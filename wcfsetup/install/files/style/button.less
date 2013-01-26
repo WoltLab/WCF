@@ -9,7 +9,6 @@ input[type='button'],
 	cursor: pointer;
 	display: inline-block;
 	margin: 0 2px;
-	min-height: 17px;
 	padding: 5px 13px;
 	position: relative;
 	
@@ -41,6 +40,10 @@ button:not([disabled]).buttonPrimary {
 	font-weight: bold;
 	
 	.textShadow(@wcfButtonPrimaryBackgroundColor);
+	
+	.icon {
+		color: @wcfButtonPrimaryColor;
+	}
 }
 
 /* hover */
@@ -56,6 +59,10 @@ button:not([disabled]):hover {
 	z-index: 100;
 	
 	.textShadow(@wcfButtonHoverBackgroundColor);
+	
+	.icon {
+		color: @wcfButtonHoverColor;
+	}
 }
 
 /* primary hover */
@@ -68,6 +75,10 @@ button:not([disabled]).buttonPrimary:hover {
 	color: @wcfButtonPrimaryHoverColor;
 	
 	.textShadow(@wcfButtonPrimaryHoverBackgroundColor);
+	
+	.icon {
+		color: @wcfButtonPrimaryHoverColor;
+	}
 }
 
 /* disabled state */
@@ -97,6 +108,12 @@ button.active:hover {
 	
 	.boxShadowInset(0, 1px, rgba(0, 0, 0, .1), 1px);
 	.textShadow(@wcfButtonColor);
+	
+	.icon {
+		color: @wcfButtonBackgroundColor;
+		
+		.textShadow(@wcfButtonColor);
+	}
 }
 
 /* button list */
@@ -160,8 +177,9 @@ button.small,
 }
 
 /* button icons */
-.button > img {
-	margin: -5px -5px -5px -5px;
+.button > .icon {
+	margin: -1px -5px;
+	vertical-align: -1px;
 	
 	+ span {
 		margin-left: 6px;

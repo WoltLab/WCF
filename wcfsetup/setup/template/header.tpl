@@ -9,12 +9,14 @@
 	{if !$lastStep|isset}
 		<style type="text/css">
 			/*<![CDATA[*/
-				.info:after {
-					background-image: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showIcon=infoInverse.svg') !important;					
-				}
-				
-				.error:after {
-					background-image: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showIcon=errorInverse.svg') !important;	
+				@font-face {
+					font-family: 'FontAwesome';
+					src: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showFont=fontawesome-webfont.eot');
+					src: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showFont=fontawesome-webfont.eot#iefix') format('embedded-opentype'),
+						url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showFont=fontawesome-webfont.woff') format('woff'),
+						url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showFont=fontawesome-webfont.ttf') format('truetype');
+					font-weight: normal;
+					font-style: normal;
 				}
 			/*]]>*/
 		</style>
@@ -35,7 +37,7 @@
 			
 			<nav class="navigation navigationHeader clearfix">
 				<ul class="navigationIcons">
-					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}circleArrowDownColored.svg" alt="" class="icon16" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-down"></span> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 				</ul>
 			</nav>
 		</div>

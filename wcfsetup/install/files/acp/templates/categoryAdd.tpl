@@ -35,7 +35,7 @@
 			<ul>
 				{content}
 					{if $objectType->getProcessor()->canDeleteCategory() || $objectType->getProcessor()->canEditCategory()}
-						<li><a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" title="{$objectType->getProcessor()->getLanguageVariable('button.list')}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{@$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a></li>
+						<li><a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" title="{$objectType->getProcessor()->getLanguageVariable('button.list')}" class="button"><span class="icon icon16 icon-list"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtons'}

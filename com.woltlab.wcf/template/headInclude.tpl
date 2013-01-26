@@ -15,7 +15,7 @@
 <script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.tools.min.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.js?t={@TIME_NOW}"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
@@ -75,26 +75,6 @@
 			'wcf.sitemap.title': '{lang}wcf.sitemap.title{/lang}',
 			'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}'
 			{event name='javascriptLanguageImport'}
-		});
-		
-		WCF.Icon.addObject({
-			'wcf.icon.add': '{icon}add{/icon}',
-			'wcf.icon.arrowDown': '{icon}arrowDown{/icon}',
-			'wcf.icon.arrowLeft': '{icon}arrowLeft{/icon}',
-			'wcf.icon.arrowRight': '{icon}arrowRight{/icon}',
-			'wcf.icon.arrowUp': '{icon}arrowUp{/icon}',
-			'wcf.icon.circleArrowDown': '{icon}circleArrowDown{/icon}',
-			'wcf.icon.circleArrowLeft': '{icon}circleArrowLeft{/icon}',
-			'wcf.icon.circleArrowRight': '{icon}circleArrowRight{/icon}',
-			'wcf.icon.circleArrowUp': '{icon}circleArrowUp{/icon}',
-			'wcf.icon.closed': '{icon}arrowRightInverse{/icon}',
-			'wcf.icon.dropdown': '{icon}dropdown{/icon}',
-			'wcf.icon.delete': '{icon}delete{/icon}',
-			'wcf.icon.edit': '{icon}edit{/icon}',
-			'wcf.icon.error': '{icon}errorRed{/icon}',
-			'wcf.icon.loading': '{icon}spinner{/icon}',
-			'wcf.icon.opened': '{icon}arrowDownInverse{/icon}'
-			{event name='javascriptIconImport'}
 		});
 		
 		new WCF.Date.Time();

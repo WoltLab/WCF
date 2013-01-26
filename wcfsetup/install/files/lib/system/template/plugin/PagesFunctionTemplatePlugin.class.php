@@ -71,10 +71,10 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 */
 	protected function makePreviousLink($link, $pageNo) {
 		if ($pageNo > 1) {
-			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo - 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous').'" class="jsTooltip"><img src="'.self::getIconPath('circleArrowLeft').'" alt="" class="icon16" /></a></li>'."\n";
+			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo - 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.previous').'" class="jsTooltip"><span class="icon icon16 icon-double-angle-left"></span></a></li>'."\n";
 		}
 		else {
-			return '<li class="skip disabled"><img src="'.self::getIconPath('circleArrowLeft').'" alt="" class="icon16 disabled" /></li>'."\n";
+			return '<li class="skip disabled"><span class="icon icon16 icon-double-angle-left disabled"></span></li>'."\n";
 		}
 	}
 	
@@ -87,10 +87,10 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 */
 	protected function makeNextLink($link, $pageNo, $pages) {
 		if ($pageNo && $pageNo < $pages) {
-			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo + 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.next').'" class="jsTooltip"><img src="'.self::getIconPath('circleArrowRight').'" alt="" class="icon16" /></a></li>'."\n";
+			return '<li class="button skip"><a href="'.$this->insertPageNumber($link, $pageNo + 1).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.next').'" class="jsTooltip"><span class="icon icon16 icon-double-angle-right"></span></a></li>'."\n";
 		}
 		else {
-			return '<li class="skip disabled"><img src="'.self::getIconPath('circleArrowRight').'" alt="" class="icon16 disabled" /></li>'."\n";
+			return '<li class="skip disabled"><span class="icon icon16 icon-double-angle-right disabled"></span></li>'."\n";
 		}
 	}
 	
@@ -213,20 +213,5 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		}
 		
 		return $html;
-	}
-	
-	/**
-	 * Returns the path to the icon with the given name.
-	 * 
-	 * @param	string		$iconName
-	 * @return	string
-	 */
-	private static function getIconPath($iconName) {
-		if (RequestHandler::getInstance()->isACPRequest()) {
-			return WCF::getPath().'icon/'.$iconName.'.svg';
-		}
-		else {
-			return StyleHandler::getInstance()->getStyle()->getIconPath($iconName);
-		}
 	}
 }

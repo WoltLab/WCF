@@ -8,21 +8,20 @@
 	border-style: solid;
 	line-height: 1.5;
 	margin-top: @wcfGapMedium;
-	padding: @wcfGapSmall @wcfGapMedium @wcfGapSmall 50px;
+	padding: @wcfGapSmall+@wcfGapTiny @wcfGapMedium @wcfGapSmall+@wcfGapTiny 48px;
 	position: relative;
 	
 	.borderRadius(7px);
 	
 	&:after {
-		background-repeat: no-repeat, repeat;
-		background-size: 24px, auto;
-		content: "";
+		font-family: FontAwesome;
+		font-size: 28px;
 		display: block;
-		height: 24px;
+		height: 32px;
 		left: 13px;
 		position: absolute;
-		top: 5px;
-		width: 24px;
+		top: 0;
+		width: 32px;
 	}
 	
 	> a {
@@ -39,7 +38,7 @@
 	.textShadow(@wcfInfoBackgroundColor);
 	
 	&:after {
-		background-image: url('../icon/infoBlue.svg');
+		content: "\f05a";
 	}
 	
 	> a, > a:hover {
@@ -55,7 +54,7 @@
 	.textShadow(@wcfSuccessBackgroundColor);
 	
 	&:after {
-		background-image: url('../icon/successGreen.svg');
+		content: "\f058";
 	}
 	
 	> a, > a:hover {
@@ -71,7 +70,7 @@
 	.textShadow(@wcfWarningBackgroundColor);
 	
 	&:after {
-		background-image: url('../icon/warningYellow.svg');
+		content: "\f071";
 	}
 	
 	> a, > a:hover {
@@ -87,7 +86,7 @@
 	.textShadow(@wcfErrorBackgroundColor);
 	
 	&:after {
-		background-image: url('../icon/errorRed.svg');
+		content: "\f05e";
 	}
 	
 	> a, > a:hover {

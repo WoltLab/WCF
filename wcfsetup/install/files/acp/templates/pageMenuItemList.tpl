@@ -25,7 +25,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='PageMenuItemAdd'}{/link}" title="{lang}wcf.acp.pageMenu.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.pageMenu.add{/lang}</span></a></li>
+			<li><a href="{link controller='PageMenuItemAdd'}{/link}" title="{lang}wcf.acp.pageMenu.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.pageMenu.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -45,15 +45,15 @@
 								<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}">{lang}{$menuItem->menuItem}{/lang}</a>
 								<span class="statusDisplay sortableButtonContainer">
 									{if $menuItem->canDisable()}
-										<img src="{@$__wcf->getPath()}icon/{if $menuItem->isDisabled}disabled{else}enabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
+										<span class="icon icon16 icon-{if $menuItem->isDisabled}off{else}circle-blank{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$menuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
 									{else}
-										<img src="{@$__wcf->getPath()}icon/enabled.svg" alt="" class="icon16 disabled" />
+										<span class="icon icon16 icon-{if $menuItem->isDisabled}off{else}circle-blank{/if} disabled" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}"></span>
 									{/if}
-									<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" class="icon16" /></a>
+									<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 icon-pencil"></span></a>
 									{if $menuItem->canDelete()}
-										<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}" />
+										<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
 									{else}
-										<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" class="icon16 disabled" />
+										<span class="icon icon16 icon-remove disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 									{/if}
 									
 									{event name='headerItemButtons'}
@@ -66,9 +66,9 @@
 											<span class="sortableNodeLabel">
 												<a href="{link controller='PageMenuItemEdit' id=$childMenuItem->menuItemID}{/link}">{lang}{$childMenuItem->menuItem}{/lang}</a>
 												<span class="statusDisplay sortableButtonContainer">
-													<img src="{@$__wcf->getPath()}icon/{if $childMenuItem->isDisabled}disabled{else}enabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if $childMenuItem->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$childMenuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
-													<a href="{link controller='PageMenuItemEdit' id=$childMenuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" class="icon16" /></a>
-													<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$childMenuItem->menuItemID}" data-confirm-message="{lang __menuItem=$childMenuItem}wcf.acp.pageMenu.delete.sure{/lang}" />
+													<span class="icon icon16 icon-{if $childMenuItem->isDisabled}off{else}circle-blank{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $childMenuItem->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$childMenuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
+													<a href="{link controller='PageMenuItemEdit' id=$childMenuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 icon-pencil"></span></a>
+													<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer"  title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$childMenuItem->menuItemID}" data-confirm-message="{lang __menuItem=$childMenuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
 													
 													{event name='subHeaderItemButtons'}
 												</span>
@@ -101,9 +101,9 @@
 							<span class="sortableNodeLabel">
 								<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}">{lang}{$menuItem->menuItem}{/lang}</a>
 								<span class="statusDisplay sortableButtonContainer">
-									<img src="{@$__wcf->getPath()}icon/{if $menuItem->isDisabled}disabled{else}enabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
-									<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" class="icon16" /></a>
-									<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip pointer" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}" />
+									<span class="icon icon16 icon-{if $menuItem->isDisabled}off{else}circle-blank{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$menuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
+									<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 icon-pencil"></span></a>
+									<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer"  title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
 									
 									{event name='footerItemButtons'}
 								</span>
@@ -123,7 +123,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='PageMenuItemAdd'}{/link}" title="{lang}wcf.acp.pageMenu.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.pageMenu.add{/lang}</span></a></li>
+			<li><a href="{link controller='PageMenuItemAdd'}{/link}" title="{lang}wcf.acp.pageMenu.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.pageMenu.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsBottom'}
 		</ul>

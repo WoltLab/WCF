@@ -72,25 +72,6 @@
 				'wcf.global.form.edit.success': '{lang}wcf.global.form.edit.success{/lang}'
 				{event name='javascriptLanguageImport'}
 			});
-			WCF.Icon.addObject({
-				'wcf.icon.add': '{@$__wcf->getPath()}icon/add.svg',
-				'wcf.icon.arrowDown': '{@$__wcf->getPath()}icon/arrowDown.svg',
-				'wcf.icon.arrowLeft': '{@$__wcf->getPath()}icon/arrowLeft.svg',
-				'wcf.icon.arrowRight': '{@$__wcf->getPath()}icon/arrowRight.svg',
-				'wcf.icon.arrowUp': '{@$__wcf->getPath()}icon/arrowUp.svg',
-				'wcf.icon.circleArrowDown': '{@$__wcf->getPath()}icon/circleArrowDown.svg',
-				'wcf.icon.circleArrowLeft': '{@$__wcf->getPath()}icon/circleArrowLeft.svg',
-				'wcf.icon.circleArrowRight': '{@$__wcf->getPath()}icon/circleArrowRight.svg',
-				'wcf.icon.circleArrowUp': '{@$__wcf->getPath()}icon/circleArrowUp.svg',
-				'wcf.icon.closed': '{@$__wcf->getPath()}icon/arrowRightInverse.svg',
-				'wcf.icon.dropdown': '{@$__wcf->getPath()}icon/dropdown.svg',
-				'wcf.icon.delete': '{@$__wcf->getPath()}icon/delete.svg',
-				'wcf.icon.edit': '{@$__wcf->getPath()}icon/edit.svg',
-				'wcf.icon.error': '{@$__wcf->getPath()}icon/errorRed.svg',
-				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner.svg',
-				'wcf.icon.opened': '{@$__wcf->getPath()}icon/arrowDownInverse.svg'
-				{event name='javascriptIconImport'}
-			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();
@@ -161,7 +142,7 @@
 			
 			<nav class="navigation navigationHeader clearfix">
 				<ul class="navigationIcons">
-					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/circleArrowDownColored.svg" alt="" class="icon16" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-down"></span> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 					{event name='navigationIcons'}
 				</ul>
 			</nav>
