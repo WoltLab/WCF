@@ -7,11 +7,11 @@
 .aclPermissionList {
 	margin-top: 0;
 	min-height: 100px;
-
+	
 	> li {
 		display: block;
 		padding: @wcfGapTiny;
-
+		
 		&:first-child {
 			border-top-left-radius: @wcfContainerBorderRadius;
 			border-top-right-radius: @wcfContainerBorderRadius;
@@ -29,7 +29,7 @@
 	
 	> li {
 		cursor: pointer;
-
+		
 		&:hover,
 		&.active:hover {
 			background-color: @wcfButtonHoverBackgroundColor;
@@ -39,7 +39,7 @@
 			background-color: @wcfContainerAccentBackgroundColor;
 		}
 		
-		> img:last-child {
+		> span:last-child {
 			float: right;
 			margin-right: @wcfGapSmall;
 		}
@@ -50,7 +50,7 @@
 	margin-top: @wcfGapSmall;
 	min-height: 200px;
 	text-align: right;
-
+	
 	> li {
 		&:hover {
 			background-color: @wcfButtonHoverBackgroundColor;
