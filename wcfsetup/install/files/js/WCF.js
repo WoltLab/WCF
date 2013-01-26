@@ -1,8 +1,8 @@
 /**
- * Class and function collection for WCF
+ * Class and function collection for WCF.
  * 
  * @author	Markus Bartz, Tim Düsterhus, Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -36,6 +36,17 @@
 		
 		return $data;
 	};
+	
+	// provide a sane console.debug implementation
+	if (!window.console) {
+		window.console = {
+			debug: function() { /* discard log */ }
+		};
+	}
+	else if (typeof(console.debug) === 'undefined') {
+		// forward console.debug to console.log (IE9)
+		console.debug = function(string) { console.log(string); };
+	}
 })();
 
 /**
@@ -5664,6 +5675,12 @@ WCF.Upload = Class.extend({
 	_className: '',
 	
 	/**
+	 * iframe for IE<10 fallback
+	 * @var	jQuery
+	 */
+	_iframe: null,
+	
+	/**
 	 * additional options
 	 * @var	jQuery
 	 */
@@ -5689,6 +5706,11 @@ WCF.Upload = Class.extend({
 	
 	/**
 	 * Initializes a new upload handler.
+	 * 
+	 * @param	string		buttonSelector
+	 * @param	string		fileListSelector
+	 * @param	string		className
+	 * @param	object		options
 	 */
 	init: function(buttonSelector, fileListSelector, className, options) {
 		this._buttonSelector = buttonSelector;
@@ -5698,7 +5720,7 @@ WCF.Upload = Class.extend({
 			action: 'upload',
 			multiple: false,
 			url: 'index.php/AJAXUpload/?t=' + SECURITY_TOKEN + SID_ARG_2ND
-		}, options);
+		}, options || { });
 		
 		// check for ajax upload support
 		var $xhr = new XMLHttpRequest();
@@ -5728,6 +5750,8 @@ WCF.Upload = Class.extend({
 	
 	/**
 	 * Inserts the upload button.
+	 * 
+	 * @param	jQuery		button
 	 */
 	_insertButton: function(button) {
 		this._buttonSelector.append(button);
@@ -5738,19 +5762,14 @@ WCF.Upload = Class.extend({
 	 */
 	_upload: function() {
 		var $files = this._fileUpload.prop('files');
-		
-		if ($files.length > 0) {
+		if ($files.length) {
 			var $fd = new FormData();
-			var self = this;
-			var $uploadID = this._uploadMatrix.length;
-			this._uploadMatrix[$uploadID] = [];
+			var $uploadID = this._createUploadMatrix($files);
 			
-			for (var $i = 0; $i < $files.length; $i++) {
-				var $li = this._initFile($files[$i]);
-				$li.data('filename', $files[$i].name);
-				this._uploadMatrix[$uploadID].push($li);
+			for (var $i = 0, $length = $files.length; $i < $length; $i++) {
 				$fd.append('__files[]', $files[$i]);
 			}
+			
 			$fd.append('actionName', this._options.action);
 			$fd.append('className', this._className);
 			var $additionalParameters = this._getParameters();
@@ -5758,6 +5777,7 @@ WCF.Upload = Class.extend({
 				$fd.append('parameters['+$name+']', $additionalParameters[$name]);
 			}
 			
+			var self = this;
 			$.ajax({ 
 				type: 'POST',
 				url: this._options.url,
@@ -5783,21 +5803,52 @@ WCF.Upload = Class.extend({
 	},
 	
 	/**
-	 * Callback for success event
+	 * Creates upload matrix for provided files.
+	 * 
+	 * @param	array<object>		files
+	 * @return	integer
 	 */
-	_success: function(uploadID, data) {
-		console.debug(data);
+	_createUploadMatrix: function(files) {
+		if (files.length) {
+			var $uploadID = this._uploadMatrix.length;
+			this._uploadMatrix[$uploadID] = [ ];
+			
+			for (var $i = 0, $length = files.length; $i < $length; $i++) {
+				var $file = files[$i];
+				var $li = this._initFile($file);
+				
+				$li.data('filename', $file.name);
+				this._uploadMatrix[$uploadID].push($li);
+			}
+			
+			return $uploadID;
+		}
+		
+		return null;
 	},
 	
 	/**
-	 * Callback for error event
+	 * Callback for success event.
+	 * 
+	 * @param	integer		uploadID
+	 * @param	object		data
 	 */
-	_error: function(jqXHR, textStatus, errorThrown) {
-		console.debug(jqXHR.responseText);
-	},
+	_success: function(uploadID, data) { },
 	
 	/**
-	 * Callback for progress event
+	 * Callback for error event.
+	 * 
+	 * @param	jQuery		jqXHR
+	 * @param	string		textStatus
+	 * @param	string		errorThrown
+	 */
+	_error: function(jqXHR, textStatus, errorThrown) { },
+	
+	/**
+	 * Callback for progress event.
+	 * 
+	 * @param	integer		uploadID
+	 * @param	object		event
 	 */
 	_progress: function(uploadID, event) {
 		var $percentComplete = Math.round(event.loaded * 100 / event.total);
@@ -5809,53 +5860,82 @@ WCF.Upload = Class.extend({
 	
 	/**
 	 * Returns additional parameters.
+	 * 
+	 * @return	object
 	 */
 	_getParameters: function() {
 		return {};
 	},
 	
+	/**
+	 * Initializes list item for uploaded file.
+	 * 
+	 * @return	jQuery
+	 */
 	_initFile: function(file) {
-		var $li = $('<li>'+file.name+' ('+file.size+')<progress max="100"></progress></li>');
-		this._fileListSelector.append($li);
-		
-		return $li;
+		return $('<li>' + file.name + ' (' + file.size + ')<progress max="100" /></li>').appendTo(this._fileListSelector);
 	},
 	
 	/**
 	 * Shows the fallback overlay (work in progress)
 	 */
 	_showOverlay: function() {
-		var $self = this;
-		if (!this._overlay) {
-			// create overlay
-			this._overlay = $('<div style="display: none;"><form enctype="multipart/form-data" method="post" action="'+this._options.url+'"><dl><dt><label for="__fileUpload">File</label></dt><dd><input type="file" id="__fileUpload" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/></dd></dl><div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form></div>');
+		// create iframe
+		if (this._iframe === null) {
+			this._iframe = $('<iframe name="__fileUploadIFrame" />').hide().appendTo(document.body);
 		}
 		
-		// create iframe
-		var $iframe = $('<iframe style="display: none"></iframe>'); // width: 300px; height: 100px; border: 5px solid red
-		$iframe.attr('name', $iframe.wcfIdentify());
-		$('body').append($iframe);
-		this._overlay.find('form').attr('target', $iframe.wcfIdentify());
-		
-		// add events (iframe onload)
-		$iframe.load(function() {
-			console.debug('iframe ready');
-			console.debug($iframe.contents());
-		});
-		
-		this._overlay.find('form').submit(function() {
-			$iframe.data('loading', true);
-			$self._overlay.wcfDialog('close');
-		});
+		// create overlay
+		if (!this._overlay) {
+			this._overlay = $('<div><form enctype="multipart/form-data" method="post" action="' + this._options.url + '" target="__fileUploadIFrame" /></div>').hide().appendTo(document.body);
+			
+			var $form = this._overlay.find('form');
+			$('<dl><dt><label for="__fileUpload">' + WCF.Language.get('wcf.upload.file') + '</label></dt><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
+			$('<div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form>').appendTo($form);
+			
+			$('<input type="hidden" name="isFallback" value="1" />').appendTo($form);
+			$('<input type="hidden" name="actionName" value="' + this._options.action + '" />').appendTo($form);
+			$('<input type="hidden" name="className" value="' + this._className + '" />').appendTo($form);
+			var $additionalParameters = this._getParameters();
+			for (var $name in $additionalParameters) {
+				$('<input type="hidden" name="' + $name + '" value="' + $additionalParameters[$name] + '" />').appendTo($form);
+			}
+			
+			$form.submit($.proxy(function() {
+				var $file = {
+					name: this._getFilename(),
+					size: WCF.Language.get('wcf.upload.file.size.unknown')
+				};
+				
+				var $uploadID = this._createUploadMatrix([ $file ]);
+				var self = this;
+				this._iframe.data('loading', true).off('load').load(function() { self._evaluateResponse($uploadID); });
+				this._overlay.wcfDialog('close');
+			}, this));
+		}
 		
 		this._overlay.wcfDialog({
-			title: 'Upload',
-			onClose: function() {
-				if (!$iframe.data('loading')) {
-					$iframe.remove();
-				}
-			}
+			title: WCF.Language.get('wcf.attachment.upload')
 		});
+	},
+	
+	/**
+	 * Evaluates iframe response.
+	 * 
+	 * @param	integer		uploadID
+	 */
+	_evaluateResponse: function(uploadID) {
+		var $returnValues = $.parseJSON(this._iframe.contents().find('pre').html());
+		this._success(uploadID, $returnValues);
+	},
+	
+	/**
+	 * Returns name of selected file.
+	 * 
+	 * @return	string
+	 */
+	_getFilename: function() {
+		return $('#__fileUpload').val().split('\\').pop();
 	}
 });
 

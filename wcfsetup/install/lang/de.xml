@@ -687,6 +687,10 @@
 		<item name="wcf.acp.worker.executing"><![CDATA[Aufgaben werden ausgeführt …]]></item>
 	</category>
 	
+	<category name="wcf.ajax">
+		<item name="wcf.ajax.error.invalidParameter"><![CDATA[Der Parameter „{$fieldName}“ fehlt oder ist ungültig.]]></item>
+	</category>
+	
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 		<item name="wcf.category.button.list"><![CDATA[Kategorien auflisten]]></item>

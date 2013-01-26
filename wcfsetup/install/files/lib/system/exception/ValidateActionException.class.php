@@ -39,7 +39,7 @@ class ValidateActionException extends \Exception {
 		}
 		
 		$this->fieldName = $fieldName;
-		$this->message = WCF::getLanguage()->getDynamicVariable('wcf.global.error.invalidParameter', array('fieldName' => $this->fieldName));
+		$this->message = WCF::getLanguage()->getDynamicVariable('wcf.ajax.error.invalidParameter', array('fieldName' => $this->fieldName));
 	}
 	
 	/**
