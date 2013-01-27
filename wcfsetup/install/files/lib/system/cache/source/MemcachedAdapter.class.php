@@ -31,7 +31,7 @@ class MemcachedAdapter extends SingletonFactory {
 		
 		// init memcached
 		if (CACHE_SOURCE_MEMCACHED_USE_PCONNECT) {
-			$this->memcached = new \Memcached('wcf_memcached');
+			$this->memcached = new \Memcached('wcf'.WCF_N.'_memcached');
 		}
 		else {
 			$this->memcached = new \Memcached();
