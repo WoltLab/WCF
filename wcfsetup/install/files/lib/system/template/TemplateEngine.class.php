@@ -81,12 +81,6 @@ class TemplateEngine extends SingletonFactory {
 	protected $v = array();
 	
 	/**
-	 * all cached variables for usage after execution in sandbox
-	 * @var	array
-	 */
-	protected $sandboxVars = null;
-	
-	/**
 	 * contains all templates with assigned template listeners.
 	 * @var	array<array>
 	 */
@@ -503,31 +497,6 @@ class TemplateEngine extends SingletonFactory {
 	}
 	
 	/**
-	 * Enables execution in sandbox.
-	 */
-	public function enableSandbox() {
-		if ($this->sandboxVars === null) {
-			$this->sandboxVars = $this->v;
-		}
-		else {
-			throw new SystemException('TemplateEngine is already in sandbox mode. Disable the current sandbox mode before you enable a new one.');
-		}
-	}
-	
-	/**
-	 * Disables execution in sandbox.
-	 */
-	public function disableSandbox() {
-		if ($this->sandboxVars !== null) {
-			$this->v = $this->sandboxVars;
-			$this->sandboxVars = null;
-		}
-		else {
-			throw new SystemException('TemplateEngine is not in sandbox mode at the moment.');
-		}
-	}
-	
-	/**
 	 * Returns the output of a template.
 	 * 
 	 * @param	string		$templateName
@@ -539,7 +508,7 @@ class TemplateEngine extends SingletonFactory {
 	public function fetch($templateName, $application = 'wcf', array $variables = array(), $sandbox = false) {
 		// enable sandbox
 		if ($sandbox) {
-			$this->enableSandbox();
+			$templateVars = $this->v;
 		}
 		
 		// add new template variables
@@ -555,7 +524,7 @@ class TemplateEngine extends SingletonFactory {
 		
 		// disable sandbox
 		if ($sandbox) {
-			$this->disableSandbox();
+			$this->v = $templateVars;
 		}
 		
 		return $output;
@@ -572,7 +541,7 @@ class TemplateEngine extends SingletonFactory {
 	public function fetchString($compiledSource, array $variables = array(), $sandbox = true) {
 		// enable sandbox
 		if ($sandbox) {
-			$this->enableSandbox();
+			$templateVars = $this->v;
 		}
 		
 		// add new template variables
@@ -588,7 +557,7 @@ class TemplateEngine extends SingletonFactory {
 		
 		// disable sandbox
 		if ($sandbox) {
-			$this->disableSandbox();
+			$this->v = $templateVars;
 		}
 		
 		return $output;
@@ -684,7 +653,7 @@ class TemplateEngine extends SingletonFactory {
 	protected function includeTemplate($templateName, $application, array $variables = array(), $sandbox = true) {
 		// enable sandbox
 		if ($sandbox) {
-			$this->enableSandbox();
+			$templateVars = $this->v;
 		}
 		
 		// add new template variables
@@ -697,7 +666,7 @@ class TemplateEngine extends SingletonFactory {
 		
 		// disable sandbox
 		if ($sandbox) {
-			$this->disableSandbox();
+			$this->v = $templateVars;
 		}
 	}
 	
