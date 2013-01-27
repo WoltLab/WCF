@@ -59,11 +59,6 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		if (isset($option['supporti18n'])) $supportI18n = $option['supporti18n'];
 		if (isset($option['requirei18n'])) $requireI18n = $option['requirei18n'];
 		
-		// check if optionType exists
-		if (!$this->validateOptionType($optionType)) {
-			throw new SystemException("unable to find option type '".$optionType."'");
-		}
-		
 		// collect additional tags and their values
 		$additionalData = array();
 		foreach ($option as $tag => $value) {
@@ -115,40 +110,5 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 			$optionEditor = new OptionEditor($optionObj);
 			$optionEditor->update($data);
 		}
-	}
-	
-	/**
-	 * Returns true, if option type is valid.
-	 * 
-	 * @param	integer		$optionType
-	 * @return	boolean
-	 */
-	protected function validateOptionType($optionType) {
-		$optionType = StringUtil::firstCharToUpperCase($optionType);
-		
-		// attempt to validate against WCF first
-		$className = 'wcf\system\option\\'.$optionType.'OptionType';
-		if (class_exists($className)) {
-			return true;
-		}
-		
-		// check for applications
-		if (self::$abbreviations === null) {
-			self::$abbreviations = array();
-			
-			$applications = ApplicationHandler::getInstance()->getApplications();
-			foreach ($applications as $application) {
-				self::$abbreviations[] = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
-			}
-		}
-		
-		foreach (self::$abbreviations as $abbreviation) {
-			$className = $abbreviation.'\system\option\\'.$optionType.'OptionType';
-			if (class_exists($className)) {
-				return true;
-			}
-		}
-		
-		return false;
 	}
 }

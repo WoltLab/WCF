@@ -141,7 +141,7 @@ class MemcachedCacheSource implements ICacheSource {
 	 * @see	wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set(array $cacheResource, $value) {
-		$this->getAdapter()->getMemcached()->set($cacheResource['file'], $value, MEMCACHE_COMPRESSED, $cacheResource['maxLifetime']);
+		$this->getAdapter()->getMemcached()->set($cacheResource['file'], $value, $cacheResource['maxLifetime']);
 		$this->addToLog($cacheResource['file']);
 	}
 	
@@ -188,8 +188,5 @@ class MemcachedCacheSource implements ICacheSource {
 	public function close() {
 		// update log
 		$this->updateLog();
-		
-		// close connection
-		if ($this->getAdapter() !== null && $this->getAdapter()->getMemcached() !== null) $this->getAdapter()->getMemcached()->close();
 	}
 }
