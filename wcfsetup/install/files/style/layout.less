@@ -1203,37 +1203,39 @@ ul.inlineDataList {
 			}
 			
 			&.skip {	
-				padding: 1px 0 1px;
+				> a {
+					padding: 2px 0 1px;
+				}
+				
+				> span {
+					padding: 3px 0 1px;
+				}
 			}
 			
-			&:not(.disabled):hover a {
+			&:not(.disabled):hover > a {
 				color: @wcfButtonHoverColor;
 			}
 			
-			&:not(.skip) a {
+			&:not(.skip) > a {
 				padding: 2px 3px;
 			}
 			
 			&.active {
-				padding: 2px 0 1px;
-				
 				> span {
-					padding: 0 3px;
+					padding: 2px 3px;
 				}
 			}
 			
-			img {
-				height: 16px;
-				margin: 0;
-				width: 16px;
-			}
-			
-			a {
+			> a {
 				color: @wcfButtonColor;
 				display: block;
 				text-decoration: none;
 				
 				.textShadow(@wcfButtonBackgroundColor);
+			}
+			
+			> span {
+				display: inline-block;
 			}
 		}
 	}
