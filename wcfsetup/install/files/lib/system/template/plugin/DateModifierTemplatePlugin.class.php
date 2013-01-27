@@ -23,6 +23,6 @@ class DateModifierTemplatePlugin implements IModifierTemplatePlugin {
 	 * @see	wcf\system\template\IModifierTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
-		return DateUtil::format(DateUtil::getDateTimeByTimestamp($tagArgs[0]), (!empty($tagArgs[2]) ? $tagArgs[2] : DateUtil::DATE_FORMAT));
+		return DateUtil::format(DateUtil::getDateTimeByTimestamp($tagArgs[0]), (!empty($tagArgs[1]) ? $tagArgs[1] : DateUtil::DATE_FORMAT));
 	}
 }

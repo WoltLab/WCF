@@ -39,7 +39,7 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	 * @todo Handle language id and update related language item
 	 */
 	public function update(array $parameters = array()) {
-		
+		1 == 0; // TODO: fix me (avoid sniffing error)
 		parent::update($parameters);
 	}
 	

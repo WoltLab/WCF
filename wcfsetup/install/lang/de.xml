@@ -275,21 +275,21 @@
 		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[Eine Adresse pro Zeile]]></item>
 		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Browser-Kennung ausschließen]]></item>
 		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[Eine Browser-Kennung (User-Agent) pro Zeile]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_host"><![CDATA[Memcache-Server]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_host.description"><![CDATA[Mehrere Server können zeilenweise angegeben werden.]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_use_pconnect"><![CDATA[Persistente Verbindungen aktivieren]]></item>
+		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
+		<item name="wcf.acp.option.cache_source_memcached_host.description"><![CDATA[Mehrere Server können zeilenweise angegeben werden, die Gewichtung kann als dritter Parameter angegeben werden, zum Beispiel „localhost:11211:67“ oder „10.0.13.37:31337:33“.]]></item>
+		<item name="wcf.acp.option.cache_source_memcached_use_pconnect"><![CDATA[Persistente Verbindungen aktivieren]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache-Methode]]></item>
 		<item name="wcf.acp.option.cache_source_type.apc"><![CDATA[Alternative PHP Cache (experimentell)]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Beachten Sie, dass einige Methoden spezielle Anforderungen an das Server-System stellen und nicht auf jedem Server zur Verfügung stehen.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Dateisystem (Standard)]]></item>
-		<item name="wcf.acp.option.cache_source_type.memcache"><![CDATA[Memcache]]></item>
+		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached]]></item>
 		<item name="wcf.acp.option.cache_source_type.no"><![CDATA[Caching deaktivieren (Nicht empfohlen)]]></item>
 		
 		<item name="wcf.acp.option.category.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcache"><![CDATA[Memcache]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache speichert häufig benötige Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. Lesen Sie mehr über dieses Thema auf der folgenden Seite: <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcached.description"><![CDATA[Memcached speichert häufig benötige Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. Lesen Sie mehr über dieses Thema auf der folgenden Seite: <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
 		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Datum &amp; Zeit]]></item>
 		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Grafik]]></item>
 		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>
@@ -685,6 +685,10 @@
 	
 	<category name="wcf.acp.worker">
 		<item name="wcf.acp.worker.executing"><![CDATA[Aufgaben werden ausgeführt …]]></item>
+	</category>
+	
+	<category name="wcf.ajax">
+		<item name="wcf.ajax.error.invalidParameter"><![CDATA[Der Parameter „{$fieldName}“ fehlt oder ist ungültig.]]></item>
 	</category>
 	
 	<category name="wcf.category">
