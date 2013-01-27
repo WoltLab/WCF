@@ -48,7 +48,7 @@ class MemcachedCacheSource implements ICacheSource {
 	/**
 	 * Returns the memcached adapter.
 	 * 
-	 * @return	\MemcachedAdapter
+	 * @return	wcf\system\cache\source\MemcachedAdapter
 	 */
 	public function getAdapter() {
 		return $this->adapter;
@@ -127,7 +127,13 @@ class MemcachedCacheSource implements ICacheSource {
 	 */
 	public function get(array $cacheResource) {
 		$value = $this->getAdapter()->getMemcached()->get($cacheResource['file']);
-		if ($value === false) return null;
+		if ($value === false) {
+			// check if result code if return values is a boolean value instead of no result
+			if ($this->getAdapter()->getMemcached()->getResultCode() == \Memcached::RES_NOTFOUND) {
+				return null;
+			}
+		}
+		
 		return $value;
 	}
 	
