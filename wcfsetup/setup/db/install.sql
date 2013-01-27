@@ -1012,7 +1012,12 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMen
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuColor', '@wcfColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuActiveColor', '@wcfLinkColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelHoverBackgroundColor', 'rgba(60, 60, 60, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMarkedBackgroundColor', 'rgba(255, 255, 200, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSelectedBackgroundColor', 'rgba(255, 255, 200, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSelectedColor', '@wcfColor');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDeletedBackgroundColor', 'rgba(255, 238, 238, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDeletedColor', 'rgba(204, 0, 0, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledBackgroundColor', 'rgba(238, 255, 238, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledColor', 'rgba(0, 153, 0, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoHeight', 'auto');
