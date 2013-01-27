@@ -108,11 +108,12 @@ class ApplicationHandler extends SingletonFactory {
 	 * @return	array<wcf\data\application\Application>
 	 */
 	public function getDependentApplications() {
-		$applications = array();
-		foreach ($this->cache['application'] as $packageID => $application) {
-			if ($packageID == PACKAGE_ID) continue;
-			
-			$applications[] = $application;
+		$applications = $this->getApplications();
+		foreach ($applications as $key => $application) {
+			if ($application->packageID == $this->getActiveApplication()->packageID) {
+				unset($applications[$key]);
+				break;
+			}
 		}
 		
 		return $applications;
@@ -124,10 +125,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * @return	array<wcf\data\application\Application>
 	 */
 	public function getApplications() {
-		$applications = $this->getDependentApplications();
-		$applications[] = $this->getActiveApplication();
-		
-		return $applications;
+		return $this->cache['application'];
 	}
 	
 	/**
