@@ -85,12 +85,6 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		if (isset($option['permissions'])) $permissions = $option['permissions'];
 		if (isset($option['options'])) $options = $option['options'];
 		
-		// check if optionType exists
-		$className = 'wcf\system\option\\'.StringUtil::firstCharToUpperCase($optionType).'OptionType';
-		if (!class_exists($className)) {
-			throw new SystemException("unable to find class '".$className."'");
-		}
-		
 		// collect additional tags and their values
 		$additionalData = array();
 		foreach ($option as $tag => $value) {
