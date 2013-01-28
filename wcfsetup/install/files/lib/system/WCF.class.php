@@ -2,7 +2,9 @@
 namespace wcf\system;
 use wcf\data\application\Application;
 use wcf\data\option\OptionEditor;
+use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
+use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\cronjob\CronjobScheduler;
@@ -455,7 +457,20 @@ class WCF {
 	protected function loadApplication(Application $application, $isDependentApplication = false) {
 		$applicationObject = null;
 		$package = PackageCache::getInstance()->getPackage($application->packageID);
-		
+		// package cache might be outdated
+		if ($package === null) {
+			$package = new Package($application->packageID);
+			
+			// package cache is outdated, discard cache
+			if ($package->packageID) {
+				PackageEditor::resetCache();
+			}
+			else {
+				// package id is invalid
+				throw new SystemException("application identified by package id '".$application->packageID."' is unknown");
+			}
+		}
+			
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
 		$packageDir = FileUtil::getRealPath(WCF_DIR.$package->packageDir);
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
