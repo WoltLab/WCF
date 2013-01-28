@@ -485,6 +485,7 @@
 		<item name="wcf.acp.pageMenu.footer"><![CDATA[Fußzeile]]></item>
 		<item name="wcf.acp.pageMenu.header"><![CDATA[Hauptmenü]]></item>
 		<item name="wcf.acp.pageMenu.isDisabled"><![CDATA[Menüpunkt deaktivieren]]></item>
+		<item name="wcf.acp.pageMenu.landingPage.description"><![CDATA[Sie können mittels Sortierung die Startseite Ihrer Website festlegen, es wird immer der erste Eintrag aus dem Hauptmenü verwendet.]]></item>
 		<item name="wcf.acp.pageMenu.link"><![CDATA[Link]]></item>
 		<item name="wcf.acp.pageMenu.link.external"><![CDATA[Externer Link]]></item>
 		<item name="wcf.acp.pageMenu.link.internal"><![CDATA[Interner Link]]></item>
