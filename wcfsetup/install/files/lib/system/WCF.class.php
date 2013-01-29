@@ -666,6 +666,15 @@ class WCF {
 	 * @return	string
 	 */
 	public function getAnchor($fragment) {
+		return $this->getRequestURI() . '#' . $fragment;
+	}
+	
+	/**
+	 * Returns the URI of the current page.
+	 *
+	 * @return	string
+	 */
+	public function getRequestURI() {
 		// resolve path and query components
 		$scriptName = $_SERVER['SCRIPT_NAME'];
 		if (empty($_SERVER['PATH_INFO'])) {
@@ -684,7 +693,7 @@ class WCF {
 			$baseHref .= 'index.php/';
 		}
 		
-		return $baseHref . $path . '#' . $fragment;
+		return $baseHref . $path;
 	}
 	
 	/**
