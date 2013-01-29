@@ -1743,7 +1743,7 @@ WCF.Action.Delete = Class.extend({
 			
 			if (!WCF.inArray($containerID, self._containers)) {
 				self._containers.push($containerID);
-				$container.find(this._buttonSelector).click($.proxy(self._click, self));
+				$container.find(self._buttonSelector).click($.proxy(self._click, self));
 			}
 		});
 	},
