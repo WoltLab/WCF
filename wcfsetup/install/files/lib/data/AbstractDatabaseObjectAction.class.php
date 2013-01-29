@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -13,7 +12,7 @@ use wcf\util\StringUtil;
  * Default implementation for DatabaseObject-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
@@ -143,7 +142,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	public function validateAction() {
 		// validate if user is logged in
 		if (!WCF::getUser()->userID && !in_array($this->getActionName(), $this->allowGuestAccess)) {
-			throw new IllegalLinkException();
+			throw new PermissionDeniedException();
 		}
 		
 		// validate action name
