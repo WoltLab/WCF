@@ -1684,8 +1684,15 @@ WCF.Action.SimpleProxy = Class.extend({
  * 
  * @param	string		className
  * @param	string		containerSelector
+ * @param	string		buttonSelector
  */
 WCF.Action.Delete = Class.extend({
+	/**
+	 * delete button selector
+	 * @var	string
+	 */
+	_buttonSelector: '',
+	
 	/**
 	 * action class name
 	 * @var	string
@@ -1709,10 +1716,13 @@ WCF.Action.Delete = Class.extend({
 	 * 
 	 * @param	string		className
 	 * @param	string		containerSelector
+	 * @param	string		buttonSelector
 	 */
-	init: function(className, containerSelector) {
+	init: function(className, containerSelector, buttonSelector) {
 		this._containerSelector = containerSelector;
 		this._className = className;
+		this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsDeleteButton';
+		
 		this.proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
@@ -1733,7 +1743,7 @@ WCF.Action.Delete = Class.extend({
 			
 			if (!WCF.inArray($containerID, self._containers)) {
 				self._containers.push($containerID);
-				$container.find('.jsDeleteButton').click($.proxy(self._click, self));
+				$container.find(self._buttonSelector).click($.proxy(self._click, self));
 			}
 		});
 	},
@@ -1818,9 +1828,15 @@ WCF.Action.Delete = Class.extend({
  * 
  * @param	string		className
  * @param	jQuery		containerList
- * @param	string		toggleButtonSelector
+ * @param	string		buttonSelector
  */
 WCF.Action.Toggle = Class.extend({
+	/**
+	 * toogle button selector
+	 * @var	string
+	 */
+	_buttonSelector: '.jsToggleButton',
+	
 	/**
 	 * action class name
 	 * @var	string
@@ -1840,24 +1856,16 @@ WCF.Action.Toggle = Class.extend({
 	_containers: [ ],
 	
 	/**
-	 * toogle button selector
-	 * @var	string
-	 */
-	_toggleButtonSelector: '.jsToggleButton',
-	
-	/**
 	 * Initializes 'toggle'-Proxy
 	 * 
 	 * @param	string		className
 	 * @param	string		containerSelector
-	 * @param	string		toggleButtonSelector
+	 * @param	string		buttonSelector
 	 */
-	init: function(className, containerSelector, toggleButtonSelector) {
+	init: function(className, containerSelector, buttonSelector) {
 		this._containerSelector = containerSelector;
 		this._className = className;
-		if (toggleButtonSelector) {
-			this._toggleButtonSelector = toggleButtonSelector;
-		}
+		this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsToggleButton';
 		
 		// initialize proxy
 		var options = {
@@ -1880,7 +1888,7 @@ WCF.Action.Toggle = Class.extend({
 			
 			if (!WCF.inArray($containerID, this._containers)) {
 				this._containers.push($containerID);
-				$container.find(this._toggleButtonSelector).click($.proxy(this._click, this));
+				$container.find(this._buttonSelector).click($.proxy(this._click, this));
 			}
 		}, this));
 	},
@@ -1945,7 +1953,7 @@ WCF.Action.Toggle = Class.extend({
 	triggerEffect: function(objectIDs) {
 		for (var $index in this._containers) {
 			var $container = $('#' + this._containers[$index]);
-			var $toggleButton = $container.find(this._toggleButtonSelector);
+			var $toggleButton = $container.find(this._buttonSelector);
 			if (WCF.inArray($toggleButton.data('objectID'), objectIDs)) {
 				$container.wcfHighlight();
 				this._toggleButton($container, $toggleButton);

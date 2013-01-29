@@ -1,16 +1,10 @@
 {include file='header' pageTitle='wcf.acp.pageMenu.list'}
 
-<header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.pageMenu.list{/lang}</h1>
-	</hgroup>
-</header>
-
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		new WCF.Action.Delete('wcf\\data\\page\\menu\\item\\PageMenuItemAction', '.sortableNode');
-		new WCF.Action.Toggle('wcf\\data\\page\\menu\\item\\PageMenuItemAction', '.sortableNode');
+		new WCF.Action.Delete('wcf\\data\\page\\menu\\item\\PageMenuItemAction', '.sortableNode', '> .sortableNodeLabel .jsDeleteButton');
+		new WCF.Action.Toggle('wcf\\data\\page\\menu\\item\\PageMenuItemAction', '.sortableNode', '> .sortableNodeLabel .jsToggleButton');
 		
 		{if $headerItems|count}
 			new WCF.Sortable.List('pageMenuItemHeaderList', 'wcf\\data\\page\\menu\\item\\PageMenuItemAction', undefined, { protectRoot: true }, false, { menuPosition: 'header' });
@@ -21,6 +15,14 @@
 	});
 	//]]>
 </script>
+
+<header class="boxHeadline">
+	<hgroup>
+		<h1>{lang}wcf.acp.pageMenu.list{/lang}</h1>
+	</hgroup>
+</header>
+
+<p class="info">{lang}wcf.acp.pageMenu.landingPage.description{/lang}</p>
 
 <div class="contentNavigation">
 	<nav>

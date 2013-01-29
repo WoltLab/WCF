@@ -2,6 +2,7 @@
 namespace wcf\data\page\menu\item;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
+use wcf\data\IToggleAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -11,13 +12,13 @@ use wcf\system\WCF;
  * Executes page menu item-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.page.menu.item
  * @category	Community Framework
  */
-class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortableAction {
+class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
@@ -140,5 +141,24 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 		if ($this->parameters['menuPosition'] == 'header') {
 			PageMenuItemEditor::updateLandingPage();
 		}
+	}
+	
+	/**
+	 * @see	wcf\data\IToggleAction::validateToggle()
+	 */
+	public function validateToggle() {
+		$this->menuItemEditor = $this->getSingleObject();
+		if ($this->menuItemEditor->isLandingPage) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * @see	wcf\data\IToggleAction::toggle()
+	 */
+	public function toggle() {
+		$this->menuItemEditor->update(array(
+			'isDisabled' => ($this->menuItemEditor->isDisabled ? 0 : 1)
+		));
 	}
 }
