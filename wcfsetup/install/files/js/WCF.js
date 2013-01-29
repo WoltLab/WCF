@@ -6060,7 +6060,16 @@ WCF.Sortable.List = Class.extend({
 		}
 		
 		if (this._className) {
-			this._container.find('.formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
+			var $formSubmit = this._container.find('.formSubmit');
+			if (!$formSubmit.length) {
+				$formSubmit = this._container.next('.formSubmit');
+				if (!$formSubmit.length) {
+					console.debug("[WCF.Sortable.Simple] Unable to find form submit for saving, aborting.");
+					return;
+				}
+			}
+			
+			$formSubmit.children('button[data-type="submit"]').click($.proxy(this._submit, this));
 		}
 	},
 	
