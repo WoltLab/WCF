@@ -24,6 +24,16 @@ interface IAction {
 	public function readParameters();
 	
 	/**
+	 * Checks the modules of this action.
+	 */
+	public function checkModules();
+	
+	/**
+	 * Checks the permissions of this action.
+	 */
+	public function checkPermissions();
+	
+	/**
 	 * Executes this action.
 	 */
 	public function execute();
