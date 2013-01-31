@@ -166,16 +166,6 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Reloads cache during setup.
-	 *
-	 * @todo	Caches should be disabled within setup, this is just a work-around!
-	 */
-	public function reloadCache() {
-		ApplicationEditor::resetCache();
-		$this->init();
-	}
-	
-	/**
 	 * Rebuilds cookie domain/path for all applications.
 	 */
 	public static function rebuild() {

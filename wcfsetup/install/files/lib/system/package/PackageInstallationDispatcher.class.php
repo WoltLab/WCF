@@ -310,7 +310,6 @@ class PackageInstallationDispatcher {
 					'cookiePath' => $path,
 					'packageID' => $package->packageID
 				));
-				ApplicationHandler::getInstance()->reloadCache();
 			}
 		}
 		
