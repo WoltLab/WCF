@@ -7873,6 +7873,7 @@ $.widget('ui.wcfDialog', {
 			// remove static dimensions
 			this._content.css({
 				height: 'auto',
+				overflow: 'auto',
 				width: 'auto'
 			});
 			
@@ -7897,6 +7898,7 @@ $.widget('ui.wcfDialog', {
 			// force dimensions
 			this._content.css({
 				height: this._contentDimensions.height + 'px',
+				overflow: 'auto',
 				width: this._contentDimensions.width + 'px'
 			});
 			
@@ -7923,6 +7925,7 @@ $.widget('ui.wcfDialog', {
 				// remove static dimensions
 				$content.css({
 					height: 'auto',
+					overflow: 'auto',
 					width: 'auto'
 				});
 			});
