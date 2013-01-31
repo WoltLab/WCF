@@ -53,6 +53,25 @@ a {
 	}
 }
 
+.nativeList,
+.nativeList {
+	margin: 1em 0;
+	margin-left: 40px;
+	
+	ul,
+	ol {
+		margin-bottom: 0;
+		margin-top: 0;
+	}
+}
+
+ul.nativeList {
+	list-style-type: disc;
+}
+ol.nativeList {
+	list-style-type: decimal;
+}
+
 .htmlContent {
 	p {
 		margin: 1em 0;
@@ -69,6 +88,18 @@ a {
 	h1, h2, h3, h4, h5, h6 {
 		font-weight: bold;
 		margin: 0.5em 0;
+	}
+	
+	ul, ol {
+		.nativeList;
+	}
+	
+	ul {
+		list-style-type: disc;
+	}
+	
+	ol {
+		list-style-type: decimal;
 	}
 }
 
