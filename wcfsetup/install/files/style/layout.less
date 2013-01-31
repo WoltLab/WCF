@@ -543,12 +543,18 @@
 		&:hover {
 			background-color: @wcfContainerHoverBackgroundColor;
 			
-			> div > .details > .buttonList {
-				opacity: 1;
+			> div > div {
+				> .buttonList {
+					opacity: 1;
+				}
+				
+				> hgroup > .containerContentType {
+					color: @wcfDimmedColor;
+				}
 			}
 		}
 		
-		> div > .details {
+		> div > div {
 			position: relative;
 			
 			> .buttonList {
@@ -558,6 +564,15 @@
 				top: 0;
 				
 				.transition(opacity, .1s);
+			}
+			
+			> hgroup > .containerContentType {
+				color: lighten(@wcfDimmedColor, 20%);
+				position: absolute;
+				right: 0;
+				top: 3px;
+				
+				.transition(color, .1s);
 			}
 		}
 	}
