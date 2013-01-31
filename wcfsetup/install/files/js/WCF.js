@@ -2089,6 +2089,10 @@ WCF.Date = {};
  * Provides a date picker for date input fields.
  */
 WCF.Date.Picker = {
+	/**
+	 * date format
+	 * @var	string
+	 */
 	_dateFormat: 'yy-mm-dd',
 	
 	/**
@@ -2188,7 +2192,9 @@ WCF.Date.Picker = {
 			});
 			
 			// format default date
-			$input.datepicker('setDate', new Date($inputValue));
+			if ($inputValue) {
+				$input.datepicker('setDate', new Date($inputValue));
+			}
 			
 			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
 			$input.datepicker('widget').hide();
