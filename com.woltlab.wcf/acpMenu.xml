@@ -68,30 +68,16 @@
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.package.database">
-			<controller><![CDATA[wcf\acp\form\PackageUpdateSearchForm]]></controller>
-			<parent>wcf.acp.menu.link.package.update</parent>
-			<permissions>admin.system.package.canInstallPackage,admin.system.package.canUpdatePackage</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.package.server">
 			<parent>wcf.acp.menu.link.package</parent>
-			<showorder>3</showorder>
+			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.server.list">
-			<controller><![CDATA[wcf\acp\page\UpdateServerListPage]]></controller>
+			<controller><![CDATA[wcf\acp\page\PackageUpdateServerListPage]]></controller>
 			<parent>wcf.acp.menu.link.package.server</parent>
 			<permissions>admin.system.package.canEditServer</permissions>
 			<showorder>1</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.package.server.add">
-			<controller><![CDATA[wcf\acp\form\UpdateServerAddForm]]></controller>
-			<parent>wcf.acp.menu.link.package.server</parent>
-			<permissions>admin.system.package.canEditServer</permissions>
-			<showorder>2</showorder>
 		</acpmenuitem>
 		<!-- /packages -->
 		

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data;
+use wcf\system\exception\SystemException;
 use wcf\system\version\VersionHandler;
 use wcf\util\StringUtil;
 

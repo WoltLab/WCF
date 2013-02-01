@@ -5,12 +5,6 @@
 		//<![CDATA[
 		var $imageViewer = null;
 		$(function() {
-			WCF.Icon.addObject({
-				'wcf.icon.arrowLeftColored': '{icon}arrowLeftColored{/icon}',
-				'wcf.icon.arrowRightColored': '{icon}arrowRightColored{/icon}',
-				'wcf.icon.deleteColored': '{icon}deleteColored{/icon}',
-				'wcf.icon.enlargeColored': '{icon}enlargeColored{/icon}'
-			});
 			WCF.Language.addObject({
 				'wcf.imageViewer.counter': '{lang}wcf.imageViewer.counter{/lang}',
 				'wcf.imageViewer.close': '{lang}wcf.imageViewer.close{/lang}',

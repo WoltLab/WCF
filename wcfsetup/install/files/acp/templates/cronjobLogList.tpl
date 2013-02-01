@@ -19,7 +19,7 @@
 				}
 			});
 		});
-
+		
 		$('.jsCronjobError').click(function(event) {
 			$(event.currentTarget).next().wcfDialog({
 				title: '{lang}wcf.acp.cronjob.log.error.details{/lang}'
@@ -35,17 +35,25 @@
 	</hgroup>
 </header>
 
-{hascontent}
-	<div class="contentNavigation">
-		{pages print=true assign=pagesLinks controller="CronjobLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
-		
+<div class="contentNavigation">
+	{pages print=true assign=pagesLinks controller="CronjobLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	
+	{hascontent}
 		<nav>
 			<ul>
-				<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><img src="{@$__wcf->getPath()}icon/delete.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
+				{if $objects|count}
+					<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
+				{/if}
+				
+				{content}
+					{event name='contentNavigationButtonsTop'}
+				{/content}
 			</ul>
 		</nav>
-	</div>
-	
+	{/hascontent}
+</div>
+
+{hascontent}
 	<div class="tabularBox tabularBoxTitle marginTop">
 		<hgroup>
 			<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.cronjob.log.count{/lang}">{#$items}</span></h1>
@@ -54,13 +62,13 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID columnCronjobID{if $sortField == 'cronjobID'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=cronjobID&sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'cronjobID'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnTitle columnClassName{if $sortField == 'className'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=className&sortOrder={if $sortField == 'className' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.className{/lang}{if $sortField == 'className'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnText columnDescription{if $sortField == 'description'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=description&sortOrder={if $sortField == 'description' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.description{/lang}{if $sortField == 'description'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnDate columnExecTime{if $sortField == 'execTime'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=execTime&sortOrder={if $sortField == 'execTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.log.execTime{/lang}{if $sortField == 'execTime'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnText columnSuccess{if $sortField == 'success'} active{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=success&sortOrder={if $sortField == 'success' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.log.status{/lang}{if $sortField == 'success'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnID columnCronjobID{if $sortField == 'cronjobID'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=cronjobID&sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnTitle columnClassName{if $sortField == 'className'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=className&sortOrder={if $sortField == 'className' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.className{/lang}</a></th>
+					<th class="columnText columnDescription{if $sortField == 'description'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=description&sortOrder={if $sortField == 'description' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.description{/lang}</a></th>
+					<th class="columnDate columnExecTime{if $sortField == 'execTime'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=execTime&sortOrder={if $sortField == 'execTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.log.execTime{/lang}</a></th>
+					<th class="columnText columnSuccess{if $sortField == 'success'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=success&sortOrder={if $sortField == 'success' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.log.status{/lang}</a></th>
 					
-					{event name='headColumns'}
+					{event name='columnHeads'}
 				</tr>
 			</thead>
 			
@@ -95,7 +103,9 @@
 		
 		<nav>
 			<ul>
-				<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><img src="{@$__wcf->getPath()}icon/delete.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
+				<li><a title="{lang}wcf.acp.cronjob.log.clear{/lang}" class="button jsCronjobLogDelete"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.acp.cronjob.log.clear{/lang}</span></a></li>
+				
+				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>
 	</div>

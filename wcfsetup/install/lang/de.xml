@@ -247,9 +247,7 @@
 		<item name="wcf.acp.menu.link.option"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Sichern &amp; Wiederherstellen]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Pakete]]></item>
-		<item name="wcf.acp.menu.link.package.database"><![CDATA[Pakete suchen]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Paket installieren]]></item>
-		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Server hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Server auflisten]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete auflisten]]></item>
 		<item name="wcf.acp.menu.link.package.autoupdate"><![CDATA[Automatisches Update]]></item>
@@ -277,21 +275,21 @@
 		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[Eine Adresse pro Zeile]]></item>
 		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Browser-Kennung ausschließen]]></item>
 		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[Eine Browser-Kennung (User-Agent) pro Zeile]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_host"><![CDATA[Memcache-Server]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_host.description"><![CDATA[Mehrere Server können zeilenweise angegeben werden.]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_use_pconnect"><![CDATA[Persistente Verbindungen aktivieren]]></item>
+		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
+		<item name="wcf.acp.option.cache_source_memcached_host.description"><![CDATA[Mehrere Server können zeilenweise angegeben werden, die Gewichtung kann als dritter Parameter angegeben werden, zum Beispiel „localhost:11211:67“ oder „10.0.13.37:31337:33“.]]></item>
+		<item name="wcf.acp.option.cache_source_memcached_use_pconnect"><![CDATA[Persistente Verbindungen aktivieren]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache-Methode]]></item>
 		<item name="wcf.acp.option.cache_source_type.apc"><![CDATA[Alternative PHP Cache (experimentell)]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Beachten Sie, dass einige Methoden spezielle Anforderungen an das Server-System stellen und nicht auf jedem Server zur Verfügung stehen.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Dateisystem (Standard)]]></item>
-		<item name="wcf.acp.option.cache_source_type.memcache"><![CDATA[Memcache]]></item>
+		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached]]></item>
 		<item name="wcf.acp.option.cache_source_type.no"><![CDATA[Caching deaktivieren (Nicht empfohlen)]]></item>
 		
 		<item name="wcf.acp.option.category.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcache"><![CDATA[Memcache]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache speichert häufig benötige Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. Lesen Sie mehr über dieses Thema auf der folgenden Seite: <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcached.description"><![CDATA[Memcached speichert häufig benötige Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. Lesen Sie mehr über dieses Thema auf der folgenden Seite: <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
 		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Datum &amp; Zeit]]></item>
 		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Grafik]]></item>
 		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>
@@ -414,6 +412,7 @@
 		<item name="wcf.acp.package.application.title"><![CDATA[Anwendungen]]></item>
 		<item name="wcf.acp.package.author"><![CDATA[Entwickler]]></item>
 		<item name="wcf.acp.package.button.info"><![CDATA[Informationen]]></item>
+		<item name="wcf.acp.package.button.installPackage"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.package.button.uninstall"><![CDATA[Deinstallieren]]></item>
 		<item name="wcf.acp.package.button.update"><![CDATA[Aktualisieren]]></item>
 		<item name="wcf.acp.package.dependencies.dependent"><![CDATA[Abhängige Pakete]]></item>
@@ -442,6 +441,7 @@
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Installation wird vorbereitet …]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Benötigte Version]]></item>
+		<item name="wcf.acp.package.license"><![CDATA[Lizenz]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Paketliste]]></item>
 		<item name="wcf.acp.package.list.detailed"><![CDATA[Detaillierte Paketliste]]></item>
 		<item name="wcf.acp.package.name"><![CDATA[Paket]]></item>
@@ -449,6 +449,13 @@
 		<item name="wcf.acp.package.packageDir.notAvailable"><![CDATA[Das angegebene Verzeichnis enthält bereits eine Anwendung.]]></item>
 		<item name="wcf.acp.package.plugin.installed"><![CDATA[Installierte Pakete]]></item>
 		<item name="wcf.acp.package.plugin.title"><![CDATA[Erweiterungen]]></item>
+		<item name="wcf.acp.package.search"><![CDATA[Paket suchen]]></item>
+		<item name="wcf.acp.package.search.conditions"><![CDATA[Suchbegriffe]]></item>
+		<item name="wcf.acp.package.search.package"><![CDATA[Paketbezeichner]]></item>
+		<item name="wcf.acp.package.search.package.description"><![CDATA[Suche nach einem bestimmten Paketbezeichner, z.B. „com.woltlab.wcf“]]></item>
+		<item name="wcf.acp.package.search.packageDescription"><![CDATA[Paketbeschreibung]]></item>
+		<item name="wcf.acp.package.search.packageName"><![CDATA[Paketname]]></item>
+		<item name="wcf.acp.package.search.resultList"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.acp.package.source"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.package.source.download"><![CDATA[Paket herunterladen]]></item>
 		<item name="wcf.acp.package.source.download.description"><![CDATA[Geben Sie den direkten Pfad zur Paketdatei an. Dabei kann es sich um die Internetadresse der Paketdatei oder alternativ den Pfad zur Paketdatei im Dateisystem handeln.]]></item>
@@ -478,6 +485,7 @@
 		<item name="wcf.acp.pageMenu.footer"><![CDATA[Fußzeile]]></item>
 		<item name="wcf.acp.pageMenu.header"><![CDATA[Hauptmenü]]></item>
 		<item name="wcf.acp.pageMenu.isDisabled"><![CDATA[Menüpunkt deaktivieren]]></item>
+		<item name="wcf.acp.pageMenu.landingPage.description"><![CDATA[Sie können mittels Sortierung die Startseite Ihrer Website festlegen, es wird immer der erste Eintrag aus dem Hauptmenü verwendet.]]></item>
 		<item name="wcf.acp.pageMenu.link"><![CDATA[Link]]></item>
 		<item name="wcf.acp.pageMenu.link.external"><![CDATA[Externer Link]]></item>
 		<item name="wcf.acp.pageMenu.link.internal"><![CDATA[Interner Link]]></item>
@@ -680,6 +688,10 @@
 		<item name="wcf.acp.worker.executing"><![CDATA[Aufgaben werden ausgeführt …]]></item>
 	</category>
 	
+	<category name="wcf.ajax">
+		<item name="wcf.ajax.error.invalidParameter"><![CDATA[Der Parameter „{$fieldName}“ fehlt oder ist ungültig.]]></item>
+	</category>
+	
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 		<item name="wcf.category.button.list"><![CDATA[Kategorien auflisten]]></item>
@@ -719,12 +731,12 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Demarkieren]]></item>
-		<item name="wcf.clipboard.item.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
-		<item name="wcf.clipboard.item.user.delete"><![CDATA[Benutzer löschen]]></item>
-		<item name="wcf.clipboard.item.user.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Benutzer löschen?]]></item>
-		<item name="wcf.clipboard.item.user.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
-		<item name="wcf.clipboard.item.user.sendMail"><![CDATA[E-Mail senden]]></item>
-		<item name="wcf.clipboard.label.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer markiert]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Benutzer löschen]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Benutzer löschen?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[E-Mail senden]]></item>
+		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer markiert]]></item>
 	</category>
 	
 	<category name="wcf.date">
@@ -918,6 +930,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.button.search"><![CDATA[Suche]]></item>
 		<item name="wcf.global.button.submit"><![CDATA[Absenden]]></item>
 		<item name="wcf.global.button.upload"><![CDATA[Hochladen]]></item>
+		<item name="wcf.global.button.readMore"><![CDATA[Weiterlesen]]></item>
 		<item name="wcf.global.confirmation.cancel"><![CDATA[Abbrechen]]></item>
 		<item name="wcf.global.confirmation.confirm"><![CDATA[OK]]></item>
 		<item name="wcf.global.confirmation.title"><![CDATA[Bestätigung erforderlich]]></item>

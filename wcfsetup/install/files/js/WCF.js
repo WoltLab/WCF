@@ -1,8 +1,8 @@
 /**
- * Class and function collection for WCF
+ * Class and function collection for WCF.
  * 
  * @author	Markus Bartz, Tim Düsterhus, Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -36,6 +36,17 @@
 		
 		return $data;
 	};
+	
+	// provide a sane console.debug implementation
+	if (!window.console) {
+		window.console = {
+			debug: function() { /* discard log */ }
+		};
+	}
+	else if (typeof(console.debug) === 'undefined') {
+		// forward console.debug to console.log (IE9)
+		console.debug = function(string) { console.log(string); };
+	}
 })();
 
 /**
@@ -1145,7 +1156,7 @@ WCF.Clipboard = {
 			
 			var $containerID = $container.wcfIdentify();
 			WCF.CloseOverlayHandler.removeCallback($containerID);
-
+			
 			$container.empty();
 		});
 		
@@ -1496,7 +1507,7 @@ WCF.Action.Proxy = Class.extend({
 	_showLoadingOverlay: function() {
 		// create loading overlay on first run
 		if (this._loadingOverlay === null) {
-			this._loadingOverlay = $('<div class="spinner"><img src="' + WCF.Icon.get('wcf.icon.loading') + '" alt="" class="icon48" /> <span>' + WCF.Language.get('wcf.global.loading') + '</span></div>').hide().appendTo($('body'));
+			this._loadingOverlay = $('<div class="spinner"><span class="icon icon48 icon-spinner" /> <span>' + WCF.Language.get('wcf.global.loading') + '</span></div>').hide().appendTo($('body'));
 		}
 		
 		// fade in overlay
@@ -1604,27 +1615,6 @@ WCF.Action.Proxy = Class.extend({
 	 */
 	setOption: function(optionName, optionData) {
 		this.options[optionName] = optionData;
-	},
-	
-	/**
-	 * Displays a spinner image for given element.
-	 *
-	 * @param	jQuery		element
-	 */
-	showSpinner: function(element) {
-		element = $(element);
-		
-		if (element.getTagName() !== 'img') {
-			console.debug('The given element is not an image, aborting.');
-			return;
-		}
-		
-		// force element dimensions
-		element.attr('width', element.attr('width'));
-		element.attr('height', element.attr('height'));
-		
-		// replace image
-		element.attr('src', WCF.Icon.get('wcf.global.loading'));
 	}
 });
 
@@ -1694,8 +1684,15 @@ WCF.Action.SimpleProxy = Class.extend({
  * 
  * @param	string		className
  * @param	string		containerSelector
+ * @param	string		buttonSelector
  */
 WCF.Action.Delete = Class.extend({
+	/**
+	 * delete button selector
+	 * @var	string
+	 */
+	_buttonSelector: '',
+	
 	/**
 	 * action class name
 	 * @var	string
@@ -1719,10 +1716,13 @@ WCF.Action.Delete = Class.extend({
 	 * 
 	 * @param	string		className
 	 * @param	string		containerSelector
+	 * @param	string		buttonSelector
 	 */
-	init: function(className, containerSelector) {
+	init: function(className, containerSelector, buttonSelector) {
 		this._containerSelector = containerSelector;
 		this._className = className;
+		this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsDeleteButton';
+		
 		this.proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
@@ -1743,7 +1743,7 @@ WCF.Action.Delete = Class.extend({
 			
 			if (!WCF.inArray($containerID, self._containers)) {
 				self._containers.push($containerID);
-				$container.find('.jsDeleteButton').click($.proxy(self._click, self));
+				$container.find(self._buttonSelector).click($.proxy(self._click, self));
 			}
 		});
 	},
@@ -1760,7 +1760,10 @@ WCF.Action.Delete = Class.extend({
 			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
 		}
 		else {
-			this.proxy.showSpinner($target);
+			if ($target.is('img')) {
+				$target.removeClass('icon-remove').addClass('icon-spinner');
+			}
+			
 			this._sendRequest($target);
 		}
 	},
@@ -1776,7 +1779,10 @@ WCF.Action.Delete = Class.extend({
 			return;
 		}
 		
-		this.proxy.showSpinner(parameters.target);
+		if (parameters.target.is('img')) {
+			parameters.target.removeClass('icon-remove').addClass('icon-spinner');
+		}
+		
 		this._sendRequest(parameters.target);
 	},
 	
@@ -1822,9 +1828,15 @@ WCF.Action.Delete = Class.extend({
  * 
  * @param	string		className
  * @param	jQuery		containerList
- * @param	string		toggleButtonSelector
+ * @param	string		buttonSelector
  */
 WCF.Action.Toggle = Class.extend({
+	/**
+	 * toogle button selector
+	 * @var	string
+	 */
+	_buttonSelector: '.jsToggleButton',
+	
 	/**
 	 * action class name
 	 * @var	string
@@ -1844,24 +1856,16 @@ WCF.Action.Toggle = Class.extend({
 	_containers: [ ],
 	
 	/**
-	 * toogle button selector
-	 * @var	string
-	 */
-	_toggleButtonSelector: '.jsToggleButton',
-	
-	/**
 	 * Initializes 'toggle'-Proxy
 	 * 
 	 * @param	string		className
 	 * @param	string		containerSelector
-	 * @param	string		toggleButtonSelector
+	 * @param	string		buttonSelector
 	 */
-	init: function(className, containerSelector, toggleButtonSelector) {
+	init: function(className, containerSelector, buttonSelector) {
 		this._containerSelector = containerSelector;
 		this._className = className;
-		if (toggleButtonSelector) {
-			this._toggleButtonSelector = toggleButtonSelector;
-		}
+		this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsToggleButton';
 		
 		// initialize proxy
 		var options = {
@@ -1884,7 +1888,7 @@ WCF.Action.Toggle = Class.extend({
 			
 			if (!WCF.inArray($containerID, this._containers)) {
 				this._containers.push($containerID);
-				$container.find(this._toggleButtonSelector).click($.proxy(this._click, this));
+				$container.find(this._buttonSelector).click($.proxy(this._click, this));
 			}
 		}, this));
 	},
@@ -1949,7 +1953,7 @@ WCF.Action.Toggle = Class.extend({
 	triggerEffect: function(objectIDs) {
 		for (var $index in this._containers) {
 			var $container = $('#' + this._containers[$index]);
-			var $toggleButton = $container.find(this._toggleButtonSelector);
+			var $toggleButton = $container.find(this._buttonSelector);
 			if (WCF.inArray($toggleButton.data('objectID'), objectIDs)) {
 				$container.wcfHighlight();
 				this._toggleButton($container, $toggleButton);
@@ -1965,33 +1969,17 @@ WCF.Action.Toggle = Class.extend({
 	 */
 	_toggleButton: function($container, $toggleButton) {
 		// toggle icon source
-		$toggleButton.attr('src', function() {
-			if (this.src.match(/disabled\.svg$/)) {
-				return this.src.replace(/disabled\.svg$/, 'enabled.svg');
-			}
-			else {
-				return this.src.replace(/enabled\.svg$/, 'disabled.svg');
-			}
-		});
-
-		// toogle icon title
-		$toggleButton.attr('title', function() {
-			if (this.src.match(/enabled\.svg$/)) {
-				if ($(this).data('disableTitle')) {
-					return $(this).data('disableTitle');
-				}
-
-				return WCF.Language.get('wcf.global.button.disable');
-			}
-			else {
-				if ($(this).data('enableTitle')) {
-					return $(this).data('enableTitle');
-				}
-
-				return WCF.Language.get('wcf.global.button.enable');
-			}
-		});
-
+		if ($toggleButton.hasClass('icon-off')) {
+			$toggleButton.removeClass('icon-off').addClass('icon-circle-blank');
+			$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
+			$toggleButton.attr('title', $newTitle);
+		}
+		else {
+			$toggleButton.removeClass('icon-circle-blank').addClass('icon-off');
+			$newTitle = ($toggleButton.data('disableTitle') ? $toggleButton.data('disableTitle') : WCF.Language.get('wcf.global.button.disable'));
+			$toggleButton.attr('title', $newTitle);
+		}
+		
 		// toggle css class
 		$container.toggleClass('disabled');
 	}
@@ -2102,31 +2090,115 @@ WCF.Date = {};
  */
 WCF.Date.Picker = {
 	/**
+	 * date format
+	 * @var	string
+	 */
+	_dateFormat: 'yy-mm-dd',
+	
+	/**
 	 * Initializes the jQuery UI based date picker.
 	 */
 	init: function() {
+		this._convertDateFormat();
 		this._initDatePicker();
-		
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.Date.Picker', $.proxy(this._initDatePicker, this));
+	},
+	
+	/**
+	 * Convert PHPs date() format to jQuery UIs date picker format.
+	 */
+	_convertDateFormat: function() {
+		// replacement table
+		// format of PHP date() => format of jQuery UI date picker
+		//
+		// No equivalence in PHP date():
+		// oo	day of the year (three digit)
+		// !	Windows ticks (100ns since 01/01/0001)
+		//
+		// No equivalence in jQuery UI date picker:
+		// N	ISO-8601 numeric representation of the day of the week
+		// S	English ordinal suffix for the day of the month, 2 characters
+		// w	Numeric representation of the day of the week
+		// W	ISO-8601 week number of year, weeks starting on Monday
+		// t	Number of days in the given month
+		// L	Whether it's a leap year
+		var $replacementTable = {
+			// day
+			'd': 'dd',
+			'D': 'D',
+			'j': 'd',
+			'l': 'DD',
+			'z': 'o',
+
+			// month
+			'F': 'MM',
+			'm': 'mm',
+			'M': 'M',
+			'n': 'm',
+
+			// year
+			'o': 'yy',
+			'Y': 'yy',
+			'y': 'y',
+
+			// timestamp
+			'U': '@'
+		};
+		
+		// do the actual replacement
+		// this is not perfect, but a basic implementation and should work in 99% of the cases
+		// TODO: support literals (magics are escaped in PHP date() by an \, in jQuery UI DatePicker they are enclosed in '')
+		this._dateFormat = WCF.Language.get('wcf.date.dateFormat').replace(/([^dDjlzFmMnoYyU\\]*(?:\\.[^dDjlzFmMnoYyU\\]*)*)([dDjlzFmMnoYyU])/g, function(match, part1, part2, offset, string) {
+			for (var $key in $replacementTable) {
+				if (part2 == $key) {
+					part2 = $replacementTable[$key];
+				}
+			}
+			
+			return part1 + part2;
+		});
 	},
 	
 	/**
 	 * Initializes the date picker for valid fields.
 	 */
 	_initDatePicker: function() {
-		$('input[type=date]:not(.jsDatePicker)').each(function(index, input) {
-			// do *not* use .attr()
-			var $input = $(input).prop('type', 'text').addClass('jsDatePicker');
+		$('input[type=date]:not(.jsDatePicker)').each($.proxy(function(index, input) {
+			var $input = $(input);
+			var $inputName = $input.prop('name');
+			var $inputValue = $input.prop('value'); // should be Y-m-d, must be interpretable by Date
 			
-			// TODO: we should support all these braindead date formats, at least within output
+			// update $input
+			$input.prop('type', 'text').addClass('jsDatePicker');
+			
+			// insert a hidden element representing the actual date
+			$input.removeAttr('name');
+			$input.before('<input type="hidden" id="' + $input.wcfIdentify() + 'DatePicker" name="' + $inputName + '" value="' + $inputValue + '" />');
+			
+			// init date picker
 			$input.datepicker({
+				altField: '#' + $input.wcfIdentify() + 'DatePicker',
+				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
 				changeMonth: true,
 				changeYear: true,
+				dateFormat: this._dateFormat,
+				dayNames: WCF.Language.get('__days'),
+				dayNamesMin: WCF.Language.get('__daysShort'),
+				dayNamesShort: WCF.Language.get('__daysShort'),
+				monthNames: WCF.Language.get('__months'),
+				monthNamesShort: WCF.Language.get('__monthsShort'),
 				showOtherMonths: true,
-				dateFormat: 'yy-mm-dd',
-				yearRange: '1900:2038' // TODO: make it configurable?
+				yearRange: '1900:2038'
 			});
-		});
+			
+			// format default date
+			if ($inputValue) {
+				$input.datepicker('setDate', new Date($inputValue));
+			}
+			
+			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
+			$input.datepicker('widget').hide();
+		}, this));
 	}
 };
 
@@ -2749,7 +2821,11 @@ WCF.MultipleLanguageInput = Class.extend({
 		var $form = $(this._element.parents('form')[0]);
 		var $elementID = this._element.wcfIdentify();
 		
-		for (var $languageID in this._values) {
+		for (var $languageID in this._availableLanguages) {
+			if (this._values[$languageID] === undefined) {
+				this._values[$languageID] = '';
+			}
+			
 			$('<input type="hidden" name="' + $elementID + '_i18n[' + $languageID + ']" value="' + this._values[$languageID] + '" />').appendTo($form);
 		}
 		
@@ -2757,40 +2833,6 @@ WCF.MultipleLanguageInput = Class.extend({
 		this._element.removeAttr('name');
 	}
 });
-
-/**
- * Icon collection used across all JavaScript classes.
- * 
- * @see	WCF.Dictionary
- */
-WCF.Icon = {
-	/**
-	 * list of icons
-	 * @var	WCF.Dictionary
-	 */
-	_icons: new WCF.Dictionary(),
-	
-	/**
-	 * @see	WCF.Dictionary.add()
-	 */
-	add: function(name, path) {
-		this._icons.add(name, path);
-	},
-	
-	/**
-	 * @see	WCF.Dictionary.addObject()
-	 */
-	addObject: function(object) {
-		this._icons.addObject(object);
-	},
-	
-	/**
-	 * @see	WCF.Dictionary.get()
-	 */
-	get: function(name) {
-		return this._icons.get(name);
-	}
-};
 
 /**
  * Number utilities.
@@ -3006,6 +3048,14 @@ WCF.TabMenu = {
 		}
 		
 		this._didInit = true;
+	},
+	
+	/**
+	 * Reloads the tab menus.
+	 */
+	reload: function() {
+		this._containers = { };
+		this.init();
 	},
 	
 	/**
@@ -3379,13 +3429,13 @@ WCF.Collapsible.Simple = {
 		
 		if ($isOpen) {
 			$target.stop().wcfBlindOut('vertical', $.proxy(function() {
-				this._toggleImage($button, 'wcf.icon.closed');
+				this._toggleImage($button);
 			}, this));
 			$isOpen = false;
 		}
 		else {
 			$target.stop().wcfBlindIn('vertical', $.proxy(function() {
-				this._toggleImage($button, 'wcf.icon.opened');
+				this._toggleImage($button);
 			}, this));
 			$isOpen = true;
 		}
@@ -3401,14 +3451,14 @@ WCF.Collapsible.Simple = {
 	 * Toggles image of target button.
 	 * 
 	 * @param	jQuery		button
-	 * @param	string		image
 	 */
-	_toggleImage: function(button, image) {
-		var $icon = WCF.Icon.get(image);
-		var $image = button.find('img');
-		
-		if ($image.length) {
-			$image.attr('src', $icon);
+	_toggleImage: function(button) {
+		var $icon = button.find('span.icon');
+		if (button.data('isOpen')) {
+			$icon.removeClass('icon-chevron-right').addClass('icon-chevron-down');
+		}
+		else {
+			$icon.removeClass('icon-chevron-down').addClass('icon-chevron-right');
 		}
 	}
 };
@@ -3489,6 +3539,11 @@ WCF.Collapsible.Remote = Class.extend({
 			isOpen: this._containers[containerID].data('isOpen'),
 			target: $target
 		};
+		
+		// add 'jsCollapsed' CSS class
+		if (!this._containers[containerID].data('isOpen')) {
+			$('#' + containerID).addClass('jsCollapsed');
+		}
 	},
 	
 	/**
@@ -3522,7 +3577,7 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	_createButton: function(containerID, buttonContainer) {
 		var $isOpen = this._containers[containerID].data('isOpen');
-		var $button = $('<a class="collapsibleButton jsTooltip" title="'+WCF.Language.get('wcf.global.button.collapsible')+'"><img src="' + WCF.Icon.get('wcf.icon.' + ($isOpen ? 'opened' : 'closed')) + '" alt="" class="icon16" /></a>').prependTo(buttonContainer);
+		var $button = $('<span class="collapsibleButton jsTooltip pointer icon icon16 icon-' + ($isOpen ? 'chevron-down' : 'chevron-right') + '" title="'+WCF.Language.get('wcf.global.button.collapsible')+'">').prependTo(buttonContainer);
 		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
 		
 		return $button;
@@ -3544,7 +3599,7 @@ WCF.Collapsible.Remote = Class.extend({
 		this._proxy.setOption('data', {
 			actionName: 'loadContainer',
 			className: this._className,
-			interfaceName: 'wcf\\data\\ILoadableCollapsibleContainerAction',
+			interfaceName: 'wcf\\data\\ILoadableContainerAction',
 			objectIDs: [ this._getObjectID($containerID) ],
 			parameters: $.extend(true, {
 				containerID: $containerID,
@@ -3554,8 +3609,11 @@ WCF.Collapsible.Remote = Class.extend({
 		});
 		this._proxy.sendRequest();
 		
+		// toogle 'jsCollapsed' CSS class
+		$('#' + $containerID).toggleClass('jsCollapsed');
+		
 		// set spinner for current button
-		this._exchangeIcon($button);
+		// this._exchangeIcon($button);
 	},
 	
 	/**
@@ -3565,8 +3623,8 @@ WCF.Collapsible.Remote = Class.extend({
 	 * @param	string		newIcon
 	 */
 	_exchangeIcon: function(button, newIcon) {
-		newIcon = newIcon || WCF.Icon.get('wcf.icon.loading');
-		button.find('img').attr('src', newIcon);
+		newIcon = newIcon || 'spinner';
+		button.removeClass('icon-chevron-down icon-chevron-right icon-spinner').addClass('icon-' + newIcon);
 	},
 	
 	/**
@@ -3623,7 +3681,7 @@ WCF.Collapsible.Remote = Class.extend({
 		this._updateContent($containerID, data.returnValues.content, $newState);
 		
 		// update icon
-		this._exchangeIcon(this._containerData[$containerID].button, WCF.Icon.get('wcf.icon.' + (data.returnValues.isOpen ? 'opened' : 'closed')));
+		this._exchangeIcon(this._containerData[$containerID].button, (data.returnValues.isOpen ? 'chevron-down' : 'chevron-right'));
 	}
 });
 
@@ -3656,7 +3714,7 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 		// hide container on init if applicable
 		if (!this._containerData[containerID].isOpen) {
 			this._containerData[containerID].target.hide();
-			this._exchangeIcon(this._containerData[containerID].button, WCF.Icon.get('wcf.icon.closed'));
+			this._exchangeIcon(this._containerData[containerID].button, 'plus');
 		}
 	},
 	
@@ -3675,7 +3733,7 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 		this._proxy.setOption('data', {
 			actionName: 'toggleContainer',
 			className: this._className,
-			interfaceName: 'wcf\\data\\ICollapsibleContainerAction',
+			interfaceName: 'wcf\\data\\IToggleContainerAction',
 			objectIDs: [ this._getObjectID($containerID) ],
 			parameters: $.extend(true, {
 				containerID: $containerID,
@@ -3686,7 +3744,7 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 		this._proxy.sendRequest();
 		
 		// exchange icon
-		this._exchangeIcon(this._containerData[$containerID].button, WCF.Icon.get('wcf.icon.' + ($newState === 'open' ? 'opened' : 'closed')));
+		this._exchangeIcon(this._containerData[$containerID].button, ($newState === 'open' ? 'minus' : 'plus'));
 		
 		// toggle container
 		if ($newState === 'open') {
@@ -3695,6 +3753,9 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 		else {
 			this._containerData[$containerID].target.hide();
 		}
+		
+		// toogle 'jsCollapsed' CSS class
+		$('#' + $containerID).toggleClass('jsCollapsed');
 		
 		// update container data
 		this._containerData[$containerID].isOpen = ($newState === 'open' ? true : false);
@@ -3921,7 +3982,7 @@ WCF.Effect.Scroll = Class.extend({
 			return true;
 		}
 		
-		var $elementOffset = element.getOffsets().top;
+		var $elementOffset = element.getOffsets('offset').top;
 		var $documentHeight = $(document).height();
 		var $windowHeight = $(window).height();
 		
@@ -4999,7 +5060,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 		var $listItem = this._super(item);
 		
 		// insert item type
-		if (this._includeUserGroups) $('<img src="' + WCF.Icon.get('wcf.icon.user' + (item.type == 'group' ? 's' : '')) + '" alt="" class="icon16" style="margin-right: 4px;" />').prependTo($listItem.children('span:eq(0)'));
+		if (this._includeUserGroups) $('<span class="icon icon16 icon-' + (item.type === 'group' ? 'group' : 'user') + '" style="margin-right: 4px;" />').prependTo($listItem.children('span:eq(0)'));
 		$listItem.data('type', item.type);
 		
 		return $listItem;
@@ -5293,8 +5354,8 @@ WCF.System.PageNavigation = {
 		var self = this;
 		elements.each(function(index, element) {
 			var $element = $(element);
-			console.debug($element.data());
 			var $elementID = $element.wcfIdentify();
+			
 			if (self._elements[$elementID] === undefined) {
 				self._elements[$elementID] = $element;
 				$element.find('li.jumpTo').data('elementID', $elementID).click($.proxy(self._click, self));
@@ -5706,6 +5767,12 @@ WCF.Upload = Class.extend({
 	_className: '',
 	
 	/**
+	 * iframe for IE<10 fallback
+	 * @var	jQuery
+	 */
+	_iframe: null,
+	
+	/**
 	 * additional options
 	 * @var	jQuery
 	 */
@@ -5731,6 +5798,11 @@ WCF.Upload = Class.extend({
 	
 	/**
 	 * Initializes a new upload handler.
+	 * 
+	 * @param	string		buttonSelector
+	 * @param	string		fileListSelector
+	 * @param	string		className
+	 * @param	object		options
 	 */
 	init: function(buttonSelector, fileListSelector, className, options) {
 		this._buttonSelector = buttonSelector;
@@ -5740,7 +5812,7 @@ WCF.Upload = Class.extend({
 			action: 'upload',
 			multiple: false,
 			url: 'index.php/AJAXUpload/?t=' + SECURITY_TOKEN + SID_ARG_2ND
-		}, options);
+		}, options || { });
 		
 		// check for ajax upload support
 		var $xhr = new XMLHttpRequest();
@@ -5770,6 +5842,8 @@ WCF.Upload = Class.extend({
 	
 	/**
 	 * Inserts the upload button.
+	 * 
+	 * @param	jQuery		button
 	 */
 	_insertButton: function(button) {
 		this._buttonSelector.append(button);
@@ -5780,19 +5854,14 @@ WCF.Upload = Class.extend({
 	 */
 	_upload: function() {
 		var $files = this._fileUpload.prop('files');
-		
-		if ($files.length > 0) {
+		if ($files.length) {
 			var $fd = new FormData();
-			var self = this;
-			var $uploadID = this._uploadMatrix.length;
-			this._uploadMatrix[$uploadID] = [];
+			var $uploadID = this._createUploadMatrix($files);
 			
-			for (var $i = 0; $i < $files.length; $i++) {
-				var $li = this._initFile($files[$i]);
-				$li.data('filename', $files[$i].name);
-				this._uploadMatrix[$uploadID].push($li);
+			for (var $i = 0, $length = $files.length; $i < $length; $i++) {
 				$fd.append('__files[]', $files[$i]);
 			}
+			
 			$fd.append('actionName', this._options.action);
 			$fd.append('className', this._className);
 			var $additionalParameters = this._getParameters();
@@ -5800,6 +5869,7 @@ WCF.Upload = Class.extend({
 				$fd.append('parameters['+$name+']', $additionalParameters[$name]);
 			}
 			
+			var self = this;
 			$.ajax({ 
 				type: 'POST',
 				url: this._options.url,
@@ -5825,21 +5895,52 @@ WCF.Upload = Class.extend({
 	},
 	
 	/**
-	 * Callback for success event
+	 * Creates upload matrix for provided files.
+	 * 
+	 * @param	array<object>		files
+	 * @return	integer
 	 */
-	_success: function(uploadID, data) {
-		console.debug(data);
+	_createUploadMatrix: function(files) {
+		if (files.length) {
+			var $uploadID = this._uploadMatrix.length;
+			this._uploadMatrix[$uploadID] = [ ];
+			
+			for (var $i = 0, $length = files.length; $i < $length; $i++) {
+				var $file = files[$i];
+				var $li = this._initFile($file);
+				
+				$li.data('filename', $file.name);
+				this._uploadMatrix[$uploadID].push($li);
+			}
+			
+			return $uploadID;
+		}
+		
+		return null;
 	},
 	
 	/**
-	 * Callback for error event
+	 * Callback for success event.
+	 * 
+	 * @param	integer		uploadID
+	 * @param	object		data
 	 */
-	_error: function(jqXHR, textStatus, errorThrown) {
-		console.debug(jqXHR.responseText);
-	},
+	_success: function(uploadID, data) { },
 	
 	/**
-	 * Callback for progress event
+	 * Callback for error event.
+	 * 
+	 * @param	jQuery		jqXHR
+	 * @param	string		textStatus
+	 * @param	string		errorThrown
+	 */
+	_error: function(jqXHR, textStatus, errorThrown) { },
+	
+	/**
+	 * Callback for progress event.
+	 * 
+	 * @param	integer		uploadID
+	 * @param	object		event
 	 */
 	_progress: function(uploadID, event) {
 		var $percentComplete = Math.round(event.loaded * 100 / event.total);
@@ -5851,53 +5952,82 @@ WCF.Upload = Class.extend({
 	
 	/**
 	 * Returns additional parameters.
+	 * 
+	 * @return	object
 	 */
 	_getParameters: function() {
 		return {};
 	},
 	
+	/**
+	 * Initializes list item for uploaded file.
+	 * 
+	 * @return	jQuery
+	 */
 	_initFile: function(file) {
-		var $li = $('<li>'+file.name+' ('+file.size+')<progress max="100"></progress></li>');
-		this._fileListSelector.append($li);
-		
-		return $li;
+		return $('<li>' + file.name + ' (' + file.size + ')<progress max="100" /></li>').appendTo(this._fileListSelector);
 	},
 	
 	/**
 	 * Shows the fallback overlay (work in progress)
 	 */
 	_showOverlay: function() {
-		var $self = this;
-		if (!this._overlay) {
-			// create overlay
-			this._overlay = $('<div style="display: none;"><form enctype="multipart/form-data" method="post" action="'+this._options.url+'"><dl><dt><label for="__fileUpload">File</label></dt><dd><input type="file" id="__fileUpload" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/></dd></dl><div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form></div>');
+		// create iframe
+		if (this._iframe === null) {
+			this._iframe = $('<iframe name="__fileUploadIFrame" />').hide().appendTo(document.body);
 		}
 		
-		// create iframe
-		var $iframe = $('<iframe style="display: none"></iframe>'); // width: 300px; height: 100px; border: 5px solid red
-		$iframe.attr('name', $iframe.wcfIdentify());
-		$('body').append($iframe);
-		this._overlay.find('form').attr('target', $iframe.wcfIdentify());
-		
-		// add events (iframe onload)
-		$iframe.load(function() {
-			console.debug('iframe ready');
-			console.debug($iframe.contents());
-		});
-		
-		this._overlay.find('form').submit(function() {
-			$iframe.data('loading', true);
-			$self._overlay.wcfDialog('close');
-		});
+		// create overlay
+		if (!this._overlay) {
+			this._overlay = $('<div><form enctype="multipart/form-data" method="post" action="' + this._options.url + '" target="__fileUploadIFrame" /></div>').hide().appendTo(document.body);
+			
+			var $form = this._overlay.find('form');
+			$('<dl><dt><label for="__fileUpload">' + WCF.Language.get('wcf.upload.file') + '</label></dt><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
+			$('<div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form>').appendTo($form);
+			
+			$('<input type="hidden" name="isFallback" value="1" />').appendTo($form);
+			$('<input type="hidden" name="actionName" value="' + this._options.action + '" />').appendTo($form);
+			$('<input type="hidden" name="className" value="' + this._className + '" />').appendTo($form);
+			var $additionalParameters = this._getParameters();
+			for (var $name in $additionalParameters) {
+				$('<input type="hidden" name="' + $name + '" value="' + $additionalParameters[$name] + '" />').appendTo($form);
+			}
+			
+			$form.submit($.proxy(function() {
+				var $file = {
+					name: this._getFilename(),
+					size: WCF.Language.get('wcf.upload.file.size.unknown')
+				};
+				
+				var $uploadID = this._createUploadMatrix([ $file ]);
+				var self = this;
+				this._iframe.data('loading', true).off('load').load(function() { self._evaluateResponse($uploadID); });
+				this._overlay.wcfDialog('close');
+			}, this));
+		}
 		
 		this._overlay.wcfDialog({
-			title: 'Upload',
-			onClose: function() {
-				if (!$iframe.data('loading')) {
-					$iframe.remove();
-				}
-			}
+			title: WCF.Language.get('wcf.attachment.upload')
 		});
+	},
+	
+	/**
+	 * Evaluates iframe response.
+	 * 
+	 * @param	integer		uploadID
+	 */
+	_evaluateResponse: function(uploadID) {
+		var $returnValues = $.parseJSON(this._iframe.contents().find('pre').html());
+		this._success(uploadID, $returnValues);
+	},
+	
+	/**
+	 * Returns name of selected file.
+	 * 
+	 * @return	string
+	 */
+	_getFilename: function() {
+		return $('#__fileUpload').val().split('\\').pop();
 	}
 });
 
@@ -6014,7 +6144,16 @@ WCF.Sortable.List = Class.extend({
 		}
 		
 		if (this._className) {
-			this._container.find('.formSubmit > button[data-type="submit"]').click($.proxy(this._submit, this));
+			var $formSubmit = this._container.find('.formSubmit');
+			if (!$formSubmit.length) {
+				$formSubmit = this._container.next('.formSubmit');
+				if (!$formSubmit.length) {
+					console.debug("[WCF.Sortable.Simple] Unable to find form submit for saving, aborting.");
+					return;
+				}
+			}
+			
+			$formSubmit.children('button[data-type="submit"]').click($.proxy(this._submit, this));
 		}
 	},
 	
@@ -6214,7 +6353,7 @@ WCF.Popover = Class.extend({
 		this._popoverOffset = 10;
 		this._selector = selector;
 		
-		this._popover = $('<div class="popover"><div class="popoverContent"></div></div>').hide().appendTo(document.body);
+		this._popover = $('<div class="popover"><span class="icon icon48 icon-spinner"></span><div class="popoverContent"></div></div>').hide().appendTo(document.body);
 		this._popoverContent = this._popover.children('.popoverContent:eq(0)');
 		this._popover.hover($.proxy(this._overPopover, this), $.proxy(this._out, this));
 		
@@ -6351,9 +6490,11 @@ WCF.Popover = Class.extend({
 		this._popover.stop().show().css({ opacity: 1 }).wcfFadeIn();
 		
 		if (this._data[this._activeElementID].loading) {
+			this._popover.children('span').show();
 			this._loadContent();
 		}
 		else {
+			this._popover.children('span').hide();
 			this._popoverContent.css({ opacity: 1 });
 		}
 	},
@@ -6405,6 +6546,7 @@ WCF.Popover = Class.extend({
 				}, 300, function() {
 					WCF.DOMNodeInsertedHandler.enable();
 					
+					self._popover.children('span').hide();
 					self._popoverContent.html(self._data[elementID].content).css({ opacity: 0 }).animate({ opacity: 1 }, 200);
 					
 					WCF.DOMNodeInsertedHandler.disable();
@@ -6412,6 +6554,7 @@ WCF.Popover = Class.extend({
 			}
 			else {
 				// insert new content
+				this._popover.children('span').hide();
 				this._popoverContent.html(this._data[elementID].content);
 			}
 			
@@ -7165,7 +7308,7 @@ WCF.Style.Chooser = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		if (data.returnValues.actionName === 'changeStyle') {
+		if (data.actionName === 'changeStyle') {
 			window.location.reload();
 			return;
 		}
@@ -7250,7 +7393,7 @@ WCF.UserPanel = Class.extend({
 		this._container.addClass('dropdown');
 		this._link = this._container.children('a').remove();
 		
-		$('<a class="dropdownToggle jsTooltip" title="' + this._container.data('title') + '">' + this._link.html() + '</a>').appendTo(this._container).click($.proxy(this._click, this));
+		$('<a class="dropdownToggle">' + this._link.html() + '</a>').appendTo(this._container).click($.proxy(this._click, this));
 		var $dropdownMenu = $('<ul class="dropdownMenu" />').appendTo(this._container);
 		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').appendTo($dropdownMenu);
 		
@@ -7525,10 +7668,7 @@ $.widget('ui.wcfDialog', {
 		if (this._isOpen) {
 			// initialize dialog content
 			this._initDialog(data);
-
-			// remove loading overlay
-			this._content.removeClass('overlayLoading');
-
+			
 			if (this.options.success !== null && $.isFunction(this.options.success)) {
 				this.options.success(data, textStatus, jqXHR);
 			}
@@ -7541,10 +7681,13 @@ $.widget('ui.wcfDialog', {
 	 * @param	object		data
 	 */
 	_initDialog: function(data) {
+		// remove spinner
+		this._content.css('position', 'static').children('.icon-spinner').remove();
+		
 		// insert template
 		if (this._getResponseValue(data, 'template')) {
 			this._content.children().html(this._getResponseValue(data, 'template'));
-			this.render();
+			this.render(false, true);
 		}
 		
 		// set title
@@ -7604,7 +7747,7 @@ $.widget('ui.wcfDialog', {
 	 * Clears the dialog and applies a loading overlay
 	 */
 	loading: function() {
-		this._content.addClass('overlayLoading');
+		$('<span class="icon icon48 icon-spinner" />').appendTo(this._content.css('position', 'relative'));
 		this.render();
 	},
 	
@@ -7644,11 +7787,15 @@ $.widget('ui.wcfDialog', {
 	/**
 	 * Renders this dialog, should be called whenever content is updated.
 	 * 
-	 * @param	boolean	loaded
+	 * @param	boolean		loaded
+	 * @param	boolean		disableAnimation
 	 */
-	render: function(loaded) {
+	render: function(loaded, disableAnimation) {
+		disableAnimation = disableAnimation || false;
+		
 		if (loaded) {
-			this._content.removeClass('overlayLoading');
+			// remove spinner
+			this._content.children('.icon-spinner').remove();
 		}
 		
 		if (!this.isOpen()) {
@@ -7719,7 +7866,29 @@ $.widget('ui.wcfDialog', {
 			$topOffset = $desiredTopOffset;
 		}
 		
-		if (!this.isOpen()) {
+		if (disableAnimation) {
+			// hide container again
+			this._container.hide();
+			
+			// apply offset
+			this._container.css({
+				left: $leftOffset + 'px',
+				top: $topOffset + 'px'
+			});
+			
+			// remove static dimensions
+			this._content.css({
+				height: 'auto',
+				overflow: 'auto',
+				width: 'auto'
+			});
+			
+			// fade in container
+			this._container.wcfFadeIn($.proxy(function() {
+				this._isRendering = false;
+			}));
+		}
+		else if (!this.isOpen()) {
 			// hide container again
 			this._container.hide();
 			
@@ -7735,6 +7904,7 @@ $.widget('ui.wcfDialog', {
 			// force dimensions
 			this._content.css({
 				height: this._contentDimensions.height + 'px',
+				overflow: 'auto',
 				width: this._contentDimensions.width + 'px'
 			});
 			
@@ -7761,6 +7931,7 @@ $.widget('ui.wcfDialog', {
 				// remove static dimensions
 				$content.css({
 					height: 'auto',
+					overflow: 'auto',
 					width: 'auto'
 				});
 			});
@@ -7920,11 +8091,6 @@ $.widget('ui.wcfPages', {
 		activePage: 1,
 		maxPage: 1,
 		
-		// icons
-		previousIcon: null,
-		arrowDownIcon: null,
-		nextIcon: null,
-		
 		// language
 		// we use options here instead of language variables, because the paginator is not only usable with pages
 		nextPage: null,
@@ -7937,9 +8103,6 @@ $.widget('ui.wcfPages', {
 	_create: function() {
 		if (this.options.nextPage === null) this.options.nextPage = WCF.Language.get('wcf.global.page.next');
 		if (this.options.previousPage === null) this.options.previousPage = WCF.Language.get('wcf.global.page.previous');
-		if (this.options.previousIcon === null) this.options.previousIcon = WCF.Icon.get('wcf.icon.circleArrowLeft');
-		if (this.options.nextIcon === null) this.options.nextIcon = WCF.Icon.get('wcf.icon.circleArrowRight');
-		if (this.options.arrowDownIcon === null) this.options.arrowDownIcon = WCF.Icon.get('wcf.icon.arrowDown');
 		
 		this.element.addClass('pageNavigation');
 		
@@ -7971,10 +8134,10 @@ $.widget('ui.wcfPages', {
 			
 			this.element.children().remove();
 			
-			var $pageList = $('<ul></ul>');
+			var $pageList = $('<ul />');
 			this.element.append($pageList);
 			
-			var $previousElement = $('<li></li>').addClass('button skip');
+			var $previousElement = $('<li class="button skip" />');
 			$pageList.append($previousElement);
 			
 			if (this.options.activePage > 1) {
@@ -7982,16 +8145,15 @@ $.widget('ui.wcfPages', {
 				$previousElement.append($previousLink);
 				this._bindSwitchPage($previousLink, this.options.activePage - 1);
 				
-				var $previousImage = $('<img src="' + this.options.previousIcon + '" alt="" />');
+				var $previousImage = $('<span class="icon icon16 icon-double-angle-left" />');
 				$previousLink.append($previousImage);
 			}
 			else {
-				var $previousImage = $('<img src="' + this.options.previousIcon + '" alt="" />');
+				var $previousImage = $('<span class="icon icon16 icon-double-angle-left" />');
 				$previousElement.append($previousImage);
 				$previousElement.addClass('disabled');
 				$previousImage.addClass('disabled');
 			}
-			$previousImage.addClass('icon16');
 			
 			// add first page
 			$pageList.append(this._renderLink(1));
@@ -8063,7 +8225,7 @@ $.widget('ui.wcfPages', {
 			$pageList.append(this._renderLink(this.options.maxPage));
 			
 			// add next button
-			var $nextElement = $('<li></li>').addClass('button skip');
+			var $nextElement = $('<li class="button skip" />');
 			$pageList.append($nextElement);
 			
 			if (this.options.activePage < this.options.maxPage) {
@@ -8071,16 +8233,15 @@ $.widget('ui.wcfPages', {
 				$nextElement.append($nextLink);
 				this._bindSwitchPage($nextLink, this.options.activePage + 1);
 				
-				var $nextImage = $('<img src="' + this.options.nextIcon + '" alt="" />');
+				var $nextImage = $('<span class="icon icon16 icon-double-angle-right" />');
 				$nextLink.append($nextImage);
 			}
 			else {
-				var $nextImage = $('<img src="' + this.options.nextIcon + '" alt="" />');
+				var $nextImage = $('<span class="icon icon16 icon-double-angle-right" />');
 				$nextElement.append($nextImage);
 				$nextElement.addClass('disabled');
 				$nextImage.addClass('disabled');
 			}
-			$nextImage.addClass('icon16');
 			
 			if ($hasHiddenPages) {
 				$pageList.data('pages', this.options.maxPage);

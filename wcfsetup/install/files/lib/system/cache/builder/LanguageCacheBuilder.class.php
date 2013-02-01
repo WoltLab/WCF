@@ -32,7 +32,6 @@ class LanguageCacheBuilder implements ICacheBuilder {
 		
 		// get languages
 		$languageList = new LanguageList();
-		$languageList->sqlLimit = 0;
 		$languageList->readObjects();
 		$data['languages'] = $languageList->getObjects();
 		foreach ($languageList->getObjects() as $language) {
@@ -52,7 +51,6 @@ class LanguageCacheBuilder implements ICacheBuilder {
 		
 		// get language categories
 		$languageCategoryList = new LanguageCategoryList();
-		$languageCategoryList->sqlLimit = 0;
 		$languageCategoryList->readObjects();
 		foreach ($languageCategoryList->getObjects() as $languageCategory) {
 			$data['categories'][$languageCategory->languageCategory] = $languageCategory;

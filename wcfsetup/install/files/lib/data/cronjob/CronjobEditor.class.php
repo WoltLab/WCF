@@ -69,7 +69,6 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 				$languageCategory = $statement->fetchObject('wcf\data\language\category\LanguageCategory');
 				
 				$languages = new LanguageList();
-				$languages->sqlLimit = 0;
 				$languages->readObjects();
 			}
 			else {

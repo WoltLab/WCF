@@ -343,7 +343,6 @@ class PackageInstallationDispatcher {
 		
 		// get language list
 		$languageList = new LanguageList();
-		$languageList->sqlLimit = 0;
 		$languageList->readObjects();
 		
 		// workaround for WCFSetup

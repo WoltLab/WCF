@@ -18,7 +18,6 @@ class ACLOptionCategoryCacheBuilder implements ICacheBuilder {
 	 */
 	public function getData(array $cacheResource) {
 		$list = new ACLOptionCategoryList();
-		$list->sqlLimit = 0;
 		$list->readObjects();
 		
 		$data = array();

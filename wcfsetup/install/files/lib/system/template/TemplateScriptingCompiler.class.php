@@ -788,8 +788,7 @@ class TemplateScriptingCompiler {
 			}
 			if (!empty($phpCode)) $phpCode = "<?php\n".$phpCode."\n?>";
 			
-			$tplPackageID = WCF::getTPL()->getPackageID($templateName, $metaData['application']);
-			$sourceFilename = WCF::getTPL()->getSourceFilename($templateName, $tplPackageID);
+			$sourceFilename = WCF::getTPL()->getSourceFilename($templateName, $metaData['application']);
 			$metaDataFilename = WCF::getTPL()->getMetaDataFilename($templateName);
 			
 			$data = $this->compileString($templateName, file_get_contents($sourceFilename), array(

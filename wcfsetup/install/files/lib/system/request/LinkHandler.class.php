@@ -89,7 +89,7 @@ class LinkHandler extends SingletonFactory {
 			}
 			
 			if ($parameters['object'] instanceof IRouteController) {
-				$parameters['id'] = $parameters['object']->getID();
+				$parameters['id'] = $parameters['object']->getObjectID();
 				$parameters['title'] = $parameters['object']->getTitle();
 			}
 			

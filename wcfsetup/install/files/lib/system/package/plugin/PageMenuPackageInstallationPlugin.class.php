@@ -47,4 +47,11 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	protected function cleanup() {
 		PageMenuItemEditor::updateLandingPage();
 	}
+	
+	/**
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getShowOrder()
+	 */
+	protected function getShowOrder($showOrder, $parentName = null, $columnName = null, $tableNameExtension = '') {
+		return $showOrder;
+	}
 }

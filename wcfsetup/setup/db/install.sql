@@ -332,7 +332,8 @@ CREATE TABLE wcf1_option (
 	supportI18n TINYINT(1) NOT NULL DEFAULT 0,
 	requireI18n TINYINT(1) NOT NULL DEFAULT 0,
 	additionalData MEDIUMTEXT,
-	UNIQUE KEY optionName (optionName, packageID)
+	
+	UNIQUE KEY optionName (optionName)
 );
 
 DROP TABLE IF EXISTS wcf1_option_category;
@@ -450,8 +451,7 @@ CREATE TABLE wcf1_package_update (
 	packageDescription VARCHAR(255) NOT NULL DEFAULT '',
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
-	isApplication TINYINT(1) NOT NULL DEFAULT 0,
-	plugin VARCHAR(255) NOT NULL DEFAULT '',
+	isApplication TINYINT(1) NOT NULL DEFAULT 0
 	UNIQUE KEY packageUpdateServerID (packageUpdateServerID, package)
 );
 
@@ -468,6 +468,12 @@ CREATE TABLE wcf1_package_update_fromversion (
 	packageUpdateVersionID INT(10) NOT NULL DEFAULT 0,
 	fromversion VARCHAR(50) NOT NULL DEFAULT '',
 	UNIQUE KEY packageUpdateVersionID (packageUpdateVersionID, fromversion)
+);
+
+DROP TABLE IF EXISTS wcf1_package_update_optional;
+CREATE TABLE wcf1_package_update_optional (
+	packageUpdateVersionID INT(10) NOT NULL DEFAULT 0,
+	package VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_package_update_requirement;
@@ -495,9 +501,12 @@ CREATE TABLE wcf1_package_update_version (
 	packageUpdateVersionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageUpdateID INT(10) NOT NULL,
 	packageVersion VARCHAR(50) NOT NULL DEFAULT '',
-	updateType VARCHAR(10) NOT NULL DEFAULT '',
 	packageDate INT(10) NOT NULL DEFAULT 0,
 	filename VARCHAR(255) NOT NULL DEFAULT '',
+	license VARCHAR(255) NOT NULL DEFAULT '',
+	licenseURL VARCHAR(255) NOT NULL DEFAULT '',
+	isAccessible TINYINT(1) NOT NULL DEFAULT 1,
+	isCritical TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY packageUpdateID (packageUpdateID, packageVersion)
 );
 
@@ -861,6 +870,8 @@ ALTER TABLE wcf1_package_update_fromversion ADD FOREIGN KEY (packageUpdateVersio
 
 ALTER TABLE wcf1_package_update_requirement ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_package_update_optional ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_package_update_version ADD FOREIGN KEY (packageUpdateID) REFERENCES wcf1_package_update (packageUpdateID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_page_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
@@ -1011,7 +1022,12 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMen
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuColor', '@wcfColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuActiveColor', '@wcfLinkColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelHoverBackgroundColor', 'rgba(60, 60, 60, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMarkedBackgroundColor', 'rgba(255, 255, 200, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSelectedBackgroundColor', 'rgba(255, 255, 200, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSelectedColor', '@wcfColor');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDeletedBackgroundColor', 'rgba(255, 238, 238, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDeletedColor', 'rgba(204, 0, 0, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledBackgroundColor', 'rgba(238, 255, 238, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledColor', 'rgba(0, 153, 0, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoHeight', 'auto');

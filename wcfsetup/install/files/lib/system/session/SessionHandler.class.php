@@ -552,6 +552,9 @@ class SessionHandler extends SingletonFactory {
 	 * Deletes this session and it's related data.
 	 */
 	public function delete() {
+		// set user to guest
+		$this->changeUser(new User(null), true);
+		
 		// remove session
 		$sessionEditor = new $this->sessionEditorClassName($this->session);
 		$sessionEditor->delete();

@@ -263,7 +263,6 @@ class ACLHandler extends SingletonFactory {
 			
 			// load categories
 			$categoryList = new ACLOptionCategoryList();
-			$categoryList->sqlLimit = 0;
 			$categoryList->getConditionBuilder()->add("acl_option_category.categoryName IN (?)", array($categoryNames));
 			$categoryList->getConditionBuilder()->add("acl_option_category.objectTypeID = ?", array($objectTypeID));
 			$categoryList->readObjects();
@@ -367,7 +366,6 @@ class ACLHandler extends SingletonFactory {
 	 */
 	public function getOptions($objectTypeID, ACLOptionCategory $category = null) {
 		$optionList = new ACLOptionList();
-		$optionList->sqlLimit = 0;
 		if ($category !== null) {
 			$optionList->getConditionBuilder()->add("acl_option.categoryName = ?", array($category->categoryName));
 		}

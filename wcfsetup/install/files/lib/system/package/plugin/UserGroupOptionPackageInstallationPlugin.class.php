@@ -62,12 +62,6 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if (isset($option['permissions'])) $permissions = $option['permissions'];
 		if (isset($option['options'])) $options = $option['options'];
 		
-		// check if optionType exists
-		$className = 'wcf\system\option\user\group\\'.StringUtil::firstCharToUpperCase($optionType).'UserGroupOptionType';
-		if (!class_exists($className)) {
-			throw new SystemException("unable to find class '".$className."'");
-		}
-		
 		// collect additional tags and their values
 		$additionalData = array();
 		foreach ($option as $tag => $value) {
@@ -167,7 +161,6 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	protected static function getAdminGroupIDs() {
 		if (empty(self::$adminGroupIDs)) {
 			$userGroupList = new UserGroupList();
-			$userGroupList->sqlLimit = 0;
 			$userGroupList->readObjects();
 			
 			foreach ($userGroupList as $userGroup) {

@@ -16,8 +16,10 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.style.canDeleteStyle') || $__wcf->session->getPermission('admin.style.canEditStyle')}
-						<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+						<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
 					{/if}
+					
+					{event name='contentNavigationButtons'}
 				{/content}
 			</ul>
 		</nav>

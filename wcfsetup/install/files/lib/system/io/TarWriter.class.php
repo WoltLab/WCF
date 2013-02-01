@@ -145,6 +145,7 @@ class TarWriter extends Tar {
 		$storedFilename = $filename;
 		if (!empty($removeDir)) $storedFilename = StringUtil::replaceIgnoreCase($removeDir, '', $filename);
 		if (!empty($addDir)) $storedFilename = $addDir . $storedFilename;
+		
 		if (is_file($filename)) {
 			// open file
 			$file = new File($filename, 'rb');

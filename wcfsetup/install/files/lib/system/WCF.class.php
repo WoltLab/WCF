@@ -2,7 +2,9 @@
 namespace wcf\system;
 use wcf\data\application\Application;
 use wcf\data\option\OptionEditor;
+use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
+use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\cronjob\CronjobScheduler;
@@ -455,7 +457,20 @@ class WCF {
 	protected function loadApplication(Application $application, $isDependentApplication = false) {
 		$applicationObject = null;
 		$package = PackageCache::getInstance()->getPackage($application->packageID);
-		
+		// package cache might be outdated
+		if ($package === null) {
+			$package = new Package($application->packageID);
+			
+			// package cache is outdated, discard cache
+			if ($package->packageID) {
+				PackageEditor::resetCache();
+			}
+			else {
+				// package id is invalid
+				throw new SystemException("application identified by package id '".$application->packageID."' is unknown");
+			}
+		}
+			
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
 		$packageDir = FileUtil::getRealPath(WCF_DIR.$package->packageDir);
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
@@ -517,7 +532,7 @@ class WCF {
 	 * Assigns some default variables to the template engine.
 	 */
 	protected function assignDefaultTemplateVariables() {
-		self::getTPL()->registerPrefilter(array('event', 'hascontent', 'lang', 'icon'));
+		self::getTPL()->registerPrefilter(array('event', 'hascontent', 'lang'));
 		self::getTPL()->assign(array('__wcf' => $this));
 	}
 	
@@ -666,6 +681,15 @@ class WCF {
 	 * @return	string
 	 */
 	public function getAnchor($fragment) {
+		return $this->getRequestURI() . '#' . $fragment;
+	}
+	
+	/**
+	 * Returns the URI of the current page.
+	 *
+	 * @return	string
+	 */
+	public function getRequestURI() {
 		// resolve path and query components
 		$scriptName = $_SERVER['SCRIPT_NAME'];
 		if (empty($_SERVER['PATH_INFO'])) {
@@ -684,7 +708,7 @@ class WCF {
 			$baseHref .= 'index.php/';
 		}
 		
-		return $baseHref . $path . '#' . $fragment;
+		return $baseHref . $path;
 	}
 	
 	/**

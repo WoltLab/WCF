@@ -185,4 +185,14 @@ class UserStorageHandler extends SingletonFactory {
 		
 		$this->resetFields = $this->updateFields = array();
 	}
+	
+	/**
+	 * Removes the entire user storage data.
+	 */
+	public function nukeStorage() {
+		$this->resetFields = $this->updateFields = array();
+		
+		$sql = "DELETE FROM	wcf".WCF_N."_user_storage";
+		$statement = WCF::getDB()->prepareStatement($sql);
+	}
 }

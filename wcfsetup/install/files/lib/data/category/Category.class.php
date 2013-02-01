@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Represents a category.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.category
@@ -65,13 +65,6 @@ class Category extends ProcessibleDatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	wcf\system\request\IRouteController::getID()
-	 */
-	public function getID() {
-		return $this->categoryID;
-	}
-	
-	/**
 	 * Returns the category object type of the category.
 	 * 
 	 * @return	wcf\data\category\Category
@@ -113,7 +106,7 @@ class Category extends ProcessibleDatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	wcf\data\ITitledDatabaseObject::getTitle()
+	 * @see	wcf\data\ITitledObject::getTitle()
 	 */
 	public function getTitle() {
 		return WCF::getLanguage()->get($this->title);

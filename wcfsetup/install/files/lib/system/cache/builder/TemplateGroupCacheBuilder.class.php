@@ -18,7 +18,6 @@ class TemplateGroupCacheBuilder implements ICacheBuilder {
 	 */
 	public function getData(array $cacheResource) {
 		$templateGroupList = new TemplateGroupList();
-		$templateGroupList->sqlLimit = 0;
 		$templateGroupList->readObjects();
 		
 		return $templateGroupList->getObjects();

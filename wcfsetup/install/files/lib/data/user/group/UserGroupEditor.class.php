@@ -143,7 +143,6 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 		}
 		
 		$userGroupList = new UserGroupList();
-		$userGroupList->sqlLimit = 0;
 		$userGroupList->readObjects();
 		foreach ($userGroupList as $userGroup) {
 			$groupIDs[] = $userGroup->groupID;

@@ -20,7 +20,7 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.language.canDeleteLanguage') || $__wcf->session->getPermission('admin.language.canEditLanguage')}
-						<li><a href="{link controller='LanguageList'}{/link}" title="{lang}wcf.acp.menu.link.language.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
+						<li><a href="{link controller='LanguageList'}{/link}" title="{lang}wcf.acp.menu.link.language.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtons'}
@@ -61,7 +61,11 @@
 					<label for="exportCustomValues"><input type="checkbox" name="exportCustomValues" id="exportCustomValues" value="1" /> {lang}wcf.acp.language.export.customValues{/lang}</label>
 				</dd>
 			</dl>
+			
+			{event name='exportFields'}
 		</fieldset>
+		
+		{event name='fieldsets'}
 	</div>
 	
 	<div class="formSubmit">

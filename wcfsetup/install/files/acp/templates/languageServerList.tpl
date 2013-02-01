@@ -27,7 +27,7 @@
 			<ul>
 				{content}
 					{if $__wcf->getSession()->getPermission('admin.language.canAddServer')}
-						<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
+						<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtonsTop'}
@@ -48,8 +48,10 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID columnLanguageServerID{if $sortField == 'languageServerID'} active{/if}" colspan="2"><a href="{link controller='LanguageServerList'}pageNo={@$pageNo}&sortField=languageServerID&sortOrder={if $sortField == 'languageServerID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}{if $sortField == 'languageServerID'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
-					<th class="columnTitle columnServerURL{if $sortField == 'serverURL'} active{/if}"><a href="{link controller='LanguageServerList'}pageNo={@$pageNo}&sortField=serverURL&sortOrder={if $sortField == 'serverURL' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.languageServer.serverURL{/lang}{if $sortField == 'serverURL'} <img src="{@$__wcf->getPath()}icon/sort{@$sortOrder}.svg" alt="" />{/if}</a></th>
+					<th class="columnID columnLanguageServerID{if $sortField == 'languageServerID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='LanguageServerList'}pageNo={@$pageNo}&sortField=languageServerID&sortOrder={if $sortField == 'languageServerID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnTitle columnServerURL{if $sortField == 'serverURL'} active {@$sortOrder}{/if}"><a href="{link controller='LanguageServerList'}pageNo={@$pageNo}&sortField=serverURL&sortOrder={if $sortField == 'serverURL' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.languageServer.serverURL{/lang}</a></th>
+					
+					{event name='columnHeads'}
 				</tr>
 			</thead>
 			<tbody>
@@ -57,18 +59,15 @@
 					<tr class="jsLanguageServerRow">
 						<td class="columnIcon">
 							{if $__wcf->getSession()->getPermission('admin.language.canEditServer')}
-								<img src="{@$__wcf->getPath()}icon/{if !$languageServer->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$languageServer->isDisabled}disable{else}enable{/if}{/lang}" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$languageServer->languageServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}" />
-								<a href="{link controller='LanguageServerEdit' id=$languageServer->languageServerID}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16jsTooltip" /></a>
-							{else}
-								<img src="{@$__wcf->getPath()}icon/{if !$languageServer->isDisabled}enabled{else}disabled{/if}.svg" alt="" title="{lang}wcf.global.button.{if !$languageServer->isDisabled}disable{else}enable{/if}{/lang}" class="icon16 disabled" />
-								<img src="{@$__wcf->getPath()}icon/edit.svg" alt="" title="{lang}wcf.global.button.edit{/lang}" class="icon16 disabled" />
+								<span class="icon icon16 icon-{if !$languageServer->isDisabled}circle-blank{else}off{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$languageServer->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$languageServer->languageServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
+								<a href="{link controller='LanguageServerEdit' id=$languageServer->languageServerID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
 							{/if}
 							
 							{if $__wcf->getSession()->getPermission('admin.language.canDeleteServer')}
-								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 jsDeleteButton jsTooltip" data-object-id="{@$languageServer->languageServerID}" data-confirm-message="{lang}wcf.acp.languageServer.delete.sure{/lang}" />
-							{else}
-								<img src="{@$__wcf->getPath()}icon/delete.svg" alt="" title="{lang}wcf.global.button.delete{/lang}" class="icon16 disabled" />
+								<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$languageServer->languageServerID}" data-confirm-message="{lang}wcf.acp.languageServer.delete.sure{/lang}"></span>
 							{/if}
+							
+							{event name='rowButtons'}
 						</td>
 						<td class="columnID columnLanguageServerID">{@$languageServer->languageServerID}</td>
 						<td class="columnTitle columnServerURL">
@@ -78,6 +77,8 @@
 								{@$languageServer->serverURL}
 							{/if}
 						</td>
+						
+						{event name='columns'}
 					</tr>
 				{/foreach}
 			</tbody>
@@ -92,7 +93,7 @@
 				<ul>
 					{content}
 						{if $__wcf->getSession()->getPermission('admin.language.canAddServer')}
-							<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
+							<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
 						{/if}
 						
 						{event name='contentNavigationButtonsBottom'}

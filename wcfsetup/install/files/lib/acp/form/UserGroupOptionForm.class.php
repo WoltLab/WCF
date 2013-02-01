@@ -110,7 +110,6 @@ class UserGroupOptionForm extends AbstractForm {
 		if ($this->verifyPermissions($this->userGroupOption)) {
 			// read all categories
 			$categoryList = new UserGroupOptionCategoryList();
-			$categoryList->sqlLimit = 0;
 			$categoryList->readObjects();
 			
 			$categories = array();

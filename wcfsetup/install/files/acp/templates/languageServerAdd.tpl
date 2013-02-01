@@ -20,7 +20,7 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.language.canDeleteServer') || $__wcf->session->getPermission('admin.language.canEditServer')}
-						<li><a href="{link controller='LanguageServerList'}{/link}" title="{lang}wcf.acp.menu.link.language.server.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.language.server.list{/lang}</span></a></li>
+						<li><a href="{link controller='LanguageServerList'}{/link}" title="{lang}wcf.acp.menu.link.language.server.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.language.server.list{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtons'}
@@ -48,7 +48,11 @@
 					<small>{lang}wcf.acp.languageServer.server.description{/lang}</small>
 				</dd>
 			</dl>
+			
+			{event name='dataFields'}
 		</fieldset>
+		
+		{event name='fieldsets'}
 	</div>
 	
 	<div class="formSubmit">

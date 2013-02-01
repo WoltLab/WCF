@@ -58,6 +58,34 @@ abstract class AbstractAction implements IAction {
 	}
 	
 	/**
+	 * @see	wcf\action\IAction::checkModules()
+	 */
+	public function checkModules() {
+		// call checkModules event
+		EventHandler::getInstance()->fireAction($this, 'checkModules');
+		
+		// check modules
+		foreach ($this->neededModules as $module) {
+			if (!defined($module) || !constant($module)) {
+				throw new IllegalLinkException();
+			}
+		}
+	}
+	
+	/**
+	 * @see	wcf\action\IAction::checkPermissions()
+	 */
+	public function checkPermissions() {
+		// call checkPermissions event
+		EventHandler::getInstance()->fireAction($this, 'checkPermissions');
+		
+		// check permission
+		if (!empty($this->neededPermissions)) {
+			WCF::getSession()->checkPermissions($this->neededPermissions);
+		}
+	}
+	
+	/**
 	 * @see	wcf\action\IAction::execute()
 	 */
 	public function execute() {
@@ -67,16 +95,10 @@ abstract class AbstractAction implements IAction {
 		}
 		
 		// check modules
-		if (!empty($this->neededModules)) {
-			foreach ($this->neededModules as $module) {
-				if (!defined($module) || !constant($module)) throw new IllegalLinkException();
-			}
-		}
+		$this->checkModules();
 		
-		// check permission
-		if (!empty($this->neededPermissions)) {
-			WCF::getSession()->checkPermissions($this->neededPermissions);
-		}
+		// check permissions
+		$this->checkPermissions();
 		
 		// call execute event
 		EventHandler::getInstance()->fireAction($this, 'execute');

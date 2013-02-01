@@ -583,7 +583,6 @@ class PackageInstallationNodeBuilder {
 		$queueList = new PackageInstallationQueueList();
 		$queueList->getConditionBuilder()->add("package_installation_queue.parentQueueID = ?", array($this->installation->queue->queueID));
 		$queueList->getConditionBuilder()->add("package_installation_queue.queueID NOT IN (SELECT queueID FROM wcf".WCF_N."_package_installation_node)");
-		$queueList->sqlLimit = 0;
 		$queueList->readObjects();
 		
 		foreach ($queueList as $queue) {

@@ -52,7 +52,9 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='PageMenuItemList'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" /> <span>{lang}wcf.acp.pageMenu.list{/lang}</span></a></li>
+			<li><a href="{link controller='PageMenuItemList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.pageMenu.list{/lang}</span></a></li>
+			
+			{event name='contentNavigationButtons'}
 		</ul>
 	</nav>
 </div>
@@ -119,6 +121,8 @@
 					{include file='multipleLanguageInputJavascript' elementIdentifier='pageMenuItem' forceSelection=true}
 				</dd>
 			</dl>
+			
+			{event name='dataFields'}
 		</fieldset>
 		
 		<fieldset>
@@ -165,6 +169,8 @@
 					{include file='multipleLanguageInputJavascript' elementIdentifier='menuItemLink' forceSelection=false}
 				</dd>
 			</dl>
+			
+			{event name='linkFields'}
 		</fieldset>
 		
 		<fieldset>
@@ -182,20 +188,16 @@
 					<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked="checked"{/if} /> <span>{lang}wcf.acp.pageMenu.isDisabled{/lang}</span></label>
 				</dd>
 			</dl>
+			
+			{event name='advancedFields'}
 		</fieldset>
+		
+		{event name='fields'}
 		
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" />
 		</div>
 	</form>
-</div>
-
-<div class="contentNavigation">
-	<nav>
-		<ul>
-			<li><a href="{link controller='PageMenuItemList'}{/link}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" /> <span>{lang}wcf.acp.pageMenu.list{/lang}</span></a></li>
-		</ul>
-	</nav>
 </div>
 
 {include file='footer'}

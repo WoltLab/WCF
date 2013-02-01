@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Default implementation for AJAX-based method calls.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
@@ -100,9 +100,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		
 		// send JSON-encoded response
 		if (!$this->inDebugMode) {
-			header('Content-type: application/json');
-			echo JSON::encode($this->response);
-			exit;
+			$this->sendResponse();
 		}
 	}
 	
@@ -126,6 +124,15 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		}
 		
 		$this->response = $this->actionObject->{$this->actionName}();
+	}
+	
+	/**
+	 * Sends JSON-Encoded response.
+	 */
+	protected function sendResponse() {
+		header('Content-type: application/json');
+		echo JSON::encode($this->response);
+		exit;
 	}
 	
 	/**
@@ -156,9 +163,9 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			));
 		}
 		else if ($e instanceof ValidateActionException) {
-			throw new AJAXException($exception->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), array(
-				'errorMessage' => $exception->getMessage(),
-				'fieldName' => $exception->getFieldName()
+			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), array(
+				'errorMessage' => $e->getMessage(),
+				'fieldName' => $e->getFieldName()
 			));
 		}
 		else {

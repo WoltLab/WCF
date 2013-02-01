@@ -106,15 +106,13 @@ class CronjobScheduler extends SingletonFactory {
 			FROM	wcf".WCF_N."_cronjob cronjob
 			WHERE	(cronjob.nextExec <= ? OR cronjob.afterNextExec <= ?)
 				AND cronjob.isDisabled = ?
-				AND cronjob.failCount < ?
-				AND cronjob.state = ?";
+				AND cronjob.failCount < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			TIME_NOW,
 			TIME_NOW,
 			0,
-			Cronjob::MAX_FAIL_COUNT,
-			Cronjob::READY
+			Cronjob::MAX_FAIL_COUNT
 		));
 		while ($row = $statement->fetchArray()) {
 			$cronjob = new Cronjob(null, $row);

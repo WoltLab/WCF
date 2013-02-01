@@ -1,5 +1,11 @@
 {include file='header' pageTitle='wcf.acp.packageUpdate'}
 
+{*
+	todo:
+	* update CSS classes
+	* add events
+*}
+
 <script type="text/javascript">
 	//<![CDATA[
 	var checkedAll = true;
@@ -35,7 +41,7 @@
 		<p class="info">{lang}wcf.acp.packageUpdate.noneAvailable{/lang}</p>
 	{else}
 		{foreach from=$availableUpdates item=availableUpdate}
-			<article class="wcf-message wcf-messageDecor{if $availableUpdate.version.updateType == 'security'} wcf-messageRed{/if}"><!-- ToDo: Style! -->
+			<article class="wcf-message wcf-messageDecor{if $availableUpdate.version.isCritical} wcf-messageRed{/if}"><!-- ToDo: Style! -->
 				<div>
 					<hgroup class="wcf-subHeading">
 						<h1>
@@ -45,7 +51,7 @@
 							</label>
 						</h1>
 					</hgroup>
-
+					
 					<div class="wcf-messageBody">
 						<dl>
 							<dt><label>{lang}wcf.acp.packageUpdate.currentVersion{/lang}</label></dt>

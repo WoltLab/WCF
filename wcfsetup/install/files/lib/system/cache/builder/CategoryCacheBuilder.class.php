@@ -18,7 +18,6 @@ class CategoryCacheBuilder implements ICacheBuilder {
 	 */
 	public function getData(array $cacheResource) {
 		$list = new CategoryList();
-		$list->sqlLimit = 0;
 		$list->sqlSelects = "object_type.objectType";
 		$list->sqlJoins = "LEFT JOIN wcf".WCF_N."_object_type object_type ON (object_type.objectTypeID = category.objectTypeID)";
 		$list->sqlOrderBy = "category.showOrder ASC";

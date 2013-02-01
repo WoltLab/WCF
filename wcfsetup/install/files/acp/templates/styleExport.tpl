@@ -9,7 +9,9 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+			<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+			
+			{event name='contentNavigationButtons'}
 		</ul>
 	</nav>
 </div>
@@ -35,6 +37,8 @@
 					<label><input type="checkbox" name="exportTemplates" value="1"{if $exportTemplates} checked="checked"{/if}{if !$canExportTemplates} disabled="disabled"{/if} /> <span>{lang}wcf.acp.style.exportTemplates{/lang}</span></label>
 				</dd>
 			</dl>
+			
+			{event name='componentFields'}
 		</fieldset>
 		
 		<fieldset>
@@ -64,7 +68,11 @@
 					<small>{lang}wcf.acp.style.packageName.description{/lang}</small>
 				</dd>
 			</dl>
+			
+			{event name='exportAsPackageFields'}
 		</fieldset>
+		
+		{event name='fieldsets'}
 	</div>
 	
 	<div class="formSubmit">

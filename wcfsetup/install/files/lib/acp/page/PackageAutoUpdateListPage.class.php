@@ -9,7 +9,7 @@ use wcf\system\WCFACP;
  * Shows the list of available updates for installed packages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -40,11 +40,11 @@ class PackageAutoUpdateListPage extends AbstractPage {
 		
 		if (empty($_POST)) {
 			// refresh package database
-			PackageUpdateDispatcher::refreshPackageDatabase();
+			PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
 		}
 		
 		// get updatable packages
-		$this->availableUpdates = PackageUpdateDispatcher::getAvailableUpdates();
+		$this->availableUpdates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 	}
 	
 	/**

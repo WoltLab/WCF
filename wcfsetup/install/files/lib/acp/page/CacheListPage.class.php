@@ -87,7 +87,7 @@ class CacheListPage extends AbstractPage {
 				}
 			break;
 			
-			case 'wcf\system\cache\source\MemcacheCacheSource':
+			case 'wcf\system\cache\source\MemcachedCacheSource':
 				// set version
 				$this->cacheData['version'] = WCF_VERSION;
 				

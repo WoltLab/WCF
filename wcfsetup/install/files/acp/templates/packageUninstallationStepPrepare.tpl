@@ -1,6 +1,7 @@
 <div id="packageInstallationDialogContainer">
 	<header class="box48 boxHeadline">
-		<img src="{@$__wcf->getPath()}icon/working.svg" alt="" class="icon48" />
+		<span class="icon icon48 icon-spinner"></span>
+		
 		<hgroup>
 			<h1>Paket &raquo;{$queue->packageName}&laquo; wird deinstalliert &hellip;</h1><!-- ToDo: Language variables -->
 			<h2>Aktueller Schritt: <span id="packageInstallationAction">{lang}wcf.package.uninstallation.step.prepare{/lang}</span></h2>

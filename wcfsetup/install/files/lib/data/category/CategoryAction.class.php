@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\category;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\ICollapsibleContainerAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\data\IToggleContainerAction;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -15,13 +15,13 @@ use wcf\system\WCF;
  * Executes category-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.category
  * @category	Community Framework
  */
-class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibleContainerAction, ISortableAction, IToggleAction {
+class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction, IToggleContainerAction {
 	/**
 	 * categorized object type
 	 * @var	wcf\data\object\type\ObjectType
@@ -54,7 +54,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	}
 	
 	/**
-	 * @see	wcf\data\ICollapsibleContainerAction::toggleContainer()
+	 * @see	wcf\data\IToggleContainerAction::toggleContainer()
 	 */
 	public function toggleContainer() {
 		$collapsibleObjectTypeName = $this->objects[0]->getProcessor()->getObjectTypeName('com.woltlab.wcf.collapsibleContent');
@@ -141,7 +141,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	}
 	
 	/**
-	 * @see	wcf\data\ICollapsibleContainerAction::validateToggleContainer()
+	 * @see	wcf\data\IToggleContainerAction::validateToggleContainer()
 	 */
 	public function validateToggleContainer() {
 		$this->validateUpdate();

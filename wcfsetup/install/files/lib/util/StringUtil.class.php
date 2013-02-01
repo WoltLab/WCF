@@ -599,8 +599,17 @@ final class StringUtil {
 			$truncatedString .= $tag[1];
 	
 			// get length of the content without entities. If the content is too long, keep entities intact
-			$contentLength = self::length(self::decodeHTML($tag[3]));
+			$decodedContent = self::decodeHTML($tag[3]);
+			$contentLength = self::length($decodedContent);
 			if ($contentLength + $totalLength > $length) {
+				if ($wordWrap) {
+					if (preg_match('/^(.{1,'.($length - $totalLength).'}) /s', $decodedContent, $match)) {
+						$truncatedString .= self::encodeHTML($match[1]);
+					}
+					
+					break;
+				}
+				
 				$left = $length - $totalLength;
 				$entitiesLength = 0;
 				if (preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|&#x[0-9a-f]{1,6};/i', $tag[3], $entities, PREG_OFFSET_CAPTURE)) {
@@ -623,37 +632,6 @@ final class StringUtil {
 			}
 			if ($totalLength >= $length) {
 				break;
-			}
-		}
-	
-		// if word wrap is active search for the last word change
-		if ($wordWrap) {
-			$lastWhitespace = self::lastIndexOf($truncatedString, ' ');
-			// check if inside a tag
-			$lastOpeningTag = self::lastIndexOf($truncatedString, '<');
-			if ($lastOpeningTag < $lastWhitespace) {
-				$lastClosingTag = self::lastIndexOf($truncatedString, '>');
-				if (($lastClosingTag === false || $lastClosingTag > $lastWhitespace) && $lastClosingTag > $lastOpeningTag) {
-					$lastWhitespace = $lastOpeningTag;
-					array_shift($openTags);
-					if ($truncatedString[$lastWhitespace] != ' ') {
-						$firstPart = self::substring($truncatedString, 0, $lastWhitespace);
-						$secondPart = self::substring($truncatedString, $lastWhitespace + 1);
-						$truncatedString = $firstPart.' '.$secondPart;
-					}
-				}
-			}
-			if ($lastWhitespace !== false) {
-				$endString = self::substring($truncatedString, $lastWhitespace);
-				preg_match_all('/<\/([a-z]+)>/', $endString, $tagOverhead, PREG_SET_ORDER);
-				if (count($tagOverhead)) {
-					foreach ($tagOverhead as $tag) {
-						if (!in_array($tag[1], $openTags)) {
-							array_unshift($openTags, $tag[1]);
-						}
-					}
-				}
-				$truncatedString = self::substring($truncatedString, 0, $lastWhitespace);
 			}
 		}
 	

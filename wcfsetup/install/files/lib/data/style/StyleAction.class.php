@@ -132,10 +132,10 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			$iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir), \RecursiveIteratorIterator::CHILD_FIRST);
 			foreach ($iterator as $path) {
 				if ($path->isDir()) {
-					@rmdir($path->__toString());
+					@rmdir($path);
 				}
 				else {
-					@unlink($path->__toString());
+					@unlink($path);
 				}
 			}
 			
@@ -480,10 +480,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		if (StyleHandler::getInstance()->getStyle()->styleID == $this->style->styleID) {
 			WCF::getSession()->setStyleID($this->style->styleID);
 		}
-		
-		return array(
-			'actionName' => 'changeStyle'
-		);
 	}
 	
 	/**

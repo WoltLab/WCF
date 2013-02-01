@@ -24,11 +24,11 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.style.canAddStyle')}
-						<li><a href="{link controller='StyleAdd'}{/link}" title="{lang}wcf.acp.menu.link.style.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
-						<li><a href="{link controller='StyleImport'}{/link}" title="{lang}wcf.acp.menu.link.style.import{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/upload.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
+						<li><a href="{link controller='StyleAdd'}{/link}" title="{lang}wcf.acp.menu.link.style.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+						<li><a href="{link controller='StyleImport'}{/link}" title="{lang}wcf.acp.menu.link.style.import{/lang}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 					{/if}
 					
-					{event name='largeButtons'}
+					{event name='contentNavigationButtonsTop'}
 				{/content}
 			</ul>
 		</nav>
@@ -47,12 +47,14 @@
 							{if $style->styleDescription}<h2>{lang}{@$style->styleDescription}{/lang}</h2>{/if}
 						</hgroup>
 						<ul class="buttonList" data-style-id="{@$style->styleID}">
-							<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/edit.svg" class="icon16" alt="" /></a></li>
+							<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a></li>
 							{if !$style->isDefault}
-								<li><img src="{@$__wcf->getPath()}icon/{if $style->isDisabled}disabled{else}enabled{/if}.svg" title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" alt="" class="icon16 jsToggleButton jsTooltip" data-object-id="{@$style->styleID}" /></li>
-								<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><img src="{@$__wcf->getPath()}icon/default.svg" class="icon16 jsTooltip" alt="" /></a></li>
-								<li><a title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message="{lang}wcf.acp.style.delete.confirmMessage{/lang}"><img src="{@$__wcf->getPath()}icon/delete.svg" class="icon16" alt="" /></a></li>
+								<li><span class="icon icon16 icon-{if $style->isDisabled}off{else}circle-blank{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$style->styleID}"></span></li>
+								<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><span class="icon icon16 icon-check"></span></a></li>
+								<li><a title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message="{lang}wcf.acp.style.delete.confirmMessage{/lang}"><span class="icon icon16 icon-remove"></span></a></li>
 							{/if}
+							
+							{event name='itemButtons'}
 						</ul>
 						<dl class="plain inlineDataList">
 							<dt>{lang}wcf.acp.style.users{/lang}</dt>
@@ -81,11 +83,11 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.style.canAddStyle')}
-						<li><a href="{link controller='StyleAdd'}{/link}" title="{lang}wcf.acp.menu.link.style.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
-						<li><a href="{link controller='StyleImport'}{/link}" title="{lang}wcf.acp.menu.link.style.import{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/upload.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
+						<li><a href="{link controller='StyleAdd'}{/link}" title="{lang}wcf.acp.menu.link.style.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+						<li><a href="{link controller='StyleImport'}{/link}" title="{lang}wcf.acp.menu.link.style.import{/lang}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 					{/if}
 					
-					{event name='largeButtons'}
+					{event name='contentNavigationButtonsBottom'}
 				{/content}
 			</ul>
 		</nav>
