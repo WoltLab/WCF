@@ -157,6 +157,8 @@ class CacheListPage extends AbstractPage {
 		$this->readCacheFiles('language', FileUtil::unifyDirSeperator(WCF_DIR.'language'));
 		$this->readCacheFiles('template', FileUtil::unifyDirSeperator(WCF_DIR.'templates/compiled'), new Regex('\.meta\.php$'));
 		$this->readCacheFiles('template', FileUtil::unifyDirSeperator(WCF_DIR.'acp/templates/compiled'), new Regex('\.meta\.php$'));
+		$this->readCacheFiles('style', FileUtil::unifyDirSeperator(WCF_DIR.'style'), null, 'css');
+		$this->readCacheFiles('style', FileUtil::unifyDirSeperator(WCF_DIR.'acp/style'), new Regex('^WCFSetup.css$'), 'css');
 	}
 	
 	/**
@@ -166,7 +168,7 @@ class CacheListPage extends AbstractPage {
 	 * @param	strign			$cacheDir
 	 * @param	wcf\system\Regex	$ignore
 	 */
-	protected function readCacheFiles($cacheType, $cacheDir, Regex $ignore = null) {
+	protected function readCacheFiles($cacheType, $cacheDir, Regex $ignore = null, $extension = 'php') {
 		if (!isset($this->cacheData[$cacheType])) {
 			$this->cacheData[$cacheType] = array();
 		}
@@ -179,7 +181,7 @@ class CacheListPage extends AbstractPage {
 			return;
 		}
 		
-		$files = $directoryUtil->getFileObjects(SORT_ASC, new Regex('\.php$'));
+		$files = $directoryUtil->getFileObjects(SORT_ASC, new Regex('\.'.$extension.'$'));
 		
 		// get additional file information
 		$data = array();
