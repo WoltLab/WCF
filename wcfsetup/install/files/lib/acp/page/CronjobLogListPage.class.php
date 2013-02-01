@@ -1,7 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
-use wcf\system\menu\acp\ACPMenu;
 
 /**
  * Shows cronjob log information.
@@ -14,6 +13,11 @@ use wcf\system\menu\acp\ACPMenu;
  * @category	Community Framework
  */
 class CronjobLogListPage extends SortablePage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.log.cronjob';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
@@ -61,15 +65,5 @@ class CronjobLogListPage extends SortablePage {
 		$this->sqlOrderBy = (($this->sortField == 'className' || $this->sortField == 'description') ? 'cronjob.' : 'cronjob_log.').$this->sortField." ".$this->sortOrder;
 		
 		parent::readObjects();
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// set active menu item.
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.log.cronjob');
-		
-		parent::show();
 	}
 }

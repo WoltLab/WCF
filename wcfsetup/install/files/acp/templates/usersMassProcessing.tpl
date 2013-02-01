@@ -76,6 +76,18 @@
 	<p class="success">{lang}wcf.acp.user.massProcessing.success{/lang}</p>
 {/if}
 
+{hascontent}
+	<div class="contentNavigation">
+		<nav>
+			<ul>
+				{content}
+					{event name='contentNavigationButtons'}
+				{/content}
+			</ul>
+		</nav>
+	</div>
+{/hascontent}
+
 <form method="post" action="{link controller='UsersMassProcessing'}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
@@ -116,6 +128,8 @@
 					</dd>
 				</dl>
 			{/if}
+			
+			{event name='generalFields'}
 		</fieldset>
 		
 		{event name='fieldsets'}
@@ -140,7 +154,7 @@
 					</fieldset>
 				{/if}
 				
-				{event name='tabMenuContent'}
+				{event name='tabMenuContents'}
 			</div>
 		{/hascontent}
 	</div>
@@ -221,8 +235,8 @@
 						<label for="enableHTML"><input type="checkbox" id="enableHTML" name="enableHTML" value="1"{if $enableHTML == 1} checked="checked"{/if}/> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
 					</dd>
 				</dl>
-			</div>
-		</fieldset>
+			</fieldset>
+		</div>
 		
 		<div id="exportMailAddressDiv">
 			<fieldset>

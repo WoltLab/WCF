@@ -716,7 +716,7 @@ define('TMP_DIR', BasicFileUtil::getTempFolder());
  * @param	string		$directory
  */
 function readFileResource($key, $directory) {
-	if (preg_match('~[\w\-]+\.(css|jpg|png|svg)~', $_GET[$key], $match)) {
+	if (preg_match('~[\w\-]+\.(css|jpg|png|svg|eot|woff|ttf)~', $_GET[$key], $match)) {
 		switch ($match[1]) {
 			case 'css':
 				header('Content-Type: text/css');
@@ -732,6 +732,18 @@ function readFileResource($key, $directory) {
 			
 			case 'svg':
 				header('Content-Type: image/svg+xml');
+			break;
+			
+			case 'eot':
+				header('Content-Type: application/vnd.ms-fontobject');
+			break;
+				
+			case 'woff':
+				header('Content-Type: application/font-woff');
+			break;
+					
+			case 'ttf':
+				header('Content-Type: application/octet-stream');
 			break;
 		}
 		
@@ -755,6 +767,10 @@ if (isset($_GET['showIcon'])) {
 // show css from temp folder
 if (isset($_GET['showCSS'])) {
 	readFileResource('showCSS', TMP_DIR . 'install/files/acp/style/setup/');
+}
+// show fonts from temp folder
+if (isset($_GET['showFont'])) {
+	readFileResource('showFont', TMP_DIR . 'install/files/font/');
 }
 
 // check whether setup files are already unzipped

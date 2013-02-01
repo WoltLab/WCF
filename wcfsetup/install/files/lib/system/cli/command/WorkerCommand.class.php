@@ -1,16 +1,16 @@
 <?php
 namespace wcf\system\cli\command;
+use phpline\internal\Log;
 use wcf\system\CLIWCF;
 use wcf\system\Regex;
 use wcf\util\ClassUtil;
+use wcf\util\CLIUtil;
 use wcf\util\DirectoryUtil;
 use wcf\util\StringUtil;
-use phpline\internal\Log;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
-use Zend\ProgressBar\ProgressBar;
 use Zend\ProgressBar\Adapter\Console as ConsoleProgressBar;
-
+use Zend\ProgressBar\ProgressBar;
 
 /**
  * Executes cronjobs.
@@ -40,7 +40,7 @@ class WorkerCommand implements ICommand {
 		$argv->parse();
 		
 		if ($argv->list) {
-			CLIWCF::getReader()->println(CLIWCF::generateTable($this->generateList()));
+			CLIWCF::getReader()->println(CLIUtil::generateTable($this->generateList()));
 			return;
 		}
 		

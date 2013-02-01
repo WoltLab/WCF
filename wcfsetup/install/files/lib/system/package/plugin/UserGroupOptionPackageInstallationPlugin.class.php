@@ -20,6 +20,12 @@ use wcf\util\StringUtil;
  */
 class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
+	 * group id of group 'Everyone'
+	 * @var	integer
+	 */
+	protected $everyoneGroupID = null;
+	
+	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'user_group_option';
@@ -55,12 +61,6 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if (isset($option['enableoptions'])) $enableOptions = $option['enableoptions'];
 		if (isset($option['permissions'])) $permissions = $option['permissions'];
 		if (isset($option['options'])) $options = $option['options'];
-		
-		// check if optionType exists
-		$className = 'wcf\system\option\user\group\\'.StringUtil::firstCharToUpperCase($optionType).'UserGroupOptionType';
-		if (!class_exists($className)) {
-			throw new SystemException("unable to find class '".$className."'");
-		}
 		
 		// collect additional tags and their values
 		$additionalData = array();
@@ -106,20 +106,16 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			$groupOptionEditor = UserGroupOptionEditor::create($data);
 			$optionID = $groupOptionEditor->optionID;
 			
-			// get default group ("everyone")
-			$sql = "SELECT	groupID
-				FROM	wcf".WCF_N."_user_group
-				WHERE	groupType = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(UserGroup::EVERYONE));
-			$row = $statement->fetchArray();
-			
 			// save default value
 			$sql = "INSERT INTO	wcf".WCF_N."_user_group_option_value
 						(groupID, optionID, optionValue)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($row['groupID'], $optionID, $defaultValue));
+			$statement->execute(array(
+				$this->getEveryoneGroupID(),
+				$optionID,
+				$defaultValue
+			));
 			
 			if ($adminDefaultValue && $defaultValue != $adminDefaultValue) {
 				$adminGroupIDs = self::getAdminGroupIDs();
@@ -138,6 +134,26 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	}
 	
 	/**
+	 * Returns group id of 'Everyone' group.
+	 * 
+	 * @return	integer
+	 */
+	protected function getEveryoneGroupID() {
+		if ($this->everyoneGroupID === null) {
+			$sql = "SELECT	groupID
+				FROM	wcf".WCF_N."_user_group
+				WHERE	groupType = ?";
+			$statement = WCF::getDB()->prepareStatement($sql, 1);
+			$statement->execute(array(UserGroup::EVERYONE));
+			$row = $statement->fetchArray();
+			
+			$this->everyoneGroupID = $row['groupID'];
+		}
+		
+		return $this->everyoneGroupID;
+	}
+	
+	/**
 	 * Returns an array of ids of admin groups.
 	 * 
 	 * @return	array<integer>
@@ -145,7 +161,6 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	protected static function getAdminGroupIDs() {
 		if (empty(self::$adminGroupIDs)) {
 			$userGroupList = new UserGroupList();
-			$userGroupList->sqlLimit = 0;
 			$userGroupList->readObjects();
 			
 			foreach ($userGroupList as $userGroup) {

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache;
+use wcf\system\cache\source\DiskCacheSource;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
@@ -38,7 +39,7 @@ class CacheHandler extends SingletonFactory {
 		catch (SystemException $e) {
 			if (CACHE_SOURCE_TYPE != 'disk') {
 				// fallback to disk cache
-				$this->cacheSource = new \wcf\system\cache\source\DiskCacheSource();
+				$this->cacheSource = new DiskCacheSource();
 			}
 			else {
 				throw $e;

@@ -30,6 +30,12 @@
 	right: 0;
 	z-index: 200;
 
+	.icon {
+		color: @wcfUserPanelColor;
+		
+		.textShadow(@wcfUserPanelBackgroundColor);
+	}
+	
 	> div {
 		> ul.userPanelItems {
 			float: left;
@@ -44,8 +50,7 @@
 					color: @wcfUserPanelColor;
 					display: block;
 					height: 20px;
-					padding: 10px 8px;
-					position: relative;
+					padding: 12px 8px 8px 8px;
 					
 					.textShadow(@wcfUserPanelBackgroundColor);
 					.transition(background-color, .2s);
@@ -59,18 +64,19 @@
 					> .badge.badgeInverse {
 						background-color: @wcfTabularBoxBackgroundColor;
 						color: @wcfTabularBoxColor;
-						padding: 0 6px 1px;
-						position: absolute;
-						bottom: 4px;
-						left: 24px;
-						z-index: 300;
+					}
+					
+					> img {
+						position: relative;
+						top: -2px;
 					}
 				}
 				
 				> .framed > img {
+					margin-top: -5px;
+					margin-bottom: -4px;
 					padding: 0px;
-					margin-top: -2px;
-					margin-bottom: -2px;
+					top: 0;
 				}
 			}
 		}
@@ -78,23 +84,35 @@
 		> .searchBar {
 			float: right;
 			padding: 6px 0 7px;
+			position: relative;
 			background-color: @wcfUserPanelHoverBackgroundColor;
 			
-			> form input[type="search"] {
-				background-color: transparent;
-				background-image: url("../icon/searchInverse.svg");
-				background-repeat: no-repeat;
-				background-position: 7px 5px;
-				border-width: 0;
+			&:before {
+				content: "\f002";
 				color: @wcfUserPanelColor;
-				padding: 6px 12px 5px 26px;
-				width: 180px;
-				-webkit-appearance: textfield;
+				font-family: FontAwesome;
+				font-size: 14px;
+				left: 7px;
+				position: absolute;
+				top: 10px;
+			}
+			
+			> form {
+				display: inline-block;
 				
-				.textShadow(@wcfUserPanelHoverBackgroundColor);
-				
-				&:focus {
-					outline: 0;
+				input[type="search"] {
+					background-color: transparent;
+					border-width: 0;
+					color: @wcfUserPanelColor;
+					padding: 6px 12px 5px 26px;
+					width: 180px;
+					-webkit-appearance: textfield;
+					
+					.textShadow(@wcfUserPanelHoverBackgroundColor);
+					
+					&:focus {
+						outline: 0;
+					}
 				}
 			}
 		}
@@ -123,6 +141,52 @@
 	}
 }
 
+/* sitemap */
+.sitemapList {
+	margin: 0 -@wcfGapSmall;
+	
+	li {
+		a,
+		h1 {
+			overflow: hidden;
+			padding: @wcfGapTiny @wcfGapMedium;
+		}
+		
+		a {
+			display: block;
+			
+			.borderRadius(6px);
+			.transition(background-color, .1s); 
+			
+			&:hover {
+				background-color: @wcfContainerHoverBackgroundColor;
+				text-decoration: none;
+			}
+		}
+	}
+	
+	> li {
+		&:not(:first-child) {
+			margin-top: @wcfGapSmall;
+		}
+		
+		&:not(:last-child) {
+			border-bottom: 1px solid @wcfContainerBorderColor;
+			padding-bottom: @wcfGapSmall;
+		}
+		
+		> ul > li {
+			> a {
+				padding-left: @wcfGapMedium + @wcfGapLarge;
+			}
+			
+			> ul > li a {
+				padding-left: @wcfGapMedium + @wcfGapLarge * 2;
+			}
+		}
+	}
+}
+
 /* main menu */
 .mainMenu {
 	> ul {
@@ -140,16 +204,11 @@
 			> a {
 				color: @wcfMainMenuColor;
 				display: inline-block;
-				padding: 9px 35px;
+				padding: 9px 21px;
 								
 				&:hover {
 					color: @wcfMainMenuActiveColor;
 					text-decoration: none;
-				}
-				
-				> .badge {
-					font-size: 60%;
-					top: -2px;
 				}
 			}
 			
@@ -161,7 +220,9 @@
 					background-color: @wcfNavigationHeaderBackgroundColor;
 					color: @wcfMainMenuActiveColor;
 					font-weight: bold;
-					padding: 14px 35px 8px;
+					min-width: 80px;
+					padding: 14px 21px 8px;
+					text-align: center;
 				}
 			}
 			
@@ -228,13 +289,17 @@
 			}
 		}
 		
+		&.navigationItems,
+		&.navigationMenuItems,
+		&.navigationIcons {
+			.icon {
+				color: @wcfLinkColor;
+			}
+		}
+		
 		&.navigationMenuItems {
 			> li {
 				display: inline-block;
-				
-				> .badge {
-					top: -1px;
-				}
 			}
 		}
 	}
@@ -286,17 +351,25 @@
 			
 			> .collapsibleButton {
 				background-color: @wcfSidebarBackgroundColor;
-				background-image: url('../icon/arrowRightColored.svg');
-				background-position: 4px 4px;
-				background-repeat: no-repeat;
-				background-size: 16px;
 				border-radius: 6px 0 0 6px;
 				display: block;
 				height: 24px;
 				left: -20px;
 				position: absolute;
+				text-decoration: none;
 				top: 0;
 				width: 24px;
+				
+				&:before {
+					content: "\f054";
+					font-family: FontAwesome;
+					font-size: 14px;
+					position: absolute;
+					left: 6px;
+					top: 4px;
+					
+					.textShadow(@wcfSidebarBackgroundColor);
+				}
 				
 				.transition(left, .2s, ease);
 			}
@@ -342,8 +415,11 @@
 				width: 0;
 				
 				> .collapsibleButton {
-					background-image: url('../icon/arrowLeftColored.svg');
 					left: -40px;
+					
+					&:before {
+						content: "\f053";
+					}
 				}
 			}
 		}
@@ -467,12 +543,18 @@
 		&:hover {
 			background-color: @wcfContainerHoverBackgroundColor;
 			
-			> div > .details > .buttonList {
-				opacity: 1;
+			> div > div {
+				> .buttonList {
+					opacity: 1;
+				}
+				
+				> hgroup > .containerContentType {
+					color: @wcfDimmedColor;
+				}
 			}
 		}
 		
-		> div > .details {
+		> div > div {
 			position: relative;
 			
 			> .buttonList {
@@ -482,6 +564,15 @@
 				top: 0;
 				
 				.transition(opacity, .1s);
+			}
+			
+			> hgroup > .containerContentType {
+				color: lighten(@wcfDimmedColor, 20%);
+				position: absolute;
+				right: 0;
+				top: 3px;
+				
+				.transition(color, .1s);
 			}
 		}
 	}
@@ -540,6 +631,54 @@
 	}
 }
 
+.nestedCategoryList {
+	> li {
+		margin-top: 21px;
+		overflow: hidden;
+		
+		&:first-child {
+			margin-top: 0;
+		}
+		
+		> div {
+			padding: 0 14px;
+			
+			> hgroup > h1 {
+				font-size: @wcfTitleFontSize;
+				font-weight: bold;
+			}
+			
+			> ol {
+				> li {
+					display: inline-block;
+					font-size: @wcfSmallFontSize;
+				}
+			}
+		}
+	}
+	
+	&.doubleColumned {
+		> li {
+			float: left;
+			width: 50%;
+			
+			&:nth-child(odd):not(:first-child) {
+				clear: left;
+			}
+			
+			&:nth-child(2) {
+				margin-top: 0;
+			}
+		}
+		
+		&:after {
+			content: "";
+			display: table;
+			clear: left;
+		}
+	}
+}
+
 /* boxes with an image */
 .box(@imageSize, @gapOffset: 0) {
 	/* using a min-height prevents us from clearing (which causes a lot of issues) */
@@ -563,8 +702,8 @@
 .box32 { .box(32px, 7px); }
 .box48 { .box(48px, 7px); }
 .box64 { .box(64px, 7px); }
-.box96 { .box(96px, 14px); }
-.box128 { .box(128px, 14px); }
+.box96 { .box(96px, 11px); }
+.box128 { .box(128px, 11px); }
 .box256 { .box(256px, 21px); }
 
 /* bread crumbs */
@@ -584,11 +723,14 @@
 			position: relative;
 			
 			&:first-child > a {
-				background-image: url('../icon/home.svg');
-				background-position: 1px center;
-				background-repeat: no-repeat;
-				background-size: 16px;
-				padding-left: 21px;
+				&:before {
+					content: "\f015";
+					display: inline-block;
+					font-family: FontAwesome;
+					font-size: 14px;
+					margin: -3px 7px -3px 0;
+					vertical-align: -1px;
+				}
 			}
 			
 			> a {
@@ -710,6 +852,7 @@
 		
 		li {
 			display: inline-block;
+			outline: 0;
 			
 			&.ui-state-active a,
 			&.ui-state-active a:hover {
@@ -726,6 +869,7 @@
 				display: block;
 				font-size: @wcfSmallFontSize;
 				margin: @wcfGapTiny 0;
+				outline: 0;
 				padding: @wcfGapTiny @wcfGapSmall;
 				
 				.borderRadius(15px);
@@ -785,6 +929,12 @@
 			}
 		}
 	}
+	
+	.icon {
+		color: @wcfTabularBoxColor;
+		
+		.textShadow(@wcfTabularBoxBackgroundColor);
+	}
 }
 
 .table {
@@ -825,6 +975,7 @@
 			color: @wcfTabularBoxColor;
 			display: block;
 			margin: -@wcfGapSmall;
+			position: relative;
 			
 			&:hover {
 				text-decoration: none;
@@ -840,6 +991,32 @@
 			color: @wcfTabularBoxHoverColor;
 			
 			.boxShadowInset(0, 10px, rgba(0, 0, 0, .1), 10px, -10px);
+		}
+		
+		&.ASC > a,
+		&.DESC > a {
+			padding-right: 20px;
+		}
+		
+		&.ASC > a:after,
+		&.DESC > a:after {
+			display: inline-block;
+			font-family: FontAwesome;
+			font-size: 14px;
+			position: absolute;
+			margin-left: 4px;
+			
+			.textShadow(@wcfTabularBoxBackgroundColor);
+		}
+		
+		&.ASC > a:after {
+			content: "\f0de";
+			top: 8px;
+		}
+		
+		&.DESC > a:after {
+			content: "\f0dd";
+			top: 3px;
 		}
 		
 		&:hover > a {
@@ -1087,37 +1264,39 @@ ul.inlineDataList {
 			}
 			
 			&.skip {	
-				padding: 1px 0 1px;
+				> a {
+					padding: 2px 0 1px;
+				}
+				
+				> span {
+					padding: 3px 0 1px;
+				}
 			}
 			
-			&:not(.disabled):hover a {
+			&:not(.disabled):hover > a {
 				color: @wcfButtonHoverColor;
 			}
 			
-			&:not(.skip) a {
+			&:not(.skip) > a {
 				padding: 2px 3px;
 			}
 			
 			&.active {
-				padding: 2px 0 1px;
-				
 				> span {
-					padding: 0 3px;
+					padding: 2px 3px;
 				}
 			}
 			
-			img {
-				height: 16px;
-				margin: 0;
-				width: 16px;
-			}
-			
-			a {
+			> a {
 				color: @wcfButtonColor;
 				display: block;
 				text-decoration: none;
 				
 				.textShadow(@wcfButtonBackgroundColor);
+			}
+			
+			> span {
+				display: inline-block;
 			}
 		}
 	}
@@ -1169,13 +1348,15 @@ ul.inlineDataList {
 			
 			> .badge {
 				float: right;
-				font-size: 75%;
-				top: 3px;
 			}
 			
 			> a {
 				color: @wcfColor;
 				text-decoration: none;
+			}
+			
+			&.invisible + div {
+				margin-top: -@wcfGapSmall;
 			}
 		}
 		
@@ -1263,20 +1444,30 @@ ul.inlineDataList {
 	
 	&.collapsibleMenu {
 		legend {
-			background-image: url(../icon/arrowRightColored.svg);
-			background-position: 15px center;
-			background-repeat: no-repeat;
-			background-size: 16px;
 			color: @wcfLinkColor;
 			cursor: pointer;
 			font-weight: bold;
 			font-size: 130%;
 			padding-left: (@wcfGapLarge + 16px + @wcfGapTiny);
+			position: relative;
 			margin-left: -@wcfGapMedium;
 			text-transform: none;
 			
-			&.active {
-				background-image: url(../icon/arrowDownColored.svg);
+			&:before {
+				content: "\f054";
+				display: inline-block;
+				font-family: FontAwesome;
+				font-size: 14px;
+				height: 16px;
+				left: 21px;
+				position: absolute;
+				text-align: center;
+				top: 2px;
+				width: 16px;
+			}
+			
+			&.active:before {
+				content: "\f078";
 			}
 		}
 		
@@ -1288,6 +1479,20 @@ ul.inlineDataList {
 					}
 				}
 			}
+		}
+	}
+	
+	dl.inlineDataList {
+		font-size: @wcfSmallFontSize;
+		
+		> dt {
+			float: left;
+		}
+		
+		> dd {
+			display: block;
+			padding-right: @wcfGapMedium;
+			text-align: right;
 		}
 	}
 }

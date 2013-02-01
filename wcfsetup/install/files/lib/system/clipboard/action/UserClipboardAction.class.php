@@ -1,9 +1,7 @@
 <?php
 namespace wcf\system\clipboard\action;
 use wcf\data\user\group\UserGroup;
-use wcf\system\clipboard\ClipboardEditorItem;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -19,50 +17,43 @@ use wcf\system\WCF;
  */
 class UserClipboardAction extends AbstractClipboardAction {
 	/**
-	 * @see	wcf\system\clipboard\action\IClipboardAction::getTypeName()
+	 * @see	wcf\system\clipboard\action\AbstractClipboardAction::$actionClassActions
 	 */
-	public function getTypeName() {
-		return 'com.woltlab.wcf.user';
-	}
+	protected $actionClassActions = array('delete');
+	
+	/**
+	 * @see	wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
+	 */
+	protected $supportedActions = array('assignToGroup', 'delete', 'exportMailAddress', 'sendMail');
 	
 	/**
 	 * @see	wcf\system\clipboard\action\IClipboardAction::execute()
 	 */
 	public function execute(array $objects, $actionName) {
-		$item = new ClipboardEditorItem();
+		$item = parent::execute($objects, $actionName);
+		
+		if ($item === null) {
+			return null;
+		}
 		
 		// handle actions
 		switch ($actionName) {
 			case 'assignToGroup':
-				$item->setName('user.assignToGroup');
 				$item->setURL(LinkHandler::getInstance()->getLink('UserAssignToGroup'));
 			break;
 			
 			case 'delete':
-				$userIDs = $this->validateDelete($objects);
-				if (empty($userIDs)) {
-					return null;
-				}
-				
-				$item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.user.delete.confirmMessage', array('count' => count($userIDs))));
-				$item->addParameter('actionName', 'delete');
-				$item->addParameter('className', 'wcf\data\user\UserAction');
-				$item->addParameter('objectIDs', $userIDs);
-				$item->setName('user.delete');
+				$item->addInternalData('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage', array(
+					'count' => $item->getCount()
+				)));
 			break;
 			
 			case 'exportMailAddress':
-				$item->setName('user.exportMailAddress');
 				$item->setURL(LinkHandler::getInstance()->getLink('UserEmailAddressExport'));
 			break;
 			
 			case 'sendMail':
-				$item->setName('user.sendMail');
 				$item->setURL(LinkHandler::getInstance()->getLink('UserMail'));
-			break;
-			
-			default:
-				throw new SystemException("action '".$actionName."' is invalid");
 			break;
 		}
 		
@@ -77,22 +68,27 @@ class UserClipboardAction extends AbstractClipboardAction {
 	}
 	
 	/**
+	 * @see	wcf\system\clipboard\action\IClipboardAction::getTypeName()
+	 */
+	public function getTypeName() {
+		return 'com.woltlab.wcf.user';
+	}
+	
+	/**
 	 * Returns the ids of the users which can be deleted.
 	 * 
-	 * @param	array<wcf\data\user\User>	$objects
-	 * @return	integer
+	 * @return	array<integer>
 	 */
-	protected function validateDelete(array $objects) {
+	protected function validateDelete() {
 		// check permissions
 		if (!WCF::getSession()->getPermission('admin.user.canDeleteUser')) {
 			return 0;
 		}
 		
 		// user cannot delete itself
-		$userIDs = array_keys($objects);
+		$userIDs = array_keys($this->objects);
 		foreach ($userIDs as $index => $userID) {
 			if ($userID == WCF::getUser()->userID) {
-				unset($objects[$userID]);
 				unset($userIDs[$index]);
 			}
 		}
@@ -127,12 +123,5 @@ class UserClipboardAction extends AbstractClipboardAction {
 		}
 		
 		return $userIDs;
-	}
-	
-	/**
-	 * @see	wcf\system\clipboard\action\IClipboardAction::getEditorLabel()
-	 */
-	public function getEditorLabel(array $objects) {
-		return WCF::getLanguage()->getDynamicVariable('wcf.clipboard.label.user.marked', array('count' => count($objects)));
 	}
 }

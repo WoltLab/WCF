@@ -52,7 +52,6 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		$isDefault = false;
 		$styleList = new StyleList();
 		$styleList->getConditionBuilder()->add("packageID = ?", array($this->installation->getPackageID()));
-		$styleList->sqlLimit = 0;
 		$styleList->readObjects();
 		
 		foreach ($styleList->getObjects() as $style) {
@@ -71,7 +70,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			$styles = $styleList->getObjects();
 			
 			if (!empty($styles)) {
-				$styleEditor = new StyleEditor($styles[0]);
+				$styleEditor = new StyleEditor(current($styles));
 				$styleEditor->setAsDefault();
 			}
 		}

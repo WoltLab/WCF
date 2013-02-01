@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\option\Option;
 use wcf\data\option\OptionEditor;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -10,13 +11,19 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes options.
  * 
  * @author	Benjamin Kunz
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
  * @category	Community Framework
  */
 class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
+	/**
+	 * list of application abbreviations
+	 * @var	array<string>
+	 */
+	protected static $abbreviations = null;
+	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
@@ -52,12 +59,6 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		if (isset($option['supporti18n'])) $supportI18n = $option['supporti18n'];
 		if (isset($option['requirei18n'])) $requireI18n = $option['requirei18n'];
 		
-		// check if optionType exists
-		$className = 'wcf\system\option\\'.StringUtil::firstCharToUpperCase($optionType).'OptionType';
-		if (!class_exists($className)) {
-			throw new SystemException("unable to find class '".$className."'");
-		}
-		
 		// collect additional tags and their values
 		$additionalData = array();
 		foreach ($option as $tag => $value) {
@@ -83,12 +84,10 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		// try to find an existing option for updating
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_".$this->tableName."
-			WHERE	optionName = ?
-				AND packageID = ?";
+			WHERE	optionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			$optionName,
-			$this->installation->getPackageID()
+			$optionName
 		));
 		$row = $statement->fetchArray();
 		
@@ -101,6 +100,11 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 			OptionEditor::create($data);
 		}
 		else {
+			// editing an option from a different package
+			if ($row['packageID'] != $this->installation->getPackageID()) {
+				throw new SystemException("Option '".$optionName."' already exists, but is owned by a different package");
+			}
+			
 			// update existing item
 			$optionObj = new Option(null, $row);
 			$optionEditor = new OptionEditor($optionObj);

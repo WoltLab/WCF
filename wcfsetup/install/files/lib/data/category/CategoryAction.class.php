@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\category;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\data\ICollapsibleContainerAction;
-use wcf\data\IPositionAction;
+use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\data\IToggleContainerAction;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -15,13 +15,13 @@ use wcf\system\WCF;
  * Executes category-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.category
  * @category	Community Framework
  */
-class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibleContainerAction, IPositionAction, IToggleAction {
+class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction, IToggleContainerAction {
 	/**
 	 * categorized object type
 	 * @var	wcf\data\object\type\ObjectType
@@ -36,7 +36,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 		
 		// call category types
 		foreach ($this->objects as $categoryEditor) {
-			$categoryEditor->getCategoryType()->afterDeletion($categoryEditor);
+			$categoryEditor->getProcessor()->afterDeletion($categoryEditor);
 		}
 		
 		return $returnValue;
@@ -54,10 +54,10 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	}
 	
 	/**
-	 * @see	wcf\data\ICollapsibleContainerAction::toggleContainer()
+	 * @see	wcf\data\IToggleContainerAction::toggleContainer()
 	 */
 	public function toggleContainer() {
-		$collapsibleObjectTypeName = $this->objects[0]->getCategoryType()->getObjectTypeName('com.woltlab.wcf.collapsibleContent');
+		$collapsibleObjectTypeName = $this->objects[0]->getProcessor()->getObjectTypeName('com.woltlab.wcf.collapsibleContent');
 		if ($collapsibleObjectTypeName === null) {
 			throw new SystemException("Categories of this type don't support collapsing");
 		}
@@ -75,7 +75,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	}
 	
 	/**
-	 * @see	wcf\data\IPositionAction::updatePosition()
+	 * @see	wcf\data\ISortableAction::updatePosition()
 	 */
 	public function updatePosition() {
 		$showOrders = array();
@@ -100,11 +100,6 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	 * @see	wcf\data\AbstractDatabaseObjectAction::validateDelete()
 	 */
 	public function validateCreate() {
-		// validate permissions
-		if (!empty($this->permissionsCreate)) {
-			WCF::getSession()->checkPermissions($this->permissionsCreate);
-		}
-		
 		if (!isset($this->parameters['data']['objectTypeID'])) {
 			throw new UserInputException('objectTypeID');
 		}
@@ -122,16 +117,6 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	 * @see	wcf\data\AbstractDatabaseObjectAction::validateDelete()
 	 */
 	public function validateDelete() {
-		// validate permissions
-		if (!empty($this->permissionsDelete)) {
-			try {
-				WCF::getSession()->checkPermissions($this->permissionsDelete);
-			}
-			catch (PermissionDeniedException $e) {
-				throw new PermissionDeniedException();
-			}
-		}
-		
 		// read objects
 		if (empty($this->objects)) {
 			$this->readObjects();
@@ -142,7 +127,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 		}
 		
 		foreach ($this->objects as $categoryEditor) {
-			if (!$categoryEditor->getCategoryType()->canDeleteCategory()) {
+			if (!$categoryEditor->getProcessor()->canDeleteCategory()) {
 				throw new PermissionDeniedException();
 			}
 		}
@@ -156,7 +141,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	}
 	
 	/**
-	 * @see	wcf\data\ICollapsibleContainerAction::validateToggleContainer()
+	 * @see	wcf\data\IToggleContainerAction::validateToggleContainer()
 	 */
 	public function validateToggleContainer() {
 		$this->validateUpdate();
@@ -166,11 +151,6 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 	 * @see	wcf\data\AbstractDatabaseObjectAction::validateUpdate()
 	 */
 	public function validateUpdate() {
-		// validate permissions
-		if (!empty($this->permissionsUpdate)) {
-			WCF::getSession()->checkPermissions($this->permissionsUpdate);
-		}
-		
 		// read objects
 		if (empty($this->objects)) {
 			$this->readObjects();
@@ -181,26 +161,16 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 		}
 		
 		foreach ($this->objects as $categoryEditor) {
-			if (!$categoryEditor->getCategoryType()->canEditCategory()) {
+			if (!$categoryEditor->getProcessor()->canEditCategory()) {
 				throw new PermissionDeniedException();
 			}
 		}
 	}
 	
 	/**
-	 * @see	wcf\data\IPositionAction::validateUpdatePosition()
+	 * @see	wcf\data\ISortableAction::validateUpdatePosition()
 	 */
 	public function validateUpdatePosition() {
-		// validate permissions
-		if (!empty($this->permissionsUpdate)) {
-			try {
-				WCF::getSession()->checkPermissions($this->permissionsUpdate);
-			}
-			catch (PermissionDeniedException $e) {
-				throw new PermissionDeniedException();
-			}
-		}
-		
 		// validate 'structure' parameter
 		if (!isset($this->parameters['data']['structure']) || !is_array($this->parameters['data']['structure'])) {
 			throw new UserInputException('structure');
@@ -215,12 +185,12 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 					throw new UserInputException('structure');
 				}
 				
-				$this->objects[$category->categoryID] = new $this->className($category);
-				
 				// validate permissions
-				if (!$category->getCategoryType()->canEditCategory()) {
+				if (!$category->getProcessor()->canEditCategory()) {
 					throw new PermissionDeniedException();
 				}
+				
+				$this->objects[$category->categoryID] = new $this->className($category);
 			}
 			
 			foreach ($categoryIDs as $categoryID) {
@@ -230,12 +200,12 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ICollapsibl
 					throw new UserInputException('structure');
 				}
 				
-				$this->objects[$category->categoryID] = new $this->className($category);
-				
 				// validate permissions
-				if (!$category->getCategoryType()->canEditCategory()) {
+				if (!$category->getProcessor()->canEditCategory()) {
 					throw new PermissionDeniedException();
 				}
+				
+				$this->objects[$category->categoryID] = new $this->className($category);
 			}
 		}
 	}

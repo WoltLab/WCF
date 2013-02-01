@@ -1,7 +1,10 @@
 <?php
 namespace wcf\system;
 use wcf\data\application\Application;
+use wcf\data\option\OptionEditor;
+use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
+use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\cronjob\CronjobScheduler;
@@ -39,7 +42,7 @@ if (!defined('NO_IMPORTS')) {
  * It holds the database connection, access to template and language engine.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
@@ -323,17 +326,14 @@ class WCF {
 	}
 	
 	/**
-	 * Includes the options file.
-	 * If the option file doesn't exist, the rebuild of it is started.
-	 * 
-	 * @param	string		$filename
+	 * Loads the options file, automatically created if not exists.
 	 */
-	protected function loadOptions($filename = null, $packageID = 1) {
-		if ($filename === null) $filename = WCF_DIR.'options.inc.php';
+	protected function loadOptions() {
+		$filename = WCF_DIR.'options.inc.php';
 		
 		// create options file if doesn't exist
 		if (!file_exists($filename) || filemtime($filename) <= 1) {
-			\wcf\data\option\OptionEditor::rebuildFile($filename, $packageID);
+			OptionEditor::rebuild();
 		}
 		require_once($filename);
 	}
@@ -363,7 +363,6 @@ class WCF {
 		
 		// get language
 		self::$languageObj = LanguageFactory::getInstance()->getUserLanguage(self::getSession()->getLanguageID());
-		self::$languageObj->setLocale();
 	}
 	
 	/**
@@ -382,10 +381,10 @@ class WCF {
 	 */
 	protected function initStyle() {
 		if (isset($_REQUEST['styleID'])) {
-			WCF::getSession()->setStyleID(intval($_REQUEST['styleID']));
+			self::getSession()->setStyleID(intval($_REQUEST['styleID']));
 		}
 		
-		StyleHandler::getInstance()->changeStyle(WCF::getSession()->getStyleID());
+		StyleHandler::getInstance()->changeStyle(self::getSession()->getStyleID());
 	}
 	
 	/**
@@ -393,17 +392,17 @@ class WCF {
 	 */
 	protected function initBlacklist() {
 		if (defined('BLACKLIST_IP_ADDRESSES') && BLACKLIST_IP_ADDRESSES != '') {
-			if (!StringUtil::executeWordFilter(WCF::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
+			if (!StringUtil::executeWordFilter(self::getSession()->ipAddress, BLACKLIST_IP_ADDRESSES)) {
 				throw new PermissionDeniedException();
 			}
 		}
 		if (defined('BLACKLIST_USER_AGENTS') && BLACKLIST_USER_AGENTS != '') {
-			if (!StringUtil::executeWordFilter(WCF::getSession()->userAgent, BLACKLIST_USER_AGENTS)) {
+			if (!StringUtil::executeWordFilter(self::getSession()->userAgent, BLACKLIST_USER_AGENTS)) {
 				throw new PermissionDeniedException();
 			}
 		}
 		if (defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
-			if (!StringUtil::executeWordFilter(@gethostbyaddr(WCF::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
+			if (!StringUtil::executeWordFilter(@gethostbyaddr(self::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
 				throw new PermissionDeniedException();
 			}
 		}
@@ -458,7 +457,20 @@ class WCF {
 	protected function loadApplication(Application $application, $isDependentApplication = false) {
 		$applicationObject = null;
 		$package = PackageCache::getInstance()->getPackage($application->packageID);
-		
+		// package cache might be outdated
+		if ($package === null) {
+			$package = new Package($application->packageID);
+			
+			// package cache is outdated, discard cache
+			if ($package->packageID) {
+				PackageEditor::resetCache();
+			}
+			else {
+				// package id is invalid
+				throw new SystemException("application identified by package id '".$application->packageID."' is unknown");
+			}
+		}
+			
 		$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
 		$packageDir = FileUtil::getRealPath(WCF_DIR.$package->packageDir);
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
@@ -474,13 +486,10 @@ class WCF {
 				throw new SystemException('Unable to load configuration for '.$package->package);
 			}
 			
-			// load options
-			$this->loadOptions($packageDir.'options.inc.php', $application->packageID);
-			
 			// start application if not within ACP
 			if (!class_exists('wcf\system\WCFACP', false)) {
 				// add template path and abbreviation
-				$this->getTPL()->addApplication($abbreviation, $application->packageID, $packageDir . 'templates/');
+				$this->getTPL()->addApplication($abbreviation, $packageDir . 'templates/');
 				
 				// init application and assign it as template variable
 				$applicationObject = call_user_func(array($className, 'getInstance'));
@@ -494,7 +503,7 @@ class WCF {
 		
 		// register template path in ACP
 		if (class_exists('wcf\system\WCFACP', false)) {
-			$this->getTPL()->addApplication($abbreviation, $application->packageID, $packageDir . 'acp/templates/');
+			$this->getTPL()->addApplication($abbreviation, $packageDir . 'acp/templates/');
 		}
 		else if (!$isDependentApplication) {
 			// assign base tag
@@ -523,7 +532,7 @@ class WCF {
 	 * Assigns some default variables to the template engine.
 	 */
 	protected function assignDefaultTemplateVariables() {
-		self::getTPL()->registerPrefilter(array('event', 'hascontent', 'lang', 'icon'));
+		self::getTPL()->registerPrefilter(array('event', 'hascontent', 'lang'));
 		self::getTPL()->assign(array('__wcf' => $this));
 	}
 	
@@ -672,6 +681,15 @@ class WCF {
 	 * @return	string
 	 */
 	public function getAnchor($fragment) {
+		return $this->getRequestURI() . '#' . $fragment;
+	}
+	
+	/**
+	 * Returns the URI of the current page.
+	 *
+	 * @return	string
+	 */
+	public function getRequestURI() {
 		// resolve path and query components
 		$scriptName = $_SERVER['SCRIPT_NAME'];
 		if (empty($_SERVER['PATH_INFO'])) {
@@ -683,9 +701,14 @@ class WCF {
 		if (!StringUtil::isASCII($path) && !StringUtil::isUTF8($path)) {
 			$path = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $path);
 		}
+		$path = FileUtil::removeLeadingSlash($path);
 		$baseHref = self::getTPL()->get('baseHref');
 		
-		return $baseHref . 'index.php' . $path . '#' . $fragment;
+		if (!empty($path) && StringUtil::indexOf($path, '?') !== 0) {
+			$baseHref .= 'index.php/';
+		}
+		
+		return $baseHref . $path;
 	}
 	
 	/**

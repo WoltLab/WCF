@@ -60,7 +60,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 			$updateSQL .= $key . ' = ?';
 			$statementParameters[] = $value;
 		}
-		$statementParameters[] = $this->__get(static::getDatabaseTableIndexName());
+		$statementParameters[] = $this->getObjectID();
 		
 		$sql = "UPDATE	".static::getDatabaseTableName()."
 			SET	".$updateSQL."
@@ -82,7 +82,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 			$updateSQL .= $key . ' = ' . $key . ' + ?';
 			$statementParameters[] = $value;
 		}
-		$statementParameters[] = $this->__get(static::getDatabaseTableIndexName());
+		$statementParameters[] = $this->getObjectID();
 		
 		$sql = "UPDATE	".static::getDatabaseTableName()."
 			SET	".$updateSQL."
@@ -95,7 +95,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	 * @see	wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
-		static::deleteAll(array($this->__get(static::getDatabaseTableIndexName())));
+		static::deleteAll(array($this->getObjectID()));
 	}
 	
 	/**

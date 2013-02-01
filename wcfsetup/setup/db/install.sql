@@ -1,10 +1,48 @@
 /* tables */
+DROP TABLE IF EXISTS wcf1_acl_option;
+CREATE TABLE wcf1_acl_option (
+	optionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL,
+	objectTypeID INT(10) NOT NULL,
+	optionName VARCHAR(255) NOT NULL,
+	categoryName VARCHAR(255) NOT NULL,
+	UNIQUE KEY (packageID, objectTypeID, optionName)
+);
+
+DROP TABLE IF EXISTS wcf1_acl_option_category;
+CREATE TABLE wcf1_acl_option_category (
+	categoryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL,
+	objectTypeID INT(10) NOT NULL,
+	categoryName VARCHAR(255) NOT NULL,
+	UNIQUE KEY (packageID, objectTypeID, categoryName)
+);
+
+DROP TABLE IF EXISTS wcf1_acl_option_to_user;
+CREATE TABLE wcf1_acl_option_to_user (
+	optionID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	optionValue TINYINT(1) NOT NULL DEFAULT 0,
+	UNIQUE KEY userID (userID, objectID, optionID)
+);
+
+DROP TABLE IF EXISTS wcf1_acl_option_to_group;
+CREATE TABLE wcf1_acl_option_to_group (
+	optionID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL,
+	groupID INT(10) NOT NULL,
+	optionValue TINYINT(1) NOT NULL DEFAULT 0,
+	UNIQUE KEY groupID (groupID, objectID, optionID)
+);
+
 DROP TABLE IF EXISTS wcf1_acp_menu_item;
 CREATE TABLE wcf1_acp_menu_item (
 	menuItemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL,
 	menuItem VARCHAR(255) NOT NULL DEFAULT '',
 	parentMenuItem VARCHAR(255) NOT NULL DEFAULT '',
+	menuItemController VARCHAR(255) NOT NULL DEFAULT '',
 	menuItemLink VARCHAR(255) NOT NULL DEFAULT '',
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
@@ -174,7 +212,7 @@ CREATE TABLE wcf1_cronjob (
 	lastExec INT(10) NOT NULL DEFAULT 0,
 	nextExec INT(10) NOT NULL DEFAULT 0,
 	afterNextExec INT(10) NOT NULL DEFAULT 0,
-	active TINYINT(1) NOT NULL DEFAULT 1,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	canBeEdited TINYINT(1) NOT NULL DEFAULT 1,
 	canBeDisabled TINYINT(1) NOT NULL DEFAULT 1,
 	state TINYINT(1) NOT NULL DEFAULT 0,
@@ -240,7 +278,7 @@ DROP TABLE IF EXISTS wcf1_language_server;
 CREATE TABLE wcf1_language_server (
 	languageServerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	serverURL VARCHAR(255) NOT NULL DEFAULT '',
-	disabled TINYINT(1) NOT NULL DEFAULT 0
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_modification_log;
@@ -294,7 +332,8 @@ CREATE TABLE wcf1_option (
 	supportI18n TINYINT(1) NOT NULL DEFAULT 0,
 	requireI18n TINYINT(1) NOT NULL DEFAULT 0,
 	additionalData MEDIUMTEXT,
-	UNIQUE KEY optionName (optionName, packageID)
+	
+	UNIQUE KEY optionName (optionName)
 );
 
 DROP TABLE IF EXISTS wcf1_option_category;
@@ -321,7 +360,6 @@ CREATE TABLE wcf1_package (
 	installDate INT(10) NOT NULL DEFAULT 0,
 	updateDate INT(10) NOT NULL DEFAULT 0,
 	packageURL VARCHAR(255) NOT NULL DEFAULT '',
-	isUnique TINYINT(1) NOT NULL DEFAULT 0,
 	isApplication TINYINT(1) NOT NULL DEFAULT 0,
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
@@ -404,14 +442,6 @@ CREATE TABLE wcf1_package_requirement (
 	UNIQUE KEY packageID (packageID, requirement)
 );
 
-DROP TABLE IF EXISTS wcf1_package_requirement_map;
-CREATE TABLE wcf1_package_requirement_map (
-	packageID INT(10) NOT NULL,
-	requirement INT(10) NOT NULL,
-	level INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY packageID (packageID, requirement)
-);
-
 DROP TABLE IF EXISTS wcf1_package_update;
 CREATE TABLE wcf1_package_update (
 	packageUpdateID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -421,8 +451,7 @@ CREATE TABLE wcf1_package_update (
 	packageDescription VARCHAR(255) NOT NULL DEFAULT '',
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
-	isApplication TINYINT(1) NOT NULL DEFAULT 0,
-	plugin VARCHAR(255) NOT NULL DEFAULT '',
+	isApplication TINYINT(1) NOT NULL DEFAULT 0
 	UNIQUE KEY packageUpdateServerID (packageUpdateServerID, package)
 );
 
@@ -441,6 +470,12 @@ CREATE TABLE wcf1_package_update_fromversion (
 	UNIQUE KEY packageUpdateVersionID (packageUpdateVersionID, fromversion)
 );
 
+DROP TABLE IF EXISTS wcf1_package_update_optional;
+CREATE TABLE wcf1_package_update_optional (
+	packageUpdateVersionID INT(10) NOT NULL DEFAULT 0,
+	package VARCHAR(255) NOT NULL DEFAULT ''
+);
+
 DROP TABLE IF EXISTS wcf1_package_update_requirement;
 CREATE TABLE wcf1_package_update_requirement (
 	packageUpdateVersionID INT(10) NOT NULL,
@@ -455,7 +490,7 @@ CREATE TABLE wcf1_package_update_server (
 	serverURL VARCHAR(255) NOT NULL DEFAULT '',
 	loginUsername VARCHAR(255) NOT NULL DEFAULT '',
 	loginPassword VARCHAR(255) NOT NULL DEFAULT '',
-	disabled TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	lastUpdateTime INT(10) NOT NULL DEFAULT 0,
 	status ENUM('online', 'offline') NOT NULL DEFAULT 'online',
 	errorMessage TEXT
@@ -466,9 +501,12 @@ CREATE TABLE wcf1_package_update_version (
 	packageUpdateVersionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageUpdateID INT(10) NOT NULL,
 	packageVersion VARCHAR(50) NOT NULL DEFAULT '',
-	updateType VARCHAR(10) NOT NULL DEFAULT '',
 	packageDate INT(10) NOT NULL DEFAULT 0,
 	filename VARCHAR(255) NOT NULL DEFAULT '',
+	license VARCHAR(255) NOT NULL DEFAULT '',
+	licenseURL VARCHAR(255) NOT NULL DEFAULT '',
+	isAccessible TINYINT(1) NOT NULL DEFAULT 1,
+	isCritical TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY packageUpdateID (packageUpdateID, packageVersion)
 );
 
@@ -478,6 +516,7 @@ CREATE TABLE wcf1_page_menu_item (
 	packageID INT(10) NOT NULL,
 	menuItem VARCHAR(255) NOT NULL DEFAULT '',
 	parentMenuItem VARCHAR(255) NOT NULL DEFAULT '',
+	menuItemController VARCHAR(255) NOT NULL DEFAULT '',
 	menuItemLink VARCHAR(255) NOT NULL DEFAULT '',
 	menuPosition ENUM('header', 'footer') NOT NULL DEFAULT 'header',
 	showOrder INT(10) NOT NULL DEFAULT 0,
@@ -486,7 +525,6 @@ CREATE TABLE wcf1_page_menu_item (
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	isLandingPage TINYINT(1) NOT NULL DEFAULT 0,
-	newWindow TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY (packageID, menuItem)
 );
 
@@ -546,8 +584,8 @@ CREATE TABLE wcf1_style (
 	styleName VARCHAR(255) NOT NULL DEFAULT '',
 	templateGroupID INT(10) NOT NULL DEFAULT 0,
 	isDefault TINYINT(1) NOT NULL DEFAULT 0,
-	disabled TINYINT(1) NOT NULL DEFAULT 0,
-	styleDescription TEXT,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	styleDescription VARCHAR(30) NOT NULL DEFAULT '',
 	styleVersion VARCHAR(255) NOT NULL DEFAULT '',
 	styleDate CHAR(10) NOT NULL DEFAULT '0000-00-00',
 	image VARCHAR(255) NOT NULL DEFAULT '',
@@ -611,8 +649,7 @@ CREATE TABLE wcf1_user (
 	userID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	email VARCHAR(255) NOT NULL DEFAULT '',
-	password VARCHAR(40) NOT NULL DEFAULT '',
-	salt VARCHAR(40) NOT NULL DEFAULT '',
+	password VARCHAR(100) NOT NULL DEFAULT '',
 	accessToken CHAR(40) NOT NULL DEFAULT '',
 	languageID INT(10) NOT NULL DEFAULT 0,
 	registrationDate INT(10) NOT NULL DEFAULT 0,
@@ -694,7 +731,7 @@ CREATE TABLE wcf1_user_option (
 	outputClass VARCHAR(255) NOT NULL DEFAULT '',
 	searchable TINYINT(1) NOT NULL DEFAULT 0,
 	showOrder INT(10) NOT NULL DEFAULT 0,
-	disabled TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
 	additionalData MEDIUMTEXT,
@@ -742,6 +779,18 @@ CREATE TABLE wcf1_user_to_language (
 );
 
 /* foreign keys */
+ALTER TABLE wcf1_acl_option ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_acl_option ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_acl_option_category ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_acl_option_category ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_acl_option_to_user ADD FOREIGN KEY (optionID) REFERENCES wcf1_acl_option (optionID) ON DELETE CASCADE;
+ALTER TABLE wcf1_acl_option_to_user ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_acl_option_to_group ADD FOREIGN KEY (optionID) REFERENCES wcf1_acl_option (optionID) ON DELETE CASCADE;
+ALTER TABLE wcf1_acl_option_to_group ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_acp_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_acp_search_provider ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
@@ -813,9 +862,6 @@ ALTER TABLE wcf1_package_installation_sql_log ADD FOREIGN KEY (packageID) REFERE
 ALTER TABLE wcf1_package_requirement ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_package_requirement ADD FOREIGN KEY (requirement) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_package_requirement_map ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-ALTER TABLE wcf1_package_requirement_map ADD FOREIGN KEY (requirement) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-
 ALTER TABLE wcf1_package_update ADD FOREIGN KEY (packageUpdateServerID) REFERENCES wcf1_package_update_server (packageUpdateServerID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update_exclusion ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
@@ -823,6 +869,8 @@ ALTER TABLE wcf1_package_update_exclusion ADD FOREIGN KEY (packageUpdateVersionI
 ALTER TABLE wcf1_package_update_fromversion ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update_requirement ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_package_update_optional ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update_version ADD FOREIGN KEY (packageUpdateID) REFERENCES wcf1_package_update (packageUpdateID) ON DELETE CASCADE;
 
@@ -891,8 +939,8 @@ INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (4, 3, '1');	-- Administrators
 
 -- default update servers
-INSERT INTO wcf1_package_update_server (serverURL, status, disabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');
-INSERT INTO wcf1_package_update_server (serverURL, status, disabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/maelstrom/', 'online', 0, NULL, 0, '', '');
 
 -- style default values
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBackgroundColor', 'rgba(255, 255, 255, 1)');
@@ -974,7 +1022,12 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMen
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuColor', '@wcfColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuActiveColor', '@wcfLinkColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelHoverBackgroundColor', 'rgba(60, 60, 60, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMarkedBackgroundColor', 'rgba(255, 255, 200, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSelectedBackgroundColor', 'rgba(255, 255, 200, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSelectedColor', '@wcfColor');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDeletedBackgroundColor', 'rgba(255, 238, 238, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDeletedColor', 'rgba(204, 0, 0, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledBackgroundColor', 'rgba(238, 255, 238, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledColor', 'rgba(0, 153, 0, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoHeight', 'auto');

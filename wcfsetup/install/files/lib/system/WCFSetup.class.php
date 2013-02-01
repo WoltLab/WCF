@@ -39,7 +39,7 @@ define('ENABLE_BENCHMARK', 0);
  * Executes the installation of the basic WCF systems.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
@@ -93,8 +93,8 @@ class WCFSetup extends WCF {
 	 * @var	array<array>
 	 */
 	protected static $dbClasses = array(
-		'MySQLDatabase' => array('class' => 'wcf\system\database\MySQLDatabase', 'minversion' => '5.1.17'),		// MySQL 5.1.17+
-		'PostgreSQLDatabase' => array('class' => 'wcf\system\database\PostgreSQLDatabase', 'minversion' => '8.2.0')	// PostgreSQL 8.2.0+
+		'MySQLDatabase' => array('class' => 'wcf\system\database\MySQLDatabase', 'minversion' => '5.1.17')//,		// MySQL 5.1.17+
+		//'PostgreSQLDatabase' => array('class' => 'wcf\system\database\PostgreSQLDatabase', 'minversion' => '8.2.0')	// PostgreSQL 8.2.0+
 	);
 	
 	/**
@@ -401,11 +401,55 @@ class WCFSetup extends WCF {
 		// mb string
 		$system['mbString']['result'] = extension_loaded('mbstring');
 		
+		// memory limit
+		$system['memoryLimit']['value'] = ini_get('memory_limit');
+		$system['memoryLimit']['result'] = $this->compareMemoryLimit();
+		
 		WCF::getTPL()->assign(array(
 			'system' => $system,
 			'nextStep' => 'searchWcfDir'
 		));
 		WCF::getTPL()->display('stepShowSystemRequirements');
+	}
+	
+	/**
+	 * Returns true, if memory_limit is set to at least 64 MB
+	 * 
+	 * @return	boolean
+	 */
+	protected function compareMemoryLimit() {
+		$memoryLimit = ini_get('memory_limit');
+		
+		// no limit
+		if ($memoryLimit == -1) {
+			return true;
+		}
+		
+		// completely numeric, PHP assumes byte
+		if (is_numeric($memoryLimit)) {
+			$memoryLimit = $memoryLimit / 1024;
+			return ($memoryLimit >= 64);
+		}
+		
+		// PHP supports 'K', 'M' and 'G' shorthand notation
+		if (preg_match('~^(\d+)([KMG])$~', $memoryLimit, $matches)) {
+			switch ($matches[2]) {
+				case 'K':
+					$memoryLimit = $matches[1] * 1024;
+					return ($memoryLimit >= 64);
+				break;
+				
+				case 'M':
+					return ($matches[1] >= 64);
+				break;
+				
+				case 'G':
+					return ($matches[1] >= 1);
+				break;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**

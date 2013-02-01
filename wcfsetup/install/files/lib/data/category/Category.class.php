@@ -1,6 +1,6 @@
 <?php
 namespace wcf\data\category;
-use wcf\data\DatabaseObject;
+use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\category\CategoryHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\WCF;
@@ -9,19 +9,13 @@ use wcf\system\WCF;
  * Represents a category.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.category
  * @category	Community Framework
  */
-class Category extends DatabaseObject implements IRouteController {
-	/**
-	 * category type of this category
-	 * @var	wcf\system\category\ICategoryType
-	 */
-	protected $categoryType = null;
-	
+class Category extends ProcessibleDatabaseObject implements IRouteController {
 	/**
 	 * list of all parent category generations of this category
 	 * @var	array<wcf\data\category\Category>
@@ -45,9 +39,19 @@ class Category extends DatabaseObject implements IRouteController {
 	protected static $databaseTableName = 'category';
 	
 	/**
+	 * @see	wcf\data\ProcessibleDatabaseObject::$processorInterface
+	 */
+	protected static $processorInterface = 'wcf\system\category\ICategoryType';
+	
+	/**
 	 * @see	wcf\data\IStorableObject::__get()
 	 */
 	public function __get($name) {
+		// forward 'className' property requests to object type
+		if ($name == 'className') {
+			return $this->getObjectType()->className;
+		}
+		
 		$value = parent::__get($name);
 		
 		// check additional data
@@ -61,23 +65,12 @@ class Category extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * Returns the category type of this category.
+	 * Returns the category object type of the category.
 	 * 
-	 * @return	wcf\system\category\ICategoryType
+	 * @return	wcf\data\category\Category
 	 */
-	public function getCategoryType() {
-		if ($this->categoryType === null) {
-			$this->categoryType = CategoryHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor();
-		}
-		
-		return $this->categoryType;
-	}
-	
-	/**
-	 * @see	wcf\system\request\IRouteController::getID()
-	 */
-	public function getID() {
-		return $this->categoryID;
+	public function getObjectType() {
+		return CategoryHandler::getInstance()->getObjectType($this->objectTypeID);
 	}
 	
 	/**
@@ -113,7 +106,7 @@ class Category extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	wcf\data\ITitledDatabaseObject::getTitle()
+	 * @see	wcf\data\ITitledObject::getTitle()
 	 */
 	public function getTitle() {
 		return WCF::getLanguage()->get($this->title);

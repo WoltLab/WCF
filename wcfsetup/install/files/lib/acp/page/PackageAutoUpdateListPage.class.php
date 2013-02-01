@@ -1,7 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
@@ -10,13 +9,18 @@ use wcf\system\WCFACP;
  * Shows the list of available updates for installed packages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
  */
 class PackageAutoUpdateListPage extends AbstractPage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.package.autoupdate';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
@@ -36,11 +40,11 @@ class PackageAutoUpdateListPage extends AbstractPage {
 		
 		if (empty($_POST)) {
 			// refresh package database
-			PackageUpdateDispatcher::refreshPackageDatabase();
+			PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
 		}
 		
 		// get updatable packages
-		$this->availableUpdates = PackageUpdateDispatcher::getAvailableUpdates();
+		$this->availableUpdates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 	}
 	
 	/**
@@ -58,9 +62,6 @@ class PackageAutoUpdateListPage extends AbstractPage {
 	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
-		// set active menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.package.autoupdate');
-		
 		// check master password
 		WCFACP::checkMasterPassword();
 		

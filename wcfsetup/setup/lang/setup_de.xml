@@ -5,8 +5,6 @@
 		<item name="wcf.global.title"><![CDATA[{$setupPackageName}]]></item>
 		<item name="wcf.global.title.subtitle"><![CDATA[Vorbereiten der Installation]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
-		<item name="wcf.global.locale.unix"><![CDATA[de_DE]]></item>
-		<item name="wcf.global.locale.win"><![CDATA[deu_deu]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[,]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
@@ -20,8 +18,6 @@
 		<item name="wcf.global.license.description"><![CDATA[Bitte lesen Sie die folgenden Lizenzbestimmungen. Verwenden Sie die Bildlaufleiste, um das gesamte Dokument anzuzeigen.]]></item>
 		<item name="wcf.global.license.accept.description"><![CDATA[Akzeptieren Sie sämtliche Bedingungen der Lizenzbestimmungen? Sie können die Software nur installieren, wenn Sie die Lizenzbestimmungen akzeptieren.]]></item>
 		<item name="wcf.global.license.missingAcception"><![CDATA[Um mit der Installation fortfahren zu können, müssen Sie die Lizenzbestimmungen akzeptieren.]]></item>
-		<item name="wcf.global.systemRequirements"><![CDATA[Überprüfung der Systemvoraussetzungen]]></item>
-		<item name="wcf.global.systemRequirements.description"><![CDATA[Dies sind die Systemvoraussetzungen:]]></item>
 		<item name="wcf.global.systemRequirements.required"><![CDATA[Benötigte Systemvoraussetzungen]]></item>
 		<item name="wcf.global.systemRequirements.recommended"><![CDATA[Empfohlene Systemvoraussetzungen]]></item>
 		<item name="wcf.global.systemRequirements.element.required"><![CDATA[Benötigt:]]></item>

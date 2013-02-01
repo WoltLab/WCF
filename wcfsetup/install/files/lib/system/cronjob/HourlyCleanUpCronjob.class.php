@@ -19,6 +19,7 @@ class HourlyCleanUpCronjob extends AbstractCronjob {
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
 		
+		return;
 		// TODO
 	}
 }

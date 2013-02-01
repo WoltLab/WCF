@@ -2,7 +2,9 @@
 namespace wcf\data\page\menu\item;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
+use wcf\data\IToggleAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -10,17 +12,23 @@ use wcf\system\WCF;
  * Executes page menu item-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.page.menu.item
  * @category	Community Framework
  */
-class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortableAction {
+class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\page\menu\item\PageMenuItemEditor';
+	
+	/**
+	 * page menu item editor
+	 * @var	wcf\data\page\menu\item\PageMenuItemEditor
+	 */
+	public $menuItemEditor = null;
 	
 	/**
 	 * list of menu items
@@ -38,12 +46,31 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 		
 		$menuItem = parent::create();
 		
-		if ($menuItem->isLandingPage) {
-			$menuItemEditor = new PageMenuItemEditor($menuItem);
-			$menuItemEditor->setAsLandingPage();
+		if ($menuItem->menuPosition == 'header') {
+			PageMenuItemEditor::updateLandingPage();
 		}
 		
 		return $menuItem;
+	}
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
+	 */
+	public function delete() {
+		$returnValues = parent::delete();
+		
+		PageMenuItemEditor::updateLandingPage();
+		
+		return $returnValues;
+	}
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
+	 */
+	public function update() {
+		parent::update();
+		
+		PageMenuItemEditor::updateLandingPage();
 	}
 	
 	/**
@@ -74,7 +101,6 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 		$menuItemList = new PageMenuItemList();
 		$menuItemList->getConditionBuilder()->add("page_menu_item.menuItemID IN (?)", array($menuItemIDs));
 		$menuItemList->getConditionBuilder()->add("page_menu_item.menuPosition = ?", array($this->parameters['menuPosition']));
-		$menuItemList->sqlLimit = 0;
 		$menuItemList->readObjects();
 		$this->menuItems = $menuItemList->getObjects();
 		
@@ -110,5 +136,29 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 			}
 		}
 		WCF::getDB()->commitTransaction();
+		
+		// update landing page
+		if ($this->parameters['menuPosition'] == 'header') {
+			PageMenuItemEditor::updateLandingPage();
+		}
+	}
+	
+	/**
+	 * @see	wcf\data\IToggleAction::validateToggle()
+	 */
+	public function validateToggle() {
+		$this->menuItemEditor = $this->getSingleObject();
+		if ($this->menuItemEditor->isLandingPage) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * @see	wcf\data\IToggleAction::toggle()
+	 */
+	public function toggle() {
+		$this->menuItemEditor->update(array(
+			'isDisabled' => ($this->menuItemEditor->isDisabled ? 0 : 1)
+		));
 	}
 }

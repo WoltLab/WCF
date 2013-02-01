@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\option;
-use wcf\data\DatabaseObject;
 use wcf\data\package\Package;
+use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -27,6 +27,22 @@ class Option extends DatabaseObject {
 	protected static $databaseTableIndexName = 'optionID';
 	
 	/**
+	 * @see	wcf\data\IStorableObject::__get()
+	 */
+	public function __get($name) {
+		$value = parent::__get($name);
+		
+		// treat additional data as data variables if it is an array
+		if ($value === null) {
+			if (is_array($this->data['additionalData']) && isset($this->data['additionalData'][$name])) {
+				$value = $this->data['additionalData'][$name];
+			}
+		}
+		
+		return $value;
+	}
+	
+	/**
 	 * @see	wcf\data\DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {
@@ -42,12 +58,12 @@ class Option extends DatabaseObject {
 	 * @return	array<wcf\data\option\Option>
 	 */
 	public static function getOptions() {
-		$sql = "SELECT		option_table.*, package.package, package.isApplication
-			FROM		wcf".WCF_N."_option option_table
-			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = option_table.packageID)";
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_option";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
+		
+		$options = array();
 		while ($row = $statement->fetchArray()) {
 			$option = new Option(null, $row);
 			$options[$option->getConstantName()] = $option;
@@ -158,11 +174,6 @@ class Option extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getConstantName() {
-		$prefix = '';
-		if ($this->package && $this->isApplication && $this->package != 'com.woltlab.wcf') {
-			$prefix = Package::getAbbreviation($this->package) . '_';
-		}
-		
-		return strtoupper($prefix.$this->optionName);
+		return strtoupper($this->optionName);
 	}
 }

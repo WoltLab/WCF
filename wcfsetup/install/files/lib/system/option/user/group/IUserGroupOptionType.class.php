@@ -14,6 +14,16 @@ use wcf\system\option\IOptionType;
  */
 interface IUserGroupOptionType extends IOptionType {
 	/**
+	 * Returns the value which results by calculating the difference of the
+	 * given values.
+	 * 
+	 * @param	mixed		$defaultValue
+	 * @param	mixed		$groupValue
+	 * @return	mixed
+	 */
+	public function diff($defaultValue, $groupValue);
+	
+	/**
 	 * Returns the value which results by merging or null if nothing should be saved.
 	 * 
 	 * @param	mixed		$defaultValue

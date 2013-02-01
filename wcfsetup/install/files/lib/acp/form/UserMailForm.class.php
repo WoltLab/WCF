@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
+use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
@@ -14,13 +15,13 @@ use wcf\util\StringUtil;
  * Shows the user mail form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class UserMailForm extends ACPForm {
+class UserMailForm extends AbstractForm {
 	/**
 	 * enable html for message body
 	 * @var	boolean
@@ -158,21 +159,27 @@ class UserMailForm extends ACPForm {
 			// get marked user ids
 			if (empty($this->action)) {
 				// get type id
-				$typeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
-				if ($typeID === null) {
-					throw new SystemException("clipboard item type 'com.woltlab.wcf.user' is unknown.");
+				$objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
+				if ($objectTypeID === null) {
+					throw new SystemException("Unknown clipboard item type 'com.woltlab.wcf.user'");
 				}
 				
 				// get user ids
-				$users = ClipboardHandler::getInstance()->getMarkedItems($typeID);
-				if (!isset($users['com.woltlab.wcf.user']) || empty($users['com.woltlab.wcf.user'])) throw new IllegalLinkException();
+				$users = ClipboardHandler::getInstance()->getMarkedItems($objectTypeID);
+				if (empty($users)) {
+					throw new IllegalLinkException();
+				}
 				
 				// load users
-				$this->userIDs = array_keys($users['com.woltlab.wcf.user']);
+				$this->userIDs = array_keys($users);
 			}
 			
-			if (MAIL_USE_FORMATTED_ADDRESS)	$this->from = MAIL_FROM_NAME . ' <' . MAIL_FROM_ADDRESS . '>';
-			else $this->from = MAIL_FROM_ADDRESS;
+			if (MAIL_USE_FORMATTED_ADDRESS) {
+				$this->from = MAIL_FROM_NAME.' <'.MAIL_FROM_ADDRESS.'>';
+			}
+			else {
+				$this->from = MAIL_FROM_ADDRESS;
+			}
 		}
 		
 		if (!empty($this->userIDs)) {

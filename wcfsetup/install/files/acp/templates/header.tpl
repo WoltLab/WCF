@@ -41,6 +41,10 @@
 			{/if}
 			
 			WCF.Language.addObject({
+				'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
+				'__daysShort': [ '{lang}wcf.date.day.sun{/lang}', '{lang}wcf.date.day.mon{/lang}', '{lang}wcf.date.day.tue{/lang}', '{lang}wcf.date.day.wed{/lang}', '{lang}wcf.date.day.thu{/lang}', '{lang}wcf.date.day.fri{/lang}', '{lang}wcf.date.day.sat{/lang}' ],
+				'__months': [ '{lang}wcf.date.month.january{/lang}', '{lang}wcf.date.month.february{/lang}', '{lang}wcf.date.month.march{/lang}', '{lang}wcf.date.month.april{/lang}', '{lang}wcf.date.month.may{/lang}', '{lang}wcf.date.month.june{/lang}', '{lang}wcf.date.month.july{/lang}', '{lang}wcf.date.month.august{/lang}', '{lang}wcf.date.month.september{/lang}', '{lang}wcf.date.month.october{/lang}', '{lang}wcf.date.month.november{/lang}', '{lang}wcf.date.month.december{/lang}' ], 
+				'__monthsShort': [ '{lang}wcf.date.month.jan{/lang}', '{lang}wcf.date.month.feb{/lang}', '{lang}wcf.date.month.mar{/lang}', '{lang}wcf.date.month.apr{/lang}', '{lang}wcf.date.month.may{/lang}', '{lang}wcf.date.month.jun{/lang}', '{lang}wcf.date.month.jul{/lang}', '{lang}wcf.date.month.aug{/lang}', '{lang}wcf.date.month.sep{/lang}', '{lang}wcf.date.month.oct{/lang}', '{lang}wcf.date.month.nov{/lang}', '{lang}wcf.date.month.dec{/lang}' ],
 				'wcf.global.button.add': '{lang}wcf.global.button.add{/lang}',
 				'wcf.global.button.cancel': '{lang}wcf.global.button.cancel{/lang}',
 				'wcf.global.button.close': '{lang}wcf.global.button.close{/lang}',
@@ -60,8 +64,8 @@
 				'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
 				'wcf.date.relative.hours': '{capture assign=relativeHours}{lang}wcf.date.relative.hours{/lang}{/capture}{@$relativeHours|encodeJS}',
 				'wcf.date.relative.pastDays': '{capture assign=relativePastDays}{lang}wcf.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
+				'wcf.date.dateFormat': '{lang}wcf.date.dateFormat{/lang}',
 				'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
-				'__days': [ '{lang}wcf.date.day.sunday{/lang}', '{lang}wcf.date.day.monday{/lang}', '{lang}wcf.date.day.tuesday{/lang}', '{lang}wcf.date.day.wednesday{/lang}', '{lang}wcf.date.day.thursday{/lang}', '{lang}wcf.date.day.friday{/lang}', '{lang}wcf.date.day.saturday{/lang}' ],
 				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 				'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
 				'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
@@ -71,25 +75,6 @@
 				'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
 				'wcf.global.form.edit.success': '{lang}wcf.global.form.edit.success{/lang}'
 				{event name='javascriptLanguageImport'}
-			});
-			WCF.Icon.addObject({
-				'wcf.icon.add': '{@$__wcf->getPath()}icon/add.svg',
-				'wcf.icon.arrowDown': '{@$__wcf->getPath()}icon/arrowDown.svg',
-				'wcf.icon.arrowLeft': '{@$__wcf->getPath()}icon/arrowLeft.svg',
-				'wcf.icon.arrowRight': '{@$__wcf->getPath()}icon/arrowRight.svg',
-				'wcf.icon.arrowUp': '{@$__wcf->getPath()}icon/arrowUp.svg',
-				'wcf.icon.circleArrowDown': '{@$__wcf->getPath()}icon/circleArrowDown.svg',
-				'wcf.icon.circleArrowLeft': '{@$__wcf->getPath()}icon/circleArrowLeft.svg',
-				'wcf.icon.circleArrowRight': '{@$__wcf->getPath()}icon/circleArrowRight.svg',
-				'wcf.icon.circleArrowUp': '{@$__wcf->getPath()}icon/circleArrowUp.svg',
-				'wcf.icon.closed': '{@$__wcf->getPath()}icon/arrowRightInverse.svg',
-				'wcf.icon.dropdown': '{@$__wcf->getPath()}icon/dropdown.svg',
-				'wcf.icon.delete': '{@$__wcf->getPath()}icon/delete.svg',
-				'wcf.icon.edit': '{@$__wcf->getPath()}icon/edit.svg',
-				'wcf.icon.error': '{@$__wcf->getPath()}icon/errorRed.svg',
-				'wcf.icon.loading': '{@$__wcf->getPath()}icon/spinner.svg',
-				'wcf.icon.opened': '{@$__wcf->getPath()}icon/arrowDownInverse.svg'
-				{event name='javascriptIconImport'}
 			});
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
@@ -161,7 +146,7 @@
 			
 			<nav class="navigation navigationHeader clearfix">
 				<ul class="navigationIcons">
-					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{@$__wcf->getPath()}icon/circleArrowDownColored.svg" alt="" class="icon16" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-down"></span> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 					{event name='navigationIcons'}
 				</ul>
 			</nav>
@@ -180,17 +165,17 @@
 									<div id="{$_parentMenuItem->menuItem}-container" style="display: none;" class="menuGroup collapsibleMenus" data-parent-menu-item="{$_parentMenuItem->menuItem}">
 										{foreach from=$__wcf->getACPMenu()->getMenuItems($_parentMenuItem->menuItem) item=_menuItem}
 											<fieldset>
-												<legend class="menuHeader" data-menu-item="{$_menuItem->menuItem}">{lang}{@$_menuItem->menuItem}{/lang}</legend>
+												<legend class="menuHeader" data-menu-item="{$_menuItem->menuItem}">{@$_menuItem}</legend>
 												
 												<nav class="menuGroupItems">
 													<ul id="{$_menuItem->menuItem}">
 														{foreach from=$__wcf->getACPMenu()->getMenuItems($_menuItem->menuItem) item=menuItemCategory}
 															{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
 																{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
-																	<li id="{$subMenuItem->menuItem}" data-menu-item="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{lang}{$subMenuItem->menuItem}{/lang}</a></li>
+																	<li id="{$subMenuItem->menuItem}" data-menu-item="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{@$subMenuItem}</a></li>
 																{/foreach}
 															{else}
-																<li id="{$menuItemCategory->menuItem}" data-menu-item="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{lang}{$menuItemCategory->menuItem}{/lang}</a></li>
+																<li id="{$menuItemCategory->menuItem}" data-menu-item="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{@$menuItemCategory}</a></li>
 															{/if}
 														{/foreach}
 													</ul>

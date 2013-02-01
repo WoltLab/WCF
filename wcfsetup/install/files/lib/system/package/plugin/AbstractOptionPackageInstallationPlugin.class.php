@@ -79,7 +79,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			// delete categories
 			$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."_category
 				WHERE		categoryName = ?
-				AND packageID = ?";
+				AND		packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($categories as $category) {
@@ -159,7 +159,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			if (!preg_match("/^[\w-\.]+$/", $data['name'])) {
 				$matches = array();
 				preg_match_all("/(\W)/", $data['name'], $matches);
-				throw new SystemException("The user option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).").");
+				throw new SystemException("The option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).").");
 			}
 			
 			$this->saveOption($data, $data['categoryname']);
@@ -259,7 +259,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @param	string		$categoryName
 	 * @param	integer		$existingOptionID
 	 */
-	protected abstract function saveOption($option, $categoryName, $existingOptionID = 0);
+	abstract protected function saveOption($option, $categoryName, $existingOptionID = 0);
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()

@@ -1,10 +1,18 @@
 {include file='header' pageTitle='wcf.acp.application.management'}
 
-<div class="contentNavigation">
-	{* todo: event *}
-</div>
-
 {hascontent}
+	<div class="contentNavigation">
+		<nav>
+			<ul>
+				{content}
+					{event name='contentNavigationButtonsTop'}
+				{/content}
+			</ul>
+		</nav>
+	</div>
+{/hascontent}
+
+{if $applicationList|count}
 	<header class="boxHeadline">
 		<hgroup>
 			<h1>{lang}wcf.acp.application.list{/lang} <span class="badge">{#$applicationList|count}</span></h1>
@@ -22,38 +30,48 @@
 					<th class="columnText columnCookieDomain">{lang}wcf.acp.application.cookieDomain{/lang}</th>
 					<th class="columnText columnCookiePath">{lang}wcf.acp.application.cookiePath{/lang}</th>
 					
-					{event name='headColumns'}
+					{event name='columnHeads'}
 				</tr>
 			</thead>
 			
 			<tbody>
-				{content}
-					{foreach from=$applicationList item=application}
-						<tr>
-							<td class="columnIcon"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}"><img src="{@$__wcf->getPath()}icon/edit.svg" alt="" class="icon16 jsTooltip" title="{lang}wcf.global.button.edit{/lang}" /></a></td>
-							<td class="columnID columnPackageID">{#$application->packageID}</td>
-							<td class="columnText columnPackageName">
-								<a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}">{$application->getPackage()}</a>
-								{if $application->isPrimary}
-									<aside class="statusDisplay">
-										<img src="{@$__wcf->getPath()}icon/home.svg" alt="" class="icon16 jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}" />
-									</aside>
-								{/if}
-							</td>
-							<td class="columnText columnDomainName">{$application->domainName}</td>
-							<td class="columnText columnDomainPath">{$application->domainPath}</td>
-							<td class="columnText columnCookieDomain">{$application->cookieDomain}</td>
-							<td class="columnText columnCookiePath">{$application->cookiePath}</td>
-						</tr>
-					{/foreach}
-				{/content}
+				{foreach from=$applicationList item=application}
+					<tr>
+						<td class="columnIcon"><a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 icon-pencil"></span></a></td>
+						<td class="columnID columnPackageID">{#$application->packageID}</td>
+						<td class="columnText columnPackageName">
+							<a href="{link controller='ApplicationEdit' id=$application->packageID}{/link}">{$application->getPackage()}</a>
+							{if $application->isPrimary}
+								<aside class="statusDisplay">
+									<ul class="statusIcons">
+										<li><span class="icon icon16 icon-home jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}"></span></li>
+									</ul>
+								</aside>
+							{/if}
+						</td>
+						<td class="columnText columnDomainName">{$application->domainName}</td>
+						<td class="columnText columnDomainPath">{$application->domainPath}</td>
+						<td class="columnText columnCookieDomain">{$application->cookieDomain}</td>
+						<td class="columnText columnCookiePath">{$application->cookiePath}</td>
+						
+						{event name='columns'}
+					</tr>
+				{/foreach}
 			</tbody>
 		</table>
 	</div>
-{/hascontent}
-
-<div class="contentNavigation">
-	{* todo: event *}
-</div>
+	
+	{hascontent}
+		<div class="contentNavigation">
+			<nav>
+				<ul>
+					{content}
+						{event name='contentNavigationButtonsBottom'}
+					{/content}
+				</ul>
+			</nav>
+		</div>
+	{/hascontent}
+{/if}
 
 {include file='footer'}

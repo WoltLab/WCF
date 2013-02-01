@@ -22,7 +22,6 @@ class TemplateListenerCacheBuilder implements ICacheBuilder {
 		// get templates for current package id
 		$templateListenerList = new TemplateListenerList();
 		$templateListenerList->getConditionBuilder()->add("template_listener.environment = ?", array($environment));
-		$templateListenerList->sqlLimit = 0;
 		$templateListenerList->readObjects();
 		
 		$data = array();

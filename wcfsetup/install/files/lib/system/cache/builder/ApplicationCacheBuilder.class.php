@@ -28,7 +28,6 @@ class ApplicationCacheBuilder implements ICacheBuilder {
 		
 		// fetch applications
 		$applicationList = new ApplicationList();
-		$applicationList->sqlLimit = 0;
 		$applicationList->readObjects();
 		$applications = $applicationList->getObjects();
 		

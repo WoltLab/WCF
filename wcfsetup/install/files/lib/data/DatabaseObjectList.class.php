@@ -3,6 +3,7 @@ namespace wcf\data;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -21,6 +22,12 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * @var	string
 	 */
 	public $className = '';
+	
+	/**
+	 * class name of the object decorator; if left empty, no decorator is used
+	 * @var	string
+	 */
+	public $decoratorClassName = '';
 	
 	/**
 	 * object class name
@@ -50,7 +57,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * sql limit
 	 * @var	integer
 	 */
-	public $sqlLimit = 20;
+	public $sqlLimit = 0;
 	
 	/**
 	 * sql order by statement
@@ -113,6 +120,19 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 			}
 		}
 		
+		if (!empty($this->decoratorClassName)) {
+			// validate decorator class name
+			if (!ClassUtil::isInstanceOf($this->decoratorClassName, 'wcf\data\DatabaseObjectDecorator')) {
+				throw new SystemException("'".$this->decoratorClassName."' should extend 'wcf\data\DatabaseObjectDecorator'");
+			}
+			
+			$objectClassName = $this->objectClassName ?: $this->className;
+			$baseClassName = call_user_func(array($this->decoratorClassName, 'getBaseClass'));
+			if ($objectClassName != $baseClassName && !ClassUtil::isInstanceOf($baseClassName, $objectClassName)) {
+				throw new SystemException("'".$this->decoratorClassName."' can't decorate objects of class '".$objectClassName."'");
+			}
+		}
+		
 		$this->conditionBuilder = new PreparedStatementConditionBuilder();
 	}
 	
@@ -125,7 +145,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		$sql = "SELECT	COUNT(*) AS count
 			FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."
 			".$this->sqlConditionJoins."
-			".$this->getConditionBuilder()->__toString();
+			".$this->getConditionBuilder();
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($this->getConditionBuilder()->getParameters());
 		$row = $statement->fetchArray();
@@ -140,7 +160,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		$sql = "SELECT	".$this->getDatabaseTableAlias().".".$this->getDatabaseTableIndexName()." AS objectID
 			FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."
 				".$this->sqlConditionJoins."
-				".$this->getConditionBuilder()->__toString()."
+				".$this->getConditionBuilder()."
 				".(!empty($this->sqlOrderBy) ? "ORDER BY ".$this->sqlOrderBy : '');
 		$statement = WCF::getDB()->prepareStatement($sql, $this->sqlLimit, $this->sqlOffset);
 		$statement->execute($this->getConditionBuilder()->getParameters());
@@ -172,17 +192,25 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 					".($this->useQualifiedShorthand ? $this->getDatabaseTableAlias().'.*' : '')."
 				FROM	".$this->getDatabaseTableName()." ".$this->getDatabaseTableAlias()."
 					".$this->sqlJoins."
-					".$this->getConditionBuilder()->__toString()."
+					".$this->getConditionBuilder()."
 					".(!empty($this->sqlOrderBy) ? "ORDER BY ".$this->sqlOrderBy : '');
 			$statement = WCF::getDB()->prepareStatement($sql, $this->sqlLimit, $this->sqlOffset);
 			$statement->execute($this->getConditionBuilder()->getParameters());
 			$this->objects = $statement->fetchObjects(($this->objectClassName ?: $this->className));
 		}
 		
+		// decorate objects
+		if (!empty($this->decoratorClassName)) {
+			foreach ($this->objects as &$object) {
+				$object = new $this->decoratorClassName($object);
+			}
+			unset($object);
+		}
+		
 		// use table index as array index
 		$objects = array();
 		foreach ($this->objects as $object) {
-			$objectID = $object->{$this->getDatabaseTableIndexName()};
+			$objectID = $object->getObjectID();
 			$objects[$objectID] = $object;
 			
 			$this->indexToObject[] = $objectID;

@@ -1,14 +1,12 @@
 <?php
 namespace wcf\acp\page;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\page\AbstractPage;
-use wcf\system\cache\source\MemcacheAdapter;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\DirectoryUtil;
+use wcf\util\FileUtil;
 
 /**
  * Shows a list of all cache resources.
@@ -21,6 +19,11 @@ use wcf\util\DirectoryUtil;
  * @category	Community Framework
  */
 class CacheListPage extends AbstractPage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.application.cache';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
@@ -84,7 +87,7 @@ class CacheListPage extends AbstractPage {
 				}
 			break;
 			
-			case 'wcf\system\cache\source\MemcacheCacheSource':
+			case 'wcf\system\cache\source\MemcachedCacheSource':
 				// set version
 				$this->cacheData['version'] = WCF_VERSION;
 				
@@ -213,15 +216,5 @@ class CacheListPage extends AbstractPage {
 			'cacheData' => $this->cacheData,
 			'cleared' => $this->cleared
 		));
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.application.cache');
-		
-		parent::show();
 	}
 }

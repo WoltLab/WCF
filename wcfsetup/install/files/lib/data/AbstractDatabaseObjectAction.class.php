@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data;
 use wcf\system\event\EventHandler;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -13,7 +12,7 @@ use wcf\util\StringUtil;
  * Default implementation for DatabaseObject-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
@@ -69,6 +68,12 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	protected $permissionsUpdate = array();
 	
 	/**
+	 * Resets cache if any of the listed actions is invoked
+	 * @var	array<string>
+	 */
+	protected $resetCache = array('create', 'delete', 'toggle', 'update', 'updatePosition');
+	
+	/**
 	 * values returned by executed action
 	 * @var	mixed
 	 */
@@ -83,6 +88,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	
 	const TYPE_INTEGER = 1;
 	const TYPE_STRING = 2;
+	const TYPE_BOOLEAN = 3;
 	
 	/**
 	 * Initialize a new DatabaseObject-related action.
@@ -136,7 +142,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	public function validateAction() {
 		// validate if user is logged in
 		if (!WCF::getUser()->userID && !in_array($this->getActionName(), $this->allowGuestAccess)) {
-			throw new IllegalLinkException();
+			throw new PermissionDeniedException();
 		}
 		
 		// validate action name
@@ -165,14 +171,23 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		$this->returnValues = call_user_func(array($this, $this->getActionName()));
 		
 		// reset cache
-		if (ClassUtil::isInstanceOf($this->className, 'wcf\data\IEditableCachedObject')) {
-			call_user_func(array($this->className, 'resetCache'));
+		if (in_array($this->getActionName(), $this->resetCache)) {
+			$this->resetCache();
 		}
 		
 		// fire event action
 		EventHandler::getInstance()->fireAction($this, 'finalizeAction');
 		
 		return $this->getReturnValues();
+	}
+	
+	/**
+	 * Resets cache of database object.
+	 */
+	protected function resetCache() {
+		if (ClassUtil::isInstanceOf($this->className, 'wcf\data\IEditableCachedObject')) {
+			call_user_func(array($this->className, 'resetCache'));
+		}
 	}
 	
 	/**
@@ -210,6 +225,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 */
 	public function getReturnValues() {
 		return array(
+			'actionName' => $this->action,
 			'objectIDs' => $this->getObjectIDs(),
 			'returnValues' => $this->returnValues
 		);
@@ -289,13 +305,10 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			$this->readObjects();
 		}
 		
-		// get index name
-		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
-		
 		// get ids
 		$objectIDs = array();
 		foreach ($this->objects as $object) {
-			$objectIDs[] = $object->__get($indexName);
+			$objectIDs[] = $object->getObjectID();
 		}
 		
 		// execute action
@@ -384,6 +397,17 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
+	 * Reads a boolean value and validates it.
+	 * 
+	 * @param	string		$variableName
+	 * @param	boolean		$allowEmpty
+	 * @param	string		$arrayIndex
+	 */
+	protected function readBoolean($variableName, $allowEmpty = false, $arrayIndex = '') {
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_BOOLEAN);
+	}
+	
+	/**
 	 * Reads a value and validates it. If you set $allowEmpty to true, no exception will
 	 * be thrown if the variable evaluates to 0 (integer) or '' (string). Furthermore the
 	 * variable will be always created with a sane value if it does not exist.
@@ -399,7 +423,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 				throw new SystemException("Corrupt parameters, index '".$arrayIndex."' is missing");
 			}
 			
-			$target =& $this->parameters[$variableName];
+			$target =& $this->parameters[$arrayIndex];
 		}
 		else {
 			$target =& $this->parameters;
@@ -439,8 +463,26 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 					}
 				}
 			break;
+			
+			case self::TYPE_BOOLEAN:
+				if (!isset($target[$variableName])) {
+					if ($allowEmpty) {
+						$target[$variableName] = false;
+					}
+					else {
+						throw new UserInputException($variableName);
+					}
+				}
+				else {
+					if (is_numeric($target[$variableName])) {
+						$target[$variableName] = (bool) $target[$variableName];
+					}
+					else {
+						$target[$variableName] = $target[$variableName] != 'false';
+					}
+				}
+			break;
 		}
-		
 	}
 	
 	/**

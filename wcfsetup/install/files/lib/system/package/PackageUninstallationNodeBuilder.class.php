@@ -23,45 +23,11 @@ class PackageUninstallationNodeBuilder extends PackageInstallationNodeBuilder {
 			$this->node = $this->getToken();
 		}
 		
-		// build nodes for dependent packages
-		$this->buildDependentPackageNodes();
-		
 		// build pip nodes
 		$this->buildPluginNodes();
 		
 		// remove package
 		$this->buildPackageNode();
-	}
-	
-	/**
-	 * Builds nodes for all dependent packages.
-	 */
-	protected function buildDependentPackageNodes() {
-		if (!PackageUninstallationDispatcher::hasDependencies($this->installation->queue->packageID)) {
-			return;
-		}
-		
-		$packageList = PackageUninstallationDispatcher::getOrderedPackageDependencies($this->installation->queue->packageID);
-		$queue = $this->installation->queue;
-		
-		foreach ($packageList as $package) {
-			$queue = PackageInstallationQueueEditor::create(array(
-				'processNo' => $queue->processNo,
-				'parentQueueID' => $queue->queueID,
-				'userID' => WCF::getUser()->userID,
-				'package' => $package->package,
-				'packageName' => $package->getName(),
-				'packageID' => $package->packageID,
-				'action' => 'uninstall'
-			));
-			
-			// spawn nodes
-			$uninstallation = new PackageUninstallationDispatcher($queue);
-			$uninstallation->nodeBuilder->setParentNode($this->node);
-			$uninstallation->nodeBuilder->buildNodes();
-			$this->parentNode = $uninstallation->nodeBuilder->getCurrentNode();
-			$this->node = $this->getToken();
-		}
 	}
 	
 	/**

@@ -18,7 +18,6 @@ class ClipboardActionCacheBuilder implements ICacheBuilder {
 	 */
 	public function getData(array $cacheResource) {
 		$actionList = new ClipboardActionList();
-		$actionList->sqlLimit = 0;
 		$actionList->readObjects();
 		
 		return $actionList->getObjects();

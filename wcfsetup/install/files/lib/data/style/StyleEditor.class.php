@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\style;
+use wcf\data\language\LanguageList;
 use wcf\data\package\Package;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupEditor;
@@ -11,6 +12,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\image\ImageHandler;
 use wcf\system\io\Tar;
 use wcf\system\io\TarWriter;
+use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
 use wcf\system\style\StyleCompiler;
 use wcf\system\Regex;
@@ -103,7 +105,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		// set new default
 		$this->update(array(
 			'isDefault' => 1,
-			'disabled' => 0
+			'isDisabled' => 0
 		));
 		
 		self::resetCache();
@@ -128,7 +130,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xpath = $xml->xpath();
 		
 		$data = array(
-			'name' => '', 'description' => '', 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
+			'name' => '', 'description' => array(), 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
 			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
 			'variables' => '', 'date' => '0000-00-00', 'icons' => '', 'iconsPath' => '', 'imagesPath' => ''
 		);
@@ -175,6 +177,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 								$data['default'] = true;
 							break;
 							
+							case 'description':
+								if ($element->hasAttribute('language')) {
+									$data['description'][$element->getAttribute('language')] = $element->nodeValue;
+								}
+							break;
+							
 							case 'stylename':
 								$data['name'] = $element->nodeValue;
 							break;
@@ -188,7 +196,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							break;
 							
 							case 'copyright':
-							case 'description':
 							case 'image':
 							case 'license':
 								$data[$element->tagName] = $element->nodeValue;
@@ -286,7 +293,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$styleData = array(
 			'styleName' => $data['name'],
 			'variables' => $data['variables'],
-			'styleDescription' => $data['description'],
 			'styleVersion' => $data['version'],
 			'styleDate' => $data['date'],
 			'copyright' => $data['copyright'],
@@ -521,11 +527,63 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$style = new StyleEditor(self::create($styleData));
 		}
 		
+		// handle descriptions
+		if (!empty($data['description'])) {
+			self::saveLocalizedDescriptions($style, $data['description']);
+		}
+		
 		if ($data['default']) {
 			$style->setAsDefault();
 		}
 		
 		return $style;
+	}
+	
+	/**
+	 * Saves localized style descriptions.
+	 * 
+	 * @param	wcf\data\style\StyleEditor	$styleEditor
+	 * @param	array<string>			$descriptions
+	 */
+	protected static function saveLocalizedDescriptions(StyleEditor $styleEditor, array $descriptions) {
+		// localize package information
+		$sql = "INSERT INTO	wcf".WCF_N."_language_item
+					(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
+			VALUES		(?, ?, ?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		// get language list
+		$languageList = new LanguageList();
+		$languageList->readObjects();
+		
+		// workaround for WCFSetup
+		if (!PACKAGE_ID) {
+			$sql = "SELECT	*
+				FROM	wcf".WCF_N."_language_category
+				WHERE	languageCategory = ?";
+			$statement2 = WCF::getDB()->prepareStatement($sql);
+			$statement2->execute(array('wcf.style'));
+			$languageCategory = $statement2->fetchObject('wcf\data\language\category\LanguageCategory');
+		}
+		else {
+			$languageCategory = LanguageFactory::getInstance()->getCategory('wcf.style');
+		}
+		
+		foreach ($languageList as $language) {
+			if (isset($descriptions[$language->languageCode])) {
+				$statement->execute(array(
+					$language->languageID,
+					'wcf.style.styleDescription'.$styleEditor->styleID,
+					$descriptions[$language->languageCode],
+					$languageCategory->languageCategoryID,
+					$styleEditor->packageID
+				));
+			}
+		}
+		
+		$styleEditor->update(array(
+			'styleDescription' => 'wcf.style.styleDescription'.$styleEditor->styleID
+		));
 	}
 	
 	/**
@@ -571,6 +629,19 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$styleTar->add(WCF_DIR.'images/'.$this->image, '', FileUtil::addTrailingSlash(dirname(WCF_DIR.'images/'.$this->image)));
 		}
 		
+		// fetch style description
+		$sql = "SELECT		language.languageCode, language_item.languageItemValue
+			FROM		wcf".WCF_N."_language_item language_item
+			LEFT JOIN	wcf".WCF_N."_language language
+			ON		(language.languageID = language_item.languageID)
+			WHERE		language_item.languageItem = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->styleDescription));
+		$styleDescriptions = array();
+		while ($row = $statement->fetchArray()) {
+			$styleDescriptions[$row['languageCode']] = $row['languageItemValue'];
+		}
+		
 		// create style info file
 		$xml = new XMLWriter();
 		$xml->beginDocument('style', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/style.xsd');
@@ -578,7 +649,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		// general block
 		$xml->startElement('general');
 		$xml->writeElement('stylename', $this->styleName);
-		if ($this->styleDescription) $xml->writeElement('description', $this->styleDescription);
+		
+		// style description
+		foreach ($styleDescriptions as $languageCode => $value) {
+			$xml->writeElement('description', $value, array('language' => $languageCode));
+		}
+		
 		$xml->writeElement('date', $this->styleDate);
 		$xml->writeElement('version', $this->styleVersion);
 		if ($this->image) $xml->writeElement('image', $this->image);
@@ -716,14 +792,19 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			
 			// append style tar
 			$styleTarName = FileUtil::unifyDirSeperator($styleTarName);
-			$packageTar->add($styleTarName, '', dirname($styleTarName));
+			$packageTar->add($styleTarName, '', FileUtil::addTrailingSlash(dirname($styleTarName)));
 			
 			// create package.xml
 			$xml->beginDocument('package', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/maelstrom/package.xsd', array('name' => $packageName));
 			
 			$xml->startElement('packageinformation');
 			$xml->writeElement('packagename', $this->styleName);
-			$xml->writeElement('packagedescription', $this->styleDescription);
+			
+			// description
+			foreach ($styleDescriptions as $languageCode => $value) {
+				$xml->writeElement('packagedescription', $value, array('language' => $languageCode));
+			}
+			
 			$xml->writeElement('version', $this->styleVersion);
 			$xml->writeElement('date', $this->styleDate);
 			$xml->endElement();
@@ -733,7 +814,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			if ($this->authorURL) $xml->writeElement('authorurl', $this->authorURL);
 			$xml->endElement();
 			
-			$xml->startElement('instructions', array('name' => 'install'));
+			$xml->startElement('instructions', array('type' => 'install'));
 			$xml->writeElement('instruction', basename($styleTarName), array('type' => 'style'));
 			$xml->endElement();
 			

@@ -1,22 +1,23 @@
 <?php
 namespace wcf\acp\form;
+use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
-use wcf\util\StringUtil;
+use wcf\util\PasswordUtil;
 
 /**
  * Shows the master password form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class MasterPasswordForm extends ACPForm {
+class MasterPasswordForm extends AbstractForm {
 	/**
 	 * master password
 	 * @var	string
@@ -61,7 +62,7 @@ class MasterPasswordForm extends ACPForm {
 		}
 		
 		// check password
-		if (StringUtil::getSaltedHash($this->masterPassword, MASTER_PASSWORD_SALT) != MASTER_PASSWORD) {
+		if (PasswordUtil::getSaltedHash($this->masterPassword, MASTER_PASSWORD_SALT) != MASTER_PASSWORD) {
 			throw new UserInputException('masterPassword', 'invalid');
 		}
 	}

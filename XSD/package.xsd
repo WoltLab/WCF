@@ -87,7 +87,6 @@
 			</xs:element>
 			<xs:element name="packageurl" type="xs:anyURI" minOccurs="0" maxOccurs="1" />
 			<xs:element name="isapplication" type="woltlab_boolean" minOccurs="0" maxOccurs="1" />
-			<xs:element name="isunique" type="woltlab_boolean" minOccurs="0" maxOccurs="1" />
 			<xs:element name="version" type="woltlab_varchar" minOccurs="1" maxOccurs="1" />
 			<xs:element name="date" type="xs:date" minOccurs="1" maxOccurs="1" />
 			<xs:element name="plugin" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />

@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\application;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;

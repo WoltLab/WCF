@@ -23,7 +23,7 @@ class ACPTemplateEngine extends TemplateEngine {
 	protected function init() {
 		parent::init();
 		
-		$this->templatePaths = array(1 => WCF_DIR.'acp/templates/');
+		$this->templatePaths = array('wcf' => WCF_DIR.'acp/templates/');
 		$this->compileDir = WCF_DIR.'acp/templates/compiled/';
 		
 		if (!defined('NO_IMPORTS')) {

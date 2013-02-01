@@ -1,12 +1,12 @@
 <?php
 namespace wcf\system\category;
 use wcf\data\category\Category;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectDecorator;
-use wcf\system\SingletonFactory;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\SingletonFactory;
 
 /**
  * Handles the categories.

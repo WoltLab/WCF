@@ -269,7 +269,7 @@ class UserGroup extends DatabaseObject {
 		if (!$this->isAccessible()) return false;
 		
 		// cannot delete static groups
-		if ($this->groupType == UserGroup::EVERYONE || $this->groupType == UserGroup::GUESTS || $this->groupType == UserGroup::USERS) return false;
+		if ($this->groupType == self::EVERYONE || $this->groupType == self::GUESTS || $this->groupType == self::USERS) return false;
 		
 		return true;
 	}

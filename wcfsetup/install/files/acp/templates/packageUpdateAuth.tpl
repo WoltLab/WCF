@@ -6,7 +6,7 @@
 	</hgroup>
 </header>
 
-{if $errorField != ''}
+{if $errorField}
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
@@ -31,6 +31,8 @@
 					<dd>{@$message}</dd>
 				</dl>
 			{/if}
+			
+			{event name='dataFields'}
 		</fieldset>
 		
 		<fieldset>
@@ -63,7 +65,11 @@
 				</dt>
 				<dd><small>{lang}wcf.acp.packageUpdate.auth.save.description{/lang}</small></dd>
 			</dl>
+			
+			{event name='authFields'}
 		</fieldset>
+		
+		{event name='fieldsets'}
 	</div>
 	
 	<div class="formSubmit">

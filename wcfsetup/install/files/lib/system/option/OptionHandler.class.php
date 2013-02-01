@@ -2,12 +2,14 @@
 namespace wcf\system\option;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
+use wcf\util\StringUtil;
 
 /**
  * Handles options.
@@ -20,6 +22,12 @@ use wcf\util\ClassUtil;
  * @category	Community Framework
  */
 class OptionHandler implements IOptionHandler {
+	/**
+	 * list of application abbreviations
+	 * @var	array<string>
+	 */
+	protected $abbreviations = null;
+	
 	/**
 	 * cache name
 	 * @var	string
@@ -340,16 +348,42 @@ class OptionHandler implements IOptionHandler {
 	/**
 	 * Returns class name for option type.
 	 * 
-	 * @param	string		$type
+	 * @param	string		$optionType
 	 * @return	string
 	 */
-	protected function getClassName($type) {
-		$className = 'wcf\system\option\\'.ucfirst($type).'OptionType';
+	protected function getClassName($optionType) {
+		$optionType = StringUtil::firstCharToUpperCase($optionType);
+		
+		// attempt to validate against WCF first
+		$isValid = false;
+		$className = 'wcf\system\option\\'.$optionType.'OptionType';
+		if (class_exists($className)) {
+			$isValid = true;
+		}
+		else {
+			if ($this->abbreviations === null) {
+				$this->abbreviations = array();
+				
+				$applications = ApplicationHandler::getInstance()->getApplications();
+				foreach ($applications as $application) {
+					$this->abbreviations[] = ApplicationHandler::getInstance()->getAbbreviation($application->packageID);
+				}
+			}
+			
+			foreach ($this->abbreviations as $abbreviation) {
+				$className = $abbreviation.'\system\option\\'.$optionType.'OptionType';
+				if (class_exists($className)) {
+					$isValid = true;
+					break;
+				}
+			}
+		}
 		
 		// validate class
-		if (!class_exists($className)) {
+		if (!$isValid) {
 			return null;
 		}
+		
 		if (!ClassUtil::isInstanceOf($className, 'wcf\system\option\IOptionType')) {
 			throw new SystemException("'".$className."' does not implement 'wcf\system\option\IOptionType'");
 		}

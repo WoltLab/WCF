@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cli\command;
+use phpline\internal\Log;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\system\exception\UserInputException;
@@ -7,7 +8,6 @@ use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\CLIWCF;
 use wcf\util\StringUtil;
-use phpline\internal\Log;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
 

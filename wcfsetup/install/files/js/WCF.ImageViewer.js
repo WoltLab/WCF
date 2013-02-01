@@ -16,12 +16,12 @@ WCF.ImageViewer = Class.extend({
 		WCF.DOMNodeInsertedHandler.enable();
 		
 		// navigation buttons
-		$('<span><img src="' + WCF.Icon.get('wcf.icon.arrowLeftColored') + '" alt="" class="icon24 jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.previous') + '" /></span>').appendTo($('#lbPrevLink'));
-		$('<span><img src="' + WCF.Icon.get('wcf.icon.arrowRightColored') + '" alt="" class="icon24 jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.next') + '" /></span>').appendTo($('#lbNextLink'));
+		$('<span><span class="icon icon24 icon-chevron-left jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.previous') + '" /></span>').appendTo($('#lbPrevLink'));
+		$('<span><span class="icon icon24 icon-chevron-right jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.next') + '" /></span>').appendTo($('#lbNextLink'));
 		
 		// close and enlarge icons
-		$('<img src="' + WCF.Icon.get('wcf.icon.deleteColored') + '" alt="" class="icon24 jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.close') + '" />').appendTo($('#lbCloseLink'));
-		var $buttonEnlarge = $('<img src="' + WCF.Icon.get('wcf.icon.enlargeColored') + '" alt="" class="icon24 jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.enlarge') + '" id="lbEnlarge" />').insertAfter($('#lbCloseLink'));
+		$('<span class="icon icon24 icon-remove jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.close') + '" />').appendTo($('#lbCloseLink'));
+		var $buttonEnlarge = $('<span class="icon icon24 icon-resize-full jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.enlarge') + '" id="lbEnlarge" />').insertAfter($('#lbCloseLink'));
 		
 		WCF.DOMNodeInsertedHandler.disable();
 		

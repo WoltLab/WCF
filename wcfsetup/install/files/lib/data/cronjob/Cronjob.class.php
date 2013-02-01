@@ -54,7 +54,10 @@ class Cronjob extends DatabaseObject {
 	public function getNextExec($timeBase = null) {
 		if ($timeBase === null) {
 			if ($this->lastExec) {
-				$timeBase = $this->lastExec;
+				$timeBase = $this->lastExec + 120;
+				if ($timeBase < TIME_NOW) {
+					$timeBase = TIME_NOW + 120;
+				}
 			}
 			else {
 				// first time setup

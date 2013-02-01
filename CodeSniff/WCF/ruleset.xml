@@ -5,6 +5,7 @@
 	<exclude-pattern>*/CodeSniff/*</exclude-pattern>
 	
 	<rule ref="Generic.Classes.DuplicateClassName" />
+	<rule ref="Generic.CodeAnalysis.UselessOverridingMethod" />
 	<rule ref="Generic.Files.ByteOrderMark" />
 	<rule ref="Generic.Files.EndFileNewline" />
 	<rule ref="Generic.Files.OneClassPerFile" />
@@ -15,12 +16,11 @@
 	<rule ref="Generic.NamingConventions.UpperCaseConstantName" />
 	<rule ref="Generic.PHP.CharacterBeforePHPOpeningTag" />
 	<rule ref="Generic.PHP.DisallowShortOpenTag" />
-	<rule ref="Generic.PHP.ForbiddenFunctions" />
 	<rule ref="Generic.PHP.LowerCaseConstant" />
 	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent" />
 	<rule ref="Squiz.Arrays.ArrayBracketSpacing" />
 	<rule ref="Squiz.Classes.LowercaseClassKeywords" />
-	<!--rule ref="Squiz.Classes.SelfMemberReference" /--> <!-- TODO: Is this wanted? -->
+	<rule ref="Squiz.Classes.SelfMemberReference" />
 	<rule ref="Squiz.Classes.ValidClassName" />
 	<rule ref="Squiz.Commenting.DocCommentAlignment" />
 	<rule ref="Squiz.ControlStructures.ElseIfDeclaration" />
@@ -28,8 +28,15 @@
 	<rule ref="Squiz.ControlStructures.ForLoopDeclaration" />
 	<rule ref="Squiz.ControlStructures.LowercaseDeclaration" />
 	<rule ref="Squiz.Operators.ValidLogicalOperators" />
+	<rule ref="Squiz.PHP.ForbiddenFunctions" />
+	<rule ref="Squiz.Scope.MethodScope" />
 	<rule ref="WCF.Classes.ClassFileName" />
 	<rule ref="WCF.ControlStructures.ControlSignature" />
+	<rule ref="WCF.Methods.MethodDeclaration" />
+	<rule ref="WCF.Namespaces.ClassMustBeImported" />
+	<rule ref="WCF.Namespaces.SortedUseDeclaration" />
+	<rule ref="WCF.Namespaces.UseDeclaration" />
+	<!--rule ref="WCF.PHP.DiscouragePCRE" /--> <!-- TODO: Sniff is disabled by commenting out the extends in the sniff file! -->
 	<rule ref="WCF.WhiteSpace.SuperfluousWhitespace" />
 	<rule ref="Zend.Files.ClosingTag" />
 	

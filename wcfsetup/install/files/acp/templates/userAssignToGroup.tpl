@@ -10,6 +10,18 @@
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
+{hascontent}
+	<div class="contentNavigation">
+		<nav>
+			<ul>
+				{content}
+					{event name='contentNavigationButtons'}
+				{/content}
+			</ul>
+		</nav>
+	</div>
+{/hascontent}
+
 <form method="post" action="{link controller='UserAssignToGroup'}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
@@ -18,6 +30,8 @@
 			<div>
 				{implode from=$users item=$user}<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user}</a>{/implode}
 			</div>
+			
+			{event name='markedUserFields'}
 		</fieldset>
 		
 		<fieldset>
@@ -33,7 +47,11 @@
 					{/if}
 				<dd>
 			</dl>
+			
+			{event name='userGroupFields'}
 		</fieldset>
+		
+		{event name='fieldsets'}
 	</div>
 	
 	<div class="formSubmit">

@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserEditor;
+use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
@@ -22,14 +23,14 @@ use wcf\util\ArrayUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class UserAssignToGroupForm extends ACPForm {
+class UserAssignToGroupForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditUser');
 	
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
 	
@@ -58,10 +59,10 @@ class UserAssignToGroupForm extends ACPForm {
 	public $groups = array();
 	
 	/**
-	 * clipboard item type id
+	 * id of the user clipboard item object type
 	 * @var	integer
 	 */
-	protected $typeID = null;
+	protected $objectTypeID = null;
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
@@ -69,19 +70,19 @@ class UserAssignToGroupForm extends ACPForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		// get type id
-		$this->typeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
-		if ($this->typeID === null) {
+		// get object type id
+		$this->objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
+		if ($this->objectTypeID === null) {
 			throw new SystemException("clipboard item type 'com.woltlab.wcf.user' is unknown.");
 		}
 		
-		// get user ids
-		$users = ClipboardHandler::getInstance()->getMarkedItems($this->typeID);
-		if (!isset($users['com.woltlab.wcf.user']) || empty($users['com.woltlab.wcf.user'])) throw new IllegalLinkException();
+		// get user
+		$this->users = ClipboardHandler::getInstance()->getMarkedItems($this->objectTypeID);
+		if (empty($this->users)) {
+			throw new IllegalLinkException();
+		}
 		
-		// load users
-		$this->userIDs = array_keys($users['com.woltlab.wcf.user']);
-		$this->users = $users['com.woltlab.wcf.user'];
+		$this->userIDs = array_keys($this->users);
 	}
 	
 	/**
@@ -143,7 +144,7 @@ class UserAssignToGroupForm extends ACPForm {
 			$userEditor->addToGroups($groupsIDs, true, false);
 		}
 		
-		ClipboardHandler::getInstance()->removeItems($this->typeID);
+		ClipboardHandler::getInstance()->removeItems($this->objectTypeID);
 		SessionHandler::resetSessions($this->userIDs);
 		
 		$this->saved();

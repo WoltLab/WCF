@@ -2,7 +2,6 @@
 namespace wcf\acp\page;
 use wcf\data\application\ViewableApplicationList;
 use wcf\page\AbstractPage;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 
 /**
@@ -16,6 +15,11 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class ApplicationManagementPage extends AbstractPage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.application.management';
+	
 	/**
 	 * list of applications
 	 * @var	wcf\data\application\ViewableApplicationList
@@ -34,7 +38,6 @@ class ApplicationManagementPage extends AbstractPage {
 		parent::readData();
 		
 		$this->applicationList = new ViewableApplicationList();
-		$this->applicationList->sqlLimit = 0;
 		$this->applicationList->readObjects();
 	}
 	
@@ -47,15 +50,5 @@ class ApplicationManagementPage extends AbstractPage {
 		WCF::getTPL()->assign(array(
 			'applicationList' => $this->applicationList
 		));
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.application.management');
-		
-		parent::show();
 	}
 }

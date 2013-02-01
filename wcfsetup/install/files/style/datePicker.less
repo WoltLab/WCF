@@ -40,24 +40,32 @@
 		
 		> .ui-datepicker-prev,
 		> .ui-datepicker-next {
-			background-repeat: no-repeat;
-			background-size: 24px;
 			display: inline-block;
-			height: 24px;
-			line-height: 600%;
-			overflow: hidden;
-			text-align: center;
-			width: 24px;
+			margin: 2px 2px 0 2px;
+			
+			> span {
+				display: none;
+			}
 		}
 		
 		> .ui-datepicker-prev {
-			background-image: url('../icon/circleArrowLeftColored.svg');
 			float: left;
+			
+			&:before {
+				content: "\f060";
+				font-family: FontAwesome;
+				font-size: 14px;
+			}
 		}
 		
 		> .ui-datepicker-next {
-			background-image: url('../icon/circleArrowRightColored.svg');
 			float: right;
+			
+			&:before {
+				content: "\f061";
+				font-family: FontAwesome;
+				font-size: 14px;
+			}
 		}
 	}
 	

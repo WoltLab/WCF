@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
+	<category name="wcf.acl">
+		<item name="wcf.acl.option.deny"><![CDATA[Verweigern]]></item>
+		<item name="wcf.acl.option.fullAccess"><![CDATA[Vollzugriff]]></item>
+		<item name="wcf.acl.option.grant"><![CDATA[Erlauben]]></item>
+		<item name="wcf.acl.permissions"><![CDATA[Benutzer-/Benutzergruppenrechte]]></item>
+	</category>
+	
 	<category name="wcf.acp">
 		<item name="wcf.acp"><![CDATA[Administrationsoberfläche]]></item>
 	</category>
@@ -110,7 +117,8 @@
 		<item name="wcf.acp.group.list"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.group.list.count"><![CDATA[{#$items} Benutzergruppe{if $items != 1}n{/if}]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Mitglieder]]></item>
-		<item name="wcf.acp.group.showMembers"><![CDATA[Zeige die Mitglieder dieser Benutzergruppe]]></item>
+		
+		<item name="wcf.acp.group.option.admin.display.canManagePageMenu"><![CDATA[Kann Seitenmenü verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Kann Administrationsoberfläche betreten]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Mitglieder dieser Benutzergruppe können die Administrationsoberfläche betreten und dort abhängig von den weiteren Zugriffsrechten verschiedene Aktionen durchführen. Diese Option muss aktiviert sein, wenn diesen Benutzern andere administrative Funktionen erlaubt werden sollen.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Kann versteckte Profilinformationen sehen]]></item>
@@ -123,6 +131,7 @@
 		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Kann allgemeine Einstellungen vornehmen]]></item>
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Kann deaktivierte Stile benutzen]]></item>
 		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Kann Protokolle abrufen]]></item>
+		<item name="wcf.acp.group.option.admin.system.canManageApplication"><![CDATA[Kann Anwendungen verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.system.canManageCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canEditServer"><![CDATA[Kann Update-Server bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canInstallPackage"><![CDATA[Kann Pakete installieren]]></item>
@@ -141,8 +150,10 @@
 		<item name="wcf.acp.group.option.admin.user.canEditUser"><![CDATA[Kann Benutzer bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Kann E-Mails an Benutzer senden]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Kann Benutzer suchen]]></item>
+		
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Darstellung]]></item>
+		<item name="wcf.acp.group.option.category.admin.display.pageMenu"><![CDATA[Seitenmenü]]></item>
 		<item name="wcf.acp.group.option.category.admin.general"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.language"><![CDATA[Sprachen]]></item>
 		<item name="wcf.acp.group.option.category.admin.style"><![CDATA[Stile]]></item>
@@ -153,6 +164,47 @@
 		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderative Rechte]]></item>
 		<item name="wcf.acp.group.option.category.user"><![CDATA[Allgemeine Rechte]]></item>
+		
+		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
+		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
+		
+		<item name="wcf.acp.group.showMembers"><![CDATA[Zeige die Mitglieder dieser Benutzergruppe]]></item>
+	</category>
+	
+	<category name="wcf.acp.language">
+		<item name="wcf.acp.language.add"><![CDATA[Sprache hinzufügen]]></item>
+		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[Dieser Sprachcode wird bereits von einer anderen im System installierten Sprache verwendet.]]></item>
+		<item name="wcf.acp.language.add.mode"><![CDATA[Sprache erstellen durch]]></item>
+		<item name="wcf.acp.language.add.mode.copy"><![CDATA[Übersetzen einer vorhandenen Sprache]]></item>
+		<item name="wcf.acp.language.add.mode.import"><![CDATA[Importieren einer Sprachdatei]]></item>
+		<item name="wcf.acp.language.add.new"><![CDATA[Neue Sprache]]></item>
+		<item name="wcf.acp.language.add.source"><![CDATA[Zu übersetzende Sprache]]></item>
+		<item name="wcf.acp.language.code"><![CDATA[Sprachcode]]></item>
+		<item name="wcf.acp.language.code.description"><![CDATA[Geben Sie hier den passenden Sprachcode nach <strong>ISO 639-1</strong> an. Weitere Informationen zu Sprachcodes finden Sie unter <a href="http://de.wikipedia.org/wiki/ISO_639-1" class="wcf-externalURL">http://de.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
+		<item name="wcf.acp.language.customVariables"><![CDATA[Veränderte Variablen]]></item>
+		<item name="wcf.acp.language.delete.sure"><![CDATA[Wollen Sie die Sprache „{$language->languageName}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.language.edit"><![CDATA[Sprache bearbeiten]]></item>
+		<item name="wcf.acp.language.export"><![CDATA[Sprache exportieren]]></item>
+		<item name="wcf.acp.language.export.allPackages"><![CDATA[Alle Pakete]]></item>
+		<item name="wcf.acp.language.export.customValues"><![CDATA[Veränderte Variablen exportieren]]></item>
+		<item name="wcf.acp.language.export.selectPackages"><![CDATA[Pakete auswählen]]></item>
+		<item name="wcf.acp.language.import.error"><![CDATA[Beim Importieren der Sprachdatei ist folgender Fehler aufgetreten:]]></item>
+		<item name="wcf.acp.language.import.source"><![CDATA[Quelle]]></item>
+		<item name="wcf.acp.language.import.source.file"><![CDATA[Pfad zur Sprachdatei]]></item>
+		<item name="wcf.acp.language.import.source.file.description"><![CDATA[Geben Sie hier den relativen Pfad zu einer gültigen XML-Sprachdatei an.]]></item>
+		<item name="wcf.acp.language.import.source.upload"><![CDATA[Sprachdatei vom lokalen Computer hochladen]]></item>
+		<item name="wcf.acp.language.list"><![CDATA[Sprachen]]></item>
+		<item name="wcf.acp.language.list.count"><![CDATA[{#$items} Sprache{if $items != 1}n{/if}]]></item>
+		<item name="wcf.acp.language.multilingualism"><![CDATA[Mehrsprachigkeit verwalten]]></item>
+		<item name="wcf.acp.language.multilingualism.enable"><![CDATA[Mehrsprachige Inhalte aktivieren]]></item>
+		<item name="wcf.acp.language.multilingualism.enable.description"><![CDATA[Haben Sie mehrere Sprachen installiert, können sich Ihre Mitglieder die Programmoberfläche in diesen Sprachen anzeigen lassen. Erstellte Inhalte werden durch die aktivierte Mehrsprachigkeit außerdem einer Sprache zugeordnet. Die Benutzer können in ihrem Profil auswählen, dass ausschließlich Inhalte von bestimmten Sprachen angezeigt werden. Bei der Erstellung von Inhalten ist standardmäßig die aktive Oberflächensprache vorausgewählt.]]></item>
+		<item name="wcf.acp.language.multilingualism.languages"><![CDATA[Inhalte in folgenden Sprachen zulassen]]></item>
+		<item name="wcf.acp.language.multilingualism.languages.error.empty"><![CDATA[Um die Mehrsprachigkeit zu nutzen, müssen Sie mindestens zwei Sprachen auswählen.]]></item>
+		<item name="wcf.acp.language.multilingualism.success"><![CDATA[Ihre Einstellungen wurden erfolgreich gespeichert.]]></item>
+		<item name="wcf.acp.language.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.language.setAsDefault"><![CDATA[Zur Standardsprache machen]]></item>
+		<item name="wcf.acp.language.variables"><![CDATA[Variablen]]></item>
+		<item name="wcf.acp.language.users"><![CDATA[Verwendet von]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -173,10 +225,17 @@
 		<item name="wcf.acp.menu.link.application"><![CDATA[Anwendungen]]></item>
 		<item name="wcf.acp.menu.link.application.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.application.management"><![CDATA[Anwendungen verwalten]]></item>
+		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.menu.link.cronjob"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Aufgabe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[Aufgaben auflisten]]></item>
+		<item name="wcf.acp.menu.link.language"><![CDATA[Sprachen]]></item>
+		<item name="wcf.acp.menu.link.language.add"><![CDATA[Sprache hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.language.list"><![CDATA[Sprachen auflisten]]></item>
+		<item name="wcf.acp.menu.link.language.multilingualism"><![CDATA[Mehrsprachigkeit verwalten]]></item>
+		<item name="wcf.acp.menu.link.language.server.add"><![CDATA[Server hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.language.server.list"><![CDATA[Server auflisten]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sitzungen]]></item>
 		<item name="wcf.acp.menu.link.log.cronjob"><![CDATA[Cronjobs]]></item>
@@ -188,15 +247,17 @@
 		<item name="wcf.acp.menu.link.option"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Sichern &amp; Wiederherstellen]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Pakete]]></item>
-		<item name="wcf.acp.menu.link.package.database"><![CDATA[Pakete suchen]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Paket installieren]]></item>
-		<item name="wcf.acp.menu.link.package.server.add"><![CDATA[Server hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Server auflisten]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete auflisten]]></item>
 		<item name="wcf.acp.menu.link.package.autoupdate"><![CDATA[Automatisches Update]]></item>
 		<item name="wcf.acp.menu.link.pageMenu"><![CDATA[Seitenmenü]]></item>
 		<item name="wcf.acp.menu.link.pageMenu.add"><![CDATA[Menüpunkt hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.pageMenu.list"><![CDATA[Menüpunkte auflisten]]></item>
+		<item name="wcf.acp.menu.link.style"><![CDATA[Stile]]></item>
+		<item name="wcf.acp.menu.link.style.add"><![CDATA[Stil hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.style.import"><![CDATA[Stil importieren]]></item>
+		<item name="wcf.acp.menu.link.style.list"><![CDATA[Stile auflisten]]></item>
 		<item name="wcf.acp.menu.link.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.menu.link.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Benutzer hinzufügen]]></item>
@@ -205,7 +266,6 @@
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.massProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Benutzer suchen]]></item>
-		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -215,21 +275,21 @@
 		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[Eine Adresse pro Zeile]]></item>
 		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Browser-Kennung ausschließen]]></item>
 		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[Eine Browser-Kennung (User-Agent) pro Zeile]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_host"><![CDATA[Memcache-Server]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_host.description"><![CDATA[Mehrere Server können zeilenweise angegeben werden.]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_use_pconnect"><![CDATA[Persistente Verbindungen aktivieren]]></item>
+		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
+		<item name="wcf.acp.option.cache_source_memcached_host.description"><![CDATA[Mehrere Server können zeilenweise angegeben werden, die Gewichtung kann als dritter Parameter angegeben werden, zum Beispiel „localhost:11211:67“ oder „10.0.13.37:31337:33“.]]></item>
+		<item name="wcf.acp.option.cache_source_memcached_use_pconnect"><![CDATA[Persistente Verbindungen aktivieren]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache-Methode]]></item>
 		<item name="wcf.acp.option.cache_source_type.apc"><![CDATA[Alternative PHP Cache (experimentell)]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Beachten Sie, dass einige Methoden spezielle Anforderungen an das Server-System stellen und nicht auf jedem Server zur Verfügung stehen.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Dateisystem (Standard)]]></item>
-		<item name="wcf.acp.option.cache_source_type.memcache"><![CDATA[Memcache]]></item>
+		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached]]></item>
 		<item name="wcf.acp.option.cache_source_type.no"><![CDATA[Caching deaktivieren (Nicht empfohlen)]]></item>
 		
 		<item name="wcf.acp.option.category.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcache"><![CDATA[Memcache]]></item>
-		<item name="wcf.acp.option.category.general.cache.memcache.description"><![CDATA[Memcache speichert häufig benötige Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. Lesen Sie mehr über dieses Thema auf der folgenden Seite: <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached]]></item>
+		<item name="wcf.acp.option.category.general.cache.memcached.description"><![CDATA[Memcached speichert häufig benötige Daten im Arbeitsspeicher zwischen. Dies kann die Last auf die Datenbank und das Dateisystem drastisch reduzieren. Lesen Sie mehr über dieses Thema auf der folgenden Seite: <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
 		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Datum &amp; Zeit]]></item>
 		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Grafik]]></item>
 		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>
@@ -264,6 +324,9 @@
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookiepfad]]></item>
 		<item name="wcf.acp.option.cookie_path.description"><![CDATA[Der Cookiepfad wird absolut zum Document Root angegeben - also z.B. "/forum" für http://www.woltlab.de/forum.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Präfix für Cookienamen]]></item>
+		
+		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
+		<item name="wcf.acp.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
 		
 		<item name="wcf.acp.option.export"><![CDATA[Optionen sichern]]></item>
 		<item name="wcf.acp.option.export.download"><![CDATA[Sicherung der Optionen herunterladen]]></item>
@@ -349,6 +412,7 @@
 		<item name="wcf.acp.package.application.title"><![CDATA[Anwendungen]]></item>
 		<item name="wcf.acp.package.author"><![CDATA[Entwickler]]></item>
 		<item name="wcf.acp.package.button.info"><![CDATA[Informationen]]></item>
+		<item name="wcf.acp.package.button.installPackage"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.package.button.uninstall"><![CDATA[Deinstallieren]]></item>
 		<item name="wcf.acp.package.button.update"><![CDATA[Aktualisieren]]></item>
 		<item name="wcf.acp.package.dependencies.dependent"><![CDATA[Abhängige Pakete]]></item>
@@ -372,11 +436,12 @@
 		<item name="wcf.acp.package.installation.packageStatus.installed"><![CDATA[bereits installiert]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missing"><![CDATA[fehlt]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[fehlende Paket-Version (installierte Version: {$package.existingVersion})]]></item>
-		<item name="wcf.acp.package.installation.step.install"><![CDATA[„{$packageName}“ wird installiert &hellip;]]></item>
+		<item name="wcf.acp.package.installation.step.install"><![CDATA[„{$packageName}“ wird installiert …]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation abgeschlossen]]></item>
-		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Installation wird vorbereitet &hellip;]]></item>
+		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Installation wird vorbereitet …]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Benötigte Version]]></item>
+		<item name="wcf.acp.package.license"><![CDATA[Lizenz]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Paketliste]]></item>
 		<item name="wcf.acp.package.list.detailed"><![CDATA[Detaillierte Paketliste]]></item>
 		<item name="wcf.acp.package.name"><![CDATA[Paket]]></item>
@@ -384,6 +449,13 @@
 		<item name="wcf.acp.package.packageDir.notAvailable"><![CDATA[Das angegebene Verzeichnis enthält bereits eine Anwendung.]]></item>
 		<item name="wcf.acp.package.plugin.installed"><![CDATA[Installierte Pakete]]></item>
 		<item name="wcf.acp.package.plugin.title"><![CDATA[Erweiterungen]]></item>
+		<item name="wcf.acp.package.search"><![CDATA[Paket suchen]]></item>
+		<item name="wcf.acp.package.search.conditions"><![CDATA[Suchbegriffe]]></item>
+		<item name="wcf.acp.package.search.package"><![CDATA[Paketbezeichner]]></item>
+		<item name="wcf.acp.package.search.package.description"><![CDATA[Suche nach einem bestimmten Paketbezeichner, z.B. „com.woltlab.wcf“]]></item>
+		<item name="wcf.acp.package.search.packageDescription"><![CDATA[Paketbeschreibung]]></item>
+		<item name="wcf.acp.package.search.packageName"><![CDATA[Paketname]]></item>
+		<item name="wcf.acp.package.search.resultList"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.acp.package.source"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.package.source.download"><![CDATA[Paket herunterladen]]></item>
 		<item name="wcf.acp.package.source.download.description"><![CDATA[Geben Sie den direkten Pfad zur Paketdatei an. Dabei kann es sich um die Internetadresse der Paketdatei oder alternativ den Pfad zur Paketdatei im Dateisystem handeln.]]></item>
@@ -392,7 +464,6 @@
 		<item name="wcf.acp.package.startInstall"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.package.startUpdate"><![CDATA[Paket „{@$package->getName()}“ aktualisieren]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[Anwendung]]></item>
-		<item name="wcf.acp.package.type.other"><![CDATA[Basispaket]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Erweiterung]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren?]]></item>
 		<item name="wcf.acp.package.uninstallation.confirmDependentPackages"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren? Beachten Sie bitte, dass die folgenden Pakete ebenfalls deinstalliert werden:
@@ -410,19 +481,25 @@
 		<item name="wcf.acp.pageMenu.advanced"><![CDATA[Erweitert]]></item>
 		<item name="wcf.acp.pageMenu.data"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.pageMenu.delete.sure"><![CDATA[Möchten Sie den Menüpunkt „{$__menuItem}“ und alle Untermenüpunkte wirklich löschen?]]></item>
+		<item name="wcf.acp.pageMenu.edit"><![CDATA[Menüpunkt bearbeiten]]></item>
 		<item name="wcf.acp.pageMenu.footer"><![CDATA[Fußzeile]]></item>
 		<item name="wcf.acp.pageMenu.header"><![CDATA[Hauptmenü]]></item>
 		<item name="wcf.acp.pageMenu.isDisabled"><![CDATA[Menüpunkt deaktivieren]]></item>
-		<item name="wcf.acp.pageMenu.isLandingPage"><![CDATA[Startseite Ihrer Website]]></item>
-		<item name="wcf.acp.pageMenu.isLandingPage.description"><![CDATA[Beim direkten Aufruf Ihrer Website wird diese Menüpunkt aufgerufen.]]></item>
+		<item name="wcf.acp.pageMenu.landingPage.description"><![CDATA[Sie können mittels Sortierung die Startseite Ihrer Website festlegen, es wird immer der erste Eintrag aus dem Hauptmenü verwendet.]]></item>
+		<item name="wcf.acp.pageMenu.link"><![CDATA[Link]]></item>
+		<item name="wcf.acp.pageMenu.link.external"><![CDATA[Externer Link]]></item>
+		<item name="wcf.acp.pageMenu.link.internal"><![CDATA[Interner Link]]></item>
 		<item name="wcf.acp.pageMenu.list"><![CDATA[Menüpunkte auflisten]]></item>
+		<item name="wcf.acp.pageMenu.menuItemController"><![CDATA[Controller]]></item>
+		<item name="wcf.acp.pageMenu.menuItemController.description"><![CDATA[Bitte geben Sie den vollständigen Klassennamen inklusive Namespace an, zum Beispiel „wcf\page\DashboardPage“.]]></item>
+		<item name="wcf.acp.pageMenu.menuItemController.error.notValid"><![CDATA[Die angegebene Klasse konnte nicht gefunden werden]]></item>
 		<item name="wcf.acp.pageMenu.menuItemLink"><![CDATA[Link]]></item>
 		<item name="wcf.acp.pageMenu.menuPosition"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pageMenu.menuPosition.footer"><![CDATA[Fußzeile]]></item>
 		<item name="wcf.acp.pageMenu.menuPosition.header"><![CDATA[Hauptmenü]]></item>
-		<item name="wcf.acp.pageMenu.newWindow"><![CDATA[Link in neuem Fenster öffnen]]></item>
 		<item name="wcf.acp.pageMenu.pageMenuItem"><![CDATA[Name]]></item>
 		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
+		<item name="wcf.acp.pageMenu.setAsLandingPage"><![CDATA[Als Startseite festlegen]]></item>
 		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Reihenfolge]]></item>
 	</category>
 	
@@ -466,6 +543,93 @@
 		<item name="wcf.acp.sessionLog.requestMethod"><![CDATA[Methode]]></item>
 		<item name="wcf.acp.sessionLog.requestURI"><![CDATA[URI]]></item>
 		<item name="wcf.acp.sessionLog.time"><![CDATA[Datum]]></item>
+	</category>
+	
+	<category name="wcf.acp.style">
+		<item name="wcf.acp.style.add"><![CDATA[Stil hinzufügen]]></item>
+		<item name="wcf.acp.style.advanced"><![CDATA[Erweiterte Einstellungen]]></item>
+		<item name="wcf.acp.style.advanced.individualLess"><![CDATA[Individuelles CSS und LESS]]></item>
+		<item name="wcf.acp.style.advanced.individualLess.description"><![CDATA[Die Eingabe wird am Ende des Stils eingefügt und kann vollständig aus CSS bestehen. Sie haben zusätzlich den Zugriff auf LESS und alle von Community Framework zur Verfügung gestellten Mixins.]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess"><![CDATA[Überschreiben von LESS-Variablen]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.description"><![CDATA[Sie können innerhalb dieser Eingabe beliebige LESS-Variablen überschreiben, die nicht durch den Stil-Editor direkt bearbeitbar ist. Beim Bezug auf andere Variablen muss sichergestellt werden, dass diese in der Reihenfolge vorher definiert wurden. Die Syntax muss wie folgt lauten: „@variableName: variableValue;“]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error"><![CDATA[Ihre Eingabe war ungültig, bitte überprüfen Sie die folgenden Einträge:]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error.notValid"><![CDATA[Eingabe „{$error[text]}“ ungültig]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error.predefined"><![CDATA[Variable „{$error[text]}“ wird bereits durch den Stil-Editor gesetzt]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.error.unknown"><![CDATA[Variable „{$error[text]}“ unbekannt]]></item>
+		<item name="wcf.acp.style.advanced.overrideLess.warning"><![CDATA[Fehlerhafte Eingaben führen dazu, dass der Stil nicht erzeugt werden kann. Überschreiben Sie LESS-Variablen nur, wenn Sie sich den Auswirkungen bewusst sind und eine Änderung anderweitig nicht möglich ist.]]></item>
+		<item name="wcf.acp.style.advanced.syntax"><![CDATA[Sie können sowohl CSS als auch <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http://www.lesscss.org">LESS</a> verwenden. Bitte beachten Sie, dass der Stil nicht erzeugt werden kann, wenn der LESS-Code ungültig ist.]]></item>
+		<item name="wcf.acp.style.authorName"><![CDATA[Autor]]></item>
+		<item name="wcf.acp.style.authorURL"><![CDATA[Website]]></item>
+		<item name="wcf.acp.style.button.exportStyle"><![CDATA[Export starten]]></item>
+		<item name="wcf.acp.style.button.setAsDefault"><![CDATA[Zum Standard machen]]></item>
+		<item name="wcf.acp.style.colors"><![CDATA[Farbpalette]]></item>
+		<item name="wcf.acp.style.colors.accentBackgroundColor"><![CDATA[Hintergrundfarbe (Akzent)]]></item>
+		<item name="wcf.acp.style.colors.backgroundColor"><![CDATA[Hintergrundfarbe]]></item>
+		<item name="wcf.acp.style.colors.borderColor"><![CDATA[Rahmenfarbe]]></item>
+		<item name="wcf.acp.style.colors.buttons"><![CDATA[Buttons]]></item>
+		<item name="wcf.acp.style.colors.container"><![CDATA[Container]]></item>
+		<item name="wcf.acp.style.colors.content"><![CDATA[Inhaltsbereich]]></item>
+		<item name="wcf.acp.style.colors.color"><![CDATA[Schriftfarbe]]></item>
+		<item name="wcf.acp.style.colors.dimmedColor"><![CDATA[Schriftfarbe (abgeschwächt)]]></item>
+		<item name="wcf.acp.style.colors.formInput"><![CDATA[Eingabeelemente in Formularen]]></item>
+		<item name="wcf.acp.style.colors.hoverBackgroundColor"><![CDATA[Hintergrundfarbe (Hover)]]></item>
+		<item name="wcf.acp.style.colors.hoverBorderColor"><![CDATA[Rahmenfarbe (Hover)]]></item>
+		<item name="wcf.acp.style.colors.hoverColor"><![CDATA[Schriftfarbe (Hover)]]></item>
+		<item name="wcf.acp.style.colors.linkColor"><![CDATA[Linkfarbe]]></item>
+		<item name="wcf.acp.style.colors.linkHoverColor"><![CDATA[Linkfarbe (Hover)]]></item>
+		<item name="wcf.acp.style.colors.page"><![CDATA[Seite]]></item>
+		<item name="wcf.acp.style.colors.primaryBackgroundColor"><![CDATA[Hintergrundfarbe (primär)]]></item>
+		<item name="wcf.acp.style.colors.primaryBorderColor"><![CDATA[Rahmenfarbe (primär)]]></item>
+		<item name="wcf.acp.style.colors.primaryColor"><![CDATA[Schriftfarbe (primär)]]></item>
+		<item name="wcf.acp.style.colors.tabular"><![CDATA[Tabellarische Auflistungen]]></item>
+		<item name="wcf.acp.style.colors.userPanel"><![CDATA[Benutzerleiste]]></item>
+		<item name="wcf.acp.style.copyright"><![CDATA[Copyright]]></item>
+		<item name="wcf.acp.style.copyStyle"><![CDATA[Stil kopieren]]></item>
+		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Möchten Sie den Stil „{$style->styleName}“ wirklich duplizieren?]]></item>
+		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Möchten Sie den Stil „{$style->styleName}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
+		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Als Paket exportieren]]></item>
+		<item name="wcf.acp.style.exportIcons"><![CDATA[Icons exportieren ({$style->iconPath})]]></item>
+		<item name="wcf.acp.style.exportImages"><![CDATA[Grafiken exportieren ({$style->imagePath})]]></item>
+		<item name="wcf.acp.style.exportTemplates"><![CDATA[Templates exportieren]]></item>
+		<item name="wcf.acp.style.exportStyle"><![CDATA[Stil exportieren]]></item>
+		<item name="wcf.acp.style.exportStyle.asPackage"><![CDATA[Export als Paket]]></item>
+		<item name="wcf.acp.style.exportStyle.asPackage.description"><![CDATA[Wählen Sie hier aus, ob sie den Stil „{$style->styleName}“ als Paket exportieren möchten. Pakete können über die Paketverwaltung installiert oder in den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http://www.woltlab.com/de/pluginstore/">WoltLab® Plugin-Store</a> hochgeladen werden.]]></item>
+		<item name="wcf.acp.style.exportStyle.components"><![CDATA[Optionen]]></item>
+		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[Wählen Sie hier aus, welche Bestandteile des Stils „{$style->styleName}“ mit exportiert werden sollen]]></item>
+		<item name="wcf.acp.style.general"><![CDATA[Daten]]></item>
+		<item name="wcf.acp.style.general.data"><![CDATA[Allgemein]]></item>
+		<item name="wcf.acp.style.general.files"><![CDATA[Dateien]]></item>
+		<item name="wcf.acp.style.globals"><![CDATA[Globale Einstellungen]]></item>
+		<item name="wcf.acp.style.globals.fixedLayoutWidth"><![CDATA[Breite]]></item>
+		<item name="wcf.acp.style.globals.fluidLayoutGap"><![CDATA[Abstand zum Seitenrand]]></item>
+		<item name="wcf.acp.style.globals.font"><![CDATA[Schriftbild]]></item>
+		<item name="wcf.acp.style.globals.fontFamily"><![CDATA[Schriftart]]></item>
+		<item name="wcf.acp.style.globals.fontSize"><![CDATA[Schriftgröße]]></item>
+		<item name="wcf.acp.style.globals.layout"><![CDATA[Layout]]></item>
+		<item name="wcf.acp.style.globals.useFluidLayout"><![CDATA[Flexible Breite verwenden]]></item>
+		<item name="wcf.acp.style.iconPath"><![CDATA[Icon-Pfad]]></item>
+		<item name="wcf.acp.style.iconPath.description"><![CDATA[Wenn Ihr Stil eigene Icons benötigt, sollten diese in einem Unterordner des Ordners „icons“ ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
+		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
+		<item name="wcf.acp.style.image.description"><![CDATA[Laden Sie hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102px × 64px anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
+		<item name="wcf.acp.style.imagePath"><![CDATA[Bilder-Pfad]]></item>
+		<item name="wcf.acp.style.imagePath.description"><![CDATA[Wenn Ihr Stil eigene Grafiken benötigt, sollten diese in einem Unterordner des Ordners „images“ ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
+		<item name="wcf.acp.style.importStyle"><![CDATA[Stil importieren]]></item>
+		<item name="wcf.acp.style.import.source"><![CDATA[Datenquelle]]></item>
+		<item name="wcf.acp.style.import.source.upload"><![CDATA[Stil hochladen]]></item>
+		<item name="wcf.acp.style.import.source.upload.description"><![CDATA[Geben Sie eine Stil-Datei von Ihrem lokalen Rechner an.]]></item>
+		<item name="wcf.acp.style.license"><![CDATA[Lizenz]]></item>
+		<item name="wcf.acp.style.list"><![CDATA[Stile auflisten]]></item>
+		<item name="wcf.acp.style.packageName"><![CDATA[Paketbezeichner]]></item>
+		<item name="wcf.acp.style.packageName.description"><![CDATA[Geben Sie hier den Paketbezeichner in der Form „tld.domain.paketName“ an. Wenn Ihnen beispielsweise die Domain „example.com“ gehört und Ihr Stil „Blue Sunrise“ heißt, so wäre „com.example.style.blueSunrise“ ein passender und gültiger Paketbezeichner.]]></item>
+		<item name="wcf.acp.style.packageName.error.notValid"><![CDATA[Der eingegebene Paketbezeichner ist ungültig]]></item>
+		<item name="wcf.acp.style.packageName.error.reserved"><![CDATA[Der Paketbezeichner darf nicht mit „com.woltlab.“ beginnen]]></item>
+		<item name="wcf.acp.style.styleDate"><![CDATA[Datum]]></item>
+		<item name="wcf.acp.style.styleDescription"><![CDATA[Beschreibung]]></item>
+		<item name="wcf.acp.style.styleName"><![CDATA[Name]]></item>
+		<item name="wcf.acp.style.styleVersion"><![CDATA[Version]]></item>
+		<item name="wcf.acp.style.templateGroupID"><![CDATA[Template-Gruppe]]></item>
+		<item name="wcf.acp.style.users"><![CDATA[Benutzer]]></item>
 	</category>
 	
 	<category name="wcf.acp.user">
@@ -524,6 +688,10 @@
 		<item name="wcf.acp.worker.executing"><![CDATA[Aufgaben werden ausgeführt …]]></item>
 	</category>
 	
+	<category name="wcf.ajax">
+		<item name="wcf.ajax.error.invalidParameter"><![CDATA[Der Parameter „{$fieldName}“ fehlt oder ist ungültig.]]></item>
+	</category>
+	
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 		<item name="wcf.category.button.list"><![CDATA[Kategorien auflisten]]></item>
@@ -563,12 +731,12 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Demarkieren]]></item>
-		<item name="wcf.clipboard.item.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
-		<item name="wcf.clipboard.item.user.delete"><![CDATA[Benutzer löschen]]></item>
-		<item name="wcf.clipboard.item.user.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Benutzer löschen?]]></item>
-		<item name="wcf.clipboard.item.user.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
-		<item name="wcf.clipboard.item.user.sendMail"><![CDATA[E-Mail senden]]></item>
-		<item name="wcf.clipboard.label.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer markiert]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Benutzer löschen]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Benutzer löschen?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[E-Mail senden]]></item>
+		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer markiert]]></item>
 	</category>
 	
 	<category name="wcf.date">
@@ -762,6 +930,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.button.search"><![CDATA[Suche]]></item>
 		<item name="wcf.global.button.submit"><![CDATA[Absenden]]></item>
 		<item name="wcf.global.button.upload"><![CDATA[Hochladen]]></item>
+		<item name="wcf.global.button.readMore"><![CDATA[Weiterlesen]]></item>
 		<item name="wcf.global.confirmation.cancel"><![CDATA[Abbrechen]]></item>
 		<item name="wcf.global.confirmation.confirm"><![CDATA[OK]]></item>
 		<item name="wcf.global.confirmation.title"><![CDATA[Bestätigung erforderlich]]></item>
@@ -778,8 +947,6 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.form.error.multilingual"><![CDATA[Bitte füllen Sie dieses Eingabefeld für jede Sprache aus.]]></item>
 		<item name="wcf.global.language.noSelection"><![CDATA[Keine Auswahl]]></item>
 		<item name="wcf.global.loading"><![CDATA[Lädt …]]></item>
-		<item name="wcf.global.locale.unix"><![CDATA[de_DE]]></item> <!-- system variable; do not translate -->
-		<item name="wcf.global.locale.win"><![CDATA[deu_deu]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.name"><![CDATA[Name]]></item>
 		<item name="wcf.global.objectID"><![CDATA[ID]]></item>
 		<item name="wcf.global.page.next"><![CDATA[Nächste Seite]]></item>

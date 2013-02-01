@@ -15,7 +15,7 @@
 		</nav>
 		
 		<div id="logo" class="logo">
-			<a href="{link controller='Index'}{/link}">
+			<a href="{link}{/link}">
 				<img src="{@$__wcf->getPath('wbb')}images/wbbLogo2.svg" alt="" style="height: 90px; width: 246px;" />
 				{*event name='headerLogo'*}
 			</a>
@@ -27,8 +27,8 @@
 			{include file='mainMenuSubMenu'}
 			
 			<ul class="navigationIcons">
-				<li id="toBottomLink"><a href="{$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{icon}circleArrowDownColored{/icon}" alt="" class="icon16" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
-				<li id="sitemap" class="javascriptOnly"><a title="{lang}wcf.sitemap.title{/lang}" class="jsTooltip"><img src="{icon}switchColored{/icon}" alt="" class="icon16" /> <span class="invisible">{lang}wcf.sitemap.title{/lang}</span></a></li>
+				<li id="toBottomLink"><a href="{$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-down"></span> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+				<li id="sitemap" class="javascriptOnly"><a title="{lang}wcf.sitemap.title{/lang}" class="jsTooltip"><span class="icon icon16 icon-sitemap"></span> <span class="invisible">{lang}wcf.sitemap.title{/lang}</span></a></li>
 				{if $headerNavigation|isset}{@$headerNavigation}{/if}
 				{event name='navigationIcons'}
 			</ul>

@@ -49,6 +49,13 @@ interface ICategoryType {
 	public function forceDescription();
 	
 	/**
+	 * Returns abbreviation of the application this category type belongs to.
+	 * 
+	 * @return	string
+	 */
+	public function getApplication();
+	
+	/**
 	 * Returns the name of the object type of the definition with the given
 	 * name for categories of this type. If categories of this type are no
 	 * object of the relevant type, null is returned.

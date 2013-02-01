@@ -226,7 +226,6 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			$itemList = new LanguageItemList();
 			$itemList->getConditionBuilder()->add("language_item.languageItem IN (?)", array(array_keys($items)));
 			$itemList->getConditionBuilder()->add("language_item.languageID = ?", array($this->languageID));
-			$itemList->sqlLimit = 0;
 			$itemList->readObjects();
 			
 			foreach ($itemList->getObjects() as $languageItem) {
@@ -460,7 +459,6 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		$languageItemList = new LanguageItemList();
 		$languageItemList->getConditionBuilder()->add("language_item.languageItem IN (?)", array(array_keys($items)));
 		$languageItemList->getConditionBuilder()->add("languageID = ?", array($this->languageID));
-		$languageItemList->sqlLimit = 0;
 		$languageItemList->readObjects();
 		
 		foreach ($languageItemList->getObjects() as $languageItem) {

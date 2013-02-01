@@ -143,7 +143,6 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 		}
 		
 		$userGroupList = new UserGroupList();
-		$userGroupList->sqlLimit = 0;
 		$userGroupList->readObjects();
 		foreach ($userGroupList as $userGroup) {
 			$groupIDs[] = $userGroup->groupID;
@@ -180,7 +179,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 */
 	public static function resetCache() {
 		// clear cache
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.userGroup.php');
+		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.userGroup*');
 		
 		// clear sessions
 		SessionHandler::resetSessions();

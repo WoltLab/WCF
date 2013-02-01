@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
@@ -17,7 +18,7 @@ use wcf\util\StringUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class UserEmailAddressExportForm extends ACPForm {
+class UserEmailAddressExportForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
@@ -62,7 +63,7 @@ class UserEmailAddressExportForm extends ACPForm {
 	 * clipboard item type id
 	 * @var	integer
 	 */
-	protected $typeID = null;
+	protected $objectTypeID = null;
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
@@ -70,19 +71,21 @@ class UserEmailAddressExportForm extends ACPForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		// get type id
-		$this->typeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
-		if ($this->typeID === null) {
-			throw new SystemException("clipboard item type 'com.woltlab.wcf.user' is unknown.");
+		// get object type id
+		$this->objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
+		if ($this->objectTypeID === null) {
+			throw new SystemException("Unknown clipboard item type 'com.woltlab.wcf.user'");
 		}
 		
 		// get user ids
-		$users = ClipboardHandler::getInstance()->getMarkedItems($this->typeID);
-		if (!isset($users['com.woltlab.wcf.user']) || empty($users['com.woltlab.wcf.user'])) throw new IllegalLinkException();
+		$users = ClipboardHandler::getInstance()->getMarkedItems($this->objectTypeID);
+		if (empty($users)) {
+			throw new IllegalLinkException();
+		}
 		
 		// load users
-		$this->userIDs = array_keys($users['com.woltlab.wcf.user']);
-		$this->users = $users['com.woltlab.wcf.user'];
+		$this->userIDs = array_keys($users);
+		$this->users = $users;
 	}
 	
 	/**
@@ -147,7 +150,7 @@ class UserEmailAddressExportForm extends ACPForm {
 		$this->saved();
 		
 		// remove items
-		ClipboardHandler::getInstance()->removeItems($this->typeID);
+		ClipboardHandler::getInstance()->removeItems($this->objectTypeID);
 		
 		exit;
 	}

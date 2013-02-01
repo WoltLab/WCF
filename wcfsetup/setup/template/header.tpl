@@ -3,21 +3,21 @@
 <head>
 	<meta charset="utf-8" />
 	<title>{lang}wcf.global.progressBar{/lang} - {lang}wcf.global.pageTitle{/lang}</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/style/setup/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showCSS={/if}WCFSetup.css" />
 	
 	{if !$lastStep|isset}
 		<style type="text/css">
 			/*<![CDATA[*/
-			.wcf-error {
-				background-image: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showIcon=errorInverse.svg') !important;
-			}
-		
-			.wcf-innerError {
-				background-image: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showIcon=errorInverse.svg') !important;
-			}
+				@font-face {
+					font-family: 'FontAwesome';
+					src: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showFont=fontawesome-webfont.eot');
+					src: url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showFont=fontawesome-webfont.eot#iefix') format('embedded-opentype'),
+						url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showFont=fontawesome-webfont.woff') format('woff'),
+						url('install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&showFont=fontawesome-webfont.ttf') format('truetype');
+					font-weight: normal;
+					font-style: normal;
+				}
 			/*]]>*/
 		</style>
 	{/if}
@@ -25,45 +25,29 @@
 
 <body id="tplWCFInstaller">
 	<a id="top"></a>
-	<!-- HEADER -->
-	<header id="pageHeader" class="wcf-pageHeader">
+	
+	<header id="pageHeader" class="layoutFluid">
 		<div>
-			<!-- no top menu -->
-			
-			<!-- logo -->
-			<div id="logo" class="wcf-logo">
-				<div><!-- ToDo: This is just a little trick to compensate the missing link here, find a better solution -->
+			<div id="logo" class="logo">
+				<a>
 					<h1>{lang}wcf.global.pageTitle{/lang}</h1>
 					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}wcfLogo2.svg" width="300" height="58" alt="" />
-				</div>
-				
-				<!-- no search area -->
+				</a>
 			</div>
-			<!-- /logo -->
 			
-			<!-- no main menu -->
-			
-			<!-- header navigation -->
-			<nav class="wcf-headerNavigation">
-				<ul>
-					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}circleArrowDownColored.svg" alt="" /> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
+			<nav class="navigation navigationHeader clearfix">
+				<ul class="navigationIcons">
+					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-down"></span> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 				</ul>
 			</nav>
-			<!-- /header navigation -->
 		</div>
 	</header>
-	<!-- /HEADER -->
 	
-	<!-- MAIN -->
-	<div id="main" class="wcf-main">
+	<div id="main" class="layoutFluid">
 		<div>
-			
-			<!-- CONTENT -->
-			<section id="content" class="wcf-content wcf-contentDecor">
-				
-				<header class="wcf-container wcf-mainHeading setup">
-					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}icon/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showIcon={/if}working.svg" alt="" class="wcf-containerIcon" />
-					<hgroup class="wcf-containerContent">
+			<section id="content" class="content clearfix">
+				<header class="boxHeadline">
+					<hgroup>
 						<h1>{lang}wcf.global.title{/lang}</h1>
 						<h2>{lang}wcf.global.title.subtitle{/lang}</h2>
 						<p><progress id="packageInstallationProgress" value="{@$progress}" max="100" style="width: 300px;" title="{@$progress}%">{@$progress}%</progress></p>

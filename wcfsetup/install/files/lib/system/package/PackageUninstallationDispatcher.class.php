@@ -10,6 +10,8 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\plugin\ObjectTypePackageInstallationPlugin;
+use wcf\system\package\plugin\SQLPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
@@ -96,6 +98,10 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			ApplicationHandler::rebuild();
 		}
 		
+		if ($this->requireRestructureVersionTables) {
+			$this->restructureVersionTables();
+		}		
+		
 		// return next node
 		return $node;
 	}
@@ -105,6 +111,11 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	 */
 	protected function executePIP(array $nodeData) {
 		$pip = new $nodeData['className']($this);
+		
+		if ($pip instanceof SQLPackageInstallationPlugin || $pip instanceof ObjectTypePackageInstallationPlugin) {
+			$this->requireRestructureVersionTables = true;
+		}		
+		
 		$pip->uninstall();
 	}
 	
@@ -182,95 +193,6 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		
 		// add this package to queue
 		self::addQueueEntries($package, $dependentPackages);
-	}
-	
-	/**
-	 * Get all packages which require this package.
-	 * 
-	 * @param	integer		$packageID
-	 * @return	array
-	 */
-	public static function getPackageDependencies($packageID) {
-		$sql = "SELECT		*
-			FROM		wcf".WCF_N."_package
-			WHERE		packageID IN (
-						SELECT	packageID
-						FROM	wcf".WCF_N."_package_requirement_map
-						WHERE	requirement = ?
-					)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
-		$packages = array();
-		while ($row = $statement->fetchArray()) {
-			$packages[] = $row;
-		}
-		
-		return $packages;
-	}
-	
-	/**
-	 * Returns an ordered list of depenencies for given package id. The order is
-	 * curcial, whereas the first package has to be uninstalled first.
-	 * 
-	 * @package	integer
-	 * @return	wcf\data\package\PackageList
-	 */
-	public static function getOrderedPackageDependencies($packageID) {
-		$sql = "SELECT		packageID, MAX(level) AS level
-			FROM		wcf".WCF_N."_package_requirement_map
-			WHERE		requirement = ?
-			GROUP BY	packageID";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
-		
-		$dependencies = array();
-		while ($row = $statement->fetchArray()) {
-			$dependencies[$row['packageID']] = $row['level'];
-		}
-		
-		$packageIDs = array();
-		$maxLevel = max(array_values($dependencies));
-		if ($maxLevel == 0) {
-			// order does not matter
-			$packageIDs = array_keys($dependencies);
-		}
-		else {
-			// order by level while ignoring individual connections as they don't
-			// matter if uninstall begins with the lowest dependency in tree
-			for ($i = $maxLevel; $i >= 0; $i--) {
-				foreach ($dependencies as $packageID => $level) {
-					if ($level == $i) {
-						$packageIDs[] = $packageID;
-						unset($dependencies[$packageID]);
-					}
-				}
-			}
-		}
-		
-		// get packages
-		$packageList = new PackageList();
-		$packageList->sqlLimit = 0;
-		$packageList->getConditionBuilder()->add("packageID IN (?)", array($packageIDs));
-		$packageList->readObjects();
-		
-		return $packageList;
-	}
-	
-	/**
-	 * Returns true if package has dependencies
-	 * 
-	 * @param	integer		$packageID
-	 * @return	boolean
-	 */
-	public static function hasDependencies($packageID) {
-		$sql = "SELECT	COUNT(*) AS count
-			FROM	wcf".WCF_N."_package_requirement
-			WHERE	requirement = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
-		$row = $statement->fetchArray();
-		
-		return ($row['count'] > 0);
 	}
 	
 	/**

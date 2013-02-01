@@ -31,23 +31,27 @@
 	}
 	
 	.dialogCloseButton {
-		background-image: url(../icon/deleteInverse.svg);
-		background-position: top left;
-		background-repeat: no-repeat;
-		background-size: 32px;
+		color: @wcfTabularBoxColor;
 		cursor: pointer;
+		display: inline-block;
+		font-family: FontAwesome;
+		font-size: 28px;
 		height: 32px;
 		position: absolute;
 		right: 10px;
-		top: 5px;
+		text-align: center;
+		text-decoration: none;
+		top: 7px;
 		width: 32px;
 		
+		.textShadow(@wcfTabularBoxBackgroundColor);
+		
+		&:before {
+			content: "\f057";
+		}
+		
 		span {
-			/* remove caption - it's over 9000! */
-			left: -9001px;
-			position: absolute;
-			top: -9001px;
-			width: 0;
+			display: none;
 		}
 	}
 }
@@ -66,11 +70,12 @@
 		.borderRadius(0, 7px);
 	}
 	
-	&.overlayLoading {
-		background-image: url(../icon/spinner.svg);
-		background-position: center center;
-		background-repeat: no-repeat;
-		background-size: 32px;
+	> .icon-spinner {
+		left: 50%;
+		margin: -21px -21px 0 0;
+		padding: 0 21px 0 21px;
+		position: absolute;
+		top: 50%;
 	}
 	
 	dl:not(.plain) {
@@ -130,8 +135,13 @@
 	.boxShadow(0, 1px, rgba(0, 0, 0, .5), 7px);
 	.linearGradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0), rgba(0, 0, 0, .7));
 
-	img {
-		margin-bottom: @wcfGapSmall;
+	> .icon {
+		color: #fff;
+	}
+	
+	> span:not(.icon) {
+		display: block;
+		margin-top: @wcfGapSmall;
 	}
 }
 

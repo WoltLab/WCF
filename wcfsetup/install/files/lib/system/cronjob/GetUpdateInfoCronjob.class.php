@@ -6,8 +6,8 @@ use wcf\system\package\PackageUpdateDispatcher;
 /**
  * Gets update package information.
  * 
- * @author	Siegfried Schweizer
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
@@ -18,7 +18,6 @@ class GetUpdateInfoCronjob implements ICronjob {
 	 * @see	wcf\system\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
-		// TODO
-		PackageUpdateDispatcher::refreshPackageDatabase();
+		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
 	}
 }

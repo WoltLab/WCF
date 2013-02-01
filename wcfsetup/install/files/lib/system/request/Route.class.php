@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\request;
 use wcf\system\exception\SystemException;
+use wcf\system\menu\page\PageMenu;
 
 /**
  * Route implementation to resolve HTTP requests.
@@ -111,10 +112,6 @@ class Route {
 	 * @param	boolean		$isOptional
 	 */
 	public function setParameterOption($key, $default = null, $regexPattern = null, $isOptional = false) {
-		if ($key == 'controller' && (empty($default) && $isOptional)) {
-			throw new SystemException('Routes require a controller, it is not possible to regard them as optional without a default value.');
-		}
-		
 		$this->parameterOptions[$key] = array(
 			'default' => $default,
 			'isOptional' => $isOptional,
@@ -154,6 +151,10 @@ class Route {
 				if (isset($this->parameterOptions[$schemaPart])) {
 					// default value is provided
 					if ($this->parameterOptions[$schemaPart]['default'] !== null) {
+						if ($schemaPart == 'controller') {
+							$data['isDefaultController'] = true;
+						}
+						
 						$data[$schemaPart] = $this->parameterOptions[$schemaPart]['default'];
 						continue;
 					}
@@ -166,11 +167,19 @@ class Route {
 			}
 		}
 		
+		if (!isset($data['isDefaultController'])) {
+			$data['isDefaultController'] = false;
+		}
+		
 		$this->routeData = $data;
 		
 		// adds route controller if given
 		if ($this->controller !== null) {
 			$this->routeData['controller'] = $this->controller;
+		}
+		
+		if (!isset($this->routeData['controller'])) {
+			$this->routeData['isDefaultController'] = true;
 		}
 		
 		return true;
@@ -249,9 +258,21 @@ class Route {
 		
 		// handle default values for controller
 		$buildRoute = true;
-		if (count($components) == 1) {
+		if (count($components) == 1 && isset($components['controller'])) {
+			$ignoreController = false;
 			if (isset($this->parameterOptions['controller']) && strcasecmp($this->parameterOptions['controller']['default'], $components['controller']) == 0) {
 				// only the controller was given and matches default, omit routing
+				$ignoreController = true;
+			}
+			else if (!RequestHandler::getInstance()->isACPRequest()) {
+				$landingPage = PageMenu::getInstance()->getLandingPage();
+				if ($landingPage !== null && ($landingPage->getController() == $components['controller'])) {
+					$ignoreController = true;
+				}
+			}
+			
+			// drops controller from route
+			if ($ignoreController) {
 				$buildRoute = false;
 				
 				// unset the controller, since it would otherwise added with http_build_query()
@@ -277,7 +298,9 @@ class Route {
 			}
 		}
 		
-		$link = 'index.php' . (!empty($link) ? '/' : '') . $link;
+		if (!empty($link)) {
+			$link = 'index.php/' . $link;
+		}
 		
 		if (!empty($components)) {
 			$link .= '?' . http_build_query($components, '', '&');

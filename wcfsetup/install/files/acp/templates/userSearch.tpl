@@ -19,21 +19,15 @@
 	<p class="error">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
 {/if}
 
-{*if $deletedUsers}
-	<p class="success">{lang}wcf.acp.user.delete.success{/lang}</p>
-{elseif $deletedUsers === 0}
-	<p class="error">{lang}wcf.acp.user.delete.error{/lang}</p>
-{/if*}
-
 <div class="contentNavigation">
 	<nav>
 		<ul>
 			{if $__wcf->session->getPermission('admin.user.canAddUser')}
-				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/add.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
+				<li><a href="{link controller='UserAdd'}{/link}" title="{lang}wcf.acp.user.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}" class="button"><img src="{@$__wcf->getPath()}icon/list.svg" alt="" class="icon24" /> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
+			<li><a href="{link controller='UserList'}{/link}" title="{lang}wcf.acp.menu.link.user.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
 			
-			{event name='largeButtons'}
+			{event name='contentNavigationButtons'}
 		</ul>
 	</nav>
 </div>
@@ -89,6 +83,8 @@
 					</dd>
 				</dl>
 			{/if}
+			
+			{event name='generalFields'}
 		</fieldset>
 		
 		{event name='fieldsets'}
@@ -116,6 +112,8 @@
 							{include file='optionFieldList' options=$category[options] langPrefix='wcf.user.option.'}
 						</fieldset>
 					{/foreach}
+					
+					{event name='profileFieldsets'}
 				</div>
 			{/if}
 			
@@ -133,7 +131,7 @@
 								<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.user.username{/lang}</option>
 								<option value="email"{if $sortField == 'email'} selected="selected"{/if}>{lang}wcf.user.email{/lang}</option>
 								<option value="registrationDate"{if $sortField == 'registrationDate'} selected="selected"{/if}>{lang}wcf.user.registrationDate{/lang}</option>
-							
+								
 								{if $additionalSortFields|isset}{@$additionalSortFields}{/if}
 							</select>
 						</dd>
@@ -144,7 +142,7 @@
 							</select>
 						</dd>
 					</dl>
-							
+					
 					<dl>
 						<dt><label for="itemsPerPage">{lang}wcf.acp.user.search.display.itemsPerPage{/lang}</label></dt>
 						<dd>
@@ -177,8 +175,9 @@
 							<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
 						</dd>
 					</dl>
-					
 				</fieldset>
+				
+				{event name='resultOptionFieldsets'}
 			</div>
 		</div>
 	</div>

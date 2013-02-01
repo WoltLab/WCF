@@ -5,6 +5,7 @@ use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionAction;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
+use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -22,9 +23,9 @@ use wcf\system\WCF;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class UserGroupOptionForm extends ACPForm {
+class UserGroupOptionForm extends AbstractForm {
 	/**
-	 * @see	wcf\acp\form\ACPForm::$activeMenuItem
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.group';
 	
@@ -106,13 +107,9 @@ class UserGroupOptionForm extends ACPForm {
 		}
 		
 		// verify options and permissions for current option
-		throw new SystemException("UserGroupOptionForm::readParameters()");
-		$dependencies = PackageDependencyHandler::getInstance()->getDependencies();
-		if ($this->verifyPermissions($this->userGroupOption) && in_array($this->userGroupOption->packageID, $dependencies)) {
+		if ($this->verifyPermissions($this->userGroupOption)) {
 			// read all categories
 			$categoryList = new UserGroupOptionCategoryList();
-			$categoryList->getConditionBuilder()->add("packageID IN (?)", array($dependencies));
-			$categoryList->sqlLimit = 0;
 			$categoryList->readObjects();
 			
 			$categories = array();
@@ -201,7 +198,7 @@ class UserGroupOptionForm extends ACPForm {
 			
 			// check if not editing default value
 			if ($groupID != $this->groupEveryone->groupID) {
-				$newValue = $this->optionType->merge($this->defaultValue, $optionValue);
+				$newValue = $this->optionType->diff($this->defaultValue, $optionValue);
 				if ($newValue === null) {
 					unset($this->values[$groupID]);
 				}
@@ -298,13 +295,13 @@ class UserGroupOptionForm extends ACPForm {
 		foreach ($this->groups as $groupID => $group) {
 			if ($group->groupType == UserGroup::EVERYONE) {
 				$this->canEditEveryone = true;
-					
+				
 				// remove 'Everyone' from groups
 				$this->groupEveryone = $group;
 				unset($this->groups[$groupID]);
 			}
 		}
-			
+		
 		// add 'Everyone' group
 		if (!$this->canEditEveryone) {
 			$this->groupEveryone = UserGroup::getGroupByType(UserGroup::EVERYONE);

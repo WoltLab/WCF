@@ -1,7 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
-use wcf\system\menu\acp\ACPMenu;
 
 /**
  * Shows a list of log sessions.
@@ -14,6 +13,11 @@ use wcf\system\menu\acp\ACPMenu;
  * @category	Community Framework
  */
 class ACPSessionLogListPage extends SortablePage {
+	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.log.session';
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$templateName
 	 */
@@ -51,15 +55,5 @@ class ACPSessionLogListPage extends SortablePage {
 		$this->sqlOrderBy = (($this->sortField != 'accesses' && $this->sortField != 'username') ? 'acp_session_log.' : '').$this->sortField." ".$this->sortOrder;
 		
 		parent::readObjects();
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::show()
-	 */
-	public function show() {
-		// enable menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.log.session');
-		
-		parent::show();
 	}
 }

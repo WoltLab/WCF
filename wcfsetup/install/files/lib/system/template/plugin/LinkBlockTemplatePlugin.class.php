@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\template\plugin;
-use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
@@ -29,7 +28,10 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 	 * @see	wcf\system\template\IBlockTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, $blockContent, TemplateEngine $tplObj) {
-		if (!isset($tagArgs['controller'])) throw new SystemException("missing 'controller' argument in link tag");
+		if (!array_key_exists('controller', $tagArgs)) {
+			$tagArgs['controller'] = null;
+		}
+		
 		if (!isset($tagArgs['application']) || empty($tagArgs['application'])) {
 			$tagArgs['application'] = 'wcf';
 		}

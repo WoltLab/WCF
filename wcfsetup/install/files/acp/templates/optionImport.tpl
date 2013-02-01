@@ -14,6 +14,18 @@
 	<p class="success">{lang}wcf.acp.option.import.success{/lang}</p>
 {/if}
 
+{hascontent}
+	<div class="contentNavigation">
+		<nav>
+			<ul>
+				{content}
+					{event name='contentNavigationButtons'}
+				{/content}
+			</ul>
+		</nav>
+	</div>
+{/hascontent}
+
 <form method="post" action="{link controller='OptionImport'}{/link}" enctype="multipart/form-data">
 	<div class="container containerPadding marginTop">
 		<fieldset>
