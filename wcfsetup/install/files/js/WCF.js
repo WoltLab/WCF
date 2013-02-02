@@ -3714,7 +3714,7 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 		// hide container on init if applicable
 		if (!this._containerData[containerID].isOpen) {
 			this._containerData[containerID].target.hide();
-			this._exchangeIcon(this._containerData[containerID].button, 'plus');
+			this._exchangeIcon(this._containerData[containerID].button, 'chevron-right');
 		}
 	},
 	
@@ -3744,7 +3744,7 @@ WCF.Collapsible.SimpleRemote = WCF.Collapsible.Remote.extend({
 		this._proxy.sendRequest();
 		
 		// exchange icon
-		this._exchangeIcon(this._containerData[$containerID].button, ($newState === 'open' ? 'minus' : 'plus'));
+		this._exchangeIcon(this._containerData[$containerID].button, ($newState === 'open' ? 'chevron-down' : 'chevron-right'));
 		
 		// toggle container
 		if ($newState === 'open') {
