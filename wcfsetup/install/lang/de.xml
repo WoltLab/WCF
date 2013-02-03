@@ -56,6 +56,7 @@
 		<item name="wcf.acp.cache.source.type.NoCacheSource"><![CDATA[keine (Caching deaktiviert)]]></item>
 		<item name="wcf.acp.cache.type.data"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.cache.type.language"><![CDATA[Sprachen]]></item>
+		<item name="wcf.acp.cache.type.style"><![CDATA[Stile]]></item>
 		<item name="wcf.acp.cache.type.template"><![CDATA[Templates]]></item>
 	</category>
 	
