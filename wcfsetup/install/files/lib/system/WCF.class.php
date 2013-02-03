@@ -145,11 +145,6 @@ class WCF {
 				self::getSession()->update();
 			}
 			
-			// close cache source
-			if (CacheHandler::isInitialized() && is_object(CacheHandler::getInstance()) && is_object(CacheHandler::getInstance()->getCacheSource())) {
-				CacheHandler::getInstance()->getCacheSource()->close();
-			}
-			
 			// execute shutdown actions of user storage handler
 			UserStorageHandler::getInstance()->shutdown();
 		}

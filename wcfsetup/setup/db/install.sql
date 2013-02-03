@@ -120,11 +120,6 @@ CREATE TABLE wcf1_application (
 	isPrimary TINYINT(1) NOT NULL DEFAULT 0
 );
 
-DROP TABLE IF EXISTS wcf1_cache_resource;
-CREATE TABLE wcf1_cache_resource (
-	cacheResource VARCHAR(255) NOT NULL PRIMARY KEY
-);
-
 DROP TABLE IF EXISTS wcf1_category;
 CREATE TABLE wcf1_category (
 	categoryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
