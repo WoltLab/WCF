@@ -62,7 +62,7 @@ WCF.ImageViewer = Class.extend({
 	_enlarge: function() {
 		var $url = $('#lbImage').css('backgroundImage');
 		if ($url) {
-			$url = $url.substring(4, $url.length - 1);
+			$url = $url.replace(/^url\((["']?)(.*)\1\)$/, '$2');
 			window.location = $url;
 		}
 	},
