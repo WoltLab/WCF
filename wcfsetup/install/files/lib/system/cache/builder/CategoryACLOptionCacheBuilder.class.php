@@ -7,17 +7,17 @@ use wcf\system\category\CategoryHandler;
  * Caches the acl options of categories.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
  */
-class CategoryACLOptionCacheBuilder implements ICacheBuilder {
+class CategoryACLOptionCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\ICacheBuilder::getData()
+	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
-	public function getData(array $cacheResource) {
+	public function rebuild(array $parameters) {
 		$data = array();
 		foreach (CategoryHandler::getInstance()->getCategories() as $objectTypeName => $categories) {
 			$objectType = CategoryHandler::getInstance()->getObjectTypeByName($objectTypeName);

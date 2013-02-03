@@ -10,13 +10,13 @@ use wcf\util\StringUtil;
  * Caches the merged user group options for a certain user group combination.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
  */
-class UserGroupPermissionCacheBuilder implements ICacheBuilder {
+class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * list of used group option type objects
 	 * @var	array<wcf\system\option\group\IGroupOptionType>
@@ -24,10 +24,9 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 	protected $typeObjects = array();
 	
 	/**
-	 * @see	wcf\system\cache\ICacheBuilder::getData()
+	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
-	public function getData(array $cacheResource) {
-		list(, $groupIDs) = explode('-', $cacheResource['cache']);
+	public function rebuild(array $parameters) {
 		$data = array();
 		
 		// get all options
@@ -44,7 +43,7 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 		if (!empty($options)) {
 			// get needed options
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("option_value.groupID IN (?)", array(explode(',', $groupIDs)));
+			$conditions->add("option_value.groupID IN (?)", array($parameters));
 			$conditions->add("option_value.optionID IN (?)", array($options));
 			
 			$sql = "SELECT		option_table.optionName, option_table.optionType, option_value.optionValue
@@ -88,7 +87,7 @@ class UserGroupPermissionCacheBuilder implements ICacheBuilder {
 			}
 		}
 		
-		$data['groupIDs'] = $groupIDs;
+		$data['groupIDs'] = $parameters;
 		return $data;
 	}
 	

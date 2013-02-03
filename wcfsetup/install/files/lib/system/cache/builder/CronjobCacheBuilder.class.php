@@ -6,17 +6,17 @@ use wcf\system\WCF;
  * Caches cronjob information.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
  */
-class CronjobCacheBuilder implements ICacheBuilder {
+class CronjobCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\ICacheBuilder::getData()
+	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
-	public function getData(array $cacheResource) {
+	public function rebuild(array $parameters) {
 		$sql = "SELECT		MIN(nextExec) AS nextExec,
 					MIN(afterNextExec) AS afterNextExec
 			FROM		wcf".WCF_N."_cronjob";
