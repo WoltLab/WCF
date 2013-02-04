@@ -1,9 +1,5 @@
 <?php
 namespace wcf\system\package;
-use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
-
-use wcf\system\cache\builder\TemplateListenerCacheBuilder;
-
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\category\LanguageCategory;
@@ -15,6 +11,8 @@ use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\builder\TemplateListenerCacheBuilder;
+use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;

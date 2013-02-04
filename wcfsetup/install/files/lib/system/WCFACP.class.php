@@ -39,7 +39,6 @@ class WCFACP extends WCF {
 		$this->initDB();
 		$this->loadOptions();
 		$this->initPackage();
-		$this->initCache();
 		$this->initSession();
 		$this->initLanguage();
 		$this->initTPL();
@@ -122,15 +121,6 @@ class WCFACP extends WCF {
 			'quickAccessPackages' => $this->getQuickAccessPackages(),
 			// todo: 'timezone' => \wcf\util\DateUtil::getTimezone()
 		));
-	}
-	
-	/**
-	 * @see	WCF::loadDefaultCacheResources()
-	 */
-	protected function loadDefaultCacheResources() {
-		parent::loadDefaultCacheResources();
-		
-		// TODO: Is this required anymore?
 	}
 	
 	/**

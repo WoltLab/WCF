@@ -111,7 +111,6 @@ class WCF {
 		$this->initMagicQuotes();
 		$this->initDB();
 		$this->loadOptions();
-		$this->initCache();
 		$this->initSession();
 		$this->initLanguage();
 		$this->initTPL();
@@ -287,20 +286,6 @@ class WCF {
 		
 		// create database connection
 		self::$dbObj = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
-	}
-	
-	/**
-	 * Initialises the cache handler and loads the default cache resources.
-	 */
-	protected function initCache() {
-		$this->loadDefaultCacheResources();
-	}
-	
-	/**
-	 * Loads the default cache resources.
-	 */
-	protected function loadDefaultCacheResources() {
-		// TODO: Is this required anymore?
 	}
 	
 	/**

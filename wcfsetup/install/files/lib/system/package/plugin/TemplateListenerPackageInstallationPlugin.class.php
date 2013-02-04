@@ -1,8 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
-
 use wcf\system\cache\builder\TemplateListenerCacheBuilder;
+use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 
