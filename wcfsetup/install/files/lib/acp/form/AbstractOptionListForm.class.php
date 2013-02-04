@@ -7,7 +7,7 @@ use wcf\system\exception\UserInputException;
  * This class provides default implementations for a list of options.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -23,12 +23,6 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	 * @see	wcf\form\AbstractForm::$errorType
 	 */
 	public $errorType = array();
-	
-	/**
-	 * cache class name
-	 * @var	string
-	 */
-	public $cacheClass = 'wcf\system\cache\builder\OptionCacheBuilder';
 	
 	/**
 	 * name of the active option category
@@ -66,7 +60,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		$this->optionHandler = new $this->optionHandlerClassName($this->cacheClass, $this->supportI18n, $this->languageItemPattern, $this->categoryName);
+		$this->optionHandler = new $this->optionHandlerClassName($this->supportI18n, $this->languageItemPattern, $this->categoryName);
 		$this->initOptionHandler();
 	}
 	

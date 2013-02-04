@@ -11,13 +11,18 @@ use wcf\system\option\OptionHandler;
  * Handles user options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user
  * @category	Community Framework
  */
 class UserOptionHandler extends OptionHandler {
+	/**
+	 * @see	wcf\system\option\OptionHandler::$cacheClass
+	 */
+	protected $cacheClass = 'wcf\system\cache\builder\UserOptionCacheBuilder';
+	
 	/**
 	 * true, if within registration process
 	 * @var	boolean

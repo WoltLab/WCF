@@ -31,7 +31,7 @@ class OptionHandler implements IOptionHandler {
 	 * cache class name
 	 * @var	string
 	 */
-	public $cacheClass = '';
+	protected $cacheClass = 'wcf\system\cache\builder\OptionCacheBuilder';
 	
 	/**
 	 * list of all option categories
@@ -108,8 +108,7 @@ class OptionHandler implements IOptionHandler {
 	/**
 	 * @see	wcf\system\option\IOptionHandler::__construct()
 	 */
-	public function __construct($cacheClass, $supportI18n, $languageItemPattern = '', $categoryName = '') {
-		$this->cacheClass = $cacheClass;
+	public function __construct($supportI18n, $languageItemPattern = '', $categoryName = '') {
 		$this->categoryName = $categoryName;
 		$this->languageItemPattern = $languageItemPattern;
 		$this->supportI18n = $supportI18n;
