@@ -407,7 +407,7 @@ class SessionHandler extends SingletonFactory {
 		
 		// get group data from cache
 		$this->groupData = UserGroupPermissionCacheBuilder::getInstance()->getData($groupIDs);
-		if (isset($this->groupData['groupIDs']) && $this->groupData['groupIDs'] != $groups) {
+		if (isset($this->groupData['groupIDs']) && $this->groupData['groupIDs'] != $groupIDs) {
 			$this->groupData = array();
 		}
 	}
