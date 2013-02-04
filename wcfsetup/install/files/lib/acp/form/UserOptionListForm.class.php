@@ -15,11 +15,6 @@ use wcf\system\language\LanguageFactory;
  */
 abstract class UserOptionListForm extends AbstractOptionListForm {
 	/**
-	 * @see	wcf\acp\form\AbstractOptionListForm::$cacheName
-	 */
-	public $cacheName = 'userOption';
-	
-	/**
 	 * @see	wcf\acp\form\AbstractOptionListForm::$supportI18n
 	 */
 	public $supportI18n = false;

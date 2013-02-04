@@ -4,7 +4,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObject;
 use wcf\system\api\rest\response\IRESTfulResponse;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
 use wcf\system\user\storage\UserStorageHandler;
@@ -15,7 +15,7 @@ use wcf\util\PasswordUtil;
  * Represents a user.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
@@ -241,12 +241,7 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 	 * Gets all user options from cache.
 	 */
 	protected static function getUserOptionCache() {
-		CacheHandler::getInstance()->addResource(
-			'userOption',
-			WCF_DIR.'cache/cache.userOption.php',
-			'wcf\system\cache\builder\OptionCacheBuilder'
-		);
-		self::$userOptions = CacheHandler::getInstance()->get('userOption', 'options');
+		self::$userOptions = UserOptionCacheBuilder::getInstance()->getData(array(), 'options');
 	}
 	
 	/**

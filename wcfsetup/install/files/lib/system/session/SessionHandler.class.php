@@ -2,7 +2,7 @@
 namespace wcf\system\session;
 use wcf\data\user\User;
 use wcf\page\ITrackablePage;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\RequestHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
@@ -16,7 +16,7 @@ use wcf\util\UserUtil;
  * Handles sessions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.session
@@ -405,20 +405,9 @@ class SessionHandler extends SingletonFactory {
 			$groupIDs = $this->user->getGroupIDs();
 		}
 		
-		$groups = implode(',', $groupIDs);
-		$groupsFileName = StringUtil::getHash($groups);
-		
-		// register cache resource
-		$cacheName = 'userGroup-'.$groups;
-		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/cache.userGroup-'.$groupsFileName.'.php',
-			'wcf\system\cache\builder\UserGroupPermissionCacheBuilder'
-		);
-		
 		// get group data from cache
-		$this->groupData = CacheHandler::getInstance()->get($cacheName);
-		if (isset($this->groupData['groupIDs']) && $this->groupData['groupIDs'] != $groups) {
+		$this->groupData = UserGroupPermissionCacheBuilder::getInstance()->getData($groupIDs);
+		if (isset($this->groupData['groupIDs']) && $this->groupData['groupIDs'] != $groupIDs) {
 			$this->groupData = array();
 		}
 	}

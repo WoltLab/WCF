@@ -3,7 +3,6 @@ namespace wcf\system\option;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
@@ -15,7 +14,7 @@ use wcf\util\StringUtil;
  * Handles options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -27,12 +26,6 @@ class OptionHandler implements IOptionHandler {
 	 * @var	array<string>
 	 */
 	protected $abbreviations = null;
-	
-	/**
-	 * cache name
-	 * @var	string
-	 */
-	public $cacheName = '';
 	
 	/**
 	 * cache class name
@@ -115,8 +108,7 @@ class OptionHandler implements IOptionHandler {
 	/**
 	 * @see	wcf\system\option\IOptionHandler::__construct()
 	 */
-	public function __construct($cacheName, $cacheClass, $supportI18n, $languageItemPattern = '', $categoryName = '') {
-		$this->cacheName = $cacheName;
+	public function __construct($cacheClass, $supportI18n, $languageItemPattern = '', $categoryName = '') {
 		$this->cacheClass = $cacheClass;
 		$this->categoryName = $categoryName;
 		$this->languageItemPattern = $languageItemPattern;
@@ -395,17 +387,13 @@ class OptionHandler implements IOptionHandler {
 	 * Gets all options and option categories from cache.
 	 */
 	protected function readCache() {
-		CacheHandler::getInstance()->addResource(
-			$this->cacheName,
-			WCF_DIR.'cache/cache.'.$this->cacheName.'.php',
-			$this->cacheClass
-		);
+		$cache = call_user_func(array($this->cacheClass, 'getInstance'));
 		
 		// get cache contents
-		$this->cachedCategories = CacheHandler::getInstance()->get($this->cacheName, 'categories');
-		$this->cachedOptions = CacheHandler::getInstance()->get($this->cacheName, 'options');
-		$this->cachedCategoryStructure = CacheHandler::getInstance()->get($this->cacheName, 'categoryStructure');
-		$this->cachedOptionToCategories = CacheHandler::getInstance()->get($this->cacheName, 'optionToCategories');
+		$this->cachedCategories = $cache->getData(array(), 'categories');
+		$this->cachedOptions = $cache->getData(array(), 'options');
+		$this->cachedCategoryStructure = $cache->getData(array(), 'categoryStructure');
+		$this->cachedOptionToCategories = $cache->getData(array(), 'optionToCategories');
 	}
 	
 	/**

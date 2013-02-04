@@ -6257,7 +6257,7 @@ WCF.Popover = Class.extend({
 	 * @var	object
 	 */
 	_delay: {
-		show: 250,
+		show: 800,
 		hide: 500
 	},
 	
@@ -6341,7 +6341,7 @@ WCF.Popover = Class.extend({
 			y: 'top'
 		};
 		this._delay = {
-			show: 250,
+			show: 800,
 			hide: 500
 		};
 		this._hoverElement = false;

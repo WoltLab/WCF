@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\system\cache\builder\TemplateListenerCacheBuilder;
+use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\WCF;
 
@@ -7,7 +9,7 @@ use wcf\system\WCF;
  * Installs, updates and deletes template listeners.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -84,7 +86,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 */
 	protected function cleanup() {
 		// clear cache immediately
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.templateListener.php');
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/templateListener', '*.php');
+		TemplateListenerCacheBuilder::getInstance()->reset();
+		TemplateListenerCodeCacheBuilder::getInstance()->reset();
 	}
 }

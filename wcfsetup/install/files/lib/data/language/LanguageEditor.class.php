@@ -6,7 +6,7 @@ use wcf\data\language\item\LanguageItemEditor;
 use wcf\data\language\item\LanguageItemList;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\LanguageCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
@@ -21,7 +21,7 @@ use wcf\util\XML;
  * Provides functions to edit languages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.language
@@ -507,7 +507,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Clears language cache.
 	 */
 	public function clearCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.language.php');
+		LanguageCacheBuilder::getInstance()->reset();
 	}
 	
 	/**

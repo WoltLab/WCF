@@ -1,12 +1,12 @@
 <?php
 namespace wcf\system\cache\source;
-use wcf\system\WCF;
-use wcf\util\FileUtil;
+use wcf\system\exception\SystemException;
+use wcf\util\StringUtil;
 
 /**
  * MemcachedCacheSource is an implementation of CacheSource that uses a Memcached server to store cached variables.
  * 
- * @author	Marcel Werk
+ * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -15,178 +15,209 @@ use wcf\util\FileUtil;
  */
 class MemcachedCacheSource implements ICacheSource {
 	/**
-	 * MemcachedAdapter object
-	 * @var	wcf\system\cache\source\MemcachedAdapter
+	 * memcached object
+	 * @var	\Memcached
 	 */
-	protected $adapter = null;
+	protected $memcached = null;
 	
 	/**
-	 * list of cache resources
-	 * @var	array<string>
+	 * key prefix
+	 * @var	string
 	 */
-	protected $cacheResources = null;
+	protected $prefix = '';
 	
 	/**
-	 * list of new cache resources
-	 * @var	array<string>
-	 */
-	protected $newLogEntries = array();
-	
-	/**
-	 * list of obsolete resources
-	 * @var	array<string>
-	 */
-	protected $obsoleteLogEntries = array();
-	
-	/**
-	 * Creates a new MemcachedCacheSource object.
+	 * Creates a new instance of memcached.
 	 */
 	public function __construct() {
-		$this->adapter = MemcachedAdapter::getInstance();
-	}
-	
-	/**
-	 * Returns the memcached adapter.
-	 * 
-	 * @return	wcf\system\cache\source\MemcachedAdapter
-	 */
-	public function getAdapter() {
-		return $this->adapter;
-	}
-	
-	// internal log functions
-	/**
-	 * Loads the cache log.
-	 */
-	protected function loadLog() {
-		if ($this->cacheResources === null) {
-			$this->cacheResources = array();
-			$sql = "SELECT	*
-				FROM	wcf".WCF_N."_cache_resource";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute();
-			while ($row = $statement->fetchArray()) {
-				$this->cacheResources[] = $row['cacheResource'];
-			}
-		}
-	}
-	
-	/**
-	 * Saves modifications of the cache log.
-	 */
-	protected function updateLog() {
-		if (!empty($this->newLogEntries)) {
-			$sql = "DELETE FROM	wcf".WCF_N."_cache_resource
-				WHERE		cacheResource = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach ($this->newLogEntries as $entry) {
-				$statement->execute(array($entry));
-			}
-			
-			$sql = "INSERT INTO	wcf".WCF_N."_cache_resource
-						(cacheResource)
-				VALUES		(?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach ($this->newLogEntries as $entry) {
-				$statement->execute(array($entry));
-			}
-			
+		if (!class_exists('Memcached')) {
+			throw new SystemException('memcached support is not enabled.');
 		}
 		
-		if (!empty($this->obsoleteLogEntries)) {
-			$sql = "DELETE FROM	wcf".WCF_N."_cache_resource
-				WHERE		cacheResource = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach ($this->obsoleteLogEntries as $entry) {
-				$statement->execute(array($entry));
+		// init memcached
+		$this->memcached = new \Memcached();
+		
+		// add servers
+		$tmp = explode("\n", StringUtil::unifyNewlines(CACHE_SOURCE_MEMCACHED_HOST));
+		$servers = array();
+		$defaultWeight = floor(100 / count($tmp));
+		foreach ($tmp as $server) {
+			$server = StringUtil::trim($server);
+			if (!empty($server)) {
+				$host = $server;
+				$port = 11211; // default memcached port
+				$weight = $defaultWeight;
+				
+				// get port
+				if (strpos($host, ':')) {
+					$parsedHost = explode(':', $host);
+					$host = $parsedHost[0];
+					$port = $parsedHost[1];
+					
+					if (isset($parsedHost[2])) {
+						$weight = $parsedHost[2];
+					}
+				}
+				
+				$servers[] = array($host, $port, $weight);
 			}
 		}
+		
+		$this->memcached->addServers($servers);
+		
+		// test connection
+		$this->memcached->get('testing');
+		
+		// set variable prefix to prevent collision
+		$this->prefix = substr(sha1(WCF_DIR), 0, 8) . '_';
 	}
 	
 	/**
-	 * Adds a cache resource to cache log.
-	 * 
-	 * @param	string		$cacheResource
+	 * @see	wcf\system\cache\source\ICacheSource::flush()
 	 */
-	protected function addToLog($cacheResource) {
-		$this->newLogEntries[] = $cacheResource;
+	public function flush($cacheName, $useWildcard) {
+		$cacheName = $this->prefix . $cacheName;
+		$this->memcached->delete($cacheName);
+		
+		$this->updateMaster(null, $cacheName);
 	}
 	
 	/**
-	 * Removes an obsolete cache resource from cache log.
-	 * 
-	 * @param	string		$cacheResource
+	 * @see	wcf\system\cache\source\ICacheSource::flushAll()
 	 */
-	protected function removeFromLog($cacheResource) {
-		$this->obsoleteLogEntries[] = $cacheResource;
+	public function flushAll() {
+		// read all keys
+		$availableKeys = $this->memcached->get($this->prefix . 'master');
+		if ($availableKeys !== false) {
+			$keys = @unserialize($availableKeys);
+			if ($keys !== false) {
+				$this->memcached->deleteMulti($keys);
+			}
+		}
+		
+		// flush master
+		$this->memcached->set($this->prefix . 'master', serialize(array()), $this->getTTL());
 	}
 	
-	// CacheSource implementations
 	/**
 	 * @see	wcf\system\cache\source\ICacheSource::get()
 	 */
-	public function get(array $cacheResource) {
-		$value = $this->getAdapter()->getMemcached()->get($cacheResource['file']);
+	public function get($cacheName, $maxLifetime) {
+		$cacheName = $this->prefix . $cacheName;
+		$value = $this->memcached->get($cacheName);
+		
 		if ($value === false) {
-			// check if result code if return values is a boolean value instead of no result
-			if ($this->getAdapter()->getMemcached()->getResultCode() == \Memcached::RES_NOTFOUND) {
+			// check if value does not exist
+			if ($this->memcached->getResultCode() !== \Memcached::RES_SUCCESS) {
+				$this->updateMaster(null, $cacheName);
 				return null;
 			}
 		}
 		
+		$this->updateMaster($cacheName);
 		return $value;
 	}
 	
 	/**
 	 * @see	wcf\system\cache\source\ICacheSource::set()
 	 */
-	public function set(array $cacheResource, $value) {
-		$this->getAdapter()->getMemcached()->set($cacheResource['file'], $value, $cacheResource['maxLifetime']);
-		$this->addToLog($cacheResource['file']);
+	public function set($cacheName, $value, $maxLifetime) {
+		$cacheName = $this->prefix . $cacheName;
+		$this->memcached->set($cacheName, $value, $this->getTTL($maxLifetime));
+		
+		$this->updateMaster($cacheName);
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::delete()
+	 * Updates master record for cached resources.
+	 * 
+	 * @param	string		$addResource
+	 * @param	string		$removeResource
 	 */
-	public function delete(array $cacheResource) {
-		$this->getAdapter()->getMemcached()->delete($cacheResource['file']);
-		$this->removeFromLog($cacheResource['file']);
-	}
-	
-	/**
-	 * @see	wcf\system\cache\source\ICacheSource::clear()
-	 */
-	public function clear($directory, $filepattern) {
-		$this->loadLog();
-		$pattern = preg_quote(FileUtil::addTrailingSlash($directory), '%').str_replace('*', '.*', str_replace('.', '\.', $filepattern));
-		foreach ($this->cacheResources as $cacheResource) {
-			if (preg_match('%^'.$pattern.'$%i', $cacheResource)) {
-				$this->getAdapter()->getMemcached()->delete($cacheResource);
-				$this->removeFromLog($cacheResource);
+	protected function updateMaster($addResource = null, $removeResource = null) {
+		if ($addResource === null && $removeResource === null) {
+			return;
+		}
+		
+		$master = $this->memcached->get($this->prefix . 'master');
+		$update = false;
+		
+		// master record missing
+		if ($master === false) {
+			$update = true;
+			$master = array();
+		}
+		else {
+			$master = @unserialize($master);
+			
+			// master record is broken
+			if ($master === false) {
+				$update = true;
+				$master = array();
 			}
+			else {
+				foreach ($master as $index => $key) {
+					if ($addResource !== null) {
+						// key is already tracked
+						if ($key === $addResource) {
+							$addResource = null;
+							
+							if ($removeResource === null) {
+								break;
+							}
+						}
+					}
+					
+					if ($removeResource !== null) {
+						if ($key === $removeResource) {
+							$update = true;
+							unset($master[$index]);
+							
+							if ($addResource === null) {
+								break;
+							}
+							else {
+								$removeResource = null;
+							}
+						}
+					}
+				}
+				
+				if ($addResource !== null) {
+					$update = true;
+					$master[] = $addResource;
+				}
+			}
+		}
+		
+		// update master record
+		if ($update) {
+			$this->memcached->set($this->prefix . 'master', serialize($master), $this->getTTL());
 		}
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::flush()
+	 * Returns time to live in seconds, defaults to 3 days.
+	 * 
+	 * @param	integer		$maxLifetime
+	 * @return	integer
 	 */
-	public function flush() {
-		// clear cache
-		$this->getAdapter()->getMemcached()->flush();
+	protected function getTTL($maxLifetime = 0) {
+		if ($maxLifetime) {
+			// max lifetime is a timestamp -> http://www.php.net/manual/en/memcached.expiration.php
+			if ($maxLifetime > (60 * 60 * 24 * 30)) {
+				// timestamp is in the past, discard
+				if ($maxLifetime < TIME_NOW) {
+					$maxLifetime = 0;
+				}
+			}
+		}
 		
-		// clear log
-		$this->newLogEntries = $this->obsoleteLogEntries = array();
+		if ($maxLifetime) {
+			return $maxLifetime;
+		}
 		
-		$sql = "DELETE FROM	wcf".WCF_N."_cache_resource";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-	}
-	
-	/**
-	 * @see	wcf\system\cache\source\ICacheSource::close()
-	 */
-	public function close() {
-		// update log
-		$this->updateLog();
+		// default TTL: 3 days
+		return (60 * 60 * 24 * 3);
 	}
 }

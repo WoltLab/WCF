@@ -278,7 +278,6 @@
 		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[Eine Browser-Kennung (User-Agent) pro Zeile]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host.description"><![CDATA[Mehrere Server können zeilenweise angegeben werden, die Gewichtung kann als dritter Parameter angegeben werden, zum Beispiel „localhost:11211:67“ oder „10.0.13.37:31337:33“.]]></item>
-		<item name="wcf.acp.option.cache_source_memcached_use_pconnect"><![CDATA[Persistente Verbindungen aktivieren]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache-Methode]]></item>
 		<item name="wcf.acp.option.cache_source_type.apc"><![CDATA[Alternative PHP Cache (experimentell)]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Beachten Sie, dass einige Methoden spezielle Anforderungen an das Server-System stellen und nicht auf jedem Server zur Verfügung stehen.]]></item>

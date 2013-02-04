@@ -2,7 +2,7 @@
 namespace wcf\system\style;
 use wcf\data\style\ActiveStyle;
 use wcf\data\style\Style;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Handles styles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.style
@@ -36,12 +36,7 @@ class StyleHandler extends SingletonFactory {
 	 */
 	protected function init() {
 		// load cache
-		CacheHandler::getInstance()->addResource(
-			'style',
-			WCF_DIR.'cache/cache.style.php',
-			'wcf\system\cache\builder\StyleCacheBuilder'
-		);
-		$this->cache = CacheHandler::getInstance()->get('style');
+		$this->cache = StyleCacheBuilder::getInstance()->getData();
 	}
 	
 	/**
