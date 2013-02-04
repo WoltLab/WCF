@@ -4,7 +4,7 @@ use wcf\data\category\Category;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectDecorator;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\CategoryCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
@@ -12,7 +12,7 @@ use wcf\system\SingletonFactory;
  * Handles the categories.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.category
@@ -147,20 +147,15 @@ class CategoryHandler extends SingletonFactory {
 			$this->objectTypeIDs[$objectType->objectTypeID] = $objectType->objectType;
 		}
 		
-		CacheHandler::getInstance()->addResource(
-			'category',
-			WCF_DIR.'cache/cache.category.php',
-			'wcf\system\cache\builder\CategoryCacheBuilder'
-		);
-		$this->categories = CacheHandler::getInstance()->get('category', 'categories');
-		$this->objectTypeCategoryIDs = CacheHandler::getInstance()->get('category', 'objectTypeCategoryIDs');
+		$this->categories = CategoryCacheBuilder::getInstance()->getData(array(), 'categories');
+		$this->objectTypeCategoryIDs = CategoryCacheBuilder::getInstance()->getData(array(), 'objectTypeCategoryIDs');
 	}
 	
 	/**
 	 * Reloads the category cache.
 	 */
 	public function reloadCache() {
-		CacheHandler::getInstance()->clearResource('category');
+		CategoryCacheBuilder::getInstance()->reset();
 		
 		$this->init();
 	}

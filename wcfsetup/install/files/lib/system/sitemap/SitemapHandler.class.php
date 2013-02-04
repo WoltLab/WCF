@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\sitemap;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\SitemapCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
@@ -8,7 +8,7 @@ use wcf\system\SingletonFactory;
  * Handles sitemap interactions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	sitemap.sitemap
@@ -25,12 +25,7 @@ class SitemapHandler extends SingletonFactory {
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		CacheHandler::getInstance()->addResource(
-			'sitemap',
-			WCF_DIR.'cache/cache.sitemap.php',
-			'wcf\system\cache\builder\SitemapCacheBuilder'
-		);
-		$this->cache = CacheHandler::getInstance()->get('sitemap');
+		$this->cache = SitemapCacheBuilder::getInstance()->get('sitemap');
 	}
 	
 	/**

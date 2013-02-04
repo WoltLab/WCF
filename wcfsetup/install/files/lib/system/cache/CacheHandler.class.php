@@ -44,7 +44,7 @@ class CacheHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Flushed cache for given resource.
+	 * Flush cache for given resource.
 	 * 
 	 * @param	wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
 	 * @param	array						$parameters
@@ -52,6 +52,13 @@ class CacheHandler extends SingletonFactory {
 	public function flush(ICacheBuilder $cacheBuilder, array $parameters) {
 		$useWildCard = (empty($parameters)) ? false : true;
 		$this->getCacheSource()->flush($this->getCacheName($cacheBuilder), $useWildCard);
+	}
+	
+	/**
+	 * Flushes the entire cache.
+	 */
+	public function flushAll() {
+		$this->getCacheSource()->flushAll();
 	}
 	
 	/**

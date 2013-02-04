@@ -1,13 +1,13 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\EventListenerCacheBuilder;
 use wcf\system\WCF;
 
 /**
  * Installs, updates and deletes event listeners.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -98,6 +98,6 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		parent::uninstall();
 		
 		// clear cache immediately
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.eventListener.php');
+		EventListenerCacheBuilder::getInstance()->reset();
 	}
 }

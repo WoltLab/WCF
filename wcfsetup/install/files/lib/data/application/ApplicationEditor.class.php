@@ -2,14 +2,14 @@
 namespace wcf\data\application;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\WCF;
 
 /**
  * Provides functions to edit applications.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.application
@@ -88,6 +88,6 @@ class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedO
 	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.application.php');
+		ApplicationCacheBuilder::getInstance()->reset();
 	}
 }

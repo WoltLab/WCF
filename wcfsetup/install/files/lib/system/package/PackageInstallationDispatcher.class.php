@@ -1,5 +1,9 @@
 <?php
 namespace wcf\system\package;
+use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
+
+use wcf\system\cache\builder\TemplateListenerCacheBuilder;
+
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\category\LanguageCategory;
@@ -38,7 +42,7 @@ use wcf\util\StringUtil;
  * PackageInstallationDispatcher handles the whole installation process.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
@@ -154,7 +158,7 @@ class PackageInstallationDispatcher {
 				
 				// remove all cache files after WCFSetup
 				if (!PACKAGE_ID) {
-					CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.*.php');
+					CacheHandler::getInstance()->flushAll();
 				}
 				
 				// rebuild application paths
@@ -163,7 +167,8 @@ class PackageInstallationDispatcher {
 			}
 			
 			// remove template listener cache
-			CacheHandler::getInstance()->clear(WCF_DIR.'cache/templateListener/', '*.php');
+			TemplateListenerCacheBuilder::getInstance()->reset();
+			TemplateListenerCodeCacheBuilder::getInstance()->reset();
 				
 			// reset language cache
 			LanguageFactory::getInstance()->clearCache();
@@ -758,7 +763,7 @@ class PackageInstallationDispatcher {
 		LanguageEditor::deleteLanguageFiles();
 		
 		// reset all caches
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', '*');
+		CacheHandler::getInstance()->flushAll();
 	}
 	
 	/**

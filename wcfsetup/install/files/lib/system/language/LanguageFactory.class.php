@@ -2,7 +2,7 @@
 namespace wcf\system\language;
 use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\LanguageCacheBuilder;
 use wcf\system\template\TemplateScriptingCompiler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Handles language related functions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.language
@@ -215,13 +215,7 @@ class LanguageFactory extends SingletonFactory {
 	 */
 	protected function loadCache() {
 		if (defined('WCF_N')) {
-			CacheHandler::getInstance()->addResource(
-				'language',
-				WCF_DIR.'cache/cache.language.php',
-				'wcf\system\cache\builder\LanguageCacheBuilder'
-			);
-			
-			$this->cache = CacheHandler::getInstance()->get('language');
+			$this->cache = LanguageCacheBuilder::getInstance()->getData();
 		}
 	}
 	
@@ -229,7 +223,7 @@ class LanguageFactory extends SingletonFactory {
 	 * Clears languages cache.
 	 */
 	public function clearCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.language.php');
+		LanguageCacheBuilder::getInstance()->reset();
 	}
 	
 	/**

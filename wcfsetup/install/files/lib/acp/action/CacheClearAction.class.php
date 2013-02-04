@@ -2,19 +2,17 @@
 namespace wcf\acp\action;
 use wcf\action\AbstractAction;
 use wcf\system\cache\CacheHandler;
-use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 
 /**
  * Clears the cache.
  * 
- * @author	Tim Düsterhus
- * @copyright	2012 Tim Düsterhus
+ * @author	Tim Duesterhus
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.action
@@ -39,18 +37,7 @@ class CacheClearAction extends AbstractAction {
 		LanguageFactory::getInstance()->deleteLanguageCache();
 		
 		// get package dirs
-		$sql = "SELECT	packageDir
-			FROM	wcf".WCF_N."_package
-			WHERE	isApplication = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(1));
-		while ($row = $statement->fetchArray()) {
-			$packageDir = FileUtil::getRealPath(WCF_DIR . $row['packageDir']);
-			try {
-				CacheHandler::getInstance()->clear($packageDir.'cache', '*.php');
-			}
-			catch (SystemException $e) { }
-		}
+		CacheHandler::getInstance()->flushAll();
 		
 		$this->executed();
 		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('CacheList'));

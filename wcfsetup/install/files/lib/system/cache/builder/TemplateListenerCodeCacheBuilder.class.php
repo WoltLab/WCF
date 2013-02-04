@@ -3,7 +3,7 @@ namespace wcf\system\cache\builder;
 use wcf\data\template\listener\TemplateListenerList;
 
 /**
- * Caches the template listener code for a certain template in a certain environment.
+ * Caches the template listener code for a certain environment.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
@@ -20,12 +20,15 @@ class TemplateListenerCodeCacheBuilder extends AbstractCacheBuilder {
 		// get template codes for specified template
 		$templateListenerList = new TemplateListenerList();
 		$templateListenerList->getConditionBuilder()->add("template_listener.environment = ?", array($parameters['environment']));
-		$templateListenerList->getConditionBuilder()->add("template_listener.templateName = ?", array($parameters['templateName']));
 		$templateListenerList->readObjects();
 		
 		$data = array();
 		foreach ($templateListenerList->getObjects() as $templateListener) {
-			$data[$templateListener->eventName][] = $templateListener->templateCode;
+			if (!isset($data[$templateListener->templateName])) {
+				$data[$templateListener->templateName] = array();
+			}
+			
+			$data[$templateListener->templateName][$templateListener->eventName][] = $templateListener->templateCode;
 		}
 		
 		return $data;

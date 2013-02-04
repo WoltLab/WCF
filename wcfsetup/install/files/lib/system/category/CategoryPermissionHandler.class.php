@@ -2,7 +2,7 @@
 namespace wcf\system\category;
 use wcf\data\category\Category;
 use wcf\data\user\User;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\CategoryACLOptionCacheBuilder;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Handles the category permissions.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.category
@@ -66,18 +66,13 @@ class CategoryPermissionHandler extends SingletonFactory {
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		CacheHandler::getInstance()->addResource(
-			'categoryACLOption',
-			WCF_DIR.'cache/cache.categoryACLOption.php',
-			'wcf\system\cache\builder\CategoryACLOptionCacheBuilder'
-		);
-		$this->categoryPermissions = CacheHandler::getInstance()->get('categoryACLOption');
+		$this->categoryPermissions = CategoryACLOptionCacheBuilder::getInstance()->getData();
 	}
 	
 	/**
 	 * Resets the category permission cache.
 	 */
 	public function resetCache() {
-		CacheHandler::getInstance()->clearResource('categoryACLOption');
+		CategoryACLOptionCacheBuilder::getInstance()->reset();
 	}
 }

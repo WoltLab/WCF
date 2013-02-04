@@ -6,7 +6,7 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\exception\IPrintableException;
 use wcf\system\exception\PermissionDeniedException;
@@ -300,24 +300,7 @@ class WCF {
 	 * Loads the default cache resources.
 	 */
 	protected function loadDefaultCacheResources() {
-		CacheHandler::getInstance()->addResource(
-			'language',
-			WCF_DIR.'cache/cache.language.php',
-			'wcf\system\cache\builder\LanguageCacheBuilder'
-		);
-		CacheHandler::getInstance()->addResource(
-			'spider',
-			WCF_DIR.'cache/cache.spider.php',
-			'wcf\system\cache\builder\SpiderCacheBuilder'
-		);
-		
-		if (defined('PACKAGE_ID')) {
-			CacheHandler::getInstance()->addResource(
-				'coreObject',
-				WCF_DIR.'cache/cache.coreObject.php',
-				'wcf\system\cache\builder\CoreObjectCacheBuilder'
-			);
-		}
+		// TODO: Is this required anymore?
 	}
 	
 	/**
@@ -520,7 +503,7 @@ class WCF {
 			return;
 		}
 		
-		self::$coreObjectCache = CacheHandler::getInstance()->get('coreObject');
+		self::$coreObjectCache = CoreObjectCacheBuilder::getInstance()->getData();
 	}
 	
 	/**

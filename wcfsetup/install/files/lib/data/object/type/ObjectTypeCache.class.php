@@ -1,13 +1,13 @@
 <?php
 namespace wcf\data\object\type;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\ObjectTypeCacheBuilder;
 use wcf\system\SingletonFactory;
 
 /**
  * Manages the object type cache.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.object.type
@@ -49,19 +49,14 @@ class ObjectTypeCache extends SingletonFactory {
 	 */
 	protected function init() {
 		// get definition cache
-		CacheHandler::getInstance()->addResource(
-			'objectType',
-			WCF_DIR.'cache/cache.objectType.php',
-			'wcf\system\cache\builder\ObjectTypeCacheBuilder'
-		);
-		$this->definitionsByCategory = CacheHandler::getInstance()->get('objectType', 'categories');
-		$this->definitions = CacheHandler::getInstance()->get('objectType', 'definitions');
+		$this->definitionsByCategory = ObjectTypeCacheBuilder::getInstance()->getData(array(), 'categories');
+		$this->definitions = ObjectTypeCacheBuilder::getInstance()->getData(array(), 'definitions');
 		foreach ($this->definitions as $definition) {
 			$this->definitionsByName[$definition->definitionName] = $definition;
 		}
 		
 		// get object type cache
-		$this->objectTypes = CacheHandler::getInstance()->get('objectType', 'objectTypes');
+		$this->objectTypes = ObjectTypeCacheBuilder::getInstance()->getData(array(), 'objectTypes');
 		foreach ($this->objectTypes as $objectType) {
 			$definition = $this->getDefinition($objectType->definitionID);
 			if (!isset($this->groupedObjectTypes[$definition->definitionName])) {
@@ -171,7 +166,7 @@ class ObjectTypeCache extends SingletonFactory {
 	 * Resets and reloads the object type cache.
 	 */
 	public function resetCache() {
-		CacheHandler::getInstance()->clearResource('objectType');
+		ObjectTypeCacheBuilder::getInstance()->reset();
 		$this->init();
 	}
 }

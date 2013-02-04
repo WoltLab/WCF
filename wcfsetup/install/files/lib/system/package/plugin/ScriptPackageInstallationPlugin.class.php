@@ -8,7 +8,7 @@ use wcf\util\FileUtil;
  * Executes individual PHP scripts during installation.
  * 
  * @author	Benjamin Kunz
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -34,7 +34,7 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 		$path = FileUtil::getRealPath(WCF_DIR.$packageDir);
 		
 		// reset WCF cache
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', '*.php');
+		CacheHandler::getInstance()->flushAll();
 		
 		// run script
 		$this->run($path.$this->instruction['value']);

@@ -5,7 +5,7 @@ use wcf\data\language\SetupLanguage;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\LanguageCacheBuilder;
 use wcf\system\database\util\SQLParser;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -864,7 +864,7 @@ class WCFSetup extends WCF {
 		LanguageFactory::getInstance()->makeDefault($language->languageID);
 		
 		// rebuild language cache
-		CacheHandler::getInstance()->clearResource('language');
+		LanguageCacheBuilder::getInstance()->reset();
 		
 		// go to next step
 		$this->gotoNextStep('createUser');

@@ -25,12 +25,6 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	public $errorType = array();
 	
 	/**
-	 * cache name
-	 * @var	string
-	 */
-	public $cacheName = 'option';
-	
-	/**
 	 * cache class name
 	 * @var	string
 	 */
@@ -72,7 +66,7 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		$this->optionHandler = new $this->optionHandlerClassName($this->cacheName, $this->cacheClass, $this->supportI18n, $this->languageItemPattern, $this->categoryName);
+		$this->optionHandler = new $this->optionHandlerClassName($this->cacheClass, $this->supportI18n, $this->languageItemPattern, $this->categoryName);
 		$this->initOptionHandler();
 	}
 	
