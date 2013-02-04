@@ -45,13 +45,13 @@ WCF.ImageViewer = Class.extend({
 	_initImageViewer: function() {
 		WCF.DOMNodeInsertedHandler.enable();
 		
-		$('a.jsImageViewer').each(function(index, link) {
-			var $link = $(link).removeClass('jsImageViewer');
-			$link.slimbox({
+		var $links = $('a.jsImageViewer');
+		if ($links.length) {
+			$links.removeClass('jsImageViewer').slimbox({
 				counterText: WCF.Language.get('wcf.imageViewer.counter'),
 				loop: true
 			});
-		});
+		}
 		
 		WCF.DOMNodeInsertedHandler.disable();
 	},
