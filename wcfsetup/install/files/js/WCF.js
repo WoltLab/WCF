@@ -5608,6 +5608,12 @@ WCF.InlineEditor = Class.extend({
 		
 		if ($hasOptions) {
 			this._dropdowns[$elementID].parent('span').addClass('dropdownOpen');
+			
+			// if last child is divider, remove it
+			var $lastChild = this._dropdowns[$elementID].children().last();
+			if ($lastChild.hasClass('dropdownDivider')) {
+				$lastChild.remove();
+			}
 		}
 		
 		return false;
