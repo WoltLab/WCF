@@ -49,7 +49,7 @@ class DiskCacheSource implements ICacheSource {
 		
 		// load cache
 		try {
-			return $this->readCache($filename);
+			return $this->readCache($cacheName, $filename);
 		}
 		catch (\Exception $e) {
 			return null;
@@ -116,7 +116,7 @@ class DiskCacheSource implements ICacheSource {
 		}
 		
 		// maxlifetime expired
-		if ($maxLifetime > 0 && (TIME_NOW - $mtime) > $filename) {
+		if ($maxLifetime > 0 && (TIME_NOW - $mtime) > $maxLifetime) {
 			return true;
 		}
 		
