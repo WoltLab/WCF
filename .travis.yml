@@ -6,5 +6,5 @@ before_install:
   - pear install pear/PHP_CodeSniffer
   - phpenv rehash
 script:
-  - find . -type f -name '*.php' -exec php -l {} \;
+  - find . -type f -name '*.php' |xargs -I file php -l file > /dev/null
   - phpcs -p --extensions=php --standard="`pwd`/CodeSniff/WCF" .
