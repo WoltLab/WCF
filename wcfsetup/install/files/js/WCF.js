@@ -2049,6 +2049,9 @@ WCF.Action.Scroll = Class.extend({
 		
 		// watch for scroll event
 		this.start();
+		
+		// check if browser navigated back and jumped to offset before JavaScript was loaded
+		this._scroll();
 	},
 	
 	/**
