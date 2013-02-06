@@ -91,7 +91,9 @@ class MemcachedCacheSource implements ICacheSource {
 		if ($availableKeys !== false) {
 			$keys = @unserialize($availableKeys);
 			if ($keys !== false) {
-				$this->memcached->deleteMulti($keys);
+				foreach ($keys as $key) {
+					$this->memcached->delete($key);
+				}
 			}
 		}
 		
