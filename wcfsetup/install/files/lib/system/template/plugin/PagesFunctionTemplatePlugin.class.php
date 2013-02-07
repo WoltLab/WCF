@@ -2,8 +2,6 @@
 namespace wcf\system\template\plugin;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
-use wcf\system\request\RequestHandler;
-use wcf\system\style\StyleHandler;
 use wcf\system\template\TemplateEngine;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -22,7 +20,7 @@ use wcf\util\StringUtil;
  * 	{pages page=8 pages=10 link='page-%d.html' assign='output' print=true}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin

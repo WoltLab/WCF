@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\package\update;
-use wcf\data\package\update\version\PackageUpdateVersion;
 use wcf\data\search\Search;
 use wcf\data\search\SearchEditor;
 use wcf\data\AbstractDatabaseObjectAction;

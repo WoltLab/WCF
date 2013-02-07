@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\version;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\VersionableDatabaseObject;
 use wcf\system\cache\builder\VersionCacheBuilder;
 use wcf\system\SingletonFactory;
 

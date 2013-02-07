@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\DatabaseObject;
-use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;

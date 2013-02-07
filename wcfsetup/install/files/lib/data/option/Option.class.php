@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\option;
-use wcf\data\package\Package;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 use wcf\util\StringUtil;

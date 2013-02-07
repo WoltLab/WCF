@@ -4,15 +4,13 @@ use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryEditor;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionEditor;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes user options.
  * 
  * @author	Benjamin Kunz
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin

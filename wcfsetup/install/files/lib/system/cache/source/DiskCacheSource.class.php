@@ -4,7 +4,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\Callback;
 use wcf\system\Regex;
-use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 

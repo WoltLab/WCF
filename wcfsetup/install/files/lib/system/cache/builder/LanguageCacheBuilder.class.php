@@ -3,7 +3,6 @@ namespace wcf\system\cache\builder;
 use wcf\data\language\category\LanguageCategoryList;
 use wcf\data\language\LanguageList;
 use wcf\data\DatabaseObject;
-use wcf\system\WCF;
 
 /**
  * Caches languages and the id of the default language. 

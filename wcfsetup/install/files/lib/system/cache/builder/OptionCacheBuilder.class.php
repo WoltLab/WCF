@@ -2,7 +2,6 @@
 namespace wcf\system\cache\builder;
 use wcf\data\option\category\OptionCategory;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**

@@ -5,7 +5,6 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
-use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 
 /**

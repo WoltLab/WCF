@@ -4,7 +4,6 @@ use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
-use wcf\data\package\PackageList;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageCacheBuilder;
 use wcf\system\cache\CacheHandler;
@@ -16,7 +15,6 @@ use wcf\system\package\plugin\SQLPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Handles the whole uninstallation process.
