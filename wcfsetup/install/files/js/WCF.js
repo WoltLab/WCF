@@ -7100,6 +7100,9 @@ WCF.Sitemap = Class.extend({
 			// bind event listener
 			this._dialog.find('.sitemapNavigation').click($.proxy(this._navigate, this));
 			
+			// select active item
+			this._dialog.find('.tabMenuContainer').wcfTabs('select', 'sitemap_' + data.returnValues.sitemapName);
+			
 			// show dialog
 			this._dialog.wcfDialog({
 				title: WCF.Language.get('wcf.sitemap.title')
