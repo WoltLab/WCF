@@ -139,7 +139,7 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns true, if given $url is an internal URL.
+	 * Returns true if given $url is an internal URL.
 	 * 
 	 * @param	string		$url
 	 * @return	boolean

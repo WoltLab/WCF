@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Represents a page menu item.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.page.menu.item
@@ -70,7 +70,7 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	}
 	
 	/**
-	 * Returns true, if current menu item may be set as landing page.
+	 * Returns true if current menu item may be set as landing page.
 	 * 
 	 * @return	boolean
 	 */
@@ -99,7 +99,7 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	}
 	
 	/**
-	 * Returns true, if this item can be deleted.
+	 * Returns true if this item can be deleted.
 	 * 
 	 * @return	boolean
 	 */
@@ -108,7 +108,7 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	}
 	
 	/**
-	 * Returns true, if this item can be disabled.
+	 * Returns true if this item can be disabled.
 	 * 
 	 * @return	boolean
 	 */

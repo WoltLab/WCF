@@ -8,7 +8,7 @@ use wcf\system\io\GZipFile;
  * Contains file-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -276,7 +276,7 @@ final class FileUtil {
 	}
 	
 	/**
-	 * Return true, if the given filename is an url (http or ftp).
+	 * Returns true if the given filename is an url (http or ftp).
 	 * 
 	 * @param	string		$filename
 	 * @return	boolean
@@ -539,7 +539,7 @@ final class FileUtil {
 	}
 	
 	/**
-	 * Returns true, if php is running as apache module.
+	 * Returns true if php is running as apache module.
 	 * 
 	 * @return	boolean
 	 */

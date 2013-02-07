@@ -12,7 +12,7 @@ use wcf\util\FileUtil;
  * the Microsoft Public License (MS-PL) http://www.opensource.org/licenses/ms-pl.html
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
@@ -109,7 +109,7 @@ class RouteHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns true, if a route matches. Please bear in mind, that the
+	 * Returns true if a route matches. Please bear in mind, that the
 	 * first route which is able to consume all path components is used,
 	 * even if other routes may fit better. Route order is crucial!
 	 * 
@@ -138,7 +138,7 @@ class RouteHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns true, if route uses default controller.
+	 * Returns true if route uses default controller.
 	 * 
 	 * @return	boolean
 	 */
@@ -187,7 +187,7 @@ class RouteHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns true, if this is a secure connection.
+	 * Returns true if this is a secure connection.
 	 * 
 	 * @return	true
 	 */

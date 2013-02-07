@@ -6,7 +6,7 @@ use wcf\system\WCF;
  * Contains user-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 final class UserUtil {
 	/**
-	 * Returns true, if the given name is a valid username.
+	 * Returns true if the given name is a valid username.
 	 * 
 	 * @param	string		$name
 	 * @return	boolean
@@ -35,7 +35,7 @@ final class UserUtil {
 	}
 	
 	/**
-	 * Returns true, if the given username is available.
+	 * Returns true if the given username is available.
 	 * 
 	 * @param	string		$name
 	 * @return	boolean
@@ -51,7 +51,7 @@ final class UserUtil {
 	}
 	
 	/**
-	 * Returns true, if the given e-mail is a valid address.
+	 * Returns true if the given e-mail is a valid address.
 	 * @see	http://www.faqs.org/rfcs/rfc821.html
 	 * 
 	 * @param	string		$email
@@ -74,7 +74,7 @@ final class UserUtil {
 	}
 	
 	/**
-	 * Returns true, if the given email address is available.
+	 * Returns true if the given email address is available.
 	 * 
 	 * @param	string		$email
 	 * @return	boolean

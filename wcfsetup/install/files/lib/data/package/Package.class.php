@@ -66,7 +66,7 @@ class Package extends DatabaseObject {
 	protected static $requirements = null;
 	
 	/**
-	 * Returns true, if this package is required by other packages.
+	 * Returns true if this package is required by other packages.
 	 * 
 	 * @return	boolean
 	 */
@@ -139,7 +139,7 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if current user can uninstall this package.
+	 * Returns true if current user can uninstall this package.
 	 * 
 	 * @return	boolean
 	 */
@@ -208,7 +208,7 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if package identified by $package is already installed.
+	 * Returns true if package identified by $package is already installed.
 	 * 
 	 * @param	string		$package
 	 * @return	boolean
@@ -245,7 +245,7 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if package version is valid.
+	 * Returns true if package version is valid.
 	 * 
 	 * Examples of valid package versions:
 	 * 	1.0.0 pl 3

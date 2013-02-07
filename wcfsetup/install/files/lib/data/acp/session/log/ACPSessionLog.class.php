@@ -8,7 +8,7 @@ use wcf\util\UserUtil;
  * Represents a session log entry.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.log
@@ -49,7 +49,7 @@ class ACPSessionLog extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if this session is active.
+	 * Returns true if this session is active.
 	 * 
 	 * @return	boolean
 	 */
@@ -62,7 +62,7 @@ class ACPSessionLog extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if this session is the active user session.
+	 * Returns true if this session is the active user session.
 	 * 
 	 * @return	boolean
 	 */

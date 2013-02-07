@@ -143,7 +143,7 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if the given user is member of the group. If no user is
+	 * Returns true if the given user is member of the group. If no user is
 	 * given, the active user is used.
 	 * 
 	 * @param	wcf\data\user\User	$user
@@ -157,7 +157,7 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if the given groups are accessible for the active user.
+	 * Returns true if the given groups are accessible for the active user.
 	 * 
 	 * @param	array		$groupIDs
 	 * @return	boolean
@@ -224,7 +224,7 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if this group is accessible for the active user.
+	 * Returns true if this group is accessible for the active user.
 	 * 
 	 * @return	boolean
 	 */

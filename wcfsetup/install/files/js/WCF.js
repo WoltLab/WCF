@@ -2458,7 +2458,7 @@ WCF.Dictionary = Class.extend({
 	},
 	
 	/**
-	 * Returns true, if dictionary is empty.
+	 * Returns true if dictionary is empty.
 	 * 
 	 * @return	integer
 	 */
@@ -3062,8 +3062,8 @@ WCF.TabMenu = {
 	},
 	
 	/**
-	 * Force display of first erroneous tab, returns true, if at
-	 * least one tab contains an error.
+	 * Force display of first erroneous tab and returns true if at least one
+	 * tab contains an error.
 	 * 
 	 * @return	boolean
 	 */
@@ -7747,7 +7747,7 @@ $.widget('ui.wcfDialog', {
 	},
 	
 	/**
-	 * Returns true, if dialog is visible.
+	 * Returns true if dialog is visible.
 	 * 
 	 * @return	boolean
 	 */
@@ -8050,7 +8050,7 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 	},
 	
 	/**
-	 * Returns true, if identifier is used by an anchor.
+	 * Returns true if identifier is used by an anchor.
 	 * 
 	 * @param	string		identifier
 	 * @param	boolean		isChildren

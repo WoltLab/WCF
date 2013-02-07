@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Provides internationalization support for input fields.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.language
@@ -110,7 +110,7 @@ class I18nHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns true, if given element has disabled i18n functionality.
+	 * Returns true if given element has disabled i18n functionality.
 	 * 
 	 * @param	string		elementID
 	 * @return	boolean
@@ -124,7 +124,7 @@ class I18nHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns true, if given element has enabled i18n functionality.
+	 * Returns true if given element has enabled i18n functionality.
 	 */
 	public function hasI18nValues($elementID) {
 		if (isset($this->i18nValues[$elementID])) {
@@ -212,7 +212,7 @@ class I18nHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns false, if element value is not empty.
+	 * Returns true if the value with the given id is valid.
 	 * 
 	 * @param	string		$elementID
 	 * @param	boolean		$requireI18n
@@ -446,7 +446,7 @@ class I18nHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns true, if given string equals a language variable.
+	 * Returns true if given string equals a language variable.
 	 * 
 	 * @param	string		$string
 	 * @return	boolean

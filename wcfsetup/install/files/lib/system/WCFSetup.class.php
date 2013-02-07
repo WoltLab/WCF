@@ -406,7 +406,7 @@ class WCFSetup extends WCF {
 	}
 	
 	/**
-	 * Returns true, if memory_limit is set to at least 64 MB
+	 * Returns true if memory_limit is set to at least 64 MB
 	 * 
 	 * @return	boolean
 	 */
