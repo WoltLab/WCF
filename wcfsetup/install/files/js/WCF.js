@@ -7500,18 +7500,6 @@ $.widget('ui.wcfDialog', {
 	_content: null,
 	
 	/**
-	 * dialog content dimensions
-	 * @var	object
-	 */
-	_contentDimensions: null,
-	
-	/**
-	 * rendering state
-	 * @var	boolean
-	 */
-	_isRendering: false,
-	
-	/**
 	 * modal overlay
 	 * @var	jQuery
 	 */
@@ -7803,6 +7791,7 @@ $.widget('ui.wcfDialog', {
 	 * @param	boolean		disableAnimation
 	 */
 	render: function(loaded, disableAnimation) {
+		loaded = loaded || false;
 		disableAnimation = disableAnimation || false;
 		
 		if (loaded) {
@@ -7810,35 +7799,29 @@ $.widget('ui.wcfDialog', {
 			this._content.children('.icon-spinner').remove();
 		}
 		
-		if (!this.isOpen()) {
-			// temporarily display container
-			this._container.show();
-		}
-		else {
-			// remove fixed content dimensions for calculation
-			this._content.css({
-				height: 'auto',
-				width: 'auto'
-			});
-		}
+		// force dialog and it's contents to be visible
+		this._container.show();
+		this._content.children().show();
 		
-		// force content to be visible
-		this._content.children().each(function() {
-			$(this).show();
+		// remove fixed content dimensions for calculation
+		this._content.css({
+			height: 'auto',
+			width: 'auto'
 		});
 		
-		// handle multiple rendering requests
-		if (this._isRendering) {
-			// stop current process
-			this._container.stop();
-			this._content.stop();
-			
-			// set dialog to be fully opaque, should prevent weird bugs in WebKit
-			this._container.show().css('opacity', 1.0);
-		}
+		// terminate concurrent rendering processes
+		this._container.stop();
+		this._content.stop();
 		
+		// set dialog to be fully opaque, prevents weird bugs in WebKit
+		this._container.show().css('opacity', 1.0);
+		
+		// handle positioning of form submit controls
+		var $heightDifference = 0;
 		if (this._content.find('.formSubmit').length) {
-			this._content.addClass('dialogForm');
+			$heightDifference = this._content.find('.formSubmit').outerHeight();
+			
+			this._content.addClass('dialogForm').css({ marginBottom: $heightDifference + 'px' });
 		}
 		else {
 			this._content.removeClass('dialogForm');
@@ -7859,12 +7842,6 @@ $.widget('ui.wcfDialog', {
 			$containerDimensions = this._container.getDimensions('outer');
 		}
 		
-		// handle multiple rendering requests
-		if (this._isRendering) {
-			// use current dimensions as previous ones
-			this._contentDimensions = this._getContentDimensions($maximumHeight);
-		}
-		
 		// calculate new dimensions
 		$contentDimensions = this._getContentDimensions($maximumHeight);
 		
@@ -7878,91 +7855,29 @@ $.widget('ui.wcfDialog', {
 			$topOffset = $desiredTopOffset;
 		}
 		
-		if (disableAnimation) {
-			// hide container again
-			this._container.hide();
-			
-			// apply offset
-			this._container.css({
-				left: $leftOffset + 'px',
-				top: $topOffset + 'px'
-			});
-			
-			// remove static dimensions
-			this._content.css({
-				height: 'auto',
-				overflow: 'auto',
-				width: 'auto'
-			});
-			
-			// fade in container
-			this._container.wcfFadeIn($.proxy(function() {
-				this._isRendering = false;
-			}));
-		}
-		else if (!this.isOpen()) {
-			// hide container again
-			this._container.hide();
-			
-			// apply offset
-			this._container.css({
-				left: $leftOffset + 'px',
-				top: $topOffset + 'px'
-			});
-			
-			// save current dimensions
-			this._contentDimensions = $contentDimensions;
-			
-			// force dimensions
-			this._content.css({
-				height: this._contentDimensions.height + 'px',
-				overflow: 'auto',
-				width: this._contentDimensions.width + 'px'
-			});
-			
-			// fade in container
-			this._container.wcfFadeIn($.proxy(function() {
-				this._isRendering = false;
-			}));
-		}
-		else {
-			// save reference (used in callback)
-			var $content = this._content;
-			
-			// force previous dimensions
-			$content.css({
-				height: this._contentDimensions.height + 'px',
-				width: this._contentDimensions.width + 'px'
-			});
-			
-			// apply new dimensions
-			$content.animate({
-				height: ($contentDimensions.height) + 'px',
-				width: ($contentDimensions.width) + 'px'
-			}, 300, function() {
-				// remove static dimensions
-				$content.css({
-					height: 'auto',
-					overflow: 'auto',
-					width: 'auto'
-				});
-			});
-			
-			// store new dimensions
-			this._contentDimensions = $contentDimensions;
-			
-			// move container
-			this._isRendering = true;
-			this._container.animate({
-				left: $leftOffset + 'px',
-				top: $topOffset + 'px'
-			}, 300, $.proxy(function() {
-				this._isRendering = false;
-			}, this));
-		}
+		// apply offset
+		this._container.css({
+			left: $leftOffset + 'px',
+			top: $topOffset + 'px'
+		});
 		
-		if (this.options.onShow !== null) {
-			this.options.onShow();
+		// remove static dimensions
+		this._content.css({
+			height: 'auto',
+			overflow: 'auto',
+			width: 'auto'
+		});
+		
+		if (!this.isOpen()) {
+			// hide container again
+			this._container.hide();
+			
+			// fade in container
+			this._container.wcfFadeIn($.proxy(function() {
+				if (this.options.onShow !== null) {
+					this.options.onShow();
+				}
+			}, this));
 		}
 	},
 	
@@ -7976,7 +7891,7 @@ $.widget('ui.wcfDialog', {
 		var $contentDimensions = this._content.getDimensions();
 		
 		// set height to maximum height if exceeded
-		if ($contentDimensions.height > maximumHeight) {
+		if (maximumHeight && $contentDimensions.height > maximumHeight) {
 			$contentDimensions.height = maximumHeight;
 		}
 		
