@@ -2,7 +2,6 @@
 namespace wcf\data\package;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**

@@ -5,7 +5,7 @@ namespace wcf\system\request;
  * Represents a page request.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
@@ -60,7 +60,7 @@ class Request {
 	}
 	
 	/**
-	 * Returns true, if this request has already been executed.
+	 * Returns true if this request has already been executed.
 	 * 
 	 * @return	boolean
 	 */
@@ -105,7 +105,7 @@ class Request {
 	}
 	
 	/**
-	 * Returns true, if the requested page is avaiable during the offline mode.
+	 * Returns true if the requested page is avaiable during the offline mode.
 	 * 
 	 * @return	boolean
 	 */

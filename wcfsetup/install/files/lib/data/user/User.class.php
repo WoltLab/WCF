@@ -81,7 +81,7 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 	}
 	
 	/**
-	 * Returns true, if the given password is the correct password for this user.
+	 * Returns true if the given password is the correct password for this user.
 	 * 
 	 * @param	string		$password
 	 * @return	boolean		password correct
@@ -121,7 +121,7 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 	}
 	
 	/**
-	 * Returns true, if the given password hash from a cookie is the correct password for this user.
+	 * Returns true if the given password hash from a cookie is the correct password for this user.
 	 * 
 	 * @param	string		$passwordHash
 	 * @return	boolean		password correct
@@ -309,7 +309,7 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 	}
 	
 	/**
-	 * Returns true, if this user is marked.
+	 * Returns true if this user is marked.
 	 * 
 	 * @return	boolean
 	 */
@@ -392,7 +392,7 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 	}
 	
 	/**
-	 * Returns true, if the active user can edit this user.
+	 * Returns true if the active user can edit this user.
 	 * 
 	 * @return	boolean
 	 */

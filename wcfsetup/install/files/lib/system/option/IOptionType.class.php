@@ -6,7 +6,7 @@ use wcf\data\option\Option;
  * Any option type has to implement this interface.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -50,7 +50,7 @@ interface IOptionType {
 	public function getCSSClassName();
 	
 	/**
-	 * Returns true, if options supports internationalization .
+	 * Returns true if options supports internationalization .
 	 * 
 	 * @return	boolean
 	 */

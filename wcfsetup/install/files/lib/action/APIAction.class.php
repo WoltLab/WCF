@@ -4,13 +4,12 @@ use wcf\system\api\rest\response\IRESTfulResponse;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\RouteHandler;
-use wcf\system\WCF;
 
 /**
  * This action provides RESTful access to database objects.
  * 
  * @author	Jeffrey Reichardt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action

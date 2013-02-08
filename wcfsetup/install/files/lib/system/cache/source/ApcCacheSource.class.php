@@ -2,7 +2,6 @@
 namespace wcf\system\cache\source;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
-use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**

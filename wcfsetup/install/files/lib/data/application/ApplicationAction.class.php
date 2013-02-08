@@ -1,9 +1,6 @@
 <?php
 namespace wcf\data\application;
-use wcf\data\package\Package;
-use wcf\data\package\PackageCache;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\cache\CacheHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -13,7 +10,7 @@ use wcf\util\FileUtil;
  * Executes application-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.application

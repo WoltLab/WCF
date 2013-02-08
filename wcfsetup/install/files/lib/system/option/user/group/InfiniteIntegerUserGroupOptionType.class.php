@@ -5,7 +5,7 @@ namespace wcf\system\option\user\group;
  * User group option type implementation for integer input fields with an option
  * for an infinite value.
  * 
- * The merge of option values returns true, if at least one value is -1. Otherwise
+ * The merge of option values returns true if at least one value is -1. Otherwise
  * it returns the highest value.
  * 
  * @author	Marcel Werk

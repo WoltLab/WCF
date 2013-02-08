@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\application;
 use wcf\data\application\ApplicationAction;
-use wcf\data\application\ApplicationEditor;
 use wcf\data\application\ApplicationList;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\SingletonFactory;
@@ -139,7 +138,7 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns true, if given $url is an internal URL.
+	 * Returns true if given $url is an internal URL.
 	 * 
 	 * @param	string		$url
 	 * @return	boolean

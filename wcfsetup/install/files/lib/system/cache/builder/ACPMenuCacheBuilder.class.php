@@ -5,7 +5,6 @@ use wcf\data\acp\menu\item\ACPMenuItemList;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\category\OptionCategoryList;
 use wcf\data\option\OptionList;
-use wcf\system\request\LinkHandler;
 
 /**
  * Caches the ACP menu items.

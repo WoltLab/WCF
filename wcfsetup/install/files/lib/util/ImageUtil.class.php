@@ -13,11 +13,10 @@ namespace wcf\util;
  */
 final class ImageUtil {
 	/**
-	 * Checks the content of an image for bad sections. 
-	 * e.g. the use of javascript.
-	 * Returns false, if any bad stuff was found.
+	 * Checks the content of an image for bad sections, e.g. the use of javascript
+	 * and returns false if any bad stuff was found.
 	 * 
-	 * @return	boolean 
+	 * @return	boolean
 	 */
 	public static function checkImageContent($file) {
 		// get file content
