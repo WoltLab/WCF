@@ -129,6 +129,10 @@ dl:not(.plain) {
 /* sidebar */
 .sidebar {
 	dl:not(.plain) {
+		&:not(:last-child) {		
+			margin-bottom: @wcfGapMedium;
+		}
+		
 		> dt {
 			text-align: left;
 			float: none;
@@ -140,7 +144,6 @@ dl:not(.plain) {
 		> dd {
 			margin-top: 2px;
 			margin-left: 0;
-			margin-bottom: @wcfGapMedium;
 		}
 	}
 }
