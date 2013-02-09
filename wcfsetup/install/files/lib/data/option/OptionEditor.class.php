@@ -5,7 +5,6 @@ use wcf\data\IEditableCachedObject;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\io\File;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Provides functions to edit options.

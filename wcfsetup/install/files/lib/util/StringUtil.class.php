@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Contains string-related functions.
  * 
  * @author	Oliver Kliebisch, Marcel Werk 
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -416,7 +416,7 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Returns true, if the given string contains only ASCII characters.
+	 * Returns true if the given string contains only ASCII characters.
 	 * 
 	 * @param	string		$string
 	 * @return	boolean
@@ -426,7 +426,7 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Returns true, if the given string is utf-8 encoded.
+	 * Returns true if the given string is utf-8 encoded.
 	 * @see		http://www.w3.org/International/questions/qa-forms-utf-8
 	 * 
 	 * @param	string		$string
@@ -492,7 +492,7 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Returns false, if the given word is forbidden by given word filter.
+	 * Returns false if the given word is forbidden by given word filter.
 	 * 
 	 * @param	string		$word
 	 * @param	string		$filter

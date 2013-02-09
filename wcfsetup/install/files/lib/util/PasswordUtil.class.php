@@ -52,7 +52,7 @@ final class PasswordUtil {
 	const BCRYPT_TYPE = '2a';
 	
 	/**
-	 * Returns true, if given encryption type is supported.
+	 * Returns true if given encryption type is supported.
 	 * 
 	 * @param	string		$type
 	 * @return	boolean
@@ -62,7 +62,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns true, if given hash looks like a valid bcrypt hash.
+	 * Returns true if given hash looks like a valid bcrypt hash.
 	 * 
 	 * @param	string		$hash
 	 * @return	boolean
@@ -72,7 +72,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Returns true, if given bcrypt hash uses a different cost factor and should be re-computed.
+	 * Returns true if given bcrypt hash uses a different cost factor and should be re-computed.
 	 * 
 	 * @param	string		$hash
 	 * @return	boolean

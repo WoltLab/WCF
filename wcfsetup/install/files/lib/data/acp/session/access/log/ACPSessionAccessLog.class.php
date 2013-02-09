@@ -7,7 +7,7 @@ use wcf\util\UserUtil;
  * Represents a session access log entry.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session.access.log
@@ -25,7 +25,7 @@ class ACPSessionAccessLog extends DatabaseObject {
 	protected static $databaseTableIndexName = 'sessionAccessLogID';
 	
 	/**
-	 * Returns true, if the URI of this log entry is protected.
+	 * Returns true if the URI of this log entry is protected.
 	 * 
 	 * @return	boolean
 	 */

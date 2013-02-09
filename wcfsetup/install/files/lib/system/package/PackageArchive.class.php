@@ -387,7 +387,7 @@ class PackageArchive {
 	}
 	
 	/**
-	 * Return true, if the package archive supports a new installation.
+	 * Returns true if the package archive supports a new installation.
 	 * 
 	 * @return	boolean
 	 */
