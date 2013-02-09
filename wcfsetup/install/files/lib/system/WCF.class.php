@@ -534,7 +534,7 @@ class WCF {
 		$namespaces = explode('\\', $className);
 		if (count($namespaces) > 1) {
 			$applicationPrefix = array_shift($namespaces);
-			if($applicationPrefix === '') {
+			if ($applicationPrefix === '') {
 				$applicationPrefix = array_shift($namespaces);
 			}
 			if (isset(self::$autoloadDirectories[$applicationPrefix])) {
