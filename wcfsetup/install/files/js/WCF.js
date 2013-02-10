@@ -1352,6 +1352,47 @@ WCF.PeriodicalExecuter = Class.extend({
 });
 
 /**
+ * Handler for loading overlays
+ */
+WCF.LoadingOverlayHandler = {
+	/**
+	 * count of active loading-requests
+	 * @var	integer
+	 */
+	_activeRequests: 0,
+	
+	/**
+	 * loading overlay
+	 * @var	jQuery
+	 */
+	_loadingOverlay: null,
+	
+	/**
+	 * Adds one loading-request and shows the loading overlay if nessercery
+	 */
+	show: function() {
+		if (this._loadingOverlay === null) { // create loading overlay on first run
+			this._loadingOverlay = $('<div class="spinner"><span class="icon icon48 icon-spinner" /> <span>' + WCF.Language.get('wcf.global.loading') + '</span></div>').hide().appendTo($('body'));
+		}
+		
+		this._activeRequests++;
+		if (this._activeRequests == 1) {
+			this._loadingOverlay.stop(true, true).fadeIn(100);
+		}
+	},
+	
+	/**
+	 * Removes one loading-request and hides loading overlay if there're no more pending requests
+	 */
+	hide: function() {
+		this._activeRequests--;
+		if (this._activeRequests == 0) {
+			this._loadingOverlay.stop(true, true).fadeOut(100);
+		}
+	}
+};
+
+/**
  * Namespace for AJAXProxies
  */
 WCF.Action = {};
@@ -1367,24 +1408,6 @@ WCF.Action.Proxy = Class.extend({
 	 * @var	integer
 	 */
 	_activeRequests: 0,
-	
-	/**
-	 * loading overlay
-	 * @var	jQuery
-	 */
-	_loadingOverlay: null,
-	
-	/**
-	 * loading overlay state
-	 * @var	boolean
-	 */
-	_loadingOverlayVisible: false,
-	
-	/**
-	 * timer for overlay activity
-	 * @var	integer
-	 */
-	_loadingOverlayVisibleTimer: 0,
 	
 	/**
 	 * suppresses errors
@@ -1451,42 +1474,7 @@ WCF.Action.Proxy = Class.extend({
 		this._activeRequests++;
 		
 		if (this.options.showLoadingOverlay) {
-			this._showLoadingOverlay();
-		}
-	},
-	
-	/**
-	 * Displays the loading overlay if not already visible due to an active request.
-	 */
-	_showLoadingOverlay: function() {
-		// create loading overlay on first run
-		if (this._loadingOverlay === null) {
-			this._loadingOverlay = $('<div class="spinner"><span class="icon icon48 icon-spinner" /> <span>' + WCF.Language.get('wcf.global.loading') + '</span></div>').hide().appendTo($('body'));
-		}
-		
-		// fade in overlay
-		if (!this._loadingOverlayVisible) {
-			this._loadingOverlayVisible = true;
-			this._loadingOverlay.stop(true, true).fadeIn(100, $.proxy(function() {
-				new WCF.PeriodicalExecuter($.proxy(this._hideLoadingOverlay, this), 100);
-			}, this));
-		}
-	},
-	
-	/**
-	 * Hides loading overlay if no requests are active and the timer reached at least 1 second.
-	 * 
-	 * @param	object		pe
-	 */
-	_hideLoadingOverlay: function(pe) {
-		this._loadingOverlayVisibleTimer += 100;
-		
-		if (this._activeRequests == 0 && this._loadingOverlayVisibleTimer >= 100) {
-			this._loadingOverlayVisible = false;
-			this._loadingOverlayVisibleTimer = 0;
-			pe.stop();
-			
-			this._loadingOverlay.fadeOut(100);
+			WCF.LoadingOverlayHandler.show();
 		}
 	},
 	
@@ -1552,6 +1540,10 @@ WCF.Action.Proxy = Class.extend({
 	_after: function() {
 		if ($.isFunction(this.options.after)) {
 			this.options.after();
+		}
+		
+		if (this.options.showLoadingOverlay) {
+			WCF.LoadingOverlayHandler.hide();
 		}
 		
 		this._activeRequests--;
