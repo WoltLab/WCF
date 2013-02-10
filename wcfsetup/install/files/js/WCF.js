@@ -7701,9 +7701,10 @@ $.widget('ui.wcfDialog', {
 		// remove static dimensions
 		this._content.css({
 			height: 'auto',
-			overflow: 'auto',
 			width: 'auto'
 		});
+		
+		this._determineOverflow();
 		
 		if (!this.isOpen()) {
 			// hide container again
@@ -7716,6 +7717,24 @@ $.widget('ui.wcfDialog', {
 				}
 			}, this));
 		}
+	},
+	
+	/**
+	 * Determines content overflow based upon static dimensions.
+	 */
+	_determineOverflow: function() {
+		var $max = $(window).getDimensions();
+		var $maxHeight = this._content.css('maxHeight');
+		this._content.css('maxHeight', 'none');
+		var $dialog = this._container.getDimensions('outer');
+		
+		var $overflow = 'visible';
+		if (($max.height * 0.8 < $dialog.height) || ($max.width * 0.8 < $dialog.width)) {
+			$overflow = 'auto';
+		}
+		
+		this._content.css('overflow', $overflow);
+		this._content.css('maxHeight', $maxHeight);
 	},
 	
 	/**
