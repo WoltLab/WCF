@@ -402,7 +402,7 @@ class PackageInstallationDispatcher {
 		}
 		else if ($infoName == 'packageName') {
 			// fallback to the package identifier for the package name
-			$defaultValue = $this->archive->getPackageInfo('name');
+			$defaultValue = $this->getArchive()->getPackageInfo('name');
 		}
 		
 		foreach ($languageList as $language) {
@@ -753,7 +753,7 @@ class PackageInstallationDispatcher {
 			$packageEditor = new PackageEditor($this->getPackage());
 			$packageEditor->update(array(
 				'updateDate' => TIME_NOW,
-				'packageVersion' => $this->archive->getPackageInfo('version')
+				'packageVersion' => $this->getArchive()->getPackageInfo('version')
 			));
 		}
 		
