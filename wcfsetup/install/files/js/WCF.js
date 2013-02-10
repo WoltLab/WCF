@@ -1404,12 +1404,6 @@ WCF.Action = {};
  */
 WCF.Action.Proxy = Class.extend({
 	/**
-	 * count of active requests
-	 * @var	integer
-	 */
-	_activeRequests: 0,
-	
-	/**
 	 * suppresses errors
 	 * @var	boolean
 	 */
@@ -1470,8 +1464,6 @@ WCF.Action.Proxy = Class.extend({
 		if ($.isFunction(this.options.init)) {
 			this.options.init(this);
 		}
-		
-		this._activeRequests++;
 		
 		if (this.options.showLoadingOverlay) {
 			WCF.LoadingOverlayHandler.show();
@@ -1545,8 +1537,6 @@ WCF.Action.Proxy = Class.extend({
 		if (this.options.showLoadingOverlay) {
 			WCF.LoadingOverlayHandler.hide();
 		}
-		
-		this._activeRequests--;
 		
 		// disable DOMNodeInserted event
 		WCF.DOMNodeInsertedHandler.disable();
