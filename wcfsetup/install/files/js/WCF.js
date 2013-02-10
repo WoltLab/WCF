@@ -494,57 +494,11 @@ $.extend(WCF, {
 	activeDialogs: 0,
 	
 	/**
-	 * Counter for dynamic element id's
+	 * Counter for dynamic element ids
 	 *
 	 * @var	integer
 	 */
 	_idCounter: 0,
-	
-	/**
-	 * Shows a modal dialog with a built-in AJAX-loader.
-	 * 
-	 * @param	string		dialogID
-	 * @param	boolean		resetDialog
-	 * @return	jQuery
-	 */
-	showAJAXDialog: function(dialogID, resetDialog) {
-		if (!dialogID) {
-			dialogID = this.getRandomID();
-		}
-		
-		if (!$.wcfIsset(dialogID)) {
-			$('<div id="' + dialogID + '"></div>').appendTo(document.body);
-		}
-		
-		var dialog = $('#' + $.wcfEscapeID(dialogID));
-		
-		if (resetDialog) {
-			dialog.empty();
-		}
-		
-		var dialogOptions = arguments[2] || {};
-		dialogOptions.ajax = true;
-		
-		dialog.wcfDialog(dialogOptions);
-		
-		return dialog;
-	},
-	
-	/**
-	 * Shows a modal dialog.
-	 * 
-	 * @param	string		dialogID
-	 */
-	showDialog: function(dialogID) {
-		// we cannot work with a non-existant dialog, if you wish to
-		// load content via AJAX, see showAJAXDialog() instead
-		if (!$.wcfIsset(dialogID)) return;
-		
-		var $dialog = $('#' + $.wcfEscapeID(dialogID));
-		
-		var dialogOptions = arguments[1] || {};
-		$dialog.wcfDialog(dialogOptions);
-	},
 	
 	/**
 	 * Returns a dynamically created id.
@@ -7537,14 +7491,6 @@ $.widget('ui.wcfDialog', {
 		title: '',
 		zIndex: 400,
 		
-		// AJAX support
-		ajax: false,
-		data: { },
-		showLoadingOverlay: true,
-		success: null,
-		type: 'POST',
-		url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
-		
 		// event callbacks
 		onClose: null,
 		onShow: null
@@ -7554,21 +7500,6 @@ $.widget('ui.wcfDialog', {
 	 * Initializes a new dialog.
 	 */
 	_init: function() {
-		if (this.options.ajax) {
-			new WCF.Action.Proxy({
-				autoSend: true,
-				data: this.options.data,
-				showLoadingOverlay: this.options.showLoadingOverlay,
-				success: $.proxy(this._success, this),
-				type: this.options.type,
-				url: this.options.url
-			});
-			this.loading();
-			
-			// force open if using AJAX
-			this.options.autoOpen = true;
-		}
-		
 		if (this.options.autoOpen) {
 			this.open();
 		}
@@ -7658,63 +7589,6 @@ $.widget('ui.wcfDialog', {
 	},
 	
 	/**
-	 * Handles successful AJAX requests.
-	 *
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		if (this._isOpen) {
-			// initialize dialog content
-			this._initDialog(data);
-			
-			if (this.options.success !== null && $.isFunction(this.options.success)) {
-				this.options.success(data, textStatus, jqXHR);
-			}
-		}
-	},
-	
-	/**
-	 * Initializes dialog content if applicable.
-	 * 
-	 * @param	object		data
-	 */
-	_initDialog: function(data) {
-		// remove spinner
-		this._content.css('position', 'static').children('.icon-spinner').remove();
-		
-		// insert template
-		if (this._getResponseValue(data, 'template')) {
-			this._content.children().html(this._getResponseValue(data, 'template'));
-			this.render(false, true);
-		}
-		
-		// set title
-		if (this._getResponseValue(data, 'title')) {
-			this._setOption('title', this._getResponseValue(data, 'title'));
-		}
-	},
-	
-	/**
-	 * Returns a response value, taking care of different object
-	 * structure returned by AJAXProxy.
-	 * 
-	 * @param	object		data
-	 * @param	string		key
-	 */
-	_getResponseValue: function(data, key) {
-		if (data.returnValues && data.returnValues[key]) {
-			return data.returnValues[key];
-		}
-		else if (data[key]) {
-			return data[key];
-		}
-		
-		return null;
-	},
-	
-	/**
 	 * Opens this dialog.
 	 */
 	open: function() {
@@ -7741,14 +7615,6 @@ $.widget('ui.wcfDialog', {
 	 */
 	isOpen: function() {
 		return this._isOpen;
-	},
-	
-	/**
-	 * Clears the dialog and applies a loading overlay
-	 */
-	loading: function() {
-		$('<span class="icon icon48 icon-spinner" />').appendTo(this._content.css('position', 'relative'));
-		this.render();
 	},
 	
 	/**
@@ -7786,19 +7652,8 @@ $.widget('ui.wcfDialog', {
 	
 	/**
 	 * Renders this dialog, should be called whenever content is updated.
-	 * 
-	 * @param	boolean		loaded
-	 * @param	boolean		disableAnimation
 	 */
-	render: function(loaded, disableAnimation) {
-		loaded = loaded || false;
-		disableAnimation = disableAnimation || false;
-		
-		if (loaded) {
-			// remove spinner
-			this._content.children('.icon-spinner').remove();
-		}
-		
+	render: function() {
 		// force dialog and it's contents to be visible
 		this._container.show();
 		this._content.children().show();
