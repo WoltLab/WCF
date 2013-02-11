@@ -27,7 +27,7 @@
 		//<![CDATA[
 		$(function() {
 			$('#benchmark').click(function() {
-				WCF.showDialog('benchmarkDetails', {
+				$('#benchmarkDetails').wcfDialog({
 					title: 'Log'
 				});
 				return false;
