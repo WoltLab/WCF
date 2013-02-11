@@ -170,8 +170,6 @@ body > iframe[src="about:blank"] {
 /* popover */
 .popover {
 	background-color: rgba(0, 0, 0, .4);
-	min-height: 32px;
-	max-height: 300px;
 	padding: @wcfGapSmall;
 	position: absolute;
 	vertical-align: middle;
@@ -190,6 +188,18 @@ body > iframe[src="about:blank"] {
 		top: 50%;
 		
 		.textShadow(black);
+	}
+	
+	> .popoverContent {
+		background-color: @wcfContainerBackgroundColor;
+		color: @wcfColor;
+		max-height: 300px;
+		min-height: 32px;
+		opacity: 0;
+		overflow: hidden;
+		padding: @wcfGapSmall @wcfGapMedium;
+		
+		.borderRadius(6px);
 	}
 	
 	&:after {
@@ -221,15 +231,6 @@ body > iframe[src="about:blank"] {
 	}
 }
 
-.popoverContent {
-	background-color: @wcfContainerBackgroundColor;
-	color: @wcfColor;
-	opacity: 0;
-	overflow: hidden;
-	padding: @wcfGapSmall @wcfGapMedium;
-	
-	.borderRadius(6px);
-}
 
 /* ### badges ### */
 /* default values */
