@@ -1723,7 +1723,7 @@ WCF.Action.Delete = Class.extend({
 	 */
 	_updateIcon: function($target) {
 		$target.find('.icon').removeClass('icon-remove').addClass('icon-spinner');
-		if ($target.is('.icon')) {
+		if ($target.hasClass('icon')) {
 			$target.removeClass('icon-remove').addClass('icon-spinner');
 		}
 	},
