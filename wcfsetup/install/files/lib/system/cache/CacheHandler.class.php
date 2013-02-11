@@ -50,8 +50,7 @@ class CacheHandler extends SingletonFactory {
 	 * @param	array						$parameters
 	 */
 	public function flush(ICacheBuilder $cacheBuilder, array $parameters) {
-		$useWildCard = (empty($parameters)) ? false : true;
-		$this->getCacheSource()->flush($this->getCacheName($cacheBuilder), $useWildCard);
+		$this->getCacheSource()->flush($this->getCacheName($cacheBuilder), empty($parameters));
 	}
 	
 	/**
