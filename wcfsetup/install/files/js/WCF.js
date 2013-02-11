@@ -1691,6 +1691,7 @@ WCF.Action.Delete = Class.extend({
 	 */
 	_click: function(event) {
 		var $target = $(event.currentTarget);
+		event.preventDefault();
 		
 		if ($target.data('confirmMessage')) {
 			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
@@ -1847,6 +1848,7 @@ WCF.Action.Toggle = Class.extend({
 	 */
 	_click: function(event) {
 		var $target = $(event.currentTarget);
+		event.preventDefault();
 		
 		if ($target.data('confirmMessage')) {
 			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
