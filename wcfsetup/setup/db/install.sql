@@ -947,6 +947,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageLin
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageLinkHoverColor', 'rgba(15, 79, 143, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSidebarBackgroundColor', '@wcfContainerHoverBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDimmedColor', 'rgba(136, 136, 136, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfExtraDimmedColor', 'lighten(@wcfDimmedColor, 20%)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLabelColor', '@wcfColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeadlineColor', '@wcfColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeadlineFontFamily', '"Trebuchet MS", Arial, sans-serif');
