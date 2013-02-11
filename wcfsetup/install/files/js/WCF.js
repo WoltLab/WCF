@@ -547,6 +547,33 @@ $.extend(WCF, {
 });
 
 /**
+ * Browser related functions.
+ */
+WCF.Browser = {
+	/**
+	 * determines if browser is chrome
+	 * @var	boolean
+	 */
+	_isChrome: null,
+	
+	/**
+	 * Returns true, if browser is Chrome, Chromium or using GoogleFrame for Internet Explorer.
+	 * 
+	 * @return	boolean
+	 */
+	isChrome: function() {
+		if (this._isChrome === null) {
+			this._isChrome = false;
+			if (/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())) {
+				this._isChrome = true;
+			}
+		}
+		
+		return this._isChrome;
+	}
+};
+
+/**
  * Dropdown API
  */
 WCF.Dropdown = {
