@@ -494,57 +494,11 @@ $.extend(WCF, {
 	activeDialogs: 0,
 	
 	/**
-	 * Counter for dynamic element id's
+	 * Counter for dynamic element ids
 	 *
 	 * @var	integer
 	 */
 	_idCounter: 0,
-	
-	/**
-	 * Shows a modal dialog with a built-in AJAX-loader.
-	 * 
-	 * @param	string		dialogID
-	 * @param	boolean		resetDialog
-	 * @return	jQuery
-	 */
-	showAJAXDialog: function(dialogID, resetDialog) {
-		if (!dialogID) {
-			dialogID = this.getRandomID();
-		}
-		
-		if (!$.wcfIsset(dialogID)) {
-			$('<div id="' + dialogID + '"></div>').appendTo(document.body);
-		}
-		
-		var dialog = $('#' + $.wcfEscapeID(dialogID));
-		
-		if (resetDialog) {
-			dialog.empty();
-		}
-		
-		var dialogOptions = arguments[2] || {};
-		dialogOptions.ajax = true;
-		
-		dialog.wcfDialog(dialogOptions);
-		
-		return dialog;
-	},
-	
-	/**
-	 * Shows a modal dialog.
-	 * 
-	 * @param	string		dialogID
-	 */
-	showDialog: function(dialogID) {
-		// we cannot work with a non-existant dialog, if you wish to
-		// load content via AJAX, see showAJAXDialog() instead
-		if (!$.wcfIsset(dialogID)) return;
-		
-		var $dialog = $('#' + $.wcfEscapeID(dialogID));
-		
-		var dialogOptions = arguments[1] || {};
-		$dialog.wcfDialog(dialogOptions);
-	},
 	
 	/**
 	 * Returns a dynamically created id.
@@ -1398,18 +1352,11 @@ WCF.PeriodicalExecuter = Class.extend({
 });
 
 /**
- * Namespace for AJAXProxies
+ * Handler for loading overlays
  */
-WCF.Action = {};
-
-/**
- * Basic implementation for AJAX-based proxyies
- * 
- * @param	object		options
- */
-WCF.Action.Proxy = Class.extend({
+WCF.LoadingOverlayHandler = {
 	/**
-	 * count of active requests
+	 * count of active loading-requests
 	 * @var	integer
 	 */
 	_activeRequests: 0,
@@ -1421,17 +1368,41 @@ WCF.Action.Proxy = Class.extend({
 	_loadingOverlay: null,
 	
 	/**
-	 * loading overlay state
-	 * @var	boolean
+	 * Adds one loading-request and shows the loading overlay if nessercery
 	 */
-	_loadingOverlayVisible: false,
+	show: function() {
+		if (this._loadingOverlay === null) { // create loading overlay on first run
+			this._loadingOverlay = $('<div class="spinner"><span class="icon icon48 icon-spinner" /> <span>' + WCF.Language.get('wcf.global.loading') + '</span></div>').hide().appendTo($('body'));
+		}
+		
+		this._activeRequests++;
+		if (this._activeRequests == 1) {
+			this._loadingOverlay.stop(true, true).fadeIn(100);
+		}
+	},
 	
 	/**
-	 * timer for overlay activity
-	 * @var	integer
+	 * Removes one loading-request and hides loading overlay if there're no more pending requests
 	 */
-	_loadingOverlayVisibleTimer: 0,
-	
+	hide: function() {
+		this._activeRequests--;
+		if (this._activeRequests == 0) {
+			this._loadingOverlay.stop(true, true).fadeOut(100);
+		}
+	}
+};
+
+/**
+ * Namespace for AJAXProxies
+ */
+WCF.Action = {};
+
+/**
+ * Basic implementation for AJAX-based proxyies
+ * 
+ * @param	object		options
+ */
+WCF.Action.Proxy = Class.extend({
 	/**
 	 * suppresses errors
 	 * @var	boolean
@@ -1494,45 +1465,8 @@ WCF.Action.Proxy = Class.extend({
 			this.options.init(this);
 		}
 		
-		this._activeRequests++;
-		
 		if (this.options.showLoadingOverlay) {
-			this._showLoadingOverlay();
-		}
-	},
-	
-	/**
-	 * Displays the loading overlay if not already visible due to an active request.
-	 */
-	_showLoadingOverlay: function() {
-		// create loading overlay on first run
-		if (this._loadingOverlay === null) {
-			this._loadingOverlay = $('<div class="spinner"><span class="icon icon48 icon-spinner" /> <span>' + WCF.Language.get('wcf.global.loading') + '</span></div>').hide().appendTo($('body'));
-		}
-		
-		// fade in overlay
-		if (!this._loadingOverlayVisible) {
-			this._loadingOverlayVisible = true;
-			this._loadingOverlay.stop(true, true).fadeIn(100, $.proxy(function() {
-				new WCF.PeriodicalExecuter($.proxy(this._hideLoadingOverlay, this), 100);
-			}, this));
-		}
-	},
-	
-	/**
-	 * Hides loading overlay if no requests are active and the timer reached at least 1 second.
-	 * 
-	 * @param	object		pe
-	 */
-	_hideLoadingOverlay: function(pe) {
-		this._loadingOverlayVisibleTimer += 100;
-		
-		if (this._activeRequests == 0 && this._loadingOverlayVisibleTimer >= 100) {
-			this._loadingOverlayVisible = false;
-			this._loadingOverlayVisibleTimer = 0;
-			pe.stop();
-			
-			this._loadingOverlay.fadeOut(100);
+			WCF.LoadingOverlayHandler.show();
 		}
 	},
 	
@@ -1600,7 +1534,9 @@ WCF.Action.Proxy = Class.extend({
 			this.options.after();
 		}
 		
-		this._activeRequests--;
+		if (this.options.showLoadingOverlay) {
+			WCF.LoadingOverlayHandler.hide();
+		}
 		
 		// disable DOMNodeInserted event
 		WCF.DOMNodeInsertedHandler.disable();
@@ -7537,14 +7473,6 @@ $.widget('ui.wcfDialog', {
 		title: '',
 		zIndex: 400,
 		
-		// AJAX support
-		ajax: false,
-		data: { },
-		showLoadingOverlay: true,
-		success: null,
-		type: 'POST',
-		url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
-		
 		// event callbacks
 		onClose: null,
 		onShow: null
@@ -7554,21 +7482,6 @@ $.widget('ui.wcfDialog', {
 	 * Initializes a new dialog.
 	 */
 	_init: function() {
-		if (this.options.ajax) {
-			new WCF.Action.Proxy({
-				autoSend: true,
-				data: this.options.data,
-				showLoadingOverlay: this.options.showLoadingOverlay,
-				success: $.proxy(this._success, this),
-				type: this.options.type,
-				url: this.options.url
-			});
-			this.loading();
-			
-			// force open if using AJAX
-			this.options.autoOpen = true;
-		}
-		
 		if (this.options.autoOpen) {
 			this.open();
 		}
@@ -7658,63 +7571,6 @@ $.widget('ui.wcfDialog', {
 	},
 	
 	/**
-	 * Handles successful AJAX requests.
-	 *
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		if (this._isOpen) {
-			// initialize dialog content
-			this._initDialog(data);
-			
-			if (this.options.success !== null && $.isFunction(this.options.success)) {
-				this.options.success(data, textStatus, jqXHR);
-			}
-		}
-	},
-	
-	/**
-	 * Initializes dialog content if applicable.
-	 * 
-	 * @param	object		data
-	 */
-	_initDialog: function(data) {
-		// remove spinner
-		this._content.css('position', 'static').children('.icon-spinner').remove();
-		
-		// insert template
-		if (this._getResponseValue(data, 'template')) {
-			this._content.children().html(this._getResponseValue(data, 'template'));
-			this.render(false, true);
-		}
-		
-		// set title
-		if (this._getResponseValue(data, 'title')) {
-			this._setOption('title', this._getResponseValue(data, 'title'));
-		}
-	},
-	
-	/**
-	 * Returns a response value, taking care of different object
-	 * structure returned by AJAXProxy.
-	 * 
-	 * @param	object		data
-	 * @param	string		key
-	 */
-	_getResponseValue: function(data, key) {
-		if (data.returnValues && data.returnValues[key]) {
-			return data.returnValues[key];
-		}
-		else if (data[key]) {
-			return data[key];
-		}
-		
-		return null;
-	},
-	
-	/**
 	 * Opens this dialog.
 	 */
 	open: function() {
@@ -7741,14 +7597,6 @@ $.widget('ui.wcfDialog', {
 	 */
 	isOpen: function() {
 		return this._isOpen;
-	},
-	
-	/**
-	 * Clears the dialog and applies a loading overlay
-	 */
-	loading: function() {
-		$('<span class="icon icon48 icon-spinner" />').appendTo(this._content.css('position', 'relative'));
-		this.render();
 	},
 	
 	/**
@@ -7786,19 +7634,8 @@ $.widget('ui.wcfDialog', {
 	
 	/**
 	 * Renders this dialog, should be called whenever content is updated.
-	 * 
-	 * @param	boolean		loaded
-	 * @param	boolean		disableAnimation
 	 */
-	render: function(loaded, disableAnimation) {
-		loaded = loaded || false;
-		disableAnimation = disableAnimation || false;
-		
-		if (loaded) {
-			// remove spinner
-			this._content.children('.icon-spinner').remove();
-		}
-		
+	render: function() {
 		// force dialog and it's contents to be visible
 		this._container.show();
 		this._content.children().show();
@@ -7864,9 +7701,10 @@ $.widget('ui.wcfDialog', {
 		// remove static dimensions
 		this._content.css({
 			height: 'auto',
-			overflow: 'auto',
 			width: 'auto'
 		});
+		
+		this._determineOverflow();
 		
 		if (!this.isOpen()) {
 			// hide container again
@@ -7879,6 +7717,24 @@ $.widget('ui.wcfDialog', {
 				}
 			}, this));
 		}
+	},
+	
+	/**
+	 * Determines content overflow based upon static dimensions.
+	 */
+	_determineOverflow: function() {
+		var $max = $(window).getDimensions();
+		var $maxHeight = this._content.css('maxHeight');
+		this._content.css('maxHeight', 'none');
+		var $dialog = this._container.getDimensions('outer');
+		
+		var $overflow = 'visible';
+		if (($max.height * 0.8 < $dialog.height) || ($max.width * 0.8 < $dialog.width)) {
+			$overflow = 'auto';
+		}
+		
+		this._content.css('overflow', $overflow);
+		this._content.css('maxHeight', $maxHeight);
 	},
 	
 	/**
