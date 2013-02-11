@@ -1691,15 +1691,13 @@ WCF.Action.Delete = Class.extend({
 	 */
 	_click: function(event) {
 		var $target = $(event.currentTarget);
+		event.preventDefault();
 		
 		if ($target.data('confirmMessage')) {
 			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
 		}
 		else {
-			if ($target.is('img')) {
-				$target.removeClass('icon-remove').addClass('icon-spinner');
-			}
-			
+			this._updateIcon($target);
 			this._sendRequest($target);
 		}
 	},
@@ -1715,13 +1713,27 @@ WCF.Action.Delete = Class.extend({
 			return;
 		}
 		
-		if (parameters.target.is('img')) {
-			parameters.target.removeClass('icon-remove').addClass('icon-spinner');
-		}
-		
+		this._updateIcon(parameters.target);
 		this._sendRequest(parameters.target);
 	},
 	
+	/**
+	 * Searches for an icon and updates it to a spinner.
+	 * 
+	 * @param	jQuery	$target
+	 */
+	_updateIcon: function($target) {
+		$target.find('.icon').removeClass('icon-remove').addClass('icon-spinner');
+		if ($target.hasClass('icon')) {
+			$target.removeClass('icon-remove').addClass('icon-spinner');
+		}
+	},
+	
+	/**
+	 * Sends the request
+	 * 
+	 * @param	jQuery	object
+	 */
 	_sendRequest: function(object) {
 		this.proxy.setOption('data', {
 			actionName: 'delete',
@@ -1836,6 +1848,7 @@ WCF.Action.Toggle = Class.extend({
 	 */
 	_click: function(event) {
 		var $target = $(event.currentTarget);
+		event.preventDefault();
 		
 		if ($target.data('confirmMessage')) {
 			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
