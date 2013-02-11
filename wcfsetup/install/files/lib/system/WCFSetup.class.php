@@ -472,7 +472,7 @@ class WCFSetup extends WCF {
 		
 		WCF::getTPL()->assign(array(
 			'nextStep' => 'unzipFiles',
-			'invalidDirectory' => true,
+			'invalidDirectory' => $invalidDirectory,
 			'wcfDir' => $wcfDir,
 			'domainName' => $domainName,
 			'installScriptUrl' => $installScriptUrl,
