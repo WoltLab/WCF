@@ -230,7 +230,7 @@
 				padding-top: 5px;
 			}
 			
-			&:not(:last-child) {
+			&:not(:last-child) > a {
 				border-right: 1px solid @wcfContainerBorderColor;
 			}
 		}
@@ -567,7 +567,7 @@
 			}
 			
 			> hgroup > .containerContentType {
-				color: @wcfExtraDimmedColor;
+				color: lighten(@wcfDimmedColor, 20%);
 				position: absolute;
 				right: 0;
 				top: 3px;
