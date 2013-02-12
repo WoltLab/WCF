@@ -2160,6 +2160,17 @@ WCF.Date.Picker = {
 			$input.removeAttr('name');
 			$input.before('<input type="hidden" id="' + $input.wcfIdentify() + 'DatePicker" name="' + $inputName + '" value="' + $inputValue + '" />');
 			
+			// get min- and maxdate
+			var minDate = ($input.data('min-date') != null)
+				? new Date($input.data('min-date'))
+				: null;
+			var maxDate = ($input.data('max-date') != null)
+				? new Date($input.data('max-date'))
+				: null;
+			
+			// page direction
+			var isRTL = (WCF.Language.get('wcf.global.pageDirection') == 'rtl');
+			
 			// init date picker
 			$input.datepicker({
 				altField: '#' + $input.wcfIdentify() + 'DatePicker',
@@ -2170,6 +2181,10 @@ WCF.Date.Picker = {
 				dayNames: WCF.Language.get('__days'),
 				dayNamesMin: WCF.Language.get('__daysShort'),
 				dayNamesShort: WCF.Language.get('__daysShort'),
+				firstDay: 1,
+				isRTL: isRTL,
+				maxDate: maxDate,
+				minDate: minDate,
 				monthNames: WCF.Language.get('__months'),
 				monthNamesShort: WCF.Language.get('__monthsShort'),
 				showOtherMonths: true,

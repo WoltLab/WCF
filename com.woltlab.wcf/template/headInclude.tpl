@@ -75,6 +75,7 @@
 			'wcf.global.page.pageNavigation': '{lang}wcf.global.page.pageNavigation{/lang}',
 			'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
 			'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
+			'wcf.global.pageDirection': '{lang}wcf.global.pageDirection{/lang}',
 			'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 			'wcf.sitemap.title': '{lang}wcf.sitemap.title{/lang}',
 			'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}'
