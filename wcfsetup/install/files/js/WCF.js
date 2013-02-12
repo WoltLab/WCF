@@ -1416,6 +1416,21 @@ WCF.LoadingOverlayHandler = {
 		if (this._activeRequests == 0) {
 			this._loadingOverlay.stop(true, true).fadeOut(100);
 		}
+	},
+	
+	/**
+	 * Updates a icon to/from spinner
+	 * 
+	 * @param	jQuery	target
+	 * @pram	boolean	loading
+	 */
+	updateIcon: function(target, loading) {
+		var $method = (loading === undefined || loading ? 'addClass' : 'removeClass');
+		
+		target.find('.icon')[$method]('icon-spinner');
+		if (target.hasClass('icon')) {
+			target[$method]('icon-spinner');
+		}
 	}
 };
 
@@ -1724,7 +1739,7 @@ WCF.Action.Delete = Class.extend({
 			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
 		}
 		else {
-			this._updateIcon($target);
+			WCF.LoadingOverlayHandler.updateIcon($target);
 			this._sendRequest($target);
 		}
 	},
@@ -1740,20 +1755,8 @@ WCF.Action.Delete = Class.extend({
 			return;
 		}
 		
-		this._updateIcon(parameters.target);
+		WCF.LoadingOverlayHandler.updateIcon(parameters.target);
 		this._sendRequest(parameters.target);
-	},
-	
-	/**
-	 * Searches for an icon and updates it to a spinner.
-	 * 
-	 * @param	jQuery	$target
-	 */
-	_updateIcon: function($target) {
-		$target.find('.icon').removeClass('icon-remove').addClass('icon-spinner');
-		if ($target.hasClass('icon')) {
-			$target.removeClass('icon-remove').addClass('icon-spinner');
-		}
 	},
 	
 	/**
@@ -1881,6 +1884,7 @@ WCF.Action.Toggle = Class.extend({
 			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
 		}
 		else {
+			WCF.LoadingOverlayHandler.updateIcon($target);
 			this._sendRequest($target);
 		}
 	},
@@ -1896,6 +1900,7 @@ WCF.Action.Toggle = Class.extend({
 			return;
 		}
 		
+		WCF.LoadingOverlayHandler.updateIcon(parameters.target);
 		this._sendRequest(parameters.target);
 	},
 	
@@ -1945,6 +1950,7 @@ WCF.Action.Toggle = Class.extend({
 	 */
 	_toggleButton: function($container, $toggleButton) {
 		// toggle icon source
+		WCF.LoadingOverlayHandler.updateIcon($toggleButton, false);
 		if ($toggleButton.hasClass('icon-off')) {
 			$toggleButton.removeClass('icon-off').addClass('icon-circle-blank');
 			$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
