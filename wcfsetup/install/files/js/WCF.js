@@ -7707,7 +7707,7 @@ $.widget('ui.wcfDialog', {
 			this._content.addClass('dialogForm').css({ marginBottom: $heightDifference + 'px' });
 		}
 		else {
-			this._content.removeClass('dialogForm');
+			this._content.removeClass('dialogForm').css({ marginBottom: '0px' });
 		}
 		
 		// calculate dimensions
