@@ -149,9 +149,7 @@ $.fn.extend({
 	 * @returns	string
 	 */
 	getTagName: function() {
-		return (this.length > 0)
-			? this.get(0).tagName.toLowerCase()
-			: '';
+		return (this.length) ? this.get(0).tagName.toLowerCase() : '';
 	},
 	
 	/**
