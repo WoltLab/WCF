@@ -81,7 +81,7 @@ class LoginForm extends AbstractForm {
 	 */
 	protected function validateUser() {
 		try {
-			$this->user = UserAuthenticationFactory::getUserAuthentication()->loginManually($this->username, $this->password);
+			$this->user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually($this->username, $this->password);
 		}
 		catch (UserInputException $e) {
 			// TODO: create an option for the authentication with email address

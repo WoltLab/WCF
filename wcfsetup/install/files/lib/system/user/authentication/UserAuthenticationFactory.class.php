@@ -1,23 +1,47 @@
 <?php
 namespace wcf\system\user\authentication;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\SystemException;
+use wcf\system\SingletonFactory;
+use wcf\util\ClassUtil;
+
 
 /**
  * Gets the user authentication instance.
  * 
- * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.authentication
  * @category	Community Framework
  */
-class UserAuthenticationFactory {
+class UserAuthenticationFactory extends SingletonFactory {
+	/**
+	 * user authentication class name
+	 * @var	string
+	 */
+	public $className = 'wcf\system\user\authentication\DefaultUserAuthentication';
+	
 	/**
 	 * user authentication instance
 	 * @var	wcf\system\user\authentication\IUserAuthentication
 	 */
-	protected static $userAuthentication = null;
+	protected $userAuthentication = null;
+	
+	/**
+	 * @see	wcf\system\SingletonFactory
+	 */
+	protected static function init() {
+		// call loadInstance event
+		EventHandler::getInstance()->fireAction($this, 'init');
+		
+		if (!ClassUtil::isInstanceOf($this->className, 'wcf\system\user\authentication\IUserAuthentication')) {
+			throw new SystemException("'" . $this->className . "' does not implement 'wcf\system\user\authentication\IUserAuthentication'");
+		}
+		
+		$this->userAuthentication = call_user_func(array($this->className, 'getInstance'));
+	}
 	
 	/**
 	 * Returns user authentication instance.
@@ -25,21 +49,6 @@ class UserAuthenticationFactory {
 	 * @return	wcf\system\user\authentication\IUserAuthentication
 	 */
 	public static function getUserAuthentication() {
-		if (static::$userAuthentication === null) {
-			// call loadInstance event
-			EventHandler::getInstance()->fireAction(__CLASS__, 'loadUserAuthentication');
-			
-			// get default implementation
-			static::loadUserAuthentication();
-		}
-		
-		return static::$userAuthentication;
-	}
-	
-	/**
-	 * Loads the user authentication .
-	 */
-	protected static function loadUserAuthentication() {
-		static::$userAuthentication = DefaultUserAuthentication::getInstance();
+		return $this->userAuthentication;
 	}
 }

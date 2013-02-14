@@ -331,7 +331,7 @@ class SessionHandler extends SingletonFactory {
 		$sessionID = StringUtil::getRandomID();
 		
 		// get user automatically
-		$this->user = UserAuthenticationFactory::getUserAuthentication()->loginAutomatically(call_user_func(array($this->sessionClassName, 'supportsPersistentLogins')));
+		$this->user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginAutomatically(call_user_func(array($this->sessionClassName, 'supportsPersistentLogins')));
 		
 		// create user
 		if ($this->user === null) {
