@@ -737,7 +737,7 @@
 				}
 			}
 			
-			> a {
+			> *:not(.pointer) {
 				color: @wcfColor;
 				display: block;
 				overflow: hidden;
@@ -745,6 +745,7 @@
 				text-decoration: none;
 				text-overflow: ellipsis;
 				white-space: nowrap;
+				cursor: pointer;
 				
 				.textShadow(@wcfContentBackgroundColor);
 			}
