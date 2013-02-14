@@ -4897,7 +4897,10 @@ WCF.Search.Base = Class.extend({
 		this._list.parent().addClass('dropdownOpen');
 		WCF.Dropdown.setAlignment(undefined, this._list);
 		
-		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(true); }, this));
+		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
+		
+		// pre-select first item
+		this._selectNextItem();
 	},
 	
 	/**
@@ -6872,7 +6875,7 @@ WCF.EditableItemList = Class.extend({
 	 * @param	object		event
 	 */
 	_keyDown: function(event) {
-		if (event === null || (event.which === 13 || event.which === 188)) {
+		if (event === null || event.which === 188) {
 			var $value = $.trim(this._searchInput.val());
 			if ($value === '') {
 				return true;
