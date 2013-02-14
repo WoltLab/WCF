@@ -1446,6 +1446,12 @@ WCF.Action = {};
  */
 WCF.Action.Proxy = Class.extend({
 	/**
+	 * shows loading overlay for a single request
+	 * @var	boolean
+	 */
+	_showLoadingOverlayOnce: false,
+	
+	/**
 	 * suppresses errors
 	 * @var	boolean
 	 */
@@ -1472,6 +1478,7 @@ WCF.Action.Proxy = Class.extend({
 		
 		this.confirmationDialog = null;
 		this.loading = null;
+		this._showLoadingOverlayOnce = false;
 		this._suppressErrors = false;
 		
 		// send request immediately after initialization
@@ -1500,6 +1507,13 @@ WCF.Action.Proxy = Class.extend({
 	},
 	
 	/**
+	 * Shows loading overlay for a single request.
+	 */
+	showLoadingOverlayOnce: function() {
+		this._showLoadingOverlayOnce = true;
+	},
+	
+	/**
 	 * Fires before request is send, displays global loading status.
 	 */
 	_init: function() {
@@ -1507,7 +1521,7 @@ WCF.Action.Proxy = Class.extend({
 			this.options.init(this);
 		}
 		
-		if (this.options.showLoadingOverlay) {
+		if (this.options.showLoadingOverlay || this._showLoadingOverlayOnce) {
 			WCF.LoadingOverlayHandler.show();
 		}
 	},
@@ -1576,8 +1590,12 @@ WCF.Action.Proxy = Class.extend({
 			this.options.after();
 		}
 		
-		if (this.options.showLoadingOverlay) {
+		if (this.options.showLoadingOverlay || this._showLoadingOverlayOnce) {
 			WCF.LoadingOverlayHandler.hide();
+			
+			if (this._showLoadingOverlayOnce) {
+				this._showLoadingOverlayOnce = false;
+			}
 		}
 		
 		// disable DOMNodeInserted event
