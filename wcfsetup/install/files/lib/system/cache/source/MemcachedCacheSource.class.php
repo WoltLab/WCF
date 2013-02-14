@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cache\source;
 use wcf\system\exception\SystemException;
+use wcf\system\Regex;
 use wcf\util\StringUtil;
 
 /**
@@ -41,6 +42,8 @@ class MemcachedCacheSource implements ICacheSource {
 		$tmp = explode("\n", StringUtil::unifyNewlines(CACHE_SOURCE_MEMCACHED_HOST));
 		$servers = array();
 		$defaultWeight = floor(100 / count($tmp));
+		$regex = new Regex('^\[([a-z0-9\:]+)\](?::([0-9]{1,5}))?(?::([0-9]{1,3}))?$', Regex::CASE_INSENSITIVE);
+		
 		foreach ($tmp as $server) {
 			$server = StringUtil::trim($server);
 			if (!empty($server)) {
@@ -48,14 +51,27 @@ class MemcachedCacheSource implements ICacheSource {
 				$port = 11211; // default memcached port
 				$weight = $defaultWeight;
 				
-				// get port
-				if (strpos($host, ':')) {
-					$parsedHost = explode(':', $host);
-					$host = $parsedHost[0];
-					$port = $parsedHost[1];
-					
-					if (isset($parsedHost[2])) {
-						$weight = $parsedHost[2];
+				// check for IPv6
+				if ($regex->match($host)) {
+					$matches = $regex->getMatches();
+					$host = $matches[1];
+					if (isset($matches[2])) {
+						$port = $matches[2];
+					}
+					if (isset($matches[3])) {
+						$weight = $matches[3];
+					}
+				}
+				else {
+					// IPv4, try to get port and weight
+					if (strpos($host, ':')) {
+						$parsedHost = explode(':', $host);
+						$host = $parsedHost[0];
+						$port = $parsedHost[1];
+						
+						if (isset($parsedHost[2])) {
+							$weight = $parsedHost[2];
+						}
 					}
 				}
 				
