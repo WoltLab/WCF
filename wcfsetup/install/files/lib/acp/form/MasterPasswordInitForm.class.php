@@ -82,22 +82,6 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 			throw new UserInputException('masterPassword', 'notSecure');
 		}
 		
-		// search for identical admin passwords
-		$sql = "SELECT	password, salt
-			FROM	wcf".WCF_N."_user
-			WHERE	userID IN (
-					SELECT	userID
-					FROM	wcf".WCF_N."_user_to_group
-					WHERE	groupID = 4
-				)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			if (StringUtil::getDoubleSaltedHash($this->masterPassword, $row['salt']) == $row['password']) {
-				throw new UserInputException('masterPassword', 'notSecure');
-			}
-		}
-		
 		// confirm master password
 		if (empty($this->confirmMasterPassword)) {
 			throw new UserInputException('confirmMasterPassword');

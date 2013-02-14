@@ -92,7 +92,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 				".$columnDefinition."
 				".(!empty($indexDefinition) ? ',' : '')."
 				".$indexDefinition."
-			) ENGINE=".($hasFulltextIndex ? 'MyISAM' : 'InnoDB')." DEFAULT CHARSET=utf8";
+			) ENGINE=".($hasFulltextIndex ? 'MyISAM' : 'InnoDB')." DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 	}

@@ -144,12 +144,12 @@ $.extend(true, {
  */
 $.fn.extend({
 	/**
-	 * Returns tag name of current jQuery element.
+	 * Returns tag name of first jQuery element.
 	 * 
 	 * @returns	string
 	 */
 	getTagName: function() {
-		return this.get(0).tagName.toLowerCase();
+		return (this.length) ? this.get(0).tagName.toLowerCase() : '';
 	},
 	
 	/**
@@ -323,12 +323,12 @@ $.fn.extend({
 	 * @return	integer
 	 */
 	getCaret: function() {
-		if (this.getTagName() == 'input') {
+		if (this.is('input')) {
 			if (this.attr('type') != 'text' && this.attr('type') != 'password') {
 				return -1;
 			}
 		}
-		else if (this.getTagName() != 'textarea') {
+		else if (!this.is('textarea')) {
 			return -1;
 		}
 		
@@ -358,12 +358,12 @@ $.fn.extend({
 	 * @return	boolean
 	 */
 	setCaret: function (position) {
-		if (this.getTagName() == 'input') {
+		if (this.is('input')) {
 			if (this.attr('type') != 'text' && this.attr('type') != 'password') {
 				return false;
 			}
 		}
-		else if (this.getTagName() != 'textarea') {
+		else if (!this.is('textarea')) {
 			return false;
 		}
 		
@@ -397,7 +397,7 @@ $.fn.extend({
 		if (!direction) direction = 'up';
 		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.show(WCF.getEffect(this.getTagName(), 'drop'), { direction: direction }, duration, callback);
+		return this.show(WCF.getEffect(this, 'drop'), { direction: direction }, duration, callback);
 	},
 	
 	/**
@@ -412,7 +412,7 @@ $.fn.extend({
 		if (!direction) direction = 'down';
 		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.hide(WCF.getEffect(this.getTagName(), 'drop'), { direction: direction }, duration, callback);
+		return this.hide(WCF.getEffect(this, 'drop'), { direction: direction }, duration, callback);
 	},
 	
 	/**
@@ -427,7 +427,7 @@ $.fn.extend({
 		if (!direction) direction = 'vertical';
 		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.show(WCF.getEffect(this.getTagName(), 'blind'), { direction: direction }, duration, callback);
+		return this.show(WCF.getEffect(this, 'blind'), { direction: direction }, duration, callback);
 	},
 	
 	/**
@@ -442,7 +442,7 @@ $.fn.extend({
 		if (!direction) direction = 'vertical';
 		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.hide(WCF.getEffect(this.getTagName(), 'blind'), { direction: direction }, duration, callback);
+		return this.hide(WCF.getEffect(this, 'blind'), { direction: direction }, duration, callback);
 	},
 	
 	/**
@@ -466,7 +466,7 @@ $.fn.extend({
 	wcfFadeIn: function(callback, duration) {
 		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.show(WCF.getEffect(this.getTagName(), 'fade'), { }, duration, callback);
+		return this.show(WCF.getEffect(this, 'fade'), { }, duration, callback);
 	},
 	
 	/**
@@ -479,7 +479,7 @@ $.fn.extend({
 	wcfFadeOut: function(callback, duration) {
 		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.hide(WCF.getEffect(this.getTagName(), 'fade'), { }, duration, callback);
+		return this.hide(WCF.getEffect(this, 'fade'), { }, duration, callback);
 	}
 });
 
@@ -532,13 +532,13 @@ $.extend(WCF, {
 	/**
 	 * Adjusts effect for partially supported elements.
 	 * 
-	 * @param	object		object
+	 * @param	jQuery		object
 	 * @param	string		effect
 	 * @return	string
 	 */
-	getEffect: function(tagName, effect) {
+	getEffect: function(object, effect) {
 		// most effects are not properly supported on table rows, use highlight instead
-		if (tagName == 'tr') {
+		if (object.is('tr')) {
 			return 'highlight';
 		}
 		
@@ -1058,7 +1058,7 @@ WCF.Clipboard = {
 		var $isMarked = true;
 		
 		// if markAll object is a checkbox, allow toggling
-		if ($item.getTagName() == 'input') {
+		if ($item.is('input')) {
 			$isMarked = $item.attr('checked');
 		}
 		
@@ -1416,6 +1416,21 @@ WCF.LoadingOverlayHandler = {
 		if (this._activeRequests == 0) {
 			this._loadingOverlay.stop(true, true).fadeOut(100);
 		}
+	},
+	
+	/**
+	 * Updates a icon to/from spinner
+	 * 
+	 * @param	jQuery	target
+	 * @pram	boolean	loading
+	 */
+	updateIcon: function(target, loading) {
+		var $method = (loading === undefined || loading ? 'addClass' : 'removeClass');
+		
+		target.find('.icon')[$method]('icon-spinner');
+		if (target.hasClass('icon')) {
+			target[$method]('icon-spinner');
+		}
 	}
 };
 
@@ -1724,7 +1739,7 @@ WCF.Action.Delete = Class.extend({
 			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
 		}
 		else {
-			this._updateIcon($target);
+			WCF.LoadingOverlayHandler.updateIcon($target);
 			this._sendRequest($target);
 		}
 	},
@@ -1740,20 +1755,8 @@ WCF.Action.Delete = Class.extend({
 			return;
 		}
 		
-		this._updateIcon(parameters.target);
+		WCF.LoadingOverlayHandler.updateIcon(parameters.target);
 		this._sendRequest(parameters.target);
-	},
-	
-	/**
-	 * Searches for an icon and updates it to a spinner.
-	 * 
-	 * @param	jQuery	$target
-	 */
-	_updateIcon: function($target) {
-		$target.find('.icon').removeClass('icon-remove').addClass('icon-spinner');
-		if ($target.hasClass('icon')) {
-			$target.removeClass('icon-remove').addClass('icon-spinner');
-		}
 	},
 	
 	/**
@@ -1881,6 +1884,7 @@ WCF.Action.Toggle = Class.extend({
 			WCF.System.Confirmation.show($target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target });
 		}
 		else {
+			WCF.LoadingOverlayHandler.updateIcon($target);
 			this._sendRequest($target);
 		}
 	},
@@ -1896,6 +1900,7 @@ WCF.Action.Toggle = Class.extend({
 			return;
 		}
 		
+		WCF.LoadingOverlayHandler.updateIcon(parameters.target);
 		this._sendRequest(parameters.target);
 	},
 	
@@ -1945,6 +1950,7 @@ WCF.Action.Toggle = Class.extend({
 	 */
 	_toggleButton: function($container, $toggleButton) {
 		// toggle icon source
+		WCF.LoadingOverlayHandler.updateIcon($toggleButton, false);
 		if ($toggleButton.hasClass('icon-off')) {
 			$toggleButton.removeClass('icon-off').addClass('icon-circle-blank');
 			$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
@@ -2669,7 +2675,7 @@ WCF.MultipleLanguageInput = Class.extend({
 				top: ($button.outerHeight() - 1) + 'px'
 			});
 			
-			if ($button.getTagName() === 'p') {
+			if ($button.is('p')) {
 				$button = $button.children('span:eq(0)');
 			}
 			
@@ -4669,7 +4675,7 @@ WCF.Search.Base = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		if (this._searchInput.getTagName() === 'input') {
+		if (this._searchInput.is('input')) {
 			this._searchInput.attr('autocomplete', 'off');
 		}
 		
@@ -6367,7 +6373,7 @@ WCF.Popover = Class.extend({
 				
 				$element.hover($.proxy(this._overElement, this), $.proxy(this._out, this));
 				
-				if ($element.getTagName() === 'a' && $element.attr('href')) {
+				if ($element.is('a') && $element.attr('href')) {
 					$element.click($.proxy(this._cancel, this));
 				}
 			}
@@ -7701,7 +7707,7 @@ $.widget('ui.wcfDialog', {
 			this._content.addClass('dialogForm').css({ marginBottom: $heightDifference + 'px' });
 		}
 		else {
-			this._content.removeClass('dialogForm');
+			this._content.removeClass('dialogForm').css({ marginBottom: '0px' });
 		}
 		
 		// calculate dimensions

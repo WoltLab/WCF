@@ -30,7 +30,6 @@
 				$('#benchmarkDetails').wcfDialog({
 					title: 'Log'
 				});
-				return false;
 			});
 		});
 		//]]>
