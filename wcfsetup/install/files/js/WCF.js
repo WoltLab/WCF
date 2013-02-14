@@ -144,12 +144,14 @@ $.extend(true, {
  */
 $.fn.extend({
 	/**
-	 * Returns tag name of current jQuery element.
+	 * Returns tag name of first jQuery element.
 	 * 
 	 * @returns	string
 	 */
 	getTagName: function() {
-		return this.get(0).tagName.toLowerCase();
+		return (this.length > 0)
+			? this.get(0).tagName.toLowerCase()
+			: '';
 	},
 	
 	/**
@@ -323,12 +325,12 @@ $.fn.extend({
 	 * @return	integer
 	 */
 	getCaret: function() {
-		if (this.getTagName() == 'input') {
+		if (this.is('input')) {
 			if (this.attr('type') != 'text' && this.attr('type') != 'password') {
 				return -1;
 			}
 		}
-		else if (this.getTagName() != 'textarea') {
+		else if (!this.is('textarea')) {
 			return -1;
 		}
 		
@@ -358,12 +360,12 @@ $.fn.extend({
 	 * @return	boolean
 	 */
 	setCaret: function (position) {
-		if (this.getTagName() == 'input') {
+		if (this.is('input')) {
 			if (this.attr('type') != 'text' && this.attr('type') != 'password') {
 				return false;
 			}
 		}
-		else if (this.getTagName() != 'textarea') {
+		else if (!this.is('textarea')) {
 			return false;
 		}
 		
@@ -397,7 +399,7 @@ $.fn.extend({
 		if (!direction) direction = 'up';
 		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.show(WCF.getEffect(this.getTagName(), 'drop'), { direction: direction }, duration, callback);
+		return this.show(WCF.getEffect(this, 'drop'), { direction: direction }, duration, callback);
 	},
 	
 	/**
@@ -412,7 +414,7 @@ $.fn.extend({
 		if (!direction) direction = 'down';
 		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.hide(WCF.getEffect(this.getTagName(), 'drop'), { direction: direction }, duration, callback);
+		return this.hide(WCF.getEffect(this, 'drop'), { direction: direction }, duration, callback);
 	},
 	
 	/**
@@ -427,7 +429,7 @@ $.fn.extend({
 		if (!direction) direction = 'vertical';
 		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.show(WCF.getEffect(this.getTagName(), 'blind'), { direction: direction }, duration, callback);
+		return this.show(WCF.getEffect(this, 'blind'), { direction: direction }, duration, callback);
 	},
 	
 	/**
@@ -442,7 +444,7 @@ $.fn.extend({
 		if (!direction) direction = 'vertical';
 		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.hide(WCF.getEffect(this.getTagName(), 'blind'), { direction: direction }, duration, callback);
+		return this.hide(WCF.getEffect(this, 'blind'), { direction: direction }, duration, callback);
 	},
 	
 	/**
@@ -466,7 +468,7 @@ $.fn.extend({
 	wcfFadeIn: function(callback, duration) {
 		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.show(WCF.getEffect(this.getTagName(), 'fade'), { }, duration, callback);
+		return this.show(WCF.getEffect(this, 'fade'), { }, duration, callback);
 	},
 	
 	/**
@@ -479,7 +481,7 @@ $.fn.extend({
 	wcfFadeOut: function(callback, duration) {
 		if (!duration || !parseInt(duration)) duration = 200;
 		
-		return this.hide(WCF.getEffect(this.getTagName(), 'fade'), { }, duration, callback);
+		return this.hide(WCF.getEffect(this, 'fade'), { }, duration, callback);
 	}
 });
 
@@ -532,13 +534,13 @@ $.extend(WCF, {
 	/**
 	 * Adjusts effect for partially supported elements.
 	 * 
-	 * @param	object		object
+	 * @param	jQuery		object
 	 * @param	string		effect
 	 * @return	string
 	 */
-	getEffect: function(tagName, effect) {
+	getEffect: function(object, effect) {
 		// most effects are not properly supported on table rows, use highlight instead
-		if (tagName == 'tr') {
+		if (object.is('tr')) {
 			return 'highlight';
 		}
 		
@@ -1058,7 +1060,7 @@ WCF.Clipboard = {
 		var $isMarked = true;
 		
 		// if markAll object is a checkbox, allow toggling
-		if ($item.getTagName() == 'input') {
+		if ($item.is('input')) {
 			$isMarked = $item.attr('checked');
 		}
 		
@@ -2675,7 +2677,7 @@ WCF.MultipleLanguageInput = Class.extend({
 				top: ($button.outerHeight() - 1) + 'px'
 			});
 			
-			if ($button.getTagName() === 'p') {
+			if ($button.is('p')) {
 				$button = $button.children('span:eq(0)');
 			}
 			
@@ -4675,7 +4677,7 @@ WCF.Search.Base = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		if (this._searchInput.getTagName() === 'input') {
+		if (this._searchInput.is('input')) {
 			this._searchInput.attr('autocomplete', 'off');
 		}
 		
@@ -6373,7 +6375,7 @@ WCF.Popover = Class.extend({
 				
 				$element.hover($.proxy(this._overElement, this), $.proxy(this._out, this));
 				
-				if ($element.getTagName() === 'a' && $element.attr('href')) {
+				if ($element.is('a') && $element.attr('href')) {
 					$element.click($.proxy(this._cancel, this));
 				}
 			}
