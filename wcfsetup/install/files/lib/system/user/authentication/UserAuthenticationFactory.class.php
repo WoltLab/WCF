@@ -5,7 +5,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\util\ClassUtil;
 
-
 /**
  * Gets the user authentication instance.
  * 
