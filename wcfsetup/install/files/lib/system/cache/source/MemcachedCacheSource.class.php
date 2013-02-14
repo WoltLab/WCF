@@ -42,7 +42,7 @@ class MemcachedCacheSource implements ICacheSource {
 		$tmp = explode("\n", StringUtil::unifyNewlines(CACHE_SOURCE_MEMCACHED_HOST));
 		$servers = array();
 		$defaultWeight = floor(100 / count($tmp));
-		$regex = new Regex('^\[([a-z0-9\:]+)\](?::([0-9]{1,5}))?(?::([0-9]{1,3}))?$', Regex::CASE_INSENSITIVE);
+		$regex = new Regex('^\[([a-z0-9\:\.]+)\](?::([0-9]{1,5}))?(?::([0-9]{1,3}))?$', Regex::CASE_INSENSITIVE);
 		
 		foreach ($tmp as $server) {
 			$server = StringUtil::trim($server);
