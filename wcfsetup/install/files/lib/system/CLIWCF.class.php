@@ -74,7 +74,7 @@ class CLIWCF extends WCF {
 	 * @see wcf\system\WCF::destruct()
 	 */
 	public static function destruct() {
-		if (self::getReader() !== null) {
+		if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCommandHistory) {
 			self::getReader()->getHistory()->save();
 			self::getReader()->getHistory()->autoSave = false;
 		}
