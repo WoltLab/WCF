@@ -74,8 +74,10 @@ class CLIWCF extends WCF {
 	 * @see wcf\system\WCF::destruct()
 	 */
 	public static function destruct() {
-		self::getReader()->getHistory()->save();
-		self::getReader()->getHistory()->autoSave = false;
+		if (self::getReader() !== null) {
+			self::getReader()->getHistory()->save();
+			self::getReader()->getHistory()->autoSave = false;
+		}
 		
 		self::getSession()->delete();
 	}
@@ -315,7 +317,7 @@ class CLIWCF extends WCF {
 						);
 						
 						// TODO: Check whether update is important
-						if (true && self::getTerminal()->isAnsiSupported() && !self::getArgvParser()->disableColors) {
+						if ($update['version']['isCritical'] && self::getTerminal()->isAnsiSupported() && !self::getArgvParser()->disableColors) {
 							$row[2] = $posix->colorize($row[2], Color::RED);
 						}
 						
