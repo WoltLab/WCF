@@ -1,7 +1,6 @@
 #lbOverlay {
 	background-color: #000;
 	bottom: 0;
-	cursor: pointer;
 	left: 0;
 	position: fixed;
 	right: 0;
@@ -12,20 +11,17 @@
 #lbPrevLink,
 #lbNextLink {
 	display: block;
-	opacity: 0;
 	overflow: hidden;
 	position: absolute;
 	top: 0;
 	width: 50%;
 	outline: none;
 	
-	.transition(opacity, .2s);
-	
 	> span {
 		background-color: #fff;
+		display: none;
 		padding: @wcfGapSmall;
 		position: absolute;
-		text-transform: uppercase;
 		top: 20%;
 	}
 	
@@ -40,7 +36,6 @@
 	> span {
 		left: 0;
 		padding-right: @wcfGapMedium;
-		text-align: right;
 		
 		.borderRadius(0, 30px, 30px, 0);
 	}
@@ -62,7 +57,6 @@
 	cursor: pointer;
 	display: block;
 	float: right;
-	margin: 5px 0;
 	padding-right: @wcfGapSmall;
 	outline: none;
 }
@@ -98,9 +92,9 @@
 	&:hover {
 		#lbNextLink,
 		#lbPrevLink {
-			opacity: 1;
-			
-			.transition(opacity, .2s);
+			> span {
+				display: block;
+			}
 		}
 	}
 }

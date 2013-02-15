@@ -6,17 +6,17 @@ use wcf\data\category\CategoryList;
  * Caches the categories for the active application.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
  */
-class CategoryCacheBuilder implements ICacheBuilder {
+class CategoryCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\ICacheBuilder::getData()
+	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
-	public function getData(array $cacheResource) {
+	public function rebuild(array $parameters) {
 		$list = new CategoryList();
 		$list->sqlSelects = "object_type.objectType";
 		$list->sqlJoins = "LEFT JOIN wcf".WCF_N."_object_type object_type ON (object_type.objectTypeID = category.objectTypeID)";

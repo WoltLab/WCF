@@ -1,24 +1,23 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\package\PackageDependencyHandler;
 use wcf\system\WCF;
 
 /**
  * Caches the versions for a certain package and object type.
  * 
  * @author	Jeffrey Reichardt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
  */
-class VersionCacheBuilder implements ICacheBuilder {
+class VersionCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\ICacheBuilder::getData()
+	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
-	public function getData(array $cacheResource) {	
+	public function rebuild(array $parameters) {	
 		// get object types
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.versionableObject');
 		

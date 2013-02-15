@@ -5,7 +5,7 @@ namespace wcf\system\option;
  * Every option handler has to implement this interface.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -15,13 +15,11 @@ interface IOptionHandler {
 	/**
 	 * Creates a new option handler instance.
 	 * 
-	 * @param	string		$cacheName
-	 * @param	string		$cacheClass
 	 * @param	boolean		$supportI18n
 	 * @param	string		$languageItemPattern
 	 * @param	string		$categoryName
 	 */
-	public function __construct($cacheName, $cacheClass, $supportI18n, $languageItemPattern = '', $categoryName = '');
+	public function __construct($supportI18n, $languageItemPattern = '', $categoryName = '');
 	
 	/**
 	 * Reads user input from given source array.

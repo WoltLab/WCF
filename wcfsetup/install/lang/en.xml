@@ -202,7 +202,6 @@
 		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[Enter one user agent each row.]]></item>
 		<item name="wcf.acp.option.cache_source_memcache_host"><![CDATA[Memcache server]]></item>
 		<item name="wcf.acp.option.cache_source_memcache_host.description"><![CDATA[You can enter one server each row.]]></item>
-		<item name="wcf.acp.option.cache_source_memcache_use_pconnect"><![CDATA[Use persistent connections]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache type]]></item>
 		<item name="wcf.acp.option.cache_source_type.apc"><![CDATA[Alternative PHP Cache (experimental)]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Some of the types have special requirements to the server system and cannot be used in any environment.]]></item>

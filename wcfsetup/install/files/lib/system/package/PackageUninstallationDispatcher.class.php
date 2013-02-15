@@ -4,8 +4,8 @@ use wcf\data\option\OptionEditor;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
-use wcf\data\package\PackageList;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\builder\PackageCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
@@ -15,13 +15,12 @@ use wcf\system\package\plugin\SQLPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
 use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Handles the whole uninstallation process.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
@@ -73,19 +72,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			// update options.inc.php if uninstallation is completed
 			OptionEditor::resetCache();
 			
-			// force removal of all cache files
-			$sql = "SELECT	packageDir
-				FROM	wcf".WCF_N."_package
-				WHERE	isApplication = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(1));
-			while ($row = $statement->fetchArray()) {
-				$dir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
-				CacheHandler::getInstance()->clear($dir.'cache/', 'cache.*.php');
-			}
-			
-			// remove template listener cache
-			CacheHandler::getInstance()->clear(WCF_DIR.'cache/templateListener/', '*.php');
+			// clear cache
+			CacheHandler::getInstance()->flushAll();
 			
 			// reset language cache
 			LanguageFactory::getInstance()->clearCache();
@@ -138,7 +126,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		));
 		
 		// reset package cache
-		CacheHandler::getInstance()->clearResource('package');
+		PackageCacheBuilder::getInstance()->reset();
 	}
 	
 	/**

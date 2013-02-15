@@ -2,7 +2,8 @@
 namespace wcf\data\user\group;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\UserGroupCacheBuilder;
+use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
@@ -11,7 +12,7 @@ use wcf\system\WCF;
  * Provides functions to edit user groups.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
@@ -179,7 +180,8 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 */
 	public static function resetCache() {
 		// clear cache
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.userGroup*');
+		UserGroupCacheBuilder::getInstance()->reset();
+		UserGroupPermissionCacheBuilder::getInstance()->reset();
 		
 		// clear sessions
 		SessionHandler::resetSessions();

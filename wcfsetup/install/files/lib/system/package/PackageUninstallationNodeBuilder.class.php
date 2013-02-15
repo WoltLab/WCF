@@ -1,14 +1,12 @@
 <?php
 namespace wcf\system\package;
-use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
-use wcf\system\package\PackageUninstallationDispatcher;
 use wcf\system\WCF;
 
 /**
  * Creates a logical node-based uninstallation tree.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package

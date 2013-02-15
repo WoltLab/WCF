@@ -5,7 +5,6 @@ use wcf\page\AbstractPage;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -15,7 +14,7 @@ use wcf\util\StringUtil;
  * type.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page

@@ -4,8 +4,8 @@ namespace wcf\system\cache\source;
 /**
  * Any cache sources should implement this interface.
  * 
- * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.source
@@ -13,43 +13,33 @@ namespace wcf\system\cache\source;
  */
 interface ICacheSource {
 	/**
-	 * Returns a cached variable.
-	 * 
-	 * @param	array		$cacheResource
-	 * @return	mixed
+	 * Flushes a specific cache, optionally removing caches which share the same name.
+	 *
+	 * @param	string		$cacheName
+	 * @param	boolean		$useWildcard
 	 */
-	public function get(array $cacheResource);
-	
-	/**
-	 * Stores a variable in the cache.
-	 * 
-	 * @param	array		$cacheResource
-	 * @param	mixed		$value
-	 */
-	public function set(array $cacheResource, $value);
-	
-	/**
-	 * Deletes a variable in the cache.
-	 * 
-	 * @param	array		$cacheResource
-	 */
-	public function delete(array $cacheResource);
-	
-	/**
-	 * Marks cached files as obsolete.
-	 * 
-	 * @param	string		$directory
-	 * @param	string		$filepattern
-	 */
-	public function clear($directory, $filepattern);
-	
-	/**
-	 * Closes this cache source.
-	 */
-	public function close();
+	public function flush($cacheName, $useWildcard);
 	
 	/**
 	 * Clears the cache completely.
 	 */
-	public function flush();
+	public function flushAll();
+	
+	/**
+	 * Returns a cached variable.
+	 * 
+	 * @param	string		$cacheName
+	 * @param	integer		$maxLifetime
+	 * @return	mixed
+	 */
+	public function get($cacheName, $maxLifetime);
+	
+	/**
+	 * Stores a variable in the cache.
+	 * 
+	 * @param	string		$cacheName
+	 * @param	mixed		$value
+	 * @param	integer		$maxLifetime
+	 */
+	public function set($cacheName, $value, $maxLifetime);
 }

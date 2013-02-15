@@ -9,13 +9,18 @@ use wcf\util\ClassUtil;
  * Handles user group options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user.group
  * @category	Community Framework
  */
 class UserGroupOptionHandler extends OptionHandler {
+	/**
+	 * @see	wcf\system\option\OptionHandler::$cacheClass
+	 */
+	protected $cacheClass = 'wcf\system\cache\builder\UserGroupOptionCacheBuilder';
+	
 	/**
 	 * user group object
 	 * @var	wcf\data\user\group\UserGroup

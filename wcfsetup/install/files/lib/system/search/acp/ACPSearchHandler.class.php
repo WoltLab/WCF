@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\search\acp;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\util\ClassUtil;
@@ -10,7 +10,7 @@ use wcf\util\ClassUtil;
  * Handles ACP Search.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.search.acp
@@ -33,13 +33,7 @@ class ACPSearchHandler extends SingletonFactory {
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		CacheHandler::getInstance()->addResource(
-			'acpSearchProvider',
-			WCF_DIR.'cache/cache.acpSearchProvider.php',
-			'wcf\system\cache\builder\ACPSearchProviderCacheBuilder'
-		);
-		
-		$this->cache = CacheHandler::getInstance()->get('acpSearchProvider');
+		$this->cache = ACPSearchProviderCacheBuilder::getInstance()->getData();
 	}
 	
 	/**

@@ -4,7 +4,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\User;
 use wcf\page\SortablePage;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * Shows the result of a user search.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -312,12 +312,7 @@ class UserListPage extends SortablePage {
 	 * Gets the user options from cache.
 	 */
 	protected function readUserOptions() {
-		CacheHandler::getInstance()->addResource(
-			'userOption',
-			WCF_DIR.'cache/cache.userOption.php',
-			'wcf\system\cache\builder\OptionCacheBuilder'
-		);
-		$this->options = CacheHandler::getInstance()->get('userOption', 'options');
+		$this->options = UserOptionCacheBuilder::getInstance()->getData(array(), 'options');
 		
 		foreach ($this->options as &$option) {
 			$option = new ViewableUserOption($option);

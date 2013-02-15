@@ -7,7 +7,7 @@ use wcf\util\ClassUtil;
  * Abstract implementation of a ACP search result provider with nested categories.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.search.acp
@@ -122,7 +122,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	}
 	
 	/**
-	 * Returns true, if given category is valid and accessible.
+	 * Returns true if given category is valid and accessible.
 	 * 
 	 * @param	string		$categoryName
 	 * @return	boolean

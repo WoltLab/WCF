@@ -120,11 +120,6 @@ CREATE TABLE wcf1_application (
 	isPrimary TINYINT(1) NOT NULL DEFAULT 0
 );
 
-DROP TABLE IF EXISTS wcf1_cache_resource;
-CREATE TABLE wcf1_cache_resource (
-	cacheResource VARCHAR(255) NOT NULL PRIMARY KEY
-);
-
 DROP TABLE IF EXISTS wcf1_category;
 CREATE TABLE wcf1_category (
 	categoryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -136,25 +131,6 @@ CREATE TABLE wcf1_category (
 	time INT(10) NOT NULL,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	additionalData TEXT
-);
-
-DROP TABLE IF EXISTS wcf1_cleanup_listener;
-CREATE TABLE wcf1_cleanup_listener (
-	listenerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	packageID INT(10) NOT NULL,
-	className VARCHAR(255) NOT NULL DEFAULT '',
-	objectType VARCHAR(255) NOT NULL DEFAULT '',
-	lastUpdateTime INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY (className, packageID)
-);
-
-DROP TABLE IF EXISTS wcf1_cleanup_log;
-CREATE TABLE wcf1_cleanup_log (
-	packageID INT(10) NOT NULL DEFAULT 0,
-	objectType VARCHAR(255) NOT NULL DEFAULT '',
-	objectID INT(10) NOT NULL DEFAULT 0,
-	deleteTime INT(10) NOT NULL DEFAULT 0,
-	KEY objectType (objectType)
 );
 
 DROP TABLE IF EXISTS wcf1_cli_history;
@@ -807,12 +783,15 @@ ALTER TABLE wcf1_application ADD FOREIGN KEY (packageID) REFERENCES wcf1_package
 
 ALTER TABLE wcf1_category ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
+<<<<<<< HEAD
 ALTER TABLE wcf1_cleanup_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_cleanup_log ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_cli_history ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
+=======
+>>>>>>> master
 ALTER TABLE wcf1_clipboard_action ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_clipboard_item ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
@@ -985,6 +964,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageLin
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageLinkHoverColor', 'rgba(15, 79, 143, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSidebarBackgroundColor', '@wcfContainerHoverBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDimmedColor', 'rgba(136, 136, 136, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfExtraDimmedColor', 'lighten(@wcfDimmedColor, 20%)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLabelColor', '@wcfColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeadlineColor', '@wcfColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeadlineFontFamily', '"Trebuchet MS", Arial, sans-serif');

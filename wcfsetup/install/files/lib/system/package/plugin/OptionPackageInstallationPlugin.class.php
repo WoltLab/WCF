@@ -2,10 +2,8 @@
 namespace wcf\system\package\plugin;
 use wcf\data\option\Option;
 use wcf\data\option\OptionEditor;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes options.

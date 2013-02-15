@@ -4,15 +4,13 @@ use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionEditor;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupList;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes user group options.
  * 
  * @author	Benjamin Kunz
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin

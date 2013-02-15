@@ -6,7 +6,7 @@ use wcf\data\acl\option\ACLOption;
 use wcf\data\acl\option\ACLOptionList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\ACLOptionCategoryCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * Handles ACL permissions.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.acl
@@ -116,13 +116,7 @@ class ACLHandler extends SingletonFactory {
 	 */
 	protected function init() {
 		$this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.acl');
-		
-		CacheHandler::getInstance()->addResource(
-			'aclOptionCategory',
-			WCF_DIR.'cache/cache.aclOptionCategory.php',
-			'wcf\system\cache\builder\ACLOptionCategoryCacheBuilder'
-		);		
-		$this->categories = CacheHandler::getInstance()->get('aclOptionCategory');
+		$this->categories = ACLOptionCategoryCacheBuilder::getInstance()->getData();
 	}
 	
 	/**

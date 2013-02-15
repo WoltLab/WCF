@@ -303,15 +303,8 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * Prepares installation dialog.
 	 */
 	prepareInstallation: function() {
-		WCF.showAJAXDialog('packageInstallationDialog', true, {
-			ajax: true,
-			closable: false,
-			data: this._getParameters(),
-			showLoadingOverlay: false,
-			success: $.proxy(this._success, this),
-			title: WCF.Language.get('wcf.acp.package.installation.title'),
-			url: 'index.php/' + this._actionName + '/?t=' + SECURITY_TOKEN + SID_ARG_2ND
-		});
+		this._proxy.setOption('data', this._getParameters());
+		this._proxy.sendRequest();
 	},
 	
 	/**
@@ -336,6 +329,14 @@ WCF.ACP.Package.Installation = Class.extend({
 	_success: function(data, textStatus, jqXHR) {
 		this._shouldRender = false;
 		
+		if (this._dialog === null) {
+			this._dialog = $('<div id="packageInstallationDialog" />').hide().appendTo(document.body);
+			this._dialog.wcfDialog({
+				closable: false,
+				title: WCF.Language.get('wcf.acp.package.installation.title')
+			});
+		}
+		
 		if (data.step == 'rollback') {
 			this._dialog.wcfDialog('close');
 			
@@ -347,10 +348,6 @@ WCF.ACP.Package.Installation = Class.extend({
 			}, 200);
 			
 			return;
-		}
-		
-		if (this._dialog == null) {
-			this._dialog = $('#packageInstallationDialog');
 		}
 		
 		// receive new queue id
@@ -1159,6 +1156,12 @@ WCF.ACP.Worker = Class.extend({
 	_proxy: null,
 	
 	/**
+	 * dialog title
+	 * @var	string
+	 */
+	_title: '',
+	
+	/**
 	 * Initializes a new worker instance.
 	 * 
 	 * @param	string		dialogID
@@ -1171,23 +1174,16 @@ WCF.ACP.Worker = Class.extend({
 		this._dialogID = dialogID + 'Worker';
 		this._dialog = null;
 		this._proxy = new WCF.Action.Proxy({
-			showLoadingOverlay: false,
-			success: $.proxy(this._success, this),
-			url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
-		});
-		
-		// initialize AJAX-based dialog
-		WCF.showAJAXDialog(this._dialogID, true, {
-			url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
-			type: 'POST',
+			autoSend: true,
 			data: {
 				className: className,
 				parameters: parameters || { }
 			},
+			showLoadingOverlay: false,
 			success: $.proxy(this._success, this),
-			onClose: $.proxy(function() { this._aborted = true; }, this),
-			title: title
+			url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
+		this._title = title;
 	},
 	
 	/**
@@ -1202,7 +1198,11 @@ WCF.ACP.Worker = Class.extend({
 		
 		// init binding
 		if (this._dialog === null) {
-			this._dialog = $('#' + $.wcfEscapeID(this._dialogID));
+			this._dialog = $('<div id="' + this._dialogID + '" />').hide().appendTo(document.body);
+			this._dialog.wcfDialog({
+				onClose:  $.proxy(function() { this._aborted = true; }, this),
+				title: this._title
+			});
 		}
 		
 		// update progress

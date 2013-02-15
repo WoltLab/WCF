@@ -3,7 +3,7 @@ namespace wcf\system\cronjob;
 use wcf\data\cronjob\log\CronjobLogEditor;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\CronjobCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -13,7 +13,7 @@ use wcf\util\ClassUtil;
  * Provides functions to execute cronjobs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
@@ -204,18 +204,13 @@ class CronjobScheduler extends SingletonFactory {
 	 * Loads the cached data for cronjob execution.
 	 */
 	protected function loadCache() {
-		CacheHandler::getInstance()->addResource(
-			'cronjob',
-			WCF_DIR.'cache/cache.cronjob.php',
-			'wcf\system\cache\builder\CronjobCacheBuilder'
-		);
-		$this->cache = CacheHandler::getInstance()->get('cronjob');
+		$this->cache = CronjobCacheBuilder::getInstance()->getData();
 	}
 	
 	/**
 	 * Clears the cronjob data cache.
 	 */
 	public static function clearCache() {
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.cronjob.php');
+		CronjobCacheBuilder::getInstance()->reset();
 	}
 }

@@ -6,14 +6,13 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
  * Handles an AJAX-based package installation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.action
@@ -224,17 +223,6 @@ class InstallPackageAction extends AbstractDialogAction {
 	 * Clears resources after successful installation.
 	 */
 	protected function finalize() {
-		// clear cache
-		$sql = "SELECT	packageDir
-			FROM	wcf".WCF_N."_package
-			WHERE	isApplication = 1";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		
-		while ($row = $statement->fetchArray()) {
-			$cacheDir = FileUtil::getRealPath(WCF_DIR . $row['packageDir'] . 'cache/');
-			
-			CacheHandler::getInstance()->clear($cacheDir, '*.php');
-		}
+		CacheHandler::getInstance()->flushAll();
 	}
 }

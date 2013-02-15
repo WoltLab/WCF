@@ -5,7 +5,6 @@ php:
   - 5.3
 env:
   - TASK=codesniffer
-  - TASK=wcfsetup_postgres
   - TASK=wcfsetup_mysql
 before_install:
   - if [[ "$TASK" = "codesniffer" ]]; then pear install pear/PHP_CodeSniffer; fi
@@ -19,6 +18,7 @@ before_script:
   - if [[ "$TASK" != "codesniffer" ]]; then cp wcfsetup/install.php .; fi
   - if [[ "$TASK" != "codesniffer" ]]; then mkdir tmp; fi
 script:
+  - if [[ "$TASK" = "codesniffer" ]]; then find . -type f -name '*.php' |xargs -I file php -l file > /dev/null; fi
   - if [[ "$TASK" = "codesniffer" ]]; then phpcs -p --extensions=php --standard="`pwd`/CodeSniff/WCF" .; fi
   - if [[ "$TASK" = "wcfsetup_mysql" ]]; then echo -e "`pwd`/wcf-setup\nMySQLDatabase\nlocalhost\nroot\n\nwcf\n1\n" | php install.php --dev; fi
   - if [[ "$TASK" = "wcfsetup_postgres" ]]; then echo -e "`pwd`/wcf-setup\nPostgreSQLDatabase\nlocalhost\npostgres\n\nwcf\n1\n" | php install.php --dev; fi

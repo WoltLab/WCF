@@ -6,7 +6,7 @@ use wcf\data\DatabaseObject;
  * Represents an ACP session.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.session
@@ -29,7 +29,7 @@ class ACPSession extends DatabaseObject {
 	protected static $databaseTableIndexName = 'sessionID';
 	
 	/**
-	 * Returns true, if this session type supports persistent logins.
+	 * Returns true if this session type supports persistent logins.
 	 * 
 	 * @return	boolean
 	 */

@@ -2,7 +2,7 @@
 namespace wcf\data\user\group;
 use wcf\data\user\User;
 use wcf\data\DatabaseObject;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\UserGroupCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Represents a user group.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
@@ -143,7 +143,7 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if the given user is member of the group. If no user is
+	 * Returns true if the given user is member of the group. If no user is
 	 * given, the active user is used.
 	 * 
 	 * @param	wcf\data\user\User	$user
@@ -157,7 +157,7 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if the given groups are accessible for the active user.
+	 * Returns true if the given groups are accessible for the active user.
 	 * 
 	 * @param	array		$groupIDs
 	 * @return	boolean
@@ -219,17 +219,12 @@ class UserGroup extends DatabaseObject {
 	 */
 	protected static function getCache() {
 		if (self::$cache === null) {
-			CacheHandler::getInstance()->addResource(
-				'userGroup',
-				WCF_DIR.'cache/cache.userGroup.php',
-				'wcf\system\cache\builder\UserGroupCacheBuilder'
-			);
-			self::$cache = CacheHandler::getInstance()->get('userGroup');
+			self::$cache = UserGroupCacheBuilder::getInstance()->getData();
 		}
 	}
 	
 	/**
-	 * Returns true, if this group is accessible for the active user.
+	 * Returns true if this group is accessible for the active user.
 	 * 
 	 * @return	boolean
 	 */
