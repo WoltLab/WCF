@@ -47,7 +47,7 @@ class UserAuthenticationFactory extends SingletonFactory {
 	 * 
 	 * @return	wcf\system\user\authentication\IUserAuthentication
 	 */
-	public static function getUserAuthentication() {
+	public function getUserAuthentication() {
 		return $this->userAuthentication;
 	}
 }
