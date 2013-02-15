@@ -74,6 +74,9 @@ class CLIWCF extends WCF {
 	 * @see wcf\system\WCF::destruct()
 	 */
 	public static function destruct() {
+		self::getReader()->getHistory()->save();
+		self::getReader()->getHistory()->autoSave = false;
+		
 		self::getSession()->delete();
 	}
 	
@@ -209,7 +212,7 @@ class CLIWCF extends WCF {
 		while ($password === '');
 		
 		try {
-			$user = UserAuthenticationFactory::getUserAuthentication()->loginManually($username, $password);
+			$user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually($username, $password);
 			WCF::getSession()->changeUser($user);
 		}
 		catch (UserInputException $e) {
@@ -290,7 +293,7 @@ class CLIWCF extends WCF {
 	 */
 	public function checkForUpdates() {
 		if (VERBOSITY >= -1 && !self::getArgvParser()->disableUpdateCheck) {
-			$updates = PackageUpdateDispatcher::getAvailableUpdates();
+			$updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 			if (!empty($updates)) {
 				$return = self::getReader()->println(count($updates) . ' updates are available');
 				
