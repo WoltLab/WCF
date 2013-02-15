@@ -1,16 +1,15 @@
 <?php
 namespace wcf\system\application;
 use wcf\data\application\ApplicationAction;
-use wcf\data\application\ApplicationEditor;
 use wcf\data\application\ApplicationList;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\SingletonFactory;
 
 /**
  * Handles multi-application environments.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.application
@@ -33,12 +32,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * Initializes cache.
 	 */
 	protected function init() {
-		CacheHandler::getInstance()->addResource(
-			'application',
-			WCF_DIR.'cache/cache.application.php',
-			'wcf\system\cache\builder\ApplicationCacheBuilder'
-		);
-		$this->cache = CacheHandler::getInstance()->get('application');
+		$this->cache = ApplicationCacheBuilder::getInstance()->getData();
 	}
 	
 	/**
@@ -144,7 +138,7 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns true, if given $url is an internal URL.
+	 * Returns true if given $url is an internal URL.
 	 * 
 	 * @param	string		$url
 	 * @return	boolean

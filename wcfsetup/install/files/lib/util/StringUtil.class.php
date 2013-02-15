@@ -1,12 +1,13 @@
 <?php
 namespace wcf\util;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
 
 /**
  * Contains string-related functions.
  * 
  * @author	Oliver Kliebisch, Marcel Werk 
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -423,7 +424,7 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Returns true, if the given string contains only ASCII characters.
+	 * Returns true if the given string contains only ASCII characters.
 	 * 
 	 * @param	string		$string
 	 * @return	boolean
@@ -433,7 +434,7 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Returns true, if the given string is utf-8 encoded.
+	 * Returns true if the given string is utf-8 encoded.
 	 * @see		http://www.w3.org/International/questions/qa-forms-utf-8
 	 * 
 	 * @param	string		$string
@@ -499,7 +500,7 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Returns false, if the given word is forbidden by given word filter.
+	 * Returns false if the given word is forbidden by given word filter.
 	 * 
 	 * @param	string		$word
 	 * @param	string		$filter
@@ -644,6 +645,32 @@ final class StringUtil {
 		$truncatedString .= $etc;
 		
 		return $truncatedString;
+	}
+	
+	/**
+	 * Generates an anchor tag from given URL.
+	 *  
+	 * @param	string		$url
+	 * @param	string		$title
+	 * @return	string		anchor tag
+	 */
+	public static function getAnchorTag($url, $title = '') {
+		$external = true;
+		if (ApplicationHandler::getInstance()->isInternalURL($url)) {
+			$external = false;
+		}
+		
+		// cut visible url
+		if (empty($title)) {
+			// use URL and remove protocol and www subdomain 
+			$title = preg_replace('~^(?:https?|ftps?)://(?:www\.)?~i', '', $url);
+			
+			if (self::length($title) > 60) {
+				$title = self::substring($title, 0, 30) . self::HELLIP . self::substring($title, -25);
+			}
+		}
+		
+		return '<a href="'.self::encodeHTML($url).'"'.($external ? (' class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '')) : '').'>'.self::encodeHTML($title).'</a>';
 	}
 	
 	/**

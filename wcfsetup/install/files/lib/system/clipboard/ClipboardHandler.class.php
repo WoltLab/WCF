@@ -1,7 +1,8 @@
 <?php
 namespace wcf\system\clipboard;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\ClipboardActionCacheBuilder;
+use wcf\system\cache\builder\ClipboardPageCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -12,7 +13,7 @@ use wcf\util\ClassUtil;
  * Handles clipboard-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.clipboard
@@ -57,12 +58,7 @@ class ClipboardHandler extends SingletonFactory {
 			$this->cache['objectTypeNames'][$objectType->objectType] = $objectType->objectTypeID;
 		}
 		
-		CacheHandler::getInstance()->addResource(
-			'clipboardPage',
-			WCF_DIR.'cache/cache.clipboardPage.php',
-			'wcf\system\cache\builder\ClipboardPageCacheBuilder'
-		);
-		$this->pageCache = CacheHandler::getInstance()->get('clipboardPage');
+		$this->pageCache = ClipboardPageCacheBuilder::getInstance()->getData();
 	}
 	
 	/**
@@ -71,12 +67,7 @@ class ClipboardHandler extends SingletonFactory {
 	protected function loadActionCache() {
 		if ($this->actionCache !== null) return;
 		
-		CacheHandler::getInstance()->addResource(
-			'clipboardAction',
-			WCF_DIR.'cache/cache.clipboardAction.php',
-			'wcf\system\cache\builder\ClipboardActionCacheBuilder'
-		);
-		$this->actionCache = CacheHandler::getInstance()->get('clipboardAction');
+		$this->actionCache = ClipboardActionCacheBuilder::getInstance()->getData();
 	}
 	
 	/**

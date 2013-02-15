@@ -3,7 +3,7 @@ namespace wcf\system;
 use wcf\acp\form\MasterPasswordForm;
 use wcf\acp\form\MasterPasswordInitForm;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\PackageCacheBuilder;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\RouteHandler;
@@ -39,7 +39,6 @@ class WCFACP extends WCF {
 		$this->initDB();
 		$this->loadOptions();
 		$this->initPackage();
-		$this->initCache();
 		$this->initSession();
 		$this->initLanguage();
 		$this->initTPL();
@@ -125,19 +124,6 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see	WCF::loadDefaultCacheResources()
-	 */
-	protected function loadDefaultCacheResources() {
-		parent::loadDefaultCacheResources();
-		
-		CacheHandler::getInstance()->addResource(
-			'package',
-			WCF_DIR.'cache/cache.package.php',
-			'wcf\system\cache\builder\PackageCacheBuilder'
-		);
-	}
-	
-	/**
 	 * Initializes the active package.
 	 */
 	protected function initPackage() {
@@ -154,8 +140,7 @@ class WCFACP extends WCF {
 	 */
 	protected function getQuickAccessPackages() {
 		$quickAccessPackages = array();
-		$packages = CacheHandler::getInstance()->get('package');
-		foreach ($packages['packages'] as $packageID => $package) {
+		foreach (PackageCacheBuilder::getInstance()->getData(array(), 'packages') as $packageID => $package) {
 			if (!$package->isApplication) break;
 			if ($package->package != 'com.woltlab.wcf') {
 				$quickAccessPackages[] = $package;

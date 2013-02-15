@@ -10,7 +10,7 @@ use wcf\system\menu\page\PageMenu;
  * the Microsoft Public License (MS-PL) http://www.opensource.org/licenses/ms-pl.html
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
@@ -120,7 +120,7 @@ class Route {
 	}
 	
 	/**
-	 * Returns true, if given request url matches this route.
+	 * Returns true if given request url matches this route.
 	 * 
 	 * @param	string		$requestURL
 	 * @return	boolean

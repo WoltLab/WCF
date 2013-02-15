@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\style;
 use wcf\data\style\Style;
-use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\Callback;
@@ -14,7 +13,7 @@ use wcf\util\StyleUtil;
  * Provides access to the LESS PHP compiler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.style

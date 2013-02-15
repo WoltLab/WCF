@@ -58,7 +58,7 @@ $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute(array(1));
 
 // reset all caches
-CacheHandler::getInstance()->clear(WCF_DIR.'cache/', '*');
+CacheHandler::getInstance()->flushAll();
 
 // delete language files
 LanguageEditor::deleteLanguageFiles();

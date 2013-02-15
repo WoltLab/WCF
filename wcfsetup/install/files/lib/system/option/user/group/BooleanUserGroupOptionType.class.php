@@ -5,7 +5,7 @@ use wcf\system\option\BooleanOptionType;
 /**
  * User group option type implementation for boolean values.
  * 
- * The merge of option values returns true, if at least one value is true.
+ * The merge of option values returns true if at least one value is true.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH

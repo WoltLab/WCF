@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -11,7 +11,7 @@ use wcf\util\XML;
  * Refreshes list of search robots.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
@@ -66,7 +66,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 			}
 			
 			// clear spider cache
-			CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.spider.php');
+			SpiderCacheBuilder::getInstance()->reset();
 		}
 		
 		// delete tmp file

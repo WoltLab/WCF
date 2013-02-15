@@ -7,17 +7,17 @@ use wcf\system\WCF;
  * Caches the event listeners.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
  */
-class EventListenerCacheBuilder implements ICacheBuilder {
+class EventListenerCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\ICacheBuilder::getData()
+	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
-	public function getData(array $cacheResource) {
+	public function rebuild(array $parameters) {
 		$data = array(
 			'actions' => array('user' => array(), 'admin' => array()),
 			'inheritedActions' => array('user' => array(), 'admin' => array())

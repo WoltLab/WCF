@@ -2,7 +2,6 @@
 namespace wcf\acp\action;
 use wcf\action\AbstractSecureAction;
 use wcf\action\AJAXInvokeAction;
-use wcf\system\exception\AJAXException;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
@@ -12,7 +11,7 @@ use wcf\util\JSON;
  * Handles worker actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.action

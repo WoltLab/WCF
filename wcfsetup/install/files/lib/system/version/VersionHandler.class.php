@@ -1,15 +1,14 @@
 <?php
 namespace wcf\system\version;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\VersionableDatabaseObject;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\VersionCacheBuilder;
 use wcf\system\SingletonFactory;
 
 /**
  * Handles versions of DatabaseObjects.
  * 
  * @author	Jeffrey Reichardt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.version
@@ -21,25 +20,25 @@ class VersionHandler extends SingletonFactory {
 	 * @var	array<wcf\data\VersionableDatabaseObject>
 	 */
 	protected $versions = array();
-
+	
 	/**
 	 * maps each version id to its object type id and object type version id
 	 * @var	array<array>
 	 */
 	protected $versionIDs = array();
-
+	
 	/**
 	 * mapes the names of the version object types to the object type ids
 	 * @var	array<integer>
 	 */
 	protected $objectTypeIDs = array();
-
+	
 	/**
 	 * list of version object types
 	 * @var	array<wcf\data\object\type>
 	 */
 	protected $objectTypes = array();
-
+	
 	/**
 	 * Returns all version of object with the given object type id and object id.
 	 * 
@@ -51,10 +50,10 @@ class VersionHandler extends SingletonFactory {
 		if (isset($this->versions[$objectTypeID][$objectID])) {
 			return $this->versions[$objectTypeID][$objectID];
 		}
-
+		
 		return array();
 	}
-
+	
 	/**
 	 * Returns the database object with the given version id.
 	 * 
@@ -66,10 +65,10 @@ class VersionHandler extends SingletonFactory {
 		if (isset($this->versionIDs[$objectTypeID][$versionID])) {
 			return $this->versionIDs[$objectTypeID][$versionID];
 		}
-
+		
 		return null;
 	}
-
+	
 	/**
 	 * Gets the object type with the given id.
 	 * 
@@ -80,10 +79,10 @@ class VersionHandler extends SingletonFactory {
 		if (isset($this->objectTypeIDs[$objectTypeID])) {
 			return $this->getObjectTypeByName($this->objectTypeIDs[$objectTypeID]);
 		}
-
+		
 		return null;
 	}
-
+	
 	/**
 	 * Gets the object type with the given name.
 	 * 
@@ -94,10 +93,10 @@ class VersionHandler extends SingletonFactory {
 		if (isset($this->objectTypes[$objectTypeName])) {
 			return $this->objectTypes[$objectTypeName];
 		}
-
+		
 		return null;
 	}
-
+	
 	/**
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
@@ -107,19 +106,17 @@ class VersionHandler extends SingletonFactory {
 		foreach ($this->objectTypes as $objectType) {
 			$this->objectTypeIDs[$objectType->objectTypeID] = $objectType->objectType;
 		}
-
-		$cacheName = 'version';
-		CacheHandler::getInstance()->addResource($cacheName, WCF_DIR.'cache/cache.'.$cacheName.'.php', 'wcf\system\cache\builder\VersionCacheBuilder');
-		$this->versions = CacheHandler::getInstance()->get($cacheName, 'versions');
-		$this->versionIDs = CacheHandler::getInstance()->get($cacheName, 'versionIDs');
+		
+		$this->versions = VersionCacheBuilder::getInstance()->getData(array(), 'versions');
+		$this->versionIDs = VersionCacheBuilder::getInstance()->getData(array(), 'versionIDs');
 	}
-
+	
 	/**
 	 * Reloads the version cache.
 	 */
 	public function reloadCache() {
-		CacheHandler::getInstance()->clearResource('version');
-
+		VersionCacheBuilder::getInstance()->reset();
+		
 		$this->init();
 	}
 	

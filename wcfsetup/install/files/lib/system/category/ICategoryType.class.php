@@ -6,7 +6,7 @@ use wcf\data\category\CategoryEditor;
  * Every category type has to implement this interface.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.category
@@ -21,21 +21,21 @@ interface ICategoryType {
 	public function afterDeletion(CategoryEditor $categoryEditor);
 	
 	/**
-	 * Returns true, if the active user can add a category of this type.
+	 * Returns true if the active user can add a category of this type.
 	 * 
 	 * @return	boolean
 	 */
 	public function canAddCategory();
 	
 	/**
-	 * Returns true, if the active user can delete a category of this type.
+	 * Returns true if the active user can delete a category of this type.
 	 * 
 	 * @return	boolean
 	 */
 	public function canDeleteCategory();
 	
 	/**
-	 * Returns true, if the active user can edit a category of this type.
+	 * Returns true if the active user can edit a category of this type.
 	 * 
 	 * @return	boolean
 	 */

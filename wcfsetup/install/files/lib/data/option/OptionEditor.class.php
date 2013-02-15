@@ -2,16 +2,15 @@
 namespace wcf\data\option;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\io\File;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Provides functions to edit options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.option
@@ -82,7 +81,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	 */
 	public static function resetCache() {
 		// reset cache
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache', 'cache.option.php');
+		OptionCacheBuilder::getInstance()->reset();
 		
 		// reset options.inc.php files
 		self::rebuild();

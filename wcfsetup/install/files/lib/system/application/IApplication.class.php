@@ -5,7 +5,7 @@ namespace wcf\system\application;
  * Default interface for all applications for the community framework.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.application
@@ -18,7 +18,7 @@ interface IApplication {
 	public function __run();
 	
 	/**
-	 * Returns true, if current application is treated as active and was invoked directly.
+	 * Returns true if current application is treated as active and was invoked directly.
 	 *
 	 * @return	boolean
 	 */

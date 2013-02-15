@@ -11,6 +11,8 @@ use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\builder\TemplateListenerCacheBuilder;
+use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -38,7 +40,7 @@ use wcf\util\StringUtil;
  * PackageInstallationDispatcher handles the whole installation process.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
@@ -154,7 +156,7 @@ class PackageInstallationDispatcher {
 				
 				// remove all cache files after WCFSetup
 				if (!PACKAGE_ID) {
-					CacheHandler::getInstance()->clear(WCF_DIR.'cache/', 'cache.*.php');
+					CacheHandler::getInstance()->flushAll();
 				}
 				
 				// rebuild application paths
@@ -163,7 +165,8 @@ class PackageInstallationDispatcher {
 			}
 			
 			// remove template listener cache
-			CacheHandler::getInstance()->clear(WCF_DIR.'cache/templateListener/', '*.php');
+			TemplateListenerCacheBuilder::getInstance()->reset();
+			TemplateListenerCodeCacheBuilder::getInstance()->reset();
 				
 			// reset language cache
 			LanguageFactory::getInstance()->clearCache();
@@ -399,7 +402,7 @@ class PackageInstallationDispatcher {
 		}
 		else if ($infoName == 'packageName') {
 			// fallback to the package identifier for the package name
-			$defaultValue = $this->archive->getPackageInfo('name');
+			$defaultValue = $this->getArchive()->getPackageInfo('name');
 		}
 		
 		foreach ($languageList as $language) {
@@ -750,7 +753,7 @@ class PackageInstallationDispatcher {
 			$packageEditor = new PackageEditor($this->getPackage());
 			$packageEditor->update(array(
 				'updateDate' => TIME_NOW,
-				'packageVersion' => $this->archive->getPackageInfo('version')
+				'packageVersion' => $this->getArchive()->getPackageInfo('version')
 			));
 		}
 		
@@ -758,7 +761,7 @@ class PackageInstallationDispatcher {
 		LanguageEditor::deleteLanguageFiles();
 		
 		// reset all caches
-		CacheHandler::getInstance()->clear(WCF_DIR.'cache/', '*');
+		CacheHandler::getInstance()->flushAll();
 	}
 	
 	/**

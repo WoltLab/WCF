@@ -92,10 +92,10 @@ class Language extends DatabaseObject {
 			}
 			
 			// attempt to load the most specific category
-			if (isset($explodedItem[3])) {
-				$this->loadCategory($explodedItem[0].'.'.$explodedItem[1].'.'.$explodedItem[2]);
+			$this->loadCategory($explodedItem[0].'.'.$explodedItem[1].'.'.$explodedItem[2]);
+			if (!isset($this->items[$item])) {
+				$this->loadCategory($explodedItem[0].'.'.$explodedItem[1]);
 			}
-			$this->loadCategory($explodedItem[0].'.'.$explodedItem[1]);
 		}
 		
 		// return language variable

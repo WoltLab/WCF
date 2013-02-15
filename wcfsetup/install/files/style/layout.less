@@ -105,7 +105,7 @@
 					border-width: 0;
 					color: @wcfUserPanelColor;
 					padding: 6px 12px 5px 26px;
-					width: 180px;
+					width: 240px;
 					-webkit-appearance: textfield;
 					
 					.textShadow(@wcfUserPanelHoverBackgroundColor);
@@ -230,7 +230,7 @@
 				padding-top: 5px;
 			}
 			
-			&:not(:last-child) {
+			&:not(:last-child) > a {
 				border-right: 1px solid @wcfContainerBorderColor;
 			}
 		}
@@ -581,44 +581,6 @@
 		padding: @wcfGapMedium @wcfGapLarge;
 	}
 	
-	&.doubleColumned {
-		overflow: hidden;
-		
-		> li {
-			padding: 0;
-			float: left;
-			width: 50%;
-			height: 90px;
-			overflow: hidden;
-			
-			&:nth-child(even) {
-				float: right;
-			}
-			
-			&:nth-child(4n), &:nth-child(4n+1) {
-				background-color: @wcfContainerBackgroundColor;
-			}
-			
-			&:nth-child(4n+2), &:nth-child(4n+3) {
-				background-color: @wcfContainerAccentBackgroundColor;
-			}
-			
-			&:hover {
-				background-color: @wcfContainerHoverBackgroundColor;
-			}
-			
-			> div {
-				padding: 14px 21px;
-			}
-		}
-		
-		&:after {
-			content: "";
-			display: table;
-			clear: left;
-		}
-	}
-	
 	&.styleList > li > div.box64 {
 		> span {
 			text-align: center;
@@ -627,6 +589,48 @@
 		
 		> div {
 			margin-left: 115px;
+		}
+	}
+}
+
+@media screen and (min-width: 1240px) {
+	.containerList {
+		&.doubleColumned {
+			overflow: hidden;
+			
+			> li {
+				padding: 0;
+				float: left;
+				width: 50%;
+				height: 90px;
+				overflow: hidden;
+				
+				&:nth-child(even) {
+					float: right;
+				}
+				
+				&:nth-child(4n), &:nth-child(4n+1) {
+					background-color: @wcfContainerBackgroundColor;
+				}
+				
+				&:nth-child(4n+2), &:nth-child(4n+3) {
+					background-color: @wcfContainerAccentBackgroundColor;
+				}
+				
+				&:hover {
+					background-color: @wcfContainerHoverBackgroundColor;
+				}
+				
+				> div {
+					padding: 14px 21px;
+				}
+			}
+			
+			&:after {
+				content: "";
+				display: table;
+				clear: left;
+			}
 		}
 	}
 }

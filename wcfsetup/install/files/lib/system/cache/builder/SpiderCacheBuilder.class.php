@@ -6,17 +6,17 @@ use wcf\data\spider\SpiderList;
  * Caches the list of search engine spiders.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
  */
-class SpiderCacheBuilder implements ICacheBuilder {
+class SpiderCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\ICacheBuilder::getData()
+	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
-	public function getData(array $cacheResource) {
+	public function rebuild(array $parameters) {
 		$spiderList = new SpiderList();
 		$spiderList->sqlOrderBy = "spider.spiderID ASC";
 		$spiderList->readObjects();

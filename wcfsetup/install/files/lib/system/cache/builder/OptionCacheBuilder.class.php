@@ -2,40 +2,35 @@
 namespace wcf\system\cache\builder;
 use wcf\data\option\category\OptionCategory;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**
- * Caches the options and option categories
+ * Caches options and option categories
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
  */
-class OptionCacheBuilder implements ICacheBuilder {
+class OptionCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\ICacheBuilder::getData()
+	 * option class name
+	 * @var	string
 	 */
-	public function getData(array $cacheResource) {
-		$tableName = '';
-		$type = $cacheResource['cache'];
-		
-		$regEx = new Regex('((?:^|[A-Z])[a-z]+)');
-		$regEx->match($cacheResource['cache'], true);
-		$matches = $regEx->getMatches();
-		if (isset($matches[1])) {
-			for ($i = 0, $length = count($matches[1]); $i < $length; $i++) {
-				if (!empty($tableName)) {
-					$tableName .= '_';
-				}
-				
-				$tableName .= strtolower($matches[1][$i]);
-			}
-		}
-		
+	protected $optionClassName = 'wcf\data\option\Option';
+	
+	/**
+	 * database table name
+	 * @var	string
+	 */
+	protected $tableName = 'option';
+	
+	/**
+	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 */
+	public function rebuild(array $parameters) {
 		$data = array(
 			'categories' => array(),
 			'options' => array(),
@@ -46,7 +41,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 		// option categories
 		// get all option categories and sort categories by priority
 		$sql = "SELECT	categoryName, categoryID 
-			FROM	wcf".WCF_N."_".$tableName."_category";
+			FROM	wcf".WCF_N."_".$this->tableName."_category";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		$optionCategories = array();
@@ -60,7 +55,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 			$conditions->add("categoryID IN (?)", array($optionCategories));
 			
 			$sql = "SELECT		option_category.*, package.packageDir
-				FROM		wcf".WCF_N."_".$tableName."_category option_category
+				FROM		wcf".WCF_N."_".$this->tableName."_category option_category
 				LEFT JOIN	wcf".WCF_N."_package package
 				ON		(package.packageID = option_category.packageID)
 				".$conditions."
@@ -81,7 +76,7 @@ class OptionCacheBuilder implements ICacheBuilder {
 		// get all options and sort options by priority
 		$optionIDs = array();
 		$sql = "SELECT		optionName, optionID 
-			FROM		wcf".WCF_N."_".$tableName;
+			FROM		wcf".WCF_N."_".$this->tableName;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
@@ -89,33 +84,19 @@ class OptionCacheBuilder implements ICacheBuilder {
 		}
 		
 		if (!empty($optionIDs)) {
-			// get option class from type
-			$className = 'wcf\data\option\Option';
-			if (!empty($type)) {
-				// strip trailing underscore
-				preg_match_all('~((?:^|[A-Z])[a-z]+)~', $type, $matches);
-				
-				if (isset($matches[1])) {
-					$className = 'wcf\data\\';
-					for ($i = 0, $length = count($matches[1]); $i < $length; $i++) {
-						$className .= strtolower($matches[1][$i] . '\\');
-					}
-					$className .= ucfirst($type);
-				}
-			}
-			
 			// get needed options
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("optionID IN (?)", array($optionIDs));
 			
 			$sql = "SELECT		*
-				FROM		wcf".WCF_N."_".$tableName."
+				FROM		wcf".WCF_N."_".$this->tableName."
 				".$conditions."
 				ORDER BY	showOrder ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
+			$optionClassName = $this->optionClassName;
 			while ($row = $statement->fetchArray()) {
-				$data['options'][$row['optionName']] = new $className(null, $row);
+				$data['options'][$row['optionName']] = new $optionClassName(null, $row);
 				if (!isset($data['optionToCategories'][$row['categoryName']])) {
 					$data['optionToCategories'][$row['categoryName']] = array();
 				}

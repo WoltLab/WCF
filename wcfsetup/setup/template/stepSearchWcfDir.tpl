@@ -87,8 +87,8 @@
 	</hgroup>
 </header>
 
-{if $foundDirectory}
-	<p class="info">{lang}wcf.global.wcfDir.foundDirectory{/lang}</p>
+{if $invalidDirectory}
+	<p class="error">{lang}wcf.global.wcfDir.error.invalidDirectory{/lang}</p>
 {/if}
 
 {if $exception|isset}

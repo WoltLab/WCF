@@ -1,26 +1,22 @@
 <?php
 namespace wcf\system\cache;
+use wcf\system\cache\builder\ICacheBuilder;
 use wcf\system\cache\source\DiskCacheSource;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\util\StringUtil;
 
 /**
- * CacheHandler holds all registered cache resources.
+ * Manages transparent cache access.
  * 
- * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Alexander Ebert, Marcel Werk
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cache
  * @category	Community Framework
  */
 class CacheHandler extends SingletonFactory {
-	/**
-	 * registered cache resources
-	 * @var	array
-	 */
-	protected $cacheResources = array();
-	
 	/**
 	 * cache source object
 	 * @var	wcf\system\cache\source\ICacheSource
@@ -48,108 +44,70 @@ class CacheHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Registers a new cache resource.
+	 * Flush cache for given resource.
 	 * 
-	 * @param	string		$cache		name of this resource
-	 * @param	string		$file		data file for this resource
-	 * @param	string		$className
-	 * @param	integer		$maxLifetime
+	 * @param	wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
+	 * @param	array						$parameters
 	 */
-	public function addResource($cache, $file, $className, $maxLifetime = 0) {
-		$this->cacheResources[$cache] = array(
-			'cache' => $cache,
-			'file' => $file, 
-			'className' => $className, 
-			'maxLifetime' => $maxLifetime
-		);
+	public function flush(ICacheBuilder $cacheBuilder, array $parameters) {
+		$this->getCacheSource()->flush($this->getCacheName($cacheBuilder), empty($parameters));
 	}
 	
 	/**
-	 * Deletes a registered cache resource.
-	 * 
-	 * @param	string		$cache
+	 * Flushes the entire cache.
 	 */
-	public function clearResource($cache) {
-		if (!isset($this->cacheResources[$cache])) {
-			throw new SystemException("cache resource '".$cache."' does not exist");
-		}
-		
-		$this->getCacheSource()->delete($this->cacheResources[$cache]);
+	public function flushAll() {
+		$this->getCacheSource()->flushAll();
 	}
 	
 	/**
-	 * Marks cached files as obsolete.
+	 * Returns cached value for given resource, false if no cache exists.
 	 * 
-	 * @param	string		$directory
-	 * @param	string		$filepattern
+	 * @param	wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
+	 * @param	array						$parameters
+	 * @return	mixed
 	 */
-	public function clear($directory, $filepattern) {
-		$this->getCacheSource()->clear($directory, $filepattern);
+	public function get(ICacheBuilder $cacheBuilder, array $parameters) {
+		return $this->getCacheSource()->get($this->getCacheName($cacheBuilder, $parameters), $cacheBuilder->getMaxLifetime());
 	}
 	
 	/**
-	 * Returns a cached variable.
+	 * Caches a value for given resource,
 	 * 
-	 * @param	string		$cache
-	 * @param	string		$variable
-	 * @return	mixed		$value
+	 * @param	wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
+	 * @param	array						$parameters
+	 * @param	array						$data
 	 */
-	public function get($cache, $variable = '') {
-		if (!isset($this->cacheResources[$cache])) {
-			throw new SystemException("unknown cache resource '".$cache."'");
-		}
-		
-		// try to get value
-		$value = $this->getCacheSource()->get($this->cacheResources[$cache]);
-		if ($value === null) {
-			// rebuild cache
-			$this->rebuild($this->cacheResources[$cache]);
-			
-			// try to get value again
-			$value = $this->getCacheSource()->get($this->cacheResources[$cache]);
-			if ($value === null) {
-				throw new SystemException("cache resource '".$cache."' does not exist");
-			}
-		}
-		
-		// return value
-		if (!empty($variable)) {
-			if (!isset($value[$variable])) {
-				throw new SystemException("variable '".$variable."' does not exist in cache resource '".$cache."'");
-			}
-			
-			return $value[$variable];
-		}
-		else {
-			return $value;
-		}
+	public function set(ICacheBuilder $cacheBuilder, array $parameters, array $data) {
+		$this->getCacheSource()->set($this->getCacheName($cacheBuilder, $parameters), $data, $cacheBuilder->getMaxLifetime());
 	}
 	
 	/**
-	 * Rebuilds a cache resource.
+	 * Returns cache index hash.
 	 * 
-	 * @param	array		$cacheResource
-	 * @return	boolean	result
+	 * @param	array		$parameters
+	 * @return	string
 	 */
-	public function rebuild($cacheResource) {
-		// instance cache class
-		if (!class_exists($cacheResource['className'])) {
-			throw new SystemException("Unable to find class '".$cacheResource['className']."'");
+	public function getCacheIndex(array $parameters) {
+		return sha1(serialize($this->orderParameters($parameters)));
+	}
+	
+	/**
+	 * Builds cache name.
+	 * 
+	 * @param	wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
+	 * @param	array						$parameters
+	 * @return	string
+	 */
+	protected function getCacheName(ICacheBuilder $cacheBuilder, array $parameters = array()) {
+		$className = explode('\\', get_class($cacheBuilder));
+		$application = array_shift($className);
+		$cacheName = StringUtil::replace('CacheBuilder', '', array_pop($className));
+		if (!empty($parameters)) {
+			$cacheName .= '-' . $this->getCacheIndex($parameters);
 		}
 		
-		// update file last modified time to avoid multiple users rebuilding cache at the same time
-		if (get_class($this->getCacheSource()) == 'wcf\system\cache\source\DiskCacheSource') {
-			@touch($cacheResource['file']);
-		}
-		
-		// build cache
-		$cacheBuilder = new $cacheResource['className'];
-		$value = $cacheBuilder->getData($cacheResource);
-
-		// save cache
-		$this->getCacheSource()->set($cacheResource, $value);
-		
-		return true;
+		return $application . '_' . StringUtil::firstCharToLowerCase($cacheName);
 	}
 	
 	/**
@@ -159,5 +117,19 @@ class CacheHandler extends SingletonFactory {
 	 */
 	public function getCacheSource() {
 		return $this->cacheSource;
+	}
+	
+	/**
+	 * Unifys parameter order, numeric indizes will be discarded.
+	 * 
+	 * @param	array		$parameters
+	 * @return	array
+	 */
+	protected function orderParameters($parameters) {
+		if (!empty($parameters)) {
+			array_multisort($parameters);
+		}
+		
+		return $parameters;
 	}
 }

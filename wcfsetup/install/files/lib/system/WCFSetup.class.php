@@ -5,7 +5,7 @@ use wcf\data\language\SetupLanguage;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\LanguageCacheBuilder;
 use wcf\system\database\util\SQLParser;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -406,7 +406,7 @@ class WCFSetup extends WCF {
 	}
 	
 	/**
-	 * Returns true, if memory_limit is set to at least 64 MB
+	 * Returns true if memory_limit is set to at least 64 MB
 	 * 
 	 * @return	boolean
 	 */
@@ -449,22 +449,16 @@ class WCFSetup extends WCF {
 	 * Searches the wcf dir.
 	 */
 	protected function searchWcfDir() {
-		$foundDirectory = '';
 		if (self::$wcfDir) {
 			$wcfDir = self::$wcfDir;
 		}
 		else {
-			if ($foundDirectory = FileUtil::scanFolder(INSTALL_SCRIPT_DIR, "WCF.class.php", true)) {
-				$foundDirectory = $wcfDir = FileUtil::unifyDirSeperator(dirname(dirname(dirname($foundDirectory))).'/');
-				
-				if (dirname(dirname($wcfDir)).'/' == TMP_DIR) {
-					$foundDirectory = false;
-					$wcfDir = FileUtil::unifyDirSeperator(INSTALL_SCRIPT_DIR).'wcf/';
-				}
-			}
-			else {
-				$wcfDir = FileUtil::unifyDirSeperator(INSTALL_SCRIPT_DIR).'wcf/';
-			}
+			$wcfDir = FileUtil::unifyDirSeperator(INSTALL_SCRIPT_DIR).'wcf/';
+		}
+		
+		$invalidDirectory = false;
+		if (@is_file($wcfDir.'lib/system/WCF.class.php')) {
+			$invalidDirectory = true;
 		}
 		
 		// domain
@@ -478,7 +472,7 @@ class WCFSetup extends WCF {
 		
 		WCF::getTPL()->assign(array(
 			'nextStep' => 'unzipFiles',
-			'foundDirectory' => $foundDirectory,
+			'invalidDirectory' => $invalidDirectory,
 			'wcfDir' => $wcfDir,
 			'domainName' => $domainName,
 			'installScriptUrl' => $installScriptUrl,
@@ -492,10 +486,9 @@ class WCFSetup extends WCF {
 	 * Unzips the files of the wcfsetup tar archive.
 	 */
 	protected function unzipFiles() {
-		// WCF seems to be installed, skip installation of files, database
-		// and admin account and go directly to the installation of packages
+		// WCF seems to be installed, abort
 		if (@is_file(self::$wcfDir.'lib/system/WCF.class.php')) {
-			$this->gotoNextStep('installPackages');
+			throw new SystemException('Target directory seems to be an existing installation of WCF, unable to continue.');
 			exit;
 		}
 		// WCF not yet installed, install files first
@@ -864,7 +857,7 @@ class WCFSetup extends WCF {
 		LanguageFactory::getInstance()->makeDefault($language->languageID);
 		
 		// rebuild language cache
-		CacheHandler::getInstance()->clearResource('language');
+		LanguageCacheBuilder::getInstance()->reset();
 		
 		// go to next step
 		$this->gotoNextStep('createUser');

@@ -388,10 +388,10 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 memcached:wcf.acp.option.cache_source_type.memcached
 apc:wcf.acp.option.cache_source_type.apc
 no:wcf.acp.option.cache_source_type.no]]></selectoptions>
-				<enableoptions><![CDATA[disk:!cache_source_memcached_host,!cache_source_memcached_use_pconnect
-memcached:cache_source_memcached_host,cache_source_memcached_use_pconnect
-apc:!cache_source_memcached_host,!cache_source_memcached_use_pconnect
-no:!cache_source_memcached_host,!cache_source_memcached_use_pconnect]]></enableoptions>
+				<enableoptions><![CDATA[disk:!cache_source_memcached_host
+memcached:cache_source_memcached_host
+apc:!cache_source_memcached_host
+no:!cache_source_memcached_host]]></enableoptions>
 			</option>
 			
 			<option name="cache_source_memcached_host">

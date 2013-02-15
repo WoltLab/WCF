@@ -1,12 +1,10 @@
 <?php
 namespace wcf\system\menu\page;
-use wcf\system\breadcrumb\Breadcrumb;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\PageMenuCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\menu\ITreeMenuItem;
 use wcf\system\menu\TreeMenu;
-use wcf\system\WCF;
 
 /**
  * Builds the page menu.
@@ -75,12 +73,7 @@ class PageMenu extends TreeMenu {
 		parent::loadCache();
 		
 		// get cache
-		CacheHandler::getInstance()->addResource(
-			'pageMenu',
-			WCF_DIR.'cache/cache.pageMenu.php',
-			'wcf\system\cache\builder\PageMenuCacheBuilder'
-		);
-		$this->menuItems = CacheHandler::getInstance()->get('pageMenu');
+		$this->menuItems = PageMenuCacheBuilder::getInstance()->getData();
 	}
 	
 	/**

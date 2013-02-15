@@ -2,13 +2,12 @@
 namespace wcf\data;
 use wcf\system\exception\SystemException;
 use wcf\system\version\VersionHandler;
-use wcf\util\StringUtil;
 
 /**
  * Abstract class for all versionable data classes.
  * 
  * @author	Jeffrey Reichardt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data

@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\template;
-use wcf\system\cache\CacheHandler;
+use wcf\system\cache\builder\TemplateGroupCacheBuilder;
+use wcf\system\cache\builder\TemplateListenerCacheBuilder;
+use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
@@ -91,6 +93,12 @@ class TemplateEngine extends SingletonFactory {
 	 * @var	array<array>
 	 */
 	protected $templateListeners = array();
+	
+	/**
+	 * true, if template listener code was already loaded
+	 * @var	boolean
+	 */
+	protected $templateListenersLoaded = false;
 	
 	/**
 	 * current environment
@@ -431,16 +439,6 @@ class TemplateEngine extends SingletonFactory {
 					}
 				}
 				
-				// check for template listeners
-				if ($this->hasTemplateListeners($templateName)) {
-					$this->loadTemplateListenerCode($templateName);
-					
-					$templateListenerCache = WCF_DIR.'cache/templateListener/'.$this->environment.'-'.$templateName.'.php';
-					$templateListenerCacheMTime = @filemtime($templateListenerCache);
-					
-					return !($sourceMTime >= $templateListenerCacheMTime);
-				}
-				
 				return true;
 			}
 		}
@@ -641,12 +639,7 @@ class TemplateEngine extends SingletonFactory {
 	 * Loads cached template group information.
 	 */
 	protected function loadTemplateGroupCache() {
-		CacheHandler::getInstance()->addResource(
-			'templateGroup',
-			WCF_DIR.'cache/cache.templateGroup.php',
-			'wcf\system\cache\builder\TemplateGroupCacheBuilder'
-		);
-		$this->templateGroupCache = CacheHandler::getInstance()->get('templateGroup');
+		$this->templateGroupCache = TemplateGroupCacheBuilder::getInstance()->getData();
 	}
 	
 	/**
@@ -719,14 +712,7 @@ class TemplateEngine extends SingletonFactory {
 	 * Loads all available template listeners.
 	 */
 	protected function loadTemplateListeners() {
-		$cacheName = 'templateListener-'.$this->environment;
-		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/cache.'.$cacheName.'.php',
-			'wcf\system\cache\builder\TemplateListenerCacheBuilder'
-		);
-		
-		$this->templateListeners = CacheHandler::getInstance()->get($cacheName);
+		$this->templateListeners = TemplateListenerCacheBuilder::getInstance()->getData(array('environment' => $this->environment));
 	}
 	
 	/**
@@ -745,21 +731,13 @@ class TemplateEngine extends SingletonFactory {
 	}
 	
 	/**
-	 * Loads template code for specified template.
-	 * 
-	 * @param	string		$templateName
+	 * Loads template listener code.
 	 */
-	protected function loadTemplateListenerCode($templateName) {
-		// cache was already loaded
-		if (!isset($this->templateListeners[$templateName]) || !empty($this->templateListeners[$templateName])) return;
-		
-		$cacheName = $this->environment.'-'.$templateName;
-		CacheHandler::getInstance()->addResource(
-			$cacheName,
-			WCF_DIR.'cache/templateListener/'.$cacheName.'.php',
-			'wcf\system\cache\builder\TemplateListenerCodeCacheBuilder'
-		);
-		$this->templateListeners[$templateName] = CacheHandler::getInstance()->get($cacheName);
+	protected function loadTemplateListenerCode() {
+		if (!$this->templateListenersLoaded) {
+			$this->templateListeners = TemplateListenerCodeCacheBuilder::getInstance()->getData(array('environment' => $this->environment));
+			$this->templateListenersLoaded = true;
+		}
 	}
 	
 	/**
@@ -770,7 +748,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @return	string
 	 */
 	public function getTemplateListenerCode($templateName, $eventName) {
-		$this->loadTemplateListenerCode($templateName);
+		$this->loadTemplateListenerCode();
 		
 		if (isset($this->templateListeners[$templateName][$eventName])) {
 			return implode("\n", $this->templateListeners[$templateName][$eventName]);
