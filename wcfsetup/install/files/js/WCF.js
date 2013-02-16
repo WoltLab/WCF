@@ -1472,6 +1472,7 @@ WCF.Action.Proxy = Class.extend({
 			failure: null,
 			showLoadingOverlay: true,
 			success: null,
+			suppressErrors: false,
 			type: 'POST',
 			url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		}, options);
@@ -1479,7 +1480,7 @@ WCF.Action.Proxy = Class.extend({
 		this.confirmationDialog = null;
 		this.loading = null;
 		this._showLoadingOverlayOnce = false;
-		this._suppressErrors = false;
+		this._suppressErrors = (this.options === true);
 		
 		// send request immediately after initialization
 		if (this.options.autoSend) {
@@ -1511,6 +1512,13 @@ WCF.Action.Proxy = Class.extend({
 	 */
 	showLoadingOverlayOnce: function() {
 		this._showLoadingOverlayOnce = true;
+	},
+	
+	/**
+	 * Suppressed errors for this action proxy.
+	 */
+	suppressErrors: function() {
+		this._suppressErrors = true;
 	},
 	
 	/**
@@ -5446,7 +5454,8 @@ WCF.System.KeepAlive = Class.extend({
 					actionName: 'keepAlive',
 					className: 'wcf\\data\\session\\SessionAction'
 				},
-				showLoadingOverlay: false
+				showLoadingOverlay: false,
+				suppressErrors: true
 			});
 		}, (seconds * 1000));
 	}
