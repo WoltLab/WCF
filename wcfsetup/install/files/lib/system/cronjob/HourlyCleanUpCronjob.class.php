@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
-use wcf\system\event\EventHandler;
 
 /**
  * Cronjob for a hourly system cleanup.
