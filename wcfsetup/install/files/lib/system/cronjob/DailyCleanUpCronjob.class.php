@@ -47,5 +47,13 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		$statement->execute(array(
 			(TIME_NOW - (86400 * 30))
 		));
+		
+		// clean up search data
+		$sql = "DELETE FROM	wcf".WCF_N."_search
+			WHERE		searchTime < ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			(TIME_NOW - 86400)
+		));
 	}
 }

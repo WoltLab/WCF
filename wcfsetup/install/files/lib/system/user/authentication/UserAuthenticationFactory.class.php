@@ -31,7 +31,7 @@ class UserAuthenticationFactory extends SingletonFactory {
 	/**
 	 * @see	wcf\system\SingletonFactory
 	 */
-	protected static function init() {
+	protected function init() {
 		// call loadInstance event
 		EventHandler::getInstance()->fireAction($this, 'init');
 		
@@ -47,7 +47,7 @@ class UserAuthenticationFactory extends SingletonFactory {
 	 * 
 	 * @return	wcf\system\user\authentication\IUserAuthentication
 	 */
-	public static function getUserAuthentication() {
+	public function getUserAuthentication() {
 		return $this->userAuthentication;
 	}
 }
