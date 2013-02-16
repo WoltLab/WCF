@@ -19,7 +19,5 @@ class HourlyCleanUpCronjob extends AbstractCronjob {
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
-		
-		EventHandler::getInstance()->fireAction($this, 'execute');
 	}
 }

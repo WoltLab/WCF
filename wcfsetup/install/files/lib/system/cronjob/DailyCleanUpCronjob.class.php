@@ -56,7 +56,5 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		$statement->execute(array(
 			(TIME_NOW - 86400)
 		));
-		
-		EventHandler::getInstance()->fireAction($this, 'execute');
 	}
 }
