@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
+use wcf\system\event\EventHandler;
 use wcf\system\WCF;
 
 /**
@@ -47,5 +48,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		$statement->execute(array(
 			(TIME_NOW - (86400 * 30))
 		));
+		
+		EventHandler::getInstance()->fireAction($this, 'execute');
 	}
 }

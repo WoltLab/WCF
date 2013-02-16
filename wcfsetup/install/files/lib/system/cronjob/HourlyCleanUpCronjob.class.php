@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
+use wcf\system\event\EventHandler;
 
 /**
  * Cronjob for a hourly system cleanup.
@@ -19,7 +20,6 @@ class HourlyCleanUpCronjob extends AbstractCronjob {
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
 		
-		return;
-		// TODO
+		EventHandler::getInstance()->fireAction($this, 'execute');
 	}
 }
