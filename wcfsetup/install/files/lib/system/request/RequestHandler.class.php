@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\request;
+use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\menu\page\PageMenu;
@@ -12,7 +13,7 @@ use wcf\util\StringUtil;
  * Handles http requests.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.request
@@ -50,10 +51,16 @@ class RequestHandler extends SingletonFactory {
 		// handle offline mode
 		if (!$isACPRequest && defined('OFFLINE') && OFFLINE) {
 			if (!WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode') && !$this->activeRequest->isAvailableDuringOfflineMode()) {
-				WCF::getTPL()->assign(array(
-					'templateName' => 'offline'
-				));
-				WCF::getTPL()->display('offline');
+				if (isset($_SERVER['X-Requested-With']) && ($_SERVER['X-Requested-With'] == 'XMLHttpRequest')) {
+					throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
+				}
+				else {
+					WCF::getTPL()->assign(array(
+						'templateName' => 'offline'
+					));
+					WCF::getTPL()->display('offline');
+				}
+				
 				exit;
 			}
 		}
