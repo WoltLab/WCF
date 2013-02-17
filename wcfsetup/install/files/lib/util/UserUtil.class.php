@@ -20,6 +20,11 @@ final class UserUtil {
 	 * @return	boolean
 	 */
 	public static function isValidUsername($name) {
+		// minimum length are 3 characters
+		if (StringUtil::length($name) < 3) {
+			return false;
+		}
+		
 		// check illegal characters
 		if (!preg_match('!^[^,\n]+$!', $name)) {
 			return false;
