@@ -20,8 +20,8 @@ final class UserUtil {
 	 * @return	boolean
 	 */
 	public static function isValidUsername($name) {
-		// minimum length are 3 characters
-		if (StringUtil::length($name) < 3) {
+		// minimum length is 3 characters, maximum length is 255 characters
+		if (StringUtil::length($name) < 3 || StringUtil::length($name) > 255) {
 			return false;
 		}
 		
