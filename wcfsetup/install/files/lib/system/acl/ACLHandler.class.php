@@ -11,6 +11,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Handles ACL permissions.
@@ -215,14 +216,14 @@ class ACLHandler extends SingletonFactory {
 	/**
 	 * Returns a list of permissions by object type id.
 	 * 
-	 * @param	integer						$objectTypeID
-	 * @param	array						$objectIDs
-	 * @param	wcf\data\acl\option\category\ACLOptionCategory	$category
-	 * @param	boolean						$settingsView
+	 * @param	integer		$objectTypeID
+	 * @param	array		$objectIDs
+	 * @param	string		$categoryName
+	 * @param	boolean		$settingsView
 	 * @return	array
 	 */
-	public function getPermissions($objectTypeID, array $objectIDs, ACLOptionCategory $category = null, $settingsView = false) {
-		$optionList = $this->getOptions($objectTypeID, $category);
+	public function getPermissions($objectTypeID, array $objectIDs, $categoryName = '', $settingsView = false) {
+		$optionList = $this->getOptions($objectTypeID, $categoryName);
 		
 		$data = array(
 			'options' => $optionList,
@@ -242,27 +243,29 @@ class ACLHandler extends SingletonFactory {
 			$data['options'] = array();
 			$data['categories'] = array();
 			
-			$categoryNames = array();
-			foreach ($optionList as $option) {
-				$data['options'][$option->optionID] = array(
-					'categoryName' => $option->categoryName,
-					'label' => WCF::getLanguage()->get('wcf.acl.option.'.$objectType->objectType.'.'.$option->optionName),
-					'optionName' => $option->optionName
-				);
-				
-				if (!in_array($option->categoryName, $categoryNames)) {
-					$categoryNames[] = $option->categoryName;
+			if (count($optionList)) {
+				$categoryNames = array();
+				foreach ($optionList as $option) {
+					$data['options'][$option->optionID] = array(
+						'categoryName' => $option->categoryName,
+						'label' => WCF::getLanguage()->get('wcf.acl.option.'.$objectType->objectType.'.'.$option->optionName),
+						'optionName' => $option->optionName
+					);
+					
+					if (!in_array($option->categoryName, $categoryNames)) {
+						$categoryNames[] = $option->categoryName;
+					}
 				}
-			}
-			
-			// load categories
-			$categoryList = new ACLOptionCategoryList();
-			$categoryList->getConditionBuilder()->add("acl_option_category.categoryName IN (?)", array($categoryNames));
-			$categoryList->getConditionBuilder()->add("acl_option_category.objectTypeID = ?", array($objectTypeID));
-			$categoryList->readObjects();
-			
-			foreach ($categoryList as $category) {
-				$data['categories'][$category->categoryName] = WCF::getLanguage()->get('wcf.acl.option.category.'.$objectType->objectType.'.'.$category->categoryName);
+				
+				// load categories
+				$categoryList = new ACLOptionCategoryList();
+				$categoryList->getConditionBuilder()->add("acl_option_category.categoryName IN (?)", array($categoryNames));
+				$categoryList->getConditionBuilder()->add("acl_option_category.objectTypeID = ?", array($objectTypeID));
+				$categoryList->readObjects();
+				
+				foreach ($categoryList as $category) {
+					$data['categories'][$category->categoryName] = WCF::getLanguage()->get('wcf.acl.option.category.'.$objectType->objectType.'.'.$category->categoryName);
+				}
 			}
 		}
 		
@@ -283,6 +286,11 @@ class ACLHandler extends SingletonFactory {
 		$optionsIDs = array();
 		foreach ($optionList as $option) {
 			$optionsIDs[] = $option->optionID;
+		}
+		
+		// category matched no options
+		if (empty($optionsIDs)) {
+			return;
 		}
 		
 		$columnID = $type.'ID';
@@ -354,14 +362,20 @@ class ACLHandler extends SingletonFactory {
 	/**
 	 * Returns a list of options by object type id.
 	 * 
-	 * @param	integer						$objectTypeID
-	 * @param	wcf\data\acl\option\category\ACLOptionCategory	$category
+	 * @param	integer		$objectTypeID
+	 * @param	string		$categoryName
 	 * @return	wcf\data\acl\option\ACLOptionList
 	 */
-	public function getOptions($objectTypeID, ACLOptionCategory $category = null) {
+	public function getOptions($objectTypeID, $categoryName = '') {
 		$optionList = new ACLOptionList();
-		if ($category !== null) {
-			$optionList->getConditionBuilder()->add("acl_option.categoryName = ?", array($category->categoryName));
+		if (!empty($categoryName)) {
+			if (StringUtil::endsWith($categoryName, '.*')) {
+				$categoryName = StringUtil::substring($categoryName, 0, -1) . '%';
+				$optionList->getConditionBuilder()->add("acl_option.categoryName LIKE ?", array($categoryName));
+			}
+			else {
+				$optionList->getConditionBuilder()->add("acl_option.categoryName = ?", array($category->categoryName));
+			}
 		}
 		$optionList->getConditionBuilder()->add("acl_option.objectTypeID = ?", array($objectTypeID));
 		$optionList->readObjects();

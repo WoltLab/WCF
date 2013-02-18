@@ -2,13 +2,12 @@
 namespace wcf\data\acl\option;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\acl\ACLHandler;
-use wcf\system\exception\UserInputException;
 
 /**
  * Executes acl option-related actions.
  * 
- * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acl.option
@@ -24,9 +23,9 @@ class ACLOptionAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters for ACL options.
 	 */
 	public function validateLoadAll() {
-		if (!isset($this->parameters['data']['objectTypeID'])) {
-			throw new UserInputException('objectTypeID');
-		}
+		$this->readInteger('objectID', true);
+		$this->readInteger('objectTypeID');
+		$this->readString('categoryName', true);
 	}
 	
 	/**
@@ -35,8 +34,8 @@ class ACLOptionAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function loadAll() {
-		$objectIDs = (isset($this->parameters['data']['objectID'])) ? array($this->parameters['data']['objectID']) : array();
-		$permissions = ACLHandler::getInstance()->getPermissions($this->parameters['data']['objectTypeID'], $objectIDs, null, true);
+		$objectIDs = (isset($this->parameters['objectID'])) ? array($this->parameters['objectID']) : array();
+		$permissions = ACLHandler::getInstance()->getPermissions($this->parameters['objectTypeID'], $objectIDs, $this->parameters['categoryName'], true);
 		
 		return $permissions;
 	}

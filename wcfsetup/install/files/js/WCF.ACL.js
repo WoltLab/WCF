@@ -155,11 +155,9 @@ WCF.ACL.List = Class.extend({
 			actionName: 'loadAll',
 			className: 'wcf\\data\\acl\\option\\ACLOptionAction',
 			parameters: {
-				data: {
-					categoryName: this._categoryName,
-					objectID: this._objectID,
-					objectTypeID: this._objectTypeID
-				}
+				categoryName: this._categoryName,
+				objectID: this._objectID,
+				objectTypeID: this._objectTypeID
 			}
 		});
 		this._proxy.sendRequest();
