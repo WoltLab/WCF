@@ -23,7 +23,7 @@ class ACLOptionAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters for ACL options.
 	 */
 	public function validateLoadAll() {
-		$this->readInteger('objectID', false);
+		$this->readInteger('objectID', true);
 		$this->readInteger('objectTypeID');
 		$this->readString('categoryName', true);
 	}

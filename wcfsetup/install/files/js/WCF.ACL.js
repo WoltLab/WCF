@@ -7,7 +7,7 @@ WCF.ACL = {};
  * ACL support for WCF
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.ACL.List = Class.extend({
@@ -78,7 +78,7 @@ WCF.ACL.List = Class.extend({
 	 * @param	boolean		includeUserGroups
 	 */
 	init: function(containerSelector, objectTypeID, categoryName, objectID, includeUserGroups, initialPermissions) {
-		this._objectID = objectID;
+		this._objectID = objectID || 0;
 		this._objectTypeID = objectTypeID;
 		this._categoryName = categoryName;
 		if (includeUserGroups === undefined) {
