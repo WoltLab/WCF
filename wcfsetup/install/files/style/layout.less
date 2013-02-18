@@ -683,6 +683,44 @@
 	}
 }
 
+.containerBoxList {
+	margin-bottom: -@wcfGapSmall;
+	
+	> li {
+		margin-bottom: @wcfGapSmall; 
+		
+		> div {
+			overflow: hidden;
+			white-space: nowrap;
+		}
+	}
+	
+	&.doubleColumned,
+	&.tripleColumned {
+		.clearfix();
+		
+		> li {
+			float: left;
+			
+			> div {
+				margin-right: @wcfGapLarge;
+			}
+		}
+	}
+	
+	&.doubleColumned {
+		> li {
+			width: 50%;
+		}
+	}
+	
+	&.tripleColumned {
+		> li {
+			width: 33%;
+		}
+	}
+}
+
 /* boxes with an image */
 .box(@imageSize, @gapOffset: 0) {
 	/* using a min-height prevents us from clearing (which causes a lot of issues) */
