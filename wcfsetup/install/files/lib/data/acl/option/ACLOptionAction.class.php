@@ -23,7 +23,7 @@ class ACLOptionAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters for ACL options.
 	 */
 	public function validateLoadAll() {
-		$this->readInteger('objectID', true);
+		$this->readInteger('objectID', false);
 		$this->readInteger('objectTypeID');
 		$this->readString('categoryName', true);
 	}
@@ -34,7 +34,7 @@ class ACLOptionAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function loadAll() {
-		$objectIDs = (isset($this->parameters['objectID'])) ? array($this->parameters['objectID']) : array();
+		$objectIDs = ($this->parameters['objectID']) ? array($this->parameters['objectID']) : array();
 		$permissions = ACLHandler::getInstance()->getPermissions($this->parameters['objectTypeID'], $objectIDs, $this->parameters['categoryName'], true);
 		
 		return $permissions;
