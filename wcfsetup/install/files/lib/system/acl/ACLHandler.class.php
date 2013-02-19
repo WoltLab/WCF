@@ -374,7 +374,7 @@ class ACLHandler extends SingletonFactory {
 				$optionList->getConditionBuilder()->add("acl_option.categoryName LIKE ?", array($categoryName));
 			}
 			else {
-				$optionList->getConditionBuilder()->add("acl_option.categoryName = ?", array($category->categoryName));
+				$optionList->getConditionBuilder()->add("acl_option.categoryName = ?", array($categoryName));
 			}
 		}
 		$optionList->getConditionBuilder()->add("acl_option.objectTypeID = ?", array($objectTypeID));
