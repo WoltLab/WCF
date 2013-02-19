@@ -1003,5 +1003,8 @@
 		<item name="wcf.user.username.error.notValid"><![CDATA[Sie haben einen ungültigen Benutzernamen eingegeben.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
 		<item name="wcf.user.group"><![CDATA[Benutzergruppe]]></item>
+		<item name="wcf.user.option.error.tooLong"><![CDATA[Der eingegebene Text ist zu lang.]]></item>
+		<item name="wcf.user.option.error.tooShort"><![CDATA[Der eingegebene Text ist zu kurz.]]></item>
+		<item name="wcf.user.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
 	</category>
 </language>
