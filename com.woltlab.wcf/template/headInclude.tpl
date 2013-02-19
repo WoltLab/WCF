@@ -111,3 +111,5 @@
 	});
 	//]]>
 </script>
+
+{include file='imageViewer'}
