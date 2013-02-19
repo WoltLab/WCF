@@ -174,6 +174,8 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 					$this->groupIDs = unserialize($data[$this->userID]);
 				}
 			}
+			
+			sort($this->groupIDs, SORT_NUMERIC);
 		}
 		
 		return $this->groupIDs;
