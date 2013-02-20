@@ -20,7 +20,7 @@ final class Regex {
 	const REGEX_DELIMITER = '/';
 	
 	/**
-	 * inidicates that no modifier is applied
+	 * indicates that no modifier is applied
 	 * @var	integer
 	 */
 	const MODIFIER_NONE = 0;
@@ -40,6 +40,7 @@ final class Regex {
 	/**
 	 * indicates eval() replacement of Regex::replace()
 	 * @var	integer
+	 * @deprecated	The feature will be removed in future versions of PHP
 	 */
 	const EVAL_REPLACEMENT = 4;
 	
@@ -131,8 +132,10 @@ final class Regex {
 		// add modifiers
 		if ($modifier & self::CASE_INSENSITIVE) $this->regex .= 'i';
 		if ($modifier & self::UNGREEDY) $this->regex .= 'U';
-		if ($modifier & self::EVAL_REPLACEMENT) $this->regex .= 'e';
-		if (~$modifier & self::NO_ANALYSE) $this->regex .= 'S';
+		if ($modifier & self::EVAL_REPLACEMENT) {
+			throw new SystemException("Using the 'e' modifier for Regex::replace() is discouraged. Please use a callback.");
+		}
+		if (!($modifier & self::NO_ANALYSE)) $this->regex .= 'S';
 		if ($modifier & self::IGNORE_WHITESPACE) $this->regex .= 'x';
 		if ($modifier & self::DOT_ALL) $this->regex .= 's';
 	}
@@ -182,8 +185,8 @@ final class Regex {
 		
 		if ($all) {
 			if ($flags & self::FLAGS_DEFAULT) $matchFlags |= PREG_PATTERN_ORDER;
-			if (($flags & self::ORDER_MATCH_BY_PATTERN) && (~$flags & self::ORDER_MATCH_BY_SET)) $matchFlags |= PREG_PATTERN_ORDER;
-			if (($flags & self::ORDER_MATCH_BY_SET) && (~$flags & self::ORDER_MATCH_BY_PATTERN)) $matchFlags |= PREG_SET_ORDER;
+			if (($flags & self::ORDER_MATCH_BY_PATTERN) && !($flags & self::ORDER_MATCH_BY_SET)) $matchFlags |= PREG_PATTERN_ORDER;
+			if (($flags & self::ORDER_MATCH_BY_SET) && !($flags & self::ORDER_MATCH_BY_PATTERN)) $matchFlags |= PREG_SET_ORDER;
 			
 			return $this->checkResult(preg_match_all($this->regex, $string, $this->matches, $matchFlags), 'match');
 		}
