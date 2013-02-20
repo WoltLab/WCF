@@ -194,9 +194,9 @@ final class HTTPRequest {
 		$regex = new Regex('^HTTP/1.(?:0|1) (\d{3})');
 		if (!$regex->match($statusLine)) throw new SystemException("Unexpected status '".$statusLine."'");
 		$matches = $regex->getMatches();
-		$statusCode = $matches[1];
+		$this->statusCode = $matches[1];
 		
-		switch ($statusCode) {
+		switch ($this->statusCode) {
 			case '301':
 			case '302':
 			case '303':
@@ -232,7 +232,7 @@ final class HTTPRequest {
 			break;
 			
 			default:
-				throw new SystemException("Got status '".$statusCode."' and I don't know how to handle it");
+				throw new SystemException("Got status '".$this->statusCode."' and I don't know how to handle it");
 			break;
 		}
 		
