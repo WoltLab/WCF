@@ -25,7 +25,8 @@ class LanguageCacheBuilder extends AbstractCacheBuilder {
 			'languages' => array(),
 			'default' => 0,
 			'categories' => array(),
-			'categoryIDs' => array()
+			'categoryIDs' => array(),
+			'multilingualismEnabled' => false
 		);
 		
 		// get languages
@@ -36,6 +37,11 @@ class LanguageCacheBuilder extends AbstractCacheBuilder {
 			// default language
 			if ($language->isDefault) {
 				$data['default'] = $language->languageID;
+			}
+			
+			// multilingualism
+			if ($language->hasContent) {
+				$data['multilingualismEnabled'] = true;
 			}
 			
 			// language code to language id
