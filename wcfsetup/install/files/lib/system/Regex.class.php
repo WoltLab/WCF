@@ -20,7 +20,7 @@ final class Regex {
 	const REGEX_DELIMITER = '/';
 	
 	/**
-	 * inidicates that no modifier is applied
+	 * indicates that no modifier is applied
 	 * @var	integer
 	 */
 	const MODIFIER_NONE = 0;
@@ -40,6 +40,7 @@ final class Regex {
 	/**
 	 * indicates eval() replacement of Regex::replace()
 	 * @var	integer
+	 * @deprecated	The feature will be removed in future versions of PHP
 	 */
 	const EVAL_REPLACEMENT = 4;
 	
@@ -60,6 +61,48 @@ final class Regex {
 	 * @var	integer
 	 */
 	const DOT_ALL = 32;
+	
+	/**
+	 * indicates that no flags are set
+	 * @var	integer
+	 */
+	const FLAGS_NONE = 0;
+	
+	/**
+	 * indicates that default flags are set
+	 * @var	integer
+	 */
+	const FLAGS_DEFAULT = 1;
+	
+	/**
+	 * captures the offset of an match (all excluding replace)
+	 * @var	integer
+	 */
+	const CAPTURE_OFFSET = 2;
+	
+	/**
+	 * indicates default pattern ordering (match all only)
+	 * @var	integer
+	 */
+	const ORDER_MATCH_BY_PATTERN = 4;
+	
+	/**
+	 * indicates alternative set ordering (match all only)
+	 * @var	integer
+	 */
+	const ORDER_MATCH_BY_SET = 8;
+	
+	/**
+	 * indicates that only non-empty pieces will be splitted (split only)
+	 * @var	integer
+	 */
+	const SPLIT_NON_EMPTY_ONLY = 16;
+	
+	/**
+	 * indicates that the split delimiter is returned as well (split only)
+	 * @var	integer
+	 */
+	const CAPTURE_SPLIT_DELIMITER = 32;
 	
 	/**
 	 * compiled regex
@@ -89,8 +132,10 @@ final class Regex {
 		// add modifiers
 		if ($modifier & self::CASE_INSENSITIVE) $this->regex .= 'i';
 		if ($modifier & self::UNGREEDY) $this->regex .= 'U';
-		if ($modifier & self::EVAL_REPLACEMENT) $this->regex .= 'e';
-		if (~$modifier & self::NO_ANALYSE) $this->regex .= 'S';
+		if ($modifier & self::EVAL_REPLACEMENT) {
+			throw new SystemException("Using the 'e' modifier for Regex::replace() is discouraged. Please use a callback.");
+		}
+		if (!($modifier & self::NO_ANALYSE)) $this->regex .= 'S';
 		if ($modifier & self::IGNORE_WHITESPACE) $this->regex .= 'x';
 		if ($modifier & self::DOT_ALL) $this->regex .= 's';
 	}
@@ -131,14 +176,22 @@ final class Regex {
 	 * 
 	 * @param	string		$string		string to match
 	 * @param	boolean		$all		indicates if all matches are collected
+	 * @param	integer		$flags		match flags
 	 * @return	integer				return value of preg_match(_all)
 	 */
-	public function match($string, $all = false) {
+	public function match($string, $all = false, $flags = self::FLAGS_DEFAULT) {
+		$matchFlags = 0;
+		if ($flags & self::CAPTURE_OFFSET) $matchFlags |= PREG_OFFSET_CAPTURE;
+		
 		if ($all) {
-			return $this->checkResult(preg_match_all($this->regex, $string, $this->matches), 'match');
+			if ($flags & self::FLAGS_DEFAULT) $matchFlags |= PREG_PATTERN_ORDER;
+			if (($flags & self::ORDER_MATCH_BY_PATTERN) && !($flags & self::ORDER_MATCH_BY_SET)) $matchFlags |= PREG_PATTERN_ORDER;
+			if (($flags & self::ORDER_MATCH_BY_SET) && !($flags & self::ORDER_MATCH_BY_PATTERN)) $matchFlags |= PREG_SET_ORDER;
+			
+			return $this->checkResult(preg_match_all($this->regex, $string, $this->matches, $matchFlags), 'match');
 		}
 		
-		return $this->checkResult(preg_match($this->regex, $string, $this->matches), 'match');
+		return $this->checkResult(preg_match($this->regex, $string, $this->matches, $matchFlags), 'match');
 	}
 	
 	/**
@@ -160,10 +213,16 @@ final class Regex {
 	 * Splits the string with the regex.
 	 * 
 	 * @param	string		$string
+	 * @param	integer		$flags
 	 * @return	array<string>
 	 */
-	public function split($string) {
-		return $this->checkResult(preg_split($this->regex, $string), 'split');
+	public function split($string, $flags = self::FLAGS_DEFAULT) {
+		$splitFlags = 0;
+		if ($flags & self::CAPTURE_OFFSET) $splitFlags |= PREG_SPLIT_OFFSET_CAPTURE;
+		if ($flags & self::SPLIT_NON_EMPTY_ONLY) $splitFlags |= PREG_SPLIT_NO_EMPTY;
+		if ($flags & self::CAPTURE_SPLIT_DELIMITER) $splitFlags |= PREG_SPLIT_DELIM_CAPTURE;
+		
+		return $this->checkResult(preg_split($this->regex, $string, null, $splitFlags), 'split');
 	}
 	// @codingStandardsIgnoreEnd
 	
