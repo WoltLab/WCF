@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use wcf\system\exception\SystemException;
 
 /**
  * Contains Array-related functions.
@@ -205,37 +206,37 @@ final class ArrayUtil {
 		// get function name
 		$function = null;
 		if ($method === 'value') {
-			$function = (is_null($callback))
+			$function = ($callback === null)
 				? 'array_diff'
 				: 'array_udiff';
 		}
 		else if ($method === 'key') {
-			$function = (is_null($callback))
+			$function = ($callback === null)
 				? 'array_diff_key'
 				: 'array_diff_ukey';
 		}
 		else if ($method === 'assoc') {
-			$function = (is_null($callback))
+			$function = ($callback === null)
 				? 'array_diff_assoc'
 				: 'array_diff_uassoc';
 		}
 		
 		// get parameters
 		$params1 = array($array1, $array2);
-		$params2 = array($array2, $array1);
-		if (!is_null($callback)) {
+		$params2 = array($array1, $array2);
+		if ($callback !== null) {
 			$params1[] = $callback;
 			$params2[] = $callback;
 		}
 		
 		// check function name
-		if (is_null($function)) {
-			throw new \wcf\system\exception\SystemException('Unknown comparison method '.$method);
+		if ($function === null) {
+			throw new SystemException('Unknown comparison method '.$method);
 		}
 		
 		// check callback
-		if (!is_null($callback) && !is_callable($callback)) {
-			throw new \wcf\system\exception\SystemException('Invalid callback specified');
+		if (($callback !== null) && !is_callable($callback)) {
+			throw new SystemException('Invalid callback specified');
 		}
 		
 		// compare the arrays
