@@ -1,7 +1,7 @@
 <?php
 namespace wcf\util;
-use wcf\system\Callback;
 use wcf\system\exception\SystemException;
+use wcf\system\Callback;
 
 /**
  * Contains Array-related functions.
@@ -203,7 +203,7 @@ final class ArrayUtil {
 	 * @param	callable	$callback
 	 * @return	boolean
 	 */
-	protected static function compareHelper($method, array $array1, array $array2, Callback $callback) {
+	protected static function compareHelper($method, array $array1, array $array2, Callback $callback = null) {
 		// get function name
 		$function = null;
 		if ($method === 'value') {
