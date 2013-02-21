@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use wcf\system\Callback;
 use wcf\system\exception\SystemException;
 
 /**
@@ -165,7 +166,7 @@ final class ArrayUtil {
 	 * @param	callable	$callback
 	 * @return	boolean
 	 */
-	public static function compare(array $array1, array $array2, $callback = null) {
+	public static function compare(array $array1, array $array2, Callback $callback = null) {
 		return static::compareHelper('value', $array1, $array2, $callback);
 	}
 
@@ -177,7 +178,7 @@ final class ArrayUtil {
 	 * @param	callable	$callback
 	 * @return	boolean
 	 */
-	public static function compareKey(array $array1, array $array2, $callback = null) {
+	public static function compareKey(array $array1, array $array2, Callback $callback = null) {
 		return static::compareHelper('key', $array1, $array2, $callback);
 	}
 
@@ -189,7 +190,7 @@ final class ArrayUtil {
 	 * @param	callable	$callback
 	 * @return	boolean
 	 */
-	public static function compareAssoc(array $array1, array $array2, $callback = null) {
+	public static function compareAssoc(array $array1, array $array2, Callback $callback = null) {
 		return static::compareHelper('assoc', $array1, $array2, $callback);
 	}
 
@@ -202,7 +203,7 @@ final class ArrayUtil {
 	 * @param	callable	$callback
 	 * @return	boolean
 	 */
-	protected static function compareHelper($method, array $array1, array $array2, $callback) {
+	protected static function compareHelper($method, array $array1, array $array2, Callback $callback) {
 		// get function name
 		$function = null;
 		if ($method === 'value') {
@@ -215,22 +216,17 @@ final class ArrayUtil {
 			$function = ($callback === null) ? 'array_diff_assoc' : 'array_diff_uassoc';
 		}
 		
+		// check function name
+		if ($function === null) {
+			throw new SystemException('Unknown comparison method '.$method);
+		}
+		
 		// get parameters
 		$params1 = array($array1, $array2);
 		$params2 = array($array2, $array1);
 		if ($callback !== null) {
 			$params1[] = $callback;
 			$params2[] = $callback;
-		}
-		
-		// check function name
-		if ($function === null) {
-			throw new SystemException('Unknown comparison method '.$method);
-		}
-		
-		// check callback
-		if (($callback !== null) && !is_callable($callback)) {
-			throw new SystemException('Invalid callback specified');
 		}
 		
 		// compare the arrays
