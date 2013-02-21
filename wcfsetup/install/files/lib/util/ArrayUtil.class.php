@@ -206,19 +206,13 @@ final class ArrayUtil {
 		// get function name
 		$function = null;
 		if ($method === 'value') {
-			$function = ($callback === null)
-				? 'array_diff'
-				: 'array_udiff';
+			$function = ($callback === null) ? 'array_diff' : 'array_udiff';
 		}
 		else if ($method === 'key') {
-			$function = ($callback === null)
-				? 'array_diff_key'
-				: 'array_diff_ukey';
+			$function = ($callback === null) ? 'array_diff_key' : 'array_diff_ukey';
 		}
 		else if ($method === 'assoc') {
-			$function = ($callback === null)
-				? 'array_diff_assoc'
-				: 'array_diff_uassoc';
+			$function = ($callback === null) ? 'array_diff_assoc' : 'array_diff_uassoc';
 		}
 		
 		// get parameters
