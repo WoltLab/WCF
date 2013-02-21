@@ -155,6 +155,92 @@ final class ArrayUtil {
 			return $array;
 		}
 	}
+
+	/**
+	 * Returns true when array1 has the same values as array2.
+	 * 
+	 * @param	array		$array1
+	 * @param	array		$array2
+	 * @param	callable	$callback
+	 * @return	boolean
+	 */
+	public static function compare(array $array1, array $array2, $callback = null) {
+		return static::compareHelper('value', $array1, $array2, $callback);
+	}
+
+	/**
+	 * Returns true when array1 has the same keys as array2.
+	 * 
+	 * @param	array		$array1
+	 * @param	array		$array2
+	 * @param	callable	$callback
+	 * @return	boolean
+	 */
+	public static function compareKey(array $array1, array $array2, $callback = null) {
+		return static::compareHelper('key', $array1, $array2, $callback);
+	}
+
+	/**
+	 * Compares array1 with array2 and returns true when they are identical.
+	 * 
+	 * @param	array		$array1
+	 * @param	array		$array2
+	 * @param	callable	$callback
+	 * @return	boolean
+	 */
+	public static function compareAssoc(array $array1, array $array2, $callback = null) {
+		return static::compareHelper('assoc', $array1, $array2, $callback);
+	}
+
+	/**
+	 * Does the actual comparison of the above compare methods.
+	 * 
+	 * @param	string		$method
+	 * @param	array		$array1
+	 * @param	array		$array2
+	 * @param	callable	$callback
+	 * @return	boolean
+	 */
+	protected static function compareHelper($method, array $array1, array $array2, $callback) {
+		// get function name
+		$function = null;
+		if ($method === 'value') {
+			$function = (is_null($callback))
+				? 'array_diff'
+				: 'array_udiff';
+		}
+		else if ($method === 'key') {
+			$function = (is_null($callback))
+				? 'array_diff_key'
+				: 'array_diff_ukey';
+		}
+		else if ($method === 'assoc') {
+			$function = (is_null($callback))
+				? 'array_diff_assoc'
+				: 'array_diff_uassoc';
+		}
+		
+		// get parameters
+		$params1 = array($array1, $array2);
+		$params2 = array($array2, $array1);
+		if (!is_null($callback)) {
+			$params1[] = $callback;
+			$params2[] = $callback;
+		}
+		
+		// check function name
+		if (is_null($function)) {
+			throw new \wcf\system\exception\SystemException('Unknown comparison method '.$method);
+		}
+		
+		// check callback
+		if (!is_null($callback) && !is_callable($callback)) {
+			throw new \wcf\system\exception\SystemException('Invalid callback specified');
+		}
+		
+		// compare the arrays
+		return ((count(call_user_func_array($function, $params1)) === 0) && (count(call_user_func_array($function, $params2)) === 0));
+	}
 	
 	private function __construct() { }
 }
