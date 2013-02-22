@@ -262,22 +262,6 @@
 						</dd>
 					</dl>
 				{/hascontent}
-				<dl{if $errorField == 'iconPath'} class="formError"{/if}>
-					<dt><label for="iconPath">{lang}wcf.acp.style.iconPath{/lang}</label></dt>
-					<dd>
-						<input type="text" name="iconPath" id="iconPath" value="{$iconPath}" class="long" />
-						{if $errorField == 'iconPath'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.style.error.iconPath.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-						<small>{lang}wcf.acp.style.iconPath.description{/lang}</small>
-					</dd>
-				</dl>
 				<dl{if $errorField == 'imagePath'} class="formError"{/if}>
 					<dt><label for="imagePath">{lang}wcf.acp.style.imagePath{/lang}</label></dt>
 					<dd>

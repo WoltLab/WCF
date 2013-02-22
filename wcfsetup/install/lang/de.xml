@@ -589,7 +589,6 @@
 		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Möchten Sie den Stil „{$style->styleName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Als Paket exportieren]]></item>
-		<item name="wcf.acp.style.exportIcons"><![CDATA[Icons exportieren ({$style->iconPath})]]></item>
 		<item name="wcf.acp.style.exportImages"><![CDATA[Grafiken exportieren ({$style->imagePath})]]></item>
 		<item name="wcf.acp.style.exportTemplates"><![CDATA[Templates exportieren]]></item>
 		<item name="wcf.acp.style.exportStyle"><![CDATA[Stil exportieren]]></item>
@@ -608,8 +607,6 @@
 		<item name="wcf.acp.style.globals.fontSize"><![CDATA[Schriftgröße]]></item>
 		<item name="wcf.acp.style.globals.layout"><![CDATA[Layout]]></item>
 		<item name="wcf.acp.style.globals.useFluidLayout"><![CDATA[Flexible Breite verwenden]]></item>
-		<item name="wcf.acp.style.iconPath"><![CDATA[Icon-Pfad]]></item>
-		<item name="wcf.acp.style.iconPath.description"><![CDATA[Wenn Ihr Stil eigene Icons benötigt, sollten diese in einem Unterordner des Ordners „icons“ ablegen. Geben Sie hier den Pfad zu diesem Ordner an.]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
 		<item name="wcf.acp.style.image.description"><![CDATA[Laden Sie hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102px × 64px anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Bilder-Pfad]]></item>

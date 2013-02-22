@@ -24,11 +24,6 @@
 			
 			<dl>
 				<dd>
-					<label><input type="checkbox" name="exportIcons" value="1"{if $exportIcons} checked="checked"{/if}{if !$canExportIcons} disabled="disabled"{/if} /> <span>{lang}wcf.acp.style.exportIcons{/lang}</span></label>
-				</dd>
-			</dl>
-			<dl>
-				<dd>
 					<label><input type="checkbox" name="exportImages" value="1"{if $exportImages} checked="checked"{/if}{if !$canExportImages} disabled="disabled"{/if} /> <span>{lang}wcf.acp.style.exportImages{/lang}</span></label>
 				</dd>
 			</dl>
