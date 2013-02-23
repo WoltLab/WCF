@@ -125,7 +125,7 @@
 			<div id="logo" class="logo">
 				<a href="{link controller='Index'}{/link}">
 					<h1>{lang}wcf.acp{/lang}</h1>
-					<img src="{@$__wcf->getPath()}acp/images/wcfLogo1.svg" width="321" height="58" alt="" />
+					<img src="{@$__wcf->getPath()}acp/images/wcfLogo2.svg" width="321" height="58" alt="" />
 				</a>
 			</div>
 			
