@@ -1467,6 +1467,7 @@ WCF.Action.Proxy = Class.extend({
 		this.options = $.extend(true, {
 			autoSend: false,
 			data: { },
+			dataType: 'json',
 			after: null,
 			init: null,
 			failure: null,
@@ -1499,7 +1500,7 @@ WCF.Action.Proxy = Class.extend({
 		
 		$.ajax({
 			data: this.options.data,
-			dataType: 'json',
+			dataType: this.options.dataType,
 			type: this.options.type,
 			url: this.options.url,
 			success: $.proxy(this._success, this),
