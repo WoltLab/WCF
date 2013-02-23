@@ -93,6 +93,12 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	public $packageID = 0;
 	
 	/**
+	 * language item with the page title
+	 * @var	string
+	 */
+	public $pageTitle = '';
+	
+	/**
 	 * id of the parent category id
 	 * @var	integer
 	 */
@@ -162,6 +168,10 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 			'showOrder' => $this->showOrder,
 			'title' => $this->title
 		));
+		
+		if ($this->pageTitle) {
+			WCF::getTPL()->assign('pageTitle', $this->pageTitle);
+		}
 	}
 	
 	/**
