@@ -3331,6 +3331,7 @@ WCF.Template.Compiled = Class.extend({
  * @param	string		element
  * @param	array		showItems
  * @param	array		hideItems
+ * @param	function	callback
  */
 WCF.ToggleOptions = Class.extend({
 	/**
@@ -3353,6 +3354,13 @@ WCF.ToggleOptions = Class.extend({
 	 * @var	array
 	 */
 	_hideItems: [],
+		
+	/**
+	 * callback after options were toggled
+	 * 
+	 * @var	function
+	 */
+	 _callback: null,
 	
 	/**
 	 * Initializes option toggle.
@@ -3360,11 +3368,15 @@ WCF.ToggleOptions = Class.extend({
 	 * @param	string		element
 	 * @param	array		showItems
 	 * @param	array		hideItems
+	 * @param	function	callback
 	 */
-	init: function(element, showItems, hideItems) {
+	init: function(element, showItems, hideItems, callback) {
 		this._element = $('#' + element);
 		this._showItems = showItems;
 		this._hideItems = hideItems;
+		if (callback !== undefined) {
+			this._callback = callback;
+		}
 		
 		// bind event
 		this._element.click($.proxy(this._toggle, this));
@@ -3389,6 +3401,10 @@ WCF.ToggleOptions = Class.extend({
 			var $item = this._hideItems[$i];
 			
 			$('#' + $item).hide();
+		}
+		
+		if (this._callback !== null) {
+			$.proxy(this._callback, this);
 		}
 	}
 });
