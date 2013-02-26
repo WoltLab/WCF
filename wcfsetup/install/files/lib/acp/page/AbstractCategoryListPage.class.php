@@ -52,6 +52,12 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	public $editController = '';
 	
 	/**
+	 * language item with the page title
+	 * @var	string
+	 */
+	public $pageTitle = '';
+	
+	/**
 	 * category object type object
 	 * @var	wcf\data\object\type\ObjectType
 	 */
@@ -100,6 +106,10 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 			'editController' => $this->editController,
 			'objectType' => $this->objectType
 		));
+		
+		if ($this->pageTitle) {
+			WCF::getTPL()->assign('pageTitle', $this->pageTitle);
+		}
 	}
 	
 	/**

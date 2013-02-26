@@ -71,7 +71,8 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 		$statement->execute();
 		
 		$sql = "UPDATE		wcf".WCF_N."_page_menu_item
-			SET		isLandingPage = ?
+			SET		isLandingPage = ?,
+					isDisabled = ?
 			WHERE		menuPosition = ?
 					AND parentMenuItem = ?
 					AND menuItemController <> ?
@@ -79,6 +80,7 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute(array(
 			1,
+			0,
 			'header',
 			'',
 			''

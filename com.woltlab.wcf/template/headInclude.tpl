@@ -2,6 +2,7 @@
 <meta charset="utf-8" />
 <meta name="description" content="{META_DESCRIPTION}" />
 <meta name="keywords" content="{META_KEYWORDS}" />
+{event name='metaTags'}
 
 <script type="text/javascript">
 	//<![CDATA[

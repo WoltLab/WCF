@@ -647,7 +647,7 @@ class WCF {
 	 * @return	string
 	 */
 	public function getAnchor($fragment) {
-		return $this->getRequestURI() . '#' . $fragment;
+		return self::getRequestURI() . '#' . $fragment;
 	}
 	
 	/**
@@ -655,7 +655,7 @@ class WCF {
 	 *
 	 * @return	string
 	 */
-	public function getRequestURI() {
+	public static function getRequestURI() {
 		// resolve path and query components
 		$scriptName = $_SERVER['SCRIPT_NAME'];
 		if (empty($_SERVER['PATH_INFO'])) {
