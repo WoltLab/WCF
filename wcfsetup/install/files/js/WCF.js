@@ -3404,7 +3404,7 @@ WCF.ToggleOptions = Class.extend({
 		}
 		
 		if (this._callback !== null) {
-			$.proxy(this._callback, this)();
+			this._callback();
 		}
 	}
 });
