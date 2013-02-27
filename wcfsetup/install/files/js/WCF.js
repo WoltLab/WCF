@@ -1544,12 +1544,12 @@ WCF.Action.Proxy = Class.extend({
 	 */
 	_failure: function(jqXHR, textStatus, errorThrown) {
 		try {
-			var data = $.parseJSON(jqXHR.responseText);
+			var $data = $.parseJSON(jqXHR.responseText);
 			
 			// call child method if applicable
 			var $showError = true;
 			if ($.isFunction(this.options.failure)) {
-				$showError = this.options.failure(jqXHR, textStatus, errorThrown, jqXHR.responseText);
+				$showError = this.options.failure($data, jqXHR, textStatus, errorThrown);
 			}
 			
 			if (!this._suppressErrors && $showError !== false) {
@@ -1561,7 +1561,7 @@ WCF.Action.Proxy = Class.extend({
 			// call child method if applicable
 			var $showError = true;
 			if ($.isFunction(this.options.failure)) {
-				$showError = this.options.failure(jqXHR, textStatus, errorThrown, jqXHR.responseText);
+				$showError = this.options.failure(null, jqXHR, textStatus, errorThrown);
 			}
 			
 			if (!this._suppressErrors && $showError !== false) {
