@@ -159,7 +159,8 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			$exception = new ValidateActionException($e->getField(), $e->getType(), $e->getVariables());
 			throw new AJAXException($exception->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), array(
 				'errorMessage' => $exception->getMessage(),
-				'fieldName' => $exception->getFieldName()
+				'errorType' => $e->getType(),
+				'fieldName' => $exception->getFieldName(),
 			));
 		}
 		else if ($e instanceof ValidateActionException) {
