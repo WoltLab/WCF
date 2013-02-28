@@ -969,6 +969,9 @@
 	
 	<category name="wcf.style">
 		<item name="wcf.style.changeStyle"><![CDATA[Stil ändern]]></item>
+		<item name="wcf.style.colorPicker"><![CDATA[Farbwähler]]></item>
+		<item name="wcf.style.colorPicker.new"><![CDATA[neu]]></item>
+		<item name="wcf.style.colorPicker.current"><![CDATA[aktuell]]></item>
 	</category>
 	
 	<category name="wcf.user">

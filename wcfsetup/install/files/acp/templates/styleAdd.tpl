@@ -25,7 +25,10 @@
 		useFluidLayout();
 		
 		WCF.Language.addObject({
-			'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}'
+			'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}',
+			'wcf.style.colorPicker': '{lang}wcf.style.colorPicker{/lang}',
+			'wcf.style.colorPicker.new': '{lang}wcf.style.colorPicker.new{/lang}',
+			'wcf.style.colorPicker.current': '{lang}wcf.style.colorPicker.current{/lang}'
 		});
 		new WCF.ACP.Style.ImageUpload(0, '{$tmpHash}');
 		
