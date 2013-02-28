@@ -271,13 +271,8 @@ WCF.ACP.Package.Installation = Class.extend({
 	
 	/**
 	 * Handles erroneous AJAX requests.
-	 * 
-	 * @param	jQuery		jqXHR
-	 * @param	string		textStatus
-	 * @param	string		errorThrown
-	 * @param	string		responseText
 	 */
-	_failure: function(jqXHR, textStatus, errorThrown, responseText) {
+	_failure: function() {
 		if (!this._allowRollback) {
 			return;
 		}
