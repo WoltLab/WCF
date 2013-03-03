@@ -166,8 +166,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		// execute action
 		if (!method_exists($this, $this->getActionName())) {
 			throw new SystemException("call to undefined function '".$this->getActionName()."'");
-		}	
-			
+		}
+		
 		$this->returnValues = call_user_func(array($this, $this->getActionName()));
 		
 		// reset cache
@@ -281,7 +281,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		// read objects
 		if (empty($this->objects)) {
 			$this->readObjects();
-
+			
 			if (empty($this->objects)) {
 				throw new UserInputException('objectIDs');
 			}
@@ -290,7 +290,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	
 	/**
 	 * Creates new database object.
-	 *
+	 * 
 	 * @return	wcf\data\DatabaseObject
 	 */
 	public function create() {
