@@ -118,7 +118,7 @@
 			<dl{if $errorField == 'showOrder'} class="formError"{/if}>
 				<dt><label for="showOrder">{@$objectType->getProcessor()->getLanguageVariable('showOrder')}</label></dt>
 				<dd>
-					<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="short" />
+					<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" min="0" class="short" />
 					{if $errorField == 'showOrder'}
 						<small class="innerError">
 							{assign var=__languageVariable value='showOrder.error.'|concat:$errorType}

@@ -524,11 +524,11 @@ final class StringUtil {
 	/**
 	 * Truncates the given string to a certain number of characters.
 	 * 
-	 * @param	string		$string
-	 * @param	integer		$length
+	 * @param	string		$string		string which shall be truncated
+	 * @param	integer		$length		string length after truncating
 	 * @param	string		$etc		string to append when $string is truncated
 	 * @param	boolean		$breakWords	should words be broken in the middle
-	 * @return	string
+	 * @return	string				truncated string
 	 */
 	public static function truncate($string, $length = 80, $etc = self::HELLIP, $breakWords = false) {
 		if ($length == 0) {
@@ -554,11 +554,11 @@ final class StringUtil {
 	 *
 	 * @param 	string		$string			string which shall be truncated
 	 * @param 	integer		$length 		string length after truncating
-	 * @param	boolean		$wordWrap		if true	words will not be split and the return string might be shorter than $length
 	 * @param 	string		$etc			ending string which will be appended after truncating
+	 * @param	boolean		$breakWords		if false words will not be split and the return string might be shorter than $length
 	 * @return 	string					truncated string
 	 */
-	public static function truncateHTML($string, $length = 500, $wordWrap = true, $etc = self::HELLIP) {
+	public static function truncateHTML($string, $length = 500, $etc = self::HELLIP, $breakWords = false) {
 		if (self::length(self::stripHTML($string)) <= $length) {
 			return $string;
 		}
@@ -595,7 +595,7 @@ final class StringUtil {
 			$decodedContent = self::decodeHTML($tag[3]);
 			$contentLength = self::length($decodedContent);
 			if ($contentLength + $totalLength > $length) {
-				if ($wordWrap) {
+				if (!$breakWords) {
 					if (preg_match('/^(.{1,'.($length - $totalLength).'}) /s', $decodedContent, $match)) {
 						$truncatedString .= self::encodeHTML($match[1]);
 					}

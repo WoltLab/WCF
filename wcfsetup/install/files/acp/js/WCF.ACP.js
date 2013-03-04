@@ -1209,7 +1209,7 @@ WCF.ACP.Worker = Class.extend({
 			this._proxy.setOption('data', {
 				className: data.className,
 				loopCount: data.loopCount,
-				parameter: data.parameters
+				parameters: data.parameters
 			});
 			this._proxy.sendRequest();
 		}
