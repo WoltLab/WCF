@@ -2,7 +2,9 @@
 <meta charset="utf-8" />
 <meta name="description" content="{META_DESCRIPTION}" />
 <meta name="keywords" content="{META_KEYWORDS}" />
-{event name='metaTags'}
+{foreach from=$__wcf->getMetaTagHandler() item=__metaTag}
+	{@$__metaTag}
+{/foreach}
 
 <script type="text/javascript">
 	//<![CDATA[
