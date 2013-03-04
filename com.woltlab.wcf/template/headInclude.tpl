@@ -1,10 +1,6 @@
 <base href="{$baseHref}" />
 <meta charset="utf-8" />
-<meta name="description" content="{META_DESCRIPTION}" />
-<meta name="keywords" content="{META_KEYWORDS}" />
-{foreach from=$__wcf->getMetaTagHandler() item=__metaTag}
-	{@$__metaTag}
-{/foreach}
+{implode from=$__wcf->getMetaTagHandler() item=__metaTag glue="\n"}{@$__metaTag}{/implode}
 
 <script type="text/javascript">
 	//<![CDATA[

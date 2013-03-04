@@ -46,7 +46,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 		// set default tags
 		$this->addTag('description', 'description', WCF::getLanguage()->get(META_DESCRIPTION));
 		$this->addTag('keywords', 'keywords', WCF::getLanguage()->get(META_KEYWORDS));
-		$this->addTag('og:site_name', 'og:site_name', WCF::getLanguage()->get(PAGE_TITLE));
+		$this->addTag('og:site_name', 'og:site_name', WCF::getLanguage()->get(PAGE_TITLE), true);
 	}
 	
 	/**
@@ -72,6 +72,8 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 		if ($name == 'og:description') {
 			$this->objects['description']['value'] = $value;
 		}
+		
+		$this->indexToObject[] = $identifier;
 	}
 	
 	/**
@@ -82,6 +84,8 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	public function removeTag($identifier) {
 		if (isset($this->objects[$identifier])) {
 			unset($this->objects[$identifier]);
+			
+			$this->indexToObject = array_keys($this->objects);
 		}
 	}
 	
@@ -98,7 +102,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	public function current() {
 		$tag = $this->objects[$this->indexToObject[$this->index]];
 		
-		return '<meta ' . ($tag['isProperty'] ? 'property' : 'name') . '="' . $tag['name'] . '" content="' + $tag['value'] + '" />';
+		return '<meta ' . ($tag['isProperty'] ? 'property' : 'name') . '="' . $tag['name'] . '" content="' . $tag['value'] . '" />';
 	}
 	
 	/**
