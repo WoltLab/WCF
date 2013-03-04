@@ -29,8 +29,12 @@
 
 <noscript>
 	<style type="text/css">
-		.javascriptOnly {
+		.jsOnly {
 			display: none !important;
+		}
+		
+		.noJsOnly {
+			display: block !important;
 		}
 	</style>
 </noscript>
