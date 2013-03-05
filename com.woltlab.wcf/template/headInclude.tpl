@@ -1,8 +1,6 @@
 <base href="{$baseHref}" />
 <meta charset="utf-8" />
-<meta name="description" content="{META_DESCRIPTION}" />
-<meta name="keywords" content="{META_KEYWORDS}" />
-{event name='metaTags'}
+{implode from=$__wcf->getMetaTagHandler() item=__metaTag glue="\n"}{@$__metaTag}{/implode}
 
 <script type="text/javascript">
 	//<![CDATA[
