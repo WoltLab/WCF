@@ -19,5 +19,8 @@
 		<coreobject>
 			<objectname><![CDATA[wcf\system\user\authentication\UserAuthenticationFactory]]></objectname>
 		</coreobject>
+		<coreobject>
+			<objectname><![CDATA[wcf\system\MetaTagHandler]]></objectname>
+		</coreobject>
 	</import>
 </data>
