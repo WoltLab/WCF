@@ -146,10 +146,10 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		}
 	
 		if ($e instanceof IllegalLinkException) {
-			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
+			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
 		}
 		else if ($e instanceof PermissionDeniedException) {
-			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
+			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
 		}
 		else if ($e instanceof SystemException) {
 			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString());

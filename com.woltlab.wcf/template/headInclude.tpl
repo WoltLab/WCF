@@ -79,7 +79,7 @@
 			'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
 			'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
 			'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
-			'wcf.sitemap.title': '{lang}wcf.sitemap.title{/lang}',
+			'wcf.page.sitemap': '{lang}wcf.page.sitemap{/lang}',
 			'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}'
 			{event name='javascriptLanguageImport'}
 		});

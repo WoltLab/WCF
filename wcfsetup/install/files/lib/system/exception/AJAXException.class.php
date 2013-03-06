@@ -74,7 +74,7 @@ class AJAXException extends LoggedException {
 		switch ($errorType) {
 			case self::MISSING_PARAMETERS:
 				$statusHeader = 'HTTP/1.0 400 Bad Request';
-				$responseData['message'] = WCF::getLanguage()->get('wcf.global.ajax.error.badRequest');
+				$responseData['message'] = WCF::getLanguage()->get('wcf.ajax.error.badRequest');
 				
 				$this->logError();
 			break;
@@ -98,7 +98,7 @@ class AJAXException extends LoggedException {
 				
 				$responseData['code'] = self::INTERNAL_ERROR;
 				if (!WCF::debugModeIsEnabled()) {
-					$responseData['message'] = WCF::getLanguage()->get('wcf.global.ajax.error.internalError');
+					$responseData['message'] = WCF::getLanguage()->get('wcf.ajax.error.internalError');
 				}
 				
 				$this->logError();

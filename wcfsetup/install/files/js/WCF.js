@@ -7136,7 +7136,7 @@ WCF.Sitemap = Class.extend({
 			
 			// show dialog
 			this._dialog.wcfDialog({
-				title: WCF.Language.get('wcf.sitemap.title')
+				title: WCF.Language.get('wcf.page.sitemap')
 			});
 			
 			this._didInit = true;

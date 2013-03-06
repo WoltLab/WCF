@@ -77,7 +77,7 @@ class WCFACP extends WCF {
 						WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
 					}
 					catch (PermissionDeniedException $e) {
-						throw new AJAXException(self::getLanguage()->get('wcf.global.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
+						throw new AJAXException(self::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
 					}
 				}
 				else {

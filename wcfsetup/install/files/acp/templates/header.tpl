@@ -3,7 +3,7 @@
 <head>
 	<base href="{$baseHref}" />
 	<meta charset="utf-8" />
-	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
+	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
 	<script type="text/javascript">
 		//<![CDATA[
 		var SID_ARG_1ST = '{@SID_ARG_1ST}';
@@ -124,7 +124,7 @@
 			
 			<div id="logo" class="logo">
 				<a href="{link controller='Index'}{/link}">
-					<h1>{lang}wcf.acp{/lang}</h1>
+					<h1>{lang}wcf.global.acp{/lang}</h1>
 					<img src="{@$__wcf->getPath()}acp/images/wcfLogo1.svg" width="321" height="58" alt="" />
 				</a>
 			</div>
