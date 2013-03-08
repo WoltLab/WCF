@@ -7574,6 +7574,19 @@ $.widget('ui.wcfDialog', {
 	},
 	
 	/**
+	 * @see	$.widget._createWidget()
+	 */
+	_createWidget: function(options, element) {
+		// ignore script tags
+		if ($(element).getTagName() === 'script') {
+			console.debug("[ui.wcfDialog] Ignored script tag");
+			return null;
+		}
+		
+		$.Widget.prototype._createWidget.apply(this, arguments);
+	},
+	
+	/**
 	 * Initializes a new dialog.
 	 */
 	_init: function() {
