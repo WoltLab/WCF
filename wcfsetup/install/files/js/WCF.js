@@ -1611,6 +1611,16 @@ WCF.Action.Proxy = Class.extend({
 		
 		// disable DOMNodeInserted event
 		WCF.DOMNodeInsertedHandler.disable();
+		
+		// fix anchor tags generated through WCF::getAnchor()
+		$('a[href*=#]').each(function(index, link) {
+			var $link = $(link);
+			if ($link.prop('href').indexOf('AJAXProxy')) {
+				var $anchor = $link.prop('href').substr($link.prop('href').indexOf('#'));
+				var $pageLink = document.location.toString().replace(/#.*/, '');
+				$link.prop('href', $pageLink + $anchor);
+			}
+		});
 	},
 	
 	/**
