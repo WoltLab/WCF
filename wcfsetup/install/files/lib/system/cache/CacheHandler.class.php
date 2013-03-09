@@ -107,7 +107,7 @@ class CacheHandler extends SingletonFactory {
 			$cacheName .= '-' . $this->getCacheIndex($parameters);
 		}
 		
-		return $application . '_' . StringUtil::firstCharToLowerCase($cacheName);
+		return $application . '_' . StringUtil::firstCharToUpperCase($cacheName);
 	}
 	
 	/**
