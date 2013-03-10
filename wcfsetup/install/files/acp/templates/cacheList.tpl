@@ -14,10 +14,6 @@
 	</hgroup>
 </header>
 
-{if $cleared}
-	<p class="success">{lang}wcf.acp.cache.clear.success{/lang}</p>
-{/if}
-
 <div class="container containerPadding marginTop">
 	<fieldset>
 		<legend>{lang}wcf.acp.cache.data{/lang}</legend>
@@ -68,7 +64,7 @@
 		{if $files|count}
 			<div class="tabularBox tabularBoxTitle marginTop">
 				<hgroup>
-					<h1><a class="jsCollapsible jsTooltip" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 icon-chevron-right"></span></a> {lang}wcf.acp.cache.type.{$cacheType}{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.cache.data.files.count{/lang}">{#$files|count}</span></h1>
+					<h1><a class="jsCollapsible jsTooltip" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 icon-chevron-right"></span></a> {lang}wcf.acp.cache.type.{$cacheType}{/lang} <span class="badge badgeInverse">{#$files|count}</span></h1>
 					<h2>{$cache}</h2>
 				</hgroup>
 				

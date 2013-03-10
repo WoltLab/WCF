@@ -26,7 +26,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.{@$action}.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>	
 {/if}
 
 {hascontent}

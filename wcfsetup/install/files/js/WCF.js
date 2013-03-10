@@ -6248,7 +6248,7 @@ WCF.Sortable.List = Class.extend({
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		if (this._notification === null) {
-			this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.form.edit.success'));
+			this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success.edit'));
 		}
 		
 		this._notification.show();

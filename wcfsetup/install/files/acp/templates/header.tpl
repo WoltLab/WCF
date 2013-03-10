@@ -66,14 +66,16 @@
 				'wcf.date.relative.pastDays': '{capture assign=relativePastDays}{lang}wcf.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
 				'wcf.date.dateFormat': '{lang}wcf.date.dateFormat{/lang}',
 				'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
-				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 				'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
+				'wcf.global.success': '{lang}wcf.global.success{/lang}',
+				'wcf.global.success.add': '{lang}wcf.global.success.add{/lang}',
+				'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
+				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 				'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
 				'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
 				'wcf.global.confirmation.cancel': '{lang}wcf.global.confirmation.cancel{/lang}',
 				'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
 				'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
-				'wcf.global.form.edit.success': '{lang}wcf.global.form.edit.success{/lang}'
 				{event name='javascriptLanguageImport'}
 			});
 			new WCF.Date.Time();

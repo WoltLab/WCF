@@ -70,7 +70,6 @@
 			'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
 			'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
 			'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
-			'wcf.global.form.edit.success': '{lang}wcf.global.form.edit.success{/lang}',
 			'wcf.global.language.noSelection': '{lang}wcf.global.language.noSelection{/lang}',
 			'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 			'wcf.global.page.jumpTo': '{lang}wcf.global.page.jumpTo{/lang}',
@@ -78,6 +77,9 @@
 			'wcf.global.page.pageNavigation': '{lang}wcf.global.page.pageNavigation{/lang}',
 			'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
 			'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
+			'wcf.global.success': '{lang}wcf.global.success{/lang}',
+			'wcf.global.success.add': '{lang}wcf.global.success.add{/lang}',
+			'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
 			'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 			'wcf.page.sitemap': '{lang}wcf.page.sitemap{/lang}',
 			'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}'

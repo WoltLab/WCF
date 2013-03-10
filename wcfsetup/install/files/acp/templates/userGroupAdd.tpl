@@ -23,7 +23,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.{@$action}.success{/lang}</p>
+	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>
 {/if}
 
 <div class="contentNavigation">
@@ -42,7 +42,7 @@
 			<legend>{lang}wcf.global.form.data{/lang}</legend>
 			
 			<dl{if $errorType.groupName|isset} class="formError"{/if}>
-				<dt><label for="groupName">{lang}wcf.acp.group.groupName{/lang}</label></dt>
+				<dt><label for="groupName">{lang}wcf.global.name{/lang}</label></dt>
 				<dd>
 					<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="medium" />
 					{if $errorType.groupName|isset}
@@ -54,7 +54,6 @@
 							{/if}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.group.groupName.description{/lang}</small>
 					
 					{include file='multipleLanguageInputJavascript' elementIdentifier='groupName' forceSelection=false}
 				</dd>

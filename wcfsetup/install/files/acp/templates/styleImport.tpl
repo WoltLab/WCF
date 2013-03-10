@@ -7,7 +7,7 @@
 </header>
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.add.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.success.add{/lang}</p>	
 {/if}
 
 {hascontent}

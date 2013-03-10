@@ -68,7 +68,7 @@
 			{if $package->packageURL != ''}
 				<dl>
 					<dt>{lang}wcf.acp.package.url{/lang}</dt>
-					<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->packageURL|rawurlencode}" class="wcf-externalURL">{$package->packageURL}</a></dd>
+					<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->packageURL|rawurlencode}" class="externalURL">{$package->packageURL}</a></dd>
 				</dl>
 			{/if}
 			{if $package->parentPackageID}
@@ -79,7 +79,7 @@
 			{/if}
 			<dl>
 				<dt>{lang}wcf.acp.package.author{/lang}</dt>
-				<dd>{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="wcf-externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
+				<dd>{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
 			</dl>
 			
 			{event name='propertyFields'}
@@ -147,7 +147,7 @@
 										</td>
 										<td class="columnID"><p>{@$requiredPackage->packageID}</p></td>
 										<td class="columnTitle" title="{$requiredPackage->packageDescription|language}"><p><a href="{link controller='Package' id=$requiredPackage->packageID}{/link}">{$requiredPackage}</a></p></td>
-										<td class="columnText">{if $requiredPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage->authorURL|rawurlencode}" class="wcf-externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}</p>{/if}</td>
+										<td class="columnText">{if $requiredPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage->authorURL|rawurlencode}" class="externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}</p>{/if}</td>
 										<td class="columnText"><p>{$requiredPackage->packageVersion}</p></td>
 										<td class="columnDate"><p>{@$requiredPackage->packageDate|date}</p></td>
 										
@@ -196,7 +196,7 @@
 										</td>
 										<td class="columnID"><p>{@$dependentPackage->packageID}</p></td>
 										<td class="columnTitle" title="{$dependentPackage->packageDescription|language}"><p><a href="{link controller='Package' id=$dependentPackage->packageID}{/link}">{$dependentPackage}</a></p></td>
-										<td class="columnText">{if $dependentPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$dependentPackage->authorURL|rawurlencode}" class="wcf-externalURL">{$dependentPackage->author}</a>{else}{$dependentPackage->author}</p>{/if}</td>
+										<td class="columnText">{if $dependentPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$dependentPackage->authorURL|rawurlencode}" class="externalURL">{$dependentPackage->author}</a>{else}{$dependentPackage->author}</p>{/if}</td>
 										<td class="columnText"><p>{$dependentPackage->packageVersion}</p></td>
 										<td class="columnDate"><p>{@$dependentPackage->packageDate|date}</p></td>
 										

@@ -6,8 +6,7 @@
 		$(function() {
 			WCF.Language.addObject({
 				'wcf.acp.application.primaryApplication': '{lang}wcf.acp.application.primaryApplication{/lang}',
-				'wcf.acp.application.setAsPrimary.confirmMessage': '{lang}wcf.acp.application.setAsPrimary.confirmMessage{/lang}',
-				'wcf.acp.application.setAsPrimary.success': '{lang}wcf.acp.application.setAsPrimary.success{/lang}'
+				'wcf.acp.application.setAsPrimary.confirmMessage': '{lang}wcf.acp.application.setAsPrimary.confirmMessage{/lang}'
 			});
 			
 			new WCF.ACP.Application.SetAsPrimary({@$application->packageID});
@@ -27,7 +26,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.edit.success{/lang}</p>
+	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
 
 <div class="contentNavigation">
@@ -36,7 +35,7 @@
 			{if $application->packageID != 1 && !$application->isPrimary}
 				<li><a id="setAsPrimary" class="button"><span class="icon icon16 icon-check"></span> <span>{lang}wcf.acp.application.setAsPrimary{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='ApplicationManagement'}{/link}" title="{lang}wcf.acp.application.management{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.application.management{/lang}</span></a></li>
+			<li><a href="{link controller='ApplicationManagement'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.application.management{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>

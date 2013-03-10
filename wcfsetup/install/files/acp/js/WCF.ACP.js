@@ -62,7 +62,7 @@ WCF.ACP.Application.SetAsPrimary = Class.extend({
 				objectIDs: [ this._packageID ]
 			},
 			success: $.proxy(function(data, textStatus, jqXHR) {
-				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.acp.application.setAsPrimary.success'));
+				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'));
 				$notification.show();
 				
 				// remove button

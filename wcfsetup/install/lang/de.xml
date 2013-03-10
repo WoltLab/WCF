@@ -4,7 +4,7 @@
 		<item name="wcf.acl.option.deny"><![CDATA[Verweigern]]></item>
 		<item name="wcf.acl.option.fullAccess"><![CDATA[Vollzugriff]]></item>
 		<item name="wcf.acl.option.grant"><![CDATA[Erlauben]]></item>
-		<item name="wcf.acl.permissions"><![CDATA[Benutzer-/Benutzergruppenrechte]]></item>
+		<item name="wcf.acl.permissions"><![CDATA[Benutzer- und Benutzergruppenrechte]]></item>
 	</category>
 	
 	<category name="wcf.acp.application">
@@ -24,20 +24,16 @@
 		<item name="wcf.acp.application.edit"><![CDATA[Anwendung bearbeiten]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: „<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installierte Anwendungen]]></item>
-		<item name="wcf.acp.application.management"><![CDATA[Anwendungen verwalten]]></item>
 		<item name="wcf.acp.application.primaryApplication"><![CDATA[Primäre Anwendung]]></item>
 		<item name="wcf.acp.application.setAsPrimary"><![CDATA[Als primäre Anwendung festlegen]]></item>
 		<item name="wcf.acp.application.setAsPrimary.confirmMessage"><![CDATA[Möchten Sie „{$application->getPackage()->getName()}“ wirklich als primäre Anwendung festlegen?]]></item>
-		<item name="wcf.acp.application.setAsPrimary.success"><![CDATA[„{$application->getPackage()->getName()}“ ist nun die primäre Anwendung]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>
-		<item name="wcf.acp.cache.clear.success"><![CDATA[Der Cache wurde erfolgreich geleert.]]></item>
 		<item name="wcf.acp.cache.clear.sure"><![CDATA[Wollen Sie den Cache wirklich komplett leeren?]]></item>
 		<item name="wcf.acp.cache.data"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.cache.data.files"><![CDATA[Dateien]]></item>
-		<item name="wcf.acp.cache.data.files.count"><![CDATA[{#$files|count} Dateien]]></item>
 		<item name="wcf.acp.cache.data.size"><![CDATA[Größe]]></item>
 		<item name="wcf.acp.cache.data.source"><![CDATA[Quelle]]></item>
 		<item name="wcf.acp.cache.data.version"><![CDATA[Version]]></item>
@@ -48,7 +44,7 @@
 		<item name="wcf.acp.cache.list.size"><![CDATA[Größe]]></item>
 		<item name="wcf.acp.cache.source.type.ApcCacheSource"><![CDATA[Alternative PHP Cache]]></item>
 		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Dateisystem]]></item>
-		<item name="wcf.acp.cache.source.type.MemcacheCacheSource"><![CDATA[Memcache]]></item>
+		<item name="wcf.acp.cache.source.type.MemcacheCacheSource"><![CDATA[Memcached]]></item>
 		<item name="wcf.acp.cache.source.type.NoCacheSource"><![CDATA[keine (Caching deaktiviert)]]></item>
 		<item name="wcf.acp.cache.type.data"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.cache.type.language"><![CDATA[Sprachen]]></item>
@@ -59,7 +55,6 @@
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Cronjob hinzufügen]]></item>
-		<item name="wcf.acp.cronjob.list.count"><![CDATA[{#$items} Cronjob{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.cronjob.subtitle"><![CDATA[„Zeitgesteuerte Aufgaben“]]></item>
 		<item name="wcf.acp.cronjob.startDom"><![CDATA[Tag des Monats]]></item>
 		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Tage des Monats (1 - 31), an welchen der Cronjob ausgeführt werden soll.]]></item>
@@ -79,7 +74,7 @@
 		<item name="wcf.acp.cronjob.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Nächste Ausführung]]></item>
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Cronjob bearbeiten]]></item>
-		<item name="wcf.acp.cronjob.className"><![CDATA[Klassenname]]></item>
+		<item name="wcf.acp.cronjob.className"><![CDATA[PHP-Klassenname]]></item>
 		<item name="wcf.acp.cronjob.timing"><![CDATA[Zeitsteuerung]]></item>
 		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von Cronjobs (zeitgesteuerten Aufgaben) erfordert eine genaue Kenntnis der Crontab-Syntax auf unixähnlichen Systemen. Weiterführende Informationen dazu erhalten Sie auf dieser Website: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
@@ -89,7 +84,6 @@
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Protokoll leeren]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Sind Sie sicher, dass Sie alle Protokoll-Einträge löschen möchten?]]></item>
-		<item name="wcf.acp.cronjob.log.count"><![CDATA[{#$items} {if $items == 1}Eintrag{else}Einträge{/if}]]></item>
 		<item name="wcf.acp.cronjob.log.execTime"><![CDATA[Ausgeführt]]></item>
 		<item name="wcf.acp.cronjob.log.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.cronjob.log.success"><![CDATA[Erfolgreich]]></item>
@@ -109,12 +103,8 @@
 		<item name="wcf.acp.group.group4"><![CDATA[Administratoren]]></item>
 		<item name="wcf.acp.group.group5"><![CDATA[Moderatoren]]></item>
 		<item name="wcf.acp.group.group6"><![CDATA[Super-Moderatoren]]></item>
-		<item name="wcf.acp.group.groupName"><![CDATA[Name der Benutzergruppe]]></item>
-		<item name="wcf.acp.group.groupName.description"><![CDATA[Geben Sie einen Namen für die Gruppe an.]]></item>
 		<item name="wcf.acp.group.list"><![CDATA[Benutzergruppen]]></item>
-		<item name="wcf.acp.group.list.count"><![CDATA[{#$items} Benutzergruppe{if $items != 1}n{/if}]]></item>
 		<item name="wcf.acp.group.members"><![CDATA[Mitglieder]]></item>
-		
 		<item name="wcf.acp.group.option.admin.display.canManagePageMenu"><![CDATA[Kann Seitenmenü verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Kann Administrationsoberfläche betreten]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Mitglieder dieser Benutzergruppe können die Administrationsoberfläche betreten und dort abhängig von den weiteren Zugriffsrechten verschiedene Aktionen durchführen. Diese Option muss aktiviert sein, wenn diesen Benutzern andere administrative Funktionen erlaubt werden sollen.]]></item>
@@ -138,7 +128,7 @@
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Mitglieder dieser Benutzergruppe haben auf diese Gruppen Zugriff. Zusätzlich muss angegeben werden, ob z.B. die Benutzergruppe bearbeitet werden darf.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddGroup"><![CDATA[Kann neue Benutzergruppen erstellen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddUser"><![CDATA[Kann neue Benutzer erstellen]]></item>
-		<item name="wcf.acp.group.option.admin.user.canAddUser.description"><![CDATA[Ist bei "Zugängliche Benutzergruppen" eine Option aktiviert, kann diese Gruppe beim Erstellen des Benutzers zugewiesen werden.]]></item>
+		<item name="wcf.acp.group.option.admin.user.canAddUser.description"><![CDATA[Ist bei „Zugängliche Benutzergruppen“ eine Option aktiviert, kann diese Gruppe beim Erstellen des Benutzers zugewiesen werden.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDeleteGroup"><![CDATA[Kann Benutzergruppen löschen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDeleteUser"><![CDATA[Kann Benutzer löschen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditGroup"><![CDATA[Kann Benutzergruppen bearbeiten]]></item>
@@ -147,7 +137,6 @@
 		<item name="wcf.acp.group.option.admin.user.canEditUser"><![CDATA[Kann Benutzer bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Kann E-Mails an Benutzer senden]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Kann Benutzer suchen]]></item>
-		
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.display"><![CDATA[Darstellung]]></item>
 		<item name="wcf.acp.group.option.category.admin.display.pageMenu"><![CDATA[Seitenmenü]]></item>
@@ -161,10 +150,8 @@
 		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderative Rechte]]></item>
 		<item name="wcf.acp.group.option.category.user"><![CDATA[Allgemeine Rechte]]></item>
-		
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
-		
 		<item name="wcf.acp.group.showMembers"><![CDATA[Zeige die Mitglieder dieser Benutzergruppe]]></item>
 	</category>
 	
@@ -177,7 +164,7 @@
 		<item name="wcf.acp.language.add.new"><![CDATA[Neue Sprache]]></item>
 		<item name="wcf.acp.language.add.source"><![CDATA[Zu übersetzende Sprache]]></item>
 		<item name="wcf.acp.language.code"><![CDATA[Sprachcode]]></item>
-		<item name="wcf.acp.language.code.description"><![CDATA[Geben Sie hier den passenden Sprachcode nach <strong>ISO 639-1</strong> an. Weitere Informationen zu Sprachcodes finden Sie unter <a href="http://de.wikipedia.org/wiki/ISO_639-1" class="wcf-externalURL">http://de.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
+		<item name="wcf.acp.language.code.description"><![CDATA[Geben Sie hier den passenden Sprachcode nach <strong>ISO 639-1</strong> an. Weitere Informationen zu Sprachcodes finden Sie unter <a href="http://de.wikipedia.org/wiki/ISO_639-1" class="externalURL">http://de.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
 		<item name="wcf.acp.language.customVariables"><![CDATA[Veränderte Variablen]]></item>
 		<item name="wcf.acp.language.delete.sure"><![CDATA[Wollen Sie die Sprache „{$language->languageName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.language.edit"><![CDATA[Sprache bearbeiten]]></item>
@@ -191,14 +178,11 @@
 		<item name="wcf.acp.language.import.source.file.description"><![CDATA[Geben Sie hier den relativen Pfad zu einer gültigen XML-Sprachdatei an.]]></item>
 		<item name="wcf.acp.language.import.source.upload"><![CDATA[Sprachdatei vom lokalen Computer hochladen]]></item>
 		<item name="wcf.acp.language.list"><![CDATA[Sprachen]]></item>
-		<item name="wcf.acp.language.list.count"><![CDATA[{#$items} Sprache{if $items != 1}n{/if}]]></item>
 		<item name="wcf.acp.language.multilingualism"><![CDATA[Mehrsprachigkeit verwalten]]></item>
 		<item name="wcf.acp.language.multilingualism.enable"><![CDATA[Mehrsprachige Inhalte aktivieren]]></item>
 		<item name="wcf.acp.language.multilingualism.enable.description"><![CDATA[Haben Sie mehrere Sprachen installiert, können sich Ihre Mitglieder die Programmoberfläche in diesen Sprachen anzeigen lassen. Erstellte Inhalte werden durch die aktivierte Mehrsprachigkeit außerdem einer Sprache zugeordnet. Die Benutzer können in ihrem Profil auswählen, dass ausschließlich Inhalte von bestimmten Sprachen angezeigt werden. Bei der Erstellung von Inhalten ist standardmäßig die aktive Oberflächensprache vorausgewählt.]]></item>
 		<item name="wcf.acp.language.multilingualism.languages"><![CDATA[Inhalte in folgenden Sprachen zulassen]]></item>
 		<item name="wcf.acp.language.multilingualism.languages.error.empty"><![CDATA[Um die Mehrsprachigkeit zu nutzen, müssen Sie mindestens zwei Sprachen auswählen.]]></item>
-		<item name="wcf.acp.language.multilingualism.success"><![CDATA[Ihre Einstellungen wurden erfolgreich gespeichert.]]></item>
-		<item name="wcf.acp.language.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.language.setAsDefault"><![CDATA[Zur Standardsprache machen]]></item>
 		<item name="wcf.acp.language.variables"><![CDATA[Variablen]]></item>
 		<item name="wcf.acp.language.users"><![CDATA[Verwendet von]]></item>
@@ -247,7 +231,6 @@
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[Server auflisten]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[Pakete auflisten]]></item>
-		<item name="wcf.acp.menu.link.package.autoupdate"><![CDATA[Automatisches Update]]></item>
 		<item name="wcf.acp.menu.link.pageMenu"><![CDATA[Seitenmenü]]></item>
 		<item name="wcf.acp.menu.link.pageMenu.add"><![CDATA[Menüpunkt hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.pageMenu.list"><![CDATA[Menüpunkte auflisten]]></item>
@@ -514,7 +497,6 @@
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Server bearbeiten]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Fehlermeldungen]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Update-Server]]></item>
-		<item name="wcf.acp.updateServer.list.count"><![CDATA[{#$items} Update-Server]]></item>
 		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[Beim letzten Verbindungsversuch trat folgender Fehler auf:]]></item>
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Kennwort für Authentifizierung (optional)]]></item>
@@ -529,12 +511,10 @@
 	
 	<category name="wcf.acp.sessionLog">
 		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Aktionen der protokollierten Sitzung von „{$sessionLog->username}“]]></item>
-		<item name="wcf.acp.sessionLog.access.list.count"><![CDATA[{#$items} protokollierte Aktion{if $items != 1}en{/if}]]></item>
 		<item name="wcf.acp.sessionLog.actions"><![CDATA[Aktionen]]></item>
 		<item name="wcf.acp.sessionLog.className"><![CDATA[Klasse]]></item>
 		<item name="wcf.acp.sessionLog.lastActivityTime"><![CDATA[Letzte Aktion]]></item>
 		<item name="wcf.acp.sessionLog.list"><![CDATA[Protokollierte Sitzungen]]></item>
-		<item name="wcf.acp.sessionLog.list.count"><![CDATA[{#$items} protokollierte Sitzung{if $items != 1}en{/if}]]></item>
 		<item name="wcf.acp.sessionLog.packageName"><![CDATA[Paket]]></item>
 		<item name="wcf.acp.sessionLog.requestMethod"><![CDATA[Methode]]></item>
 		<item name="wcf.acp.sessionLog.requestURI"><![CDATA[URI]]></item>
@@ -689,14 +669,14 @@
 		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 		<item name="wcf.category.button.list"><![CDATA[Kategorien auflisten]]></item>
 		<item name="wcf.category.delete.sure"><![CDATA[Sind Sie sicher, dass Sie diese Kategorie löschen möchten? Alle sich in dieser Kategorie befindlichen Unterkategorien werden in die Elternkategorie dieser Kategorie verschoben.]]></item>
-		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.category.edit"><![CDATA[Kategorie bearbeiten]]></item>
-		<item name="wcf.category.isDisabled"><![CDATA[deaktiviert]]></item>
+		<item name="wcf.category.isDisabled"><![CDATA[Kategorie deaktivieren]]></item>
 		<item name="wcf.category.list"><![CDATA[Kategorien]]></item>
 		<item name="wcf.category.noneAvailable"><![CDATA[Es wurde noch keine Kategorie hinzugefügt.]]></item>
 		<item name="wcf.category.parentCategoryID"><![CDATA[Übergeordnete Kategorie]]></item>
 		<item name="wcf.category.parentCategoryID.error.invalid"><![CDATA[Die ausgewählte Kategorie existiert nicht.]]></item>
 		<item name="wcf.category.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.category.title"><![CDATA[Titel]]></item>
 	</category>
 	
@@ -906,8 +886,9 @@
 		<item name="wcf.global.error.permissionDenied"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt. Sie besitzen nicht die notwendigen Zugriffsrechte, um diese Seite aufrufen zu können.]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Der Zutritt zu dieser Seite ist Ihnen leider verwehrt.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Fehlermeldung]]></item>
-		<item name="wcf.global.form.add.success"><![CDATA[Der Eintrag wurde erfolgreich gespeichert.]]></item>
-		<item name="wcf.global.form.edit.success"><![CDATA[Ihre Änderungen wurden erfolgreich gespeichert.]]></item>
+		<item name="wcf.global.success"><![CDATA[Die Aktion wurde erfolgreich ausgeführt.]]></item>
+		<item name="wcf.global.success.add"><![CDATA[Der Eintrag wurde gespeichert.]]></item>
+		<item name="wcf.global.success.edit"><![CDATA[Ihre Änderungen wurden gespeichert.]]></item>
 		<item name="wcf.global.form.data"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.global.form.error"><![CDATA[Ihre Angaben sind ungültig. Bitte überprüfen Sie die markierten Eingabefelder.]]></item>
 		<item name="wcf.global.form.error.empty"><![CDATA[Bitte füllen Sie dieses Eingabefeld aus.]]></item>

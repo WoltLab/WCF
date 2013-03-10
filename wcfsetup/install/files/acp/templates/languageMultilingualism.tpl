@@ -21,7 +21,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.acp.language.multilingualism.success{/lang}</p>
+	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
 
 {hascontent}
