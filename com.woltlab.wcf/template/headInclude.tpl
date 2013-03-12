@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
 	//<![CDATA[
-	var SID_ARG_2ND	= '{@SID_ARG_2ND_NOT_ENCODED}';
+	var SID_ARG_2ND = '{@SID_ARG_2ND_NOT_ENCODED}';
 	var RELATIVE_WCF_DIR = '{@$__wcf->getPath()}';
 	var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 	var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
