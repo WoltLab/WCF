@@ -653,7 +653,7 @@
 		<item name="wcf.ajax.error.invalidParameter"><![CDATA[Parameter “{$fieldName}” is missing or invalid.]]></item>
 		<item name="wcf.ajax.error.badRequest"><![CDATA[The server was unable to proceed your request due to an incomplete request.]]></item>
 		<item name="wcf.ajax.error.internalError"><![CDATA[The server encountered an unresolvable problem, please try again later.]]></item>
-		<item name="wcf.ajax.error.permissionDenied"><![CDATA[You are not authorized to execute this action.]]></item>
+		<item name="wcf.ajax.error.permissionDenied"><![CDATA[You’re not authorized to execute this action.]]></item>
 		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Your session expired, please login again.]]></item>
 	</category>
 	
@@ -875,14 +875,14 @@
 		<item name="wcf.global.confirmation.title"><![CDATA[Confirmation Required]]></item>
 		<item name="wcf.global.decimalPoint"><![CDATA[.]]></item>
 		<item name="wcf.global.description"><![CDATA[Description]]></item>
-		<item name="wcf.global.error.permissionDenied"><![CDATA[Access denied. You are not authorized to view this page.]]></item>
+		<item name="wcf.global.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access denied.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Error Message]]></item>
 		<item name="wcf.global.success"><![CDATA[The action has been successfully completed.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[The entry has been saved.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Your changes have been saved.]]></item>
 		<item name="wcf.global.form.data"><![CDATA[General Information]]></item>
-		<item name="wcf.global.form.error"><![CDATA[Your form input was invalid, please validate the marked input fields.]]></item>
+		<item name="wcf.global.form.error"><![CDATA[Please correct the erroneous fields marked below.]]></item>
 		<item name="wcf.global.form.error.empty"><![CDATA[Please fill in this field.]]></item>
 		<item name="wcf.global.form.error.multilingual"><![CDATA[Please fill in this field for all languages.]]></item>
 		<item name="wcf.global.language.noSelection"><![CDATA[No Selection]]></item>
