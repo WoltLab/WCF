@@ -3,9 +3,21 @@
 	padding: 0 @wcfLayoutFluidGap;
 }
 
+@media only screen and (max-device-width: 480px) {
+	.layoutFluid {
+		padding: 0;
+	}
+}
+
 .layoutFixed {
 	margin: 0 auto;
 	width: @wcfLayoutFixedWidth;
+}
+
+@media only screen and (max-device-width: 480px) {
+	.layoutFixed {
+		width: auto;
+	}
 }
 
 /* ### header ### */
@@ -119,6 +131,29 @@
 	}
 }
 
+@media only screen and (max-device-width: 480px) {
+	/* hide user panel labels */
+	.userPanel > div {
+		> ul.userPanelItems > li {
+			> a > span:not(.icon) {
+				display: none;
+			}
+			
+			&#pageLanguageContainer > div > div > hgroup {
+				display: none;
+			}
+		}
+		
+		> .searchBar {
+			> form {
+				input[type="search"] {
+					width: auto;
+				}
+			}
+		}
+	}
+}
+
 /* header logo */
 .logo {
 	margin-bottom: @wcfGapLarge;
@@ -138,6 +173,12 @@
 			
 			.textShadow(@wcfPageBackgroundColor);
 		}
+	}
+}
+
+@media only screen and (max-device-width: 480px) {
+	.logo {
+		display: none;
 	}
 }
 
@@ -305,6 +346,15 @@
 	}
 }
 
+@media only screen and (max-device-width: 480px) {
+	.navigation {
+		> ul.navigationIcons,
+		> ul.navigationItems {
+			display: none;
+		}
+	}
+}
+
 .navigationHeader {
 	background-color: @wcfNavigationHeaderBackgroundColor;
 	border-bottom: 1px solid @wcfContainerBorderColor;
@@ -332,6 +382,12 @@
 				text-decoration: none;
 			}
 		}
+	}
+}
+
+@media only screen and (max-device-width: 480px) {
+	.footerContent {
+		margin: 0 @wcfGapMedium;
 	}
 }
 
@@ -430,6 +486,24 @@
 		
 		.sidebar {
 			float: right;
+		}
+	}
+}
+
+@media only screen and (max-device-width: 480px) {
+	/* hide sidebar */
+	#main {
+		.sidebar {
+			display: none;
+		}
+		
+		.content {
+			border-left: 0 !important;
+			border-right: 0 !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			padding-left: @wcfGapSmall !important;
+			padding-right: @wcfGapSmall !important;
 		}
 	}
 }
@@ -589,6 +663,26 @@
 		
 		> div {
 			margin-left: 115px;
+		}
+	}
+}
+
+@media only screen and (max-device-width: 480px) {
+	.containerList {
+		> li {
+			padding: @wcfGapSmall;
+		}
+		
+		&.infoBoxList {
+			> li.box32 {
+				> span.icon {
+					display: none;
+				}
+				
+				> div {
+					margin-left: 0;
+				}
+			}
 		}
 	}
 }
