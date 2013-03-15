@@ -20,7 +20,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.success.add{/lang}</p>	
+	<p class="success">{lang}wcf.global.success.add{/lang}</p>
 {/if}
 
 {hascontent}

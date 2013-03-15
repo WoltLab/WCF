@@ -11,7 +11,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.acp.languageServer.{$action}.success{/lang}</p>	
+	<p class="success">{lang}wcf.acp.languageServer.{$action}.success{/lang}</p>
 {/if}
 
 {hascontent}
