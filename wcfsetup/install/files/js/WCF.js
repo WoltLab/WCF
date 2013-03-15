@@ -1615,7 +1615,7 @@ WCF.Action.Proxy = Class.extend({
 		// fix anchor tags generated through WCF::getAnchor()
 		$('a[href*=#]').each(function(index, link) {
 			var $link = $(link);
-			if ($link.prop('href').indexOf('AJAXProxy')) {
+			if ($link.prop('href').indexOf('AJAXProxy') != -1) {
 				var $anchor = $link.prop('href').substr($link.prop('href').indexOf('#'));
 				var $pageLink = document.location.toString().replace(/#.*/, '');
 				$link.prop('href', $pageLink + $anchor);
