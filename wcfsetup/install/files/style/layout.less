@@ -49,10 +49,10 @@
 	}
 	
 	> div {
+		position: relative;
+		
 		> ul.userPanelItems {
-			float: left;
-			
-			.clearfix();
+			/*.clearfix();*/
 			
 			> li {
 				float: left;
@@ -94,10 +94,10 @@
 		}
 	
 		> .searchBar {
-			float: right;
-			padding: 6px 0 7px;
-			position: relative;
 			background-color: @wcfUserPanelHoverBackgroundColor;
+			position: absolute;
+			right: 0;
+			top: 0;
 			
 			&:before {
 				content: "\f002";
@@ -106,7 +106,7 @@
 				font-size: 14px;
 				left: 7px;
 				position: absolute;
-				top: 10px;
+				top: 12px;
 			}
 			
 			> form {
@@ -116,6 +116,7 @@
 					background-color: transparent;
 					border-width: 0;
 					color: @wcfUserPanelColor;
+					height: 40px;
 					padding: 6px 12px 5px 26px;
 					width: 240px;
 					-webkit-appearance: textfield;
@@ -128,26 +129,73 @@
 				}
 			}
 		}
+		
+		&.layoutFluid > .searchBar {
+			right: 30px;
+		}
 	}
 }
 
 @media only screen and (max-device-width: 480px) {
-	/* hide user panel labels */
-	.userPanel > div {
-		> ul.userPanelItems > li {
-			> a > span:not(.icon) {
-				display: none;
-			}
-			
-			&#pageLanguageContainer > div > div > hgroup {
-				display: none;
-			}
+	.userPanel {
+		height: auto;
+		
+		.icon {
+			font-size: 28px;
+			height: auto;
+			width: auto;
 		}
 		
-		> .searchBar {
-			> form {
-				input[type="search"] {
-					width: auto;
+		> div {
+			> ul.userPanelItems {
+				> li {
+					> a,
+					> div:not(.dropdownMenu) {
+						height: 28px;
+						padding: 12px 11px 8px 11px;
+					}
+					
+					> .framed > img {
+						margin-top: 0;
+					}
+					
+					/* hide user panel labels */
+					> a > span:not(.icon),
+					&#pageLanguageContainer > div > div > hgroup {
+						display: none;
+					}
+				}
+			}
+		
+			> .searchBar {
+				height: 48px;
+				min-width: 40px;
+				right: 0 !important;
+				
+				&:before {
+					font-size: 28px;
+				}
+				
+				> form {
+					display: none;
+					
+					input[type="search"] {
+						height: 48px;
+						padding-left: 40px;
+						width: 100%;
+					}
+				}
+				
+				&:hover {
+					width: 100%;
+					
+					> form {
+						display: block;
+					}
+				}
+				
+				&:before {
+					top: 8px;
 				}
 			}
 		}
@@ -278,6 +326,69 @@
 	}
 }
 
+@media only screen and (max-device-width: 480px) {
+	.mainMenu {
+		min-height: 38px;
+		position: relative;
+		z-index: 150;
+		
+		> ul {
+			border: solid 1px @wcfContainerBorderColor;
+			left: @wcfGapSmall;
+			position: absolute;
+			
+			.borderRadius(5px);
+			
+			> li {
+				display: none;
+				font-size: 120% !important;
+				margin: 0 !important;
+				padding: 0 !important;
+				width: 100%;
+				
+				&.active {
+					display: block;
+					
+					> a {
+						&:before {
+							content: "\f03a";
+							font-family: FontAwesome;
+							font-size: 14px;
+							left: 10px;
+							position: absolute;
+							top: 7px;
+						}
+					}
+				}
+				
+				> a {
+					background-color: transparent !important;
+					border: 0 !important;
+					color: @wcfMainMenuColor !important;
+					font-weight: normal !important;
+					padding: 5px 5px 5px 32px !important;
+					position: relative;
+					text-align: left !important;
+				}
+			}
+			
+			&:hover {
+				> li {
+					display: block;
+					
+					&.active {
+						> a {
+							&:before {
+								content: "\f00c";
+							}
+						}	
+					}
+				}
+			}
+		}
+	}
+}
+
 /* navigation */
 .navigation {
 	padding: 0 7px;
@@ -364,6 +475,72 @@
 .navigationFooter {
 	background-color: @wcfNavigationFooterBackgroundColor;
 	border-top: 1px solid @wcfContainerBorderColor;
+}
+
+@media only screen and (max-device-width: 480px) {
+	.navigationHeader {
+		background-color: transparent;
+		border: 0;
+		min-height: 38px;
+		position: relative;
+		z-index: 149;
+		
+		> ul.navigationMenuItems {
+			background-color: @wcfMainMenuBackgroundColor;
+			border: solid 1px @wcfContainerBorderColor;
+			left: @wcfGapSmall;
+			position: absolute;
+			
+			.borderRadius(5px);
+			
+			> li {
+				display: none;
+				font-size: 120% !important;
+				margin: 0 !important;
+				width: 100%;
+				
+				&:first-child {
+					display: block;
+					
+					> a {
+						&:before {
+							content: "\f03a";
+							font-family: FontAwesome;
+							font-size: 14px;
+							left: 10px;
+							position: absolute;
+							top: 7px;
+						}
+					}
+				}
+				
+				> a {
+					background-color: transparent !important;
+					border: 0 !important;
+					color: @wcfMainMenuColor !important;
+					display: inline-block;
+					font-weight: normal !important;
+					padding: 5px 5px 5px 32px !important;
+					position: relative;
+					text-align: left !important;
+				}
+			}
+			
+			&:hover {
+				> li {
+					display: block;
+					
+					&:first-child {
+						> a {
+							&:before {
+								content: "";
+							}
+						}	
+					}
+				}
+			}
+		}
+	}
 }
 
 /* ### footer ### */
@@ -504,6 +681,10 @@
 			margin-right: 0 !important;
 			padding-left: @wcfGapSmall !important;
 			padding-right: @wcfGapSmall !important;
+			
+			> *:first-child {
+				margin-top: 0;
+			}
 		}
 	}
 }
@@ -549,6 +730,12 @@
 	}
 }
 
+@media only screen and (max-device-width: 480px) {
+	.boxHeadline {
+		margin-top: @wcfGapSmall;
+	}
+}
+
 .contentNavigation {
 	display: table;
 	width: 100%;
@@ -582,6 +769,12 @@
 
 .containerPadding {
 	padding: @wcfGapMedium @wcfGapLarge @wcfGapMedium;
+}
+
+@media only screen and (max-device-width: 480px) {
+	.containerPadding {
+		padding: @wcfGapSmall;
+	}
 }
 
 .containerHeadline {
@@ -888,6 +1081,12 @@
 				right: 0;
 			}
 		}
+	}
+}
+
+@media only screen and (max-device-width: 480px) {
+	.content > .breadcrumbs {
+		display: none;
 	}
 }
 
@@ -1433,6 +1632,16 @@ ul.inlineDataList {
 			
 			> span {
 				display: inline-block;
+			}
+		}
+	}
+}
+
+@media only screen and (max-device-width: 480px) {
+	.pageNavigation {
+		> ul > li {
+			&:not(.skip):not(.active) {
+				display: none;
 			}
 		}
 	}

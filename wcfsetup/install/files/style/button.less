@@ -154,6 +154,55 @@ button.active:hover {
 	}
 }
 
+@media only screen and (max-device-width: 480px) {
+	.buttonGroup {
+		min-height: 21px;
+		min-width: 21px;
+		position: relative;
+		z-index: 148;
+		
+		&:before {
+			content: "\f03a";
+			font-family: FontAwesome;
+			font-size: 21px;
+			right: 0;
+			position: absolute;
+			top: 0;
+		}
+		
+		> li {
+			display: none;
+			
+			&:not(:first-child) {
+				> a {
+					border-top: 0;
+				}
+			}
+			
+			> .button {
+				border-radius: 0 !important;
+			}
+		}
+		
+		&:hover {
+			> li {
+				display: block;
+				
+				> a {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					width: 124px;
+					white-space: nowrap;
+					
+					> span.invisible {
+						display: inline;
+					}
+				}
+			}
+		}
+	}
+}
+
 /* sidebar buttons */
 .sidebar {
 	button,

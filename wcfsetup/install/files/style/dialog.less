@@ -11,6 +11,19 @@
 	.boxShadow(0, 1px, rgba(0, 0, 0, .3), 23px);
 }
 
+@media only screen and (max-device-width: 480px) {
+	.dialogContainer {
+		border: 0;
+		left: 0 !important;
+		max-width: none;
+		min-width: 0;
+		top: 0 !important;
+		width: 100%;
+		
+		.borderRadius(0);
+	}
+}
+
 .dialogTitlebar {
 	background-color: @wcfTabularBoxBackgroundColor;
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
@@ -56,6 +69,12 @@
 	}
 }
 
+@media only screen and (max-device-width: 480px) {
+	.dialogTitlebar {
+		.borderRadius(0);
+	}
+}
+
 .dialogContent {
 	background-color: @wcfContainerBackgroundColor;
 	color: @wcfColor;
@@ -93,6 +112,20 @@
 		width: 100%;
 		
 		.borderRadius(0, 0, 7px, 7px);
+	}
+}
+
+@media only screen and (max-device-width: 480px) {
+	.dialogContent {
+		max-height: none !important;
+		
+		&:not(.dialogForm) {
+			.borderRadius(0);
+		}
+		
+		.formSubmit {
+			.borderRadius(0);
+		}
 	}
 }
 

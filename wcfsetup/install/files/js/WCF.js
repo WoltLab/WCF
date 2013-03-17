@@ -4090,6 +4090,8 @@ WCF.Effect.BalloonTooltip = Class.extend({
 	 * Initializes tooltips.
 	 */
 	init: function() {
+		if (jQuery.browser.mobile) return;
+
 		if (!this._didInit) {
 			// create empty div
 			this._tooltip = $('<div id="balloonTooltip" class="balloonTooltip"><span id="balloonTooltipText"></span><span class="pointer"><span></span></span></div>').appendTo($('body')).hide();

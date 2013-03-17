@@ -1,11 +1,12 @@
 <base href="{$baseHref}" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+<meta name="format-detection" content="telephone=no" />
 {implode from=$__wcf->getMetaTagHandler() item=__metaTag glue="\n"}{@$__metaTag}{/implode}
 
 <script type="text/javascript">
 	//<![CDATA[
-	var SID_ARG_2ND = '{@SID_ARG_2ND_NOT_ENCODED}';
+	var SID_ARG_2ND	= '{@SID_ARG_2ND_NOT_ENCODED}';
 	var RELATIVE_WCF_DIR = '{@$__wcf->getPath()}';
 	var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 	var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};

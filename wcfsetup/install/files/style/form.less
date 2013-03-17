@@ -126,6 +126,25 @@ dl:not(.plain) {
 	}
 }
 
+@media only screen and (max-device-width: 480px) {
+	dl:not(.plain) {
+		> dt {
+			float: none;
+			margin-bottom: @wcfGapTiny;
+			text-align: left;
+			width: auto !important;
+		}
+		
+		> dd {
+			margin-left: 0 !important;
+		}
+	}
+	
+	fieldset > dl:not(:first-of-type) {
+		margin-top: 14px;
+	}
+}
+
 /* sidebar */
 .sidebar {
 	dl:not(.plain) {
