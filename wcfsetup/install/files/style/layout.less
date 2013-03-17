@@ -864,6 +864,10 @@
 	.containerList {
 		> li {
 			padding: @wcfGapSmall;
+			
+			.containerContentType {
+				display: none;
+			}
 		}
 		
 		&.infoBoxList {
@@ -1122,9 +1126,6 @@
 			white-space: nowrap;
 			
 			&.ui-state-active {
-				margin-right: -7px;
-				margin-left: -6px;
-				
 				> a {
 					background-color: @wcfContainerBackgroundColor;
 					border-color: @wcfContainerBorderColor @wcfContainerBorderColor @wcfContainerBackgroundColor;
@@ -1136,6 +1137,14 @@
 					margin-top: -10px;
 					padding: 10px 15px 5px;
 					z-index: 30;
+				}
+				
+				&:first-child {
+					margin-left: -6px;
+				}
+				
+				&:last-child {
+					margin-right: -6px;
 				}
 			}
 			
