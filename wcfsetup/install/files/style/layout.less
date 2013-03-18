@@ -328,6 +328,7 @@
 
 @media only screen and (max-device-width: 480px) {
 	.mainMenu {
+		float: left;
 		min-height: 38px;
 		position: relative;
 		z-index: 150;
@@ -344,7 +345,10 @@
 				font-size: 120% !important;
 				margin: 0 !important;
 				padding: 0 !important;
-				width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				width: 120px;
+				white-space: nowrap;
 				
 				&.active {
 					display: block;
@@ -354,7 +358,7 @@
 							content: "\f03a";
 							font-family: FontAwesome;
 							font-size: 14px;
-							left: 10px;
+							left: 7px;
 							position: absolute;
 							top: 7px;
 						}
@@ -366,7 +370,7 @@
 					border: 0 !important;
 					color: @wcfMainMenuColor !important;
 					font-weight: normal !important;
-					padding: 5px 5px 5px 32px !important;
+					padding: 4px 4px 4px 28px !important;
 					position: relative;
 					text-align: left !important;
 				}
@@ -481,6 +485,8 @@
 	.navigationHeader {
 		background-color: transparent;
 		border: 0;
+		float: left;
+		margin-left: 127px;
 		min-height: 38px;
 		position: relative;
 		z-index: 149;
@@ -497,7 +503,10 @@
 				display: none;
 				font-size: 120% !important;
 				margin: 0 !important;
-				width: 100%;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				width: 176px;
+				white-space: nowrap;
 				
 				&:first-child {
 					display: block;
@@ -507,7 +516,7 @@
 							content: "\f03a";
 							font-family: FontAwesome;
 							font-size: 14px;
-							left: 10px;
+							left: 7px;
 							position: absolute;
 							top: 7px;
 						}
@@ -520,7 +529,7 @@
 					color: @wcfMainMenuColor !important;
 					display: inline-block;
 					font-weight: normal !important;
-					padding: 5px 5px 5px 32px !important;
+					padding: 4px 4px 4px 28px !important;
 					position: relative;
 					text-align: left !important;
 				}
@@ -670,6 +679,8 @@
 @media only screen and (max-device-width: 480px) {
 	/* hide sidebar */
 	#main {
+		margin-top: 96px;
+		
 		.sidebar {
 			display: none;
 		}
