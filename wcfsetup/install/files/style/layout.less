@@ -115,8 +115,9 @@
 				input[type="search"] {
 					background-color: transparent;
 					border-width: 0;
+					box-sizing: content-box;
 					color: @wcfUserPanelColor;
-					height: 40px;
+					height: 29px;
 					padding: 6px 12px 5px 26px;
 					width: 240px;
 					-webkit-appearance: textfield;
@@ -131,7 +132,7 @@
 		}
 		
 		&.layoutFluid > .searchBar {
-			right: 30px;
+			right: @wcfLayoutFluidGap;
 		}
 	}
 }
