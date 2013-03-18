@@ -133,6 +133,10 @@ dl:not(.plain) {
 			margin-bottom: @wcfGapTiny;
 			text-align: left;
 			width: auto !important;
+			
+			&.reversed {
+				left: 20px;
+			}
 		}
 		
 		> dd {
@@ -201,8 +205,9 @@ select[multiple] {
 }
 
 select {
-	padding: 1px 1px 1px 3px;
 	margin: 0;
+	min-width: 1px;
+	padding: 1px 1px 1px 3px;
 }
 
 /* normal state */
