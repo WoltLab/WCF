@@ -7599,6 +7599,7 @@ $.widget('ui.wcfDialog', {
 		// ignore script tags
 		if ($(element).getTagName() === 'script') {
 			console.debug("[ui.wcfDialog] Ignored script tag");
+			this.element = false;
 			return null;
 		}
 		
@@ -7701,6 +7702,11 @@ $.widget('ui.wcfDialog', {
 	 * Opens this dialog.
 	 */
 	open: function() {
+		// ignore script tags
+		if (this.element === false) {
+			return;
+		}
+		
 		if (this.isOpen()) {
 			return;
 		}
