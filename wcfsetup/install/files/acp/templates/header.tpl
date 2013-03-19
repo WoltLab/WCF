@@ -135,13 +135,7 @@
 			{if PACKAGE_ID}
 				{hascontent}
 					<nav id="mainMenu" class="mainMenu">
-						<ul>
-							{content}
-								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_menuItem}
-									<li data-menu-item="{$_menuItem->menuItem}"><a>{lang}{@$_menuItem->menuItem}{/lang}</a></li>
-								{/foreach}
-							{/content}
-						</ul>
+						<ul>{content}{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_menuItem}<li data-menu-item="{$_menuItem->menuItem}"><a>{lang}{@$_menuItem->menuItem}{/lang}</a></li>{/foreach}{/content}</ul>
 					</nav>
 				{/hascontent}
 			{/if}
