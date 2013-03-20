@@ -249,7 +249,7 @@
 								<option value="0"></option>
 								{content}
 									{foreach from=$availableTemplateGroups item=templateGroup}
-										<option value="{@$templateGroup->templateGroupID}" {if $style->templateGroupID == $templateGroup->templateGroupID}selected{/if}>{$templateGroup->templateGroupName}</option>
+										<option value="{@$templateGroup->templateGroupID}" {if $templateGroup->templateGroupID == $templateGroupID}selected{/if}>{$templateGroup->templateGroupName}</option>
 									{/foreach}
 								{/content}
 							</select>
