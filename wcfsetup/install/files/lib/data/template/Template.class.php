@@ -32,10 +32,10 @@ class Template extends DatabaseObject {
 	 */
 	public function __construct($id, $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {
-			$sql = "SELECT		template.*, g.templateGroupFolderName, package.packageDir
+			$sql = "SELECT		template.*, template_group.templateGroupFolderName, package.packageDir
 				FROM		wcf".WCF_N."_template template
-				LEFT JOIN	wcf".WCF_N."_template_group g
-				ON		(g.templateGroupID = template.templateGroupID)
+				LEFT JOIN	wcf".WCF_N."_template_group template_group
+				ON		(template_group.templateGroupID = template.templateGroupID)
 				LEFT JOIN	wcf".WCF_N."_package package
 				ON		(package.packageID = template.packageID)
 				WHERE		template.templateID = ?";
