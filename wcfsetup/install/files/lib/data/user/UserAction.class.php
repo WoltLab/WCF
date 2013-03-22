@@ -46,9 +46,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates permissions and parameters.
 	 */
 	public function validateCreate() {
-		if (!isset($this->parameters['data']['password'])) {
-			throw new UserInputException('password');
-		}
+		$this->readString('password', false, 'data');
 	}
 	
 	/**
@@ -201,13 +199,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @see	wcf\data\ISearchAction::validateGetSearchResultList()
 	 */
 	public function validateGetSearchResultList() {
-		if (!isset($this->parameters['data']['searchString'])) {
-			throw new UserInputException('searchString');
-		}
-		
-		if (!isset($this->parameters['data']['includeUserGroups'])) {
-			throw new UserInputException('includeUserGroups');
-		}
+		$this->readBoolean('includeUserGroups', false, 'data');
+		$this->readString('searchString', false, 'data');
 		
 		if (isset($this->parameters['data']['excludedSearchValues']) && !is_array($this->parameters['data']['excludedSearchValues'])) {
 			throw new UserInputException('excludedSearchValues');

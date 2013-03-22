@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Executes ACP search provider-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.acp.search.provider
@@ -21,10 +21,7 @@ class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements IS
 	 * @see	wcf\data\ISearchAction::validateGetSearchResultList()
 	 */
 	public function validateGetSearchResultList() {
-		$this->parameters['data']['searchString'] = (isset($this->parameters['data']['searchString'])) ? StringUtil::trim($this->parameters['data']['searchString']) : '';
-		if (empty($this->parameters['data']['searchString'])) {
-			throw new UserInputException('searchString');
-		}
+		$this->readString('searchString', false, 'data');
 	}
 	
 	/**
