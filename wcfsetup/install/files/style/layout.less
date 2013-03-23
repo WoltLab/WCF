@@ -166,9 +166,13 @@
 					}
 					
 					/* hide user panel labels */
-					> a > span:not(.icon),
+					> a > span:not(.icon):not(.badge),
 					&#pageLanguageContainer > div > div > hgroup {
 						display: none;
+					}
+					
+					> a > .badge {
+						top: -4px;
 					}
 				}
 			}
@@ -608,10 +612,55 @@
 @media only screen and (max-width: 640px) {
 	/* hide sidebar */
 	#main {
+		position: relative;
 		margin-top: 7px;
 		
-		.sidebar {
-			display: none;
+		&.sidebarOrientationRight {
+			.sidebar {
+				display: none;
+			}
+		}
+		
+		&.sidebarOrientationLeft {
+			.sidebar {
+				float: none;
+				padding-top: 0;
+				position: absolute;
+				right: 0px;
+				top: 14px;
+				width: 100%;
+				
+				&.mobileSidebar {
+					&:before {
+						content: "\f03a";
+						font-family: FontAwesome;
+						font-size: 21px;
+						right: 7px;
+						position: absolute;
+						top: 0;
+					}
+					
+					&:hover {
+						> div {
+							display: block;
+						}
+					}
+					
+					> div {
+						background-color: @wcfSidebarBackgroundColor;
+						margin-top: 28px;
+						padding-top: 14px;
+					}
+				}
+				
+				> div {
+					display: none;
+					
+					> fieldset.jsOnly {
+						display: none;
+					}
+				}
+			}
 		}
 		
 		.content {
@@ -824,6 +873,10 @@
 			.containerContentType {
 				display: none;
 			}
+			
+			> div > div > .buttonList {
+				display: none;
+			}
 		}
 		
 		&.infoBoxList {
@@ -941,29 +994,33 @@
 			white-space: nowrap;
 		}
 	}
-	
-	&.doubleColumned,
-	&.tripleColumned {
-		.clearfix();
-		
-		> li {
-			float: left;
+}
+
+@media only screen and (min-width: 641px) {
+	.containerBoxList {
+		&.doubleColumned,
+		&.tripleColumned {
+			.clearfix();
 			
-			> div {
-				margin-right: @wcfGapLarge;
+			> li {
+				float: left;
+				
+				> div {
+					margin-right: @wcfGapLarge;
+				}
 			}
 		}
-	}
-	
-	&.doubleColumned {
-		> li {
-			width: 50%;
+		
+		&.doubleColumned {
+			> li {
+				width: 50%;
+			}
 		}
-	}
-	
-	&.tripleColumned {
-		> li {
-			width: 33%;
+		
+		&.tripleColumned {
+			> li {
+				width: 33%;
+			}
 		}
 	}
 }
@@ -1187,6 +1244,32 @@
 
 .containerPadding > .tabMenuContainer:last-child {
 	margin-bottom: @wcfGapSmall;
+}
+
+@media only screen and (max-width: 640px) {
+	.tabMenu {
+		> ul {
+			margin-left: @wcfGapTiny;
+			margin-right: @wcfGapTiny;
+			
+			> li {
+				&.ui-state-active {
+					> a {
+						font-size: 100%;
+						padding-left: 10px;
+						padding-right: 10px;
+					}
+				}
+				
+				> a {
+					font-size: 100%;
+					padding-left: 5px;
+					padding-right: 5px;
+				}
+			}
+		}
+	
+	}
 }
 
 /* ToDo: 2x hidden? */
@@ -1605,7 +1688,7 @@ ul.inlineDataList {
 				.textShadow(@wcfButtonBackgroundColor);
 			}
 			
-			> span {
+			> span:not(.invisible) {
 				display: inline-block;
 			}
 		}
@@ -1617,6 +1700,18 @@ ul.inlineDataList {
 		> ul > li {
 			&:not(.skip):not(.active) {
 				display: none;
+			}
+			
+			&.active {
+				> span {
+					&.invisible {
+						display: inline-block;
+					}
+					
+					&:not(.invisible) {
+						display: none;
+					}
+				}
 			}
 		}
 	}

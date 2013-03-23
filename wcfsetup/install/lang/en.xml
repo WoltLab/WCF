@@ -931,6 +931,7 @@
 		<item name="wcf.page.offline"><![CDATA[Page is currently in maintenance mode{if OFFLINE_MESSAGE != ''}:{else}.{/if}]]></item>
 		<item name="wcf.page.sitemap"><![CDATA[Sitemap]]></item>
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
+		<item name="wcf.page.pagePosition"><![CDATA[Page {#$pageNo} of {#$pages}]]></item>
 	</category>
 	
 	<category name="wcf.style">

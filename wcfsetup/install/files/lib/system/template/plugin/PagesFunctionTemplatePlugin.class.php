@@ -48,15 +48,16 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * @param	string		$link
 	 * @param	integer		$pageNo
 	 * @param	integer		$activePage
+	 * @param	integer		$pages
 	 * @return	string
 	 */
-	protected function makeLink($link, $pageNo, $activePage, $break = false) {
+	protected function makeLink($link, $pageNo, $activePage, $pages) {
 		// first page
 		if ($activePage != $pageNo) {
 			return '<li class="button"><a href="'.$this->insertPageNumber($link, $pageNo).'" title="'.WCF::getLanguage()->getDynamicVariable('wcf.page.pageNo', array('pageNo' => $pageNo)).'">'.StringUtil::formatInteger($pageNo).'</a></li>'."\n";
 		}
 		else {
-			return '<li class="button active"><span>'.StringUtil::formatInteger($pageNo).'</span></li>'."\n";
+			return '<li class="button active"><span>'.StringUtil::formatInteger($pageNo).'</span><span class="invisible">'.WCF::getLanguage()->getDynamicVariable('wcf.page.pagePosition', array('pageNo' => $pageNo, 'pages' => $pages)).'</span></li>'."\n";
 		}
 	}
 	
@@ -130,7 +131,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			$html .= $this->makePreviousLink($link, $tagArgs['page']);
 			
 			// first page
-			$html .= $this->makeLink($link, 1, $tagArgs['page']);
+			$html .= $this->makeLink($link, 1, $tagArgs['page'], $tagArgs['pages']);
 			
 			// calculate page links
 			$maxLinks = static::SHOW_LINKS - 4;
@@ -172,7 +173,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			// left ... links
 			if ($left > 1) {
 				if ($left - 1 < 2) {
-					$html .= $this->makeLink($link, 2, $tagArgs['page']);
+					$html .= $this->makeLink($link, 2, $tagArgs['page'], $tagArgs['pages']);
 				}
 				else {
 					$html .= '<li class="button jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.jumpTo').'" class="jsTooltip">'.StringUtil::HELLIP.'</a></li>'."\n";
@@ -181,13 +182,13 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			
 			// visible links
 			for ($i = $left + 1; $i < $right; $i++) {
-				$html .= $this->makeLink($link, $i, $tagArgs['page']);
+				$html .= $this->makeLink($link, $i, $tagArgs['page'], $tagArgs['pages']);
 			}
 			
 			// right ... links
 			if ($right < $tagArgs['pages']) {
 				if ($tagArgs['pages'] - $right < 2) {
-					$html .= $this->makeLink($link, $tagArgs['pages'] - 1, $tagArgs['page']);
+					$html .= $this->makeLink($link, $tagArgs['pages'] - 1, $tagArgs['page'], $tagArgs['pages']);
 				}
 				else {
 					$html .= '<li class="button jumpTo"><a title="'.WCF::getLanguage()->getDynamicVariable('wcf.global.page.jumpTo').'" class="jsTooltip">'.StringUtil::HELLIP.'</a></li>'."\n";
@@ -195,7 +196,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			}
 			
 			// last page
-			$html .= $this->makeLink($link, $tagArgs['pages'], $tagArgs['page']);
+			$html .= $this->makeLink($link, $tagArgs['pages'], $tagArgs['page'], $tagArgs['pages']);
 			
 			// next page
 			$html .= $this->makeNextLink($link, $tagArgs['page'], $tagArgs['pages']);
