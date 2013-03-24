@@ -1562,7 +1562,7 @@ WCF.Action.Proxy = Class.extend({
 			}
 			
 			if (!this._suppressErrors && $showError !== false) {
-				$('<div class="ajaxDebugMessage"><p>' + data.message + '</p><p>Stacktrace:</p><p>' + data.stacktrace + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+				$('<div class="ajaxDebugMessage"><p>' + $data.message + '</p><p>Stacktrace:</p><p>' + $data.stacktrace + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
 			}
 		}
 		// failed to parse JSON

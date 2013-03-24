@@ -3,7 +3,7 @@
 	padding: 0 @wcfLayoutFluidGap;
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	.layoutFluid {
 		padding: 0;
 	}
@@ -14,7 +14,7 @@
 	width: @wcfLayoutFixedWidth;
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	.layoutFixed {
 		width: auto;
 	}
@@ -24,6 +24,12 @@
 #pageHeader {
 	margin-top: 57px;
 	z-index: 100;
+}
+
+@media only screen and (max-width: 640px) {
+	#pageHeader {
+		margin-top: 48px;
+	}
 }
 
 #top {
@@ -136,12 +142,12 @@
 	}
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	.userPanel {
 		height: auto;
 		
 		.icon {
-			font-size: 28px;
+			font-size: 21px;
 			height: auto;
 			width: auto;
 		}
@@ -151,36 +157,40 @@
 				> li {
 					> a,
 					> div:not(.dropdownMenu) {
-						height: 28px;
-						padding: 12px 11px 8px 11px;
+						height: 21px;
+						padding: 11px 11px 9px 11px;
 					}
 					
 					> .framed > img {
-						margin-top: 0;
+						margin-top: -4px;
 					}
 					
 					/* hide user panel labels */
-					> a > span:not(.icon),
+					> a > span:not(.icon):not(.badge),
 					&#pageLanguageContainer > div > div > hgroup {
 						display: none;
+					}
+					
+					> a > .badge {
+						top: -4px;
 					}
 				}
 			}
 		
 			> .searchBar {
-				height: 48px;
+				height: 41px;
 				min-width: 40px;
 				right: 0 !important;
 				
 				&:before {
-					font-size: 28px;
+					font-size: 21px;
 				}
 				
 				> form {
 					display: none;
 					
 					input[type="search"] {
-						height: 48px;
+						height: 41px;
 						padding-left: 40px;
 						width: 100%;
 					}
@@ -224,7 +234,7 @@
 	}
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	.logo {
 		display: none;
 	}
@@ -277,116 +287,104 @@
 }
 
 /* main menu */
-.mainMenu {
-	> ul {
-		background-color: @wcfMainMenuBackgroundColor;
-		display: inline-block;
-		
-		> li {
+@media only screen and (min-width: 641px) {
+	.mainMenu {
+		> ul {
+			background-color: @wcfMainMenuBackgroundColor;
 			display: inline-block;
-			font-size: @wcfTitleFontSize;
-			margin-top: -7px;
-			vertical-align: bottom;
 			
-			> a {
-				color: @wcfMainMenuColor;
+			> li {
 				display: inline-block;
-				padding: 9px 21px;
-								
-				&:hover {
-					color: @wcfMainMenuActiveColor;
-					text-decoration: none;
-				}
-			}
-			
-			&.active {
-				font-size: @wcfSubHeadlineFontSize;
-				margin-top: -8px;
+				font-size: @wcfTitleFontSize;
+				margin-top: -7px;
+				vertical-align: bottom;
 				
 				> a {
-					background-color: @wcfNavigationHeaderBackgroundColor;
-					color: @wcfMainMenuActiveColor;
-					font-weight: bold;
-					min-width: 80px;
-					padding: 14px 21px 8px;
-					text-align: center;
+					color: @wcfMainMenuColor;
+					display: inline-block;
+					padding: 9px 21px;
+									
+					&:hover {
+						color: @wcfMainMenuActiveColor;
+						text-decoration: none;
+					}
 				}
-			}
-			
-			&:not(.active) {
-				padding-top: 5px;
-			}
-			
-			&:not(:last-child) > a {
-				border-right: 1px solid @wcfContainerBorderColor;
+				
+				&.active {
+					font-size: @wcfSubHeadlineFontSize;
+					margin-top: -8px;
+					
+					> a {
+						background-color: @wcfNavigationHeaderBackgroundColor;
+						color: @wcfMainMenuActiveColor;
+						font-weight: bold;
+						min-width: 80px;
+						padding: 14px 21px 8px;
+						text-align: center;
+					}
+				}
+				
+				&:not(.active) {
+					padding-top: 5px;
+				}
+				
+				&:not(:last-child) > a {
+					border-right: 1px solid @wcfContainerBorderColor;
+				}
 			}
 		}
 	}
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	.mainMenu {
-		float: left;
-		min-height: 38px;
 		position: relative;
-		z-index: 150;
+		
+		&:hover > ul {
+			display: block;
+		}
+		
+		> .invisible {
+			.button;
+			margin-left: @wcfGapSmall;
+			padding-left: 28px;
+			
+			&:before {
+				content: "\f03a";
+				font-family: FontAwesome;
+				font-size: 14px;
+				left: 9px;
+				position: absolute;
+				top: 6px;
+			}
+		}
 		
 		> ul {
-			border: solid 1px @wcfContainerBorderColor;
+			.dropdown .dropdownMenu;
+			font-size: 120%;
 			left: @wcfGapSmall;
-			position: absolute;
 			
-			.borderRadius(5px);
-			
-			> li {
-				display: none;
-				font-size: 120% !important;
-				margin: 0 !important;
-				padding: 0 !important;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				width: 120px;
-				white-space: nowrap;
-				
-				&.active {
+			> li.active {
+				> ul.invisible {
 					display: block;
-					
-					> a {
-						&:before {
-							content: "\f03a";
-							font-family: FontAwesome;
-							font-size: 14px;
-							left: 7px;
-							position: absolute;
-							top: 7px;
-						}
-					}
+					font-size: 85%;
+					padding-left: 14px;
 				}
 				
 				> a {
-					background-color: transparent !important;
-					border: 0 !important;
-					color: @wcfMainMenuColor !important;
-					font-weight: normal !important;
-					padding: 4px 4px 4px 28px !important;
 					position: relative;
-					text-align: left !important;
-				}
-			}
-			
-			&:hover {
-				> li {
-					display: block;
 					
-					&.active {
-						> a {
-							&:before {
-								content: "\f00c";
-							}
-						}	
+					&:after {
+						content: "\f00c";
+						font-family: FontAwesome;
+						font-size: 14px;
+						position: absolute;
+						right: 7px;
 					}
 				}
 			}
+			
+			
 		}
 	}
 }
@@ -459,10 +457,11 @@
 	}
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	.navigation {
 		> ul.navigationIcons,
-		> ul.navigationItems {
+		> ul.navigationItems,
+		> ul.navigationMenuItems {
 			display: none;
 		}
 	}
@@ -479,74 +478,10 @@
 	border-top: 1px solid @wcfContainerBorderColor;
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	.navigationHeader {
 		background-color: transparent;
 		border: 0;
-		float: left;
-		margin-left: 127px;
-		min-height: 38px;
-		position: relative;
-		z-index: 149;
-		
-		> ul.navigationMenuItems {
-			background-color: @wcfMainMenuBackgroundColor;
-			border: solid 1px @wcfContainerBorderColor;
-			left: @wcfGapSmall;
-			position: absolute;
-			
-			.borderRadius(5px);
-			
-			> li {
-				display: none;
-				font-size: 120% !important;
-				margin: 0 !important;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				width: 176px;
-				white-space: nowrap;
-				
-				&:first-child {
-					display: block;
-					
-					> a {
-						&:before {
-							content: "\f03a";
-							font-family: FontAwesome;
-							font-size: 14px;
-							left: 7px;
-							position: absolute;
-							top: 7px;
-						}
-					}
-				}
-				
-				> a {
-					background-color: transparent !important;
-					border: 0 !important;
-					color: @wcfMainMenuColor !important;
-					display: inline-block;
-					font-weight: normal !important;
-					padding: 4px 4px 4px 28px !important;
-					position: relative;
-					text-align: left !important;
-				}
-			}
-			
-			&:hover {
-				> li {
-					display: block;
-					
-					&:first-child {
-						> a {
-							&:before {
-								content: "";
-							}
-						}	
-					}
-				}
-			}
-		}
 	}
 }
 
@@ -569,7 +504,7 @@
 	}
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	.footerContent {
 		margin: 0 @wcfGapMedium;
 	}
@@ -674,13 +609,58 @@
 	}
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	/* hide sidebar */
 	#main {
-		margin-top: 96px;
+		position: relative;
+		margin-top: 7px;
 		
-		.sidebar {
-			display: none;
+		&.sidebarOrientationRight {
+			.sidebar {
+				display: none;
+			}
+		}
+		
+		&.sidebarOrientationLeft {
+			.sidebar {
+				float: none;
+				padding-top: 0;
+				position: absolute;
+				right: 0px;
+				top: 14px;
+				width: 100%;
+				
+				&.mobileSidebar {
+					&:before {
+						content: "\f03a";
+						font-family: FontAwesome;
+						font-size: 21px;
+						right: 7px;
+						position: absolute;
+						top: 0;
+					}
+					
+					&:hover {
+						> div {
+							display: block;
+						}
+					}
+					
+					> div {
+						background-color: @wcfSidebarBackgroundColor;
+						margin-top: 28px;
+						padding-top: 14px;
+					}
+				}
+				
+				> div {
+					display: none;
+					
+					> fieldset.jsOnly {
+						display: none;
+					}
+				}
+			}
 		}
 		
 		.content {
@@ -688,8 +668,8 @@
 			border-right: 0 !important;
 			margin-left: 0 !important;
 			margin-right: 0 !important;
-			padding-left: @wcfGapSmall !important;
-			padding-right: @wcfGapSmall !important;
+			padding-left: 0 !important;
+			padding-right: 0 !important;
 			
 			> *:first-child {
 				margin-top: 0;
@@ -739,9 +719,11 @@
 	}
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	.boxHeadline {
 		margin-top: @wcfGapSmall;
+		margin-left: @wcfGapSmall;
+		margin-right: @wcfGapSmall;
 	}
 }
 
@@ -771,6 +753,16 @@
 	}
 }
 
+@media only screen and (max-width: 640px) {
+	.contentNavigation {
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+		padding-left: @wcfGapSmall;
+		padding-right: @wcfGapSmall;
+	}
+}
+
 .container {
 	background-color: @wcfContainerBackgroundColor;
 	border: 1px solid @wcfContainerBorderColor;
@@ -780,7 +772,11 @@
 	padding: @wcfGapMedium @wcfGapLarge @wcfGapMedium;
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
+	.container {
+		border-width: 1px 0;
+	}
+	
 	.containerPadding {
 		padding: @wcfGapSmall;
 	}
@@ -869,12 +865,16 @@
 	}
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	.containerList {
 		> li {
 			padding: @wcfGapSmall;
 			
 			.containerContentType {
+				display: none;
+			}
+			
+			> div > div > .buttonList {
 				display: none;
 			}
 		}
@@ -994,29 +994,33 @@
 			white-space: nowrap;
 		}
 	}
-	
-	&.doubleColumned,
-	&.tripleColumned {
-		.clearfix();
-		
-		> li {
-			float: left;
+}
+
+@media only screen and (min-width: 641px) {
+	.containerBoxList {
+		&.doubleColumned,
+		&.tripleColumned {
+			.clearfix();
 			
-			> div {
-				margin-right: @wcfGapLarge;
+			> li {
+				float: left;
+				
+				> div {
+					margin-right: @wcfGapLarge;
+				}
 			}
 		}
-	}
-	
-	&.doubleColumned {
-		> li {
-			width: 50%;
+		
+		&.doubleColumned {
+			> li {
+				width: 50%;
+			}
 		}
-	}
-	
-	&.tripleColumned {
-		> li {
-			width: 33%;
+		
+		&.tripleColumned {
+			> li {
+				width: 33%;
+			}
 		}
 	}
 }
@@ -1097,7 +1101,7 @@
 	}
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	.content > .breadcrumbs {
 		display: none;
 	}
@@ -1242,6 +1246,32 @@
 	margin-bottom: @wcfGapSmall;
 }
 
+@media only screen and (max-width: 640px) {
+	.tabMenu {
+		> ul {
+			margin-left: @wcfGapTiny;
+			margin-right: @wcfGapTiny;
+			
+			> li {
+				&.ui-state-active {
+					> a {
+						font-size: 100%;
+						padding-left: 10px;
+						padding-right: 10px;
+					}
+				}
+				
+				> a {
+					font-size: 100%;
+					padding-left: 5px;
+					padding-right: 5px;
+				}
+			}
+		}
+	
+	}
+}
+
 /* ToDo: 2x hidden? */
 .ui-tabs .ui-tabs-hide {
 	display: none !important;
@@ -1287,6 +1317,16 @@
 		color: @wcfTabularBoxColor;
 		
 		.textShadow(@wcfTabularBoxBackgroundColor);
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	.tabularBox {
+		border-width: 1px 0;
+	}
+	
+	.tabularBoxTitle {
+		border-top-width: 0;
 	}
 }
 
@@ -1648,18 +1688,30 @@ ul.inlineDataList {
 				.textShadow(@wcfButtonBackgroundColor);
 			}
 			
-			> span {
+			> span:not(.invisible) {
 				display: inline-block;
 			}
 		}
 	}
 }
 
-@media only screen and (max-device-width: 480px) {
+@media only screen and (max-width: 640px) {
 	.pageNavigation {
 		> ul > li {
 			&:not(.skip):not(.active) {
 				display: none;
+			}
+			
+			&.active {
+				> span {
+					&.invisible {
+						display: inline-block;
+					}
+					
+					&:not(.invisible) {
+						display: none;
+					}
+				}
 			}
 		}
 	}

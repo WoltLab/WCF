@@ -30,6 +30,21 @@
 	}
 }
 
+@media only screen and (max-width: 640px) {
+	.info,
+	.error,
+	.success,
+	.warning {
+		margin-left: @wcfGapSmall;
+		margin-right: @wcfGapSmall;
+		padding: @wcfGapTiny @wcfGapSmall;
+		
+		&:after {
+			display: none;
+		}
+	}
+}
+
 /* types */
 .info {
 	background-color: @wcfInfoBackgroundColor;

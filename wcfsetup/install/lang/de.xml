@@ -683,7 +683,7 @@
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Demarkieren]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Benutzer löschen]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Benutzer löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[E-Mail senden]]></item>
@@ -938,6 +938,8 @@
 		<item name="wcf.page.pageNo"><![CDATA[Seite {#$pageNo}]]></item>
 		<item name="wcf.page.offline"><![CDATA[Die Seite befindet sich zur Zeit {if OFFLINE_MESSAGE != ''}aus folgenden Gründen im Wartungsmodus:{else}im Wartungsmodus.{/if}]]></item>
 		<item name="wcf.page.sitemap"><![CDATA[Schnellnavigation]]></item>
+		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
+		<item name="wcf.page.pagePosition"><![CDATA[Seite {#$pageNo} von {#$pages}]]></item>
 	</category>
 	
 	<category name="wcf.style">
