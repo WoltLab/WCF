@@ -47,7 +47,6 @@ class LinkHandler extends SingletonFactory {
 		$appendSession = true;
 		if (isset($parameters['application'])) {
 			$abbreviation = $parameters['application'];
-			unset($parameters['application']);
 		}
 		if (isset($parameters['isRaw'])) {
 			$isRaw = $parameters['isRaw'];

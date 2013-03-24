@@ -258,7 +258,7 @@ class Route {
 		
 		// handle default values for controller
 		$buildRoute = true;
-		if (count($components) == 1 && isset($components['controller'])) {
+		if (count($components) <= 2 && isset($components['controller'])) {
 			$ignoreController = false;
 			if (isset($this->parameterOptions['controller']) && strcasecmp($this->parameterOptions['controller']['default'], $components['controller']) == 0) {
 				// only the controller was given and matches default, omit routing
@@ -268,6 +268,9 @@ class Route {
 				$landingPage = PageMenu::getInstance()->getLandingPage();
 				if ($landingPage !== null && ($landingPage->getController() == $components['controller'])) {
 					$ignoreController = true;
+				}
+				if (isset($components['application']) && $components['application'] != $landingPage->getApplication()) {
+					$ignoreController = false;
 				}
 			}
 			
@@ -279,6 +282,7 @@ class Route {
 				unset($components['controller']);
 			}
 		}
+		unset($components['application']);
 		
 		if ($buildRoute) {
 			foreach ($this->routeSchema as $component) {
