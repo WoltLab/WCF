@@ -329,7 +329,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$sql = "SELECT	COUNT(*) AS count
 					FROM	wcf".WCF_N."_template_group
 					WHERE	templateGroupFolderName = ?
-						AND parentTemplatePackID = ?";
+						AND parentTemplateGroupID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute(array(
 					FileUtil::addTrailingSlash($templateGroupFolderName),
@@ -345,22 +345,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				'templateGroupName' => $templateGroupName,
 				'templateGroupFolderName' => FileUtil::addTrailingSlash($templateGroupFolderName)
 			));
-			$styleData['templateGroupID'] = $templateGroup->templateGroupID;
-		}
-		
-		// import preview image
-		if (!empty($data['image'])) {
-			$fileExtension = StringUtil::substring($data['image'], StringUtil::lastIndexOf($data['image'], '.'));
-			$index = $tar->getIndexByFilename($data['image']);
-			if ($index !== false) {
-				$filename = WCF_DIR.'images/stylePreview-'.$style->styleID.'.'.$fileExtension;
-				$tar->extract($index, $filename);
-				@chmod($filename, 0777);
-				
-				if (file_exists($filename)) {
-					$styleData['image'] = $filename;
-				}
-			}
+			$templateGroupID = $styleData['templateGroupID'] = $templateGroup->templateGroupID;
 		}
 		
 		// import images
@@ -455,8 +440,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			}
 		}
 		
-		$tar->close();
-		
 		// save style
 		if ($style !== null) {
 			$style->update($styleData);
@@ -465,6 +448,23 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$styleData['packageID'] = $packageID;
 			$style = new StyleEditor(self::create($styleData));
 		}
+		
+		// import preview image
+		if (!empty($data['image'])) {
+			$fileExtension = StringUtil::substring($data['image'], StringUtil::lastIndexOf($data['image'], '.'));
+			$index = $tar->getIndexByFilename($data['image']);
+			if ($index !== false) {
+				$filename = WCF_DIR.'images/stylePreview-'.$style->styleID.$fileExtension;
+				$tar->extract($index, $filename);
+				@chmod($filename, 0777);
+				
+				if (file_exists($filename)) {
+					$style->update(array('image' => basename($filename)));
+				}
+			}
+		}
+		
+		$tar->close();
 		
 		// handle descriptions
 		if (!empty($data['description'])) {
