@@ -194,5 +194,6 @@ class UserStorageHandler extends SingletonFactory {
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_storage";
 		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
 	}
 }
