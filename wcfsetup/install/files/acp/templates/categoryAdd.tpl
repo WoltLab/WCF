@@ -134,10 +134,10 @@
 		
 		{if $aclObjectTypeID}
 			<fieldset>
-				<legend>{lang}wcf.acp.acl.permissions{/lang}</legend>
+				<legend>{lang}wcf.acl.permissions{/lang}</legend>
 				
 				<dl id="groupPermissions" class="wide">
-					<dt>{lang}wcf.acp.acl.permissions{/lang}</dt>
+					<dt>{lang}wcf.acl.permissions{/lang}</dt>
 					<dd></dd>
 				</dl>
 				
