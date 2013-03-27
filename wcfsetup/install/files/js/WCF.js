@@ -5167,7 +5167,7 @@ WCF.System.Notification = Class.extend({
 		this._overlay = $('#systemNotification');
 		
 		if (!this._overlay.length) {
-			this._overlay = $('<div id="systemNotification"><p></p></div>').appendTo(document.body);
+			this._overlay = $('<div id="systemNotification"><p></p></div>').hide().appendTo(document.body);
 		}
 	},
 	
@@ -5193,7 +5193,7 @@ WCF.System.Notification = Class.extend({
 		// hide overlay after specified duration
 		new WCF.PeriodicalExecuter($.proxy(this._hide, this), duration);
 		
-		this._overlay.addClass('open');
+		this._overlay.wcfFadeIn(undefined, 300);
 	},
 	
 	/**
@@ -5206,7 +5206,7 @@ WCF.System.Notification = Class.extend({
 			this._callback();
 		}
 		
-		this._overlay.removeClass('open');
+		this._overlay.wcfFadeOut(undefined, 300);
 		
 		pe.stop();
 	}
