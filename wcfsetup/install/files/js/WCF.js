@@ -5241,6 +5241,12 @@ WCF.System.Confirmation = {
 	_visible: false,
 	
 	/**
+	 * confirmation button
+	 * @var	jQuery
+	 */
+	_confirmationButton: null,
+	
+	/**
 	 * Displays a confirmation dialog.
 	 * 
 	 * @param	string		message
@@ -5283,6 +5289,7 @@ WCF.System.Confirmation = {
 			this._dialog.wcfDialog('render');
 		}
 		
+		this._confirmationButton.focus();
 		this._visible = true;
 	},
 	
@@ -5293,7 +5300,7 @@ WCF.System.Confirmation = {
 		this._dialog = $('<div id="wcfSystemConfirmation" class="systemConfirmation"><p /><div id="wcfSystemConfirmationContent" /></div>').hide().appendTo(document.body);
 		var $formButtons = $('<div class="formSubmit" />').appendTo(this._dialog);
 		
-		$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
+		this._confirmationButton = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
 		$('<button>' + WCF.Language.get('wcf.global.confirmation.cancel') + '</button>').data('action', 'cancel').click($.proxy(this._click, this)).appendTo($formButtons);
 	},
 	
