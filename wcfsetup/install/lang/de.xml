@@ -453,6 +453,7 @@
 </ul>]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
+		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installationsverzeichnis]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">

@@ -446,6 +446,7 @@
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package “{@$package->getName()}”?]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
+		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
