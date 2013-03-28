@@ -2277,12 +2277,30 @@ WCF.Date.Util = {
  */
 WCF.Date.Time = Class.extend({
 	/**
+	 * list of time elements
+	 * @var	jQuery
+	 */
+	_elements: null,
+	
+	/**
+	 * difference between server and local time
+	 * @var	integer
+	 */
+	_offset: null,
+	
+	/**
+	 * current timestamp
+	 * @var	integer
+	 */
+	_timestamp: 0,
+	
+	/**
 	 * Initializes relative datetimes.
 	 */
 	init: function() {
-		// initialize variables
-		this.elements = $('time.datetime');
-		this.timestamp = 0;
+		this._elements = $('time.datetime');
+		this._offset = null;
+		this._timestamp = 0;
 		
 		// calculate relative datetime on init
 		this._refresh();
@@ -2298,7 +2316,7 @@ WCF.Date.Time = Class.extend({
 	 * Updates element collection once a DOM node was inserted.
 	 */
 	_domNodeInserted: function() {
-		this.elements = $('time.datetime');
+		this._elements = $('time.datetime');
 		this._refresh();
 	},
 	
@@ -2306,12 +2324,13 @@ WCF.Date.Time = Class.extend({
 	 * Refreshes relative datetime for each element.
 	 */
 	_refresh: function() {
-		// TESTING ONLY!
 		var $date = new Date();
-		this.timestamp = ($date.getTime() - $date.getMilliseconds()) / 1000;
-		// TESTING ONLY!
+		this._timestamp = ($date.getTime() - $date.getMilliseconds()) / 1000;
+		if (this._offset === null) {
+			this._offset = this._timestamp - TIME_NOW;
+		}
 		
-		this.elements.each($.proxy(this._refreshElement, this));
+		this._elements.each($.proxy(this._refreshElement, this));
 	},
 	
 	/**
@@ -2321,45 +2340,47 @@ WCF.Date.Time = Class.extend({
 	 * @param	object		element
 	 */
 	_refreshElement: function(index, element) {
-		if (!$(element).attr('title')) {
-			$(element).attr('title', $(element).text());
+		var $element = $(element);
+		
+		if (!$element.attr('title')) {
+			$element.attr('title', $element.text());
 		}
 		
-		var $timestamp = $(element).data('timestamp');
-		var $date = $(element).data('date');
-		var $time = $(element).data('time');
-		var $offset = $(element).data('offset');
+		var $timestamp = $element.data('timestamp') + this._offset;
+		var $date = $element.data('date');
+		var $time = $element.data('time');
+		var $offset = $element.data('offset');
 		
 		// timestamp is in the future
-		if ($timestamp > this.timestamp) {
+		if ($timestamp > this._timestamp) {
 			var $string = WCF.Language.get('wcf.date.dateTimeFormat');
-			$(element).text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
+			$element.text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
 		}
 		// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-		else if (this.timestamp < ($timestamp + 3540)) {
-			var $minutes = Math.round((this.timestamp - $timestamp) / 60);
-			$(element).text(eval(WCF.Language.get('wcf.date.relative.minutes')));
+		else if (this._timestamp < ($timestamp + 3540)) {
+			var $minutes = Math.round((this._timestamp - $timestamp) / 60);
+			$element.text(eval(WCF.Language.get('wcf.date.relative.minutes')));
 		}
 		// timestamp is less than 24 hours ago
-		else if (this.timestamp < ($timestamp + 86400)) {
-			var $hours = Math.round((this.timestamp - $timestamp) / 3600);
-			$(element).text(eval(WCF.Language.get('wcf.date.relative.hours')));
+		else if (this._timestamp < ($timestamp + 86400)) {
+			var $hours = Math.round((this._timestamp - $timestamp) / 3600);
+			$element.text(eval(WCF.Language.get('wcf.date.relative.hours')));
 		}
 		// timestamp is less than a week ago
-		else if (this.timestamp < ($timestamp + 604800)) {
-			var $days = Math.round((this.timestamp - $timestamp) / 86400);
+		else if (this._timestamp < ($timestamp + 604800)) {
+			var $days = Math.round((this._timestamp - $timestamp) / 86400);
 			var $string = eval(WCF.Language.get('wcf.date.relative.pastDays'));
 			
 			// get day of week
 			var $dateObj = WCF.Date.Util.getTimezoneDate(($timestamp * 1000), $offset);
 			var $dow = $dateObj.getDay();
 			
-			$(element).text($string.replace(/\%day\%/, WCF.Language.get('__days')[$dow]).replace(/\%time\%/, $time));
+			$element.text($string.replace(/\%day\%/, WCF.Language.get('__days')[$dow]).replace(/\%time\%/, $time));
 		}
 		// timestamp is between ~700 million years BC and last week
 		else {
 			var $string = WCF.Language.get('wcf.date.dateTimeFormat');
-			$(element).text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
+			$element.text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
 		}
 	}
 });
