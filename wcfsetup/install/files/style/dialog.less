@@ -180,17 +180,10 @@
 /* notification overlay */
 #systemNotification {
 	left: 0;
-	opacity: 0;
 	position: fixed;
 	top: 0;
 	width: 100%;
 	z-index: 460;
-	
-	.transition(opacity, .3s);
-	
-	&.open {
-		opacity: 1;
-	}
 	
 	> p {
 		border-top-left-radius: 0;

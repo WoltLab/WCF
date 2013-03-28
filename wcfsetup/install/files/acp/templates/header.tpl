@@ -11,6 +11,7 @@
 		var RELATIVE_WCF_DIR = '{@$__wcf->getPath()}';
 		var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
+		var TIME_NOW = {@TIME_NOW};
 		//]]>
 	</script>
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js"></script>
