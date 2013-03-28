@@ -2148,7 +2148,6 @@ WCF.Date.Picker = {
 		//
 		// No equivalence in jQuery UI date picker:
 		// N	ISO-8601 numeric representation of the day of the week
-		// S	English ordinal suffix for the day of the month, 2 characters
 		// w	Numeric representation of the day of the week
 		// W	ISO-8601 week number of year, weeks starting on Monday
 		// t	Number of days in the given month
@@ -2160,6 +2159,7 @@ WCF.Date.Picker = {
 			'j': 'd',
 			'l': 'DD',
 			'z': 'o',
+			'S': '', // English ordinal suffix for the day of the month, 2 characters, will be discarded
 
 			// month
 			'F': 'MM',
@@ -2179,7 +2179,7 @@ WCF.Date.Picker = {
 		// do the actual replacement
 		// this is not perfect, but a basic implementation and should work in 99% of the cases
 		// TODO: support literals (magics are escaped in PHP date() by an \, in jQuery UI DatePicker they are enclosed in '')
-		this._dateFormat = WCF.Language.get('wcf.date.dateFormat').replace(/([^dDjlzFmMnoYyU\\]*(?:\\.[^dDjlzFmMnoYyU\\]*)*)([dDjlzFmMnoYyU])/g, function(match, part1, part2, offset, string) {
+		this._dateFormat = WCF.Language.get('wcf.date.dateFormat').replace(/([^dDjlzSFmMnoYyU\\]*(?:\\.[^dDjlzSFmMnoYyU\\]*)*)([dDjlzSFmMnoYyU])/g, function(match, part1, part2, offset, string) {
 			for (var $key in $replacementTable) {
 				if (part2 == $key) {
 					part2 = $replacementTable[$key];
