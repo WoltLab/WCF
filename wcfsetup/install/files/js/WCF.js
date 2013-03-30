@@ -4756,7 +4756,7 @@ WCF.Search.Base = Class.extend({
 		this._itemIndex = -1;
 		
 		this._proxy = new WCF.Action.Proxy({
-			showLoadingOverlay: (showLoadingOverlay === false ? false : true),
+			showLoadingOverlay: (showLoadingOverlay !== true ? false : true),
 			success: $.proxy(this._success, this)
 		});
 		
