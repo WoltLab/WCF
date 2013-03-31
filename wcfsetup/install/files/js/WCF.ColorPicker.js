@@ -267,7 +267,7 @@ WCF.ColorPicker = Class.extend({
 			g: this._rgba.g.val(),
 			b: this._rgba.b.val()
 		});
-		$('#' + $element.data('store')).val('rgba(' + this._rgba.r.val() + ', ' + this._rgba.g.val() + ', ' + this._rgba.b.val() + ', ' + (this._rgba.a.val() / 100) + ')');
+		$('#' + $element.data('store')).val('rgba(' + this._rgba.r.val() + ', ' + this._rgba.g.val() + ', ' + this._rgba.b.val() + ', ' + (this._rgba.a.val() / 100) + ')').trigger('change');
 		
 		this._dialog.wcfDialog('close');
 	},
