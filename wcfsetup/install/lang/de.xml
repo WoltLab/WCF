@@ -402,9 +402,9 @@
 		<item name="wcf.acp.package.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[Das angegebene Archiv ist kein gültiges Paket.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Existierende Tabellen überschreiben]]></item>
-		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[Die oben genannten Tabellen existieren bereits und werden beim fortfahren der Installation überschrieben. Alle Daten dieser Tabellen gehen unwiderruflich verloren.]]></item>
+		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[Die oben genannten Tabellen existieren bereits und werden beim Fortfahren der Installation überschrieben. Alle Daten dieser Tabellen gehen unwiderruflich verloren.]]></item>
 		<item name="wcf.acp.package.error.sql.dropTable"><![CDATA[Existierende Tabellen löschen]]></item>
-		<item name="wcf.acp.package.error.sql.dropTable.description"><![CDATA[Die oben genannten Tabellen existieren bereits und werden beim fortfahren der Installation entfernt. Alle Daten dieser Tabellen gehen unwiderruflich verloren.]]></item>
+		<item name="wcf.acp.package.error.sql.dropTable.description"><![CDATA[Die oben genannten Tabellen existieren bereits und werden beim Fortfahren der Installation entfernt. Alle Daten dieser Tabellen gehen unwiderruflich verloren.]]></item>
 		<item name="wcf.acp.package.error.uniqueAlreadyInstalled"><![CDATA[Dieses Paket ist bereits installiert und kann nicht mehrfach installiert werden.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Bezeichner]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Eigenschaften]]></item>
