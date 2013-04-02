@@ -328,6 +328,12 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 				$object->update($this->parameters['data']);
 			}
 		}
+		
+		if (isset($this->parameters['counters'])) {
+			foreach ($this->objects as $object) {
+				$object->updateCounters($this->parameters['counters']);
+			}
+		}
 	}
 	
 	/**
