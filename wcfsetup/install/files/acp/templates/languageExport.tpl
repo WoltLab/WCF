@@ -14,8 +14,8 @@
 	<p class="success">{lang}wcf.acp.language.add.success{/lang}</p>
 {/if}
 
-{hascontent}
-	<div class="contentNavigation">
+<div class="contentNavigation">
+	{hascontent}
 		<nav>
 			<ul>
 				{content}
@@ -27,8 +27,8 @@
 				{/content}
 			</ul>
 		</nav>
-	</div>
-{/hascontent}
+	{/hascontent}
+</div>
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageExport' id=$languageID}{/link}">
 	<div class="container containerPadding marginTop">

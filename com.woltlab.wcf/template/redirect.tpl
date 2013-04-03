@@ -12,12 +12,10 @@
 
 {include file='header'}
 
-{event name='boxesTop'}
 <div class="{if !$status|empty}{@$status}{else}success{/if}">
 	<p>{@$message}</p>
 	<a href="{$url}">{lang}wcf.global.redirect.url{/lang}</a>
 </div>
-{event name='boxesBottom'}
 
 {include file='footer'}
 

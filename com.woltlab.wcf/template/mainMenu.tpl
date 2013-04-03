@@ -7,6 +7,6 @@
 				*}{foreach from=$__wcf->getPageMenu()->getMenuItems($menuItem->menuItem) item=subMenuItem}{*
 					*}<li{if $__wcf->getPageMenu()->getActiveMenuItem(1) == $subMenuItem->menuItem} class="active"{/if}><a href="{$subMenuItem->getProcessor()->getLink()}"><span>{lang}{$subMenuItem->menuItem}{/lang}</span></a>{if $subMenuItem->getProcessor()->getNotifications()} <span class="badge badgeUpdate">{#$subMenuItem->getProcessor()->getNotifications()}</span>{/if}</li>{*
 				*}{/foreach}{*
-		*}</ul>{/if}</li>{/foreach}</ul>
+		*}{event name='items'}</ul>{/if}</li>{/foreach}</ul>
 	</nav>
 {/if}

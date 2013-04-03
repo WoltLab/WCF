@@ -14,8 +14,8 @@
 	<p class="success">{lang}wcf.acp.option.import.success{/lang}</p>
 {/if}
 
-{hascontent}
-	<div class="contentNavigation">
+<div class="contentNavigation">
+	{hascontent}
 		<nav>
 			<ul>
 				{content}
@@ -23,8 +23,8 @@
 				{/content}
 			</ul>
 		</nav>
-	</div>
-{/hascontent}
+	{/hascontent}
+</div>
 
 <form method="post" action="{link controller='OptionImport'}{/link}" enctype="multipart/form-data">
 	<div class="container containerPadding marginTop">

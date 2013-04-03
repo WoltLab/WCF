@@ -14,19 +14,19 @@
 	</hgroup>
 </header>
 
-{hascontent}
-	<div class="contentNavigation">
+<p class="info marginTop">{lang}wcf.acp.group.option.hint{/lang}</p>
+
+<div class="contentNavigation">
+	{hascontent}
 		<nav>
 			<ul>
 				{content}
-					{event name='contentNavigationButtons'}
+					{event name='contentNavigationButtonsTop'}
 				{/content}
 			</ul>
 		</nav>
-	</div>
-{/hascontent}
-
-<p class="info marginTop">{lang}wcf.acp.group.option.hint{/lang}</p>
+	{/hascontent}
+</div>
 
 <form method="post" action="{link controller='UserGroupOption'}{/link}" class="marginTop">
 	<fieldset id="defaultValueContainer">
@@ -57,6 +57,16 @@
 	</div>
 </form>
 
-<div class="contentNavigation"></div>
+<div class="contentNavigation">
+	{hascontent}
+		<nav>
+			<ul>
+				{content}
+					{event name='contentNavigationButtonsBottom'}
+				{/content}
+			</ul>
+		</nav>
+	{/hascontent}
+</div>
 
 {include file='footer'}

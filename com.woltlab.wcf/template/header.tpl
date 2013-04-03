@@ -17,9 +17,11 @@
 		<div id="logo" class="logo">
 			<a href="{link}{/link}">
 				<img src="{@$__wcf->getPath('wbb')}images/wbbLogo2.svg" alt="" style="height: 90px; width: 246px;" />
-				{*event name='headerLogo'*}
+				{event name='headerLogo'}
 			</a>
 		</div>
+		
+		{event name='headerContents'}
 		
 		{include file='mainMenu'}
 		
@@ -41,7 +43,11 @@
 		{if $sidebar|isset}
 			<aside class="sidebar"{if $sidebarOrientation|isset && $sidebarOrientation == 'right'} data-is-open="{if $sidebarCollapsed}false{else}true{/if}" data-sidebar-name="{$sidebarName}"{/if}>
 				<div>
+					{event name='sidebarBoxesTop'}
+					
 					{@$sidebar}
+					
+					{event name='sidebarBoxesBottom'}
 				</div>
 			</aside>
 			
@@ -57,6 +63,8 @@
 		{/if}
 				
 		<section id="content" class="content clearfix">
+			
+			{event name='contents'}
 			
 			{if $skipBreadcrumbs|empty}{include file='breadcrumbs'}{/if}
 			

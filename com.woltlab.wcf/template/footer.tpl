@@ -1,3 +1,5 @@
+			{event name='contents'}
+			
 			{if $skipBreadcrumbs|empty}{include file='breadcrumbs' __microdata=false}{/if}
 			
 		</section>
@@ -23,11 +25,15 @@
 		</nav>
 		
 		<div class="footerContent">
+			{event name='footerContents'}
+			
 			{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
 		
 			{event name='copyright'}
 		</div>
 	</div>
 </footer>
+
+{event name='footer'}
 
 <a id="bottom"></a>

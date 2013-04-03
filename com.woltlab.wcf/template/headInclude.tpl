@@ -3,6 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 <meta name="format-detection" content="telephone=no" />
 {implode from=$__wcf->getMetaTagHandler() item=__metaTag glue="\n"}{@$__metaTag}{/implode}
+{event name='metaTags'}
 
 <script type="text/javascript">
 	//<![CDATA[
@@ -27,6 +28,7 @@
 
 <!-- Stylesheets -->
 {@$__wcf->getStyleHandler()->getStylesheet()}
+{event name='stylesheets'}
 
 <noscript>
 	<style type="text/css">

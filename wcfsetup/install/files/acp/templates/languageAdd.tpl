@@ -23,8 +23,8 @@
 	<p class="success">{lang}wcf.global.success.add{/lang}</p>
 {/if}
 
-{hascontent}
-	<div class="contentNavigation">
+<div class="contentNavigation">
+	{hascontent}
 		<nav>
 			<ul>
 				{content}
@@ -36,8 +36,8 @@
 				{/content}
 			</ul>
 		</nav>
-	</div>
-{/hascontent}
+	{/hascontent}
+</div>
 
 <form enctype="multipart/form-data" method="post" action="{link controller='LanguageAdd'}{/link}">
 	<div class="container containerPadding marginTop">
