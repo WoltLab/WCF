@@ -141,7 +141,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 			));
 				
 			// calculate next exec-time
-			if (!$this->isDisabled) {
+			if (!$cronjob->isDisabled) {
 				$nextExec = $cronjob->getNextExec();
 				$cronjob->update(array(
 					'nextExec' => $nextExec, 
