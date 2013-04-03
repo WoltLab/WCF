@@ -20,10 +20,11 @@
 			success: function(data, statusText, jqXHR) {
 				$('.jsCronjobRow').each(function(index, row) {
 					var $button = $(row).find('.jsExecuteButton');
+					var $objectID = $($button).data('objectID');
 					
-					if (WCF.inArray($($button).data('objectID'), data.objectIDs)) {
+					if (WCF.inArray($objectID, data.objectIDs) && data.returnValues[$objectID] && data.returnValues[$objectID].formatted) {
 						// insert feedback here
-						$(row).find('td.columnNextExec').html(data.returnValues[$($button).data('objectID')].formatted);
+						$(row).find('td.columnNextExec').html(data.returnValues[$objectID].formatted);
 						$(row).wcfHighlight();
 					}
 				});
