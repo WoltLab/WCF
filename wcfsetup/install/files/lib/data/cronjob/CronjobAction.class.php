@@ -141,26 +141,28 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 			));
 				
 			// calculate next exec-time
-			$nextExec = $cronjob->getNextExec();
-			$cronjob->update(array(
-				'nextExec' => $nextExec, 
-				'afterNextExec' => $cronjob->getNextExec(($nextExec + 120))
-			));
-			
-			// build the return value
-			$dateTime = DateUtil::getDateTimeByTimestamp($nextExec);
-			$return[$cronjob->cronjobID] = array(
-				'time' => $nextExec,
-				'formatted' => str_replace(
-					'%time%', 
-					DateUtil::format($dateTime, DateUtil::TIME_FORMAT), 
-					str_replace(
-						'%date%', 
-						DateUtil::format($dateTime, DateUtil::DATE_FORMAT), 
-						WCF::getLanguage()->get('wcf.date.dateTimeFormat')
+			if (!$this->isDisabled) {
+				$nextExec = $cronjob->getNextExec();
+				$cronjob->update(array(
+					'nextExec' => $nextExec, 
+					'afterNextExec' => $cronjob->getNextExec(($nextExec + 120))
+				));
+
+				// build the return value
+				$dateTime = DateUtil::getDateTimeByTimestamp($nextExec);
+				$return[$cronjob->cronjobID] = array(
+					'time' => $nextExec,
+					'formatted' => str_replace(
+						'%time%', 
+						DateUtil::format($dateTime, DateUtil::TIME_FORMAT), 
+						str_replace(
+							'%date%', 
+							DateUtil::format($dateTime, DateUtil::DATE_FORMAT), 
+							WCF::getLanguage()->get('wcf.date.dateTimeFormat')
+						)
 					)
-				)
-			);
+				);
+			}
 			
 			// we are finished
 			$cronjob->update(array('state' => Cronjob::READY));
