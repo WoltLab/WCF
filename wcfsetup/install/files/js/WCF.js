@@ -1489,7 +1489,7 @@ WCF.Action.Proxy = Class.extend({
 		this.confirmationDialog = null;
 		this.loading = null;
 		this._showLoadingOverlayOnce = false;
-		this._suppressErrors = (this.options === true);
+		this._suppressErrors = (this.options.suppressErrors === true);
 		
 		// send request immediately after initialization
 		if (this.options.autoSend) {
@@ -5506,13 +5506,14 @@ WCF.System.KeepAlive = Class.extend({
 	 * @param	integer		seconds
 	 */
 	init: function(seconds) {
-		new WCF.PeriodicalExecuter(function() {
+		new WCF.PeriodicalExecuter(function(pe) {
 			new WCF.Action.Proxy({
 				autoSend: true,
 				data: {
 					actionName: 'keepAlive',
 					className: 'wcf\\data\\session\\SessionAction'
 				},
+				failure: function() { pe.stop(); },
 				showLoadingOverlay: false,
 				suppressErrors: true
 			});
