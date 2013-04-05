@@ -62,6 +62,10 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 			$value = StringUtil::encodeHTML($value);
 		}
 		
+		if (!isset($this->objects[$identifier])) {
+			$this->indexToObject[] = $identifier;
+		}
+		
 		$this->objects[$identifier] = array(
 			'isProperty' => $isProperty,
 			'name' => $name,
@@ -71,9 +75,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 		// replace description if Open Graph Protocol tag was given
 		if ($name == 'og:description') {
 			$this->objects['description']['value'] = $value;
-		}
-		
-		$this->indexToObject[] = $identifier;
+		}		
 	}
 	
 	/**
@@ -136,3 +138,4 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 		return isset($this->indexToObject[$this->index]);
 	}
 }
+
