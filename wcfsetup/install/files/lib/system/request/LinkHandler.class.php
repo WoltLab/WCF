@@ -66,7 +66,7 @@ class LinkHandler extends SingletonFactory {
 				$appendSession = false;
 			}
 		}
-		if (isset($parameters['forceFrontend'])) {{
+		if (isset($parameters['forceFrontend'])) {
 			$isACP = false;
 			$appendSession = false;
 		}
