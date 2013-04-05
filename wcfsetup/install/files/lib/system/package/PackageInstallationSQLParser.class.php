@@ -218,7 +218,7 @@ class PackageInstallationSQLParser extends SQLParser {
 		$sql = "SELECT	packageID
 			FROM	wcf".WCF_N."_package_installation_sql_log
 			WHERE	sqlTable = ?
-				AND sqlColum = ?";
+				AND sqlColumn = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			$tableName,
