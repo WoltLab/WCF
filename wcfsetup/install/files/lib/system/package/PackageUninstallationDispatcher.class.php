@@ -7,6 +7,7 @@ use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageCacheBuilder;
 use wcf\system\cache\CacheHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -14,6 +15,7 @@ use wcf\system\package\plugin\ObjectTypePackageInstallationPlugin;
 use wcf\system\package\plugin\SQLPackageInstallationPlugin;
 use wcf\system\setup\Uninstaller;
 use wcf\system\style\StyleHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -87,6 +89,8 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			
 			// reset user storage
 			UserStorageHandler::getInstance()->resetAll();
+			
+			EventHandler::getInstance()->fireAction($this, 'postUninstall');
 		}
 		
 		if ($this->requireRestructureVersionTables) {

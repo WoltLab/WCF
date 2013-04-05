@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\package;
-use wcf\system\user\storage\UserStorageHandler;
-
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\category\LanguageCategory;
@@ -18,6 +16,7 @@ use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\form\container\GroupFormElementContainer;
 use wcf\system\form\container\MultipleSelectionFormElementContainer;
@@ -32,6 +31,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\setup\Installer;
 use wcf\system\style\StyleHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\version\VersionHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -179,6 +179,8 @@ class PackageInstallationDispatcher {
 			
 			// reset user storage
 			UserStorageHandler::getInstance()->resetAll();
+			
+			EventHandler::getInstance()->fireAction($this, 'postInstall');
 		}	
 		
 		if ($this->requireRestructureVersionTables) {
