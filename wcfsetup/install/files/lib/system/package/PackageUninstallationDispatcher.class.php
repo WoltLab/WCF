@@ -84,6 +84,9 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			
 			// rebuild application paths
 			ApplicationHandler::rebuild();
+			
+			// reset user storage
+			UserStorageHandler::getInstance()->resetAll();
 		}
 		
 		if ($this->requireRestructureVersionTables) {

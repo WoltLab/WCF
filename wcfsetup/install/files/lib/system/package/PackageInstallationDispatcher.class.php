@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\package;
+use wcf\system\user\storage\UserStorageHandler;
+
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
 use wcf\data\language\category\LanguageCategory;
@@ -174,6 +176,9 @@ class PackageInstallationDispatcher {
 			
 			// reset stylesheets
 			StyleHandler::resetStylesheets();
+			
+			// reset user storage
+			UserStorageHandler::getInstance()->resetAll();
 		}	
 		
 		if ($this->requireRestructureVersionTables) {
