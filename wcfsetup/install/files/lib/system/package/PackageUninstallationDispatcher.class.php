@@ -87,15 +87,15 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 			// rebuild application paths
 			ApplicationHandler::rebuild();
 			
-			// reset user storage
-			UserStorageHandler::getInstance()->resetAll();
+			// clear user storage
+			UserStorageHandler::getInstance()->clear();
 			
 			EventHandler::getInstance()->fireAction($this, 'postUninstall');
 		}
 		
 		if ($this->requireRestructureVersionTables) {
 			$this->restructureVersionTables();
-		}		
+		}
 		
 		// return next node
 		return $node;

@@ -177,15 +177,15 @@ class PackageInstallationDispatcher {
 			// reset stylesheets
 			StyleHandler::resetStylesheets();
 			
-			// reset user storage
-			UserStorageHandler::getInstance()->resetAll();
+			// clear user storage
+			UserStorageHandler::getInstance()->clear();
 			
 			EventHandler::getInstance()->fireAction($this, 'postInstall');
-		}	
+		}
 		
 		if ($this->requireRestructureVersionTables) {
 			$this->restructureVersionTables();
-		}			
+		}
 		
 		return $step;
 	}
@@ -984,7 +984,7 @@ class PackageInstallationDispatcher {
 		$versionTableBaseColumns[] = array('name' => 'versionUsername', 'data' => array('type' => 'VARCHAR', 'length' => 255));
 		$versionTableBaseColumns[] = array('name' => 'versionTime', 'data' => array('type' => 'INT'));
 		
-		foreach ($objectTypes as $objectTypeID => $objectType) {
+		foreach ($objectTypes as $objectType) {
 			// get structure of base table
 			$baseTableColumns = WCF::getDB()->getEditor()->getColumns($objectType::getDatabaseTableName());
 			// get structure of version table
