@@ -188,6 +188,15 @@
 		<item name="wcf.acp.language.users"><![CDATA[Used by]]></item>
 	</category>
 	
+	<category name="wcf.acp.languageServer">
+		<item name="wcf.acp.languageServer.list"><![CDATA[Language Server]]></item>
+		<item name="wcf.acp.languageServer.add"><![CDATA[Add Server]]></item>
+		<item name="wcf.acp.languageServer.data"><![CDATA[Server Data]]></item>
+		<item name="wcf.acp.languageServer.server"><![CDATA[Address]]></item>
+		<item name="wcf.acp.languageServer.server.description"><![CDATA[Please enter the URL to a language server.]]></item>
+		<item name="wcf.acp.languageServer.view.noneAvailable"><![CDATA[There are no language server available.]]></item>
+	</category>
+	
 	<category name="wcf.acp.masterPassword">
 		<item name="wcf.acp.masterPassword"><![CDATA[Master Password]]></item>
 		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Confirm Master Password]]></item>
@@ -228,6 +237,7 @@
 		<item name="wcf.acp.menu.link.option"><![CDATA[Options]]></item>
 		<item name="wcf.acp.menu.link.option.importAndExport"><![CDATA[Import &amp; Export]]></item>
 		<item name="wcf.acp.menu.link.package"><![CDATA[Packages]]></item>
+		<item name="wcf.acp.menu.link.package.autoupdate"><![CDATA[Automatic Update]]></item>
 		<item name="wcf.acp.menu.link.package.install"><![CDATA[Install Package]]></item>
 		<item name="wcf.acp.menu.link.package.server.list"><![CDATA[List Update Servers]]></item>
 		<item name="wcf.acp.menu.link.package.list"><![CDATA[List Packages]]></item>
@@ -269,6 +279,11 @@
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcached"><![CDATA[Memcached]]></item>
 		<item name="wcf.acp.option.category.general.cache.memcached.description"><![CDATA[Memcached uses the machine’s memory to store frequently accessed data, reducing database and filesystem load. Read more about Memcached on <a href="http://memcached.org/" class="externalURL">memcached.org</a>.]]></item>
+		<item name="wcf.acp.option.category.general.mail"><![CDATA[Emails]]></item>
+		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
+		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Sending]]></item>
+		<item name="wcf.acp.option.category.general.offline"><![CDATA[Maintenance Mode]]></item>
+		<item name="wcf.acp.option.category.general.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.option.category.general.system.date"><![CDATA[Date &amp; Time]]></item>
 		<item name="wcf.acp.option.category.general.system.image"><![CDATA[Graphics]]></item>
 		<item name="wcf.acp.option.category.general.system"><![CDATA[System]]></item>
@@ -276,10 +291,6 @@
 		<item name="wcf.acp.option.category.general.system.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy-Server]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Optionally provide a Proxy-Server for outgoing connections..]]></item>
-		<item name="wcf.acp.option.category.general.mail"><![CDATA[Emails]]></item>
-		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
-		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Sending]]></item>
-		<item name="wcf.acp.option.category.general.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.option.category.message"><![CDATA[Messages]]></item>
 		<item name="wcf.acp.option.category.message.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.module"><![CDATA[Module]]></item>
@@ -289,14 +300,13 @@
 		<item name="wcf.acp.option.category.module.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.option.category.module.display"><![CDATA[Appearance]]></item>
 		<item name="wcf.acp.option.category.security"><![CDATA[Security]]></item>
+		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.blacklist"><![CDATA[Blacklist]]></item>
+		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Censorship]]></item>
 		<item name="wcf.acp.option.category.security.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.security.general.session"><![CDATA[Sessions]]></item>
-		<item name="wcf.acp.option.category.general.offline"><![CDATA[Maintenance Mode]]></item>
 		<item name="wcf.acp.option.category.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.option.category.user.general"><![CDATA[General]]></item>
-		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
-		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Censorship]]></item>
 		
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookie Domain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Should be left blank except for special circumstances.]]></item>
@@ -449,6 +459,11 @@
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
 	</category>
 	
+	<category name="wcf.acp.packageUpdate">
+		<item name="wcf.acp.packageUpdate"><![CDATA[Update packages]]></item>
+		<item name="wcf.acp.packageUpdate.noneAvailable"><![CDATA[There are currently no updates available.]]></item>
+	</category>
+	
 	<category name="wcf.acp.pageMenu">
 		<item name="wcf.acp.pageMenu.add"><![CDATA[Add Menu Item]]></item>
 		<item name="wcf.acp.pageMenu.advanced"><![CDATA[Advanced]]></item>
@@ -575,6 +590,8 @@
 		<item name="wcf.acp.style.globals.fontFamily"><![CDATA[Font]]></item>
 		<item name="wcf.acp.style.globals.fontSize"><![CDATA[Font Size]]></item>
 		<item name="wcf.acp.style.globals.layout"><![CDATA[Layout]]></item>
+		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Logo]]></item>
+		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[You can display a logo within the upper page-header area. Note: Excessively large images will be cropped!]]></item>
 		<item name="wcf.acp.style.globals.useFluidLayout"><![CDATA[Use fluid width]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Preview Image]]></item>
 		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102px × 64px, exceeding images will be scaled.]]></item>
