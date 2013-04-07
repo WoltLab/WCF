@@ -4792,7 +4792,8 @@ WCF.Search.Base = Class.extend({
 		
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: (showLoadingOverlay !== true ? false : true),
-			success: $.proxy(this._success, this)
+			success: $.proxy(this._success, this),
+			autoAbortPrevious: true
 		});
 		
 		if (this._searchInput.is('input')) {
