@@ -1465,6 +1465,12 @@ WCF.Action.Proxy = Class.extend({
 	_suppressErrors: false,
 	
 	/**
+	 * last request
+	 * @var	jqXHR
+	 */
+	_lastRequest: null,
+	
+	/**
 	 * Initializes AJAXProxy.
 	 * 
 	 * @param	object		options
@@ -1483,7 +1489,9 @@ WCF.Action.Proxy = Class.extend({
 			success: null,
 			suppressErrors: false,
 			type: 'POST',
-			url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
+			aborted: null,
+			autoAbortPrevious: false
 		}, options);
 		
 		this.confirmationDialog = null;
@@ -1502,11 +1510,18 @@ WCF.Action.Proxy = Class.extend({
 	
 	/**
 	 * Sends an AJAX request.
+	 * 
+	 * @param	abortPrevious	boolean
+	 * @return	jqXHR
 	 */
-	sendRequest: function() {
+	sendRequest: function(abortPrevious) {
 		this._init();
 		
-		$.ajax({
+		if (abortPrevious || this.options.autoAbortPrevious) {
+			this.abortPrevious();
+		}
+		
+		this._lastRequest = $.ajax({
 			data: this.options.data,
 			dataType: this.options.dataType,
 			jsonp: this.options.jsonp,
@@ -1515,6 +1530,16 @@ WCF.Action.Proxy = Class.extend({
 			success: $.proxy(this._success, this),
 			error: $.proxy(this._failure, this)
 		});
+		return this._lastRequest;
+	},
+	
+	/**
+	 * Aborts the previous request
+	 */
+	abortPrevious: function() {
+		if (this._lastRequest !== null) {
+			this._lastRequest.abort();
+		}
 	},
 	
 	/**
@@ -1552,6 +1577,15 @@ WCF.Action.Proxy = Class.extend({
 	 * @param	string		errorThrown
 	 */
 	_failure: function(jqXHR, textStatus, errorThrown) {
+		if (textStatus == 'abort') {
+			// call child method if applicable
+			if ($.isFunction(this.options.aborted)) {
+				this.options.aborted(jqXHR);
+			}
+			
+			return;
+		}
+		
 		try {
 			var $data = $.parseJSON(jqXHR.responseText);
 			
@@ -1604,6 +1638,7 @@ WCF.Action.Proxy = Class.extend({
 	 * Fires after an AJAX request, hides global loading status.
 	 */
 	_after: function() {
+		this._lastRequest = null;
 		if ($.isFunction(this.options.after)) {
 			this.options.after();
 		}
