@@ -620,6 +620,8 @@ CREATE TABLE wcf1_user (
 	languageID INT(10) NOT NULL DEFAULT 0,
 	registrationDate INT(10) NOT NULL DEFAULT 0,
 	styleID INT(10) NOT NULL DEFAULT 0,
+	banned TINYINT(1) NOT NULL DEFAULT 0,
+	banReason MEDIUMTEXT NULL,
 	
 	KEY username (username),
 	KEY registrationDate (registrationDate),

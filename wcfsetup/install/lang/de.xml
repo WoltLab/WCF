@@ -982,5 +982,6 @@
 		<item name="wcf.user.option.error.tooLong"><![CDATA[Der eingegebene Text ist zu lang.]]></item>
 		<item name="wcf.user.option.error.tooShort"><![CDATA[Der eingegebene Text ist zu kurz.]]></item>
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
+		<item name="wcf.user.error.isBanned"><![CDATA[Ihr Benutzeraccount wurde gesperrt{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
 	</category>
 </language>

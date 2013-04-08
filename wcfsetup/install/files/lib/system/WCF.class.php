@@ -8,7 +8,9 @@ use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
+use wcf\system\exception\AJAXException;
 use wcf\system\exception\IPrintableException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -367,6 +369,16 @@ class WCF {
 		if (defined('BLACKLIST_HOSTNAMES') && BLACKLIST_HOSTNAMES != '') {
 			if (!StringUtil::executeWordFilter(@gethostbyaddr(self::getSession()->ipAddress), BLACKLIST_HOSTNAMES)) {
 				throw new PermissionDeniedException();
+			}
+		}
+		
+		// handle banned users
+		if (WCF::getUser()->userID && WCF::getUser()->banned) {
+			if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
+				throw new AJAXException(WCF::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'), AJAXException::INSUFFICIENT_PERMISSIONS);
+			}
+			else {
+				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'));
 			}
 		}
 	}

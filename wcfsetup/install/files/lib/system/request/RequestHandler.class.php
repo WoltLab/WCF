@@ -51,7 +51,7 @@ class RequestHandler extends SingletonFactory {
 		// handle offline mode
 		if (!$isACPRequest && defined('OFFLINE') && OFFLINE) {
 			if (!WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode') && !$this->activeRequest->isAvailableDuringOfflineMode()) {
-				if (isset($_SERVER['X-Requested-With']) && ($_SERVER['X-Requested-With'] == 'XMLHttpRequest')) {
+				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
 					throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
 				else {
