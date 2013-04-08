@@ -1539,6 +1539,7 @@ WCF.Action.Proxy = Class.extend({
 	abortPrevious: function() {
 		if (this._lastRequest !== null) {
 			this._lastRequest.abort();
+			this._lastRequest = null;
 		}
 	},
 	
