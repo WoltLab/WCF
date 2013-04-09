@@ -3,7 +3,7 @@
 	padding: 0 @wcfLayoutFluidGap;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.layoutFluid {
 		padding: 0;
 	}
@@ -14,7 +14,7 @@
 	width: @wcfLayoutFixedWidth;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.layoutFixed {
 		width: auto;
 	}
@@ -26,7 +26,7 @@
 	z-index: 100;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	#pageHeader {
 		margin-top: 48px;
 	}
@@ -148,7 +148,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.userPanel {
 		height: auto;
 		
@@ -240,7 +240,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.logo {
 		display: none;
 	}
@@ -293,7 +293,7 @@
 }
 
 /* main menu */
-@media only screen and (min-width: 641px) {
+@media only screen and (min-width: 769px) {
 	.mainMenu {
 		> ul {
 			background-color: @wcfMainMenuBackgroundColor;
@@ -342,7 +342,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.mainMenu {
 		position: relative;
 		
@@ -389,8 +389,14 @@
 					}
 				}
 			}
-			
-			
+		}
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 768px) {
+	.mainMenu {
+		> .invisible {
+			margin-left: @wcfGapMedium;
 		}
 	}
 }
@@ -463,7 +469,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.navigation {
 		> ul.navigationIcons,
 		> ul.navigationItems,
@@ -484,7 +490,7 @@
 	border-top: 1px solid @wcfContainerBorderColor;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.navigationHeader {
 		background-color: transparent;
 		border: 0;
@@ -510,7 +516,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.footerContent {
 		margin: 0 @wcfGapMedium;
 	}
@@ -615,7 +621,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	/* hide sidebar */
 	#main {
 		position: relative;
@@ -684,6 +690,15 @@
 	}
 }
 
+@media only screen and (min-width: 769px) and (max-width: 1239px) {
+	#main {
+		> div > .content {
+			padding-left: @wcfGapLarge + @wcfGapSmall;
+			padding-right: @wcfGapLarge + @wcfGapSmall;
+		}
+	}
+}
+
 /* basic layout elements */
 .boxHeadline {
 	margin-top: @wcfGapMedium;
@@ -725,11 +740,18 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.boxHeadline {
 		margin-top: @wcfGapSmall;
 		margin-left: @wcfGapSmall;
 		margin-right: @wcfGapSmall;
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 768px) {
+	.boxHeadline {
+		margin-left: @wcfGapMedium;
+		margin-right: @wcfGapMedium;
 	}
 }
 
@@ -759,13 +781,20 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.contentNavigation {
 		box-sizing:border-box;
 		-moz-box-sizing:border-box;
 		-webkit-box-sizing:border-box;
 		padding-left: @wcfGapSmall;
 		padding-right: @wcfGapSmall;
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 768px) {
+	.contentNavigation {
+		padding-left: @wcfGapMedium;
+		padding-right: @wcfGapMedium;
 	}
 }
 
@@ -778,13 +807,20 @@
 	padding: @wcfGapMedium @wcfGapLarge @wcfGapMedium;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.container {
 		border-width: 1px 0;
 	}
 	
 	.containerPadding {
 		padding: @wcfGapSmall;
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 768px) {
+	.containerPadding {
+		padding-left: @wcfGapMedium;
+		padding-right: @wcfGapMedium;
 	}
 }
 
@@ -875,7 +911,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.containerList {
 		> li {
 			padding: @wcfGapSmall;
@@ -899,6 +935,14 @@
 					margin-left: 0;
 				}
 			}
+		}
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 768px) {
+	.containerList {
+		> li {
+			padding: @wcfGapSmall @wcfGapMedium;
 		}
 	}
 }
@@ -1006,7 +1050,7 @@
 	}
 }
 
-@media only screen and (min-width: 641px) {
+@media only screen and (min-width: 769px) {
 	.containerBoxList {
 		&.doubleColumned,
 		&.tripleColumned {
@@ -1111,7 +1155,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.content > .breadcrumbs {
 		display: none;
 	}
@@ -1256,7 +1300,7 @@
 	margin-bottom: @wcfGapSmall;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.tabMenu {
 		> ul {
 			margin-left: @wcfGapTiny;
@@ -1330,13 +1374,20 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.tabularBox {
 		border-width: 1px 0;
 	}
 	
 	.tabularBoxTitle {
 		border-top-width: 0;
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 768px) {
+	.tabularBoxTitle > hgroup {
+		padding-left: @wcfGapMedium;
+		padding-right: @wcfGapMedium;
 	}
 }
 
@@ -1705,7 +1756,7 @@ ul.inlineDataList {
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 	.pageNavigation {
 		> ul > li {
 			&:not(.skip):not(.active) {
