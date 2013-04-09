@@ -994,7 +994,5 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisable
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledColor', 'rgba(0, 153, 0, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoHeight', 'auto');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoWidth', 'auto');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideLess', '');
