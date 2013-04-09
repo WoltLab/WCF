@@ -422,7 +422,6 @@
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Benötigte Version]]></item>
 		<item name="wcf.acp.package.license"><![CDATA[Lizenz]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Paketliste]]></item>
-		<item name="wcf.acp.package.list.detailed"><![CDATA[Detaillierte Paketliste]]></item>
 		<item name="wcf.acp.package.name"><![CDATA[Paket]]></item>
 		<item name="wcf.acp.package.packageDate"><![CDATA[Erstellungsdatum]]></item>
 		<item name="wcf.acp.package.packageDir.notAvailable"><![CDATA[Das angegebene Verzeichnis enthält bereits eine Anwendung.]]></item>
@@ -445,12 +444,6 @@
 		<item name="wcf.acp.package.type.application"><![CDATA[Anwendung]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Erweiterung]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren?]]></item>
-		<item name="wcf.acp.package.uninstallation.confirmDependentPackages"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren? Beachten Sie bitte, dass die folgenden Pakete ebenfalls deinstalliert werden:
-<ul>
-	{foreach from=$package->getDependentPackages() item=dependentPackage}
-		<li><a href="{link controller='Package' object=$dependentPackage}{/link}">{$dependentPackage}</a></li>
-	{/foreach}
-</ul>]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installationsverzeichnis]]></item>
@@ -479,7 +472,6 @@
 		<item name="wcf.acp.pageMenu.menuPosition.header"><![CDATA[Hauptmenü]]></item>
 		<item name="wcf.acp.pageMenu.pageMenuItem"><![CDATA[Name]]></item>
 		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
-		<item name="wcf.acp.pageMenu.setAsLandingPage"><![CDATA[Als Startseite festlegen]]></item>
 		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Reihenfolge]]></item>
 	</category>
 	
