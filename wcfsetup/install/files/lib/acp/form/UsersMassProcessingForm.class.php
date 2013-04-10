@@ -301,7 +301,10 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @todo	add documentation
+	 * Fetches a list of users.
+	 * 
+	 * @param	mixed		$loopFunction
+	 * @return	array<integer>
 	 */
 	protected function fetchUsers($loopFunction = null) {
 		// select users

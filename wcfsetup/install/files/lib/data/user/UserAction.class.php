@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Executes user-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
@@ -245,7 +245,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$sql = "SELECT	userID, username
 			FROM	wcf".WCF_N."_user
 			".$conditionBuilder;
-		$statement = WCF::getDB()->prepareStatement($sql, 10); /* TODO: add limit parameter */
+		$statement = WCF::getDB()->prepareStatement($sql, 10);
 		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
 			$list[] = array(
