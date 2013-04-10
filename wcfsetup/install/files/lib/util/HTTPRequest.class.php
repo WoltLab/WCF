@@ -215,7 +215,7 @@ final class HTTPRequest {
 				
 				$newRequest = clone $this;
 				$newRequest->options['maxDepth']--;
-				if ($this->statusCode != '307') {
+				if ($this->statusCode != '303') {
 					$newRequest->options['method'] = 'GET';
 					$newRequest->postParameters = array();
 					$newRequest->addHeader('Content-length', '');
