@@ -837,8 +837,6 @@
 }
 
 .containerHeadline {
-	margin-bottom: @wcfGapSmall;
-	
 	> h1 {
 		font-size: @wcfTitleFontSize;
 		font-weight: bold;
@@ -857,6 +855,10 @@
 	
 	> h1, > h1 > a {
 		.textShadow(@wcfContainerBackgroundColor);
+	}
+	
+	+ * {
+		margin-top: @wcfGapSmall;
 	}
 }
 
