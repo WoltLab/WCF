@@ -470,11 +470,22 @@
 }
 
 @media only screen and (max-width: 768px) {
-	.navigation {
+	.navigation.navigationHeader {
 		> ul.navigationIcons,
 		> ul.navigationItems,
 		> ul.navigationMenuItems {
 			display: none;
+		}
+	}
+	
+	.navigation.navigationFooter {
+		> ul.navigationIcons,
+		> ul.navigationItems {
+			display: none;
+		}
+		
+		> ul.navigationMenuItems > li {
+			margin: 4px 7px 4px 0;
 		}
 	}
 }
