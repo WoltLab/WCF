@@ -4235,7 +4235,16 @@ WCF.Effect.BalloonTooltip = Class.extend({
 		}
 		
 		// calculate top offset
-		var $top = $elementOffsets.top + $elementDimensions.height + 7;
+		if ($elementOffsets.top + $elementDimensions.height + $tooltipDimensions.height - $(document).scrollTop() < $(window).height()) {
+			var $top = $elementOffsets.top + $elementDimensions.height + 7;
+			this._tooltip.removeClass('inverse');
+			$arrow.css('top', -5);
+		}
+		else {
+			var $top = $elementOffsets.top - $elementDimensions.height - 7;
+			this._tooltip.addClass('inverse');
+			$arrow.css('top', $tooltipDimensions.height);
+		}
 		
 		// calculate left offset
 		switch ($alignment) {

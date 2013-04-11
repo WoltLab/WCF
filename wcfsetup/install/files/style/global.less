@@ -164,8 +164,6 @@ body > iframe[src="about:blank"] {
 	z-index: 800;
 	
 	.borderRadius(6px);
-	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
-	
 	.pointer {
 		border-color: @wcfTooltipBackgroundColor transparent;
 		border-style: solid;
@@ -173,6 +171,15 @@ body > iframe[src="about:blank"] {
 		left: 50%;
 		position: absolute;
 		top: -5px;
+	}
+	
+	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
+	
+	&.inverse {
+		.boxShadow(0, -3px, rgba(0, 0, 0, .3), 7px);
+		.pointer {
+			border-width: 5px 5px 0;
+		}
 	}
 }
 
