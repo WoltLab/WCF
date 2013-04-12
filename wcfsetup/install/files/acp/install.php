@@ -5,6 +5,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\session\SessionHandler;
 use wcf\system\template\ACPTemplateEngine;
 use wcf\system\WCF;
+use wcf\util\DateUtil;
 
 /**
  * @author	Marcel Werk
@@ -68,7 +69,7 @@ ACPTemplateEngine::deleteCompiledTemplates(WCF_DIR.'acp/templates/compiled/');
 
 // get server timezone
 if ($timezone = @date_default_timezone_get()) {
-	if ($timezone != 'Europe/London' && in_array($timezone, \wcf\util\DateUtil::getAvailableTimezones())) {
+	if ($timezone != 'Europe/London' && in_array($timezone, DateUtil::getAvailableTimezones())) {
 		$sql = "UPDATE	wcf".WCF_N."_option
 			SET	optionValue = ?
 			WHERE	optionName = ?";
