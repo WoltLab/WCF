@@ -116,21 +116,19 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns the HTML tag to include current stylesheet.
 	 * 
-	 * @todo	Add RTL support
-	 * 
 	 * @return	string
 	 */
 	public function getStylesheet() {
 		if (RequestHandler::getInstance()->isACPRequest()) {
 			// ACP
-			$filename = 'acp/style/style.css';
+			$filename = 'acp/style/style'.(WCF::getLanguage()->get('wcf.global.pageDirection') == 'rtl' ? '-rtl' : '').'.css';
 			if (!file_exists(WCF_DIR.$filename)) {
 				StyleCompiler::getInstance()->compileACP();
 			}
 		}
 		else {
 			// frontend
-			$filename = 'style/style-'.$this->getStyle()->styleID.'.css';
+			$filename = 'style/style-'.$this->getStyle()->styleID.(WCF::getLanguage()->get('wcf.global.pageDirection') == 'rtl' ? '-rtl' : '').'.css';
 			if (!file_exists(WCF_DIR.$filename)) {
 				StyleCompiler::getInstance()->compile($this->getStyle()->getDecoratedObject());
 			}

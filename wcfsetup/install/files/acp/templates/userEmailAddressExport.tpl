@@ -56,7 +56,7 @@
 				</dd>
 			</dl>
 			
-			<dl id="textSeparatorDiv"><!-- ToDo: Checkbox -->
+			<dl id="textSeparatorDiv">
 				<dt><label for="textSeparator">{lang}wcf.acp.user.exportEmailAddress.textSeparator{/lang}</label></dt>
 				<dd>
 					<input type="text" id="textSeparator" name="textSeparator" value="{$textSeparator}" class="medium" />

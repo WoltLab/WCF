@@ -117,9 +117,7 @@ class WCFACP extends WCF {
 		$path = RouteHandler::getPath();
 		
 		self::getTPL()->assign(array(
-			'baseHref' => $host . $path,
-			'quickAccessPackages' => $this->getQuickAccessPackages(),
-			// todo: 'timezone' => \wcf\util\DateUtil::getTimezone()
+			'baseHref' => $host . $path
 		));
 	}
 	
@@ -131,23 +129,6 @@ class WCFACP extends WCF {
 		if (!defined('PACKAGE_ID')) {
 			define('PACKAGE_ID', 1);
 		}
-	}
-	
-	/**
-	 * Returns a list of all installed applications packages.
-	 * 
-	 * @return	array
-	 */
-	protected function getQuickAccessPackages() {
-		$quickAccessPackages = array();
-		foreach (PackageCacheBuilder::getInstance()->getData(array(), 'packages') as $packageID => $package) {
-			if (!$package->isApplication) break;
-			if ($package->package != 'com.woltlab.wcf') {
-				$quickAccessPackages[] = $package;
-			}
-		}
-		
-		return $quickAccessPackages;
 	}
 	
 	/**
