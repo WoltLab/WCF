@@ -210,10 +210,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		));
 		$row = $statement->fetchArray();
 		if (empty($row['categoryID'])) {
-			if ($row['categoryID'] != $this->installation->getPackageID()) {
-				throw new SystemException("Cannot override existing category '".$category['categoryName']."'");
-			}
-			
 			// insert new category
 			$sql = "INSERT INTO	wcf".WCF_N."_".$this->tableName."_category
 						(packageID, categoryName, parentCategoryName, permissions,
@@ -233,6 +229,10 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			$statement->execute($data);
 		}
 		else {
+			if ($row['categoryID'] != $this->installation->getPackageID()) {
+				throw new SystemException("Cannot override existing category '".$category['categoryName']."'");
+			}
+			
 			// update existing category
 			$sql = "UPDATE	wcf".WCF_N."_".$this->tableName."_category
 				SET	parentCategoryName = ?,
