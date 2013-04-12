@@ -201,17 +201,19 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 */
 	protected function saveCategory($category) {
 		// search existing category
-		$sql = "SELECT	categoryID
+		$sql = "SELECT	categoryID, packageID
 			FROM	wcf".WCF_N."_".$this->tableName."_category
-			WHERE	categoryName = ?
-				AND packageID = ?";
+			WHERE	categoryName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			$category['categoryName'],
-			$this->installation->getPackageID()
+			$category['categoryName']
 		));
 		$row = $statement->fetchArray();
 		if (empty($row['categoryID'])) {
+			if ($row['categoryID'] != $this->installation->getPackageID()) {
+				throw new SystemException("Cannot override existing category '".$category['categoryName']."'");
+			}
+			
 			// insert new category
 			$sql = "INSERT INTO	wcf".WCF_N."_".$this->tableName."_category
 						(packageID, categoryName, parentCategoryName, permissions,

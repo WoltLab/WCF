@@ -4,6 +4,7 @@ use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryEditor;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionEditor;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -41,8 +42,12 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		// append show order if explicitly stated
 		if ($category['showOrder'] !== null) $data['showOrder'] = $category['showOrder'];
 		
-		$userOptionCategory = UserOptionCategory::getCategoryByName($category['categoryName'], $this->installation->getPackageID());
-		if ($userOptionCategory->categoryID) {
+		$userOptionCategory = UserOptionCategory::getCategoryByName($category['categoryName']);
+		if ($userOptionCategory !== null) {
+			if ($userOptionCategory->packageID != $this->installation->getPackageID()) {
+				throw new SystemException("Cannot override existing category '".$category['categoryName']."'");
+			} 
+			
 			$categoryEditor = new UserOptionCategoryEditor($userOptionCategory);
 			$categoryEditor->update($data);
 		}

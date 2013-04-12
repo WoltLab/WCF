@@ -313,7 +313,7 @@ CREATE TABLE wcf1_option_category (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
-	UNIQUE KEY categoryName (categoryName, packageID)
+	UNIQUE KEY categoryName (categoryName)
 );
 
 DROP TABLE IF EXISTS wcf1_package;
@@ -670,7 +670,7 @@ CREATE TABLE wcf1_user_group_option_category (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
-	UNIQUE KEY categoryName (categoryName, packageID)
+	UNIQUE KEY categoryName (categoryName)
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_option_value;
@@ -716,7 +716,7 @@ CREATE TABLE wcf1_user_option_category (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
-	UNIQUE KEY categoryName (categoryName, packageID)
+	UNIQUE KEY categoryName (categoryName)
 );
 
 DROP TABLE IF EXISTS wcf1_user_option_value;

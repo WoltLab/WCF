@@ -51,21 +51,19 @@ class UserOptionCategory extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns an instance of UserOptionCategory by name and package id.
+	 * Returns an instance of UserOptionCategory by name.
 	 * 
 	 * @param	string		$categoryName
-	 * @param	integer		$packageID
 	 * @return	wcf\data\user\option\category\UserOptionCategory
 	 */
-	public static function getCategoryByName($categoryName, $packageID) {
+	public static function getCategoryByName($categoryName) {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_user_option_category
-			WHERE	categoryName = ?
-				AND packageID = ?";
+			WHERE	categoryName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($categoryName, $packageID));
+		$statement->execute(array($categoryName));
 		$row = $statement->fetchArray();
-		if (!$row) $row = array();
+		if ($row === falsch) return null;
 		
 		return new UserOptionCategory(null, $row);
 	}
