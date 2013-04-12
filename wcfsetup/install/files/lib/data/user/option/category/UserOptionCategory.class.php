@@ -63,7 +63,7 @@ class UserOptionCategory extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($categoryName));
 		$row = $statement->fetchArray();
-		if ($row === falsch) return null;
+		if ($row === false) return null;
 		
 		return new UserOptionCategory(null, $row);
 	}
