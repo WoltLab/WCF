@@ -65,3 +65,14 @@ LanguageEditor::deleteLanguageFiles();
 
 // delete all compiled templates
 ACPTemplateEngine::deleteCompiledTemplates(WCF_DIR.'acp/templates/compiled/');
+
+// get server timezone
+if ($timezone = @date_default_timezone_get()) {
+	if ($timezone != 'Europe/London' && in_array($timezone, \wcf\util\DateUtil::getAvailableTimezones())) {
+		$sql = "UPDATE	wcf".WCF_N."_option
+			SET	optionValue = ?
+			WHERE	optionName = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($timezone, 'timezone'));
+	}
+}
