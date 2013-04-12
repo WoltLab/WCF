@@ -28,7 +28,7 @@ class TimezoneOptionType extends AbstractOptionType {
 		WCF::getTPL()->assign(array(
 			'option' => $option,
 			'selectOptions' => $timezoneOptions,
-			'value' => $value
+			'value' => ($value ?: TIMEZONE)
 		));
 		return WCF::getTPL()->fetch('selectOptionType');
 	}
