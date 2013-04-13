@@ -5381,6 +5381,49 @@ WCF.System.Confirmation = {
 };
 
 /**
+ * Disables the ability to scroll the page.
+ */
+WCF.System.DisableScrolling = {
+	/**
+	 * number of times scrolling was disabled (nested calls)
+	 * @var	integer
+	 */
+	_depth: 0,
+	
+	/**
+	 * old overflow-value of the body element
+	 * @var	string
+	 */
+	_oldOverflow: null,
+	
+	/**
+	 * Disables scrolling.
+	 */
+	disable: function () {
+		if (this._depth === 0) {
+			this._oldOverflow = $(document.body).css('overflow');
+			$(document.body).css('overflow', 'hidden');
+		}
+		
+		this._depth++;
+	},
+	
+	/**
+	 * Enables scrolling again.
+	 * Must be called the same number of times disable() was called to enable scrolling.
+	 */
+	enable: function () {
+		if (this._depth === 0) return;
+		
+		this._depth--;
+		
+		if (this._depth === 0) {
+			$(document.body).css('overflow', this._oldOverflow);
+		}
+	}
+};
+
+/**
  * Provides the 'jump to page' overlay.
  */
 WCF.System.PageNavigation = {
