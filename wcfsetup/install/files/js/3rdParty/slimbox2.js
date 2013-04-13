@@ -85,8 +85,7 @@
 		$(overlay).css("opacity", options.overlayOpacity).fadeIn(options.overlayFadeDuration);
 		// WoltLab modifications	BEGIN
 		
-		$("body").data("slimboxOverflow", $('body').css("overflow"))
-		$("body").css("overflow", "hidden");
+		WCF.System.DisableScrolling.disable();
 		
 		// WoltLab modifications	END
 		position();
@@ -288,7 +287,7 @@
 			$(overlay).stop().fadeOut(options.overlayFadeDuration, setup);
 			// WoltLab modifications	BEGIN
 			
-			$("body").css("overflow", $("body").data("slimboxOverflow"));
+			WCF.System.DisableScrolling.enable();
 			
 			// WoltLab modifications	END
 		}
