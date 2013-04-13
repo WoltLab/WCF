@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Shows the acp login form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -84,19 +84,13 @@ class LoginForm extends AbstractForm {
 			$this->user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually($this->username, $this->password);
 		}
 		catch (UserInputException $e) {
-			// TODO: create an option for the authentication with email address
-			if (true) {
-				if ($e->getField() == 'username') {
-					try {
-						$this->user = EmailUserAuthentication::getInstance()->loginManually($this->username, $this->password);
-					}
-					catch (UserInputException $e2) {
-						if ($e2->getField() == 'username') throw $e;
-						throw $e2;
-					}
+			if ($e->getField() == 'username') {
+				try {
+					$this->user = EmailUserAuthentication::getInstance()->loginManually($this->username, $this->password);
 				}
-				else {
-					throw $e;
+				catch (UserInputException $e2) {
+					if ($e2->getField() == 'username') throw $e;
+					throw $e2;
 				}
 			}
 			else {

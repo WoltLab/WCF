@@ -37,13 +37,16 @@
 		return $data;
 	};
 	
-	// provide a sane console.debug implementation
-	if (!window.console) {
-		window.console = {
-			debug: function() { /* discard log */ }
-		};
+	// provide a sane window.console implementation
+	if (!window.console) window.console = { };
+	var consoleProperties = [ "log",/* "debug",*/ "info", "warn", "exception", "assert", "dir", "dirxml", "trace", "group", "groupEnd", "groupCollapsed", "profile", "profileEnd", "count", "clear", "time", "timeEnd", "timeStamp", "table", "error" ];
+	for (var i = 0; i < consoleProperties.length; i++) {
+		if (typeof (console[consoleProperties[i]]) === 'undefined') {
+			console[consoleProperties[i]] = function () { }
+		}
 	}
-	else if (typeof(console.debug) === 'undefined') {
+	
+	if (typeof(console.debug) === 'undefined') {
 		// forward console.debug to console.log (IE9)
 		console.debug = function(string) { console.log(string); };
 	}
@@ -5374,6 +5377,49 @@ WCF.System.Confirmation = {
 	 */
 	_show: function() {
 		this._dialog.find('button.buttonPrimary').blur().focus();
+	}
+};
+
+/**
+ * Disables the ability to scroll the page.
+ */
+WCF.System.DisableScrolling = {
+	/**
+	 * number of times scrolling was disabled (nested calls)
+	 * @var	integer
+	 */
+	_depth: 0,
+	
+	/**
+	 * old overflow-value of the body element
+	 * @var	string
+	 */
+	_oldOverflow: null,
+	
+	/**
+	 * Disables scrolling.
+	 */
+	disable: function () {
+		if (this._depth === 0) {
+			this._oldOverflow = $(document.body).css('overflow');
+			$(document.body).css('overflow', 'hidden');
+		}
+		
+		this._depth++;
+	},
+	
+	/**
+	 * Enables scrolling again.
+	 * Must be called the same number of times disable() was called to enable scrolling.
+	 */
+	enable: function () {
+		if (this._depth === 0) return;
+		
+		this._depth--;
+		
+		if (this._depth === 0) {
+			$(document.body).css('overflow', this._oldOverflow);
+		}
 	}
 };
 
