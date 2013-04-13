@@ -83,6 +83,12 @@
 		compatibleOverlay = ie6 || (overlay.currentStyle && (overlay.currentStyle.position != "fixed"));
 		if (compatibleOverlay) overlay.style.position = "absolute";
 		$(overlay).css("opacity", options.overlayOpacity).fadeIn(options.overlayFadeDuration);
+		// WoltLab modifications	BEGIN
+		
+		$("body").data("slimboxOverflow", $('body').css("overflow"))
+		$("body").css("overflow", "hidden");
+		
+		// WoltLab modifications	END
 		position();
 		setup(1);
 
@@ -180,10 +186,9 @@
 			nextImage = ((activeImage + 1) % images.length) || (options.loop ? 0 : -1);
 
 			stop();
-			// center.className = "lbLoading";
-			
 			// WoltLab modifications	BEGIN
 			
+			// center.className = "lbLoading";
 			$('<span class="icon icon48 icon-spinner" />').appendTo(center);
 			
 			// WoltLab modifications	END
@@ -197,7 +202,11 @@
 	}
 
 	function animateBox() {
+		// WoltLab modifications	BEGIN
+		
 		//center.className = "";
+		
+		// WoltLab modifications	END
 		$(image).css({backgroundImage: "url(" + activeURL + ")", visibility: "hidden", display: ""});
 		$(sizer).width(preload.width);
 		$([sizer, prevLink, nextLink]).height(preload.height);
@@ -277,6 +286,11 @@
 			activeImage = prevImage = nextImage = -1;
 			$(center).hide();
 			$(overlay).stop().fadeOut(options.overlayFadeDuration, setup);
+			// WoltLab modifications	BEGIN
+			
+			$("body").css("overflow", $("body").data("slimboxOverflow"));
+			
+			// WoltLab modifications	END
 		}
 
 		return false;
