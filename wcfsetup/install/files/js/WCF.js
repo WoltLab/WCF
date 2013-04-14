@@ -5400,6 +5400,11 @@ WCF.System.DisableScrolling = {
 	 * Disables scrolling.
 	 */
 	disable: function () {
+		// do not block scrolling on touch devices
+		if ($.browser.touch) {
+			return;
+		}
+		
 		if (this._depth === 0) {
 			this._oldOverflow = $(document.body).css('overflow');
 			$(document.body).css('overflow', 'hidden');
