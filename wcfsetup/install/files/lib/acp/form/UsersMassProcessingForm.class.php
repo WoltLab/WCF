@@ -314,7 +314,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 			ON		(option_value.userID = user.userID)
 			".$this->conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->conditions->getParameters()));
+		$statement->execute($this->conditions->getParameters());
 		
 		$users = array();
 		while ($row = $statement->fetchArray()) {
@@ -333,7 +333,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 		
 		$groupIDs = array();
 		while ($row = $statement->fetchArray()) {
-			if (!is_array($groupIDs[$row['userID']])) {
+			if (!isset($groupIDs[$row['userID']])) {
 				$groupIDs[$row['userID']] = array();
 			}
 			
