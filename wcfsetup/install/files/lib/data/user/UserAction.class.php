@@ -28,6 +28,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public $className = 'wcf\data\user\UserEditor';
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 */
+	protected $allowGuestAccess = array('getSearchResultList');
+	
+	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
 	protected $permissionsCreate = array('admin.user.canAddUser');
