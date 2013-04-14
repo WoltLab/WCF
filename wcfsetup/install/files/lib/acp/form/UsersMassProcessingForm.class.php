@@ -193,7 +193,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				// get user ids
 				$userIDArray = array();
 				$sql = "SELECT		user.userID
-					FROM		wcf".WCF_N."_user
+					FROM		wcf".WCF_N."_user user
 					LEFT JOIN	wcf".WCF_N."_user_option_value option_value
 					ON		(option_value.userID = user.userID)".
 					$this->conditions;
@@ -279,9 +279,10 @@ class UsersMassProcessingForm extends UserOptionListForm {
 			case 'assignToGroup':
 				WCF::getSession()->checkPermissions(array('admin.user.canEditUser'));
 				
-				$userIDArray = $this->fetchUsers(function($userID, array $userData) {
+				$_this = $this;
+				$userIDArray = $this->fetchUsers(function($userID, array $userData) use ($_this) {
 					$user = new UserEditor(new User(null, $userData));
-					$user->addToGroups($this->assignToGroupIDArray, false, false);
+					$user->addToGroups($_this->assignToGroupIDArray, false, false);
 				});
 				
 				UserStorageHandler::getInstance()->reset($userIDArray, 'groupIDs', 1);
@@ -314,7 +315,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 			ON		(option_value.userID = user.userID)
 			".$this->conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->conditions->getParameters()));
+		$statement->execute($this->conditions->getParameters());
 		
 		$users = array();
 		while ($row = $statement->fetchArray()) {
@@ -333,7 +334,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 		
 		$groupIDs = array();
 		while ($row = $statement->fetchArray()) {
-			if (!is_array($groupIDs[$row['userID']])) {
+			if (!isset($groupIDs[$row['userID']])) {
 				$groupIDs[$row['userID']] = array();
 			}
 			
