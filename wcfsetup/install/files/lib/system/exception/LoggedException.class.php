@@ -7,8 +7,8 @@ use wcf\util\StringUtil;
  * A logged exceptions prevents information disclosures and provides an easy
  * way to log errors.
  * 
- * @author	Tim Düsterhus, Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Tim Duesterhus, Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
@@ -16,11 +16,17 @@ use wcf\util\StringUtil;
  */
 class LoggedException extends \Exception {
 	/**
+	 * ignore disabled debug mode
+	 * @var	boolean
+	 */
+	protected $ignoreDebugMode = false;
+	
+	/**
 	 * @see	\Exception::getMessage()
 	 */
 	public function _getMessage() {
 		// suppresses the original error message
-		if (!WCF::debugModeIsEnabled()) {
+		if (!WCF::debugModeIsEnabled() && !$this->ignoreDebugMode) {
 			return 'An error occured. Sorry.';
 		}
 		
