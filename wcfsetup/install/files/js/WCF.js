@@ -7828,8 +7828,10 @@ $.widget('ui.wcfDialog', {
 	
 	/**
 	 * Closes this dialog.
+	 * 
+	 * @param	object		event
 	 */
-	close: function() {
+	close: function(event) {
 		if (!this.isOpen() || !this.options.closable) {
 			return;
 		}
@@ -7847,6 +7849,12 @@ $.widget('ui.wcfDialog', {
 		
 		if (this.options.onClose !== null) {
 			this.options.onClose();
+		}
+		
+		if (event !== undefined) {
+			event.preventDefault();
+			event.stopPropagation();
+			return false;
 		}
 	},
 	
