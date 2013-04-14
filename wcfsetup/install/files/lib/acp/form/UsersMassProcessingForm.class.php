@@ -193,7 +193,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 				// get user ids
 				$userIDArray = array();
 				$sql = "SELECT		user.userID
-					FROM		wcf".WCF_N."_user
+					FROM		wcf".WCF_N."_user user
 					LEFT JOIN	wcf".WCF_N."_user_option_value option_value
 					ON		(option_value.userID = user.userID)".
 					$this->conditions;
