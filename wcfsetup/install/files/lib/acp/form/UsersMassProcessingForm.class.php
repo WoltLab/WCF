@@ -279,9 +279,10 @@ class UsersMassProcessingForm extends UserOptionListForm {
 			case 'assignToGroup':
 				WCF::getSession()->checkPermissions(array('admin.user.canEditUser'));
 				
-				$userIDArray = $this->fetchUsers(function($userID, array $userData) {
+				$_this = $this;
+				$userIDArray = $this->fetchUsers(function($userID, array $userData) use ($_this) {
 					$user = new UserEditor(new User(null, $userData));
-					$user->addToGroups($this->assignToGroupIDArray, false, false);
+					$user->addToGroups($_this->assignToGroupIDArray, false, false);
 				});
 				
 				UserStorageHandler::getInstance()->reset($userIDArray, 'groupIDs', 1);
