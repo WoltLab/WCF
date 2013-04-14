@@ -283,7 +283,7 @@
 			</fieldset>
 		</div>
 		
-		{event name='additionalActionDivs'}
+		{event name='additionalActionSettings'}
 	</div>
 	
 	<div class="formSubmit">
