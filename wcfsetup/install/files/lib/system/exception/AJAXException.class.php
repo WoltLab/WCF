@@ -50,9 +50,11 @@ class AJAXException extends LoggedException {
 	 * @param	string		$message
 	 * @param	boolean		$isDoomsday
 	 * @param	string		$stacktrace
+	 * @param	array		$returnValues
+	 * @param	string		$exceptionID
 	 * @param	array<mixed>	$returnValues
 	 */
-	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null, $returnValues = array()) {
+	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null, $returnValues = array(), $exceptionID = '') {
 		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();
 		
 		if (WCF::debugModeIsEnabled()) {
@@ -97,11 +99,10 @@ class AJAXException extends LoggedException {
 				header('HTTP/1.0 503 Service Unavailable');
 				
 				$responseData['code'] = self::INTERNAL_ERROR;
+				$responseData['exceptionID'] = $exceptionID;
 				if (!WCF::debugModeIsEnabled()) {
 					$responseData['message'] = WCF::getLanguage()->get('wcf.ajax.error.internalError');
 				}
-				
-				$this->logError();
 			break;
 		}
 		

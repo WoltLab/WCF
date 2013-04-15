@@ -16,6 +16,12 @@ use wcf\util\StringUtil;
  */
 class LoggedException extends \Exception {
 	/**
+	 * exception id
+	 * @var	string
+	 */
+	protected $exceptionID = '';
+	
+	/**
 	 * ignore disabled debug mode
 	 * @var	boolean
 	 */
@@ -35,9 +41,26 @@ class LoggedException extends \Exception {
 	}
 	
 	/**
+	 * Returns exception id
+	 * 
+	 * @return	string
+	 */
+	public function getExceptionID() {
+		if (empty($this->exceptionID)) {
+			$this->logError();
+		}
+		
+		return $this->exceptionID;
+	}
+	
+	/**
 	 * Writes an error to log file.
 	 */
 	protected function logError() {
+		if (!empty($this->exceptionID)) {
+			return;
+		}
+		
 		$logFile = WCF_DIR . 'log/' . date('Y-m-d', TIME_NOW) . '.txt';
 		
 		// try to create file
@@ -66,12 +89,10 @@ class LoggedException extends \Exception {
 			"Stacktrace: \n  ".implode("\n  ", explode("\n", $e->getTraceAsString()))."\n";
 		
 		// calculate Exception-ID
-		$id = StringUtil::getHash($message);
-		$message = "<<<<<<<<".$id."<<<<\n".$message."<<<<\n\n";
+		$this->exceptionID = StringUtil::getHash($message);
+		$message = "<<<<<<<<".$this->exceptionID."<<<<\n".$message."<<<<\n\n";
 		
 		// append
 		@file_put_contents($logFile, $message, FILE_APPEND);
-		
-		return $id;
 	}
 }
