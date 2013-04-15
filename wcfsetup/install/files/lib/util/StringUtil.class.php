@@ -107,6 +107,21 @@ final class StringUtil {
 	}
 	
 	/**
+	 * Encodes JSON strings. This is not the same as PHP's json_encode()!
+	 * 
+	 * @param	string		$string
+	 * @return	string
+	 */
+	public static function encodeJSON($string) {
+		$string = self::encodeJS($string);
+		
+		// single quotes must be encoded as HTML entity
+		$string = self::replace("\'", "&#39;", $string);
+		
+		return $string;
+	}
+	
+	/**
 	 * Decodes html entities.
 	 * 
 	 * @param	string		$string
