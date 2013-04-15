@@ -229,7 +229,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			$statement->execute($data);
 		}
 		else {
-			if ($row['categoryID'] != $this->installation->getPackageID()) {
+			if ($row['packageID'] != $this->installation->getPackageID()) {
 				throw new SystemException("Cannot override existing category '".$category['categoryName']."'");
 			}
 			
