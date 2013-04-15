@@ -269,7 +269,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
-			$this->tables[$row['TABLE_NAME']][] = $row['CONSTRAINT_NAME'];
+			$tables[$row['TABLE_NAME']][] = $row['CONSTRAINT_NAME'];
 		}
 		
 		// handle foreign keys from 3rd party tables
@@ -300,14 +300,14 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		}
 		
 		// drop foreign keys
-		foreach ($this->tables as $tableName => $foreignKeys) {
+		foreach ($tables as $tableName => $foreignKeys) {
 			foreach ($foreignKeys as $fk) {
 				$this->dropForeignKey($tableName, $fk);
 			}
 		}
 		
 		// drop tables
-		foreach (array_keys($this->tables) as $tableName) {
+		foreach (array_keys($tables) as $tableName) {
 			$this->dropTable($tableName);
 		}
 	}

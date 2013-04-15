@@ -10,8 +10,8 @@
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
-{hascontent}
-	<div class="contentNavigation">
+<div class="contentNavigation">
+	{hascontent}
 		<nav>
 			<ul>
 				{content}
@@ -19,8 +19,8 @@
 				{/content}
 			</ul>
 		</nav>
-	</div>
-{/hascontent}
+	{/hascontent}
+</div>
 
 <form method="post" action="{link controller='UserAssignToGroup'}{/link}">
 	<div class="container containerPadding marginTop">

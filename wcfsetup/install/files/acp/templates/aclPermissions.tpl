@@ -5,8 +5,7 @@
 		WCF.Language.addObject({
 			'wcf.acl.option.deny': '{lang}wcf.acl.option.deny{/lang}',
 			'wcf.acl.option.fullAccess': '{lang}wcf.acl.option.fullAccess{/lang}',
-			'wcf.acl.option.grant': '{lang}wcf.acl.option.grant{/lang}',
-			'wcf.global.button.delete': '{lang}wcf.global.button.delete{/lang}'
+			'wcf.acl.option.grant': '{lang}wcf.acl.option.grant{/lang}'
 		});
 	});
 	//]]>

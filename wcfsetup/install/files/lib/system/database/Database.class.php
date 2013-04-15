@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\database;
+use wcf\system\benchmark\Benchmark;
+use wcf\system\WCF;
 
 /**
  * Abstract implementation of a database access class using PDO.
@@ -73,10 +75,10 @@ abstract class Database {
 	protected $pdo = null;
 	
 	/**
-	 * Indicates if there is an open transaction.
-	 * @var	boolean
+	 * amount of active transactions
+	 * @var	integer
 	 */
-	protected $hasActiveTransaction = false;
+	protected $activeTransactions = 0;
 	
 	/**
 	 * Creates a Dabatase Object.
@@ -115,7 +117,7 @@ abstract class Database {
 			return $this->pdo->lastInsertId();
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Can not fetch last insert id", $this);
+			throw new DatabaseException("Cannot fetch last insert id", $this);
 		}
 	}
 	
@@ -126,16 +128,22 @@ abstract class Database {
 	 */
 	public function beginTransaction() {
 		try {
-			if ($this->hasActiveTransaction) {
-				return false;
+			if ($this->activeTransactions === 0) {
+				if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start("BEGIN", Benchmark::TYPE_SQL_QUERY);
+				$result = $this->pdo->beginTransaction();
 			}
 			else {
-				$this->hasActiveTransaction = $this->pdo->beginTransaction();
-				return $this->hasActiveTransaction;
+				if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start("SAVEPOINT level".$this->activeTransactions, Benchmark::TYPE_SQL_QUERY);
+				$result = $this->pdo->exec("SAVEPOINT level".$this->activeTransactions) !== false;
 			}
+			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
+			
+			$this->activeTransactions++;
+			
+			return $result;
 		}
 		catch (\PDOException $e) {
-			return false;
+			throw new DatabaseException("Cannot begin transaction", $this);
 		}
 	}
 	
@@ -146,11 +154,23 @@ abstract class Database {
 	 */
 	public function commitTransaction() {
 		try {
-			$this->hasActiveTransaction = false;
-			return $this->pdo->commit();
+			$this->activeTransactions--;
+			
+			if ($this->activeTransactions === 0) {
+				if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start("COMMIT", Benchmark::TYPE_SQL_QUERY);
+				$result = $this->pdo->commit();
+			}
+			else {
+				if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start("RELEASE SAVEPOINT level".$this->activeTransactions, Benchmark::TYPE_SQL_QUERY);
+				$result = $this->pdo->exec("RELEASE SAVEPOINT level".$this->activeTransactions) !== false;
+			}
+			
+			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
+			
+			return $result;
 		}
 		catch (\PDOException $e) {
-			return false;
+			throw new DatabaseException("Cannot commit transaction", $this);
 		}
 	}
 	
@@ -161,11 +181,23 @@ abstract class Database {
 	 */
 	public function rollBackTransaction() {
 		try {
-			$this->hasActiveTransaction = false;
-			return $this->pdo->rollBack();
+			$this->activeTransactions--;
+			
+			if ($this->activeTransactions === 0) {
+				if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start("ROLLBACK", Benchmark::TYPE_SQL_QUERY);
+				$result = $this->pdo->rollback();
+			}
+			else {
+				if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start("ROLLBACK TO SAVEPOINT level".$this->activeTransactions, Benchmark::TYPE_SQL_QUERY);
+				$result = $this->pdo->exec("ROLLBACK TO SAVEPOINT level".$this->activeTransactions) !== false;
+			}
+			
+			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
+			
+			return $result;
 		}
 		catch (\PDOException $e) {
-			return false;
+			throw new DatabaseException("Cannot rollback transaction", $this);
 		}
 	}
 	
@@ -185,10 +217,10 @@ abstract class Database {
 			if ($pdoStatement instanceof \PDOStatement) {
 				return new $this->preparedStatementClassName($this, $pdoStatement, $statement);
 			}
-			throw new DatabaseException("Can not prepare statement: ".$statement, $this);
+			throw new DatabaseException("Cannot prepare statement: ".$statement, $this);
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Can not prepare statement: ".$statement, $this);
+			throw new DatabaseException("Cannot prepare statement: ".$statement, $this);
 		}
 	}
 	

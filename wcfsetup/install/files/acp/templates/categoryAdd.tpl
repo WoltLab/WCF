@@ -26,11 +26,11 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.{@$action}.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>
 {/if}
 
-{hascontent}
-	<div class="contentNavigation">
+<div class="contentNavigation">
+	{hascontent}
 		<nav>
 			<ul>
 				{content}
@@ -42,8 +42,8 @@
 				{/content}
 			</ul>
 		</nav>
-	</div>
-{/hascontent}
+	{/hascontent}
+</div>
 
 <form method="post" action="{if $action == 'add'}{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}{else}{link controller=$editController application=$objectType->getProcessor()->getApplication() object=$category}{/link}{/if}">
 	<div class="container containerPadding marginTop">
@@ -75,8 +75,8 @@
 					<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" class="long" />
 					{if $errorField == 'title'}
 						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
+							{if $errorType == 'empty' || $errorType == 'multilingual'}
+								{lang}wcf.global.form.error.{$errorType}{/lang}
 							{else}
 								{assign var=__languageVariable value='title.error.'|concat:$errorType}
 								{@$objectType->getProcessor()->getLanguageVariable($__languageVariable)}
@@ -94,8 +94,8 @@
 						<textarea cols="40" rows="10" id="description" name="description">{$i18nPlainValues['description']}</textarea>
 						{if $errorField == 'description'}
 							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
+								{if $errorType == 'empty' || $errorType == 'multilingual'}
+									{lang}wcf.global.form.error.{$errorType}{/lang}
 								{else}
 									{assign var=__languageVariable value='description.error.'|concat:$errorType}
 									{@$objectType->getProcessor()->getLanguageVariable($__languageVariable)}
@@ -118,7 +118,7 @@
 			<dl{if $errorField == 'showOrder'} class="formError"{/if}>
 				<dt><label for="showOrder">{@$objectType->getProcessor()->getLanguageVariable('showOrder')}</label></dt>
 				<dd>
-					<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="short" />
+					<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" min="0" class="short" />
 					{if $errorField == 'showOrder'}
 						<small class="innerError">
 							{assign var=__languageVariable value='showOrder.error.'|concat:$errorType}
@@ -134,10 +134,10 @@
 		
 		{if $aclObjectTypeID}
 			<fieldset>
-				<legend>{lang}wcf.acp.acl.permissions{/lang}</legend>
+				<legend>{lang}wcf.acl.permissions{/lang}</legend>
 				
 				<dl id="groupPermissions" class="wide">
-					<dt>{lang}wcf.acp.acl.permissions{/lang}</dt>
+					<dt>{lang}wcf.acl.permissions{/lang}</dt>
 					<dd></dd>
 				</dl>
 				

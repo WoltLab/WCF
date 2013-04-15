@@ -53,7 +53,6 @@ a {
 	}
 }
 
-.nativeList,
 .nativeList {
 	margin: 1em 0;
 	margin-left: 40px;
@@ -144,6 +143,16 @@ body > iframe[src="about:blank"] {
 	}
 }
 
+.highlight {
+	background-color: @wcfHighlightBackgroundColor;
+}
+
+.grayscale {
+	filter: url(../images/grayscale-filter.svg#grayscale);
+	filter: gray;
+	-webkit-filter: grayscale(1);
+}
+
 /* balloon tooltips */
 .balloonTooltip {
 	background-color: @wcfTooltipBackgroundColor;
@@ -155,8 +164,6 @@ body > iframe[src="about:blank"] {
 	z-index: 800;
 	
 	.borderRadius(6px);
-	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
-	
 	.pointer {
 		border-color: @wcfTooltipBackgroundColor transparent;
 		border-style: solid;
@@ -164,6 +171,15 @@ body > iframe[src="about:blank"] {
 		left: 50%;
 		position: absolute;
 		top: -5px;
+	}
+	
+	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
+	
+	&.inverse {
+		.boxShadow(0, -3px, rgba(0, 0, 0, .3), 7px);
+		.pointer {
+			border-width: 5px 5px 0;
+		}
 	}
 }
 
@@ -212,12 +228,12 @@ body > iframe[src="about:blank"] {
 	
 	&.top:after {
 		border-bottom-width: 0;
-		border-top-color: rgba(0, 0, 0, .4);
+		border-top-color: rgba(0, 0, 0, .3);
 		bottom: -10px;
 	}
 	
 	&.bottom:after {
-		border-bottom-color: rgba(0, 0, 0, .4);
+		border-bottom-color: rgba(0, 0, 0, .3);
 		border-top-width: 0;
 		top: -10px;
 	}
@@ -337,11 +353,11 @@ a.badge:hover {
 	}
 	
 	&.green {
-		background-color: #090;
+		background-color: #060;
 	}
 	
 	&.blue {
-		background-color: #06c;
+		background-color: #036;
 	}
 	
 	&.purple {

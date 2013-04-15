@@ -15,10 +15,6 @@
 	}
 </style>
 
-{if $didYouKnow !== ''}
-	<p class="info">{lang}wcf.acp.index.didYouKnow{/lang}: {@$didYouKnow|language}</p>
-{/if}
-
 <p class="{@$health}">{lang}wcf.acp.index.health.summary.{@$health}{/lang}</p>
 
 {event name='boxes'}

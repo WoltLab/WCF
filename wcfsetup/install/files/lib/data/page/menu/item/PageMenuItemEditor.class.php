@@ -23,24 +23,12 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	
 	/**
 	 * @see	wcf\data\IEditableObject::create()
-	 * 
-	 * @todo Handle language id and create related language item
 	 */
 	public static function create(array $parameters = array()) {
 		// calculate show order
 		$parameters['showOrder'] = self::getShowOrder($parameters['showOrder'], $parameters['menuPosition'], $parameters['parentMenuItem']);
 		
 		return parent::create($parameters);
-	}
-	
-	/**
-	 * @see	wcf\data\IEditableObject::update()
-	 * 
-	 * @todo Handle language id and update related language item
-	 */
-	public function update(array $parameters = array()) {
-		1 == 0; // TODO: fix me (avoid sniffing error)
-		parent::update($parameters);
 	}
 	
 	/**
@@ -71,7 +59,8 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 		$statement->execute();
 		
 		$sql = "UPDATE		wcf".WCF_N."_page_menu_item
-			SET		isLandingPage = ?
+			SET		isLandingPage = ?,
+					isDisabled = ?
 			WHERE		menuPosition = ?
 					AND parentMenuItem = ?
 					AND menuItemController <> ?
@@ -79,6 +68,7 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute(array(
 			1,
+			0,
 			'header',
 			'',
 			''

@@ -321,7 +321,7 @@ CREATE TABLE wcf1_option_category (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
-	UNIQUE KEY categoryName (categoryName, packageID)
+	UNIQUE KEY categoryName (categoryName)
 );
 
 DROP TABLE IF EXISTS wcf1_package;
@@ -339,7 +339,6 @@ CREATE TABLE wcf1_package (
 	isApplication TINYINT(1) NOT NULL DEFAULT 0,
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
-	packageIcon VARCHAR(30) NOT NULL DEFAULT '',
 	KEY package (package)
 );
 
@@ -569,7 +568,6 @@ CREATE TABLE wcf1_style (
 	license VARCHAR(255) NOT NULL DEFAULT '',
 	authorName VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
-	iconPath VARCHAR(255) NOT NULL DEFAULT '',
 	imagePath VARCHAR(255) NOT NULL DEFAULT ''
 );
 
@@ -630,6 +628,8 @@ CREATE TABLE wcf1_user (
 	languageID INT(10) NOT NULL DEFAULT 0,
 	registrationDate INT(10) NOT NULL DEFAULT 0,
 	styleID INT(10) NOT NULL DEFAULT 0,
+	banned TINYINT(1) NOT NULL DEFAULT 0,
+	banReason MEDIUMTEXT NULL,
 	
 	KEY username (username),
 	KEY registrationDate (registrationDate),
@@ -678,7 +678,7 @@ CREATE TABLE wcf1_user_group_option_category (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
-	UNIQUE KEY categoryName (categoryName, packageID)
+	UNIQUE KEY categoryName (categoryName)
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_option_value;
@@ -724,7 +724,7 @@ CREATE TABLE wcf1_user_option_category (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
-	UNIQUE KEY categoryName (categoryName, packageID)
+	UNIQUE KEY categoryName (categoryName)
 );
 
 DROP TABLE IF EXISTS wcf1_user_option_value;
@@ -984,6 +984,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInfoBac
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInfoBorderColor', 'rgba(153, 187, 238, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltipBackgroundColor', 'rgba(0, 0, 0, .8)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltipColor', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHighlightBackgroundColor', 'rgba(255, 255, 102, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapTiny', '4px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapSmall', '7px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapMedium', '14px');
@@ -1003,7 +1004,5 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisable
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledColor', 'rgba(0, 153, 0, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoHeight', 'auto');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoWidth', 'auto');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideLess', '');

@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\mail;
+use wcf\data\language\Language;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
@@ -7,23 +9,77 @@ use wcf\util\StringUtil;
  * This class represents an e-mail.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.mail
  * @category	Community Framework
  */
 class Mail {
-	// todo: comment properties
+	/**
+	 * line ending string
+	 * @var string
+	 */
+	public static $lineEnding = "\n";
+	
+	/**
+	 * mail header
+	 * @var string
+	 */
 	protected $header = '';
+	
+	/**
+	 * boundary for multipart/mixed mail
+	 * @var string
+	 */
 	protected $boundary = '';
+	
+	/**
+	 * mail content mime type
+	 * @var string
+	 */
 	protected $contentType = "text/plain";
+	
+	/**
+	 * mail recipients
+	 * @var array<string>
+	 */
 	protected $to = array();
+	
+	/**
+	 * mail subject
+	 * @var string
+	 */
 	protected $subject = '';
+	
+	/**
+	 * mail message
+	 * @var string
+	 */
 	protected $message = '';
+	
+	/**
+	 * mail sender
+	 * @var array<string>
+	 */
 	protected $from = array();
+	
+	/**
+	 * mail carbon copy
+	 * @var array<string>
+	 */
 	protected $cc = array();
+	
+	/**
+	 * mail blind carbon copy
+	 * @var array<string>
+	 */
 	protected $bcc = array();
+	
+	/**
+	 * mail attachments
+	 * @var array
+	 */
 	protected $attachments = array();
 	
 	/**
@@ -38,8 +94,11 @@ class Mail {
 	 */
 	protected $body = '';
 	
-	// TODO: Should this be a constant?
-	public static $crlf = "\n";
+	/**
+	 * mail language
+	 * @var wcf\data\language\Language
+	 */
+	protected $language = null;
 	
 	/**
 	 * Creates a new Mail object.
@@ -80,25 +139,25 @@ class Mail {
 	 */
 	public function getHeader() {
 		if (!empty($this->header)) {
-			$this->header = preg_replace('%(\r\n|\r|\n)%', self::$crlf, $this->header);
+			$this->header = preg_replace('%(\r\n|\r|\n)%', self::$lineEnding, $this->header);
 		}
 		
 		$this->header .=
-			'X-Priority: 3'.self::$crlf
-			.'X-Mailer: WoltLab Community Framework Mail Package'.self::$crlf									
-			.'MIME-Version: 1.0'.self::$crlf
-			.'From: '.$this->getFrom().self::$crlf
-			.($this->getCCString() != '' ? 'CC:'.$this->getCCString().self::$crlf : '')
-			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$crlf : '');
+			'X-Priority: 3'.self::$lineEnding
+			.'X-Mailer: WoltLab Community Framework Mail Package'.self::$lineEnding									
+			.'MIME-Version: 1.0'.self::$lineEnding
+			.'From: '.$this->getFrom().self::$lineEnding
+			.($this->getCCString() != '' ? 'CC:'.$this->getCCString().self::$lineEnding : '')
+			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$lineEnding : '');
 			
 		if (count($this->getAttachments())) {
-			$this->header .= 'Content-Transfer-Encoding: 8bit'.self::$crlf;
-			$this->header .= 'Content-Type: multipart/mixed;'.self::$crlf;
-			$this->header .= "\tboundary=".'"'.$this->getBoundary().'";'.self::$crlf;
+			$this->header .= 'Content-Transfer-Encoding: 8bit'.self::$lineEnding;
+			$this->header .= 'Content-Type: multipart/mixed;'.self::$lineEnding;
+			$this->header .= "\tboundary=".'"'.$this->getBoundary().'";'.self::$lineEnding;
 		}
 		else {
-			$this->header .= 'Content-Transfer-Encoding: 8bit'.self::$crlf;
-			$this->header .= 'Content-Type: '.$this->getContentType().'; charset=UTF-8'.self::$crlf;
+			$this->header .= 'Content-Transfer-Encoding: 8bit'.self::$lineEnding;
+			$this->header .= 'Content-Type: '.$this->getContentType().'; charset=UTF-8'.self::$lineEnding;
 		}
 		
 		return $this->header;
@@ -112,9 +171,9 @@ class Mail {
 	 */
 	public function getRecipients($withTo = false) {
 		$recipients = '';
-		if ($withTo && $this->getToString() != '') $recipients .= 'TO:'.$this->getToString().self::$crlf;
-		if ($this->getCCString() != '') $recipients .= 'CC:'.$this->getCCString().self::$crlf;
-		if ($this->getBCCString() != '') $recipients .= 'BCC:'.$this->getBCCString().self::$crlf;
+		if ($withTo && $this->getToString() != '') $recipients .= 'TO:'.$this->getToString().self::$lineEnding;
+		if ($this->getCCString() != '') $recipients .= 'CC:'.$this->getCCString().self::$lineEnding;
+		if ($this->getBCCString() != '') $recipients .= 'BCC:'.$this->getBCCString().self::$lineEnding;
 		return $recipients;
 	}
 	
@@ -129,16 +188,15 @@ class Mail {
 
 		if (count($this->getAttachments())) {
 			// add message
-			$this->body .= '--'.$this->getBoundary().self::$crlf;
-			$this->body .= 'Content-Type: '.$this->getContentType().'; charset="UTF-8"'.self::$crlf;
-			$this->body .= 'Content-Transfer-Encoding: 8bit'.self::$crlf;
-			//$this->body .= self::$crlf.self::$crlf;
-			$this->body .= self::$crlf;
+			$this->body .= '--'.$this->getBoundary().self::$lineEnding;
+			$this->body .= 'Content-Type: '.$this->getContentType().'; charset="UTF-8"'.self::$lineEnding;
+			$this->body .= 'Content-Transfer-Encoding: 8bit'.self::$lineEnding;
+			$this->body .= self::$lineEnding;
 			
 			// wrap lines after 70 characters
 			$this->body .= wordwrap($this->getMessage(), 70); 
-			$this->body .= self::$crlf.self::$crlf;
-			$this->body .= '--'.$this->getBoundary().self::$crlf;
+			$this->body .= self::$lineEnding.self::$lineEnding;
+			$this->body .= '--'.$this->getBoundary().self::$lineEnding;
 			
 			// add attachments
 			foreach ($this->getAttachments() as $attachment) {
@@ -154,21 +212,20 @@ class Mail {
 				
 				// get file contents
 				$data = @file_get_contents($path);
-				$data = chunk_split(base64_encode($data), 70, self::$crlf);
+				$data = chunk_split(base64_encode($data), 70, self::$lineEnding);
 				
-				$this->body .= 'Content-Type: application/octetstream; name="'.$fileName.'"'.self::$crlf;
-				$this->body .= 'Content-Transfer-Encoding: base64'.self::$crlf;
-				$this->body .= 'Content-Disposition: attachment; filename="'.$fileName.'"'.self::$crlf.self::$crlf;
-				$this->body .= $data.self::$crlf.self::$crlf;
+				$this->body .= 'Content-Type: application/octetstream; name="'.$fileName.'"'.self::$lineEnding;
+				$this->body .= 'Content-Transfer-Encoding: base64'.self::$lineEnding;
+				$this->body .= 'Content-Disposition: attachment; filename="'.$fileName.'"'.self::$lineEnding.self::$lineEnding;
+				$this->body .= $data.self::$lineEnding.self::$lineEnding;
 				
-				if ($counter < count($this->getAttachments())) $this->body .= '--'.$this->getBoundary().self::$crlf;
+				if ($counter < count($this->getAttachments())) $this->body .= '--'.$this->getBoundary().self::$lineEnding;
 				$counter++;
 			}
 			
-			$this->body .= self::$crlf.'--'.$this->getBoundary().'--';
+			$this->body .= self::$lineEnding.'--'.$this->getBoundary().'--';
 		}
 		else {
-			//$this->body .= self::$crlf;
 			$this->body .= $this->getMessage();
 		}
 		return $this->body;
@@ -265,7 +322,7 @@ class Mail {
 	 * @return	string
 	 */
 	public function getMessage() {
-		return preg_replace('%(\r\n|\r|\n)%', self::$crlf, $this->message . (MAIL_SIGNATURE ? self::$crlf . '-- ' . self::$crlf . MAIL_SIGNATURE : ''));
+		return preg_replace('%(\r\n|\r|\n)%', self::$lineEnding, $this->message . (MAIL_SIGNATURE ? self::$lineEnding . self::$lineEnding . '-- ' . self::$lineEnding . $this->getLanguage()->get(MAIL_SIGNATURE) : ''));
 	}
 	
 	/**
@@ -445,8 +502,28 @@ class Mail {
 	 */
 	public function setHeader($header) {
 		if (!empty($header)) {
-			$this->header .= $header.self::$crlf;
+			$this->header .= $header.self::$lineEnding;
 		}
+	}
+	
+	/**
+	 * Sets the mail language.
+	 * 
+	 * @param	wcf\data\language\Language	$language
+	 */
+	public function setLanguage(Language $language) {
+		$this->language = $language;
+	}
+	
+	/**
+	 * Gets the mail language.
+	 *
+	 * @return	wcf\data\language\Language
+	 */
+	public function getLanguage() {
+		if ($this->language === null) return WCF::getLanguage();
+		
+		return $this->language;
 	}
 	
 	/**
@@ -454,7 +531,7 @@ class Mail {
 	 */
 	public static function encodeMIMEHeader($string) {
 		if (function_exists('mb_encode_mimeheader')) {
-			$string = mb_encode_mimeheader($string, 'UTF-8', 'Q', self::$crlf);
+			$string = mb_encode_mimeheader($string, 'UTF-8', 'Q', self::$lineEnding);
 		}
 		else {
 			$string = '=?UTF-8?Q?'.preg_replace('/[^\r\n]{73}[^=\r\n]{2}/', "$0=\r\n", str_replace("%", "=", str_replace("%0D%0A", "\r\n", str_replace("%20", " ", rawurlencode($string))))).'?=';

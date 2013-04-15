@@ -13,19 +13,13 @@ use wcf\system\WCF;
  * Shows the welcome page in admin control panel.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
  */
 class IndexPage extends AbstractPage {
-	/**
-	 * did you know language item
-	 * @var	string
-	 */
-	public $didYouKnow = '';
-	
 	/**
 	 * health status data
 	 * @var	array
@@ -44,7 +38,6 @@ class IndexPage extends AbstractPage {
 		else if (!empty($this->healthDetails['info'])) $health = 'info';
 		
 		WCF::getTPL()->assign(array(
-			'didYouKnow' => $this->didYouKnow,
 			'health' => $health,
 			'healthDetails' => $this->healthDetails
 		));
@@ -116,15 +109,6 @@ class IndexPage extends AbstractPage {
 		parent::readData();
 		
 		$this->calculateHealth();
-		
-		$sql = "SELECT		languageItem
-			FROM		wcf".WCF_N."_language_item
-			WHERE		languageCategoryID = ?
-			ORDER BY	".(WCF::getDB()->getDBType() == 'wcf\system\database\PostgreSQLDatabase' ? 'RANDOM()' : 'RAND()');
-		$statement = WCF::getDB()->prepareStatement($sql, 1);
-		// TODO: Change category
-		$statement->execute(array(LanguageFactory::getInstance()->getCategory('wcf.global')->languageCategoryID));
-		$this->didYouKnow = $statement->fetchColumn();
 	}
 	
 	/**

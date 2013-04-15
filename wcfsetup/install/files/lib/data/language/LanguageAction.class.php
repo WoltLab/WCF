@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Executes language-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.language
@@ -36,26 +36,24 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.language.canEditLanguage');
 	
 	/**
+	 * language editor object
+	 * @var	wcf\data\language\LanguageEditor
+	 */
+	protected $languageEditor = null;
+	
+	/**
 	 * Validates permission to set a language as default.
 	 */
 	public function validateSetAsDefault() {
 		WCF::getSession()->checkPermissions($this->permissionsUpdate);
 		
-		// read objects
-		if (empty($this->objects)) {
-			$this->readObjects();
-			
-			if (empty($this->objects)) {
-				throw new UserInputException('objectIDs');
-			}
-		}
+		$this->languageEditor = $this->getSingleObject();
 	}
 	
 	/**
 	 * Sets language as default
 	 */
 	public function setAsDefault() {
-		$language = array_shift($this->objects);
-		$language->setAsDefault();
+		$this->languageEditor->setAsDefault();
 	}
 }

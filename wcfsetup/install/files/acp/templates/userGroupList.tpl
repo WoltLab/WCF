@@ -34,14 +34,14 @@
 
 <div class="tabularBox tabularBoxTitle marginTop">
 	<hgroup>
-		<h1>{lang}wcf.acp.group.list{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.group.list.count{/lang}">{#$items}</span></h1>
+		<h1>{lang}wcf.acp.group.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
 	</hgroup>
 	
 	<table class="table">
 		<thead>
 			<tr>
 				<th class="columnID columnGroupID{if $sortField == 'groupID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='UserGroupList'}pageNo={@$pageNo}&sortField=groupID&sortOrder={if $sortField == 'groupID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-				<th class="columnTitle columnGroupName{if $sortField == 'groupName'} active {@$sortOrder}{/if}"><a href="{link controller='UserGroupList'}pageNo={@$pageNo}&sortField=groupName&sortOrder={if $sortField == 'groupName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.group.groupName{/lang}</a></th>
+				<th class="columnTitle columnGroupName{if $sortField == 'groupName'} active {@$sortOrder}{/if}"><a href="{link controller='UserGroupList'}pageNo={@$pageNo}&sortField=groupName&sortOrder={if $sortField == 'groupName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.name{/lang}</a></th>
 				<th class="columnDigits columnMembers{if $sortField == 'members'} active {@$sortOrder}{/if}"><a href="{link controller='UserGroupList'}pageNo={@$pageNo}&sortField=members&sortOrder={if $sortField == 'members' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.group.members{/lang}</a></th>
 				
 				{event name='columnHeads'}
@@ -78,7 +78,7 @@
 							{* dont't show search links for the everybody and the guest user group *}
 							<p>{#$group->members}</p>
 						{else}
-							<p><a title="{lang}wcf.acp.group.showMembers{/lang}" href="{link controller='UserSearch'}groupID={@$group->groupID}{/link}">{#$group->members}</a></p>
+							<p><a class="jsTooltip" title="{lang}wcf.acp.group.showMembers{/lang}" href="{link controller='UserSearch'}groupID={@$group->groupID}{/link}">{#$group->members}</a></p>
 						{/if}
 					</td>
 					

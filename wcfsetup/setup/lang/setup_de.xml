@@ -37,6 +37,8 @@
 		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[Diese Bibliothek ist für den Betrieb der Software zwingend erforderlich.]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[nicht aktiviert]]></item>
+		<item name="wcf.global.systemRequirements.memoryLimit"><![CDATA[Zur Verfügung stehender Arbeitsspeicher]]></item>
+		<item name="wcf.global.systemRequirements.memoryLimit.description"><![CDATA[Der PHP-Skripten zur Verfügung stehende Arbeitsspeicher ist für einen einwandfreien Betrieb der Software zu gering.]]></item>
 		<item name="wcf.global.wcfDir"><![CDATA[Installationsverzeichnis wählen]]></item>
 		<item name="wcf.global.wcfDir.description"><![CDATA[In das Installationsverzeichnis werden alle Dateien von <b>WoltLab Community Framework</b> entpackt.]]></item>
 		<item name="wcf.global.wcfDir.dir"><![CDATA[Installationsverzeichnis]]></item>

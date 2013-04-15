@@ -6,7 +6,7 @@ use wcf\system\version\VersionHandler;
  * Abstract class for all versionable data actions.
  * 
  * @author	Jeffrey Reichardt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data

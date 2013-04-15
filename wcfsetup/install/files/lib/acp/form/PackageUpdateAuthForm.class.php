@@ -134,7 +134,7 @@ class PackageUpdateAuthForm extends AbstractForm {
 	}
 	
 	/**
-	 * @todo	This whole page is carzy, it's manipulating the requested page, but RequestHandler does not work this way
+	 * @todo	This whole page is crazy, it's manipulating the requested page, but RequestHandler does not work this way
 	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {

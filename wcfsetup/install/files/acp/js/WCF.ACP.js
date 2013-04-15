@@ -62,7 +62,7 @@ WCF.ACP.Application.SetAsPrimary = Class.extend({
 				objectIDs: [ this._packageID ]
 			},
 			success: $.proxy(function(data, textStatus, jqXHR) {
-				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.acp.application.setAsPrimary.success'));
+				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'));
 				$notification.show();
 				
 				// remove button
@@ -271,13 +271,8 @@ WCF.ACP.Package.Installation = Class.extend({
 	
 	/**
 	 * Handles erroneous AJAX requests.
-	 * 
-	 * @param	jQuery		jqXHR
-	 * @param	string		textStatus
-	 * @param	string		errorThrown
-	 * @param	string		responseText
 	 */
-	_failure: function(jqXHR, textStatus, errorThrown, responseText) {
+	_failure: function() {
 		if (!this._allowRollback) {
 			return;
 		}
@@ -1214,7 +1209,7 @@ WCF.ACP.Worker = Class.extend({
 			this._proxy.setOption('data', {
 				className: data.className,
 				loopCount: data.loopCount,
-				parameter: data.parameters
+				parameters: data.parameters
 			});
 			this._proxy.sendRequest();
 		}

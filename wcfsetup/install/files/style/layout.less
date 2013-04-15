@@ -3,15 +3,33 @@
 	padding: 0 @wcfLayoutFluidGap;
 }
 
+@media only screen and (max-width: 768px) {
+	.layoutFluid {
+		padding: 0;
+	}
+}
+
 .layoutFixed {
 	margin: 0 auto;
 	width: @wcfLayoutFixedWidth;
+}
+
+@media only screen and (max-width: 768px) {
+	.layoutFixed {
+		width: auto;
+	}
 }
 
 /* ### header ### */
 #pageHeader {
 	margin-top: 57px;
 	z-index: 100;
+}
+
+@media only screen and (max-width: 768px) {
+	#pageHeader {
+		margin-top: 48px;
+	}
 }
 
 #top {
@@ -37,10 +55,10 @@
 	}
 	
 	> div {
+		position: relative;
+		
 		> ul.userPanelItems {
-			float: left;
-			
-			.clearfix();
+			/*.clearfix();*/
 			
 			> li {
 				float: left;
@@ -82,10 +100,10 @@
 		}
 	
 		> .searchBar {
-			float: right;
-			padding: 6px 0 7px;
-			position: relative;
 			background-color: @wcfUserPanelHoverBackgroundColor;
+			position: absolute;
+			right: 0;
+			top: 0;
 			
 			&:before {
 				content: "\f002";
@@ -94,7 +112,7 @@
 				font-size: 14px;
 				left: 7px;
 				position: absolute;
-				top: 10px;
+				top: 12px;
 			}
 			
 			> form {
@@ -104,6 +122,7 @@
 					background-color: transparent;
 					border-width: 0;
 					color: @wcfUserPanelColor;
+					height: 40px;
 					padding: 6px 12px 5px 26px;
 					width: 240px;
 					-webkit-appearance: textfield;
@@ -113,6 +132,86 @@
 					&:focus {
 						outline: 0;
 					}
+				}
+			}
+			
+			.dropdownMenu li > span {
+				max-width: 210px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+		
+		&.layoutFluid > .searchBar {
+			right: @wcfLayoutFluidGap;
+		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.userPanel {
+		height: auto;
+		
+		.icon {
+			font-size: 21px;
+			height: auto;
+			width: auto;
+		}
+		
+		> div {
+			> ul.userPanelItems {
+				> li {
+					> a,
+					> div:not(.dropdownMenu) {
+						height: 21px;
+						padding: 11px 11px 9px 11px;
+					}
+					
+					> .framed > img {
+						margin-top: -4px;
+					}
+					
+					/* hide user panel labels */
+					> a > span:not(.icon):not(.badge),
+					&#pageLanguageContainer > div > div > hgroup {
+						display: none;
+					}
+					
+					> a > .badge {
+						top: -4px;
+					}
+				}
+			}
+		
+			> .searchBar {
+				height: 41px;
+				min-width: 40px;
+				right: 0 !important;
+				
+				&:before {
+					font-size: 21px;
+				}
+				
+				> form {
+					display: none;
+					
+					input[type="search"] {
+						height: 41px;
+						padding-left: 40px;
+						width: 100%;
+					}
+				}
+				
+				&:hover {
+					width: 100%;
+					
+					> form {
+						display: block;
+					}
+				}
+				
+				&:before {
+					top: 8px;
 				}
 			}
 		}
@@ -138,6 +237,12 @@
 			
 			.textShadow(@wcfPageBackgroundColor);
 		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.logo {
+		display: none;
 	}
 }
 
@@ -188,51 +293,114 @@
 }
 
 /* main menu */
-.mainMenu {
-	> ul {
-		background-color: @wcfMainMenuBackgroundColor;
-		display: inline-block;
-		letter-spacing: -4px;
-		
-		> li {
+@media only screen and (min-width: 769px) {
+	.mainMenu {
+		> ul {
+			background-color: @wcfMainMenuBackgroundColor;
 			display: inline-block;
-			font-size: @wcfTitleFontSize;
-			margin-top: -7px;
-			letter-spacing: normal;
-			vertical-align: bottom;
 			
-			> a {
-				color: @wcfMainMenuColor;
+			> li {
 				display: inline-block;
-				padding: 9px 21px;
-								
-				&:hover {
-					color: @wcfMainMenuActiveColor;
-					text-decoration: none;
-				}
-			}
-			
-			&.active {
-				font-size: @wcfSubHeadlineFontSize;
-				margin-top: -8px;
+				font-size: @wcfTitleFontSize;
+				margin-top: -7px;
+				vertical-align: bottom;
 				
 				> a {
-					background-color: @wcfNavigationHeaderBackgroundColor;
-					color: @wcfMainMenuActiveColor;
-					font-weight: bold;
-					min-width: 80px;
-					padding: 14px 21px 8px;
-					text-align: center;
+					color: @wcfMainMenuColor;
+					display: inline-block;
+					padding: 9px 21px;
+									
+					&:hover {
+						color: @wcfMainMenuActiveColor;
+						text-decoration: none;
+					}
+				}
+				
+				&.active {
+					font-size: @wcfSubHeadlineFontSize;
+					margin-top: -8px;
+					
+					> a {
+						background-color: @wcfNavigationHeaderBackgroundColor;
+						color: @wcfMainMenuActiveColor;
+						font-weight: bold;
+						min-width: 80px;
+						padding: 14px 21px 8px;
+						text-align: center;
+					}
+				}
+				
+				&:not(.active) {
+					padding-top: 5px;
+				}
+				
+				&:not(:last-child) > a {
+					border-right: 1px solid @wcfContainerBorderColor;
 				}
 			}
+		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.mainMenu {
+		position: relative;
+		
+		&:hover > ul {
+			display: block;
+		}
+		
+		> .invisible {
+			.button;
+			margin-left: @wcfGapSmall;
+			padding-left: 28px;
 			
-			&:not(.active) {
-				padding-top: 5px;
+			&:before {
+				content: "\f03a";
+				font-family: FontAwesome;
+				font-size: 14px;
+				left: 9px;
+				position: absolute;
+				top: 6px;
 			}
+		}
+		
+		> ul {
+			.dropdown .dropdownMenu;
+			font-size: 120%;
+			left: @wcfGapSmall;
 			
-			&:not(:last-child) > a {
-				border-right: 1px solid @wcfContainerBorderColor;
+			> li.active {
+				> ul.invisible {
+					display: block;
+					font-size: 85%;
+					padding-left: 14px;
+					
+					> li > span.badge {
+						display: none;
+					}
+				}
+				
+				> a {
+					position: relative;
+					
+					&:after {
+						content: "\f00c";
+						font-family: FontAwesome;
+						font-size: 14px;
+						position: absolute;
+						right: 7px;
+					}
+				}
 			}
+		}
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 768px) {
+	.mainMenu {
+		> .invisible {
+			margin-left: @wcfGapMedium;
 		}
 	}
 }
@@ -305,6 +473,27 @@
 	}
 }
 
+@media only screen and (max-width: 768px) {
+	.navigation.navigationHeader {
+		> ul.navigationIcons,
+		> ul.navigationItems,
+		> ul.navigationMenuItems {
+			display: none;
+		}
+	}
+	
+	.navigation.navigationFooter {
+		> ul.navigationIcons,
+		> ul.navigationItems {
+			display: none;
+		}
+		
+		> ul.navigationMenuItems > li {
+			margin: 4px 7px 4px 0;
+		}
+	}
+}
+
 .navigationHeader {
 	background-color: @wcfNavigationHeaderBackgroundColor;
 	border-bottom: 1px solid @wcfContainerBorderColor;
@@ -314,6 +503,13 @@
 .navigationFooter {
 	background-color: @wcfNavigationFooterBackgroundColor;
 	border-top: 1px solid @wcfContainerBorderColor;
+}
+
+@media only screen and (max-width: 768px) {
+	.navigationHeader {
+		background-color: transparent;
+		border: 0;
+	}
 }
 
 /* ### footer ### */
@@ -332,6 +528,12 @@
 				text-decoration: none;
 			}
 		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.footerContent {
+		margin: 0 @wcfGapMedium;
 	}
 }
 
@@ -434,9 +636,88 @@
 	}
 }
 
+@media only screen and (max-width: 768px) {
+	/* hide sidebar */
+	#main {
+		position: relative;
+		margin-top: 7px;
+		
+		&.sidebarOrientationRight {
+			.sidebar {
+				display: none;
+			}
+		}
+		
+		&.sidebarOrientationLeft {
+			.sidebar {
+				float: none;
+				padding-top: 0;
+				position: absolute;
+				right: 0px;
+				top: 14px;
+				width: 100%;
+				
+				&.mobileSidebar {
+					&:before {
+						content: "\f03a";
+						font-family: FontAwesome;
+						font-size: 21px;
+						right: 7px;
+						position: absolute;
+						top: 0;
+					}
+					
+					&:hover {
+						> div {
+							display: block;
+						}
+					}
+					
+					> div {
+						background-color: @wcfSidebarBackgroundColor;
+						margin-top: 28px;
+						padding-top: 14px;
+					}
+				}
+				
+				> div {
+					display: none;
+					
+					> fieldset.jsOnly {
+						display: none;
+					}
+				}
+			}
+		}
+		
+		.content {
+			border-left: 0 !important;
+			border-right: 0 !important;
+			margin-left: 0 !important;
+			margin-right: 0 !important;
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+			
+			> *:first-child {
+				margin-top: 0;
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1239px) {
+	#main {
+		> div > .content {
+			padding-left: @wcfGapLarge + @wcfGapSmall;
+			padding-right: @wcfGapLarge + @wcfGapSmall;
+		}
+	}
+}
+
 /* basic layout elements */
 .boxHeadline {
 	margin-top: @wcfGapMedium;
+	overflow: hidden;
 	
 	> hgroup {
 		> h1 {
@@ -475,6 +756,21 @@
 	}
 }
 
+@media only screen and (max-width: 768px) {
+	.boxHeadline {
+		margin-top: @wcfGapSmall;
+		margin-left: @wcfGapSmall;
+		margin-right: @wcfGapSmall;
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 768px) {
+	.boxHeadline {
+		margin-left: @wcfGapMedium;
+		margin-right: @wcfGapMedium;
+	}
+}
+
 .contentNavigation {
 	display: table;
 	width: 100%;
@@ -501,6 +797,23 @@
 	}
 }
 
+@media only screen and (max-width: 768px) {
+	.contentNavigation {
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+		padding-left: @wcfGapSmall;
+		padding-right: @wcfGapSmall;
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 768px) {
+	.contentNavigation {
+		padding-left: @wcfGapMedium;
+		padding-right: @wcfGapMedium;
+	}
+}
+
 .container {
 	background-color: @wcfContainerBackgroundColor;
 	border: 1px solid @wcfContainerBorderColor;
@@ -510,9 +823,24 @@
 	padding: @wcfGapMedium @wcfGapLarge @wcfGapMedium;
 }
 
-.containerHeadline {
-	margin-bottom: @wcfGapSmall;
+@media only screen and (max-width: 768px) {
+	.container {
+		border-width: 1px 0;
+	}
 	
+	.containerPadding {
+		padding: @wcfGapSmall;
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 768px) {
+	.containerPadding {
+		padding-left: @wcfGapMedium;
+		padding-right: @wcfGapMedium;
+	}
+}
+
+.containerHeadline {
 	> h1 {
 		font-size: @wcfTitleFontSize;
 		font-weight: bold;
@@ -523,10 +851,18 @@
 			text-shadow: none;
 			font-size: 75%;
 		}
+		
+		> .badge {
+			top: -1px;
+		}
 	}
 	
 	> h1, > h1 > a {
 		.textShadow(@wcfContainerBackgroundColor);
+	}
+	
+	+ * {
+		margin-top: @wcfGapSmall;
 	}
 }
 
@@ -589,6 +925,42 @@
 		
 		> div {
 			margin-left: 115px;
+		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.containerList {
+		> li {
+			padding: @wcfGapSmall;
+			
+			.containerContentType {
+				display: none;
+			}
+			
+			> div > div > .buttonList {
+				display: none;
+			}
+		}
+		
+		&.infoBoxList {
+			> li.box32 {
+				> span.icon {
+					display: none;
+				}
+				
+				> div {
+					margin-left: 0;
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 768px) {
+	.containerList {
+		> li {
+			padding: @wcfGapSmall @wcfGapMedium;
 		}
 	}
 }
@@ -683,6 +1055,48 @@
 	}
 }
 
+.containerBoxList {
+	margin-bottom: -@wcfGapSmall;
+	
+	> li {
+		margin-bottom: @wcfGapSmall; 
+		
+		> div {
+			overflow: hidden;
+			white-space: nowrap;
+		}
+	}
+}
+
+@media only screen and (min-width: 769px) {
+	.containerBoxList {
+		&.doubleColumned,
+		&.tripleColumned {
+			.clearfix();
+			
+			> li {
+				float: left;
+				
+				> div {
+					margin-right: @wcfGapLarge;
+				}
+			}
+		}
+		
+		&.doubleColumned {
+			> li {
+				width: 50%;
+			}
+		}
+		
+		&.tripleColumned {
+			> li {
+				width: 33%;
+			}
+		}
+	}
+}
+
 /* boxes with an image */
 .box(@imageSize, @gapOffset: 0) {
 	/* using a min-height prevents us from clearing (which causes a lot of issues) */
@@ -759,6 +1173,12 @@
 	}
 }
 
+@media only screen and (max-width: 768px) {
+	.content > .breadcrumbs {
+		display: none;
+	}
+}
+
 .smallBreadcrumbs {
 	> li {
 		display: inline;
@@ -791,9 +1211,6 @@
 			white-space: nowrap;
 			
 			&.ui-state-active {
-				margin-right: -7px;
-				margin-left: -6px;
-				
 				> a {
 					background-color: @wcfContainerBackgroundColor;
 					border-color: @wcfContainerBorderColor @wcfContainerBorderColor @wcfContainerBackgroundColor;
@@ -805,6 +1222,14 @@
 					margin-top: -10px;
 					padding: 10px 15px 5px;
 					z-index: 30;
+				}
+				
+				&:first-child {
+					margin-left: -6px;
+				}
+				
+				&:last-child {
+					margin-right: -6px;
 				}
 			}
 			
@@ -893,6 +1318,32 @@
 	margin-bottom: @wcfGapSmall;
 }
 
+@media only screen and (max-width: 768px) {
+	.tabMenu {
+		> ul {
+			margin-left: @wcfGapTiny;
+			margin-right: @wcfGapTiny;
+			
+			> li {
+				&.ui-state-active {
+					> a {
+						font-size: 100%;
+						padding-left: 10px;
+						padding-right: 10px;
+					}
+				}
+				
+				> a {
+					font-size: 100%;
+					padding-left: 5px;
+					padding-right: 5px;
+				}
+			}
+		}
+	
+	}
+}
+
 /* ToDo: 2x hidden? */
 .ui-tabs .ui-tabs-hide {
 	display: none !important;
@@ -938,6 +1389,23 @@
 		color: @wcfTabularBoxColor;
 		
 		.textShadow(@wcfTabularBoxBackgroundColor);
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.tabularBox {
+		border-width: 1px 0;
+	}
+	
+	.tabularBoxTitle {
+		border-top-width: 0;
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 768px) {
+	.tabularBoxTitle > hgroup {
+		padding-left: @wcfGapMedium;
+		padding-right: @wcfGapMedium;
 	}
 }
 
@@ -1184,7 +1652,7 @@ dl.statsDataList {
 
 dl.inlineDataList {
 	overflow: hidden;
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 	
 	> dd {
 		display: inline-block;
@@ -1299,8 +1767,30 @@ ul.inlineDataList {
 				.textShadow(@wcfButtonBackgroundColor);
 			}
 			
-			> span {
+			> span:not(.invisible) {
 				display: inline-block;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.pageNavigation {
+		> ul > li {
+			&:not(.skip):not(.active) {
+				display: none;
+			}
+			
+			&.active {
+				> span {
+					&.invisible {
+						display: inline-block;
+					}
+					
+					&:not(.invisible) {
+						display: none;
+					}
+				}
 			}
 		}
 	}
@@ -1419,6 +1909,10 @@ ul.inlineDataList {
 	
 	.sidebarBoxList > li:not(:last-child) {
 		margin-bottom: 7px;
+	}
+	
+	.sidebarBoxList {
+		overflow: hidden;
 	}
 	
 	.sidebarBoxHeadline {

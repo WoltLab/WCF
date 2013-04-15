@@ -201,14 +201,12 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 */
 	protected function saveCategory($category) {
 		// search existing category
-		$sql = "SELECT	categoryID
+		$sql = "SELECT	categoryID, packageID
 			FROM	wcf".WCF_N."_".$this->tableName."_category
-			WHERE	categoryName = ?
-				AND packageID = ?";
+			WHERE	categoryName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			$category['categoryName'],
-			$this->installation->getPackageID()
+			$category['categoryName']
 		));
 		$row = $statement->fetchArray();
 		if (empty($row['categoryID'])) {
@@ -231,6 +229,10 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			$statement->execute($data);
 		}
 		else {
+			if ($row['packageID'] != $this->installation->getPackageID()) {
+				throw new SystemException("Cannot override existing category '".$category['categoryName']."'");
+			}
+			
 			// update existing category
 			$sql = "UPDATE	wcf".WCF_N."_".$this->tableName."_category
 				SET	parentCategoryName = ?,

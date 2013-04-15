@@ -51,12 +51,6 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	public $categoryNodeList = null;
 	
 	/**
-	 * description of the category
-	 * @var	string
-	 */
-	public $description = '';
-	
-	/**
 	 * indicates if the category is disabled
 	 * @var	integer
 	 */
@@ -93,6 +87,12 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	public $packageID = 0;
 	
 	/**
+	 * language item with the page title
+	 * @var	string
+	 */
+	public $pageTitle = '';
+	
+	/**
 	 * id of the parent category id
 	 * @var	integer
 	 */
@@ -108,12 +108,6 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	 * @see	wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'categoryAdd';
-	
-	/**
-	 * title of the category
-	 * @var	string
-	 */
-	public $title = '';
 	
 	/**
 	 * @see	wcf\page\AbstractPage::__run()
@@ -153,15 +147,17 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 			'addController' => $this->addController,
 			'additionalData' => $this->additionalData,
 			'categoryNodeList' => $this->categoryNodeList,
-			'description' => $this->description,
 			'editController' => $this->editController,
 			'isDisabled' => $this->isDisabled,
 			'listController' => $this->listController,
 			'objectType' => $this->objectType,
 			'parentCategoryID' => $this->parentCategoryID,
-			'showOrder' => $this->showOrder,
-			'title' => $this->title
+			'showOrder' => $this->showOrder
 		));
+		
+		if ($this->pageTitle) {
+			WCF::getTPL()->assign('pageTitle', $this->pageTitle);
+		}
 	}
 	
 	/**
@@ -224,9 +220,6 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		if (isset($_POST['additionalData'])) {
 			$this->additionalData = ArrayUtil::trim($_POST['additionalData']);
 		}
-		if ($this->objectType->getProcessor()->hasDescription() && isset($_POST['description'])) {
-			$this->description = StringUtil::trim($_POST['description']);
-		}
 		if (isset($_POST['isDisabled'])) {
 			$this->isDisabled = 1;
 		}
@@ -235,9 +228,6 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		}
 		if (isset($_POST['showOrder'])) {
 			$this->showOrder = intval($_POST['showOrder']);
-		}
-		if (isset($_POST['title'])) {
-			$this->title = StringUtil::trim($_POST['title']);
 		}
 	}
 	
@@ -250,12 +240,12 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		$this->objectAction = new CategoryAction(array(), 'create', array(
 			'data' => array(
 				'additionalData' => serialize($this->additionalData),
-				'description' => $this->description,
+				'description' => ($this->objectType->getProcessor()->hasDescription() && I18nHandler::getInstance()->isPlainValue('description')) ? I18nHandler::getInstance()->getValue('description') : '',
 				'isDisabled' => $this->isDisabled,
 				'objectTypeID' => $this->objectType->objectTypeID,
 				'parentCategoryID' => $this->parentCategoryID,
 				'showOrder' => $this->showOrder > 0 ? $this->showOrder : null,
-				'title' => $this->title
+				'title' => I18nHandler::getInstance()->isPlainValue('title') ? I18nHandler::getInstance()->getValue('title') : ''
 			)
 		));
 		$this->objectAction->executeAction();
@@ -312,11 +302,21 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		$this->validateParentCategory();
 		
 		if (!I18nHandler::getInstance()->validateValue('title')) {
-			throw new UserInputException('title');
+			if (I18nHandler::getInstance()->isPlainValue('title')) {
+				throw new UserInputException('title');
+			}
+			else {
+				throw new UserInputException('title', 'multilingual');
+			}
 		}
 		
 		if ($this->objectType->getProcessor()->hasDescription() && !I18nHandler::getInstance()->validateValue('description', false, !$this->objectType->getProcessor()->forceDescription())) {
-			throw new UserInputException('description');
+			if (I18nHandler::getInstance()->isPlainValue('description')) {
+				throw new UserInputException('description');
+			}
+			else {
+				throw new UserInputException('description', 'multilingual');
+			}
 		}
 	}
 	

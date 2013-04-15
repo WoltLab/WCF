@@ -49,7 +49,7 @@
 </div>
 
 <div id="userTableContainer" class="tabularBox marginTop">
-	<nav class="wcf-menu">
+	<nav class="menu">
 		<ul>
 			<li{if $action == ''} class="active"{/if}><a href="{link controller='UserList'}{/link}"><span>{lang}wcf.acp.user.list.all{/lang}</span> <span class="wcf-badge" title="{lang}wcf.acp.user.list.count{/lang}">{#$items}</span></a></li>
 			
@@ -110,8 +110,6 @@
 	<div class="contentNavigation">
 		{@$pagesLinks}
 		
-		<div class="wcf-clipboardEditor jsClipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></div>
-		
 		<nav>
 			<ul>
 				{if $__wcf->session->getPermission('admin.user.canAddUser')}
@@ -122,11 +120,13 @@
 				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>
+		
+		<nav class="jsClipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></nav>
 	</div>
 {hascontentelse}
 </div>
 
-<p class="wcf-info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
+<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
 {/hascontent}
 
 {include file='footer'}

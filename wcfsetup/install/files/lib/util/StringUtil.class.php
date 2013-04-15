@@ -107,6 +107,21 @@ final class StringUtil {
 	}
 	
 	/**
+	 * Encodes JSON strings. This is not the same as PHP's json_encode()!
+	 * 
+	 * @param	string		$string
+	 * @return	string
+	 */
+	public static function encodeJSON($string) {
+		$string = self::encodeJS($string);
+		
+		// single quotes must be encoded as HTML entity
+		$string = self::replace("\'", "&#39;", $string);
+		
+		return $string;
+	}
+	
+	/**
 	 * Decodes html entities.
 	 * 
 	 * @param	string		$string
@@ -532,11 +547,11 @@ final class StringUtil {
 	/**
 	 * Truncates the given string to a certain number of characters.
 	 * 
-	 * @param	string		$string
-	 * @param	integer		$length
+	 * @param	string		$string		string which shall be truncated
+	 * @param	integer		$length		string length after truncating
 	 * @param	string		$etc		string to append when $string is truncated
 	 * @param	boolean		$breakWords	should words be broken in the middle
-	 * @return	string
+	 * @return	string				truncated string
 	 */
 	public static function truncate($string, $length = 80, $etc = self::HELLIP, $breakWords = false) {
 		if ($length == 0) {
@@ -562,11 +577,11 @@ final class StringUtil {
 	 *
 	 * @param 	string		$string			string which shall be truncated
 	 * @param 	integer		$length 		string length after truncating
-	 * @param	boolean		$wordWrap		if true	words will not be split and the return string might be shorter than $length
 	 * @param 	string		$etc			ending string which will be appended after truncating
+	 * @param	boolean		$breakWords		if false words will not be split and the return string might be shorter than $length
 	 * @return 	string					truncated string
 	 */
-	public static function truncateHTML($string, $length = 500, $wordWrap = true, $etc = self::HELLIP) {
+	public static function truncateHTML($string, $length = 500, $etc = self::HELLIP, $breakWords = false) {
 		if (self::length(self::stripHTML($string)) <= $length) {
 			return $string;
 		}
@@ -603,7 +618,7 @@ final class StringUtil {
 			$decodedContent = self::decodeHTML($tag[3]);
 			$contentLength = self::length($decodedContent);
 			if ($contentLength + $totalLength > $length) {
-				if ($wordWrap) {
+				if (!$breakWords) {
 					if (preg_match('/^(.{1,'.($length - $totalLength).'}) /s', $decodedContent, $match)) {
 						$truncatedString .= self::encodeHTML($match[1]);
 					}
@@ -652,9 +667,10 @@ final class StringUtil {
 	 *  
 	 * @param	string		$url
 	 * @param	string		$title
+	 * @param	boolean		$encodeTitle
 	 * @return	string		anchor tag
 	 */
-	public static function getAnchorTag($url, $title = '') {
+	public static function getAnchorTag($url, $title = '', $encodeTitle = true) {
 		$external = true;
 		if (ApplicationHandler::getInstance()->isInternalURL($url)) {
 			$external = false;
@@ -668,9 +684,11 @@ final class StringUtil {
 			if (self::length($title) > 60) {
 				$title = self::substring($title, 0, 30) . self::HELLIP . self::substring($title, -25);
 			}
+			
+			if (!$encodeTitle) $title = self::encodeHTML($title);
 		}
 		
-		return '<a href="'.self::encodeHTML($url).'"'.($external ? (' class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '')) : '').'>'.self::encodeHTML($title).'</a>';
+		return '<a href="'.self::encodeHTML($url).'"'.($external ? (' class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '')) : '').'>'.($encodeTitle ? self::encodeHTML($title) : $title).'</a>';
 	}
 	
 	/**

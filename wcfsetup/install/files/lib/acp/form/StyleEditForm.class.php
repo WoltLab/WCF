@@ -80,7 +80,6 @@ class StyleEditForm extends StyleAddForm {
 			$this->authorName = $this->style->authorName;
 			$this->authorURL = $this->style->authorURL;
 			$this->copyright = $this->style->copyright;
-			$this->iconPath = $this->style->iconPath;
 			$this->imagePath = $this->style->imagePath;
 			$this->license = $this->style->license;
 			$this->styleDate = $this->style->styleDate;
@@ -107,8 +106,7 @@ class StyleEditForm extends StyleAddForm {
 				'copyright' => $this->copyright,
 				'license' => $this->license,
 				'authorName' => $this->authorName,
-				'authorURL' => $this->authorURL,
-				'iconPath' => $this->iconPath
+				'authorURL' => $this->authorURL
 			),
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables

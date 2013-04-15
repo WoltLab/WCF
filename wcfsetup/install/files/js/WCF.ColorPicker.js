@@ -245,7 +245,7 @@ WCF.ColorPicker = Class.extend({
 		
 		// submit button
 		var $submitForm = $('<div class="formSubmit" />').appendTo(this._dialog);
-		$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.submit') + '</button>').appendTo($submitForm).click($.proxy(this._submit, this));
+		$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.save') + '</button>').appendTo($submitForm).click($.proxy(this._submit, this));
 	},
 	
 	/**
@@ -267,7 +267,7 @@ WCF.ColorPicker = Class.extend({
 			g: this._rgba.g.val(),
 			b: this._rgba.b.val()
 		});
-		$('#' + $element.data('store')).val('rgba(' + this._rgba.r.val() + ', ' + this._rgba.g.val() + ', ' + this._rgba.b.val() + ', ' + (this._rgba.a.val() / 100) + ')');
+		$('#' + $element.data('store')).val('rgba(' + this._rgba.r.val() + ', ' + this._rgba.g.val() + ', ' + this._rgba.b.val() + ', ' + (this._rgba.a.val() / 100) + ')').trigger('change');
 		
 		this._dialog.wcfDialog('close');
 	},

@@ -80,7 +80,7 @@ class MasterPasswordForm extends AbstractForm {
 		
 		// forward
 		if (empty($this->url)) {
-			$this->url = LinkHandler::getInstance()->getLink('Index');
+			$this->url = LinkHandler::getInstance()->getLink();
 		}
 		HeaderUtil::redirect($this->url);
 		exit;

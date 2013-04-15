@@ -2,6 +2,8 @@
 namespace wcf\action;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\LoggedException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -146,20 +148,21 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		}
 	
 		if ($e instanceof IllegalLinkException) {
-			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
+			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
 		}
 		else if ($e instanceof PermissionDeniedException) {
-			throw new AJAXException(WCF::getLanguage()->get('wcf.global.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
+			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS, $e->getTraceAsString());
 		}
 		else if ($e instanceof SystemException) {
-			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString());
+			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString(), array(), $e->getExceptionID());
 		}
 		else if ($e instanceof UserInputException) {
 			// repackage as ValidationActionException
 			$exception = new ValidateActionException($e->getField(), $e->getType(), $e->getVariables());
 			throw new AJAXException($exception->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), array(
 				'errorMessage' => $exception->getMessage(),
-				'fieldName' => $exception->getFieldName()
+				'errorType' => $e->getType(),
+				'fieldName' => $exception->getFieldName(),
 			));
 		}
 		else if ($e instanceof ValidateActionException) {
@@ -168,8 +171,11 @@ class AJAXInvokeAction extends AbstractSecureAction {
 				'fieldName' => $e->getFieldName()
 			));
 		}
+		else if ($e instanceof NamedUserException) {
+			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString());
+		}
 		else {
-			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString());
+			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString(), array(), ($e instanceof LoggedException ? $e->getExceptionID() : ''));
 		}
 	}
 	

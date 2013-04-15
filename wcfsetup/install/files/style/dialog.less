@@ -11,6 +11,19 @@
 	.boxShadow(0, 1px, rgba(0, 0, 0, .3), 23px);
 }
 
+@media only screen and (max-width: 768px) {
+	.dialogContainer {
+		border: 0;
+		left: 0 !important;
+		max-width: none;
+		min-width: 0;
+		top: 0 !important;
+		width: 100%;
+		
+		.borderRadius(0);
+	}
+}
+
 .dialogTitlebar {
 	background-color: @wcfTabularBoxBackgroundColor;
 	border-bottom: 1px solid rgba(0, 0, 0, .1);
@@ -56,6 +69,12 @@
 	}
 }
 
+@media only screen and (max-width: 768px) {
+	.dialogTitlebar {
+		.borderRadius(0);
+	}
+}
+
 .dialogContent {
 	background-color: @wcfContainerBackgroundColor;
 	color: @wcfColor;
@@ -93,6 +112,20 @@
 		width: 100%;
 		
 		.borderRadius(0, 0, 7px, 7px);
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.dialogContent {
+		max-height: none !important;
+		
+		&:not(.dialogForm) {
+			.borderRadius(0);
+		}
+		
+		.formSubmit {
+			.borderRadius(0);
+		}
 	}
 }
 
@@ -146,23 +179,18 @@
 
 /* notification overlay */
 #systemNotification {
-	left: 40%;
-	opacity: 0;
+	left: 0;
 	position: fixed;
-	right: 40%;
 	top: 0;
+	width: 100%;
 	z-index: 460;
-	
-	.transition(opacity, .3s);
-	
-	&.open {
-		opacity: 1;
-	}
 	
 	> p {
 		border-top-left-radius: 0;
 		border-top-right-radius: 0;
 		border-top-width: 0;
-		margin-top: 0;
+		display: table;
+		margin: 0 auto;
+		max-width: 80%;
 	}
 }

@@ -23,6 +23,18 @@
 	&.disabled {
 		opacity: .3;
 	}
+	&:hover {
+		text-decoration: none;
+	}
+}
+
+// firefox cursor issue
+span.icon:not(.pointer) {
+	cursor: default;
+}
+
+a > span.icon:not(.pointer) {
+	cursor: pointer;
 }
 
 // icon sizes

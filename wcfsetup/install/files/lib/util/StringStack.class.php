@@ -25,8 +25,8 @@ final class StringStack {
 	 * @param	string		$type
 	 * @return	string		$hash
 	 */
-	public static function pushToStringStack($string, $type = 'default') {
-		$hash = '@@'.StringUtil::getHash(uniqid(microtime()).$string).'@@';
+	public static function pushToStringStack($string, $type = 'default', $delimiter = '@@') {
+		$hash = $delimiter.StringUtil::getHash(uniqid(microtime()).$string).$delimiter;
 		
 		if (!isset(self::$stringStack[$type])) {
 			self::$stringStack[$type] = array();

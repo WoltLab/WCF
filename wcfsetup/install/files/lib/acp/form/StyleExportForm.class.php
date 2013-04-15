@@ -26,12 +26,6 @@ class StyleExportForm extends AbstractForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.style';
 	
 	/**
-	 * true, if style has custom icons
-	 * @var	boolean
-	 */
-	public $canExportIcons = false;
-	
-	/**
 	 * true, if style has custom images
 	 * @var	boolean
 	 */
@@ -48,12 +42,6 @@ class StyleExportForm extends AbstractForm {
 	 * @var	boolean
 	 */
 	public $exportAsPackage = false;
-	
-	/**
-	 * true, if icons should be exported
-	 * @var	boolean
-	 */
-	public $exportIcons = false;
 	
 	/**
 	 * true, if images should be exported
@@ -102,7 +90,6 @@ class StyleExportForm extends AbstractForm {
 			throw new IllegalLinkException();
 		}
 		
-		if ($this->style->iconPath && $this->style->iconPath != 'icon/') $this->canExportIcons = true;
 		if ($this->style->imagePath && $this->style->imagePath != 'images/') $this->canExportImages = true;
 		if ($this->style->templateGroupID) $this->canExportTemplates = true;
 	}
@@ -113,7 +100,6 @@ class StyleExportForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if ($this->canExportIcons && isset($_POST['exportIcons'])) $this->exportIcons = true;
 		if ($this->canExportImages && isset($_POST['exportImages'])) $this->exportImages = true;
 		if ($this->canExportTemplates && isset($_POST['exportTemplates'])) $this->exportTemplates = true;
 		
@@ -167,7 +153,7 @@ class StyleExportForm extends AbstractForm {
 		
 		// export style
 		$styleEditor = new StyleEditor($this->style);
-		$styleEditor->export($this->exportTemplates, $this->exportImages, $this->exportIcons, $this->packageName);
+		$styleEditor->export($this->exportTemplates, $this->exportImages, $this->packageName);
 		
 		// call saved event
 		$this->saved();
@@ -182,11 +168,9 @@ class StyleExportForm extends AbstractForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'canExportIcons' => $this->canExportIcons,
 			'canExportImages' => $this->canExportImages,
 			'canExportTemplates' => $this->canExportTemplates,
 			'exportAsPackage' => $this->exportAsPackage,
-			'exportIcons' => $this->exportIcons,
 			'exportImages' => $this->exportImages,
 			'exportTemplates' => $this->exportTemplates,
 			'packageName' => $this->packageName,

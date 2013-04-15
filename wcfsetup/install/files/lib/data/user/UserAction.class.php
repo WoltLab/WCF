@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Executes user-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
@@ -26,6 +26,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	public $className = 'wcf\data\user\UserEditor';
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 */
+	protected $allowGuestAccess = array('getSearchResultList');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
@@ -46,9 +51,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates permissions and parameters.
 	 */
 	public function validateCreate() {
-		if (!isset($this->parameters['data']['password'])) {
-			throw new UserInputException('password');
-		}
+		$this->readString('password', false, 'data');
 	}
 	
 	/**
@@ -201,13 +204,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @see	wcf\data\ISearchAction::validateGetSearchResultList()
 	 */
 	public function validateGetSearchResultList() {
-		if (!isset($this->parameters['data']['searchString'])) {
-			throw new UserInputException('searchString');
-		}
-		
-		if (!isset($this->parameters['data']['includeUserGroups'])) {
-			throw new UserInputException('includeUserGroups');
-		}
+		$this->readBoolean('includeUserGroups', false, 'data');
+		$this->readString('searchString', false, 'data');
 		
 		if (isset($this->parameters['data']['excludedSearchValues']) && !is_array($this->parameters['data']['excludedSearchValues'])) {
 			throw new UserInputException('excludedSearchValues');
@@ -252,7 +250,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$sql = "SELECT	userID, username
 			FROM	wcf".WCF_N."_user
 			".$conditionBuilder;
-		$statement = WCF::getDB()->prepareStatement($sql, 10); /* TODO: add limit parameter */
+		$statement = WCF::getDB()->prepareStatement($sql, 10);
 		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
 			$list[] = array(

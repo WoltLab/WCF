@@ -72,7 +72,7 @@
 						{if $availableUpdate.author}
 							<dl>
 								<dt><label>{lang}wcf.acp.package.list.author{/lang}</label></dt>
-								<dd>{if $availableUpdate.authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$availableUpdate.authorURL|rawurlencode}" class="wcf-externalURL">{$availableUpdate.author}</a>{else}{$availableUpdate.author}{/if}</dd>
+								<dd>{if $availableUpdate.authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$availableUpdate.authorURL|rawurlencode}" class="externalURL">{$availableUpdate.author}</a>{else}{$availableUpdate.author}{/if}</dd>
 							</dl>
 						{/if}
 						

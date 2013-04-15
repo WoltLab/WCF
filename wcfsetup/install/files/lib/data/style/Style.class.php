@@ -61,6 +61,11 @@ class Style extends DatabaseObject {
 	 */
 	public function getVariable($variableName) {
 		if (isset($this->variables[$variableName])) {
+			// check if variable is empty
+			if ($this->variables[$variableName] == '~""') {
+				return '';
+			}
+			
 			return $this->variables[$variableName];
 		}
 		

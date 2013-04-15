@@ -132,7 +132,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$data = array(
 			'name' => '', 'description' => array(), 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
 			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
-			'variables' => '', 'date' => '0000-00-00', 'icons' => '', 'iconsPath' => '', 'imagesPath' => ''
+			'variables' => '', 'date' => '0000-00-00', 'imagesPath' => ''
 		);
 		
 		$categories = $xpath->query('/ns:style/*');
@@ -391,67 +391,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			}
 		}
 		
-		// import icons
-		if (!empty($data['icons']) && $data['iconsPath'] != 'icon/') {
-			$iconsLocation = FileUtil::getRelativePath(WCF_DIR, self::getFileLocation($data['imagesPath']));
-			$styleData['iconPath'] = $iconsLocation;
-			
-			$index = $tar->getIndexByFilename($data['icons']);
-			if ($index !== false) {
-				// extract icons tar
-				$destination = FileUtil::getTemporaryFilename('icons_');
-				$tar->extract($index, $destination);
-				
-				// open icons tar and group icons by package
-				$iconsTar = new Tar($destination);
-				$contentList = $iconsTar->getContentList();
-				$packageToIcons = array();
-				foreach ($contentList as $val) {
-					if ($val['type'] == 'file') {
-						$folders = explode('/', $val['filename']);
-						$packageName = array_shift($folders);
-						if (!isset($packageToIcons[$packageName])) {
-							$packageToIcons[$packageName] = array();
-						}
-						$packageToIcons[$packageName][] = array('index' => $val['index'], 'filename' => implode('/', $folders));
-					}
-				}
-				
-				// copy icons
-				foreach ($packageToIcons as $package => $icons) {
-					// try to find package
-					$sql = "SELECT	packageDir
-						FROM	wcf".WCF_N."_package
-						WHERE	package = ?
-							AND isApplication = ?";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array(
-						$package,
-						1
-					));
-					while ($row = $statement->fetchArray()) {
-						// get icon path
-						$iconDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']).$iconsLocation;
-						
-						// create icon path
-						if (!file_exists($iconDir)) {
-							@mkdir($iconDir, 0777, true);
-							@chmod($iconDir, 0777);
-						}
-						
-						// copy icons
-						foreach ($icons as $icon) {
-							$iconsTar->extract($icon['index'], $iconDir.$icon['filename']);
-						}
-					}
-				}
-				
-				// delete tmp file
-				$iconsTar->close();
-				@unlink($destination);
-			}
-		}
-		
 		// import templates
 		if (!empty($data['templates'])) {
 			$index = $tar->getIndexByFilename($data['templates']);
@@ -488,7 +427,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						1
 						));
 					while ($row = $statement->fetchArray()) {
-						// get icon path
+						// get template path
 						$templatesDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$row['packageDir']).'templates/'.$templateGroupFolderName);
 						
 						// create template path
@@ -616,10 +555,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * 
 	 * @param	boolean		$templates
 	 * @param	boolean		$images
-	 * @param	boolean		$icons
 	 * @param	string		$packageName
 	 */
-	public function export($templates = false, $images = false, $icons = false, $packageName = '') {
+	public function export($templates = false, $images = false, $packageName = '') {
 		// create style tar
 		$styleTarName = FileUtil::getTemporaryFilename('style_', '.tgz');
 		$styleTar = new TarWriter($styleTarName, true);
@@ -673,7 +611,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xml->writeElement('variables', 'variables.xml');
 		if ($templates) $xml->writeElement('templates', 'templates.tar');
 		if ($images) $xml->writeElement('images', 'images.tar', array('path' => $this->imagePath));
-		if ($icons) $xml->writeElement('icons', 'icons.tar', array('path' => $this->iconPath));
 		$xml->endElement();
 		
 		// append style info file to style tar
@@ -753,27 +690,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$imagesTar->create();
 			$styleTar->add($imagesTarName, 'images.tar', $imagesTarName);
 			@unlink($imagesTarName);
-		}
-		
-		// export icons
-		if ($icons && ($this->iconPath && $this->iconPath != 'icon/')) {
-			// create icons tar
-			$iconsTarName = FileUtil::getTemporaryFilename('icons_', '.tar');
-			$iconsTar = new TarWriter($iconsTarName);
-			@chmod($iconsTar, 0777);
-			
-			// append icons to tar
-			$path = FileUtil::addTrailingSlash(WCF_DIR.$this->iconPath);
-			if (file_exists($path) && is_dir($path)) {
-				$icons = glob($path.'*.svg');
-				foreach ($icons as $icon) {
-					$iconsTar->add($icon, '', $path);
-				}
-			}
-			
-			$iconsTar->create();
-			$styleTar->add($iconsTarName, 'icons.tar', $iconsTarName);
-			@unlink($iconsTarName);
 		}
 		
 		// output file content

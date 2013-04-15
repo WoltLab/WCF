@@ -70,9 +70,6 @@ class SystemException extends LoggedException implements IPrintableException {
 	 * @see	wcf\system\exception\IPrintableException::show()
 	 */
 	public function show() {
-		// log error
-		$exceptionID = $this->logError();
-		
 		// send status code
 		@header('HTTP/1.1 503 Service Unavailable');
 		
@@ -157,7 +154,7 @@ class SystemException extends LoggedException implements IPrintableException {
 							
 							<h2>Information:</h2>
 							<p>
-								<b>id:</b> <code><?php echo $exceptionID; ?></code><br>
+								<b>id:</b> <code><?php echo $this->getExceptionID(); ?></code><br>
 								<b>error message:</b> <?php echo StringUtil::encodeHTML($this->_getMessage()); ?><br>
 								<b>error code:</b> <?php echo intval($e->getCode()); ?><br>
 								<?php echo $this->information; ?>
@@ -176,7 +173,7 @@ class SystemException extends LoggedException implements IPrintableException {
 						<div>
 							<h2>Information:</h2>
 							<p>
-								<b>id:</b> <code><?php echo $exceptionID; ?></code><br>
+								<b>id:</b> <code><?php echo $this->getExceptionID(); ?></code><br>
 								Send this ID to the administrator of this website to report this issue.
 							</p>
 						</div>
