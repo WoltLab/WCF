@@ -659,9 +659,10 @@ final class StringUtil {
 	 *  
 	 * @param	string		$url
 	 * @param	string		$title
+	 * @param	boolean		$encodeTitle
 	 * @return	string		anchor tag
 	 */
-	public static function getAnchorTag($url, $title = '') {
+	public static function getAnchorTag($url, $title = '', $encodeTitle = true) {
 		$external = true;
 		if (ApplicationHandler::getInstance()->isInternalURL($url)) {
 			$external = false;
@@ -675,9 +676,11 @@ final class StringUtil {
 			if (self::length($title) > 60) {
 				$title = self::substring($title, 0, 30) . self::HELLIP . self::substring($title, -25);
 			}
+			
+			if (!$encodeTitle) $title = self::encodeHTML($title);
 		}
 		
-		return '<a href="'.self::encodeHTML($url).'"'.($external ? (' class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '')) : '').'>'.self::encodeHTML($title).'</a>';
+		return '<a href="'.self::encodeHTML($url).'"'.($external ? (' class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '')) : '').'>'.($encodeTitle ? self::encodeHTML($title) : $title).'</a>';
 	}
 	
 	/**
