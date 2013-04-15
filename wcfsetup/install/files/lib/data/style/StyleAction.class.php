@@ -98,11 +98,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		$count = parent::delete();
 		
 		foreach ($this->objects as $style) {
-			// remove custom icons
-			if ($style->iconPath && $style->iconPath != 'icon/') {
-				$this->removeDirectory($style->iconPath);
-			}
-			
 			// remove custom images
 			if ($style->imagePath && $style->imagePath != 'images/') {
 				$this->removeDirectory($style->imagePath);
@@ -400,7 +395,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			'license' => $this->styleEditor->license,
 			'authorName' => $this->styleEditor->authorName,
 			'authorURL' => $this->styleEditor->authorURL,
-			'iconPath' => $this->styleEditor->iconPath,
 			'imagePath' => $this->styleEditor->imagePath
 		));
 		

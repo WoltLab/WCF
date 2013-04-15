@@ -190,23 +190,32 @@ final class HTTPRequest {
 		}
 		$this->replyHeaders = $headers;
 		
+		// get status code
 		$statusLine = reset($this->replyHeaders);
 		$regex = new Regex('^HTTP/1.(?:0|1) (\d{3})');
 		if (!$regex->match($statusLine)) throw new SystemException("Unexpected status '".$statusLine."'");
 		$matches = $regex->getMatches();
-		$statusCode = $matches[1];
+		$this->statusCode = $matches[1];
 		
-		switch ($statusCode) {
+		// validate length
+		if (isset($this->replyHeaders['Content-Length'])) {
+			if (strlen($this->replyBody) != $this->replyHeaders['Content-Length']) {
+				throw new SystemException('Body length does not match length given in header');
+			}
+		}
+		
+		// validate status code
+		switch ($this->statusCode) {
 			case '301':
 			case '302':
 			case '303':
 			case '307':
 				// redirect
-				if ($this->options['maxDepth'] <= 0) throw new SystemException("Got redirect status '".$statusCode."', but recursion level is exhausted");
+				if ($this->options['maxDepth'] <= 0) throw new SystemException("Got redirect status '".$this->statusCode."', but recursion level is exhausted");
 				
 				$newRequest = clone $this;
 				$newRequest->options['maxDepth']--;
-				if ($statusCode != '307') {
+				if ($this->statusCode != '303') {
 					$newRequest->options['method'] = 'GET';
 					$newRequest->postParameters = array();
 					$newRequest->addHeader('Content-length', '');
@@ -232,15 +241,8 @@ final class HTTPRequest {
 			break;
 			
 			default:
-				throw new SystemException("Got status '".$statusCode."' and I don't know how to handle it");
+				throw new SystemException("Got status '".$this->statusCode."' and I don't know how to handle it");
 			break;
-		}
-		
-		// validate length
-		if (isset($this->replyHeaders['Content-Length'])) {
-			if (strlen($this->replyBody) != $this->replyHeaders['Content-Length']) {
-				throw new SystemException('Body length does not match length given in header');
-			}
 		}
 	}
 	

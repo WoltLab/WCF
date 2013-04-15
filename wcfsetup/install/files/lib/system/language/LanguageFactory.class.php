@@ -306,4 +306,13 @@ class LanguageFactory extends SingletonFactory {
 			$languageEditor->deleteCompiledTemplates();
 		}
 	}
+	
+	/**
+	 * Returns true if multilingualism is enabled.
+	 * 
+	 * @return	boolean
+	 */
+	public function multilingualismEnabled() {
+		return $this->cache['multilingualismEnabled'];
+	}
 }

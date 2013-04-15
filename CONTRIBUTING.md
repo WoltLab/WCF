@@ -16,8 +16,8 @@ Files
 Formatting
 ----------
 - Tabs MUST be used for indentation, you HAVE TO use a tab size of 8
-    - empty lines MUST be indentated as deep as the previos line
-- All identifiers and comments MUST be written in englisch language
+    - empty lines MUST be indentated as deep as the previous line
+- All identifiers and comments MUST be written in English
 - PHP
     - The closing PHP tag MUST be omitted
     - Every file MUST end with a newline character (\n)

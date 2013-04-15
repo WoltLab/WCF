@@ -2,6 +2,7 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -57,5 +58,17 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 		
 		$conditions->add("option_value.userOption".$option->optionID." LIKE ?", array('%'.addcslashes($value, '_%').'%'));
 		return true;
+	}
+	
+	/**
+	 * @see	wcf\system\option\IOptionType::validate()
+	 */
+	public function validate(Option $option, $newValue) {
+		if ($option->minlength !== null && $option->minlength > StringUtil::length($newValue)) {
+			throw new UserInputException($option->optionName, 'tooShort');
+		}
+		if ($option->maxlength !== null && $option->maxlength < StringUtil::length($newValue)) {
+			throw new UserInputException($option->optionName, 'tooLong');
+		}
 	}
 }

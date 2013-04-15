@@ -27,14 +27,14 @@ class ACPSessionFactory {
 		$sessionID = $this->readSessionID();
 		SessionHandler::getInstance()->load($this->sessionEditor, $sessionID);
 		
-		// call shouldInit event
+		// call beforeInit event
 		if (!defined('NO_IMPORTS')) {
 			EventHandler::getInstance()->fireAction($this, 'beforeInit');
 		}
 		
 		$this->init();
 		
-		// call didInit event
+		// call afterInit event
 		if (!defined('NO_IMPORTS')) {
 			EventHandler::getInstance()->fireAction($this, 'afterInit');
 		}

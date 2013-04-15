@@ -8,7 +8,9 @@ use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
+use wcf\system\exception\AJAXException;
 use wcf\system\exception\IPrintableException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
@@ -369,6 +371,16 @@ class WCF {
 				throw new PermissionDeniedException();
 			}
 		}
+		
+		// handle banned users
+		if (self::getUser()->userID && self::getUser()->banned) {
+			if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
+				throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'), AJAXException::INSUFFICIENT_PERMISSIONS);
+			}
+			else {
+				throw new NamedUserException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'));
+			}
+		}
 	}
 	
 	/**
@@ -647,7 +659,7 @@ class WCF {
 	 * @return	string
 	 */
 	public function getAnchor($fragment) {
-		return $this->getRequestURI() . '#' . $fragment;
+		return self::getRequestURI() . '#' . $fragment;
 	}
 	
 	/**
@@ -655,7 +667,7 @@ class WCF {
 	 *
 	 * @return	string
 	 */
-	public function getRequestURI() {
+	public static function getRequestURI() {
 		// resolve path and query components
 		$scriptName = $_SERVER['SCRIPT_NAME'];
 		if (empty($_SERVER['PATH_INFO'])) {

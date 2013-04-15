@@ -74,6 +74,11 @@ class CLIWCF extends WCF {
 	 * @see wcf\system\WCF::destruct()
 	 */
 	public static function destruct() {
+		if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCommandHistory) {
+			self::getReader()->getHistory()->save();
+			self::getReader()->getHistory()->autoSave = false;
+		}
+		
 		self::getSession()->delete();
 	}
 	
@@ -209,7 +214,7 @@ class CLIWCF extends WCF {
 		while ($password === '');
 		
 		try {
-			$user = UserAuthenticationFactory::getUserAuthentication()->loginManually($username, $password);
+			$user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually($username, $password);
 			WCF::getSession()->changeUser($user);
 		}
 		catch (UserInputException $e) {
@@ -290,7 +295,7 @@ class CLIWCF extends WCF {
 	 */
 	public function checkForUpdates() {
 		if (VERBOSITY >= -1 && !self::getArgvParser()->disableUpdateCheck) {
-			$updates = PackageUpdateDispatcher::getAvailableUpdates();
+			$updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 			if (!empty($updates)) {
 				$return = self::getReader()->println(count($updates) . ' updates are available');
 				
@@ -312,7 +317,7 @@ class CLIWCF extends WCF {
 						);
 						
 						// TODO: Check whether update is important
-						if (true && self::getTerminal()->isAnsiSupported() && !self::getArgvParser()->disableColors) {
+						if ($update['version']['isCritical'] && self::getTerminal()->isAnsiSupported() && !self::getArgvParser()->disableColors) {
 							$row[2] = $posix->colorize($row[2], Color::RED);
 						}
 						

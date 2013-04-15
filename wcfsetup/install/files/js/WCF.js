@@ -37,13 +37,16 @@
 		return $data;
 	};
 	
-	// provide a sane console.debug implementation
-	if (!window.console) {
-		window.console = {
-			debug: function() { /* discard log */ }
-		};
+	// provide a sane window.console implementation
+	if (!window.console) window.console = { };
+	var consoleProperties = [ "log",/* "debug",*/ "info", "warn", "exception", "assert", "dir", "dirxml", "trace", "group", "groupEnd", "groupCollapsed", "profile", "profileEnd", "count", "clear", "time", "timeEnd", "timeStamp", "table", "error" ];
+	for (var i = 0; i < consoleProperties.length; i++) {
+		if (typeof (console[consoleProperties[i]]) === 'undefined') {
+			console[consoleProperties[i]] = function () { }
+		}
 	}
-	else if (typeof(console.debug) === 'undefined') {
+	
+	if (typeof(console.debug) === 'undefined') {
 		// forward console.debug to console.log (IE9)
 		console.debug = function(string) { console.log(string); };
 	}
@@ -76,6 +79,18 @@ String.prototype.hashCode = function() {
 	
 	return $hash;
 };
+
+/**
+ * jQuery.browser.mobile (http://detectmobilebrowser.com/)
+ * 
+ * jQuery.browser.mobile will be true if the browser is a mobile device
+ **/
+(function(a){(jQuery.browser=jQuery.browser||{}).mobile=/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))})(navigator.userAgent||navigator.vendor||window.opera);
+
+(function() {
+	jQuery.browser = jQuery.browser || { };
+	jQuery.browser.touch = (!!('ontouchstart' in window) || !!('msmaxtouchpoints' in window.navigator));
+})();
 
 /**
  * Initialize WCF namespace
@@ -1467,11 +1482,14 @@ WCF.Action.Proxy = Class.extend({
 		this.options = $.extend(true, {
 			autoSend: false,
 			data: { },
+			dataType: 'json',
 			after: null,
 			init: null,
+			jsonp: 'callback',
 			failure: null,
 			showLoadingOverlay: true,
 			success: null,
+			suppressErrors: false,
 			type: 'POST',
 			url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		}, options);
@@ -1479,7 +1497,7 @@ WCF.Action.Proxy = Class.extend({
 		this.confirmationDialog = null;
 		this.loading = null;
 		this._showLoadingOverlayOnce = false;
-		this._suppressErrors = false;
+		this._suppressErrors = (this.options.suppressErrors === true);
 		
 		// send request immediately after initialization
 		if (this.options.autoSend) {
@@ -1498,7 +1516,8 @@ WCF.Action.Proxy = Class.extend({
 		
 		$.ajax({
 			data: this.options.data,
-			dataType: 'json',
+			dataType: this.options.dataType,
+			jsonp: this.options.jsonp,
 			type: this.options.type,
 			url: this.options.url,
 			success: $.proxy(this._success, this),
@@ -1511,6 +1530,13 @@ WCF.Action.Proxy = Class.extend({
 	 */
 	showLoadingOverlayOnce: function() {
 		this._showLoadingOverlayOnce = true;
+	},
+	
+	/**
+	 * Suppressed errors for this action proxy.
+	 */
+	suppressErrors: function() {
+		this._suppressErrors = true;
 	},
 	
 	/**
@@ -1535,16 +1561,20 @@ WCF.Action.Proxy = Class.extend({
 	 */
 	_failure: function(jqXHR, textStatus, errorThrown) {
 		try {
-			var data = $.parseJSON(jqXHR.responseText);
+			var $data = $.parseJSON(jqXHR.responseText);
 			
 			// call child method if applicable
 			var $showError = true;
 			if ($.isFunction(this.options.failure)) {
-				$showError = this.options.failure(jqXHR, textStatus, errorThrown, jqXHR.responseText);
+				$showError = this.options.failure($data, jqXHR, textStatus, errorThrown);
 			}
 			
 			if (!this._suppressErrors && $showError !== false) {
-				$('<div class="ajaxDebugMessage"><p>' + data.message + '</p><p>Stacktrace:</p><p>' + data.stacktrace + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+				var $details = '';
+				if ($data.stacktrace) $details = '<br /><p>Stacktrace:</p><p>' + $data.stacktrace + '</p>';
+				else if ($data.exceptionID) $details = '<br /><p>Exception ID: <code>' + $data.exceptionID + '</code></p>';
+				
+				$('<div class="ajaxDebugMessage"><p>' + $data.message + '</p>' + $details + '</div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
 			}
 		}
 		// failed to parse JSON
@@ -1552,7 +1582,7 @@ WCF.Action.Proxy = Class.extend({
 			// call child method if applicable
 			var $showError = true;
 			if ($.isFunction(this.options.failure)) {
-				$showError = this.options.failure(jqXHR, textStatus, errorThrown, jqXHR.responseText);
+				$showError = this.options.failure(null, jqXHR, textStatus, errorThrown);
 			}
 			
 			if (!this._suppressErrors && $showError !== false) {
@@ -1600,6 +1630,16 @@ WCF.Action.Proxy = Class.extend({
 		
 		// disable DOMNodeInserted event
 		WCF.DOMNodeInsertedHandler.disable();
+		
+		// fix anchor tags generated through WCF::getAnchor()
+		$('a[href*=#]').each(function(index, link) {
+			var $link = $(link);
+			if ($link.prop('href').indexOf('AJAXProxy') != -1) {
+				var $anchor = $link.prop('href').substr($link.prop('href').indexOf('#'));
+				var $pageLink = document.location.toString().replace(/#.*/, '');
+				$link.prop('href', $pageLink + $anchor);
+			}
+		});
 	},
 	
 	/**
@@ -2120,7 +2160,6 @@ WCF.Date.Picker = {
 		//
 		// No equivalence in jQuery UI date picker:
 		// N	ISO-8601 numeric representation of the day of the week
-		// S	English ordinal suffix for the day of the month, 2 characters
 		// w	Numeric representation of the day of the week
 		// W	ISO-8601 week number of year, weeks starting on Monday
 		// t	Number of days in the given month
@@ -2132,6 +2171,7 @@ WCF.Date.Picker = {
 			'j': 'd',
 			'l': 'DD',
 			'z': 'o',
+			'S': '', // English ordinal suffix for the day of the month, 2 characters, will be discarded
 
 			// month
 			'F': 'MM',
@@ -2151,7 +2191,7 @@ WCF.Date.Picker = {
 		// do the actual replacement
 		// this is not perfect, but a basic implementation and should work in 99% of the cases
 		// TODO: support literals (magics are escaped in PHP date() by an \, in jQuery UI DatePicker they are enclosed in '')
-		this._dateFormat = WCF.Language.get('wcf.date.dateFormat').replace(/([^dDjlzFmMnoYyU\\]*(?:\\.[^dDjlzFmMnoYyU\\]*)*)([dDjlzFmMnoYyU])/g, function(match, part1, part2, offset, string) {
+		this._dateFormat = WCF.Language.get('wcf.date.dateFormat').replace(/([^dDjlzSFmMnoYyU\\]*(?:\\.[^dDjlzSFmMnoYyU\\]*)*)([dDjlzSFmMnoYyU])/g, function(match, part1, part2, offset, string) {
 			for (var $key in $replacementTable) {
 				if (part2 == $key) {
 					part2 = $replacementTable[$key];
@@ -2249,12 +2289,30 @@ WCF.Date.Util = {
  */
 WCF.Date.Time = Class.extend({
 	/**
+	 * list of time elements
+	 * @var	jQuery
+	 */
+	_elements: null,
+	
+	/**
+	 * difference between server and local time
+	 * @var	integer
+	 */
+	_offset: null,
+	
+	/**
+	 * current timestamp
+	 * @var	integer
+	 */
+	_timestamp: 0,
+	
+	/**
 	 * Initializes relative datetimes.
 	 */
 	init: function() {
-		// initialize variables
-		this.elements = $('time.datetime');
-		this.timestamp = 0;
+		this._elements = $('time.datetime');
+		this._offset = null;
+		this._timestamp = 0;
 		
 		// calculate relative datetime on init
 		this._refresh();
@@ -2270,7 +2328,7 @@ WCF.Date.Time = Class.extend({
 	 * Updates element collection once a DOM node was inserted.
 	 */
 	_domNodeInserted: function() {
-		this.elements = $('time.datetime');
+		this._elements = $('time.datetime');
 		this._refresh();
 	},
 	
@@ -2278,12 +2336,13 @@ WCF.Date.Time = Class.extend({
 	 * Refreshes relative datetime for each element.
 	 */
 	_refresh: function() {
-		// TESTING ONLY!
 		var $date = new Date();
-		this.timestamp = ($date.getTime() - $date.getMilliseconds()) / 1000;
-		// TESTING ONLY!
+		this._timestamp = ($date.getTime() - $date.getMilliseconds()) / 1000;
+		if (this._offset === null) {
+			this._offset = this._timestamp - TIME_NOW;
+		}
 		
-		this.elements.each($.proxy(this._refreshElement, this));
+		this._elements.each($.proxy(this._refreshElement, this));
 	},
 	
 	/**
@@ -2293,45 +2352,47 @@ WCF.Date.Time = Class.extend({
 	 * @param	object		element
 	 */
 	_refreshElement: function(index, element) {
-		if (!$(element).attr('title')) {
-			$(element).attr('title', $(element).text());
+		var $element = $(element);
+		
+		if (!$element.attr('title')) {
+			$element.attr('title', $element.text());
 		}
 		
-		var $timestamp = $(element).data('timestamp');
-		var $date = $(element).data('date');
-		var $time = $(element).data('time');
-		var $offset = $(element).data('offset');
+		var $timestamp = $element.data('timestamp') + this._offset;
+		var $date = $element.data('date');
+		var $time = $element.data('time');
+		var $offset = $element.data('offset');
 		
 		// timestamp is in the future
-		if ($timestamp > this.timestamp) {
+		if ($timestamp > this._timestamp) {
 			var $string = WCF.Language.get('wcf.date.dateTimeFormat');
-			$(element).text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
+			$element.text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
 		}
 		// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-		else if (this.timestamp < ($timestamp + 3540)) {
-			var $minutes = Math.round((this.timestamp - $timestamp) / 60);
-			$(element).text(eval(WCF.Language.get('wcf.date.relative.minutes')));
+		else if (this._timestamp < ($timestamp + 3540)) {
+			var $minutes = Math.round((this._timestamp - $timestamp) / 60);
+			$element.text(eval(WCF.Language.get('wcf.date.relative.minutes')));
 		}
 		// timestamp is less than 24 hours ago
-		else if (this.timestamp < ($timestamp + 86400)) {
-			var $hours = Math.round((this.timestamp - $timestamp) / 3600);
-			$(element).text(eval(WCF.Language.get('wcf.date.relative.hours')));
+		else if (this._timestamp < ($timestamp + 86400)) {
+			var $hours = Math.round((this._timestamp - $timestamp) / 3600);
+			$element.text(eval(WCF.Language.get('wcf.date.relative.hours')));
 		}
 		// timestamp is less than a week ago
-		else if (this.timestamp < ($timestamp + 604800)) {
-			var $days = Math.round((this.timestamp - $timestamp) / 86400);
+		else if (this._timestamp < ($timestamp + 604800)) {
+			var $days = Math.round((this._timestamp - $timestamp) / 86400);
 			var $string = eval(WCF.Language.get('wcf.date.relative.pastDays'));
 			
 			// get day of week
 			var $dateObj = WCF.Date.Util.getTimezoneDate(($timestamp * 1000), $offset);
 			var $dow = $dateObj.getDay();
 			
-			$(element).text($string.replace(/\%day\%/, WCF.Language.get('__days')[$dow]).replace(/\%time\%/, $time));
+			$element.text($string.replace(/\%day\%/, WCF.Language.get('__days')[$dow]).replace(/\%time\%/, $time));
 		}
 		// timestamp is between ~700 million years BC and last week
 		else {
 			var $string = WCF.Language.get('wcf.date.dateTimeFormat');
-			$(element).text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
+			$element.text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
 		}
 	}
 });
@@ -3322,6 +3383,7 @@ WCF.Template.Compiled = Class.extend({
  * @param	string		element
  * @param	array		showItems
  * @param	array		hideItems
+ * @param	function	callback
  */
 WCF.ToggleOptions = Class.extend({
 	/**
@@ -3344,6 +3406,13 @@ WCF.ToggleOptions = Class.extend({
 	 * @var	array
 	 */
 	_hideItems: [],
+		
+	/**
+	 * callback after options were toggled
+	 * 
+	 * @var	function
+	 */
+	 _callback: null,
 	
 	/**
 	 * Initializes option toggle.
@@ -3351,11 +3420,15 @@ WCF.ToggleOptions = Class.extend({
 	 * @param	string		element
 	 * @param	array		showItems
 	 * @param	array		hideItems
+	 * @param	function	callback
 	 */
-	init: function(element, showItems, hideItems) {
+	init: function(element, showItems, hideItems, callback) {
 		this._element = $('#' + element);
 		this._showItems = showItems;
 		this._hideItems = hideItems;
+		if (callback !== undefined) {
+			this._callback = callback;
+		}
 		
 		// bind event
 		this._element.click($.proxy(this._toggle, this));
@@ -3380,6 +3453,10 @@ WCF.ToggleOptions = Class.extend({
 			var $item = this._hideItems[$i];
 			
 			$('#' + $item).hide();
+		}
+		
+		if (this._callback !== null) {
+			this._callback();
 		}
 	}
 });
@@ -4053,6 +4130,8 @@ WCF.Effect.BalloonTooltip = Class.extend({
 	 * Initializes tooltips.
 	 */
 	init: function() {
+		if (jQuery.browser.touch) return;
+
 		if (!this._didInit) {
 			// create empty div
 			this._tooltip = $('<div id="balloonTooltip" class="balloonTooltip"><span id="balloonTooltipText"></span><span class="pointer"><span></span></span></div>').appendTo($('body')).hide();
@@ -4163,7 +4242,16 @@ WCF.Effect.BalloonTooltip = Class.extend({
 		}
 		
 		// calculate top offset
-		var $top = $elementOffsets.top + $elementDimensions.height + 7;
+		if ($elementOffsets.top + $elementDimensions.height + $tooltipDimensions.height - $(document).scrollTop() < $(window).height()) {
+			var $top = $elementOffsets.top + $elementDimensions.height + 7;
+			this._tooltip.removeClass('inverse');
+			$arrow.css('top', -5);
+		}
+		else {
+			var $top = $elementOffsets.top - $elementDimensions.height - 7;
+			this._tooltip.addClass('inverse');
+			$arrow.css('top', $tooltipDimensions.height);
+		}
 		
 		// calculate left offset
 		switch ($alignment) {
@@ -4689,7 +4777,7 @@ WCF.Search.Base = Class.extend({
 		this._itemIndex = -1;
 		
 		this._proxy = new WCF.Action.Proxy({
-			showLoadingOverlay: (showLoadingOverlay === false ? false : true),
+			showLoadingOverlay: (showLoadingOverlay !== true ? false : true),
 			success: $.proxy(this._success, this)
 		});
 		
@@ -5121,7 +5209,7 @@ WCF.System.Notification = Class.extend({
 		this._overlay = $('#systemNotification');
 		
 		if (!this._overlay.length) {
-			this._overlay = $('<div id="systemNotification"><p></p></div>').appendTo(document.body);
+			this._overlay = $('<div id="systemNotification"><p></p></div>').hide().appendTo(document.body);
 		}
 	},
 	
@@ -5147,7 +5235,7 @@ WCF.System.Notification = Class.extend({
 		// hide overlay after specified duration
 		new WCF.PeriodicalExecuter($.proxy(this._hide, this), duration);
 		
-		this._overlay.addClass('open');
+		this._overlay.wcfFadeIn(undefined, 300);
 	},
 	
 	/**
@@ -5160,7 +5248,7 @@ WCF.System.Notification = Class.extend({
 			this._callback();
 		}
 		
-		this._overlay.removeClass('open');
+		this._overlay.wcfFadeOut(undefined, 300);
 		
 		pe.stop();
 	}
@@ -5193,6 +5281,12 @@ WCF.System.Confirmation = {
 	 * @var	boolean
 	 */
 	_visible: false,
+	
+	/**
+	 * confirmation button
+	 * @var	jQuery
+	 */
+	_confirmationButton: null,
 	
 	/**
 	 * Displays a confirmation dialog.
@@ -5237,6 +5331,7 @@ WCF.System.Confirmation = {
 			this._dialog.wcfDialog('render');
 		}
 		
+		this._confirmationButton.focus();
 		this._visible = true;
 	},
 	
@@ -5247,7 +5342,7 @@ WCF.System.Confirmation = {
 		this._dialog = $('<div id="wcfSystemConfirmation" class="systemConfirmation"><p /><div id="wcfSystemConfirmationContent" /></div>').hide().appendTo(document.body);
 		var $formButtons = $('<div class="formSubmit" />').appendTo(this._dialog);
 		
-		$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
+		this._confirmationButton = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.confirmation.confirm') + '</button>').data('action', 'confirm').click($.proxy(this._click, this)).appendTo($formButtons);
 		$('<button>' + WCF.Language.get('wcf.global.confirmation.cancel') + '</button>').data('action', 'cancel').click($.proxy(this._click, this)).appendTo($formButtons);
 	},
 	
@@ -5286,6 +5381,54 @@ WCF.System.Confirmation = {
 	 */
 	_show: function() {
 		this._dialog.find('button.buttonPrimary').blur().focus();
+	}
+};
+
+/**
+ * Disables the ability to scroll the page.
+ */
+WCF.System.DisableScrolling = {
+	/**
+	 * number of times scrolling was disabled (nested calls)
+	 * @var	integer
+	 */
+	_depth: 0,
+	
+	/**
+	 * old overflow-value of the body element
+	 * @var	string
+	 */
+	_oldOverflow: null,
+	
+	/**
+	 * Disables scrolling.
+	 */
+	disable: function () {
+		// do not block scrolling on touch devices
+		if ($.browser.touch) {
+			return;
+		}
+		
+		if (this._depth === 0) {
+			this._oldOverflow = $(document.body).css('overflow');
+			$(document.body).css('overflow', 'hidden');
+		}
+		
+		this._depth++;
+	},
+	
+	/**
+	 * Enables scrolling again.
+	 * Must be called the same number of times disable() was called to enable scrolling.
+	 */
+	enable: function () {
+		if (this._depth === 0) return;
+		
+		this._depth--;
+		
+		if (this._depth === 0) {
+			$(document.body).css('overflow', this._oldOverflow);
+		}
 	}
 };
 
@@ -5439,14 +5582,16 @@ WCF.System.KeepAlive = Class.extend({
 	 * @param	integer		seconds
 	 */
 	init: function(seconds) {
-		new WCF.PeriodicalExecuter(function() {
+		new WCF.PeriodicalExecuter(function(pe) {
 			new WCF.Action.Proxy({
 				autoSend: true,
 				data: {
 					actionName: 'keepAlive',
 					className: 'wcf\\data\\session\\SessionAction'
 				},
-				showLoadingOverlay: false
+				failure: function() { pe.stop(); },
+				showLoadingOverlay: false,
+				suppressErrors: true
 			});
 		}, (seconds * 1000));
 	}
@@ -6220,7 +6365,7 @@ WCF.Sortable.List = Class.extend({
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		if (this._notification === null) {
-			this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.form.edit.success'));
+			this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success.edit'));
 		}
 		
 		this._notification.show();
@@ -7108,7 +7253,7 @@ WCF.Sitemap = Class.extend({
 			
 			// show dialog
 			this._dialog.wcfDialog({
-				title: WCF.Language.get('wcf.sitemap.title')
+				title: WCF.Language.get('wcf.page.sitemap')
 			});
 			
 			this._didInit = true;
@@ -7546,6 +7691,20 @@ $.widget('ui.wcfDialog', {
 	},
 	
 	/**
+	 * @see	$.widget._createWidget()
+	 */
+	_createWidget: function(options, element) {
+		// ignore script tags
+		if ($(element).getTagName() === 'script') {
+			console.debug("[ui.wcfDialog] Ignored script tag");
+			this.element = false;
+			return null;
+		}
+		
+		$.Widget.prototype._createWidget.apply(this, arguments);
+	},
+	
+	/**
 	 * Initializes a new dialog.
 	 */
 	_init: function() {
@@ -7641,6 +7800,11 @@ $.widget('ui.wcfDialog', {
 	 * Opens this dialog.
 	 */
 	open: function() {
+		// ignore script tags
+		if (this.element === false) {
+			return;
+		}
+		
 		if (this.isOpen()) {
 			return;
 		}
@@ -7668,8 +7832,10 @@ $.widget('ui.wcfDialog', {
 	
 	/**
 	 * Closes this dialog.
+	 * 
+	 * @param	object		event
 	 */
-	close: function() {
+	close: function(event) {
 		if (!this.isOpen() || !this.options.closable) {
 			return;
 		}
@@ -7687,6 +7853,12 @@ $.widget('ui.wcfDialog', {
 		
 		if (this.options.onClose !== null) {
 			this.options.onClose();
+		}
+		
+		if (event !== undefined) {
+			event.preventDefault();
+			event.stopPropagation();
+			return false;
 		}
 	},
 	

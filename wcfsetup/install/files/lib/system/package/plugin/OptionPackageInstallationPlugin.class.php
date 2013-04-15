@@ -17,16 +17,10 @@ use wcf\system\WCF;
  */
 class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
-	 * list of application abbreviations
-	 * @var	array<string>
-	 */
-	protected static $abbreviations = null;
-	
-	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'option';
-
+	
 	/**
 	 * list of names of tags which aren't considered as additional data
 	 * @var	array<string>

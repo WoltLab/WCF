@@ -7,8 +7,8 @@ use wcf\util\StringUtil;
  * A logged exceptions prevents information disclosures and provides an easy
  * way to log errors.
  * 
- * @author	Tim Düsterhus, Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Tim Duesterhus, Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
@@ -16,11 +16,23 @@ use wcf\util\StringUtil;
  */
 class LoggedException extends \Exception {
 	/**
+	 * exception id
+	 * @var	string
+	 */
+	protected $exceptionID = '';
+	
+	/**
+	 * ignore disabled debug mode
+	 * @var	boolean
+	 */
+	protected $ignoreDebugMode = false;
+	
+	/**
 	 * @see	\Exception::getMessage()
 	 */
 	public function _getMessage() {
 		// suppresses the original error message
-		if (!WCF::debugModeIsEnabled()) {
+		if (!WCF::debugModeIsEnabled() && !$this->ignoreDebugMode) {
 			return 'An error occured. Sorry.';
 		}
 		
@@ -29,9 +41,26 @@ class LoggedException extends \Exception {
 	}
 	
 	/**
+	 * Returns exception id
+	 * 
+	 * @return	string
+	 */
+	public function getExceptionID() {
+		if (empty($this->exceptionID)) {
+			$this->logError();
+		}
+		
+		return $this->exceptionID;
+	}
+	
+	/**
 	 * Writes an error to log file.
 	 */
 	protected function logError() {
+		if (!empty($this->exceptionID)) {
+			return;
+		}
+		
 		$logFile = WCF_DIR . 'log/' . date('Y-m-d', TIME_NOW) . '.txt';
 		
 		// try to create file
@@ -57,15 +86,13 @@ class LoggedException extends \Exception {
 			'WCF version: '.WCF_VERSION."\n".
 			'Request URI: '.(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '')."\n".
 			'Referrer: '.(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '')."\n".
-			"Stacktrace: \n ".implode("\n  ", explode("\n", $e->getTraceAsString()))."\n";
+			"Stacktrace: \n  ".implode("\n  ", explode("\n", $e->getTraceAsString()))."\n";
 		
 		// calculate Exception-ID
-		$id = StringUtil::getHash($message);
-		$message = "<<<<<<<<".$id."<<<<\n".$message."<<<<\n\n";
+		$this->exceptionID = StringUtil::getHash($message);
+		$message = "<<<<<<<<".$this->exceptionID."<<<<\n".$message."<<<<\n\n";
 		
 		// append
 		@file_put_contents($logFile, $message, FILE_APPEND);
-		
-		return $id;
 	}
 }

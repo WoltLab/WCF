@@ -20,7 +20,7 @@ fieldset {
 	}
 	
 	> dl:not(:first-of-type) {
-		margin-top: @wcfGapSmall;
+		margin-top: @wcfGapSmall+@wcfGapTiny;
 	}
 	
 	&:not(:first-of-type) {
@@ -35,7 +35,7 @@ dl:not(.plain) {
 	.clearfix();
 	
 	> dd:not(:first-of-type), > dt:not(:first-of-type) {
-		margin-top: @wcfGapSmall;
+		margin-top: @wcfGapSmall+@wcfGapTiny;
 	}
 	
 	> dt {
@@ -69,7 +69,7 @@ dl:not(.plain) {
 		> small:not(.innerError) {
 			color: @wcfDimmedColor;
 			display: block;
-			margin-top: 2px;
+			margin-top: 3px;
 		}
 		
 		> label {
@@ -84,6 +84,7 @@ dl:not(.plain) {
 		> input[type='checkbox'], > input[type='radio'] {
 			~ small {
 				margin-left: 21px;
+				margin-top: 2px;
 			}
 		}
 		
@@ -123,6 +124,29 @@ dl:not(.plain) {
 		> dt, > dd > label {
 			color: @wcfDimmedColor;
 		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	dl:not(.plain) {
+		> dt {
+			float: none;
+			margin-bottom: @wcfGapTiny;
+			text-align: left;
+			width: auto !important;
+			
+			&.reversed {
+				left: 20px;
+			}
+		}
+		
+		> dd {
+			margin-left: 0 !important;
+		}
+	}
+	
+	fieldset > dl:not(:first-of-type) {
+		margin-top: 14px;
 	}
 }
 
@@ -177,13 +201,16 @@ input[type='password'],
 textarea,
 select[multiple] {
 	box-sizing: border-box;
-	padding: 5px 3px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	padding: 4px 3px;
 	margin: 0;
 }
 
 select {
-	padding: 1px 1px 1px 3px;
 	margin: 0;
+	min-width: 1px;
+	padding: 3px;
 }
 
 /* normal state */
@@ -330,6 +357,16 @@ textarea {
 	width: 100%;
 }
 
+@media only screen and (max-width: 768px) {
+	textarea {
+		max-height: 160px;
+	}
+	
+	.medium {
+		width: 100%;
+	}
+}
+
 /* upload button */
 .uploadButton {
 	margin-top: @wcfGapSmall;
@@ -342,20 +379,6 @@ textarea {
 		position: absolute;
 		top: 0;
 	}
-}
-
-
-
-
-
-
-
-
-
-/* todo: ckeditor fixes */
-.cke_editor_text {
-	border-style: solid !important;
-	padding: 0 !important;
 }
 
 /* todo: element list with checkboxes */

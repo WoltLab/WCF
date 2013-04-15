@@ -6,6 +6,7 @@ use wcf\system\menu\page\PageMenu;
 use wcf\system\request\RouteHandler;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
+use wcf\util\StringUtil;
 
 /**
  * Handles relative links within the wcf.
@@ -66,6 +67,13 @@ class LinkHandler extends SingletonFactory {
 				$appendSession = false;
 			}
 		}
+		if (isset($parameters['forceFrontend'])) {
+			if ($parameters['forceFrontend'] && $isACP) {
+				$isACP = false;
+				$appendSession = false;
+			}
+			unset($parameters['forceFrontend']);
+		}
 		
 		// remove anchor before parsing
 		if (($pos = strpos($url, '#')) !== false) {
@@ -106,6 +114,12 @@ class LinkHandler extends SingletonFactory {
 		if (!$isRaw && !empty($url)) {
 			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
 		}
+		
+		// encode certain characters
+		if (!empty($url)) {
+			$url = StringUtil::replace(array('[', ']'), array('%5B', '%5D'), $url);
+		}
+		
 		$url = $routeURL . $url;
 		
 		// append session id

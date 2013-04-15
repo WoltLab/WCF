@@ -151,8 +151,7 @@ class UserOption extends Option {
 		}
 		
 		// check owner state
-		// TODO: Shouldn't this be: EDITABILITY_OWNER?
-		if ($this->editable & self::VISIBILITY_OWNER) {
+		if ($this->editable & self::EDITABILITY_OWNER) {
 			if ($this->user === null || $this->user->userID == WCF::getUser()->userID) {
 				return true;
 			}

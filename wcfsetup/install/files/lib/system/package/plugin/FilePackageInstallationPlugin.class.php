@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\package\Package;
-use wcf\data\package\PackageEditor;
 use wcf\system\package\FilesFileHandler;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
@@ -30,27 +29,8 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	public function install() {
 		parent::install();
 		
-		// get package installation dir
-		$dir = $this->installation->getPackage()->packageDir;
-		if (empty($dir)) {
-			if ($this->installation->getPackage()->isApplication == 1 && $this->installation->getPackage()->package != 'com.woltlab.wcf' && $this->installation->getAction() == 'install') {
-				// application
-				// prompt package dir
-				$dir = $this->promptPackageDir();
-			}
-			
-			// save package dir
-			if (!empty($dir)) {
-				$package = new Package($this->installation->getPackageID());
-				$packageEditor = new PackageEditor($package);
-				$packageEditor->update(array('packageDir' => $dir));
-				
-				$this->installation->getPackage()->packageDir = $dir;
-			}
-		}
-		
 		// absolute path to package dir
-		$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$dir));
+		$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$this->installation->getPackage()->packageDir));
 		
 		// extract files.tar to temp folder
 		$sourceFile = $this->installation->getArchive()->extractTar($this->instruction['value'], 'files_');

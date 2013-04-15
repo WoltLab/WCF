@@ -115,7 +115,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 				$defaultValue
 			));
 			
-			if ($adminDefaultValue && $defaultValue != $adminDefaultValue) {
+			if (isset($option['admindefaultvalue']) && $defaultValue != $adminDefaultValue) {
 				$adminGroupIDs = self::getAdminGroupIDs();
 				
 				WCF::getDB()->beginTransaction();

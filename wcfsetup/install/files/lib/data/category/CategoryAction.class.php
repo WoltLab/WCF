@@ -100,9 +100,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	 * @see	wcf\data\AbstractDatabaseObjectAction::validateDelete()
 	 */
 	public function validateCreate() {
-		if (!isset($this->parameters['data']['objectTypeID'])) {
-			throw new UserInputException('objectTypeID');
-		}
+		$this->readInteger('objectTypeID', false, 'data');
 		
 		$objectType = CategoryHandler::getInstance()->getObjectType($this->parameters['data']['objectTypeID']);
 		if ($objectType === null) {

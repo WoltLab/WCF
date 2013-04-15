@@ -73,8 +73,8 @@
 	</hgroup>
 </header>
 
-{hascontent}
-	<div class="contentNavigation">
+<div class="contentNavigation">
+	{hascontent}
 		<nav>
 			<ul>
 				{content}
@@ -86,8 +86,8 @@
 				{/content}
 			</ul>
 		</nav>
-	</div>
-{/hascontent}
+	{/hascontent}
+</div>
 
 {if $categoryNodeList|count}
 	<section id="categoryList" class="container containerPadding marginTop{if $objectType->getProcessor()->canEditCategory() && $categoryNodeList|count > 1} sortableListContainer{/if}">
@@ -139,8 +139,8 @@
 		{/if}
 	</section>
 	
-	{hascontent}
-		<div class="contentNavigation">
+	<div class="contentNavigation">
+		{hascontent}
 			<nav>
 				<ul>
 					{content}
@@ -152,8 +152,8 @@
 					{/content}
 				</ul>
 			</nav>
-		</div>
-	{/hascontent}
+		{/hascontent}
+	</div>
 {else}
 	<p class="info">{@$objectType->getProcessor()->getLanguageVariable('noneAvailable')}</p>
 {/if}

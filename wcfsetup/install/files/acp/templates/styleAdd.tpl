@@ -25,7 +25,10 @@
 		useFluidLayout();
 		
 		WCF.Language.addObject({
-			'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}'
+			'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}',
+			'wcf.style.colorPicker': '{lang}wcf.style.colorPicker{/lang}',
+			'wcf.style.colorPicker.new': '{lang}wcf.style.colorPicker.new{/lang}',
+			'wcf.style.colorPicker.current': '{lang}wcf.style.colorPicker.current{/lang}'
 		});
 		new WCF.ACP.Style.ImageUpload(0, '{$tmpHash}');
 		
@@ -50,11 +53,11 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.{$action}.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
 
-{hascontent}
-	<div class="contentNavigation">
+<div class="contentNavigation">
+	{hascontent}
 		<nav>
 			<ul>
 				{content}
@@ -71,8 +74,8 @@
 				{/content}
 			</ul>
 		</nav>
-	</div>
-{/hascontent}
+	{/hascontent}
+</div>
 
 <form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit' id=$styleID}{/link}{/if}">
 	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
@@ -262,22 +265,6 @@
 						</dd>
 					</dl>
 				{/hascontent}
-				<dl{if $errorField == 'iconPath'} class="formError"{/if}>
-					<dt><label for="iconPath">{lang}wcf.acp.style.iconPath{/lang}</label></dt>
-					<dd>
-						<input type="text" name="iconPath" id="iconPath" value="{$iconPath}" class="long" />
-						{if $errorField == 'iconPath'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.style.error.iconPath.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-						<small>{lang}wcf.acp.style.iconPath.description{/lang}</small>
-					</dd>
-				</dl>
 				<dl{if $errorField == 'imagePath'} class="formError"{/if}>
 					<dt><label for="imagePath">{lang}wcf.acp.style.imagePath{/lang}</label></dt>
 					<dd>

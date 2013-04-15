@@ -93,6 +93,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 	 * @param	array		$groupOptions
 	 */
 	public function updateGroupOptions(array $groupOptions = array()) {
+		WCF::getDB()->beginTransaction();
 		// delete old group options
 		$sql = "DELETE FROM	wcf".WCF_N."_user_group_option_value
 			WHERE		groupID = ?";
@@ -107,6 +108,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 		foreach ($groupOptions as $id => $value) {
 			$statement->execute(array($this->groupID, $id, $value));
 		}
+		WCF::getDB()->commitTransaction();
 	}
 	
 	/**

@@ -23,12 +23,6 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	protected $package = null;
 	
 	/**
-	 * id of the package the prepared queue belongs to
-	 * @var	integer
-	 */
-	protected $packageID = 0;
-	
-	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\package\installation\queue\PackageInstallationQueueEditor';
@@ -37,9 +31,9 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	 * Validates the 'prepareQueue' action:
 	 */
 	public function validatePrepareQueue() {
-		if (isset($this->parameters['packageID'])) $this->packageID = intval($this->parameters['packageID']);
+		$this->readInteger('packageID');
 		
-		$this->package = new Package($this->packageID);
+		$this->package = new Package($this->parameters['packageID']);
 		if (!$this->package->packageID) {
 			throw new UserInputException('packageID');
 		}

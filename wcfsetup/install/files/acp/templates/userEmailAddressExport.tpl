@@ -14,8 +14,8 @@
 	</hgroup>
 </header>
 
-{hascontent}
-	<div class="contentNavigation">
+<div class="contentNavigation">
+	{hascontent}
 		<nav>
 			<ul>
 				{content}
@@ -23,8 +23,8 @@
 				{/content}
 			</ul>
 		</nav>
-	</div>
-{/hascontent}
+	{/hascontent}
+</div>
 
 <form method="post" action="{link controller='UserEmailAddressExport'}{/link}">
 	<div class="container containerPadding marginTop">
@@ -56,7 +56,7 @@
 				</dd>
 			</dl>
 			
-			<dl id="textSeparatorDiv"><!-- ToDo: Checkbox -->
+			<dl id="textSeparatorDiv">
 				<dt><label for="textSeparator">{lang}wcf.acp.user.exportEmailAddress.textSeparator{/lang}</label></dt>
 				<dd>
 					<input type="text" id="textSeparator" name="textSeparator" value="{$textSeparator}" class="medium" />

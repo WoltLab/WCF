@@ -6,13 +6,18 @@ use wcf\system\WCF;
  * NamedUserException shows a (well) styled page with the given error message.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
  * @category	Community Framework
  */
 class NamedUserException extends UserException {
+	/**
+	 * @see	wcf\system\exception\LoggedException::$ignoreDebugMode
+	 */
+	protected $ignoreDebugMode = true;
+	
 	/**
 	 * Shows a styled page with the given error message.
 	 */
@@ -21,7 +26,7 @@ class NamedUserException extends UserException {
 			'name' => get_class($this),
 			'file' => $this->getFile(),
 			'line' => $this->getLine(),
-			'message' => $this->_getMessage(),
+			'message' => $this->getMessage(),
 			'stacktrace' => $this->getTraceAsString(),
 			'templateName' => 'userException'
 		));

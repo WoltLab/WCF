@@ -25,8 +25,23 @@
 		width: 32px;
 	}
 	
-	> a {
+	a {
 		text-decoration: underline;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.info,
+	.error,
+	.success,
+	.warning {
+		margin-left: @wcfGapSmall;
+		margin-right: @wcfGapSmall;
+		padding: @wcfGapTiny @wcfGapSmall;
+		
+		&:after {
+			display: none;
+		}
 	}
 }
 
@@ -42,7 +57,8 @@
 		content: "\f05a";
 	}
 	
-	> a, > a:hover {
+	a,
+	a:hover {
 		color: @wcfInfoColor;
 	}
 }
@@ -58,7 +74,8 @@
 		content: "\f058";
 	}
 	
-	> a, > a:hover {
+	a,
+	a:hover {
 		color: @wcfSuccessColor;
 	}
 }
@@ -74,7 +91,8 @@
 		content: "\f071";
 	}
 	
-	> a, > a:hover {
+	a,
+	a:hover {
 		color: @wcfWarningColor;
 	}
 }
@@ -90,7 +108,8 @@
 		content: "\f05e";
 	}
 	
-	> a, > a:hover {
+	a,
+	a:hover {
 		color: @wcfErrorColor;
 	}
 }

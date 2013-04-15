@@ -20,7 +20,7 @@ class PageMenuCacheBuilder extends AbstractCacheBuilder {
 		$data = array();
 		
 		$menuItemList = new PageMenuItemList();
-		$menuItemList->getConditionBuilder()->add("page_menu_item.isDisabled = ?", array(0));
+		$menuItemList->getConditionBuilder()->add("(page_menu_item.isDisabled = ? OR page_menu_item.isLandingPage = ?)", array(0, 1));
 		$menuItemList->sqlOrderBy = "page_menu_item.showOrder ASC";
 		$menuItemList->readObjects();
 		

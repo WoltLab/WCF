@@ -100,12 +100,6 @@ class StyleAddForm extends AbstractForm {
 	public $globals = array();
 	
 	/**
-	 * icon path
-	 * @var	string
-	 */
-	public $iconPath = 'icon/';
-	
-	/**
 	 * image path
 	 * @var	string
 	 */
@@ -229,7 +223,6 @@ class StyleAddForm extends AbstractForm {
 		if (isset($_POST['authorName'])) $this->authorName = StringUtil::trim($_POST['authorName']);
 		if (isset($_POST['authorURL'])) $this->authorURL = StringUtil::trim($_POST['authorURL']);
 		if (isset($_POST['copyright'])) $this->copyright = StringUtil::trim($_POST['copyright']);
-		if (isset($_POST['iconPath'])) $this->iconPath = StringUtil::trim($_POST['iconPath']);
 		if (isset($_POST['imagePath'])) $this->imagePath = StringUtil::trim($_POST['imagePath']);
 		if (isset($_POST['license'])) $this->license = StringUtil::trim($_POST['license']);
 		if (isset($_POST['styleDate'])) $this->styleDate = StringUtil::trim($_POST['styleDate']);
@@ -283,14 +276,6 @@ class StyleAddForm extends AbstractForm {
 		if ($this->templateGroupID) {
 			if (!isset($this->availableTemplateGroups[$this->templateGroupID])) {
 				throw new UserInputException('templateGroupID');
-			}
-		}
-		
-		// ensure icon path is below WCF_DIR/icon/
-		if ($this->iconPath) {
-			$relativePath = FileUtil::unifyDirSeperator(FileUtil::getRelativePath(WCF_DIR.'icon/', WCF_DIR.$this->iconPath));
-			if (strpos($relativePath, '../') !== false) {
-				throw new UserInputException('iconPath', 'notValid');
 			}
 		}
 		
@@ -494,8 +479,7 @@ class StyleAddForm extends AbstractForm {
 				'copyright' => $this->copyright,
 				'license' => $this->license,
 				'authorName' => $this->authorName,
-				'authorURL' => $this->authorURL,
-				'iconPath' => $this->iconPath
+				'authorURL' => $this->authorURL
 			),
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
@@ -518,7 +502,6 @@ class StyleAddForm extends AbstractForm {
 		$this->authorName = $this->authorURL = $this->copyright = $this->fontFamily = $this->image = '';
 		$this->license = $this->styleDate = $this->styleDescription = $this->styleName = $this->styleVersion = '';
 		
-		$this->iconPath = 'icon/';
 		$this->imagePath = 'images/';
 		$this->templateGroupID = 0;
 		
@@ -545,7 +528,6 @@ class StyleAddForm extends AbstractForm {
 			'availableUnits' => $this->availableUnits,
 			'copyright' => $this->copyright,
 			'fontFamily' => $this->fontFamily,
-			'iconPath' => $this->iconPath,
 			'imagePath' => $this->imagePath,
 			'license' => $this->license,
 			'styleDate' => $this->styleDate,

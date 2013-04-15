@@ -37,6 +37,7 @@ class DatabaseCommandHistory extends MemoryHistory {
 			VALUES (?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		WCF::getDB()->beginTransaction();
+		
 		foreach ($this as $item) {
 			$statement->execute(array(WCF::getUser()->userID, $item));
 		}

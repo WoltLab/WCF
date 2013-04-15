@@ -73,8 +73,6 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * Adds default routes.
-	 * 
-	 * @todo add support for custom default controllers (see https://github.com/WoltLab/WCF/issues/1000)
 	 */
 	protected function addDefaultRoutes() {
 		$acpRoute = new Route('ACP_default', true);

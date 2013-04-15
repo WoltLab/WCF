@@ -1,10 +1,12 @@
+			{event name='contents'}
+			
 			{if $skipBreadcrumbs|empty}{include file='breadcrumbs' __microdata=false}{/if}
 			
 		</section>
 	</div>
 </div>
 
-<footer id="pageFooter" class="layoutFluid footer">
+<footer id="pageFooter" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if} footer">
 	<div>
 		<nav id="footerNavigation" class="navigation navigationFooter clearfix">
 			{include file='footerMenu'}
@@ -23,11 +25,15 @@
 		</nav>
 		
 		<div class="footerContent">
+			{event name='footerContents'}
+			
 			{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
 		
 			{event name='copyright'}
 		</div>
 	</div>
 </footer>
+
+{event name='footer'}
 
 <a id="bottom"></a>

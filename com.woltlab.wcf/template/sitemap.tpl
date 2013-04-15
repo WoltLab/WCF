@@ -5,7 +5,7 @@
 				<ul>
 					{content}
 						{foreach from=$tree item=sitemapName}
-							<li><a href="#sitemap_{$sitemapName}" class="sitemapNavigation" data-sitemap-name="{$sitemapName}">{lang}wcf.sitemap.{$sitemapName}{/lang}</a></li>
+							<li><a href="#sitemap_{$sitemapName}" class="sitemapNavigation" data-sitemap-name="{$sitemapName}">{lang}wcf.page.sitemap.{$sitemapName}{/lang}</a></li>
 						{/foreach}
 					{/content}
 				</ul>

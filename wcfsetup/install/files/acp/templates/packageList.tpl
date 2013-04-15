@@ -37,7 +37,7 @@
 {if $objects|count}
 	<div class="tabularBox tabularBoxTitle marginTop">
 		<hgroup>
-			<h1>{lang}wcf.acp.package.list{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.package.list.count{/lang}">{#$items}</span></h1>
+			<h1>{lang}wcf.acp.package.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
 		</hgroup>
 		
 		<table class="table">
@@ -72,7 +72,7 @@
 						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->packageDescription|language}">
 							<a href="{link controller='Package' id=$package->packageID}{/link}"><span>{$package}</span></a>
 						</td>
-						<td class="columnText"><p>{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="wcf-externalURL">{$package->author}</a>{else}{$package->author}{/if}</p></td>
+						<td class="columnText"><p>{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</p></td>
 						<td class="columnText"><p>{$package->packageVersion}</p></td>
 						<td class="columnDate"><p>{@$package->updateDate|time}</p></td>
 						

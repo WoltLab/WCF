@@ -61,13 +61,13 @@
 	{if $archive->getPackageInfo('packageURL') != ''}
 		<dl>
 			<dt>{lang}wcf.acp.package.url{/lang}</dt>
-			<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="wcf-externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
+			<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
 		</dl>
 	{/if}
 	
 	<dl>
 		<dt>{lang}wcf.acp.package.author{/lang}</dt>
-		<dd>{if $archive->getAuthorInfo('authorURL')}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getAuthorInfo('authorURL')|rawurlencode}" class="wcf-externalURL">{$archive->getAuthorInfo('author')}</a>{else}{$archive->getAuthorInfo('author')}{/if}</dd>
+		<dd>{if $archive->getAuthorInfo('authorURL')}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getAuthorInfo('authorURL')|rawurlencode}" class="externalURL">{$archive->getAuthorInfo('author')}</a>{else}{$archive->getAuthorInfo('author')}{/if}</dd>
 	</dl>
 	
 	{event name='propertyFields'}
@@ -76,7 +76,7 @@
 {if $requiredPackages|count > 0}
 	<div class="tabularBox tabularBoxTitle marginTop">
 		<hgroup>
-			<h1>{lang}wcf.acp.package.dependencies.required{/lang} <span class="badge badgeInverse" title="{lang}wcf.acp.package.view.requiredPackages.description{/lang}">{#$requiredPackages|count}</span></h1>
+			<h1>{lang}wcf.acp.package.dependencies.required{/lang} <span class="badge badgeInverse">{#$requiredPackages|count}</span></h1>
 		</hgroup>
 		
 		<table class="table">

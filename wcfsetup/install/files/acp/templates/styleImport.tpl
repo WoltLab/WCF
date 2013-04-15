@@ -7,11 +7,11 @@
 </header>
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.add.success{/lang}</p>	
+	<p class="success">{lang}wcf.global.success.add{/lang}</p>
 {/if}
 
-{hascontent}
-	<div class="contentNavigation">
+<div class="contentNavigation">
+	{hascontent}
 		<nav>
 			<ul>
 				{content}
@@ -23,8 +23,8 @@
 				{/content}
 			</ul>
 		</nav>
-	</div>
-{/hascontent}
+	{/hascontent}
+</div>
 
 <form method="post" action="{link controller='StyleImport'}{/link}" enctype="multipart/form-data">
 	<div class="container containerPadding marginTop">

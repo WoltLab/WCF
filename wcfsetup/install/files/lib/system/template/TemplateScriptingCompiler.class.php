@@ -266,8 +266,6 @@ class TemplateScriptingCompiler {
 		$compiledContent .= $textBlocks[$i];
 		$compiledContent = chop($compiledContent);
 		
-		// @todo: INSERT POSTFILTERS HERE!?
-		
 		// reinsert {literal} Tags
 		$compiledContent = $this->reinsertLiterals($compiledContent);
 		

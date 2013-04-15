@@ -16,6 +16,7 @@ use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\form\container\GroupFormElementContainer;
 use wcf\system\form\container\MultipleSelectionFormElementContainer;
@@ -30,6 +31,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\setup\Installer;
 use wcf\system\style\StyleHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\version\VersionHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -174,11 +176,16 @@ class PackageInstallationDispatcher {
 			
 			// reset stylesheets
 			StyleHandler::resetStylesheets();
-		}	
+			
+			// clear user storage
+			UserStorageHandler::getInstance()->clear();
+			
+			EventHandler::getInstance()->fireAction($this, 'postInstall');
+		}
 		
 		if ($this->requireRestructureVersionTables) {
 			$this->restructureVersionTables();
-		}			
+		}
 		
 		return $step;
 	}
@@ -977,7 +984,7 @@ class PackageInstallationDispatcher {
 		$versionTableBaseColumns[] = array('name' => 'versionUsername', 'data' => array('type' => 'VARCHAR', 'length' => 255));
 		$versionTableBaseColumns[] = array('name' => 'versionTime', 'data' => array('type' => 'INT'));
 		
-		foreach ($objectTypes as $objectTypeID => $objectType) {
+		foreach ($objectTypes as $objectType) {
 			// get structure of base table
 			$baseTableColumns = WCF::getDB()->getEditor()->getColumns($objectType::getDatabaseTableName());
 			// get structure of version table
