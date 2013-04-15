@@ -3200,118 +3200,83 @@ WCF.TabMenu = {
  */
 WCF.Template = Class.extend({
 	/**
-	 * template content
-	 * @var	string
-	 */
-	_template: '',
-	
-	/**
-	 * saved literal tags
-	 * @var	WCF.Dictionary
-	 */
-	_literals: new WCF.Dictionary(),
-	
-	/**
-	 * needed variabls
-	 * @var	WCF.Dictionary
-	 */
-	_neededVars: [ ],
-	
-	/**
 	 * Prepares template
 	 * 
 	 * @param	$template		template-content
 	 */
 	init: function(template) {
-		this._template = template;
-		this._literals = new WCF.Dictionary();
-		this._neededVars = [ ];
+		var $literals = new WCF.Dictionary();
+		
+		// escape \ and ',
+		template = template.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 		
 		// save literal-tags
-		this._template = this._template.replace(/\{literal\}(.*?)\{\/literal\}/g, $.proxy(function (match) {
+		template = template.replace(/\{literal\}(.*?)\{\/literal\}/g, $.proxy(function (match) {
 			// hopefully no one uses this string in one of his templates
 			var id = '@@@@@@@@@@@'+Math.random()+'@@@@@@@@@@@';
-			this._literals.add(id, match.replace(/\{\/?literal\}/g, ''));
+			$literals.add(id, match.replace(/\{\/?literal\}/g, ''));
 			
 			return id;
 		}, this));
 		
-		// escape \ and '
-		this._template = this._template.replace('\\', '\\\\').replace("'", "\\'");
-		
 		var self = this;
 		
 		// parse our variable-tags
-		this._template = this._template.replace(/\{\$(.+?)\}/g, function (_, name) {
-			self._neededVars.push(name);
+		template = template.replace(/\{\$(.+?)\}/g, function (_, content) {
+			// unescape \ and '
+			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
-			return "' + WCF.String.escapeHTML(v." + name + ") + '";
-		}).replace(/\{#\$(.+?)\}/g, function (_, name) {
-			self._neededVars.push(name);
+			return "' + WCF.String.escapeHTML(" + content + ") + '";
+		}).replace(/\{#\$(.+?)\}/g, function (_, content) {
+			// unescape \ and '
+			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
-			return "' + WCF.String.formatNumeric(v." + name + ") + '";
-		}).replace(/\{@\$(.+?)\}/g, function (_, name) {
-			self._neededVars.push(name);
+			return "' + WCF.String.formatNumeric(" + content + ") + '";
+		}).replace(/\{@\$(.+?)\}/g, function (_, content) {
+			// unescape \ and '
+			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
-			return "' + (v." + name + ") + '";
+			return "' + " + content + " + '";
 		}).replace(/{if (.+?)}/g, function (_, content) {
-			content = content.replace(/\$([^\s]+)/g, function (_, name) {
-				self._neededVars.push(name);
-			
-				return "v." + name;
-			});
+			// unescape \ and '
+			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
 			return "'; if (" + content + ") { $output += '";
-		}).replace(/{elseif (.+?)}/g, function (_, content) {
-			content = content.replace(/\$([^\s]+)/g, function (_, name) {
-				self._neededVars.push(name);
-			
-				return "v." + name;
-			});
+		})
+		.replace(/{elseif (.+?)}/g, function (_, content) {
+			// unescape \ and '
+			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
 			return "'; } else if (" + content + ") { $output += '";
-		}).replace(/{else}/g, "'; } else { $output += '").replace(/{\/if}/g, "'; } $output += '");
+		})
+		.replace(/{else}/g, "'; } else { $output += '")
+		.replace(/{\/if}/g, "'; } $output += '");
 		
 		// insert delimiter tags
-		this._template = this._template.replace('{ldelim}', '{').replace('{rdelim}', '}');
+		template = template.replace('{ldelim}', '{').replace('{rdelim}', '}');
 		
 		// escape newlines
-		this._template = this._template.replace(/(\r\n|\n|\r)/g, '\\n');
+		template = template.replace(/(\r\n|\n|\r)/g, '\\n');
 		
-		this._template = "$output += '" + this.insertLiterals(this._template) + "';";
+		$literals.each(function (pair) {
+			template = template.replace(pair.key, pair.value);
+		});
 		
-		this._template = new Function("v", "var $output = ''; " + this._template + ' return $output;');
+		template = "$output += '" + template + "';";
+		
+		console.debug(template);
+		
+		this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
 	},
 	
 	/**
-	 * Fetches the template with the given variables
+	 * Fetches the template with the given variables.
 	 *
 	 * @param	v	variables to insert
 	 * @return		parsed template
 	 */
-	fetch: function(v) {
-		// check whether all needed variables are given
-		for (var $i = 0; $i < this._neededVars.length; $i++) {
-			if (typeof v[this._neededVars[$i]] === 'undefined') {
-				throw new Error('Use of undefined variable ' + this._neededVars[$i]);
-			}
-		}
-		
-		return this._template(v);
-	},
-	
-	/**
-	 * Inserts literals into given string
-	 * 
-	 * @param	template	string to insert into
-	 * @return			string with inserted literals
-	 */
-	insertLiterals: function (template) {
-		this._literals.each(function (pair) {
-			template = template.replace(pair.key, pair.value);
-		});
-		
-		return template;
+	fetch: function() {
+		// this will be replaced in the init function
 	}
 });
 
