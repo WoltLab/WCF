@@ -2231,7 +2231,7 @@ WCF.Date.Picker = {
 				monthNames: WCF.Language.get('__months'),
 				monthNamesShort: WCF.Language.get('__monthsShort'),
 				showOtherMonths: true,
-				yearRange: '1900:2038'
+				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038')
 			});
 			
 			// format default date
