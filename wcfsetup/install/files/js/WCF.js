@@ -4248,7 +4248,7 @@ WCF.Effect.BalloonTooltip = Class.extend({
 			$arrow.css('top', -5);
 		}
 		else {
-			var $top = $elementOffsets.top - $elementDimensions.height - 7;
+			var $top = $elementOffsets.top - $tooltipDimensions.height - 7;
 			this._tooltip.addClass('inverse');
 			$arrow.css('top', $tooltipDimensions.height);
 		}
