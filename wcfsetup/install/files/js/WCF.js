@@ -3264,8 +3264,6 @@ WCF.Template = Class.extend({
 		
 		template = "$output += '" + template + "';";
 		
-		console.debug(template);
-		
 		this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
 	},
 	
@@ -3275,7 +3273,7 @@ WCF.Template = Class.extend({
 	 * @param	v	variables to insert
 	 * @return		parsed template
 	 */
-	fetch: function() {
+	fetch: function(v) {
 		// this will be replaced in the init function
 	}
 });
