@@ -2,6 +2,7 @@
 namespace wcf\action;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\LoggedException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -169,6 +170,9 @@ class AJAXInvokeAction extends AbstractSecureAction {
 				'errorMessage' => $e->getMessage(),
 				'fieldName' => $e->getFieldName()
 			));
+		}
+		else if ($e instanceof NamedUserException) {
+			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString());
 		}
 		else {
 			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->getTraceAsString(), array(), ($e instanceof LoggedException ? $e->getExceptionID() : ''));
