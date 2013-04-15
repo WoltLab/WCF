@@ -1,9 +1,8 @@
 <?php
 namespace wcf\action;
-use wcf\system\exception\LoggedException;
-
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\LoggedException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
