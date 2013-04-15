@@ -26,7 +26,7 @@ class NamedUserException extends UserException {
 			'name' => get_class($this),
 			'file' => $this->getFile(),
 			'line' => $this->getLine(),
-			'message' => $this->_getMessage(),
+			'message' => $this->getMessage(),
 			'stacktrace' => $this->getTraceAsString(),
 			'templateName' => 'userException'
 		));
