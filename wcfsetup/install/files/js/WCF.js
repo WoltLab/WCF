@@ -3268,30 +3268,30 @@ WCF.Template = Class.extend({
 		var self = this;
 		
 		// parse our variable-tags
-		template = template.replace(/\{(\$.+?)\}/g, function (_, content) {
+		template = template.replace(/\{(\$[^\s]+?)\}/g, function (_, content) {
 			// unescape \ and '
-			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
 			return "' + WCF.String.escapeHTML(" + content + ") + '";
-		}).replace(/\{#(\$.+?)\}/g, function (_, content) {
+		}).replace(/\{#(\$[^\s]+?)\}/g, function (_, content) {
 			// unescape \ and '
-			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
 			return "' + WCF.String.formatNumeric(" + content + ") + '";
-		}).replace(/\{@(\$.+?)\}/g, function (_, content) {
+		}).replace(/\{@(\$[^\s]+?)\}/g, function (_, content) {
 			// unescape \ and '
-			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
 			return "' + " + content + " + '";
 		}).replace(/\{if (.+?)\}/g, function (_, content) {
 			// unescape \ and '
-			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
 			return "'; if (" + content + ") { $output += '";
 		})
-		.replace(/\{elseif (.+?)\}/g, function (_, content) {
+		.replace(/\{else ?if (.+?)\}/g, function (_, content) {
 			// unescape \ and '
-			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
 			return "'; } else if (" + content + ") { $output += '";
 		})
