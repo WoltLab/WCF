@@ -57,28 +57,23 @@ class AJAXException extends LoggedException {
 	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null, $returnValues = array(), $exceptionID = '') {
 		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();
 		
-		if (WCF::debugModeIsEnabled()) {
-			$responseData = array(
-				'message' => $message,
-				'stacktrace' => nl2br($stacktrace)
-			);
-		}
-		else {
-			$responseData = array(
-				'message' => $this->_getMessage()
-			);
-		}
+		$responseData = array(
+			'code' => $errorType,
+			'message' => $message,
+			'returnValues' => $returnValues
+		);
 		
-		$responseData['code'] = $errorType;
-		$responseData['returnValues'] = $returnValues;
+		if (WCF::debugModeIsEnabled()) {
+			$responseData['stacktrace'] = nl2br($stacktrace);
+		}
 		
 		$statusHeader = '';
 		switch ($errorType) {
 			case self::MISSING_PARAMETERS:
 				$statusHeader = 'HTTP/1.0 400 Bad Request';
-				$responseData['message'] = WCF::getLanguage()->get('wcf.ajax.error.badRequest');
 				
-				$this->logError();
+				$responseData['exceptionID'] = $exceptionID;
+				$responseData['message'] = WCF::getLanguage()->get('wcf.ajax.error.badRequest');
 			break;
 			
 			case self::SESSION_EXPIRED:
@@ -91,6 +86,8 @@ class AJAXException extends LoggedException {
 			
 			case self::BAD_PARAMETERS:
 				$statusHeader = 'HTTP/1.0 412 Precondition Failed';
+				
+				$responseData['exceptionID'] = $exceptionID;
 			break;
 			
 			default:
