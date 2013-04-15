@@ -3311,6 +3311,10 @@ WCF.Template = Class.extend({
 		.replace(/\{else\}/g, "'; } else { $output += '")
 		.replace(/\{\/(if|implode)\}/g, "'; } $output += '");
 		
+		for (var key in WCF.Template.callbacks) {
+			template = WCF.Template.callbacks[key](template);
+		}
+		
 		// insert delimiter tags
 		template = template.replace('{ldelim}', '{').replace('{rdelim}', '}');
 		
@@ -3322,7 +3326,7 @@ WCF.Template = Class.extend({
 		});
 		
 		template = "$output += '" + template + "';";
-		console.log(template);
+		
 		this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
 	},
 	
@@ -3336,6 +3340,13 @@ WCF.Template = Class.extend({
 		// this will be replaced in the init function
 	}
 });
+
+/**
+ * Array of callbacks that will be called after parsing the included tags. Only applies to Templates compiled after the callback was added.
+ * 
+ * @var	array<Function>
+ */
+WCF.Template.callbacks = [ ];
 
 /**
  * Toggles options.
