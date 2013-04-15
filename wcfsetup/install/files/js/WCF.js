@@ -3245,15 +3245,15 @@ WCF.Template = Class.extend({
 		this._template = this._template.replace(/\{\$(.+?)\}/g, function (_, name) {
 			self._neededVars.push(name);
 			
-			return "' + WCF.String.escapeHTML(v."+ name + ") + '";
+			return "' + WCF.String.escapeHTML(v." + name + ") + '";
 		}).replace(/\{#\$(.+?)\}/g, function (_, name) {
 			self._neededVars.push(name);
 			
-			return "' + WCF.String.formatNumeric(v."+ name + ") + '";
+			return "' + WCF.String.formatNumeric(v." + name + ") + '";
 		}).replace(/\{@\$(.+?)\}/g, function (_, name) {
 			self._neededVars.push(name);
 			
-			return "' + (v."+ name + ") + '";
+			return "' + (v." + name + ") + '";
 		}).replace(/{if (.+?)}/g, function (_, content) {
 			content = content.replace(/\$([^\s]+)/g, function (_, name) {
 				self._neededVars.push(name);
@@ -3279,6 +3279,8 @@ WCF.Template = Class.extend({
 		this._template = this._template.replace(/(\r\n|\n|\r)/g, '\\n');
 		
 		this._template = "$output += '" + this.insertLiterals(this._template) + "';";
+		
+		this._template = new Function("v", "var $output = ''; " + this._template + ' return $output;');
 	},
 	
 	/**
@@ -3295,11 +3297,7 @@ WCF.Template = Class.extend({
 			}
 		}
 		
-		var $output = '';
-		
-		eval(this._template);
-		
-		return $output;
+		return this._template(v);
 	},
 	
 	/**
