@@ -3242,22 +3242,35 @@ WCF.Template = Class.extend({
 		var self = this;
 		
 		// parse our variable-tags
-		this._template = this._template.replace(/\{\$(.*?)\}/g, function ($match) {
-			var $name = $match.substring(2, $match.length - 1);
-			self._neededVars.push($name);
+		this._template = this._template.replace(/\{\$(.+?)\}/g, function (_, name) {
+			self._neededVars.push(name);
 			
-			return "' + WCF.String.escapeHTML(v."+ $name + ") + '";
-		}).replace(/\{#\$(.*?)\}/g, function ($match) {
-			var $name = $match.substring(3, $match.length - 1);
-			self._neededVars.push($name);
+			return "' + WCF.String.escapeHTML(v."+ name + ") + '";
+		}).replace(/\{#\$(.+?)\}/g, function (_, name) {
+			self._neededVars.push(name);
 			
-			return "' + WCF.String.formatNumeric(v."+ $name + ") + '";
-		}).replace(/\{@\$(.*?)\}/g, function ($match) {
-			var $name = $match.substring(3, $match.length - 1);
-			self._neededVars.push($name);
+			return "' + WCF.String.formatNumeric(v."+ name + ") + '";
+		}).replace(/\{@\$(.+?)\}/g, function (_, name) {
+			self._neededVars.push(name);
 			
-			return "' + (v."+ $name + ") + '";
-		});
+			return "' + (v."+ name + ") + '";
+		}).replace(/{if (.+?)}/g, function (_, content) {
+			content = content.replace(/\$([^\s]+)/g, function (_, name) {
+				self._neededVars.push(name);
+			
+				return "v." + name;
+			});
+			
+			return "'; if (" + content + ") { $output += '";
+		}).replace(/{elseif (.+?)}/g, function (_, content) {
+			content = content.replace(/\$([^\s]+)/g, function (_, name) {
+				self._neededVars.push(name);
+			
+				return "v." + name;
+			});
+			
+			return "'; } else if (" + content + ") { $output += '";
+		}).replace(/{else}/g, "'; } else { $output += '").replace(/{\/if}/g, "'; } $output += '");
 		
 		// insert delimiter tags
 		this._template = this._template.replace('{ldelim}', '{').replace('{rdelim}', '}');
@@ -3265,7 +3278,7 @@ WCF.Template = Class.extend({
 		// escape newlines
 		this._template = this._template.replace(/(\r\n|\n|\r)/g, '\\n');
 		
-		this._template = "'" + this.insertLiterals(this._template) + "';";
+		this._template = "$output += '" + this.insertLiterals(this._template) + "';";
 	},
 	
 	/**
@@ -3277,12 +3290,16 @@ WCF.Template = Class.extend({
 	fetch: function(v) {
 		// check whether all needed variables are given
 		for (var $i = 0; $i < this._neededVars.length; $i++) {
-			if (!v[this._neededVars[$i]]) {
+			if (typeof v[this._neededVars[$i]] === 'undefined') {
 				throw new Error('Use of undefined variable ' + this._neededVars[$i]);
 			}
 		}
 		
-		return eval(this._template);
+		var $output = '';
+		
+		eval(this._template);
+		
+		return $output;
 	},
 	
 	/**
