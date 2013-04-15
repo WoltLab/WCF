@@ -17,6 +17,7 @@
 			}, 200);
 		{/if}
 	});
+	{event name='javascriptInclude'}
 	//]]>
 </script>
 
