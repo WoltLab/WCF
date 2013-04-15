@@ -107,36 +107,37 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		AbstractForm::save();
 		
 		// handle description
+		$description = '';
 		if ($this->objectType->getProcessor()->hasDescription()) {
-			$this->description = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.description.category'.$this->category->categoryID;
+			$description = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.description.category'.$this->category->categoryID;
 			if (I18nHandler::getInstance()->isPlainValue('description')) {
-				I18nHandler::getInstance()->remove($this->description, $this->packageID);
-				$this->description = I18nHandler::getInstance()->getValue('description');
+				I18nHandler::getInstance()->remove($description, $this->packageID);
+				$description = I18nHandler::getInstance()->getValue('description');
 			}
 			else {
-				I18nHandler::getInstance()->save('description', $this->description, $this->objectType->getProcessor()->getDescriptionLangVarCategory(), $this->packageID);
+				I18nHandler::getInstance()->save('description', $description, $this->objectType->getProcessor()->getDescriptionLangVarCategory(), $this->packageID);
 			}
 		}
 		
 		// handle title
-		$this->title = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.title.category'.$this->category->categoryID;
+		$title = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.title.category'.$this->category->categoryID;
 		if (I18nHandler::getInstance()->isPlainValue('title')) {
-			I18nHandler::getInstance()->remove($this->title, $this->packageID);
-			$this->title = I18nHandler::getInstance()->getValue('title');
+			I18nHandler::getInstance()->remove($title, $this->packageID);
+			$title = I18nHandler::getInstance()->getValue('title');
 		}
 		else {
-			I18nHandler::getInstance()->save('title', $this->title, $this->objectType->getProcessor()->getTitleLangVarCategory(), $this->packageID);
+			I18nHandler::getInstance()->save('title', $title, $this->objectType->getProcessor()->getTitleLangVarCategory(), $this->packageID);
 		}
 		
 		// update category
 		$this->objectAction = new CategoryAction(array($this->category), 'update', array(
 			'data' => array(
 				'additionalData' => serialize($this->additionalData),
-				'description' => $this->description,
+				'description' => $description,
 				'isDisabled' => $this->isDisabled,
 				'parentCategoryID' => $this->parentCategoryID,
 				'showOrder' => $this->showOrder,
-				'title' => $this->title
+				'title' => $title
 			)
 		));
 		$this->objectAction->executeAction();

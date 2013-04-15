@@ -75,8 +75,8 @@
 					<input type="text" id="title" name="title" value="{$i18nPlainValues['title']}" class="long" />
 					{if $errorField == 'title'}
 						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
+							{if $errorType == 'empty' || $errorType == 'multilingual'}
+								{lang}wcf.global.form.error.{$errorType}{/lang}
 							{else}
 								{assign var=__languageVariable value='title.error.'|concat:$errorType}
 								{@$objectType->getProcessor()->getLanguageVariable($__languageVariable)}
@@ -94,8 +94,8 @@
 						<textarea cols="40" rows="10" id="description" name="description">{$i18nPlainValues['description']}</textarea>
 						{if $errorField == 'description'}
 							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
+								{if $errorType == 'empty' || $errorType == 'multilingual'}
+									{lang}wcf.global.form.error.{$errorType}{/lang}
 								{else}
 									{assign var=__languageVariable value='description.error.'|concat:$errorType}
 									{@$objectType->getProcessor()->getLanguageVariable($__languageVariable)}
