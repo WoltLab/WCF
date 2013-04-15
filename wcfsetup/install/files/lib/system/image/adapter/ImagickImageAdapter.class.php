@@ -83,7 +83,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
 		/* todo: obtainDimensions=false doesn't work */
-		$thumbnail = $this->imagick;
+		$thumbnail = clone $this->imagick;
 		$thumbnail->cropThumbnailImage($maxWidth, $maxHeight);
 		
 		return $thumbnail;
