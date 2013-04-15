@@ -3206,6 +3206,7 @@ WCF.Template = Class.extend({
 	 */
 	init: function(template) {
 		var $literals = new WCF.Dictionary();
+		var $implodeID = 0;
 		
 		// escape \ and ',
 		template = template.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
@@ -3219,38 +3220,96 @@ WCF.Template = Class.extend({
 			return id;
 		}, this));
 		
+		var parseParameterList = function (parameterString) {
+			var $chars = parameterString.split('');
+			var $parameters = { };
+			var $inName = true;
+			var $name = '';
+			var $value = '';
+			var $quoted = false;
+			var $escaped = false;
+			for (var $i = 0, $max = $chars.length; $i < $max; $i++) {
+				var $char = $chars[$i];
+				if ($inName && $char != '=' && $char != ' ') $name += $char
+				else if ($inName && $char == '=') {
+					$inName = false;
+					$quoted = false;
+					$escaped = false;
+				}
+				else if (!$inName && !$quoted && $char == ' ') {
+					$inName = true;
+					$parameters[$name] = $value;
+					$value = $name = '';
+				}
+				else if (!$inName && $quoted && !$escaped && $char == "'") {
+					$quoted = false;
+					$value += $char;
+				}
+				else if (!$inName && !$quoted && $char == "'") {
+					$quoted = true;
+					$value += $char;
+				}
+				else if (!$inName && $quoted && !$escaped && $char == '\\') {
+					$escaped = true;
+					$value += $char;
+				}
+				else if (!$inName) {
+					$escaped = false;
+					$value += $char;
+				}
+			}
+			$parameters[$name] = $value;
+			
+			if ($quoted || $escaped) throw new Error('Syntax error in parameterList: "' + parameterString + '"');
+			
+			return $parameters;
+		};
+		
 		var self = this;
 		
 		// parse our variable-tags
-		template = template.replace(/\{\$(.+?)\}/g, function (_, content) {
+		template = template.replace(/\{(\$.+?)\}/g, function (_, content) {
 			// unescape \ and '
 			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
 			return "' + WCF.String.escapeHTML(" + content + ") + '";
-		}).replace(/\{#\$(.+?)\}/g, function (_, content) {
+		}).replace(/\{#(\$.+?)\}/g, function (_, content) {
 			// unescape \ and '
 			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
 			return "' + WCF.String.formatNumeric(" + content + ") + '";
-		}).replace(/\{@\$(.+?)\}/g, function (_, content) {
+		}).replace(/\{@(\$.+?)\}/g, function (_, content) {
 			// unescape \ and '
 			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
 			return "' + " + content + " + '";
-		}).replace(/{if (.+?)}/g, function (_, content) {
+		}).replace(/\{if (.+?)\}/g, function (_, content) {
 			// unescape \ and '
 			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
 			return "'; if (" + content + ") { $output += '";
 		})
-		.replace(/{elseif (.+?)}/g, function (_, content) {
+		.replace(/\{elseif (.+?)\}/g, function (_, content) {
 			// unescape \ and '
 			content = content.replace(/\$([^\s]+)/g, "(v.$1)").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			
 			return "'; } else if (" + content + ") { $output += '";
 		})
-		.replace(/{else}/g, "'; } else { $output += '")
-		.replace(/{\/if}/g, "'; } $output += '");
+		.replace(/\{implode (.+?)\}/g, function (_, content) {
+			$implodeID++;
+			
+			content = content.replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			var $parameters = parseParameterList(content);
+			
+			if (typeof $parameters['from'] === 'undefined') throw new Error('Missing from attribute in implode-tag');
+			if (typeof $parameters['item'] === 'undefined') throw new Error('Missing item attribute in implode-tag');
+			if (typeof $parameters['glue'] === 'undefined') $parameters['glue'] = "', '";
+			$parameters['from'] = $parameters['from'].replace(/\$([^\s]+)/g, "(v.$1)");
+			
+			return "'; var $implode_" + $implodeID + " = false; for ($implodeKey_" + $implodeID + " in " + $parameters['from'] + ") { v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$implodeKey_" + $implodeID + "]; if ($implode_" + $implodeID + ") $output += " + $parameters['glue'] + "; $implode_" + $implodeID + " = true; $output += '";
+		})
+		.replace(/\{else\}/g, "'; } else { $output += '")
+		.replace(/\{\/(if|implode)\}/g, "'; } $output += '");
 		
 		// insert delimiter tags
 		template = template.replace('{ldelim}', '{').replace('{rdelim}', '}');
@@ -3263,7 +3322,7 @@ WCF.Template = Class.extend({
 		});
 		
 		template = "$output += '" + template + "';";
-		
+		console.log(template);
 		this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
 	},
 	
