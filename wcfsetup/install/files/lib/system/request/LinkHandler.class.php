@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\request;
+use wcf\util\StringUtil;
+
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\menu\page\PageMenu;
@@ -113,6 +115,12 @@ class LinkHandler extends SingletonFactory {
 		if (!$isRaw && !empty($url)) {
 			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
 		}
+		
+		// encode certain characters
+		if (!empty($url)) {
+			$url = StringUtil::replace(array('[', ']'), array('%5B', '%5D'), $url);
+		}
+		
 		$url = $routeURL . $url;
 		
 		// append session id
