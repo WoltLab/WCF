@@ -68,6 +68,7 @@
 				'wcf.date.dateFormat': '{lang}wcf.date.dateFormat{/lang}',
 				'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
 				'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
+				'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
 				'wcf.global.success': '{lang}wcf.global.success{/lang}',
 				'wcf.global.success.add': '{lang}wcf.global.success.add{/lang}',
 				'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
