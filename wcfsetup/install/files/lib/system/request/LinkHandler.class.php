@@ -1,13 +1,12 @@
 <?php
 namespace wcf\system\request;
-use wcf\util\StringUtil;
-
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\menu\page\PageMenu;
 use wcf\system\request\RouteHandler;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
+use wcf\util\StringUtil;
 
 /**
  * Handles relative links within the wcf.
