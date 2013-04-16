@@ -6013,10 +6013,10 @@ WCF.Upload = Class.extend({
 			this._fileUpload = $('<input type="file" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/>');
 			this._fileUpload.change($.proxy(this._upload, this));
 			var $button = $('<p class="button uploadButton"><span>'+WCF.Language.get('wcf.global.button.upload')+'</span></p>');
-			$button.append(this._fileUpload);
+			$button.prepend(this._fileUpload);
 		}
 		else {
-			var $button = $('<p class="button"><span>Upload</span></p>');
+			var $button = $('<p class="button uploadFallbackButton"><span>'+WCF.Language.get('wcf.global.button.upload')+'</span></p>');
 			$button.click($.proxy(this._showOverlay, this));
 		}
 		
@@ -6165,7 +6165,7 @@ WCF.Upload = Class.extend({
 			this._overlay = $('<div><form enctype="multipart/form-data" method="post" action="' + this._options.url + '" target="__fileUploadIFrame" /></div>').hide().appendTo(document.body);
 			
 			var $form = this._overlay.find('form');
-			$('<dl><dt><label for="__fileUpload">' + WCF.Language.get('wcf.upload.file') + '</label></dt><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
+			$('<dl class="wide"><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
 			$('<div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form>').appendTo($form);
 			
 			$('<input type="hidden" name="isFallback" value="1" />').appendTo($form);
@@ -6179,7 +6179,7 @@ WCF.Upload = Class.extend({
 			$form.submit($.proxy(function() {
 				var $file = {
 					name: this._getFilename(),
-					size: WCF.Language.get('wcf.upload.file.size.unknown')
+					size: ''
 				};
 				
 				var $uploadID = this._createUploadMatrix([ $file ]);
@@ -6190,7 +6190,7 @@ WCF.Upload = Class.extend({
 		}
 		
 		this._overlay.wcfDialog({
-			title: WCF.Language.get('wcf.attachment.upload')
+			title: WCF.Language.get('wcf.global.button.upload')
 		});
 	},
 	
