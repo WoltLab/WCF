@@ -4055,9 +4055,10 @@ WCF.Effect.Scroll = Class.extend({
 	 * 
 	 * @param	jQuery		element
 	 * @param	boolean		excludeMenuHeight
+	 * @param	boolean		disableAnimation
 	 * @return	boolean
 	 */
-	scrollTo: function(element, excludeMenuHeight) {
+	scrollTo: function(element, excludeMenuHeight, disableAnimation) {
 		if (!element.length) {
 			return true;
 		}
@@ -4078,9 +4079,14 @@ WCF.Effect.Scroll = Class.extend({
 			}
 		}
 		
-		$('html,body').animate({ scrollTop: $elementOffset }, 400, function (x, t, b, c, d) {
-			return -c * ( ( t = t / d - 1 ) * t * t * t - 1) + b;
-		});
+		if (disableAnimation === true) {
+			$('html,body').scrollTop($elementOffset);
+		}
+		else {
+			$('html,body').animate({ scrollTop: $elementOffset }, 400, function (x, t, b, c, d) {
+				return -c * ( ( t = t / d - 1 ) * t * t * t - 1) + b;
+			});
+		}
 		
 		return false;
 	}
@@ -5165,6 +5171,26 @@ WCF.Search.User = WCF.Search.Base.extend({
  * Namespace for system-related classes.
  */
 WCF.System = { };
+
+/**
+ * Fixes scroll offset on page load.
+ */
+WCF.System.JumpToAnchor = {
+	execute: function() {
+		if (window.location.hash) {
+			var $element = $(window.location.hash);
+			if ($element.length) {
+				$element.addClass('userPanelJumpToAnchorFix');
+				
+				new WCF.PeriodicalExecuter(function(pe) {
+					pe.stop();
+					
+					$element.removeClass('userPanelJumpToAnchorFix');
+				}, 5000);
+			}
+		}
+	}
+};
 
 /**
  * System notification overlays.
