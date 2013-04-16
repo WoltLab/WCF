@@ -4385,9 +4385,9 @@ WCF.CloseOverlayHandler = {
 WCF.DOMNodeInsertedHandler = {
 	/**
 	 * list of callbacks
-	 * @var	WCF.Dictionary
+	 * @var	array<object>
 	 */
-	_callbacks: new WCF.Dictionary(),
+	_callbacks: [ ],
 	
 	/**
 	 * true if DOMNodeInserted event should be ignored
@@ -4423,23 +4423,7 @@ WCF.DOMNodeInsertedHandler = {
 		this._discardEventCount = 0;
 		this._bindListener();
 		
-		if (this._callbacks.isset(identifier)) {
-			console.debug("[WCF.DOMNodeInsertedHandler] identifier '" + identifier + "' is already bound to a callback");
-			return false;
-		}
-		
-		this._callbacks.add(identifier, callback);
-	},
-	
-	/**
-	 * Removes a callback from list.
-	 * 
-	 * @param	string		identifier
-	 */
-	removeCallback: function(identifier) {
-		if (this._callbacks.isset(identifier)) {
-			this._callbacks.remove(identifier);
-		}
+		this._callbacks.push(callback);
 	},
 	
 	/**
@@ -4462,10 +4446,9 @@ WCF.DOMNodeInsertedHandler = {
 		// do not track events while executing callbacks
 		this._isExecuting = true;
 		
-		this._callbacks.each(function(pair) {
-			// execute callback
-			pair.value();
-		});
+		for (var $i = 0, $length = this._callbacks.length; $i < $length; $i++) {
+			this._callbacks[$i]();
+		}
 		
 		// enable listener again
 		this._isExecuting = false;
