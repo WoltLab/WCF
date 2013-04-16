@@ -369,16 +369,25 @@ textarea {
 
 /* upload button */
 .uploadButton {
-	margin-top: @wcfGapSmall;
+	cursor: pointer;
+	display: inline-block;
 	overflow: hidden;
 	position: relative;
 	
 	input {
-		left: 0;
+		cursor: pointer;
+		right: 0;
 		opacity: 0;
+		padding: 4px 0;
 		position: absolute;
 		top: 0;
+		position: absolute;
 	}
+}
+
+.uploadButton,
+.uploadFallbackButton {
+	margin-top: @wcfGapSmall;
 }
 
 /* todo: element list with checkboxes */
