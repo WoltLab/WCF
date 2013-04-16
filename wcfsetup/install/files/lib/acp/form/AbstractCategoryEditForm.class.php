@@ -2,7 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\category\Category;
 use wcf\data\category\CategoryAction;
-use wcf\data\category\CategoryNodeList;
+use wcf\data\category\CategoryNodeTree;
 use wcf\form\AbstractForm;
 use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;
@@ -63,7 +63,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	 * @see	wcf\acp\form\AbstractCategoryAddForm::readCategories()
 	 */
 	protected function readCategories() {
-		$this->categoryNodeList = new CategoryNodeList($this->objectType->objectType, 0, true, array($this->category->categoryID));
+		$this->categoryNodeTree = new CategoryNodeTree($this->objectType->objectType, 0, true, array($this->category->categoryID));
 	}
 	
 	/**
@@ -164,7 +164,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		parent::validateParentCategory();
 		
 		// check if new parent category is no child category of the category
-		$childCategories = CategoryHandler::getInstance()->getChildCategories($this->category);
+		$childCategories = CategoryHandler::getInstance()->getChildCategories($this->categoryID, $this->objectType->objectTypeID);
 		if (isset($childCategories[$this->parentCategoryID])) {
 			throw new UserInputException('parentCategoryID', 'invalid');
 		}

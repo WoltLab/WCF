@@ -1,9 +1,6 @@
 <?php
 namespace wcf\system\category;
-use wcf\data\category\Category;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\DatabaseObject;
-use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\builder\CategoryCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -81,20 +78,23 @@ class CategoryHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the child categories of the given category.
+	 * Returns the child categories of the category with the given id.
 	 * 
-	 * @param	wcf\data\DatabaseObject		$category
+	 * The second paramater is only needed if $categoryID is 0.
+	 * 
+	 * @param	integer		$categoryID
+	 * @param	integer		$objectTypeID
 	 * @return	array<wcf\data\category\Category>
 	 */
-	public function getChildCategories(DatabaseObject $category) {
-		if (!($category instanceof Category) && (!($category instanceof DatabaseObjectDecorator) || !($category->getDecoratedObject() instanceof Category))) {
-			throw new SystemException("Invalid object given (class: ".get_class($category).")");
+	public function getChildCategories($categoryID, $objectTypeID = null) {
+		if (!$categoryID && $objectTypeID === null) {
+			throw new SystemException("Missing object type id");
 		}
 		
 		$categories = array();
-		foreach ($this->categories as $__category) {
-			if ($__category->parentCategoryID == $category->categoryID && ($category->categoryID || $category->objectTypeID == $__category->objectTypeID)) {
-				$categories[$__category->categoryID] = $__category;
+		foreach ($this->categories as $category) {
+			if ($category->parentCategoryID == $categoryID && ($categoryID || $category->objectTypeID == $objectTypeID)) {
+				$categories[$category->categoryID] = $category;
 			}
 		}
 		

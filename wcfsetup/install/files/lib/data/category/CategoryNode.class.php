@@ -1,8 +1,6 @@
 <?php
 namespace wcf\data\category;
-use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectDecorator;
-use wcf\system\category\CategoryHandler;
 
 /**
  * Represents a category node.
@@ -19,19 +17,13 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	 * child category nodes
 	 * @var	array<wcf\data\category\CategoryNode>
 	 */
-	protected $childCategories = array();
+	protected $children = array();
 	
 	/**
-	 * indicates if disabled categories are included
+	 * current iterator key
 	 * @var	integer
 	 */
-	protected $includeDisabledCategories = false;
-	
-	/**
-	 * list of object type category ids of excluded categories
-	 * @var	array<integer>
-	 */
-	protected $excludedCategoryIDs = false;
+	protected $index = 0;
 	
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
@@ -39,59 +31,40 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	protected static $baseClass = 'wcf\data\category\Category';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::__construct()
+	 * Adds the given category node as child node.
+	 * 
+	 * @param	wcf\data\category\CategoryNode		$categoryNode
 	 */
-	public function __construct(DatabaseObject $object, $includeDisabledCategories = false, array $excludedCategoryIDs = array()) {
-		parent::__construct($object);
-		
-		$this->includeDisabledCategories = $includeDisabledCategories;
-		$this->excludedCategoryIDs = $excludedCategoryIDs;
-		
-		$className = get_called_class();
-		foreach (CategoryHandler::getInstance()->getChildCategories($this->getDecoratedObject()) as $category) {
-			if ($this->fulfillsConditions($category)) {
-				$this->childCategories[] = new $className($category, $includeDisabledCategories, $excludedCategoryIDs);
-			}
-		}
+	public function addChild(CategoryNode $categoryNode) {
+		$this->children[] = $categoryNode;
 	}
 	
 	/**
 	 * @see	\Countable::count()
 	 */
 	public function count() {
-		return count($this->childCategories);
+		return count($this->children);
 	}
 	
 	/**
 	 * @see	\Iterator::current()
 	 */
 	public function current() {
-		return $this->childCategories[$this->index];
-	}
-	
-	/**
-	 * Returns true if the given category fulfills all needed conditions to
-	 * be included in the list.
-	 * 
-	 * @param	wcf\data\DatabaseObject	$category
-	 * @return	boolean
-	 */
-	protected function fulfillsConditions(DatabaseObject $category) {
-		return !in_array($category->categoryID, $this->excludedCategoryIDs) && ($this->includeDisabledCategories || !$category->isDisabled);
+		return $this->children[$this->index];
 	}
 	
 	/**
 	 * @see	\RecursiveIterator::getChildren()
 	 */
 	public function getChildren() {
-		return $this->childCategories[$this->index];
+		return $this->children[$this->index];
 	}
 	
 	/**
 	 * @see	\RecursiveIterator::getChildren()
 	 */
 	public function hasChildren() {
-		return !empty($this->childCategories);
+		return !empty($this->children);
 	}
 	
 	/**
@@ -119,6 +92,6 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	 * @see	\Iterator::valid()
 	 */
 	public function valid() {
-		return isset($this->childCategories[$this->index]);
+		return isset($this->children[$this->index]);
 	}
 }
