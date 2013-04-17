@@ -805,12 +805,12 @@
 		<item name="wcf.date.timezone.europe.minsk"><![CDATA[(UTC+02:00) Minsk]]></item>
 		<item name="wcf.date.timezone.asia.baghdad"><![CDATA[(UTC+03:00) Baghdad]]></item>
 		<item name="wcf.date.timezone.asia.kuwait"><![CDATA[(UTC+03:00) Kuwait, Riyadh]]></item>
-		<item name="wcf.date.timezone.europe.moscow"><![CDATA[(UTC+03:00) Moscow, Saint Petersburg, Volgograd]]></item>
 		<item name="wcf.date.timezone.africa.nairobi"><![CDATA[(UTC+03:00) Nairobi]]></item>
 		<item name="wcf.date.timezone.asia.tehran"><![CDATA[(UTC+03:30) Tehran]]></item>
 		<item name="wcf.date.timezone.asia.muscat"><![CDATA[(UTC+04:00) Abu Dhabi, Muscat]]></item>
 		<item name="wcf.date.timezone.asia.baku"><![CDATA[(UTC+04:00) Baku]]></item>
 		<item name="wcf.date.timezone.asia.yerevan"><![CDATA[(UTC+04:00) Yerevan]]></item>
+		<item name="wcf.date.timezone.europe.moscow"><![CDATA[(UTC+04:00) Moscow, Saint Petersburg, Volgograd]]></item>
 		<item name="wcf.date.timezone.indian.mauritius"><![CDATA[(UTC+04:00) Port Louis]]></item>
 		<item name="wcf.date.timezone.asia.tbilisi"><![CDATA[(UTC+04:00) Tbilisi]]></item>
 		<item name="wcf.date.timezone.asia.kabul"><![CDATA[(UTC+04:30) Kabul]]></item>

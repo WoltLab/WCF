@@ -86,12 +86,12 @@ final class DateUtil {
 		'Europe/Minsk', // (GMT+02:00) Minsk
 		'Asia/Baghdad', // (GMT+03:00) Baghdad
 		'Asia/Kuwait', // (GMT+03:00) Kuwait, Riyadh
-		'Europe/Moscow', // (GMT+03:00) Moscow, Volgograd
 		'Africa/Nairobi', // (GMT+03:00) Nairobi
 		'Asia/Tehran', // (GMT+03:30) Tehran
 		'Asia/Muscat', // (GMT+04:00) Muscat
 		'Asia/Baku', // (GMT+04:00) Baku
 		'Asia/Yerevan', // (GMT+04:00) Yerevan
+		'Europe/Moscow', // (GMT+04:00) Moscow, Volgograd
 		'Indian/Mauritius', // UTC+04:00 Port Loius
 		'Asia/Tbilisi', // UTC+04:00 Tbilisi
 		'Asia/Kabul', // UTCU+04:30 Kabul
