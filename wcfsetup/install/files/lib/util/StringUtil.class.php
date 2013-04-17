@@ -695,5 +695,37 @@ final class StringUtil {
 		return mb_ereg_replace('.{'.$length.'}', "\\0".$break, $string);
 	}
 	
+	/**
+	 * Simple multi-byte safe wordwrap() function.
+	 * 
+	 * @param 	string		$string
+	 * @param	integer		$width
+	 * @param	string		$break
+	 * @return	string
+	 */
+	public static function wordwrap($string, $width = 50, $break = ' ') {
+		$result = '';
+		$substrings = explode($break, $string);
+		
+		foreach ($substrings as $substring) {
+			$length = self::length($substring);
+			if ($length > $width) {
+				$j = ceil($length / $width);
+				
+				for ($i = 0; $i < $j; $i++) {
+					if (!empty($result)) $result .= $break;
+					if ($width * ($i + 1) > $length) $result .= self::substring($substring, $width * $i);
+					else $result .= self::substring($substring, $width * $i, $width);
+				}
+			}
+			else {
+				if (!empty($result)) $result .= $break;
+				$result .= $substring;
+			}
+		}
+		
+		return $result;
+	}
+	
 	private function __construct() { }
 }
