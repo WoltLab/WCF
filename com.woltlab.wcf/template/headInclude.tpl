@@ -92,6 +92,7 @@
 			{event name='javascriptLanguageImport'}
 		});
 		
+		if (jQuery.browser.touch) $('html').addClass('touch');
 		new WCF.Date.Time();
 		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
