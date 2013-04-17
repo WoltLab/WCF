@@ -109,12 +109,8 @@
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Can enter Administration Control Panel]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Users of this group may access the Administration Control Panel based upon their granted permissions. This option must be enabled if you wish to grant access to any administrative option.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Can view private user options]]></item>
-		<item name="wcf.acp.group.option.admin.language.canAddLanguage"><![CDATA[Can add languages]]></item>
-		<item name="wcf.acp.group.option.admin.language.canAddServer"><![CDATA[Can add language servers]]></item>
-		<item name="wcf.acp.group.option.admin.language.canDeleteLanguage"><![CDATA[Can delete languages]]></item>
-		<item name="wcf.acp.group.option.admin.language.canDeleteServer"><![CDATA[Can delete language servers]]></item>
-		<item name="wcf.acp.group.option.admin.language.canEditLanguage"><![CDATA[Can edit languages]]></item>
-		<item name="wcf.acp.group.option.admin.language.canEditServer"><![CDATA[Can edit language servers]]></item>
+		<item name="wcf.acp.group.option.admin.language.canManageLanguage"><![CDATA[Can manage languages]]></item>
+		<item name="wcf.acp.group.option.admin.language.canManageServer"><![CDATA[Can manage language servers]]></item>
 		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Can edit system options]]></item>
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Can view disabled styles]]></item>
 		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Can view log files]]></item>
@@ -212,10 +208,10 @@
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Add Cronjob]]></item>
 		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[List Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.language"><![CDATA[Languages]]></item>
-		<item name="wcf.acp.menu.link.language.add"><![CDATA[Add Language]]></item>
+		<item name="wcf.acp.menu.link.language.import"><![CDATA[Import Language]]></item>
+		<item name="wcf.acp.menu.link.language.item.list"><![CDATA[Manage Phrases]]></item>
 		<item name="wcf.acp.menu.link.language.list"><![CDATA[List Languages]]></item>
 		<item name="wcf.acp.menu.link.language.multilingualism"><![CDATA[Multilingualism]]></item>
-		<item name="wcf.acp.menu.link.language.server.add"><![CDATA[Add Language Server]]></item>
 		<item name="wcf.acp.menu.link.language.server.list"><![CDATA[List Language Server]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Logs]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sessions]]></item>

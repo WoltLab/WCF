@@ -15,19 +15,13 @@
 {/if}
 
 <div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{if $__wcf->session->getPermission('admin.language.canDeleteServer') || $__wcf->session->getPermission('admin.language.canEditServer')}
-						<li><a href="{link controller='LanguageServerList'}{/link}" title="{lang}wcf.acp.menu.link.language.server.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.language.server.list{/lang}</span></a></li>
-					{/if}
-					
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav>
+		<ul>
+			<li><a href="{link controller='LanguageServerList'}{/link}" title="{lang}wcf.acp.menu.link.language.server.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.language.server.list{/lang}</span></a></li>
+				
+			{event name='contentNavigationButtons'}
+		</ul>
+	</nav>
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='LanguageServerAdd'}{/link}{else}{link controller='LanguageServerEdit' id=$languageServerID}{/link}{/if}">

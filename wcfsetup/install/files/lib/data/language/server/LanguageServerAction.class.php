@@ -22,17 +22,17 @@ class LanguageServerAction extends AbstractDatabaseObjectAction implements ITogg
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.language.canAddServer');
+	protected $permissionsCreate = array('admin.language.canManageServer');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.language.canDeleteServer');
+	protected $permissionsDelete = array('admin.language.canManageServer');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.language.canEditServer');
+	protected $permissionsUpdate = array('admin.language.canManageServer');
 	
 	/**
 	 * @see	wcf\data\IToggleAction::toggle()

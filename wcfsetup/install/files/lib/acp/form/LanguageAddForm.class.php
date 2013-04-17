@@ -71,7 +71,7 @@ class LanguageAddForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.language.canAddLanguage');
+	public $neededPermissions = array('admin.language.canManageLanguage');
 	
 	/**
 	 * source language object
