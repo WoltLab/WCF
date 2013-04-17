@@ -27,7 +27,7 @@ class LanguageListPage extends SortablePage {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.language.canEditLanguage', 'admin.language.canDeleteLanguage');
+	public $neededPermissions = array('admin.language.canManageLanguage');
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName

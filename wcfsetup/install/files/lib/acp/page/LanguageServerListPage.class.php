@@ -27,7 +27,7 @@ class LanguageServerListPage extends SortablePage {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.language.canEditServer', 'admin.language.canDeleteServer');
+	public $neededPermissions = array('admin.language.canManageServer');
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
