@@ -3576,24 +3576,31 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	init: function(className) {
 		this._className = className;
-		
-		// validate containers
-		var $containers = this._getContainers();
-		if ($containers.length == 0) {
-			console.debug('[WCF.Collapsible.Remote] Empty container set given, aborting.');
-		}
-		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
 		
 		// initialize each container
-		$containers.each($.proxy(function(index, container) {
+		this._init();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Collapsible.Remote', $.proxy(this._init, this));
+	},
+	
+	/**
+	 * Initializes a collapsible container.
+	 * 
+	 * @param	string		containerID
+	 */
+	_init: function(containerID) {
+		this._getContainers().each($.proxy(function(index, container) {
 			var $container = $(container);
 			var $containerID = $container.wcfIdentify();
-			this._containers[$containerID] = $container;
 			
-			this._initContainer($containerID);
+			if (this._containers[$containerID] === undefined) {
+				this._containers[$containerID] = $container;
+				
+				this._initContainer($containerID);
+			}
 		}, this));
 	},
 	
