@@ -3,7 +3,7 @@
 	padding: 0 @wcfLayoutFluidGap;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.layoutFluid {
 		padding: 0;
 	}
@@ -14,9 +14,15 @@
 	width: @wcfLayoutFixedWidth;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.layoutFixed {
 		width: auto;
+	}
+}
+
+@media only screen and (min-width: 801px) {
+	body {
+		min-width: 1024px;
 	}
 }
 
@@ -26,7 +32,7 @@
 	z-index: 100;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	#pageHeader {
 		margin-top: 48px;
 	}
@@ -155,7 +161,7 @@
 	margin-top: -40px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.userPanel {
 		height: auto;
 		
@@ -247,7 +253,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.logo {
 		display: none;
 	}
@@ -300,7 +306,7 @@
 }
 
 /* main menu */
-@media only screen and (min-width: 769px) {
+@media only screen and (min-width: 801px) {
 	.mainMenu {
 		> ul {
 			background-color: @wcfMainMenuBackgroundColor;
@@ -349,7 +355,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.mainMenu {
 		position: relative;
 		
@@ -404,7 +410,7 @@
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 768px) {
+@media only screen and (min-width: 641px) and (max-width: 800px) {
 	.mainMenu {
 		> .invisible {
 			margin-left: @wcfGapMedium;
@@ -480,7 +486,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.navigation.navigationHeader {
 		> ul.navigationIcons,
 		> ul.navigationItems,
@@ -512,7 +518,7 @@
 	border-top: 1px solid @wcfContainerBorderColor;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.navigationHeader {
 		background-color: transparent;
 		border: 0;
@@ -538,7 +544,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.footerContent {
 		margin: 0 @wcfGapMedium;
 	}
@@ -643,7 +649,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	/* hide sidebar */
 	#main {
 		position: relative;
@@ -712,7 +718,7 @@
 	}
 }
 
-@media only screen and (min-width: 769px) and (max-width: 1239px) {
+@media only screen and (min-width: 801px) and (max-width: 1239px) {
 	#main {
 		> div > .content {
 			padding-left: @wcfGapLarge + @wcfGapSmall;
@@ -763,7 +769,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.boxHeadline {
 		margin-top: @wcfGapSmall;
 		margin-left: @wcfGapSmall;
@@ -771,7 +777,7 @@
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 768px) {
+@media only screen and (min-width: 641px) and (max-width: 800px) {
 	.boxHeadline {
 		margin-left: @wcfGapMedium;
 		margin-right: @wcfGapMedium;
@@ -804,7 +810,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.contentNavigation {
 		box-sizing:border-box;
 		-moz-box-sizing:border-box;
@@ -814,7 +820,7 @@
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 768px) {
+@media only screen and (min-width: 641px) and (max-width: 800px) {
 	.contentNavigation {
 		padding-left: @wcfGapMedium;
 		padding-right: @wcfGapMedium;
@@ -830,7 +836,7 @@
 	padding: @wcfGapMedium @wcfGapLarge @wcfGapMedium;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.container {
 		border-width: 1px 0;
 	}
@@ -840,7 +846,7 @@
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 768px) {
+@media only screen and (min-width: 641px) and (max-width: 800px) {
 	.containerPadding {
 		padding-left: @wcfGapMedium;
 		padding-right: @wcfGapMedium;
@@ -936,7 +942,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.containerList {
 		> li {
 			padding: @wcfGapSmall;
@@ -964,7 +970,7 @@
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 768px) {
+@media only screen and (min-width: 641px) and (max-width: 800px) {
 	.containerList {
 		> li {
 			padding: @wcfGapSmall @wcfGapMedium;
@@ -1075,7 +1081,7 @@
 	}
 }
 
-@media only screen and (min-width: 769px) {
+@media only screen and (min-width: 801px) {
 	.containerBoxList {
 		&.doubleColumned,
 		&.tripleColumned {
@@ -1180,7 +1186,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.content > .breadcrumbs {
 		display: none;
 	}
@@ -1325,7 +1331,7 @@
 	margin-bottom: @wcfGapSmall;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.tabMenu {
 		> ul {
 			margin-left: @wcfGapTiny;
@@ -1399,7 +1405,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.tabularBox {
 		border-width: 1px 0;
 	}
@@ -1409,7 +1415,7 @@
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 768px) {
+@media only screen and (min-width: 641px) and (max-width: 800px) {
 	.tabularBoxTitle > hgroup {
 		padding-left: @wcfGapMedium;
 		padding-right: @wcfGapMedium;
@@ -1781,7 +1787,7 @@ ul.inlineDataList {
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.pageNavigation {
 		> ul > li {
 			&:not(.skip):not(.active) {
