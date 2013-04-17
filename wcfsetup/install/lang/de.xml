@@ -154,11 +154,7 @@
 	<category name="wcf.acp.language">
 		<item name="wcf.acp.language.add"><![CDATA[Sprache hinzufügen]]></item>
 		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[Dieser Sprachcode wird bereits von einer anderen im System installierten Sprache verwendet.]]></item>
-		<item name="wcf.acp.language.add.mode"><![CDATA[Sprache erstellen durch]]></item>
-		<item name="wcf.acp.language.add.mode.copy"><![CDATA[Übersetzen einer vorhandenen Sprache]]></item>
-		<item name="wcf.acp.language.add.mode.import"><![CDATA[Importieren einer Sprachdatei]]></item>
-		<item name="wcf.acp.language.add.new"><![CDATA[Neue Sprache]]></item>
-		<item name="wcf.acp.language.add.source"><![CDATA[Zu übersetzende Sprache]]></item>
+		<item name="wcf.acp.language.add.source"><![CDATA[Vorlage]]></item>
 		<item name="wcf.acp.language.code"><![CDATA[Sprachcode]]></item>
 		<item name="wcf.acp.language.code.description"><![CDATA[Geben Sie hier den passenden Sprachcode nach <strong>ISO 639-1</strong> an. Weitere Informationen zu Sprachcodes finden Sie unter <a href="http://de.wikipedia.org/wiki/ISO_639-1" class="externalURL">http://de.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
 		<item name="wcf.acp.language.customVariables"><![CDATA[Veränderte Variablen]]></item>
@@ -169,7 +165,6 @@
 		<item name="wcf.acp.language.export.customValues"><![CDATA[Veränderte Variablen exportieren]]></item>
 		<item name="wcf.acp.language.export.selectPackages"><![CDATA[Pakete auswählen]]></item>
 		<item name="wcf.acp.language.import.error"><![CDATA[Beim Importieren der Sprachdatei ist folgender Fehler aufgetreten:]]></item>
-		<item name="wcf.acp.language.import.source"><![CDATA[Quelle]]></item>
 		<item name="wcf.acp.language.import.source.file"><![CDATA[Pfad zur Sprachdatei]]></item>
 		<item name="wcf.acp.language.import.source.file.description"><![CDATA[Geben Sie hier den relativen Pfad zu einer gültigen XML-Sprachdatei an.]]></item>
 		<item name="wcf.acp.language.import.source.upload"><![CDATA[Sprachdatei vom lokalen Computer hochladen]]></item>
@@ -182,6 +177,17 @@
 		<item name="wcf.acp.language.setAsDefault"><![CDATA[Zur Standardsprache machen]]></item>
 		<item name="wcf.acp.language.variables"><![CDATA[Variablen]]></item>
 		<item name="wcf.acp.language.users"><![CDATA[Verwendet von]]></item>
+		<item name="wcf.acp.language.import"><![CDATA[Sprache importieren]]></item>
+		<item name="wcf.acp.language.item.list"><![CDATA[Texte verwalten]]></item>
+		<item name="wcf.acp.language.item.list.filter"><![CDATA[Filter]]></item>
+		<item name="wcf.acp.language.category"><![CDATA[Kategorie]]></item>
+		<item name="wcf.acp.language.item.value"><![CDATA[Inhalt]]></item>
+		<item name="wcf.acp.language.item.customValue"><![CDATA[Eigener Inhalt]]></item>
+		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[Eigene Version verwenden]]></item>
+		<item name="wcf.acp.language.item.hasCustomValue"><![CDATA[Inhalte mit eigener Version]]></item>
+		<item name="wcf.acp.language.item.customValues"><![CDATA[Veränderte Inhalte finden]]></item>
+		<item name="wcf.acp.language.name.description"><![CDATA[Name der Sprache]]></item>
+		<item name="wcf.acp.language.add.source.description"><![CDATA[Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">

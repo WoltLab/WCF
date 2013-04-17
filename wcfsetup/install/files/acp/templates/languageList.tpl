@@ -7,21 +7,10 @@
 		new WCF.Action.SimpleProxy({
 			action: 'setAsDefault',
 			className: 'wcf\\data\\language\\LanguageAction',
-			elements: $('.jsLanguageRow .setAsDefaultButton')
+			elements: $('.jsLanguageRow .jsSetAsDefaultButton')
 		}, {
 			success: function(data, statusText, jqXHR) {
-				$('.jsLanguageRow').each(function(index, row) {
-					var $button = $(row).find('.jsSetAsDefaultButton');
-					
-					if (WCF.inArray($($button).data('objectID'), data.objectIDs)) {
-						$($button).attr('src', '{@$__wcf->getPath()}icon/default.svg');
-						$(row).find('.jsDeleteButton').attr('src', '{@$__wcf->getPath()}icon/delete.svg');
-					}
-					else {
-						$($button).attr('src', '{@$__wcf->getPath()}icon/default1.svg');
-						$(row).find('.jsDeleteButton').attr('src', '{@$__wcf->getPath()}icon/delete.svg');
-					}
-				});
+				window.location.reload();
 			}
 		});
 	});
@@ -39,7 +28,8 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+			<li><a href="{link controller='LanguageAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+			<li><a href="{link controller='LanguageImport'}{/link}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.language.import{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -87,12 +77,10 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID columnLanguageID">{@$language->languageID}</td>
-						<td class="columnTitle columnLanguageName">
-							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}">{$language->languageName} ({@$language->languageCode})</a>
-						</td>
+						<td class="columnTitle columnLanguageName"><a href="{link controller='LanguageEdit' id=$language->languageID}{/link}">{$language->languageName} ({@$language->languageCode})</a></td>
 						<td class="columnDigits columnUsers">{#$language->users}</td>
-						<td class="columnDigits columnVariables">{#$language->variables}</td>
-						<td class="columnDigits columnCustomVariables">{if $language->customVariables > 0}<a href="{link controller='LanguageEdit' id=$language->languageID}customVariables=1{/link}">{#$language->customVariables}</a>{else}{#$language->customVariables}{/if}</td>
+						<td class="columnDigits columnVariables"><a href="{link controller='LanguageItemList' id=$language->languageID}{/link}">{#$language->variables}</a></td>
+						<td class="columnDigits columnCustomVariables">{if $language->customVariables > 0}<a href="{link controller='LanguageItemList' id=$language->languageID}hasCustomValue=1{/link}">{#$language->customVariables}</a>{else}{#$language->customVariables}{/if}</td>
 
 						{event name='columns'}
 					</tr>
@@ -107,6 +95,7 @@
 		<nav>
 			<ul>
 				<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+				<li><a href="{link controller='LanguageImport'}{/link}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.language.import{/lang}</span></a></li>
 					
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

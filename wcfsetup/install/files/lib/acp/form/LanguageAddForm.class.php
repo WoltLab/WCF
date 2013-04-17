@@ -2,11 +2,9 @@
 namespace wcf\acp\form;
 use wcf\data\language\LanguageEditor;
 use wcf\form\AbstractForm;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
-use wcf\system\WCFACP;
 use wcf\util\StringUtil;
 use wcf\util\XML;
 
@@ -24,19 +22,12 @@ class LanguageAddForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.language.add';
+	public $activeMenuItem = 'wcf.acp.menu.link.language';
 	
 	/**
-	 * file name
-	 * @var	string
+	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $filename = '';
-	
-	/**
-	 * import field
-	 * @var	string
-	 */
-	public $importField = 'languageFile';
+	public $neededPermissions = array('admin.language.canManageLanguage');
 	
 	/**
 	 * language object
@@ -45,33 +36,22 @@ class LanguageAddForm extends AbstractForm {
 	public $language = null;
 	
 	/**
+	 * language name
+	 * @var	string
+	 */
+	public $languageName = '';
+	
+	/**
 	 * language code
 	 * @var	string
 	 */
 	public $languageCode = '';
 	
 	/**
-	 * import language file
-	 * @var	string
-	 */
-	public $languageFile = '';
-	
-	/**
 	 * list of available languages
 	 * @var	array<wcf\data\language\Language>
 	 */
 	public $languages = array();
-	
-	/**
-	 * mode
-	 * @var	string
-	 */
-	public $mode = 'import';
-	
-	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
-	 */
-	public $neededPermissions = array('admin.language.canManageLanguage');
 	
 	/**
 	 * source language object
@@ -86,95 +66,75 @@ class LanguageAddForm extends AbstractForm {
 	public $sourceLanguageID = 0;
 	
 	/**
-	 * @see	wcf\form\Form::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		// mode
-		if (isset($_POST['mode'])) $this->mode = $_POST['mode'];
-		
-		// copy
-		if (isset($_POST['languageCode'])) $this->languageCode = $_POST['languageCode'];
+		if (isset($_POST['languageName'])) $this->languageName = StringUtil::trim($_POST['languageName']);
+		if (isset($_POST['languageCode'])) $this->languageCode = StringUtil::trim($_POST['languageCode']);
 		if (isset($_POST['sourceLanguageID'])) $this->sourceLanguageID = intval($_POST['sourceLanguageID']);
-		
-		// import
-		if (isset($_POST['languageFile']) && !empty($_POST['languageFile'])) {
-			$this->languageFile = $_POST['languageFile'];
-			$this->filename = $_POST['languageFile'];
-		}
-		if (isset($_FILES['languageUpload']) && !empty($_FILES['languageUpload']['tmp_name'])) {
-			$this->importField = 'languageUpload';
-			$this->filename = $_FILES['languageUpload']['tmp_name'];
-		}
 	}
 	
 	/**
-	 * @see	wcf\form\Form::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
 		
-		if ($this->mode == 'copy') {
-			// language code
-			if (empty($this->languageCode)) {
-				throw new UserInputException('languageCode');
-			}
-			
-			// 
-			if (LanguageFactory::getInstance()->getLanguageByCode($this->languageCode)) {
-				throw new UserInputException('languageCode', 'notUnique');
-			}
-			
-			// source language id
-			if (empty($this->sourceLanguageID)) {
-				throw new UserInputException('sourceLanguageID');
-			}
-			
-			// get language
-			$this->sourceLanguage = LanguageFactory::getInstance()->getLanguage($this->sourceLanguageID);
-			if (!$this->sourceLanguage->languageID) {
-				throw new UserInputException('sourceLanguageID');
-			}
+		// language name
+		if (empty($this->languageName)) {
+			throw new UserInputException('languageName');
 		}
-		else {
-			// check file
-			if (!file_exists($this->filename)) {
-				throw new UserInputException('languageFile');
-			}
+		
+		// language code
+		$this->validateLanguageCode();
 			
-			// try to import
-			try {
-				// open xml document
-				$xml = new XML();
-				$xml->load($this->filename);
-				
-				// import xml document
-				$this->language = LanguageEditor::importFromXML($xml, PACKAGE_ID);
-			}
-			catch (SystemException $e) {
-				throw new UserInputException($this->importField, $e->getMessage());
-			}
+		// source language id
+		$this->validateSource();
+	}
+	
+	/**
+	 * Validates the language code.
+	 */
+	protected function validateLanguageCode() {
+		if (empty($this->languageCode)) {
+			throw new UserInputException('languageCode');
+		}
+		if (LanguageFactory::getInstance()->getLanguageByCode($this->languageCode)) {
+			throw new UserInputException('languageCode', 'notUnique');
 		}
 	}
 	
 	/**
-	 * @see	wcf\form\Form::save()
+	 * Validates given source language.
+	 */
+	protected function validateSource() {
+		if (empty($this->sourceLanguageID)) {
+			throw new UserInputException('sourceLanguageID');
+		}
+			
+		// get language
+		$this->sourceLanguage = LanguageFactory::getInstance()->getLanguage($this->sourceLanguageID);
+		if (!$this->sourceLanguage->languageID) {
+			throw new UserInputException('sourceLanguageID');
+		}
+	}
+	
+	/**
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
 		
-		if ($this->mode == 'copy') {
-			$this->language = LanguageEditor::create(array(
-				'languageCode' => StringUtil::toLowerCase($this->languageCode)
-			));
-			$languageEditor = new LanguageEditor($this->sourceLanguage);
-			$languageEditor->copy($this->language);
-		}
-		
+		$this->language = LanguageEditor::create(array(
+			'languageName' => $this->languageName,
+			'languageCode' => StringUtil::toLowerCase($this->languageCode)
+		));
+		$languageEditor = new LanguageEditor($this->sourceLanguage);
+		$languageEditor->copy($this->language);
 		LanguageFactory::getInstance()->clearCache();
 		LanguageFactory::getInstance()->deleteLanguageCache();
-		
 		$this->saved();
 		
 		// show success message
@@ -182,7 +142,7 @@ class LanguageAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\Page::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -191,27 +151,17 @@ class LanguageAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\Page::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'mode' => $this->mode,
+			'languageName' => $this->languageName,
 			'languageCode' => $this->languageCode,
 			'sourceLanguageID' => $this->sourceLanguageID,
 			'languages' => $this->languages,
-			'languageFile' => $this->languageFile
+			'action' => 'add'
 		));
-	}
-	
-	/**
-	 * @see	wcf\page\Page::show()
-	 */
-	public function show() {
-		// check master password
-		WCFACP::checkMasterPassword();
-		
-		parent::show();
 	}
 }

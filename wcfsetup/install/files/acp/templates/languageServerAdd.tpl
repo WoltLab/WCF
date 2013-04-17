@@ -35,7 +35,7 @@
 					<input type="text" name="server" id="server" value="{$server}" autofocus="autofocus" class="long" />
 					{if $errorField == 'server'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							{if $errorType == 'notValid'}{lang}wcf.acp.languageServer.server.error.notValid{/lang}{/if}
 						</small>
 					{/if}
