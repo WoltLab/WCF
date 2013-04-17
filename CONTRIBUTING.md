@@ -1,12 +1,12 @@
 CONTRIBUTING
 ============
 
-First of all: Thanks for your interest in contributing to WoltLab Community Framework! You have to meet some requirements to get your changes accepted though.
+First of all: Thanks for your interest in contributing to WoltLab Community Framework! However, you have to meet some requirements in order to get your changes accepted.
 
 General requirements
 --------------------
-- Testing is key, you MUST try out your changes before submitting pull requests. It saves us and yourself a lot of time.
-- The code SHOULD be written by yourself, otherwise you have to check the license before for compatibility and give proper credit to the original author.
+- Testing is the key, you MUST try out your changes before submitting pull requests. It saves us and yourself a lot of time.
+- The code SHOULD be written by yourself, otherwise you have to check the license beforehand with regard to compatibility and give the proper credit to the original author.
 
 Files
 -----
@@ -26,7 +26,7 @@ Additionally: Have a look at existing files to find out what they should look li
 
 Automated tests
 ---------------
-We are running [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) to ensure most of our formatting rules. You SHOULD test your changes before submission with it.
+We are running [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) to ensure most of our formatting rules. You SHOULD test your changes before submitting them with it.
 
 1. Install PHP Codesniffer, either via PEAR or via cloning it
 2. Execute the following command in the root of your clone of Community Framework:
@@ -35,4 +35,4 @@ We are running [PHP Codesniffer](https://github.com/squizlabs/PHP_CodeSniffer) t
     $ phpcs -p --extensions=php --standard="`pwd`/CodeSniff/WCF" .
    ```
 3. Fix any errors
-4. Repeat until no more errors show up
+4. Repeat it until no more errors occur
