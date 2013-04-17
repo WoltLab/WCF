@@ -181,7 +181,6 @@
 		<item name="wcf.acp.language.item.list"><![CDATA[Manage Phrases]]></item>
 		<item name="wcf.acp.language.item.list.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.language.category"><![CDATA[Category]]></item>
-		
 		<item name="wcf.acp.language.item.value"><![CDATA[TODO: Inhalt]]></item>
 		<item name="wcf.acp.language.item.customValue"><![CDATA[TODO: Eigener Inhalt]]></item>
 		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[TODO: Eigene Version verwenden]]></item>
