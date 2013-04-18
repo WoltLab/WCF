@@ -92,6 +92,21 @@
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Error Message]]></item>
 	</category>
 	
+	<category name="wcf.acp.exceptionLog">
+		<item name="wcf.acp.exceptionLog"><![CDATA[Logged errors]]></item>
+		<item name="wcf.acp.exceptionLog.exception.file"><![CDATA[File (Line)]]></item>
+		<item name="wcf.acp.exceptionLog.exception.phpVersion"><![CDATA[PHP version]]></item>
+		<item name="wcf.acp.exceptionLog.exception.wcfVersion"><![CDATA[WCF version]]></item>
+		<item name="wcf.acp.exceptionLog.exception.requestURI"><![CDATA[Requested URL]]></item>
+		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
+		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
+		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Copy error message]]></item>
+		<item name="wcf.acp.exceptionLog.search"><![CDATA[Search]]></item>
+		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Error-ID]]></item>
+		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Logfile]]></item>
+		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[No error with the ID “{$exceptionID” was found.]]></item>
+	</category>
+	
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group “{$group->groupName|language}”?]]></item>
@@ -222,6 +237,7 @@
 		<item name="wcf.acp.menu.link.log"><![CDATA[Logs]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sessions]]></item>
 		<item name="wcf.acp.menu.link.log.cronjob"><![CDATA[Cronjobs]]></item>
+		<item name="wcf.acp.menu.link.log.exception"><![CDATA[Errors]]></item>
 		<item name="wcf.acp.menu.link.group"><![CDATA[User Groups]]></item>
 		<item name="wcf.acp.menu.link.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.menu.link.group.mail"><![CDATA[Email Users]]></item>

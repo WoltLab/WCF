@@ -138,6 +138,12 @@
 			<parent>wcf.acp.menu.link.log</parent>
 			<permissions>admin.system.canManageCronjob</permissions>
 		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.log.exception">
+			<controller><![CDATA[wcf\acp\page\ExceptionLogViewPage]]></controller>
+			<parent>wcf.acp.menu.link.log</parent>
+			<permissions>admin.system.canViewLog</permissions>
+		</acpmenuitem>
 		<!-- /log -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.user">

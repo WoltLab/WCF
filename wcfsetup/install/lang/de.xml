@@ -92,6 +92,21 @@
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Fehlermeldung]]></item>
 	</category>
 	
+	<category name="wcf.acp.exceptionLog">
+		<item name="wcf.acp.exceptionLog"><![CDATA[Protokollierte Fehler]]></item>
+		<item name="wcf.acp.exceptionLog.exception.file"><![CDATA[Datei (Zeile)]]></item>
+		<item name="wcf.acp.exceptionLog.exception.phpVersion"><![CDATA[PHP-Version]]></item>
+		<item name="wcf.acp.exceptionLog.exception.wcfVersion"><![CDATA[WCF-Version]]></item>
+		<item name="wcf.acp.exceptionLog.exception.requestURI"><![CDATA[Aufgerufene URL]]></item>
+		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
+		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
+		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Fehlermeldung kopieren]]></item>
+		<item name="wcf.acp.exceptionLog.search"><![CDATA[Suche]]></item>
+		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Fehler-ID]]></item>
+		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Datei]]></item>
+		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[Es wurde kein Fehler mit der ID „{$exceptionID}“ gefunden.]]></item>
+	</category>
+	
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Wollen Sie diese Benutzergruppe „{$group->groupName|language}“ wirklich löschen?]]></item>
@@ -222,6 +237,7 @@
 		<item name="wcf.acp.menu.link.log"><![CDATA[Protokoll]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sitzungen]]></item>
 		<item name="wcf.acp.menu.link.log.cronjob"><![CDATA[Cronjobs]]></item>
+		<item name="wcf.acp.menu.link.log.exception"><![CDATA[Fehler]]></item>
 		<item name="wcf.acp.menu.link.group"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.menu.link.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.group.mail"><![CDATA[E-Mail an Gruppenmitglieder]]></item>
