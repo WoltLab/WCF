@@ -6,9 +6,8 @@
 	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
 	<script type="text/javascript">
 		//<![CDATA[
-		var SID_ARG_1ST = '{@SID_ARG_1ST}';
 		var SID_ARG_2ND = '{@SID_ARG_2ND_NOT_ENCODED}';
-		var RELATIVE_WCF_DIR = '{@$__wcf->getPath()}';
+		var WCF_PATH = '{@$__wcf->getPath()}';
 		var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 		var TIME_NOW = {@TIME_NOW};
@@ -19,7 +18,7 @@
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.tools.min.js"></script>
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js"></script>
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.js"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?t={@TIME_NOW}"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
@@ -70,6 +69,7 @@
 				'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
 				'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
 				'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
+				'wcf.global.error.timeout': '{lang}wcf.global.error.timeout{/lang}',
 				'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
 				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 				'wcf.global.page.jumpTo': '{lang}wcf.global.page.jumpTo{/lang}',
@@ -83,6 +83,8 @@
 				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 				{event name='javascriptLanguageImport'}
 			});
+			
+			if (jQuery.browser.touch) $('html').addClass('touch');
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();

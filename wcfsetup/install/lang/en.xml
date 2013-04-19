@@ -896,6 +896,7 @@
 		<item name="wcf.global.description"><![CDATA[Description]]></item>
 		<item name="wcf.global.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access denied.]]></item>
+		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Error Message]]></item>
 		<item name="wcf.global.success"><![CDATA[The action has been successfully completed.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[The entry has been saved.]]></item>
