@@ -184,4 +184,18 @@ abstract class DatabaseObject implements IStorableObject {
 			array_multisort($sortArray, $sortOrder == 'ASC' ? SORT_ASC : SORT_DESC, $objects);
 		}
 	}
+	
+	/**
+	 * Compares two database objects.
+	 * 
+	 * @param	wcf\data\DatabaseObject	$objectA
+	 * @param	wcf\data\DatabaseObject	$objectB
+	 * @return	boolean
+	 */
+	public static function compare($objectA, $objectB) {
+		if (get_class($objectA) != get_class($objectB)) return false;
+		if ($objectA->getObjectID() != $objectB->getObjectID()) return false;
+	
+		return true;
+	}	
 }

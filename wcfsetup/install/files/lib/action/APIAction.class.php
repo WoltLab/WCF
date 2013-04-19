@@ -1,6 +1,9 @@
 <?php
 namespace wcf\action;
+use wcf\data\DatabaseObject;
 use wcf\system\api\rest\response\IRESTfulResponse;
+use wcf\system\application\ApplicationHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\RouteHandler;
@@ -23,6 +26,18 @@ final class APIAction extends AbstractAjaxAction {
 	public $neededModules = array('MODULE_API_ACCESS');
 	
 	/**
+	 * Holds json data
+	 * @var	array<mixed>
+	 */
+	public $data = array();
+	
+	/**
+	 * Holds additional response fields by controller
+	 * @var	array<string>
+	 */
+	public $additionalFields = array();
+	
+	/**
 	 * @see	wcf\action\IAction::execute()
 	 */
 	public function execute() {
@@ -40,7 +55,8 @@ final class APIAction extends AbstractAjaxAction {
 		}
 		
 		//get class data
-		$classData = $this->getClassData($routeData['className']);
+		$application = ApplicationHandler::getInstance()->getActiveApplication();		
+		$classData = $this->getClassData($routeData['className'], ApplicationHandler::getInstance()->getAbbreviation($application->packageID));
 		
 		if ($classData === null) {
 			throw new AJAXException("unable to find class for controller '".$routeData['className']."'");
@@ -56,7 +72,10 @@ final class APIAction extends AbstractAjaxAction {
 			throw new AJAXException("unable to create object of '".$routeData['className']."'");
 		}
 		
-		$this->data = $this->prune($object);
+		// fire event for extending additionalFields
+		EventHandler::getInstance()->fireAction($this, 'beforePrune');
+		
+		$this->data = $this->prune($object, $this->data);
 		
 		if (empty($this->data)) {
 			throw new AJAXException("no results");
@@ -74,19 +93,61 @@ final class APIAction extends AbstractAjaxAction {
 	
 	/**
 	 * Checks fields, prunes given array and returns it
-	 *
-	 * @return array
+	 * 
+	 * @param	wcf\system\api\rest\IRESTfulResponse	$object
+	 * @param	array<mixed>	$data
+	 * @param	array<wcf\data\DatabaseObject>	$traversedObjects
+	 * @return	array<mixed>
 	 */
-	protected function prune(IRESTfulResponse $object) {
-		$prunedArray = array();
-		
-		foreach ($object->getResponseFields() as $fieldName) {
-			if (isset($object->$fieldName)) {
-				$prunedArray[$fieldName] = $object->$fieldName;
-			}
+	protected function prune(IRESTfulResponse $object, $data = array(), &$traversedObjects = array()) {
+		// avoid self-recursion
+		foreach ($traversedObjects as $key => $traversedObject) {
+			if (DatabaseObject::compare($object, $traversedObject))
+				return $data;
 		}
 		
-		return $prunedArray;
+		$traversedObjects[] = $object;
+		
+		foreach (array_merge($object->getResponseFields(), $this->getAdditionalFields(get_class($object))) as $fieldName) {
+			if (isset($object->$fieldName)) {
+				if (is_object($object->$fieldName) && ($object->$fieldName instanceof IRESTfulResponse)) {
+					$data[$fieldName] = array();
+					$data[$fieldName] = $this->prune($object->$fieldName, $data[$fieldName], $traversedObjects);
+				} 
+				else if (is_array($object->$fieldName)) {
+					$data[$fieldName] = array();
+					
+					foreach ($object->$fieldName as $key => $value) {
+						if (is_object($value) && ($value instanceof IRESTfulResponse)) {
+							$data[$fieldName][$key] = array();
+							$data[$fieldName][$key] = $this->prune($value, $data[$fieldName][$key], $traversedObjects);
+						} 
+						else {
+							$data[$fieldName][$key] = $value;
+						}
+					}
+				} 
+				else {
+					$data[$fieldName] = $object->$fieldName;
+				}
+			}
+		}
+
+		return $data;
+	}
+	
+	/**
+	 * Returns the additional fields for the given class.
+	 *
+	 * @param	string	$className
+	 * @return	array<mixed>
+	 */
+	protected function getAdditionalFields($className) {
+		if (isset($this->additionalFields[$className])) {
+			return $this->additionalFields[$className];
+		}
+		
+		return array();
 	}
 	
 	/**
