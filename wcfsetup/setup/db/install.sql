@@ -521,7 +521,7 @@ CREATE TABLE wcf1_session (
 	objectType VARCHAR(255) NOT NULL DEFAULT '',
 	objectID INT(10) NOT NULL DEFAULT 0,
 	sessionVariables MEDIUMTEXT,
-	spiderID INT(10) NOT NULL DEFAULT 0,
+	spiderID INT(10),
 	KEY packageID (lastActivityTime, spiderID)
 );
 
@@ -841,6 +841,7 @@ ALTER TABLE wcf1_page_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_pack
 ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_session ADD FOREIGN KEY (spiderID) REFERENCES wcf1_spider (spiderID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_sitemap ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
