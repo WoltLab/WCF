@@ -4998,6 +4998,7 @@ WCF.Search.Base = Class.extend({
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
 		
 		// pre-select first item
+		this._itemIndex = -1;
 		this._selectNextItem();
 	},
 	
