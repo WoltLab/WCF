@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.tools.min.js"></script>
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js"></script>
 	<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.js"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?t={@TIME_NOW}"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
