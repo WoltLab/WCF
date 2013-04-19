@@ -6,9 +6,8 @@
 	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
 	<script type="text/javascript">
 		//<![CDATA[
-		var SID_ARG_1ST = '{@SID_ARG_1ST}';
 		var SID_ARG_2ND = '{@SID_ARG_2ND_NOT_ENCODED}';
-		var RELATIVE_WCF_DIR = '{@$__wcf->getPath()}';
+		var WCF_PATH = '{@$__wcf->getPath()}';
 		var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 		var TIME_NOW = {@TIME_NOW};
@@ -83,6 +82,8 @@
 				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 				{event name='javascriptLanguageImport'}
 			});
+			
+			if (jQuery.browser.touch) $('html').addClass('touch');
 			new WCF.Date.Time();
 			new WCF.Effect.SmoothScroll();
 			new WCF.Effect.BalloonTooltip();
