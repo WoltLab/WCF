@@ -2,6 +2,7 @@
 namespace wcf\action;
 use wcf\data\DatabaseObject;
 use wcf\system\api\rest\response\IRESTfulResponse;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
@@ -54,7 +55,8 @@ final class APIAction extends AbstractAjaxAction {
 		}
 		
 		//get class data
-		$classData = $this->getClassData($routeData['className']);
+		$application = ApplicationHandler::getInstance()->getActiveApplication();		
+		$classData = $this->getClassData($routeData['className'], ApplicationHandler::getInstance()->getAbbreviation($application->packageID));
 		
 		if ($classData === null) {
 			throw new AJAXException("unable to find class for controller '".$routeData['className']."'");
