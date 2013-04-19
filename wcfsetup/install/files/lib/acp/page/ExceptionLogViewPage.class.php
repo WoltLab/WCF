@@ -109,7 +109,12 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		$contents = $split->split($contents, Regex::SPLIT_NON_EMPTY_ONLY | Regex::CAPTURE_SPLIT_DELIMITER);
 		
 		// even items become keys, odd items become values
-		$this->exceptions = call_user_func_array('array_merge', array_map(function($v) { return array($v[0] => $v[1]); }, array_chunk($contents, 2)));
+		$this->exceptions = call_user_func_array('array_merge', array_map(
+			function($v) { 
+				return array($v[0] => $v[1]); 
+			}, 
+			array_chunk($contents, 2)
+		));
 		
 		if ($this->exceptionID) $this->searchPage($this->exceptionID);
 		$this->calculateNumberOfPages();
