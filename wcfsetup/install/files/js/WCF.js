@@ -3270,26 +3270,26 @@ WCF.Template = Class.extend({
 			return string.replace(/\\n/g, "\n").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 		};
 		
-		template = template.replace(/\{(\$[^\s]+?)\}/g, function(_, content) {
-			content = unescape(content.replace(/\$([^\s]+)/g, "(v['$1'])"));
+		template = template.replace(/\{(\$[^\}]+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^.\s]+)/g, "(v['$1'])"));
 			
 			return "' + WCF.String.escapeHTML(" + content + ") + '";
 		})
 		// Numeric Variable
-		.replace(/\{#(\$[^\s]+?)\}/g, function(_, content) {
-			content = unescape(content.replace(/\$([^\s]+)/g, "(v['$1'])"));
+		.replace(/\{#(\$[^\}]+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^.\s]+)/g, "(v['$1'])"));
 			
 			return "' + WCF.String.formatNumeric(" + content + ") + '";
 		})
 		// Variable without escaping
-		.replace(/\{@(\$[^\s]+?)\}/g, function(_, content) {
-			content = unescape(content.replace(/\$([^\s]+)/g, "(v['$1'])"));
+		.replace(/\{@(\$[^\}]+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^.\s]+)/g, "(v['$1'])"));
 			
 			return "' + " + content + " + '";
 		})
 		// {if}
 		.replace(/\{if (.+?)\}/g, function(_, content) {
-			content = unescape(content.replace(/\$([^\s]+)/g, "(v['$1'])"));
+			content = unescape(content.replace(/\$([^.\s]+)/g, "(v['$1'])"));
 			
 			return	"';\n" +
 				"if (" + content + ") {\n" +
@@ -3297,7 +3297,7 @@ WCF.Template = Class.extend({
 		})
 		// {elseif}
 		.replace(/\{else ?if (.+?)\}/g, function(_, content) {
-			content = unescape(content.replace(/\$([^\s]+)/g, "(v['$1'])"));
+			content = unescape(content.replace(/\$([^.\s]+)/g, "(v['$1'])"));
 			
 			return	"';\n" +
 				"}\n" +
@@ -3315,7 +3315,7 @@ WCF.Template = Class.extend({
 			if (typeof $parameters['item'] === 'undefined') throw new Error('Missing item attribute in implode-tag');
 			if (typeof $parameters['glue'] === 'undefined') $parameters['glue'] = "', '";
 			
-			$parameters['from'] = $parameters['from'].replace(/\$([^\s]+)/g, "(v.$1)");
+			$parameters['from'] = $parameters['from'].replace(/\$([^.\s]+)/g, "(v.$1)");
 			
 			return 	"';\n"+
 				"var $implode_" + $tagID + " = false;\n" +
@@ -3335,7 +3335,7 @@ WCF.Template = Class.extend({
 			
 			if (typeof $parameters['from'] === 'undefined') throw new Error('Missing from attribute in foreach-tag');
 			if (typeof $parameters['item'] === 'undefined') throw new Error('Missing item attribute in foreach-tag');
-			$parameters['from'] = $parameters['from'].replace(/\$([^\s]+)/g, "(v.$1)");
+			$parameters['from'] = $parameters['from'].replace(/\$([^.\s]+)/g, "(v.$1)");
 			
 			return	"';\n" +
 				"$foreach_"+$tagID+" = false;\n" +
@@ -3392,7 +3392,7 @@ WCF.Template = Class.extend({
 		});
 		
 		template = "$output += '" + template + "';";
-		console.debug("var $output = ''; " + template + ' return $output;');
+		
 		this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
 	},
 	
