@@ -5589,7 +5589,7 @@ WCF.System.PageNavigation = {
 			
 			var $fieldset = $('<fieldset><legend>' + WCF.Language.get('wcf.global.page.jumpTo') + '</legend></fieldset>').appendTo(this._dialog);
 			$('<dl><dt><label for="jsPageNavigationPageNo">' + WCF.Language.get('wcf.global.page.jumpTo') + '</label></dt><dd></dd></dl>').appendTo($fieldset);
-			this._pageNo = $('<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="long" />').keyup($.proxy(this._keyUp, this)).appendTo($fieldset.find('dd'));
+			this._pageNo = $('<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="medium" />').keyup($.proxy(this._keyUp, this)).appendTo($fieldset.find('dd'));
 			this._description = $('<small></small>').insertAfter(this._pageNo);
 			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
 			this._button = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(this._submit, this)).appendTo($formSubmit);
