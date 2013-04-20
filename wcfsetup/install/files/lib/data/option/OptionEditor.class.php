@@ -75,7 +75,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		
 		$flushCache = false;
 		foreach ($options as $id => $value) {
-			if ($id == $row['optionID'] && ($value != $row['optionValue'] || $value != CACHE_SOURCE_TYPE) {
+			if ($id == $row['optionID'] && ($value != $row['optionValue'] || $value != CACHE_SOURCE_TYPE)) {
 				$flushCache = true;
 			}
 			
