@@ -23,17 +23,17 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.language.canAddLanguage');
+	protected $permissionsCreate = array('admin.language.canManageLanguage');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.language.canDeleteLanguage');
+	protected $permissionsDelete = array('admin.language.canManageLanguage');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.language.canEditLanguage');
+	protected $permissionsUpdate = array('admin.language.canManageLanguage');
 	
 	/**
 	 * language editor object

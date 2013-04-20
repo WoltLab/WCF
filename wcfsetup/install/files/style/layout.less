@@ -3,7 +3,7 @@
 	padding: 0 @wcfLayoutFluidGap;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.layoutFluid {
 		padding: 0;
 	}
@@ -14,9 +14,15 @@
 	width: @wcfLayoutFixedWidth;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.layoutFixed {
 		width: auto;
+	}
+}
+
+@media only screen and (min-width: 801px) {
+	body {
+		min-width: 1024px;
 	}
 }
 
@@ -26,7 +32,7 @@
 	z-index: 100;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	#pageHeader {
 		margin-top: 48px;
 	}
@@ -148,7 +154,14 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+.userPanelJumpToAnchorFix:before {
+	content: "";
+	display: block;
+	height: 40px;
+	margin-top: -40px;
+}
+
+@media only screen and (max-width: 800px) {
 	.userPanel {
 		height: auto;
 		
@@ -240,7 +253,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.logo {
 		display: none;
 	}
@@ -293,7 +306,7 @@
 }
 
 /* main menu */
-@media only screen and (min-width: 641px) {
+@media only screen and (min-width: 801px) {
 	.mainMenu {
 		> ul {
 			background-color: @wcfMainMenuBackgroundColor;
@@ -342,7 +355,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.mainMenu {
 		position: relative;
 		
@@ -375,6 +388,10 @@
 					display: block;
 					font-size: 85%;
 					padding-left: 14px;
+					
+					> li > span.badge {
+						display: none;
+					}
 				}
 				
 				> a {
@@ -389,8 +406,14 @@
 					}
 				}
 			}
-			
-			
+		}
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 800px) {
+	.mainMenu {
+		> .invisible {
+			margin-left: @wcfGapMedium;
 		}
 	}
 }
@@ -463,12 +486,23 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
-	.navigation {
+@media only screen and (max-width: 800px) {
+	.navigation.navigationHeader {
 		> ul.navigationIcons,
 		> ul.navigationItems,
 		> ul.navigationMenuItems {
 			display: none;
+		}
+	}
+	
+	.navigation.navigationFooter {
+		> ul.navigationIcons,
+		> ul.navigationItems {
+			display: none;
+		}
+		
+		> ul.navigationMenuItems > li {
+			margin: 4px 7px 4px 0;
 		}
 	}
 }
@@ -484,7 +518,7 @@
 	border-top: 1px solid @wcfContainerBorderColor;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.navigationHeader {
 		background-color: transparent;
 		border: 0;
@@ -510,7 +544,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.footerContent {
 		margin: 0 @wcfGapMedium;
 	}
@@ -615,7 +649,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	/* hide sidebar */
 	#main {
 		position: relative;
@@ -684,9 +718,19 @@
 	}
 }
 
+@media only screen and (min-width: 801px) and (max-width: 1239px) {
+	#main {
+		> div > .content {
+			padding-left: @wcfGapLarge + @wcfGapSmall;
+			padding-right: @wcfGapLarge + @wcfGapSmall;
+		}
+	}
+}
+
 /* basic layout elements */
 .boxHeadline {
 	margin-top: @wcfGapMedium;
+	overflow: hidden;
 	
 	> hgroup {
 		> h1 {
@@ -725,11 +769,18 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.boxHeadline {
 		margin-top: @wcfGapSmall;
 		margin-left: @wcfGapSmall;
 		margin-right: @wcfGapSmall;
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 800px) {
+	.boxHeadline {
+		margin-left: @wcfGapMedium;
+		margin-right: @wcfGapMedium;
 	}
 }
 
@@ -759,13 +810,20 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.contentNavigation {
 		box-sizing:border-box;
 		-moz-box-sizing:border-box;
 		-webkit-box-sizing:border-box;
 		padding-left: @wcfGapSmall;
 		padding-right: @wcfGapSmall;
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 800px) {
+	.contentNavigation {
+		padding-left: @wcfGapMedium;
+		padding-right: @wcfGapMedium;
 	}
 }
 
@@ -778,7 +836,7 @@
 	padding: @wcfGapMedium @wcfGapLarge @wcfGapMedium;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.container {
 		border-width: 1px 0;
 	}
@@ -788,9 +846,14 @@
 	}
 }
 
+@media only screen and (min-width: 641px) and (max-width: 800px) {
+	.containerPadding {
+		padding-left: @wcfGapMedium;
+		padding-right: @wcfGapMedium;
+	}
+}
+
 .containerHeadline {
-	margin-bottom: @wcfGapSmall;
-	
 	> h1 {
 		font-size: @wcfTitleFontSize;
 		font-weight: bold;
@@ -809,6 +872,10 @@
 	
 	> h1, > h1 > a {
 		.textShadow(@wcfContainerBackgroundColor);
+	}
+	
+	+ * {
+		margin-top: @wcfGapSmall;
 	}
 }
 
@@ -875,7 +942,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.containerList {
 		> li {
 			padding: @wcfGapSmall;
@@ -899,6 +966,14 @@
 					margin-left: 0;
 				}
 			}
+		}
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 800px) {
+	.containerList {
+		> li {
+			padding: @wcfGapSmall @wcfGapMedium;
 		}
 	}
 }
@@ -1006,7 +1081,7 @@
 	}
 }
 
-@media only screen and (min-width: 641px) {
+@media only screen and (min-width: 801px) {
 	.containerBoxList {
 		&.doubleColumned,
 		&.tripleColumned {
@@ -1111,7 +1186,7 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.content > .breadcrumbs {
 		display: none;
 	}
@@ -1256,7 +1331,7 @@
 	margin-bottom: @wcfGapSmall;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.tabMenu {
 		> ul {
 			margin-left: @wcfGapTiny;
@@ -1301,6 +1376,10 @@
 .tabularBox {
 	background-color: @wcfTabularBoxBackgroundColor;
 	border: 1px solid @wcfContainerBorderColor;
+	
+	> .container {
+		border: 0;
+	}
 }
 
 .tabularBoxTitle > hgroup {
@@ -1330,13 +1409,20 @@
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.tabularBox {
 		border-width: 1px 0;
 	}
 	
 	.tabularBoxTitle {
 		border-top-width: 0;
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 800px) {
+	.tabularBoxTitle > hgroup {
+		padding-left: @wcfGapMedium;
+		padding-right: @wcfGapMedium;
 	}
 }
 
@@ -1705,7 +1791,7 @@ ul.inlineDataList {
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	.pageNavigation {
 		> ul > li {
 			&:not(.skip):not(.active) {
@@ -1840,6 +1926,10 @@ ul.inlineDataList {
 	
 	.sidebarBoxList > li:not(:last-child) {
 		margin-bottom: 7px;
+	}
+	
+	.sidebarBoxList {
+		overflow: hidden;
 	}
 	
 	.sidebarBoxHeadline {

@@ -37,13 +37,16 @@
 		return $data;
 	};
 	
-	// provide a sane console.debug implementation
-	if (!window.console) {
-		window.console = {
-			debug: function() { /* discard log */ }
-		};
+	// provide a sane window.console implementation
+	if (!window.console) window.console = { };
+	var consoleProperties = [ "log",/* "debug",*/ "info", "warn", "exception", "assert", "dir", "dirxml", "trace", "group", "groupEnd", "groupCollapsed", "profile", "profileEnd", "count", "clear", "time", "timeEnd", "timeStamp", "table", "error" ];
+	for (var i = 0; i < consoleProperties.length; i++) {
+		if (typeof (console[consoleProperties[i]]) === 'undefined') {
+			console[consoleProperties[i]] = function () { }
+		}
 	}
-	else if (typeof(console.debug) === 'undefined') {
+	
+	if (typeof(console.debug) === 'undefined') {
 		// forward console.debug to console.log (IE9)
 		console.debug = function(string) { console.log(string); };
 	}
@@ -83,6 +86,11 @@ String.prototype.hashCode = function() {
  * jQuery.browser.mobile will be true if the browser is a mobile device
  **/
 (function(a){(jQuery.browser=jQuery.browser||{}).mobile=/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))})(navigator.userAgent||navigator.vendor||window.opera);
+
+(function() {
+	jQuery.browser = jQuery.browser || { };
+	jQuery.browser.touch = (!!('ontouchstart' in window) || !!('msmaxtouchpoints' in window.navigator));
+})();
 
 /**
  * Initialize WCF namespace
@@ -1597,7 +1605,11 @@ WCF.Action.Proxy = Class.extend({
 			}
 			
 			if (!this._suppressErrors && $showError !== false) {
-				$('<div class="ajaxDebugMessage"><p>' + $data.message + '</p><p>Stacktrace:</p><p>' + $data.stacktrace + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+				var $details = '';
+				if ($data.stacktrace) $details = '<br /><p>Stacktrace:</p><p>' + $data.stacktrace + '</p>';
+				else if ($data.exceptionID) $details = '<br /><p>Exception ID: <code>' + $data.exceptionID + '</code></p>';
+				
+				$('<div class="ajaxDebugMessage"><p>' + $data.message + '</p>' + $details + '</div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
 			}
 		}
 		// failed to parse JSON
@@ -1609,7 +1621,8 @@ WCF.Action.Proxy = Class.extend({
 			}
 			
 			if (!this._suppressErrors && $showError !== false) {
-				$('<div class="ajaxDebugMessage"><p>' + jqXHR.responseText + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+				var $message = (textStatus === 'timeout') ? WCF.Language.get('wcf.global.error.timeout') : jqXHR.responseText;
+				$('<div class="ajaxDebugMessage"><p>' + $message + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
 			}
 		}
 		
@@ -2255,7 +2268,7 @@ WCF.Date.Picker = {
 				monthNames: WCF.Language.get('__months'),
 				monthNamesShort: WCF.Language.get('__monthsShort'),
 				showOtherMonths: true,
-				yearRange: '1900:2038'
+				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038')
 			});
 			
 			// format default date
@@ -2387,14 +2400,9 @@ WCF.Date.Time = Class.extend({
 		var $time = $element.data('time');
 		var $offset = $element.data('offset');
 		
-		// timestamp is in the future
-		if ($timestamp > this._timestamp) {
-			var $string = WCF.Language.get('wcf.date.dateTimeFormat');
-			$element.text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
-		}
 		// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-		else if (this._timestamp < ($timestamp + 3540)) {
-			var $minutes = Math.round((this._timestamp - $timestamp) / 60);
+		if ($timestamp >= this._timestamp || this._timestamp < ($timestamp + 3540)) {
+			var $minutes = Math.max(Math.round((this._timestamp - $timestamp) / 60), 1);
 			$element.text(eval(WCF.Language.get('wcf.date.relative.minutes')));
 		}
 		// timestamp is less than 24 hours ago
@@ -3605,24 +3613,31 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	init: function(className) {
 		this._className = className;
-		
-		// validate containers
-		var $containers = this._getContainers();
-		if ($containers.length == 0) {
-			console.debug('[WCF.Collapsible.Remote] Empty container set given, aborting.');
-		}
-		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
 		
 		// initialize each container
-		$containers.each($.proxy(function(index, container) {
+		this._init();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Collapsible.Remote', $.proxy(this._init, this));
+	},
+	
+	/**
+	 * Initializes a collapsible container.
+	 * 
+	 * @param	string		containerID
+	 */
+	_init: function(containerID) {
+		this._getContainers().each($.proxy(function(index, container) {
 			var $container = $(container);
 			var $containerID = $container.wcfIdentify();
-			this._containers[$containerID] = $container;
 			
-			this._initContainer($containerID);
+			if (this._containers[$containerID] === undefined) {
+				this._containers[$containerID] = $container;
+				
+				this._initContainer($containerID);
+			}
 		}, this));
 	},
 	
@@ -4079,9 +4094,10 @@ WCF.Effect.Scroll = Class.extend({
 	 * 
 	 * @param	jQuery		element
 	 * @param	boolean		excludeMenuHeight
+	 * @param	boolean		disableAnimation
 	 * @return	boolean
 	 */
-	scrollTo: function(element, excludeMenuHeight) {
+	scrollTo: function(element, excludeMenuHeight, disableAnimation) {
 		if (!element.length) {
 			return true;
 		}
@@ -4102,9 +4118,14 @@ WCF.Effect.Scroll = Class.extend({
 			}
 		}
 		
-		$('html,body').animate({ scrollTop: $elementOffset }, 400, function (x, t, b, c, d) {
-			return -c * ( ( t = t / d - 1 ) * t * t * t - 1) + b;
-		});
+		if (disableAnimation === true) {
+			$('html,body').scrollTop($elementOffset);
+		}
+		else {
+			$('html,body').animate({ scrollTop: $elementOffset }, 400, function (x, t, b, c, d) {
+				return -c * ( ( t = t / d - 1 ) * t * t * t - 1) + b;
+			});
+		}
 		
 		return false;
 	}
@@ -4154,7 +4175,7 @@ WCF.Effect.BalloonTooltip = Class.extend({
 	 * Initializes tooltips.
 	 */
 	init: function() {
-		if (jQuery.browser.mobile) return;
+		if (jQuery.browser.touch) return;
 
 		if (!this._didInit) {
 			// create empty div
@@ -4266,7 +4287,16 @@ WCF.Effect.BalloonTooltip = Class.extend({
 		}
 		
 		// calculate top offset
-		var $top = $elementOffsets.top + $elementDimensions.height + 7;
+		if ($elementOffsets.top + $elementDimensions.height + $tooltipDimensions.height - $(document).scrollTop() < $(window).height()) {
+			var $top = $elementOffsets.top + $elementDimensions.height + 7;
+			this._tooltip.removeClass('inverse');
+			$arrow.css('top', -5);
+		}
+		else {
+			var $top = $elementOffsets.top - $tooltipDimensions.height - 7;
+			this._tooltip.addClass('inverse');
+			$arrow.css('top', $tooltipDimensions.height);
+		}
 		
 		// calculate left offset
 		switch ($alignment) {
@@ -4394,9 +4424,9 @@ WCF.CloseOverlayHandler = {
 WCF.DOMNodeInsertedHandler = {
 	/**
 	 * list of callbacks
-	 * @var	WCF.Dictionary
+	 * @var	array<object>
 	 */
-	_callbacks: new WCF.Dictionary(),
+	_callbacks: [ ],
 	
 	/**
 	 * true if DOMNodeInserted event should be ignored
@@ -4432,23 +4462,7 @@ WCF.DOMNodeInsertedHandler = {
 		this._discardEventCount = 0;
 		this._bindListener();
 		
-		if (this._callbacks.isset(identifier)) {
-			console.debug("[WCF.DOMNodeInsertedHandler] identifier '" + identifier + "' is already bound to a callback");
-			return false;
-		}
-		
-		this._callbacks.add(identifier, callback);
-	},
-	
-	/**
-	 * Removes a callback from list.
-	 * 
-	 * @param	string		identifier
-	 */
-	removeCallback: function(identifier) {
-		if (this._callbacks.isset(identifier)) {
-			this._callbacks.remove(identifier);
-		}
+		this._callbacks.push(callback);
 	},
 	
 	/**
@@ -4471,10 +4485,9 @@ WCF.DOMNodeInsertedHandler = {
 		// do not track events while executing callbacks
 		this._isExecuting = true;
 		
-		this._callbacks.each(function(pair) {
-			// execute callback
-			pair.value();
-		});
+		for (var $i = 0, $length = this._callbacks.length; $i < $length; $i++) {
+			this._callbacks[$i]();
+		}
 		
 		// enable listener again
 		this._isExecuting = false;
@@ -5022,6 +5035,7 @@ WCF.Search.Base = Class.extend({
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
 		
 		// pre-select first item
+		this._itemIndex = -1;
 		this._selectNextItem();
 	},
 	
@@ -5181,6 +5195,26 @@ WCF.Search.User = WCF.Search.Base.extend({
  * Namespace for system-related classes.
  */
 WCF.System = { };
+
+/**
+ * Fixes scroll offset on page load.
+ */
+WCF.System.JumpToAnchor = {
+	execute: function() {
+		if (window.location.hash) {
+			var $element = $(window.location.hash);
+			if ($element.length) {
+				$element.addClass('userPanelJumpToAnchorFix');
+				
+				new WCF.PeriodicalExecuter(function(pe) {
+					pe.stop();
+					
+					$element.removeClass('userPanelJumpToAnchorFix');
+				}, 5000);
+			}
+		}
+	}
+};
 
 /**
  * System notification overlays.
@@ -5397,6 +5431,54 @@ WCF.System.Confirmation = {
 	 */
 	_show: function() {
 		this._dialog.find('button.buttonPrimary').blur().focus();
+	}
+};
+
+/**
+ * Disables the ability to scroll the page.
+ */
+WCF.System.DisableScrolling = {
+	/**
+	 * number of times scrolling was disabled (nested calls)
+	 * @var	integer
+	 */
+	_depth: 0,
+	
+	/**
+	 * old overflow-value of the body element
+	 * @var	string
+	 */
+	_oldOverflow: null,
+	
+	/**
+	 * Disables scrolling.
+	 */
+	disable: function () {
+		// do not block scrolling on touch devices
+		if ($.browser.touch) {
+			return;
+		}
+		
+		if (this._depth === 0) {
+			this._oldOverflow = $(document.body).css('overflow');
+			$(document.body).css('overflow', 'hidden');
+		}
+		
+		this._depth++;
+	},
+	
+	/**
+	 * Enables scrolling again.
+	 * Must be called the same number of times disable() was called to enable scrolling.
+	 */
+	enable: function () {
+		if (this._depth === 0) return;
+		
+		this._depth--;
+		
+		if (this._depth === 0) {
+			$(document.body).css('overflow', this._oldOverflow);
+		}
 	}
 };
 
@@ -5955,10 +6037,10 @@ WCF.Upload = Class.extend({
 			this._fileUpload = $('<input type="file" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/>');
 			this._fileUpload.change($.proxy(this._upload, this));
 			var $button = $('<p class="button uploadButton"><span>'+WCF.Language.get('wcf.global.button.upload')+'</span></p>');
-			$button.append(this._fileUpload);
+			$button.prepend(this._fileUpload);
 		}
 		else {
-			var $button = $('<p class="button"><span>Upload</span></p>');
+			var $button = $('<p class="button uploadFallbackButton"><span>'+WCF.Language.get('wcf.global.button.upload')+'</span></p>');
 			$button.click($.proxy(this._showOverlay, this));
 		}
 		
@@ -6107,7 +6189,7 @@ WCF.Upload = Class.extend({
 			this._overlay = $('<div><form enctype="multipart/form-data" method="post" action="' + this._options.url + '" target="__fileUploadIFrame" /></div>').hide().appendTo(document.body);
 			
 			var $form = this._overlay.find('form');
-			$('<dl><dt><label for="__fileUpload">' + WCF.Language.get('wcf.upload.file') + '</label></dt><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
+			$('<dl class="wide"><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
 			$('<div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form>').appendTo($form);
 			
 			$('<input type="hidden" name="isFallback" value="1" />').appendTo($form);
@@ -6121,7 +6203,7 @@ WCF.Upload = Class.extend({
 			$form.submit($.proxy(function() {
 				var $file = {
 					name: this._getFilename(),
-					size: WCF.Language.get('wcf.upload.file.size.unknown')
+					size: ''
 				};
 				
 				var $uploadID = this._createUploadMatrix([ $file ]);
@@ -6132,7 +6214,7 @@ WCF.Upload = Class.extend({
 		}
 		
 		this._overlay.wcfDialog({
-			title: WCF.Language.get('wcf.attachment.upload')
+			title: WCF.Language.get('wcf.global.button.upload')
 		});
 	},
 	
@@ -7800,8 +7882,10 @@ $.widget('ui.wcfDialog', {
 	
 	/**
 	 * Closes this dialog.
+	 * 
+	 * @param	object		event
 	 */
-	close: function() {
+	close: function(event) {
 		if (!this.isOpen() || !this.options.closable) {
 			return;
 		}
@@ -7819,6 +7903,12 @@ $.widget('ui.wcfDialog', {
 		
 		if (this.options.onClose !== null) {
 			this.options.onClose();
+		}
+		
+		if (event !== undefined) {
+			event.preventDefault();
+			event.stopPropagation();
+			return false;
 		}
 	},
 	

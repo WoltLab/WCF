@@ -2,13 +2,14 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 <meta name="format-detection" content="telephone=no" />
+{if $allowSpidersToIndexThisPage|empty}<meta name="robots" content="noindex,nofollow" />{/if} 
 {implode from=$__wcf->getMetaTagHandler() item=__metaTag glue="\n"}{@$__metaTag}{/implode}
 {event name='metaTags'}
 
 <script type="text/javascript">
 	//<![CDATA[
 	var SID_ARG_2ND	= '{@SID_ARG_2ND_NOT_ENCODED}';
-	var RELATIVE_WCF_DIR = '{@$__wcf->getPath()}';
+	var WCF_PATH = '{@$__wcf->getPath()}';
 	var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 	var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 	var TIME_NOW = {@TIME_NOW};
@@ -74,7 +75,9 @@
 			'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
 			'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
 			'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
+			'wcf.global.error.timeout': '{lang}wcf.global.error.timeout{/lang}',
 			'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
+			'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
 			'wcf.global.language.noSelection': '{lang}wcf.global.language.noSelection{/lang}',
 			'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 			'wcf.global.page.jumpTo': '{lang}wcf.global.page.jumpTo{/lang}',
@@ -91,6 +94,7 @@
 			{event name='javascriptLanguageImport'}
 		});
 		
+		if (jQuery.browser.touch) $('html').addClass('touch');
 		new WCF.Date.Time();
 		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
@@ -99,6 +103,7 @@
 		WCF.Dropdown.init();
 		WCF.System.PageNavigation.init('.pageNavigation');
 		WCF.Date.Picker.init();
+		WCF.System.JumpToAnchor.execute();
 		
 		{event name='javascriptInit'}
 		

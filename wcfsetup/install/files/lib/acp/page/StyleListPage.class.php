@@ -31,7 +31,7 @@ class StyleListPage extends MultipleLinkPage {
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$sortField
 	 */
-	public $sortField = 'style.styleName';
+	public $sortField = 'style.isDefault DESC, style.styleName';
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$sortOrder

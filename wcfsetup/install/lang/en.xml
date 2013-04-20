@@ -92,6 +92,21 @@
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Error Message]]></item>
 	</category>
 	
+	<category name="wcf.acp.exceptionLog">
+		<item name="wcf.acp.exceptionLog"><![CDATA[Logged errors]]></item>
+		<item name="wcf.acp.exceptionLog.exception.file"><![CDATA[File (Line)]]></item>
+		<item name="wcf.acp.exceptionLog.exception.phpVersion"><![CDATA[PHP version]]></item>
+		<item name="wcf.acp.exceptionLog.exception.wcfVersion"><![CDATA[WCF version]]></item>
+		<item name="wcf.acp.exceptionLog.exception.requestURI"><![CDATA[Requested URL]]></item>
+		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
+		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
+		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Copy error message]]></item>
+		<item name="wcf.acp.exceptionLog.search"><![CDATA[Search]]></item>
+		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Error-ID]]></item>
+		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Logfile]]></item>
+		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[No error with the ID “{$exceptionID” was found.]]></item>
+	</category>
+	
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group “{$group->groupName|language}”?]]></item>
@@ -109,12 +124,8 @@
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Can enter Administration Control Panel]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Users of this group may access the Administration Control Panel based upon their granted permissions. This option must be enabled if you wish to grant access to any administrative option.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Can view private user options]]></item>
-		<item name="wcf.acp.group.option.admin.language.canAddLanguage"><![CDATA[Can add languages]]></item>
-		<item name="wcf.acp.group.option.admin.language.canAddServer"><![CDATA[Can add language servers]]></item>
-		<item name="wcf.acp.group.option.admin.language.canDeleteLanguage"><![CDATA[Can delete languages]]></item>
-		<item name="wcf.acp.group.option.admin.language.canDeleteServer"><![CDATA[Can delete language servers]]></item>
-		<item name="wcf.acp.group.option.admin.language.canEditLanguage"><![CDATA[Can edit languages]]></item>
-		<item name="wcf.acp.group.option.admin.language.canEditServer"><![CDATA[Can edit language servers]]></item>
+		<item name="wcf.acp.group.option.admin.language.canManageLanguage"><![CDATA[Can manage languages]]></item>
+		<item name="wcf.acp.group.option.admin.language.canManageServer"><![CDATA[Can manage language servers]]></item>
 		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Can edit system options]]></item>
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Can view disabled styles]]></item>
 		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Can view log files]]></item>
@@ -158,14 +169,10 @@
 	<category name="wcf.acp.language">
 		<item name="wcf.acp.language.add"><![CDATA[Add Language]]></item>
 		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[Language code is already in use by an installed language.]]></item>
-		<item name="wcf.acp.language.add.mode"><![CDATA[Add Language by]]></item>
-		<item name="wcf.acp.language.add.mode.copy"><![CDATA[Translating an existing language]]></item>
-		<item name="wcf.acp.language.add.mode.import"><![CDATA[Importing a language file]]></item>
-		<item name="wcf.acp.language.add.new"><![CDATA[New Language]]></item>
-		<item name="wcf.acp.language.add.source"><![CDATA[Language to Translate]]></item>
+		<item name="wcf.acp.language.add.source"><![CDATA[TODO: Vorlage]]></item>
 		<item name="wcf.acp.language.code"><![CDATA[ISO Code]]></item>
 		<item name="wcf.acp.language.code.description"><![CDATA[Please enter the <strong>ISO 639-1</strong> language code, you can lookup the language code at <a href="http://en.wikipedia.org/wiki/ISO_639-1" class="externalURL">http://en.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
-		<item name="wcf.acp.language.customVariables"><![CDATA[Custom Items]]></item>
+		<item name="wcf.acp.language.customVariables"><![CDATA[Custom Phrases]]></item>
 		<item name="wcf.acp.language.delete.sure"><![CDATA[Do you really want to delete the language “{$language->languageName}”?]]></item>
 		<item name="wcf.acp.language.edit"><![CDATA[Edit Language]]></item>
 		<item name="wcf.acp.language.export"><![CDATA[Export Language]]></item>
@@ -173,7 +180,6 @@
 		<item name="wcf.acp.language.export.customValues"><![CDATA[Include custom items]]></item>
 		<item name="wcf.acp.language.export.selectPackages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.language.import.error"><![CDATA[Errors occured while importing the language file:]]></item>
-		<item name="wcf.acp.language.import.source"><![CDATA[Source]]></item>
 		<item name="wcf.acp.language.import.source.file"><![CDATA[Path to Language File]]></item>
 		<item name="wcf.acp.language.import.source.file.description"><![CDATA[Enter the relative path to a valid XML language file.]]></item>
 		<item name="wcf.acp.language.import.source.upload"><![CDATA[Upload Language File]]></item>
@@ -184,8 +190,19 @@
 		<item name="wcf.acp.language.multilingualism.languages"><![CDATA[Available Languages]]></item>
 		<item name="wcf.acp.language.multilingualism.languages.error.empty"><![CDATA[You need to select at least two languages.]]></item>
 		<item name="wcf.acp.language.setAsDefault"><![CDATA[Set As Default]]></item>
-		<item name="wcf.acp.language.variables"><![CDATA[Items]]></item>
+		<item name="wcf.acp.language.variables"><![CDATA[Phrases]]></item>
 		<item name="wcf.acp.language.users"><![CDATA[Used by]]></item>
+		<item name="wcf.acp.language.import"><![CDATA[Import Language]]></item>
+		<item name="wcf.acp.language.item.list"><![CDATA[Manage Phrases]]></item>
+		<item name="wcf.acp.language.item.list.filter"><![CDATA[Filter]]></item>
+		<item name="wcf.acp.language.category"><![CDATA[Category]]></item>
+		<item name="wcf.acp.language.item.value"><![CDATA[TODO: Inhalt]]></item>
+		<item name="wcf.acp.language.item.customValue"><![CDATA[TODO: Eigener Inhalt]]></item>
+		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[TODO: Eigene Version verwenden]]></item>
+		<item name="wcf.acp.language.item.hasCustomValue"><![CDATA[TODO: Inhalte mit eigener Version]]></item>
+		<item name="wcf.acp.language.item.customValues"><![CDATA[TODO: Veränderte Inhalte finden]]></item>
+		<item name="wcf.acp.language.name.description"><![CDATA[TODO: Name der Sprache]]></item>
+		<item name="wcf.acp.language.add.source.description"><![CDATA[TODO: Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -212,14 +229,15 @@
 		<item name="wcf.acp.menu.link.cronjob.add"><![CDATA[Add Cronjob]]></item>
 		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[List Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.language"><![CDATA[Languages]]></item>
-		<item name="wcf.acp.menu.link.language.add"><![CDATA[Add Language]]></item>
+		<item name="wcf.acp.menu.link.language.import"><![CDATA[Import Language]]></item>
+		<item name="wcf.acp.menu.link.language.item.list"><![CDATA[Manage Phrases]]></item>
 		<item name="wcf.acp.menu.link.language.list"><![CDATA[List Languages]]></item>
 		<item name="wcf.acp.menu.link.language.multilingualism"><![CDATA[Multilingualism]]></item>
-		<item name="wcf.acp.menu.link.language.server.add"><![CDATA[Add Language Server]]></item>
 		<item name="wcf.acp.menu.link.language.server.list"><![CDATA[List Language Server]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Logs]]></item>
 		<item name="wcf.acp.menu.link.log.session"><![CDATA[Sessions]]></item>
 		<item name="wcf.acp.menu.link.log.cronjob"><![CDATA[Cronjobs]]></item>
+		<item name="wcf.acp.menu.link.log.exception"><![CDATA[Errors]]></item>
 		<item name="wcf.acp.menu.link.group"><![CDATA[User Groups]]></item>
 		<item name="wcf.acp.menu.link.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.menu.link.group.mail"><![CDATA[Email Users]]></item>
@@ -805,12 +823,12 @@
 		<item name="wcf.date.timezone.europe.minsk"><![CDATA[(UTC+02:00) Minsk]]></item>
 		<item name="wcf.date.timezone.asia.baghdad"><![CDATA[(UTC+03:00) Baghdad]]></item>
 		<item name="wcf.date.timezone.asia.kuwait"><![CDATA[(UTC+03:00) Kuwait, Riyadh]]></item>
-		<item name="wcf.date.timezone.europe.moscow"><![CDATA[(UTC+03:00) Moscow, Saint Petersburg, Volgograd]]></item>
 		<item name="wcf.date.timezone.africa.nairobi"><![CDATA[(UTC+03:00) Nairobi]]></item>
 		<item name="wcf.date.timezone.asia.tehran"><![CDATA[(UTC+03:30) Tehran]]></item>
 		<item name="wcf.date.timezone.asia.muscat"><![CDATA[(UTC+04:00) Abu Dhabi, Muscat]]></item>
 		<item name="wcf.date.timezone.asia.baku"><![CDATA[(UTC+04:00) Baku]]></item>
 		<item name="wcf.date.timezone.asia.yerevan"><![CDATA[(UTC+04:00) Yerevan]]></item>
+		<item name="wcf.date.timezone.europe.moscow"><![CDATA[(UTC+04:00) Moscow, Saint Petersburg, Volgograd]]></item>
 		<item name="wcf.date.timezone.indian.mauritius"><![CDATA[(UTC+04:00) Port Louis]]></item>
 		<item name="wcf.date.timezone.asia.tbilisi"><![CDATA[(UTC+04:00) Tbilisi]]></item>
 		<item name="wcf.date.timezone.asia.kabul"><![CDATA[(UTC+04:30) Kabul]]></item>
@@ -878,6 +896,7 @@
 		<item name="wcf.global.description"><![CDATA[Description]]></item>
 		<item name="wcf.global.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
 		<item name="wcf.global.error.permissionDenied.title"><![CDATA[Access denied.]]></item>
+		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Error Message]]></item>
 		<item name="wcf.global.success"><![CDATA[The action has been successfully completed.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[The entry has been saved.]]></item>
@@ -974,5 +993,6 @@
 		<item name="wcf.user.option.error.tooLong"><![CDATA[Entered text is too long.]]></item>
 		<item name="wcf.user.option.error.tooShort"><![CDATA[Entered text is too short.]]></item>
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[Entered text is invalid.]]></item>
+		<item name="wcf.user.error.isBanned"><![CDATA[Your user account has been banned{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
 	</category>
 </language>

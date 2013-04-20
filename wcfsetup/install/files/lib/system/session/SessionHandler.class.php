@@ -2,6 +2,7 @@
 namespace wcf\system\session;
 use wcf\data\user\User;
 use wcf\page\ITrackablePage;
+use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\RequestHandler;
@@ -185,7 +186,7 @@ class SessionHandler extends SingletonFactory {
 	 * Defines global wcf constants related to session.
 	 */
 	protected function defineConstants() {
-		if ($this->useCookies) {
+		if ($this->useCookies || $this->session->spiderID) {
 			if (!defined('SID_ARG_1ST')) define('SID_ARG_1ST', '');
 			if (!defined('SID_ARG_2ND')) define('SID_ARG_2ND', '');
 			if (!defined('SID_ARG_2ND_NOT_ENCODED')) define('SID_ARG_2ND_NOT_ENCODED', '');
@@ -327,6 +328,20 @@ class SessionHandler extends SingletonFactory {
 	 * Creates a new session.
 	 */
 	protected function create() {
+		$spiderID = null;
+		if ($this->sessionEditorClassName == 'wcf\data\session\SessionEditor') {
+			// get spider information
+			$spiderID = $this->getSpiderID(UserUtil::getUserAgent());
+			if ($spiderID !== null) {
+				// try to use existing session
+				if (($session = $this->getExistingSpiderSession($spiderID)) !== null) {
+					$this->user = new User(null);
+					$this->session = $session;
+					return;
+				}
+			}
+		}
+		
 		// create new session hash
 		$sessionID = StringUtil::getRandomID();
 		
@@ -347,7 +362,7 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		// save session
-		$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), array(
+		$sessionData = array(
 			'sessionID' => $sessionID,
 			'userID' => $this->user->userID,
 			'ipAddress' => UserUtil::getIpAddress(),
@@ -355,7 +370,9 @@ class SessionHandler extends SingletonFactory {
 			'lastActivityTime' => TIME_NOW,
 			'requestURI' => UserUtil::getRequestURI(),
 			'requestMethod' => (!empty($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '')
-		));
+		);
+		if ($spiderID !== null) $sessionData['spiderID'] = $spiderID;
+		$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), $sessionData);
 	}
 	
 	/**
@@ -609,5 +626,50 @@ class SessionHandler extends SingletonFactory {
 			UserStorageHandler::getInstance()->resetAll('groupIDs', 1);
 			UserStorageHandler::getInstance()->resetAll('languageIDs', 1);
 		}
+	}
+	
+	/**
+	 * Returns the spider id for given user agent.
+	 *
+	 * @param 	string		$userAgent
+	 * @return	mixed
+	 */
+	protected function getSpiderID($userAgent) {
+		$spiderList = SpiderCacheBuilder::getInstance()->getData();
+		$userAgent = strtolower($userAgent);
+		
+		foreach ($spiderList as $spider) {
+			if (strpos($userAgent, $spider->spiderIdentifier) !== false) {
+				return $spider->spiderID;
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Searches for existing session of a search spider.
+	 *
+	 * @param 	integer		$spiderID
+	 * @return	wcf\data\session\Session
+	 */
+	protected function getExistingSpiderSession($spiderID) {
+		$sql = "SELECT 	*
+			FROM 	wcf".WCF_N."_session
+			WHERE 	spiderID = ?
+				AND userID IS NULL";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($spiderID));
+		$row = $statement->fetchArray();
+		if ($row !== false) {
+			// fix session validation
+			$row['ipAddress'] = UserUtil::getIpAddress();
+			$row['userAgent'] = UserUtil::getUserAgent();
+				
+			// return session object
+			return new $this->sessionClassName(null, $row);
+		}
+		
+		return null;
 	}
 }

@@ -59,7 +59,7 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 	/**
 	 * @see	wcf\data\DatabaseObject::__construct()
 	 */
-	public function __construct($id, $row = null, User $object = null) {
+	public function __construct($id, $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {
 			$sql = "SELECT		user_option_value.*, user_table.*
 				FROM		wcf".WCF_N."_user user_table

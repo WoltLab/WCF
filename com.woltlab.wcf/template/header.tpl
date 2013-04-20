@@ -1,9 +1,9 @@
 <a id="top"></a>
 
-<header id="pageHeader" class="layoutFluid">
+<header id="pageHeader" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}">
 	<div>
 		<nav id="topMenu" class="userPanel">
-			<div class="layoutFluid clearfix">
+			<div class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if} clearfix">
 				{hascontent}
 					<ul class="userPanelItems">
 						{content}{event name='topMenu'}{/content}
@@ -16,7 +16,9 @@
 		
 		<div id="logo" class="logo">
 			<a href="{link}{/link}">
-				<img src="{@$__wcf->getPath('wbb')}images/wbbLogo2.svg" alt="" style="height: 90px; width: 246px;" />
+				{if $__wcf->getStyleHandler()->getStyle()->getPageLogo()}
+					<img src="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}" alt="" />
+				{/if}
 				{event name='headerLogo'}
 			</a>
 		</div>
@@ -38,7 +40,7 @@
 	</div>
 </header>
 
-<div id="main" class="layoutFluid{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst} clearfix{if $sidebarOrientation == 'right' && $sidebarCollapsed} sidebarCollapsed{/if}{/if}">
+<div id="main" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst} clearfix{if $sidebarOrientation == 'right' && $sidebarCollapsed} sidebarCollapsed{/if}{/if}">
 	<div>
 		{if $sidebar|isset}
 			<aside class="sidebar"{if $sidebarOrientation|isset && $sidebarOrientation == 'right'} data-is-open="{if $sidebarCollapsed}false{else}true{/if}" data-sidebar-name="{$sidebarName}"{/if}>

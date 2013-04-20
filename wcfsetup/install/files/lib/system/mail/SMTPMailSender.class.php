@@ -14,17 +14,35 @@ use wcf\system\io\RemoteFile;
  * @category	Community Framework
  */
 class SMTPMailSender extends MailSender {
-	// todo: comment properties
+	/**
+	 * smtp connection
+	 * @var wcf\system\io\RemoteFile
+	 */
 	protected $connection = null;
+	
+	/**
+	 * last received status code
+	 * @var string
+	 */
 	protected $statusCode = '';
+	
+	/**
+	 * last received status message
+	 * @var string
+	 */
 	protected $statusMsg = '';
-	protected $recipients;
+	
+	/**
+	 * mail recipients
+	 * @var array
+	 */
+	protected $recipients = array();
 	
 	/**
 	 * Creates a new SMTPMailSender object.
 	 */
 	public function __construct() {
-		Mail::$crlf = "\r\n";
+		Mail::$lineEnding = "\r\n";
 	}
 	
 	/**
@@ -148,10 +166,10 @@ class SMTPMailSender extends MailSender {
 		}
 		
 		$header =
-			"Date: ".gmdate('r').Mail::$crlf
-			."To: ".$mail->getToString().Mail::$crlf
-			."Message-ID: <".md5(uniqid())."@".$_SERVER['SERVER_NAME'].">".Mail::$crlf
-			."Subject: ".Mail::encodeMIMEHeader($mail->getSubject()).Mail::$crlf
+			"Date: ".gmdate('r').Mail::$lineEnding
+			."To: ".$mail->getToString().Mail::$lineEnding
+			."Message-ID: <".md5(uniqid())."@".$_SERVER['SERVER_NAME'].">".Mail::$lineEnding
+			."Subject: ".Mail::encodeMIMEHeader($mail->getSubject()).Mail::$lineEnding
 			.$mail->getHeader();
 		
 		$this->write($header);
@@ -210,6 +228,6 @@ class SMTPMailSender extends MailSender {
 	 * @param	string		$data
 	 */
 	protected function write($data) {
-		$this->connection->puts($data.Mail::$crlf);
+		$this->connection->puts($data.Mail::$lineEnding);
 	}
 }

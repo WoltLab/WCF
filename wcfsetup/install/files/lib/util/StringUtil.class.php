@@ -107,6 +107,21 @@ final class StringUtil {
 	}
 	
 	/**
+	 * Encodes JSON strings. This is not the same as PHP's json_encode()!
+	 * 
+	 * @param	string		$string
+	 * @return	string
+	 */
+	public static function encodeJSON($string) {
+		$string = self::encodeJS($string);
+		
+		// single quotes must be encoded as HTML entity
+		$string = self::replace("\'", "&#39;", $string);
+		
+		return $string;
+	}
+	
+	/**
 	 * Decodes html entities.
 	 * 
 	 * @param	string		$string
@@ -644,9 +659,10 @@ final class StringUtil {
 	 *  
 	 * @param	string		$url
 	 * @param	string		$title
+	 * @param	boolean		$encodeTitle
 	 * @return	string		anchor tag
 	 */
-	public static function getAnchorTag($url, $title = '') {
+	public static function getAnchorTag($url, $title = '', $encodeTitle = true) {
 		$external = true;
 		if (ApplicationHandler::getInstance()->isInternalURL($url)) {
 			$external = false;
@@ -660,9 +676,11 @@ final class StringUtil {
 			if (self::length($title) > 60) {
 				$title = self::substring($title, 0, 30) . self::HELLIP . self::substring($title, -25);
 			}
+			
+			if (!$encodeTitle) $title = self::encodeHTML($title);
 		}
 		
-		return '<a href="'.self::encodeHTML($url).'"'.($external ? (' class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '')) : '').'>'.self::encodeHTML($title).'</a>';
+		return '<a href="'.self::encodeHTML($url).'"'.($external ? (' class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '')) : '').'>'.($encodeTitle ? self::encodeHTML($title) : $title).'</a>';
 	}
 	
 	/**
@@ -675,6 +693,38 @@ final class StringUtil {
 	 */
 	public static function splitIntoChunks($string, $length = 75, $break = "\r\n") {
 		return mb_ereg_replace('.{'.$length.'}', "\\0".$break, $string);
+	}
+	
+	/**
+	 * Simple multi-byte safe wordwrap() function.
+	 * 
+	 * @param 	string		$string
+	 * @param	integer		$width
+	 * @param	string		$break
+	 * @return	string
+	 */
+	public static function wordwrap($string, $width = 50, $break = ' ') {
+		$result = '';
+		$substrings = explode($break, $string);
+		
+		foreach ($substrings as $substring) {
+			$length = self::length($substring);
+			if ($length > $width) {
+				$j = ceil($length / $width);
+				
+				for ($i = 0; $i < $j; $i++) {
+					if (!empty($result)) $result .= $break;
+					if ($width * ($i + 1) > $length) $result .= self::substring($substring, $width * $i);
+					else $result .= self::substring($substring, $width * $i, $width);
+				}
+			}
+			else {
+				if (!empty($result)) $result .= $break;
+				$result .= $substring;
+			}
+		}
+		
+		return $result;
 	}
 	
 	private function __construct() { }

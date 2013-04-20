@@ -20,7 +20,7 @@ fieldset {
 	}
 	
 	> dl:not(:first-of-type) {
-		margin-top: @wcfGapSmall;
+		margin-top: @wcfGapSmall+@wcfGapTiny;
 	}
 	
 	&:not(:first-of-type) {
@@ -35,7 +35,7 @@ dl:not(.plain) {
 	.clearfix();
 	
 	> dd:not(:first-of-type), > dt:not(:first-of-type) {
-		margin-top: @wcfGapSmall;
+		margin-top: @wcfGapSmall+@wcfGapTiny;
 	}
 	
 	> dt {
@@ -69,7 +69,7 @@ dl:not(.plain) {
 		> small:not(.innerError) {
 			color: @wcfDimmedColor;
 			display: block;
-			margin-top: 2px;
+			margin-top: 3px;
 		}
 		
 		> label {
@@ -84,6 +84,7 @@ dl:not(.plain) {
 		> input[type='checkbox'], > input[type='radio'] {
 			~ small {
 				margin-left: 21px;
+				margin-top: 2px;
 			}
 		}
 		
@@ -126,7 +127,7 @@ dl:not(.plain) {
 	}
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	dl:not(.plain) {
 		> dt {
 			float: none;
@@ -202,14 +203,14 @@ select[multiple] {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
-	padding: 5px 3px;
+	padding: 4px 3px;
 	margin: 0;
 }
 
 select {
 	margin: 0;
 	min-width: 1px;
-	padding: 1px 1px 1px 3px;
+	padding: 3px;
 }
 
 /* normal state */
@@ -356,7 +357,7 @@ textarea {
 	width: 100%;
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 800px) {
 	textarea {
 		max-height: 160px;
 	}
@@ -368,16 +369,25 @@ textarea {
 
 /* upload button */
 .uploadButton {
-	margin-top: @wcfGapSmall;
+	cursor: pointer;
+	display: inline-block;
 	overflow: hidden;
 	position: relative;
 	
 	input {
-		left: 0;
+		cursor: pointer;
+		right: 0;
 		opacity: 0;
+		padding: 4px 0;
 		position: absolute;
 		top: 0;
+		position: absolute;
 	}
+}
+
+.uploadButton,
+.uploadFallbackButton {
+	margin-top: @wcfGapSmall;
 }
 
 /* todo: element list with checkboxes */

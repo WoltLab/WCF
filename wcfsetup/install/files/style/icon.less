@@ -29,12 +29,12 @@
 }
 
 // firefox cursor issue
-span.icon:not(.pointer) {
+span.icon:not(.pointer):not(.disabled) {
 	cursor: default;
 }
 
 a > span.icon:not(.pointer) {
-	cursor: pointer;
+	cursor: pointer !important;
 }
 
 // icon sizes

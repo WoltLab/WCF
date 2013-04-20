@@ -313,7 +313,7 @@ CREATE TABLE wcf1_option_category (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
-	UNIQUE KEY categoryName (categoryName, packageID)
+	UNIQUE KEY categoryName (categoryName)
 );
 
 DROP TABLE IF EXISTS wcf1_package;
@@ -521,7 +521,7 @@ CREATE TABLE wcf1_session (
 	objectType VARCHAR(255) NOT NULL DEFAULT '',
 	objectID INT(10) NOT NULL DEFAULT 0,
 	sessionVariables MEDIUMTEXT,
-	spiderID INT(10) NOT NULL DEFAULT 0,
+	spiderID INT(10),
 	KEY packageID (lastActivityTime, spiderID)
 );
 
@@ -620,6 +620,8 @@ CREATE TABLE wcf1_user (
 	languageID INT(10) NOT NULL DEFAULT 0,
 	registrationDate INT(10) NOT NULL DEFAULT 0,
 	styleID INT(10) NOT NULL DEFAULT 0,
+	banned TINYINT(1) NOT NULL DEFAULT 0,
+	banReason MEDIUMTEXT NULL,
 	
 	KEY username (username),
 	KEY registrationDate (registrationDate),
@@ -668,7 +670,7 @@ CREATE TABLE wcf1_user_group_option_category (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
-	UNIQUE KEY categoryName (categoryName, packageID)
+	UNIQUE KEY categoryName (categoryName)
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_option_value;
@@ -714,7 +716,7 @@ CREATE TABLE wcf1_user_option_category (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
-	UNIQUE KEY categoryName (categoryName, packageID)
+	UNIQUE KEY categoryName (categoryName)
 );
 
 DROP TABLE IF EXISTS wcf1_user_option_value;
@@ -839,6 +841,7 @@ ALTER TABLE wcf1_page_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_pack
 ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_session ADD FOREIGN KEY (spiderID) REFERENCES wcf1_spider (spiderID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_sitemap ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
@@ -992,7 +995,5 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisable
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledColor', 'rgba(0, 153, 0, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoHeight', 'auto');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogoWidth', 'auto');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideLess', '');

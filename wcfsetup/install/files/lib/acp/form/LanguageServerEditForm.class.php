@@ -25,7 +25,7 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.language.canAddServer');
+	public $neededPermissions = array('admin.language.canManageServer');
 	
 	/**
 	 * language server id

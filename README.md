@@ -1,15 +1,15 @@
 WoltLab Community Framework 2.0
 ===============================
 
-WoltLab Community Framework is a free web-framework, designed and developed for complex community applications. The framework uses the latest and most modern technologies, is structured completly object-oriented, constantly enhanced and the base for all WoltLab products.
+WoltLab Community Framework is a free web-framework, designed and developed for complex community applications. The framework applies the latest and most modern technologies, it is structured completly object-oriented, constantly enhanced and forms the base for all WoltLab products.
 
 Version notes
 -------------
 
-The currently available source code represents an early alpha-version of WCF, even though it may be installable, we cannot guarantee a working installation at any time. You MUST NOT install and/or use WCF 2.0 in a production environment.
+The currently available source code represents an early alpha-version of WCF, even though it may be installable, we cannot guarantee a working installation at any time. You MUST NOT install and/or use WCF 2.0 in a productive environment.
 
 **COMPLETE FEATURE FREEZE**
-New pull requests or suggestions will be denied (or delayed until WCF 2.1); API changes are no longer allowed unless they solve an already existing issue.
+New pull requests or suggestions will be declined (or delayed until WCF 2.1); API changes are no longer allowed, unless they solve an already existing issue.
 This applies to all packages belonging to Community Framework.
 
 Contribution
