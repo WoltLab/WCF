@@ -2554,7 +2554,7 @@ WCF.Language = {
 	 */
 	get: function(key, parameters) {
 		// initialize parameters with an empty object
-		if (typeof parameters === 'undefined') var parameters = {};
+		if (parameters == null) var parameters = { };
 		
 		var value = this._variables.get(key);
 		
@@ -2563,7 +2563,7 @@ WCF.Language = {
 			this.add(key, new WCF.Template(value));
 			return this.get(key, parameters);
 		}
-		else if (value !== null && typeof value === 'object' && typeof value.fetch !== 'undefined') {
+		else if (typeof value.fetch === 'function') {
 			// evaluate templates
 			value = value.fetch(parameters);
 		}
@@ -2923,41 +2923,7 @@ WCF.String = {
 	 * @return	string
 	 */
 	addThousandsSeparator: function(number) {
-		var $numberString = String(number);
-		var parts = $numberString.split(/[^0-9]+/);
-		
-		var $decimalPoint = $numberString.match(/[^0-9]+/);
-		
-		$numberString = parts[0];
-		var $decimalPart = '';
-		if ($decimalPoint !== null) {
-			delete parts[0];
-			var $decimalPart = $decimalPoint.join('')+parts.join('');
-		}
-		if (parseInt(number) >= 1000 || parseInt(number) <= -1000) {
-			var $negative = false;
-			if (parseInt(number) <= -1000) {
-				$negative = true;
-				$numberString = $numberString.substring(1);
-			}
-			var $separator = WCF.Language.get('wcf.global.thousandsSeparator');
-			
-			if ($separator != null && $separator != '') {
-				var $numElements = new Array();
-				var $firstPart = $numberString.length % 3;
-				if ($firstPart == 0) $firstPart = 3;
-				for (var $i = 0; $i < Math.ceil($numberString.length / 3); $i++) {
-					if ($i == 0) $numElements.push($numberString.substring(0, $firstPart));
-					else {
-						var $start = (($i - 1) * 3) + $firstPart;
-						$numElements.push($numberString.substring($start, $start + 3));
-					}
-				}
-				$numberString = (($negative) ? ('-') : ('')) + $numElements.join($separator);
-			}
-		}
-		
-		return $numberString + $decimalPart;
+		return String(number).replace(/(^-?\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, '$1' + WCF.Language.get('wcf.global.thousandsSeparator'));
 	},
 	
 	/**
@@ -3234,144 +3200,171 @@ WCF.TabMenu = {
  */
 WCF.Template = Class.extend({
 	/**
-	 * template content
-	 * @var	string
-	 */
-	_template: '',
-	
-	/**
-	 * saved literal tags
-	 * @var	WCF.Dictionary
-	 */
-	_literals: new WCF.Dictionary(),
-	
-	/**
 	 * Prepares template
 	 * 
 	 * @param	$template		template-content
 	 */
-	init: function($template) {
-		this._template = $template;
+	init: function(template) {
+		var $literals = new WCF.Dictionary();
+		var $tagID = 0;
+		
+		// escape \ and ',
+		template = template.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 		
 		// save literal-tags
-		this._template = this._template.replace(/\{literal\}(.*?)\{\/literal\}/g, $.proxy(function ($match) {
+		template = template.replace(/\{literal\}(.*?)\{\/literal\}/g, $.proxy(function (match) {
 			// hopefully no one uses this string in one of his templates
 			var id = '@@@@@@@@@@@'+Math.random()+'@@@@@@@@@@@';
-			this._literals.add(id, $match.replace(/\{\/?literal\}/g, ''));
+			$literals.add(id, match.replace(/\{\/?literal\}/g, ''));
 			
 			return id;
 		}, this));
-	},
-	
-	/**
-	 * Fetches the template with the given variables
-	 *
-	 * @param	$variables	variables to insert
-	 * @return			parsed template
-	 */
-	fetch: function($variables) {
-		var $result = this._template;
 		
-		// insert them :)
-		for (var $key in $variables) {
-			$result = $result.replace(new RegExp(WCF.String.escapeRegExp('{$'+$key+'}'), 'g'), WCF.String.escapeHTML(new String($variables[$key])));
-			$result = $result.replace(new RegExp(WCF.String.escapeRegExp('{#$'+$key+'}'), 'g'), WCF.String.formatNumeric($variables[$key]));
-			$result = $result.replace(new RegExp(WCF.String.escapeRegExp('{@$'+$key+'}'), 'g'), $variables[$key]);
+		var parseParameterList = function (parameterString) {
+			var $chars = parameterString.split('');
+			var $parameters = { };
+			var $inName = true;
+			var $name = '';
+			var $value = '';
+			var $quoted = false;
+			var $escaped = false;
+			for (var $i = 0, $max = $chars.length; $i < $max; $i++) {
+				var $char = $chars[$i];
+				if ($inName && $char != '=' && $char != ' ') $name += $char
+				else if ($inName && $char == '=') {
+					$inName = false;
+					$quoted = false;
+					$escaped = false;
+				}
+				else if (!$inName && !$quoted && $char == ' ') {
+					$inName = true;
+					$parameters[$name] = $value;
+					$value = $name = '';
+				}
+				else if (!$inName && $quoted && !$escaped && $char == "'") {
+					$quoted = false;
+					$value += $char;
+				}
+				else if (!$inName && !$quoted && $char == "'") {
+					$quoted = true;
+					$value += $char;
+				}
+				else if (!$inName && $quoted && !$escaped && $char == '\\') {
+					$escaped = true;
+					$value += $char;
+				}
+				else if (!$inName) {
+					$escaped = false;
+					$value += $char;
+				}
+			}
+			$parameters[$name] = $value;
+			
+			if ($quoted || $escaped) throw new Error('Syntax error in parameterList: "' + parameterString + '"');
+			
+			return $parameters;
+		};
+		
+		// parse our variable-tags
+		template = template.replace(/\{(\$[^\s]+?)\}/g, function (_, content) {
+			// unescape \ and '
+			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			
+			return "' + WCF.String.escapeHTML(" + content + ") + '";
+		}).replace(/\{#(\$[^\s]+?)\}/g, function (_, content) {
+			// unescape \ and '
+			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			
+			return "' + WCF.String.formatNumeric(" + content + ") + '";
+		}).replace(/\{@(\$[^\s]+?)\}/g, function (_, content) {
+			// unescape \ and '
+			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			
+			return "' + " + content + " + '";
+		}).replace(/\{if (.+?)\}/g, function (_, content) {
+			// unescape \ and '
+			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			
+			return "'; if (" + content + ") { $output += '";
+		})
+		.replace(/\{else ?if (.+?)\}/g, function (_, content) {
+			// unescape \ and '
+			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			
+			return "'; } else if (" + content + ") { $output += '";
+		})
+		.replace(/\{implode (.+?)\}/g, function (_, content) {
+			$tagID++;
+			
+			content = content.replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			var $parameters = parseParameterList(content);
+			
+			if (typeof $parameters['from'] === 'undefined') throw new Error('Missing from attribute in implode-tag');
+			if (typeof $parameters['item'] === 'undefined') throw new Error('Missing item attribute in implode-tag');
+			if (typeof $parameters['glue'] === 'undefined') $parameters['glue'] = "', '";
+			$parameters['from'] = $parameters['from'].replace(/\$([^\s]+)/g, "(v.$1)");
+			
+			return "'; var $implode_" + $tagID + " = false; for ($implodeKey_" + $tagID + " in " + $parameters['from'] + ") { v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$implodeKey_" + $tagID + "]; if ($implode_" + $tagID + ") $output += " + $parameters['glue'] + "; $implode_" + $tagID + " = true; $output += '";
+		})
+		.replace(/\{foreach (.+?)\}/g, function (_, content) {
+			$tagID++;
+			
+			content = content.replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			var $parameters = parseParameterList(content);
+			
+			if (typeof $parameters['from'] === 'undefined') throw new Error('Missing from attribute in foreach-tag');
+			if (typeof $parameters['item'] === 'undefined') throw new Error('Missing item attribute in foreach-tag');
+			$parameters['from'] = $parameters['from'].replace(/\$([^\s]+)/g, "(v.$1)");
+			
+			if (typeof $parameters['key'] === 'undefined') {
+				return "'; $foreach_"+$tagID+" = false; for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") { $foreach_"+$tagID+" = true; break; } if ($foreach_"+$tagID+") { for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") { v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$foreachKey_" + $tagID + "]; $output += '";
+			}
+			else {
+				return "'; $foreach_"+$tagID+" = false; for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") { $foreach_"+$tagID+" = true; break; } if ($foreach_"+$tagID+") { for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") { v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$foreachKey_" + $tagID + "]; v[" + $parameters['key'] + "] = $foreachKey_" + $tagID + "; $output += '";
+			}
+			
+		})
+		.replace(/\{foreachelse\}/g, "'; } } else { { $output += '")
+		.replace(/\{\/foreach\}/g, "'; } } $output += '")
+		.replace(/\{else\}/g, "'; } else { $output += '")
+		.replace(/\{\/(if|implode)\}/g, "'; } $output += '");
+		
+		for (var key in WCF.Template.callbacks) {
+			template = WCF.Template.callbacks[key](template);
 		}
 		
 		// insert delimiter tags
-		$result = $result.replace('{ldelim}', '{').replace('{rdelim}', '}');
-		
-		// and re-insert saved literals
-		return this.insertLiterals($result);
-	},
-	
-	/**
-	 * Inserts literals into given string
-	 * 
-	 * @param	$template	string to insert into
-	 * @return			string with inserted literals
-	 */
-	insertLiterals: function ($template) {
-		this._literals.each(function ($pair) {
-			$template = $template.replace($pair.key, $pair.value);
-		});
-		
-		return $template;
-	},
-	
-	/**
-	 * Compiles this template into javascript-code
-	 * 
-	 * @return	WCF.Template.Compiled
-	 */
-	compile: function () {
-		var $compiled = this._template;
-		
-		// escape \ and '
-		$compiled = $compiled.replace('\\', '\\\\').replace("'", "\\'");
-		
-		// parse our variable-tags
-		$compiled = $compiled.replace(/\{\$(.*?)\}/g, function ($match) {
-			var $name = '$v.' + $match.substring(2, $match.length - 1);
-			// trinary operator to maintain compatibility with uncompiled template
-			// ($name) ? $name : '$match'
-			// -> $v.muh ? $v.muh : '{$muh}'
-			return "' + WCF.String.escapeHTML("+ $name + " ? " + $name + " : '" + $match + "') + '";
-		}).replace(/\{#\$(.*?)\}/g, function ($match) {
-			var $name = '$v.' + $match.substring(3, $match.length - 1);
-			// trinary operator to maintain compatibility with uncompiled template
-			// ($name) ? $name : '$match'
-			// -> $v.muh ? $v.muh : '{$muh}'
-			return "' + WCF.String.formatNumeric("+ $name + " ? " + $name + " : '" + $match + "') + '";
-		}).replace(/\{@\$(.*?)\}/g, function ($match) {
-			var $name = '$v.' + $match.substring(3, $match.length - 1);
-			// trinary operator to maintain compatibility with uncompiled template
-			// ($name) ? $name : '$match'
-			// -> $v.muh ? $v.muh : '{$muh}'
-			return "' + ("+ $name + " ? " + $name + " : '" + $match + "') + '";
-		});
-		
-		// insert delimiter tags
-		$compiled = $compiled.replace('{ldelim}', '{').replace('{rdelim}', '}');
+		template = template.replace('{ldelim}', '{').replace('{rdelim}', '}');
 		
 		// escape newlines
-		$compiled = $compiled.replace(/(\r\n|\n|\r)/g, '\\n');
+		template = template.replace(/(\r\n|\n|\r)/g, '\\n');
 		
-		// and re-insert saved literals
-		return new WCF.Template.Compiled("'" + this.insertLiterals($compiled) + "';");
+		$literals.each(function (pair) {
+			template = template.replace(pair.key, pair.value);
+		});
+		
+		template = "$output += '" + template + "';";
+		
+		this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
+	},
+	
+	/**
+	 * Fetches the template with the given variables.
+	 *
+	 * @param	v	variables to insert
+	 * @return		parsed template
+	 */
+	fetch: function(v) {
+		// this will be replaced in the init function
 	}
 });
 
 /**
- * Represents a compiled template
+ * Array of callbacks that will be called after parsing the included tags. Only applies to Templates compiled after the callback was added.
  * 
- * @param	compiled		compiled template
+ * @var	array<Function>
  */
-WCF.Template.Compiled = Class.extend({
-	/**
-	 * Compiled template
-	 * 
-	 * @var	string
-	 */
-	_compiled: '',
-	
-	/**
-	 * Initializes our compiled template
-	 * 
-	 * @param	$compiled	compiled template
-	 */
-	init: function($compiled) {
-		this._compiled = $compiled;
-	},
-	
-	/**
-	 * @see	WCF.Template.fetch
-	 */
-	fetch: function($v) {
-		return eval(this._compiled);
-	}
-});
+WCF.Template.callbacks = [ ];
 
 /**
  * Toggles options.
