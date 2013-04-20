@@ -2554,7 +2554,7 @@ WCF.Language = {
 	 */
 	get: function(key, parameters) {
 		// initialize parameters with an empty object
-		if (typeof parameters === 'undefined') var parameters = {};
+		if (parameters == null) var parameters = { };
 		
 		var value = this._variables.get(key);
 		
@@ -2563,7 +2563,7 @@ WCF.Language = {
 			this.add(key, new WCF.Template(value));
 			return this.get(key, parameters);
 		}
-		else if (value !== null && typeof value === 'object' && typeof value.fetch !== 'undefined') {
+		else if (typeof value.fetch === 'function') {
 			// evaluate templates
 			value = value.fetch(parameters);
 		}
@@ -3206,7 +3206,7 @@ WCF.Template = Class.extend({
 	 */
 	init: function(template) {
 		var $literals = new WCF.Dictionary();
-		var $implodeID = 0;
+		var $tagID = 0;
 		
 		// escape \ and ',
 		template = template.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
@@ -3265,8 +3265,6 @@ WCF.Template = Class.extend({
 			return $parameters;
 		};
 		
-		var self = this;
-		
 		// parse our variable-tags
 		template = template.replace(/\{(\$[^\s]+?)\}/g, function (_, content) {
 			// unescape \ and '
@@ -3296,7 +3294,7 @@ WCF.Template = Class.extend({
 			return "'; } else if (" + content + ") { $output += '";
 		})
 		.replace(/\{implode (.+?)\}/g, function (_, content) {
-			$implodeID++;
+			$tagID++;
 			
 			content = content.replace(/\\\\/g, '\\').replace(/\\'/g, "'");
 			var $parameters = parseParameterList(content);
@@ -3306,8 +3304,28 @@ WCF.Template = Class.extend({
 			if (typeof $parameters['glue'] === 'undefined') $parameters['glue'] = "', '";
 			$parameters['from'] = $parameters['from'].replace(/\$([^\s]+)/g, "(v.$1)");
 			
-			return "'; var $implode_" + $implodeID + " = false; for ($implodeKey_" + $implodeID + " in " + $parameters['from'] + ") { v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$implodeKey_" + $implodeID + "]; if ($implode_" + $implodeID + ") $output += " + $parameters['glue'] + "; $implode_" + $implodeID + " = true; $output += '";
+			return "'; var $implode_" + $tagID + " = false; for ($implodeKey_" + $tagID + " in " + $parameters['from'] + ") { v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$implodeKey_" + $tagID + "]; if ($implode_" + $tagID + ") $output += " + $parameters['glue'] + "; $implode_" + $tagID + " = true; $output += '";
 		})
+		.replace(/\{foreach (.+?)\}/g, function (_, content) {
+			$tagID++;
+			
+			content = content.replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			var $parameters = parseParameterList(content);
+			
+			if (typeof $parameters['from'] === 'undefined') throw new Error('Missing from attribute in foreach-tag');
+			if (typeof $parameters['item'] === 'undefined') throw new Error('Missing item attribute in foreach-tag');
+			$parameters['from'] = $parameters['from'].replace(/\$([^\s]+)/g, "(v.$1)");
+			
+			if (typeof $parameters['key'] === 'undefined') {
+				return "'; $foreach_"+$tagID+" = false; for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") { $foreach_"+$tagID+" = true; break; } if ($foreach_"+$tagID+") { for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") { v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$foreachKey_" + $tagID + "]; $output += '";
+			}
+			else {
+				return "'; $foreach_"+$tagID+" = false; for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") { $foreach_"+$tagID+" = true; break; } if ($foreach_"+$tagID+") { for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") { v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$foreachKey_" + $tagID + "]; v[" + $parameters['key'] + "] = $foreachKey_" + $tagID + "; $output += '";
+			}
+			
+		})
+		.replace(/\{foreachelse\}/g, "'; } } else { { $output += '")
+		.replace(/\{\/foreach\}/g, "'; } } $output += '")
 		.replace(/\{else\}/g, "'; } else { $output += '")
 		.replace(/\{\/(if|implode)\}/g, "'; } $output += '");
 		
