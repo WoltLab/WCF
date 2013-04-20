@@ -93,9 +93,9 @@
 			<tbody>
 				{foreach from=$requiredPackages item=$package}
 					<tr>
-						<td class="columnTitle"><p><span class="badge label {if $package.status == 'installed'}green{elseif $package.status == 'delivered'}yellow{else}red{/if}">{@$package.name}</span></p></td>
-						<td class="columnText"><p>{lang}wcf.acp.package.installation.packageStatus.{@$package.status}{/lang}</p></td>
-						<td class="columnDigits"><p>{if $package.minversion|isset}{if $package.status == 'missingVersion'}<span class="badge label red">{/if}{$package.minversion}{if $package.status == 'missingVersion'}</span>{/if}{/if}</p></td>
+						<td class="columnTitle"><span class="badge label {if $package.status == 'installed'}green{elseif $package.status == 'delivered'}yellow{else}red{/if}">{@$package.name}</span></td>
+						<td class="columnText">{lang}wcf.acp.package.installation.packageStatus.{@$package.status}{/lang}</td>
+						<td class="columnDigits">{if $package.minversion|isset}{if $package.status == 'missingVersion'}<span class="badge label red">{/if}{$package.minversion}{if $package.status == 'missingVersion'}</span>{/if}{/if}</td>
 						
 						{event name='columns'}
 					</tr>

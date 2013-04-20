@@ -44,13 +44,13 @@
 			<tbody>
 				{foreach from=$objects item=sessionLog}
 					<tr class="{if $sessionLog->active} activeContainer{/if}">
-						<td class="columnID columnSessionLogID"><p>{@$sessionLog->sessionLogID}</p></td>
-						<td class="columnTitle columnUsername"><p><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->username}</a></p></td>
-						<td class="columnSmallText columnIpAddress"><p><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->getIpAddress()}</a>{if $sessionLog->hostname != $sessionLog->ipAddress}<br /><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->hostname}</a>{/if}</p></td>
-						<td class="columnSmallText columnUserAgent" title="{$sessionLog->userAgent}"><p><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->userAgent|truncate:75}</a></p></td>
-						<td class="columnDate columnTime"><p>{@$sessionLog->time|time}</p></td>
-						<td class="columnDate columnLastActivityTime"><p>{@$sessionLog->lastActivityTime|time}</p></td>
-						<td class="columnDigits columnAccesses"><p>{#$sessionLog->accesses}</p></td>
+						<td class="columnID columnSessionLogID">{@$sessionLog->sessionLogID}</td>
+						<td class="columnTitle columnUsername"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->username}</a></td>
+						<td class="columnSmallText columnIpAddress"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->getIpAddress()}</a>{if $sessionLog->hostname != $sessionLog->ipAddress}<br /><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->hostname}</a>{/if}</td>
+						<td class="columnSmallText columnUserAgent" title="{$sessionLog->userAgent}"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->userAgent|truncate:75}</a></td>
+						<td class="columnDate columnTime">{@$sessionLog->time|time}</td>
+						<td class="columnDate columnLastActivityTime">{@$sessionLog->lastActivityTime|time}</td>
+						<td class="columnDigits columnAccesses">{#$sessionLog->accesses}</td>
 						
 						{event name='columns'}
 					</tr>
