@@ -3,6 +3,7 @@ namespace wcf\data\option;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\cache\builder\OptionCacheBuilder;
+use wcf\system\cache\CacheHandler;
 use wcf\system\io\File;
 use wcf\system\WCF;
 
@@ -60,12 +61,24 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	 * @param	array		$options	id to value
 	 */
 	public static function updateAll(array $options) {
+		$sql = "SELECT	optionID, optionValue
+			FROM	wcf".WCF_N."_option
+			WHERE	optionName = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array('cache_source_type'));
+		$row = $statement->fetchArray();
+		
 		$sql = "UPDATE	wcf".WCF_N."_option
 			SET	optionValue = ?
 			WHERE	optionID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
+		$flushCache = false;
 		foreach ($options as $id => $value) {
+			if ($id == $row['optionID'] && ($value != $row['optionValue'] || $value != CACHE_SOURCE_TYPE)) {
+				$flushCache = true;
+			}
+			
 			$statement->execute(array(
 				$value,
 				$id
@@ -74,6 +87,17 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		
 		// force a cache reset if options were changed
 		self::resetCache();
+		
+		// flush entire cache, as the CacheSource was changed
+		if ($flushCache) {
+			// flush caches (in case register_shutdown_function gets not properly called)
+			CacheHandler::getInstance()->flushAll();
+			
+			// flush cache before finishing request to flush caches created after this was executed
+			register_shutdown_function(function() {
+				CacheHandler::getInstance()->flushAll();
+			});
+		}
 	}
 	
 	/**

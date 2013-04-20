@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\page;
-use wcf\data\package\Package;
 use wcf\page\AbstractPage;
 use wcf\page\MultipleLinkPage;
 use wcf\system\event\EventHandler;
@@ -79,7 +78,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 			foreach ($this->logFiles as $logFile) {
 				$contents = file_get_contents($logFile);
 				
-				if (strpos($contents, '<<<<<<<<'.$this->exceptionID.'<<<<') !== false) {
+				if (StringUtil::indexOf($contents, '<<<<<<<<'.$this->exceptionID.'<<<<') !== false) {
 					$fileNameRegex->match($logFile);
 					$matches = $fileNameRegex->getMatches();
 					$this->logFile = $matches[0];
