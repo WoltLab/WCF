@@ -3208,11 +3208,11 @@ WCF.Template = Class.extend({
 		var $literals = new WCF.Dictionary();
 		var $tagID = 0;
 		
-		// escape \ and ',
-		template = template.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+		// escape \ and ' and newlines
+		template = template.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/(\r\n|\n|\r)/g, '\\n');
 		
 		// save literal-tags
-		template = template.replace(/\{literal\}(.*?)\{\/literal\}/g, $.proxy(function (match) {
+		template = template.replace(/\{literal\}(.*?)\{\/literal\}/g, $.proxy(function(match) {
 			// hopefully no one uses this string in one of his templates
 			var id = '@@@@@@@@@@@'+Math.random()+'@@@@@@@@@@@';
 			$literals.add(id, match.replace(/\{\/?literal\}/g, ''));
@@ -3220,7 +3220,7 @@ WCF.Template = Class.extend({
 			return id;
 		}, this));
 		
-		var parseParameterList = function (parameterString) {
+		var parseParameterList = function(parameterString) {
 			var $chars = parameterString.split('');
 			var $parameters = { };
 			var $inName = true;
@@ -3228,6 +3228,7 @@ WCF.Template = Class.extend({
 			var $value = '';
 			var $quoted = false;
 			var $escaped = false;
+			
 			for (var $i = 0, $max = $chars.length; $i < $max; $i++) {
 				var $char = $chars[$i];
 				if ($inName && $char != '=' && $char != ' ') $name += $char
@@ -3265,35 +3266,46 @@ WCF.Template = Class.extend({
 			return $parameters;
 		};
 		
-		// parse our variable-tags
-		template = template.replace(/\{(\$[^\s]+?)\}/g, function (_, content) {
-			// unescape \ and '
-			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+		var unescape = function(string) {
+			return string.replace(/\\n/g, "\n").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+		};
+		
+		template = template.replace(/\{(\$[^\s]+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^\s]+)/g, "(v['$1'])"));
 			
 			return "' + WCF.String.escapeHTML(" + content + ") + '";
-		}).replace(/\{#(\$[^\s]+?)\}/g, function (_, content) {
-			// unescape \ and '
-			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+		})
+		// Numeric Variable
+		.replace(/\{#(\$[^\s]+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^\s]+)/g, "(v['$1'])"));
 			
 			return "' + WCF.String.formatNumeric(" + content + ") + '";
-		}).replace(/\{@(\$[^\s]+?)\}/g, function (_, content) {
-			// unescape \ and '
-			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+		})
+		// Variable without escaping
+		.replace(/\{@(\$[^\s]+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^\s]+)/g, "(v['$1'])"));
 			
 			return "' + " + content + " + '";
-		}).replace(/\{if (.+?)\}/g, function (_, content) {
-			// unescape \ and '
-			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
-			
-			return "'; if (" + content + ") { $output += '";
 		})
-		.replace(/\{else ?if (.+?)\}/g, function (_, content) {
-			// unescape \ and '
-			content = content.replace(/\$([^\s]+)/g, "(v['$1'])").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+		// {if}
+		.replace(/\{if (.+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^\s]+)/g, "(v['$1'])"));
 			
-			return "'; } else if (" + content + ") { $output += '";
+			return	"';\n" +
+				"if (" + content + ") {\n" +
+				"	$output += '";
 		})
-		.replace(/\{implode (.+?)\}/g, function (_, content) {
+		// {elseif}
+		.replace(/\{else ?if (.+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^\s]+)/g, "(v['$1'])"));
+			
+			return	"';\n" +
+				"}\n" +
+				"else if (" + content + ") {\n" +
+				"	$output += '";
+		})
+		// {implode}
+		.replace(/\{implode (.+?)\}/g, function(_, content) {
 			$tagID++;
 			
 			content = content.replace(/\\\\/g, '\\').replace(/\\'/g, "'");
@@ -3302,11 +3314,20 @@ WCF.Template = Class.extend({
 			if (typeof $parameters['from'] === 'undefined') throw new Error('Missing from attribute in implode-tag');
 			if (typeof $parameters['item'] === 'undefined') throw new Error('Missing item attribute in implode-tag');
 			if (typeof $parameters['glue'] === 'undefined') $parameters['glue'] = "', '";
+			
 			$parameters['from'] = $parameters['from'].replace(/\$([^\s]+)/g, "(v.$1)");
 			
-			return "'; var $implode_" + $tagID + " = false; for ($implodeKey_" + $tagID + " in " + $parameters['from'] + ") { v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$implodeKey_" + $tagID + "]; if ($implode_" + $tagID + ") $output += " + $parameters['glue'] + "; $implode_" + $tagID + " = true; $output += '";
+			return 	"';\n"+
+				"var $implode_" + $tagID + " = false;\n" +
+				"for ($implodeKey_" + $tagID + " in " + $parameters['from'] + ") {\n" +
+				"	v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$implodeKey_" + $tagID + "];\n" +
+				(typeof $parameters['key'] !== 'undefined' ? "		v[" + $parameters['key'] + "] = $implodeKey_" + $tagID + ";\n" : "") +
+				"	if ($implode_" + $tagID + ") $output += " + $parameters['glue'] + ";\n" +
+				"	$implode_" + $tagID + " = true;\n" +
+				"	$output += '";
 		})
-		.replace(/\{foreach (.+?)\}/g, function (_, content) {
+		// {foreach}
+		.replace(/\{foreach (.+?)\}/g, function(_, content) {
 			$tagID++;
 			
 			content = content.replace(/\\\\/g, '\\').replace(/\\'/g, "'");
@@ -3316,19 +3337,49 @@ WCF.Template = Class.extend({
 			if (typeof $parameters['item'] === 'undefined') throw new Error('Missing item attribute in foreach-tag');
 			$parameters['from'] = $parameters['from'].replace(/\$([^\s]+)/g, "(v.$1)");
 			
-			if (typeof $parameters['key'] === 'undefined') {
-				return "'; $foreach_"+$tagID+" = false; for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") { $foreach_"+$tagID+" = true; break; } if ($foreach_"+$tagID+") { for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") { v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$foreachKey_" + $tagID + "]; $output += '";
-			}
-			else {
-				return "'; $foreach_"+$tagID+" = false; for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") { $foreach_"+$tagID+" = true; break; } if ($foreach_"+$tagID+") { for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") { v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$foreachKey_" + $tagID + "]; v[" + $parameters['key'] + "] = $foreachKey_" + $tagID + "; $output += '";
-			}
-			
+			return	"';\n" +
+				"$foreach_"+$tagID+" = false;\n" +
+				"for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") {\n" +
+				"	$foreach_"+$tagID+" = true;\n" +
+				"	break;\n" +
+				"}\n" +
+				"if ($foreach_"+$tagID+") {\n" +
+				"	for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") {\n" +
+				"		v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$foreachKey_" + $tagID + "];\n" +
+				(typeof $parameters['key'] !== 'undefined' ? "		v[" + $parameters['key'] + "] = $foreachKey_" + $tagID + ";\n" : "") +
+				"		$output += '";
 		})
-		.replace(/\{foreachelse\}/g, "'; } } else { { $output += '")
-		.replace(/\{\/foreach\}/g, "'; } } $output += '")
-		.replace(/\{else\}/g, "'; } else { $output += '")
-		.replace(/\{\/(if|implode)\}/g, "'; } $output += '");
+		// {foreachelse}
+		.replace(/\{foreachelse\}/g, 
+			"';\n" +
+			"	}\n" +
+			"}\n" +
+			"else {\n" +
+			"	{\n" +
+			"		$output += '"
+		)
+		// {/foreach}
+		.replace(/\{\/foreach\}/g, 
+			"';\n" +
+			"	}\n" +
+			"}\n" +
+			"$output += '"
+		)
+		// {else}
+		.replace(/\{else\}/g, 
+			"';\n" +
+			"}\n" +
+			"else {\n" +
+			"	$output += '"
+		)
+		// {/if} and {/implode}
+		.replace(/\{\/(if|implode)\}/g, 
+			"';\n" +
+			"}\n" +
+			"$output += '"
+		);
 		
+		// call callback
 		for (var key in WCF.Template.callbacks) {
 			template = WCF.Template.callbacks[key](template);
 		}
@@ -3336,15 +3387,12 @@ WCF.Template = Class.extend({
 		// insert delimiter tags
 		template = template.replace('{ldelim}', '{').replace('{rdelim}', '}');
 		
-		// escape newlines
-		template = template.replace(/(\r\n|\n|\r)/g, '\\n');
-		
-		$literals.each(function (pair) {
+		$literals.each(function(pair) {
 			template = template.replace(pair.key, pair.value);
 		});
 		
 		template = "$output += '" + template + "';";
-		
+		console.debug("var $output = ''; " + template + ' return $output;');
 		this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
 	},
 	
@@ -8228,7 +8276,7 @@ $.widget('ui.wcfPages', {
 					$pageList.append(this._renderLink(2));
 				}
 				else {
-					$('<li class="button jumpTo"><a title="' + WCF.Language.get('wcf.global.page.jumpTo') + '" class="jsTooltip">…</a></li>').appendTo($pageList);
+					$('<li class="button jumpTo"><a title="' + WCF.Language.get('wcf.global.page.jumpTo') + '" class="jsTooltip">...</a></li>').appendTo($pageList);
 					$hasHiddenPages = true;
 				}
 			}
@@ -8244,7 +8292,7 @@ $.widget('ui.wcfPages', {
 					$pageList.append(this._renderLink(this.options.maxPage - 1));
 				}
 				else {
-					$('<li class="button jumpTo"><a title="' + WCF.Language.get('wcf.global.page.jumpTo') + '" class="jsTooltip">…</a></li>').appendTo($pageList);
+					$('<li class="button jumpTo"><a title="' + WCF.Language.get('wcf.global.page.jumpTo') + '" class="jsTooltip">...</a></li>').appendTo($pageList);
 					$hasHiddenPages = true;
 				}
 			}
