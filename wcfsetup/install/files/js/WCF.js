@@ -3226,7 +3226,8 @@ WCF.Template = Class.extend({
 			var $inName = true;
 			var $name = '';
 			var $value = '';
-			var $quoted = false;
+			var $doubleQuoted = false;
+			var $singleQuoted = false;
 			var $escaped = false;
 			
 			for (var $i = 0, $max = $chars.length; $i < $max; $i++) {
@@ -3234,23 +3235,32 @@ WCF.Template = Class.extend({
 				if ($inName && $char != '=' && $char != ' ') $name += $char
 				else if ($inName && $char == '=') {
 					$inName = false;
-					$quoted = false;
+					$singleQuoted = false;
+					$doubleQuoted = false;
 					$escaped = false;
 				}
-				else if (!$inName && !$quoted && $char == ' ') {
+				else if (!$inName && !$singleQuoted && !$doubleQuoted && $char == ' ') {
 					$inName = true;
 					$parameters[$name] = $value;
 					$value = $name = '';
 				}
-				else if (!$inName && $quoted && !$escaped && $char == "'") {
-					$quoted = false;
+				else if (!$inName && $singleQuoted && !$escaped && $char == "'") {
+					$singleQuoted = false;
 					$value += $char;
 				}
-				else if (!$inName && !$quoted && $char == "'") {
-					$quoted = true;
+				else if (!$inName && !$singleQuoted && !$doubleQuoted && $char == "'") {
+					$singleQuoted = true;
 					$value += $char;
 				}
-				else if (!$inName && $quoted && !$escaped && $char == '\\') {
+				else if (!$inName && $doubleQuoted && !$escaped && $char == '"') {
+					$doubleQuoted = false;
+					$value += $char;
+				}
+				else if (!$inName && !$singleQuoted && !$doubleQuoted && $char == '"') {
+					$doubleQuoted = true;
+					$value += $char;
+				}
+				else if (!$inName && ($doubleQuoted || $singleQuoted) && !$escaped && $char == '\\') {
 					$escaped = true;
 					$value += $char;
 				}
@@ -3261,7 +3271,7 @@ WCF.Template = Class.extend({
 			}
 			$parameters[$name] = $value;
 			
-			if ($quoted || $escaped) throw new Error('Syntax error in parameterList: "' + parameterString + '"');
+			if ($doubleQuoted || $singleQuoted || $escaped) throw new Error('Syntax error in parameterList: "' + parameterString + '"');
 			
 			return $parameters;
 		};
