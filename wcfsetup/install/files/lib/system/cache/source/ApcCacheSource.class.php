@@ -30,7 +30,7 @@ class ApcCacheSource implements ICacheSource {
 		}
 		
 		// set variable prefix to prevent collision
-		$this->prefix = substr(sha1(WCF_DIR), 0, 8) . '_';
+		$this->prefix = 'WCF_'.substr(sha1(WCF_DIR), 0, 10) . '_';
 	}
 	
 	/**
