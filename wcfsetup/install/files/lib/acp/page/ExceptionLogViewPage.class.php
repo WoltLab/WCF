@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\page;
-use wcf\data\package\Package;
 use wcf\page\AbstractPage;
 use wcf\page\MultipleLinkPage;
 use wcf\system\event\EventHandler;
