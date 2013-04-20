@@ -1127,12 +1127,6 @@ WCF.ACP.Options.Group = Class.extend({
  */
 WCF.ACP.Worker = Class.extend({
 	/**
-	 * true, if worker was aborted
-	 * @var	boolean
-	 */
-	_aborted: false,
-	
-	/**
 	 * dialog id
 	 * @var	string
 	 */
@@ -1165,7 +1159,6 @@ WCF.ACP.Worker = Class.extend({
 	 * @param	object		parameters
 	 */
 	init: function(dialogID, className, title, parameters) {
-		this._aborted = false;
 		this._dialogID = dialogID + 'Worker';
 		this._dialog = null;
 		this._proxy = new WCF.Action.Proxy({
@@ -1187,15 +1180,13 @@ WCF.ACP.Worker = Class.extend({
 	 * @param	object		data
 	 */
 	_success: function(data) {
-		if (this._aborted) {
-			return;
-		}
-		
 		// init binding
 		if (this._dialog === null) {
 			this._dialog = $('<div id="' + this._dialogID + '" />').hide().appendTo(document.body);
 			this._dialog.wcfDialog({
-				onClose:  $.proxy(function() { this._aborted = true; }, this),
+				onClose:  $.proxy(function() {
+					this._proxy.abortPrevious();
+				}, this),
 				title: this._title
 			});
 		}
