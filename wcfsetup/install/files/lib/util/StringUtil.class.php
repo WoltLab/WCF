@@ -115,6 +115,8 @@ final class StringUtil {
 	public static function encodeJSON($string) {
 		$string = self::encodeJS($string);
 		
+		$string = self::encodeHTML($string);
+		
 		// single quotes must be encoded as HTML entity
 		$string = self::replace("\'", "&#39;", $string);
 		
