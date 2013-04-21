@@ -47,7 +47,7 @@
 							<td class="columnDate columnTime">{@$sessionAccessLog->time|time}</td>
 							<td class="columnText columnClassName">{$sessionAccessLog->className}</td>
 							<td class="columnURL columnRequestURI" title="{$sessionAccessLog->requestURI}">{if !$sessionAccessLog->hasProtectedURI()}<a href="{$sessionAccessLog->requestURI}{@SID_ARG_2ND}">{$sessionAccessLog->requestURI|truncate:50}</a>{else}{$sessionAccessLog->requestURI|truncate:50}{/if}</td>
-							<td class="columnTextolumnRequestMethod"{$sessionAccessLog->requestMethod}</td>
+							<td class="columnText columnRequestMethod">{$sessionAccessLog->requestMethod}</td>
 							
 							{event name='columns'}
 						</tr>
