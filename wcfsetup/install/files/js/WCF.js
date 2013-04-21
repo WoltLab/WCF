@@ -2558,7 +2558,11 @@ WCF.Language = {
 		
 		var value = this._variables.get(key);
 		
-		if (typeof value === 'string') {
+		if (value === null) {
+			// return key again
+			return key;
+		}
+		else if (typeof value === 'string') {
 			// transform strings into template and try to refetch
 			this.add(key, new WCF.Template(value));
 			return this.get(key, parameters);
@@ -2566,10 +2570,6 @@ WCF.Language = {
 		else if (typeof value.fetch === 'function') {
 			// evaluate templates
 			value = value.fetch(parameters);
-		}
-		else if (value === null) {
-			// return key again
-			return key;
 		}
 		
 		return value;
