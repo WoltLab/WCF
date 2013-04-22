@@ -34,6 +34,9 @@
 			<category name="admin.user.group">
 				<parent>admin.user</parent>
 			</category>
+			<category name="admin.user.option">
+				<parent>admin.user</parent>
+			</category>
 			
 			<category name="admin.display">
 				<parent>admin</parent>
@@ -171,43 +174,32 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
+			<option name="admin.user.canManageUserOption">
+				<categoryname>admin.user.option</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canManageUserOptionCategory">
+				<categoryname>admin.user.option</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
 			
-			<option name="admin.language.canAddLanguage">
+			<option name="admin.language.canManageLanguage">
 				<categoryname>admin.language</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
-			<option name="admin.language.canEditLanguage">
+			<option name="admin.language.canManageServer">
 				<categoryname>admin.language</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
-			<option name="admin.language.canDeleteLanguage">
-				<categoryname>admin.language</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.language.canAddServer">
-				<categoryname>admin.language</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.language.canDeleteServer">
-				<categoryname>admin.language</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.language.canEditServer">
-				<categoryname>admin.language</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
+			
 			<option name="admin.style.canAddStyle">
 				<categoryname>admin.style</categoryname>
 				<optiontype>boolean</optiontype>

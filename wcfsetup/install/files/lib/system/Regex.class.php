@@ -63,6 +63,12 @@ final class Regex {
 	const DOT_ALL = 32;
 	
 	/**
+	 * indicates that ^/$ match start and end of a line instead of the whole string
+	 * @var	integer
+	 */
+	const MULTILINE = 64;
+	
+	/**
 	 * indicates that no flags are set
 	 * @var	integer
 	 */
@@ -138,6 +144,7 @@ final class Regex {
 		if (!($modifier & self::NO_ANALYSE)) $this->regex .= 'S';
 		if ($modifier & self::IGNORE_WHITESPACE) $this->regex .= 'x';
 		if ($modifier & self::DOT_ALL) $this->regex .= 's';
+		if ($modifier & self::MULTILINE) $this->regex .= 'm';
 	}
 	
 	/**

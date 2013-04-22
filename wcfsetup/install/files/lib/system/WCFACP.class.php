@@ -83,6 +83,9 @@ class WCFACP extends WCF {
 				else {
 					WCF::getSession()->checkPermissions(array('admin.general.canUseAcp'));
 				}
+				
+				// force debug mode if in ACP and authenticated
+				self::$overrideDebugMode = true;
 			}
 		}
 	}

@@ -97,22 +97,22 @@
 								
 								{event name='rowButtons'}
 							</td>
-							<td class="columnID"><p>{@$cronjob->cronjobID}</p></td>
-							<td class="columnDate columnStartMinute"><p>{$cronjob->startMinute|truncate:30}</p></td>
-							<td class="columnDate columnStartHour"><p>{$cronjob->startHour|truncate:30}</p></td>
-							<td class="columnDate columnStartDom"><p>{$cronjob->startDom|truncate:30}</p></td>
-							<td class="columnDate columnStartMonth"><p>{$cronjob->startMonth|truncate:30}</p></td>
-							<td class="columnDate columnStartDow"><p>{$cronjob->startDow|truncate:30}</p></td>
+							<td class="columnID">{@$cronjob->cronjobID}</td>
+							<td class="columnDate columnStartMinute">{$cronjob->startMinute|truncate:30}</td>
+							<td class="columnDate columnStartHour">{$cronjob->startHour|truncate:30}</td>
+							<td class="columnDate columnStartDom">{$cronjob->startDom|truncate:30}</td>
+							<td class="columnDate columnStartMonth">{$cronjob->startMonth|truncate:30}</td>
+							<td class="columnDate columnStartDow">{$cronjob->startDow|truncate:30}</td>
 							<td class="columnText columnDescription" title="{$cronjob->description|language}">
 								{if $cronjob->isEditable()}
-									<p><a title="{lang}wcf.acp.cronjob.edit{/lang}" href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}">{$cronjob->description|language|truncate:50}</a></p>
+									<a title="{lang}wcf.acp.cronjob.edit{/lang}" href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}">{$cronjob->description|language|truncate:50}</a>
 								{else}
-									<p>{$cronjob->description|language|truncate:50}</p>
+									{$cronjob->description|language|truncate:50}
 								{/if}
 							</td>
 							<td class="columnDate columnNextExec">
 								{if !$cronjob->isDisabled && $cronjob->nextExec != 1}
-									<p>{@$cronjob->nextExec|plainTime}</p>
+									{@$cronjob->nextExec|plainTime}
 								{/if}
 							</td>
 							

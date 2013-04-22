@@ -83,11 +83,11 @@
 					<tbody>
 						{foreach from=$files item=file}
 							<tr>
-								<td class="columnTitle"><p>{$file.filename}</td>
-								<td class="columnDigits"><p>{@$file.filesize|filesize}</td>
-								<td class="columnDate">{if $file.mtime > 1}<p>{@$file.mtime|time}</p>{/if}</td>
+								<td class="columnTitle">{$file.filename}</td>
+								<td class="columnDigits">{@$file.filesize|filesize}</td>
+								<td class="columnDate">{if $file.mtime > 1}{@$file.mtime|time}{/if}</td>
 								{if $file.perm|isset}
-									<td class="columnDigits"><p{if !$file.writable} style="color: #c00"{/if}>{@$file.perm}</p></td>
+									<td class="columnDigits"><span{if !$file.writable} class="hot"{/if}>{@$file.perm}</span></td>
 								{/if}
 							</tr>
 						{/foreach}

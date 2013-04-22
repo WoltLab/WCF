@@ -2,6 +2,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 <meta name="format-detection" content="telephone=no" />
+{if $allowSpidersToIndexThisPage|empty}<meta name="robots" content="noindex,nofollow" />{/if} 
 {implode from=$__wcf->getMetaTagHandler() item=__metaTag glue="\n"}{@$__metaTag}{/implode}
 {event name='metaTags'}
 
@@ -74,6 +75,7 @@
 			'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
 			'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',
 			'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
+			'wcf.global.error.timeout': '{lang}wcf.global.error.timeout{/lang}',
 			'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
 			'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
 			'wcf.global.language.noSelection': '{lang}wcf.global.language.noSelection{/lang}',

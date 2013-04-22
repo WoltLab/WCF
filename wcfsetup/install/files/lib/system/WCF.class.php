@@ -88,6 +88,12 @@ class WCF {
 	protected static $languageObj = null;
 	
 	/**
+	 * overrides disabled debug mode
+	 * @var	boolean
+	 */
+	protected static $overrideDebugMode = false;
+	
+	/**
 	 * session object
 	 * @var	wcf\system\session\SessionHandler
 	 */
@@ -618,7 +624,14 @@ class WCF {
 	 * @return	boolean
 	 */
 	public static function debugModeIsEnabled() {
-		if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE) return true;
+		// ACP override
+		if (self::$overrideDebugMode) {
+			return true;
+		}
+		else if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE) {
+			return true;
+		}
+		
 		return false;
 	}
 	

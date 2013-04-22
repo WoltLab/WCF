@@ -28,7 +28,7 @@ class LanguageExportForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.language.canEditLanguage');
+	public $neededPermissions = array('admin.language.canManageLanguage');
 	
 	/**
 	 * language id
