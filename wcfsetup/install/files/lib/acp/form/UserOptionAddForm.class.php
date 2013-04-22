@@ -1,8 +1,8 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\user\option\category\UserOptionCategoryList;
-use wcf\data\user\option\UserOptionEditor;
 use wcf\data\user\option\UserOptionAction;
+use wcf\data\user\option\UserOptionEditor;
 use wcf\form\AbstractForm;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\UserInputException;

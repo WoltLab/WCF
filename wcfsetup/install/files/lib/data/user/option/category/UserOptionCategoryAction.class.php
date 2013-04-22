@@ -25,11 +25,11 @@ class UserOptionCategoryAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
-	*/
+	 */
 	protected $permissionsDelete = array('admin.user.canManageUserOptionCategory');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
-	*/
+	 */
 	protected $permissionsUpdate = array('admin.user.canManageUserOptionCategory');
 }
