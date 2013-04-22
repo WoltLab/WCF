@@ -265,6 +265,12 @@
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Users]]></item>
 		<item name="wcf.acp.menu.link.user.massProcessing"><![CDATA[Bulk Processing]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Search Users]]></item>
+		<item name="wcf.acp.menu.link.user.option"><![CDATA[Custom User Fields]]></item>
+		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[List Custom User Fields]]></item>
+		<item name="wcf.acp.menu.link.user.option.add"><![CDATA[Add Custom User Field]]></item>
+		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[List Field Categories]]></item>
+		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Add Field Category]]></item>
+		<item name="wcf.acp.menu.link.user.option.setDefaults"><![CDATA[Manage User Field Settings]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
