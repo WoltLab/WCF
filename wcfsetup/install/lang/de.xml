@@ -641,7 +641,7 @@
 		<item name="wcf.acp.user.massProcessing.action"><![CDATA[Aktion]]></item>
 		<item name="wcf.acp.user.massProcessing.conditions"><![CDATA[Bedingungen]]></item>
 		<item name="wcf.acp.user.massProcessing.success"><![CDATA[Die gewählte Aktion wurde erfolgreich auf {#$affectedUsers} Benutzer ausgeführt.]]></item>
-		<item name="wcf.acp.user.massProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> auf alle Benutzer aus, die unter die eingestellten Bedingungen fallen. Die Bearbeitungen können unter Umständen sehr rechenintensiv werden und sollten deshalb möglichst nur dann ausgeführt werden, wenn sich die Seite im Wartungsmodus befindet! Die Veränderungen können nicht rückgängig gemacht werden. Bitte benutzen Sie diese Funktion mit der nötigen Vorsicht!]]></item>
+		<item name="wcf.acp.user.massProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> bei allen Benutzern aus, die unter die eingestellten Bedingungen fallen. Die Bearbeitungen können unter Umständen sehr rechenintensiv werden und sollten deshalb möglichst nur dann ausgeführt werden, wenn sich die Seite im Wartungsmodus befindet! Die Veränderungen können nicht rückgängig gemacht werden. Bitte benutzen Sie diese Funktion mit der nötigen Vorsicht!]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Benutzer suchen]]></item>
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profil]]></item>
@@ -655,13 +655,13 @@
 		<item name="wcf.acp.user.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Benutzer gefunden.]]></item>
 		<item name="wcf.acp.user.search.matches"><![CDATA[{if $items == 1}Ein Ergebnis{else}{#$items} Ergebnisse{/if}]]></item>
 		<item name="wcf.acp.user.sendMail"><![CDATA[E-Mail an Benutzer senden]]></item>
-		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail an alle Benutzer]]></item>
+		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail an alle Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[E-Mail als HTML versenden]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Absender]]></item>
 		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[<p>Hier können Sie die E-Mail-Adresse des Absenders definieren.{if MAIL_USE_FORMATTED_ADDRESS} Es ist auch folgendes Format möglich:{/if}</p>
 {if MAIL_USE_FORMATTED_ADDRESS}<p style="line-height: 2em;"><code>Absender Name &lt;email@absender.tld&gt;</code></p>{/if}
 <p>Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alles ausgefüllt haben, wird dieses Feld automatisch ausgefüllt. Sollten Sie E-Mails per SMTP senden, so achten Sie darauf, dass die E-Mail-Adresse des Absenders auch vom Server akzeptiert werden muss.</p>]]></item>
-		<item name="wcf.acp.user.sendMail.group"><![CDATA[E-Mail an Gruppenmitglieder]]></item>
+		<item name="wcf.acp.user.sendMail.group"><![CDATA[E-Mail an Gruppenmitglieder senden]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[E-Mail an die Mitglieder folgender Benutzergruppen senden]]></item>
 		<item name="wcf.acp.user.sendMail.mail"><![CDATA[E-Mail]]></item>
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[E-Mail an folgende Benutzer senden]]></item>
