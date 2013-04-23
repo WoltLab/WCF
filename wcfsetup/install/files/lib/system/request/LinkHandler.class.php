@@ -134,13 +134,11 @@ class LinkHandler extends SingletonFactory {
 		else {
 			// try to resolve abbreviation
 			$application = null;
-			if ($abbreviation != 'wcf') {
-				$application = ApplicationHandler::getInstance()->getApplication($abbreviation);
+			if ($abbreviation == 'wcf' && $isACP) {
+				$application = ApplicationHandler::getInstance()->getWCF();
 			}
-			
-			// fallback to primary application if abbreviation is 'wcf' or unknown
-			if ($application === null) {
-				$application = ApplicationHandler::getInstance()->getPrimaryApplication();
+			else {
+				$application = ApplicationHandler::getInstance()->getApplication($abbreviation);
 			}
 			
 			$url = $application->getPageURL() . ($isACP ? 'acp/' : '') . $url;
