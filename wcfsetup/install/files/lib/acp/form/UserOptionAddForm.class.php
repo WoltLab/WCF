@@ -206,6 +206,10 @@ class UserOptionAddForm extends AbstractForm {
 		if (in_array($this->optionType, self::$optionTypesUsingSelectOptions) && empty($this->selectOptions)) {
 			throw new UserInputException('selectOptions');
 		}
+		
+		if ($this->editable < 1 || $this->editable > 3) {
+			$this->editable = 3;
+		}
 	}
 	
 	/**
