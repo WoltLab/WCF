@@ -57,26 +57,26 @@
 		<item name="wcf.acp.cronjob.add"><![CDATA[Add Cronjob]]></item>
 		<item name="wcf.acp.cronjob.subtitle"><![CDATA[]]></item>
 		<item name="wcf.acp.cronjob.startDom"><![CDATA[Day of Month]]></item>
-		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Day of the month (1 - 31), the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Day of the month (1 - 31), the cronjob should be carried out.]]></item>
 		<item name="wcf.acp.cronjob.startDomShort"><![CDATA[D]]></item>
 		<item name="wcf.acp.cronjob.startDow"><![CDATA[Weekday]]></item>
-		<item name="wcf.acp.cronjob.startDow.description"><![CDATA[Weekday (0 - 6 with Sunday = 0, or mon - sun), the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startDow.description"><![CDATA[Weekday (0 - 6 with Sunday = 0, or mon - sun), the cronjob should be carried out]]></item>
 		<item name="wcf.acp.cronjob.startDowShort"><![CDATA[DoW]]></item>
 		<item name="wcf.acp.cronjob.startHour"><![CDATA[Hour]]></item>
-		<item name="wcf.acp.cronjob.startHour.description"><![CDATA[Hours (0 - 23), the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startHour.description"><![CDATA[Hours (0 - 23), the cronjob should be carried out.]]></item>
 		<item name="wcf.acp.cronjob.startHourShort"><![CDATA[h]]></item>
 		<item name="wcf.acp.cronjob.startMinute"><![CDATA[Minute]]></item>
-		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Minutes (0 - 59), the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startMinute.description"><![CDATA[Minutes (0 - 59), the cronjob should be carried out.]]></item>
 		<item name="wcf.acp.cronjob.startMinuteShort"><![CDATA[m]]></item>
 		<item name="wcf.acp.cronjob.startMonth"><![CDATA[Month]]></item>
-		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Month (1 - 12, or jan - dec), the cron job should be executed.]]></item>
+		<item name="wcf.acp.cronjob.startMonth.description"><![CDATA[Month (1 - 12, or jan - dec), the cronjob should be carried out.]]></item>
 		<item name="wcf.acp.cronjob.startMonthShort"><![CDATA[M]]></item>
 		<item name="wcf.acp.cronjob.description"><![CDATA[Description]]></item>
-		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Next Scheduled Execution]]></item>
+		<item name="wcf.acp.cronjob.nextExec"><![CDATA[Next Scheduled Performance]]></item>
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Edit Cronjob]]></item>
 		<item name="wcf.acp.cronjob.className"><![CDATA[PHP Class Name]]></item>
 		<item name="wcf.acp.cronjob.timing"><![CDATA[Schedule]]></item>
-		<item name="wcf.acp.cronjob.intro"><![CDATA[Configuring cronjobs requires distinct knowledge of the crontab syntax on Unix based systems. More information about this topic can be obtained on the following webpage: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>.]]></item>
+		<item name="wcf.acp.cronjob.intro"><![CDATA[Configuring cronjobs requires distinct knowledge of the crontab syntax on Unix-based systems. More information on this topic can be obtained on the following webpage: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>.]]></item>
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Run Cronjob]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Invalid time format.]]></item>
