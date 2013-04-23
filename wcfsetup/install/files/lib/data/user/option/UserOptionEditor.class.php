@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\user\option;
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\WCF;
 
 /**
@@ -13,7 +15,7 @@ use wcf\system\WCF;
  * @subpackage	data.user.option
  * @category	Community Framework
  */
-class UserOptionEditor extends DatabaseObjectEditor {
+class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
@@ -139,5 +141,12 @@ class UserOptionEditor extends DatabaseObjectEditor {
 		}
 		
 		return $column;
+	}
+	
+	/**
+	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 */
+	public static function resetCache() {
+		UserOptionCacheBuilder::getInstance()->reset();
 	}
 }

@@ -89,13 +89,13 @@ class UserOptionAddForm extends AbstractForm {
 	 * edit permission bitmask
 	 * @var integer
 	 */
-	public $editable = 0;
+	public $editable = 3;
 	
 	/**
 	 * view permission bitmask
 	 * @var integer
 	 */
-	public $visible = 0;
+	public $visible = 15;
 	
 	/**
 	 * field is searchable
@@ -242,9 +242,6 @@ class UserOptionAddForm extends AbstractForm {
 		$editor->update(array(
 			'optionName' => 'option'.$userOption->optionID
 		));
-		
-		// reset cache
-		UserOptionCacheBuilder::getInstance()->reset();
 		$this->saved();
 	
 		// reset values
