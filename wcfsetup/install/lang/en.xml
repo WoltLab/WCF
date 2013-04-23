@@ -9,7 +9,7 @@
 	
 	<category name="wcf.acp.application">
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie Settings]]></item>
-		<item name="wcf.acp.application.cookie.warning"><![CDATA[The settings below are used to establish a persistent login for your website; Keep in mind to update these values whenever the domain name or path changes. If you are unsure which values you need to provide, you can safely copy both values from above.]]></item>
+		<item name="wcf.acp.application.cookie.warning"><![CDATA[The settings below are used to enable a permanent login for your website; keep in mind to update these values whenever the domain name or path changes. If you are unsure, which values you need to provide, you can safely copy both values from above.]]></item>
 		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie Domain]]></item>
 		<item name="wcf.acp.application.cookieDomain.error.containsPfad"><![CDATA[Cookie domain may not contain path components]]></item>
 		<item name="wcf.acp.application.cookieDomain.error.notValid"><![CDATA[Cookie domain does not match the domain entered above (sub-domains like “www” may be omitted).]]></item>
@@ -17,10 +17,10 @@
 		<item name="wcf.acp.application.cookiePath.error.notValid"><![CDATA[Cookie path does not match the domain path above.]]></item>
 		<item name="wcf.acp.application.domain"><![CDATA[Domain Settings]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
-		<item name="wcf.acp.application.domainName.description"><![CDATA[If you’re accessing this application through “http://www.example.com/community/forum/”, please enter “www.example.com”.]]></item>
+		<item name="wcf.acp.application.domainName.description"><![CDATA[If you’re accessing this application via “http://www.example.com/community/forum/”, please enter “www.example.com”.]]></item>
 		<item name="wcf.acp.application.domainName.error.containsPfad"><![CDATA[Domain may not contain path components]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Path]]></item>
-		<item name="wcf.acp.application.domainPath.description"><![CDATA[If you’re accessing this application through “http://www.example.com/community/forum/”, please enter “/community/forum/”.]]></item>
+		<item name="wcf.acp.application.domainPath.description"><![CDATA[If you’re accessing this application via “http://www.example.com/community/forum/”, please enter “/community/forum/”.]]></item>
 		<item name="wcf.acp.application.edit"><![CDATA[Edit Application]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[Edit Application: “<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>”]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installed Applications]]></item>
