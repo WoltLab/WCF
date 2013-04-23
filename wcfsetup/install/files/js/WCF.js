@@ -2210,7 +2210,7 @@ WCF.Date.Picker = {
 		$('input[type=date]:not(.jsDatePicker)').each($.proxy(function(index, input) {
 			var $input = $(input);
 			var $inputName = $input.prop('name');
-			var $inputValue = $input.prop('value'); // should be Y-m-d, must be interpretable by Date
+			var $inputValue = $input.val(); // should be Y-m-d, must be interpretable by Date
 			
 			// update $input
 			$input.prop('type', 'text').addClass('jsDatePicker');
@@ -2232,7 +2232,13 @@ WCF.Date.Picker = {
 				monthNames: WCF.Language.get('__months'),
 				monthNamesShort: WCF.Language.get('__monthsShort'),
 				showOtherMonths: true,
-				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038')
+				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038'),
+				onClose: function(dateText, datePicker) {
+					// clear altField when datepicker is cleared
+					if (dateText == '') {
+						$(datePicker.settings["altField"]).val(dateText);
+					}
+				}
 			});
 			
 			// format default date
