@@ -101,7 +101,7 @@
 		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Copy error message]]></item>
-		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[No error with the ID “{$exceptionID}” was found.]]></item>
+		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[No error concerning the ID “{$exceptionID}” was found.]]></item>
 		<item name="wcf.acp.exceptionLog.noneAvailable"><![CDATA[There are no logged errors.]]></item>
 		<item name="wcf.acp.exceptionLog.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Error-ID]]></item>
