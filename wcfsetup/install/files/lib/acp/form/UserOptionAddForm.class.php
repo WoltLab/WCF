@@ -246,7 +246,9 @@ class UserOptionAddForm extends AbstractForm {
 	
 		// reset values
 		$this->optionName = $this->optionDescription = $this->categoryName = $this->optionType = $this->defaultValue = $this->validationPattern = $this->optionType = $this->selectOptions = $this->outputClass = '';
-		$this->required = $this->editable = $this->visible = $this->searchable = $this->showOrder = $this->askDuringRegistration = 0;
+		$this->required = $this->searchable = $this->showOrder = $this->askDuringRegistration = 0;
+		$this->editable = 3;
+		$this->visible = 15;
 		
 		// show success
 		WCF::getTPL()->assign('success', true);

@@ -24,7 +24,7 @@ class MultiSelectOptionType extends SelectOptionType {
 		WCF::getTPL()->assign(array(
 			'option' => $option,
 			'selectOptions' => $option->parseSelectOptions(),
-			'value' => explode("\n", $value)
+			'value' => (!is_array($value) ? explode("\n", $value) : $value)
 		));
 		return WCF::getTPL()->fetch('multiSelectOptionType');
 	}
@@ -58,7 +58,7 @@ class MultiSelectOptionType extends SelectOptionType {
 		$value = ArrayUtil::trim($value);
 		if (empty($value)) return false;
 		
-		$conditions->add("option_value.userOption".$option->optionID." = ?", array(implode("\n", $value)));
+		$conditions->add("option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', array_map('escapeString', $value)).'($|\n)'."'");
 		return true;
 	}
 }

@@ -67,7 +67,20 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->optionID));
 		
-		$sql = WCF::getDB()->getEditor()->dropColumn('wcf'.WCF_N.'_user_option_value', 'userOption'.$this->optionID);
+		WCF::getDB()->getEditor()->dropColumn('wcf'.WCF_N.'_user_option_value', 'userOption'.$this->optionID);
+	}
+	
+	/**
+	 * @see	wcf\data\IEditableObject::deleteAll()
+	 */
+	public static function deleteAll(array $objectIDs = array()) {
+		$returnValue = parent::deleteAll($objectIDs);
+		
+		foreach ($objectIDs as $objectID) {
+			WCF::getDB()->getEditor()->dropColumn('wcf'.WCF_N.'_user_option_value', 'userOption'.$objectID);
+		}
+		
+		return $returnValue;
 	}
 	
 	/**
