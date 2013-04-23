@@ -141,6 +141,11 @@ class LinkHandler extends SingletonFactory {
 				$application = ApplicationHandler::getInstance()->getApplication($abbreviation);
 			}
 			
+			// fallback to primary application if abbreviation is unknown
+			if ($application === null) {
+				$application = ApplicationHandler::getInstance()->getPrimaryApplication();
+			}
+			
 			$url = $application->getPageURL() . ($isACP ? 'acp/' : '') . $url;
 		}
 		
