@@ -112,7 +112,7 @@
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group “{$group->groupName|language}”?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit User Group]]></item>
-		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Heads up! You’re a member of this user group, change may cause yourself being locked out from the Administration Control Panel.]]></item>
+		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Mind! You’re a member of this user group, changes may affect yourself by being locked out from the Administration Control Panel.]]></item>
 		<item name="wcf.acp.group.group1"><![CDATA[Everyone]]></item>
 		<item name="wcf.acp.group.group2"><![CDATA[Guests]]></item>
 		<item name="wcf.acp.group.group3"><![CDATA[Users]]></item>
@@ -123,7 +123,7 @@
 		<item name="wcf.acp.group.members"><![CDATA[Members]]></item>
 		<item name="wcf.acp.group.option.admin.display.canManagePageMenu"><![CDATA[Can manage page menu]]></item>
 		<item name="wcf.acp.group.option.admin.general.canUseAcp"><![CDATA[Can enter Administration Control Panel]]></item>
-		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Users of this group may access the Administration Control Panel based upon their granted permissions. This option must be enabled if you wish to grant access to any administrative option.]]></item>
+		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Users of this group may access the Administration Control Panel, based on their granted permissions. This option must be enabled if you wish to grant access to any administrative option.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Can view private user options]]></item>
 		<item name="wcf.acp.group.option.admin.language.canManageLanguage"><![CDATA[Can manage languages]]></item>
 		<item name="wcf.acp.group.option.admin.language.canManageServer"><![CDATA[Can manage language servers]]></item>
