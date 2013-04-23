@@ -44,7 +44,8 @@
 </script>
 <header class="boxHeadline">
 	<hgroup>
-		<h1>{lang}wcf.acp.style.{$action}{/lang}{if $action == 'edit'} „{$styleName}“{/if}</h1>
+		<h1>{lang}wcf.acp.style.{$action}{/lang}</h1>
+		{if $action == 'edit'}<h2>{$styleName}</h2>{/if}
 	</hgroup>
 </header>
 
