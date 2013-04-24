@@ -161,7 +161,7 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 			throw new PermissionDeniedException();
 		}
 		
-		parent::validateUpdate();
+		WCF::getSession()->checkPermissions($this->permissionsUpdate);
 	}
 	
 	/**
