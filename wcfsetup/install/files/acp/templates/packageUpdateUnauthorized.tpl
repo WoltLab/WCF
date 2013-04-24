@@ -1,0 +1,46 @@
+{assign var='serverAuthData' value=$updateServer->getAuthData()}
+{assign var='serverReply' value=$request->getReply()}
+
+{if !$serverAuthData|empty}
+	<p class="{if $serverReply[statusCode] == 401}error{else}warning{/if}">{lang}wcf.acp.package.update.errorCode.{@$serverReply[statusCode]}{/lang}</p>
+{/if}
+
+<fieldset{if !$serverAuthData|empty} class="marginTop"{/if}>
+	<legend>{lang}wcf.acp.package.update.server{/lang}</legend>
+	
+	<dl>
+		<dt>{lang}wcf.acp.package.name{/lang}</dt>
+		<dd>{$packageUpdateVersion[packageName]} ({$packageUpdateVersion[packageVersion]})</dd>
+	</dl>
+	<dl>
+		<dt>{lang}wcf.acp.package.update.server.url{/lang}</dt>
+		<dd>{@$updateServer->getHighlightedURL()}</dd>
+	</dl>
+	
+	<dl>
+		<dt>{lang}wcf.acp.package.update.server.message{/lang}</dt>
+		<dd>{$serverReply[body]}</dd>
+	</dl>
+</fieldset>
+
+<fieldset>
+	<legend>{lang}wcf.acp.package.update.credentials{/lang}</legend>
+	
+	<dl>
+		<dt><label for="packageUpdateServerUsername">{lang}wcf.acp.package.update.{if $updateServer->requiresLicense()}licenseNo{else}username{/if}{/lang}</label></dt>
+		<dd><input type="text" id="packageUpdateServerUsername" value="{if $serverAuthData[username]|isset}{$serverAuthData[username]}{/if}" class="long" /></dd>
+	</dl>
+	
+	<dl>
+		<dt><label for="packageUpdateServerPassword">{lang}wcf.acp.package.update.{if $updateServer->requiresLicense()}serialNo{else}password{/if}{/lang}</label></dt>
+		<dd><input type="{if $updateServer->requiresLicense()}text{else}password{/if}" id="packageUpdateServerPassword" value="{if $serverAuthData[password]|isset}{$serverAuthData[password]}{/if}" class="long" /></dd>
+	</dl>
+	
+	<dl>
+		<dd><label><input type="checkbox" id="packageUpdateServerSaveCredentials" value="1" /> {lang}wcf.acp.package.update.saveCredentials{/lang}</label></dd>
+	</dl>
+</fieldset>
+
+<div class="formSubmit">
+	<button data-package-update-server-id="{@$updateServer->packageUpdateServerID}">{lang}wcf.global.button.submit{/lang}</button>
+</div>

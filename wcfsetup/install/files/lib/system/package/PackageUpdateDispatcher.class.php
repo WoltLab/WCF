@@ -525,7 +525,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		// get existing packages and their versions
 		$existingPackages = array();
-		$sql = "SELECT	packageID, package, packageDescription,
+		$sql = "SELECT	packageID, package, packageDescription, packageName,
 				packageVersion, packageDate, author, authorURL, isApplication
 			FROM	wcf".WCF_N."_package";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -544,7 +544,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					puv.packageUpdateVersionID, puv.isCritical, puv.packageDate, puv.filename, puv.packageVersion
 			FROM		wcf".WCF_N."_package_update pu
 			LEFT JOIN	wcf".WCF_N."_package_update_version puv
-			ON		(puv.packageUpdateID = pu.packageUpdateID)
+			ON		(puv.packageUpdateID = pu.packageUpdateID AND puv.isAccessible = 1)
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
@@ -631,12 +631,10 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * Creates a new package installation scheduler.
 	 * 
 	 * @param	array			$selectedPackages
-	 * @param	array<integer>		$packageUpdateServerIDs
-	 * @param	boolean			$download
 	 * @return	wcf\system\package\PackageInstallationScheduler
 	 */
-	public function prepareInstallation(array $selectedPackages, array $packageUpdateServerIDs = array(), $download = true) {
-		return new PackageInstallationScheduler($selectedPackages, $packageUpdateServerIDs, $download);
+	public function prepareInstallation(array $selectedPackages) {
+		return new PackageInstallationScheduler($selectedPackages);
 	}
 	
 	/**
