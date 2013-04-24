@@ -210,14 +210,14 @@
 		<item name="wcf.acp.masterPassword"><![CDATA[Master Password]]></item>
 		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Confirm Master Password]]></item>
 		<item name="wcf.acp.masterPassword.enter"><![CDATA[Master Password Required]]></item>
-		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[The page or action requires the master password for security reasons, the password will be remembered for your current session. In case you forgot the password, please reset it by removing the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
+		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[The page or action requires the master password for security reasons, the password will be saved throughout your current session. In case you forgot the password, please reset it by removing the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
 		<item name="wcf.acp.masterPassword.error.invalid"><![CDATA[Password is incorrect. In case you forgot the password, please reset it by removing the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
 		<item name="wcf.acp.masterPassword.error.notEqual"><![CDATA[Passwords do not match.]]></item>
-		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Password is regarded unsafe. It should be at least 8 characters, containing upper and lower latin letters, as well as numbers and special symbols.]]></item>
+		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Password is regarded as unsafe. It should contain at least 8 characters, including upper and lower latin letters, as well as numbers and special symbols.]]></item>
 		<item name="wcf.acp.masterPassword.example"><![CDATA[Suggestion]]></item>
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Use Suggestion]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Set Master Password]]></item>
-		<item name="wcf.acp.masterPassword.init.description"><![CDATA[The master password is the last line of defense, protecting both critical settings and sensitive data. One should choose a rather strong password which is neither known to any 3rd party person nor re-used on other webpages.]]></item>
+		<item name="wcf.acp.masterPassword.init.description"><![CDATA[The master password is the last line of defense, protecting both, critical settings and sensitive data. One should choose a rather strong password,  which is neither known to any third party nor re-used on other webpages.]]></item>
 	</category>
 	
 	<category name="wcf.acp.menu">
