@@ -170,9 +170,9 @@
 	<category name="wcf.acp.language">
 		<item name="wcf.acp.language.add"><![CDATA[Add Language]]></item>
 		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[Language code is already in use by an installed language.]]></item>
-		<item name="wcf.acp.language.add.source"><![CDATA[TODO: Vorlage]]></item>
+		<item name="wcf.acp.language.add.source"><![CDATA[Pattern]]></item>
 		<item name="wcf.acp.language.code"><![CDATA[ISO Code]]></item>
-		<item name="wcf.acp.language.code.description"><![CDATA[Please enter the <strong>ISO 639-1</strong> language code, you can lookup the language code at <a href="http://en.wikipedia.org/wiki/ISO_639-1" class="externalURL">http://en.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
+		<item name="wcf.acp.language.code.description"><![CDATA[Please enter the <strong>ISO 639-1</strong> language code, you can look up the language code at <a href="http://en.wikipedia.org/wiki/ISO_639-1" class="externalURL">http://en.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
 		<item name="wcf.acp.language.customVariables"><![CDATA[Custom Phrases]]></item>
 		<item name="wcf.acp.language.delete.sure"><![CDATA[Do you really want to delete the language “{$language->languageName}”?]]></item>
 		<item name="wcf.acp.language.edit"><![CDATA[Edit Language]]></item>
@@ -187,7 +187,7 @@
 		<item name="wcf.acp.language.list"><![CDATA[Languages]]></item>
 		<item name="wcf.acp.language.multilingualism"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.acp.language.multilingualism.enable"><![CDATA[Enable multilingualism]]></item>
-		<item name="wcf.acp.language.multilingualism.enable.description"><![CDATA[Enabling miltilingualism provides the ability to associate user-generated content with a specific language; Newly created content is automatically associated with the user’s interface language. Users may filter content for specific languages through their settings.]]></item>
+		<item name="wcf.acp.language.multilingualism.enable.description"><![CDATA[Enabling multilingualism provides the ability to associate user-generated content with a specific language; newly created content is automatically associated with the user’s interface language. Users may filter content for specific languages by means of their settings.]]></item>
 		<item name="wcf.acp.language.multilingualism.languages"><![CDATA[Available Languages]]></item>
 		<item name="wcf.acp.language.multilingualism.languages.error.empty"><![CDATA[You need to select at least two languages.]]></item>
 		<item name="wcf.acp.language.setAsDefault"><![CDATA[Set As Default]]></item>
@@ -197,13 +197,13 @@
 		<item name="wcf.acp.language.item.list"><![CDATA[Manage Phrases]]></item>
 		<item name="wcf.acp.language.item.list.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.language.category"><![CDATA[Category]]></item>
-		<item name="wcf.acp.language.item.value"><![CDATA[TODO: Inhalt]]></item>
-		<item name="wcf.acp.language.item.customValue"><![CDATA[TODO: Eigener Inhalt]]></item>
-		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[TODO: Eigene Version verwenden]]></item>
-		<item name="wcf.acp.language.item.hasCustomValue"><![CDATA[TODO: Inhalte mit eigener Version]]></item>
-		<item name="wcf.acp.language.item.customValues"><![CDATA[TODO: Veränderte Inhalte finden]]></item>
-		<item name="wcf.acp.language.name.description"><![CDATA[TODO: Name der Sprache]]></item>
-		<item name="wcf.acp.language.add.source.description"><![CDATA[TODO: Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
+		<item name="wcf.acp.language.item.value"><![CDATA[Content]]></item>
+		<item name="wcf.acp.language.item.customValue"><![CDATA[One's Own Content]]></item>
+		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[Use One's Own Version]]></item>
+		<item name="wcf.acp.language.item.hasCustomValue"><![CDATA[Contents Containing One's Own Version]]></item>
+		<item name="wcf.acp.language.item.customValues"><![CDATA[Find Changed Contents]]></item>
+		<item name="wcf.acp.language.name.description"><![CDATA[Language Name]]></item>
+		<item name="wcf.acp.language.add.source.description"><![CDATA[The chosen language is used a pattern. All language variables will be copied into the new language.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
