@@ -78,13 +78,13 @@
 							
 							{event name='rowButtons'}
 						</td>
-						<td class="columnID"><p>{@$package->packageID}</p></td>
+						<td class="columnID">{@$package->packageID}</td>
 						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->packageDescription|language}">
 							<a href="{link controller='Package' id=$package->packageID}{/link}"><span>{$package}</span></a>
 						</td>
-						<td class="columnText"><p>{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</p></td>
-						<td class="columnText"><p>{$package->packageVersion}</p></td>
-						<td class="columnDate"><p>{@$package->updateDate|time}</p></td>
+						<td class="columnText">{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</td>
+						<td class="columnText">{$package->packageVersion}</td>
+						<td class="columnDate">{@$package->updateDate|time}</td>
 						
 						{event name='columns'}
 					</tr>

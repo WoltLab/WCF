@@ -92,11 +92,11 @@
 								
 								{event name='rowButtons'}
 							</td>
-							<td class="columnID columnUserID"><p>{@$user->userID}</p></td>
-							<td class="columnTitle columnUsername"><p>{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>{else}{$user->username}{/if}</p></td>
+							<td class="columnID columnUserID">{@$user->userID}</td>
+							<td class="columnTitle columnUsername">{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>{else}{$user->username}{/if}</td>
 							
 							{foreach from=$columnHeads key=column item=columnLanguageVariable}
-								<td class="column{$column|ucfirst}"><p>{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</p></td>
+								<td class="column{$column|ucfirst}">{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</td>
 							{/foreach}
 							
 							{event name='columns'}

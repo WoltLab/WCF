@@ -2210,7 +2210,7 @@ WCF.Date.Picker = {
 		$('input[type=date]:not(.jsDatePicker)').each($.proxy(function(index, input) {
 			var $input = $(input);
 			var $inputName = $input.prop('name');
-			var $inputValue = $input.prop('value'); // should be Y-m-d, must be interpretable by Date
+			var $inputValue = $input.val(); // should be Y-m-d, must be interpretable by Date
 			
 			// update $input
 			$input.prop('type', 'text').addClass('jsDatePicker');
@@ -2232,7 +2232,13 @@ WCF.Date.Picker = {
 				monthNames: WCF.Language.get('__months'),
 				monthNamesShort: WCF.Language.get('__monthsShort'),
 				showOtherMonths: true,
-				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038')
+				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038'),
+				onClose: function(dateText, datePicker) {
+					// clear altField when datepicker is cleared
+					if (dateText == '') {
+						$(datePicker.settings["altField"]).val(dateText);
+					}
+				}
 			});
 			
 			// format default date
@@ -2558,7 +2564,11 @@ WCF.Language = {
 		
 		var value = this._variables.get(key);
 		
-		if (typeof value === 'string') {
+		if (value === null) {
+			// return key again
+			return key;
+		}
+		else if (typeof value === 'string') {
 			// transform strings into template and try to refetch
 			this.add(key, new WCF.Template(value));
 			return this.get(key, parameters);
@@ -2566,10 +2576,6 @@ WCF.Language = {
 		else if (typeof value.fetch === 'function') {
 			// evaluate templates
 			value = value.fetch(parameters);
-		}
-		else if (value === null) {
-			// return key again
-			return key;
 		}
 		
 		return value;
@@ -5589,7 +5595,7 @@ WCF.System.PageNavigation = {
 			
 			var $fieldset = $('<fieldset><legend>' + WCF.Language.get('wcf.global.page.jumpTo') + '</legend></fieldset>').appendTo(this._dialog);
 			$('<dl><dt><label for="jsPageNavigationPageNo">' + WCF.Language.get('wcf.global.page.jumpTo') + '</label></dt><dd></dd></dl>').appendTo($fieldset);
-			this._pageNo = $('<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="long" />').keyup($.proxy(this._keyUp, this)).appendTo($fieldset.find('dd'));
+			this._pageNo = $('<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="medium" />').keyup($.proxy(this._keyUp, this)).appendTo($fieldset.find('dd'));
 			this._description = $('<small></small>').insertAfter(this._pageNo);
 			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
 			this._button = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(this._submit, this)).appendTo($formSubmit);

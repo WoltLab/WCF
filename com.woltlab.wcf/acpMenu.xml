@@ -230,6 +230,41 @@
 		</acpmenuitem>
 		<!-- user groups -->
 		
+		<!-- user options -->
+		<acpmenuitem name="wcf.acp.menu.link.user.option">
+			<parent>wcf.acp.menu.link.user</parent>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.option.list">
+			<controller><![CDATA[wcf\acp\page\UserOptionListPage]]></controller>
+			<parent>wcf.acp.menu.link.user.option</parent>
+			<permissions>admin.user.canManageUserOption</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.user.option.add">
+			<controller><![CDATA[wcf\acp\form\UserOptionAddForm]]></controller>
+			<parent>wcf.acp.menu.link.user.option</parent>
+			<permissions>admin.user.canManageUserOption</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.option.category.list">
+			<controller><![CDATA[wcf\acp\page\UserOptionCategoryListPage]]></controller>
+			<parent>wcf.acp.menu.link.user.option</parent>
+			<permissions>admin.user.canManageUserOptionCategory</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.user.option.category.add">
+			<controller><![CDATA[wcf\acp\form\UserOptionCategoryAddForm]]></controller>
+			<parent>wcf.acp.menu.link.user.option</parent>
+			<permissions>admin.user.canManageUserOptionCategory</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.option.setDefaults">
+			<controller><![CDATA[wcf\acp\form\UserOptionSetDefaultsForm]]></controller>
+			<parent>wcf.acp.menu.link.user.option</parent>
+			<permissions>admin.user.canManageUserOption</permissions>
+		</acpmenuitem>
+		<!-- /user options -->
+		
 		<acpmenuitem name="wcf.acp.menu.link.display">
 			<showorder>3</showorder>
 		</acpmenuitem>

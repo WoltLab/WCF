@@ -76,19 +76,19 @@
 				{content}
 					{foreach from=$objects item=cronjobLog}
 						<tr>
-							<td class="columnID columnCronjobID"><p>{@$cronjobLog->cronjobID}</p></td>
-							<td class="columnTitle columnClassName"><p>{$cronjobLog->className}</p></td>
-							<td class="columnText columnDescription"><p>{$cronjobLog->description|language}</p></td>
-							<td class="columnDate columnExecTime"><p>{if $cronjobLog->execTime}{@$cronjobLog->execTime|time}{/if}</p></td>
+							<td class="columnID columnCronjobID">{@$cronjobLog->cronjobID}</td>
+							<td class="columnTitle columnClassName">{$cronjobLog->className}</td>
+							<td class="columnText columnDescription">{$cronjobLog->description|language}</td>
+							<td class="columnDate columnExecTime">{if $cronjobLog->execTime}{@$cronjobLog->execTime|time}{/if}</td>
 							
-							<td class="columnText columnSuccess"><p>
-							{if $cronjobLog->success}
-								<span class="badge green">{lang}wcf.acp.cronjob.log.success{/lang}</span>
-							{elseif $cronjobLog->error}	
-								<a class="badge red jsTooltip jsCronjobError" title="{lang}wcf.acp.cronjob.log.error.showDetails{/lang}">{lang}wcf.acp.cronjob.log.error{/lang}</a>
-								<span style="display: none">{@$cronjobLog->error}</span>
-							{/if}
-							</p></td>
+							<td class="columnText columnSuccess">
+								{if $cronjobLog->success}
+									<span class="badge green">{lang}wcf.acp.cronjob.log.success{/lang}</span>
+								{elseif $cronjobLog->error}	
+									<a class="badge red jsTooltip jsCronjobError" title="{lang}wcf.acp.cronjob.log.error.showDetails{/lang}">{lang}wcf.acp.cronjob.log.error{/lang}</a>
+									<span style="display: none">{@$cronjobLog->error}</span>
+								{/if}
+							</td>
 							
 							{event name='columns'}
 						</tr>
