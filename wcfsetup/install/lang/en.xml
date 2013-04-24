@@ -241,7 +241,7 @@
 		<item name="wcf.acp.menu.link.log.exception"><![CDATA[Errors]]></item>
 		<item name="wcf.acp.menu.link.group"><![CDATA[User Groups]]></item>
 		<item name="wcf.acp.menu.link.group.add"><![CDATA[Add User Group]]></item>
-		<item name="wcf.acp.menu.link.group.mail"><![CDATA[Email Users]]></item>
+		<item name="wcf.acp.menu.link.group.mail"><![CDATA[Email to Users]]></item>
 		<item name="wcf.acp.menu.link.group.list"><![CDATA[List User Groups]]></item>
 		<item name="wcf.acp.menu.link.display"><![CDATA[Appearance]]></item>
 		<item name="wcf.acp.menu.link.option"><![CDATA[Options]]></item>
@@ -261,7 +261,7 @@
 		<item name="wcf.acp.menu.link.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.menu.link.user.add"><![CDATA[Add User]]></item>
 		<item name="wcf.acp.menu.link.user.list"><![CDATA[List Users]]></item>
-		<item name="wcf.acp.menu.link.user.mail"><![CDATA[Email Users]]></item>
+		<item name="wcf.acp.menu.link.user.mail"><![CDATA[Email to Users]]></item>
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Users]]></item>
 		<item name="wcf.acp.menu.link.user.massProcessing"><![CDATA[Bulk Processing]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Search Users]]></item>
