@@ -1,9 +1,8 @@
 <?php
 namespace wcf\data\package\update;
-use wcf\data\package\update\server\PackageUpdateServer;
-
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\search\Search;
 use wcf\data\search\SearchEditor;
 use wcf\data\AbstractDatabaseObjectAction;
