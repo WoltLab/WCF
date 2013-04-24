@@ -79,6 +79,7 @@ class LoggedException extends \Exception {
 		
 		$e = ($this->getPrevious() ?: $this);
 		
+		// don't forget to update ExceptionLogViewPage, when changing the log file format
 		$message = date('r', TIME_NOW)."\n".
 			'Message: '.$e->getMessage()."\n".
 			'File: '.$e->getFile().' ('.$e->getLine().")\n".
