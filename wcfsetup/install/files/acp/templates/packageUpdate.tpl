@@ -42,7 +42,7 @@
 				<dd>
 					<select>
 						{foreach from=$update[versions] item=version}
-							<option value="{@$version[packageVersion]}">{$version[packageVersion]}</option>
+							<option value="{@$version[packageVersion]}"{if $version[packageVersion] == $update[version][packageVersion]} selected="selected"{/if}>{$version[packageVersion]}</option>
 						{/foreach}
 					</select>
 				</dd>
