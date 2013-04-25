@@ -509,7 +509,7 @@
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Edit Server]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Error Message]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Update-Server]]></item>
-		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[Errors occured on last connection attempt:]]></item>
+		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[Errors occured at the last connection attempt:]]></item>
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Password]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Authentication password (optional)]]></item>
 		<item name="wcf.acp.updateServer.loginUsername"><![CDATA[Username]]></item>
