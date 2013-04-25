@@ -3,9 +3,19 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		WCF.Language.add('wcf.acp.package.view.button.uninstall.sure', '{lang}wcf.acp.package.view.button.uninstall.sure{/lang}');
+		WCF.Language.addObject({
+			'wcf.acp.package.view.button.uninstall.sure': '{lang}wcf.acp.package.view.button.uninstall.sure{/lang}',
+			'wcf.acp.package.searchForUpdates': '{lang}wcf.acp.package.searchForUpdates{/lang}',
+			'wcf.acp.package.searchForUpdates.noResults': '{lang}wcf.acp.package.searchForUpdates.noResults{/lang}'
+		});
 		
-		new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
+		{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage')}
+			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
+		{/if}
+		
+		{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
+			new WCF.ACP.Package.Update.Search();
+		{/if}
 	});
 	//]]>
 </script>

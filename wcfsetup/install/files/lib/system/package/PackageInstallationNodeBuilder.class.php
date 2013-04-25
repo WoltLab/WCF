@@ -81,8 +81,10 @@ class PackageInstallationNodeBuilder {
 		// package installation plugins
 		$this->buildPluginNodes();
 		
-		// optional packages
-		$this->buildOptionalNodes();
+		// optional packages (ignored on update)
+		if ($this->installation->queue->action == 'install') {
+			$this->buildOptionalNodes();
+		}
 		
 		// child queues
 		$this->buildChildQueues();

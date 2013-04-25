@@ -100,6 +100,10 @@
 						<dd>{$exception[referrer]}</dd>
 					</dl>
 					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.userAgent{/lang}</dt>
+						<dd>{$exception[userAgent]}</dd>
+					</dl>
+					<dl>
 						<dt>{lang}wcf.acp.exceptionLog.exception.stacktrace{/lang}</dt>
 						<dd style="font-family: monospace; word-wrap: wrap-all; word-break: break-all;">
 							<ul>

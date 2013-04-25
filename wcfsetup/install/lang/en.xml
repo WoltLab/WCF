@@ -464,6 +464,8 @@
 		<item name="wcf.acp.package.search.packageDescription"><![CDATA[Package Description]]></item>
 		<item name="wcf.acp.package.search.packageName"><![CDATA[Package Name]]></item>
 		<item name="wcf.acp.package.search.resultList"><![CDATA[Search Results]]></item>
+		<item name="wcf.acp.package.searchForUpdates"><![CDATA[Search for Updates]]></item>
+		<item name="wcf.acp.package.searchForUpdates.noResults"><![CDATA[Your system is up to date, there are no outstanding updates.]]></item>
 		<item name="wcf.acp.package.source"><![CDATA[Data Source]]></item>
 		<item name="wcf.acp.package.source.download"><![CDATA[Paket herunterladen]]></item>
 		<item name="wcf.acp.package.source.download.description"><![CDATA[Geben Sie den direkten Pfad zur Paketdatei an. Dabei kann es sich um die Internetadresse der Paketdatei oder alternativ den Pfad zur Paketdatei im Dateisystem handeln.]]></item>
@@ -475,6 +477,18 @@
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Plugin]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package “{@$package->getName()}”?]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
+		<item name="wcf.acp.package.update.credentials"><![CDATA[Credentials]]></item>
+		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Your credentials are invalid, please verify {if $updateServer->requiresLicense()}license and serial number{else}username and password{/if}.]]></item>
+		<item name="wcf.acp.package.update.errorCode.403"><![CDATA[You are not allowed to access this package.]]></item>
+		<item name="wcf.acp.package.update.licenseNo"><![CDATA[License Number]]></item>
+		<item name="wcf.acp.package.update.password"><![CDATA[Password]]></item>
+		<item name="wcf.acp.package.update.saveCredentials"><![CDATA[Save Credentials]]></item>
+		<item name="wcf.acp.package.update.serialNo"><![CDATA[Serial Number]]></item>
+		<item name="wcf.acp.package.update.server"><![CDATA[Package Server]]></item>
+		<item name="wcf.acp.package.update.server.message"><![CDATA[Server Notice]]></item>
+		<item name="wcf.acp.package.update.server.url"><![CDATA[URL]]></item>
+		<item name="wcf.acp.package.update.unauthorized"><![CDATA[Authorization Required]]></item>
+		<item name="wcf.acp.package.update.username"><![CDATA[Username]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
 	</category>

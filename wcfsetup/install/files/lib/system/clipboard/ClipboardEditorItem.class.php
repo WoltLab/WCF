@@ -115,7 +115,7 @@ final class ClipboardEditorItem {
 	 * @param	string		$name
 	 */
 	public function setName($name) {
-		if (!preg_match('~^[a-zA-Z0-9\.]+$~', $name)) {
+		if (!preg_match('~^[a-zA-Z0-9\.-]+$~', $name)) {
 			throw new SystemException("item name '".$name."' is invalid");
 		}
 		

@@ -1,25 +1,34 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
+use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 
 /**
- * Shows the list of available updates for installed packages.
+ * Shows the package update confirmation form.
  * 
- * @author	Marcel Werk
+ * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
  * @category	Community Framework
  */
-class PackageAutoUpdateListPage extends AbstractPage {
+class PackageUpdatePage extends AbstractPage {
 	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.package.autoupdate';
+	public $activeMenuItem = 'wcf.acp.menu.link.package';
+	
+	/**
+	 * list of available updates
+	 * @var	array
+	 */
+	public $availableUpdates = array();
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
@@ -27,23 +36,11 @@ class PackageAutoUpdateListPage extends AbstractPage {
 	public $neededPermissions = array('admin.system.package.canUpdatePackage');
 	
 	/**
-	 * list with data of available updates
-	 * @var	array
+	 * @see	wcf\page\IPage::readData()
 	 */
-	public $availableUpdates = array();
-	
-	/**
-	 * @see	wcf\page\IPage::assignVariables()
-	 */
-	public function readParameters() {
-		parent::readParameters();
+	public function readData() {
+		parent::readData();
 		
-		if (empty($_POST)) {
-			// refresh package database
-			PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
-		}
-		
-		// get updatable packages
 		$this->availableUpdates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 	}
 	
@@ -59,7 +56,7 @@ class PackageAutoUpdateListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function show() {
 		// check master password

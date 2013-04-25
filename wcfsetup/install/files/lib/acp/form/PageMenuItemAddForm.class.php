@@ -239,8 +239,11 @@ class PageMenuItemAddForm extends AbstractForm {
 		$this->menuItemController = $this->menuItemLink = $this->pageMenuItem = $this->parentMenuItem = '';
 		$this->showOrder = 0;
 		
+		// disable assignment of value variables
+		I18nHandler::getInstance()->disableAssignValueVariables();
+		
 		// reload parent menu items
-		if ($menuItem->menuPosition == 'header' && $menuItem->parentMenuItem != '') {
+		if ($menuItem->menuPosition == 'header' && $menuItem->parentMenuItem == '') {
 			$this->readAvailableParentMenuItems();
 		}
 	}

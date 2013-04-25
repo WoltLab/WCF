@@ -418,7 +418,7 @@ CREATE TABLE wcf1_package_update (
 	packageDescription VARCHAR(255) NOT NULL DEFAULT '',
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
-	isApplication TINYINT(1) NOT NULL DEFAULT 0
+	isApplication TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY packageUpdateServerID (packageUpdateServerID, package)
 );
 

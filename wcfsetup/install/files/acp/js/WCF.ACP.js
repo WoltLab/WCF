@@ -189,7 +189,7 @@ WCF.ACP.Menu = Class.extend({
 /**
  * Namespace for ACP package management.
  */
-WCF.ACP.Package = {};
+WCF.ACP.Package = { };
 
 /**
  * Provides the package installation.
@@ -864,6 +864,230 @@ WCF.ACP.Package.Search = Class.extend({
 			this._packageSearchResultList.html(this._content[this._pageNo]);
 			
 			WCF.DOMNodeInsertedHandler.disable();
+		}
+	}
+});
+
+/**
+ * Namespace for package update related classes.
+ */
+WCF.ACP.Package.Update = { };
+
+/**
+ * Handles the package update process.
+ */
+WCF.ACP.Package.Update.Manager = Class.extend({
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * submit button
+	 * @var	jQuery
+	 */
+	_submitButton: null,
+	
+	/**
+	 * Initializes the WCF.ACP.Package.Update.Manager class.
+	 */
+	init: function() {
+		this._dialog = null;
+		this._submitButton = $('.formSubmit > button').click($.proxy(this._click, this));
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		$('.jsPackageUpdate').each($.proxy(function(index, packageUpdate) {
+			var $packageUpdate = $(packageUpdate);
+			$packageUpdate.find('input[type=checkbox]').data('packageUpdate', $packageUpdate).change($.proxy(this._change, this));
+		}, this));
+	},
+	
+	/**
+	 * Handles toggles for a specific update.
+	 */
+	_change: function(event) {
+		var $checkbox = $(event.currentTarget);
+		
+		if ($checkbox.is(':checked')) {
+			$checkbox.data('packageUpdate').find('select').enable();
+			$checkbox.data('packageUpdate').find('dl').removeClass('disabled');
+			
+			this._submitButton.enable();
+		}
+		else {
+			$checkbox.data('packageUpdate').find('select').disable();
+			$checkbox.data('packageUpdate').find('dl').addClass('disabled');
+			
+			// disable submit button
+			if (!$('input[type=checkbox]:checked').length) {
+				this._submitButton.disable();
+			}
+		}
+	},
+	
+	/**
+	 * Handles clicks on the submit button.
+	 * 
+	 * @param	object		event
+	 * @param	integer		packageUpdateServerID
+	 */
+	_click: function(event, packageUpdateServerID) {
+		var $packages = { };
+		$('.jsPackageUpdate').each($.proxy(function(index, packageUpdate) {
+			var $packageUpdate = $(packageUpdate);
+			if ($packageUpdate.find('input[type=checkbox]:checked').length) {
+				$packages[$packageUpdate.data('package')] = $packageUpdate.find('select').val();
+			}
+		}, this));
+		
+		if ($.getLength($packages)) {
+			var $parameters = {
+				packages: $packages
+			};
+			if (packageUpdateServerID) {
+				$parameters.authData = {
+					packageUpdateServerID: packageUpdateServerID,
+					password: $.trim($('#packageUpdateServerPassword').val()),
+					saveCredentials: ($('#packageUpdateServerSaveCredentials:checked').length ? true : false),
+					username: $.trim($('#packageUpdateServerUsername').val())
+				}
+			}
+			
+			this._proxy.setOption('data', {
+				actionName: 'prepareUpdate',
+				className: 'wcf\\data\\package\\update\\PackageUpdateAction',
+				parameters: $parameters,
+			});
+			this._proxy.sendRequest();
+		}
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (data.returnValues.queueID) {
+			if (this._dialog !== null) {
+				this._dialog.wcfDialog('close');
+			}
+			
+			var $installation = new WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false);
+			$installation.prepareInstallation();
+		}
+		else if (data.returnValues.template) {
+			if (this._dialog === null) {
+				this._dialog = $('<div>' + data.returnValues.template + '</div>').hide().appendTo(document.body);
+				this._dialog.wcfDialog({
+					title: WCF.Language.get('wcf.acp.package.update.unauthorized')
+				});
+			}
+			else {
+				this._dialog.html(data.returnValues.template).wcfDialog('open');
+			}
+			
+			this._dialog.find('.formSubmit > button').click($.proxy(this._submitAuthentication, this));
+		}
+	},
+	
+	/**
+	 * Submits authentication data for current update server.
+	 * 
+	 * @param	object		event
+	 */
+	_submitAuthentication: function(event) {
+		var $usernameField = $('#packageUpdateServerUsername');
+		var $passwordField = $('#packageUpdateServerPassword');
+		
+		// remove error messages if any
+		$usernameField.next('small.innerError').remove();
+		$passwordField.next('small.innerError').remove();
+		
+		var $continue = true;
+		if ($.trim($usernameField.val()) === '') {
+			$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($usernameField);
+			$continue = false;
+		}
+		
+		if ($.trim($passwordField.val()) === '') {
+			$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($passwordField);
+			$continue = false;
+		}
+		
+		if ($continue) {
+			this._click(undefined, $(event.currentTarget).data('packageUpdateServerID'))
+		}
+	}
+});
+
+/**
+ * Searches for available updates.
+ */
+WCF.ACP.Package.Update.Search = Class.extend({
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * initializes the WCF.ACP.Package.SearchForUpdates class.
+	 */
+	init: function() {
+		this._dialog = null;
+		
+		var $button = $('<li><a class="button"><span class="icon icon16 icon-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
+		$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav > ul'));
+	},
+	
+	/**
+	 * Handles clicks on the search button.
+	 */
+	_click: function() {
+		if (this._dialog === null) {
+			new WCF.Action.Proxy({
+				autoSend: true,
+				data: {
+					actionName: 'searchForUpdates',
+					className: 'wcf\\data\\package\\update\\PackageUpdateAction'
+				},
+				success: $.proxy(this._success, this)
+			});
+		}
+		else {
+			this._dialog.wcfDialog('open');
+		}
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (data.returnValues.url) {
+			window.location = data.returnValues.url;
+		}
+		else {
+			this._dialog = $('<div>' + WCF.Language.get('wcf.acp.package.searchForUpdates.noResults') + '</div>').hide().appendTo(document.body);
+			this._dialog.wcfDialog({
+				title: WCF.Language.get('wcf.acp.package.searchForUpdates')
+			});
 		}
 	}
 });

@@ -1,13 +1,15 @@
 <?php
 namespace wcf\data\package\update\server;
 use wcf\data\DatabaseObject;
+use wcf\system\Regex;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a package update server.
  * 
- * @author	Siegfried Schweizer
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.update.server
@@ -78,11 +80,60 @@ class PackageUpdateServer extends DatabaseObject {
 		}
 		
 		// session data
-		$packageUpdateAuthData = WCF::getSession()->getVar('packageUpdateAuthData');
+		$packageUpdateAuthData = @unserialize(WCF::getSession()->getVar('packageUpdateAuthData'));
 		if ($packageUpdateAuthData !== null && isset($packageUpdateAuthData[$this->packageUpdateServerID])) {
 			$authData = $packageUpdateAuthData[$this->packageUpdateServerID];
 		}
 		
 		return $authData;
+	}
+	
+	/**
+	 * Stores auth data for a package update server.
+	 * 
+	 * @param	integer		$packageUpdateServerID
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	boolean		$saveCredentials
+	 */
+	public static function storeAuthData($packageUpdateServerID, $username, $password, $saveCredentials = false) {
+		$packageUpdateAuthData = @unserialize(WCF::getSession()->getVar('packageUpdateAuthData'));
+		if ($packageUpdateAuthData === null || !is_array($packageUpdateAuthData)) {
+			$packageUpdateAuthData = array();
+		}
+		
+		$packageUpdateAuthData[$packageUpdateServerID] = array(
+			'username' => $username,
+			'password' => $password
+		);
+		
+		WCF::getSession()->register('packageUpdateAuthData', serialize($packageUpdateAuthData));
+		
+		if ($saveCredentials) {
+			$serverAction = new PackageUpdateServerAction(array($packageUpdateServerID), 'update', array('data' => array(
+				'loginUsername' => $username,
+				'loginPassword' => $password
+			)));
+			$serverAction->executeAction();
+		}
+	}
+	
+	/**
+	 * Returns true, if update server requires license data instead of username/password.
+	 *
+	 * @return	integer
+	 */
+	public final function requiresLicense() {
+		return Regex::compile('^https?://update.woltlab.com/')->match($this->serverURL);
+	}
+	
+	/**
+	 * Returns the highlighed server URL.
+	 * 
+	 * @return	string
+	 */
+	public function getHighlightedURL() {
+		$host = parse_url($this->serverURL, PHP_URL_HOST);
+		return StringUtil::replace($host, '<strong>'.$host.'</strong>', $this->serverURL);
 	}
 }

@@ -56,18 +56,6 @@
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.package.update">
-			<parent>wcf.acp.menu.link.package</parent>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.package.autoupdate">
-			<controller><![CDATA[wcf\acp\page\PackageAutoUpdateListPage]]></controller>
-			<parent>wcf.acp.menu.link.package.update</parent>
-			<permissions>admin.system.package.canUpdatePackage</permissions>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.package.server">
 			<parent>wcf.acp.menu.link.package</parent>
 			<showorder>2</showorder>
