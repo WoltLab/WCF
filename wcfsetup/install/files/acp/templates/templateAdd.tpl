@@ -79,6 +79,7 @@
 		
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			{if $copy}<input type="hidden" name="copy" value="{@$copy}" />{/if}
 		</div>
 	</form>
 {else}

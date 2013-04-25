@@ -6,6 +6,7 @@ use wcf\data\template\group\TemplateGroupList;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateAction;
 use wcf\form\AbstractForm;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -60,6 +61,35 @@ class TemplateAddForm extends AbstractForm {
 	 * @var integer
 	 */
 	public $packageID = PACKAGE_ID;
+	
+	/**
+	 * id of copied template
+	 * @var integer
+	 */
+	public $copy = 0;
+	
+	/**
+	 * copied template object
+	 * @var wcf\data\template\Template
+	 */
+	public $copiedTemplate = null;
+	
+	/**
+	 * @see	wcf\page\IPage::readParameters()
+	 */
+	public function readParameters() {
+		parent::readParameters();
+	
+		if (!empty($_REQUEST['copy'])) {
+			$this->copy = intval($_REQUEST['copy']);
+			$this->copiedTemplate = new Template($this->copy);
+			if (!$this->copiedTemplate->templateID) {
+				throw new IllegalLinkException();
+			}
+			
+			$this->packageID = $this->copiedTemplate->packageID;
+		}
+	}
 	
 	/**
 	 * @see	wcf\form\IForm::readFormParameters()
@@ -171,13 +201,9 @@ class TemplateAddForm extends AbstractForm {
 		$templateGroupList->readObjects();
 		$this->availableTemplateGroups = $templateGroupList->getObjects();
 		
-		if (!count($_POST)) {
-			if (!empty($_REQUEST['copy'])) {
-				$templateID = intval($_REQUEST['copy']);
-				$template = new Template($templateID);
-				$this->tplName = $template->templateName;
-				$this->templateSource = $template->getSource();
-			}
+		if (!count($_POST) && $this->copiedTemplate !== null) {
+			$this->tplName = $this->copiedTemplate->templateName;
+			$this->templateSource = $this->copiedTemplate->getSource();
 		}
 	}
 	
@@ -192,7 +218,8 @@ class TemplateAddForm extends AbstractForm {
 			'tplName' => $this->tplName,
 			'templateGroupID' => $this->templateGroupID,
 			'templateSource' => $this->templateSource,
-			'availableTemplateGroups' => $this->availableTemplateGroups
+			'availableTemplateGroups' => $this->availableTemplateGroups,
+			'copy' => $this->copy
 		));
 	}
 }
