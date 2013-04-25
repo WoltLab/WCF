@@ -22,14 +22,14 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 	 * @see	wcf\system\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
-		$filename = FileUtil::downloadFileFromHttp('http://www.woltlab.com/spiderlist/spiderlist.xml', 'spiders');
+		$filename = FileUtil::downloadFileFromHttp('http://www.woltlab.com/spiderlist/spiderList2.xml', 'spiders');
 		$xml = new XML();
 		$xml->load($filename);
 		
 		$xpath = $xml->xpath();
 		
 		// fetch spiders
-		$spiders = $xpath->query('/spiderlist/spider');
+		$spiders = $xpath->query('/data/spider');
 		
 		if (!empty($spiders)) {
 			// delete old entries
@@ -41,7 +41,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 			foreach ($spiders as $spider) {
 				$identifier = StringUtil::toLowerCase($spider->getAttribute('ident'));
 				$name = $xpath->query('name', $spider)->item(0);
-				$info = $xpath->query('info', $spider)->item(0);
+				$info = $xpath->query('url', $spider)->item(0);
 				
 				$statementParameters[$identifier] = array(
 					'spiderIdentifier' => $identifier,
