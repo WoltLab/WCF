@@ -110,6 +110,21 @@ class TemplateEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
+	 * @see	wcf\data\IEditableObject::deleteAll()
+	 */
+	public static function deleteAll(array $objectIDs = array()) {
+		$list = new TemplateList();
+		$list->setObjectIDs($objectIDs);
+		$list->readObjects();
+		foreach ($list as $template) {
+			$editor = new TemplateEditor($template);
+			$editor->deleteFile();
+		}
+		
+		return parent::deleteAll($objectIDs);
+	}
+	
+	/**
 	 * Deletes the compiled files of this template.
 	 */
 	public function deleteCompiledFiles() {
