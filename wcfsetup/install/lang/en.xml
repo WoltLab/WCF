@@ -454,8 +454,8 @@
 		<item name="wcf.acp.package.search.packageName"><![CDATA[Package Name]]></item>
 		<item name="wcf.acp.package.search.resultList"><![CDATA[Search Results]]></item>
 		<item name="wcf.acp.package.source"><![CDATA[Data Source]]></item>
-		<item name="wcf.acp.package.source.download"><![CDATA[Paket herunterladen]]></item>
-		<item name="wcf.acp.package.source.download.description"><![CDATA[Geben Sie den direkten Pfad zur Paketdatei an. Dabei kann es sich um die Internetadresse der Paketdatei oder alternativ den Pfad zur Paketdatei im Dateisystem handeln.]]></item>
+		<item name="wcf.acp.package.source.download"><![CDATA[Download Package]]></item>
+		<item name="wcf.acp.package.source.download.description"><![CDATA[Enter the direct path to the package data. It is possible to use the package data's internet address or, alternatively, the path to the package data within the file system.]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Upload Package]]></item>
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[Upload package archive from your local machine.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Install Package]]></item>
