@@ -84,7 +84,7 @@
 
 {if $objects|count}
 	<div class="container marginTop">
-		<ol class="containerList styleList">
+		<ol class="containerList">
 			{foreach from=$objects item=item}
 				<li>
 					<div>

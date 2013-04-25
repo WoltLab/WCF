@@ -21,15 +21,15 @@ class TemplateAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
-	protected $permissionsCreate = array('admin.template.canAddTemplate');
+	protected $permissionsCreate = array('admin.template.canManageTemplate');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.template.canDeleteTemplate');
+	protected $permissionsDelete = array('admin.template.canManageTemplate');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.template.canEditTemplate');
+	protected $permissionsUpdate = array('admin.template.canManageTemplate');
 }

@@ -585,7 +585,7 @@ CREATE TABLE wcf1_template (
 	packageID INT(10) NOT NULL,
 	templateName VARCHAR(255) NOT NULL DEFAULT '',
 	templateGroupID INT(10),
-	obsolete TINYINT(1) NOT NULL DEFAULT 0,
+	lastModificationTime INT(10) NOT NULL DEFAULT 0,
 	KEY packageID (packageID, templateName),
 	KEY templateGroupID (packageID, templateGroupID, templateName)
 );
@@ -593,7 +593,7 @@ CREATE TABLE wcf1_template (
 DROP TABLE IF EXISTS wcf1_template_group;
 CREATE TABLE wcf1_template_group (
 	templateGroupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	parentTemplateGroupID INT(10) NOT NULL DEFAULT 0,
+	parentTemplateGroupID INT(10),
 	templateGroupName VARCHAR(255) NOT NULL DEFAULT '',
 	templateGroupFolderName VARCHAR(255) NOT NULL DEFAULT ''
 );
@@ -854,6 +854,8 @@ ALTER TABLE wcf1_style_variable_value ADD FOREIGN KEY (variableID) REFERENCES wc
 
 ALTER TABLE wcf1_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_template ADD FOREIGN KEY (templateGroupID) REFERENCES wcf1_template_group (templateGroupID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_template_group ADD FOREIGN KEY (parentTemplateGroupID) REFERENCES wcf1_template_group (templateGroupID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_template_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
