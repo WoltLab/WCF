@@ -28,8 +28,9 @@ class TemplateEditor extends DatabaseObjectEditor {
 	public static function create(array $parameters = array()) {
 		// obtain default values
 		if (!isset($parameters['packageID'])) $parameters['packageID'] = PACKAGE_ID;
+		if (!isset($parameters['lastModificationTime'])) $parameters['lastModificationTime'] = TIME_NOW;
 		
-		parent::create($parameters);
+		return parent::create($parameters);
 	}
 	
 	/**
@@ -58,13 +59,12 @@ class TemplateEditor extends DatabaseObjectEditor {
 	 * @param	string		$name
 	 * @param	integer		$templateGroupID
 	 */
-	protected function rename($name, $templateGroupID = 0) {
+	public function rename($name, $templateGroupID = 0) {
 		// get current path
 		$currentPath = $this->getPath();
 		
 		// get new path		
-		$this->data['templateGroupFolderName'] = '';
-		if ($templateGroupID != 0) {
+		if ($templateGroupID != $this->templateGroupID) {
 			// get folder name
 			$sql = "SELECT	templateGroupFolderName
 				FROM	wcf".WCF_N."_template_group
@@ -72,14 +72,14 @@ class TemplateEditor extends DatabaseObjectEditor {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($templateGroupID));
 			$row = $statement->fetchArray();
-			$this->data['templateGroupFolderName'] = $row['templateGroupFolderName'];
+			$this->object->data['templateGroupFolderName'] = $row['templateGroupFolderName'];
 		}
 		
 		// delete compiled templates
 		$this->deleteCompiledFiles();
 		
 		// rename
-		$this->data['templateName'] = $name;
+		$this->object->data['templateName'] = $name;
 		$newPath = $this->getPath();
 		
 		// move file

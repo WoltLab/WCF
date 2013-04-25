@@ -102,7 +102,7 @@ class TemplateAddForm extends AbstractForm {
 			throw new UserInputException('tplName');
 		}
 	
-		if (!preg_match('^/[a-z0-9_\-]+$/i', $this->tplName)) {
+		if (!preg_match('/^[a-z0-9_\-]+$/i', $this->tplName)) {
 			throw new UserInputException('tplName', 'notValid');
 		}
 		
@@ -144,9 +144,9 @@ class TemplateAddForm extends AbstractForm {
 		parent::save();
 		
 		$this->objectAction = new TemplateAction(array(), 'create', array('data' => array(
-			'templateName' => $this->templateName,
+			'templateName' => $this->tplName,
 			'packageID' => $this->packageID,
-			'templateGroupID' => ($this->templateGroupID)
+			'templateGroupID' => $this->templateGroupID
 		), 'source' => $this->templateSource));
 		$this->objectAction->executeAction();
 		$this->saved();

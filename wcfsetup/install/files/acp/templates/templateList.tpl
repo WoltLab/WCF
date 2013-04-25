@@ -95,7 +95,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$template->templateID}</td>
-						<td class="columnTitle columnTemplateName">{if $template->templateGroupID}<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}">{$template->templateName}</a>{else}{$template->templateName}{/if}</td>
+						<td class="columnTitle columnTemplateName">{if $template->packageDir}[{$template->getPackageAbbreviation()}] {/if}{if $template->templateGroupID}<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}">{$template->templateName}</a>{else}{$template->templateName}{/if}</td>
 						<td class="columnDate columnLastModificationTime">{@$template->lastModificationTime|time}</td>
 						
 						{event name='columns'}
