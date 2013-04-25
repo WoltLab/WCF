@@ -51,20 +51,20 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	/**
 	 * @see wcf\acp\form\TemplateGroupAddForm::validateName()
 	 */
- 	protected function validateName() {
- 		if ($this->templateGroupName != $this->templateGroup->templateGroupName) {
- 			parent::validateName();
- 		}
- 	}
- 	
- 	/**
+	protected function validateName() {
+		if ($this->templateGroupName != $this->templateGroup->templateGroupName) {
+			parent::validateName();
+		}
+	}
+	
+	/**
 	 * @see wcf\acp\form\TemplateGroupAddForm::validateFolderName()
 	 */
- 	protected function validateFolderName() {
- 		if ($this->templateGroupFolderName != $this->templateGroup->templateGroupFolderName) {
- 			parent::validateFolderName();
- 		}
- 	}
+	protected function validateFolderName() {
+		if ($this->templateGroupFolderName != $this->templateGroup->templateGroupFolderName) {
+			parent::validateFolderName();
+		}
+	}
 	
 	/**
 	 * @see	wcf\form\IForm::save()
