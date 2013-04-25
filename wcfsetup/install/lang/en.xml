@@ -370,13 +370,13 @@
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP Port]]></item>
 		<item name="wcf.acp.option.mail_smtp_user"><![CDATA[SMTP Username]]></item>
 		<item name="wcf.acp.option.mail_use_f_param"><![CDATA[Use “-f” parameter]]></item>
-		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Some servers require the “-f” parameter to send emails. Enable this option if you have any trouble sending emails.]]></item>
+		<item name="wcf.acp.option.mail_use_f_param.description"><![CDATA[Some servers require the “-f” parameter to send emails. Enable this option, if you have any trouble sending emails.]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address"><![CDATA[Use formatted email address]]></item>
 		<item name="wcf.acp.option.mail_use_formatted_address.description"><![CDATA[Sender and receiver addresses will be converted into “Name &lt;email@domain.tld&gt;”. This option is not supported by most mail-servers, try turning it off if you experience any issues.]]></item>
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Enable master password]]></item>
-		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Enables an additional passwort to protect both critical actions and sensitive data.]]></item>
+		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Enables an additional passwort to protect both, critical actions and sensitive data.]]></item>
 		<item name="wcf.acp.option.page_description"><![CDATA[Page Description]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Page Title]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
@@ -389,18 +389,18 @@
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Default timezone of your page]]></item>
 		<item name="wcf.acp.option.user_online_timeout"><![CDATA[User-Online timeout]]></item>
-		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Timeout in seconds until an inactive user should be displayed as online.]]></item>
+		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Timeout given in seconds, until an inactive user should be displayed as online.]]></item>
 		<item name="wcf.acp.option.offline"><![CDATA[Enable maintenance mode]]></item>
-		<item name="wcf.acp.option.offline.description"><![CDATA[Disables all applications and prevents access from unprivileged users.]]></item>
+		<item name="wcf.acp.option.offline.description"><![CDATA[Disables all applications and prevents access from unauthorized users.]]></item>
 		<item name="wcf.acp.option.offline_message"><![CDATA[Maintenance Notice]]></item>
-		<item name="wcf.acp.option.offline_message.description"><![CDATA[Notice displayed to visitors while maintenance mode is enabled]]></item>
+		<item name="wcf.acp.option.offline_message.description"><![CDATA[Notice displayed to visitors, while maintenance mode is enabled]]></item>
 		<item name="wcf.acp.option.offline_message_allow_html"><![CDATA[Use HTML]]></item>
 		<item name="wcf.acp.option.offline_message_allow_html.description"><![CDATA[Enables you to use HTML in “Maintenance Notice”.]]></item>
 		<item name="wcf.acp.option.show_version_number"><![CDATA[Show version number in copyright notice]]></item>
 		<item name="wcf.acp.option.enable_debug_mode"><![CDATA[Enable debug mode]]></item>
-		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Enables extensive error messages. Should be always disabled in production environments!]]></item>
+		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Enables extensive error messages. Should be always disabled in productive environments!]]></item>
 		<item name="wcf.acp.option.external_link_rel_nofollow"><![CDATA[Append the attribute “rel="nofollow"” to all external links]]></item>
-		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[The attribute “rel="nofollow"” tells search engines to disregard external links.]]></item>
+		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[The attribute “rel="nofollow"” transmits to search engines to disregard external links.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Open external links in a new window]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Appends the attribute “target="_blank"” to external links, causing the user’s browser to open the link in a new window.]]></item>
 	</category>
