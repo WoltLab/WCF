@@ -318,7 +318,7 @@
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Censorship]]></item>
 		
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookie Domain]]></item>
-		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Should be left blank except for special circumstances.]]></item>
+		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Should be left blank, except for special circumstances.]]></item>
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookie Path]]></item>
 		<item name="wcf.acp.option.cookie_path.description"><![CDATA[Value should be absolute to Document Root, e.g. “/forum” for “http://www.woltlab.com/forum”.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Cookie Prefix]]></item>
@@ -333,7 +333,7 @@
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Enable gzip-compression]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Compresses content transfered to users, reduces traffic and page load time. Does not affect files, e.g. images.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Prevent Browser-caching]]></item>
-		<item name="wcf.acp.option.http_enable_no_cache_headers.description"><![CDATA[Prevents Browser’s caching ensuring your users are always viewing the latest content. Increases both traffic and server load.]]></item>
+		<item name="wcf.acp.option.http_enable_no_cache_headers.description"><![CDATA[Prevents Browser’s caching, ensuring your users are always viewing the latest content. Increases both, traffic and server load.]]></item>
 		
 		<item name="wcf.acp.option.http_gzip_level"><![CDATA[gzip-compression level]]></item>
 		<item name="wcf.acp.option.http_gzip_level.description"><![CDATA[Values between 1 and 9 are valid, it is recommended to use “1” for good compression without causing high server loads.]]></item>
