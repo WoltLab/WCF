@@ -623,7 +623,7 @@
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Assigning the following users to user groups selected below]]></item>
 		<item name="wcf.acp.user.delete.sure"><![CDATA[Do you really want to delete the user “{$user->username}”?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Edit User]]></item>
-		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Heads up! You’re editing your own user account and changes might result in yourself being locked out from the Administration Control Panel.]]></item>
+		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Mind! You’re editing your own user account and changes might result in yourself being locked out from the Administration Control Panel.]]></item>
 		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[Export Email Addresses]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType"><![CDATA[Export Format]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.csv"><![CDATA[CSV (<em>Character Separated Values</em>)]]></item>
@@ -633,7 +633,7 @@
 		<item name="wcf.acp.user.exportEmailAddress.separator"><![CDATA[Separator]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.textSeparator"><![CDATA[Text Separator]]></item>
 		<item name="wcf.acp.user.groups"><![CDATA[User Group(s)]]></item>
-		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Find users which are not part of the selected user groups.]]></item>
+		<item name="wcf.acp.user.groups.invertSearch"><![CDATA[Find users, which are not part of the selected user groups.]]></item>
 		<item name="wcf.acp.user.list"><![CDATA[Users]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[All Users]]></item>
 		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} Users]]></item>
@@ -641,7 +641,7 @@
 		<item name="wcf.acp.user.massProcessing.action"><![CDATA[Actions]]></item>
 		<item name="wcf.acp.user.massProcessing.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.user.massProcessing.success"><![CDATA[Executed action affected {#$affectedUsers} user{if $affectedUsers != 1}s{/if}.]]></item>
-		<item name="wcf.acp.user.massProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below without any further confirmation prompt! Processing can be fairly slow if many users are affected by your conditions, it is recommended to enable “Maintenance Mode” in first place. Any change cannot be undone, please be careful!]]></item>
+		<item name="wcf.acp.user.massProcessing.warning"><![CDATA[Mind! The bulk processing executes all actions below without any further confirmation prompt! Processing can be fairly slow, if many users are affected by your conditions, it is recommended to enable “Maintenance Mode” in first place. Any change cannot be undone, please be careful!]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Search Users]]></item>
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profile]]></item>
@@ -664,7 +664,7 @@
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[Email to user group]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[Send email to members of the following user groups]]></item>
 		<item name="wcf.acp.user.sendMail.mail"><![CDATA[Email]]></item>
-		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[Send email to following users]]></item>
+		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[Send email to the following users]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Text]]></item>
 	</category>
