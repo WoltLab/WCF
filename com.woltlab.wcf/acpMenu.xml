@@ -329,6 +329,32 @@
 		</acpmenuitem>
 		<!-- /style -->
 		
+		<!-- template -->
+		<acpmenuitem name="wcf.acp.menu.link.template">
+			<parent>wcf.acp.menu.link.display</parent>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.template.list">
+			<controller><![CDATA[wcf\acp\page\TemplateListPage]]></controller>
+			<parent>wcf.acp.menu.link.template</parent>
+			<permissions>admin.template.canManageTemplate</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.template.add">
+			<controller><![CDATA[wcf\acp\form\TemplateAddForm]]></controller>
+			<parent>wcf.acp.menu.link.template</parent>
+			<permissions>admin.template.canManageTemplate</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.template.group.list">
+			<controller><![CDATA[wcf\acp\page\TemplateGroupListPage]]></controller>
+			<parent>wcf.acp.menu.link.template</parent>
+			<permissions>admin.template.canManageTemplate</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.template.group.add">
+			<controller><![CDATA[wcf\acp\form\TemplateGroupAddForm]]></controller>
+			<parent>wcf.acp.menu.link.template</parent>
+			<permissions>admin.template.canManageTemplate</permissions>
+		</acpmenuitem>
+		<!-- /template -->
+		
 		<!-- language -->
 		<acpmenuitem name="wcf.acp.menu.link.language">
 			<parent>wcf.acp.menu.link.display</parent>

@@ -271,6 +271,11 @@
 		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[Benutzerprofilfeld-Kategorien auflisten]]></item>
 		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Benutzerprofilfeld-Kategorie hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.user.option.setDefaults"><![CDATA[Benutzerprofil-Einstellungen verwalten]]></item>
+		<item name="wcf.acp.menu.link.template"><![CDATA[Templates]]></item>
+		<item name="wcf.acp.menu.link.template.list"><![CDATA[Templates auflisten]]></item>
+		<item name="wcf.acp.menu.link.template.add"><![CDATA[Template hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.template.group.list"><![CDATA[Templategruppen auflisten]]></item>
+		<item name="wcf.acp.menu.link.template.group.add"><![CDATA[Templategruppe hinzufügen]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">

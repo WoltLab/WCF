@@ -271,6 +271,11 @@
 		<item name="wcf.acp.menu.link.user.option.category.list"><![CDATA[List Field Categories]]></item>
 		<item name="wcf.acp.menu.link.user.option.category.add"><![CDATA[Add Field Category]]></item>
 		<item name="wcf.acp.menu.link.user.option.setDefaults"><![CDATA[Manage User Field Settings]]></item>
+		<item name="wcf.acp.menu.link.template"><![CDATA[Templates]]></item>
+		<item name="wcf.acp.menu.link.template.list"><![CDATA[List Templates]]></item>
+		<item name="wcf.acp.menu.link.template.add"><![CDATA[Add Template]]></item>
+		<item name="wcf.acp.menu.link.template.group.list"><![CDATA[List Template Groups]]></item>
+		<item name="wcf.acp.menu.link.template.group.add"><![CDATA[Add Template Group]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
