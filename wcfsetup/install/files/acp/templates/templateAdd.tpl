@@ -3,6 +3,7 @@
 <header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.template.{$action}{/lang}</h1>
+		{if $action == 'edit'}<h2>{$template->getPath()}</h2>{/if}
 	</hgroup>
 </header>
 

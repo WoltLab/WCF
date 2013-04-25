@@ -85,10 +85,6 @@ class TemplateGroupAddForm extends AbstractForm {
 			throw new UserInputException('templateGroupName');
 		}
 	
-		if (!preg_match('/^[a-z0-9_\-]+\/$/i', $this->templateGroupName)) {
-			throw new UserInputException('templateGroupName', 'notValid');
-		}
-		
 		$sql = "SELECT	COUNT(*) AS count
 			FROM	wcf".WCF_N."_template_group
 			WHERE	templateGroupName = ?";
@@ -108,8 +104,8 @@ class TemplateGroupAddForm extends AbstractForm {
 			throw new UserInputException('templateGroupFolderName');
 		}
 		
-		if ($this->templateGroupFolderName == '/') {
-			throw new UserInputException('templateGroupFolderName', 'notUnique');
+		if (!preg_match('/^[a-z0-9_\- ]+\/$/i', $this->templateGroupFolderName)) {
+			throw new UserInputException('templateGroupFolderName', 'notValid');
 		}
 	
 		$sql = "SELECT	COUNT(*) AS count
