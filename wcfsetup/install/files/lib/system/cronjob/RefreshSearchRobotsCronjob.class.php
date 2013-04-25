@@ -29,7 +29,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 		$xpath = $xml->xpath();
 		
 		// fetch spiders
-		$spiders = $xpath->query('/data/spider');
+		$spiders = $xpath->query('/ns:data/ns:spider');
 		
 		if (!empty($spiders)) {
 			// delete old entries
@@ -40,8 +40,8 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 			$statementParameters = array();
 			foreach ($spiders as $spider) {
 				$identifier = StringUtil::toLowerCase($spider->getAttribute('ident'));
-				$name = $xpath->query('name', $spider)->item(0);
-				$info = $xpath->query('url', $spider)->item(0);
+				$name = $xpath->query('ns:name', $spider)->item(0);
+				$info = $xpath->query('ns:url', $spider)->item(0);
 				
 				$statementParameters[$identifier] = array(
 					'spiderIdentifier' => $identifier,
