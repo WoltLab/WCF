@@ -27,7 +27,7 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler {
 	
 		// remove file extension
 		foreach ($files as &$file) {
-			$file = preg_replace('~.tpl$~', '', $file);
+			$file = substr($file, 0, -4);
 		}
 		unset($file);
 	

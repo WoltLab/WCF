@@ -1,7 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\system\exception\IllegalLinkException;
-
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupAction;
 use wcf\data\template\group\TemplateGroupList;
