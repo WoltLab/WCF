@@ -64,7 +64,7 @@
 {if $objects|count}
 	<div class="tabularBox tabularBoxTitle marginTop">
 		<hgroup>
-			<h1>{lang}wcf.acp.template.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
+			<h1>{lang}wcf.acp.template.list{/lang} <span class="badge badgeInverse jsDataCount">{#$items}</span></h1>
 		</hgroup>
 		
 		<table class="table">

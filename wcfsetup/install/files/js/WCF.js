@@ -1770,6 +1770,12 @@ WCF.Action.Delete = Class.extend({
 	_containerSelector: '',
 	
 	/**
+	 * count selector
+	 * @var	string
+	 */
+	_countSelector: '',
+	
+	/**
 	 * list of known container ids
 	 * @var	array<string>
 	 */
@@ -1782,10 +1788,11 @@ WCF.Action.Delete = Class.extend({
 	 * @param	string		containerSelector
 	 * @param	string		buttonSelector
 	 */
-	init: function(className, containerSelector, buttonSelector) {
+	init: function(className, containerSelector, buttonSelector, countSelector) {
 		this._containerSelector = containerSelector;
 		this._className = className;
 		this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsDeleteButton';
+		this._countSelector = (countSelector) ? countSelector : '.jsDataCount';
 		
 		this.proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
@@ -1869,19 +1876,29 @@ WCF.Action.Delete = Class.extend({
 	 * @param	object		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		this.triggerEffect(data.objectIDs);
+		this.triggerEffect(data.objectIDs, (data.returnValues != null));
+		if(data.returnValues != null)
+			$(this._countSelector).html(parseInt($(this._countSelector).html()) - data.returnValues);
 	},
 	
 	/**
 	 * Triggers the delete effect for the objects with the given ids.
 	 * 
 	 * @param	array		objectIDs
+	 * @param	boolean		fadeOut
 	 */
-	triggerEffect: function(objectIDs) {
+	triggerEffect: function(objectIDs, fadeOut) {
+		if(fadeOut == undefined) 
+			fadeOut = true;
+	
 		for (var $index in this._containers) {
 			var $container = $('#' + this._containers[$index]);
 			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
-				$container.wcfBlindOut('up', function() { $(this).remove(); });
+				if(fadeOut)
+					$container.wcfBlindOut('up', function() { $(this).remove(); });
+				else {
+					$container.find('.jsDeleteButton').removeClass('icon-spinner').addClass('icon-remove');
+				}
 			}
 		}
 	}
