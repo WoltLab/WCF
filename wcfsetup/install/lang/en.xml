@@ -195,7 +195,6 @@
 		<item name="wcf.acp.language.users"><![CDATA[Used by]]></item>
 		<item name="wcf.acp.language.import"><![CDATA[Import Language]]></item>
 		<item name="wcf.acp.language.item.list"><![CDATA[Manage Phrases]]></item>
-		<item name="wcf.acp.language.item.list.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.language.category"><![CDATA[Category]]></item>
 		<item name="wcf.acp.language.item.value"><![CDATA[TODO: Inhalt]]></item>
 		<item name="wcf.acp.language.item.customValue"><![CDATA[TODO: Eigener Inhalt]]></item>
@@ -1003,6 +1002,7 @@
 		<item name="wcf.global.acp"><![CDATA[Administration Control Panel]]></item>
 		<item name="wcf.global.acp.short"><![CDATA[Administration]]></item>
 		<item name="wcf.global.worker.executing"><![CDATA[Executing …]]></item>
+		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">

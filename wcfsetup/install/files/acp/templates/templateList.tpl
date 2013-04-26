@@ -17,7 +17,7 @@
 <form method="post" action="{link controller='TemplateList'}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
-			<legend>{lang}wcf.acp.template.list.filter{/lang}</legend>
+			<legend>{lang}wcf.global.filter{/lang}</legend>
 		
 			<dl>
 				<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
