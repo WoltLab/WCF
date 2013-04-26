@@ -89,4 +89,16 @@ class PageMenu extends TreeMenu {
 		
 		return $item->getProcessor()->isVisible();
 	}
+	
+	/**
+	 * @see	wcf\system\menu\TreeMenu::setActiveMenuItem()
+	 */
+	public function setActiveMenuItem($menuItem) {
+		if (isset($this->menuItemList[$menuItem]) && $this->menuItemList[$menuItem]->menuPosition == 'footer') {
+			// ignore footer items
+			return;
+		}
+	
+		parent::setActiveMenuItem($menuItem);
+	}
 }
