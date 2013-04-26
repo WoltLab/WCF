@@ -232,7 +232,8 @@ class UserOptionAddForm extends AbstractForm {
 			'searchable' => $this->searchable,
 			'editable' => $this->editable,
 			'visible' => $this->visible,
-			'packageID' => 1
+			'packageID' => 1,
+			'additionalData' => ($this->optionType == 'select' ? serialize(array('allowEmptyValue' => true)) : '')
 		)));
 		$this->objectAction->executeAction();
 	

@@ -242,17 +242,15 @@
 						<small>{lang}wcf.acp.style.image.description{/lang}</small>
 					</dd>
 				</dl>
-				{hascontent}
+				{if $availableTemplateGroups|count}
 					<dl{if $errorField == 'templateGroupID'} class="formError"{/if}>
 						<dt><label for="templateGroupID">{lang}wcf.acp.style.templateGroupID{/lang}</label></dt>
 						<dd>
 							<select name="templateGroupID" id="templateGroupID">
-								<option value="0"></option>
-								{content}
-									{foreach from=$availableTemplateGroups item=templateGroup}
-										<option value="{@$templateGroup->templateGroupID}">{$templateGroup->templateGroupName}</option>
-									{/foreach}
-								{/content}
+								<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
+								{foreach from=$availableTemplateGroups item=templateGroup}
+									<option value="{@$templateGroup->templateGroupID}"{if $templateGroup->templateGroupID == $templateGroupID} selected="selected"{/if}>{$templateGroup->templateGroupName}</option>
+								{/foreach}
 							</select>
 							{if $errorField == 'templateGroupID'}
 								<small class="innerError">
@@ -265,7 +263,7 @@
 							{/if}
 						</dd>
 					</dl>
-				{/hascontent}
+				{/if}
 				<dl{if $errorField == 'imagePath'} class="formError"{/if}>
 					<dt><label for="imagePath">{lang}wcf.acp.style.imagePath{/lang}</label></dt>
 					<dd>

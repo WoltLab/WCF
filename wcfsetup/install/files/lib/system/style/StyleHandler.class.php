@@ -144,8 +144,10 @@ class StyleHandler extends SingletonFactory {
 	 */
 	public function resetStylesheet(Style $style) {
 		$stylesheets = glob(WCF_DIR.'style/style-'.$style->styleID.'*.css');
-		foreach ($stylesheets as $stylesheet) {
-			@unlink($stylesheet);
+		if ($stylesheets !== false) {
+			foreach ($stylesheets as $stylesheet) {
+				@unlink($stylesheet);
+			}
 		}
 	}
 	

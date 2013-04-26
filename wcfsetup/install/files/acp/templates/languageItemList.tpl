@@ -18,7 +18,7 @@
 <form method="post" action="{link controller='LanguageItemList'}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
-			<legend>{lang}wcf.acp.language.item.list.filter{/lang}</legend>
+			<legend>{lang}wcf.global.filter{/lang}</legend>
 		
 			<dl>
 				<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>

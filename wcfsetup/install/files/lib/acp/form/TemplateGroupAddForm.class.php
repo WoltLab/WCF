@@ -5,6 +5,7 @@ use wcf\data\template\group\TemplateGroupList;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -59,7 +60,10 @@ class TemplateGroupAddForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		if (isset($_POST['templateGroupName'])) $this->templateGroupName = StringUtil::trim($_POST['templateGroupName']);
-		if (isset($_POST['templateGroupFolderName'])) $this->templateGroupFolderName = StringUtil::trim($_POST['templateGroupFolderName']);
+		if (!empty($_POST['templateGroupFolderName'])) {
+			$this->templateGroupFolderName = StringUtil::trim($_POST['templateGroupFolderName']);
+			if ($this->templateGroupFolderName) $this->templateGroupFolderName = FileUtil::addTrailingSlash($this->templateGroupFolderName);
+		}
 		if (isset($_POST['parentTemplateGroupID'])) $this->parentTemplateGroupID = intval($_POST['parentTemplateGroupID']);
 	}
 	
@@ -100,8 +104,8 @@ class TemplateGroupAddForm extends AbstractForm {
 			throw new UserInputException('templateGroupFolderName');
 		}
 		
-		if ($this->templateGroupFolderName == '/') {
-			throw new UserInputException('templateGroupFolderName', 'notUnique');
+		if (!preg_match('/^[a-z0-9_\- ]+\/$/i', $this->templateGroupFolderName)) {
+			throw new UserInputException('templateGroupFolderName', 'notValid');
 		}
 	
 		$sql = "SELECT	COUNT(*) AS count

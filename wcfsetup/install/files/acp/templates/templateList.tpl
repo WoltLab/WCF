@@ -17,7 +17,7 @@
 <form method="post" action="{link controller='TemplateList'}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
-			<legend>{lang}wcf.acp.template.list.filter{/lang}</legend>
+			<legend>{lang}wcf.global.filter{/lang}</legend>
 		
 			<dl>
 				<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
@@ -95,7 +95,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$template->templateID}</td>
-						<td class="columnTitle columnTemplateName">{if $template->templateGroupID}<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}">{$template->templateName}</a>{else}{$template->templateName}{/if}</td>
+						<td class="columnTitle columnTemplateName">{if $template->packageDir}[{$template->getPackageAbbreviation()}] {/if}{if $template->templateGroupID}<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}">{$template->templateName}</a>{else}{$template->templateName}{/if}</td>
 						<td class="columnDate columnLastModificationTime">{@$template->lastModificationTime|time}</td>
 						
 						{event name='columns'}

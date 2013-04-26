@@ -103,7 +103,8 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'menuItemController' => $this->menuItemController,
 			'menuItemLink' => $this->menuItemLink,
-			'parentMenuItem' => ($this->menuItem->menuPosition == 'header' ? $this->parentMenuItem : ''),
+			'parentMenuItem' => ($this->menuPosition == 'header' ? $this->parentMenuItem : ''),
+			'menuPosition' => $this->menuPosition,
 			'showOrder' => $this->showOrder
 		)));
 		$this->objectAction->executeAction();

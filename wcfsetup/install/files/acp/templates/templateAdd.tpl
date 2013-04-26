@@ -3,6 +3,7 @@
 <header class="boxHeadline">
 	<hgroup>
 		<h1>{lang}wcf.acp.template.{$action}{/lang}</h1>
+		{if $action == 'edit'}<h2>{$template->getPath()}</h2>{/if}
 	</hgroup>
 </header>
 
@@ -17,7 +18,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='TemplateList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.template.list{/lang}</span></a></li>
+			<li><a href="{link controller='TemplateList'}{if $action == 'edit'}templateGroupID={@$template->templateGroupID}{/if}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.template.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>
@@ -41,11 +42,11 @@
 					</dd>
 				</dl>
 				
-				<dl{if $errorField == 'templateName'} class="formError"{/if}>
+				<dl{if $errorField == 'tplName'} class="formError"{/if}>
 					<dt><label for="tplName">{lang}wcf.global.name{/lang}</label></dt>
 					<dd>
 						<input type="text" id="tplName" name="tplName" value="{$tplName}" required="required" class="long" />
-						{if $errorField == 'templateName'}
+						{if $errorField == 'tplName'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
@@ -78,6 +79,7 @@
 		
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			{if $copy}<input type="hidden" name="copy" value="{@$copy}" />{/if}
 		</div>
 	</form>
 {else}

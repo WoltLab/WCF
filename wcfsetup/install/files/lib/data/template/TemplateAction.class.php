@@ -32,4 +32,39 @@ class TemplateAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.template.canManageTemplate');
+	
+	/**
+	 * @see wcf\data\AbstractDatabaseObjectAction::create()
+	 */
+	public function create() {
+		$template = parent::create();
+		
+		if (isset($this->parameters['source'])) {
+			$editor = new TemplateEditor($template);
+			$editor->setSource($this->parameters['source']);
+		}
+		
+		return $template;
+	}
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
+	 */
+	public function update() {
+		parent::update();
+	
+		foreach ($this->objects as $template) {
+			// rename file
+			$templateName = (isset($this->parameters['data']['templateName']) ? $this->parameters['data']['templateName'] : $template->templateName);
+			$templateGroupID = (isset($this->parameters['data']['templateGroupID']) ? $this->parameters['data']['templateGroupID'] : $template->templateGroupID);
+			if ($templateName != $template->templateName || $templateGroupID != $template->templateGroupID) {
+				$template->rename($templateName, $templateGroupID);
+			}
+			
+			// update source
+			if (isset($this->parameters['source'])) {
+				$template->setSource($this->parameters['source']);
+			}
+		}
+	}
 }

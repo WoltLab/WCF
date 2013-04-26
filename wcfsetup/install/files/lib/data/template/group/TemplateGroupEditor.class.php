@@ -51,7 +51,9 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
 	 * Deletes the folder of this template group.
 	 */
 	public function deleteFolder() {
-		DirectoryUtil::getInstance(WCF_DIR . 'templates/' . $this->templateGroupFolderName)->removeAll();
+		if (file_exists(WCF_DIR . 'templates/' . $this->templateGroupFolderName)) {
+			DirectoryUtil::getInstance(WCF_DIR . 'templates/' . $this->templateGroupFolderName)->removeAll();
+		}
 	}
 	
 	/**
