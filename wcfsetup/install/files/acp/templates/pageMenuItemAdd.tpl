@@ -7,6 +7,7 @@
 		var $parentMenuItemContainer = $('#parentMenuItemContainer');
 		var $isInternalLink = $('input[name=isInternalLink]').filter('[value=1]');
 		var $menuItemControllerContainer = $('#menuItemControllerContainer');
+		var $menuItemLinkContainer = $('#menuItemLinkContainer');
 		
 		function handleMenuPosition() {
 			if ($menuPosition.val() === 'header') {
@@ -20,9 +21,11 @@
 		function handleIsInternalLink() {
 			if ($isInternalLink.is(':checked')) {
 				$menuItemControllerContainer.show();
+				$menuItemLinkContainer.hide();
 			}
 			else {
 				$menuItemControllerContainer.hide();
+				$menuItemLinkContainer.show();
 			}
 		}
 		
@@ -138,7 +141,7 @@
 			<dl id="menuItemControllerContainer"{if $errorField == 'menuItemController'} class="formError"{/if}>
 				<dt><label for="menuItemController">{lang}wcf.acp.pageMenu.menuItemController{/lang}</label></dt>
 				<dd>
-					<input type="text" name="menuItemController" id="menuItemController" value="{$menuItemController}" class="medium" />
+					<input type="text" name="menuItemController" id="menuItemController" value="{$menuItemController}" class="long" />
 					{if $errorField == 'menuItemController'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -152,7 +155,7 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'menuItemLink'} class="formError"{/if}>
+			<dl id="menuItemLinkContainer"{if $errorField == 'menuItemLink'} class="formError"{/if}>
 				<dt><label for="menuItemLink">{lang}wcf.acp.pageMenu.menuItemLink{/lang}</label></dt>
 				<dd>
 					<input type="text" name="menuItemLink" id="menuItemLink" value="{$menuItemLink}" class="long" />
