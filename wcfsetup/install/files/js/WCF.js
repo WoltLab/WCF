@@ -7711,6 +7711,8 @@ WCF.UserPanel = Class.extend({
 			var $dropdownMenu = this._container.children('.dropdownMenu');
 			$dropdownMenu.children('.jsDropdownPlaceholder').remove();
 			$('' + data.returnValues.template).prependTo($dropdownMenu);
+			
+			this._after($dropdownMenu);
 		}
 		else {
 			this._container.removeClass('dropdown').empty();
@@ -7719,7 +7721,14 @@ WCF.UserPanel = Class.extend({
 			// remove badge
 			this._container.find('.badge').remove();
 		}
-	}
+	},
+	
+	/**
+	 * Execute actions after the dropdown menu has been populated.
+	 * 
+	 * @param	object		dropdownMenu
+	 */
+	_after: function(dropdownMenu) { }
 });
 
 /**
@@ -8127,7 +8136,7 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 			}
 		}
 		
-		$.ui.tabs.prototype.select.apply(this, arguments);
+		this._setOption('active', index);
 	},
 	
 	/**
