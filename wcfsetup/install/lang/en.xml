@@ -877,7 +877,7 @@
 		<item name="wcf.global.button.collapsible"><![CDATA[Expand and Collapse]]></item>
 		<item name="wcf.global.button.delete"><![CDATA[Delete]]></item>
 		<item name="wcf.global.button.disable"><![CDATA[Disable]]></item>
-		<item name="wcf.global.button.disabledI18n"><![CDATA[monolingual]]></item>
+		<item name="wcf.global.button.disabledI18n"><![CDATA[Monolingual]]></item>
 		<item name="wcf.global.button.edit"><![CDATA[Edit]]></item>
 		<item name="wcf.global.button.enable"><![CDATA[Enable]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Next »]]></item>
@@ -915,7 +915,7 @@
 		<item name="wcf.global.page.previous"><![CDATA[Previous Page]]></item>
 		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
 		<item name="wcf.global.redirect.title"><![CDATA[Redirection]]></item>
-		<item name="wcf.global.redirect.url"><![CDATA[Please click here if the automatic redirection does not work!]]></item>
+		<item name="wcf.global.redirect.url"><![CDATA[Please click here, if the automatic redirection does not work!]]></item>
 		<item name="wcf.global.scrollDown"><![CDATA[Go to Page Bottom]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Go to Page Top]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Search …]]></item>
