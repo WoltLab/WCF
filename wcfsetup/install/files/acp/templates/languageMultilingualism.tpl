@@ -43,7 +43,9 @@
 			<dl id="languageIDs" class="marginTop{if $errorField == 'languageIDs'} formError{/if}">
 				<dt><label for="languageIDs">{lang}wcf.acp.language.multilingualism.languages{/lang}</label></dt>
 				<dd class="floated">
-					{htmlCheckboxes options=$languages name=languageIDs selected=$languageIDs disableEncoding=true}
+					{foreach from=$languages item='language'}
+						<label><input type="checkbox" name="languageIDs[]" value="{@$language->languageID}"{if $language->languageID == $defaultLanguageID} checked="checked" disabled="disabled"{elseif $language->languageID|in_array:$languageIDs} checked="checked"{/if} /> {$language}</label>
+					{/foreach}
 					
 					{if $errorField == 'languageIDs'}
 						<small class="innerError">

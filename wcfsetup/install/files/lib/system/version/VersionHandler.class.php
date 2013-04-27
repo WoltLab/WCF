@@ -57,8 +57,8 @@ class VersionHandler extends SingletonFactory {
 	/**
 	 * Returns the database object with the given version id.
 	 * 
-	 * @param	integer	$objectTypeID
-	 * @param	integer	$versionID
+	 * @param	integer		$objectTypeID
+	 * @param	integer		$versionID
 	 * @return	wcf\data\VersionableDatabaseObject
 	 */
 	public function getVersionByID($objectTypeID, $versionID) {
@@ -70,7 +70,7 @@ class VersionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the object type with the given id.
+	 * Returns the object type with the given id.
 	 * 
 	 * @param	integer	$objectTypeID
 	 * @return	wcf\data\object\type\ObjectType
@@ -84,9 +84,9 @@ class VersionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the object type with the given name.
+	 * Returns the object type with the given name.
 	 * 
-	 * @param	string	$objectTypeName
+	 * @param	string		$objectTypeName
 	 * @return	wcf\data\object\type\ObjectType
 	 */
 	public function getObjectTypeByName($objectTypeName) {
