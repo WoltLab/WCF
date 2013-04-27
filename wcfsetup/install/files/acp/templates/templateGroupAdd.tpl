@@ -66,11 +66,10 @@
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.template.group.name.error.{@$errorType}{/lang}
+								{lang}wcf.acp.template.group.folderName.error.{@$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.template.group.folderName.description{/lang}</small>
 				</dd>
 			</dl>
 			
