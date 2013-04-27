@@ -13,7 +13,7 @@ use wcf\system\version\VersionHandler;
  * @subpackage	data
  * @category	Community Framework
  */
-abstract class VersionableDatabaseObject extends DatabaseObject {	
+abstract class VersionableDatabaseObject extends DatabaseObject {
 	/**
 	 * name of the versionable object type
 	 * @var	string
@@ -21,7 +21,7 @@ abstract class VersionableDatabaseObject extends DatabaseObject {
 	public $versionableObjectTypeName = '';
 	
 	/**
-	 * Returns suffix of database tables.
+	 * Returns suffix of the version database table.
 	 * 
 	 * @return	string
 	 */
@@ -30,7 +30,7 @@ abstract class VersionableDatabaseObject extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns name of index in version table.
+	 * Returns name of index in version database table.
 	 * 
 	 * @return	string
 	 */
@@ -39,7 +39,7 @@ abstract class VersionableDatabaseObject extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns all versions of this database object
+	 * Returns all versions of this database object.
 	 * 
 	 * @return	array<wcf\data\VersionableDatabaseObject>
 	 */
