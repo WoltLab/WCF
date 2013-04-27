@@ -10,9 +10,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.user.search{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.user.search{/lang}</h1>
 </header>
 
 {if $errorField == 'search'}
@@ -107,7 +105,7 @@
 					{foreach from=$optionTree[0][categories] item=category}
 						<fieldset>
 							<legend>{lang}wcf.user.option.category.{@$category[object]->categoryName}{/lang}</legend>
-							{hascontent}<h2>{content}{lang __optional=true}wcf.user.option.category.{@$category[object]->categoryName}.description{/lang}{/content}</h2>{/hascontent}
+							{hascontent}<p>{content}{lang __optional=true}wcf.user.option.category.{@$category[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
 							
 							{include file='optionFieldList' options=$category[options] langPrefix='wcf.user.option.'}
 						</fieldset>

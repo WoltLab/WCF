@@ -30,9 +30,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.cronjob.log{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.cronjob.log{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -55,9 +53,9 @@
 
 {hascontent}
 	<div class="tabularBox tabularBoxTitle marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.cronjob.log{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
-		</hgroup>
+		<header>
+			<h2>{lang}wcf.acp.cronjob.log{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+		</header>
 		
 		<table class="table">
 			<thead>

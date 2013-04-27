@@ -7453,7 +7453,7 @@ WCF.Language.Chooser = Class.extend({
 		
 		for (var $languageID in languages) {
 			var $language = languages[$languageID];
-			var $item = $('<li class="boxFlag"><a class="box24"><div class="framed"><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <hgroup><h1>' + $language.languageName + '</h1></hgroup></a></li>').appendTo($dropdownMenu);
+			var $item = $('<li class="boxFlag"><a class="box24"><div class="framed"><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <div><h3>' + $language.languageName + '</h3></div></a></li>').appendTo($dropdownMenu);
 			$item.data('languageID', $languageID).click($.proxy(this._click, this));
 			
 			// update dropdown label

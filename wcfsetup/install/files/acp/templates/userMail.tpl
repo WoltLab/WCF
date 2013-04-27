@@ -21,9 +21,7 @@
 {/if}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}{@$pageTitle}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}{@$pageTitle}{/lang}</h1>
 </header>
 
 {if $errorField}

@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.language.export'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.language.export{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.language.export{/lang}</h1>
 </header>
 
 {if $errorField}

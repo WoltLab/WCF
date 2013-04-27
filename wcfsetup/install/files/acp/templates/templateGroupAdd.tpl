@@ -1,9 +1,7 @@
 {include file='header'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.template.group.{$action}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.template.group.{$action}{/lang}</h1>
 </header>
 
 {if $errorField}

@@ -68,9 +68,7 @@
 {/if}
 
 <header class="box48 boxHeadline">
-	<hgroup>
-		<h1>{@$objectType->getProcessor()->getLanguageVariable('list')}</h1>
-	</hgroup>
+	<h1>{@$objectType->getProcessor()->getLanguageVariable('list')}</h1>
 </header>
 
 <div class="contentNavigation">

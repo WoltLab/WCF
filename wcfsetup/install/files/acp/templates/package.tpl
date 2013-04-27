@@ -11,10 +11,8 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{$package->getName()}</h1>
-		<h2>{$package->packageDescription|language}</h2>
-	</hgroup>
+	<h1>{$package->getName()}</h1>
+	<p>{$package->packageDescription|language}</p>
 </header>
 
 <div class="contentNavigation">
@@ -113,10 +111,10 @@
 			
 			{hascontent}
 				<div id="dependencies-required" class="tabularBox tabularBoxTitle hidden">
-					<hgroup>
-						<h1>{lang}wcf.acp.package.dependencies.required{/lang}</h1>
-						<h2>{lang}wcf.acp.package.dependencies.required.description{/lang}</h2>
-					</hgroup>
+					<header>
+						<h2>{lang}wcf.acp.package.dependencies.required{/lang}</h2>
+						<small>{lang}wcf.acp.package.dependencies.required.description{/lang}</small>
+					</header>
 					
 					<table class="table">
 						<thead>
@@ -162,10 +160,10 @@
 			
 			{hascontent}
 				<div id="dependencies-dependent" class="tabularBox tabularBoxTitle hidden">
-					<hgroup>
-						<h1>{lang}wcf.acp.package.dependencies.dependent{/lang}</h1>
-						<h2>{lang}wcf.acp.package.dependencies.dependent.description{/lang}</h2>
-					</hgroup>
+					<header>
+						<h2>{lang}wcf.acp.package.dependencies.dependent{/lang}</h2>
+						<small>{lang}wcf.acp.package.dependencies.dependent.description{/lang}</small>
+					</header>
 					
 					<table class="table">
 						<thead>

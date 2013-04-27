@@ -81,10 +81,8 @@
 </script>
 
 <header class="boxHeadline boxSubHeadline">
-	<hgroup>
-		<h1>{lang}wcf.global.wcfDir{/lang}</h1>
-		<h2>{lang}wcf.global.wcfDir.description{/lang}</h2>
-	</hgroup>
+	<h2>{lang}wcf.global.wcfDir{/lang}</h2>
+	<p>{lang}wcf.global.wcfDir.description{/lang}</p>
 </header>
 
 {if $invalidDirectory}

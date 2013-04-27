@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.style.exportStyle'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.style.exportStyle{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.style.exportStyle{/lang}</h1>
 </header>
 
 <div class="contentNavigation">

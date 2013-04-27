@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.style.importStyle'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.style.importStyle{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.style.importStyle{/lang}</h1>
 </header>
 
 {if $success|isset}

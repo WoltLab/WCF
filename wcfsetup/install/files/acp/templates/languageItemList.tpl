@@ -10,9 +10,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.language.item.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.language.item.list{/lang}</h1>
 </header>
 
 <form method="post" action="{link controller='LanguageItemList'}{/link}">
@@ -89,9 +87,9 @@
 				<li>
 					<div>
 						<div class="details">
-							<hgroup class="containerHeadline">
-								<h1><a class="jsLanguageItem" data-language-item-id="{@$item->languageItemID}">{$item->languageItem}</a>{if $item->languageCustomItemValue} <span class="icon icon16 icon-bookmark jsTooltip" title="{lang}wcf.acp.language.item.hasCustomValue{/lang}"></span>{/if}</h1>
-							</hgroup>
+							<div class="containerHeadline">
+								<h3><a class="jsLanguageItem" data-language-item-id="{@$item->languageItemID}">{$item->languageItem}</a>{if $item->languageCustomItemValue} <span class="icon icon16 icon-bookmark jsTooltip" title="{lang}wcf.acp.language.item.hasCustomValue{/lang}"></span>{/if}</h3>
+							</div>
 							
 							<p>{if $item->languageUseCustomValue}{$item->languageCustomItemValue|truncate:255}{else}{$item->languageItemValue|truncate:255}{/if}</p>
 						</div>

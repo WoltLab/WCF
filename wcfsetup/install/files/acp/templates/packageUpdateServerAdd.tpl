@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.updateServer.'|concat:$action}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.updateServer.{$action}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.updateServer.{$action}{/lang}</h1>
 </header>
 
 {if $errorField}

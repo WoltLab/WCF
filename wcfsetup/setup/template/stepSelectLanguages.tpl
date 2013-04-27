@@ -1,10 +1,8 @@
 {include file='header'}
 
 <header class="boxHeadline boxSubHeadline">
-	<hgroup>
-		<h1>{lang}wcf.global.languages{/lang}</h1>
-		<h2>{lang}wcf.global.languages.description{/lang}</h2>
-	</hgroup>
+	<h2>{lang}wcf.global.languages{/lang}</h2>
+	<p>{lang}wcf.global.languages.description{/lang}</p>
 </header>
 
 {if $errorField}

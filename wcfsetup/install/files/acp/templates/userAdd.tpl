@@ -9,9 +9,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.user.{@$action}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.user.{@$action}{/lang}</h1>
 </header>
 
 {if $errorField}

@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.option.import'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.option.import{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.option.import{/lang}</h1>
 </header>
 
 {if $errorField}
@@ -60,9 +58,7 @@
 </form>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.option.export{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.option.export{/lang}</h1>
 </header>
 
 <div class="container containerPadding marginTop">

@@ -43,10 +43,8 @@
 	//]]>
 </script>
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.style.{$action}{/lang}</h1>
-		{if $action == 'edit'}<h2>{$styleName}</h2>{/if}
-	</hgroup>
+	<h1>{lang}wcf.acp.style.{$action}{/lang}</h1>
+	{if $action == 'edit'}<p>{$styleName}</p>{/if}
 </header>
 
 {if $errorField}

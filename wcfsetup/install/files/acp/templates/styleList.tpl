@@ -11,9 +11,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.style.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.style.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -42,10 +40,10 @@
 				<div class="box64">
 					<span class="framed"><img src="{@$style->getPreviewImage()}" alt="" /></span>
 					<div class="details">
-						<hgroup class="containerHeadline">
-							<h1><a href="{link controller='StyleEdit' id=$style->styleID}{/link}">{$style->styleName}</a></h1>
-							{if $style->styleDescription}<h2>{lang}{@$style->styleDescription}{/lang}</h2>{/if}
-						</hgroup>
+						<div class="containerHeadline">
+							<h3><a href="{link controller='StyleEdit' id=$style->styleID}{/link}">{$style->styleName}</a></h3>
+							{if $style->styleDescription}<small>{lang}{@$style->styleDescription}{/lang}</small>{/if}
+						</div>
 						<ul class="buttonList" data-style-id="{@$style->styleID}">
 							<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a></li>
 							<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" title="{lang}wcf.acp.style.exportStyle{/lang}" class="jsTooltip"><span class="icon icon16 icon-download-alt"></span></a></li>

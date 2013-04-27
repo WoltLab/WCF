@@ -17,9 +17,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.pageMenu.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.pageMenu.list{/lang}</h1>
 </header>
 
 <p class="info">{lang}wcf.acp.pageMenu.landingPage.description{/lang}</p>

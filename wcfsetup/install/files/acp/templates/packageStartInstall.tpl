@@ -16,9 +16,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}{@$pageTitle}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}{@$pageTitle}{/lang}</h1>
 </header>
 
 {if $errorField}
@@ -70,9 +68,7 @@
 		
 		<div id="packageSearchResultContainer" style="display: none;">
 			<header class="boxHeadline boxSubHeadline">
-				<hgroup>
-					<h1>{lang}wcf.acp.package.search.resultList{/lang} <span class="badge">0</span></h1>
-				</hgroup>
+				<h2>{lang}wcf.acp.package.search.resultList{/lang} <span class="badge">0</span></h2>
 			</header>
 			
 			<div id="packageSearchResultList"></div>

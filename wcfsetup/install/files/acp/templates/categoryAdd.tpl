@@ -16,9 +16,7 @@
 {/if}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{@$objectType->getProcessor()->getLanguageVariable($action)}</h1>
-	</hgroup>
+	<h1>{@$objectType->getProcessor()->getLanguageVariable($action)}</h1>
 </header>
 
 {if $errorField}

@@ -10,9 +10,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.languageServer.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.languageServer.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -31,9 +29,9 @@
 	<p class="warning">{lang}wcf.acp.languageServer.view.noneAvailable{/lang}</p>
 {else}
 	<div class="tabularBox tabularBoxTitle marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.languageServer.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
-		</hgroup>
+		<header>
+			<h2>{lang}wcf.acp.languageServer.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+		</header>
 		
 		<table class="table">
 			<thead>

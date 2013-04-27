@@ -1,9 +1,7 @@
 {include file='header'}
 
 <header class="boxHeadline boxSubHeadline">
-	<hgroup>
-		<h1>{lang}wcf.global.systemRequirements.required{/lang}</h1>
-	</hgroup>
+	<h2>{lang}wcf.global.systemRequirements.required{/lang}</h2>
 </header>
 
 <div class="container containerPadding marginTop">
@@ -45,9 +43,7 @@
 </div>
 
 <header class="boxHeadline boxSubHeadline">
-	<hgroup>
-		<h1>{lang}wcf.global.systemRequirements.recommended{/lang}</h1>
-	</hgroup>
+	<h2>{lang}wcf.global.systemRequirements.recommended{/lang}</h2>
 </header>
 
 <div class="container containerPadding marginTop">

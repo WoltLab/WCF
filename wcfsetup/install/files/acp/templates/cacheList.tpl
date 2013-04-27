@@ -9,9 +9,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.cache.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.cache.list{/lang}</h1>
 </header>
 
 <div class="container containerPadding marginTop">
@@ -63,10 +61,10 @@
 		
 		{if $files|count}
 			<div class="tabularBox tabularBoxTitle marginTop">
-				<hgroup>
-					<h1><a class="jsCollapsible jsTooltip" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 icon-chevron-right"></span></a> {lang}wcf.acp.cache.type.{$cacheType}{/lang} <span class="badge badgeInverse">{#$files|count}</span></h1>
-					<h2>{$cache}</h2>
-				</hgroup>
+				<header>
+					<h2><a class="jsCollapsible jsTooltip" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 icon-chevron-right"></span></a> {lang}wcf.acp.cache.type.{$cacheType}{/lang} <span class="badge badgeInverse">{#$files|count}</span></h2>
+					<small>{$cache}</small>
+				</header>
 				
 				<table id="cache{@$cacheIndex}" style="display: none;" class="table">
 					<thead>

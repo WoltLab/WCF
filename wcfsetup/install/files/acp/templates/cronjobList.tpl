@@ -1,10 +1,8 @@
 {include file='header' pageTitle='wcf.acp.cronjob.list'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.cronjob.list{/lang}</h1>
-		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
-	</hgroup>
+	<h1>{lang}wcf.acp.cronjob.list{/lang}</h1>
+	<p>{lang}wcf.acp.cronjob.subtitle{/lang}</p>
 </header>
 
 <script type="text/javascript">
@@ -47,9 +45,9 @@
 
 {hascontent}
 	<div class="tabularBox tabularBoxTitle marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.cronjob.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
-		</hgroup>
+		<header>
+			<h2>{lang}wcf.acp.cronjob.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+		</header>
 		
 		<table class="table">
 			<thead>

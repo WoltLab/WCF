@@ -11,9 +11,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.language.multilingualism{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.language.multilingualism{/lang}</h1>
 </header>
 
 {if $errorField}

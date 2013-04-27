@@ -13,9 +13,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.packageUpdate{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.packageUpdate{/lang}</h1>
 </header>
 
 <div class="container containerPadding marginTop">

@@ -1,10 +1,8 @@
 {include file='header'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.template.{$action}{/lang}</h1>
-		{if $action == 'edit'}<h2>{$template->getPath()}</h2>{/if}
-	</hgroup>
+	<h1>{lang}wcf.acp.template.{$action}{/lang}</h1>
+	{if $action == 'edit'}<p>{$template->getPath()}</p>{/if}
 </header>
 
 {if $errorField}

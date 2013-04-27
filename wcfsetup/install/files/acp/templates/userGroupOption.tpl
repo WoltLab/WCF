@@ -9,9 +9,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.group.option.editingOption{/lang} {lang}wcf.acp.group.option.{$userGroupOption->optionName}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.group.option.editingOption{/lang} {lang}wcf.acp.group.option.{$userGroupOption->optionName}{/lang}</h1>
 </header>
 
 <p class="info marginTop">{lang}wcf.acp.group.option.hint{/lang}</p>
