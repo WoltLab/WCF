@@ -131,6 +131,7 @@ class CronjobScheduler extends SingletonFactory {
 				// disable cronjob
 				if ($failCount == Cronjob::MAX_FAIL_COUNT) {
 					$data['isDisabled'] = 1;
+					$data['state'] = 0;
 					$executeCronjob = false;
 				}
 			}

@@ -11,8 +11,8 @@ use wcf\util\DateUtil;
 /**
  * Executes cronjob-related actions.
  * 
- * @author	Tim Düsterhus, Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Tim Duesterhus, Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.cronjob
@@ -136,16 +136,30 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 			CronjobLogEditor::create(array(
 				'cronjobID' => $cronjob->cronjobID,
 				'execTime' => TIME_NOW,
-				'success' => (int) ($error == ''),
+				'success' => ($error == '' ? 1 : 0),
 				'error' => $error
 			));
-				
+			
 			// calculate next exec-time
 			$nextExec = $cronjob->getNextExec();
-			$cronjob->update(array(
+			$data = array(
+				'lastExec' => TIME_NOW,
 				'nextExec' => $nextExec, 
 				'afterNextExec' => $cronjob->getNextExec(($nextExec + 120))
-			));
+			);
+			
+			// if no error: reset fail counter
+			if ($error == '') {
+				$data['failCount'] = 0;
+				
+				// if cronjob has been disabled because of too many
+				// failed executions, enable it again
+				if ($cronjob->failCount == Cronjob::MAX_FAIL_COUNT && $cronjob->isDisabled) {
+					$data['isDisabled'] = 0;
+				}
+			}
+			
+			$cronjob->update($data);
 			
 			// build the return value
 			$dateTime = DateUtil::getDateTimeByTimestamp($nextExec);
