@@ -17,11 +17,12 @@ class CronjobCacheBuilder extends AbstractCacheBuilder {
 	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
-		$sql = "SELECT		MIN(nextExec) AS nextExec,
-					MIN(afterNextExec) AS afterNextExec
-			FROM		wcf".WCF_N."_cronjob";
+		$sql = "SELECT	MIN(nextExec) AS nextExec,
+				MIN(afterNextExec) AS afterNextExec
+			FROM	wcf".WCF_N."_cronjob
+			WHERE	isDisabled = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
+		$statement->execute(array(0));
 		$row = $statement->fetchArray();
 		
 		return array(
