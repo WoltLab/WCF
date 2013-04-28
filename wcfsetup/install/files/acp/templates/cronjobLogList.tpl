@@ -3,28 +3,12 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		$('.jsCronjobLogDelete').click(function() {
-			WCF.System.Confirmation.show('{lang}wcf.acp.cronjob.log.clear.confirm{/lang}', function(action) {
-				if (action == 'confirm') {
-					new WCF.Action.Proxy({
-						autoSend: true,
-						data: {
-							actionName: 'clearAll',
-							className: 'wcf\\data\\cronjob\\log\\CronjobLogAction'
-						},
-						success: function() {
-							window.location.reload();
-						}
-					});
-				}
-			});
+		WCF.Language.addObject({
+			'wcf.acp.cronjob.log.clear.confirm': '{lang}wcf.acp.cronjob.log.clear.confirm{/lang}',
+			'wcf.acp.cronjob.log.error.details': '{lang}wcf.acp.cronjob.log.error.details{/lang}'
 		});
 		
-		$('.jsCronjobError').click(function(event) {
-			$(event.currentTarget).next().wcfDialog({
-				title: '{lang}wcf.acp.cronjob.log.error.details{/lang}'
-			});
-		});
+		new WCF.ACP.Cronjob.LogList();
 	});
 	//]]>
 </script>
@@ -82,7 +66,7 @@
 							<td class="columnText columnSuccess">
 								{if $cronjobLog->success}
 									<span class="badge green">{lang}wcf.acp.cronjob.log.success{/lang}</span>
-								{elseif $cronjobLog->error}	
+								{elseif $cronjobLog->error}
 									<a class="badge red jsTooltip jsCronjobError" title="{lang}wcf.acp.cronjob.log.error.showDetails{/lang}">{lang}wcf.acp.cronjob.log.error{/lang}</a>
 									<span style="display: none">{@$cronjobLog->error}</span>
 								{/if}
