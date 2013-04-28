@@ -30,7 +30,7 @@
 				<legend>{lang}wcf.global.form.data{/lang}</legend>
 				
 				<dl>
-					<dt><label for="templateGroupID">{lang}wcf.acp.template.templateGroup{/lang}</label></dt>
+					<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
 					<dd>
 						<select name="templateGroupID" id="templateGroupID">
 							{foreach from=$availableTemplateGroups item=availableTemplateGroup}
