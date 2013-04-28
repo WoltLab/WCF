@@ -641,6 +641,33 @@
 		<item name="wcf.acp.style.users"><![CDATA[Users]]></item>
 	</category>
 	
+	<category name="wcf.acp.template">
+		<item name="wcf.acp.template.list"><![CDATA[Templates]]></item>
+		<item name="wcf.acp.template.group"><![CDATA[Template Group]]></item>
+		<item name="wcf.acp.template.group.default"><![CDATA[TODO: Standardtemplates]]></item>
+		<item name="wcf.acp.template.add"><![CDATA[Add Template]]></item>
+		<item name="wcf.acp.template.edit"><![CDATA[Edit Template]]></item>
+		<item name="wcf.acp.template.copy"><![CDATA[Copy Template]]></item>
+		<item name="wcf.acp.template.lastModificationTime"><![CDATA[TODO: Letzte Änderung]]></item>
+		<item name="wcf.acp.template.group.list"><![CDATA[Template Groups]]></item>
+		<item name="wcf.acp.template.group.add"><![CDATA[Add Template Group]]></item>
+		<item name="wcf.acp.template.group.edit"><![CDATA[Edit Template Group]]></item>
+		<item name="wcf.acp.template.group.templates"><![CDATA[Templates]]></item>
+		<item name="wcf.acp.template.error.noGroups"><![CDATA[TODO: Bevor sie ein eigenes Template erstellen können, müssen Sie eine <a href="{link controller='TemplateGroupAdd'}{/link}">Templategruppe hinzufügen</a>.]]></item>
+		<item name="wcf.acp.template.group.noItems"><![CDATA[TODO: Es sind keine Templategruppen vorhanden.]]></item>
+		<item name="wcf.acp.template.group.folderName"><![CDATA[TODO: Verzeichnis]]></item>
+		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[TODO: Übergeordnete Templategruppe]]></item>
+		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[TODO: Der eingegebene Name wird bereits von einer anderen Templategruppe verwendet.]]></item>
+		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[TODO: Sie haben einen ungültigen Verzeichnis-Namen eingegeben.]]></item>
+		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[TODO: Das angegebene Verzeichnis wird bereits von einer anderen Templategruppe verwendet.]]></item>
+		<item name="wcf.acp.template.group.delete.sure"><![CDATA[TODO: Wollen Sie die Templategruppe „{$templateGroup->templateGroupName}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.template.noItems"><![CDATA[TODO: Es wurden keine Templates gefunden.]]></item>
+		<item name="wcf.acp.template.source"><![CDATA[TODO: Template-Quelltext]]></item>
+		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[TODO: Der eingegebene Name wird bereits von einem anderen Templaten verwendet.]]></item>
+		<item name="wcf.acp.template.name.error.notValid"><![CDATA[TODO: Sie haben einen ungültigen Namen eingegeben.]]></item>
+		<item name="wcf.acp.template.delete.sure"><![CDATA[TODO: Wollen Sie das Template „{$template->templateName}“ wirklich löschen?]]></item>
+	</category>
+	
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Add User]]></item>
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Assign to User Group]]></item>
