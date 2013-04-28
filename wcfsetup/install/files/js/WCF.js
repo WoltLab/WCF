@@ -2934,16 +2934,16 @@ WCF.MultipleLanguageInput = Class.extend({
  */
 WCF.Number = {
 	/**
-	 * Rounds a number to a given number of floating points digits. Defaults to 0.
+	 * Rounds a number to a given number of decimal places. Defaults to 0.
 	 * 
 	 * @param	number		number
-	 * @param	floatingPoint	number of digits
+	 * @param	decimalPlaces	number of decimal places
 	 * @return	number
 	 */
-	round: function (number, floatingPoint) {
-		floatingPoint = Math.pow(10, (floatingPoint || 0));
+	round: function (number, decimalPlaces) {
+		decimalPlaces = Math.pow(10, (decimalPlaces || 0));
 		
-		return Math.round(number * floatingPoint) / floatingPoint;
+		return Math.round(number * decimalPlaces) / decimalPlaces;
 	}
 };
 
@@ -2988,11 +2988,14 @@ WCF.String = {
 	 * @param	mixed	number
 	 * @return	string
 	 */
-	formatNumeric: function(number, floatingPoint) {
-		number = String(WCF.Number.round(number, floatingPoint || 2));
+	formatNumeric: function(number, decimalPlaces) {
+		number = String(WCF.Number.round(number, decimalPlaces || 2));
 		number = number.replace('.', WCF.Language.get('wcf.global.decimalPoint'));
 		
-		return this.addThousandsSeparator(number);
+		number = this.addThousandsSeparator(number);
+		number = number.replace('-', '\u2212');
+		
+		return number;
 	},
 	
 	/**
