@@ -7723,6 +7723,14 @@ WCF.UserPanel = Class.extend({
 		
 		if (data.returnValues && data.returnValues.template) {
 			$('' + data.returnValues.template).prependTo($dropdownMenu);
+			
+			// update badge
+			var $badge = this._container.find('.badge');
+			if (!$badge.length) {
+				$badge = $('<span class="badge badgeInverse" />').appendTo(this._container.children('.dropdownToggle'));
+			}
+			$badge.html(data.returnValues.totalCount);
+			
 			this._after($dropdownMenu);
 		}
 		else {
