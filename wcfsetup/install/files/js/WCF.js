@@ -2402,8 +2402,12 @@ WCF.Date.Time = Class.extend({
 		// skip for future dates
 		if ($element.data('isFutureDate')) return;
 		
+		// timestamp is less than 60 seconds ago
+		if ($timestamp >= this._timestamp || this._timestamp < ($timestamp + 60)) {
+			$element.text(WCF.Language.get('wcf.date.relative.now'));
+		}
 		// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-		if ($timestamp >= this._timestamp || this._timestamp < ($timestamp + 3540)) {
+		else if (this._timestamp < ($timestamp + 3540)) {
 			var $minutes = Math.max(Math.round((this._timestamp - $timestamp) / 60), 1);
 			$element.text(eval(WCF.Language.get('wcf.date.relative.minutes')));
 		}

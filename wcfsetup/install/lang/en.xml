@@ -816,6 +816,7 @@
 		<item name="wcf.date.interval.years.future"><![CDATA[In {if $years > 1}{#$years} years{else}A year{/if}]]></item>
 		
 		<!-- variables for dynamic javascript datetime -->
+		<item name="wcf.date.relative.now"><![CDATA[A moment ago]]></item>
 		<item name="wcf.date.relative.minutes"><![CDATA[(($minutes > 1) ? $minutes + ' minutes' : 'A minute') + ' ago']]></item>
 		<item name="wcf.date.relative.hours"><![CDATA[(($hours > 1) ? $hours + ' hours' : 'An hour' ) + ' ago']]></item>
 		<item name="wcf.date.relative.pastDays"><![CDATA[(($days > 1) ? '%day%' : 'Yesterday' ) + ', %time%']]></item>
