@@ -2937,16 +2937,16 @@ WCF.MultipleLanguageInput = Class.extend({
  */
 WCF.Number = {
 	/**
-	 * Rounds a number to a given number of floating points digits. Defaults to 0.
+	 * Rounds a number to a given number of decimal places. Defaults to 0.
 	 * 
 	 * @param	number		number
-	 * @param	floatingPoint	number of digits
+	 * @param	decimalPlaces	number of decimal places
 	 * @return	number
 	 */
-	round: function (number, floatingPoint) {
-		floatingPoint = Math.pow(10, (floatingPoint || 0));
+	round: function (number, decimalPlaces) {
+		decimalPlaces = Math.pow(10, (decimalPlaces || 0));
 		
-		return Math.round(number * floatingPoint) / floatingPoint;
+		return Math.round(number * decimalPlaces) / decimalPlaces;
 	}
 };
 
@@ -2991,11 +2991,14 @@ WCF.String = {
 	 * @param	mixed	number
 	 * @return	string
 	 */
-	formatNumeric: function(number, floatingPoint) {
-		number = String(WCF.Number.round(number, floatingPoint || 2));
+	formatNumeric: function(number, decimalPlaces) {
+		number = String(WCF.Number.round(number, decimalPlaces || 2));
 		number = number.replace('.', WCF.Language.get('wcf.global.decimalPoint'));
 		
-		return this.addThousandsSeparator(number);
+		number = this.addThousandsSeparator(number);
+		number = number.replace('-', '\u2212');
+		
+		return number;
 	},
 	
 	/**
@@ -7621,6 +7624,12 @@ WCF.UserPanel = Class.extend({
 	_link: null,
 	
 	/**
+	 * language variable name for 'no items'
+	 * @var	string
+	 */
+	_noItems: '',
+	
+	/**
 	 * reverts to original link if return values are empty
 	 * @var	boolean
 	 */
@@ -7641,11 +7650,9 @@ WCF.UserPanel = Class.extend({
 			return;
 		}
 		
-		if (this._container.data('count')) {
-			WCF.DOMNodeInsertedHandler.enable();
-			this._convert();
-			WCF.DOMNodeInsertedHandler.disable();
-		}
+		WCF.DOMNodeInsertedHandler.enable();
+		this._convert();
+		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
@@ -7660,6 +7667,11 @@ WCF.UserPanel = Class.extend({
 		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').appendTo($dropdownMenu);
 		
 		this._addDefaultItems($dropdownMenu);
+		
+		this._container.dblclick($.proxy(function() {
+			window.location = this._link.attr('href');
+			return false;
+		}, this));
 	},
 	
 	/**
@@ -7712,16 +7724,23 @@ WCF.UserPanel = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		var $dropdownMenu = this._container.children('.dropdownMenu');
+		$dropdownMenu.children('.jsDropdownPlaceholder').remove();
+		
 		if (data.returnValues && data.returnValues.template) {
-			var $dropdownMenu = this._container.children('.dropdownMenu');
-			$dropdownMenu.children('.jsDropdownPlaceholder').remove();
 			$('' + data.returnValues.template).prependTo($dropdownMenu);
+			
+			// update badge
+			var $badge = this._container.find('.badge');
+			if (!$badge.length) {
+				$badge = $('<span class="badge badgeInverse" />').appendTo(this._container.children('.dropdownToggle'));
+			}
+			$badge.html(data.returnValues.totalCount);
 			
 			this._after($dropdownMenu);
 		}
 		else {
-			this._container.removeClass('dropdown').empty();
-			this._link.appendTo(this._container);
+			$('<li><span>' + WCF.Language.get(this._noItems) + '</span></li>').prependTo($dropdownMenu);
 			
 			// remove badge
 			this._container.find('.badge').remove();
