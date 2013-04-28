@@ -7618,6 +7618,12 @@ WCF.UserPanel = Class.extend({
 	_link: null,
 	
 	/**
+	 * language variable name for 'no items'
+	 * @var	string
+	 */
+	_noItems: '',
+	
+	/**
 	 * reverts to original link if return values are empty
 	 * @var	boolean
 	 */
@@ -7638,11 +7644,9 @@ WCF.UserPanel = Class.extend({
 			return;
 		}
 		
-		if (this._container.data('count')) {
-			WCF.DOMNodeInsertedHandler.enable();
-			this._convert();
-			WCF.DOMNodeInsertedHandler.disable();
-		}
+		WCF.DOMNodeInsertedHandler.enable();
+		this._convert();
+		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
@@ -7657,6 +7661,11 @@ WCF.UserPanel = Class.extend({
 		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').appendTo($dropdownMenu);
 		
 		this._addDefaultItems($dropdownMenu);
+		
+		this._container.dblclick($.proxy(function() {
+			window.location = this._link.attr('href');
+			return false;
+		}, this));
 	},
 	
 	/**
@@ -7709,16 +7718,15 @@ WCF.UserPanel = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		var $dropdownMenu = this._container.children('.dropdownMenu');
+		$dropdownMenu.children('.jsDropdownPlaceholder').remove();
+		
 		if (data.returnValues && data.returnValues.template) {
-			var $dropdownMenu = this._container.children('.dropdownMenu');
-			$dropdownMenu.children('.jsDropdownPlaceholder').remove();
 			$('' + data.returnValues.template).prependTo($dropdownMenu);
-			
 			this._after($dropdownMenu);
 		}
 		else {
-			this._container.removeClass('dropdown').empty();
-			this._link.appendTo(this._container);
+			$('<li><span>' + WCF.Language.get(this._noItems) + '</span></li>').prependTo($dropdownMenu);
 			
 			// remove badge
 			this._container.find('.badge').remove();
