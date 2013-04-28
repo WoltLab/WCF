@@ -158,6 +158,17 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 					$data['isDisabled'] = 0;
 				}
 			}
+			// cronjob failed
+			else {
+				if ($cronjob->failCount < Cronjob::MAX_FAIL_COUNT) {
+					$data['failCount'] = $cronjob->failCount + 1;
+				}
+				
+				// cronjob failed too often: disable it
+				if ($cronjob->failCount + 1 == Cronjob::MAX_FAIL_COUNT) {
+					$data['isDisabled'] = 1;
+				}
+			}
 			
 			$cronjob->update($data);
 			
