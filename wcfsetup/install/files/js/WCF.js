@@ -2289,6 +2289,17 @@ WCF.Date.Picker = {
 			$input.datepicker({
 				altField: '#' + $input.wcfIdentify() + 'DatePicker',
 				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
+				beforeShow: function(input, instance) {
+					// dirty hack to force opening below the input
+					setTimeout(function() {
+						instance.dpDiv.position({
+							my: 'left top',
+							at: 'left bottom',
+							collision: 'none',
+							of: input
+						});
+					}, 1);
+				},
 				changeMonth: true,
 				changeYear: true,
 				dateFormat: this._dateFormat,
@@ -2340,6 +2351,17 @@ WCF.Date.Picker = {
 				altFieldTimeOnly: false,
 				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
 				altTimeFormat: 'HH:mm',
+				beforeShow: function(input, instance) {
+					// dirty hack to force opening below the input
+					setTimeout(function() {
+						instance.dpDiv.position({
+							my: 'left top',
+							at: 'left bottom',
+							collision: 'none',
+							of: input
+						});
+					}, 1);
+				},
 				changeMonth: true,
 				changeYear: true,
 				controlType: 'select',
