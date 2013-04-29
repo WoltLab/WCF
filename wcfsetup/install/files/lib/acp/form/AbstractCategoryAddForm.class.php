@@ -286,8 +286,8 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		
 		$this->saved();
 		
-		// disable assignment of i18n values
-		I18nHandler::getInstance()->disableAssignValueVariables();
+		// reset i18n values
+		I18nHandler::getInstance()->reset();
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);
