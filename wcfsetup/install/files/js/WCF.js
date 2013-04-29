@@ -2169,9 +2169,25 @@ WCF.Date.Picker = {
 	_dateFormat: 'yy-mm-dd',
 	
 	/**
+	 * time format
+	 * @var	string
+	 */
+	_timeFormat: 'g:ia',
+	
+	/**
 	 * Initializes the jQuery UI based date picker.
 	 */
 	init: function() {
+		// ignore error 'unexpected literal' error; this might be not the best approach
+		// to fix this problem, but since the date is properly processed anyway, we can
+		// simply continue :)	- Alex
+		var $__log = $.timepicker.log;
+		$.timepicker.log = function(error) {
+			if (error.indexOf('Error parsing the date/time string: Unexpected literal at position') == -1) {
+				$__log(error);
+			}
+		};
+		
 		this._convertDateFormat();
 		this._initDatePicker();
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.Date.Picker', $.proxy(this._initDatePicker, this));
@@ -2195,6 +2211,17 @@ WCF.Date.Picker = {
 		// t	Number of days in the given month
 		// L	Whether it's a leap year
 		var $replacementTable = {
+			// time
+			'a': ' tt',
+			'A': ' TT',
+			'g': 'h',
+			'G': 'H',
+			'h': 'hh',
+			'H': 'HH',
+			'i': 'mm',
+			's': 'ss',
+			'u': 'l',
+			
 			// day
 			'd': 'dd',
 			'D': 'D',
@@ -2222,6 +2249,16 @@ WCF.Date.Picker = {
 		// this is not perfect, but a basic implementation and should work in 99% of the cases
 		// TODO: support literals (magics are escaped in PHP date() by an \, in jQuery UI DatePicker they are enclosed in '')
 		this._dateFormat = WCF.Language.get('wcf.date.dateFormat').replace(/([^dDjlzSFmMnoYyU\\]*(?:\\.[^dDjlzSFmMnoYyU\\]*)*)([dDjlzSFmMnoYyU])/g, function(match, part1, part2, offset, string) {
+			for (var $key in $replacementTable) {
+				if (part2 == $key) {
+					part2 = $replacementTable[$key];
+				}
+			}
+			
+			return part1 + part2;
+		});
+		
+		this._timeFormat = WCF.Language.get('wcf.date.timeFormat').replace(/([^aAgGhHisu\\]*(?:\\.[^aAgGhHisu\\]*)*)([aAgGhHisu])/g, function(match, part1, part2, offset, string) {
 			for (var $key in $replacementTable) {
 				if (part2 == $key) {
 					part2 = $replacementTable[$key];
@@ -2273,6 +2310,60 @@ WCF.Date.Picker = {
 			// format default date
 			if ($inputValue) {
 				$input.datepicker('setDate', new Date($inputValue));
+			}
+			
+			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
+			$input.datepicker('widget').hide();
+		}, this));
+		
+		$('input[type=datetime]:not(.jsDatePicker)').each($.proxy(function(index, input) {
+			var $input = $(input);
+			var $inputName = $input.prop('name');
+			var $inputValue = $input.val(); // should be Y-m-d H:i:s, must be interpretable by Date
+			
+			// drop the seconds
+			if (/[0-9]{2}:[0-9]{2}:[0-9]{2}$/.test($inputValue)) {
+				$inputValue = $inputValue.replace(/:[0-9]{2}$/, '');
+				$input.val($inputValue);
+			}
+			
+			// update $input
+			$input.prop('type', 'text').addClass('jsDatePicker');
+			
+			// insert a hidden element representing the actual date
+			$input.removeAttr('name');
+			$input.before('<input type="hidden" id="' + $input.wcfIdentify() + 'DatePicker" name="' + $inputName + '" value="' + $inputValue + '" />');
+			
+			// init date picker
+			$input.datetimepicker({
+				altField: '#' + $input.wcfIdentify() + 'DatePicker',
+				altFieldTimeOnly: false,
+				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
+				altTimeFormat: 'HH:mm',
+				changeMonth: true,
+				changeYear: true,
+				controlType: 'select',
+				dateFormat: this._dateFormat,
+				dayNames: WCF.Language.get('__days'),
+				dayNamesMin: WCF.Language.get('__daysShort'),
+				dayNamesShort: WCF.Language.get('__daysShort'),
+				monthNames: WCF.Language.get('__months'),
+				monthNamesShort: WCF.Language.get('__monthsShort'),
+				showButtonPanel: false,
+				showOtherMonths: true,
+				timeFormat: this._timeFormat,
+				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038'),
+				onClose: function(dateText, datePicker) {
+					// clear altField when datepicker is cleared
+					if (dateText == '') {
+						$(datePicker.settings.altField).val('');
+					}
+				}
+			});
+			
+			// format default date
+			if ($inputValue) {
+				$input.removeClass('hasDatepicker').datetimepicker('setDate', new Date($inputValue));
 			}
 			
 			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
@@ -3847,7 +3938,7 @@ WCF.Collapsible.Remote = Class.extend({
 		var $newState = (data.returnValues.isOpen) ? 'open' : 'close';
 		
 		// update container content
-		this._updateContent($containerID, data.returnValues.content, $newState);
+		this._updateContent($containerID, $.trim(data.returnValues.content), $newState);
 		
 		// update icon
 		this._exchangeIcon(this._containerData[$containerID].button, (data.returnValues.isOpen ? 'chevron-down' : 'chevron-right'));
