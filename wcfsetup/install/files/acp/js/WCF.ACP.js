@@ -490,7 +490,7 @@ WCF.ACP.Package.Installation = Class.extend({
 			var $inputElement = $(inputElement);
 			var $type = $inputElement.attr('type');
 			
-			if (($type == 'checkbox' || $type == 'radio') && !$inputElement.attr('checked')) {
+			if (($type == 'checkbox' || $type == 'radio') && !$inputElement.prop('checked')) {
 				return false;
 			}
 			
@@ -1204,11 +1204,11 @@ WCF.ACP.Options = Class.extend({
 			case 'input':
 				switch(option.attr('type')) {
 					case 'checkbox':
-						this._execute(option.attr('checked'), $disableOptions, $enableOptions);
+						this._execute(option.prop('checked'), $disableOptions, $enableOptions);
 					break;
 					
 					case 'radio':
-						if (option.attr('checked')) {
+						if (option.prop('checked')) {
 							this._execute(true, $disableOptions, $enableOptions);
 						}
 					break;
