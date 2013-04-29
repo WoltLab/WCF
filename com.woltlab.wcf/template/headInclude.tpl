@@ -18,8 +18,8 @@
 <script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.tools.min.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
@@ -57,6 +57,7 @@
 			'wcf.date.relative.pastDays': '{capture assign=relativePastDays}{lang}wcf.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
 			'wcf.date.dateFormat': '{lang}wcf.date.dateFormat{/lang}',
 			'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
+			'wcf.date.timeFormat': '{lang}wcf.date.timeFormat{/lang}',
 			'wcf.global.button.add': '{lang}wcf.global.button.add{/lang}',
 			'wcf.global.button.cancel': '{lang}wcf.global.button.cancel{/lang}',
 			'wcf.global.button.close': '{lang}wcf.global.button.close{/lang}',
