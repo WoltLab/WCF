@@ -136,12 +136,16 @@
 			<div id="logo" class="logo">
 				<a href="{link controller='Index'}{/link}">
 					<h1>{lang}wcf.global.acp{/lang}</h1>
-					<img src="{@$__wcf->getPath()}acp/images/wcfLogo1.svg" width="321" height="58" alt="" />
+					{if PACKAGE_ID > 1}
+						{event name='headerLogo'}
+					{else}
+						<img src="{@$__wcf->getPath()}acp/images/wcfLogo2.svg" alt="" width="300" height="58" />
+					{/if}
 				</a>
 			</div>
 			
 			{* work-around for unknown core-object during WCFSetup *}
-			{if PACKAGE_ID}
+			{if PACKAGE_ID && $__wcf->user->userID}
 				{hascontent}
 					<nav id="mainMenu" class="mainMenu">
 						<ul>{content}{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_menuItem}<li data-menu-item="{$_menuItem->menuItem}"><a>{lang}{@$_menuItem->menuItem}{/lang}</a></li>{/foreach}{/content}</ul>
@@ -158,14 +162,14 @@
 		</div>
 	</header>
 	
-	<div id="main" class="layoutFluid{if PACKAGE_ID && $__wcf->getACPMenu()->getMenuItems('')|count} sidebarOrientationLeft{/if}">
+	<div id="main" class="layoutFluid{if PACKAGE_ID && $__wcf->user->userID && $__wcf->getACPMenu()->getMenuItems('')|count} sidebarOrientationLeft{/if}">
 		<div>
 			{hascontent}
 				<aside class="sidebar collapsibleMenu">
 					<div>
 						{content}
 							{* work-around for unknown core-object during WCFSetup *}
-							{if PACKAGE_ID}
+							{if PACKAGE_ID && $__wcf->user->userID}
 								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_parentMenuItem}
 									<div id="{$_parentMenuItem->menuItem}-container" style="display: none;" class="menuGroup collapsibleMenus" data-parent-menu-item="{$_parentMenuItem->menuItem}">
 										{foreach from=$__wcf->getACPMenu()->getMenuItems($_parentMenuItem->menuItem) item=_menuItem}
