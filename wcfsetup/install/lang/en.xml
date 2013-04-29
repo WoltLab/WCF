@@ -825,6 +825,9 @@
 		<item name="wcf.date.relative.pastDays"><![CDATA[(($days > 1) ? '%day%' : 'Yesterday' ) + ', %time%']]></item>
 		
 		<!-- variables for localized date formats -->
+		<item name="wcf.date.hour"><![CDATA[Hour]]></item>
+		<item name="wcf.date.minute"><![CDATA[Minute]]></item>
+		
 		<item name="wcf.date.month.january"><![CDATA[January]]></item>
 		<item name="wcf.date.month.february"><![CDATA[February]]></item>
 		<item name="wcf.date.month.march"><![CDATA[March]]></item>
