@@ -24,11 +24,6 @@ class CronjobEditForm extends CronjobAddForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.cronjob';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
-	 */
-	public $neededPermissions = array('admin.system.canManageCronjob');
-	
-	/**
 	 * cronjob id
 	 * @var	integer
 	 */
