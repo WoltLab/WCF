@@ -24,11 +24,6 @@ class StyleEditForm extends StyleAddForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.style';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
-	 */
-	public $neededPermissions = array('admin.style.canManageStyle');
-	
-	/**
 	 * style object
 	 * @var	wcf\data\style\Style
 	 */
