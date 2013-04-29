@@ -20,11 +20,6 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			{if $__wcf->session->getPermission('admin.user.canAddUser')}
-				<li><a href="{link controller='UserAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
-			{/if}
-			<li><a href="{link controller='UserList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.user.list{/lang}</span></a></li>
-			
 			{event name='contentNavigationButtons'}
 		</ul>
 	</nav>

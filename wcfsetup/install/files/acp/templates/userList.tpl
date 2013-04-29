@@ -39,7 +39,6 @@
 			{if $__wcf->session->getPermission('admin.user.canAddUser')}
 				<li><a href="{link controller='UserAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 			{/if}
-			<li><a href="{link controller='UserSearch'}{/link}" class="button"><span class="icon icon16 icon-search"></span> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -107,7 +106,6 @@
 				{if $__wcf->session->getPermission('admin.user.canAddUser')}
 					<li><a href="{link controller='UserAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.user.add{/lang}</span></a></li>
 				{/if}
-				<li><a href="{link controller='UserSearch'}{/link}" class="button"><span class="icon icon16 icon-search"></span> <span>{lang}wcf.acp.user.search{/lang}</span></a></li>
 				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

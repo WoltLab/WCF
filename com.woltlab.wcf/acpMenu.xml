@@ -148,25 +148,24 @@
 			<parent>wcf.acp.menu.link.user.management</parent>
 			<showorder>1</showorder>
 		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.user.search">
+			<controller><![CDATA[wcf\acp\form\UserSearchForm]]></controller>
+			<parent>wcf.acp.menu.link.user.management.general</parent>
+			<permissions>admin.user.canSearchUser</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.list">
 			<controller><![CDATA[wcf\acp\page\UserListPage]]></controller>
 			<parent>wcf.acp.menu.link.user.management.general</parent>
 			<permissions>admin.user.canSearchUser</permissions>
-			<showorder>1</showorder>
+			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.add">
 			<controller><![CDATA[wcf\acp\form\UserAddForm]]></controller>
 			<parent>wcf.acp.menu.link.user.management.general</parent>
 			<permissions>admin.user.canAddUser</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.search">
-			<controller><![CDATA[wcf\acp\form\UserSearchForm]]></controller>
-			<parent>wcf.acp.menu.link.user.management.general</parent>
-			<permissions>admin.user.canSearchUser</permissions>
 			<showorder>3</showorder>
 		</acpmenuitem>
 		
