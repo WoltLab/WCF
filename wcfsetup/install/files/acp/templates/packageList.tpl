@@ -32,7 +32,7 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
-						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtonsTop'}
@@ -108,7 +108,7 @@
 				<ul>
 					{content}
 						{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
-							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 						{/if}
 						
 						{event name='contentNavigationButtonsBottom'}

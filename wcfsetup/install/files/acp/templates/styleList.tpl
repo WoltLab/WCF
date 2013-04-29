@@ -22,8 +22,8 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.style.canAddStyle')}
-						<li><a href="{link controller='StyleAdd'}{/link}" title="{lang}wcf.acp.menu.link.style.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
-						<li><a href="{link controller='StyleImport'}{/link}" title="{lang}wcf.acp.menu.link.style.import{/lang}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
+						<li><a href="{link controller='StyleAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+						<li><a href="{link controller='StyleImport'}{/link}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtonsTop'}
@@ -83,8 +83,8 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.style.canAddStyle')}
-						<li><a href="{link controller='StyleAdd'}{/link}" title="{lang}wcf.acp.menu.link.style.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
-						<li><a href="{link controller='StyleImport'}{/link}" title="{lang}wcf.acp.menu.link.style.import{/lang}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
+						<li><a href="{link controller='StyleAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+						<li><a href="{link controller='StyleImport'}{/link}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtonsBottom'}

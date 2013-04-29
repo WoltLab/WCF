@@ -37,7 +37,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+			<li><a href="{link controller='CronjobAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -131,7 +131,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+			<li><a href="{link controller='CronjobAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsBottom'}
 		</ul>

@@ -220,16 +220,16 @@
 			{if PACKAGE_ID != $package->packageID}
 				{if $package->canUninstall()}
 					{* TODO: maybe show users that this package can't be uninstalled because a dependent package is the active application *}
-					<li><a href="{link controller='Package'}action=startUninstall&packageID={@$package->packageID}{/link}" onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></a></li>
+					<li><a href="{link controller='Package'}action=startUninstall&packageID={@$package->packageID}{/link}" onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></a></li>
 				{/if}
 			{/if}
 			{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-				<li><a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}" title="{lang}wcf.acp.package.button.update{/lang}" class="button"><span class="icon icon16 icon-repeat"></span> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
+				<li><a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}" class="button"><span class="icon icon16 icon-repeat"></span> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
 			{/if}
 			
 			{event name='contentNavigationButtonsBottom'}
 			
-			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>
