@@ -250,12 +250,12 @@
 		<acpmenuitem name="wcf.acp.menu.link.user.option.category.list">
 			<controller><![CDATA[wcf\acp\page\UserOptionCategoryListPage]]></controller>
 			<parent>wcf.acp.menu.link.user.option</parent>
-			<permissions>admin.user.canManageUserOptionCategory</permissions>
+			<permissions>admin.user.canManageUserOption</permissions>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.user.option.category.add">
 			<controller><![CDATA[wcf\acp\form\UserOptionCategoryAddForm]]></controller>
 			<parent>wcf.acp.menu.link.user.option</parent>
-			<permissions>admin.user.canManageUserOptionCategory</permissions>
+			<permissions>admin.user.canManageUserOption</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.option.setDefaults">
@@ -298,21 +298,21 @@
 		<acpmenuitem name="wcf.acp.menu.link.style.list">
 			<controller><![CDATA[wcf\acp\page\StyleListPage]]></controller>
 			<parent>wcf.acp.menu.link.style</parent>
-			<permissions>admin.style.canEditStyle,admin.style.canDeleteStyle</permissions>
+			<permissions>admin.style.canManageStyle</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.style.add">
 			<controller><![CDATA[wcf\acp\form\StyleAddForm]]></controller>
 			<parent>wcf.acp.menu.link.style</parent>
-			<permissions>admin.style.canAddStyle</permissions>
+			<permissions>admin.style.canManageStyle</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.style.import">
 			<controller><![CDATA[wcf\acp\form\StyleImportForm]]></controller>
 			<parent>wcf.acp.menu.link.style</parent>
-			<permissions>admin.style.canAddStyle</permissions>
+			<permissions>admin.style.canManageStyle</permissions>
 			<showorder>3</showorder>
 		</acpmenuitem>
 		<!-- /style -->
@@ -379,7 +379,7 @@
 		<acpmenuitem name="wcf.acp.menu.link.language.server.list">
 			<controller><![CDATA[wcf\acp\page\LanguageServerListPage]]></controller>
 			<parent>wcf.acp.menu.link.language.server</parent>
-			<permissions>admin.language.canManageServer</permissions>
+			<permissions>admin.language.canManageLanguage</permissions>
 		</acpmenuitem>
 		<!-- /language -->
 		

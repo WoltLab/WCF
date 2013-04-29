@@ -25,7 +25,7 @@ class StyleImportForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.style.canAddStyle');
+	public $neededPermissions = array('admin.style.canManageStyle');
 	
 	/**
 	 * upload data

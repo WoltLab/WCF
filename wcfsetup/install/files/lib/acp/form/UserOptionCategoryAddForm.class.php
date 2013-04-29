@@ -26,7 +26,7 @@ class UserOptionCategoryAddForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canManageUserOptionCategory');
+	public $neededPermissions = array('admin.user.canManageUserOption');
 	
 	/**
 	 * category name

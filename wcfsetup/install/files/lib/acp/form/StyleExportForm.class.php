@@ -58,7 +58,7 @@ class StyleExportForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.style.canEditStyle');
+	public $neededPermissions = array('admin.style.canManageStyle');
 	
 	/**
 	 * package identifier

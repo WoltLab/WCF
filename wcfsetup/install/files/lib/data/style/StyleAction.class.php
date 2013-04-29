@@ -39,12 +39,12 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.style.canDeleteStyle');
+	protected $permissionsDelete = array('admin.style.canManageStyle');
 	
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.style.canEditStyle');
+	protected $permissionsUpdate = array('admin.style.canManageStyle');
 	
 	/**
 	 * style object
@@ -239,7 +239,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	 */
 	public function validateUpload() {
 		// check upload permissions
-		if (!WCF::getSession()->getPermission('admin.style.canAddStyle')) {
+		if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
 			throw new PermissionDeniedException();
 		}
 		
@@ -313,7 +313,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	 * Validates parameters to assign a new default style.
 	 */
 	public function validateSetAsDefault() {
-		if (!WCF::getSession()->getPermission('admin.style.canEditStyle')) {
+		if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
 			throw new PermissionDeniedException();
 		}
 		
@@ -341,7 +341,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	 * Validates parameters to copy a style.
 	 */
 	public function validateCopy() {
-		if (!WCF::getSession()->getPermission('admin.style.canAddStyle')) {
+		if (!WCF::getSession()->getPermission('admin.style.canManageStyle')) {
 			throw new PermissionDeniedException();
 		}
 		

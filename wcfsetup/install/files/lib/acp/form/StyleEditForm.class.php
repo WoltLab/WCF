@@ -26,7 +26,7 @@ class StyleEditForm extends StyleAddForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.style.canEditStyle');
+	public $neededPermissions = array('admin.style.canManageStyle');
 	
 	/**
 	 * style object

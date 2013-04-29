@@ -32,7 +32,7 @@
 		});
 		new WCF.ACP.Style.ImageUpload(0, '{$tmpHash}');
 		
-		{if $action == 'edit' && $__wcf->getSession()->getPermission('admin.style.canAddStyle')}
+		{if $action == 'edit'}
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
 			
 			WCF.Language.addObject({
@@ -56,24 +56,18 @@
 {/if}
 
 <div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{if $action == 'edit'}
-						<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><span class="icon icon16 icon-download-alt"></span> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
-						{if $__wcf->getSession()->getPermission('admin.style.canAddStyle')}<li><a class="jsCopyStyle button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>{/if}
-					{/if}
-					
-					{if $__wcf->session->getPermission('admin.style.canDeleteStyle') || $__wcf->session->getPermission('admin.style.canEditStyle')}
-						<li><a href="{link controller='StyleList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
-					{/if}
-					
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav>
+		<ul>
+			{if $action == 'edit'}
+				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><span class="icon icon16 icon-download-alt"></span> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
+				<li><a class="jsCopyStyle button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
+			{/if}
+			
+			<li><a href="{link controller='StyleList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+			
+			{event name='contentNavigationButtons'}
+		</ul>
+	</nav>
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit' id=$styleID}{/link}{/if}">
