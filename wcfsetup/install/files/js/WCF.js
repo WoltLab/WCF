@@ -2490,8 +2490,15 @@ WCF.Date.Time = Class.extend({
 		var $time = $element.data('time');
 		var $offset = $element.data('offset');
 		
+		// skip for future dates
+		if ($element.data('isFutureDate')) return;
+		
+		// timestamp is less than 60 seconds ago
+		if ($timestamp >= this._timestamp || this._timestamp < ($timestamp + 60)) {
+			$element.text(WCF.Language.get('wcf.date.relative.now'));
+		}
 		// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-		if ($timestamp >= this._timestamp || this._timestamp < ($timestamp + 3540)) {
+		else if (this._timestamp < ($timestamp + 3540)) {
 			var $minutes = Math.max(Math.round((this._timestamp - $timestamp) / 60), 1);
 			$element.text(eval(WCF.Language.get('wcf.date.relative.minutes')));
 		}
@@ -3025,16 +3032,16 @@ WCF.MultipleLanguageInput = Class.extend({
  */
 WCF.Number = {
 	/**
-	 * Rounds a number to a given number of floating points digits. Defaults to 0.
+	 * Rounds a number to a given number of decimal places. Defaults to 0.
 	 * 
 	 * @param	number		number
-	 * @param	floatingPoint	number of digits
+	 * @param	decimalPlaces	number of decimal places
 	 * @return	number
 	 */
-	round: function (number, floatingPoint) {
-		floatingPoint = Math.pow(10, (floatingPoint || 0));
+	round: function (number, decimalPlaces) {
+		decimalPlaces = Math.pow(10, (decimalPlaces || 0));
 		
-		return Math.round(number * floatingPoint) / floatingPoint;
+		return Math.round(number * decimalPlaces) / decimalPlaces;
 	}
 };
 
@@ -3079,11 +3086,14 @@ WCF.String = {
 	 * @param	mixed	number
 	 * @return	string
 	 */
-	formatNumeric: function(number, floatingPoint) {
-		number = String(WCF.Number.round(number, floatingPoint || 2));
+	formatNumeric: function(number, decimalPlaces) {
+		number = String(WCF.Number.round(number, decimalPlaces || 2));
 		number = number.replace('.', WCF.Language.get('wcf.global.decimalPoint'));
 		
-		return this.addThousandsSeparator(number);
+		number = this.addThousandsSeparator(number);
+		number = number.replace('-', '\u2212');
+		
+		return number;
 	},
 	
 	/**
@@ -5715,7 +5725,7 @@ WCF.System.PageNavigation = {
 			
 			var $fieldset = $('<fieldset><legend>' + WCF.Language.get('wcf.global.page.jumpTo') + '</legend></fieldset>').appendTo(this._dialog);
 			$('<dl><dt><label for="jsPageNavigationPageNo">' + WCF.Language.get('wcf.global.page.jumpTo') + '</label></dt><dd></dd></dl>').appendTo($fieldset);
-			this._pageNo = $('<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="medium" />').keyup($.proxy(this._keyUp, this)).appendTo($fieldset.find('dd'));
+			this._pageNo = $('<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="tiny" />').keyup($.proxy(this._keyUp, this)).appendTo($fieldset.find('dd'));
 			this._description = $('<small></small>').insertAfter(this._pageNo);
 			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
 			this._button = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(this._submit, this)).appendTo($formSubmit);
@@ -5723,7 +5733,7 @@ WCF.System.PageNavigation = {
 		
 		this._button.enable();
 		this._description.html(WCF.Language.get('wcf.global.page.jumpTo.description').replace(/#pages#/, this._elements[this._elementID].data('pages')));
-		this._pageNo.val('1').attr('max', this._elements[this._elementID].data('pages'));
+		this._pageNo.val(this._elements[this._elementID].data('pages')).attr('max', this._elements[this._elementID].data('pages'));
 		
 		this._dialog.wcfDialog({
 			'title': WCF.Language.get('wcf.global.page.pageNavigation')

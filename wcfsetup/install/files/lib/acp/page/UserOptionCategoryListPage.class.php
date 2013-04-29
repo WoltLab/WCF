@@ -21,7 +21,7 @@ class UserOptionCategoryListPage extends SortablePage {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canManageUserOptionCategory');
+	public $neededPermissions = array('admin.user.canManageUserOption');
 	
 	/**
 	 * @see wcf\page\SortablePage::$defaultSortField

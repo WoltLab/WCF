@@ -92,7 +92,7 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+				<li><a href="{link controller='LanguageAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
 				<li><a href="{link controller='LanguageImport'}{/link}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.language.import{/lang}</span></a></li>
 					
 				{event name='contentNavigationButtonsBottom'}

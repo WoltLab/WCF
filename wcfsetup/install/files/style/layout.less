@@ -306,7 +306,7 @@
 }
 
 /* main menu */
-@media only screen and (min-width: 801px) {
+@media all and (min-width: 801px) {
 	.mainMenu {
 		> ul {
 			background-color: @wcfMainMenuBackgroundColor;
@@ -732,13 +732,12 @@
 	margin-top: @wcfGapMedium;
 	overflow: hidden;
 	
-	> h1 {
+	h1 {
 		font-size: @wcfHeadlineFontSize;
 	}
 	
 	> p {
 		color: @wcfDimmedColor;
-		display: inline-block;
 		font-size: @wcfSmallFontSize;
 	}
 	
@@ -1076,7 +1075,7 @@
 	}
 }
 
-@media only screen and (min-width: 801px) {
+@media all and (min-width: 801px) {
 	.containerBoxList {
 		&.doubleColumned,
 		&.tripleColumned {

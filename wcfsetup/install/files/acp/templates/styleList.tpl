@@ -17,20 +17,14 @@
 <div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller="StyleList" link="pageNo=%d"}
 	
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{if $__wcf->session->getPermission('admin.style.canAddStyle')}
-						<li><a href="{link controller='StyleAdd'}{/link}" title="{lang}wcf.acp.menu.link.style.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
-						<li><a href="{link controller='StyleImport'}{/link}" title="{lang}wcf.acp.menu.link.style.import{/lang}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
-					{/if}
-					
-					{event name='contentNavigationButtonsTop'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav>
+		<ul>
+			<li><a href="{link controller='StyleAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+			<li><a href="{link controller='StyleImport'}{/link}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
+				
+			{event name='contentNavigationButtonsTop'}
+		</ul>
+	</nav>
 </div>
 
 <div class="container marginTop">
@@ -78,20 +72,14 @@
 <div class="contentNavigation">
 	{@$pagesLinks}
 	
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{if $__wcf->session->getPermission('admin.style.canAddStyle')}
-						<li><a href="{link controller='StyleAdd'}{/link}" title="{lang}wcf.acp.menu.link.style.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
-						<li><a href="{link controller='StyleImport'}{/link}" title="{lang}wcf.acp.menu.link.style.import{/lang}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
-					{/if}
-					
-					{event name='contentNavigationButtonsBottom'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav>
+		<ul>
+			<li><a href="{link controller='StyleAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.menu.link.style.add{/lang}</span></a></li>
+			<li><a href="{link controller='StyleImport'}{/link}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.menu.link.style.import{/lang}</span></a></li>
+				
+			{event name='contentNavigationButtonsBottom'}
+		</ul>
+	</nav>
 </div>
 
 {include file='footer'}

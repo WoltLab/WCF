@@ -126,7 +126,6 @@
 		<item name="wcf.acp.group.option.admin.general.canUseAcp.description"><![CDATA[Mitglieder dieser Benutzergruppe können die Administrationsoberfläche betreten und dort abhängig von den weiteren Zugriffsrechten verschiedene Aktionen durchführen. Diese Option muss aktiviert sein, wenn diesen Benutzern andere administrative Funktionen erlaubt werden sollen.]]></item>
 		<item name="wcf.acp.group.option.admin.general.canViewPrivateUserOptions"><![CDATA[Kann versteckte Profilinformationen sehen]]></item>
 		<item name="wcf.acp.group.option.admin.language.canManageLanguage"><![CDATA[Kann Sprachen verwalten]]></item>
-		<item name="wcf.acp.group.option.admin.language.canManageServer"><![CDATA[Kann Sprach-Update-Server verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.system.canEditOption"><![CDATA[Kann allgemeine Einstellungen vornehmen]]></item>
 		<item name="wcf.acp.group.option.admin.style.canUseDisabledStyle"><![CDATA[Kann deaktivierte Stile benutzen]]></item>
 		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Kann Protokolle abrufen]]></item>
@@ -816,6 +815,7 @@
 		<item name="wcf.date.interval.years.future"><![CDATA[In {if $years > 1}{#$years} Jahren{else}einem Jahr{/if}]]></item>
 		
 		<!-- variables for dynamic javascript datetime -->
+		<item name="wcf.date.relative.now"><![CDATA[Vor einem Moment]]></item>
 		<item name="wcf.date.relative.minutes"><![CDATA['Vor ' + (($minutes > 1) ? $minutes + ' Minuten' : 'einer Minute' )]]></item>
 		<item name="wcf.date.relative.hours"><![CDATA['Vor ' + (($hours > 1) ? $hours + ' Stunden' : 'einer Stunde' )]]></item>
 		<item name="wcf.date.relative.pastDays"><![CDATA[(($days > 1) ? '%day%' : 'Gestern' ) + ', %time%']]></item>
@@ -1053,6 +1053,7 @@
 		<item name="wcf.style.colorPicker"><![CDATA[Farbwähler]]></item>
 		<item name="wcf.style.colorPicker.new"><![CDATA[neu]]></item>
 		<item name="wcf.style.colorPicker.current"><![CDATA[aktuell]]></item>
+		<item name="wcf.style.currentStyle"><![CDATA[Aktiver Stil]]></item>
 	</category>
 	
 	<category name="wcf.user">

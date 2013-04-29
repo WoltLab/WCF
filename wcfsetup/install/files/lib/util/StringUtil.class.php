@@ -21,10 +21,16 @@ final class StringUtil {
 	const HTML_COMMENT_PATTERN = '~<!--(.*?)-->~';
 	
 	/**
-	 * utf8 bytes of the horizontal ellipsis char
+	 * utf8 bytes of the HORIZONTAL ELLIPSIS (U+2026)
 	 * @var	string
 	 */
 	const HELLIP = "\xE2\x80\xA6";
+	
+	/**
+	 * utf8 bytes of the MINUS SIGN (U+2212)
+	 * @var	string
+	 */
+	const MINUS = "\xE2\x88\x92";
 	
 	/**
 	 * Alias to php sha1() function.
@@ -141,17 +147,19 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function formatNumeric($numeric) {
-		if (is_int($numeric)) 
+		if (is_int($numeric)) {
 			return self::formatInteger($numeric);
-			
-		else if (is_float($numeric))
+		}
+		else if (is_float($numeric)) {
 			return self::formatDouble($numeric);
-			
+		}
 		else {
-			if (floatval($numeric) - (float) intval($numeric))
+			if (floatval($numeric) - (float) intval($numeric)) {
 				return self::formatDouble($numeric);
-			else 
+			}
+			else {
 				return self::formatInteger(intval($numeric));
+			}
 		}
 	}
 	
@@ -163,6 +171,9 @@ final class StringUtil {
 	 */
 	public static function formatInteger($integer) {
 		$integer = self::addThousandsSeparator($integer);
+		
+		// format minus
+		$integer = self::formatNegative($integer);
 		
 		return $integer;
 	}
@@ -192,6 +203,9 @@ final class StringUtil {
 		// add thousands separator
 		$double = self::addThousandsSeparator($double);
 		
+		// format minus
+		$double = self::formatNegative($double);
+		
 		return $double;
 	}
 	
@@ -207,6 +221,16 @@ final class StringUtil {
 		}
 		
 		return $number;
+	}
+	
+	/**
+	 * Replaces the MINUS-HYPHEN with the MINUS SIGN
+	 * 
+	 * @param	mixed		$number
+	 * @return	string
+	 */
+	public static function formatNegative($number) {
+		return self::replace('-', self::MINUS, $number);
 	}
 	
 	/**
