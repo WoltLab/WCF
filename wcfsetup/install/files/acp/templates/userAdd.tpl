@@ -44,6 +44,8 @@
 				{foreach from=$optionTree item=categoryLevel1}
 					<li><a href="{@$__wcf->getAnchor($categoryLevel1[object]->categoryName)}">{lang}wcf.user.option.category.{@$categoryLevel1[object]->categoryName}{/lang}</a></li>
 				{/foreach}
+				
+				{event name='tabMenuTabs'}
 			</ul>
 		</nav>
 		
@@ -152,6 +154,45 @@
 					{event name='passwordFields'}
 				</fieldset>
 			{/if}
+			
+			{if $action == 'edit'}
+				<fieldset>
+					<legend>{lang}wcf.acp.user.banUser{/lang}</legend>
+					
+					<dl>
+						<dd>
+							<label><input type="checkbox" id="banned" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.banUser{/lang}</label>
+							<small>{lang}wcf.acp.user.banUser.description{/lang}</small>	
+						</dd>
+					</dl>
+					
+					<dl>
+						<dt><label for="banReason">{lang}wcf.acp.user.banReason{/lang}</label></dt>
+						<dd>
+							<textarea name="banReason" id="banReason" cols="40" rows="10">{$banReason}</textarea>
+							<small>{lang}wcf.acp.user.banReason.description{/lang}</small>
+						</dd>
+					</dl>
+					
+					{event name='banFields'}
+				</fieldset>
+				
+				<script type="text/javascript">
+					//<![CDATA[
+					$('#banned').change(function (event) {
+						if ($('#banned').is(':checked')) {
+							$('#banReason').attr('readonly', false);
+						}
+						else {
+							$('#banReason').attr('readonly', true);
+						}
+					});
+					$('#banned').change();
+					//]]>
+				</script>
+			{/if}
+			
+			{event name='fieldsets'}
 		</div>
 		
 		{foreach from=$optionTree item=categoryLevel1}
@@ -202,6 +243,8 @@
 				{/foreach}
 			</div>
 		{/foreach}
+		
+		{event name='tabMenuContent'}
 	</div>
 	
 	<div class="formSubmit">

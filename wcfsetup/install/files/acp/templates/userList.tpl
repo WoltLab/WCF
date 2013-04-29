@@ -46,16 +46,12 @@
 	</nav>
 </div>
 
-<div id="userTableContainer" class="tabularBox marginTop">
-	<nav class="menu">
-		<ul>
-			<li{if $action == ''} class="active"{/if}><a href="{link controller='UserList'}{/link}"><span>{lang}wcf.acp.user.list.all{/lang}</span> <span class="wcf-badge" title="{lang}wcf.acp.user.list.count{/lang}">{#$items}</span></a></li>
-			
-			{event name='userListOptions'}
-		</ul>
-	</nav>
-	
-	{hascontent}
+{if $users|count}
+	<div id="userTableContainer" class="tabularBox tabularBoxTitle marginTop">
+		<header>
+			<h2>{lang}wcf.acp.user.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+		</header>
+		
 		<table data-type="com.woltlab.wcf.user" class="table jsClipboardContainer">
 			<thead>
 				<tr>
@@ -64,7 +60,7 @@
 					<th class="columnTitle columnUsername{if $sortField == 'username'} active {@$sortOrder}{/if}"><a href="{link controller='UserList'}searchID={@$searchID}&action={@$encodedAction}&pageNo={@$pageNo}&sortField=username&sortOrder={if $sortField == 'username' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.user.username{/lang}</a></th>
 					
 					{foreach from=$columnHeads key=column item=columnLanguageVariable}
-						<th class="column{$column|ucfirst}{if $sortField == $column} active{/if}"><a href="{link controller='UserList'}searchID={@$searchID}&action={@$encodedAction}&pageNo={@$pageNo}&sortField={$column}&sortOrder={if $sortField == $column && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}{$columnLanguageVariable}{/lang}{if $sortField == $column} <span class="icon icon16 icon-sort-{@$sortOrder}"></span>{/if}</a></th>
+						<th class="column{$column|ucfirst}{if $sortField == $column} active {@$sortOrder}{/if}"><a href="{link controller='UserList'}searchID={@$searchID}&action={@$encodedAction}&pageNo={@$pageNo}&sortField={$column}&sortOrder={if $sortField == $column && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}{$columnLanguageVariable}{/lang}</a></th>
 					{/foreach}
 					
 					{event name='columnHeads'}
@@ -72,39 +68,37 @@
 			</thead>
 			
 			<tbody>
-				{content}
-					{foreach from=$users item=user}
-						<tr class="jsUserRow">
-							<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}" /></td>
-							<td class="columnIcon">
-								{if $user->editable}
-									<a href="{link controller='UserEdit' id=$user->userID}{/link}" title="{lang}wcf.acp.user.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-								{else}
-									<span class="icon icon16 icon-pencil disabled" title="{lang}wcf.acp.user.edit{/lang}"></span>
-								{/if}
-								{if $user->deletable}
-									<span class="icon icon16 icon-remove jsTooltip jsDeleteButton pointer" title="{lang}wcf.acp.user.delete{/lang}" data-object-id="{@$user->userID}" data-confirm-message="{lang}wcf.acp.user.delete.sure{/lang}"></span>
-								{else}
-									<span class="icon icon16 icon-remove disabled" title="{lang}wcf.acp.user.delete{/lang}"></span>
-								{/if}
-								
-								{event name='rowButtons'}
-							</td>
-							<td class="columnID columnUserID">{@$user->userID}</td>
-							<td class="columnTitle columnUsername">{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>{else}{$user->username}{/if}</td>
+				{foreach from=$users item=user}
+					<tr class="jsUserRow">
+						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}" /></td>
+						<td class="columnIcon">
+							{if $user->editable}
+								<a href="{link controller='UserEdit' id=$user->userID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
+							{else}
+								<span class="icon icon16 icon-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
+							{/if}
+							{if $user->deletable}
+								<span class="icon icon16 icon-remove jsTooltip jsDeleteButton pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$user->userID}" data-confirm-message="{lang}wcf.acp.user.delete.sure{/lang}"></span>
+							{else}
+								<span class="icon icon16 icon-remove disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+							{/if}
 							
-							{foreach from=$columnHeads key=column item=columnLanguageVariable}
-								<td class="column{$column|ucfirst}">{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</td>
-							{/foreach}
-							
-							{event name='columns'}
-						</tr>
-					{/foreach}
-				{/content}
+							{event name='rowButtons'}
+						</td>
+						<td class="columnID columnUserID">{@$user->userID}</td>
+						<td class="columnTitle columnUsername">{if $user->editable}<a title="{lang}wcf.acp.user.edit{/lang}" href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>{else}{$user->username}{/if}</td>
+						
+						{foreach from=$columnHeads key=column item=columnLanguageVariable}
+							<td class="column{$column|ucfirst}">{if $columnValues[$user->userID][$column]|isset}{@$columnValues[$user->userID][$column]}{/if}</td>
+						{/foreach}
+						
+						{event name='columns'}
+					</tr>
+				{/foreach}
 			</tbody>
 		</table>
 	</div>
-	
+		
 	<div class="contentNavigation">
 		{@$pagesLinks}
 		
@@ -121,10 +115,8 @@
 		
 		<nav class="jsClipboardEditor" data-types="[ 'com.woltlab.wcf.user' ]"></nav>
 	</div>
-{hascontentelse}
-</div>
-
-<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
-{/hascontent}
+{else}
+	<p class="info">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
+{/if}
 
 {include file='footer'}

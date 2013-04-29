@@ -671,6 +671,10 @@
 		<item name="wcf.acp.user.add"><![CDATA[Add User]]></item>
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Assign to User Group]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Assigning the following users to user groups selected below]]></item>
+		<item name="wcf.acp.user.banUser"><![CDATA[TODO: Benutzer sperren]]></item>
+		<item name="wcf.acp.user.banUser.description"><![CDATA[TODO: Der Benutzer wird dauerhaft von der Nutzung aller Funktionen ausgeschlossen und erhält beim Aufruf der Seite eine entsprechende Fehlermeldung.]]></item>
+		<item name="wcf.acp.user.banReason"><![CDATA[TODO: Begründung]]></item>
+		<item name="wcf.acp.user.banReason.description"><![CDATA[TODO: Die Begründung wird dem gesperrten Benutzer beim Aufruf der Seite angezeigt.]]></item>
 		<item name="wcf.acp.user.delete.sure"><![CDATA[Do you really want to delete the user “{$user->username}”?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Heads up! You’re editing your own user account and changes might result in yourself being locked out from the Administration Control Panel.]]></item>
