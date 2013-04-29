@@ -969,7 +969,7 @@ WCF.Clipboard = {
 					
 					$container.find('input.jsClipboardItem').each(function(itemIndex, item) {
 						var $item = $(item);
-						if (!$item.attr('checked')) {
+						if (!$item.prop('checked')) {
 							$allItemsMarked = false;
 						}
 					});
@@ -1040,7 +1040,7 @@ WCF.Clipboard = {
 	_click: function(event) {
 		var $item = $(event.target);
 		var $objectID = $item.data('objectID');
-		var $isMarked = ($item.attr('checked')) ? true : false;
+		var $isMarked = ($item.prop('checked')) ? true : false;
 		var $objectIDs = [ $objectID ];
 		
 		if ($isMarked) {
@@ -1061,7 +1061,7 @@ WCF.Clipboard = {
 			var $markedAll = true;
 			$container.find('input.jsClipboardItem').each(function(index, containerItem) {
 				var $containerItem = $(containerItem);
-				if (!$containerItem.attr('checked')) {
+				if (!$containerItem.prop('checked')) {
 					$markedAll = false;
 				}
 			});
@@ -1096,7 +1096,7 @@ WCF.Clipboard = {
 		
 		// if markAll object is a checkbox, allow toggling
 		if ($item.is('input')) {
-			$isMarked = $item.attr('checked');
+			$isMarked = $item.prop('checked');
 		}
 		
 		// handle item containers
@@ -1109,14 +1109,14 @@ WCF.Clipboard = {
 				var $containerItem = $(containerItem);
 				var $objectID = $containerItem.data('objectID');
 				if ($isMarked) {
-					if (!$containerItem.attr('checked')) {
+					if (!$containerItem.prop('checked')) {
 						$containerItem.attr('checked', 'checked');
 						this._markedObjectIDs.push($objectID);
 						$objectIDs.push($objectID);
 					}
 				}
 				else {
-					if ($containerItem.attr('checked')) {
+					if ($containerItem.prop('checked')) {
 						$containerItem.removeAttr('checked');
 						this._markedObjectIDs = $.removeArrayValue(this._markedObjectIDs, $objectID);
 						$objectIDs.push($objectID);
@@ -2289,6 +2289,17 @@ WCF.Date.Picker = {
 			$input.datepicker({
 				altField: '#' + $input.wcfIdentify() + 'DatePicker',
 				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
+				beforeShow: function(input, instance) {
+					// dirty hack to force opening below the input
+					setTimeout(function() {
+						instance.dpDiv.position({
+							my: 'left top',
+							at: 'left bottom',
+							collision: 'none',
+							of: input
+						});
+					}, 1);
+				},
 				changeMonth: true,
 				changeYear: true,
 				dateFormat: this._dateFormat,
@@ -2340,6 +2351,17 @@ WCF.Date.Picker = {
 				altFieldTimeOnly: false,
 				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
 				altTimeFormat: 'HH:mm',
+				beforeShow: function(input, instance) {
+					// dirty hack to force opening below the input
+					setTimeout(function() {
+						instance.dpDiv.position({
+							my: 'left top',
+							at: 'left bottom',
+							collision: 'none',
+							of: input
+						});
+					}, 1);
+				},
 				changeMonth: true,
 				changeYear: true,
 				controlType: 'select',
@@ -3624,7 +3646,7 @@ WCF.ToggleOptions = Class.extend({
 	 * Toggles items.
 	 */
 	_toggle: function() {
-		if (!this._element.attr('checked')) return;
+		if (!this._element.prop('checked')) return;
 		
 		for (var $i = 0, $length = this._showItems.length; $i < $length; $i++) {
 			var $item = this._showItems[$i];
