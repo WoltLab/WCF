@@ -168,7 +168,6 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 			foreach ($groupIDs as $groupID) {
 				if (!in_array($groupID, $currentGroups)) {
 					$statement->execute(array($this->userID, $groupID));
-					$currentGroups[] = $groupID; 
 				}
 			}
 		}
