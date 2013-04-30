@@ -10,6 +10,7 @@
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.user.{@$action}{/lang}</h1>
+	{if $action == 'edit'}<p>{$user->username}</p>{/if}
 </header>
 
 {if $errorField}
