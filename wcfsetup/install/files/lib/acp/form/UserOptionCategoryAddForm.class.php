@@ -99,7 +99,8 @@ class UserOptionCategoryAddForm extends AbstractForm {
 		// reset values
 		$this->categoryName = '';
 		$this->showOrder = 0;
-		I18nHandler::getInstance()->disableAssignValueVariables();
+		
+		I18nHandler::getInstance()->reset();
 		
 		// show success
 		WCF::getTPL()->assign(array(

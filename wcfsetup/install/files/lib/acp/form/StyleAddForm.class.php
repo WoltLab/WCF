@@ -505,6 +505,8 @@ class StyleAddForm extends AbstractForm {
 		$this->imagePath = 'images/';
 		$this->templateGroupID = 0;
 		
+		I18nHandler::getInstance()->reset();
+		
 		// reload variables
 		$this->readStyleVariables();
 		

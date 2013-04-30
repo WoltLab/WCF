@@ -255,6 +255,8 @@ class UserOptionAddForm extends AbstractForm {
 		$this->editable = 3;
 		$this->visible = 15;
 		
+		I18nHandler::getInstance()->reset();
+		
 		// show success
 		WCF::getTPL()->assign('success', true);
 	}
