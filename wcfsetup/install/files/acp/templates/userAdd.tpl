@@ -155,7 +155,7 @@
 				</fieldset>
 			{/if}
 			
-			{if $action == 'edit'}
+			{if $action == 'edit' && $__wcf->session->getPermission('admin.user.canBanUser')}
 				<fieldset>
 					<legend>{lang}wcf.acp.user.banUser{/lang}</legend>
 					

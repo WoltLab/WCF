@@ -163,6 +163,10 @@ class UserEditForm extends UserAddForm {
 		// save user
 		$saveOptions = $this->optionHandler->save();
 		$this->additionalFields['languageID'] = $this->languageID;
+		if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
+			$this->additionalFields['banned'] = $this->banned;
+			$this->additionalFields['banReason'] = $this->banReason;
+		}
 		$data = array(
 			'data' => array_merge($this->additionalFields, array(
 				'username' => $this->username,
