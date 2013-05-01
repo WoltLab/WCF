@@ -2,7 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\category\CategoryAction;
 use wcf\data\category\CategoryEditor;
-use wcf\data\category\CategoryNodeList;
+use wcf\data\category\UncachedCategoryNodeTree;
 use wcf\form\AbstractForm;
 use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;
@@ -45,10 +45,10 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	public $additionalData = array();
 	
 	/**
-	 * list with the category nodes
-	 * @var	wcf\data\category\CategoryNodeList
+	 * tree with the category nodes
+	 * @var	wcf\data\category\CategoryNodeTree
 	 */
-	public $categoryNodeList = null;
+	public $categoryNodeTree = null;
 	
 	/**
 	 * indicates if the category is disabled
@@ -146,7 +146,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 			'action' => 'add',
 			'addController' => $this->addController,
 			'additionalData' => $this->additionalData,
-			'categoryNodeList' => $this->categoryNodeList,
+			'categoryNodeList' => $this->categoryNodeTree->getIterator(),
 			'editController' => $this->editController,
 			'isDisabled' => $this->isDisabled,
 			'listController' => $this->listController,
@@ -173,13 +173,13 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	 * Reads the categories.
 	 */
 	protected function readCategories() {
-		$this->categoryNodeList = new CategoryNodeList($this->objectType->objectType, 0, true);
+		$this->categoryNodeTree = new UncachedCategoryNodeTree($this->objectType->objectType, 0, true);
 	}
 	
 	/**
 	 * @see	wcf\page\IPage::readData()
 	 */
-	public function readData() {		
+	public function readData() {
 		$this->objectType = CategoryHandler::getInstance()->getObjectTypeByName($this->objectTypeName);
 		if ($this->objectType === null) {
 			throw new SystemException("Unknown category object type with name '".$this->objectTypeName."'");
@@ -204,9 +204,9 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		}
 		I18nHandler::getInstance()->register('title');
 		
-		$this->readCategories();
-		
 		parent::readData();
+		
+		$this->readCategories();
 	}
 	
 	/**
@@ -330,19 +330,14 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 				return;
 			}
 			
-			if (CategoryHandler::getInstance()->getCategory($this->parentCategoryID) === null) {
-				throw new UserInputException('parentCategoryID', 'invalid');
+			$category = CategoryHandler::getInstance()->getCategory($this->parentCategoryID);
+			if ($category === null) {
+				throw new UserInputException('parentCategoryID', 'notValid');
 			}
 			
 			if ($this->objectType->getProcessor()->getMaximumNestingLevel() != -1) {
-				foreach ($this->categoryNodeList as $category) {
-					if ($category->categoryID == $this->parentCategoryID) {
-						if ($this->categoryNodeList->getDepth() > $this->objectType->getProcessor()->getMaximumNestingLevel() - 1) {
-							throw new UserInputException('parentCategoryID', 'invalid');
-						}
-						
-						break;
-					}
+				if (count($category->getParentCategories()) > $this->objectType->getProcessor()->getMaximumNestingLevel()) {
+					throw new UserInputException('parentCategoryID', 'notValid');
 				}
 			}
 		}
