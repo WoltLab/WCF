@@ -83,6 +83,77 @@ WCF.ACP.Application.SetAsPrimary = Class.extend({
 WCF.ACP.Cronjob = { };
 
 /**
+ * Handles the manual execution of cronjobs.
+ */
+WCF.ACP.Cronjob.ExecutionHandler = Class.extend({
+	/**
+	 * notification object
+	 * @var	WCF.System.Notification
+	 */
+	_notification: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes WCF.ACP.Cronjob.ExecutionHandler object.
+	 */
+	init: function() {
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		$('.jsCronjobRow .jsExecuteButton').click($.proxy(this._click, this));
+		
+		this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'), 'success');
+	},
+	
+	/**
+	 * Handles a click on an execute button.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		this._proxy.setOption('data', {
+			actionName: 'execute',
+			className: 'wcf\\data\\cronjob\\CronjobAction',
+			objectIDs: [ $(event.target).data('objectID') ]
+		});
+		
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Handles successful cronjob execution.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		$('.jsCronjobRow').each($.proxy(function(index, row) {
+			var $button = $(row).find('.jsExecuteButton');
+			var $objectID = ($button).data('objectID');
+			
+			if (WCF.inArray($objectID, data.objectIDs)) {
+				if (data.returnValues[$objectID]) {
+					// insert feedback here
+					$(row).find('td.columnNextExec').html(data.returnValues[$objectID].formatted);
+					$(row).wcfHighlight();
+				}
+				
+				this._notification.show();
+				
+				return false;
+			}
+		}, this));
+	}
+});
+
+/**
  * Handles the cronjob log list.
  */
 WCF.ACP.Cronjob.LogList = Class.extend({
