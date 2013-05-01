@@ -59,7 +59,9 @@ class PageMenuItemListPage extends AbstractPage {
 			}
 			else {
 				if ($menuItem->parentMenuItem) {
-					$this->headerItems[$menuItem->parentMenuItem]->addChild($menuItem);
+					if (isset($this->headerItems[$menuItem->parentMenuItem])) {
+						$this->headerItems[$menuItem->parentMenuItem]->addChild($menuItem);
+					}
 				}
 				else {
 					$this->headerItems[$menuItem->menuItem] = new ViewablePageMenuItem($menuItem);

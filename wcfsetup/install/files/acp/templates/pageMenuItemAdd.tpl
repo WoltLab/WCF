@@ -60,8 +60,8 @@
 	</nav>
 </div>
 
-<div class="container containerPadding marginTop">
-	<form method="post" action="{if $action == 'add'}{link controller='PageMenuItemAdd'}{/link}{else}{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link controller='PageMenuItemAdd'}{/link}{else}{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}{/if}">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.pageMenu.data{/lang}</legend>
 			
@@ -194,11 +194,11 @@
 		</fieldset>
 		
 		{event name='fields'}
-		
-		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" />
-		</div>
-	</form>
-</div>
+	</div>
+	
+	<div class="formSubmit">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" />
+	</div>
+</form>
 
 {include file='footer'}

@@ -109,6 +109,14 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 		)));
 		$this->objectAction->executeAction();
 		
+		// update children
+		if ($this->menuItem->menuPosition == 'header' && $this->menuPosition != 'header') {
+			$sql = "UPDATE	wcf".WCF_N."_page_menu_item
+				SET	parentMenuItem = ''
+				WHERE	parentMenuItem = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->menuItem->menuItem));
+		}
 		$this->saved();
 		
 		WCF::getTPL()->assign('success', true);
