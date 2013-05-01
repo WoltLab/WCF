@@ -10,24 +10,8 @@
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\cronjob\\CronjobAction', '.jsCronjobRow');
 		new WCF.Action.Toggle('wcf\\data\\cronjob\\CronjobAction', '.jsCronjobRow');
-		new WCF.Action.SimpleProxy({
-			action: 'execute',
-			className: 'wcf\\data\\cronjob\\CronjobAction',
-			elements: $('.jsCronjobRow .jsExecuteButton')
-		}, {
-			success: function(data, statusText, jqXHR) {
-				$('.jsCronjobRow').each(function(index, row) {
-					var $button = $(row).find('.jsExecuteButton');
-					var $objectID = ($button).data('objectID');
-					
-					if (WCF.inArray($objectID, data.objectIDs) && data.returnValues[$objectID]) {
-						// insert feedback here
-						$(row).find('td.columnNextExec').html(data.returnValues[$objectID].formatted);
-						$(row).wcfHighlight();
-					}
-				});
-			}
-		});
+		
+		new WCF.ACP.Cronjob.ExecutionHandler();
 	});
 	//]]>
 </script>
