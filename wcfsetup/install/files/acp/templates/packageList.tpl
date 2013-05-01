@@ -65,9 +65,6 @@
 				{foreach from=$objects item=$package}
 					<tr class="jsPackageRow">
 						<td class="columnIcon">
-							{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-								<a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}" title="{lang}wcf.acp.package.button.update{/lang}" class="jsTooltip"><span class="icon icon16 icon-repeat"></span></a>
-							{/if}
 							{if $package->canUninstall()}
 								<span class="icon icon16 icon-remove pointer jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}"></span>
 							{else}
