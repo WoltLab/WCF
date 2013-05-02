@@ -477,7 +477,7 @@
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Zugangsdaten]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Ihre Angaben sind ungültig, bitte überprüfen Sie {if $updateServer->requiresLicense()}Lizenz- und Seriennummer{else}Benutzername und Passwort{/if}.]]></item>
-		<item name="wcf.acp.package.update.errorCode.403"><![CDATA[Sie sind nicht berechtigt auf dieses Paket zu zugreifen.]]></item>
+		<item name="wcf.acp.package.update.errorCode.403"><![CDATA[Sie sind nicht berechtigt auf dieses Paket zuzugreifen.]]></item>
 		<item name="wcf.acp.package.update.licenseNo"><![CDATA[Lizenznummer]]></item>
 		<item name="wcf.acp.package.update.password"><![CDATA[Passwort]]></item>
 		<item name="wcf.acp.package.update.saveCredentials"><![CDATA[Zugangsdaten speichern]]></item>
@@ -652,7 +652,7 @@
 		<item name="wcf.acp.template.group.add"><![CDATA[Templategruppe hinzufügen]]></item>
 		<item name="wcf.acp.template.group.edit"><![CDATA[Templategruppe bearbeiten]]></item>
 		<item name="wcf.acp.template.group.templates"><![CDATA[Templates]]></item>
-		<item name="wcf.acp.template.error.noGroups"><![CDATA[Bevor sie ein eigenes Template erstellen können, müssen Sie eine <a href="{link controller='TemplateGroupAdd'}{/link}">Templategruppe hinzufügen</a>.]]></item>
+		<item name="wcf.acp.template.error.noGroups"><![CDATA[Bevor Sie ein eigenes Template erstellen können, müssen Sie eine <a href="{link controller='TemplateGroupAdd'}{/link}">Templategruppe hinzufügen</a>.]]></item>
 		<item name="wcf.acp.template.group.noItems"><![CDATA[Es sind keine Templategruppen vorhanden.]]></item>
 		<item name="wcf.acp.template.group.folderName"><![CDATA[Verzeichnis]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[Übergeordnete Templategruppe]]></item>
@@ -754,7 +754,7 @@
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Die hier eingestellten Änderungen der Vorgabewerte für Benutzerprofil-Einstellungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.]]></item>
 		<item name="wcf.acp.user.option.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.acp.user.option.validationPattern"><![CDATA[Regulärer Ausdruck zur Validierung]]></item>
-		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[Tragen Sie hier den Regulären Ausdruck ein, um die Eingabe der Benutzer zu validieren.]]></item>
+		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[Tragen Sie hier den regulären Ausdruck ein, um die Eingabe der Benutzer zu validieren.]]></item>
 		<item name="wcf.acp.user.option.list"><![CDATA[Benutzerprofilfelder]]></item>
 		<item name="wcf.acp.user.option.visible"><![CDATA[Wer darf den Inhalt sehen?]]></item>
 		<item name="wcf.acp.user.option.visible.1"><![CDATA[Eigentümer]]></item>
