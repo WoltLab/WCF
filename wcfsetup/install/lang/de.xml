@@ -675,6 +675,9 @@
 		<item name="wcf.acp.user.banUser.description"><![CDATA[Der Benutzer wird dauerhaft von der Nutzung aller Funktionen ausgeschlossen und erhält beim Aufruf der Seite eine entsprechende Fehlermeldung.]]></item>
 		<item name="wcf.acp.user.banReason"><![CDATA[Begründung]]></item>
 		<item name="wcf.acp.user.banReason.description"><![CDATA[Die Begründung wird dem gesperrten Benutzer beim Aufruf der Seite angezeigt.]]></item>
+		<item name="wcf.acp.user.ban"><![CDATA[Sperren]]></item>
+		<item name="wcf.acp.user.unban"><![CDATA[Sperrung aufheben]]></item>
+		<item name="wcf.acp.user.ban.sure"><![CDATA[Wollen Sie den/die Benutzer wirklich sperren?]]></item>
 		<item name="wcf.acp.user.delete.sure"><![CDATA[Wollen Sie Benutzer „{$user->username}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Sie bearbeiten Ihr eigenes Benutzerkonto. Änderungen an den Mitgliedschaften in Benutzergruppen können womöglich dazu führen, dass Sie aus der Administrationsoberfläche ausgeschlossen werden. Bitte seien Sie entsprechend vorsichtig!]]></item>
