@@ -27,7 +27,7 @@
 		
 		<action name="sendMail">
 			<actionclassname><![CDATA[wcf\system\clipboard\action\UserClipboardAction]]></actionclassname>
-			<showorder>4</showorder>
+			<showorder>5</showorder>
 			<pages>
 				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
 			</pages>
@@ -35,7 +35,7 @@
 
 		<action name="exportMailAddress">
 			<actionclassname><![CDATA[wcf\system\clipboard\action\UserClipboardAction]]></actionclassname>
-			<showorder>5</showorder>
+			<showorder>6</showorder>
 			<pages>
 				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
 			</pages>
