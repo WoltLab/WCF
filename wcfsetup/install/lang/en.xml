@@ -275,7 +275,7 @@
 		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Block by User-Agent]]></item>
 		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[One User-Agent per line]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
-		<item name="wcf.acp.option.cache_source_memcached_host.description"><![CDATA[One server per line, you can additionally specify a weight factor to allow load balancing, for example “localhost:11211:67” or “10.0.13.37:31337:33”.]]></item>
+		<item name="wcf.acp.option.cache_source_memcached_host.description"><![CDATA[One server per line, you can additionally specify a priority to allow load balancing, for example “localhost:11211:67” or “10.0.13.37:31337:33”.]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Caching Method]]></item>
 		<item name="wcf.acp.option.cache_source_type.apc"><![CDATA[Alternative PHP Cache (experimental)]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Caching methods differing from “Filesystem” require special extensions or services running on your machine.]]></item>
