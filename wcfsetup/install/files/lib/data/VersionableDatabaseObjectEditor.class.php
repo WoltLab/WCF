@@ -6,7 +6,7 @@ use wcf\system\WCF;
  * Abstract class for all versionable editor classes.
  * 
  * @author	Jeffrey Reichardt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
@@ -38,10 +38,10 @@ abstract class VersionableDatabaseObjectEditor extends DatabaseObjectEditor {
 		
 		// return new object
 		$id = WCF::getDB()->getInsertID(static::getDatabaseVersionTableName(), static::getDatabaseVersionTableIndexName());
-
+		
 		return new static::$baseClass($id);
 	}
-		
+	
 	/**
 	 * @see	wcf\data\IEditableObject::delete()
 	 */
@@ -59,7 +59,7 @@ abstract class VersionableDatabaseObjectEditor extends DatabaseObjectEditor {
 		$sql = "DELETE FROM	".static::getDatabaseVersionTableName()."
 				WHERE ".static::getDatabaseTableIndexName()." = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-
+		
 		WCF::getDB()->beginTransaction();
 		foreach ($objectIDs as $objectID) {
 			$statement->execute(array($objectID));

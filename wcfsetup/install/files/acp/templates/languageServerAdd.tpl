@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.languageServer.'|concat:$action}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.languageServer.{$action}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.languageServer.{$action}{/lang}</h1>
 </header>
 
 {if $errorField}
@@ -17,7 +15,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='LanguageServerList'}{/link}" title="{lang}wcf.acp.menu.link.language.server.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.language.server.list{/lang}</span></a></li>
+			<li><a href="{link controller='LanguageServerList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.language.server.list{/lang}</span></a></li>
 				
 			{event name='contentNavigationButtons'}
 		</ul>

@@ -1,10 +1,8 @@
 {include file='header'}
 
 <header class="boxHeadline boxSubHeadline">
-	<hgroup>
-		<h1>{lang}wcf.global.configureDB{/lang}</h1>
-		<h2>{lang}wcf.global.configureDB.description{/lang}</h2>
-	</hgroup>
+	<h2>{lang}wcf.global.configureDB{/lang}</h2>
+	<p>{lang}wcf.global.configureDB.description{/lang}</p>
 </header>
 
 {if $exception|isset}

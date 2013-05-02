@@ -81,14 +81,36 @@ String.prototype.hashCode = function() {
 };
 
 /**
- * jQuery.browser.mobile (http://detectmobilebrowser.com/)
- * 
- * jQuery.browser.mobile will be true if the browser is a mobile device
- **/
-(function(a){(jQuery.browser=jQuery.browser||{}).mobile=/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))})(navigator.userAgent||navigator.vendor||window.opera);
-
+ * User-Agent based browser detection and touch detection.
+ */
 (function() {
-	jQuery.browser = jQuery.browser || { };
+	var ua = navigator.userAgent.toLowerCase();
+	var match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+		/(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+		/(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+		/(msie) ([\w.]+)/.exec( ua ) ||
+		ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+		[];
+	
+	var matched = {
+		browser: match[ 1 ] || "",
+		version: match[ 2 ] || "0"
+	};
+	browser = {};
+	
+	if ( matched.browser ) {
+		browser[ matched.browser ] = true;
+		browser.version = matched.version;
+	}
+	
+	// Chrome is Webkit, but Webkit is also Safari.
+	if ( browser.chrome ) {
+		browser.webkit = true;
+	} else if ( browser.webkit ) {
+		browser.safari = true;
+	}
+	
+	jQuery.browser = browser;
 	jQuery.browser.touch = (!!('ontouchstart' in window) || !!('msmaxtouchpoints' in window.navigator));
 })();
 
@@ -947,7 +969,7 @@ WCF.Clipboard = {
 					
 					$container.find('input.jsClipboardItem').each(function(itemIndex, item) {
 						var $item = $(item);
-						if (!$item.attr('checked')) {
+						if (!$item.prop('checked')) {
 							$allItemsMarked = false;
 						}
 					});
@@ -1018,7 +1040,7 @@ WCF.Clipboard = {
 	_click: function(event) {
 		var $item = $(event.target);
 		var $objectID = $item.data('objectID');
-		var $isMarked = ($item.attr('checked')) ? true : false;
+		var $isMarked = ($item.prop('checked')) ? true : false;
 		var $objectIDs = [ $objectID ];
 		
 		if ($isMarked) {
@@ -1039,7 +1061,7 @@ WCF.Clipboard = {
 			var $markedAll = true;
 			$container.find('input.jsClipboardItem').each(function(index, containerItem) {
 				var $containerItem = $(containerItem);
-				if (!$containerItem.attr('checked')) {
+				if (!$containerItem.prop('checked')) {
 					$markedAll = false;
 				}
 			});
@@ -1074,7 +1096,7 @@ WCF.Clipboard = {
 		
 		// if markAll object is a checkbox, allow toggling
 		if ($item.is('input')) {
-			$isMarked = $item.attr('checked');
+			$isMarked = $item.prop('checked');
 		}
 		
 		// handle item containers
@@ -1087,14 +1109,14 @@ WCF.Clipboard = {
 				var $containerItem = $(containerItem);
 				var $objectID = $containerItem.data('objectID');
 				if ($isMarked) {
-					if (!$containerItem.attr('checked')) {
+					if (!$containerItem.prop('checked')) {
 						$containerItem.attr('checked', 'checked');
 						this._markedObjectIDs.push($objectID);
 						$objectIDs.push($objectID);
 					}
 				}
 				else {
-					if ($containerItem.attr('checked')) {
+					if ($containerItem.prop('checked')) {
 						$containerItem.removeAttr('checked');
 						this._markedObjectIDs = $.removeArrayValue(this._markedObjectIDs, $objectID);
 						$objectIDs.push($objectID);
@@ -1486,6 +1508,7 @@ WCF.Action.Proxy = Class.extend({
 			after: null,
 			init: null,
 			jsonp: 'callback',
+			async: true,
 			failure: null,
 			showLoadingOverlay: true,
 			success: null,
@@ -1518,6 +1541,7 @@ WCF.Action.Proxy = Class.extend({
 			data: this.options.data,
 			dataType: this.options.dataType,
 			jsonp: this.options.jsonp,
+			async: this.options.async,
 			type: this.options.type,
 			url: this.options.url,
 			success: $.proxy(this._success, this),
@@ -1607,6 +1631,11 @@ WCF.Action.Proxy = Class.extend({
 		
 		// call child method if applicable
 		if ($.isFunction(this.options.success)) {
+			// trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
+			if (data.returnValues && data.returnValues.template !== undefined) {
+				data.returnValues.template = $.trim(data.returnValues.template);
+			}
+			
 			this.options.success(data, textStatus, jqXHR);
 		}
 		
@@ -2012,12 +2041,12 @@ WCF.Action.Toggle = Class.extend({
 		WCF.LoadingOverlayHandler.updateIcon($toggleButton, false);
 		if ($toggleButton.hasClass('icon-off')) {
 			$toggleButton.removeClass('icon-off').addClass('icon-circle-blank');
-			$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
+			$newTitle = ($toggleButton.data('disableTitle') ? $toggleButton.data('disableTitle') : WCF.Language.get('wcf.global.button.disable'));
 			$toggleButton.attr('title', $newTitle);
 		}
 		else {
 			$toggleButton.removeClass('icon-circle-blank').addClass('icon-off');
-			$newTitle = ($toggleButton.data('disableTitle') ? $toggleButton.data('disableTitle') : WCF.Language.get('wcf.global.button.disable'));
+			$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
 			$toggleButton.attr('title', $newTitle);
 		}
 		
@@ -2140,9 +2169,25 @@ WCF.Date.Picker = {
 	_dateFormat: 'yy-mm-dd',
 	
 	/**
+	 * time format
+	 * @var	string
+	 */
+	_timeFormat: 'g:ia',
+	
+	/**
 	 * Initializes the jQuery UI based date picker.
 	 */
 	init: function() {
+		// ignore error 'unexpected literal' error; this might be not the best approach
+		// to fix this problem, but since the date is properly processed anyway, we can
+		// simply continue :)	- Alex
+		var $__log = $.timepicker.log;
+		$.timepicker.log = function(error) {
+			if (error.indexOf('Error parsing the date/time string: Unexpected literal at position') == -1) {
+				$__log(error);
+			}
+		};
+		
 		this._convertDateFormat();
 		this._initDatePicker();
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.Date.Picker', $.proxy(this._initDatePicker, this));
@@ -2166,6 +2211,17 @@ WCF.Date.Picker = {
 		// t	Number of days in the given month
 		// L	Whether it's a leap year
 		var $replacementTable = {
+			// time
+			'a': ' tt',
+			'A': ' TT',
+			'g': 'h',
+			'G': 'H',
+			'h': 'hh',
+			'H': 'HH',
+			'i': 'mm',
+			's': 'ss',
+			'u': 'l',
+			
 			// day
 			'd': 'dd',
 			'D': 'D',
@@ -2201,6 +2257,16 @@ WCF.Date.Picker = {
 			
 			return part1 + part2;
 		});
+		
+		this._timeFormat = WCF.Language.get('wcf.date.timeFormat').replace(/([^aAgGhHisu\\]*(?:\\.[^aAgGhHisu\\]*)*)([aAgGhHisu])/g, function(match, part1, part2, offset, string) {
+			for (var $key in $replacementTable) {
+				if (part2 == $key) {
+					part2 = $replacementTable[$key];
+				}
+			}
+			
+			return part1 + part2;
+		});
 	},
 	
 	/**
@@ -2210,7 +2276,7 @@ WCF.Date.Picker = {
 		$('input[type=date]:not(.jsDatePicker)').each($.proxy(function(index, input) {
 			var $input = $(input);
 			var $inputName = $input.prop('name');
-			var $inputValue = $input.prop('value'); // should be Y-m-d, must be interpretable by Date
+			var $inputValue = $input.val(); // should be Y-m-d, must be interpretable by Date
 			
 			// update $input
 			$input.prop('type', 'text').addClass('jsDatePicker');
@@ -2223,6 +2289,17 @@ WCF.Date.Picker = {
 			$input.datepicker({
 				altField: '#' + $input.wcfIdentify() + 'DatePicker',
 				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
+				beforeShow: function(input, instance) {
+					// dirty hack to force opening below the input
+					setTimeout(function() {
+						instance.dpDiv.position({
+							my: 'left top',
+							at: 'left bottom',
+							collision: 'none',
+							of: input
+						});
+					}, 1);
+				},
 				changeMonth: true,
 				changeYear: true,
 				dateFormat: this._dateFormat,
@@ -2232,12 +2309,86 @@ WCF.Date.Picker = {
 				monthNames: WCF.Language.get('__months'),
 				monthNamesShort: WCF.Language.get('__monthsShort'),
 				showOtherMonths: true,
-				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038')
+				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038'),
+				onClose: function(dateText, datePicker) {
+					// clear altField when datepicker is cleared
+					if (dateText == '') {
+						$(datePicker.settings["altField"]).val(dateText);
+					}
+				}
 			});
 			
 			// format default date
 			if ($inputValue) {
 				$input.datepicker('setDate', new Date($inputValue));
+			}
+			
+			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
+			$input.datepicker('widget').hide();
+		}, this));
+		
+		$('input[type=datetime]:not(.jsDatePicker)').each($.proxy(function(index, input) {
+			var $input = $(input);
+			var $inputName = $input.prop('name');
+			var $inputValue = $input.val(); // should be Y-m-d H:i:s, must be interpretable by Date
+			
+			// drop the seconds
+			if (/[0-9]{2}:[0-9]{2}:[0-9]{2}$/.test($inputValue)) {
+				$inputValue = $inputValue.replace(/:[0-9]{2}$/, '');
+				$input.val($inputValue);
+			}
+			
+			// update $input
+			$input.prop('type', 'text').addClass('jsDatePicker');
+			
+			// insert a hidden element representing the actual date
+			$input.removeAttr('name');
+			$input.before('<input type="hidden" id="' + $input.wcfIdentify() + 'DatePicker" name="' + $inputName + '" value="' + $inputValue + '" />');
+			
+			// init date picker
+			$input.datetimepicker({
+				altField: '#' + $input.wcfIdentify() + 'DatePicker',
+				altFieldTimeOnly: false,
+				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
+				altTimeFormat: 'HH:mm',
+				beforeShow: function(input, instance) {
+					// dirty hack to force opening below the input
+					setTimeout(function() {
+						instance.dpDiv.position({
+							my: 'left top',
+							at: 'left bottom',
+							collision: 'none',
+							of: input
+						});
+					}, 1);
+				},
+				changeMonth: true,
+				changeYear: true,
+				controlType: 'select',
+				dateFormat: this._dateFormat,
+				dayNames: WCF.Language.get('__days'),
+				dayNamesMin: WCF.Language.get('__daysShort'),
+				dayNamesShort: WCF.Language.get('__daysShort'),
+				hourText: WCF.Language.get('wcf.date.hour'),
+				minuteText: WCF.Language.get('wcf.date.minute'),
+				monthNames: WCF.Language.get('__months'),
+				monthNamesShort: WCF.Language.get('__monthsShort'),
+				showButtonPanel: false,
+				showTime: false,
+				showOtherMonths: true,
+				timeFormat: this._timeFormat,
+				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038'),
+				onClose: function(dateText, datePicker) {
+					// clear altField when datepicker is cleared
+					if (dateText == '') {
+						$(datePicker.settings.altField).val('');
+					}
+				}
+			});
+			
+			// format default date
+			if ($inputValue) {
+				$input.removeClass('hasDatepicker').datetimepicker('setDate', new Date($inputValue));
 			}
 			
 			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
@@ -2364,8 +2515,15 @@ WCF.Date.Time = Class.extend({
 		var $time = $element.data('time');
 		var $offset = $element.data('offset');
 		
+		// skip for future dates
+		if ($element.data('isFutureDate')) return;
+		
+		// timestamp is less than 60 seconds ago
+		if ($timestamp >= this._timestamp || this._timestamp < ($timestamp + 60)) {
+			$element.text(WCF.Language.get('wcf.date.relative.now'));
+		}
 		// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
-		if ($timestamp >= this._timestamp || this._timestamp < ($timestamp + 3540)) {
+		else if (this._timestamp < ($timestamp + 3540)) {
 			var $minutes = Math.max(Math.round((this._timestamp - $timestamp) / 60), 1);
 			$element.text(eval(WCF.Language.get('wcf.date.relative.minutes')));
 		}
@@ -2899,16 +3057,16 @@ WCF.MultipleLanguageInput = Class.extend({
  */
 WCF.Number = {
 	/**
-	 * Rounds a number to a given number of floating points digits. Defaults to 0.
+	 * Rounds a number to a given number of decimal places. Defaults to 0.
 	 * 
 	 * @param	number		number
-	 * @param	floatingPoint	number of digits
+	 * @param	decimalPlaces	number of decimal places
 	 * @return	number
 	 */
-	round: function (number, floatingPoint) {
-		floatingPoint = Math.pow(10, (floatingPoint || 0));
+	round: function (number, decimalPlaces) {
+		decimalPlaces = Math.pow(10, (decimalPlaces || 0));
 		
-		return Math.round(number * floatingPoint) / floatingPoint;
+		return Math.round(number * decimalPlaces) / decimalPlaces;
 	}
 };
 
@@ -2953,11 +3111,14 @@ WCF.String = {
 	 * @param	mixed	number
 	 * @return	string
 	 */
-	formatNumeric: function(number, floatingPoint) {
-		number = String(WCF.Number.round(number, floatingPoint || 2));
+	formatNumeric: function(number, decimalPlaces) {
+		number = String(WCF.Number.round(number, decimalPlaces || 2));
 		number = number.replace('.', WCF.Language.get('wcf.global.decimalPoint'));
 		
-		return this.addThousandsSeparator(number);
+		number = this.addThousandsSeparator(number);
+		number = number.replace('-', '\u2212');
+		
+		return number;
 	},
 	
 	/**
@@ -3281,25 +3442,25 @@ WCF.Template = Class.extend({
 		};
 		
 		template = template.replace(/\{(\$[^\}]+?)\}/g, function(_, content) {
-			content = unescape(content.replace(/\$([^.\s]+)/g, "(v['$1'])"));
+			content = unescape(content.replace(/\$([^.\[\s]+)/g, "(v['$1'])"));
 			
 			return "' + WCF.String.escapeHTML(" + content + ") + '";
 		})
 		// Numeric Variable
 		.replace(/\{#(\$[^\}]+?)\}/g, function(_, content) {
-			content = unescape(content.replace(/\$([^.\s]+)/g, "(v['$1'])"));
+			content = unescape(content.replace(/\$([^.\[\s]+)/g, "(v['$1'])"));
 			
 			return "' + WCF.String.formatNumeric(" + content + ") + '";
 		})
 		// Variable without escaping
 		.replace(/\{@(\$[^\}]+?)\}/g, function(_, content) {
-			content = unescape(content.replace(/\$([^.\s]+)/g, "(v['$1'])"));
+			content = unescape(content.replace(/\$([^.\[\s]+)/g, "(v['$1'])"));
 			
 			return "' + " + content + " + '";
 		})
 		// {if}
 		.replace(/\{if (.+?)\}/g, function(_, content) {
-			content = unescape(content.replace(/\$([^.\s]+)/g, "(v['$1'])"));
+			content = unescape(content.replace(/\$([^.\[\s]+)/g, "(v['$1'])"));
 			
 			return	"';\n" +
 				"if (" + content + ") {\n" +
@@ -3307,7 +3468,7 @@ WCF.Template = Class.extend({
 		})
 		// {elseif}
 		.replace(/\{else ?if (.+?)\}/g, function(_, content) {
-			content = unescape(content.replace(/\$([^.\s]+)/g, "(v['$1'])"));
+			content = unescape(content.replace(/\$([^.\[\s]+)/g, "(v['$1'])"));
 			
 			return	"';\n" +
 				"}\n" +
@@ -3325,7 +3486,7 @@ WCF.Template = Class.extend({
 			if (typeof $parameters['item'] === 'undefined') throw new Error('Missing item attribute in implode-tag');
 			if (typeof $parameters['glue'] === 'undefined') $parameters['glue'] = "', '";
 			
-			$parameters['from'] = $parameters['from'].replace(/\$([^.\s]+)/g, "(v.$1)");
+			$parameters['from'] = $parameters['from'].replace(/\$([^.\[\s]+)/g, "(v.$1)");
 			
 			return 	"';\n"+
 				"var $implode_" + $tagID + " = false;\n" +
@@ -3345,7 +3506,7 @@ WCF.Template = Class.extend({
 			
 			if (typeof $parameters['from'] === 'undefined') throw new Error('Missing from attribute in foreach-tag');
 			if (typeof $parameters['item'] === 'undefined') throw new Error('Missing item attribute in foreach-tag');
-			$parameters['from'] = $parameters['from'].replace(/\$([^.\s]+)/g, "(v.$1)");
+			$parameters['from'] = $parameters['from'].replace(/\$([^.\[\s]+)/g, "(v.$1)");
 			
 			return	"';\n" +
 				"$foreach_"+$tagID+" = false;\n" +
@@ -3488,7 +3649,7 @@ WCF.ToggleOptions = Class.extend({
 	 * Toggles items.
 	 */
 	_toggle: function() {
-		if (!this._element.attr('checked')) return;
+		if (!this._element.prop('checked')) return;
 		
 		for (var $i = 0, $length = this._showItems.length; $i < $length; $i++) {
 			var $item = this._showItems[$i];
@@ -3812,7 +3973,7 @@ WCF.Collapsible.Remote = Class.extend({
 		var $newState = (data.returnValues.isOpen) ? 'open' : 'close';
 		
 		// update container content
-		this._updateContent($containerID, data.returnValues.content, $newState);
+		this._updateContent($containerID, $.trim(data.returnValues.content), $newState);
 		
 		// update icon
 		this._exchangeIcon(this._containerData[$containerID].button, (data.returnValues.isOpen ? 'chevron-down' : 'chevron-right'));
@@ -5269,7 +5430,7 @@ WCF.System.Notification = Class.extend({
 	 */
 	init: function(message, cssClassNames) {
 		this._cssClassNames = cssClassNames || 'success';
-		this._message = message;
+		this._message = message || WCF.Language.get('wcf.global.success');
 		this._overlay = $('#systemNotification');
 		
 		if (!this._overlay.length) {
@@ -5589,7 +5750,7 @@ WCF.System.PageNavigation = {
 			
 			var $fieldset = $('<fieldset><legend>' + WCF.Language.get('wcf.global.page.jumpTo') + '</legend></fieldset>').appendTo(this._dialog);
 			$('<dl><dt><label for="jsPageNavigationPageNo">' + WCF.Language.get('wcf.global.page.jumpTo') + '</label></dt><dd></dd></dl>').appendTo($fieldset);
-			this._pageNo = $('<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="medium" />').keyup($.proxy(this._keyUp, this)).appendTo($fieldset.find('dd'));
+			this._pageNo = $('<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="tiny" />').keyup($.proxy(this._keyUp, this)).appendTo($fieldset.find('dd'));
 			this._description = $('<small></small>').insertAfter(this._pageNo);
 			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
 			this._button = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(this._submit, this)).appendTo($formSubmit);
@@ -5597,7 +5758,7 @@ WCF.System.PageNavigation = {
 		
 		this._button.enable();
 		this._description.html(WCF.Language.get('wcf.global.page.jumpTo.description').replace(/#pages#/, this._elements[this._elementID].data('pages')));
-		this._pageNo.val('1').attr('max', this._elements[this._elementID].data('pages'));
+		this._pageNo.val(this._elements[this._elementID].data('pages')).attr('max', this._elements[this._elementID].data('pages'));
 		
 		this._dialog.wcfDialog({
 			'title': WCF.Language.get('wcf.global.page.pageNavigation')
@@ -7418,7 +7579,7 @@ WCF.Language.Chooser = Class.extend({
 		
 		for (var $languageID in languages) {
 			var $language = languages[$languageID];
-			var $item = $('<li class="boxFlag"><a class="box24"><div class="framed"><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <hgroup><h1>' + $language.languageName + '</h1></hgroup></a></li>').appendTo($dropdownMenu);
+			var $item = $('<li class="boxFlag"><a class="box24"><div class="framed"><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <div><h3>' + $language.languageName + '</h3></div></a></li>').appendTo($dropdownMenu);
 			$item.data('languageID', $languageID).click($.proxy(this._click, this));
 			
 			// update dropdown label
@@ -7583,6 +7744,12 @@ WCF.UserPanel = Class.extend({
 	_link: null,
 	
 	/**
+	 * language variable name for 'no items'
+	 * @var	string
+	 */
+	_noItems: '',
+	
+	/**
 	 * reverts to original link if return values are empty
 	 * @var	boolean
 	 */
@@ -7603,11 +7770,9 @@ WCF.UserPanel = Class.extend({
 			return;
 		}
 		
-		if (this._container.data('count')) {
-			WCF.DOMNodeInsertedHandler.enable();
-			this._convert();
-			WCF.DOMNodeInsertedHandler.disable();
-		}
+		WCF.DOMNodeInsertedHandler.enable();
+		this._convert();
+		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
@@ -7622,6 +7787,11 @@ WCF.UserPanel = Class.extend({
 		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').appendTo($dropdownMenu);
 		
 		this._addDefaultItems($dropdownMenu);
+		
+		this._container.dblclick($.proxy(function() {
+			window.location = this._link.attr('href');
+			return false;
+		}, this));
 	},
 	
 	/**
@@ -7674,19 +7844,35 @@ WCF.UserPanel = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		var $dropdownMenu = this._container.children('.dropdownMenu');
+		$dropdownMenu.children('.jsDropdownPlaceholder').remove();
+		
 		if (data.returnValues && data.returnValues.template) {
-			var $dropdownMenu = this._container.children('.dropdownMenu');
-			$dropdownMenu.children('.jsDropdownPlaceholder').remove();
 			$('' + data.returnValues.template).prependTo($dropdownMenu);
+			
+			// update badge
+			var $badge = this._container.find('.badge');
+			if (!$badge.length) {
+				$badge = $('<span class="badge badgeInverse" />').appendTo(this._container.children('.dropdownToggle'));
+			}
+			$badge.html(data.returnValues.totalCount);
+			
+			this._after($dropdownMenu);
 		}
 		else {
-			this._container.removeClass('dropdown').empty();
-			this._link.appendTo(this._container);
+			$('<li><span>' + WCF.Language.get(this._noItems) + '</span></li>').prependTo($dropdownMenu);
 			
 			// remove badge
 			this._container.find('.badge').remove();
 		}
-	}
+	},
+	
+	/**
+	 * Execute actions after the dropdown menu has been populated.
+	 * 
+	 * @param	object		dropdownMenu
+	 */
+	_after: function(dropdownMenu) { }
 });
 
 /**
@@ -8094,7 +8280,7 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 			}
 		}
 		
-		$.ui.tabs.prototype.select.apply(this, arguments);
+		this._setOption('active', index);
 	},
 	
 	/**

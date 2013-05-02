@@ -10,10 +10,8 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{$archive->getLocalizedPackageInfo('packageName')}</h1>
-		<h2>{$archive->getLocalizedPackageInfo('packageDescription')}</h2>
-	</hgroup>
+	<h1>{$archive->getLocalizedPackageInfo('packageName')}</h1>
+	<p>{$archive->getLocalizedPackageInfo('packageDescription')}</p>
 </header>
 
 {if $missingPackages > 0}
@@ -75,9 +73,9 @@
 
 {if $requiredPackages|count > 0}
 	<div class="tabularBox tabularBoxTitle marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.package.dependencies.required{/lang} <span class="badge badgeInverse">{#$requiredPackages|count}</span></h1>
-		</hgroup>
+		<header>
+			<h2>{lang}wcf.acp.package.dependencies.required{/lang} <span class="badge badgeInverse">{#$requiredPackages|count}</span></h2>
+		</header>
 		
 		<table class="table">
 			<thead>

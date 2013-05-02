@@ -1,14 +1,14 @@
 <?php
-namespace wcf\data\category;
+namespace wcf\system\exception;
 
 /**
- * Represents a list of viewable category nodes.
+ * Default exception for HTTP status code "404 Not Found".
  * 
- * @author	Matthias Schmidt
+ * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	data.category
+ * @subpackage	system.exception
  * @category	Community Framework
  */
-class ViewableCategoryNodeList extends CategoryNodeList { }
+class HTTPNotFoundException extends SystemException { }

@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.packageUpdate.auth'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.packageUpdate.auth{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.packageUpdate.auth{/lang}</h1>
 </header>
 
 {if $errorField}

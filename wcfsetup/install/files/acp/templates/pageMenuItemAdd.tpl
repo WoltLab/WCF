@@ -7,6 +7,7 @@
 		var $parentMenuItemContainer = $('#parentMenuItemContainer');
 		var $isInternalLink = $('input[name=isInternalLink]').filter('[value=1]');
 		var $menuItemControllerContainer = $('#menuItemControllerContainer');
+		var $menuItemLinkContainer = $('#menuItemLinkContainer');
 		
 		function handleMenuPosition() {
 			if ($menuPosition.val() === 'header') {
@@ -20,9 +21,11 @@
 		function handleIsInternalLink() {
 			if ($isInternalLink.is(':checked')) {
 				$menuItemControllerContainer.show();
+				$menuItemLinkContainer.hide();
 			}
 			else {
 				$menuItemControllerContainer.hide();
+				$menuItemLinkContainer.show();
 			}
 		}
 		
@@ -36,9 +39,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.pageMenu.{$action}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.pageMenu.{$action}{/lang}</h1>
 </header>
 
 {if $errorField}
@@ -59,8 +60,8 @@
 	</nav>
 </div>
 
-<div class="container containerPadding marginTop">
-	<form method="post" action="{if $action == 'add'}{link controller='PageMenuItemAdd'}{/link}{else}{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link controller='PageMenuItemAdd'}{/link}{else}{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}{/if}">
+	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.pageMenu.data{/lang}</legend>
 			
@@ -138,7 +139,7 @@
 			<dl id="menuItemControllerContainer"{if $errorField == 'menuItemController'} class="formError"{/if}>
 				<dt><label for="menuItemController">{lang}wcf.acp.pageMenu.menuItemController{/lang}</label></dt>
 				<dd>
-					<input type="text" name="menuItemController" id="menuItemController" value="{$menuItemController}" class="medium" />
+					<input type="text" name="menuItemController" id="menuItemController" value="{$menuItemController}" class="long" />
 					{if $errorField == 'menuItemController'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -152,7 +153,7 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'menuItemLink'} class="formError"{/if}>
+			<dl id="menuItemLinkContainer"{if $errorField == 'menuItemLink'} class="formError"{/if}>
 				<dt><label for="menuItemLink">{lang}wcf.acp.pageMenu.menuItemLink{/lang}</label></dt>
 				<dd>
 					<input type="text" name="menuItemLink" id="menuItemLink" value="{$menuItemLink}" class="long" />
@@ -193,11 +194,11 @@
 		</fieldset>
 		
 		{event name='fields'}
-		
-		<div class="formSubmit">
-			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" />
-		</div>
-	</form>
-</div>
+	</div>
+	
+	<div class="formSubmit">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" />
+	</div>
+</form>
 
 {include file='footer'}

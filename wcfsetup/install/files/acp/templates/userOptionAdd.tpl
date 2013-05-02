@@ -1,9 +1,7 @@
 {include file='header'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.user.option.{$action}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.user.option.{$action}{/lang}</h1>
 </header>
 
 {if $errorField}
@@ -105,7 +103,6 @@
 							<option value="{$availableOptionType}"{if $availableOptionType == $optionType} selected="selected"{/if}>{$availableOptionType}</option>
 						{/foreach}
 					</select>
-					
 					{if $errorField == 'optionType'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -115,6 +112,7 @@
 							{/if}
 						</small>
 					{/if}
+					<small>{lang}wcf.acp.user.option.optionType{/lang}</small>
 				</dd>
 			</dl>
 			
@@ -122,6 +120,7 @@
 				<dt><label for="defaultValue">{lang}wcf.acp.user.option.defaultValue{/lang}</label></dt>
 				<dd>
 					<input type="text" id="defaultValue" name="defaultValue" value="{$defaultValue}" class="long" />
+					<small>{lang}wcf.acp.user.option.defaultValue.description{/lang}</small>
 				</dd>
 			</dl>
 			
@@ -138,6 +137,7 @@
 							{/if}
 						</small>
 					{/if}
+					<small>{lang}wcf.acp.user.option.selectOptions.description{/lang}</small>
 				</dd>
 			</dl>
 			
@@ -167,7 +167,6 @@
 				<dt><label for="editable">{lang}wcf.acp.user.option.editable{/lang}</label></dt>
 				<dd>
 					<select name="editable" id="editable">
-						<option value="0"{if $editable == 0} selected="selected"{/if}>{lang}wcf.acp.user.option.editable.0{/lang}</option>
 						<option value="1"{if $editable == 1} selected="selected"{/if}>{lang}wcf.acp.user.option.editable.1{/lang}</option>
 						<option value="2"{if $editable == 2} selected="selected"{/if}>{lang}wcf.acp.user.option.editable.2{/lang}</option>
 						<option value="3"{if $editable == 3} selected="selected"{/if}>{lang}wcf.acp.user.option.editable.3{/lang}</option>
@@ -179,7 +178,6 @@
 				<dt><label for="visible">{lang}wcf.acp.user.option.visible{/lang}</label></dt>
 				<dd>
 					<select name="visible" id="visible">
-						<option value="0"{if $visible == 0} selected="selected"{/if}>{lang}wcf.acp.user.option.visible.0{/lang}</option>
 						<option value="1"{if $visible == 1} selected="selected"{/if}>{lang}wcf.acp.user.option.visible.1{/lang}</option>
 						<option value="2"{if $visible == 2} selected="selected"{/if}>{lang}wcf.acp.user.option.visible.2{/lang}</option>
 						<option value="3"{if $visible == 3} selected="selected"{/if}>{lang}wcf.acp.user.option.visible.3{/lang}</option>
@@ -202,6 +200,7 @@
 							{/if}
 						</small>
 					{/if}
+					<small>{lang}wcf.acp.user.option.validationPattern.description{/lang}</small>
 				</dd>
 			</dl>
 			

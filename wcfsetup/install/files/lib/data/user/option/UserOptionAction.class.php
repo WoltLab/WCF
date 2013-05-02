@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\user\option;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IToggleAction;
 
 /**
  * Executes user option-related actions.
@@ -12,7 +13,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @subpackage	data.user.option
  * @category	Community Framework
  */
-class UserOptionAction extends AbstractDatabaseObjectAction {
+class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
@@ -32,4 +33,22 @@ class UserOptionAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.user.canManageUserOption');
+	
+	/**
+	 * @see	wcf\data\IToggleAction::toggle()
+	 */
+	public function toggle() {
+		foreach ($this->objects as $optionEditor) {
+			$optionEditor->update(array(
+				'isDisabled' => 1 - $optionEditor->isDisabled
+			));
+		}
+	}
+	
+	/**
+	 * @see	wcf\data\IToggleAction::validateToggle()
+	 */
+	public function validateToggle() {
+		$this->validateUpdate();
+	}
 }

@@ -56,18 +56,6 @@
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.package.update">
-			<parent>wcf.acp.menu.link.package</parent>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.package.autoupdate">
-			<controller><![CDATA[wcf\acp\page\PackageAutoUpdateListPage]]></controller>
-			<parent>wcf.acp.menu.link.package.update</parent>
-			<permissions>admin.system.package.canUpdatePackage</permissions>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.package.server">
 			<parent>wcf.acp.menu.link.package</parent>
 			<showorder>2</showorder>
@@ -160,25 +148,24 @@
 			<parent>wcf.acp.menu.link.user.management</parent>
 			<showorder>1</showorder>
 		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.user.search">
+			<controller><![CDATA[wcf\acp\form\UserSearchForm]]></controller>
+			<parent>wcf.acp.menu.link.user.management.general</parent>
+			<permissions>admin.user.canSearchUser</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.list">
 			<controller><![CDATA[wcf\acp\page\UserListPage]]></controller>
 			<parent>wcf.acp.menu.link.user.management.general</parent>
 			<permissions>admin.user.canSearchUser</permissions>
-			<showorder>1</showorder>
+			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.add">
 			<controller><![CDATA[wcf\acp\form\UserAddForm]]></controller>
 			<parent>wcf.acp.menu.link.user.management.general</parent>
 			<permissions>admin.user.canAddUser</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.search">
-			<controller><![CDATA[wcf\acp\form\UserSearchForm]]></controller>
-			<parent>wcf.acp.menu.link.user.management.general</parent>
-			<permissions>admin.user.canSearchUser</permissions>
 			<showorder>3</showorder>
 		</acpmenuitem>
 		
@@ -262,12 +249,12 @@
 		<acpmenuitem name="wcf.acp.menu.link.user.option.category.list">
 			<controller><![CDATA[wcf\acp\page\UserOptionCategoryListPage]]></controller>
 			<parent>wcf.acp.menu.link.user.option</parent>
-			<permissions>admin.user.canManageUserOptionCategory</permissions>
+			<permissions>admin.user.canManageUserOption</permissions>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.user.option.category.add">
 			<controller><![CDATA[wcf\acp\form\UserOptionCategoryAddForm]]></controller>
 			<parent>wcf.acp.menu.link.user.option</parent>
-			<permissions>admin.user.canManageUserOptionCategory</permissions>
+			<permissions>admin.user.canManageUserOption</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.option.setDefaults">
@@ -310,24 +297,50 @@
 		<acpmenuitem name="wcf.acp.menu.link.style.list">
 			<controller><![CDATA[wcf\acp\page\StyleListPage]]></controller>
 			<parent>wcf.acp.menu.link.style</parent>
-			<permissions>admin.style.canEditStyle,admin.style.canDeleteStyle</permissions>
+			<permissions>admin.style.canManageStyle</permissions>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.style.add">
 			<controller><![CDATA[wcf\acp\form\StyleAddForm]]></controller>
 			<parent>wcf.acp.menu.link.style</parent>
-			<permissions>admin.style.canAddStyle</permissions>
+			<permissions>admin.style.canManageStyle</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.style.import">
 			<controller><![CDATA[wcf\acp\form\StyleImportForm]]></controller>
 			<parent>wcf.acp.menu.link.style</parent>
-			<permissions>admin.style.canAddStyle</permissions>
+			<permissions>admin.style.canManageStyle</permissions>
 			<showorder>3</showorder>
 		</acpmenuitem>
 		<!-- /style -->
+		
+		<!-- template -->
+		<acpmenuitem name="wcf.acp.menu.link.template">
+			<parent>wcf.acp.menu.link.display</parent>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.template.list">
+			<controller><![CDATA[wcf\acp\page\TemplateListPage]]></controller>
+			<parent>wcf.acp.menu.link.template</parent>
+			<permissions>admin.template.canManageTemplate</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.template.add">
+			<controller><![CDATA[wcf\acp\form\TemplateAddForm]]></controller>
+			<parent>wcf.acp.menu.link.template</parent>
+			<permissions>admin.template.canManageTemplate</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.template.group.list">
+			<controller><![CDATA[wcf\acp\page\TemplateGroupListPage]]></controller>
+			<parent>wcf.acp.menu.link.template</parent>
+			<permissions>admin.template.canManageTemplate</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.template.group.add">
+			<controller><![CDATA[wcf\acp\form\TemplateGroupAddForm]]></controller>
+			<parent>wcf.acp.menu.link.template</parent>
+			<permissions>admin.template.canManageTemplate</permissions>
+		</acpmenuitem>
+		<!-- /template -->
 		
 		<!-- language -->
 		<acpmenuitem name="wcf.acp.menu.link.language">
@@ -365,7 +378,7 @@
 		<acpmenuitem name="wcf.acp.menu.link.language.server.list">
 			<controller><![CDATA[wcf\acp\page\LanguageServerListPage]]></controller>
 			<parent>wcf.acp.menu.link.language.server</parent>
-			<permissions>admin.language.canManageServer</permissions>
+			<permissions>admin.language.canManageLanguage</permissions>
 		</acpmenuitem>
 		<!-- /language -->
 		

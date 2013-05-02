@@ -10,9 +10,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.languageServer.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.languageServer.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -20,7 +18,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
+			<li><a href="{link controller='LanguageServerAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
 				
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -31,9 +29,9 @@
 	<p class="warning">{lang}wcf.acp.languageServer.view.noneAvailable{/lang}</p>
 {else}
 	<div class="tabularBox tabularBoxTitle marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.languageServer.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
-		</hgroup>
+		<header>
+			<h2>{lang}wcf.acp.languageServer.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+		</header>
 		
 		<table class="table">
 			<thead>
@@ -72,7 +70,7 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='LanguageServerAdd'}{/link}" title="{lang}wcf.acp.languageServer.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
+				<li><a href="{link controller='LanguageServerAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
 					
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

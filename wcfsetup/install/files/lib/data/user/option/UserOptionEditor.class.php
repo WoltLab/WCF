@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\user\option;
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\WCF;
 
 /**
@@ -13,7 +15,7 @@ use wcf\system\WCF;
  * @subpackage	data.user.option
  * @category	Community Framework
  */
-class UserOptionEditor extends DatabaseObjectEditor {
+class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
@@ -65,7 +67,20 @@ class UserOptionEditor extends DatabaseObjectEditor {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->optionID));
 		
-		$sql = WCF::getDB()->getEditor()->dropColumn('wcf'.WCF_N.'_user_option_value', 'userOption'.$this->optionID);
+		WCF::getDB()->getEditor()->dropColumn('wcf'.WCF_N.'_user_option_value', 'userOption'.$this->optionID);
+	}
+	
+	/**
+	 * @see	wcf\data\IEditableObject::deleteAll()
+	 */
+	public static function deleteAll(array $objectIDs = array()) {
+		$returnValue = parent::deleteAll($objectIDs);
+		
+		foreach ($objectIDs as $objectID) {
+			WCF::getDB()->getEditor()->dropColumn('wcf'.WCF_N.'_user_option_value', 'userOption'.$objectID);
+		}
+		
+		return $returnValue;
 	}
 	
 	/**
@@ -139,5 +154,12 @@ class UserOptionEditor extends DatabaseObjectEditor {
 		}
 		
 		return $column;
+	}
+	
+	/**
+	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 */
+	public static function resetCache() {
+		UserOptionCacheBuilder::getInstance()->reset();
 	}
 }

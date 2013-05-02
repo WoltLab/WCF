@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.sessionLog.access.list'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.sessionLog.access.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.sessionLog.access.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -11,7 +9,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='ACPSessionLogList'}{/link}" title="{lang}wcf.acp.sessionLog.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
+			<li><a href="{link controller='ACPSessionLogList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -20,9 +18,9 @@
 
 {hascontent}
 	<div class="tabularBox tabularBoxTitle marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.sessionLog.access.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
-		</hgroup>
+		<header>
+			<h2>{lang}wcf.acp.sessionLog.access.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+		</header>
 		
 		<table class="table">
 			<thead>
@@ -62,7 +60,7 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='ACPSessionLogList'}{/link}" title="{lang}wcf.acp.sessionLog.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
+				<li><a href="{link controller='ACPSessionLogList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.sessionLog.list{/lang}</span></a></li>
 				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

@@ -20,12 +20,6 @@ use wcf\util\StringUtil;
  */
 class I18nHandler extends SingletonFactory {
 	/**
-	 * indicates if value variables are assigned in assignVariables()
-	 * @var	boolean
-	 */
-	protected $assignValueVariablesDisabled = false;
-	
-	/**
 	 * list of available languages
 	 * @var	array<wcf\data\language\Language>
 	 */
@@ -374,49 +368,47 @@ class I18nHandler extends SingletonFactory {
 			$value = '';
 			$i18nValues = array();
 			
-			if (!$this->assignValueVariablesDisabled) {
-				// use POST values instead of querying database
-				if ($useRequestData) {
-					if ($this->isPlainValue($elementID)) {
-						$value = $this->getValue($elementID);
+			// use POST values instead of querying database
+			if ($useRequestData) {
+				if ($this->isPlainValue($elementID)) {
+					$value = $this->getValue($elementID);
+				}
+				else {
+					if ($this->hasI18nValues($elementID)) {
+						$i18nValues = $this->i18nValues[$elementID];
+						// encoding the entries for javascript
+						foreach ($i18nValues as $languageID => $value) {
+							$i18nValues[$languageID] = StringUtil::encodeJS(StringUtil::unifyNewlines($value));
+						}
 					}
 					else {
-						if ($this->hasI18nValues($elementID)) {
-							$i18nValues = $this->i18nValues[$elementID];
-							// encoding the entries for javascript
-							foreach ($i18nValues as $languageID => $value) {
-								$i18nValues[$languageID] = StringUtil::encodeJS(StringUtil::unifyNewlines($value));
-							}
-						}
-						else {
-							$i18nValues = array();
-						}
+						$i18nValues = array();
+					}
+				}
+			}
+			else {
+				$isI18n = Regex::compile('^'.$this->elementOptions[$elementID]['pattern'].'$')->match($this->elementOptions[$elementID]['value']);
+				if (!$isI18n) {
+					// check if it's a regular language variable
+					$isI18n = Regex::compile('^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$')->match($this->elementOptions[$elementID]['value']);
+				}
+				
+				if ($isI18n) {
+					// use i18n values from language items
+					$sql = "SELECT	languageID, languageItemValue
+						FROM	wcf".WCF_N."_language_item
+						WHERE	languageItem = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute(array(
+						$this->elementOptions[$elementID]['value']
+					));
+					while ($row = $statement->fetchArray()) {
+						$i18nValues[$row['languageID']] = StringUtil::encodeJS(StringUtil::unifyNewlines($row['languageItemValue']));
 					}
 				}
 				else {
-					$isI18n = Regex::compile('^'.$this->elementOptions[$elementID]['pattern'].'$')->match($this->elementOptions[$elementID]['value']);
-					if (!$isI18n) {
-						// check if it's a regular language variable
-						$isI18n = Regex::compile('^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$')->match($this->elementOptions[$elementID]['value']);
-					}
-					
-					if ($isI18n) {
-						// use i18n values from language items
-						$sql = "SELECT	languageID, languageItemValue
-							FROM	wcf".WCF_N."_language_item
-							WHERE	languageItem = ?";
-						$statement = WCF::getDB()->prepareStatement($sql);
-						$statement->execute(array(
-							$this->elementOptions[$elementID]['value']
-						));
-						while ($row = $statement->fetchArray()) {
-							$i18nValues[$row['languageID']] = StringUtil::encodeJS(StringUtil::unifyNewlines($row['languageItemValue']));
-						}
-					}
-					else {
-						// use data provided by setOptions()
-						$value = $this->elementOptions[$elementID]['value'];
-					}
+					// use data provided by setOptions()
+					$value = $this->elementOptions[$elementID]['value'];
 				}
 			}
 			
@@ -432,17 +424,10 @@ class I18nHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Disables assignment of value variables in assignVariables().
+	 * Resets internally stored data after creating a new object through a form.
 	 */
-	public function disableAssignValueVariables() {
-		$this->assignValueVariablesDisabled = true;
-	}
-	
-	/**
-	 * Enables assignment of value variables in assignVariables().
-	 */
-	public function enableAssignValueVariables() {
-		$this->assignValueVariablesDisabled = false;
+	public function reset() {
+		$this->i18nValues = $this->plainValues = array();
 	}
 	
 	/**

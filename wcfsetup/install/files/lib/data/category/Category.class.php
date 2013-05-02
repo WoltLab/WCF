@@ -1,7 +1,10 @@
 <?php
 namespace wcf\data\category;
+use wcf\data\IPermissionObject;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\category\CategoryHandler;
+use wcf\system\category\CategoryPermissionHandler;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\IRouteController;
 use wcf\system\WCF;
 
@@ -15,7 +18,13 @@ use wcf\system\WCF;
  * @subpackage	data.category
  * @category	Community Framework
  */
-class Category extends ProcessibleDatabaseObject implements IRouteController {
+class Category extends ProcessibleDatabaseObject implements IPermissionObject, IRouteController {
+	/**
+	 * list of all child categories of this category
+	 * @var	array<wcf\data\category\Category>
+	 */
+	protected $childCategories = null;
+	
 	/**
 	 * list of all parent category generations of this category
 	 * @var	array<wcf\data\category\Category>
@@ -27,6 +36,12 @@ class Category extends ProcessibleDatabaseObject implements IRouteController {
 	 * @var	wcf\data\category\Category
 	 */
 	protected $parentCategory = null;
+	
+	/**
+	 * acl permissions for the active user of this category
+	 * @var	array<boolean>
+	 */
+	protected $permissions = null;
 	
 	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
@@ -65,12 +80,36 @@ class Category extends ProcessibleDatabaseObject implements IRouteController {
 	}
 	
 	/**
+	 * @see	wcf\data\IPermissionObject::checkPermissions()
+	 */
+	public function checkPermissions(array $permissions) {
+		foreach ($permissions as $permission) {
+			if (!$this->getPermission($permission)) {
+				throw new PermissionDeniedException();
+			}
+		}
+	}
+	
+	/**
 	 * Returns the category object type of the category.
 	 * 
 	 * @return	wcf\data\category\Category
 	 */
 	public function getObjectType() {
 		return CategoryHandler::getInstance()->getObjectType($this->objectTypeID);
+	}
+	
+	/**
+	 * Returns the child categories of this category.
+	 * 
+	 * @return	array<wcf\data\category\Category>
+	 */
+	public function getChildCategories() {
+		if ($this->childCategories === null) {
+			$this->childCategories = CategoryHandler::getInstance()->getChildCategories($this->categoryID);
+		}
+		
+		return $this->childCategories;
 	}
 	
 	/**
@@ -103,6 +142,21 @@ class Category extends ProcessibleDatabaseObject implements IRouteController {
 		}
 		
 		return $this->parentCategories;
+	}
+	
+	/**
+	 * @see	wcf\data\IPermissionObject::getPermission()
+	 */
+	public function getPermission($permission) {
+		if ($this->permissions === null) {
+			$this->permissions = CategoryPermissionHandler::getInstance()->getPermissions($this);
+		}
+		
+		if (isset($this->permissions[$permission])) {
+			return $this->permissions[$permission];
+		}
+		
+		return false;
 	}
 	
 	/**

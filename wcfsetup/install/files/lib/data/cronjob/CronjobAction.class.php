@@ -11,8 +11,8 @@ use wcf\util\DateUtil;
 /**
  * Executes cronjob-related actions.
  * 
- * @author	Tim Düsterhus, Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Tim Duesterhus, Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.cronjob
@@ -125,45 +125,75 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 			$executable = new $className();
 			
 			// execute cronjob
-			$error = '';
+			$exception = null;
 			try {
 				$executable->execute(new Cronjob($cronjob->cronjobID));
 			}
-			catch (\Exception $e) {
-				$error = $e->getMessage();
-			}
+			catch (\Exception $exception) { }
 			
 			CronjobLogEditor::create(array(
 				'cronjobID' => $cronjob->cronjobID,
 				'execTime' => TIME_NOW,
-				'success' => (int) ($error == ''),
-				'error' => $error
-			));
-				
-			// calculate next exec-time
-			$nextExec = $cronjob->getNextExec();
-			$cronjob->update(array(
-				'nextExec' => $nextExec, 
-				'afterNextExec' => $cronjob->getNextExec(($nextExec + 120))
+				'success' => ($exception ? 0 : 1),
+				'error' => ($exception ? $exception->getMessage() : '')
 			));
 			
-			// build the return value
-			$dateTime = DateUtil::getDateTimeByTimestamp($nextExec);
-			$return[$cronjob->cronjobID] = array(
-				'time' => $nextExec,
-				'formatted' => str_replace(
-					'%time%', 
-					DateUtil::format($dateTime, DateUtil::TIME_FORMAT), 
-					str_replace(
-						'%date%', 
-						DateUtil::format($dateTime, DateUtil::DATE_FORMAT), 
-						WCF::getLanguage()->get('wcf.date.dateTimeFormat')
-					)
-				)
+			// calculate next exec-time
+			$nextExec = $cronjob->getNextExec();
+			$data = array(
+				'lastExec' => TIME_NOW,
+				'nextExec' => $nextExec, 
+				'afterNextExec' => $cronjob->getNextExec(($nextExec + 120))
 			);
+			
+			// cronjob failed
+			if ($exception) {
+				if ($cronjob->failCount < Cronjob::MAX_FAIL_COUNT) {
+					$data['failCount'] = $cronjob->failCount + 1;
+				}
+				
+				// cronjob failed too often: disable it
+				if ($cronjob->failCount + 1 == Cronjob::MAX_FAIL_COUNT) {
+					$data['isDisabled'] = 1;
+				}
+			}
+			// if no error: reset fail counter
+			else {
+				$data['failCount'] = 0;
+				
+				// if cronjob has been disabled because of too many
+				// failed executions, enable it again
+				if ($cronjob->failCount == Cronjob::MAX_FAIL_COUNT && $cronjob->isDisabled) {
+					$data['isDisabled'] = 0;
+				}
+			}
+			
+			$cronjob->update($data);
+			
+			// build the return value
+			if ($exception === null && !$cronjob->isDisabled) {
+				$dateTime = DateUtil::getDateTimeByTimestamp($nextExec);
+				$return[$cronjob->cronjobID] = array(
+					'time' => $nextExec,
+					'formatted' => str_replace(
+						'%time%', 
+						DateUtil::format($dateTime, DateUtil::TIME_FORMAT), 
+						str_replace(
+							'%date%', 
+							DateUtil::format($dateTime, DateUtil::DATE_FORMAT), 
+							WCF::getLanguage()->get('wcf.date.dateTimeFormat')
+						)
+					)
+				);
+			}
 			
 			// we are finished
 			$cronjob->update(array('state' => Cronjob::READY));
+			
+			// throw exception again to show error message
+			if ($exception) {
+				throw $exception;
+			}
 		}
 		
 		return $return;

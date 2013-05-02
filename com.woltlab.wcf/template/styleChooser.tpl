@@ -7,9 +7,9 @@
 						<img src="{@$style->getPreviewImage()}" alt="" />
 					</span>
 					<div class="details">
-						<hgroup class="containerHeadline">
-							<h1>{$style->styleName}</h1>
-						</hgroup>
+						<div class="containerHeadline">
+							<h3>{$style->styleName}{if $style->styleID == $__wcf->getStyleHandler()->getStyle()->styleID} <span class="icon icon16 icon-check" title="{lang}wcf.style.currentStyle{/lang}"></span>{/if}</h3>
+						</div>
 						{if $style->styleDescription}<small>{lang}{@$style->styleDescription}{/lang}</small>{/if}
 					</div>
 				</div>

@@ -60,7 +60,6 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 			'showOrder' => $this->showOrder
 		)));
 		$this->objectAction->executeAction();
-		
 		$this->saved();
 		
 		WCF::getTPL()->assign('success', true);

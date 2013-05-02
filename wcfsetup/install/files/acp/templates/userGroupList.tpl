@@ -9,9 +9,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.group.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.group.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -22,7 +20,7 @@
 			<ul>
 				{content}
 					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}
-						<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+						<li><a href="{link controller='UserGroupAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtonsTop'}
@@ -33,9 +31,9 @@
 </div>
 
 <div class="tabularBox tabularBoxTitle marginTop">
-	<hgroup>
-		<h1>{lang}wcf.acp.group.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
-	</hgroup>
+	<header>
+		<h2>{lang}wcf.acp.group.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+	</header>
 	
 	<table class="table">
 		<thead>
@@ -97,7 +95,7 @@
 			<ul>
 				{content}
 					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}
-						<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+						<li><a href="{link controller='UserGroupAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtonsBottom'}

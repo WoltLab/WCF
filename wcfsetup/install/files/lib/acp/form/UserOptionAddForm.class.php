@@ -89,13 +89,13 @@ class UserOptionAddForm extends AbstractForm {
 	 * edit permission bitmask
 	 * @var integer
 	 */
-	public $editable = 0;
+	public $editable = 3;
 	
 	/**
 	 * view permission bitmask
 	 * @var integer
 	 */
-	public $visible = 0;
+	public $visible = 15;
 	
 	/**
 	 * field is searchable
@@ -206,6 +206,10 @@ class UserOptionAddForm extends AbstractForm {
 		if (in_array($this->optionType, self::$optionTypesUsingSelectOptions) && empty($this->selectOptions)) {
 			throw new UserInputException('selectOptions');
 		}
+		
+		if ($this->editable < 1 || $this->editable > 3) {
+			$this->editable = 3;
+		}
 	}
 	
 	/**
@@ -228,7 +232,8 @@ class UserOptionAddForm extends AbstractForm {
 			'searchable' => $this->searchable,
 			'editable' => $this->editable,
 			'visible' => $this->visible,
-			'packageID' => 1
+			'packageID' => 1,
+			'additionalData' => ($this->optionType == 'select' ? serialize(array('allowEmptyValue' => true)) : '')
 		)));
 		$this->objectAction->executeAction();
 	
@@ -242,14 +247,15 @@ class UserOptionAddForm extends AbstractForm {
 		$editor->update(array(
 			'optionName' => 'option'.$userOption->optionID
 		));
-		
-		// reset cache
-		UserOptionCacheBuilder::getInstance()->reset();
 		$this->saved();
 	
 		// reset values
 		$this->optionName = $this->optionDescription = $this->categoryName = $this->optionType = $this->defaultValue = $this->validationPattern = $this->optionType = $this->selectOptions = $this->outputClass = '';
-		$this->required = $this->editable = $this->visible = $this->searchable = $this->showOrder = $this->askDuringRegistration = 0;
+		$this->required = $this->searchable = $this->showOrder = $this->askDuringRegistration = 0;
+		$this->editable = 3;
+		$this->visible = 15;
+		
+		I18nHandler::getInstance()->reset();
 		
 		// show success
 		WCF::getTPL()->assign('success', true);

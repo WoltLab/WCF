@@ -89,15 +89,31 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 		// apply changes
 		if ($this->applyChangesToExistingUsers) {
 			$optionIDs = array_keys($saveOptions);
-			$sql = "UPDATE	wcf".WCF_N."_user_option_value
-				SET	userOption".implode(' = ?, userOption', $optionIDs)." = ?";
+			
+			// get changed options
+			$sql = "SELECT	optionID, defaultValue
+				FROM	wcf".WCF_N."_user_option
+				WHERE	optionID IN (?".str_repeat(', ?', count($optionIDs) - 1).")"; 
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array_merge($saveOptions));
+			$statement->execute($optionIDs);
+			$optionIDs = $optionValues = array();
+			while ($row = $statement->fetchArray()) {
+				if ($row['defaultValue'] != $saveOptions[$row['optionID']]) {
+					$optionIDs[] = $row['optionID'];
+					$optionValues[] = $saveOptions[$row['optionID']];
+				}
+			}
+			
+			if (!empty($optionIDs)) {
+				$sql = "UPDATE	wcf".WCF_N."_user_option_value
+					SET	userOption".implode(' = ?, userOption', $optionIDs)." = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array_merge($optionValues));
+			}
 		}
 		
 		// reset cache
 		UserOptionCacheBuilder::getInstance()->reset();
-		
 		$this->saved();
 	
 		WCF::getTPL()->assign('success', true);

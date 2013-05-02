@@ -1,10 +1,8 @@
 {include file='header'}
 
 <header class="boxHeadline boxSubHeadline">
-	<hgroup>
-		<h1>{lang}wcf.global.welcome{/lang}</h1>
-		<h2>{lang}wcf.global.welcome.description{/lang}</h2>
-	</hgroup>
+	<h2>{lang}wcf.global.welcome{/lang}</h2>
+	<p>{lang}wcf.global.welcome.description{/lang}</p>
 </header>
 
 <form method="post" action="install.php">

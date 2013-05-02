@@ -18,9 +18,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.language.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.language.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -38,9 +36,9 @@
 
 {if $objects|count}
 	<div id="userTableContainer" class="tabularBox tabularBoxTitle marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.language.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
-		</hgroup>
+		<header>
+			<h2>{lang}wcf.acp.language.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+		</header>
 		
 		<table class="table">
 			<thead>
@@ -94,7 +92,7 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='LanguageAdd'}{/link}" title="{lang}wcf.acp.language.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
+				<li><a href="{link controller='LanguageAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.language.add{/lang}</span></a></li>
 				<li><a href="{link controller='LanguageImport'}{/link}" class="button"><span class="icon icon16 icon-upload-alt"></span> <span>{lang}wcf.acp.language.import{/lang}</span></a></li>
 					
 				{event name='contentNavigationButtonsBottom'}

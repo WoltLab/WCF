@@ -47,10 +47,8 @@
 		<div>
 			<section id="content" class="content clearfix">
 				<header class="boxHeadline">
-					<hgroup>
-						<h1>{lang}wcf.global.title{/lang}</h1>
-						<h2>{lang}wcf.global.title.subtitle{/lang}</h2>
-						<p><progress id="packageInstallationProgress" value="{@$progress}" max="100" style="width: 300px;" title="{@$progress}%">{@$progress}%</progress></p>
-					</hgroup>
+					<h1>{lang}wcf.global.title{/lang}</h1>
+					<p>{lang}wcf.global.title.subtitle{/lang}</p>
+					<p><progress id="packageInstallationProgress" value="{@$progress}" max="100" style="width: 300px;" title="{@$progress}%">{@$progress}%</progress></p>
 				</header>
 				

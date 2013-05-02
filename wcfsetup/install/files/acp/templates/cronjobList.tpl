@@ -1,10 +1,8 @@
 {include file='header' pageTitle='wcf.acp.cronjob.list'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.cronjob.list{/lang}</h1>
-		<h2>{lang}wcf.acp.cronjob.subtitle{/lang}</h2>
-	</hgroup>
+	<h1>{lang}wcf.acp.cronjob.list{/lang}</h1>
+	<p>{lang}wcf.acp.cronjob.subtitle{/lang}</p>
 </header>
 
 <script type="text/javascript">
@@ -12,23 +10,8 @@
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\cronjob\\CronjobAction', '.jsCronjobRow');
 		new WCF.Action.Toggle('wcf\\data\\cronjob\\CronjobAction', '.jsCronjobRow');
-		new WCF.Action.SimpleProxy({
-			action: 'execute',
-			className: 'wcf\\data\\cronjob\\CronjobAction',
-			elements: $('.jsCronjobRow .jsExecuteButton')
-		}, {
-			success: function(data, statusText, jqXHR) {
-				$('.jsCronjobRow').each(function(index, row) {
-					var $button = $(row).find('.jsExecuteButton');
-					
-					if (WCF.inArray($($button).data('objectID'), data.objectIDs)) {
-						// insert feedback here
-						$(row).find('td.columnNextExec').html(data.returnValues[$($button).data('objectID')].formatted);
-						$(row).wcfHighlight();
-					}
-				});
-			}
-		});
+		
+		new WCF.ACP.Cronjob.ExecutionHandler();
 	});
 	//]]>
 </script>
@@ -38,7 +21,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+			<li><a href="{link controller='CronjobAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -47,9 +30,9 @@
 
 {hascontent}
 	<div class="tabularBox tabularBoxTitle marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.cronjob.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
-		</hgroup>
+		<header>
+			<h2>{lang}wcf.acp.cronjob.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+		</header>
 		
 		<table class="table">
 			<thead>
@@ -132,7 +115,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='CronjobAdd'}{/link}" title="{lang}wcf.acp.cronjob.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
+			<li><a href="{link controller='CronjobAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.cronjob.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsBottom'}
 		</ul>

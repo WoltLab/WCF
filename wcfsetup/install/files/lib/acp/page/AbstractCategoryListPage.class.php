@@ -1,6 +1,6 @@
 <?php
 namespace wcf\acp\page;
-use wcf\data\category\CategoryNodeList;
+use wcf\data\category\CategoryNodeTree;
 use wcf\page\AbstractPage;
 use wcf\system\category\CategoryHandler;
 use wcf\system\exception\PermissionDeniedException;
@@ -28,10 +28,10 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	public $addController = '';
 	
 	/**
-	 * category node list
-	 * @var	wcf\data\category\CategoryNodeList
+	 * category node tree
+	 * @var	wcf\data\category\CategoryNodeTree
 	 */
-	public $categoryNodeList = null;
+	public $categoryNodeTree = null;
 	
 	/**
 	 * ids of collapsed categories
@@ -100,7 +100,7 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 		
 		WCF::getTPL()->assign(array(
 			'addController' => $this->addController,
-			'categoryNodeList' => $this->categoryNodeList,
+			'categoryNodeList' => $this->categoryNodeTree->getIterator(),
 			'collapsedCategoryIDs' => $this->collapsedCategoryIDs,
 			'collapsibleObjectTypeID' => $this->collapsibleObjectTypeID,
 			'editController' => $this->editController,
@@ -125,7 +125,7 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	 * Reads the categories.
 	 */
 	protected function readCategories() {
-		$this->categoryNodeList = new CategoryNodeList($this->objectType->objectType, 0, true);
+		$this->categoryNodeTree = new CategoryNodeTree($this->objectType->objectType, 0, true);
 	}
 	
 	/**

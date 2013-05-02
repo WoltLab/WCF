@@ -26,7 +26,7 @@ class UserOptionCategoryAddForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.user.canManageUserOptionCategory');
+	public $neededPermissions = array('admin.user.canManageUserOption');
 	
 	/**
 	 * category name
@@ -99,7 +99,8 @@ class UserOptionCategoryAddForm extends AbstractForm {
 		// reset values
 		$this->categoryName = '';
 		$this->showOrder = 0;
-		I18nHandler::getInstance()->disableAssignValueVariables();
+		
+		I18nHandler::getInstance()->reset();
 		
 		// show success
 		WCF::getTPL()->assign(array(

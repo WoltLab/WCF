@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.sessionLog.list'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.sessionLog.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.sessionLog.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -22,9 +20,9 @@
 
 {if $objects|count}
 	<div class="tabularBox tabularBoxTitle marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.sessionLog.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
-		</hgroup>
+		<header>
+			<h2>{lang}wcf.acp.sessionLog.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+		</header>
 		
 		<table class="table">
 			<thead>

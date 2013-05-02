@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.style.importStyle'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.style.importStyle{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.style.importStyle{/lang}</h1>
 </header>
 
 {if $success|isset}
@@ -11,19 +9,13 @@
 {/if}
 
 <div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{if $__wcf->session->getPermission('admin.style.canDeleteStyle') || $__wcf->session->getPermission('admin.style.canEditStyle')}
-						<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
-					{/if}
-					
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav>
+		<ul>
+			<li><a href="{link controller='StyleList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+				
+			{event name='contentNavigationButtons'}
+		</ul>
+	</nav>
 </div>
 
 <form method="post" action="{link controller='StyleImport'}{/link}" enctype="multipart/form-data">

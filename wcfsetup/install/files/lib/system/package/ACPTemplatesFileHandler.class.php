@@ -32,8 +32,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 			// build sql string with ACP-templateNames
 			$fileNames = array();
 			foreach ($files as $file) {
-				$fileName = preg_replace("~\.tpl$~", "", $file);
-				$fileNames[] = $fileName;
+				$fileNames[] = substr($file, 0, -4);
 			}
 			
 			// check if files are existing already
@@ -76,7 +75,7 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 		
 		// remove file extension
 		foreach ($files as &$file) {
-			$file = preg_replace('~.tpl$~', '', $file);
+			$file = substr($file, 0, -4);
 		}
 		unset($file);
 		

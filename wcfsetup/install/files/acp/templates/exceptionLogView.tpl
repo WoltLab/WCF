@@ -22,9 +22,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.exceptionLog{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.exceptionLog{/lang}</h1>
 </header>
 
 {if !$logFiles|empty}
@@ -73,10 +71,10 @@
 	{if $logFile}
 		{foreach from=$exceptions item='exception' key='exceptionKey'}
 			<div class="tabularBox tabularBoxTitle marginTop" id="{$exceptionKey}">
-				<hgroup>
-					<h1><a class="jsCollapsible jsTooltip" data-is-open="{if $exceptionKey == $exceptionID}1{else}0{/if}" data-collapsible-container="exception_{$exceptionKey}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 icon-chevron-{if $exceptionKey == $exceptionID}down{else}right{/if}"></span></a> {$exception[message]}</h1>
-					<h2>{$exception[date]|strtotime|plainTime}</h2>
-				</hgroup>
+				<header>
+					<h2><a class="jsCollapsible jsTooltip" data-is-open="{if $exceptionKey == $exceptionID}1{else}0{/if}" data-collapsible-container="exception_{$exceptionKey}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 icon-chevron-{if $exceptionKey == $exceptionID}down{else}right{/if}"></span></a> {$exception[message]}</h2>
+					<small>{$exception[date]|strtotime|plainTime}</small>
+				</header>
 				
 				<div id="exception_{$exceptionKey}" class="container containerPadding" {if $exceptionKey != $exceptionID} style="display: none;"{/if}>
 					<dl>
@@ -98,6 +96,10 @@
 					<dl>
 						<dt>{lang}wcf.acp.exceptionLog.exception.referrer{/lang}</dt>
 						<dd>{$exception[referrer]}</dd>
+					</dl>
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.userAgent{/lang}</dt>
+						<dd>{$exception[userAgent]}</dd>
 					</dl>
 					<dl>
 						<dt>{lang}wcf.acp.exceptionLog.exception.stacktrace{/lang}</dt>

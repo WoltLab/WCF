@@ -16,9 +16,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}{@$pageTitle}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}{@$pageTitle}{/lang}</h1>
 </header>
 
 {if $errorField}
@@ -28,7 +26,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>
@@ -70,9 +68,7 @@
 		
 		<div id="packageSearchResultContainer" style="display: none;">
 			<header class="boxHeadline boxSubHeadline">
-				<hgroup>
-					<h1>{lang}wcf.acp.package.search.resultList{/lang} <span class="badge">0</span></h1>
-				</hgroup>
+				<h2>{lang}wcf.acp.package.search.resultList{/lang} <span class="badge">0</span></h2>
 			</header>
 			
 			<div id="packageSearchResultList"></div>

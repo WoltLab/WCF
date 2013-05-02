@@ -126,6 +126,7 @@ PHP version: (?<phpVersion>.*?)
 WCF version: (?<wcfVersion>.*?)
 Request URI: (?<requestURI>.*?)
 Referrer: (?<referrer>.*?)
+User-Agent: (?<userAgent>.*?)
 Stacktrace: 
 (?<stacktrace>.*)', Regex::DOT_ALL);
 		$stackTraceFormatter = new Regex('^\s+(#\d+)', Regex::MULTILINE);

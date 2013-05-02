@@ -36,6 +36,16 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	public $menuItems = array();
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 */
+	protected $permissionsDelete = array('admin.display.canManagePageMenu');
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 */
+	protected $permissionsUpdate = array('admin.display.canManagePageMenu');
+	
+	/**
 	 * @see wcf\data\IDatabaseObjectAction::create()
 	 */
 	public function create() {
@@ -150,6 +160,8 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 		if ($this->menuItemEditor->isLandingPage) {
 			throw new PermissionDeniedException();
 		}
+		
+		WCF::getSession()->checkPermissions($this->permissionsUpdate);
 	}
 	
 	/**

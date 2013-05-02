@@ -14,9 +14,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{@$pageTitle|language}</h1>
-	</hgroup>
+	<h1>{@$pageTitle|language}</h1>
 </header>
 
 {if $errorField}

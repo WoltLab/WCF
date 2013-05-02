@@ -2,11 +2,11 @@
 	<header class="box48 boxHeadline">
 		<span class="icon icon48 icon-spinner"></span>
 		
-		<hgroup>
+		<div>
 			<h1>Paket &raquo;{$queue->packageName}&laquo; wird deinstalliert &hellip;</h1><!-- ToDo: Language variables -->
-			<h2>Aktueller Schritt: <span id="packageInstallationAction">{lang}wcf.package.uninstallation.step.prepare{/lang}</span></h2>
+			<p>Aktueller Schritt: <span id="packageInstallationAction">{lang}wcf.package.uninstallation.step.prepare{/lang}</span></p>
 			<p><progress id="packageInstallationProgress" value="0" max="100">0%</progress></p>
-		</hgroup>
+		</div>
 	</header>
 	
 	<div id="packageInstallationInnerContentContainer" style="display: none;">

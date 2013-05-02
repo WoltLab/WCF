@@ -32,7 +32,7 @@
 		});
 		new WCF.ACP.Style.ImageUpload(0, '{$tmpHash}');
 		
-		{if $action == 'edit' && $__wcf->getSession()->getPermission('admin.style.canAddStyle')}
+		{if $action == 'edit'}
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
 			
 			WCF.Language.addObject({
@@ -43,9 +43,8 @@
 	//]]>
 </script>
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.style.{$action}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.style.{$action}{/lang}</h1>
+	{if $action == 'edit'}<p>{$styleName}</p>{/if}
 </header>
 
 {if $errorField}
@@ -57,24 +56,18 @@
 {/if}
 
 <div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{if $action == 'edit'}
-						<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><span class="icon icon16 icon-download-alt"></span> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
-						{if $__wcf->getSession()->getPermission('admin.style.canAddStyle')}<li><a class="jsCopyStyle button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>{/if}
-					{/if}
-					
-					{if $__wcf->session->getPermission('admin.style.canDeleteStyle') || $__wcf->session->getPermission('admin.style.canEditStyle')}
-						<li><a href="{link controller='StyleList'}{/link}" title="{lang}wcf.acp.menu.link.style.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
-					{/if}
-					
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav>
+		<ul>
+			{if $action == 'edit'}
+				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><span class="icon icon16 icon-download-alt"></span> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
+				<li><a class="jsCopyStyle button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
+			{/if}
+			
+			<li><a href="{link controller='StyleList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>
+			
+			{event name='contentNavigationButtons'}
+		</ul>
+	</nav>
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='StyleAdd'}{/link}{else}{link controller='StyleEdit' id=$styleID}{/link}{/if}">
@@ -241,17 +234,15 @@
 						<small>{lang}wcf.acp.style.image.description{/lang}</small>
 					</dd>
 				</dl>
-				{hascontent}
+				{if $availableTemplateGroups|count}
 					<dl{if $errorField == 'templateGroupID'} class="formError"{/if}>
 						<dt><label for="templateGroupID">{lang}wcf.acp.style.templateGroupID{/lang}</label></dt>
 						<dd>
 							<select name="templateGroupID" id="templateGroupID">
-								<option value="0"></option>
-								{content}
-									{foreach from=$availableTemplateGroups item=templateGroup}
-										<option value="{@$templateGroup->templateGroupID}">{$templateGroup->templateGroupName}</option>
-									{/foreach}
-								{/content}
+								<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
+								{foreach from=$availableTemplateGroups item=templateGroup}
+									<option value="{@$templateGroup->templateGroupID}"{if $templateGroup->templateGroupID == $templateGroupID} selected="selected"{/if}>{$templateGroup->templateGroupName}</option>
+								{/foreach}
 							</select>
 							{if $errorField == 'templateGroupID'}
 								<small class="innerError">
@@ -264,7 +255,7 @@
 							{/if}
 						</dd>
 					</dl>
-				{/hascontent}
+				{/if}
 				<dl{if $errorField == 'imagePath'} class="formError"{/if}>
 					<dt><label for="imagePath">{lang}wcf.acp.style.imagePath{/lang}</label></dt>
 					<dd>

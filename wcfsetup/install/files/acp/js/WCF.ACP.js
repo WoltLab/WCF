@@ -2,7 +2,7 @@
  * Class and function collection for WCF ACP
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -70,10 +70,143 @@ WCF.ACP.Application.SetAsPrimary = Class.extend({
 				
 				// insert icon
 				WCF.DOMNodeInsertedHandler.enable();
-				$('<span class="icon icon16 icon-home jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($('.boxHeadline > hgroup > h1'));
+				$('<span class="icon icon16 icon-home jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($('.boxHeadline > h1'));
 				WCF.DOMNodeInsertedHandler.disable();
 			}, this)
 		});
+	}
+});
+
+/**
+ * Namespace for ACP cronjob management.
+ */
+WCF.ACP.Cronjob = { };
+
+/**
+ * Handles the manual execution of cronjobs.
+ */
+WCF.ACP.Cronjob.ExecutionHandler = Class.extend({
+	/**
+	 * notification object
+	 * @var	WCF.System.Notification
+	 */
+	_notification: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes WCF.ACP.Cronjob.ExecutionHandler object.
+	 */
+	init: function() {
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		$('.jsCronjobRow .jsExecuteButton').click($.proxy(this._click, this));
+		
+		this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'), 'success');
+	},
+	
+	/**
+	 * Handles a click on an execute button.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		this._proxy.setOption('data', {
+			actionName: 'execute',
+			className: 'wcf\\data\\cronjob\\CronjobAction',
+			objectIDs: [ $(event.target).data('objectID') ]
+		});
+		
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Handles successful cronjob execution.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		$('.jsCronjobRow').each($.proxy(function(index, row) {
+			var $button = $(row).find('.jsExecuteButton');
+			var $objectID = ($button).data('objectID');
+			
+			if (WCF.inArray($objectID, data.objectIDs)) {
+				if (data.returnValues[$objectID]) {
+					// insert feedback here
+					$(row).find('td.columnNextExec').html(data.returnValues[$objectID].formatted);
+					$(row).wcfHighlight();
+				}
+				
+				this._notification.show();
+				
+				return false;
+			}
+		}, this));
+	}
+});
+
+/**
+ * Handles the cronjob log list.
+ */
+WCF.ACP.Cronjob.LogList = Class.extend({
+	/**
+	 * error message dialog
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * Initializes WCF.ACP.Cronjob.LogList object.
+	 */
+	init: function() {
+		// bind event listener to delete cronjob log button
+		$('.jsCronjobLogDelete').click(function() {
+			WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.cronjob.log.clear.confirm'), function(action) {
+				if (action == 'confirm') {
+					new WCF.Action.Proxy({
+						autoSend: true,
+						data: {
+							actionName: 'clearAll',
+							className: 'wcf\\data\\cronjob\\log\\CronjobLogAction'
+						},
+						success: function() {
+							window.location.reload();
+						}
+					});
+				}
+			});
+		});
+		
+		// bind event listeners to error badges
+		$('.jsCronjobError').click($.proxy(this._showError, this));
+	},
+	
+	/**
+	 * Shows certain error message
+	 * 
+	 * @param	object		event
+	 */
+	_showError: function(event) {
+		var $errorBadge = $(event.currentTarget);
+		
+		if (this._dialog === null) {
+			this._dialog = $('<div>' + $errorBadge.next().html() + '</div>').hide().appendTo(document.body);
+			this._dialog.wcfDialog({
+				title: WCF.Language.get('wcf.acp.cronjob.log.error.details')
+			});
+		}
+		else {
+			this._dialog.html($errorBadge.next().html());
+			this._dialog.wcfDialog('open');
+		}
 	}
 });
 
@@ -189,7 +322,7 @@ WCF.ACP.Menu = Class.extend({
 /**
  * Namespace for ACP package management.
  */
-WCF.ACP.Package = {};
+WCF.ACP.Package = { };
 
 /**
  * Provides the package installation.
@@ -428,7 +561,7 @@ WCF.ACP.Package.Installation = Class.extend({
 			var $inputElement = $(inputElement);
 			var $type = $inputElement.attr('type');
 			
-			if (($type == 'checkbox' || $type == 'radio') && !$inputElement.attr('checked')) {
+			if (($type == 'checkbox' || $type == 'radio') && !$inputElement.prop('checked')) {
 				return false;
 			}
 			
@@ -803,7 +936,7 @@ WCF.ACP.Package.Search = Class.extend({
 		// update badge count
 		if (count !== undefined) {
 			this._content = { 1: template };
-			this._packageSearchResultContainer.find('> header > hgroup > h1 > .badge').html(count);
+			this._packageSearchResultContainer.find('> header > h1 > .badge').html(count);
 		}
 	},
 	
@@ -869,6 +1002,230 @@ WCF.ACP.Package.Search = Class.extend({
 });
 
 /**
+ * Namespace for package update related classes.
+ */
+WCF.ACP.Package.Update = { };
+
+/**
+ * Handles the package update process.
+ */
+WCF.ACP.Package.Update.Manager = Class.extend({
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * submit button
+	 * @var	jQuery
+	 */
+	_submitButton: null,
+	
+	/**
+	 * Initializes the WCF.ACP.Package.Update.Manager class.
+	 */
+	init: function() {
+		this._dialog = null;
+		this._submitButton = $('.formSubmit > button').click($.proxy(this._click, this));
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		$('.jsPackageUpdate').each($.proxy(function(index, packageUpdate) {
+			var $packageUpdate = $(packageUpdate);
+			$packageUpdate.find('input[type=checkbox]').data('packageUpdate', $packageUpdate).change($.proxy(this._change, this));
+		}, this));
+	},
+	
+	/**
+	 * Handles toggles for a specific update.
+	 */
+	_change: function(event) {
+		var $checkbox = $(event.currentTarget);
+		
+		if ($checkbox.is(':checked')) {
+			$checkbox.data('packageUpdate').find('select').enable();
+			$checkbox.data('packageUpdate').find('dl').removeClass('disabled');
+			
+			this._submitButton.enable();
+		}
+		else {
+			$checkbox.data('packageUpdate').find('select').disable();
+			$checkbox.data('packageUpdate').find('dl').addClass('disabled');
+			
+			// disable submit button
+			if (!$('input[type=checkbox]:checked').length) {
+				this._submitButton.disable();
+			}
+		}
+	},
+	
+	/**
+	 * Handles clicks on the submit button.
+	 * 
+	 * @param	object		event
+	 * @param	integer		packageUpdateServerID
+	 */
+	_click: function(event, packageUpdateServerID) {
+		var $packages = { };
+		$('.jsPackageUpdate').each($.proxy(function(index, packageUpdate) {
+			var $packageUpdate = $(packageUpdate);
+			if ($packageUpdate.find('input[type=checkbox]:checked').length) {
+				$packages[$packageUpdate.data('package')] = $packageUpdate.find('select').val();
+			}
+		}, this));
+		
+		if ($.getLength($packages)) {
+			var $parameters = {
+				packages: $packages
+			};
+			if (packageUpdateServerID) {
+				$parameters.authData = {
+					packageUpdateServerID: packageUpdateServerID,
+					password: $.trim($('#packageUpdateServerPassword').val()),
+					saveCredentials: ($('#packageUpdateServerSaveCredentials:checked').length ? true : false),
+					username: $.trim($('#packageUpdateServerUsername').val())
+				}
+			}
+			
+			this._proxy.setOption('data', {
+				actionName: 'prepareUpdate',
+				className: 'wcf\\data\\package\\update\\PackageUpdateAction',
+				parameters: $parameters,
+			});
+			this._proxy.sendRequest();
+		}
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (data.returnValues.queueID) {
+			if (this._dialog !== null) {
+				this._dialog.wcfDialog('close');
+			}
+			
+			var $installation = new WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false);
+			$installation.prepareInstallation();
+		}
+		else if (data.returnValues.template) {
+			if (this._dialog === null) {
+				this._dialog = $('<div>' + data.returnValues.template + '</div>').hide().appendTo(document.body);
+				this._dialog.wcfDialog({
+					title: WCF.Language.get('wcf.acp.package.update.unauthorized')
+				});
+			}
+			else {
+				this._dialog.html(data.returnValues.template).wcfDialog('open');
+			}
+			
+			this._dialog.find('.formSubmit > button').click($.proxy(this._submitAuthentication, this));
+		}
+	},
+	
+	/**
+	 * Submits authentication data for current update server.
+	 * 
+	 * @param	object		event
+	 */
+	_submitAuthentication: function(event) {
+		var $usernameField = $('#packageUpdateServerUsername');
+		var $passwordField = $('#packageUpdateServerPassword');
+		
+		// remove error messages if any
+		$usernameField.next('small.innerError').remove();
+		$passwordField.next('small.innerError').remove();
+		
+		var $continue = true;
+		if ($.trim($usernameField.val()) === '') {
+			$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($usernameField);
+			$continue = false;
+		}
+		
+		if ($.trim($passwordField.val()) === '') {
+			$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($passwordField);
+			$continue = false;
+		}
+		
+		if ($continue) {
+			this._click(undefined, $(event.currentTarget).data('packageUpdateServerID'))
+		}
+	}
+});
+
+/**
+ * Searches for available updates.
+ */
+WCF.ACP.Package.Update.Search = Class.extend({
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * initializes the WCF.ACP.Package.SearchForUpdates class.
+	 */
+	init: function() {
+		this._dialog = null;
+		
+		var $button = $('<li><a class="button"><span class="icon icon16 icon-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
+		$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav > ul'));
+	},
+	
+	/**
+	 * Handles clicks on the search button.
+	 */
+	_click: function() {
+		if (this._dialog === null) {
+			new WCF.Action.Proxy({
+				autoSend: true,
+				data: {
+					actionName: 'searchForUpdates',
+					className: 'wcf\\data\\package\\update\\PackageUpdateAction'
+				},
+				success: $.proxy(this._success, this)
+			});
+		}
+		else {
+			this._dialog.wcfDialog('open');
+		}
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (data.returnValues.url) {
+			window.location = data.returnValues.url;
+		}
+		else {
+			this._dialog = $('<div>' + WCF.Language.get('wcf.acp.package.searchForUpdates.noResults') + '</div>').hide().appendTo(document.body);
+			this._dialog.wcfDialog({
+				title: WCF.Language.get('wcf.acp.package.searchForUpdates')
+			});
+		}
+	}
+});
+
+/**
  * Handles option selection.
  */
 WCF.ACP.Options = Class.extend({
@@ -918,11 +1275,11 @@ WCF.ACP.Options = Class.extend({
 			case 'input':
 				switch(option.attr('type')) {
 					case 'checkbox':
-						this._execute(option.attr('checked'), $disableOptions, $enableOptions);
+						this._execute(option.prop('checked'), $disableOptions, $enableOptions);
 					break;
 					
 					case 'radio':
-						if (option.attr('checked')) {
+						if (option.prop('checked')) {
 							this._execute(true, $disableOptions, $enableOptions);
 						}
 					break;
@@ -1372,3 +1729,110 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 		window.location = this._list.find('li.dropdownNavigationItem > a').attr('href');
 	}
 });
+
+/**
+ * Namespace for user management.
+ */
+WCF.ACP.User = { };
+
+/**
+ * Generic implementation to ban users.
+ */
+WCF.ACP.User.BanHandler = {
+	/**
+	 * callback object
+	 * @var	object
+	 */
+	_callback: null,
+	
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes WCF.ACP.User.BanHandler on first use.
+	 */
+	init: function() {
+		this._dialog = $('<div />').hide().appendTo(document.body);
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		$('.jsBanButton').click($.proxy(function(event) {
+			var $button = $(event.currentTarget);
+			if ($button.data('banned')) {
+				this.unban([ $button.data('objectID') ]);
+			}
+			else {
+				this.ban([ $button.data('objectID') ]);
+			}
+		}, this));
+	},
+	
+	/**
+	 * Unbans users.
+	 * 
+	 * @param	array<integer>	userIDs
+	 */
+	unban: function(userIDs) {
+		this._proxy.setOption('data', {
+			actionName: 'unban',
+			className: 'wcf\\data\\user\\UserAction',
+			objectIDs: userIDs
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Bans users.
+	 * 
+	 * @param	array<integer>	userIDs
+	 */
+	ban: function(userIDs) {
+		WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.user.ban.sure'), $.proxy(function(action) {
+			if (action === 'confirm') {
+				this._proxy.setOption('data', {
+					actionName: 'ban',
+					className: 'wcf\\data\\user\\UserAction',
+					objectIDs: userIDs,
+					parameters: {
+						banReason: $('#userBanReason').val()
+					}
+				});
+				this._proxy.sendRequest();
+			}
+		}, this), '', $('<fieldset><dl><dt><label for="userBanReason">' + WCF.Language.get('wcf.acp.user.banReason') + '</label></dt><dd><textarea id="userBanReason" cols="40" rows="3" /><small>' + WCF.Language.get('wcf.acp.user.banReason.description') + '</small></dd></dl></fieldset>'));
+	},
+	
+	/**
+	 * Handles successful AJAX calls.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		$('.jsBanButton').each(function(index, button) {
+			var $button = $(button);
+			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
+				if (data.actionName == 'unban') {
+					$button.data('banned', false).data('tooltip', $button.data('banMessage')).removeClass('icon-lock').addClass('icon-unlock');
+				}
+				else {
+					$button.data('banned', true).data('tooltip', $button.data('unbanMessage')).removeClass('icon-unlock').addClass('icon-lock');
+				}
+			}
+		});
+		
+		var $notification = new WCF.System.Notification();
+		$notification.show();
+	}
+};

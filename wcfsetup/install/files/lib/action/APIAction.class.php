@@ -74,8 +74,8 @@ final class APIAction extends AbstractAjaxAction {
 	
 	/**
 	 * Checks fields, prunes given array and returns it
-	 *
-	 * @return array
+	 * 
+	 * @return	array
 	 */
 	protected function prune(IRESTfulResponse $object) {
 		$prunedArray = array();
@@ -91,8 +91,8 @@ final class APIAction extends AbstractAjaxAction {
 	
 	/**
 	 * Tries to find class and returns class name and controller.
-	 *
-	 * @return array<string>
+	 * 
+	 * @return	array<string>
 	 */
 	protected function getClassData($controller, $application = 'wcf') {
 		$className = $application.'\\data\\'.$controller.'\\'.ucfirst($controller);

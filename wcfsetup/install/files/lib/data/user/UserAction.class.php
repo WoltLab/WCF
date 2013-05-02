@@ -55,30 +55,28 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * Validates permissions and parameters.
+	 * Validates accessible groups.
+	 * 
+	 * @param	boolean		$ignoreOwnUser
 	 */
-	public function validateDelete() {
-		// read and validate user objects
-		parent::validateDelete();
-		
-		$userIDs = array();
-		foreach ($this->objects as $user) {
-			// you cannot delete yourself
-			if ($user->userID == WCF::getUser()->userID) {
-				continue;
+	protected function __validateAccessibleGroups($ignoreOwnUser = true) {
+		if ($ignoreOwnUser) {
+			if (in_array(WCF::getUser()->userID, $this->objectIDs)) {
+				unset($this->objectIDs[array_search(WCF::getUser()->userID, $this->objectIDs)]);
+				if (isset($this->objects[WCF::getUser()->userID])) {
+					unset($this->objects[WCF::getUser()->userID]);
+				}
 			}
-			
-			$userIDs[] = $user->userID;
 		}
 		
 		// list might be empty because only our own user id was given
-		if (empty($userIDs)) {
+		if (empty($this->objectIDs)) {
 			throw new UserInputException('objectIDs');
 		}
 		
 		// validate groups
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($userIDs));
+		$conditions->add("userID IN (?)", array($this->objectIDs));
 		
 		$sql = "SELECT	DISTINCT groupID
 			FROM	wcf".WCF_N."_user_to_group
@@ -94,6 +92,16 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (!UserGroup::isAccessibleGroup($groupIDs)) {
 			throw new PermissionDeniedException();
 		}
+	}
+	
+	/**
+	 * Validates permissions and parameters.
+	 */
+	public function validateDelete() {
+		// read and validate user objects
+		parent::validateDelete();
+		
+		$this->__validateAccessibleGroups();
 	}
 	
 	/**
@@ -123,6 +131,51 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			
 			throw new PermissionDeniedException();
 		}
+	}
+	
+	/**
+	 * Validates the ban action.
+	 */
+	public function validateBan() {
+		WCF::getSession()->checkPermissions(array('admin.user.canBanUser'));
+		
+		$this->__validateAccessibleGroups();
+	}
+	
+	/**
+	 * Validates the unban action.
+	 */
+	public function validateUnban() {
+		$this->validateBan();
+	}
+	
+	/**
+	 * Bans users.
+	 */
+	public function ban() {
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('userID IN (?)', array($this->objectIDs));
+		$sql = "UPDATE	wcf".WCF_N."_user
+			SET	banned = ?,
+				banReason = ?
+			".$conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(
+			array_merge(array(1, $this->parameters['banReason']), $conditionBuilder->getParameters())		
+		);
+	}
+	
+	/**
+	 * Unbans users.
+	 */
+	public function unban() {
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('userID IN (?)', array($this->objectIDs));
+		$sql = "UPDATE	wcf".WCF_N."_user
+			SET	banned = 0
+			".$conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
 	}
 	
 	/**
