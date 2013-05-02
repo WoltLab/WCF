@@ -209,7 +209,7 @@ class PackageArchive {
 				case 'date':
 					DateUtil::validateDate($element->nodeValue);
 					
-					$this->packageInfo['date'] = strtotime($element->nodeValue);
+					$this->packageInfo['date'] = @strtotime($element->nodeValue);
 				break;
 			}
 		}
