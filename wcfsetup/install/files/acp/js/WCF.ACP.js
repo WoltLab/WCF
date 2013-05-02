@@ -1775,6 +1775,30 @@ WCF.ACP.User.BanHandler = {
 				this.ban([ $button.data('objectID') ]);
 			}
 		}, this));
+		
+		// bind listener
+		$('.jsClipboardEditor').each($.proxy(function(index, container) {
+			var $container = $(container);
+			var $types = eval($container.data('types'));
+			if (WCF.inArray('com.woltlab.wcf.user', $types)) {
+				$container.on('clipboardAction', $.proxy(this._execute, this));
+				return false;
+			}
+		}, this));
+	},
+	
+	/**
+	 * Handles clipboard actions.
+	 * 
+	 * @param	object		event
+	 * @param	string		type
+	 * @param	string		actionName
+	 * @param	object		parameters
+	 */
+	_execute: function(event, type, actionName, parameters) {
+		if (actionName == 'com.woltlab.wcf.user.ban') {
+			this.ban(parameters.objectIDs);
+		}
 	},
 	
 	/**
@@ -1834,5 +1858,7 @@ WCF.ACP.User.BanHandler = {
 		
 		var $notification = new WCF.System.Notification();
 		$notification.show();
+		
+		WCF.Clipboard.reload();
 	}
 };
