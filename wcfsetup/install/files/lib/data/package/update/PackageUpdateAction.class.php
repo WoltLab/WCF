@@ -69,10 +69,13 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		if (!empty($this->parameters['packageName'])) {
 			$conditions->add("package_update.packageName LIKE ?", array('%'.$this->parameters['packageName'].'%'));
 		}
+		$conditions->add("package.packageID IS NULL");
 		
 		// find matching packages
 		$sql = "SELECT		package_update.packageUpdateID
 			FROM		wcf".WCF_N."_package_update package_update
+			LEFT JOIN	wcf".WCF_N."_package package
+			ON		(package.package = package_update.package)
 			".$conditions."
 			ORDER BY	package_update.packageName ASC";
 		$statement = WCF::getDB()->prepareStatement($sql, 1000);
@@ -213,7 +216,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("packageUpdateID IN (?)", array(array_keys($updateData)));
 		
-		$sql = "SELECT	packageUpdateID, packageName, packageDescription, author, authorURL
+		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_package_update
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
@@ -336,11 +339,50 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function prepareUpdate() {
+		return $this->createQueue('update');
+	}
+	
+	/**
+	 * Validates parameters to prepare a package installation.
+	 */
+	public function validatePrepareInstallation() {
+		WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+		
+		$this->readString('package');
+		
+		if (isset($this->parameters['authData'])) {
+			if (!is_array($this->parameters['authData'])) {
+				throw new UserInputException('authData');
+			}
+				
+			$this->readInteger('packageUpdateServerID', false, 'authData');
+			$this->readString('password', false, 'authData');
+			$this->readString('username', false, 'authData');
+			$this->readBoolean('saveCredentials', true, 'authData');
+		}
+	}
+	
+	/**
+	 * Prepares a package installation.
+	 * 
+	 * @return	array
+	 */
+	public function prepareInstallation() {
+		return $this->createQueue('install');
+	}
+	
+	/**
+	 * Creates a new package installation queue.
+	 * 
+	 * @param	string		$queueType
+	 * @return	array
+	 */
+	protected function createQueue($queueType) {
 		if (isset($this->parameters['authData'])) {
 			PackageUpdateServer::storeAuthData($this->parameters['authData']['packageUpdateServerID'], $this->parameters['authData']['username'], $this->parameters['authData']['password'], $this->parameters['authData']['saveCredentials']);
 		}
 		
-		$scheduler = new PackageInstallationScheduler($this->parameters['packages']);
+		$scheduler = new PackageInstallationScheduler($this->parameters['package']);
 		
 		try {
 			$scheduler->buildPackageInstallationStack();
@@ -365,10 +407,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 					'packageName' => $package['packageName'],
 					'packageID' => ($package['packageID'] ?: null),
 					'archive' => $package['archive'],
-					'action' => 'update'
+					'action' => $queueType
 				));
 				$parentQueueID = $queue->queueID;
-				
+		
 				if ($queueID === null) {
 					$queueID = $queue->queueID;
 				}
