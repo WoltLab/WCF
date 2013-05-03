@@ -765,6 +765,7 @@
 		<item name="wcf.acp.user.option.typeData"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP-Klasse für Ausgabe]]></item>
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Erlaubt die Angabe einer speziellen PHP-Klasse für die Ausgabeformatierung bei der Anzeige des Feldes.]]></item>
+		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 	</category>
 	
 	<category name="wcf.ajax">

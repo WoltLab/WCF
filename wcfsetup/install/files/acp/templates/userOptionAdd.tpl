@@ -162,7 +162,7 @@
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.user.option.access{/lang}</legend>
-		
+			
 			<dl>
 				<dt><label for="editable">{lang}wcf.acp.user.option.editable{/lang}</label></dt>
 				<dd>
