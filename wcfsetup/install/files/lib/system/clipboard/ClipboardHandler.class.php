@@ -306,8 +306,8 @@ class ClipboardHandler extends SingletonFactory {
 		// load actions
 		$actions = array();
 		foreach ($actionIDs as $actionID) {
-			$actionClassName = $this->actionCache[$actionID]->actionClassName;
-			$actionName = $this->actionCache[$actionID]->actionName;
+			$actionObject = $this->actionCache[$actionID];
+			$actionClassName = $actionObject->actionClassName;
 			if (!isset($actions[$actionClassName])) {
 				// validate class
 				if (!ClassUtil::isInstanceOf($actionClassName, 'wcf\system\clipboard\action\IClipboardAction')) {
@@ -320,7 +320,7 @@ class ClipboardHandler extends SingletonFactory {
 				);
 			}
 			
-			$actions[$actionClassName]['actions'][] = $actionName;
+			$actions[$actionClassName]['actions'][] = $actionObject;
 		}
 		
 		// execute actions
@@ -346,13 +346,13 @@ class ClipboardHandler extends SingletonFactory {
 				);
 			}
 			
-			foreach ($actionData['actions'] as $action) {
-				$data = $actionData['object']->execute($objects, $action);
+			foreach ($actionData['actions'] as $actionObject) {
+				$data = $actionData['object']->execute($objects, $actionObject);
 				if ($data === null) {
 					continue;
 				}
 				
-				$editorData[$typeName]['items'][$action] = $data;
+				$editorData[$typeName]['items'][$actionObject->showOrder] = $data;
 			}
 		}
 		

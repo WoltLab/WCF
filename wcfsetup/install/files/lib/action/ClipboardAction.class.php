@@ -125,8 +125,8 @@ class ClipboardAction extends AJAXInvokeAction {
 				'items' => array()
 			);
 			
-			foreach ($itemData['items'] as $item) {
-				$items['items'][] = array(
+			foreach ($itemData['items'] as $showOrder => $item) {
+				$items['items'][$showOrder] = array(
 					'actionName' => $item->getName(),
 					'internalData' => $item->getInternalData(),
 					'parameters' => $item->getParameters(),

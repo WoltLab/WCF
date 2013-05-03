@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\clipboard\action;
+use wcf\data\clipboard\action\ClipboardAction;
 use wcf\system\clipboard\ClipboardEditorItem;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
@@ -8,7 +9,7 @@ use wcf\system\WCF;
  * Abstract implementation of a clipboard action handler.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.clipboard.action
@@ -36,24 +37,24 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	/**
 	 * @see	wcf\system\clipboard\action\IClipboardAction::execute()
 	 */
-	public function execute(array $objects, $actionName) {
-		if (!in_array($actionName, $this->supportedActions)) {
-			throw new SystemException("Unknown clipboard action '".$actionName."'");
+	public function execute(array $objects, ClipboardAction $action) {
+		if (!in_array($action->actionName, $this->supportedActions)) {
+			throw new SystemException("Unknown clipboard action '".$action->actionName."'");
 		}
 		
 		$this->objects = $objects;
 		
 		$item = new ClipboardEditorItem();
-		$item->setName($this->getTypeName().'.'.$actionName);
+		$item->setName($this->getTypeName().'.'.$action->actionName);
 		
 		// set action class-related data
-		if (in_array($actionName, $this->actionClassActions)) {
-			$item->addParameter('actionName', $actionName);
+		if (in_array($action->actionName, $this->actionClassActions)) {
+			$item->addParameter('actionName', $action->actionName);
 			$item->addParameter('className', $this->getClassName());
 		}
 		
 		// validate objects if relevant method exists and set valid object ids
-		$methodName = 'validate'.ucfirst($actionName);
+		$methodName = 'validate'.ucfirst($action->actionName);
 		if (method_exists($this, $methodName)) {
 			$objectIDs = $this->$methodName();
 			if (empty($objectIDs)) {
