@@ -75,6 +75,7 @@
 				'wcf.global.decimalPoint': '{capture assign=decimalPoint}{lang}wcf.global.decimalPoint{/lang}{/capture}{$decimalPoint|encodeJS}',
 				'wcf.global.error.timeout': '{lang}wcf.global.error.timeout{/lang}',
 				'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
+				'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
 				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 				'wcf.global.page.jumpTo': '{lang}wcf.global.page.jumpTo{/lang}',
 				'wcf.global.page.jumpTo.description': '{lang}wcf.global.page.jumpTo.description{/lang}',

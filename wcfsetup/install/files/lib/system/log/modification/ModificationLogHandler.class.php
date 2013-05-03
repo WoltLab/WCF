@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Handles modification logs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.log.modification
@@ -60,13 +60,13 @@ class ModificationLogHandler extends SingletonFactory {
 	 * @return	wcf\data\modification\log\ModificationLog
 	 */
 	protected function _add($objectType, $objectID, $action, array $additionalData = array(), $time = TIME_NOW, $userID = null, $username = null) {
-		$objectType = $this->getObjectType($objectType);
-		if ($objectType === null) {
+		$objectTypeObj = $this->getObjectType($objectType);
+		if ($objectTypeObj === null) {
 			throw new SystemException("Object type '".$objectType."' not found within definition 'com.woltlab.wcf.modifiableContent'");
 		}
 		
 		return ModificationLogEditor::create(array(
-			'objectTypeID' => $objectType->objectTypeID,
+			'objectTypeID' => $objectTypeObj->objectTypeID,
 			'objectID' => $objectID,
 			'action' => $action,
 			'userID' => ($userID === null ? WCF::getUser()->userID : $userID),
@@ -83,13 +83,13 @@ class ModificationLogHandler extends SingletonFactory {
 	 * @param	array<integer>	$objectIDs
 	 */
 	protected function _remove($objectType, array $objectIDs) {
-		$objectType = $this->getObjectType($objectType);
-		if ($objectType === null) {
+		$objectTypeObj = $this->getObjectType($objectType);
+		if ($objectTypeObj === null) {
 			throw new SystemException("Object type '".$objectType."' not found within definition 'com.woltlab.wcf.modifiableContent'");
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("objectTypeID = ?", array($objectType->objectTypeID));
+		$conditions->add("objectTypeID = ?", array($objectTypeObj->objectTypeID));
 		$conditions->add("objectID IN (?)", array($objectIDs));
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_modification_log

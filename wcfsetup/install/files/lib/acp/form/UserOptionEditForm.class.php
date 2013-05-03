@@ -3,7 +3,6 @@ namespace wcf\acp\form;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionAction;
 use wcf\form\AbstractForm;
-use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
@@ -41,7 +40,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		if (isset($_REQUEST['id'])) $this->optionID = intval($_REQUEST['id']);
 		$this->userOption = new UserOption($this->optionID);
 		if (!$this->userOption->optionID) {
@@ -54,10 +53,10 @@ class UserOptionEditForm extends UserOptionAddForm {
 	 */
 	public function save() {
 		AbstractForm::save();
-	
+		
 		I18nHandler::getInstance()->save('optionName', 'wcf.user.option.'.$this->userOption->optionName, 'wcf.user.option');
 		I18nHandler::getInstance()->save('optionDescription', 'wcf.user.option.'.$this->userOption->optionName.'.description', 'wcf.user.option');
-	
+		
 		$this->objectAction = new UserOptionAction(array($this->userOption), 'update', array('data' => array(
 			'categoryName' => $this->categoryName,
 			'optionType' => $this->optionType,
@@ -74,7 +73,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 		)));
 		$this->objectAction->executeAction();
 		$this->saved();
-	
+		
 		WCF::getTPL()->assign('success', true);
 	}
 	
@@ -83,11 +82,11 @@ class UserOptionEditForm extends UserOptionAddForm {
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		I18nHandler::getInstance()->setOptions('optionName', 1, 'wcf.user.option.'.$this->userOption->optionName, 'wcf.user.option.option\d+');
 		I18nHandler::getInstance()->setOptions('optionDescription', 1, 'wcf.user.option.'.$this->userOption->optionName.'.description', 'wcf.user.option.option\d+.description');
 		
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			$this->categoryName = $this->userOption->categoryName;
 			$this->optionType = $this->userOption->optionType;
 			$this->defaultValue = $this->userOption->defaultValue;
@@ -108,7 +107,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
 		WCF::getTPL()->assign(array(

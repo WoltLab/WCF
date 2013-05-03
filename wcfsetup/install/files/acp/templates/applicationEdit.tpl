@@ -49,7 +49,6 @@
 				<dt><label for="domainName">{lang}wcf.acp.application.domainName{/lang}</label></dt>
 				<dd>
 					<input type="text" name="domainName" id="domainName" value="{$domainName}" class="long" />
-					<small>{lang}wcf.acp.application.domainName.description{/lang}</small>
 					{if $errorField == 'domainName'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -59,6 +58,7 @@
 							{/if}
 						</small>
 					{/if}
+					<small>{lang}wcf.acp.application.domainName.description{/lang}</small>
 				</dd>
 			</dl>
 			
