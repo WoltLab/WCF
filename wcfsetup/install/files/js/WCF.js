@@ -1204,10 +1204,6 @@ WCF.Clipboard = {
 			for (var $itemIndex in $editor.items) {
 				var $item = $editor.items[$itemIndex];
 				
-				if ($item.actionName === 'unmarkAll') {
-					$('<li class="dropdownDivider" />').appendTo($itemList);
-				}
-				
 				var $listItem = $('<li><span>' + $item.label + '</span></li>').appendTo($itemList);
 				$listItem.data('objectType', $typeName);
 				$listItem.data('actionName', $item.actionName).data('parameters', $item.parameters);
@@ -1216,6 +1212,29 @@ WCF.Clipboard = {
 				// bind event
 				$listItem.click($.proxy(this._executeAction, this));
 			}
+			
+			// add 'unmark all'
+			$('<li class="dropdownDivider" />').appendTo($itemList);
+			$('<li><span>' + WCF.Language.get('wcf.clipboard.item.unmarkAll') + '</span></li>').appendTo($itemList).click($.proxy(function() {
+				this._proxy.setOption('data', {
+					action: 'unmarkAll',
+					type: $typeName
+				});
+				this._proxy.setOption('success', $.proxy(function(data, textStatus, jqXHR) {
+					for (var $__containerID in this._containers) {
+						var $__container = $(this._containers[$__containerID]);
+						if ($__container.data('type') == $typeName) {
+							$__container.find('.jsClipboardMarkAll, .jsClipboardItem').removeAttr('checked');
+							break;
+						}
+					}
+					
+					// call and restore success method
+					this._success(data, textStatus, jqXHR);
+					this._proxy.setOption('success', $.proxy(this._success, this));
+				}, this));
+				this._proxy.sendRequest();
+			}, this));
 			
 			// block click event
 			$container.click(function(event) {
