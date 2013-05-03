@@ -75,7 +75,7 @@
 			
 			<tbody>
 				{foreach from=$users item=user}
-					<tr class="jsUserRow">
+					<tr class="jsUserRow jsClipboardObject">
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}" /></td>
 						<td class="columnIcon">
 							{if $user->editable}
