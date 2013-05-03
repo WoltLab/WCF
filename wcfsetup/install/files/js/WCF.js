@@ -5430,7 +5430,7 @@ WCF.System.Notification = Class.extend({
 	 */
 	init: function(message, cssClassNames) {
 		this._cssClassNames = cssClassNames || 'success';
-		this._message = message;
+		this._message = message || WCF.Language.get('wcf.global.success');
 		this._overlay = $('#systemNotification');
 		
 		if (!this._overlay.length) {
@@ -7854,6 +7854,7 @@ WCF.UserPanel = Class.extend({
 			var $badge = this._container.find('.badge');
 			if (!$badge.length) {
 				$badge = $('<span class="badge badgeInverse" />').appendTo(this._container.children('.dropdownToggle'));
+				$badge.before(' ');
 			}
 			$badge.html(data.returnValues.totalCount);
 			

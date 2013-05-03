@@ -1849,3 +1849,136 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 		window.location = this._list.find('li.dropdownNavigationItem > a').attr('href');
 	}
 });
+
+/**
+ * Namespace for user management.
+ */
+WCF.ACP.User = { };
+
+/**
+ * Generic implementation to ban users.
+ */
+WCF.ACP.User.BanHandler = {
+	/**
+	 * callback object
+	 * @var	object
+	 */
+	_callback: null,
+	
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes WCF.ACP.User.BanHandler on first use.
+	 */
+	init: function() {
+		this._dialog = $('<div />').hide().appendTo(document.body);
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		$('.jsBanButton').click($.proxy(function(event) {
+			var $button = $(event.currentTarget);
+			if ($button.data('banned')) {
+				this.unban([ $button.data('objectID') ]);
+			}
+			else {
+				this.ban([ $button.data('objectID') ]);
+			}
+		}, this));
+		
+		// bind listener
+		$('.jsClipboardEditor').each($.proxy(function(index, container) {
+			var $container = $(container);
+			var $types = eval($container.data('types'));
+			if (WCF.inArray('com.woltlab.wcf.user', $types)) {
+				$container.on('clipboardAction', $.proxy(this._execute, this));
+				return false;
+			}
+		}, this));
+	},
+	
+	/**
+	 * Handles clipboard actions.
+	 * 
+	 * @param	object		event
+	 * @param	string		type
+	 * @param	string		actionName
+	 * @param	object		parameters
+	 */
+	_execute: function(event, type, actionName, parameters) {
+		if (actionName == 'com.woltlab.wcf.user.ban') {
+			this.ban(parameters.objectIDs);
+		}
+	},
+	
+	/**
+	 * Unbans users.
+	 * 
+	 * @param	array<integer>	userIDs
+	 */
+	unban: function(userIDs) {
+		this._proxy.setOption('data', {
+			actionName: 'unban',
+			className: 'wcf\\data\\user\\UserAction',
+			objectIDs: userIDs
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Bans users.
+	 * 
+	 * @param	array<integer>	userIDs
+	 */
+	ban: function(userIDs) {
+		WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.user.ban.sure'), $.proxy(function(action) {
+			if (action === 'confirm') {
+				this._proxy.setOption('data', {
+					actionName: 'ban',
+					className: 'wcf\\data\\user\\UserAction',
+					objectIDs: userIDs,
+					parameters: {
+						banReason: $('#userBanReason').val()
+					}
+				});
+				this._proxy.sendRequest();
+			}
+		}, this), '', $('<fieldset><dl><dt><label for="userBanReason">' + WCF.Language.get('wcf.acp.user.banReason') + '</label></dt><dd><textarea id="userBanReason" cols="40" rows="3" /><small>' + WCF.Language.get('wcf.acp.user.banReason.description') + '</small></dd></dl></fieldset>'));
+	},
+	
+	/**
+	 * Handles successful AJAX calls.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		$('.jsBanButton').each(function(index, button) {
+			var $button = $(button);
+			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
+				if (data.actionName == 'unban') {
+					$button.data('banned', false).data('tooltip', $button.data('banMessage')).removeClass('icon-lock').addClass('icon-unlock');
+				}
+				else {
+					$button.data('banned', true).data('tooltip', $button.data('unbanMessage')).removeClass('icon-unlock').addClass('icon-lock');
+				}
+			}
+		});
+		
+		var $notification = new WCF.System.Notification();
+		$notification.show();
+		
+		WCF.Clipboard.reload();
+	}
+};

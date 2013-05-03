@@ -21,6 +21,13 @@
 		{/if}
 		
 		new WCF.Table.EmptyTableHandler($('#userTableContainer'), 'jsUserRow', options);
+		
+		WCF.Language.addObject({
+			'wcf.acp.user.banReason': '{lang}wcf.acp.user.banReason{/lang}',
+			'wcf.acp.user.banReason.description': '{lang}wcf.acp.user.banReason.description{/lang}',
+			'wcf.acp.user.ban.sure': '{lang}wcf.acp.user.ban.sure{/lang}'
+		});
+		WCF.ACP.User.BanHandler.init();
 	});
 	//]]>
 </script>
@@ -80,6 +87,11 @@
 								<span class="icon icon16 icon-remove jsTooltip jsDeleteButton pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$user->userID}" data-confirm-message="{lang}wcf.acp.user.delete.sure{/lang}"></span>
 							{else}
 								<span class="icon icon16 icon-remove disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+							{/if}
+							{if $user->bannable}
+								<span class="icon icon16 icon-{if $user->banned}lock{else}unlock{/if} jsBanButton jsTooltip pointer" title="{lang}wcf.acp.user.{if $user->banned}unban{else}ban{/if}{/lang}" data-object-id="{@$user->userID}" data-ban-message="{lang}wcf.acp.user.ban{/lang}" data-unban-message="{lang}wcf.acp.user.unban{/lang}" data-banned="{if $user->banned}true{else}false{/if}"></span>
+							{else}
+								<span class="icon icon16 icon-{if $user->banned}lock{else}unlock{/if} disabled" title="{lang}wcf.acp.user.{if $user->banned}unban{else}ban{/if}{/lang}"></span>
 							{/if}
 							
 							{event name='rowButtons'}

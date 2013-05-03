@@ -675,6 +675,9 @@
 		<item name="wcf.acp.user.banUser.description"><![CDATA[TODO: Der Benutzer wird dauerhaft von der Nutzung aller Funktionen ausgeschlossen und erhält beim Aufruf der Seite eine entsprechende Fehlermeldung.]]></item>
 		<item name="wcf.acp.user.banReason"><![CDATA[TODO: Begründung]]></item>
 		<item name="wcf.acp.user.banReason.description"><![CDATA[TODO: Die Begründung wird dem gesperrten Benutzer beim Aufruf der Seite angezeigt.]]></item>
+		<item name="wcf.acp.user.ban"><![CDATA[TODO: Sperren]]></item>
+		<item name="wcf.acp.user.unban"><![CDATA[TODO: Sperrung aufheben]]></item>
+		<item name="wcf.acp.user.ban.sure"><![CDATA[TODO: Wollen Sie den/die Benutzer wirklich sperren?]]></item>
 		<item name="wcf.acp.user.delete.sure"><![CDATA[Do you really want to delete the user “{$user->username}”?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Heads up! You’re editing your own user account and changes might result in yourself being locked out from the Administration Control Panel.]]></item>
@@ -762,6 +765,7 @@
 		<item name="wcf.acp.user.option.typeData"><![CDATA[TODO: Eigenschaften]]></item>
 		<item name="wcf.acp.user.option.outputClass"><![CDATA[TODO: PHP-Klasse für Ausgabe]]></item>
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[TODO: Erlaubt die Angabe einer speziellen PHP-Klasse für die Ausgabeformatierung bei der Anzeige des Feldes.]]></item>
+		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
 	</category>
 	
 	<category name="wcf.ajax">
@@ -790,6 +794,7 @@
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Unmark All]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Assign to User Group]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[TODO: Sperren ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} user{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[Export Email addresses]]></item>

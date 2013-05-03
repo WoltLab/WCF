@@ -24,7 +24,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @see	wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
 	 */
-	protected $supportedActions = array('assignToGroup', 'delete', 'exportMailAddress', 'sendMail');
+	protected $supportedActions = array('assignToGroup', 'ban', 'delete', 'exportMailAddress', 'sendMail');
 	
 	/**
 	 * @see	wcf\system\clipboard\action\IClipboardAction::execute()
@@ -82,14 +82,37 @@ class UserClipboardAction extends AbstractClipboardAction {
 	protected function validateDelete() {
 		// check permissions
 		if (!WCF::getSession()->getPermission('admin.user.canDeleteUser')) {
-			return 0;
+			return array();
 		}
 		
-		// user cannot delete itself
-		$userIDs = array_keys($this->objects);
-		foreach ($userIDs as $index => $userID) {
-			if ($userID == WCF::getUser()->userID) {
-				unset($userIDs[$index]);
+		return $this->__validateAccessibleGroups(array_keys($this->objects));
+	}
+	
+	/**
+	 * Returns the ids of the users which can be banned.
+	 *
+	 * @return	array<integer>
+	 */
+	protected function validateBan() {
+		// check permissions
+		if (!WCF::getSession()->getPermission('admin.user.canBanUser')) {
+			return array();
+		}
+		
+		return $this->__validateAccessibleGroups(array_keys($this->objects));
+	}
+	
+	/**
+	 * Validates accessible groups.
+	 *
+	 * @return	array<integer>
+	 */
+	protected function __validateAccessibleGroups(array $userIDs, $ignoreOwnUser = true) {
+		if ($ignoreOwnUser) {
+			foreach ($userIDs as $index => $userID) {
+				if ($userID == WCF::getUser()->userID) {
+					unset($userIDs[$index]);
+				}
 			}
 		}
 		
@@ -111,7 +134,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 			if (!isset($userToGroup[$row['userID']])) {
 				$userToGroup[$row['userID']] = array();
 			}
-			
+				
 			$userToGroup[$row['userID']][] = $row['groupID'];
 		}
 		
