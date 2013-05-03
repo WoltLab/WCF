@@ -1615,6 +1615,20 @@
 			}
 		}
 	}
+	
+	tr {
+		&.jsMarked {
+			color: @wcfSelectedColor;
+			
+			> td {
+				background-color: @wcfSelectedBackgroundColor !important;
+			}
+			
+			a:not(.badge) {
+				color: @wcfSelectedColor;
+			}
+		}
+	}
 }
 
 /* ### definition lists ### */
