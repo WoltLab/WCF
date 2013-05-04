@@ -98,11 +98,14 @@ class StyleCompiler extends SingletonFactory {
 			$variables[$row['variableName']] = $value;
 		}
 		
+		// insert blue temptation files
+		array_unshift($files, WCF_DIR.'acp/style/blueTemptation/variables.less', WCF_DIR.'acp/style/blueTemptation/override.less');
+		
 		$this->compileStylesheet(
 			WCF_DIR.'acp/style/style',
 			$files,
 			$variables,
-			'',
+			file_get_contents(WCF_DIR.'acp/style/blueTemptation/individual.less'),
 			new Callback(function($content) {
 				// fix relative paths
 				$content = str_replace('../font/', '../../font/', $content);
