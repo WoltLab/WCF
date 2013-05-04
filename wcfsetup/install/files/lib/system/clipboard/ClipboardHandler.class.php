@@ -112,6 +112,22 @@ class ClipboardHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Unmarks all items of given type.
+	 * 
+	 * @param	integer		$objectTypeID
+	 */
+	public function unmarkAll($objectTypeID) {
+		$sql = "DELETE FROM	wcf".WCF_N."_clipboard_item
+			WHERE		objectTypeID = ?
+					AND userID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$objectTypeID,
+			WCF::getUser()->userID
+		));
+	}
+	
+	/**
 	 * Returns a type id by name.
 	 * 
 	 * @param	string		$typeName
@@ -290,8 +306,8 @@ class ClipboardHandler extends SingletonFactory {
 		// load actions
 		$actions = array();
 		foreach ($actionIDs as $actionID) {
-			$actionClassName = $this->actionCache[$actionID]->actionClassName;
-			$actionName = $this->actionCache[$actionID]->actionName;
+			$actionObject = $this->actionCache[$actionID];
+			$actionClassName = $actionObject->actionClassName;
 			if (!isset($actions[$actionClassName])) {
 				// validate class
 				if (!ClassUtil::isInstanceOf($actionClassName, 'wcf\system\clipboard\action\IClipboardAction')) {
@@ -304,7 +320,7 @@ class ClipboardHandler extends SingletonFactory {
 				);
 			}
 			
-			$actions[$actionClassName]['actions'][] = $actionName;
+			$actions[$actionClassName]['actions'][] = $actionObject;
 		}
 		
 		// execute actions
@@ -323,31 +339,21 @@ class ClipboardHandler extends SingletonFactory {
 			$objects = $actionData['object']->filterObjects($this->markedItems[$typeName], $typeData);
 			if (empty($objects)) continue;
 			
-			$editorData[$typeName] = array(
-				'label' => $actionData['object']->getEditorLabel($objects),
-				'items' => array()
-			);
+			if (!isset($editorData[$typeName])) {
+				$editorData[$typeName] = array(
+					'label' => $actionData['object']->getEditorLabel($objects),
+					'items' => array()
+				);
+			}
 			
-			foreach ($actionData['actions'] as $action) {
-				$data = $actionData['object']->execute($objects, $action);
+			foreach ($actionData['actions'] as $actionObject) {
+				$data = $actionData['object']->execute($objects, $actionObject);
 				if ($data === null) {
 					continue;
 				}
 				
-				$editorData[$typeName]['items'][$action] = $data;
+				$editorData[$typeName]['items'][$actionObject->showOrder] = $data;
 			}
-			
-			// append 'unmark all' item
-			if (!ClassUtil::isInstanceOf($actionData['object']->getClassName(), 'wcf\data\IClipboardAction')) {
-				throw new SystemException("'".$actionData['object']->getClassName()."' does not implement 'wcf\data\IClipboardAction'");
-			}
-			
-			$unmarkAll = new ClipboardEditorItem();
-			$unmarkAll->setName('unmarkAll');
-			$unmarkAll->addParameter('actionName', 'unmarkAll');
-			$unmarkAll->addParameter('className', $actionData['object']->getClassName());
-			
-			$editorData[$typeName]['items'][] = $unmarkAll;
 		}
 		
 		return $editorData;

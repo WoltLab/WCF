@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\clipboard\action;
+use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\user\group\UserGroup;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
@@ -9,7 +10,7 @@ use wcf\system\WCF;
  * Prepares clipboard editor items for user objects.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.clipboard.action
@@ -29,15 +30,15 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @see	wcf\system\clipboard\action\IClipboardAction::execute()
 	 */
-	public function execute(array $objects, $actionName) {
-		$item = parent::execute($objects, $actionName);
+	public function execute(array $objects, ClipboardAction $action) {
+		$item = parent::execute($objects, $action);
 		
 		if ($item === null) {
 			return null;
 		}
 		
 		// handle actions
-		switch ($actionName) {
+		switch ($action->actionName) {
 			case 'assignToGroup':
 				$item->setURL(LinkHandler::getInstance()->getLink('UserAssignToGroup'));
 			break;

@@ -52,7 +52,7 @@
 					{if $errorField == 'domainName'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
-								{lang}wcf.acp.global.form.error.empty{/lang}
+								{lang}wcf.global.form.error.empty{/lang}
 							{else}
 								{lang}wcf.acp.application.domainName.error.{$errorType}{/lang}
 							{/if}
@@ -85,7 +85,7 @@
 					{if $errorField == 'cookieDomain'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
-								{lang}wcf.acp.global.form.error.empty{/lang}
+								{lang}wcf.global.form.error.empty{/lang}
 							{else}
 								{lang}wcf.acp.application.cookieDomain.error.{$errorType}{/lang}
 							{/if}
@@ -101,7 +101,7 @@
 					{if $errorField == 'cookiePath'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
-								{lang}wcf.acp.global.form.error.empty{/lang}
+								{lang}wcf.global.form.error.empty{/lang}
 							{else}
 								{lang}wcf.acp.application.cookiePath.error.{$errorType}{/lang}
 							{/if}

@@ -1,11 +1,12 @@
 <?php
 namespace wcf\system\clipboard\action;
+use wcf\data\clipboard\action\ClipboardAction;
 
 /**
  * Basic interface for all clipboard editor actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.clipboard.action
@@ -23,11 +24,11 @@ interface IClipboardAction {
 	 * Returns editor item for the clipboard action with the given name or null
 	 * if the action is not applicable to the given objects.
 	 * 
-	 * @param	array		$objects
-	 * @param	string		$actionName
+	 * @param	array<wcf\data\DatabaseObject>			$objects
+	 * @param	wcf\data\clipboard\action\ClipboardAction	$action
 	 * @return	wcf\system\clipboard\ClipboardEditorItem
 	 */
-	public function execute(array $objects, $actionName);
+	public function execute(array $objects, ClipboardAction $action);
 	
 	/**
 	 * Filters the given objects by the given type data and returns the filtered
