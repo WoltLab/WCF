@@ -8173,8 +8173,16 @@ $.widget('ui.wcfDialog', {
 			this._content.removeClass('dialogForm').css({ marginBottom: '0px' });
 		}
 		
-		// calculate dimensions
+		// force 800px or 80% width
 		var $windowDimensions = $(window).getDimensions();
+		if ($windowDimensions.width * 0.8 > 800) {
+			this._content.css('maxWidth', '800px');
+		}
+		else {
+			this._content.css('maxWidth', '80%');
+		}
+		
+		// calculate dimensions
 		var $containerDimensions = this._container.getDimensions('outer');
 		var $contentDimensions = this._content.getDimensions();
 		
