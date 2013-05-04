@@ -724,6 +724,9 @@
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[Send email to following users]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Text]]></item>
+		<item name="wcf.acp.user.quickSearch"><![CDATA[TODO: Schnellsuche]]></item>
+		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[TODO: Gesperrte Benutzer]]></item>
+		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[TODO: Neueste Benutzer]]></item>
 		<item name="wcf.acp.user.option.access"><![CDATA[TODO: Zugriff]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Add Custom User Field]]></item>
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Add Custom User Field Category]]></item>
