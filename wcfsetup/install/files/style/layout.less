@@ -359,22 +359,27 @@
 	.mainMenu {
 		position: relative;
 		
-		&:hover > ul {
-			display: block;
-		}
-		
-		> .invisible {
+		> a:first-child {
 			.button;
 			margin-left: @wcfGapSmall;
-			padding-left: 28px;
 			
-			&:before {
-				content: "\f03a";
-				font-family: FontAwesome;
-				font-size: 14px;
-				left: 9px;
+			+ a {
+				height: 100%;
+				left: 0;
 				position: absolute;
-				top: 6px;
+				top: 0;
+				width: 100%;
+				z-index:100;
+			}
+			
+			&:focus {
+				+ a {
+					display: block;
+				}
+				
+				~ ul {
+					display: block;
+				}
 			}
 		}
 		
@@ -412,7 +417,7 @@
 
 @media only screen and (min-width: 641px) and (max-width: 800px) {
 	.mainMenu {
-		> .invisible {
+		> a:first-child {
 			margin-left: @wcfGapMedium;
 		}
 	}

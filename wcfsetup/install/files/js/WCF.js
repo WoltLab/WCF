@@ -5391,6 +5391,27 @@ WCF.Search.User = WCF.Search.Base.extend({
 WCF.System = { };
 
 /**
+ * Enables mobile navigation.
+ */
+WCF.System.MobileNavigation = {
+	init: function() {
+		this._convertNavigation();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.System.MobileNavigation', function() {
+			WCF.System.MobileNavigation._convertNavigation();
+		});
+	},
+	
+	_convertNavigation: function() {
+		$('nav.jsMobileNavigation').removeClass('jsMobileNavigation').each(function(index, navigation) {
+			var $navigation = $(navigation);
+			$('<a class="invisible" tabindex="9999999" />').click(function() {}).prependTo($navigation);
+			$('<a class="invisible" tabindex="9999999"><span class="icon icon16 icon-list" />' + ($navigation.data('buttonLabel') !== undefined ? (' ' + $navigation.data('buttonLabel')) : '') + '</a>').click(function() {}).prependTo($navigation);
+		});
+	}
+};
+
+/**
  * Fixes scroll offset on page load.
  */
 WCF.System.JumpToAnchor = {
