@@ -1187,7 +1187,43 @@
 
 @media only screen and (max-width: 800px) {
 	.content > .breadcrumbs {
-		display: none;
+		background-color: @wcfContentBackgroundColor;
+		border: 1px solid @wcfContainerBorderColor;
+		display: inline-block;
+		margin-left: @wcfGapSmall;
+		margin-right: @wcfGapSmall;
+		
+		.borderRadius(6px);
+		
+		> ul {
+			> li {
+				max-width: none;
+				padding-right: 0;
+				
+				&:not(:last-child) {
+					display: none;
+				}
+				
+				> a {
+					padding: @wcfGapTiny @wcfGapMedium;
+					
+					&:before {
+						content: "\f060";
+						font-family: FontAwesome;
+						font-size: 14px;
+						padding-right: @wcfGapSmall;
+					}
+				}
+				
+				> .pointer {
+					display: none;
+				}
+			}
+		}
+		
+		+ .boxHeadline {
+			margin-top: 0;
+		}
 	}
 }
 
