@@ -27,6 +27,12 @@ class ClipboardHandler extends SingletonFactory {
 	protected $actionCache = null;
 	
 	/**
+	 * cached list of clipboard item types
+	 * @var	array<array>
+	 */
+	protected $cache = null;
+	
+	/**
 	 * list of marked items
 	 * @var	array<array>
 	 */
@@ -39,10 +45,10 @@ class ClipboardHandler extends SingletonFactory {
 	protected $pageCache = null;
 	
 	/**
-	 * cached list of clipboard item types
-	 * @var	array<array>
+	 * page object id
+	 * @var	integer
 	 */
-	protected $cache = null;
+	protected $pageObjectID = 0;
 	
 	/**
 	 * @see	wcf\system\SingletonFactory::init()
@@ -282,16 +288,21 @@ class ClipboardHandler extends SingletonFactory {
 	 * Returns items for clipboard editor.
 	 * 
 	 * @param	string		$page
+	 * @param	integer		$pageObjectID
 	 * @param	array		$containerData
 	 * @return	array<array>
 	 */
-	public function getEditorItems($page, $containerData) {
+	public function getEditorItems($page, $pageObjectID, $containerData) {
+		$this->pageObjectID = 0;
+		
 		// ignore unknown pages
 		if (!isset($this->pageCache[$page])) return null;
 		
 		// get objects
 		$this->loadMarkedItems();
 		if (empty($this->markedItems)) return null;
+		
+		$this->pageObjectID = $pageObjectID;
 		
 		// fetch action ids
 		$this->loadActionCache();
@@ -402,5 +413,14 @@ class ClipboardHandler extends SingletonFactory {
 		}
 		
 		return 0;
+	}
+	
+	/**
+	 * Returns page object id.
+	 * 
+	 * @return	integer
+	 */
+	public function getPageObjectID() {
+		return $this->pageObjectID;
 	}
 }
