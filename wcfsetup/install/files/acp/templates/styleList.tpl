@@ -38,18 +38,20 @@
 							<h3><a href="{link controller='StyleEdit' id=$style->styleID}{/link}">{$style->styleName}</a></h3>
 							{if $style->styleDescription}<small>{lang}{@$style->styleDescription}{/lang}</small>{/if}
 						</div>
-						<ul class="buttonList" data-style-id="{@$style->styleID}">
-							<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a></li>
-							<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" title="{lang}wcf.acp.style.exportStyle{/lang}" class="jsTooltip"><span class="icon icon16 icon-download-alt"></span></a></li>
-							
-							{if !$style->isDefault}
-								<li><span class="icon icon16 icon-{if $style->isDisabled}off{else}circle-blank{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$style->styleID}"></span></li>
-								<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><span class="icon icon16 icon-check"></span></a></li>
-								<li><a title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message="{lang}wcf.acp.style.delete.confirmMessage{/lang}"><span class="icon icon16 icon-remove"></span></a></li>
-							{/if}
-							
-							{event name='itemButtons'}
-						</ul>
+						<nav class="jsMobileNavigation buttonGroupNavigation">
+							<ul class="buttonList" data-style-id="{@$style->styleID}">
+								<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a></li>
+								<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" title="{lang}wcf.acp.style.exportStyle{/lang}" class="jsTooltip"><span class="icon icon16 icon-download-alt"></span></a></li>
+								
+								{if !$style->isDefault}
+									<li><span class="icon icon16 icon-{if $style->isDisabled}off{else}circle-blank{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$style->styleID}"></span></li>
+									<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><span class="icon icon16 icon-check"></span></a></li>
+									<li><a title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message="{lang}wcf.acp.style.delete.confirmMessage{/lang}"><span class="icon icon16 icon-remove"></span></a></li>
+								{/if}
+								
+								{event name='itemButtons'}
+							</ul>
+						</nav>
 						<dl class="plain inlineDataList">
 							<dt>{lang}wcf.acp.style.users{/lang}</dt>
 							<dd>{#$style->users}</dd>

@@ -362,6 +362,7 @@
 		> a:first-child {
 			.button;
 			margin-left: @wcfGapSmall;
+			outline: 0;
 			
 			+ a {
 				height: 100%;
@@ -387,6 +388,10 @@
 			.dropdown .dropdownMenu;
 			font-size: 120%;
 			left: @wcfGapSmall;
+			
+			&:hover {
+				display: block;
+			}
 			
 			> li.active {
 				> ul.invisible {
@@ -897,7 +902,7 @@
 			background-color: @wcfContainerHoverBackgroundColor;
 			
 			> div > div {
-				> .buttonList {
+				> .buttonGroupNavigation > .buttonList {
 					opacity: 1;
 				}
 				
@@ -910,13 +915,16 @@
 		> div > div {
 			position: relative;
 			
-			> .buttonList {
-				opacity: 0;
+			> .buttonGroupNavigation {
 				position: absolute;
 				right: 0;
 				top: 0;
 				
-				.transition(opacity, .1s);
+				> .buttonList {
+					opacity: 0;
+					
+					.transition(opacity, .1s);
+				}
 			}
 			
 			> .containerHeadline > .containerContentType {
@@ -952,10 +960,6 @@
 			padding: @wcfGapSmall;
 			
 			.containerContentType {
-				display: none;
-			}
-			
-			> div > div > .buttonList {
 				display: none;
 			}
 		}
@@ -1221,9 +1225,16 @@
 			}
 		}
 		
-		+ .boxHeadline {
-			margin-top: 0;
+		&:not(:first-child) {
+			display: none;
 		}
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 800px) {
+	.content > .breadcrumbs {
+		margin-left: @wcfGapMedium;
+		margin-right: @wcfGapMedium;
 	}
 }
 
