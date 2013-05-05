@@ -1157,6 +1157,7 @@ WCF.Clipboard = {
 			containerData: this._containerData,
 			objectIDs: objectIDs,
 			pageClassName: this._page,
+			pageObjectID: this._pageObjectID,
 			type: type
 		});
 		this._proxy.sendRequest();
