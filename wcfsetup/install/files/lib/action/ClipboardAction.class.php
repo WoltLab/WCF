@@ -49,6 +49,12 @@ class ClipboardAction extends AJAXInvokeAction {
 	protected $pageClassName = '';
 	
 	/**
+	 * page object id
+	 * @var	integer
+	 */
+	protected $pageObjectID = 0;
+	
+	/**
 	 * object type
 	 * @var	string
 	 */
@@ -70,6 +76,7 @@ class ClipboardAction extends AJAXInvokeAction {
 		if (isset($_POST['containerData']) && is_array($_POST['containerData'])) $this->containerData = $_POST['containerData'];
 		if (isset($_POST['objectIDs']) && is_array($_POST['objectIDs'])) $this->objectIDs = ArrayUtil::toIntegerArray($_POST['objectIDs']);
 		if (isset($_POST['pageClassName'])) $this->pageClassName = StringUtil::trim($_POST['pageClassName']);
+		if (isset($_POST['pageObjectID'])) $this->pageObjectID = intval($_POST['pageObjectID']);
 		if (isset($_POST['type'])) $this->type = StringUtil::trim($_POST['type']);
 	}
 	
@@ -112,7 +119,7 @@ class ClipboardAction extends AJAXInvokeAction {
 	 * @return	array<array>
 	 */
 	protected function getEditorItems() {
-		$data = ClipboardHandler::getInstance()->getEditorItems($this->pageClassName, $this->containerData);
+		$data = ClipboardHandler::getInstance()->getEditorItems($this->pageClassName, $this->pageObjectID, $this->containerData);
 		
 		if ($data === null) {
 			return array();

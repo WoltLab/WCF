@@ -853,6 +853,12 @@ WCF.Clipboard = {
 	_page: '',
 	
 	/**
+	 * current page's object id
+	 * @var	integer
+	 */
+	_pageObjectID: 0,
+	
+	/**
 	 * proxy object
 	 * @var	WCF.Action.Proxy
 	 */
@@ -866,16 +872,17 @@ WCF.Clipboard = {
 	
 	/**
 	 * Initializes the clipboard API.
+	 * 
+	 * @param	string		page
+	 * @param	integer		hasMarkedItems
+	 * @param	object		actionObjects
+	 * @param	integer		pageObjectID
 	 */
-	init: function(page, hasMarkedItems, actionObjects) {
+	init: function(page, hasMarkedItems, actionObjects, pageObjectID) {
 		this._page = page;
-		this._actionObjects = actionObjects;
-		if (!actionObjects) {
-			this._actionObjects = {};
-		}
-		if (hasMarkedItems) {
-			this._hasMarkedItems = true;
-		}
+		this._actionObjects = actionObjects || { };
+		this._hasMarkedItems = (hasMarkedItems > 0);
+		this._pageObjectID = parseInt(pageObjectID) || 0;
 		
 		this._actionProxy = new WCF.Action.Proxy({
 			success: $.proxy(this._actionSuccess, this),
@@ -913,7 +920,8 @@ WCF.Clipboard = {
 			autoSend: true,
 			data: {
 				containerData: this._containerData,
-				pageClassName: this._page
+				pageClassName: this._page,
+				pageObjectID: this._pageObjectID
 			},
 			success: $.proxy(this._loadMarkedItemsSuccess, this),
 			url: 'index.php/ClipboardLoadMarkedItems/?t=' + SECURITY_TOKEN + SID_ARG_2ND
