@@ -202,10 +202,7 @@ $.fn.extend({
 		
 		// show element to retrieve dimensions and restore them later
 		if (this.is(':hidden')) {
-			css = {
-				display: this.css('display'),
-				visibility: this.css('visibility')
-			};
+			css = WCF.getInlineCSS(this);
 			
 			wasHidden = true;
 			
@@ -240,7 +237,7 @@ $.fn.extend({
 		
 		// restore previous settings
 		if (wasHidden) {
-			this.css(css);
+			WCF.revertInlineCSS(this, css, [ 'display', 'visibility' ]);
 		}
 		
 		return dimensions;
@@ -260,11 +257,7 @@ $.fn.extend({
 		
 		// show element to retrieve dimensions and restore them later
 		if (this.is(':hidden')) {
-			css = {
-				display: this.css('display'),
-				visibility: this.css('visibility')
-			};
-			
+			css = WCF.getInlineCSS(this);
 			wasHidden = true;
 			
 			this.css({
@@ -286,7 +279,7 @@ $.fn.extend({
 		
 		// restore previous settings
 		if (wasHidden) {
-			this.css(css);
+			WCF.revertInlineCSS(this, css, [ 'display', 'visibility' ]);
 		}
 		
 		return offsets;
@@ -580,6 +573,57 @@ $.extend(WCF, {
 		}
 		
 		return effect;
+	},
+	
+	/**
+	 * Returns inline CSS for given element.
+	 * 
+	 * @param	jQuery		element
+	 * @return	object
+	 */
+	getInlineCSS: function(element) {
+		var $inlineStyles = { };
+		var $style = element.attr('style');
+		
+		// no style tag given or empty
+		if (!$style) {
+			return { };
+		}
+		
+		$style = $style.split(';');
+		for (var $i = 0, $length = $style.length; $i < $length; $i++) {
+			var $fragment = $.trim($style[$i]);
+			if ($fragment == '') {
+				continue;
+			}
+			
+			$fragment = $fragment.split(':');
+			$inlineStyles[$.trim($fragment[0])] = $.trim($fragment[1]);
+		}
+		
+		return $inlineStyles;
+	},
+	
+	/**
+	 * Reverts inline CSS or negates a previously set property.
+	 * 
+	 * @param	jQuery		element
+	 * @param	object		inlineCSS
+	 * @param	array<string>	targetProperties
+	 */
+	revertInlineCSS: function(element, inlineCSS, targetProperties) {
+		for (var $i = 0, $length = targetProperties.length; $i < $length; $i++) {
+			var $property = targetProperties[$i];
+			
+			// revert inline CSS
+			if (inlineCSS[$property]) {
+				element.css($property, inlineCSS[$property]);
+			}
+			else {
+				// negate inline CSS
+				element.css($property, '');
+			}
+		}
 	}
 });
 
