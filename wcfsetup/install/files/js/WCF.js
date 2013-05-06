@@ -3317,7 +3317,7 @@ WCF.TabMenu = {
 						location.hash = '#' + $panel.attr('id');
 					}
 					
-					$container.trigger('tabsselect', event, ui);
+					$container.trigger('tabsselect', ui);
 				}
 			});
 			
