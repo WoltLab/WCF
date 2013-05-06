@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Handles commands.
  *
  * @author	Tim Düsterhus
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cli.command
@@ -85,7 +85,7 @@ class CommandHandler {
 	/**
 	 * Returns the parameterlist of the given line.
 	 * 
-	 * @param	string	$line
+	 * @param	string		$line
 	 * @return	array<string>
 	 */
 	public static function getParameters($line) {

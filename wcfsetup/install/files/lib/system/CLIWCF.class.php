@@ -213,6 +213,7 @@ class CLIWCF extends WCF {
 		}
 		while ($password === '');
 		
+		// check credentials and switch user
 		try {
 			$user = UserAuthenticationFactory::getInstance()->getUserAuthentication()->loginManually($username, $password);
 			WCF::getSession()->changeUser($user);

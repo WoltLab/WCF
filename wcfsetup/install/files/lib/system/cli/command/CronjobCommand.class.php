@@ -70,9 +70,10 @@ class CronjobCommand implements ICommand {
 				if (VERBOSITY >= 0) {
 					Log::info("Executing cronjob #", $cronjob->cronjobID, ': ', StringUtil::truncate(CLIWCF::getLanguage()->get($cronjob->description), 40));
 				}
+				continue;
 			}
 			// use time() instead of TIME_NOW, as the latter may be outdated
-			else if ($cronjob->nextExec < time()) {
+			if (!$cronjob->isDisabled && $cronjob->nextExec < time()) {
 				$cronjobs[] = $cronjob;
 				if (VERBOSITY >= 0) {
 					Log::info("Executing cronjob #", $cronjob->cronjobID, ': ', StringUtil::truncate(CLIWCF::getLanguage()->get($cronjob->description), 40));
@@ -111,10 +112,15 @@ class CronjobCommand implements ICommand {
 		));
 		
 		foreach ($cronjobList as $cronjob) {
-			$dateTimeObject = DateUtil::getDateTimeByTimestamp($cronjob->nextExec);
-			$date = DateUtil::format($dateTimeObject, DateUtil::DATE_FORMAT);
-			$time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
-			$dateTime = str_replace('%time%', $time, str_replace('%date%', $date, CLIWCF::getLanguage()->get('wcf.date.dateTimeFormat')));
+			if ($cronjob->isDisabled) {
+				$dateTime = '';
+			}
+			else {
+				$dateTimeObject = DateUtil::getDateTimeByTimestamp($cronjob->nextExec);
+				$date = DateUtil::format($dateTimeObject, DateUtil::DATE_FORMAT);
+				$time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
+				$dateTime = str_replace('%time%', $time, str_replace('%date%', $date, CLIWCF::getLanguage()->get('wcf.date.dateTimeFormat')));
+			}
 			
 			$table[] = array(
 				$cronjob->cronjobID,
@@ -130,7 +136,6 @@ class CronjobCommand implements ICommand {
 	 * @see \wcf\system\cli\command\ICommand::canAccess()
 	 */
 	public function canAccess() {
-		// TODO: Check access
-		return true;
+		return CLIWCF::getSession()->getPermission('admin.system.canManageCronjob');
 	}
 }
