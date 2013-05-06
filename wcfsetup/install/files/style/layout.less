@@ -138,6 +138,16 @@
 					&:focus {
 						outline: 0;
 					}
+					
+					&::-webkit-input-placeholder { /* WebKit browsers */
+						color: darken(@wcfUserPanelColor, 20%);
+					}
+					&::-moz-placeholder { /* Mozilla Firefox 19+ */
+						color: darken(@wcfUserPanelColor, 20%);
+					}
+					&:-ms-input-placeholder { /* Internet Explorer 10+ */
+						color: darken(@wcfUserPanelColor, 20%);
+					}
 				}
 			}
 			
