@@ -139,7 +139,7 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 			foreach ($menuItems as $showOrder => $menuItemID) {
 				$statement->execute(array(
 					($parentMenuItemID ? $this->menuItems[$parentMenuItemID]->menuItem : ''),
-					$showOrder,
+					$showOrder + 1,
 					$menuItemID
 				));
 			}
