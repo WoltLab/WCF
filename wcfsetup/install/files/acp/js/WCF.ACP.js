@@ -1771,34 +1771,6 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
 });
 
 /**
- * @see	WCF.Action.Delete
- */
-WCF.ACP.Category.Delete = WCF.Action.Delete.extend({
-	/**
-	 * @see	WCF.Action.Delete.triggerEffect()
-	 */
-	triggerEffect: function(objectIDs) {
-		for (var $index in this._containers) {
-			var $container = $('#' + this._containers[$index]);
-			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
-				// move child categories up
-				if ($container.has('ol').has('li')) {
-					if ($container.is(':only-child')) {
-						$container.parent().replaceWith($container.find('> ol'));
-					}
-					else {
-						$container.replaceWith($container.find('> ol > li'));
-					}
-				}
-				else {
-					$container.wcfBlindOut('up', function() { $container.remove(); });
-				}
-			}
-		}
-	}
-});
-
-/**
  * Provides the search dropdown for ACP
  * 
  * @see	WCF.Search.Base

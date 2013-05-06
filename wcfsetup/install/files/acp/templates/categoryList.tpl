@@ -7,9 +7,9 @@
 			{if $collapsibleObjectTypeID}
 				new WCF.ACP.Category.Collapsible('wcf\\data\\category\\CategoryAction', {@$collapsibleObjectTypeID});
 			{/if}
-				
+			
 			{if $objectType->getProcessor()->canDeleteCategory()}
-				new WCF.ACP.Category.Delete('wcf\\data\\category\\CategoryAction', $('.jsCategory'));
+				new WCF.Action.NestedDelete('wcf\\data\\category\\CategoryAction', '.jsCategory');
 			{/if}
 			{if $objectType->getProcessor()->canEditCategory()}
 				new WCF.Action.Toggle('wcf\\data\\category\\CategoryAction', '.jsCategory', '> .sortableNodeLabel > .buttons > .jsToggleButton');

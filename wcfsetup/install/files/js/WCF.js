@@ -1962,6 +1962,40 @@ WCF.Action.Delete = Class.extend({
 });
 
 /**
+ * Basic implementation for deletion of nested elements.
+ * 
+ * The implementation requires the nested elements to be grouped as numbered lists
+ * (ol lists). The child elements of the deleted elements are moved to the parent
+ * element of the deleted element.
+ * 
+ * @see	WCF.Action.Delete
+ */
+WCF.Action.NestedDelete = WCF.Action.Delete.extend({
+	/**
+	 * @see	WCF.Action.Delete.triggerEffect()
+	 */
+	triggerEffect: function(objectIDs) {
+		for (var $index in this._containers) {
+			var $container = $('#' + this._containers[$index]);
+			if (WCF.inArray($container.find(this._buttonSelector).data('objectID'), objectIDs)) {
+				// move child categories up
+				if ($container.has('ol').has('li')) {
+					if ($container.is(':only-child')) {
+						$container.parent().replaceWith($container.find('> ol'));
+					}
+					else {
+						$container.replaceWith($container.find('> ol > li'));
+					}
+				}
+				else {
+					$container.wcfBlindOut('up', function() { $(this).remove(); });
+				}
+			}
+		}
+	}
+});
+
+/**
  * Basic implementation for AJAXProxy-based toggle actions.
  * 
  * @param	string		className
