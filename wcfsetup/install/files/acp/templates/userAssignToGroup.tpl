@@ -35,7 +35,7 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 			
-			<dl{if $errorField == 'groupIDs'} class="wcf-formError"{/if}>
+			<dl{if $errorField == 'groupIDs'} class="formError"{/if}>
 				<dd>
 					{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
 					{if $errorField == 'groupIDs'}

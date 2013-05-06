@@ -9,17 +9,25 @@
 			</pages>
 		</action>
 		
-		<action name="sendMail">
+		<action name="delete">
 			<actionclassname><![CDATA[wcf\system\clipboard\action\UserClipboardAction]]></actionclassname>
 			<showorder>2</showorder>
 			<pages>
 				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
 			</pages>
 		</action>
-
-		<action name="delete">
+		
+		<action name="ban">
 			<actionclassname><![CDATA[wcf\system\clipboard\action\UserClipboardAction]]></actionclassname>
 			<showorder>3</showorder>
+			<pages>
+				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
+			</pages>
+		</action>
+		
+		<action name="sendMail">
+			<actionclassname><![CDATA[wcf\system\clipboard\action\UserClipboardAction]]></actionclassname>
+			<showorder>5</showorder>
 			<pages>
 				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
 			</pages>
@@ -27,7 +35,7 @@
 
 		<action name="exportMailAddress">
 			<actionclassname><![CDATA[wcf\system\clipboard\action\UserClipboardAction]]></actionclassname>
-			<showorder>4</showorder>
+			<showorder>6</showorder>
 			<pages>
 				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
 			</pages>

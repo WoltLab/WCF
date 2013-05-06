@@ -18,7 +18,7 @@
 					{foreach from=$packageUpdates item=$package}
 						<tr class="jsPackageRow">
 							<td class="columnIcon">
-								<span class="icon icon16 icon-plus pointer jsTooltip" title="{lang}wcf.acp.package.button.install{/lang}"></span>
+								<a class="jsInstallPackage" data-confirm-message="{lang}wcf.acp.package.install.confirmMessage{/lang}" data-package="{$package->package}" data-package-version="{$package->getAccessibleVersion()->packageVersion}"><span class="icon icon16 icon-plus jsTooltip" title="{lang}wcf.acp.package.button.install{/lang}"></span></a>
 								
 								{event name='buttons'}
 							</td>

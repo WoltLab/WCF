@@ -724,6 +724,9 @@
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[Send email to the following users]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Text]]></item>
+		<item name="wcf.acp.user.quickSearch"><![CDATA[TODO: Schnellsuche]]></item>
+		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[TODO: Gesperrte Benutzer]]></item>
+		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[TODO: Neueste Benutzer]]></item>
 		<item name="wcf.acp.user.option.access"><![CDATA[TODO: Zugriff]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Add Custom User Field]]></item>
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Add Custom User Field Category]]></item>
@@ -765,6 +768,7 @@
 		<item name="wcf.acp.user.option.typeData"><![CDATA[Properties]]></item>
 		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP-class for output]]></item>
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Allows for the output of a special PHP-class for the output formatting referring to the field's display.]]></item>
+		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
 	</category>
 	
 	<category name="wcf.ajax">
@@ -793,6 +797,7 @@
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Unmark All]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Assign to User Group]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[TODO: Sperren ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} user{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[Export Email addresses]]></item>

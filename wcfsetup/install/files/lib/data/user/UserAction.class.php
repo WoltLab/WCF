@@ -163,6 +163,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$statement->execute(
 			array_merge(array(1, $this->parameters['banReason']), $conditionBuilder->getParameters())		
 		);
+		
+		$this->unmarkItems();
 	}
 	
 	/**
@@ -328,5 +330,20 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function unmarkAll() {
 		ClipboardHandler::getInstance()->removeItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
+	}
+	
+	/**
+	 * Unmarks users.
+	 *
+	 * @param	array<integer>		$userIDs
+	 */
+	protected function unmarkItems(array $userIDs = array()) {
+		if (empty($userIDs)) {
+			$userIDs = $this->objectIDs;
+		}
+	
+		if (!empty($userIDs)) {
+			ClipboardHandler::getInstance()->unmark($userIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
+		}
 	}
 }

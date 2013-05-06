@@ -154,6 +154,7 @@
 							{/if}
 						</small>
 					{/if}
+					<small>{lang}wcf.acp.user.option.outputClass.description{/lang}</small>
 				</dd>
 			</dl>
 			
@@ -162,7 +163,7 @@
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.user.option.access{/lang}</legend>
-		
+			
 			<dl>
 				<dt><label for="editable">{lang}wcf.acp.user.option.editable{/lang}</label></dt>
 				<dd>
@@ -214,7 +215,7 @@
 			
 			{event name='accessFields'}
 		</fieldset>
-			
+		
 		{event name='fieldsets'}
 	</div>
 	

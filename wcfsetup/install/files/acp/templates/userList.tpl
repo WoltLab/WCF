@@ -6,6 +6,7 @@
 
 {include file='header'}
 
+{event name='javascriptInclude'}
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
@@ -28,6 +29,8 @@
 			'wcf.acp.user.ban.sure': '{lang}wcf.acp.user.ban.sure{/lang}'
 		});
 		WCF.ACP.User.BanHandler.init();
+		
+		{event name='javascriptInit'}
 	});
 	//]]>
 </script>
@@ -75,7 +78,7 @@
 			
 			<tbody>
 				{foreach from=$users item=user}
-					<tr class="jsUserRow">
+					<tr class="jsUserRow jsClipboardObject">
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}" /></td>
 						<td class="columnIcon">
 							{if $user->editable}

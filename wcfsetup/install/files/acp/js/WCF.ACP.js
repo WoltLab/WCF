@@ -747,6 +747,12 @@ WCF.ACP.Package.Search = Class.extend({
 	_container: null,
 	
 	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
 	 * package input field
 	 * @var	jQuery
 	 */
@@ -801,12 +807,24 @@ WCF.ACP.Package.Search = Class.extend({
 	_searchID: 0,
 	
 	/**
+	 * currently selected package
+	 * @var	string
+	 */
+	_selectedPackage: '',
+	
+	/**
+	 * currently selected package's version
+	 */
+	_selectedPackageVersion: '',
+	
+	/**
 	 * Initializes the WCF.ACP.Package.Seach class.
 	 */
 	init: function() {
 		this._button = null;
 		this._cache = { };
 		this._container = $('#packageSearch');
+		this._dialog = null;
 		this._package = null;
 		this._packageName = null;
 		this._packageSearchResultContainer = $('#packageSearchResultContainer');
@@ -815,6 +833,8 @@ WCF.ACP.Package.Search = Class.extend({
 		this._pageNo = 1;
 		this._searchDescription = null;
 		this._searchID = 0;
+		this._selectedPackage = '';
+		this._selectedPackageVersion = '';
 		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
@@ -909,6 +929,30 @@ WCF.ACP.Package.Search = Class.extend({
 				this._insertTemplate(data.returnValues.template);
 			break;
 			
+			case 'prepareInstallation':
+				if (data.returnValues.queueID) {
+					if (this._dialog !== null) {
+						this._dialog.wcfDialog('close');
+					}
+					
+					var $installation = new WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false);
+					$installation.prepareInstallation();
+				}
+				else if (data.returnValues.template) {
+					if (this._dialog === null) {
+						this._dialog = $('<div>' + data.returnValues.template + '</div>').hide().appendTo(document.body);
+						this._dialog.wcfDialog({
+							title: WCF.Language.get('wcf.acp.package.update.unauthorized')
+						});
+					}
+					else {
+						this._dialog.html(data.returnValues.template).wcfDialog('open');
+					}
+					
+					this._dialog.find('.formSubmit > button').click($.proxy(this._submitAuthentication, this));
+				}
+			break;
+			
 			case 'search':
 				this._pageCount = data.returnValues.pageCount;
 				this._searchID = data.returnValues.searchID;
@@ -916,6 +960,35 @@ WCF.ACP.Package.Search = Class.extend({
 				this._insertTemplate(data.returnValues.template, (data.returnValues.count === undefined ? undefined : data.returnValues.count));
 				this._setupPagination();
 			break;
+		}
+	},
+	
+	/**
+	 * Submits authentication data for current update server.
+	 * 
+	 * @param	object		event
+	 */
+	_submitAuthentication: function(event) {
+		var $usernameField = $('#packageUpdateServerUsername');
+		var $passwordField = $('#packageUpdateServerPassword');
+		
+		// remove error messages if any
+		$usernameField.next('small.innerError').remove();
+		$passwordField.next('small.innerError').remove();
+		
+		var $continue = true;
+		if ($.trim($usernameField.val()) === '') {
+			$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($usernameField);
+			$continue = false;
+		}
+		
+		if ($.trim($passwordField.val()) === '') {
+			$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($passwordField);
+			$continue = false;
+		}
+		
+		if ($continue) {
+			this._prepareInstallation($(event.currentTarget).data('packageUpdateServerID'));
 		}
 	},
 	
@@ -936,8 +1009,55 @@ WCF.ACP.Package.Search = Class.extend({
 		// update badge count
 		if (count !== undefined) {
 			this._content = { 1: template };
-			this._packageSearchResultContainer.find('> header > h1 > .badge').html(count);
+			this._packageSearchResultContainer.find('> header > h2 > .badge').html(count);
 		}
+		
+		// bind listener
+		this._packageSearchResultList.find('.jsInstallPackage').click($.proxy(this._click, this));
+	},
+	
+	/**
+	 * Prepares a package installation.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		var $button = $(event.currentTarget);
+		WCF.System.Confirmation.show($button.data('confirmMessage'), $.proxy(function(action) {
+			if (action === 'confirm') {
+				this._selectedPackage = $button.data('package');
+				this._selectedPackageVersion = $button.data('packageVersion');
+				this._prepareInstallation();
+			}
+		}, this));
+	},
+	
+	/**
+	 * Prepares package installation.
+	 * 
+	 * @param	integer		packageUpdateServerID
+	 */
+	_prepareInstallation: function(packageUpdateServerID) {
+		var $parameters = {
+			'package': { }
+		};
+		$parameters['package'][this._selectedPackage] = this._selectedPackageVersion;
+		
+		if (packageUpdateServerID) {
+			$parameters.authData = {
+				packageUpdateServerID: packageUpdateServerID,
+				password: $.trim($('#packageUpdateServerPassword').val()),
+				saveCredentials: ($('#packageUpdateServerSaveCredentials:checked').length ? true : false),
+				username: $.trim($('#packageUpdateServerUsername').val())
+			};
+		}
+		
+		this._proxy.setOption('data', {
+			actionName: 'prepareInstallation',
+			className: 'wcf\\data\\package\\update\\PackageUpdateAction',
+			parameters: $parameters
+		});
+		this._proxy.sendRequest();
 	},
 	
 	/**
@@ -949,12 +1069,12 @@ WCF.ACP.Package.Search = Class.extend({
 		this._packageSearchResultContainer.find('.pageNavigation').wcfPages('destroy').remove();
 		
 		if (this._pageCount > 1) {
-			var $topNavigation = $('<div class="contentNavigation" />').insertBefore(this._packageSearchResultList).wcfPages({
+			$('<div class="contentNavigation" />').insertBefore(this._packageSearchResultList).wcfPages({
 				activePage: this._pageNo,
 				maxPage: this._pageCount
 			}).bind('wcfpagesswitched', $.proxy(this._showPage, this));
 			
-			var $bottomNavigation = $('<div class="contentNavigation" />').insertAfter(this._packageSearchResultList).wcfPages({
+			$('<div class="contentNavigation" />').insertAfter(this._packageSearchResultList).wcfPages({
 				activePage: this._pageNo,
 				maxPage: this._pageCount
 			}).bind('wcfpagesswitched', $.proxy(this._showPage, this));
@@ -1093,7 +1213,7 @@ WCF.ACP.Package.Update.Manager = Class.extend({
 					password: $.trim($('#packageUpdateServerPassword').val()),
 					saveCredentials: ($('#packageUpdateServerSaveCredentials:checked').length ? true : false),
 					username: $.trim($('#packageUpdateServerUsername').val())
-				}
+				};
 			}
 			
 			this._proxy.setOption('data', {
@@ -1651,34 +1771,6 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
 });
 
 /**
- * @see	WCF.Action.Delete
- */
-WCF.ACP.Category.Delete = WCF.Action.Delete.extend({
-	/**
-	 * @see	WCF.Action.Delete.triggerEffect()
-	 */
-	triggerEffect: function(objectIDs) {
-		for (var $index in this._containers) {
-			var $container = $('#' + this._containers[$index]);
-			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
-				// move child categories up
-				if ($container.has('ol').has('li')) {
-					if ($container.is(':only-child')) {
-						$container.parent().replaceWith($container.find('> ol'));
-					}
-					else {
-						$container.replaceWith($container.find('> ol > li'));
-					}
-				}
-				else {
-					$container.wcfBlindOut('up', function() { $container.remove(); });
-				}
-			}
-		}
-	}
-});
-
-/**
  * Provides the search dropdown for ACP
  * 
  * @see	WCF.Search.Base
@@ -1775,6 +1867,30 @@ WCF.ACP.User.BanHandler = {
 				this.ban([ $button.data('objectID') ]);
 			}
 		}, this));
+		
+		// bind listener
+		$('.jsClipboardEditor').each($.proxy(function(index, container) {
+			var $container = $(container);
+			var $types = eval($container.data('types'));
+			if (WCF.inArray('com.woltlab.wcf.user', $types)) {
+				$container.on('clipboardAction', $.proxy(this._execute, this));
+				return false;
+			}
+		}, this));
+	},
+	
+	/**
+	 * Handles clipboard actions.
+	 * 
+	 * @param	object		event
+	 * @param	string		type
+	 * @param	string		actionName
+	 * @param	object		parameters
+	 */
+	_execute: function(event, type, actionName, parameters) {
+		if (actionName == 'com.woltlab.wcf.user.ban') {
+			this.ban(parameters.objectIDs);
+		}
 	},
 	
 	/**
@@ -1834,5 +1950,7 @@ WCF.ACP.User.BanHandler = {
 		
 		var $notification = new WCF.System.Notification();
 		$notification.show();
+		
+		WCF.Clipboard.reload();
 	}
 };

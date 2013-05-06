@@ -26,7 +26,7 @@
 		<item name="wcf.acp.application.list"><![CDATA[Installierte Anwendungen]]></item>
 		<item name="wcf.acp.application.primaryApplication"><![CDATA[Primäre Anwendung]]></item>
 		<item name="wcf.acp.application.setAsPrimary"><![CDATA[Als primäre Anwendung festlegen]]></item>
-		<item name="wcf.acp.application.setAsPrimary.confirmMessage"><![CDATA[Möchten Sie „{$application->getPackage()->getName()}“ wirklich als primäre Anwendung festlegen?]]></item>
+		<item name="wcf.acp.application.setAsPrimary.confirmMessage"><![CDATA[Wollen Sie „{$application->getPackage()->getName()}“ wirklich als primäre Anwendung festlegen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -80,10 +80,10 @@
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegebenen Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Sind Sie sicher, dass Sie den Cronjob „{$cronjob->description|language}“ löschen möchten?]]></item>
+		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Wollen Sie den Cronjob „{$cronjob->description|language}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Protokoll leeren]]></item>
-		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Sind Sie sicher, dass Sie alle Protokoll-Einträge löschen möchten?]]></item>
+		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Wollen Sie alle Protokoll-Einträge wirklich löschen?]]></item>
 		<item name="wcf.acp.cronjob.log.execTime"><![CDATA[Ausgeführt]]></item>
 		<item name="wcf.acp.cronjob.log.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.cronjob.log.success"><![CDATA[Erfolgreich]]></item>
@@ -495,7 +495,7 @@
 		<item name="wcf.acp.pageMenu.add"><![CDATA[Menüpunkt hinzufügen]]></item>
 		<item name="wcf.acp.pageMenu.advanced"><![CDATA[Erweitert]]></item>
 		<item name="wcf.acp.pageMenu.data"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.pageMenu.delete.sure"><![CDATA[Möchten Sie den Menüpunkt „{$__menuItem}“ und alle Untermenüpunkte wirklich löschen?]]></item>
+		<item name="wcf.acp.pageMenu.delete.sure"><![CDATA[Wollen Sie den Menüpunkt „{$__menuItem}“ und alle Untermenüpunkte wirklich löschen?]]></item>
 		<item name="wcf.acp.pageMenu.edit"><![CDATA[Menüpunkt bearbeiten]]></item>
 		<item name="wcf.acp.pageMenu.footer"><![CDATA[Fußzeile]]></item>
 		<item name="wcf.acp.pageMenu.header"><![CDATA[Hauptmenü]]></item>
@@ -596,8 +596,8 @@
 		<item name="wcf.acp.style.colors.userPanel"><![CDATA[Benutzerleiste]]></item>
 		<item name="wcf.acp.style.copyright"><![CDATA[Copyright]]></item>
 		<item name="wcf.acp.style.copyStyle"><![CDATA[Stil kopieren]]></item>
-		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Möchten Sie den Stil „{$style->styleName}“ wirklich duplizieren?]]></item>
-		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Möchten Sie den Stil „{$style->styleName}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Wollen Sie den Stil „{$style->styleName}“ wirklich duplizieren?]]></item>
+		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Wollen Sie den Stil „{$style->styleName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Als Paket exportieren]]></item>
 		<item name="wcf.acp.style.exportImages"><![CDATA[Grafiken exportieren ({$style->imagePath})]]></item>
@@ -724,6 +724,9 @@
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[E-Mail an folgende Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Betreff]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Nachricht]]></item>
+		<item name="wcf.acp.user.quickSearch"><![CDATA[Schnellsuche]]></item>
+		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[Gesperrte Benutzer]]></item>
+		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[Neueste Benutzer]]></item>
 		<item name="wcf.acp.user.option.access"><![CDATA[Zugriff]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Benutzerprofilfeld hinzufügen]]></item>
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Benutzerprofilfeld-Kategorie hinzufügen]]></item>
@@ -765,6 +768,7 @@
 		<item name="wcf.acp.user.option.typeData"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP-Klasse für Ausgabe]]></item>
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Erlaubt die Angabe einer speziellen PHP-Klasse für die Ausgabeformatierung bei der Anzeige des Feldes.]]></item>
+		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 	</category>
 	
 	<category name="wcf.ajax">
@@ -778,7 +782,7 @@
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 		<item name="wcf.category.button.list"><![CDATA[Kategorien auflisten]]></item>
-		<item name="wcf.category.delete.sure"><![CDATA[Sind Sie sicher, dass Sie diese Kategorie löschen möchten? Alle sich in dieser Kategorie befindlichen Unterkategorien werden in die Elternkategorie dieser Kategorie verschoben.]]></item>
+		<item name="wcf.category.delete.sure"><![CDATA[Wollen Sie diese Kategorie wirklich löschen? Alle sich in dieser Kategorie befindlichen Unterkategorien werden in die Elternkategorie dieser Kategorie verschoben.]]></item>
 		<item name="wcf.category.edit"><![CDATA[Kategorie bearbeiten]]></item>
 		<item name="wcf.category.isDisabled"><![CDATA[Kategorie deaktivieren]]></item>
 		<item name="wcf.category.list"><![CDATA[Kategorien]]></item>
@@ -793,6 +797,7 @@
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Demarkieren]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[Sperren ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Benutzer löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>

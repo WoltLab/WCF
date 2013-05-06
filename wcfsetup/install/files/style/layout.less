@@ -138,6 +138,16 @@
 					&:focus {
 						outline: 0;
 					}
+					
+					&::-webkit-input-placeholder { /* WebKit browsers */
+						color: darken(@wcfUserPanelColor, 20%);
+					}
+					&::-moz-placeholder { /* Mozilla Firefox 19+ */
+						color: darken(@wcfUserPanelColor, 20%);
+					}
+					&:-ms-input-placeholder { /* Internet Explorer 10+ */
+						color: darken(@wcfUserPanelColor, 20%);
+					}
 				}
 			}
 			
@@ -186,7 +196,7 @@
 					
 					/* hide user panel labels */
 					> a > span:not(.icon):not(.badge),
-					&#pageLanguageContainer > div > div > h3 {
+					&#pageLanguageContainer > div > div > div > h3 {
 						display: none;
 					}
 					
@@ -359,22 +369,28 @@
 	.mainMenu {
 		position: relative;
 		
-		&:hover > ul {
-			display: block;
-		}
-		
-		> .invisible {
+		> a:first-child {
 			.button;
 			margin-left: @wcfGapSmall;
-			padding-left: 28px;
+			outline: 0;
 			
-			&:before {
-				content: "\f03a";
-				font-family: FontAwesome;
-				font-size: 14px;
-				left: 9px;
+			+ a {
+				height: 100%;
+				left: 0;
 				position: absolute;
-				top: 6px;
+				top: 0;
+				width: 100%;
+				z-index:100;
+			}
+			
+			&:focus {
+				+ a {
+					display: block;
+				}
+				
+				~ ul {
+					display: block;
+				}
 			}
 		}
 		
@@ -382,6 +398,10 @@
 			.dropdown .dropdownMenu;
 			font-size: 120%;
 			left: @wcfGapSmall;
+			
+			&:hover {
+				display: block;
+			}
 			
 			> li.active {
 				> ul.invisible {
@@ -412,7 +432,7 @@
 
 @media only screen and (min-width: 641px) and (max-width: 800px) {
 	.mainMenu {
-		> .invisible {
+		> a:first-child {
 			margin-left: @wcfGapMedium;
 		}
 	}
@@ -892,7 +912,7 @@
 			background-color: @wcfContainerHoverBackgroundColor;
 			
 			> div > div {
-				> .buttonList {
+				> .buttonGroupNavigation > .buttonList {
 					opacity: 1;
 				}
 				
@@ -905,13 +925,16 @@
 		> div > div {
 			position: relative;
 			
-			> .buttonList {
-				opacity: 0;
+			> .buttonGroupNavigation {
 				position: absolute;
 				right: 0;
 				top: 0;
 				
-				.transition(opacity, .1s);
+				> .buttonList {
+					opacity: 0;
+					
+					.transition(opacity, .1s);
+				}
 			}
 			
 			> .containerHeadline > .containerContentType {
@@ -947,10 +970,6 @@
 			padding: @wcfGapSmall;
 			
 			.containerContentType {
-				display: none;
-			}
-			
-			> div > div > .buttonList {
 				display: none;
 			}
 		}
@@ -1182,7 +1201,50 @@
 
 @media only screen and (max-width: 800px) {
 	.content > .breadcrumbs {
-		display: none;
+		background-color: @wcfContentBackgroundColor;
+		border: 1px solid @wcfContainerBorderColor;
+		display: inline-block;
+		margin-left: @wcfGapSmall;
+		margin-right: @wcfGapSmall;
+		
+		.borderRadius(6px);
+		
+		> ul {
+			> li {
+				max-width: none;
+				padding-right: 0;
+				
+				&:not(:last-child) {
+					display: none;
+				}
+				
+				> a {
+					padding: @wcfGapTiny @wcfGapMedium;
+					
+					&:before {
+						content: "\f060";
+						font-family: FontAwesome;
+						font-size: 14px;
+						padding-right: @wcfGapSmall;
+					}
+				}
+				
+				> .pointer {
+					display: none;
+				}
+			}
+		}
+		
+		&:not(:first-child) {
+			display: none;
+		}
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 800px) {
+	.content > .breadcrumbs {
+		margin-left: @wcfGapMedium;
+		margin-right: @wcfGapMedium;
 	}
 }
 
@@ -1612,6 +1674,20 @@
 			
 			li {
 				display: inline-block;
+			}
+		}
+	}
+	
+	tr {
+		&.jsMarked {
+			color: @wcfSelectedColor;
+			
+			> td {
+				background-color: @wcfSelectedBackgroundColor !important;
+			}
+			
+			a:not(.badge) {
+				color: @wcfSelectedColor;
 			}
 		}
 	}

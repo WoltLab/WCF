@@ -4,7 +4,6 @@ use wcf\data\user\option\category\UserOptionCategoryList;
 use wcf\data\user\option\UserOptionAction;
 use wcf\data\user\option\UserOptionEditor;
 use wcf\form\AbstractForm;
-use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
@@ -138,7 +137,7 @@ class UserOptionAddForm extends AbstractForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		I18nHandler::getInstance()->register('optionName');
 		I18nHandler::getInstance()->register('optionDescription');
 		
@@ -154,7 +153,7 @@ class UserOptionAddForm extends AbstractForm {
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
-	
+		
 		I18nHandler::getInstance()->readValues();
 		
 		if (I18nHandler::getInstance()->isPlainValue('optionName')) $this->optionName = I18nHandler::getInstance()->getValue('optionName');
@@ -178,7 +177,7 @@ class UserOptionAddForm extends AbstractForm {
 	 */
 	public function validate() {
 		parent::validate();
-	
+		
 		// option name
 		if (!I18nHandler::getInstance()->validateValue('optionName', true)) {
 			throw new UserInputException('optionName');
@@ -207,6 +206,10 @@ class UserOptionAddForm extends AbstractForm {
 			throw new UserInputException('selectOptions');
 		}
 		
+		if ($this->outputClass && !class_exists($this->outputClass)) {
+			throw new UserInputException('outputClass', 'doesNotExist');
+		}
+		
 		if ($this->editable < 1 || $this->editable > 3) {
 			$this->editable = 3;
 		}
@@ -217,7 +220,7 @@ class UserOptionAddForm extends AbstractForm {
 	 */
 	public function save() {
 		parent::save();
-	
+		
 		$this->objectAction = new UserOptionAction(array(), 'create', array('data' => array(
 			'optionName' => StringUtil::getRandomID(),
 			'categoryName' => $this->categoryName,
@@ -236,7 +239,7 @@ class UserOptionAddForm extends AbstractForm {
 			'additionalData' => ($this->optionType == 'select' ? serialize(array('allowEmptyValue' => true)) : '')
 		)));
 		$this->objectAction->executeAction();
-	
+		
 		$returnValues = $this->objectAction->getReturnValues();
 		$userOption = $returnValues['returnValues'];
 		
@@ -248,7 +251,7 @@ class UserOptionAddForm extends AbstractForm {
 			'optionName' => 'option'.$userOption->optionID
 		));
 		$this->saved();
-	
+		
 		// reset values
 		$this->optionName = $this->optionDescription = $this->categoryName = $this->optionType = $this->defaultValue = $this->validationPattern = $this->optionType = $this->selectOptions = $this->outputClass = '';
 		$this->required = $this->searchable = $this->showOrder = $this->askDuringRegistration = 0;
@@ -266,7 +269,7 @@ class UserOptionAddForm extends AbstractForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		I18nHandler::getInstance()->assignVariables();
 		
 		WCF::getTPL()->assign(array(

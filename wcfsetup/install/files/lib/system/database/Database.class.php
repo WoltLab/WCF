@@ -153,6 +153,8 @@ abstract class Database {
 	 * @return	boolean
 	 */
 	public function commitTransaction() {
+		if ($this->activeTransactions === 0) return false;
+		
 		try {
 			$this->activeTransactions--;
 			
@@ -180,9 +182,10 @@ abstract class Database {
 	 * @return	boolean
 	 */
 	public function rollBackTransaction() {
+		if ($this->activeTransactions === 0) return false;
+		
 		try {
 			$this->activeTransactions--;
-			
 			if ($this->activeTransactions === 0) {
 				if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start("ROLLBACK", Benchmark::TYPE_SQL_QUERY);
 				$result = $this->pdo->rollback();

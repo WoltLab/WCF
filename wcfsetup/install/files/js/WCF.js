@@ -202,10 +202,7 @@ $.fn.extend({
 		
 		// show element to retrieve dimensions and restore them later
 		if (this.is(':hidden')) {
-			css = {
-				display: this.css('display'),
-				visibility: this.css('visibility')
-			};
+			css = WCF.getInlineCSS(this);
 			
 			wasHidden = true;
 			
@@ -240,7 +237,7 @@ $.fn.extend({
 		
 		// restore previous settings
 		if (wasHidden) {
-			this.css(css);
+			WCF.revertInlineCSS(this, css, [ 'display', 'visibility' ]);
 		}
 		
 		return dimensions;
@@ -260,11 +257,7 @@ $.fn.extend({
 		
 		// show element to retrieve dimensions and restore them later
 		if (this.is(':hidden')) {
-			css = {
-				display: this.css('display'),
-				visibility: this.css('visibility')
-			};
-			
+			css = WCF.getInlineCSS(this);
 			wasHidden = true;
 			
 			this.css({
@@ -286,7 +279,7 @@ $.fn.extend({
 		
 		// restore previous settings
 		if (wasHidden) {
-			this.css(css);
+			WCF.revertInlineCSS(this, css, [ 'display', 'visibility' ]);
 		}
 		
 		return offsets;
@@ -580,6 +573,57 @@ $.extend(WCF, {
 		}
 		
 		return effect;
+	},
+	
+	/**
+	 * Returns inline CSS for given element.
+	 * 
+	 * @param	jQuery		element
+	 * @return	object
+	 */
+	getInlineCSS: function(element) {
+		var $inlineStyles = { };
+		var $style = element.attr('style');
+		
+		// no style tag given or empty
+		if (!$style) {
+			return { };
+		}
+		
+		$style = $style.split(';');
+		for (var $i = 0, $length = $style.length; $i < $length; $i++) {
+			var $fragment = $.trim($style[$i]);
+			if ($fragment == '') {
+				continue;
+			}
+			
+			$fragment = $fragment.split(':');
+			$inlineStyles[$.trim($fragment[0])] = $.trim($fragment[1]);
+		}
+		
+		return $inlineStyles;
+	},
+	
+	/**
+	 * Reverts inline CSS or negates a previously set property.
+	 * 
+	 * @param	jQuery		element
+	 * @param	object		inlineCSS
+	 * @param	array<string>	targetProperties
+	 */
+	revertInlineCSS: function(element, inlineCSS, targetProperties) {
+		for (var $i = 0, $length = targetProperties.length; $i < $length; $i++) {
+			var $property = targetProperties[$i];
+			
+			// revert inline CSS
+			if (inlineCSS[$property]) {
+				element.css($property, inlineCSS[$property]);
+			}
+			else {
+				// negate inline CSS
+				element.css($property, '');
+			}
+		}
 	}
 });
 
@@ -853,6 +897,12 @@ WCF.Clipboard = {
 	_page: '',
 	
 	/**
+	 * current page's object id
+	 * @var	integer
+	 */
+	_pageObjectID: 0,
+	
+	/**
 	 * proxy object
 	 * @var	WCF.Action.Proxy
 	 */
@@ -866,16 +916,17 @@ WCF.Clipboard = {
 	
 	/**
 	 * Initializes the clipboard API.
+	 * 
+	 * @param	string		page
+	 * @param	integer		hasMarkedItems
+	 * @param	object		actionObjects
+	 * @param	integer		pageObjectID
 	 */
-	init: function(page, hasMarkedItems, actionObjects) {
+	init: function(page, hasMarkedItems, actionObjects, pageObjectID) {
 		this._page = page;
-		this._actionObjects = actionObjects;
-		if (!actionObjects) {
-			this._actionObjects = {};
-		}
-		if (hasMarkedItems) {
-			this._hasMarkedItems = true;
-		}
+		this._actionObjects = actionObjects || { };
+		this._hasMarkedItems = (hasMarkedItems > 0);
+		this._pageObjectID = parseInt(pageObjectID) || 0;
 		
 		this._actionProxy = new WCF.Action.Proxy({
 			success: $.proxy(this._actionSuccess, this),
@@ -913,7 +964,8 @@ WCF.Clipboard = {
 			autoSend: true,
 			data: {
 				containerData: this._containerData,
-				pageClassName: this._page
+				pageClassName: this._page,
+				pageObjectID: this._pageObjectID
 			},
 			success: $.proxy(this._loadMarkedItemsSuccess, this),
 			url: 'index.php/ClipboardLoadMarkedItems/?t=' + SECURITY_TOKEN + SID_ARG_2ND
@@ -1149,6 +1201,7 @@ WCF.Clipboard = {
 			containerData: this._containerData,
 			objectIDs: objectIDs,
 			pageClassName: this._page,
+			pageObjectID: this._pageObjectID,
 			type: type
 		});
 		this._proxy.sendRequest();
@@ -1204,10 +1257,6 @@ WCF.Clipboard = {
 			for (var $itemIndex in $editor.items) {
 				var $item = $editor.items[$itemIndex];
 				
-				if ($item.actionName === 'unmarkAll') {
-					$('<li class="dropdownDivider" />').appendTo($itemList);
-				}
-				
 				var $listItem = $('<li><span>' + $item.label + '</span></li>').appendTo($itemList);
 				$listItem.data('objectType', $typeName);
 				$listItem.data('actionName', $item.actionName).data('parameters', $item.parameters);
@@ -1216,6 +1265,29 @@ WCF.Clipboard = {
 				// bind event
 				$listItem.click($.proxy(this._executeAction, this));
 			}
+			
+			// add 'unmark all'
+			$('<li class="dropdownDivider" />').appendTo($itemList);
+			$('<li><span>' + WCF.Language.get('wcf.clipboard.item.unmarkAll') + '</span></li>').appendTo($itemList).click($.proxy(function() {
+				this._proxy.setOption('data', {
+					action: 'unmarkAll',
+					type: $typeName
+				});
+				this._proxy.setOption('success', $.proxy(function(data, textStatus, jqXHR) {
+					for (var $__containerID in this._containers) {
+						var $__container = $(this._containers[$__containerID]);
+						if ($__container.data('type') == $typeName) {
+							$__container.find('.jsClipboardMarkAll, .jsClipboardItem').removeAttr('checked');
+							break;
+						}
+					}
+					
+					// call and restore success method
+					this._success(data, textStatus, jqXHR);
+					this._proxy.setOption('success', $.proxy(this._success, this));
+				}, this));
+				this._proxy.sendRequest();
+			}, this));
 			
 			// block click event
 			$container.click(function(event) {
@@ -1884,6 +1956,40 @@ WCF.Action.Delete = Class.extend({
 			var $container = $('#' + this._containers[$index]);
 			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
 				$container.wcfBlindOut('up', function() { $(this).remove(); });
+			}
+		}
+	}
+});
+
+/**
+ * Basic implementation for deletion of nested elements.
+ * 
+ * The implementation requires the nested elements to be grouped as numbered lists
+ * (ol lists). The child elements of the deleted elements are moved to the parent
+ * element of the deleted element.
+ * 
+ * @see	WCF.Action.Delete
+ */
+WCF.Action.NestedDelete = WCF.Action.Delete.extend({
+	/**
+	 * @see	WCF.Action.Delete.triggerEffect()
+	 */
+	triggerEffect: function(objectIDs) {
+		for (var $index in this._containers) {
+			var $container = $('#' + this._containers[$index]);
+			if (WCF.inArray($container.find(this._buttonSelector).data('objectID'), objectIDs)) {
+				// move child categories up
+				if ($container.has('ol').has('li')) {
+					if ($container.is(':only-child')) {
+						$container.parent().replaceWith($container.find('> ol'));
+					}
+					else {
+						$container.replaceWith($container.find('> ol > li'));
+					}
+				}
+				else {
+					$container.wcfBlindOut('up', function() { $(this).remove(); });
+				}
 			}
 		}
 	}
@@ -5372,6 +5478,27 @@ WCF.Search.User = WCF.Search.Base.extend({
 WCF.System = { };
 
 /**
+ * Enables mobile navigation.
+ */
+WCF.System.MobileNavigation = {
+	init: function() {
+		this._convertNavigation();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.System.MobileNavigation', function() {
+			WCF.System.MobileNavigation._convertNavigation();
+		});
+	},
+	
+	_convertNavigation: function() {
+		$('nav.jsMobileNavigation').removeClass('jsMobileNavigation').each(function(index, navigation) {
+			var $navigation = $(navigation);
+			$('<a class="invisible" tabindex="9999999" />').click(function() {}).prependTo($navigation);
+			$('<a class="invisible" tabindex="9999999"><span class="icon icon16 icon-list" />' + ($navigation.data('buttonLabel') !== undefined ? (' ' + $navigation.data('buttonLabel')) : '') + '</a>').click(function() {}).prependTo($navigation);
+		});
+	}
+};
+
+/**
  * Fixes scroll offset on page load.
  */
 WCF.System.JumpToAnchor = {
@@ -7854,6 +7981,7 @@ WCF.UserPanel = Class.extend({
 			var $badge = this._container.find('.badge');
 			if (!$badge.length) {
 				$badge = $('<span class="badge badgeInverse" />').appendTo(this._container.children('.dropdownToggle'));
+				$badge.before(' ');
 			}
 			$badge.html(data.returnValues.totalCount);
 			
@@ -8153,8 +8281,16 @@ $.widget('ui.wcfDialog', {
 			this._content.removeClass('dialogForm').css({ marginBottom: '0px' });
 		}
 		
-		// calculate dimensions
+		// force 800px or 80% width
 		var $windowDimensions = $(window).getDimensions();
+		if ($windowDimensions.width * 0.8 > 800) {
+			this._content.css('maxWidth', '800px');
+		}
+		else {
+			this._content.css('maxWidth', '80%');
+		}
+		
+		// calculate dimensions
 		var $containerDimensions = this._container.getDimensions('outer');
 		var $contentDimensions = this._content.getDimensions();
 		
