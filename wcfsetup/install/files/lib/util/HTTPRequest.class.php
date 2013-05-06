@@ -1,5 +1,8 @@
 <?php
 namespace wcf\util;
+use wcf\system\exception\HTTPNotFoundException;
+use wcf\system\exception\HTTPServerErrorException;
+use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
 use wcf\system\Regex;
@@ -9,8 +12,8 @@ use wcf\system\WCF;
  * Sends HTTP requests.
  * It supports POST, SSL, Basic Auth etc.
  * 
- * @author	Tim Düsterhus
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Tim Duesterhus
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -240,8 +243,21 @@ final class HTTPRequest {
 				// we are fine
 			break;
 			
+			case '401':
+			case '403':
+				throw new HTTPUnauthorizedException("Received status code '".$this->statusCode."' from server");
+			break;
+			
+			case '404':
+				throw new HTTPNotFoundException("Received status code '404' from server");
+			break;
+			
+			case '500':
+				throw new HTTPServerErrorException("Received status code '500' from server");
+			break;
+			
 			default:
-				throw new SystemException("Got status '".$this->statusCode."' and I don't know how to handle it");
+				throw new SystemException("Received unhandled status code '".$this->statusCode."' from server");
 			break;
 		}
 	}

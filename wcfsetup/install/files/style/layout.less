@@ -3,7 +3,7 @@
 	padding: 0 @wcfLayoutFluidGap;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.layoutFluid {
 		padding: 0;
 	}
@@ -14,9 +14,15 @@
 	width: @wcfLayoutFixedWidth;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.layoutFixed {
 		width: auto;
+	}
+}
+
+@media only screen and (min-width: 801px) {
+	body {
+		min-width: 1024px;
 	}
 }
 
@@ -26,7 +32,7 @@
 	z-index: 100;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	#pageHeader {
 		margin-top: 48px;
 	}
@@ -148,7 +154,14 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+.userPanelJumpToAnchorFix:before {
+	content: "";
+	display: block;
+	height: 40px;
+	margin-top: -40px;
+}
+
+@media only screen and (max-width: 800px) {
 	.userPanel {
 		height: auto;
 		
@@ -173,7 +186,7 @@
 					
 					/* hide user panel labels */
 					> a > span:not(.icon):not(.badge),
-					&#pageLanguageContainer > div > div > hgroup {
+					&#pageLanguageContainer > div > div > div > h3 {
 						display: none;
 					}
 					
@@ -240,7 +253,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.logo {
 		display: none;
 	}
@@ -251,13 +264,13 @@
 	margin: 0 -@wcfGapSmall;
 	
 	li {
-		a,
-		h1 {
+		> a,
+		> h3 {
 			overflow: hidden;
 			padding: @wcfGapTiny @wcfGapMedium;
 		}
 		
-		a {
+		> a {
 			display: block;
 			
 			.borderRadius(6px);
@@ -293,7 +306,7 @@
 }
 
 /* main menu */
-@media only screen and (min-width: 769px) {
+@media all and (min-width: 801px) {
 	.mainMenu {
 		> ul {
 			background-color: @wcfMainMenuBackgroundColor;
@@ -342,26 +355,32 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.mainMenu {
 		position: relative;
 		
-		&:hover > ul {
-			display: block;
-		}
-		
-		> .invisible {
+		> a:first-child {
 			.button;
 			margin-left: @wcfGapSmall;
-			padding-left: 28px;
+			outline: 0;
 			
-			&:before {
-				content: "\f03a";
-				font-family: FontAwesome;
-				font-size: 14px;
-				left: 9px;
+			+ a {
+				height: 100%;
+				left: 0;
 				position: absolute;
-				top: 6px;
+				top: 0;
+				width: 100%;
+				z-index:100;
+			}
+			
+			&:focus {
+				+ a {
+					display: block;
+				}
+				
+				~ ul {
+					display: block;
+				}
 			}
 		}
 		
@@ -369,6 +388,10 @@
 			.dropdown .dropdownMenu;
 			font-size: 120%;
 			left: @wcfGapSmall;
+			
+			&:hover {
+				display: block;
+			}
 			
 			> li.active {
 				> ul.invisible {
@@ -397,9 +420,9 @@
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 768px) {
+@media only screen and (min-width: 641px) and (max-width: 800px) {
 	.mainMenu {
-		> .invisible {
+		> a:first-child {
 			margin-left: @wcfGapMedium;
 		}
 	}
@@ -473,7 +496,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.navigation.navigationHeader {
 		> ul.navigationIcons,
 		> ul.navigationItems,
@@ -505,7 +528,7 @@
 	border-top: 1px solid @wcfContainerBorderColor;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.navigationHeader {
 		background-color: transparent;
 		border: 0;
@@ -531,7 +554,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.footerContent {
 		margin: 0 @wcfGapMedium;
 	}
@@ -636,7 +659,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	/* hide sidebar */
 	#main {
 		position: relative;
@@ -705,7 +728,7 @@
 	}
 }
 
-@media only screen and (min-width: 769px) and (max-width: 1239px) {
+@media only screen and (min-width: 801px) and (max-width: 1239px) {
 	#main {
 		> div > .content {
 			padding-left: @wcfGapLarge + @wcfGapSmall;
@@ -719,34 +742,13 @@
 	margin-top: @wcfGapMedium;
 	overflow: hidden;
 	
-	> hgroup {
-		> h1 {
-			color: @wcfHeadlineColor;
-			font-family: @wcfHeadlineFontFamily;
-			font-size: @wcfHeadlineFontSize;
-			font-weight: bold;
-			
-			.textShadow(@wcfContentBackgroundColor);
-			
-			a {
-				color: @wcfHeadlineColor;
-				text-decoration: none;
-			}
-		}
-		
-		> h2,
-		> h3 {
-			color: @wcfDimmedColor;
-			font-size: @wcfSmallFontSize;
-		}
+	h1 {
+		font-size: @wcfHeadlineFontSize;
 	}
 	
-	&.boxSubHeadline {
-		> hgroup {
-			> h1 {
-				font-size: @wcfSubHeadlineFontSize;
-			}
-		}
+	> p {
+		color: @wcfDimmedColor;
+		font-size: @wcfSmallFontSize;
 	}
 	
 	> .dataList,
@@ -756,7 +758,27 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+.boxHeadline > h1,
+.boxSubHeadline > h2 {
+	color: @wcfHeadlineColor;
+	font-family: @wcfHeadlineFontFamily;
+	font-weight: bold;
+	
+	.textShadow(@wcfContentBackgroundColor);
+	
+	a {
+		color: @wcfHeadlineColor;
+		text-decoration: none;
+	}
+}
+
+.boxSubHeadline {
+	> h2 {
+		font-size: @wcfSubHeadlineFontSize;
+	}
+}
+
+@media only screen and (max-width: 800px) {
 	.boxHeadline {
 		margin-top: @wcfGapSmall;
 		margin-left: @wcfGapSmall;
@@ -764,7 +786,7 @@
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 768px) {
+@media only screen and (min-width: 641px) and (max-width: 800px) {
 	.boxHeadline {
 		margin-left: @wcfGapMedium;
 		margin-right: @wcfGapMedium;
@@ -797,7 +819,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.contentNavigation {
 		box-sizing:border-box;
 		-moz-box-sizing:border-box;
@@ -807,7 +829,7 @@
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 768px) {
+@media only screen and (min-width: 641px) and (max-width: 800px) {
 	.contentNavigation {
 		padding-left: @wcfGapMedium;
 		padding-right: @wcfGapMedium;
@@ -823,7 +845,7 @@
 	padding: @wcfGapMedium @wcfGapLarge @wcfGapMedium;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.container {
 		border-width: 1px 0;
 	}
@@ -833,7 +855,7 @@
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 768px) {
+@media only screen and (min-width: 641px) and (max-width: 800px) {
 	.containerPadding {
 		padding-left: @wcfGapMedium;
 		padding-right: @wcfGapMedium;
@@ -841,7 +863,7 @@
 }
 
 .containerHeadline {
-	> h1 {
+	> h3 {
 		font-size: @wcfTitleFontSize;
 		font-weight: bold;
 		
@@ -857,7 +879,7 @@
 		}
 	}
 	
-	> h1, > h1 > a {
+	> h3, > h3 > a {
 		.textShadow(@wcfContainerBackgroundColor);
 	}
 	
@@ -880,11 +902,11 @@
 			background-color: @wcfContainerHoverBackgroundColor;
 			
 			> div > div {
-				> .buttonList {
+				> .buttonGroupNavigation > .buttonList {
 					opacity: 1;
 				}
 				
-				> hgroup > .containerContentType {
+				> .containerHeadline > .containerContentType {
 					color: @wcfDimmedColor;
 				}
 			}
@@ -893,16 +915,19 @@
 		> div > div {
 			position: relative;
 			
-			> .buttonList {
-				opacity: 0;
+			> .buttonGroupNavigation {
 				position: absolute;
 				right: 0;
 				top: 0;
 				
-				.transition(opacity, .1s);
+				> .buttonList {
+					opacity: 0;
+					
+					.transition(opacity, .1s);
+				}
 			}
 			
-			> hgroup > .containerContentType {
+			> .containerHeadline > .containerContentType {
 				color: lighten(@wcfDimmedColor, 20%);
 				position: absolute;
 				right: 0;
@@ -929,16 +954,12 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.containerList {
 		> li {
 			padding: @wcfGapSmall;
 			
 			.containerContentType {
-				display: none;
-			}
-			
-			> div > div > .buttonList {
 				display: none;
 			}
 		}
@@ -957,7 +978,7 @@
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 768px) {
+@media only screen and (min-width: 641px) and (max-width: 800px) {
 	.containerList {
 		> li {
 			padding: @wcfGapSmall @wcfGapMedium;
@@ -1019,11 +1040,6 @@
 		> div {
 			padding: 0 14px;
 			
-			> hgroup > h1 {
-				font-size: @wcfTitleFontSize;
-				font-weight: bold;
-			}
-			
 			> ol {
 				> li {
 					display: inline-block;
@@ -1068,7 +1084,7 @@
 	}
 }
 
-@media only screen and (min-width: 769px) {
+@media all and (min-width: 801px) {
 	.containerBoxList {
 		&.doubleColumned,
 		&.tripleColumned {
@@ -1173,9 +1189,52 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.content > .breadcrumbs {
-		display: none;
+		background-color: @wcfContentBackgroundColor;
+		border: 1px solid @wcfContainerBorderColor;
+		display: inline-block;
+		margin-left: @wcfGapSmall;
+		margin-right: @wcfGapSmall;
+		
+		.borderRadius(6px);
+		
+		> ul {
+			> li {
+				max-width: none;
+				padding-right: 0;
+				
+				&:not(:last-child) {
+					display: none;
+				}
+				
+				> a {
+					padding: @wcfGapTiny @wcfGapMedium;
+					
+					&:before {
+						content: "\f060";
+						font-family: FontAwesome;
+						font-size: 14px;
+						padding-right: @wcfGapSmall;
+					}
+				}
+				
+				> .pointer {
+					display: none;
+				}
+			}
+		}
+		
+		&:not(:first-child) {
+			display: none;
+		}
+	}
+}
+
+@media only screen and (min-width: 641px) and (max-width: 800px) {
+	.content > .breadcrumbs {
+		margin-left: @wcfGapMedium;
+		margin-right: @wcfGapMedium;
 	}
 }
 
@@ -1318,7 +1377,7 @@
 	margin-bottom: @wcfGapSmall;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.tabMenu {
 		> ul {
 			margin-left: @wcfGapTiny;
@@ -1363,13 +1422,17 @@
 .tabularBox {
 	background-color: @wcfTabularBoxBackgroundColor;
 	border: 1px solid @wcfContainerBorderColor;
+	
+	> .container {
+		border: 0;
+	}
 }
 
-.tabularBoxTitle > hgroup {
+.tabularBoxTitle > header {
 	color: @wcfTabularBoxColor;
 	padding: 5px 7px;
 
-	> h1 {
+	> h2 {
 		font-size: @wcfTitleFontSize;
 		font-weight: bold;
 		
@@ -1392,7 +1455,7 @@
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.tabularBox {
 		border-width: 1px 0;
 	}
@@ -1402,8 +1465,8 @@
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 768px) {
-	.tabularBoxTitle > hgroup {
+@media only screen and (min-width: 641px) and (max-width: 800px) {
+	.tabularBoxTitle > header {
 		padding-left: @wcfGapMedium;
 		padding-right: @wcfGapMedium;
 	}
@@ -1427,7 +1490,7 @@
 			padding: @wcfGapSmall;
 			
 			> input[type="checkbox"] {
-				margin: 0 3px;
+				margin: -1px 3px 0;
 			}
 		}
 	}
@@ -1593,7 +1656,6 @@
 	}
 	
 	.statusDisplay {
-		padding: 1px 0;
 		float: right;
 		
 		.statusIcons {
@@ -1602,6 +1664,20 @@
 			
 			li {
 				display: inline-block;
+			}
+		}
+	}
+	
+	tr {
+		&.jsMarked {
+			color: @wcfSelectedColor;
+			
+			> td {
+				background-color: @wcfSelectedBackgroundColor !important;
+			}
+			
+			a:not(.badge) {
+				color: @wcfSelectedColor;
 			}
 		}
 	}
@@ -1774,7 +1850,7 @@ ul.inlineDataList {
 	}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 	.pageNavigation {
 		> ul > li {
 			&:not(.skip):not(.active) {
@@ -1916,7 +1992,7 @@ ul.inlineDataList {
 	}
 	
 	.sidebarBoxHeadline {
-		> h1 {
+		> h3 {
 			margin-bottom: 1px;
 			overflow: hidden;
 			text-overflow: ellipsis;

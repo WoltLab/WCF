@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\user\option\category;
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 
 /**
  * Provides functions to add, edit and delete user option categories.
@@ -12,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  * @subpackage	data.user.option.category
  * @category	Community Framework
  */
-class UserOptionCategoryEditor extends DatabaseObjectEditor {
+class UserOptionCategoryEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @see	wcf\data\user\option\category\UserOptionCategory::$baseClass
 	 */
@@ -26,5 +28,12 @@ class UserOptionCategoryEditor extends DatabaseObjectEditor {
 		if (!isset($parameters['packageID'])) $parameters['packageID'] = PACKAGE_ID;
 		
 		return parent::create($parameters);
+	}
+	
+	/**
+	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 */
+	public static function resetCache() {
+		UserOptionCacheBuilder::getInstance()->reset();
 	}
 }

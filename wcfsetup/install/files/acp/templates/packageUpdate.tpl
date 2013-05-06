@@ -1,61 +1,56 @@
 {include file='header' pageTitle='wcf.acp.packageUpdate'}
 
+<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.acp.package.update.unauthorized': '{lang}wcf.acp.package.update.unauthorized{/lang}'
+		})
+		
+		new WCF.ACP.Package.Update.Manager();
+	});
+	//]]>
+</script>
+
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.packageUpdate{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.packageUpdate{/lang}</h1>
 </header>
 
-{if $errorField == 'updates'}
-	{if $errorType === 'empty'}
-		<p class="error">{lang}wcf.acp.packageUpdate.noneSelected{/lang}</p>
-	{else}
-		<p class="error">{lang}wcf.acp.packageUpdate.error{/lang} {$errorType->getMessage()} ({@$errorType->getCode()})</p>
-		<!-- {$errorType->getTraceAsString()} -->
-	{/if}
-{/if}
-
-{if $errorField == 'excludedPackages'}
-	<div class="error">{lang}wcf.acp.packageUpdate.excludedPackages{/lang}
-		<ul>
-		{foreach from=$excludedPackages item=excludedPackage}
-			<li>{if $excludedPackage.conflict == 'existingPackageExcludesNewPackage'}{lang}wcf.acp.packageUpdate.excludedPackages.existingPackageExcludesNewPackage{/lang}{else}{lang}wcf.acp.packageUpdate.excludedPackages.newPackageExcludesExistingPackage{/lang}{/if}</li>
-		{/foreach}
-		</ul>
-	</div>
-{/if}
-
-{if $packageInstallationStack|count}
-	<form method="post" action="{link controller='PackageUpdate'}{/link}">
-		<div class="container containerPadding marginTop">
-			<fieldset>
-				<legend>{lang}wcf.acp.packageUpdate.updates{/lang}</legend>
-				
-				<ul>
-					{foreach from=$packageInstallationStack item=package}
-						<li>
-							{if $package.action == 'install'}
-								{lang}wcf.acp.packageUpdate.install{/lang}
-							{else}
-								{lang}wcf.acp.packageUpdate.update{/lang}
-							{/if}
-						</li>
-					{/foreach}
-				</ul>
-			</fieldset>
+<div class="container containerPadding marginTop">
+	{foreach from=$availableUpdates item=update}
+		<fieldset class="jsPackageUpdate" data-package="{$update[package]}">
+			<legend><label>
+				<input type="checkbox" value="1" checked="checked" />
+				{$update[packageName]|language}
+			</label></legend>
+			{if $update[packageDescription]}<small>{$update[packageDescription]|language}</small>{/if}
 			
-			{event name='fieldsets'}
-		</div>
-		
-		<div class="formSubmit">
-			{if !$errorField}<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />{/if}
-			{@SID_INPUT_TAG}
-			<input type="hidden" name="send" value="1" />
-			{foreach from=$updates key=package item=version}
-				<input type="hidden" name="updates[{$package}]" value="{$version}" />
-			{/foreach}
-		</div>
-	</form>
-{/if}
+			<dl{if $update[packageDescription]} class="marginTop"{/if}>
+				<dt>
+					{lang}wcf.acp.package.installedVersion{/lang}
+				</dt>
+				<dd>
+					{$update[packageVersion]} ({$update[packageDate]|date})
+				</dd>
+			</dl>
+			<dl>
+				<dt>
+					{lang}wcf.acp.package.availableVersions{/lang}
+				</dt>
+				<dd>
+					<select>
+						{foreach from=$update[versions] item=version}
+							<option value="{@$version[packageVersion]}"{if $version[packageVersion] == $update[version][packageVersion]} selected="selected"{/if}>{$version[packageVersion]}</option>
+						{/foreach}
+					</select>
+				</dd>
+			</dl>
+		</fieldset>
+	{/foreach}
+</div>
+
+<div class="formSubmit">
+	<button>{lang}wcf.global.button.submit{/lang}</button>
+</div>
 
 {include file='footer'}

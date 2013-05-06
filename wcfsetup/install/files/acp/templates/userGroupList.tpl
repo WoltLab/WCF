@@ -9,9 +9,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.group.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.group.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -22,7 +20,7 @@
 			<ul>
 				{content}
 					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}
-						<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+						<li><a href="{link controller='UserGroupAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtonsTop'}
@@ -33,9 +31,9 @@
 </div>
 
 <div class="tabularBox tabularBoxTitle marginTop">
-	<hgroup>
-		<h1>{lang}wcf.acp.group.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
-	</hgroup>
+	<header>
+		<h2>{lang}wcf.acp.group.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+	</header>
 	
 	<table class="table">
 		<thead>
@@ -65,20 +63,20 @@
 						
 						{event name='rowButtons'}
 					</td>
-					<td class="columnID columnGroupID"><p>{@$group->groupID}</p></td>
+					<td class="columnID columnGroupID">{@$group->groupID}</td>
 					<td class="columnTitle columnGroupName">
 						{if $group->isEditable()}
-							<p><a title="{lang}wcf.acp.group.edit{/lang}" href="{link controller='UserGroupEdit' id=$group->groupID}{/link}">{lang}{$group->groupName}{/lang}</a></p>
+							<a title="{lang}wcf.acp.group.edit{/lang}" href="{link controller='UserGroupEdit' id=$group->groupID}{/link}">{lang}{$group->groupName}{/lang}</a>
 						{else}
-							<p>{lang}{$group->groupName}{/lang}</p>
+							{lang}{$group->groupName}{/lang}
 						{/if}
 					</td>
 					<td class="columnDigits columnMembers">
 						{if $group->groupType == 1 ||$group->groupType == 2}
 							{* dont't show search links for the everybody and the guest user group *}
-							<p>{#$group->members}</p>
+							{#$group->members}
 						{else}
-							<p><a class="jsTooltip" title="{lang}wcf.acp.group.showMembers{/lang}" href="{link controller='UserSearch'}groupID={@$group->groupID}{/link}">{#$group->members}</a></p>
+							<a class="jsTooltip" title="{lang}wcf.acp.group.showMembers{/lang}" href="{link controller='UserSearch'}groupID={@$group->groupID}{/link}">{#$group->members}</a>
 						{/if}
 					</td>
 					
@@ -97,7 +95,7 @@
 			<ul>
 				{content}
 					{if $__wcf->getSession()->getPermission('admin.user.canAddGroup')}
-						<li><a href="{link controller='UserGroupAdd'}{/link}" title="{lang}wcf.acp.group.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
+						<li><a href="{link controller='UserGroupAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.group.add{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtonsBottom'}

@@ -79,6 +79,7 @@ class LoggedException extends \Exception {
 		
 		$e = ($this->getPrevious() ?: $this);
 		
+		// don't forget to update ExceptionLogViewPage, when changing the log file format
 		$message = date('r', TIME_NOW)."\n".
 			'Message: '.$e->getMessage()."\n".
 			'File: '.$e->getFile().' ('.$e->getLine().")\n".
@@ -86,6 +87,7 @@ class LoggedException extends \Exception {
 			'WCF version: '.WCF_VERSION."\n".
 			'Request URI: '.(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '')."\n".
 			'Referrer: '.(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '')."\n".
+			'User-Agent: '.(isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '')."\n".
 			"Stacktrace: \n  ".implode("\n  ", explode("\n", $e->getTraceAsString()))."\n";
 		
 		// calculate Exception-ID

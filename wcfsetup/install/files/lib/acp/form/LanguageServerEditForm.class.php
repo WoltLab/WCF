@@ -23,11 +23,6 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.language.server';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
-	 */
-	public $neededPermissions = array('admin.language.canAddServer');
-	
-	/**
 	 * language server id
 	 * @var	integer
 	 */

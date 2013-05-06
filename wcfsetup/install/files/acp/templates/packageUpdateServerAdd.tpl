@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.updateServer.'|concat:$action}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.updateServer.{$action}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.updateServer.{$action}{/lang}</h1>
 </header>
 
 {if $errorField}
@@ -21,7 +19,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a href="{link controller='PackageUpdateServerList'}{/link}" title="{lang}wcf.acp.menu.link.package.server.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li>
+			<li><a href="{link controller='PackageUpdateServerList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.package.server.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
 		</ul>
@@ -61,7 +59,7 @@
 				<dt><label for="loginPassword">{lang}wcf.acp.updateServer.loginPassword{/lang}</label></dt>
 				<dd>
 					<input type="password" id="loginPassword" name="loginPassword" value="{$loginPassword}" class="medium" />
-					<small><p>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</p></small>
+					<small>{lang}wcf.acp.updateServer.loginPassword.description{/lang}</small>
 				</dd>
 			</dl>
 			

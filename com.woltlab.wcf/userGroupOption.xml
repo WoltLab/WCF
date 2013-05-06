@@ -34,6 +34,9 @@
 			<category name="admin.user.group">
 				<parent>admin.user</parent>
 			</category>
+			<category name="admin.user.option">
+				<parent>admin.user</parent>
+			</category>
 			
 			<category name="admin.display">
 				<parent>admin</parent>
@@ -42,6 +45,9 @@
 				<parent>admin.display</parent>
 			</category>
 			<category name="admin.display.pageMenu">
+				<parent>admin.display</parent>
+			</category>
+			<category name="admin.template">
 				<parent>admin.display</parent>
 			</category>
 			
@@ -153,6 +159,12 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
+			<option name="admin.user.canBanUser">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
 			<option name="admin.user.canMailUser">
 				<categoryname>admin.user.user</categoryname>
 				<optiontype>boolean</optiontype>
@@ -171,73 +183,42 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
+			<option name="admin.user.canManageUserOption">
+				<categoryname>admin.user.option</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
 			
-			<option name="admin.language.canAddLanguage">
+			<option name="admin.language.canManageLanguage">
 				<categoryname>admin.language</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
-			<option name="admin.language.canEditLanguage">
-				<categoryname>admin.language</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.language.canDeleteLanguage">
-				<categoryname>admin.language</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.language.canAddServer">
-				<categoryname>admin.language</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.language.canDeleteServer">
-				<categoryname>admin.language</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.language.canEditServer">
-				<categoryname>admin.language</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-			</option>
-			<option name="admin.style.canAddStyle">
+			
+			<option name="admin.style.canManageStyle">
 				<categoryname>admin.style</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
-				<showorder>1</showorder>
-			</option>
-			<option name="admin.style.canEditStyle">
-				<categoryname>admin.style</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-				<showorder>2</showorder>
-			</option>
-			<option name="admin.style.canDeleteStyle">
-				<categoryname>admin.style</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
-				<showorder>3</showorder>
 			</option>
 			<option name="admin.style.canUseDisabledStyle">
 				<categoryname>admin.style</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
-				<showorder>4</showorder>
 			</option>
+			
 			<option name="admin.display.canManagePageMenu">
 				<categoryname>admin.display.pageMenu</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			
+			<option name="admin.template.canManageTemplate">
+				<categoryname>admin.template</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>

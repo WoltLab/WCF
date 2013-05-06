@@ -63,7 +63,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	 * @see	wcf\system\category\ICategoryType::afterDeletion()
 	 */
 	public function afterDeletion(CategoryEditor $categoryEditor) {
-		$categoryIDs = array_keys(CategoryHandler::getInstance()->getChildCategories($categoryEditor->getDecoratedObject()));
+		$categoryIDs = array_keys(CategoryHandler::getInstance()->getChildCategories($categoryEditor->categoryID));
 		
 		if (!empty($categoryIDs)) {
 			// move child categories to parent category

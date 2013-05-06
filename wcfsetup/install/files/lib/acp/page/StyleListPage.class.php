@@ -21,7 +21,7 @@ class StyleListPage extends MultipleLinkPage {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.style.canEditStyle', 'admin.style.canDeleteStyle');
+	public $neededPermissions = array('admin.style.canManageStyle');
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
@@ -31,7 +31,7 @@ class StyleListPage extends MultipleLinkPage {
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$sortField
 	 */
-	public $sortField = 'style.styleName';
+	public $sortField = 'style.isDefault DESC, style.styleName';
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$sortOrder

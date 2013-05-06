@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.languageServer.'|concat:$action}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.languageServer.{$action}{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.languageServer.{$action}{/lang}</h1>
 </header>
 
 {if $errorField}
@@ -15,19 +13,13 @@
 {/if}
 
 <div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{if $__wcf->session->getPermission('admin.language.canDeleteServer') || $__wcf->session->getPermission('admin.language.canEditServer')}
-						<li><a href="{link controller='LanguageServerList'}{/link}" title="{lang}wcf.acp.menu.link.language.server.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.language.server.list{/lang}</span></a></li>
-					{/if}
-					
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav>
+		<ul>
+			<li><a href="{link controller='LanguageServerList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.language.server.list{/lang}</span></a></li>
+				
+			{event name='contentNavigationButtons'}
+		</ul>
+	</nav>
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='LanguageServerAdd'}{/link}{else}{link controller='LanguageServerEdit' id=$languageServerID}{/link}{/if}">
@@ -41,7 +33,7 @@
 					<input type="text" name="server" id="server" value="{$server}" autofocus="autofocus" class="long" />
 					{if $errorField == 'server'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.error.empty{/lang}{/if}
+							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 							{if $errorType == 'notValid'}{lang}wcf.acp.languageServer.server.error.notValid{/lang}{/if}
 						</small>
 					{/if}

@@ -30,6 +30,6 @@ class TimeModifierTemplatePlugin implements IModifierTemplatePlugin {
 		$time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
 		$dateTime = str_replace('%time%', $time, str_replace('%date%', $date, WCF::getLanguage()->get('wcf.date.dateTimeFormat')));
 		
-		return '<time datetime="'.DateUtil::format($dateTimeObject, 'c').'" class="datetime" data-timestamp="'.$timestamp.'" data-date="'.$date.'" data-time="'.$time.'" data-offset="'.$dateTimeObject->getOffset().'">'.$dateTime.'</time>';
+		return '<time datetime="'.DateUtil::format($dateTimeObject, 'c').'" class="datetime" data-timestamp="'.$timestamp.'" data-date="'.$date.'" data-time="'.$time.'" data-offset="'.$dateTimeObject->getOffset().'"'.($timestamp > TIME_NOW ? ' data-is-future-date="true"' : '').'>'.$dateTime.'</time>';
 	}
 }

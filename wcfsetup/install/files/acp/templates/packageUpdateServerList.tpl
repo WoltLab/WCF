@@ -10,9 +10,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.updateServer.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.updateServer.list{/lang}</h1>
 </header>
 
 {if $deletedPackageUpdateServerID}
@@ -24,7 +22,7 @@
 	
 	<nav>
 		<ul>
-			<li><a href="{link controller='PackageUpdateServerAdd'}{/link}" title="{lang}wcf.acp.updateServer.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
+			<li><a href="{link controller='PackageUpdateServerAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
@@ -33,9 +31,9 @@
 
 {hascontent}
 	<div class="tabularBox tabularBoxTitle marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.updateServer.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
-		</hgroup>
+		<header>
+			<h2>{lang}wcf.acp.updateServer.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+		</header>
 		
 		<table class="table">
 			<thead>
@@ -62,12 +60,12 @@
 								
 								{event name='itemButtons'}
 							</td>
-							<td class="columnID"><p>{@$updateServer->packageUpdateServerID}</p></td>
-							<td class="columnText columnTitle"><p><a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.acp.updateServer.edit{/lang}">{$updateServer->serverURL}</a></p></td>
-							<td class="columnDigits"><p>{#$updateServer->packages}</p></td>
-							<td class="columnStatus"><p class="badge{if $updateServer->status == 'online'} green{else} red{/if}">{@$updateServer->status}</p></td>
-							<td class="columnText"><p title="{@$updateServer->errorMessage}">{@$updateServer->errorMessage|truncate:"30"}</p></td>
-							<td class="columnDate"><p>{if $updateServer->lastUpdateTime}{@$updateServer->lastUpdateTime|time}{/if}</p></td>
+							<td class="columnID">{@$updateServer->packageUpdateServerID}</td>
+							<td class="columnText columnTitle"><a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.acp.updateServer.edit{/lang}">{$updateServer->serverURL}</a></td>
+							<td class="columnDigits">{#$updateServer->packages}</td>
+							<td class="columnStatus"><span class="badge{if $updateServer->status == 'online'} green{else} red{/if}">{@$updateServer->status}</span></td>
+							<td class="columnText" title="{@$updateServer->errorMessage}">{@$updateServer->errorMessage|truncate:"30"}</td>
+							<td class="columnDate">{if $updateServer->lastUpdateTime}{@$updateServer->lastUpdateTime|time}{/if}</td>
 							
 							{event name='columns'}
 						</tr>
@@ -83,7 +81,7 @@
 		
 		<nav>
 			<ul>
-				<li><a href="{link controller='PackageUpdateServerAdd'}{/link}" title="{lang}wcf.acp.updateServer.add{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
+				<li><a href="{link controller='PackageUpdateServerAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.updateServer.add{/lang}</span></a></li>
 				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>

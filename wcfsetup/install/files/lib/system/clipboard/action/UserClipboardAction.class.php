@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\clipboard\action;
+use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\user\group\UserGroup;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
@@ -9,7 +10,7 @@ use wcf\system\WCF;
  * Prepares clipboard editor items for user objects.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.clipboard.action
@@ -24,20 +25,20 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @see	wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
 	 */
-	protected $supportedActions = array('assignToGroup', 'delete', 'exportMailAddress', 'sendMail');
+	protected $supportedActions = array('assignToGroup', 'ban', 'delete', 'exportMailAddress', 'sendMail');
 	
 	/**
 	 * @see	wcf\system\clipboard\action\IClipboardAction::execute()
 	 */
-	public function execute(array $objects, $actionName) {
-		$item = parent::execute($objects, $actionName);
+	public function execute(array $objects, ClipboardAction $action) {
+		$item = parent::execute($objects, $action);
 		
 		if ($item === null) {
 			return null;
 		}
 		
 		// handle actions
-		switch ($actionName) {
+		switch ($action->actionName) {
 			case 'assignToGroup':
 				$item->setURL(LinkHandler::getInstance()->getLink('UserAssignToGroup'));
 			break;
@@ -82,14 +83,37 @@ class UserClipboardAction extends AbstractClipboardAction {
 	protected function validateDelete() {
 		// check permissions
 		if (!WCF::getSession()->getPermission('admin.user.canDeleteUser')) {
-			return 0;
+			return array();
 		}
 		
-		// user cannot delete itself
-		$userIDs = array_keys($this->objects);
-		foreach ($userIDs as $index => $userID) {
-			if ($userID == WCF::getUser()->userID) {
-				unset($userIDs[$index]);
+		return $this->__validateAccessibleGroups(array_keys($this->objects));
+	}
+	
+	/**
+	 * Returns the ids of the users which can be banned.
+	 *
+	 * @return	array<integer>
+	 */
+	protected function validateBan() {
+		// check permissions
+		if (!WCF::getSession()->getPermission('admin.user.canBanUser')) {
+			return array();
+		}
+		
+		return $this->__validateAccessibleGroups(array_keys($this->objects));
+	}
+	
+	/**
+	 * Validates accessible groups.
+	 *
+	 * @return	array<integer>
+	 */
+	protected function __validateAccessibleGroups(array $userIDs, $ignoreOwnUser = true) {
+		if ($ignoreOwnUser) {
+			foreach ($userIDs as $index => $userID) {
+				if ($userID == WCF::getUser()->userID) {
+					unset($userIDs[$index]);
+				}
 			}
 		}
 		
@@ -111,7 +135,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 			if (!isset($userToGroup[$row['userID']])) {
 				$userToGroup[$row['userID']] = array();
 			}
-			
+				
 			$userToGroup[$row['userID']][] = $row['groupID'];
 		}
 		

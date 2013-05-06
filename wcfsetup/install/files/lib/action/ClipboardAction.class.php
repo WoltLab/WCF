@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Handles clipboard items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	action
@@ -23,6 +23,12 @@ class ClipboardAction extends AJAXInvokeAction {
 	 * @var	string
 	 */
 	protected $action = '';
+	
+	/**
+	 * list of allowed action methods
+	 * @var	array<string>
+	 */
+	protected $allowedActions = array('mark', 'unmark', 'unmarkAll');
 	
 	/**
 	 * container data
@@ -41,6 +47,12 @@ class ClipboardAction extends AJAXInvokeAction {
 	 * @var	string
 	 */
 	protected $pageClassName = '';
+	
+	/**
+	 * page object id
+	 * @var	integer
+	 */
+	protected $pageObjectID = 0;
 	
 	/**
 	 * object type
@@ -64,6 +76,7 @@ class ClipboardAction extends AJAXInvokeAction {
 		if (isset($_POST['containerData']) && is_array($_POST['containerData'])) $this->containerData = $_POST['containerData'];
 		if (isset($_POST['objectIDs']) && is_array($_POST['objectIDs'])) $this->objectIDs = ArrayUtil::toIntegerArray($_POST['objectIDs']);
 		if (isset($_POST['pageClassName'])) $this->pageClassName = StringUtil::trim($_POST['pageClassName']);
+		if (isset($_POST['pageObjectID'])) $this->pageObjectID = intval($_POST['pageObjectID']);
 		if (isset($_POST['type'])) $this->type = StringUtil::trim($_POST['type']);
 	}
 	
@@ -92,7 +105,12 @@ class ClipboardAction extends AJAXInvokeAction {
 		$this->validate();
 		
 		// execute action
-		ClipboardHandler::getInstance()->{$this->action}($this->objectIDs, $this->objectTypeID);
+		if ($this->action == 'unmarkAll') {
+			ClipboardHandler::getInstance()->unmarkAll($this->objectTypeID);
+		}
+		else {
+			ClipboardHandler::getInstance()->{$this->action}($this->objectIDs, $this->objectTypeID);
+		}
 	}
 	
 	/**
@@ -101,7 +119,7 @@ class ClipboardAction extends AJAXInvokeAction {
 	 * @return	array<array>
 	 */
 	protected function getEditorItems() {
-		$data = ClipboardHandler::getInstance()->getEditorItems($this->pageClassName, $this->containerData);
+		$data = ClipboardHandler::getInstance()->getEditorItems($this->pageClassName, $this->pageObjectID, $this->containerData);
 		
 		if ($data === null) {
 			return array();
@@ -114,8 +132,8 @@ class ClipboardAction extends AJAXInvokeAction {
 				'items' => array()
 			);
 			
-			foreach ($itemData['items'] as $item) {
-				$items['items'][] = array(
+			foreach ($itemData['items'] as $showOrder => $item) {
+				$items['items'][$showOrder] = array(
 					'actionName' => $item->getName(),
 					'internalData' => $item->getInternalData(),
 					'parameters' => $item->getParameters(),
@@ -128,6 +146,7 @@ class ClipboardAction extends AJAXInvokeAction {
 		}
 		
 		return array(
+			'action' => $this->action,
 			'items' => $editorItems
 		);
 	}
@@ -136,16 +155,18 @@ class ClipboardAction extends AJAXInvokeAction {
 	 * Validates parameters.
 	 */
 	protected function validate() {
-		if (empty($this->objectIDs)) {
-			throw new UserInputException('objectIDs');
-		}
-		
-		if (empty($this->pageClassName)) {
-			throw new UserInputException('pageClassName');
-		}
-		
-		if ($this->action != 'mark' && $this->action != 'unmark') {
+		if (!in_array($this->action, $this->allowedActions)) {
 			throw new UserInputException('action');
+		}
+		
+		if ($this->action != 'unmarkAll') {
+			if (empty($this->objectIDs)) {
+				throw new UserInputException('objectIDs');
+			}
+			
+			if (empty($this->pageClassName)) {
+				throw new UserInputException('pageClassName');
+			}
 		}
 		
 		$this->objectTypeID = (!empty($this->type)) ? ClipboardHandler::getInstance()->getObjectTypeID($this->type) : null;

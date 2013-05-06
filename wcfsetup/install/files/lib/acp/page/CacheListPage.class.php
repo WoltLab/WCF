@@ -7,6 +7,7 @@ use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Shows a list of all cache resources.
@@ -75,82 +76,42 @@ class CacheListPage extends AbstractPage {
 				// set version
 				$this->cacheData['version'] = WCF_VERSION;
 				
-				// get package dirs
-				$sql = "SELECT	packageDir
-					FROM	wcf".WCF_N."_package
-					WHERE	isApplication = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(1));
-				while ($row = $statement->fetchArray()) {
-					$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
-					$this->readCacheFiles('data', $packageDir.'cache');
-				}
+				$this->readCacheFiles('data', WCF_DIR.'cache');
 			break;
 			
 			case 'wcf\system\cache\source\MemcachedCacheSource':
 				// set version
 				$this->cacheData['version'] = WCF_VERSION;
-				
-				// get package dirs
-				$sql = "SELECT	packageDir
-					FROM	wcf".WCF_N."_package
-					WHERE	isApplication = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(1));
-				while ($row = $statement->fetchArray()) {
-					$packageDir = FileUtil::getRealPath(WCF_DIR.$row['packageDir']);
-					$this->readCacheFiles('data', $packageDir.'cache');
-				}
 			break;
 			
 			case 'wcf\system\cache\source\ApcCacheSource':
 				// set version
 				$this->cacheData['version'] = phpversion('apc');
 				
-				// get package dirs
-				$sql = "SELECT	packageDir, packageName
-					FROM	wcf".WCF_N."_package
-					WHERE	isApplication = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array(1));
-				
-				$packageNames = array();
-				while ($row = $statement->fetchArray()) {
-					$packagePath = FileUtil::getRealPath(WCF_DIR.$row['packageDir']).'cache/';
-					$packageNames[$packagePath] = $row['packageName'];
-				}
-				
 				$apcinfo = apc_cache_info('user');
 				$cacheList = $apcinfo['cache_list'];
+				usort($cacheList, function ($a, $b) {
+					return $a['info'] > $b['info'];
+				});
+				
+				$prefix = new Regex('^WCF_'.substr(sha1(WCF_DIR), 0, 10) . '_');
 				foreach ($cacheList as $cache) {
-					$cachePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(dirname($cache['info'])));
-					if (isset($packageNames[$cachePath])) {
-						// Use the packageName + the instance number, because pathes could confuse the administrator.
-						// He could think this is a file cache. If instanceName would be unique, we could use it instead.
-						$packageName = $packageNames[$cachePath];
-						if (!isset($this->caches['data'])) {
-							$this->caches['data'] = array();
-						}
-						if (!isset($this->caches['data'][$packageName])) {
-							$this->caches['data'][$packageName] = array();
-						}
-						
-						// get additional cache information
-						$this->caches['data'][$packageName][] = array(
-							'filename' => basename($cache['info'], '.php'),
-							'filesize' => $cache['mem_size'],
-							'mtime' => $cache['mtime'],
-						);
-						
-						$this->cacheData['files']++;
-						$this->cacheData['size'] += $cache['mem_size'];
-					}
+					if (!$prefix->match($cache['info'])) continue;
+					
+					// get additional cache information
+					$this->caches['data']['apc'][] = array(
+						'filename' => $prefix->replace($cache['info'], ''),
+						'filesize' => $cache['mem_size'],
+						'mtime' => $cache['mtime']
+					);
+					
+					$this->cacheData['files']++;
+					$this->cacheData['size'] += $cache['mem_size'];
 				}
 			break;
 			
 			case 'wcf\system\cache\source\NoCacheSource':
 				$this->cacheData['version'] = WCF_VERSION;
-				$this->cacheData['files'] = $this->cacheData['size'] = 0;
 			break;
 		}
 		

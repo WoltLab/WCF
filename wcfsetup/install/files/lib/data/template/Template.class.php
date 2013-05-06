@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\template;
+use wcf\data\package\Package;
 use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
@@ -32,13 +33,14 @@ class Template extends DatabaseObject {
 	 */
 	public function __construct($id, $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {
-			$sql = "SELECT		template.*, group.templateGroupFolderName, package.packageDir
+			$sql = "SELECT		template.*, template_group.templateGroupFolderName,
+						package.package, package.packageDir
 				FROM		wcf".WCF_N."_template template
-				LEFT JOIN	wcf".WCF_N."_template_group group
-				ON		(group.templateGroupID = template.templateGroupID)
+				LEFT JOIN	wcf".WCF_N."_template_group template_group
+				ON		(template_group.templateGroupID = template.templateGroupID)
 				LEFT JOIN	wcf".WCF_N."_package package
 				ON		(package.packageID = template.packageID)
-				WHERE		template.templateID = ?".$id;
+				WHERE		template.templateID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($id));
 			$row = $statement->fetchArray();
@@ -70,6 +72,15 @@ class Template extends DatabaseObject {
 	 */
 	public function getSource() {
 		return @file_get_contents($this->getPath());
+	}
+	
+	/**
+	 * Returns the abbreviation of the package name.
+	 *
+	 * @return	string
+	 */
+	public function getPackageAbbreviation() {
+		return Package::getAbbreviation($this->package);
 	}
 	
 	/**

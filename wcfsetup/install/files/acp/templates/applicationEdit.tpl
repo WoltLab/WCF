@@ -16,9 +16,7 @@
 {/if}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.application.edit.title{/lang}{if $application->isPrimary} <span class="icon icon16 icon-home jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}"></span>{/if}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.application.edit.title{/lang}{if $application->isPrimary} <span class="icon icon16 icon-home jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}"></span>{/if}</h1>
 </header>
 
 {if $errorField}
@@ -51,16 +49,16 @@
 				<dt><label for="domainName">{lang}wcf.acp.application.domainName{/lang}</label></dt>
 				<dd>
 					<input type="text" name="domainName" id="domainName" value="{$domainName}" class="long" />
-					<small>{lang}wcf.acp.application.domainName.description{/lang}</small>
 					{if $errorField == 'domainName'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
-								{lang}wcf.acp.global.form.error.empty{/lang}
+								{lang}wcf.global.form.error.empty{/lang}
 							{else}
 								{lang}wcf.acp.application.domainName.error.{$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
+					<small>{lang}wcf.acp.application.domainName.description{/lang}</small>
 				</dd>
 			</dl>
 			
@@ -87,7 +85,7 @@
 					{if $errorField == 'cookieDomain'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
-								{lang}wcf.acp.global.form.error.empty{/lang}
+								{lang}wcf.global.form.error.empty{/lang}
 							{else}
 								{lang}wcf.acp.application.cookieDomain.error.{$errorType}{/lang}
 							{/if}
@@ -103,7 +101,7 @@
 					{if $errorField == 'cookiePath'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
-								{lang}wcf.acp.global.form.error.empty{/lang}
+								{lang}wcf.global.form.error.empty{/lang}
 							{else}
 								{lang}wcf.acp.application.cookiePath.error.{$errorType}{/lang}
 							{/if}

@@ -1,11 +1,18 @@
 <?php
 namespace wcf\data\package\update;
+use wcf\data\package\installation\queue\PackageInstallationQueue;
+use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\search\Search;
 use wcf\data\search\SearchEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\package\PackageInstallationScheduler;
+use wcf\system\package\PackageUpdateDispatcher;
+use wcf\system\package\PackageUpdateUnauthorizedException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -62,10 +69,13 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		if (!empty($this->parameters['packageName'])) {
 			$conditions->add("package_update.packageName LIKE ?", array('%'.$this->parameters['packageName'].'%'));
 		}
+		$conditions->add("package.packageID IS NULL");
 		
 		// find matching packages
 		$sql = "SELECT		package_update.packageUpdateID
 			FROM		wcf".WCF_N."_package_update package_update
+			LEFT JOIN	wcf".WCF_N."_package package
+			ON		(package.package = package_update.package)
 			".$conditions."
 			ORDER BY	package_update.packageName ASC";
 		$statement = WCF::getDB()->prepareStatement($sql, 1000);
@@ -206,7 +216,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("packageUpdateID IN (?)", array(array_keys($updateData)));
 		
-		$sql = "SELECT	packageUpdateID, packageName, packageDescription, author, authorURL
+		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_package_update
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
@@ -252,6 +262,163 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			'pageCount' => ceil($count / 20),
 			'searchID' => $this->search->searchID,
 			'template' => WCF::getTPL()->fetch('packageSearchResultList')
+		);
+	}
+	
+	/**
+	 * Validates permissions to search for updates.
+	 */
+	public function validateSearchForUpdates() {
+		WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+	}
+	
+	/**
+	 * Searches for updates.
+	 * 
+	 * @return	array
+	 */
+	public function searchForUpdates() {
+		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
+		
+		$updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
+		$url = '';
+		if (!empty($updates)) {
+			$url = LinkHandler::getInstance()->getLink('PackageUpdate');
+		}
+		
+		return array(
+			'url' => $url
+		);
+	}
+	
+	/**
+	 * Validates parameters to perform a system update.
+	 */
+	public function validatePrepareUpdate() {
+		WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+	
+		if (!isset($this->parameters['packages']) || !is_array($this->parameters['packages'])) {
+			throw new UserInputException('packages');
+		}
+	
+		// validate packages for their existance
+		$availableUpdates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
+		foreach ($this->parameters['packages'] as $packageName => $versionNumber) {
+			$isValid = false;
+			
+			foreach ($availableUpdates as $package) {
+				if ($package['package'] == $packageName) {
+					// validate version
+					if (isset($package['versions'][$versionNumber])) {
+						$isValid = true;
+						break;
+					}
+				}
+			}
+			
+			if (!$isValid) {
+				throw new UserInputException('packages');
+			}
+		}
+		
+		if (isset($this->parameters['authData'])) {
+			if (!is_array($this->parameters['authData'])) {
+				throw new UserInputException('authData');
+			}
+			
+			$this->readInteger('packageUpdateServerID', false, 'authData');
+			$this->readString('password', false, 'authData');
+			$this->readString('username', false, 'authData');
+			$this->readBoolean('saveCredentials', true, 'authData');
+		}
+	}
+	
+	/**
+	 * Prepares a system update.
+	 * 
+	 * @return	array
+	 */
+	public function prepareUpdate() {
+		return $this->createQueue('update');
+	}
+	
+	/**
+	 * Validates parameters to prepare a package installation.
+	 */
+	public function validatePrepareInstallation() {
+		WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+		
+		$this->readString('package');
+		
+		if (isset($this->parameters['authData'])) {
+			if (!is_array($this->parameters['authData'])) {
+				throw new UserInputException('authData');
+			}
+				
+			$this->readInteger('packageUpdateServerID', false, 'authData');
+			$this->readString('password', false, 'authData');
+			$this->readString('username', false, 'authData');
+			$this->readBoolean('saveCredentials', true, 'authData');
+		}
+	}
+	
+	/**
+	 * Prepares a package installation.
+	 * 
+	 * @return	array
+	 */
+	public function prepareInstallation() {
+		return $this->createQueue('install');
+	}
+	
+	/**
+	 * Creates a new package installation queue.
+	 * 
+	 * @param	string		$queueType
+	 * @return	array
+	 */
+	protected function createQueue($queueType) {
+		if (isset($this->parameters['authData'])) {
+			PackageUpdateServer::storeAuthData($this->parameters['authData']['packageUpdateServerID'], $this->parameters['authData']['username'], $this->parameters['authData']['password'], $this->parameters['authData']['saveCredentials']);
+		}
+		
+		$scheduler = new PackageInstallationScheduler($this->parameters['package']);
+		
+		try {
+			$scheduler->buildPackageInstallationStack();
+		}
+		catch (PackageUpdateUnauthorizedException $e) {
+			return array(
+				'template' => $e->getRenderedTemplate()
+			);
+		}
+		
+		$stack = $scheduler->getPackageInstallationStack();
+		$queueID = null;
+		if (!empty($stack)) {
+			$parentQueueID = 0;
+			$processNo = PackageInstallationQueue::getNewProcessNo();
+			foreach ($stack as $package) {
+				$queue = PackageInstallationQueueEditor::create(array(
+					'parentQueueID' => $parentQueueID,
+					'processNo' => $processNo,
+					'userID' => WCF::getUser()->userID,
+					'package' => $package['package'],
+					'packageName' => $package['packageName'],
+					'packageID' => ($package['packageID'] ?: null),
+					'archive' => $package['archive'],
+					'action' => $queueType
+				));
+				$parentQueueID = $queue->queueID;
+		
+				if ($queueID === null) {
+					$queueID = $queue->queueID;
+				}
+			}
+		}
+		
+		return array(
+			'queueID' => $queueID
 		);
 	}
 }

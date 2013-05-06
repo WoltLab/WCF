@@ -10,10 +10,8 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{$archive->getLocalizedPackageInfo('packageName')}</h1>
-		<h2>{$archive->getLocalizedPackageInfo('packageDescription')}</h2>
-	</hgroup>
+	<h1>{$archive->getLocalizedPackageInfo('packageName')}</h1>
+	<p>{$archive->getLocalizedPackageInfo('packageDescription')}</p>
 </header>
 
 {if $missingPackages > 0}
@@ -75,9 +73,9 @@
 
 {if $requiredPackages|count > 0}
 	<div class="tabularBox tabularBoxTitle marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.package.dependencies.required{/lang} <span class="badge badgeInverse">{#$requiredPackages|count}</span></h1>
-		</hgroup>
+		<header>
+			<h2>{lang}wcf.acp.package.dependencies.required{/lang} <span class="badge badgeInverse">{#$requiredPackages|count}</span></h2>
+		</header>
 		
 		<table class="table">
 			<thead>
@@ -93,9 +91,9 @@
 			<tbody>
 				{foreach from=$requiredPackages item=$package}
 					<tr>
-						<td class="columnTitle"><p><span class="badge label {if $package.status == 'installed'}green{elseif $package.status == 'delivered'}yellow{else}red{/if}">{@$package.name}</span></p></td>
-						<td class="columnText"><p>{lang}wcf.acp.package.installation.packageStatus.{@$package.status}{/lang}</p></td>
-						<td class="columnDigits"><p>{if $package.minversion|isset}{if $package.status == 'missingVersion'}<span class="badge label red">{/if}{$package.minversion}{if $package.status == 'missingVersion'}</span>{/if}{/if}</p></td>
+						<td class="columnTitle"><span class="badge label {if $package.status == 'installed'}green{elseif $package.status == 'delivered'}yellow{else}red{/if}">{@$package.name}</span></td>
+						<td class="columnText">{lang}wcf.acp.package.installation.packageStatus.{@$package.status}{/lang}</td>
+						<td class="columnDigits">{if $package.minversion|isset}{if $package.status == 'missingVersion'}<span class="badge label red">{/if}{$package.minversion}{if $package.status == 'missingVersion'}</span>{/if}{/if}</td>
 						
 						{event name='columns'}
 					</tr>

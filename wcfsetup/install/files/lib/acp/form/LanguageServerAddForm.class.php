@@ -27,7 +27,7 @@ class LanguageServerAddForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.language.canAddServer');
+	public $neededPermissions = array('admin.language.canManageLanguage');
 	
 	/**
 	 * server url

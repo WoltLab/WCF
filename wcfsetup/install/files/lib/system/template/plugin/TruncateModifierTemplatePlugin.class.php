@@ -23,7 +23,7 @@ class TruncateModifierTemplatePlugin implements IModifierTemplatePlugin {
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// default values
 		$length = 80;
-		$etc = '…';
+		$etc = StringUtil::HELLIP;
 		$breakWords = false;
 		
 		// get values

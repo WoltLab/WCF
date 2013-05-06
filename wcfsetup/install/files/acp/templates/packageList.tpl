@@ -3,17 +3,25 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		WCF.Language.add('wcf.acp.package.view.button.uninstall.sure', '{lang}wcf.acp.package.view.button.uninstall.sure{/lang}');
+		WCF.Language.addObject({
+			'wcf.acp.package.view.button.uninstall.sure': '{lang}wcf.acp.package.view.button.uninstall.sure{/lang}',
+			'wcf.acp.package.searchForUpdates': '{lang}wcf.acp.package.searchForUpdates{/lang}',
+			'wcf.acp.package.searchForUpdates.noResults': '{lang}wcf.acp.package.searchForUpdates.noResults{/lang}'
+		});
 		
-		new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
+		{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage')}
+			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
+		{/if}
+		
+		{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
+			new WCF.ACP.Package.Update.Search();
+		{/if}
 	});
 	//]]>
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.package.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.package.list{/lang}</h1>
 </header>
 
 <div class="contentNavigation">
@@ -24,7 +32,7 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
-						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtonsTop'}
@@ -36,9 +44,9 @@
 
 {if $objects|count}
 	<div class="tabularBox tabularBoxTitle marginTop">
-		<hgroup>
-			<h1>{lang}wcf.acp.package.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
-		</hgroup>
+		<header>
+			<h2>{lang}wcf.acp.package.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
+		</header>
 		
 		<table class="table">
 			<thead>
@@ -57,9 +65,6 @@
 				{foreach from=$objects item=$package}
 					<tr class="jsPackageRow">
 						<td class="columnIcon">
-							{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-								<a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}" title="{lang}wcf.acp.package.button.update{/lang}" class="jsTooltip"><span class="icon icon16 icon-repeat"></span></a>
-							{/if}
 							{if $package->canUninstall()}
 								<span class="icon icon16 icon-remove pointer jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}"></span>
 							{else}
@@ -68,13 +73,13 @@
 							
 							{event name='rowButtons'}
 						</td>
-						<td class="columnID"><p>{@$package->packageID}</p></td>
+						<td class="columnID">{@$package->packageID}</td>
 						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->packageDescription|language}">
 							<a href="{link controller='Package' id=$package->packageID}{/link}"><span>{$package}</span></a>
 						</td>
-						<td class="columnText"><p>{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</p></td>
-						<td class="columnText"><p>{$package->packageVersion}</p></td>
-						<td class="columnDate"><p>{@$package->updateDate|time}</p></td>
+						<td class="columnText">{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</td>
+						<td class="columnText">{$package->packageVersion}</td>
+						<td class="columnDate">{@$package->updateDate|time}</td>
 						
 						{event name='columns'}
 					</tr>
@@ -100,7 +105,7 @@
 				<ul>
 					{content}
 						{if $__wcf->session->getPermission('admin.system.package.canInstallPackage')}
-							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" title="{lang}wcf.acp.package.startInstall{/lang}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
+							<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 						{/if}
 						
 						{event name='contentNavigationButtonsBottom'}

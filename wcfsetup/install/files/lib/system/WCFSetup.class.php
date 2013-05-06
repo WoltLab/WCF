@@ -1074,7 +1074,7 @@ class WCFSetup extends WCF {
 				while ($queueID) {
 					$queueIDs[] = $queueID;
 					
-					$queueID = (isset($queues[$queueID])) ?: 0;
+					$queueID = (isset($queues[$queueID])) ? $queues[$queueID] : 0;
 				}
 				
 				// remove previously created queues

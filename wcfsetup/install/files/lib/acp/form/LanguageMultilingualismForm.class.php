@@ -28,14 +28,25 @@ class LanguageMultilingualismForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.language.canEditLanguage');
+	public $neededPermissions = array('admin.language.canManageLanguage');
 	
-	// data
-	// todo: comment
+	/**
+	 * indicates if multilingualism is enabled
+	 * @var	integer
+	 */
 	public $enable = 0;
+	
+	/**
+	 * ids of selected available languages
+	 * @var	array<integer>
+	 */
 	public $languageIDs = array();
+	
+	/**
+	 * list of available content languages
+	 * @var	array<wcf\data\language\Language>
+	 */
 	public $languages = array();
-	public $languageList = array();
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
@@ -124,8 +135,6 @@ class LanguageMultilingualismForm extends AbstractForm {
 				$this->enable = 1;
 			}
 		}
-		
-		$this->languageList = LanguageFactory::getInstance()->getLanguages();
 	}
 	
 	/**
@@ -135,9 +144,10 @@ class LanguageMultilingualismForm extends AbstractForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
+			'defaultLanguageID' => LanguageFactory::getInstance()->getDefaultLanguageID(),
 			'enable' => $this->enable,
 			'languageIDs' => $this->languageIDs,
-			'languages' => $this->languageList
+			'languages' => $this->languages
 		));
 	}
 	

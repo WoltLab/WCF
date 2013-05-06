@@ -103,11 +103,20 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'menuItemController' => $this->menuItemController,
 			'menuItemLink' => $this->menuItemLink,
-			'parentMenuItem' => ($this->menuItem->menuPosition == 'header' ? $this->parentMenuItem : ''),
+			'parentMenuItem' => ($this->menuPosition == 'header' ? $this->parentMenuItem : ''),
+			'menuPosition' => $this->menuPosition,
 			'showOrder' => $this->showOrder
 		)));
 		$this->objectAction->executeAction();
 		
+		// update children
+		if ($this->menuItem->menuPosition == 'header' && $this->menuPosition != 'header') {
+			$sql = "UPDATE	wcf".WCF_N."_page_menu_item
+				SET	parentMenuItem = ''
+				WHERE	parentMenuItem = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->menuItem->menuItem));
+		}
 		$this->saved();
 		
 		WCF::getTPL()->assign('success', true);

@@ -215,7 +215,7 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 					$this->languageIDs = unserialize($data[$this->userID]);
 				}
 			}
-			else {
+			else if (!WCF::getSession()->spiderID) {
 				$this->languageIDs[] = WCF::getLanguage()->languageID;
 			}
 		}

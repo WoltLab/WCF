@@ -182,6 +182,7 @@ class CronjobAddForm extends AbstractForm {
 		// reset values
 		$this->className = $this->description = '';
 		$this->startMinute = $this->startHour = $this->startDom = $this->startMonth = $this->startDow = '*';
+		I18nHandler::getInstance()->reset();
 		
 		// show success.
 		WCF::getTPL()->assign(array(

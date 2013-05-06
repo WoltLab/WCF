@@ -154,41 +154,58 @@ button.active:hover {
 	}
 }
 
-@media only screen and (max-width: 768px) {
-	.buttonGroup {
-		min-height: 21px;
-		min-width: 21px;
-		position: relative;
-		z-index: 148;
-		
-		&:before {
-			content: "\f03a";
-			font-family: FontAwesome;
-			font-size: 21px;
-			right: 0;
-			position: absolute;
-			top: 0;
-		}
-		
-		> li {
-			display: none;
+@media only screen and (max-width: 800px) {
+	nav.buttonGroupNavigation {
+		> a:first-child {
+			display: inline-block;
+			outline: 0;
 			
-			&:not(:first-child) {
-				> a {
-					border-top: 0;
+			> span.icon {
+				font-size: 21px;
+				height: 24px;
+				width: 24px;
+			}
+			
+			+ a {
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 100%;
+				z-index:100;
+			}
+			
+			&:focus {
+				+ a {
+					display: block;
+				}
+				
+				~ ul {
+					display: block;
 				}
 			}
-			
-			> .button {
-				border-radius: 0 !important;
-			}
 		}
 		
-		&:hover {
+		> ul {
+			display: none;
+			opacity: 1;
+			position: absolute;
+			right: 0;
+			z-index: 350;
+			
+			&:hover {
+				display: block;
+			}
+			
 			> li {
 				display: block;
+				float: none;
+				opacity: 1 !important;
 				
 				> a {
+					.button;
+					
+					border-radius: 0 !important;
 					overflow: hidden;
 					text-overflow: ellipsis;
 					width: 124px;

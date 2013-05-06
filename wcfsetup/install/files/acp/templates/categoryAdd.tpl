@@ -16,9 +16,7 @@
 {/if}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{@$objectType->getProcessor()->getLanguageVariable($action)}</h1>
-	</hgroup>
+	<h1>{@$objectType->getProcessor()->getLanguageVariable($action)}</h1>
 </header>
 
 {if $errorField}
@@ -35,7 +33,7 @@
 			<ul>
 				{content}
 					{if $objectType->getProcessor()->canDeleteCategory() || $objectType->getProcessor()->canEditCategory()}
-						<li><a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" title="{$objectType->getProcessor()->getLanguageVariable('button.list')}" class="button"><span class="icon icon16 icon-list"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a></li>
+						<li><a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a></li>
 					{/if}
 					
 					{event name='contentNavigationButtons'}
@@ -50,13 +48,13 @@
 		<fieldset>
 			<legend>{lang}wcf.global.form.data{/lang}</legend>
 			
-			{if $objectType->getProcessor()->getMaximumNestingLevel() && $categoryNodeList|count}
+			{if $categoryNodeList->hasChildren() && $objectType->getProcessor()->getMaximumNestingLevel()}
 				<dl{if $errorField == 'parentCategoryID'} class="formError"{/if}>
 					<dt><label for="parentCategoryID">{@$objectType->getProcessor()->getLanguageVariable('parentCategoryID')}</label></dt>
 					<dd>
 						<select id="parentCategoryID" name="parentCategoryID">
 							<option value="0"></option>
-							{include file='categoryOptionList' categoryID=$parentCategoryID maximumNestingLevel=$objectType->getProcessor()->getMaximumNestingLevel() - 1}
+							{include file='categoryOptionList' categoryID=$parentCategoryID maximumNestingLevel=$objectType->getProcessor()->getMaximumNestingLevel()}
 						</select>
 						{if $errorField == 'parentCategoryID'}
 							<small class="innerError">

@@ -2,11 +2,14 @@
 namespace wcf\system\package;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\HTTPRequest;
 
 /**
  * Contains business logic related to preparation of package installations.
@@ -20,22 +23,22 @@ use wcf\util\FileUtil;
  */
 class PackageInstallationScheduler {
 	/**
+	 * stack of package installations / updates
+	 * @var	array
+	 */
+	protected $packageInstallationStack = array();
+	
+	/**
+	 * list of package update servers
+	 * @var	array<wcf\data\package\update\server\PackageUpdateServer>
+	 */
+	protected $packageUpdateServers = array();
+	
+	/**
 	 * list of packages to update or install
 	 * @var	array
 	 */
 	protected $selectedPackages = array();
-	
-	/**
-	 * list of package update server ids
-	 * @var	array
-	 */
-	protected $packageUpdateServerIDs;
-	
-	/**
-	 * enables downloading of updates
-	 * @var	boolean
-	 */
-	protected $download;
 	
 	/**
 	 * virtual package versions
@@ -44,22 +47,13 @@ class PackageInstallationScheduler {
 	protected $virtualPackageVersions = array();
 	
 	/**
-	 * stack of package installations / updates
-	 * @var	array
-	 */
-	protected $packageInstallationStack = array();
-	
-	/**
 	 * Creates a new instance of PackageInstallationScheduler
 	 * 
-	 * @param	array		$selectedPackages
-	 * @param	array		$packageUpdateServerIDs
-	 * @param	boolean		$download
+	 * @param	array<string>		$selectedPackages
 	 */
-	public function __construct(array $selectedPackages, array $packageUpdateServerIDs = array(), $download = true) {
+	public function __construct(array $selectedPackages) {
 		$this->selectedPackages = $selectedPackages;
-		$this->packageUpdateServerIDs = $packageUpdateServerIDs;
-		$this->download = $download;
+		$this->packageUpdateServers = PackageUpdateServer::getActiveUpdateServers();
 	}
 	
 	/**
@@ -67,12 +61,7 @@ class PackageInstallationScheduler {
 	 */
 	public function buildPackageInstallationStack() {
 		foreach ($this->selectedPackages as $package => $version) {
-			if (is_numeric($package)) {
-				$this->updatePackage($package, $version);
-			}
-			else {
-				$this->tryToInstallPackage($package, $version, true);
-			}
+			$this->tryToInstallPackage($package, $version, true);
 		}
 	}
 	
@@ -101,8 +90,18 @@ class PackageInstallationScheduler {
 			}
 		}
 		else {
-			// package is missing -> install
-			$this->installPackage($package, ($installOldVersion ? $minversion : ''));
+			// check if package is already installed
+			$packageID = PackageCache::getInstance()->getPackageID($package);
+			if ($packageID === null) {
+				// package is missing -> install
+				$this->installPackage($package, ($installOldVersion ? $minversion : ''));
+			}
+			else {
+				$package = PackageCache::getInstance()->getPackage($packageID);
+				if (!empty($minversion) && Package::compareVersion($package->packageVersion, $minversion, '<')) {
+					$this->updatePackage($packageID, ($installOldVersion ? $minversion : ''));
+				}
+			}
 		}
 	}
 	
@@ -121,10 +120,7 @@ class PackageInstallationScheduler {
 		$this->resolveRequirements($packageUpdateVersions[0]['packageUpdateVersionID']);
 		
 		// download package
-		$download = '';
-		if ($this->download) {
-			$download = $this->downloadPackage($package, $packageUpdateVersions);
-		}
+		$download = $this->downloadPackage($package, $packageUpdateVersions);
 		
 		// add to stack
 		$data = array(
@@ -183,7 +179,7 @@ class PackageInstallationScheduler {
 				if (isset($installedPackages[$row['package']])) {
 					// package already installed -> check version
 					// sort multiple instances by version number
-					uasort($installedPackages[$row['package']], array('Package', 'compareVersion'));
+					uasort($installedPackages[$row['package']], array('wcf\data\package\Package', 'compareVersion'));
 					
 					foreach ($installedPackages[$row['package']] as $packageID => $packageVersion) {
 						if (empty($row['minversion']) || Package::compareVersion($row['minversion'], $packageVersion, '<=')) {
@@ -215,63 +211,55 @@ class PackageInstallationScheduler {
 		}
 		
 		// download file
-		$authorizationRequiredException = array();
-		$systemExceptions = array();
 		foreach ($packageUpdateVersions as $packageUpdateVersion) {
+			// get auth data
+			$authData = $this->getAuthData($packageUpdateVersion);
+			
+			// create request
+			$request = new HTTPRequest(
+				$this->packageUpdateServers[$packageUpdateVersion['packageUpdateServerID']]->serverURL,
+				(!empty($authData) ? array('auth' => $authData) : array()),
+				array(
+					'packageName' => $packageUpdateVersion['package'],
+					'packageVersion' => $packageUpdateVersion['packageVersion']
+				)
+			);
+			
 			try {
-				// get auth data
-				$authData = $this->getAuthData($packageUpdateVersion);
-				
-				// send request
-				// TODO: Use HTTPRequest
-				if (!empty($packageUpdateVersion['file'])) {
-					$response = PackageUpdateDispatcher::getInstance()->sendRequest($packageUpdateVersion['file'], array(), $authData);
-				}
-				else {
-					$response = PackageUpdateDispatcher::getInstance()->sendRequest($packageUpdateVersion['server'], array('packageName' => $packageUpdateVersion['package'], 'packageVersion' => $packageUpdateVersion['packageVersion']), $authData);
-				}
-				
-				// check response
-				// check http code
-				if ($response['httpStatusCode'] == 401) {
-					throw new PackageUpdateAuthorizationRequiredException($packageUpdateVersion['packageUpdateServerID'], (!empty($packageUpdateVersion['file']) ? $packageUpdateVersion['file'] : $packageUpdateVersion['server']), $response);
-				}
-				
-				if ($response['httpStatusCode'] != 200) {
-					throw new SystemException(WCF::getLanguage()->get('wcf.acp.packageUpdate.error.downloadFailed', array('$package' => $package)) . ' ('.$response['httpStatusLine'].')');
-				}
-				
-				// write content to tmp file
-				$filename = FileUtil::getTemporaryFilename('package_');
-				$file = new File($filename);
-				$file->write($response['content']);
-				$file->close();
-				unset($response['content']);
-				
-				// test package
-				$archive = new PackageArchive($filename);
-				$archive->openArchive();
-				$archive->getTar()->close();
-				
-				// cache download in session
-				PackageUpdateDispatcher::getInstance()->cacheDownload($package, $packageUpdateVersion['packageVersion'], $filename);
-				
-				return $filename;
+				$request->execute();
 			}
-			catch (PackageUpdateAuthorizationRequiredException $e) {
-				$authorizationRequiredException[] = $e;
+			catch (HTTPUnauthorizedException $e) {
+				throw new PackageUpdateUnauthorizedException($request, $this->packageUpdateServers[$packageUpdateVersion['packageUpdateServerID']], $packageUpdateVersion);
 			}
-			catch (SystemException $e) {
-				$systemExceptions[] = $e;
+			
+			$response = $request->getReply();
+			
+			// check response
+			// 401 = missing/invalid auth data, 403 = valid auth data, but unaccessible
+			if ($response['statusCode'] == 401 || $response['statusCode'] == 403) {
+				throw new PackageUpdateAuthorizationRequiredException($packageUpdateVersion['packageUpdateServerID'], (!empty($packageUpdateVersion['file']) ? $packageUpdateVersion['file'] : $packageUpdateVersion['server']), $response);
 			}
-		}
-		
-		if (!empty($authorizationRequiredException)) {
-			throw array_shift($authorizationRequiredException);
-		}
-		
-		if (!empty($systemExceptions)) {
-			throw array_shift($systemExceptions);
+			
+			if ($response['statusCode'] != 200) {
+				throw new SystemException(WCF::getLanguage()->get('wcf.acp.packageUpdate.error.downloadFailed', array('$package' => $package)) . ' ('.$response['body'].')');
+			}
+			
+			// write content to tmp file
+			$filename = FileUtil::getTemporaryFilename('package_');
+			$file = new File($filename);
+			$file->write($response['body']);
+			$file->close();
+			unset($response['body']);
+			
+			// test package
+			$archive = new PackageArchive($filename);
+			$archive->openArchive();
+			$archive->getTar()->close();
+			
+			// cache download in session
+			PackageUpdateDispatcher::getInstance()->cacheDownload($package, $packageUpdateVersion['packageVersion'], $filename);
+			
+			return $filename;
 		}
 		
 		return false;
@@ -426,6 +414,181 @@ class PackageInstallationScheduler {
 	 */
 	public function getPackageInstallationStack() {
 		return $this->packageInstallationStack;
+	}
+	
+	/**
+	 * Updates an existing package.
+	 * 
+	 * @param	integer		$packageID
+	 * @param	string		$version
+	 */
+	protected function updatePackage($packageID, $version) {
+		// get package info
+		$package = PackageCache::getInstance()->getPackage($packageID);
+		
+		// get current package version
+		$packageVersion = $package->packageVersion;
+		if (isset($this->virtualPackageVersions[$packageID])) {
+			$packageVersion = $this->virtualPackageVersions[$packageID];
+			// check virtual package version
+			if (Package::compareVersion($packageVersion, $version, '>=')) {
+				// virtual package version is greater than requested version
+				// skip package update
+				return;
+			}
+		}
+		
+		// get highest version of the required major release
+		if (preg_match('/(\d+\.\d+\.)/', $version, $match)) {
+			$packageVersions = array();
+			$sql = "SELECT	DISTINCT packageVersion
+				FROM	wcf".WCF_N."_package_update_version
+				WHERE	packageUpdateID IN (
+						SELECT	packageUpdateID
+						FROM	wcf".WCF_N."_package_update
+						WHERE	package = ?
+					)
+					AND packageVersion LIKE ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array(
+				$package->package,
+				$match[1].'%'
+			));
+			while ($row = $statement->fetchArray()) {
+				$packageVersions[] = $row['packageVersion'];
+			}
+			
+			if (count($packageVersions) > 1) {
+				// sort by version number
+				usort($packageVersions, array('wcf\data\package\Package', 'compareVersion'));
+				
+				// get highest version
+				$version = array_pop($packageVersions);
+			}
+		}
+		
+		// get all fromversion
+		$fromversions = array();
+		$sql = "SELECT		puv.packageVersion, puf.fromversion
+			FROM		wcf".WCF_N."_package_update_fromversion puf
+			LEFT JOIN	wcf".WCF_N."_package_update_version puv
+			ON		(puv.packageUpdateVersionID = puf.packageUpdateVersionID)
+			WHERE		puf.packageUpdateVersionID IN (
+						SELECT	packageUpdateVersionID
+						FROM	wcf".WCF_N."_package_update_version
+						WHERE 	packageUpdateID IN (
+							SELECT	packageUpdateID
+							FROM	wcf".WCF_N."_package_update
+							WHERE	package = ?
+						)
+					)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($package->package));
+		while ($row = $statement->fetchArray()) {
+			if (!isset($fromversions[$row['packageVersion']])) $fromversions[$row['packageVersion']] = array();
+			$fromversions[$row['packageVersion']][$row['fromversion']] = $row['fromversion'];
+		}
+		
+		// sort by version number
+		uksort($fromversions, array('wcf\data\package\Package', 'compareVersion'));
+		
+		// find shortest update thread
+		$updateThread = $this->findShortestUpdateThread($package->package, $fromversions, $packageVersion, $version);
+		
+		// process update thread
+		foreach ($updateThread as $fromversion => $toVersion) {
+			$packageUpdateVersions = PackageUpdateDispatcher::getInstance()->getPackageUpdateVersions($package->package, $toVersion);
+			
+			// resolve requirements
+			$this->resolveRequirements($packageUpdateVersions[0]['packageUpdateVersionID']);
+			
+			// download package
+			$download = $this->downloadPackage($package->package, $packageUpdateVersions);
+			
+			// add to stack
+			$this->packageInstallationStack[] = array(
+				'packageName' => $package->getName(),
+				'fromversion' => $fromversion,
+				'toVersion' => $toVersion,
+				'package' => $package->package,
+				'packageID' => $packageID,
+				'archive' => $download,
+				'action' => 'update'
+			);
+			
+			// update virtual versions
+			$this->virtualPackageVersions[$packageID] = $toVersion;
+		}
+	}
+	
+	/**
+	 * Determines intermediate update steps using a backtracking algorithm in case there is no direct upgrade possible.
+	 *
+	 * @param	string		$package		package identifier
+	 * @param	array		$fromversions		list of all fromversions
+	 * @param	string		$currentVersion		current package version
+	 * @param	string		$newVersion		new package version
+	 * @return	array		list of update steps (old version => new version, old version => new version, ...)
+	 */
+	protected function findShortestUpdateThread($package, $fromversions, $currentVersion, $newVersion) {
+		if (!isset($fromversions[$newVersion])) {
+			throw new SystemException("An update of package ".$package." from version ".$currentVersion." to ".$newVersion." is not supported.");
+		}
+		
+		// find direct update
+		foreach ($fromversions[$newVersion] as $fromversion) {
+			if (Package::checkFromversion($currentVersion, $fromversion)) {
+				return array($currentVersion => $newVersion);
+			}
+		}
+		
+		// find intermediate update
+		$packageVersions = array_keys($fromversions);
+		$updateThreadList = array();
+		foreach ($fromversions[$newVersion] as $fromversion) {
+			$innerUpdateThreadList = array();
+			// find matching package versions
+			foreach ($packageVersions as $packageVersion) {
+				if (Package::checkFromversion($packageVersion, $fromversion) && Package::compareVersion($packageVersion, $currentVersion, '>') && Package::compareVersion($packageVersion, $newVersion, '<')) {
+					$innerUpdateThreadList[] = $this->findShortestUpdateThread($package, $fromversions, $currentVersion, $packageVersion) + array($packageVersion => $newVersion);
+				}
+			}
+			
+			if (!empty($innerUpdateThreadList)) {
+				// sort by length
+				usort($innerUpdateThreadList, array($this, 'compareUpdateThreadLists'));
+				
+				// add to thread list
+				$updateThreadList[] = array_shift($innerUpdateThreadList);
+			}
+		}
+		
+		if (empty($updateThreadList)) {
+			throw new SystemException("An update of package ".$package." from version ".$currentVersion." to ".$newVersion." is not supported.");
+		}
+		
+		// sort by length
+		usort($updateThreadList, array($this, 'compareUpdateThreadLists'));
+		
+		// take shortest
+		return array_shift($updateThreadList);
+	}
+	
+	/**
+	 * Compares the length of two updates threads.
+	 *
+	 * @param	array		$updateThreadListA
+	 * @param	array		$updateThreadListB
+	 * @return	integer
+	 */
+	protected function compareUpdateThreadLists($updateThreadListA, $updateThreadListB) {
+		$countA = count($updateThreadListA);
+		$countB = count($updateThreadListB);
+		
+		if ($countA < $countB) return -1;
+		if ($countA > $countB) return 1;
+		
+		return 0;
 	}
 	
 	/**

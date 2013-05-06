@@ -1,18 +1,7 @@
-{include file='header' pageTitle='wcf.acp.language.add'}
-
-<script type="text/javascript">
-	//<![CDATA[
-	$(function() {
-		new WCF.ToggleOptions('import', [ 'importDiv' ], [ 'copyDiv' ]);
-		new WCF.ToggleOptions('copy', [ 'copyDiv' ], [ 'importDiv' ]);
-	});
-	//]]>
-</script>
+{include file='header' pageTitle="wcf.acp.language.$action"}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.language.add{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.language.{@$action}{/lang}</h1>
 </header>
 
 {if $errorField}
@@ -20,86 +9,49 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.success.add{/lang}</p>
+	<p class="success">{lang}wcf.global.success.{@$action}{/lang}</p>
 {/if}
 
 <div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{if $__wcf->session->getPermission('admin.language.canDeleteLanguage') || $__wcf->session->getPermission('admin.language.canEditLanguage')}
-						<li><a href="{link controller='LanguageList'}{/link}" title="{lang}wcf.acp.menu.link.language.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
-					{/if}
-					
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav>
+		<ul>
+			<li><a href="{link controller='LanguageList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.language.list{/lang}</span></a></li>
+				
+			{event name='contentNavigationButtons'}
+		</ul>
+	</nav>
 </div>
 
-<form enctype="multipart/form-data" method="post" action="{link controller='LanguageAdd'}{/link}">
+<form method="post" action="{if $action == 'edit'}{link controller='LanguageEdit' id=$languageID}{/link}{else}{link controller='LanguageAdd'}{/link}{/if}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
-			<legend>{lang}wcf.acp.language.add.mode{/lang}</legend>
+			<legend>{lang}wcf.global.form.data{/lang}</legend>
 			
-			<dl>
-				<dd class="floated">
-					<label><input type="radio" name="mode" value="import" id="import" {if $mode == 'import'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.import{/lang}</label>
-					<label><input type="radio" name="mode" value="copy" id="copy" {if $mode == 'copy'}checked="checked" {/if}/> {lang}wcf.acp.language.add.mode.copy{/lang}</label>
-				</dd>
-			</dl>
-			
-			{event name='modeFields'}
-		</fieldset>
-		
-		<fieldset id="importDiv">
-			<legend>{lang}wcf.acp.language.import.source{/lang}</legend>
-			
-			<dl{if $errorField == 'languageFile'} class="formError"{/if}>
-				<dt><label for="languageFile">{lang}wcf.acp.language.import.source.file{/lang}</label></dt>
+			<dl{if $errorField == 'languageName'} class="formError"{/if}>
+				<dt><label for="languageName">{lang}wcf.global.name{/lang}</label></dt>
 				<dd>
-					<input type="text" id="languageFile" name="languageFile" value="{$languageFile}" class="long" />
-					{if $errorField == 'languageFile'}
+					<input type="text" id="languageName" name="languageName" value="{$languageName}" class="long" required="required" />
+					{if $errorField == 'languageName'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
-								{lang}wcf.global.error.empty{/lang}
+								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-								{lang}wcf.acp.language.import.error{/lang} {$errorType}
+								{lang}wcf.acp.language.add.languageName.error.{@$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.language.import.source.file.description{/lang}</small>
+					<small>{lang}wcf.acp.language.name.description{/lang}</small>
 				</dd>
 			</dl>
-			
-			<dl{if $errorField == 'languageUpload'} class="formError"{/if}>
-				<dt><label for="languageUpload">{lang}wcf.acp.language.import.source.upload{/lang}</label></dt>
-				<dd>
-					<input type="file" id="languageUpload" name="languageUpload" />
-					{if $errorField == 'languageUpload'}
-						<small class="innerError">
-							{lang}wcf.acp.language.import.error{/lang} {$errorType}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-			
-			{event name='importFields'}
-		</fieldset>
-		
-		<fieldset id="copyDiv">
-			<legend>{lang}wcf.acp.language.add.new{/lang}</legend>
 			
 			<dl{if $errorField == 'languageCode'} class="formError"{/if}>
 				<dt><label for="languageCode">{lang}wcf.acp.language.code{/lang}</label></dt>
 				<dd>
-					<input type="text" id="languageCode" name="languageCode" value="{$languageCode}" class="long" />
+					<input type="text" id="languageCode" name="languageCode" value="{$languageCode}" class="medium" required="required" />
 					{if $errorField == 'languageCode'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
-								{lang}wcf.global.error.empty{/lang}
+								{lang}wcf.global.form.error.empty{/lang}
 							{else}
 								{lang}wcf.acp.language.add.languageCode.error.{@$errorType}{/lang}
 							{/if}
@@ -109,27 +61,30 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'sourceLanguageID'} class="formError"{/if}>
-				<dt><label for="sourceLanguageID">{lang}wcf.acp.language.add.source{/lang}</label></dt>
-				<dd>
-					<select id="sourceLanguageID" name="sourceLanguageID">
-						{foreach from=$languages item=language}
-							<option value="{@$language->languageID}"{if $language->languageID == $sourceLanguageID} selected="selected"{/if}>{$language->languageName} ({$language->languageCode})</option>
-						{/foreach}
-					</select>
-					{if $errorField == 'sourceLanguageID'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.error.empty{/lang}
-							{else}
-								{lang}wcf.acp.language.add.source.error.{@$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-				</dd>
-			</dl>
+			{if $action == 'add'}
+				<dl{if $errorField == 'sourceLanguageID'} class="formError"{/if}>
+					<dt><label for="sourceLanguageID">{lang}wcf.acp.language.add.source{/lang}</label></dt>
+					<dd>
+						<select id="sourceLanguageID" name="sourceLanguageID">
+							{foreach from=$languages item=language}
+								<option value="{@$language->languageID}"{if $language->languageID == $sourceLanguageID} selected="selected"{/if}>{$language->languageName} ({$language->languageCode})</option>
+							{/foreach}
+						</select>
+						{if $errorField == 'sourceLanguageID'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.language.add.source.error.{@$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
+						<small>{lang}wcf.acp.language.add.source.description{/lang}</small>
+					</dd>
+				</dl>
+			{/if}
 			
-			{event name='copyFields'}
+			{event name='fields'}
 		</fieldset>
 		
 		{event name='fieldsets'}

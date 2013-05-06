@@ -1,9 +1,7 @@
 {include file='header' pageTitle='wcf.acp.user.assignToGroup'}
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.user.assignToGroup{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.user.assignToGroup{/lang}</h1>
 </header>
 
 {if $errorField}
@@ -37,7 +35,7 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 			
-			<dl{if $errorField == 'groupIDs'} class="wcf-formError"{/if}>
+			<dl{if $errorField == 'groupIDs'} class="formError"{/if}>
 				<dd>
 					{htmlCheckboxes options=$groups name=groupIDs selected=$groupIDs}
 					{if $errorField == 'groupIDs'}

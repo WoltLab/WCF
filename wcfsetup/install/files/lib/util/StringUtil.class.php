@@ -21,10 +21,16 @@ final class StringUtil {
 	const HTML_COMMENT_PATTERN = '~<!--(.*?)-->~';
 	
 	/**
-	 * utf8 bytes of the horizontal ellipsis char
+	 * utf8 bytes of the HORIZONTAL ELLIPSIS (U+2026)
 	 * @var	string
 	 */
 	const HELLIP = "\xE2\x80\xA6";
+	
+	/**
+	 * utf8 bytes of the MINUS SIGN (U+2212)
+	 * @var	string
+	 */
+	const MINUS = "\xE2\x88\x92";
 	
 	/**
 	 * Alias to php sha1() function.
@@ -115,6 +121,8 @@ final class StringUtil {
 	public static function encodeJSON($string) {
 		$string = self::encodeJS($string);
 		
+		$string = self::encodeHTML($string);
+		
 		// single quotes must be encoded as HTML entity
 		$string = self::replace("\'", "&#39;", $string);
 		
@@ -139,17 +147,19 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function formatNumeric($numeric) {
-		if (is_int($numeric)) 
+		if (is_int($numeric)) {
 			return self::formatInteger($numeric);
-			
-		else if (is_float($numeric))
+		}
+		else if (is_float($numeric)) {
 			return self::formatDouble($numeric);
-			
+		}
 		else {
-			if (floatval($numeric) - (float) intval($numeric))
+			if (floatval($numeric) - (float) intval($numeric)) {
 				return self::formatDouble($numeric);
-			else 
+			}
+			else {
 				return self::formatInteger(intval($numeric));
+			}
 		}
 	}
 	
@@ -161,6 +171,9 @@ final class StringUtil {
 	 */
 	public static function formatInteger($integer) {
 		$integer = self::addThousandsSeparator($integer);
+		
+		// format minus
+		$integer = self::formatNegative($integer);
 		
 		return $integer;
 	}
@@ -190,6 +203,9 @@ final class StringUtil {
 		// add thousands separator
 		$double = self::addThousandsSeparator($double);
 		
+		// format minus
+		$double = self::formatNegative($double);
+		
 		return $double;
 	}
 	
@@ -205,6 +221,16 @@ final class StringUtil {
 		}
 		
 		return $number;
+	}
+	
+	/**
+	 * Replaces the MINUS-HYPHEN with the MINUS SIGN
+	 * 
+	 * @param	mixed		$number
+	 * @return	string
+	 */
+	public static function formatNegative($number) {
+		return self::replace('-', self::MINUS, $number);
 	}
 	
 	/**
@@ -701,6 +727,38 @@ final class StringUtil {
 	 */
 	public static function splitIntoChunks($string, $length = 75, $break = "\r\n") {
 		return mb_ereg_replace('.{'.$length.'}', "\\0".$break, $string);
+	}
+	
+	/**
+	 * Simple multi-byte safe wordwrap() function.
+	 * 
+	 * @param 	string		$string
+	 * @param	integer		$width
+	 * @param	string		$break
+	 * @return	string
+	 */
+	public static function wordwrap($string, $width = 50, $break = ' ') {
+		$result = '';
+		$substrings = explode($break, $string);
+		
+		foreach ($substrings as $substring) {
+			$length = self::length($substring);
+			if ($length > $width) {
+				$j = ceil($length / $width);
+				
+				for ($i = 0; $i < $j; $i++) {
+					if (!empty($result)) $result .= $break;
+					if ($width * ($i + 1) > $length) $result .= self::substring($substring, $width * $i);
+					else $result .= self::substring($substring, $width * $i, $width);
+				}
+			}
+			else {
+				if (!empty($result)) $result .= $break;
+				$result .= $substring;
+			}
+		}
+		
+		return $result;
 	}
 	
 	private function __construct() { }

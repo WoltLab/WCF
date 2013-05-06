@@ -11,10 +11,8 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{$package->getName()}</h1>
-		<h2>{$package->packageDescription|language}</h2>
-	</hgroup>
+	<h1>{$package->getName()}</h1>
+	<p>{$package->packageDescription|language}</p>
 </header>
 
 <div class="contentNavigation">
@@ -113,10 +111,10 @@
 			
 			{hascontent}
 				<div id="dependencies-required" class="tabularBox tabularBoxTitle hidden">
-					<hgroup>
-						<h1>{lang}wcf.acp.package.dependencies.required{/lang}</h1>
-						<h2>{lang}wcf.acp.package.dependencies.required.description{/lang}</h2>
-					</hgroup>
+					<header>
+						<h2>{lang}wcf.acp.package.dependencies.required{/lang}</h2>
+						<small>{lang}wcf.acp.package.dependencies.required.description{/lang}</small>
+					</header>
 					
 					<table class="table">
 						<thead>
@@ -136,20 +134,17 @@
 								{foreach from=$package->getRequiredPackages() item=requiredPackage}
 									<tr class="jsPackageRow">
 										<td class="columnIcon">
-											{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-												<a href="{link controller='PackageStartInstall' id=$requiredPackage->packageID}action=update{/link}" title="{lang}wcf.acp.package.button.update{/lang}" class="jsTooltip"><span class="icon icon16 icon-repeat"></span></a>
-											{/if}
 											{if $requiredPackage->canUninstall()}
 												<span class="icon icon16 icon-remove pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-objectID="{@$requiredPackage->packageID}" data-confirm-message="{lang package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}"></span>
 											{else}
 												<span class="icon icon16 icon-remove disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
 											{/if}
 										</td>
-										<td class="columnID"><p>{@$requiredPackage->packageID}</p></td>
-										<td class="columnTitle" title="{$requiredPackage->packageDescription|language}"><p><a href="{link controller='Package' id=$requiredPackage->packageID}{/link}">{$requiredPackage}</a></p></td>
-										<td class="columnText">{if $requiredPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage->authorURL|rawurlencode}" class="externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}</p>{/if}</td>
-										<td class="columnText"><p>{$requiredPackage->packageVersion}</p></td>
-										<td class="columnDate"><p>{@$requiredPackage->packageDate|date}</p></td>
+										<td class="columnID">{@$requiredPackage->packageID}</td>
+										<td class="columnTitle" title="{$requiredPackage->packageDescription|language}"><a href="{link controller='Package' id=$requiredPackage->packageID}{/link}">{$requiredPackage}</a></td>
+										<td class="columnText">{if $requiredPackage->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage->authorURL|rawurlencode}" class="externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}{/if}</td>
+										<td class="columnText">{$requiredPackage->packageVersion}</td>
+										<td class="columnDate">{@$requiredPackage->packageDate|date}</td>
 										
 										{event name='requirementColumns'}
 									</tr>
@@ -162,10 +157,10 @@
 			
 			{hascontent}
 				<div id="dependencies-dependent" class="tabularBox tabularBoxTitle hidden">
-					<hgroup>
-						<h1>{lang}wcf.acp.package.dependencies.dependent{/lang}</h1>
-						<h2>{lang}wcf.acp.package.dependencies.dependent.description{/lang}</h2>
-					</hgroup>
+					<header>
+						<h2>{lang}wcf.acp.package.dependencies.dependent{/lang}</h2>
+						<small>{lang}wcf.acp.package.dependencies.dependent.description{/lang}</small>
+					</header>
 					
 					<table class="table">
 						<thead>
@@ -185,20 +180,17 @@
 								{foreach from=$package->getDependentPackages() item=dependentPackage}
 									<tr class="jsPackageRow">
 										<td class="columnIcon">
-											{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-												<a href="{link controller='PackageStartInstall' id=$dependentPackage->packageID}action=update{/link}" title="{lang}wcf.acp.package.button.update{/lang}" class="jsTooltip"><span class="icon icon16 icon-repeat"></span></a>
-											{/if}
 											{if $dependentPackage->canUninstall()}
 												<span class="icon icon16 icon-remove pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-objectID="{@$dependentPackage->packageID}" data-confirm-message="{lang package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}"></span>
 											{else}
 												<span class="icon icon16 icon-remove disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
 											{/if}
 										</td>
-										<td class="columnID"><p>{@$dependentPackage->packageID}</p></td>
-										<td class="columnTitle" title="{$dependentPackage->packageDescription|language}"><p><a href="{link controller='Package' id=$dependentPackage->packageID}{/link}">{$dependentPackage}</a></p></td>
-										<td class="columnText">{if $dependentPackage->authorURL}<p><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$dependentPackage->authorURL|rawurlencode}" class="externalURL">{$dependentPackage->author}</a>{else}{$dependentPackage->author}</p>{/if}</td>
-										<td class="columnText"><p>{$dependentPackage->packageVersion}</p></td>
-										<td class="columnDate"><p>{@$dependentPackage->packageDate|date}</p></td>
+										<td class="columnID">{@$dependentPackage->packageID}</td>
+										<td class="columnTitle" title="{$dependentPackage->packageDescription|language}"><a href="{link controller='Package' id=$dependentPackage->packageID}{/link}">{$dependentPackage}</a></td>
+										<td class="columnText">{if $dependentPackage->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$dependentPackage->authorURL|rawurlencode}" class="externalURL">{$dependentPackage->author}</a>{else}{$dependentPackage->author}{/if}</td>
+										<td class="columnText">{$dependentPackage->packageVersion}</td>
+										<td class="columnDate">{@$dependentPackage->packageDate|date}</td>
 										
 										{event name='dependencyColumns'}
 									</tr>
@@ -219,19 +211,13 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			{if PACKAGE_ID != $package->packageID}
-				{if $package->canUninstall()}
-					{* TODO: maybe show users that this package can't be uninstalled because a dependent package is the active application *}
-					<li><a href="{link controller='Package'}action=startUninstall&packageID={@$package->packageID}{/link}" onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" title="{lang}wcf.acp.package.button.uninstall{/lang}" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></a></li>
-				{/if}
-			{/if}
-			{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
-				<li><a href="{link controller='PackageStartInstall' id=$package->packageID}action=update{/link}" title="{lang}wcf.acp.package.button.update{/lang}" class="button"><span class="icon icon16 icon-repeat"></span> <span>{lang}wcf.acp.package.button.update{/lang}</span></a></li>
+			{if PACKAGE_ID != $package->packageID && $package->canUninstall()}
+				<li><a href="{link controller='Package'}action=startUninstall&packageID={@$package->packageID}{/link}" onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></a></li>
 			{/if}
 			
 			{event name='contentNavigationButtonsBottom'}
 			
-			<li><a href="{link controller='PackageList'}{/link}" title="{lang}wcf.acp.menu.link.package.list{/lang}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
+			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 		</ul>
 	</nav>
 </div>

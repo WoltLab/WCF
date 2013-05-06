@@ -44,6 +44,18 @@ class UserEditForm extends UserAddForm {
 	public $user = null;
 	
 	/**
+	 * ban status
+	 * @var boolean
+	 */
+	public $banned = 0;
+	
+	/**
+	 * ban reason
+	 * @var string
+	 */
+	public $banReason = '';
+	
+	/**
 	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -76,6 +88,9 @@ class UserEditForm extends UserAddForm {
 		
 		if (!WCF::getSession()->getPermission('admin.user.canEditPassword')) $this->password = $this->confirmPassword = '';
 		if (!WCF::getSession()->getPermission('admin.user.canEditMailAddress')) $this->email = $this->confirmEmail = $this->user->email;
+		
+		if (!empty($_POST['banned'])) $this->banned = 1;
+		if (isset($_POST['banReason'])) $this->banReason = StringUtil::trim($_POST['banReason']);
 	}
 	
 	/**
@@ -108,6 +123,8 @@ class UserEditForm extends UserAddForm {
 		$this->email = $this->confirmEmail = $this->user->email;
 		$this->groupIDs = $this->user->getGroupIDs(true);
 		$this->languageID = $this->user->languageID;
+		$this->banned = $this->user->banned;
+		$this->banReason = $this->user->banReason;
 	}
 	
 	/**
@@ -121,7 +138,9 @@ class UserEditForm extends UserAddForm {
 			'action' => 'edit',
 			'url' => '',
 			'markedUsers' => 0,
-			'user' => $this->user
+			'user' => $this->user,
+			'banned' => $this->banned,
+			'banReason' => $this->banReason
 		));
 	}
 	
@@ -144,11 +163,17 @@ class UserEditForm extends UserAddForm {
 		// save user
 		$saveOptions = $this->optionHandler->save();
 		$this->additionalFields['languageID'] = $this->languageID;
+		if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
+			$this->additionalFields['banned'] = $this->banned;
+			$this->additionalFields['banReason'] = $this->banReason;
+		}
 		$data = array(
 			'data' => array_merge($this->additionalFields, array(
 				'username' => $this->username,
 				'email' => $this->email,
 				'password' => $this->password,
+				'banned' => $this->banned,
+				'banReason' => $this->banReason
 			)),
 			'groups' => $this->groupIDs,
 			'languages' => $this->visibleLanguages,

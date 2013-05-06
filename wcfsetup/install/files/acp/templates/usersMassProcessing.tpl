@@ -61,9 +61,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.user.massProcessing{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.user.massProcessing{/lang}</h1>
 </header>
 
 {if $errorField}

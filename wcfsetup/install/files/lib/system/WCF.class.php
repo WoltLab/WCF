@@ -88,6 +88,12 @@ class WCF {
 	protected static $languageObj = null;
 	
 	/**
+	 * overrides disabled debug mode
+	 * @var	boolean
+	 */
+	protected static $overrideDebugMode = false;
+	
+	/**
 	 * session object
 	 * @var	wcf\system\session\SessionHandler
 	 */
@@ -461,15 +467,15 @@ class WCF {
 				throw new SystemException('Unable to load configuration for '.$package->package);
 			}
 			
-			// start application if not within ACP
+			// register template path if not within ACP
 			if (!class_exists('wcf\system\WCFACP', false)) {
 				// add template path and abbreviation
 				$this->getTPL()->addApplication($abbreviation, $packageDir . 'templates/');
-				
-				// init application and assign it as template variable
-				$applicationObject = call_user_func(array($className, 'getInstance'));
-				$this->getTPL()->assign('__'.$abbreviation, $applicationObject);
 			}
+			
+			// init application and assign it as template variable
+			$applicationObject = call_user_func(array($className, 'getInstance'));
+			$this->getTPL()->assign('__'.$abbreviation, $applicationObject);
 		}
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
@@ -618,7 +624,14 @@ class WCF {
 	 * @return	boolean
 	 */
 	public static function debugModeIsEnabled() {
-		if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE) return true;
+		// ACP override
+		if (self::$overrideDebugMode) {
+			return true;
+		}
+		else if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE) {
+			return true;
+		}
+		
 		return false;
 	}
 	

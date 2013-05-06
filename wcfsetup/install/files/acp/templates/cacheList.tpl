@@ -9,9 +9,7 @@
 </script>
 
 <header class="boxHeadline">
-	<hgroup>
-		<h1>{lang}wcf.acp.cache.list{/lang}</h1>
-	</hgroup>
+	<h1>{lang}wcf.acp.cache.list{/lang}</h1>
 </header>
 
 <div class="container containerPadding marginTop">
@@ -63,10 +61,10 @@
 		
 		{if $files|count}
 			<div class="tabularBox tabularBoxTitle marginTop">
-				<hgroup>
-					<h1><a class="jsCollapsible jsTooltip" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 icon-chevron-right"></span></a> {lang}wcf.acp.cache.type.{$cacheType}{/lang} <span class="badge badgeInverse">{#$files|count}</span></h1>
-					<h2>{$cache}</h2>
-				</hgroup>
+				<header>
+					<h2><a class="jsCollapsible jsTooltip" data-is-open="0" data-collapsible-container="cache{@$cacheIndex}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 icon-chevron-right"></span></a> {lang}wcf.acp.cache.type.{$cacheType}{/lang} <span class="badge badgeInverse">{#$files|count}</span></h2>
+					<small>{$cache}</small>
+				</header>
 				
 				<table id="cache{@$cacheIndex}" style="display: none;" class="table">
 					<thead>
@@ -83,11 +81,11 @@
 					<tbody>
 						{foreach from=$files item=file}
 							<tr>
-								<td class="columnTitle"><p>{$file.filename}</td>
-								<td class="columnDigits"><p>{@$file.filesize|filesize}</td>
-								<td class="columnDate">{if $file.mtime > 1}<p>{@$file.mtime|time}</p>{/if}</td>
+								<td class="columnTitle">{$file.filename}</td>
+								<td class="columnDigits">{@$file.filesize|filesize}</td>
+								<td class="columnDate">{if $file.mtime > 1}{@$file.mtime|time}{/if}</td>
 								{if $file.perm|isset}
-									<td class="columnDigits"><p{if !$file.writable} style="color: #c00"{/if}>{@$file.perm}</p></td>
+									<td class="columnDigits"><span{if !$file.writable} class="hot"{/if}>{@$file.perm}</span></td>
 								{/if}
 							</tr>
 						{/foreach}

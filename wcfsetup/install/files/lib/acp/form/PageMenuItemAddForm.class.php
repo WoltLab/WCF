@@ -239,8 +239,10 @@ class PageMenuItemAddForm extends AbstractForm {
 		$this->menuItemController = $this->menuItemLink = $this->pageMenuItem = $this->parentMenuItem = '';
 		$this->showOrder = 0;
 		
+		I18nHandler::getInstance()->reset();
+		
 		// reload parent menu items
-		if ($menuItem->menuPosition == 'header' && $menuItem->parentMenuItem != '') {
+		if ($menuItem->menuPosition == 'header' && $menuItem->parentMenuItem == '') {
 			$this->readAvailableParentMenuItems();
 		}
 	}

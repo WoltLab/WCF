@@ -81,14 +81,36 @@ String.prototype.hashCode = function() {
 };
 
 /**
- * jQuery.browser.mobile (http://detectmobilebrowser.com/)
- * 
- * jQuery.browser.mobile will be true if the browser is a mobile device
- **/
-(function(a){(jQuery.browser=jQuery.browser||{}).mobile=/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))})(navigator.userAgent||navigator.vendor||window.opera);
-
+ * User-Agent based browser detection and touch detection.
+ */
 (function() {
-	jQuery.browser = jQuery.browser || { };
+	var ua = navigator.userAgent.toLowerCase();
+	var match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+		/(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+		/(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+		/(msie) ([\w.]+)/.exec( ua ) ||
+		ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+		[];
+	
+	var matched = {
+		browser: match[ 1 ] || "",
+		version: match[ 2 ] || "0"
+	};
+	browser = {};
+	
+	if ( matched.browser ) {
+		browser[ matched.browser ] = true;
+		browser.version = matched.version;
+	}
+	
+	// Chrome is Webkit, but Webkit is also Safari.
+	if ( browser.chrome ) {
+		browser.webkit = true;
+	} else if ( browser.webkit ) {
+		browser.safari = true;
+	}
+	
+	jQuery.browser = browser;
 	jQuery.browser.touch = (!!('ontouchstart' in window) || !!('msmaxtouchpoints' in window.navigator));
 })();
 
@@ -180,10 +202,7 @@ $.fn.extend({
 		
 		// show element to retrieve dimensions and restore them later
 		if (this.is(':hidden')) {
-			css = {
-				display: this.css('display'),
-				visibility: this.css('visibility')
-			};
+			css = WCF.getInlineCSS(this);
 			
 			wasHidden = true;
 			
@@ -218,7 +237,7 @@ $.fn.extend({
 		
 		// restore previous settings
 		if (wasHidden) {
-			this.css(css);
+			WCF.revertInlineCSS(this, css, [ 'display', 'visibility' ]);
 		}
 		
 		return dimensions;
@@ -238,11 +257,7 @@ $.fn.extend({
 		
 		// show element to retrieve dimensions and restore them later
 		if (this.is(':hidden')) {
-			css = {
-				display: this.css('display'),
-				visibility: this.css('visibility')
-			};
-			
+			css = WCF.getInlineCSS(this);
 			wasHidden = true;
 			
 			this.css({
@@ -264,7 +279,7 @@ $.fn.extend({
 		
 		// restore previous settings
 		if (wasHidden) {
-			this.css(css);
+			WCF.revertInlineCSS(this, css, [ 'display', 'visibility' ]);
 		}
 		
 		return offsets;
@@ -558,6 +573,57 @@ $.extend(WCF, {
 		}
 		
 		return effect;
+	},
+	
+	/**
+	 * Returns inline CSS for given element.
+	 * 
+	 * @param	jQuery		element
+	 * @return	object
+	 */
+	getInlineCSS: function(element) {
+		var $inlineStyles = { };
+		var $style = element.attr('style');
+		
+		// no style tag given or empty
+		if (!$style) {
+			return { };
+		}
+		
+		$style = $style.split(';');
+		for (var $i = 0, $length = $style.length; $i < $length; $i++) {
+			var $fragment = $.trim($style[$i]);
+			if ($fragment == '') {
+				continue;
+			}
+			
+			$fragment = $fragment.split(':');
+			$inlineStyles[$.trim($fragment[0])] = $.trim($fragment[1]);
+		}
+		
+		return $inlineStyles;
+	},
+	
+	/**
+	 * Reverts inline CSS or negates a previously set property.
+	 * 
+	 * @param	jQuery		element
+	 * @param	object		inlineCSS
+	 * @param	array<string>	targetProperties
+	 */
+	revertInlineCSS: function(element, inlineCSS, targetProperties) {
+		for (var $i = 0, $length = targetProperties.length; $i < $length; $i++) {
+			var $property = targetProperties[$i];
+			
+			// revert inline CSS
+			if (inlineCSS[$property]) {
+				element.css($property, inlineCSS[$property]);
+			}
+			else {
+				// negate inline CSS
+				element.css($property, '');
+			}
+		}
 	}
 });
 
@@ -831,6 +897,12 @@ WCF.Clipboard = {
 	_page: '',
 	
 	/**
+	 * current page's object id
+	 * @var	integer
+	 */
+	_pageObjectID: 0,
+	
+	/**
 	 * proxy object
 	 * @var	WCF.Action.Proxy
 	 */
@@ -844,16 +916,17 @@ WCF.Clipboard = {
 	
 	/**
 	 * Initializes the clipboard API.
+	 * 
+	 * @param	string		page
+	 * @param	integer		hasMarkedItems
+	 * @param	object		actionObjects
+	 * @param	integer		pageObjectID
 	 */
-	init: function(page, hasMarkedItems, actionObjects) {
+	init: function(page, hasMarkedItems, actionObjects, pageObjectID) {
 		this._page = page;
-		this._actionObjects = actionObjects;
-		if (!actionObjects) {
-			this._actionObjects = {};
-		}
-		if (hasMarkedItems) {
-			this._hasMarkedItems = true;
-		}
+		this._actionObjects = actionObjects || { };
+		this._hasMarkedItems = (hasMarkedItems > 0);
+		this._pageObjectID = parseInt(pageObjectID) || 0;
 		
 		this._actionProxy = new WCF.Action.Proxy({
 			success: $.proxy(this._actionSuccess, this),
@@ -891,7 +964,8 @@ WCF.Clipboard = {
 			autoSend: true,
 			data: {
 				containerData: this._containerData,
-				pageClassName: this._page
+				pageClassName: this._page,
+				pageObjectID: this._pageObjectID
 			},
 			success: $.proxy(this._loadMarkedItemsSuccess, this),
 			url: 'index.php/ClipboardLoadMarkedItems/?t=' + SECURITY_TOKEN + SID_ARG_2ND
@@ -947,7 +1021,7 @@ WCF.Clipboard = {
 					
 					$container.find('input.jsClipboardItem').each(function(itemIndex, item) {
 						var $item = $(item);
-						if (!$item.attr('checked')) {
+						if (!$item.prop('checked')) {
 							$allItemsMarked = false;
 						}
 					});
@@ -1018,7 +1092,7 @@ WCF.Clipboard = {
 	_click: function(event) {
 		var $item = $(event.target);
 		var $objectID = $item.data('objectID');
-		var $isMarked = ($item.attr('checked')) ? true : false;
+		var $isMarked = ($item.prop('checked')) ? true : false;
 		var $objectIDs = [ $objectID ];
 		
 		if ($isMarked) {
@@ -1039,7 +1113,7 @@ WCF.Clipboard = {
 			var $markedAll = true;
 			$container.find('input.jsClipboardItem').each(function(index, containerItem) {
 				var $containerItem = $(containerItem);
-				if (!$containerItem.attr('checked')) {
+				if (!$containerItem.prop('checked')) {
 					$markedAll = false;
 				}
 			});
@@ -1074,7 +1148,7 @@ WCF.Clipboard = {
 		
 		// if markAll object is a checkbox, allow toggling
 		if ($item.is('input')) {
-			$isMarked = $item.attr('checked');
+			$isMarked = $item.prop('checked');
 		}
 		
 		// handle item containers
@@ -1087,14 +1161,14 @@ WCF.Clipboard = {
 				var $containerItem = $(containerItem);
 				var $objectID = $containerItem.data('objectID');
 				if ($isMarked) {
-					if (!$containerItem.attr('checked')) {
+					if (!$containerItem.prop('checked')) {
 						$containerItem.attr('checked', 'checked');
 						this._markedObjectIDs.push($objectID);
 						$objectIDs.push($objectID);
 					}
 				}
 				else {
-					if ($containerItem.attr('checked')) {
+					if ($containerItem.prop('checked')) {
 						$containerItem.removeAttr('checked');
 						this._markedObjectIDs = $.removeArrayValue(this._markedObjectIDs, $objectID);
 						$objectIDs.push($objectID);
@@ -1127,6 +1201,7 @@ WCF.Clipboard = {
 			containerData: this._containerData,
 			objectIDs: objectIDs,
 			pageClassName: this._page,
+			pageObjectID: this._pageObjectID,
 			type: type
 		});
 		this._proxy.sendRequest();
@@ -1182,10 +1257,6 @@ WCF.Clipboard = {
 			for (var $itemIndex in $editor.items) {
 				var $item = $editor.items[$itemIndex];
 				
-				if ($item.actionName === 'unmarkAll') {
-					$('<li class="dropdownDivider" />').appendTo($itemList);
-				}
-				
 				var $listItem = $('<li><span>' + $item.label + '</span></li>').appendTo($itemList);
 				$listItem.data('objectType', $typeName);
 				$listItem.data('actionName', $item.actionName).data('parameters', $item.parameters);
@@ -1194,6 +1265,29 @@ WCF.Clipboard = {
 				// bind event
 				$listItem.click($.proxy(this._executeAction, this));
 			}
+			
+			// add 'unmark all'
+			$('<li class="dropdownDivider" />').appendTo($itemList);
+			$('<li><span>' + WCF.Language.get('wcf.clipboard.item.unmarkAll') + '</span></li>').appendTo($itemList).click($.proxy(function() {
+				this._proxy.setOption('data', {
+					action: 'unmarkAll',
+					type: $typeName
+				});
+				this._proxy.setOption('success', $.proxy(function(data, textStatus, jqXHR) {
+					for (var $__containerID in this._containers) {
+						var $__container = $(this._containers[$__containerID]);
+						if ($__container.data('type') == $typeName) {
+							$__container.find('.jsClipboardMarkAll, .jsClipboardItem').removeAttr('checked');
+							break;
+						}
+					}
+					
+					// call and restore success method
+					this._success(data, textStatus, jqXHR);
+					this._proxy.setOption('success', $.proxy(this._success, this));
+				}, this));
+				this._proxy.sendRequest();
+			}, this));
 			
 			// block click event
 			$container.click(function(event) {
@@ -1486,6 +1580,7 @@ WCF.Action.Proxy = Class.extend({
 			after: null,
 			init: null,
 			jsonp: 'callback',
+			async: true,
 			failure: null,
 			showLoadingOverlay: true,
 			success: null,
@@ -1518,6 +1613,7 @@ WCF.Action.Proxy = Class.extend({
 			data: this.options.data,
 			dataType: this.options.dataType,
 			jsonp: this.options.jsonp,
+			async: this.options.async,
 			type: this.options.type,
 			url: this.options.url,
 			success: $.proxy(this._success, this),
@@ -1586,7 +1682,8 @@ WCF.Action.Proxy = Class.extend({
 			}
 			
 			if (!this._suppressErrors && $showError !== false) {
-				$('<div class="ajaxDebugMessage"><p>' + jqXHR.responseText + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+				var $message = (textStatus === 'timeout') ? WCF.Language.get('wcf.global.error.timeout') : jqXHR.responseText;
+				$('<div class="ajaxDebugMessage"><p>' + $message + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
 			}
 		}
 		
@@ -1606,6 +1703,11 @@ WCF.Action.Proxy = Class.extend({
 		
 		// call child method if applicable
 		if ($.isFunction(this.options.success)) {
+			// trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
+			if (data.returnValues && data.returnValues.template !== undefined) {
+				data.returnValues.template = $.trim(data.returnValues.template);
+			}
+			
 			this.options.success(data, textStatus, jqXHR);
 		}
 		
@@ -2011,12 +2113,12 @@ WCF.Action.Toggle = Class.extend({
 		WCF.LoadingOverlayHandler.updateIcon($toggleButton, false);
 		if ($toggleButton.hasClass('icon-off')) {
 			$toggleButton.removeClass('icon-off').addClass('icon-circle-blank');
-			$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
+			$newTitle = ($toggleButton.data('disableTitle') ? $toggleButton.data('disableTitle') : WCF.Language.get('wcf.global.button.disable'));
 			$toggleButton.attr('title', $newTitle);
 		}
 		else {
 			$toggleButton.removeClass('icon-circle-blank').addClass('icon-off');
-			$newTitle = ($toggleButton.data('disableTitle') ? $toggleButton.data('disableTitle') : WCF.Language.get('wcf.global.button.disable'));
+			$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
 			$toggleButton.attr('title', $newTitle);
 		}
 		
@@ -2139,9 +2241,25 @@ WCF.Date.Picker = {
 	_dateFormat: 'yy-mm-dd',
 	
 	/**
+	 * time format
+	 * @var	string
+	 */
+	_timeFormat: 'g:ia',
+	
+	/**
 	 * Initializes the jQuery UI based date picker.
 	 */
 	init: function() {
+		// ignore error 'unexpected literal' error; this might be not the best approach
+		// to fix this problem, but since the date is properly processed anyway, we can
+		// simply continue :)	- Alex
+		var $__log = $.timepicker.log;
+		$.timepicker.log = function(error) {
+			if (error.indexOf('Error parsing the date/time string: Unexpected literal at position') == -1) {
+				$__log(error);
+			}
+		};
+		
 		this._convertDateFormat();
 		this._initDatePicker();
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.Date.Picker', $.proxy(this._initDatePicker, this));
@@ -2165,6 +2283,17 @@ WCF.Date.Picker = {
 		// t	Number of days in the given month
 		// L	Whether it's a leap year
 		var $replacementTable = {
+			// time
+			'a': ' tt',
+			'A': ' TT',
+			'g': 'h',
+			'G': 'H',
+			'h': 'hh',
+			'H': 'HH',
+			'i': 'mm',
+			's': 'ss',
+			'u': 'l',
+			
 			// day
 			'd': 'dd',
 			'D': 'D',
@@ -2200,6 +2329,16 @@ WCF.Date.Picker = {
 			
 			return part1 + part2;
 		});
+		
+		this._timeFormat = WCF.Language.get('wcf.date.timeFormat').replace(/([^aAgGhHisu\\]*(?:\\.[^aAgGhHisu\\]*)*)([aAgGhHisu])/g, function(match, part1, part2, offset, string) {
+			for (var $key in $replacementTable) {
+				if (part2 == $key) {
+					part2 = $replacementTable[$key];
+				}
+			}
+			
+			return part1 + part2;
+		});
 	},
 	
 	/**
@@ -2209,7 +2348,7 @@ WCF.Date.Picker = {
 		$('input[type=date]:not(.jsDatePicker)').each($.proxy(function(index, input) {
 			var $input = $(input);
 			var $inputName = $input.prop('name');
-			var $inputValue = $input.prop('value'); // should be Y-m-d, must be interpretable by Date
+			var $inputValue = $input.val(); // should be Y-m-d, must be interpretable by Date
 			
 			// update $input
 			$input.prop('type', 'text').addClass('jsDatePicker');
@@ -2222,6 +2361,17 @@ WCF.Date.Picker = {
 			$input.datepicker({
 				altField: '#' + $input.wcfIdentify() + 'DatePicker',
 				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
+				beforeShow: function(input, instance) {
+					// dirty hack to force opening below the input
+					setTimeout(function() {
+						instance.dpDiv.position({
+							my: 'left top',
+							at: 'left bottom',
+							collision: 'none',
+							of: input
+						});
+					}, 1);
+				},
 				changeMonth: true,
 				changeYear: true,
 				dateFormat: this._dateFormat,
@@ -2231,12 +2381,86 @@ WCF.Date.Picker = {
 				monthNames: WCF.Language.get('__months'),
 				monthNamesShort: WCF.Language.get('__monthsShort'),
 				showOtherMonths: true,
-				yearRange: '1900:2038'
+				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038'),
+				onClose: function(dateText, datePicker) {
+					// clear altField when datepicker is cleared
+					if (dateText == '') {
+						$(datePicker.settings["altField"]).val(dateText);
+					}
+				}
 			});
 			
 			// format default date
 			if ($inputValue) {
 				$input.datepicker('setDate', new Date($inputValue));
+			}
+			
+			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
+			$input.datepicker('widget').hide();
+		}, this));
+		
+		$('input[type=datetime]:not(.jsDatePicker)').each($.proxy(function(index, input) {
+			var $input = $(input);
+			var $inputName = $input.prop('name');
+			var $inputValue = $input.val(); // should be Y-m-d H:i:s, must be interpretable by Date
+			
+			// drop the seconds
+			if (/[0-9]{2}:[0-9]{2}:[0-9]{2}$/.test($inputValue)) {
+				$inputValue = $inputValue.replace(/:[0-9]{2}$/, '');
+				$input.val($inputValue);
+			}
+			
+			// update $input
+			$input.prop('type', 'text').addClass('jsDatePicker');
+			
+			// insert a hidden element representing the actual date
+			$input.removeAttr('name');
+			$input.before('<input type="hidden" id="' + $input.wcfIdentify() + 'DatePicker" name="' + $inputName + '" value="' + $inputValue + '" />');
+			
+			// init date picker
+			$input.datetimepicker({
+				altField: '#' + $input.wcfIdentify() + 'DatePicker',
+				altFieldTimeOnly: false,
+				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
+				altTimeFormat: 'HH:mm',
+				beforeShow: function(input, instance) {
+					// dirty hack to force opening below the input
+					setTimeout(function() {
+						instance.dpDiv.position({
+							my: 'left top',
+							at: 'left bottom',
+							collision: 'none',
+							of: input
+						});
+					}, 1);
+				},
+				changeMonth: true,
+				changeYear: true,
+				controlType: 'select',
+				dateFormat: this._dateFormat,
+				dayNames: WCF.Language.get('__days'),
+				dayNamesMin: WCF.Language.get('__daysShort'),
+				dayNamesShort: WCF.Language.get('__daysShort'),
+				hourText: WCF.Language.get('wcf.date.hour'),
+				minuteText: WCF.Language.get('wcf.date.minute'),
+				monthNames: WCF.Language.get('__months'),
+				monthNamesShort: WCF.Language.get('__monthsShort'),
+				showButtonPanel: false,
+				showTime: false,
+				showOtherMonths: true,
+				timeFormat: this._timeFormat,
+				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038'),
+				onClose: function(dateText, datePicker) {
+					// clear altField when datepicker is cleared
+					if (dateText == '') {
+						$(datePicker.settings.altField).val('');
+					}
+				}
+			});
+			
+			// format default date
+			if ($inputValue) {
+				$input.removeClass('hasDatepicker').datetimepicker('setDate', new Date($inputValue));
 			}
 			
 			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
@@ -2363,14 +2587,16 @@ WCF.Date.Time = Class.extend({
 		var $time = $element.data('time');
 		var $offset = $element.data('offset');
 		
-		// timestamp is in the future
-		if ($timestamp > this._timestamp) {
-			var $string = WCF.Language.get('wcf.date.dateTimeFormat');
-			$element.text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
+		// skip for future dates
+		if ($element.data('isFutureDate')) return;
+		
+		// timestamp is less than 60 seconds ago
+		if ($timestamp >= this._timestamp || this._timestamp < ($timestamp + 60)) {
+			$element.text(WCF.Language.get('wcf.date.relative.now'));
 		}
 		// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
 		else if (this._timestamp < ($timestamp + 3540)) {
-			var $minutes = Math.round((this._timestamp - $timestamp) / 60);
+			var $minutes = Math.max(Math.round((this._timestamp - $timestamp) / 60), 1);
 			$element.text(eval(WCF.Language.get('wcf.date.relative.minutes')));
 		}
 		// timestamp is less than 24 hours ago
@@ -2558,22 +2784,22 @@ WCF.Language = {
 	 */
 	get: function(key, parameters) {
 		// initialize parameters with an empty object
-		if (typeof parameters === 'undefined') var parameters = {};
+		if (parameters == null) var parameters = { };
 		
 		var value = this._variables.get(key);
 		
-		if (typeof value === 'string') {
+		if (value === null) {
+			// return key again
+			return key;
+		}
+		else if (typeof value === 'string') {
 			// transform strings into template and try to refetch
 			this.add(key, new WCF.Template(value));
 			return this.get(key, parameters);
 		}
-		else if (value !== null && typeof value === 'object' && typeof value.fetch !== 'undefined') {
+		else if (typeof value.fetch === 'function') {
 			// evaluate templates
 			value = value.fetch(parameters);
-		}
-		else if (value === null) {
-			// return key again
-			return key;
 		}
 		
 		return value;
@@ -2903,16 +3129,16 @@ WCF.MultipleLanguageInput = Class.extend({
  */
 WCF.Number = {
 	/**
-	 * Rounds a number to a given number of floating points digits. Defaults to 0.
+	 * Rounds a number to a given number of decimal places. Defaults to 0.
 	 * 
 	 * @param	number		number
-	 * @param	floatingPoint	number of digits
+	 * @param	decimalPlaces	number of decimal places
 	 * @return	number
 	 */
-	round: function (number, floatingPoint) {
-		floatingPoint = Math.pow(10, (floatingPoint || 0));
+	round: function (number, decimalPlaces) {
+		decimalPlaces = Math.pow(10, (decimalPlaces || 0));
 		
-		return Math.round(number * floatingPoint) / floatingPoint;
+		return Math.round(number * decimalPlaces) / decimalPlaces;
 	}
 };
 
@@ -2927,41 +3153,7 @@ WCF.String = {
 	 * @return	string
 	 */
 	addThousandsSeparator: function(number) {
-		var $numberString = String(number);
-		var parts = $numberString.split(/[^0-9]+/);
-		
-		var $decimalPoint = $numberString.match(/[^0-9]+/);
-		
-		$numberString = parts[0];
-		var $decimalPart = '';
-		if ($decimalPoint !== null) {
-			delete parts[0];
-			var $decimalPart = $decimalPoint.join('')+parts.join('');
-		}
-		if (parseInt(number) >= 1000 || parseInt(number) <= -1000) {
-			var $negative = false;
-			if (parseInt(number) <= -1000) {
-				$negative = true;
-				$numberString = $numberString.substring(1);
-			}
-			var $separator = WCF.Language.get('wcf.global.thousandsSeparator');
-			
-			if ($separator != null && $separator != '') {
-				var $numElements = new Array();
-				var $firstPart = $numberString.length % 3;
-				if ($firstPart == 0) $firstPart = 3;
-				for (var $i = 0; $i < Math.ceil($numberString.length / 3); $i++) {
-					if ($i == 0) $numElements.push($numberString.substring(0, $firstPart));
-					else {
-						var $start = (($i - 1) * 3) + $firstPart;
-						$numElements.push($numberString.substring($start, $start + 3));
-					}
-				}
-				$numberString = (($negative) ? ('-') : ('')) + $numElements.join($separator);
-			}
-		}
-		
-		return $numberString + $decimalPart;
+		return String(number).replace(/(^-?\d{1,3}|\d{3})(?=(?:\d{3})+(?:$|\.))/g, '$1' + WCF.Language.get('wcf.global.thousandsSeparator'));
 	},
 	
 	/**
@@ -2991,11 +3183,14 @@ WCF.String = {
 	 * @param	mixed	number
 	 * @return	string
 	 */
-	formatNumeric: function(number, floatingPoint) {
-		number = String(WCF.Number.round(number, floatingPoint || 2));
+	formatNumeric: function(number, decimalPlaces) {
+		number = String(WCF.Number.round(number, decimalPlaces || 2));
 		number = number.replace('.', WCF.Language.get('wcf.global.decimalPoint'));
 		
-		return this.addThousandsSeparator(number);
+		number = this.addThousandsSeparator(number);
+		number = number.replace('-', '\u2212');
+		
+		return number;
 	},
 	
 	/**
@@ -3238,144 +3433,229 @@ WCF.TabMenu = {
  */
 WCF.Template = Class.extend({
 	/**
-	 * template content
-	 * @var	string
-	 */
-	_template: '',
-	
-	/**
-	 * saved literal tags
-	 * @var	WCF.Dictionary
-	 */
-	_literals: new WCF.Dictionary(),
-	
-	/**
 	 * Prepares template
 	 * 
 	 * @param	$template		template-content
 	 */
-	init: function($template) {
-		this._template = $template;
+	init: function(template) {
+		var $literals = new WCF.Dictionary();
+		var $tagID = 0;
+		
+		// escape \ and ' and newlines
+		template = template.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/(\r\n|\n|\r)/g, '\\n');
 		
 		// save literal-tags
-		this._template = this._template.replace(/\{literal\}(.*?)\{\/literal\}/g, $.proxy(function ($match) {
+		template = template.replace(/\{literal\}(.*?)\{\/literal\}/g, $.proxy(function(match) {
 			// hopefully no one uses this string in one of his templates
 			var id = '@@@@@@@@@@@'+Math.random()+'@@@@@@@@@@@';
-			this._literals.add(id, $match.replace(/\{\/?literal\}/g, ''));
+			$literals.add(id, match.replace(/\{\/?literal\}/g, ''));
 			
 			return id;
 		}, this));
-	},
-	
-	/**
-	 * Fetches the template with the given variables
-	 *
-	 * @param	$variables	variables to insert
-	 * @return			parsed template
-	 */
-	fetch: function($variables) {
-		var $result = this._template;
 		
-		// insert them :)
-		for (var $key in $variables) {
-			$result = $result.replace(new RegExp(WCF.String.escapeRegExp('{$'+$key+'}'), 'g'), WCF.String.escapeHTML(new String($variables[$key])));
-			$result = $result.replace(new RegExp(WCF.String.escapeRegExp('{#$'+$key+'}'), 'g'), WCF.String.formatNumeric($variables[$key]));
-			$result = $result.replace(new RegExp(WCF.String.escapeRegExp('{@$'+$key+'}'), 'g'), $variables[$key]);
+		var parseParameterList = function(parameterString) {
+			var $chars = parameterString.split('');
+			var $parameters = { };
+			var $inName = true;
+			var $name = '';
+			var $value = '';
+			var $doubleQuoted = false;
+			var $singleQuoted = false;
+			var $escaped = false;
+			
+			for (var $i = 0, $max = $chars.length; $i < $max; $i++) {
+				var $char = $chars[$i];
+				if ($inName && $char != '=' && $char != ' ') $name += $char
+				else if ($inName && $char == '=') {
+					$inName = false;
+					$singleQuoted = false;
+					$doubleQuoted = false;
+					$escaped = false;
+				}
+				else if (!$inName && !$singleQuoted && !$doubleQuoted && $char == ' ') {
+					$inName = true;
+					$parameters[$name] = $value;
+					$value = $name = '';
+				}
+				else if (!$inName && $singleQuoted && !$escaped && $char == "'") {
+					$singleQuoted = false;
+					$value += $char;
+				}
+				else if (!$inName && !$singleQuoted && !$doubleQuoted && $char == "'") {
+					$singleQuoted = true;
+					$value += $char;
+				}
+				else if (!$inName && $doubleQuoted && !$escaped && $char == '"') {
+					$doubleQuoted = false;
+					$value += $char;
+				}
+				else if (!$inName && !$singleQuoted && !$doubleQuoted && $char == '"') {
+					$doubleQuoted = true;
+					$value += $char;
+				}
+				else if (!$inName && ($doubleQuoted || $singleQuoted) && !$escaped && $char == '\\') {
+					$escaped = true;
+					$value += $char;
+				}
+				else if (!$inName) {
+					$escaped = false;
+					$value += $char;
+				}
+			}
+			$parameters[$name] = $value;
+			
+			if ($doubleQuoted || $singleQuoted || $escaped) throw new Error('Syntax error in parameterList: "' + parameterString + '"');
+			
+			return $parameters;
+		};
+		
+		var unescape = function(string) {
+			return string.replace(/\\n/g, "\n").replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+		};
+		
+		template = template.replace(/\{(\$[^\}]+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^.\[\s]+)/g, "(v['$1'])"));
+			
+			return "' + WCF.String.escapeHTML(" + content + ") + '";
+		})
+		// Numeric Variable
+		.replace(/\{#(\$[^\}]+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^.\[\s]+)/g, "(v['$1'])"));
+			
+			return "' + WCF.String.formatNumeric(" + content + ") + '";
+		})
+		// Variable without escaping
+		.replace(/\{@(\$[^\}]+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^.\[\s]+)/g, "(v['$1'])"));
+			
+			return "' + " + content + " + '";
+		})
+		// {if}
+		.replace(/\{if (.+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^.\[\s]+)/g, "(v['$1'])"));
+			
+			return	"';\n" +
+				"if (" + content + ") {\n" +
+				"	$output += '";
+		})
+		// {elseif}
+		.replace(/\{else ?if (.+?)\}/g, function(_, content) {
+			content = unescape(content.replace(/\$([^.\[\s]+)/g, "(v['$1'])"));
+			
+			return	"';\n" +
+				"}\n" +
+				"else if (" + content + ") {\n" +
+				"	$output += '";
+		})
+		// {implode}
+		.replace(/\{implode (.+?)\}/g, function(_, content) {
+			$tagID++;
+			
+			content = content.replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			var $parameters = parseParameterList(content);
+			
+			if (typeof $parameters['from'] === 'undefined') throw new Error('Missing from attribute in implode-tag');
+			if (typeof $parameters['item'] === 'undefined') throw new Error('Missing item attribute in implode-tag');
+			if (typeof $parameters['glue'] === 'undefined') $parameters['glue'] = "', '";
+			
+			$parameters['from'] = $parameters['from'].replace(/\$([^.\[\s]+)/g, "(v.$1)");
+			
+			return 	"';\n"+
+				"var $implode_" + $tagID + " = false;\n" +
+				"for ($implodeKey_" + $tagID + " in " + $parameters['from'] + ") {\n" +
+				"	v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$implodeKey_" + $tagID + "];\n" +
+				(typeof $parameters['key'] !== 'undefined' ? "		v[" + $parameters['key'] + "] = $implodeKey_" + $tagID + ";\n" : "") +
+				"	if ($implode_" + $tagID + ") $output += " + $parameters['glue'] + ";\n" +
+				"	$implode_" + $tagID + " = true;\n" +
+				"	$output += '";
+		})
+		// {foreach}
+		.replace(/\{foreach (.+?)\}/g, function(_, content) {
+			$tagID++;
+			
+			content = content.replace(/\\\\/g, '\\').replace(/\\'/g, "'");
+			var $parameters = parseParameterList(content);
+			
+			if (typeof $parameters['from'] === 'undefined') throw new Error('Missing from attribute in foreach-tag');
+			if (typeof $parameters['item'] === 'undefined') throw new Error('Missing item attribute in foreach-tag');
+			$parameters['from'] = $parameters['from'].replace(/\$([^.\[\s]+)/g, "(v.$1)");
+			
+			return	"';\n" +
+				"$foreach_"+$tagID+" = false;\n" +
+				"for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") {\n" +
+				"	$foreach_"+$tagID+" = true;\n" +
+				"	break;\n" +
+				"}\n" +
+				"if ($foreach_"+$tagID+") {\n" +
+				"	for ($foreachKey_" + $tagID + " in " + $parameters['from'] + ") {\n" +
+				"		v[" + $parameters['item'] + "] = " + $parameters['from'] + "[$foreachKey_" + $tagID + "];\n" +
+				(typeof $parameters['key'] !== 'undefined' ? "		v[" + $parameters['key'] + "] = $foreachKey_" + $tagID + ";\n" : "") +
+				"		$output += '";
+		})
+		// {foreachelse}
+		.replace(/\{foreachelse\}/g, 
+			"';\n" +
+			"	}\n" +
+			"}\n" +
+			"else {\n" +
+			"	{\n" +
+			"		$output += '"
+		)
+		// {/foreach}
+		.replace(/\{\/foreach\}/g, 
+			"';\n" +
+			"	}\n" +
+			"}\n" +
+			"$output += '"
+		)
+		// {else}
+		.replace(/\{else\}/g, 
+			"';\n" +
+			"}\n" +
+			"else {\n" +
+			"	$output += '"
+		)
+		// {/if} and {/implode}
+		.replace(/\{\/(if|implode)\}/g, 
+			"';\n" +
+			"}\n" +
+			"$output += '"
+		);
+		
+		// call callback
+		for (var key in WCF.Template.callbacks) {
+			template = WCF.Template.callbacks[key](template);
 		}
 		
 		// insert delimiter tags
-		$result = $result.replace('{ldelim}', '{').replace('{rdelim}', '}');
+		template = template.replace('{ldelim}', '{').replace('{rdelim}', '}');
 		
-		// and re-insert saved literals
-		return this.insertLiterals($result);
+		$literals.each(function(pair) {
+			template = template.replace(pair.key, pair.value);
+		});
+		
+		template = "$output += '" + template + "';";
+		
+		this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
 	},
 	
 	/**
-	 * Inserts literals into given string
-	 * 
-	 * @param	$template	string to insert into
-	 * @return			string with inserted literals
+	 * Fetches the template with the given variables.
+	 *
+	 * @param	v	variables to insert
+	 * @return		parsed template
 	 */
-	insertLiterals: function ($template) {
-		this._literals.each(function ($pair) {
-			$template = $template.replace($pair.key, $pair.value);
-		});
-		
-		return $template;
-	},
-	
-	/**
-	 * Compiles this template into javascript-code
-	 * 
-	 * @return	WCF.Template.Compiled
-	 */
-	compile: function () {
-		var $compiled = this._template;
-		
-		// escape \ and '
-		$compiled = $compiled.replace('\\', '\\\\').replace("'", "\\'");
-		
-		// parse our variable-tags
-		$compiled = $compiled.replace(/\{\$(.*?)\}/g, function ($match) {
-			var $name = '$v.' + $match.substring(2, $match.length - 1);
-			// trinary operator to maintain compatibility with uncompiled template
-			// ($name) ? $name : '$match'
-			// -> $v.muh ? $v.muh : '{$muh}'
-			return "' + WCF.String.escapeHTML("+ $name + " ? " + $name + " : '" + $match + "') + '";
-		}).replace(/\{#\$(.*?)\}/g, function ($match) {
-			var $name = '$v.' + $match.substring(3, $match.length - 1);
-			// trinary operator to maintain compatibility with uncompiled template
-			// ($name) ? $name : '$match'
-			// -> $v.muh ? $v.muh : '{$muh}'
-			return "' + WCF.String.formatNumeric("+ $name + " ? " + $name + " : '" + $match + "') + '";
-		}).replace(/\{@\$(.*?)\}/g, function ($match) {
-			var $name = '$v.' + $match.substring(3, $match.length - 1);
-			// trinary operator to maintain compatibility with uncompiled template
-			// ($name) ? $name : '$match'
-			// -> $v.muh ? $v.muh : '{$muh}'
-			return "' + ("+ $name + " ? " + $name + " : '" + $match + "') + '";
-		});
-		
-		// insert delimiter tags
-		$compiled = $compiled.replace('{ldelim}', '{').replace('{rdelim}', '}');
-		
-		// escape newlines
-		$compiled = $compiled.replace(/(\r\n|\n|\r)/g, '\\n');
-		
-		// and re-insert saved literals
-		return new WCF.Template.Compiled("'" + this.insertLiterals($compiled) + "';");
+	fetch: function(v) {
+		// this will be replaced in the init function
 	}
 });
 
 /**
- * Represents a compiled template
+ * Array of callbacks that will be called after parsing the included tags. Only applies to Templates compiled after the callback was added.
  * 
- * @param	compiled		compiled template
+ * @var	array<Function>
  */
-WCF.Template.Compiled = Class.extend({
-	/**
-	 * Compiled template
-	 * 
-	 * @var	string
-	 */
-	_compiled: '',
-	
-	/**
-	 * Initializes our compiled template
-	 * 
-	 * @param	$compiled	compiled template
-	 */
-	init: function($compiled) {
-		this._compiled = $compiled;
-	},
-	
-	/**
-	 * @see	WCF.Template.fetch
-	 */
-	fetch: function($v) {
-		return eval(this._compiled);
-	}
-});
+WCF.Template.callbacks = [ ];
 
 /**
  * Toggles options.
@@ -3441,7 +3721,7 @@ WCF.ToggleOptions = Class.extend({
 	 * Toggles items.
 	 */
 	_toggle: function() {
-		if (!this._element.attr('checked')) return;
+		if (!this._element.prop('checked')) return;
 		
 		for (var $i = 0, $length = this._showItems.length; $i < $length; $i++) {
 			var $item = this._showItems[$i];
@@ -3581,24 +3861,31 @@ WCF.Collapsible.Remote = Class.extend({
 	 */
 	init: function(className) {
 		this._className = className;
-		
-		// validate containers
-		var $containers = this._getContainers();
-		if ($containers.length == 0) {
-			console.debug('[WCF.Collapsible.Remote] Empty container set given, aborting.');
-		}
-		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
 		
 		// initialize each container
-		$containers.each($.proxy(function(index, container) {
+		this._init();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Collapsible.Remote', $.proxy(this._init, this));
+	},
+	
+	/**
+	 * Initializes a collapsible container.
+	 * 
+	 * @param	string		containerID
+	 */
+	_init: function(containerID) {
+		this._getContainers().each($.proxy(function(index, container) {
 			var $container = $(container);
 			var $containerID = $container.wcfIdentify();
-			this._containers[$containerID] = $container;
 			
-			this._initContainer($containerID);
+			if (this._containers[$containerID] === undefined) {
+				this._containers[$containerID] = $container;
+				
+				this._initContainer($containerID);
+			}
 		}, this));
 	},
 	
@@ -3758,7 +4045,7 @@ WCF.Collapsible.Remote = Class.extend({
 		var $newState = (data.returnValues.isOpen) ? 'open' : 'close';
 		
 		// update container content
-		this._updateContent($containerID, data.returnValues.content, $newState);
+		this._updateContent($containerID, $.trim(data.returnValues.content), $newState);
 		
 		// update icon
 		this._exchangeIcon(this._containerData[$containerID].button, (data.returnValues.isOpen ? 'chevron-down' : 'chevron-right'));
@@ -4055,9 +4342,10 @@ WCF.Effect.Scroll = Class.extend({
 	 * 
 	 * @param	jQuery		element
 	 * @param	boolean		excludeMenuHeight
+	 * @param	boolean		disableAnimation
 	 * @return	boolean
 	 */
-	scrollTo: function(element, excludeMenuHeight) {
+	scrollTo: function(element, excludeMenuHeight, disableAnimation) {
 		if (!element.length) {
 			return true;
 		}
@@ -4078,9 +4366,14 @@ WCF.Effect.Scroll = Class.extend({
 			}
 		}
 		
-		$('html,body').animate({ scrollTop: $elementOffset }, 400, function (x, t, b, c, d) {
-			return -c * ( ( t = t / d - 1 ) * t * t * t - 1) + b;
-		});
+		if (disableAnimation === true) {
+			$('html,body').scrollTop($elementOffset);
+		}
+		else {
+			$('html,body').animate({ scrollTop: $elementOffset }, 400, function (x, t, b, c, d) {
+				return -c * ( ( t = t / d - 1 ) * t * t * t - 1) + b;
+			});
+		}
 		
 		return false;
 	}
@@ -4248,7 +4541,7 @@ WCF.Effect.BalloonTooltip = Class.extend({
 			$arrow.css('top', -5);
 		}
 		else {
-			var $top = $elementOffsets.top - $elementDimensions.height - 7;
+			var $top = $elementOffsets.top - $tooltipDimensions.height - 7;
 			this._tooltip.addClass('inverse');
 			$arrow.css('top', $tooltipDimensions.height);
 		}
@@ -4379,9 +4672,9 @@ WCF.CloseOverlayHandler = {
 WCF.DOMNodeInsertedHandler = {
 	/**
 	 * list of callbacks
-	 * @var	WCF.Dictionary
+	 * @var	array<object>
 	 */
-	_callbacks: new WCF.Dictionary(),
+	_callbacks: [ ],
 	
 	/**
 	 * true if DOMNodeInserted event should be ignored
@@ -4417,23 +4710,7 @@ WCF.DOMNodeInsertedHandler = {
 		this._discardEventCount = 0;
 		this._bindListener();
 		
-		if (this._callbacks.isset(identifier)) {
-			console.debug("[WCF.DOMNodeInsertedHandler] identifier '" + identifier + "' is already bound to a callback");
-			return false;
-		}
-		
-		this._callbacks.add(identifier, callback);
-	},
-	
-	/**
-	 * Removes a callback from list.
-	 * 
-	 * @param	string		identifier
-	 */
-	removeCallback: function(identifier) {
-		if (this._callbacks.isset(identifier)) {
-			this._callbacks.remove(identifier);
-		}
+		this._callbacks.push(callback);
 	},
 	
 	/**
@@ -4456,10 +4733,9 @@ WCF.DOMNodeInsertedHandler = {
 		// do not track events while executing callbacks
 		this._isExecuting = true;
 		
-		this._callbacks.each(function(pair) {
-			// execute callback
-			pair.value();
-		});
+		for (var $i = 0, $length = this._callbacks.length; $i < $length; $i++) {
+			this._callbacks[$i]();
+		}
 		
 		// enable listener again
 		this._isExecuting = false;
@@ -5006,6 +5282,7 @@ WCF.Search.Base = Class.extend({
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
 		
 		// pre-select first item
+		this._itemIndex = -1;
 		this._selectNextItem();
 	},
 	
@@ -5167,6 +5444,47 @@ WCF.Search.User = WCF.Search.Base.extend({
 WCF.System = { };
 
 /**
+ * Enables mobile navigation.
+ */
+WCF.System.MobileNavigation = {
+	init: function() {
+		this._convertNavigation();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.System.MobileNavigation', function() {
+			WCF.System.MobileNavigation._convertNavigation();
+		});
+	},
+	
+	_convertNavigation: function() {
+		$('nav.jsMobileNavigation').removeClass('jsMobileNavigation').each(function(index, navigation) {
+			var $navigation = $(navigation);
+			$('<a class="invisible" tabindex="9999999" />').click(function() {}).prependTo($navigation);
+			$('<a class="invisible" tabindex="9999999"><span class="icon icon16 icon-list" />' + ($navigation.data('buttonLabel') !== undefined ? (' ' + $navigation.data('buttonLabel')) : '') + '</a>').click(function() {}).prependTo($navigation);
+		});
+	}
+};
+
+/**
+ * Fixes scroll offset on page load.
+ */
+WCF.System.JumpToAnchor = {
+	execute: function() {
+		if (window.location.hash) {
+			var $element = $(window.location.hash);
+			if ($element.length) {
+				$element.addClass('userPanelJumpToAnchorFix');
+				
+				new WCF.PeriodicalExecuter(function(pe) {
+					pe.stop();
+					
+					$element.removeClass('userPanelJumpToAnchorFix');
+				}, 5000);
+			}
+		}
+	}
+};
+
+/**
  * System notification overlays.
  * 
  * @param	string		message
@@ -5205,7 +5523,7 @@ WCF.System.Notification = Class.extend({
 	 */
 	init: function(message, cssClassNames) {
 		this._cssClassNames = cssClassNames || 'success';
-		this._message = message;
+		this._message = message || WCF.Language.get('wcf.global.success');
 		this._overlay = $('#systemNotification');
 		
 		if (!this._overlay.length) {
@@ -5525,7 +5843,7 @@ WCF.System.PageNavigation = {
 			
 			var $fieldset = $('<fieldset><legend>' + WCF.Language.get('wcf.global.page.jumpTo') + '</legend></fieldset>').appendTo(this._dialog);
 			$('<dl><dt><label for="jsPageNavigationPageNo">' + WCF.Language.get('wcf.global.page.jumpTo') + '</label></dt><dd></dd></dl>').appendTo($fieldset);
-			this._pageNo = $('<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="long" />').keyup($.proxy(this._keyUp, this)).appendTo($fieldset.find('dd'));
+			this._pageNo = $('<input type="number" id="jsPageNavigationPageNo" value="1" min="1" max="1" class="tiny" />').keyup($.proxy(this._keyUp, this)).appendTo($fieldset.find('dd'));
 			this._description = $('<small></small>').insertAfter(this._pageNo);
 			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
 			this._button = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(this._submit, this)).appendTo($formSubmit);
@@ -5533,7 +5851,7 @@ WCF.System.PageNavigation = {
 		
 		this._button.enable();
 		this._description.html(WCF.Language.get('wcf.global.page.jumpTo.description').replace(/#pages#/, this._elements[this._elementID].data('pages')));
-		this._pageNo.val('1').attr('max', this._elements[this._elementID].data('pages'));
+		this._pageNo.val(this._elements[this._elementID].data('pages')).attr('max', this._elements[this._elementID].data('pages'));
 		
 		this._dialog.wcfDialog({
 			'title': WCF.Language.get('wcf.global.page.pageNavigation')
@@ -5987,10 +6305,10 @@ WCF.Upload = Class.extend({
 			this._fileUpload = $('<input type="file" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/>');
 			this._fileUpload.change($.proxy(this._upload, this));
 			var $button = $('<p class="button uploadButton"><span>'+WCF.Language.get('wcf.global.button.upload')+'</span></p>');
-			$button.append(this._fileUpload);
+			$button.prepend(this._fileUpload);
 		}
 		else {
-			var $button = $('<p class="button"><span>Upload</span></p>');
+			var $button = $('<p class="button uploadFallbackButton"><span>'+WCF.Language.get('wcf.global.button.upload')+'</span></p>');
 			$button.click($.proxy(this._showOverlay, this));
 		}
 		
@@ -6139,7 +6457,7 @@ WCF.Upload = Class.extend({
 			this._overlay = $('<div><form enctype="multipart/form-data" method="post" action="' + this._options.url + '" target="__fileUploadIFrame" /></div>').hide().appendTo(document.body);
 			
 			var $form = this._overlay.find('form');
-			$('<dl><dt><label for="__fileUpload">' + WCF.Language.get('wcf.upload.file') + '</label></dt><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
+			$('<dl class="wide"><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
 			$('<div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form>').appendTo($form);
 			
 			$('<input type="hidden" name="isFallback" value="1" />').appendTo($form);
@@ -6153,7 +6471,7 @@ WCF.Upload = Class.extend({
 			$form.submit($.proxy(function() {
 				var $file = {
 					name: this._getFilename(),
-					size: WCF.Language.get('wcf.upload.file.size.unknown')
+					size: ''
 				};
 				
 				var $uploadID = this._createUploadMatrix([ $file ]);
@@ -6164,7 +6482,7 @@ WCF.Upload = Class.extend({
 		}
 		
 		this._overlay.wcfDialog({
-			title: WCF.Language.get('wcf.attachment.upload')
+			title: WCF.Language.get('wcf.global.button.upload')
 		});
 	},
 	
@@ -7354,7 +7672,7 @@ WCF.Language.Chooser = Class.extend({
 		
 		for (var $languageID in languages) {
 			var $language = languages[$languageID];
-			var $item = $('<li class="boxFlag"><a class="box24"><div class="framed"><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <hgroup><h1>' + $language.languageName + '</h1></hgroup></a></li>').appendTo($dropdownMenu);
+			var $item = $('<li class="boxFlag"><a class="box24"><div class="framed"><img src="' + $language.iconPath + '" alt="" class="iconFlag" /></div> <div><h3>' + $language.languageName + '</h3></div></a></li>').appendTo($dropdownMenu);
 			$item.data('languageID', $languageID).click($.proxy(this._click, this));
 			
 			// update dropdown label
@@ -7519,6 +7837,12 @@ WCF.UserPanel = Class.extend({
 	_link: null,
 	
 	/**
+	 * language variable name for 'no items'
+	 * @var	string
+	 */
+	_noItems: '',
+	
+	/**
 	 * reverts to original link if return values are empty
 	 * @var	boolean
 	 */
@@ -7539,11 +7863,9 @@ WCF.UserPanel = Class.extend({
 			return;
 		}
 		
-		if (this._container.data('count')) {
-			WCF.DOMNodeInsertedHandler.enable();
-			this._convert();
-			WCF.DOMNodeInsertedHandler.disable();
-		}
+		WCF.DOMNodeInsertedHandler.enable();
+		this._convert();
+		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
@@ -7558,6 +7880,11 @@ WCF.UserPanel = Class.extend({
 		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').appendTo($dropdownMenu);
 		
 		this._addDefaultItems($dropdownMenu);
+		
+		this._container.dblclick($.proxy(function() {
+			window.location = this._link.attr('href');
+			return false;
+		}, this));
 	},
 	
 	/**
@@ -7610,19 +7937,36 @@ WCF.UserPanel = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		var $dropdownMenu = this._container.children('.dropdownMenu');
+		$dropdownMenu.children('.jsDropdownPlaceholder').remove();
+		
 		if (data.returnValues && data.returnValues.template) {
-			var $dropdownMenu = this._container.children('.dropdownMenu');
-			$dropdownMenu.children('.jsDropdownPlaceholder').remove();
 			$('' + data.returnValues.template).prependTo($dropdownMenu);
+			
+			// update badge
+			var $badge = this._container.find('.badge');
+			if (!$badge.length) {
+				$badge = $('<span class="badge badgeInverse" />').appendTo(this._container.children('.dropdownToggle'));
+				$badge.before(' ');
+			}
+			$badge.html(data.returnValues.totalCount);
+			
+			this._after($dropdownMenu);
 		}
 		else {
-			this._container.removeClass('dropdown').empty();
-			this._link.appendTo(this._container);
+			$('<li><span>' + WCF.Language.get(this._noItems) + '</span></li>').prependTo($dropdownMenu);
 			
 			// remove badge
 			this._container.find('.badge').remove();
 		}
-	}
+	},
+	
+	/**
+	 * Execute actions after the dropdown menu has been populated.
+	 * 
+	 * @param	object		dropdownMenu
+	 */
+	_after: function(dropdownMenu) { }
 });
 
 /**
@@ -7903,8 +8247,16 @@ $.widget('ui.wcfDialog', {
 			this._content.removeClass('dialogForm').css({ marginBottom: '0px' });
 		}
 		
-		// calculate dimensions
+		// force 800px or 80% width
 		var $windowDimensions = $(window).getDimensions();
+		if ($windowDimensions.width * 0.8 > 800) {
+			this._content.css('maxWidth', '800px');
+		}
+		else {
+			this._content.css('maxWidth', '80%');
+		}
+		
+		// calculate dimensions
 		var $containerDimensions = this._container.getDimensions('outer');
 		var $contentDimensions = this._content.getDimensions();
 		
@@ -8030,7 +8382,7 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 			}
 		}
 		
-		$.ui.tabs.prototype.select.apply(this, arguments);
+		this._setOption('active', index);
 	},
 	
 	/**
@@ -8222,7 +8574,7 @@ $.widget('ui.wcfPages', {
 					$pageList.append(this._renderLink(2));
 				}
 				else {
-					$('<li class="button jumpTo"><a title="' + WCF.Language.get('wcf.global.page.jumpTo') + '" class="jsTooltip">…</a></li>').appendTo($pageList);
+					$('<li class="button jumpTo"><a title="' + WCF.Language.get('wcf.global.page.jumpTo') + '" class="jsTooltip">...</a></li>').appendTo($pageList);
 					$hasHiddenPages = true;
 				}
 			}
@@ -8238,7 +8590,7 @@ $.widget('ui.wcfPages', {
 					$pageList.append(this._renderLink(this.options.maxPage - 1));
 				}
 				else {
-					$('<li class="button jumpTo"><a title="' + WCF.Language.get('wcf.global.page.jumpTo') + '" class="jsTooltip">…</a></li>').appendTo($pageList);
+					$('<li class="button jumpTo"><a title="' + WCF.Language.get('wcf.global.page.jumpTo') + '" class="jsTooltip">...</a></li>').appendTo($pageList);
 					$hasHiddenPages = true;
 				}
 			}
