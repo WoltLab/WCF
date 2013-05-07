@@ -410,14 +410,16 @@ WCF.ACP.Package.Installation = Class.extend({
 			return;
 		}
 		
-		this._purgeTemplateContent($.proxy(function() {
-			var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-			$('<button class="buttonPrimary">' + WCF.Language.get('wcf.acp.package.installation.rollback') + '</button>').appendTo($form).click($.proxy(this._rollback, this));
-			
-			$('#packageInstallationInnerContentContainer').show();
-			
-			this._dialog.wcfDialog('render');
-		}, this));
+		if (this._dialog !== null) {
+			this._purgeTemplateContent($.proxy(function() {
+				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
+				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.acp.package.installation.rollback') + '</button>').appendTo($form).click($.proxy(this._rollback, this));
+				
+				$('#packageInstallationInnerContentContainer').show();
+				
+				this._dialog.wcfDialog('render');
+			}, this));
+		}
 	},
 	
 	/**
