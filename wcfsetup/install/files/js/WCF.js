@@ -3092,8 +3092,10 @@ WCF.MultipleLanguageInput = Class.extend({
 		this._list.prev('.dropdownToggle').children('span').text(this._availableLanguages[this._languageID]);
 		
 		// close selection and set focus on input element
-		//this._closeSelection();
-		this._element.blur().focus();
+		if (this._didInit) {
+			// this._closeSelection(); todo: still needed?
+			this._element.blur().focus();
+		}
 	},
 	
 	/**
