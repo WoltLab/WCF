@@ -302,7 +302,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		);
 		
 		// create template group
-		$templateGroupID = 0;
 		if (!empty($data['templates'])) {
 			$templateGroupName = $originalTemplateGroupName = $data['name'];
 			$templateGroupFolderName = preg_replace('/[^a-z0-9_-]/i', '', $templateGroupName);
@@ -329,7 +328,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$sql = "SELECT	COUNT(*) AS count
 					FROM	wcf".WCF_N."_template_group
 					WHERE	templateGroupFolderName = ?
-						AND parentTemplatePackID = ?";
+						AND parentTemplateGroupID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute(array(
 					FileUtil::addTrailingSlash($templateGroupFolderName),
@@ -346,21 +345,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				'templateGroupFolderName' => FileUtil::addTrailingSlash($templateGroupFolderName)
 			));
 			$styleData['templateGroupID'] = $templateGroup->templateGroupID;
-		}
-		
-		// import preview image
-		if (!empty($data['image'])) {
-			$fileExtension = StringUtil::substring($data['image'], StringUtil::lastIndexOf($data['image'], '.'));
-			$index = $tar->getIndexByFilename($data['image']);
-			if ($index !== false) {
-				$filename = WCF_DIR.'images/stylePreview-'.$style->styleID.'.'.$fileExtension;
-				$tar->extract($index, $filename);
-				@chmod($filename, 0777);
-				
-				if (file_exists($filename)) {
-					$styleData['image'] = $filename;
-				}
-			}
 		}
 		
 		// import images
@@ -443,7 +427,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							TemplateEditor::create(array(
 								'packageID' => $row['packageID'],
 								'templateName' => StringUtil::replace('.tpl', '', $template['filename']),
-								'templateGroupID' => $templateGroupID
+								'templateGroupID' => $styleData['templateGroupID']
 							));
 						}
 					}
@@ -455,8 +439,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			}
 		}
 		
-		$tar->close();
-		
 		// save style
 		if ($style !== null) {
 			$style->update($styleData);
@@ -466,9 +448,27 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$style = new StyleEditor(self::create($styleData));
 		}
 		
+		// import preview image
+		if (!empty($data['image'])) {
+			$fileExtension = StringUtil::substring($data['image'], StringUtil::lastIndexOf($data['image'], '.'));
+			$index = $tar->getIndexByFilename($data['image']);
+			if ($index !== false) {
+				$filename = WCF_DIR.'images/stylePreview-'.$style->styleID.$fileExtension;
+				$tar->extract($index, $filename);
+				@chmod($filename, 0777);
+				
+				if (file_exists($filename)) {
+					$style->update(array('image' => 'stylePreview-'.$style->styleID.$fileExtension));
+				}
+			}
+		}
+		
+		$tar->close();
+		
 		// handle descriptions
 		if (!empty($data['description'])) {
 			self::saveLocalizedDescriptions($style, $data['description']);
+			LanguageFactory::getInstance()->deleteLanguageCache();
 		}
 		
 		if ($data['default']) {
@@ -861,7 +861,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 */
 	public static function scalePreviewImage($filename) {
 		$adapter = ImageHandler::getInstance()->getAdapter();
-		$adapter->loadFile($filename);
+		$adapter->loadFile(WCF_DIR.'images/'.$filename);
 		$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH, Style::PREVIEW_IMAGE_MAX_HEIGHT);
 		$adapter->writeImage($thumbnail, $filename);
 	}
