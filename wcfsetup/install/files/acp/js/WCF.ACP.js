@@ -469,6 +469,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		
 		if (data.step == 'rollback') {
 			this._dialog.wcfDialog('close');
+			this._dialog.remove();
 			
 			new WCF.PeriodicalExecuter(function(pe) {
 				pe.stop();
