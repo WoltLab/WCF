@@ -235,7 +235,7 @@ class PackageArchive {
 			foreach ($attributes as $attribute) {
 				$data[$attribute->name] = $attribute->value;
 			}
-					
+			
 			$this->requirements[$element->nodeValue] = $data;
 		}
 		
@@ -252,7 +252,7 @@ class PackageArchive {
 			foreach ($attributes as $attribute) {
 				$data[$attribute->name] = $attribute->value;
 			}
-					
+			
 			$this->optionals[] = $data;
 		}
 		
@@ -435,6 +435,29 @@ class PackageArchive {
 		$row = $statement->fetchArray();
 		
 		return ($row['count'] > 0) ? true : false;
+	}
+	
+	/**
+	 * Returns true if the package is an application and has an unique abbrevation.
+	 * 
+	 * @return	boolean
+	 */
+	public function hasUniqueAbbreviation() {
+		if (!$this->packageInfo['isApplication']) {
+			return true;
+		}
+		
+		$sql = "SELECT	COUNT(*)
+			FROM	wcf".WCF_N."_package
+			WHERE	isApplication = ?
+				AND package LIKE ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			1,
+			'%'.Package::getAbbreviation($this->packageInfo['name'])
+		));
+		
+		return $statement->fetchColumn();
 	}
 	
 	/**

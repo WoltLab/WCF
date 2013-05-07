@@ -195,6 +195,9 @@ class PackageStartInstallForm extends AbstractForm {
 			else if ($this->archive->isAlreadyInstalled()) {
 				throw new UserInputException($type, 'uniqueAlreadyInstalled');
 			}
+			else if ($this->archive->getPackageInfo('isApplication') && $this->archive->hasUniqueAbbreviation()) {
+				throw new UserInputException($type, 'noUniqueAbbrevation');
+			}
 		}
 	}
 	
