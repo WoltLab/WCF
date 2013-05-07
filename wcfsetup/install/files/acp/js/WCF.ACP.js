@@ -1692,6 +1692,10 @@ WCF.ACP.Worker = Class.extend({
 			});
 		}
 		
+		if (data.template) {
+			this._dialog.html(data.template);
+		}
+		
 		// update progress
 		this._dialog.find('progress').attr('value', data.progress).text(data.progress + '%').next('span').text(data.progress + '%');
 		
@@ -1708,7 +1712,7 @@ WCF.ACP.Worker = Class.extend({
 		else {
 			// display continue button
 			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
-			$('<button>' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).click(function() { window.location = data.proceedURL; });
+			$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).click(function() { window.location = data.proceedURL; });
 			
 			this._dialog.wcfDialog('render');
 		}
