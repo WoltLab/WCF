@@ -350,6 +350,12 @@ WCF.ACP.Package.Installation = Class.extend({
 	_dialog: null,
 	
 	/**
+	 * name of the language item with the title of the dialog
+	 * @var	string
+	 */
+	_dialogTitle: '',
+	
+	/**
 	 * action proxy
 	 * @var	WCF.Action.Proxy
 	 */
@@ -378,6 +384,11 @@ WCF.ACP.Package.Installation = Class.extend({
 		this._actionName = (actionName) ? actionName : 'InstallPackage';
 		this._allowRollback = (allowRollback === true) ? true : false;
 		this._queueID = queueID;
+		
+		this._dialogTitle = 'wcf.acp.package.installation.title';
+		if (actionName == 'UninstallPackage') {
+			this._dialogTitle = 'wcf.acp.package.uninstallation.title';
+		}
 		
 		this._initProxy();
 		this._init();
@@ -463,7 +474,7 @@ WCF.ACP.Package.Installation = Class.extend({
 			this._dialog = $('<div id="packageInstallationDialog" />').hide().appendTo(document.body);
 			this._dialog.wcfDialog({
 				closable: false,
-				title: WCF.Language.get('wcf.acp.package.installation.title')
+				title: WCF.Language.get(this._dialogTitle)
 			});
 		}
 		
@@ -656,6 +667,7 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 		this._actionName = 'UninstallPackage';
 		this._packageID = packageID;
 		this._queueID = 0;
+		this._dialogTitle = 'wcf.acp.package.uninstallation.title';
 		
 		this._initProxy();
 		this.prepareInstallation();

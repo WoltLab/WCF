@@ -74,13 +74,13 @@ class UninstallPackageAction extends InstallPackageAction {
 			'packageID' => $package->packageID,
 			'action' => 'uninstall'
 		));
-			
+		
 		// initialize uninstallation
 		$this->installation = new PackageUninstallationDispatcher($queue);
-			
+		
 		$this->installation->nodeBuilder->purgeNodes();
 		$this->installation->nodeBuilder->buildNodes();
-			
+		
 		WCF::getTPL()->assign(array(
 			'queue' => $queue
 		));
@@ -126,7 +126,7 @@ class UninstallPackageAction extends InstallPackageAction {
 			else {
 				$packageID = PACKAGE_ID;
 			}
-				
+			
 			// get domain path
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_application
@@ -140,6 +140,7 @@ class UninstallPackageAction extends InstallPackageAction {
 			
 			// show success
 			$this->data = array(
+				'currentAction' => WCF::getLanguage()->get('wcf.acp.package.uninstallation.step.success'),
 				'progress' => 100,
 				'redirectLocation' => $location,
 				'step' => 'success'
@@ -168,7 +169,7 @@ class UninstallPackageAction extends InstallPackageAction {
 			break;
 			
 			default:
-				die(print_r($_POST, true));
+				die(print_r($_POST, true)); // todo: remove/replace
 				throw new IllegalLinkException();
 			break;
 		}

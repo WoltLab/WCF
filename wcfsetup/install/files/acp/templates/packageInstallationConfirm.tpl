@@ -3,7 +3,10 @@
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
-		WCF.Language.add('wcf.acp.package.installation.title', '{lang}wcf.acp.package.installation.title{/lang}');
+		WCF.Language.addObject({
+			'wcf.acp.package.installation.title': '{lang}wcf.acp.package.installation.title{/lang}',
+			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}'
+		});
 		new WCF.ACP.Package.Installation({@$queueID}, undefined, true);
 	});
 	//]]>
