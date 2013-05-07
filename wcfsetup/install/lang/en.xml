@@ -1111,5 +1111,6 @@
 		<item name="wcf.user.error.isBanned"><![CDATA[Your user account has been banned{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
 	</category>
 	
-	<category name="wcf.user.option"></category>
+	<!-- i18n category -->
+	<category name="wcf.user.option" />
 </language>
