@@ -80,7 +80,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 				continue;
 			}
 			
-			$link = LinkHandler::getInstance()->getLink('Option', array('id' => $this->getCategoryID($option->categoryName)), 'optionName='.$option->optionName.'#'.$this->getCategoryName($option->categoryName));
+			$link = LinkHandler::getInstance()->getLink('Option', array('id' => $this->getCategoryID($this->getTopCategory($option->categoryName)->parentCategoryName)), 'optionName='.$option->optionName.'#'.$this->getCategoryName($option->categoryName));
 			$results[] = new ACPSearchResult($languageItems[$option->optionName], $link);
 		}
 		

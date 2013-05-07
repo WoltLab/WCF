@@ -1,11 +1,3 @@
-/**
- * Blue Temptation
- * Style for WoltLab Community Framework 2
- * 
- * @copyright	2001-2013 WoltLab GmbH
- * @license	WoltLab Burning Board License <http://www.woltlab.com/products/burning_board/license.php>
- */
-
 /* ### blue temptation special css ### */
 /* background-image for body, tabular boxes and dialogs */
 body, .tabularBox, .dialogTitlebar {
@@ -253,70 +245,72 @@ button.active:hover {
 
 
 /* bread crumbs */
-.breadcrumbs {
-	background-color: @wcfContentBackgroundColor;
-	border: 1px solid @wcfContainerBorderColor;
-	.borderRadius();
-	
-	> ul {
-		> li {
-			padding-right: 0;
-			
-			.transition(max-width, .2s);
-			
-			&:hover {
-				max-width: 100%;
+@media only screen and (min-width: 801px) {
+	.breadcrumbs {
+		background-color: @wcfContentBackgroundColor;
+		border: 1px solid @wcfContainerBorderColor;
+		.borderRadius();
+		
+		> ul {
+			> li {
+				padding-right: 0;
 				
-				> a {
-					background-color: @wcfContainerAccentBackgroundColor;
-					position: relative;
-					z-index: 10;
+				.transition(max-width, .2s);
+				
+				&:hover {
+					max-width: 100%;
+					
+					> a {
+						background-color: @wcfContainerAccentBackgroundColor;
+						position: relative;
+						z-index: 10;
+					}
+					
+					> .pointer > span {
+						border-color: transparent transparent transparent @wcfContainerAccentBackgroundColor;
+					}
 				}
 				
-				> .pointer > span {
-					border-color: transparent transparent transparent @wcfContainerAccentBackgroundColor;
-				}
-			}
-			
-			> .pointer {
-				border-color: transparent transparent transparent @wcfContainerBorderColor;
-				border-style: inset none inset solid;
-				border-width: 15px;
-				display: block;
-				height: 0;
-				padding: 0;
-				right: -15px;
-				top: -3px;
-				width: 0;
-				z-index: 20;
-				
-				> span {
-					border-color: transparent transparent transparent @wcfContentBackgroundColor;
+				> .pointer {
+					border-color: transparent transparent transparent @wcfContainerBorderColor;
 					border-style: inset none inset solid;
 					border-width: 15px;
 					display: block;
 					height: 0;
-					left: -16px;
-					overflow: hidden;
-					position: absolute;
-					text-indent: -9000px;
-					top: -15px;
+					padding: 0;
+					right: -15px;
+					top: -3px;
 					width: 0;
+					z-index: 20;
 					
-					.transition(border-color, .2s);
+					> span {
+						border-color: transparent transparent transparent @wcfContentBackgroundColor;
+						border-style: inset none inset solid;
+						border-width: 15px;
+						display: block;
+						height: 0;
+						left: -16px;
+						overflow: hidden;
+						position: absolute;
+						text-indent: -9000px;
+						top: -15px;
+						width: 0;
+						
+						.transition(border-color, .2s);
+					}
 				}
-			}
-			
-			> a {
-				padding-left: 20px;
 				
-				.transition(background-color, .2s);
-			}
-			
-			&:first-child > a {
-				padding-left: 9px;
+				> a {
+					padding-left: 20px;
+					
+					.transition(background-color, .2s);
+				}
 				
-				.borderRadius(@wcfContainerBorderRadius - 2, 0, 0, @wcfContainerBorderRadius - 2);
+				&:first-child > a {
+					padding-left: 9px;
+					
+					.borderRadius(@wcfContainerBorderRadius - 2, 0, 0, @wcfContainerBorderRadius - 2);
+				}
 			}
 		}
 	}
@@ -602,6 +596,16 @@ select[multiple] {
 	
 	.boxShadowInset(0, 1px, rgba(0, 0, 0, .1));
 	.transition(~"background-color, border, box-shadow", .2s);
+}
+
+.preInput {
+	> input[type='text'] {
+		border-radius: 0 3px 3px 0;
+	}
+	
+	> textarea {
+		border-radius: 0 3px 3px;
+	}
 }
 
 /* active / focus */
