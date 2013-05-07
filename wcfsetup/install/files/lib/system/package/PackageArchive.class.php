@@ -454,7 +454,7 @@ class PackageArchive {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			1,
-			'%'.Package::getAbbreviation($this->packageInfo['name'])
+			'%.'.Package::getAbbreviation($this->packageInfo['name'])
 		));
 		
 		return $statement->fetchColumn();
