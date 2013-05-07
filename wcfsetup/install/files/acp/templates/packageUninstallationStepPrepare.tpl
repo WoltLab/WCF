@@ -3,7 +3,7 @@
 		<span class="icon icon48 icon-spinner"></span>
 		
 		<div>
-			<h1>{lang}wcf.acp.package.uninstallation.title{/lang}</h1>
+			<h1>{lang}wcf.acp.package.uninstallation.title.packageName{/lang}</h1>
 			<p id="packageInstallationAction">{lang}wcf.acp.package.uninstallation.step.prepare{/lang}</span></p>
 			<p><progress id="packageInstallationProgress" value="0" max="100">0%</progress></p>
 		</div>
