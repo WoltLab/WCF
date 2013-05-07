@@ -8213,10 +8213,13 @@ $.widget('ui.wcfDialog', {
 	/**
 	 * Closes this dialog.
 	 * 
+	 * This function can be manually called, even if the dialog is set as not
+	 * closable by the user.
+	 * 
 	 * @param	object		event
 	 */
 	close: function(event) {
-		if (!this.isOpen() || !this.options.closable) {
+		if (!this.isOpen()) {
 			return;
 		}
 		
