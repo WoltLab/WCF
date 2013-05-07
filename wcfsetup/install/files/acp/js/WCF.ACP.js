@@ -350,6 +350,12 @@ WCF.ACP.Package.Installation = Class.extend({
 	_dialog: null,
 	
 	/**
+	 * name of the language item with the title of the dialog
+	 * @var	string
+	 */
+	_dialogTitle: '',
+	
+	/**
 	 * action proxy
 	 * @var	WCF.Action.Proxy
 	 */
@@ -378,6 +384,11 @@ WCF.ACP.Package.Installation = Class.extend({
 		this._actionName = (actionName) ? actionName : 'InstallPackage';
 		this._allowRollback = (allowRollback === true) ? true : false;
 		this._queueID = queueID;
+		
+		this._dialogTitle = 'wcf.acp.package.installation.title';
+		if (actionName == 'UninstallPackage') {
+			this._dialogTitle = 'wcf.acp.package.uninstallation.title';
+		}
 		
 		this._initProxy();
 		this._init();
@@ -410,14 +421,16 @@ WCF.ACP.Package.Installation = Class.extend({
 			return;
 		}
 		
-		this._purgeTemplateContent($.proxy(function() {
-			var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-			$('<button class="buttonPrimary">' + WCF.Language.get('wcf.acp.package.installation.rollback') + '</button>').appendTo($form).click($.proxy(this._rollback, this));
-			
-			$('#packageInstallationInnerContentContainer').show();
-			
-			this._dialog.wcfDialog('render');
-		}, this));
+		if (this._dialog !== null) {
+			this._purgeTemplateContent($.proxy(function() {
+				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
+				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.acp.package.installation.rollback') + '</button>').appendTo($form).click($.proxy(this._rollback, this));
+				
+				$('#packageInstallationInnerContentContainer').show();
+				
+				this._dialog.wcfDialog('render');
+			}, this));
+		}
 	},
 	
 	/**
@@ -461,12 +474,13 @@ WCF.ACP.Package.Installation = Class.extend({
 			this._dialog = $('<div id="packageInstallationDialog" />').hide().appendTo(document.body);
 			this._dialog.wcfDialog({
 				closable: false,
-				title: WCF.Language.get('wcf.acp.package.installation.title')
+				title: WCF.Language.get(this._dialogTitle)
 			});
 		}
 		
 		if (data.step == 'rollback') {
 			this._dialog.wcfDialog('close');
+			this._dialog.remove();
 			
 			new WCF.PeriodicalExecuter(function(pe) {
 				pe.stop();
@@ -653,6 +667,7 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 		this._actionName = 'UninstallPackage';
 		this._packageID = packageID;
 		this._queueID = 0;
+		this._dialogTitle = 'wcf.acp.package.uninstallation.title';
 		
 		this._initProxy();
 		this.prepareInstallation();
@@ -1677,6 +1692,10 @@ WCF.ACP.Worker = Class.extend({
 			});
 		}
 		
+		if (data.template) {
+			this._dialog.html(data.template);
+		}
+		
 		// update progress
 		this._dialog.find('progress').attr('value', data.progress).text(data.progress + '%').next('span').text(data.progress + '%');
 		
@@ -1693,7 +1712,7 @@ WCF.ACP.Worker = Class.extend({
 		else {
 			// display continue button
 			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
-			$('<button>' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).click(function() { window.location = data.proceedURL; });
+			$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).click(function() { window.location = data.proceedURL; });
 			
 			this._dialog.wcfDialog('render');
 		}
@@ -1767,34 +1786,6 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
 			
 			this._initContainer($containerID);
 		}, this));
-	}
-});
-
-/**
- * @see	WCF.Action.Delete
- */
-WCF.ACP.Category.Delete = WCF.Action.Delete.extend({
-	/**
-	 * @see	WCF.Action.Delete.triggerEffect()
-	 */
-	triggerEffect: function(objectIDs) {
-		for (var $index in this._containers) {
-			var $container = $('#' + this._containers[$index]);
-			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
-				// move child categories up
-				if ($container.has('ol').has('li')) {
-					if ($container.is(':only-child')) {
-						$container.parent().replaceWith($container.find('> ol'));
-					}
-					else {
-						$container.replaceWith($container.find('> ol > li'));
-					}
-				}
-				else {
-					$container.wcfBlindOut('up', function() { $container.remove(); });
-				}
-			}
-		}
 	}
 });
 

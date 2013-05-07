@@ -413,7 +413,7 @@
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Open external links in a new window]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Appends the attribute “target="_blank"” to external links, causing the user’s browser to open the link in a new window.]]></item>
 	</category>
-
+	
 	<category name="wcf.acp.package">
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installed Applications]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Applications]]></item>
@@ -428,6 +428,7 @@
 		<item name="wcf.acp.package.dependencies.required.description"><![CDATA[Packages required by this package]]></item>
 		<item name="wcf.acp.package.dependencies.title"><![CDATA[Dependencies]]></item>
 		<item name="wcf.acp.package.description"><![CDATA[Description]]></item>
+		<item name="wcf.acp.package.error.noUniqueAbbrevation"><![CDATA[There is already an application installed which has the same abbrevation.]]></item>
 		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[The uploaded archive is invalid.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Overwrite Existing Tables]]></item>
 		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[The tables above already exist and will be replaced during the installation. Any contained data will be lost.]]></item>
@@ -474,6 +475,10 @@
 		<item name="wcf.acp.package.type.application"><![CDATA[Application]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Plugin]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package “{@$package->getName()}”?]]></item>
+		<item name="wcf.acp.package.uninstallation.step.prepare"><![CDATA[TODO: Deinstallation wird vorbereitet …]]></item>
+		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[TODO: Deinstallation abgeschlossen]]></item>
+		<item name="wcf.acp.package.uninstallation.title"><![CDATA[TODO: Deinstallation]]></item>
+		<item name="wcf.acp.package.uninstallation.title.packageName"><![CDATA[TODO: Paket „{$queue->packageName}“ wird deinstalliert …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Credentials]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Your credentials are invalid, please verify {if $updateServer->requiresLicense()}license and serial number{else}username and password{/if}.]]></item>
@@ -1105,4 +1110,7 @@
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[Entered text is invalid.]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[Your user account has been banned{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
 	</category>
+	
+	<!-- i18n category -->
+	<category name="wcf.user.option" />
 </language>
