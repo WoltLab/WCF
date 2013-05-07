@@ -863,6 +863,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$adapter = ImageHandler::getInstance()->getAdapter();
 		$adapter->loadFile(WCF_DIR.'images/'.$filename);
 		$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH, Style::PREVIEW_IMAGE_MAX_HEIGHT);
-		$adapter->writeImage($thumbnail, $filename);
+		$adapter->writeImage($thumbnail, WCF_DIR.'images/'.$filename);
 	}
 }
