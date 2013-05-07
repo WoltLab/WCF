@@ -43,7 +43,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		$this->optionHandler = new UserOptionHandler(false, '', 'settings');
 		$this->optionHandler->init();
 	}
@@ -64,7 +64,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	 */
 	public function validate() {
 		parent::validate();
-	
+		
 		$this->optionHandler->validate();
 	}
 	
@@ -73,7 +73,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	 */
 	public function save() {
 		parent::save();
-	
+		
 		// get new values
 		$saveOptions = $this->optionHandler->save();
 		
@@ -115,7 +115,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 		// reset cache
 		UserOptionCacheBuilder::getInstance()->reset();
 		$this->saved();
-	
+		
 		WCF::getTPL()->assign('success', true);
 	}
 	
@@ -124,7 +124,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		if (empty($_POST)) {
 			$this->optionHandler->readData();
 		}
@@ -135,7 +135,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		WCF::getTPL()->assign(array(
 			'optionTree' => $this->optionHandler->getOptionTree(),
 			'applyChangesToExistingUsers' => $this->applyChangesToExistingUsers
