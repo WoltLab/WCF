@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\request;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\menu\page\PageMenu;
 use wcf\system\SingletonFactory;
@@ -51,19 +53,30 @@ class RequestHandler extends SingletonFactory {
 		// handle offline mode
 		if (!$isACPRequest && defined('OFFLINE') && OFFLINE) {
 			if (!WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode') && !$this->activeRequest->isAvailableDuringOfflineMode()) {
-				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
+				if ($this->isAJAXRequest()) {
 					throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.permissionDenied'), AJAXException::INSUFFICIENT_PERMISSIONS);
 				}
 				else {
-					WCF::getTPL()->assign(array(
-						'templateName' => 'offline'
-					));
+					WCF::getTPL()->assign('templateName', 'offline');
 					WCF::getTPL()->display('offline');
 				}
 				
 				exit;
 			}
 		}
+		
+		// handle banned users
+		if (WCF::getUser()->userID && WCF::getUser()->banned && !$this->activeRequest->isAvailableDuringOfflineMode()) {
+			if ($this->isAJAXRequest()) {
+				throw new AJAXException(WCF::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'), AJAXException::INSUFFICIENT_PERMISSIONS);
+			}
+			else {
+				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'));
+			}
+		}
+		
+		// call handleRequest event
+		EventHandler::getInstance()->fireAction($this, 'handleRequest');
 		
 		// start request
 		$this->activeRequest->execute();
@@ -168,5 +181,14 @@ class RequestHandler extends SingletonFactory {
 	 */
 	public function isACPRequest() {
 		return $this->isACPRequest;
+	}
+	
+	/**
+	 * Checks if the request is done through AJAX.
+	 * 
+	 * @return	boolean
+	 */
+	public function isAJAXRequest() {
+		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
 	}
 }
