@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
@@ -140,8 +141,11 @@ class UserAssignToGroupForm extends AbstractForm {
 			$groupsIDs = array_merge($groups[$user->userID], $this->groupIDs);
 			$groupsIDs = array_unique($groupsIDs);
 			
-			$userEditor = new UserEditor($user);
-			$userEditor->addToGroups($groupsIDs, true, false);
+			$action = new UserAction(array(new UserEditor($user)), 'addToGroups', array(
+				'groups' => $groupsIDs,
+				'addDefaultGroups' => false		
+			));
+			$action->executeAction();
 		}
 		
 		ClipboardHandler::getInstance()->removeItems($this->objectTypeID);
