@@ -85,8 +85,8 @@
 						</dt>
 						<dd>
 							{htmlCheckboxes options=$availableGroups name='groupIDs' selected=$groupIDs}
-								
-							<!-- ToDo --><label style="margin-top: 10px"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
+							
+							<label class="marginTop"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
 						</dd>
 					</dl>
 				{/if}

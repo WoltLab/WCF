@@ -5,13 +5,19 @@ namespace wcf\util;
  * Replaces quoted strings in a text.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
  * @category	Community Framework
  */
 final class StringStack {
+	/**
+	 * hash index
+	 * @var	integer
+	 */
+	protected static $i = 0;
+	
 	/**
 	 * local string stack
 	 * @var	array<string>
@@ -26,7 +32,7 @@ final class StringStack {
 	 * @return	string		$hash
 	 */
 	public static function pushToStringStack($string, $type = 'default', $delimiter = '@@') {
-		$hash = $delimiter.StringUtil::getHash(uniqid(microtime()).$string).$delimiter;
+		$hash = $delimiter.StringUtil::getHash(self::$i++ . uniqid(microtime()) . $string).$delimiter;
 		
 		if (!isset(self::$stringStack[$type])) {
 			self::$stringStack[$type] = array();
