@@ -1008,7 +1008,7 @@ WCF.Clipboard = {
 				$container.find('input.jsClipboardItem').each($.proxy(function(innerIndex, item) {
 					var $item = $(item);
 					if (WCF.inArray($item.data('objectID'), this._markedObjectIDs)) {
-						$item.attr('checked', 'checked');
+						$item.prop('checked', true);
 						
 						// add marked class for element container
 						$item.parents('.jsClipboardObject').addClass('jsMarked');
@@ -1027,7 +1027,7 @@ WCF.Clipboard = {
 					});
 					
 					if ($allItemsMarked) {
-						$(markAll).attr('checked', 'checked');
+						$(markAll).prop('checked', true);
 					}
 				});
 			}, this));
@@ -1044,7 +1044,7 @@ WCF.Clipboard = {
 		this._containers.each(function(index, container) {
 			var $container = $(container);
 			
-			$container.find('input.jsClipboardItem, input.jsClipboardMarkAll').removeAttr('checked');
+			$container.find('input.jsClipboardItem, input.jsClipboardMarkAll').prop('checked', false);
 			$container.find('.jsClipboardObject').removeClass('jsMarked');
 		});
 	},
@@ -1121,10 +1121,10 @@ WCF.Clipboard = {
 			// simulate a ticked 'markAll' checkbox
 			$container.find('.jsClipboardMarkAll').each(function(index, markAll) {
 				if ($markedAll) {
-					$(markAll).attr('checked', 'checked');
+					$(markAll).prop('checked', true);
 				}
 				else {
-					$(markAll).removeAttr('checked');
+					$(markAll).prop('checked', false);
 				}
 			});
 		}
@@ -1162,14 +1162,14 @@ WCF.Clipboard = {
 				var $objectID = $containerItem.data('objectID');
 				if ($isMarked) {
 					if (!$containerItem.prop('checked')) {
-						$containerItem.attr('checked', 'checked');
+						$containerItem.prop('checked', true);
 						this._markedObjectIDs.push($objectID);
 						$objectIDs.push($objectID);
 					}
 				}
 				else {
 					if ($containerItem.prop('checked')) {
-						$containerItem.removeAttr('checked');
+						$containerItem.prop('checked', false);
 						this._markedObjectIDs = $.removeArrayValue(this._markedObjectIDs, $objectID);
 						$objectIDs.push($objectID);
 					}
@@ -1277,7 +1277,7 @@ WCF.Clipboard = {
 					for (var $__containerID in this._containers) {
 						var $__container = $(this._containers[$__containerID]);
 						if ($__container.data('type') == $typeName) {
-							$__container.find('.jsClipboardMarkAll, .jsClipboardItem').removeAttr('checked');
+							$__container.find('.jsClipboardMarkAll, .jsClipboardItem').prop('checked', false);
 							break;
 						}
 					}
