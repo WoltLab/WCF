@@ -533,7 +533,7 @@ $.extend(WCF, {
 	/**
 	 * Returns a dynamically created id.
 	 * 
-	 * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/dom/dom.js#L1789
+	 * @see		https://github.com/sstephenson/prototype/blob/5e5cfff7c2c253eaf415c279f9083b4650cd4506/src/prototype/dom/dom.js#L1789
 	 * @return	string
 	 */
 	getRandomID: function() {
