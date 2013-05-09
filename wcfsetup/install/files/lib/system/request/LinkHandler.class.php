@@ -46,6 +46,7 @@ class LinkHandler extends SingletonFactory {
 		$isACP = $originIsACP = RequestHandler::getInstance()->isACPRequest();
 		$isRaw = false;
 		$appendSession = true;
+		$encodeTitle = false;
 		if (isset($parameters['application'])) {
 			$abbreviation = $parameters['application'];
 			unset($parameters['application']);
@@ -73,6 +74,10 @@ class LinkHandler extends SingletonFactory {
 				$appendSession = false;
 			}
 			unset($parameters['forceFrontend']);
+		}
+		if (isset($parameters['encodeTitle'])) {
+			$encodeTitle = $parameters['encodeTitle'];
+			unset($parameters['encodeTitle']);
 		}
 		
 		// remove anchor before parsing
@@ -107,6 +112,8 @@ class LinkHandler extends SingletonFactory {
 		if (isset($parameters['title'])) {
 			// remove illegal characters
 			$parameters['title'] = trim($this->titleRegex->replace($parameters['title'], '-'), '-');
+			// encode title
+			if ($encodeTitle) $parameters['title'] = rawurlencode($parameters['title']);
 		}
 		
 		$parameters['controller'] = $controller;

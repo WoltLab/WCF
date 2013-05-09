@@ -39,6 +39,11 @@
 				'wcf.acp.style.copyStyle.confirmMessage': '{lang}wcf.acp.style.copyStyle.confirmMessage{/lang}'
 			});
 		{/if}
+		
+		$('.jsUnitSelect').change(function(event) {
+			var $target = $(event.currentTarget);
+			$target.prev().attr('step', ($target.val() == 'em' ? '0.01' : '1'));
+		}).trigger('change');
 	});
 	//]]>
 </script>
@@ -295,7 +300,7 @@
 					<dt><label for="wcfLayoutFluidGap">{lang}wcf.acp.style.globals.fluidLayoutGap{/lang}</label></dt>
 					<dd>
 						<input type="number" id="wcfLayoutFluidGap" name="wcfLayoutFluidGap" value="{@$variables[wcfLayoutFluidGap]}" class="tiny" />
-						<select name="wcfLayoutFluidGap_unit">
+						<select name="wcfLayoutFluidGap_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
 								<option value="{@$unit}"{if $variables[wcfLayoutFluidGap_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
 							{/foreach}
@@ -306,7 +311,7 @@
 					<dt><label for="wcfLayoutFixedWidth">{lang}wcf.acp.style.globals.fixedLayoutWidth{/lang}</label></dt>
 					<dd>
 						<input type="number" id="wcfLayoutFixedWidth" name="wcfLayoutFixedWidth" value="{@$variables[wcfLayoutFixedWidth]}" class="tiny" />
-						<select name="wcfLayoutFixedWidth_unit">
+						<select name="wcfLayoutFixedWidth_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
 								<option value="{@$unit}"{if $variables[wcfLayoutFixedWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
 							{/foreach}
@@ -332,7 +337,7 @@
 					<dt><label for="wcfBaseFontSize">{lang}wcf.acp.style.globals.fontSize{/lang}</label></dt>
 					<dd>
 						<input type="number" id="wcfBaseFontSize" name="wcfBaseFontSize" value="{@$variables[wcfBaseFontSize]}" class="tiny" />
-						<select name="wcfBaseFontSize_unit">
+						<select name="wcfBaseFontSize_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
 								<option value="{@$unit}"{if $variables[wcfBaseFontSize_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
 							{/foreach}
