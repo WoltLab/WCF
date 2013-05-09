@@ -32,7 +32,7 @@
 				<dl>
 					<dt><label for="exceptionID">{lang}wcf.acp.exceptionLog.search.exceptionID{/lang}</label></dt>
 					<dd>
-						<input type="search" id="exceptionID" name="exceptionID" value="{$exceptionID}" autofocus="autofocus" class="medium" />
+						<input type="text" id="exceptionID" name="exceptionID" value="{$exceptionID}" autofocus="autofocus" class="medium" />
 					</dd>
 				</dl>
 				<dl>
