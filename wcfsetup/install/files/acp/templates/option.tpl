@@ -1,5 +1,7 @@
 {include file='header' pageTitle='wcf.acp.option.category.'|concat:$category->categoryName}
 
+{event name='javascriptInclude'}
+
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
@@ -17,6 +19,8 @@
 			}, 200);
 		{/if}
 	});
+	
+	{event name='javascriptInit'}
 	//]]>
 </script>
 
