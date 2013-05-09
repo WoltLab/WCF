@@ -1,5 +1,20 @@
 {include file='header' pageTitle='wcf.acp.style.exportStyle'}
 
+<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+		$('#exportAsPackage').change(function (event) {
+			if ($('#exportAsPackage').is(':checked')) {
+				$('#packageNameDl').show();
+			}
+			else {
+				$('#packageNameDl').hide();
+			}
+		}).trigger('change');
+	});
+	//]]>
+</script>
+
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.style.exportStyle{/lang}</h1>
 </header>
@@ -40,10 +55,10 @@
 			
 			<dl>
 				<dd>
-					<label><input type="checkbox" name="exportAsPackage" value="1"{if $exportAsPackage} checked="checked"{/if} /> <span>{lang}wcf.acp.style.exportAsPackage{/lang}</span></label>
+					<label><input type="checkbox" id="exportAsPackage" name="exportAsPackage" value="1"{if $exportAsPackage} checked="checked"{/if} /> <span>{lang}wcf.acp.style.exportAsPackage{/lang}</span></label>
 				</dd>
 			</dl>
-			<dl{if $errorField == 'packageName'} class="formError"{/if}>
+			<dl id="packageNameDl"{if $errorField == 'packageName'} class="formError"{/if}>
 				<dt>
 					<label for="packageName">{lang}wcf.acp.style.packageName{/lang}</label>
 				</dt>
