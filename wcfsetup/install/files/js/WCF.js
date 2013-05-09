@@ -3185,6 +3185,7 @@ WCF.String = {
 	/**
 	 * Adds thousands separators to a given number.
 	 * 
+	 * @see		http://stackoverflow.com/a/6502556/782822
 	 * @param	mixed		number
 	 * @return	string
 	 */
