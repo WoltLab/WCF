@@ -631,6 +631,7 @@
 		<item name="wcf.acp.style.import.source"><![CDATA[Data Source]]></item>
 		<item name="wcf.acp.style.import.source.upload"><![CDATA[Upload Style]]></item>
 		<item name="wcf.acp.style.import.source.upload.description"><![CDATA[Upload a style from your local machine.]]></item>
+		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[TODO: Der Stil konnte nicht importiert werden. Es handelt sich nicht um eine gültige Stil-Datei.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.style.list"><![CDATA[List Styles]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Package Identifier]]></item>
