@@ -281,7 +281,7 @@
 			</fieldset>
 		</div>
 		
-		{if $additionalActionSettings|isset}{@$additionalActionSettings}{/if}
+		{event name='additionalActionSettings'}
 	</div>
 	
 	<div class="formSubmit">
