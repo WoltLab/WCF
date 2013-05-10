@@ -88,11 +88,16 @@ class LinkHandler extends SingletonFactory {
 		
 		// build route
 		if ($controller === null) {
-			// build link to landing page
-			$landingPage = PageMenu::getInstance()->getLandingPage();
-			$controller = $landingPage->getController();
-			$abbreviation = $landingPage->getApplication();
-			$url = $landingPage->menuItemLink;
+			if ($isACP) {
+				$controller = 'Index';
+			}
+			else {
+				// build link to landing page
+				$landingPage = PageMenu::getInstance()->getLandingPage();
+				$controller = $landingPage->getController();
+				$abbreviation = $landingPage->getApplication();
+				$url = $landingPage->menuItemLink;
+			}
 		}
 		
 		// handle object
