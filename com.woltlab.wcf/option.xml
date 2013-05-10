@@ -54,6 +54,9 @@
 					<category name="general.system.date">
 						<parent>general.system</parent>
 					</category>
+					<category name="general.system.jquery">
+						<parent>general.system</parent>
+					</category>
 				<category name="general.mail">
 					<parent>general</parent>
 				</category>
@@ -311,6 +314,17 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>Europe/London</defaultvalue>
 			</option>
 			<!-- /general.system.date -->
+			
+			<!-- general.system.jquery -->
+			<option name="jquery_source">
+				<categoryname>general.system.jquery</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue>google</defaultvalue>
+				<selectoptions>local:wcf.acp.option.jquery_source.local
+google:wcf.acp.option.jquery_source.google
+microsoft:wcf.acp.option.jquery_source.microsoft</selectoptions>
+			</option>
+			<!-- /general.system.jquery -->
 			
 			<!-- mail.general -->
 			<option name="mail_from_name">

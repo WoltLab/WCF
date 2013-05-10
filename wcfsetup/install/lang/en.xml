@@ -328,6 +328,7 @@
 		<item name="wcf.acp.option.category.user.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Censorship]]></item>
+		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
 		
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookie Domain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Should be left blank except for special circumstances.]]></item>
@@ -415,6 +416,10 @@
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[The attribute “rel="nofollow"” tells search engines to disregard external links.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Open external links in a new window]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Appends the attribute “target="_blank"” to external links, causing the user’s browser to open the link in a new window.]]></item>
+		<item name="wcf.acp.option.jquery_source"><![CDATA[jQuery Source]]></item>
+		<item name="wcf.acp.option.jquery_source.local"><![CDATA[Local Version]]></item>
+		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
+		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
