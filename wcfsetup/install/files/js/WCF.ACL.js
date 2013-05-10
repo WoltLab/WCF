@@ -96,7 +96,7 @@ WCF.ACL.List = Class.extend({
 		// insert container elements
 		var $elementContainer = this._container.children('dd');
 		var $aclList = $('<ul class="aclList container" />').appendTo($elementContainer);
-		var $searchInput = $('<input type="text" class="long" />').appendTo($elementContainer);
+		var $searchInput = $('<input type="text" class="long" placeholder="' + WCF.Language.get('wcf.acl.search.' + (!includeUserGroups ? 'user.' : '') + 'description') + '" />').appendTo($elementContainer);
 		var $permissionList = $('<ul class="aclPermissionList container" />').hide().appendTo($elementContainer);
 		
 		// set elements
@@ -186,6 +186,8 @@ WCF.ACL.List = Class.extend({
 		
 		// show permissions
 		this._containerElements.permissionList.show();
+		
+		WCF.DOMNodeInsertedHandler.forceExecution();
 	},
 	
 	/**
@@ -199,7 +201,7 @@ WCF.ACL.List = Class.extend({
 	_createListItem: function(objectID, label, type) {
 		var $listItem = $('<li><span class="icon icon16 icon-' + (type === 'group' ? 'group' : 'user') + '" /> <span>' + label + '</span></li>').appendTo(this._containerElements.aclList);
 		$listItem.data('objectID', objectID).data('type', type).click($.proxy(this._click, this));
-		$('<span class="icon icon16 icon-remove jsTooltip" title="' + WCF.Language.get('wcf.global.button.delete') + '" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
+		$('<span class="icon icon16 icon-remove jsTooltip pointer" title="' + WCF.Language.get('wcf.global.button.delete') + '" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
 		
 		return $listItem;
 	},
@@ -258,8 +260,8 @@ WCF.ACL.List = Class.extend({
 			var $option = data.returnValues.options[$optionID];
 			
 			var $listItem = $('<li><span>' + $option.label +  '</span></li>').data('optionID', $optionID).data('optionName', $option.optionName);
-			var $grantPermission = $('<input type="checkbox" id="grant' + $optionID + '" />').appendTo($listItem).wrap('<label for="grant' + $optionID + '" />');
-			var $denyPermission = $('<input type="checkbox" id="deny' + $optionID + '" />').appendTo($listItem).wrap('<label for="deny' + $optionID + '" />');
+			var $grantPermission = $('<input type="checkbox" id="grant' + $optionID + '" />').appendTo($listItem).wrap('<label for="grant' + $optionID + '" class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.grant') + '" />');
+			var $denyPermission = $('<input type="checkbox" id="deny' + $optionID + '" />').appendTo($listItem).wrap('<label for="deny' + $optionID + '" class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.deny') + '" />');
 			
 			$grantPermission.data('type', 'grant').data('optionID', $optionID).change($.proxy(this._change, this));
 			$denyPermission.data('type', 'deny').data('optionID', $optionID).change($.proxy(this._change, this));
@@ -281,8 +283,8 @@ WCF.ACL.List = Class.extend({
 		// add a "full access" permission if there are more than one option
 		if ($count > 1) {
 			var $listItem = $('<li class="aclFullAccess"><span>' + WCF.Language.get('wcf.acl.option.fullAccess') + '</span></li>').prependTo(this._containerElements.permissionList);
-			this._containerElements.grantAll = $('<input type="checkbox" id="grantAll" />').appendTo($listItem).wrap('<label for="grantAll" />');
-			this._containerElements.denyAll = $('<input type="checkbox" id="denyAll" />').appendTo($listItem).wrap('<label for="denyAll" />');
+			this._containerElements.grantAll = $('<input type="checkbox" id="grantAll" />').appendTo($listItem).wrap('<label for="grantAll" class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.grant') + '" />');
+			this._containerElements.denyAll = $('<input type="checkbox" id="denyAll" />').appendTo($listItem).wrap('<label for="denyAll" class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.deny') + '" />');
 			
 			// bind events
 			this._containerElements.grantAll.data('type', 'grant').change($.proxy(this._changeAll, this));
@@ -334,6 +336,8 @@ WCF.ACL.List = Class.extend({
 		
 		// add options
 		this._values[type] = data.returnValues[type].option;
+		
+		WCF.DOMNodeInsertedHandler.forceExecution();
 	},
 	
 	/**

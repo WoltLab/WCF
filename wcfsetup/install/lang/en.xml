@@ -5,6 +5,9 @@
 		<item name="wcf.acl.option.fullAccess"><![CDATA[Full Access]]></item>
 		<item name="wcf.acl.option.grant"><![CDATA[Grant]]></item>
 		<item name="wcf.acl.permissions"><![CDATA[User and Group Permissions]]></item>
+		<item name="wcf.acl.user.permissions"><![CDATA[User Permissions]]></item>
+		<item name="wcf.acl.search.description"><![CDATA[TODO: Benutzer- oder Benutzergruppenname eingeben …]]></item>
+		<item name="wcf.acl.search.user.description"><![CDATA[TODO: Benutzername eingeben …]]></item>
 	</category>
 	
 	<category name="wcf.acp.application">
