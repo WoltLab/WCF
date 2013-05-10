@@ -8305,13 +8305,10 @@ $.widget('ui.wcfDialog', {
 		var $maximumHeight = $windowDimensions.height - $heightDifference - 120;
 		this._content.css({ maxHeight: $maximumHeight + 'px' });
 		
-		// re-caculate values if container height was previously limited
-		if ($maximumHeight < $contentDimensions.height) {
-			$containerDimensions = this._container.getDimensions('outer');
-		}
+		this._determineOverflow();
 		
 		// calculate new dimensions
-		$contentDimensions = this._getContentDimensions($maximumHeight);
+		$containerDimensions = this._container.getDimensions('outer');
 		
 		// move container
 		var $leftOffset = Math.round(($windowDimensions.width - $containerDimensions.width) / 2);
@@ -8334,8 +8331,6 @@ $.widget('ui.wcfDialog', {
 			height: 'auto',
 			width: 'auto'
 		});
-		
-		this._determineOverflow();
 		
 		if (!this.isOpen()) {
 			// hide container again
