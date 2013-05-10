@@ -30,7 +30,7 @@
 				<dd>
 					<input type="password" id="masterPassword" name="masterPassword" value="{$masterPassword}" class="medium" />
 					{if $errorField == 'masterPassword'}
-						<small class="wcf-innerError">
+						<small class="innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
@@ -47,7 +47,7 @@
 				<dd>
 					<input type="password" id="confirmMasterPassword" name="confirmMasterPassword" value="{$confirmMasterPassword}" class="medium" />
 					{if $errorField == 'confirmMasterPassword'}
-						<small class="wcf-innerError">
+						<small class="innerError">
 							{if $errorType == 'empty'}
 								{lang}wcf.global.form.error.empty{/lang}
 							{else}
