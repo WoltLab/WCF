@@ -168,11 +168,14 @@ class RouteHandler extends SingletonFactory {
 	 * but a reverse lookup.
 	 * 
 	 * @param	array		$components
+	 * @param	boolean		$isACP
 	 * @return	string
 	 */
-	public function buildRoute(array $components) {
+	public function buildRoute(array $components, $isACP = null) {
+		if ($isACP === null) $isACP = RequestHandler::getInstance()->isACPRequest();
+		
 		foreach ($this->routes as $route) {
-			if (RequestHandler::getInstance()->isACPRequest() != $route->isACP()) {
+			if ($isACP != $route->isACP()) {
 				continue;
 			}
 			

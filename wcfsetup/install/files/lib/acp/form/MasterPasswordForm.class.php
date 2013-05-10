@@ -6,6 +6,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\PasswordUtil;
+use wcf\util\StringUtil;
 
 /**
  * Shows the master password form.
@@ -39,6 +40,10 @@ class MasterPasswordForm extends AbstractForm {
 		if (file_exists(WCF_DIR.'acp/masterPassword.inc.php')) {
 			require_once(WCF_DIR.'acp/masterPassword.inc.php');
 		}
+		else {
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('MasterPasswordInit'));
+			exit;
+		}
 	}
 	
 	/**
@@ -62,7 +67,7 @@ class MasterPasswordForm extends AbstractForm {
 		}
 		
 		// check password
-		if (PasswordUtil::secureCompare(PasswordUtil::getSaltedHash($this->masterPassword, MASTER_PASSWORD_SALT), MASTER_PASSWORD)) {
+		if (!PasswordUtil::secureCompare(MASTER_PASSWORD, PasswordUtil::getDoubleSaltedHash($this->masterPassword, MASTER_PASSWORD))) {
 			throw new UserInputException('masterPassword', 'invalid');
 		}
 	}
@@ -92,7 +97,7 @@ class MasterPasswordForm extends AbstractForm {
 	public function readData() {
 		parent::readData();
 		
-		if (empty($_POST)) {
+		if (empty($_POST) && StringUtil::indexOf(WCF::getSession()->requestURI, 'MasterPassword') === false) {
 			$this->url = WCF::getSession()->requestURI;
 		}
 	}
