@@ -7,7 +7,7 @@ use wcf\util\StringUtil;
  * Template modifier plugin which formats currencies.
  * 
  * Usage:
- * 	{$prize|currency} ->
+ * 	{$prize|currency}
  * 	{320|currency} -> 3.20
  * 	{5125845|currency} -> 51,258.45
  * 
