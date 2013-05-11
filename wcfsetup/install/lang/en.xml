@@ -264,7 +264,7 @@
 		<item name="wcf.acp.menu.link.user.list"><![CDATA[List Users]]></item>
 		<item name="wcf.acp.menu.link.user.mail"><![CDATA[Email Users]]></item>
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Users]]></item>
-		<item name="wcf.acp.menu.link.user.massProcessing"><![CDATA[Bulk Processing]]></item>
+		<item name="wcf.acp.menu.link.user.bulkProcessing"><![CDATA[Bulk Processing]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Search Users]]></item>
 		<item name="wcf.acp.menu.link.user.option"><![CDATA[Custom User Fields]]></item>
 		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[List Custom User Fields]]></item>
@@ -708,11 +708,11 @@
 		<item name="wcf.acp.user.list"><![CDATA[Users]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[All Users]]></item>
 		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} Users]]></item>
-		<item name="wcf.acp.user.massProcessing"><![CDATA[Bulk Processing]]></item>
-		<item name="wcf.acp.user.massProcessing.action"><![CDATA[Actions]]></item>
-		<item name="wcf.acp.user.massProcessing.conditions"><![CDATA[Conditions]]></item>
-		<item name="wcf.acp.user.massProcessing.success"><![CDATA[Executed action affected {#$affectedUsers} user{if $affectedUsers != 1}s{/if}.]]></item>
-		<item name="wcf.acp.user.massProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below without any further confirmation prompt! Processing can be fairly slow if many users are affected by your conditions, it is recommended to enable “Maintenance Mode” in first place. Any change cannot be undone, please be careful!]]></item>
+		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Bulk Processing]]></item>
+		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Actions]]></item>
+		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Conditions]]></item>
+		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Executed action affected {#$affectedUsers} user{if $affectedUsers != 1}s{/if}.]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below without any further confirmation prompt! Processing can be fairly slow if many users are affected by your conditions, it is recommended to enable “Maintenance Mode” in first place. Any change cannot be undone, please be careful!]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Search Users]]></item>
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profile]]></item>
