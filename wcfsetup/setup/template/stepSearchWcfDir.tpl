@@ -1,6 +1,6 @@
 {include file='header'}
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min{if !DEBUG_MODE}.min{/if}.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	if (window.jQuery) {
