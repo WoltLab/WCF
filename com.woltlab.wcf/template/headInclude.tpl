@@ -15,11 +15,11 @@
 	var TIME_NOW = {@TIME_NOW};
 	//]]>
 </script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min{if !DEBUG_MODE}.min{/if}.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min{if !DEBUG_MODE}.min{/if}.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable{if !DEBUG_MODE}.min{/if}.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min{if !DEBUG_MODE}.min{/if}.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF{if !DEBUG_MODE}.min{/if}.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
