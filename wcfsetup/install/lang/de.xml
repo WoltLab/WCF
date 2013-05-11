@@ -264,7 +264,7 @@
 		<item name="wcf.acp.menu.link.user.list"><![CDATA[Benutzer auflisten]]></item>
 		<item name="wcf.acp.menu.link.user.mail"><![CDATA[E-Mail an alle Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Benutzer]]></item>
-		<item name="wcf.acp.menu.link.user.massProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
+		<item name="wcf.acp.menu.link.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Benutzer suchen]]></item>
 		<item name="wcf.acp.menu.link.user.option"><![CDATA[Benutzerprofilfelder]]></item>
 		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[Benutzerprofilfelder auflisten]]></item>
@@ -328,6 +328,7 @@
 		<item name="wcf.acp.option.category.user.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Zensur]]></item>
+		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
 		
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookiedomain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Standardmäßig sollten Sie dieses Feld frei lassen, da ein Ausfüllen nur in wenigen Fällen notwendig ist.]]></item>
@@ -415,6 +416,10 @@
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[Das Attribut „rel="nofollow"“ weist Suchmaschinen an, einen bestimmten Link auf einer Seite zu ignorieren.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Externe Links in neuem Fenster öffnen]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Setzt das Attribut „target="_blank"“ auf externe Links und weist den Browser dadurch an, einen aufgerufenen Link in einem neuen Browser-Fenster zu öffnen.]]></item>
+		<item name="wcf.acp.option.jquery_source"><![CDATA[jQuery-Quelle]]></item>
+		<item name="wcf.acp.option.jquery_source.local"><![CDATA[lokale Version]]></item>
+		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
+		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -703,11 +708,11 @@
 		<item name="wcf.acp.user.list"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[Alle Benutzer]]></item>
 		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} Benutzer]]></item>
-		<item name="wcf.acp.user.massProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
-		<item name="wcf.acp.user.massProcessing.action"><![CDATA[Aktion]]></item>
-		<item name="wcf.acp.user.massProcessing.conditions"><![CDATA[Bedingungen]]></item>
-		<item name="wcf.acp.user.massProcessing.success"><![CDATA[Die gewählte Aktion wurde erfolgreich auf {#$affectedUsers} Benutzer ausgeführt.]]></item>
-		<item name="wcf.acp.user.massProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> auf alle Benutzer aus, die unter die eingestellten Bedingungen fallen. Die Bearbeitungen können unter Umständen sehr rechenintensiv werden und sollten deshalb möglichst nur dann ausgeführt werden, wenn sich die Seite im Wartungsmodus befindet! Die Veränderungen können nicht rückgängig gemacht werden. Bitte benutzen Sie diese Funktion mit der nötigen Vorsicht!]]></item>
+		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
+		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Aktion]]></item>
+		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Bedingungen]]></item>
+		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Die gewählte Aktion wurde erfolgreich auf {#$affectedUsers} Benutzer ausgeführt.]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> auf alle Benutzer aus, die unter die eingestellten Bedingungen fallen. Die Bearbeitungen können unter Umständen sehr rechenintensiv werden und sollten deshalb möglichst nur dann ausgeführt werden, wenn sich die Seite im Wartungsmodus befindet! Die Veränderungen können nicht rückgängig gemacht werden. Bitte benutzen Sie diese Funktion mit der nötigen Vorsicht!]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Benutzer suchen]]></item>
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profil]]></item>

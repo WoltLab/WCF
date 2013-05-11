@@ -34,7 +34,6 @@
 	background-color: @backgroundColor;
 	background-image: -webkit-linear-gradient(@gradientColor1, @gradientColor2);
 	background-image: -moz-linear-gradient(@gradientColor1, @gradientColor2);
-	background-image: -o-linear-gradient(@gradientColor1, @gradientColor2);
 	background-image: -ms-linear-gradient(@gradientColor1, @gradientColor2);
 	background-image: linear-gradient(@gradientColor1, @gradientColor2);
 }
@@ -43,7 +42,6 @@
 	background-color: @backgroundColor;
 	background-image: -webkit-linear-gradient(@direction, @gradientColor1, @gradientColor2, @gradientColor3);
 	background-image: -moz-linear-gradient(@direction, @gradientColor1, @gradientColor2, @gradientColor3);
-	background-image: -o-linear-gradient(@direction, @gradientColor1, @gradientColor2, @gradientColor3);
 	background-image: -ms-linear-gradient(@direction, @gradientColor1, @gradientColor2, @gradientColor3);
 	background-image: linear-gradient(@direction, @gradientColor1, @gradientColor2, @gradientColor3);
 }
@@ -51,52 +49,30 @@
 .linearGradientNative(@parameters) {
 	background-image: -webkit-linear-gradient(@parameters);
 	background-image: -moz-linear-gradient(@parameters);
-	background-image: -o-linear-gradient(@parameters);
 	background-image: -ms-linear-gradient(@parameters);
 	background-image: linear-gradient(@parameters);
 }
 
 .transition(@property, @duration, @type: linear) {
 	-webkit-transition-property: @property;
-	-moz-transition-property: @property;
-	-ms-transition-property: @property;
-	-o-transition-property: @property;
 	transition-property: @property;
 	
 	-webkit-transition-duration: @duration;
-	-moz-transition-duration: @duration;
-	-ms-transition-duration: @duration;
-	-o-transition-duration: @duration;
 	transition-duration: @duration;
 	
 	-webkit-transition-timing-function: @type;
-	-moz-transition-timing-function: @type;
-	-ms-transition-timing-function: @type;
-	-o-transition-timing-function: @type;
 	transition-timing-function: @type;
 }
 
 .boxShadow(@topOffset, @leftOffset, @color, @blurriness: 5px, @shadowHeight: 0) {
-	-webkit-box-shadow: @topOffset @leftOffset @blurriness @shadowHeight @color;
-	-moz-box-shadow: @topOffset @leftOffset @blurriness @shadowHeight @color;
-	-ms-box-shadow: @topOffset @leftOffset @blurriness @shadowHeight @color;
-	-o-box-shadow: @topOffset @leftOffset @blurriness @shadowHeight @color;
 	box-shadow: @topOffset @leftOffset @blurriness @shadowHeight @color;
 }
 
 .boxShadowInset(@topOffset, @leftOffset, @color, @blurriness: 5px, @shadowHeight: 0) {
-	-webkit-box-shadow: inset @topOffset @leftOffset @blurriness @shadowHeight @color;
-	-moz-box-shadow: inset @topOffset @leftOffset @blurriness @shadowHeight @color;
-	-ms-box-shadow: inset @topOffset @leftOffset @blurriness @shadowHeight @color;
-	-o-box-shadow: inset @topOffset @leftOffset @blurriness @shadowHeight @color;
 	box-shadow: inset @topOffset @leftOffset @blurriness @shadowHeight @color;
 }
 
 .boxShadowNative(@parameters) {
-	-webkit-box-shadow: @parameters;
-	-moz-box-shadow: @parameters;
-	-ms-box-shadow: @parameters;
-	-o-box-shadow: @parameters;
 	box-shadow: @parameters;
 }
 

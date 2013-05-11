@@ -18,16 +18,16 @@ use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
- * Shows the users mass processing form.
+ * Shows the user bulk processing form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class UsersMassProcessingForm extends UserOptionListForm {
+class UserBulkProcessingForm extends UserOptionListForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
@@ -418,7 +418,7 @@ class UsersMassProcessingForm extends UserOptionListForm {
 	 */
 	public function show() {
 		// set active menu item
-		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.user.massProcessing');
+		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.user.bulkProcessing');
 		
 		// check master password
 		WCFACP::checkMasterPassword();

@@ -151,7 +151,8 @@ class GDImageAdapter implements IImageAdapter {
 		imageCopy($image, $this->image, 0, 0, $originX, $originY, $width, $height);
 		imageSaveAlpha($image, true);
 		
-		$this->image = $image;
+		// reload image to update image resource, width and height
+		$this->load($image, $this->type);
 	}
 	
 	/**
@@ -164,7 +165,8 @@ class GDImageAdapter implements IImageAdapter {
 		imageCopyResampled($image, $this->image, $targetX, $targetY, $originX, $originY, $targetWidth, $targetHeight, $originWidth, $originHeight);
 		imageSaveAlpha($image, true);
 		
-		$this->image = $image;
+		// reload image to update image resource, width and height
+		$this->load($image, $this->type);
 	}
 	
 	/**

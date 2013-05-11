@@ -15,10 +15,28 @@
 	var TIME_NOW = {@TIME_NOW};
 	//]]>
 </script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min{if !DEBUG_MODE}.min{/if}.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min{if !DEBUG_MODE}.min{/if}.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable{if !DEBUG_MODE}.min{/if}.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min{if !DEBUG_MODE}.min{/if}.js"></script>
+{if JQUERY_SOURCE == 'google'}
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+{else if JQUERY_SOURCE == 'microsoft'}
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.2/jquery-ui.min.js"></script>
+{else}
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js"></script>
+{/if}
+{if JQUERY_SOURCE != 'local'}
+<script type="text/javascript">
+	//<![CDATA[
+	if (!window.jQuery) {
+		document.write('<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js"><\/script>');
+		document.write('<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js"><\/script>');
+	}
+	//]]>
+</script>
+{/if}
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js"></script>
 <script type="text/javascript" src="{@$__wcf->getPath()}js/WCF{if !DEBUG_MODE}.min{/if}.js"></script>
 <script type="text/javascript">
 	//<![CDATA[
