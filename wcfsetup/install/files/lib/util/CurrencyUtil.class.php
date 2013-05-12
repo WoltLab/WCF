@@ -38,7 +38,7 @@ final class CurrencyUtil {
 	 * @return	string
 	 */
 	public static function formatFloat($float, $currency = self::CURRENCY_EUR, $prependCurrency = false) {
-		$formatted = StringUtil::formatNegative(number_format($float/100, 2, WCF::getLanguage()->get('wcf.global.decimalPoint'), WCF::getLanguage()->get('wcf.global.thousandsSeparator')));
+		$formatted = number_format($float, 2, WCF::getLanguage()->get('wcf.global.decimalPoint'), WCF::getLanguage()->get('wcf.global.thousandsSeparator'));
 		return ($prependCurrency ? $currency.' '.$formatted : $formatted.' '.$currency);
 	}
 	
@@ -59,15 +59,17 @@ final class CurrencyUtil {
 	 * @return	integer
 	 */
 	public static function parseInteger($currency) {
-		$regex = '^[\d\\'.preg_quote(WCF::getLanguage()->get('wcf.global.thousandsSeparator')).']*';
-		$regex .= '('.preg_quote(WCF::getLanguage()->get('wcf.global.decimalPoint')).'\d{0,2})?$';
-		if (!Regex::compile($regex)->match($currency)) {
+		$regex = Regex::compile('^(\d+)?((?:'.preg_quote(WCF::getLanguage()->get('wcf.global.thousandsSeparator')).'\d+)*)'.
+			'?(?:'.preg_quote(WCF::getLanguage()->get('wcf.global.decimalPoint')).'(\d{0,2}))?$');
+		if (!$regex->match($currency, true)) {
 			throw new SystemException('"'.$currency.'" is no valid currency');
 		}
 		
-		$integer = str_replace(WCF::getLanguage()->get('wcf.global.decimalPoint'), '', $currency);
-		$integer = str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $integer);
-		return instval($integer);
+		$matches = $regex->getMatches();
+		$integer = $matches[1][0];
+		$integer .= str_replace('.', '', $matches[2][0]);
+		$integer .= $matches[3][0].str_repeat('0', 2-strlen($matches[3][0]));
+		return intval($integer);
 	}
 	
 	/**
@@ -77,7 +79,7 @@ final class CurrencyUtil {
 	 * @param	string	$currency
 	 * @return	float
 	 */
-	public static function paseFloat($currency) {
+	public static function parseFloat($currency) {
 		return self::parseInteger($currency)/100;
 	}
 	
