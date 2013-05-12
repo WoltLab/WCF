@@ -22,6 +22,6 @@ class EURModifierTemplatePlugin implements IModifierTemplatePlugin {
 	 * @see	wcf\system\template\ITemplatePluginModifier::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
-		return CurrencyUtil::formatInteger(intval($tagArgs[0]), CurrencyUtil::CURRENCY_EUR);
+		return CurrencyUtil::formatFloat(intval($tagArgs[0]), CurrencyUtil::CURRENCY_EUR);
 	}
 }
