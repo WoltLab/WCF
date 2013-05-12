@@ -8,7 +8,7 @@ use wcf\util\CurrencyUtil;
  * 
  * Usage (with English as language):
  * 	{520|currency} -> 5.20 €
- *	{35181321684351384|currency} -> 351,813,216,843,513.84 €
+ * 	{35181321684351384|currency} -> 351,813,216,843,513.84 €
  * 
  * @author	Magnus Kühn
  * @copyright	2001-2013 WoltLab GmbH
