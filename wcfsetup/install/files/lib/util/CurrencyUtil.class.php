@@ -14,6 +14,7 @@ use wcf\system\WCF;
  */
 final class CurrencyUtil {
 	const CURRENCY_EUR = "€";
+	const CURRENCY_USD = "$";
 	
 	/**
 	 * Formats an integer as a currency
