@@ -3291,8 +3291,8 @@ WCF.TabMenu = {
 			self._containers[$containerID] = $tabMenu;
 			$tabMenu.wcfTabs({
 				active: false,
-				select: function(event, ui) {
-					var $panel = $(ui.panel);
+				activate: function(event, eventData) {
+					var $panel = $(eventData.newPanel);
 					var $container = $panel.closest('.tabMenuContainer');
 					
 					// store currently selected item
@@ -3320,7 +3320,7 @@ WCF.TabMenu = {
 						location.hash = '#' + $panel.attr('id');
 					}
 					
-					$container.trigger('tabsselect', event, ui);
+					//$container.trigger('tabsbeforeactivate', event, eventData);
 				}
 			});
 			
@@ -3335,11 +3335,11 @@ WCF.TabMenu = {
 		
 		// try to resolve location hash
 		if (!this._didInit) {
-			this.selectTabs();
+			this._selectActiveTab();
 			$(window).bind('hashchange', $.proxy(this.selectTabs, this));
 			
 			if (!this._selectErroneousTab()) {
-				this._selectActiveTab();
+				this.selectTabs();
 			}
 		}
 		
@@ -3399,7 +3399,6 @@ WCF.TabMenu = {
 					var $tabMenuItem = $(tabMenuItem);
 					if ($tabMenuItem.wcfIdentify() == $index) {
 						$tabMenu.wcfTabs('select', innerIndex);
-						
 						if ($subIndex !== null) {
 							if ($tabMenuItem.hasClass('tabMenuContainer')) {
 								$tabMenuItem.wcfTabs('selectTab', $tabMenu.data('active'));
