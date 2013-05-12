@@ -224,6 +224,16 @@ final class StringUtil {
 	}
 	
 	/**
+	 * Formats a number as a currency
+	 * 
+	 * @param	integer	$number
+	 * @return	string
+	 */
+	public static function formatCurrency($number) {
+		return number_format($number/100, 2, WCF::getLanguage()->get('wcf.global.decimalPoint'), WCF::getLanguage()->get('wcf.global.thousandsSeparator'));
+	}
+	
+	/**
 	 * Replaces the MINUS-HYPHEN with the MINUS SIGN
 	 * 
 	 * @param	mixed		$number
