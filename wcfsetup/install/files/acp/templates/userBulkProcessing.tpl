@@ -103,7 +103,7 @@
 	
 		<div id="conditions" class="container containerPadding tabMenuContainer tabMenuContent">
 			<fieldset>
-				<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
+				<legend>{lang}wcf.acp.user.search.conditions{/lang}</legend>
 				
 				<dl>
 					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
@@ -141,7 +141,7 @@
 					</dl>
 				{/if}
 				
-				{event name='generalFields'}
+				{event name='conditionFields'}
 			</fieldset>
 		</div>
 		
