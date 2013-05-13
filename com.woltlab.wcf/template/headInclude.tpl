@@ -126,7 +126,6 @@
 		WCF.Dropdown.init();
 		WCF.System.PageNavigation.init('.pageNavigation');
 		WCF.Date.Picker.init();
-		WCF.System.JumpToAnchor.execute();
 		WCF.System.MobileNavigation.init();
 		
 		{event name='javascriptInit'}

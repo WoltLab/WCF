@@ -4391,9 +4391,9 @@ WCF.Effect.Scroll = Class.extend({
 		var $windowHeight = $(window).height();
 		
 		// handles menu height
-		if (excludeMenuHeight) {
+		/*if (excludeMenuHeight) {
 			$elementOffset = Math.max($elementOffset - $('#topMenu').outerHeight(), 0);
-		}
+		}*/
 		
 		if ($elementOffset > $documentHeight - $windowHeight) {
 			$elementOffset = $documentHeight - $windowHeight;
@@ -5497,36 +5497,6 @@ WCF.System.MobileNavigation = {
 			$('<a class="invisible" tabindex="9999999" />').click(function() {}).prependTo($navigation);
 			$('<a class="invisible" tabindex="9999999"><span class="icon icon16 icon-list" />' + ($navigation.data('buttonLabel') !== undefined ? (' ' + $navigation.data('buttonLabel')) : '') + '</a>').click(function() {}).prependTo($navigation);
 		});
-	}
-};
-
-/**
- * Fixes scroll offset on page load.
- */
-WCF.System.JumpToAnchor = {
-	execute: function() {
-		if (window.location.hash) {
-			var $element = $(window.location.hash);
-			if ($element.length) {
-				if ($.browser.chrome || $.browser.msie) {
-					$element.addClass('userPanelJumpToAnchorFix');
-					
-					$(document).on('readystatechange', function() {
-						if (document.readyState === 'complete') {
-							// wait 100ms
-							new WCF.PeriodicalExecuter(function(pe) {
-								pe.stop();
-								
-								$element.removeClass('userPanelJumpToAnchorFix');
-							}, 100);
-						}
-					});
-				}
-				else {
-					window.scrollBy(0, -1 * $('.userPanel').outerHeight());
-				}
-			}
-		}
 	}
 };
 
