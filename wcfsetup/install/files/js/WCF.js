@@ -7377,7 +7377,7 @@ WCF.EditableItemList = Class.extend({
 			var $value = $.trim(this._searchInput.val());
 			
 			// read everything left from caret position
-			if (event.which === 188) {
+			if (event && event.which === 188) {
 				$value = $value.substring(0, this._searchInput.getCaret());
 			}
 			
@@ -7391,7 +7391,7 @@ WCF.EditableItemList = Class.extend({
 			});
 			
 			// reset input
-			if (event.which === 188) {
+			if (event && event.which === 188) {
 				this._searchInput.val($.trim(this._searchInput.val().substr(this._searchInput.getCaret())));
 			}
 			else {
