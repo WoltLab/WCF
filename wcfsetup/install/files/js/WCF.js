@@ -5508,13 +5508,23 @@ WCF.System.JumpToAnchor = {
 		if (window.location.hash) {
 			var $element = $(window.location.hash);
 			if ($element.length) {
-				$element.addClass('userPanelJumpToAnchorFix');
-				
-				new WCF.PeriodicalExecuter(function(pe) {
-					pe.stop();
+				if ($.browser.chrome || $.browser.msie) {
+					$element.addClass('userPanelJumpToAnchorFix');
 					
-					$element.removeClass('userPanelJumpToAnchorFix');
-				}, 5000);
+					$(document).on('readystatechange', function() {
+						if (document.readyState === 'complete') {
+							// wait 100ms
+							new WCF.PeriodicalExecuter(function(pe) {
+								pe.stop();
+								
+								$element.removeClass('userPanelJumpToAnchorFix');
+							}, 100);
+						}
+					});
+				}
+				else {
+					window.scrollBy(0, -1 * $('.userPanel').outerHeight());
+				}
 			}
 		}
 	}
