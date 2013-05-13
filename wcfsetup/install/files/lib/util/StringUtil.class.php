@@ -1,7 +1,7 @@
 <?php
 namespace wcf\util;
-use wcf\system\exception\SystemException;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\exception\SystemException;
 use wcf\system\Regex;
 use wcf\system\WCF;
 
