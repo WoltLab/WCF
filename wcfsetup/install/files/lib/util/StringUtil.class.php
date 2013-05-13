@@ -1,6 +1,8 @@
 <?php
 namespace wcf\util;
+use wcf\system\exception\SystemException;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**
@@ -266,18 +268,14 @@ final class StringUtil {
 	 * @return	float
 	 */
 	public static function parseCurrency($currency) {
-		$regex = Regex::compile('^(\d+)?((?:'.preg_quote(WCF::getLanguage()->get('wcf.global.thousandsSeparator')).'\d+)*)'.
-			'?(?:'.preg_quote(WCF::getLanguage()->get('wcf.global.decimalPoint')).'(\d{0,2}))?$');
+		$regex = Regex::compile('^(\d+)?(['.preg_quote(WCF::getLanguage()->get('wcf.global.thousandsSeparator')).'\d]*)?'.
+			'(?:'.preg_quote(WCF::getLanguage()->get('wcf.global.decimalPoint')).'(\d{0,2}))?$');
 		if (!$regex->match($currency, true)) {
 			throw new SystemException('"'.$currency.'" is no valid currency');
 		}
 
 		$matches = $regex->getMatches();
-		$float = $matches[1][0];
-		$float .= str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $matches[2][0]);
-		$float .= '.'.$matches[3][0];
-		var_dump($float);
-		return floatval($float);
+		return floatval($matches[1][0].str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $matches[2][0]).'.'.$matches[3][0]);
 	}
 	
 	/**
