@@ -244,9 +244,40 @@ final class StringUtil {
 	 * @param	boolean	$prependCurrency
 	 * @return	string
 	 */
-	public static function formatFloat($float, $currency = self::CURRENCY_EUR, $prependCurrency = false) {
+	public static function formatCurrency($float, $currency = self::CURRENCY_EUR, $prependCurrency = false) {
 		$formatted = number_format($float, 2, WCF::getLanguage()->get('wcf.global.decimalPoint'), WCF::getLanguage()->get('wcf.global.thousandsSeparator'));
 		return ($prependCurrency ? $currency.' '.$formatted : $formatted.' '.$currency);
+	}
+	
+	/**
+	 * Parses a currency string and returns it as a float.
+	 * 
+	 * Accepted formats (using English as language):
+	 * 	".2" -> 20
+	 * 	".20" -> 20
+	 * 	"5.2" -> 520
+	 * 	"5.20" -> 520
+	 * 	"520" -> 52000
+	 * 	"52,052" -> 5205200
+	 * 	"52052.05" -> 5205205
+	 * 	"52,052.05" -> 5205205
+	 * 
+	 * @param	string	$currency
+	 * @return	float
+	 */
+	public static function parseCurrency($currency) {
+		$regex = Regex::compile('^(\d+)?((?:'.preg_quote(WCF::getLanguage()->get('wcf.global.thousandsSeparator')).'\d+)*)'.
+			'?(?:'.preg_quote(WCF::getLanguage()->get('wcf.global.decimalPoint')).'(\d{0,2}))?$');
+		if (!$regex->match($currency, true)) {
+			throw new SystemException('"'.$currency.'" is no valid currency');
+		}
+
+		$matches = $regex->getMatches();
+		$float = $matches[1][0];
+		$float .= str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $matches[2][0]);
+		$float .= '.'.$matches[3][0];
+		var_dump($float);
+		return floatval($float);
 	}
 	
 	/**
