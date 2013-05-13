@@ -26,6 +26,10 @@ class ActiveStyle extends DatabaseObjectDecorator {
 	 * @return	string
 	 */
 	public function getImage($image) {
+		if (preg_match('~^https?://~', $image)) {
+			return $image;
+		}
+		
 		if ($this->imagePath && file_exists(WCF_DIR.$this->imagePath.$image)) {
 			return WCF::getPath().$this->imagePath.$image;
 		}
