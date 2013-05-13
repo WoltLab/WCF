@@ -20,6 +20,9 @@ final class StringUtil {
 			))*\s*/?>~ix';
 	const HTML_COMMENT_PATTERN = '~<!--(.*?)-->~';
 	
+	const CURRENCY_EUR = "€";
+	const CURRENCY_USD = "$";
+	
 	/**
 	 * utf8 bytes of the HORIZONTAL ELLIPSIS (U+2026)
 	 * @var	string
@@ -231,6 +234,19 @@ final class StringUtil {
 	 */
 	public static function formatNegative($number) {
 		return self::replace('-', self::MINUS, $number);
+	}
+	
+	/**
+	 * Formats a float as a currency.
+	 * 
+	 * @param	float	$float
+	 * @param	string	$currency
+	 * @param	boolean	$prependCurrency
+	 * @return	string
+	 */
+	public static function formatFloat($float, $currency = self::CURRENCY_EUR, $prependCurrency = false) {
+		$formatted = number_format($float, 2, WCF::getLanguage()->get('wcf.global.decimalPoint'), WCF::getLanguage()->get('wcf.global.thousandsSeparator'));
+		return ($prependCurrency ? $currency.' '.$formatted : $formatted.' '.$currency);
 	}
 	
 	/**
