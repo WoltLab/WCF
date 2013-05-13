@@ -5501,36 +5501,6 @@ WCF.System.MobileNavigation = {
 };
 
 /**
- * Fixes scroll offset on page load.
- */
-WCF.System.JumpToAnchor = {
-	execute: function() {
-		if (window.location.hash) {
-			var $element = $(window.location.hash);
-			if ($element.length) {
-				if ($.browser.chrome || $.browser.msie) {
-					$element.addClass('userPanelJumpToAnchorFix');
-					
-					$(document).on('readystatechange', function() {
-						if (document.readyState === 'complete') {
-							// wait 100ms
-							new WCF.PeriodicalExecuter(function(pe) {
-								pe.stop();
-								
-								$element.removeClass('userPanelJumpToAnchorFix');
-							}, 100);
-						}
-					});
-				}
-				else {
-					window.scrollBy(0, -1 * $('.userPanel').outerHeight());
-				}
-			}
-		}
-	}
-};
-
-/**
  * System notification overlays.
  * 
  * @param	string		message
