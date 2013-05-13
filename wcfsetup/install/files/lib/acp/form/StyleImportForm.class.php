@@ -2,9 +2,9 @@
 namespace wcf\acp\form;
 use wcf\data\style\StyleEditor;
 use wcf\form\AbstractForm;
+use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Shows the style import form.
@@ -53,7 +53,7 @@ class StyleImportForm extends AbstractForm {
 	 */
 	public function validate() {
 		parent::validate();
-	
+		
 		if (empty($this->source['name'])) {
 			throw new UserInputException('source');
 		}
@@ -76,6 +76,8 @@ class StyleImportForm extends AbstractForm {
 	 */
 	public function save() {
 		parent::save();
+		
+		StyleCacheBuilder::getInstance()->reset();
 		
 		@unlink($this->source['tmp_name']);
 		$this->saved();
