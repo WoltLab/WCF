@@ -247,7 +247,7 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function formatCurrency($float, $currency = self::CURRENCY_EUR, $prependCurrency = false) {
-		$formatted = number_format($float, 2, WCF::getLanguage()->get('wcf.global.decimalPoint'), WCF::getLanguage()->get('wcf.global.thousandsSeparator'));
+		$formatted = self::formatDouble($float, 2);
 		return ($prependCurrency ? $currency.' '.$formatted : $formatted.' '.$currency);
 	}
 	
