@@ -84,7 +84,9 @@ class RequestHandler extends SingletonFactory {
 				if ($landingPage !== null && RouteHandler::getInstance()->isDefaultController()) {
 					// check if redirect URL matches current URL
 					$redirectURL = $landingPage->getLink();
-					if (StringUtil::replace(RouteHandler::getHost(), '', $redirectURL) == $_SERVER['REQUEST_URI']) {
+					$relativeRoute = StringUtil::replace(RouteHandler::getHost(), '', $redirectURL);
+					
+					if ($relativeRoute == $_SERVER['REQUEST_URI'] || $relativeRoute == preg_replace('~([?&]s=[a-f0-9]{40})~', '', $_SERVER['REQUEST_URI'])) {
 						$routeData['controller'] = $landingPage->getController();
 					}
 					else {
