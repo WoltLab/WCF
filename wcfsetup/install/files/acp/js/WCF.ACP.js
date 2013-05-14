@@ -594,10 +594,10 @@ WCF.ACP.Package.Installation = Class.extend({
 				}
 				
 				if ($key) {
-					$additionalData[$key] = $inputElement.val();
+					$additionalData[$name][$key] = $inputElement.val();
 				}
 				else {
-					$additionalData[$key].push($inputElement.val());
+					$additionalData[$name].push($inputElement.val());
 				}
 			}
 			else {
