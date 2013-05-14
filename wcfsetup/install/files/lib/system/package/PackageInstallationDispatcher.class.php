@@ -646,7 +646,7 @@ class PackageInstallationDispatcher {
 			
 			foreach ($packages as $package) {
 				$optionalPackage = new MultipleSelectionFormElement($container);
-				$optionalPackage->setName('optionalPackages');
+				$optionalPackage->setName('optionalPackages[]');
 				$optionalPackage->setLabel($package['packageName']);
 				$optionalPackage->setValue($package['package']);
 				

@@ -579,7 +579,30 @@ WCF.ACP.Package.Installation = Class.extend({
 				return false;
 			}
 			
-			$additionalData[$inputElement.attr('name')] = $inputElement.val();
+			var $name = $inputElement.attr('name');
+			if ($name.match(/(.*)\[([^[]*)\]$/)) {
+				$name = RegExp.$1;
+				$key = RegExp.$2;
+				
+				if ($additionalData[$name] === undefined) {
+					if ($key) {
+						$additionalData[$name] = { };
+					}
+					else {
+						$additionalData[$name] = [ ];
+					}
+				}
+				
+				if ($key) {
+					$additionalData[$key] = $inputElement.val();
+				}
+				else {
+					$additionalData[$key].push($inputElement.val());
+				}
+			}
+			else {
+				$additionalData[$name] = $inputElement.val();
+			}
 		});
 		
 		this._executeStep(data.step, data.node, $additionalData);
