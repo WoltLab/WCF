@@ -3317,7 +3317,12 @@ WCF.TabMenu = {
 					
 					// set panel id as location hash
 					if (WCF.TabMenu._didInit) {
-						location.hash = '#' + $panel.attr('id');
+						if (window.history) {
+							window.history.pushState(null, document.title, window.location.toString().replace(/#.+$/, '') + '#' + $panel.attr('id'));
+						}
+						else {
+							location.hash = '#' + $panel.attr('id');
+						}
 					}
 					
 					//$container.trigger('tabsbeforeactivate', event, eventData);
