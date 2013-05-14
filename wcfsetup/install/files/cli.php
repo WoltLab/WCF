@@ -10,8 +10,8 @@
  */
 if (PHP_SAPI !== 'cli') exit;
 // define the wcf-root-dir
-//define('WCF_DIR', dirname(__FILE__).'/');
-define('WCF_DIR', '/var/www/wcf/wcf2/');
+define('WCF_DIR', dirname(__FILE__).'/');
+
 // TODO: Fix PACKAGE_ID
 define('PACKAGE_ID', 1);
 

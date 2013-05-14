@@ -37,12 +37,14 @@ class PackageCommand implements ICommand {
 	 */
 	public function execute(array $parameters) {
 		$this->argv = new ArgvParser(array());
+		$this->argv->setArguments($parameters);
+		$this->argv->parse();
 		
-		if (count($parameters) !== 2) {
+		if (count($this->argv->getRemainingArgs()) !== 2) {
 			throw new ArgvException('', $this->fixUsage($this->argv->getUsageMessage()));
 		}
 		
-		list($action, $file) = $parameters;
+		list($action, $file) = $this->argv->getRemainingArgs();
 		CLIWCF::getReader()->setHistoryEnabled(false);
 		$package = null;
 		switch ($action) {

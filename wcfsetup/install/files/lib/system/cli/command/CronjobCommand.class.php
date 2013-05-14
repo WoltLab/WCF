@@ -1,14 +1,7 @@
 <?php
 namespace wcf\system\cli\command;
-use phpline\internal\Log;
-use wcf\data\cronjob\CronjobAction;
-use wcf\data\cronjob\CronjobList;
 use wcf\system\cronjob\CronjobScheduler;
-use wcf\system\exception\SystemException;
 use wcf\system\CLIWCF;
-use wcf\util\CLIUtil;
-use wcf\util\DateUtil;
-use wcf\util\StringUtil;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
 
@@ -27,112 +20,27 @@ class CronjobCommand implements ICommand {
 	 * @see \wcf\system\cli\command\ICommand::execute()
 	 */
 	public function execute(array $parameters) {
-		$argv = new ArgvParser(array(
-			'f|force' => 'Force the execution of the cronjob(s)',
-			'a|all' => 'Execute all cronjobs that are over time',
-			'l|list' => 'Lists available cronjobs'
-		));
+		$argv = new ArgvParser(array());
 		$argv->setArguments($parameters);
 		$argv->parse();
 		
-		if ($argv->list) {
-			CLIWCF::getReader()->println(CLIUtil::generateTable($this->generateList()));
-			return;
+		$args = $argv->getRemainingArgs();
+		if (count($args) != 1 || $args[0] != 'execute') {
+			throw new ArgvException('', $this->fixUsage($argv->getUsageMessage()));
 		}
 		
-		// TODO: Executing is currently very much broken. Refer to issue WoltLab/WCF#910
-		$cronjobIDs = $argv->getRemainingArgs();
-		if (empty($cronjobIDs) && !$argv->all) {
-			throw new ArgvException('Neither cronjobIDs nor --all given. Aborting', $argv->getUsageMessage());
-		}
-		
-		$cronjobList = new CronjobList();
-		if (!$argv->all) {
-			$cronjobList->getConditionBuilder()->add('cronjobID IN(?)', array($cronjobIDs));
-		}
-		$cronjobList->readObjects();
-		if (!$argv->all) {
-			foreach ($cronjobIDs as $cronjobID) {
-				try {
-					$cronjobList->seekTo($cronjobID);
-				}
-				catch (SystemException $e) {
-					Log::warn('Cannot find cronjob #', $cronjobID);
-				}
-			}
-		}
-		
-		$cronjobs = array();
-		foreach ($cronjobList as $cronjob) {
-			if ($argv->force) {
-				$cronjobs[] = $cronjob;
-				
-				if (VERBOSITY >= 0) {
-					Log::info("Executing cronjob #", $cronjob->cronjobID, ': ', StringUtil::truncate(CLIWCF::getLanguage()->get($cronjob->description), 40));
-				}
-				continue;
-			}
-			// use time() instead of TIME_NOW, as the latter may be outdated
-			if (!$cronjob->isDisabled && $cronjob->nextExec < time()) {
-				$cronjobs[] = $cronjob;
-				if (VERBOSITY >= 0) {
-					Log::info("Executing cronjob #", $cronjob->cronjobID, ': ', StringUtil::truncate(CLIWCF::getLanguage()->get($cronjob->description), 40));
-				}
-			}
-			else {
-				if (VERBOSITY >= 0) {
-					Log::info("Skipping cronjob #", $cronjob->cronjobID, ': ', StringUtil::truncate(CLIWCF::getLanguage()->get($cronjob->description), 40));
-				}
-			}
-		}
-		
-		$action = new CronjobAction($cronjobs, 'execute');
-		$action->executeAction();
-		$action = new CronjobAction($cronjobs, 'update', array(
-			'data' => array(
-				'lastExec' => time()
-			)
-		));
-		$action->executeAction();
+		// TODO: As applications are not loaded application specific cronjobs cannot be executed
+		CronjobScheduler::getInstance()->executeCronjobs();
 	}
 	
-	/**
-	 * Returns an array with a list of cronjobs.
-	 *
-	 * @return array
-	 */
-	public function generateList() {
-		$cronjobList = new CronjobList();
-		$cronjobList->readObjects();
-		
-		$table = array(array(
-			CLIWCF::getLanguage()->get('wcf.global.objectID'),
-			CLIWCF::getLanguage()->get('wcf.acp.cronjob.description'),
-			CLIWCF::getLanguage()->get('wcf.acp.cronjob.nextExec')
-		));
-		
-		foreach ($cronjobList as $cronjob) {
-			if ($cronjob->isDisabled) {
-				$dateTime = '';
-			}
-			else {
-				$dateTime = CLIUtil::formatTime($cronjob->nextExec);
-			}
-			
-			$table[] = array(
-				$cronjob->cronjobID,
-				CLIWCF::getLanguage()->get($cronjob->description),
-				$dateTime
-			);
-		}
-		
-		return $table;
+	public function fixUsage($usage) {
+		return str_replace($_SERVER['argv'][0].' [ options ]', $_SERVER['argv'][0].' [ options ] execute', $usage);
 	}
 	
 	/**
 	 * @see \wcf\system\cli\command\ICommand::canAccess()
 	 */
 	public function canAccess() {
-		return CLIWCF::getSession()->getPermission('admin.system.canManageCronjob');
+		return true;
 	}
 }
