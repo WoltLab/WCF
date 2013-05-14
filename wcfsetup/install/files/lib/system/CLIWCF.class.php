@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system;
+use wcf\util\JSON;
+
 use phpline\console\ConsoleReader;
 use phpline\internal\Log;
 use phpline\TerminalFactory;
@@ -147,8 +149,6 @@ class CLIWCF extends WCF {
 		}
 		
 		define('VERBOSITY', self::getArgvParser()->v - self::getArgvParser()->q);
-		if (VERBOSITY >= 2) Log::enableDebug();
-		if (VERBOSITY >= 3) Log::enableTrace();
 	}
 	
 	/**
@@ -244,7 +244,7 @@ class CLIWCF extends WCF {
 			if (WCF::getDB()->rollBackTransaction()) {
 				Log::warn('Previous command had an open transaction.');
 			}
-			CLIWCF::getReader()->setHistoryEnabled(true);
+			self::getReader()->setHistoryEnabled(true);
 			$line = self::getReader()->readLine('>');
 			if ($line === null) exit;
 			$line = StringUtil::trim($line);
@@ -253,6 +253,7 @@ class CLIWCF extends WCF {
 				$command->execute(CommandHandler::getParameters($line));
 			}
 			catch (IllegalLinkException $e) {
+				Log::error('notFound:'.JSON::encode(array('command' => $line)));
 				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.cli.error.command.notFound', array('command' => $line)));
 				
 				if (self::getArgvParser()->exitOnFail) {
@@ -261,6 +262,7 @@ class CLIWCF extends WCF {
 				continue;
 			}
 			catch (PermissionDeniedException $e) {
+				Log::error('permissionDenied');
 				self::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.global.error.permissionDenied'));
 				
 				if (self::getArgvParser()->exitOnFail) {

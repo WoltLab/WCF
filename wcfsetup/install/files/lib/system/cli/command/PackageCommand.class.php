@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\cli\command;
+use wcf\util\JSON;
+
 use phpline\internal\Log;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
@@ -30,50 +32,40 @@ use Zend\ProgressBar\ProgressBar;
  * @category	Community Framework
  */
 class PackageCommand implements ICommand {
+	private $argv = null;
 	/**
 	 * @see \wcf\system\cli\command\ICommand::execute()
 	 */
 	public function execute(array $parameters) {
-		$argv = new ArgvParser(array(
-			'assumeYes|y' => 'Assumes yes',
-			'assumeNo|n' => 'Assume no'
-		));
-		$argv->setArguments($parameters);
-		$argv->parse();
+		$this->argv = new ArgvParser(array());
 		
-		if (count($argv->getRemainingArgs()) !== 2) {
-			throw new ArgvException('', $this->fixUsage($argv->getUsageMessage()));
-		}
-		if ($argv->assumeYes && $argv->assumeNo) {
-			throw new ArgvException('At most one of assumes may be set', $this->fixUsage($argv->getUsageMessage()));
+		if (count($parameters) !== 2) {
+			throw new ArgvException('', $this->fixUsage($this->argv->getUsageMessage()));
 		}
 		
-		list($action, $file) = $argv->getRemainingArgs();
+		list($action, $file) = $parameters;
 		CLIWCF::getReader()->setHistoryEnabled(false);
 		$package = null;
 		switch ($action) {
 			case 'update':
-				do {
-					$line = CLIWCF::getReader()->readLine('package to update>');
-					
-					if ($line === null) return;
-					$line = StringUtil::trim($line);
-					if ($line == '') return;
-					$sql = "SELECT	*
-						FROM	wcf".WCF_N."_package
-						WHERE	packageName = ?";
-					$statement = CLIWCF::getDB()->prepareStatement($sql);
-					$statement->execute(array($line));
-					$package = $statement->fetchObject('wcf\data\package\Package');
-					if ($package === null) {
-						Log::error('Unknown package '.$line);
-					}
+				$line = CLIWCF::getReader()->readLine(CLIWCF::getLanguage()->get('wcf.cli.command.package.updatePackage'));
+				
+				if ($line === null) return;
+				$line = StringUtil::trim($line);
+				if ($line == '') return;
+				$sql = "SELECT	*
+					FROM	wcf".WCF_N."_package
+					WHERE	packageName = ?";
+				$statement = CLIWCF::getDB()->prepareStatement($sql);
+				$statement->execute(array($line));
+				$package = $statement->fetchObject('wcf\data\package\Package');
+				if ($package === null) {
+					$this->error('unknownPackage', array('package' => $line));
 				}
-				while ($package === null);
 			case 'install':
 			break;
 			default:
-				throw new ArgvException('Valid actions are install and update', $this->fixUsage($argv->getUsageMessage()));
+				$this->error('invalidAction', array('action' => $action));
 			break;
 		}
 		
@@ -83,44 +75,49 @@ class PackageCommand implements ICommand {
 			$archive = new PackageArchive($file, $package);
 			
 			try {
-				if (VERBOSITY >= 0) Log::info("Downloading '".$file."'");
+				if (VERBOSITY >= 1) Log::info("Downloading '".$file."'");
 				$file = $archive->downloadArchive();
 			}
 			catch (SystemException $e) {
-				throw new UserInputException('', 'notFound');
+				$this->error('notFound', array('file' => $file));
 			}
 		}
 		else {
 			// probably local path
 			if (!file_exists($file)) {
-				throw new UserInputException('', 'notFound');
+				$this->error('notFound', array('file' => $file));
 			}
 			
 			$archive = new PackageArchive($file, $package);
 		}
 		
-		if (VERBOSITY >= 1) Log::debug("Starting '".$action."'");
-		
 		// PackageStartInstallForm::validateArchive()
-		$archive->openArchive();
+		// try to open the archive
+		try {
+			// TODO: Exceptions thrown within openArchive() are discarded, resulting in
+			// the meaningless message 'not a valid package'
+			$archive->openArchive();
+		}
+		catch (SystemException $e) {
+			$this->error('noValidPackage');
+		}
 		$errors = PackageInstallationDispatcher::validatePHPRequirements($archive->getPhpRequirements());
 		if (!empty($errors)) {
 			// TODO: Nice output
-			var_dump($errors);
-			return;
+			$this->error('phpRequirements', array('errors' => $errors));
 		}
 		
 		if ($package !== null) {
 			if (!$archive->isValidUpdate()) {
-				throw new UserInputException('', 'noValidUpdate');
+				$this->error('noValidUpdate');
 			}
 		}
 		else {
 			if (!$archive->isValidInstall()) {
-				throw new UserInputException('', 'noValidInstall');
+				$this->error('noValidInstall');
 			}
 			else if ($archive->isAlreadyInstalled()) {
-				throw new UserInputException('', 'uniqueAlreadyInstalled');
+				$this->error('uniqueAlreadyInstalled');
 			}
 		}
 		
@@ -156,7 +153,7 @@ class PackageCommand implements ICommand {
 		$packageInstallation = $statement->fetchArray();
 		if (!isset($packageInstallation['queueID'])) {
 			// todo: what to output?
-			echo "PackageInstallationDispatcher::openQueue()";
+			Log::error('internalOpenQueue');
 			return;
 		}
 		else {
@@ -167,7 +164,7 @@ class PackageCommand implements ICommand {
 		$queue = new PackageInstallationQueue($queueID);
 		if (!$queue->queueID || $queue->done) {
 			// todo: what to output?
-			echo "PackageInstallationConfirmPage::readParameters()";
+			Log::error('internalReadParameters');
 			return;
 		}
 		
@@ -202,82 +199,15 @@ class PackageCommand implements ICommand {
 		unset($requirement);
 		
 		// PackageInstallationConfirmPage::assignVariables/show()
-		$tplData = array(
-			'archive' => $packageInstallationDispatcher->getArchive(),
-			'requiredPackages' => $requirements,
-			'missingPackages' => $missingPackages,
-			'excludingPackages' => $packageInstallationDispatcher->getArchive()->getConflictedExcludingPackages(),
-			'excludedPackages' => $packageInstallationDispatcher->getArchive()->getConflictedExcludedPackages(),
-			'queueID' => $queue->queueID
-		);
-		$table = array(
-			array(CLIWCF::getLanguage()->get('wcf.acp.package.identifier'), $tplData['archive']->getPackageInfo('name')),
-			array(CLIWCF::getLanguage()->get('wcf.acp.package.version'), $tplData['archive']->getPackageInfo('version')),
-			array(CLIWCF::getLanguage()->get('wcf.acp.package.packageDate'), CLIUtil::formatDate($tplData['archive']->getPackageInfo('date'))),
-			array(CLIWCF::getLanguage()->get('wcf.acp.package.author'), $tplData['archive']->getAuthorInfo('author')),
-		);
-		CLIWCF::getReader()->println(CLIUtil::generateTable($table));
-		
-		$list = $tplData['excludingPackages'];
-		if (count($list)) {
-			Log::error(CLIWCF::getLanguage()->get('wcf.acp.package.install.error.excludingPackages'));
-			CLIWCF::getReader()->println(CLIUtil::generateList($list));
-		}
-		
-		$list = $tplData['excludedPackages'];
-		if (count($list)) {
-			Log::error(CLIWCF::getLanguage()->get('wcf.acp.package.install.error.excludedPackages'));
-			CLIWCF::getReader()->println(CLIUtil::generateList($list));
-		}
-		
-		Log::info(CLIWCF::getLanguage()->get('wcf.acp.package.dependencies.required').' ('.StringUtil::formatInteger(count($tplData['requiredPackages'])).')');
-		$table = array(array(
-			CLIWCF::getLanguage()->get('wcf.acp.package.name'),
-			CLIWCF::getLanguage()->get('wcf.acp.package.installation.packageStatus'),
-			CLIWCF::getLanguage()->get('wcf.acp.package.installation.requiredVersion')
-		));
-		foreach ($tplData['requiredPackages'] as $package) {
-			switch ($package['status']) {
-				case 'installed':
-					$color = Color::GREEN;
-				break;
-				case 'delivered':
-					$color = Color::YELLOW;
-				break;
-				default:
-					$color = Color::RED;
-				break;
-			}
-			$minVersion = '';
-			if (isset($package['minversion'])) {
-				if ($package['status'] == 'missingVersion') {
-					$minVersion = CLIUtil::colorize($package['minversion'], Color::RED);
-				}
-				else {
-					$minVersion = $package['minversion'];
-				}
-			}
-			$row = array(
-				CLIUtil::colorize($package['name'], $color),
-				CLIWCF::getLanguage()->get('wcf.acp.package.installation.packageStatus.'.$package['status']),
-				$minVersion
-			);
-			
-			$table[] = $row;
-		}
-		CLIWCF::getReader()->println(CLIUtil::generateTable($table));
-		
-		if (!($tplData['missingPackages'] == 0 && count($tplData['excludingPackages']) == 0 && count($tplData['excludedPackages']) == 0)) {
-			// todo: what to output?
-			Log::error("Unable to continue");
+		$excludingPackages = $packageInstallationDispatcher->getArchive()->getConflictedExcludingPackages();
+		$excludedPackages = $packageInstallationDispatcher->getArchive()->getConflictedExcludedPackages();
+		if (!($missingPackages == 0 && count($excludingPackages) == 0 && count($excludedPackages) == 0)) {
+			$this->error('missingPackagesOrExclude', array(
+				'requirements' => $requirements,
+				'excludingPackages' => $excludingPackages,
+				'excludedPackages' => $excludedPackages
+			));
 			return;
-		}
-		
-		if (!$argv->assumeYes) {
-			// todo: replace by proper form
-			$line = CLIWCF::getReader()->readLine('confirm>');
-			$line = StringUtil::trim($line);
-			if ($line != 'yes') return;
 		}
 		
 		switch ($action) {
@@ -290,7 +220,13 @@ class PackageCommand implements ICommand {
 				
 				// initialize progressbar
 				$progressbar = new ProgressBar(new ConsoleProgressBar(array(
-					'width' => CLIWCF::getTerminal()->getWidth()
+					'width' => CLIWCF::getTerminal()->getWidth(),
+					'elements' => array(
+						ConsoleProgressBar::ELEMENT_PERCENT,
+						ConsoleProgressBar::ELEMENT_BAR,
+						ConsoleProgressBar::ELEMENT_TEXT
+					),
+					'textWidth' => min(floor(CLIWCF::getTerminal()->getWidth() / 2), 50)
 				)));
 				
 				// InstallPackageAction::readParameters()
@@ -321,6 +257,7 @@ class PackageCommand implements ICommand {
 							
 							$step = 'install';
 							$progress = 0;
+							$currentAction = $installation->nodeBuilder->getPackageNameByQueue($queueID);
 						break;
 						
 						case 'install':
@@ -332,6 +269,7 @@ class PackageCommand implements ICommand {
 								$innerTemplate = $step_->getTemplate();
 								$progress = $installation->nodeBuilder->calculateProgress($node);
 								$node = $step_->getNode();
+								$currentAction = $installation->nodeBuilder->getPackageNameByQueue($queueID);
 							}
 							else {
 								if ($step_->getNode() == '') {
@@ -343,6 +281,7 @@ class PackageCommand implements ICommand {
 									
 									// show success
 									$progress = 100;
+									$currentAction = CLIWCF::getLanguage()->get('wcf.acp.package.installation.step.install.success');
 									$finished = true;
 									continue;
 								}
@@ -350,14 +289,26 @@ class PackageCommand implements ICommand {
 									// continue with next node
 									$progress = $installation->nodeBuilder->calculateProgress($node);
 									$node = $step_->getNode();
+									$currentAction = $installation->nodeBuilder->getPackageNameByQueue($queueID);
 								}
 							}
 						break;
 					}
 					
-					$progressbar->update($progress);
+					$progressbar->update($progress, $currentAction);
 				}
 			break;
+		}
+	}
+	
+	public function error($name, array $parameters = array()) {
+		Log::error('package.'.$name.':'.JSON::encode($parameters));
+		
+		if ($parameters) {
+			throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.acp.package.error.'.$name, $parameters), $this->fixUsage($this->argv->getUsageMessage()));
+		}
+		else {
+			throw new ArgvException(CLIWCF::getLanguage()->get('wcf.acp.package.error.'.$name), $this->fixUsage($this->argv->getUsageMessage()));
 		}
 	}
 	
