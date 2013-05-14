@@ -75,24 +75,6 @@ final class CLIUtil {
 	}
 	
 	/**
-	 * Colorizes a string.
-	 * 
-	 * @param	string	$string
-	 * @param	integer	$color
-	 * @return	string
-	 */
-	public static function colorize($string, $color) {
-		static $posix = null;
-		
-		if ($posix === null) $posix = new Posix();
-		if (CLIWCF::getTerminal()->isAnsiSupported() && !CLIWCF::getArgvParser()->disableColors) {
-			$string = $posix->colorize($string, $color);
-		}
-		
-		return $string;
-	}
-	
-	/**
 	 * Formats time.
 	 * 
 	 * @param	integer	$timestamp

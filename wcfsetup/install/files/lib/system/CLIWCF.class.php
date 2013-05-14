@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system;
-use wcf\util\JSON;
-
 use phpline\console\ConsoleReader;
 use phpline\internal\Log;
 use phpline\TerminalFactory;
@@ -17,9 +15,9 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\util\CLIUtil;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 use Zend\Console\Exception\RuntimeException as ArgvException;
-use Zend\Console\ColorInterface as Color;
 use Zend\Console\Getopt as ArgvParser;
 use Zend\Loader\StandardAutoloader as ZendLoader;
 
@@ -94,7 +92,6 @@ class CLIWCF extends WCF {
 			'q' => WCF::getLanguage()->get('wcf.cli.help.q'),
 			'h|help-s' => WCF::getLanguage()->get('wcf.cli.help.help'),
 			'version' => WCF::getLanguage()->get('wcf.cli.help.version'),
-			'disableColors' => WCF::getLanguage()->get('wcf.cli.help.disableColors'),
 			'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck'),
 			'exitOnFail' => WCF::getLanguage()->get('wcf.cli.help.exitOnFail')
 		));
@@ -317,11 +314,6 @@ class CLIWCF extends WCF {
 							$update['packageVersion'],
 							$update['version']['packageVersion']
 						);
-						
-						// TODO: Check whether update is important
-						if ($update['version']['isCritical'] && self::getTerminal()->isAnsiSupported() && !self::getArgvParser()->disableColors) {
-							$row[2] = CLIUtil::colorize($row[2], Color::RED);
-						}
 						
 						$table[] = $row;
 					}
