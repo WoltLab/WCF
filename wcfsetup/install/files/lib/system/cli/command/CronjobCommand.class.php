@@ -116,10 +116,7 @@ class CronjobCommand implements ICommand {
 				$dateTime = '';
 			}
 			else {
-				$dateTimeObject = DateUtil::getDateTimeByTimestamp($cronjob->nextExec);
-				$date = DateUtil::format($dateTimeObject, DateUtil::DATE_FORMAT);
-				$time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
-				$dateTime = str_replace('%time%', $time, str_replace('%date%', $date, CLIWCF::getLanguage()->get('wcf.date.dateTimeFormat')));
+				$dateTime = CLIUtil::formatTime($cronjob->nextExec);
 			}
 			
 			$table[] = array(

@@ -1,6 +1,8 @@
 <?php
 namespace wcf\util;
 use phpline\internal\AnsiUtil;
+use wcf\system\CLIWCF;
+use Zend\Console\Adapter\Posix;
 
 /**
  * Provide convenience methods for use on command line interface.
@@ -54,6 +56,64 @@ final class CLIUtil {
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * Generates a list.
+	 * 
+	 * @param	array	$list
+	 * @return	string
+	 */
+	public static function generateList(array $list) {
+		$result = '';
+		foreach ($list as $row) {
+			$parts = StringUtil::split($row, CLIWCF::getTerminal()->getWidth() - 2);
+			$result .= '* '.implode(PHP_EOL.'  ', $parts).PHP_EOL;
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * Colorizes a string.
+	 * 
+	 * @param	string	$string
+	 * @param	integer	$color
+	 * @return	string
+	 */
+	public static function colorize($string, $color) {
+		static $posix = null;
+		
+		if ($posix === null) $posix = new Posix();
+		if (CLIWCF::getTerminal()->isAnsiSupported() && !CLIWCF::getArgvParser()->disableColors) {
+			$string = $posix->colorize($string, $color);
+		}
+		
+		return $string;
+	}
+	
+	/**
+	 * Formats time.
+	 * 
+	 * @param	integer	$timestamp
+	 * @return	string
+	 */
+	public static function formatTime($timestamp) {
+		$dateTimeObject = DateUtil::getDateTimeByTimestamp($timestamp);
+		$date = DateUtil::format($dateTimeObject, DateUtil::DATE_FORMAT);
+		$time = DateUtil::format($dateTimeObject, DateUtil::TIME_FORMAT);
+		
+		return str_replace('%time%', $time, str_replace('%date%', $date, CLIWCF::getLanguage()->get('wcf.date.dateTimeFormat')));
+	}
+	
+	/**
+	 * Formats dates.
+	 * 
+	 * @param	integer	$timestamp
+	 * @return	string
+	 */
+	public static function formatDate($timestamp) {
+		return DateUtil::format(DateUtil::getDateTimeByTimestamp($timestamp), DateUtil::DATE_FORMAT);
 	}
 	
 	private function __construct() { }

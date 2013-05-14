@@ -342,6 +342,21 @@ final class StringUtil {
 	}
 	
 	/**
+	 * Alias to php str_split() function with multibyte support.
+	 * 
+	 * @param	string		$string
+	 * @param	integer		$length
+	 * @return	array<string>
+	 */
+	public static function split($string, $length = 1) {
+		$result = array();
+		for ($i = 0, $max = self::length($string); $i < $max; $i += $length) {
+			$result[] = self::substring($string, $i, $length);
+		}
+		return $result;
+	}
+	
+	/**
 	 * Checks wether $haystack starts with $needle, or not.
 	 * 
 	 * @param	string		$haystack	The string to be checked for starting with $needle

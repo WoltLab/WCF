@@ -16,7 +16,6 @@ use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\util\CLIUtil;
 use wcf\util\StringUtil;
-use Zend\Console\Adapter\Posix;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\ColorInterface as Color;
 use Zend\Console\Getopt as ArgvParser;
@@ -245,6 +244,7 @@ class CLIWCF extends WCF {
 			if (WCF::getDB()->rollBackTransaction()) {
 				Log::warn('Previous command had an open transaction.');
 			}
+			CLIWCF::getReader()->setHistoryEnabled(true);
 			$line = self::getReader()->readLine('>');
 			if ($line === null) exit;
 			$line = StringUtil::trim($line);
@@ -309,7 +309,6 @@ class CLIWCF extends WCF {
 						)
 					);
 					
-					$posix = new Posix();
 					foreach ($updates as $update) {
 						$row = array(
 							WCF::getLanguage()->get($update['packageName']),
@@ -319,7 +318,7 @@ class CLIWCF extends WCF {
 						
 						// TODO: Check whether update is important
 						if ($update['version']['isCritical'] && self::getTerminal()->isAnsiSupported() && !self::getArgvParser()->disableColors) {
-							$row[2] = $posix->colorize($row[2], Color::RED);
+							$row[2] = CLIUtil::colorize($row[2], Color::RED);
 						}
 						
 						$table[] = $row;
