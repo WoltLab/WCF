@@ -159,6 +159,7 @@ final class HTTPRequest {
 		$inHeader = true;
 		$this->replyHeaders = array();
 		$this->replyBody = '';
+		
 		// read http response.
 		while (!$remoteFile->eof()) {
 			$line = $remoteFile->gets();
@@ -195,7 +196,7 @@ final class HTTPRequest {
 		
 		// get status code
 		$statusLine = reset($this->replyHeaders);
-		$regex = new Regex('^HTTP/1.(?:0|1) (\d{3})');
+		$regex = new Regex('^HTTP/1.[01] (\d{3})');
 		if (!$regex->match($statusLine)) throw new SystemException("Unexpected status '".$statusLine."'");
 		$matches = $regex->getMatches();
 		$this->statusCode = $matches[1];
@@ -214,24 +215,30 @@ final class HTTPRequest {
 			case '303':
 			case '307':
 				// redirect
-				if ($this->options['maxDepth'] <= 0) throw new SystemException("Got redirect status '".$this->statusCode."', but recursion level is exhausted");
+				if ($this->options['maxDepth'] <= 0) throw new SystemException("Received status code '".$this->statusCode."' from server, but recursion level is exhausted");
 				
 				$newRequest = clone $this;
 				$newRequest->options['maxDepth']--;
-				if ($this->statusCode != '303') {
+				
+				// The response to the request can be found under a different URI and SHOULD
+				// be retrieved using a GET method on that resource.
+				// http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.4
+				if ($this->statusCode == '303') {
 					$newRequest->options['method'] = 'GET';
 					$newRequest->postParameters = array();
 					$newRequest->addHeader('Content-length', '');
 					$newRequest->addHeader('Content-Type', '');
 				}
+				
 				try {
 					$newRequest->setURL($this->replyHeaders['Location']);
 				}
 				catch (SystemException $e) {
-					throw new SystemException("Given redirect URL '".$this->replyHeaders['Location']."' is invalid. Probably the host is missing?", 0, $e);
+					throw new SystemException("Received 'Location: ".$this->replyHeaders['Location']."' from server, which is invalid.", 0, $e);
 				}
 				$newRequest->execute();
 				
+				// update data with data from the inner request
 				$this->statusCode = $newRequest->statusCode;
 				$this->replyHeaders = $newRequest->replyHeaders;
 				$this->replyBody = $newRequest->replyBody;
@@ -282,7 +289,7 @@ final class HTTPRequest {
 	 */
 	private function setOptions(array $options) {
 		if (!isset($options['timeout'])) {
-			$options['timeout'] = 30;
+			$options['timeout'] = 10;
 		}
 		
 		if (!isset($options['method'])) {
@@ -295,10 +302,10 @@ final class HTTPRequest {
 		
 		if (isset($options['auth'])) {
 			if (!isset($options['auth']['username'])) {
-				throw new SystemException('username is missing in authentification data');
+				throw new SystemException('Username is missing in authentification data.');
 			}
 			if (!isset($options['auth']['password'])) {
-				throw new SystemException('password is missing in authentification data');
+				throw new SystemException('Password is missing in authentification data.');
 			}
 		}
 		
@@ -307,7 +314,7 @@ final class HTTPRequest {
 	
 	/**
 	 * Adds a header to this request.
-	 * When an empty value is given existing headers of this name will be remove. When append
+	 * When an empty value is given existing headers of this name will be removed. When append
 	 * is set to false existing values will be overwritten.
 	 * 
 	 * @param	string		$name

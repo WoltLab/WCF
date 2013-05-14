@@ -64,11 +64,38 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 	 * @see	wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
+		$newValue = $this->getContent($option, $newValue);
+		
 		if ($option->minlength !== null && $option->minlength > StringUtil::length($newValue)) {
 			throw new UserInputException($option->optionName, 'tooShort');
 		}
 		if ($option->maxlength !== null && $option->maxlength < StringUtil::length($newValue)) {
 			throw new UserInputException($option->optionName, 'tooLong');
 		}
+	}
+	
+	/**
+	 * @see	wcf\system\option\IOptionType::getData()
+	 */
+	public function getData(Option $option, $newValue) {
+		return $this->getContent($option, $newValue);
+	}
+	
+	/**
+	 * Tries to extract content from value.
+	 * 
+	 * @param	wcf\data\option\Option		$option
+	 * @param	string				$newValue
+	 * @return					string
+	 */
+	protected function getContent(Option $option, $newValue) {
+		if ($option->contentpattern) {
+			if (preg_match('~'.$option->contentpattern.'~', $newValue, $matches)) {
+				unset($matches[0]);
+				$newValue = implode('', $matches); 
+			}
+		}
+		
+		return $newValue;
 	}
 }

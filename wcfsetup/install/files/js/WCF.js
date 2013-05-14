@@ -533,7 +533,7 @@ $.extend(WCF, {
 	/**
 	 * Returns a dynamically created id.
 	 * 
-	 * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/dom/dom.js#L1789
+	 * @see		https://github.com/sstephenson/prototype/blob/5e5cfff7c2c253eaf415c279f9083b4650cd4506/src/prototype/dom/dom.js#L1789
 	 * @return	string
 	 */
 	getRandomID: function() {
@@ -1008,7 +1008,7 @@ WCF.Clipboard = {
 				$container.find('input.jsClipboardItem').each($.proxy(function(innerIndex, item) {
 					var $item = $(item);
 					if (WCF.inArray($item.data('objectID'), this._markedObjectIDs)) {
-						$item.attr('checked', 'checked');
+						$item.prop('checked', true);
 						
 						// add marked class for element container
 						$item.parents('.jsClipboardObject').addClass('jsMarked');
@@ -1027,7 +1027,7 @@ WCF.Clipboard = {
 					});
 					
 					if ($allItemsMarked) {
-						$(markAll).attr('checked', 'checked');
+						$(markAll).prop('checked', true);
 					}
 				});
 			}, this));
@@ -1044,7 +1044,7 @@ WCF.Clipboard = {
 		this._containers.each(function(index, container) {
 			var $container = $(container);
 			
-			$container.find('input.jsClipboardItem, input.jsClipboardMarkAll').removeAttr('checked');
+			$container.find('input.jsClipboardItem, input.jsClipboardMarkAll').prop('checked', false);
 			$container.find('.jsClipboardObject').removeClass('jsMarked');
 		});
 	},
@@ -1121,10 +1121,10 @@ WCF.Clipboard = {
 			// simulate a ticked 'markAll' checkbox
 			$container.find('.jsClipboardMarkAll').each(function(index, markAll) {
 				if ($markedAll) {
-					$(markAll).attr('checked', 'checked');
+					$(markAll).prop('checked', true);
 				}
 				else {
-					$(markAll).removeAttr('checked');
+					$(markAll).prop('checked', false);
 				}
 			});
 		}
@@ -1162,14 +1162,14 @@ WCF.Clipboard = {
 				var $objectID = $containerItem.data('objectID');
 				if ($isMarked) {
 					if (!$containerItem.prop('checked')) {
-						$containerItem.attr('checked', 'checked');
+						$containerItem.prop('checked', true);
 						this._markedObjectIDs.push($objectID);
 						$objectIDs.push($objectID);
 					}
 				}
 				else {
 					if ($containerItem.prop('checked')) {
-						$containerItem.removeAttr('checked');
+						$containerItem.prop('checked', false);
 						this._markedObjectIDs = $.removeArrayValue(this._markedObjectIDs, $objectID);
 						$objectIDs.push($objectID);
 					}
@@ -1277,7 +1277,7 @@ WCF.Clipboard = {
 					for (var $__containerID in this._containers) {
 						var $__container = $(this._containers[$__containerID]);
 						if ($__container.data('type') == $typeName) {
-							$__container.find('.jsClipboardMarkAll, .jsClipboardItem').removeAttr('checked');
+							$__container.find('.jsClipboardMarkAll, .jsClipboardItem').prop('checked', false);
 							break;
 						}
 					}
@@ -1956,6 +1956,40 @@ WCF.Action.Delete = Class.extend({
 			var $container = $('#' + this._containers[$index]);
 			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
 				$container.wcfBlindOut('up', function() { $(this).remove(); });
+			}
+		}
+	}
+});
+
+/**
+ * Basic implementation for deletion of nested elements.
+ * 
+ * The implementation requires the nested elements to be grouped as numbered lists
+ * (ol lists). The child elements of the deleted elements are moved to the parent
+ * element of the deleted element.
+ * 
+ * @see	WCF.Action.Delete
+ */
+WCF.Action.NestedDelete = WCF.Action.Delete.extend({
+	/**
+	 * @see	WCF.Action.Delete.triggerEffect()
+	 */
+	triggerEffect: function(objectIDs) {
+		for (var $index in this._containers) {
+			var $container = $('#' + this._containers[$index]);
+			if (WCF.inArray($container.find(this._buttonSelector).data('objectID'), objectIDs)) {
+				// move child categories up
+				if ($container.has('ol').has('li')) {
+					if ($container.is(':only-child')) {
+						$container.parent().replaceWith($container.find('> ol'));
+					}
+					else {
+						$container.replaceWith($container.find('> ol > li'));
+					}
+				}
+				else {
+					$container.wcfBlindOut('up', function() { $(this).remove(); });
+				}
 			}
 		}
 	}
@@ -3058,8 +3092,10 @@ WCF.MultipleLanguageInput = Class.extend({
 		this._list.prev('.dropdownToggle').children('span').text(this._availableLanguages[this._languageID]);
 		
 		// close selection and set focus on input element
-		//this._closeSelection();
-		this._element.blur().focus();
+		if (this._didInit) {
+			// this._closeSelection(); todo: still needed?
+			this._element.blur().focus();
+		}
 	},
 	
 	/**
@@ -3149,6 +3185,7 @@ WCF.String = {
 	/**
 	 * Adds thousands separators to a given number.
 	 * 
+	 * @see		http://stackoverflow.com/a/6502556/782822
 	 * @param	mixed		number
 	 * @return	string
 	 */
@@ -3254,8 +3291,8 @@ WCF.TabMenu = {
 			self._containers[$containerID] = $tabMenu;
 			$tabMenu.wcfTabs({
 				active: false,
-				select: function(event, ui) {
-					var $panel = $(ui.panel);
+				activate: function(event, eventData) {
+					var $panel = $(eventData.newPanel);
 					var $container = $panel.closest('.tabMenuContainer');
 					
 					// store currently selected item
@@ -3283,7 +3320,7 @@ WCF.TabMenu = {
 						location.hash = '#' + $panel.attr('id');
 					}
 					
-					$container.trigger('tabsselect', event, ui);
+					//$container.trigger('tabsbeforeactivate', event, eventData);
 				}
 			});
 			
@@ -3298,11 +3335,11 @@ WCF.TabMenu = {
 		
 		// try to resolve location hash
 		if (!this._didInit) {
-			this.selectTabs();
+			this._selectActiveTab();
 			$(window).bind('hashchange', $.proxy(this.selectTabs, this));
 			
 			if (!this._selectErroneousTab()) {
-				this._selectActiveTab();
+				this.selectTabs();
 			}
 		}
 		
@@ -3362,7 +3399,6 @@ WCF.TabMenu = {
 					var $tabMenuItem = $(tabMenuItem);
 					if ($tabMenuItem.wcfIdentify() == $index) {
 						$tabMenu.wcfTabs('select', innerIndex);
-						
 						if ($subIndex !== null) {
 							if ($tabMenuItem.hasClass('tabMenuContainer')) {
 								$tabMenuItem.wcfTabs('selectTab', $tabMenu.data('active'));
@@ -4355,9 +4391,9 @@ WCF.Effect.Scroll = Class.extend({
 		var $windowHeight = $(window).height();
 		
 		// handles menu height
-		if (excludeMenuHeight) {
+		/*if (excludeMenuHeight) {
 			$elementOffset = Math.max($elementOffset - $('#topMenu').outerHeight(), 0);
-		}
+		}*/
 		
 		if ($elementOffset > $documentHeight - $windowHeight) {
 			$elementOffset = $documentHeight - $windowHeight;
@@ -5461,26 +5497,6 @@ WCF.System.MobileNavigation = {
 			$('<a class="invisible" tabindex="9999999" />').click(function() {}).prependTo($navigation);
 			$('<a class="invisible" tabindex="9999999"><span class="icon icon16 icon-list" />' + ($navigation.data('buttonLabel') !== undefined ? (' ' + $navigation.data('buttonLabel')) : '') + '</a>').click(function() {}).prependTo($navigation);
 		});
-	}
-};
-
-/**
- * Fixes scroll offset on page load.
- */
-WCF.System.JumpToAnchor = {
-	execute: function() {
-		if (window.location.hash) {
-			var $element = $(window.location.hash);
-			if ($element.length) {
-				$element.addClass('userPanelJumpToAnchorFix');
-				
-				new WCF.PeriodicalExecuter(function(pe) {
-					pe.stop();
-					
-					$element.removeClass('userPanelJumpToAnchorFix');
-				}, 5000);
-			}
-		}
 	}
 };
 
@@ -7356,8 +7372,15 @@ WCF.EditableItemList = Class.extend({
 	 * @param	object		event
 	 */
 	_keyDown: function(event) {
+		// 188 = [,]
 		if (event === null || event.which === 188) {
 			var $value = $.trim(this._searchInput.val());
+			
+			// read everything left from caret position
+			if (event && event.which === 188) {
+				$value = $value.substring(0, this._searchInput.getCaret());
+			}
+			
 			if ($value === '') {
 				return true;
 			}
@@ -7368,7 +7391,12 @@ WCF.EditableItemList = Class.extend({
 			});
 			
 			// reset input
-			this._searchInput.val('');
+			if (event && event.which === 188) {
+				this._searchInput.val($.trim(this._searchInput.val().substr(this._searchInput.getCaret())));
+			}
+			else {
+				this._searchInput.val('');
+			}
 			
 			if (event !== null) {
 				event.stopPropagation();
@@ -8177,10 +8205,13 @@ $.widget('ui.wcfDialog', {
 	/**
 	 * Closes this dialog.
 	 * 
+	 * This function can be manually called, even if the dialog is set as not
+	 * closable by the user.
+	 * 
 	 * @param	object		event
 	 */
 	close: function(event) {
-		if (!this.isOpen() || !this.options.closable) {
+		if (!this.isOpen()) {
 			return;
 		}
 		
@@ -8265,13 +8296,10 @@ $.widget('ui.wcfDialog', {
 		var $maximumHeight = $windowDimensions.height - $heightDifference - 120;
 		this._content.css({ maxHeight: $maximumHeight + 'px' });
 		
-		// re-caculate values if container height was previously limited
-		if ($maximumHeight < $contentDimensions.height) {
-			$containerDimensions = this._container.getDimensions('outer');
-		}
+		this._determineOverflow();
 		
 		// calculate new dimensions
-		$contentDimensions = this._getContentDimensions($maximumHeight);
+		$containerDimensions = this._container.getDimensions('outer');
 		
 		// move container
 		var $leftOffset = Math.round(($windowDimensions.width - $containerDimensions.width) / 2);
@@ -8294,8 +8322,6 @@ $.widget('ui.wcfDialog', {
 			height: 'auto',
 			width: 'auto'
 		});
-		
-		this._determineOverflow();
 		
 		if (!this.isOpen()) {
 			// hide container again
@@ -8450,6 +8476,69 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 		if (!$active || $active === '') $active = 0;
 		
 		this.select($active);
+	},
+	
+	/**
+	 * @see	$.ui.tabs.prototype._processTabs()
+	 */
+	_processTabs: function() {
+		var that = this;
+
+		this.tablist = this._getList()
+			.addClass( "ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" )
+			.attr( "role", "tablist" );
+
+		this.tabs = this.tablist.find( "> li:has(a[href])" )
+			.addClass( "ui-state-default ui-corner-top" )
+			.attr({
+				role: "tab",
+				tabIndex: -1
+			});
+
+		this.anchors = this.tabs.map(function() {
+				return $( "a", this )[ 0 ];
+			})
+			.addClass( "ui-tabs-anchor" )
+			.attr({
+				role: "presentation",
+				tabIndex: -1
+			});
+
+		this.panels = $();
+
+		this.anchors.each(function( i, anchor ) {
+			var selector, panel,
+				anchorId = $( anchor ).uniqueId().attr( "id" ),
+				tab = $( anchor ).closest( "li" ),
+				originalAriaControls = tab.attr( "aria-controls" );
+
+			// inline tab
+			selector = anchor.hash;
+			panel = that.element.find( that._sanitizeSelector( selector ) );
+			
+			if ( panel.length) {
+				that.panels = that.panels.add( panel );
+			}
+			if ( originalAriaControls ) {
+				tab.data( "ui-tabs-aria-controls", originalAriaControls );
+			}
+			tab.attr({
+				"aria-controls": selector.substring( 1 ),
+				"aria-labelledby": anchorId
+			});
+			panel.attr( "aria-labelledby", anchorId );
+		});
+
+		this.panels
+			.addClass( "ui-tabs-panel ui-widget-content ui-corner-bottom" )
+			.attr( "role", "tabpanel" );
+	},
+	
+	/**
+	 * @see	$.ui.tabs.prototype.load()
+	 */
+	load: function( index, event ) {
+		return;
 	}
 });
 

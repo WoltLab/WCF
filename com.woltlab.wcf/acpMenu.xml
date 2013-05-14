@@ -50,7 +50,6 @@
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.install">
 			<controller><![CDATA[wcf\acp\form\PackageStartInstallForm]]></controller>
-			<link><![CDATA[action=install]]></link>
 			<parent>wcf.acp.menu.link.package.management</parent>
 			<permissions>admin.system.package.canInstallPackage</permissions>
 			<showorder>2</showorder>
@@ -174,8 +173,8 @@
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.user.massProcessing">
-			<controller><![CDATA[wcf\acp\form\UsersMassProcessingForm]]></controller>
+		<acpmenuitem name="wcf.acp.menu.link.user.bulkProcessing">
+			<controller><![CDATA[wcf\acp\form\UserBulkProcessingForm]]></controller>
 			<parent>wcf.acp.menu.link.user.management.additional</parent>
 			<permissions>admin.user.canEditUser,admin.user.canDeleteUser,admin.user.canMailUser</permissions>
 			<showorder>1</showorder>

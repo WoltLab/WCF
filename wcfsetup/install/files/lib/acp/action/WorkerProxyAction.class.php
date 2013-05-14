@@ -87,7 +87,6 @@ class WorkerProxyAction extends AJAXInvokeAction {
 		
 		// send current state
 		$this->sendResponse($progress, $this->worker->getParameters(), $this->worker->getProceedURL());
-		
 	}
 	
 	/**

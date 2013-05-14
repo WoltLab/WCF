@@ -236,11 +236,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$removeGroups = (isset($this->parameters['removeGroups'])) ? $this->parameters['removeGroups'] : array();
 		$userOptions = (isset($this->parameters['options'])) ? $this->parameters['options'] : array();
 		
+		if (!empty($groupIDs)) {
+			$action = new UserAction($this->objects, 'addToGroups', array('groups' => $groupIDs));
+			$action->executeAction();
+		}
+		
 		foreach ($this->objects as $userEditor) {
-			if (!empty($groupIDs)) {
-				$userEditor->addToGroups($groupIDs);
-			}
-			
 			if (!empty($removeGroups)) {
 				$userEditor->removeFromGroups($removeGroups);
 			}
@@ -252,6 +253,22 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			if (!empty($languageIDs)) {
 				$userEditor->addToLanguages($languageIDs);
 			}
+		}
+	}
+	
+	
+	public function addToGroups() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$groupIDs = $this->parameters['groups'];
+		$deleteOldGroups = $addDefaultGroups = true;
+		if (isset($this->parameters['deleteOldGroups'])) $deleteOldGroups = $this->parameters['deleteOldGroups'];
+		if (isset($this->parameters['addDefaultGroups'])) $addDefaultGroups = $this->parameters['addDefaultGroups'];
+		
+		foreach ($this->objects as $userEditor) {
+			$userEditor->addToGroups($groupIDs, $deleteOldGroups, $addDefaultGroups);
 		}
 	}
 	

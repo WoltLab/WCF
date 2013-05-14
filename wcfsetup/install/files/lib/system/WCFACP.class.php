@@ -65,7 +65,7 @@ class WCFACP extends WCF {
 			if (WCF::getUser()->userID == 0) {
 				// build redirect path
 				$application = ApplicationHandler::getInstance()->getActiveApplication();
-				$path = $application->getPageURL() . 'acp/index.php/Login/' . SID_ARG_1ST;
+				$path = $application->getPageURL() . 'acp/index.php/Login/' . SID_ARG_1ST . '&url=' . rawurlencode(WCF::getSession()->requestURI);
 				
 				HeaderUtil::redirect($path);
 				exit;
@@ -142,7 +142,7 @@ class WCFACP extends WCF {
 			if (file_exists(WCF_DIR.'acp/masterPassword.inc.php')) {
 				require_once(WCF_DIR.'acp/masterPassword.inc.php');
 			}
-			if (defined('MASTER_PASSWORD') && defined('MASTER_PASSWORD_SALT')) {
+			if (defined('MASTER_PASSWORD')) {
 				$form = new MasterPasswordForm();
 				$form->__run();
 				exit;

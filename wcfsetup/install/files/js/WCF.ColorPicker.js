@@ -237,15 +237,35 @@ WCF.ColorPicker = Class.extend({
 		this._hex = $('<input type="text" maxlength="6" />').appendTo($hex.find('label'));
 		
 		// bind event listener
-		this._rgba.r.blur($.proxy(this._blurRgba, this));
-		this._rgba.g.blur($.proxy(this._blurRgba, this));
-		this._rgba.b.blur($.proxy(this._blurRgba, this));
-		this._rgba.a.blur($.proxy(this._blurRgba, this));
-		this._hex.blur($.proxy(this._blurHex, this));
+		this._rgba.r.blur($.proxy(this._blurRgba, this)).keyup($.proxy(this._keyUpRGBA, this));
+		this._rgba.g.blur($.proxy(this._blurRgba, this)).keyup($.proxy(this._keyUpRGBA, this));
+		this._rgba.b.blur($.proxy(this._blurRgba, this)).keyup($.proxy(this._keyUpRGBA, this));
+		this._rgba.a.blur($.proxy(this._blurRgba, this)).keyup($.proxy(this._keyUpRGBA, this));
+		this._hex.blur($.proxy(this._blurHex, this)).keyup($.proxy(this._keyUpHex, this));
 		
 		// submit button
 		var $submitForm = $('<div class="formSubmit" />').appendTo(this._dialog);
 		$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.save') + '</button>').appendTo($submitForm).click($.proxy(this._submit, this));
+	},
+	
+	/**
+	 * Submits form on enter.
+	 */
+	_keyUpRGBA: function(event) {
+		if (event.which == 13) {
+			this._blurRgba();
+			this._submit();
+		}
+	},
+	
+	/**
+	 * Submits form on enter.
+	 */
+	_keyUpHex: function(event) {
+		if (event.which == 13) {
+			this._blurHex();
+			this._submit();
+		}
 	},
 	
 	/**

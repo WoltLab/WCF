@@ -96,7 +96,7 @@ WCF.ACL.List = Class.extend({
 		// insert container elements
 		var $elementContainer = this._container.children('dd');
 		var $aclList = $('<ul class="aclList container" />').appendTo($elementContainer);
-		var $searchInput = $('<input type="text" class="long" />').appendTo($elementContainer);
+		var $searchInput = $('<input type="text" class="long" placeholder="' + WCF.Language.get('wcf.acl.search.' + (!includeUserGroups ? 'user.' : '') + 'description') + '" />').appendTo($elementContainer);
 		var $permissionList = $('<ul class="aclPermissionList container" />').hide().appendTo($elementContainer);
 		
 		// set elements
@@ -144,7 +144,7 @@ WCF.ACL.List = Class.extend({
 		this._containerElements.searchInput.val('');
 		
 		// deselect all input elements
-		this._containerElements.permissionList.hide().find('input[type=checkbox]').removeAttr('checked');
+		this._containerElements.permissionList.hide().find('input[type=checkbox]').prop('checked', false);
 	},
 	
 	/**
@@ -179,13 +179,15 @@ WCF.ACL.List = Class.extend({
 		this._search.addExcludedSearchValue(data.label);
 		
 		// uncheck all option values
-		this._containerElements.permissionList.find('input[type=checkbox]').removeAttr('checked');
+		this._containerElements.permissionList.find('input[type=checkbox]').prop('checked', false);
 		
 		// clear search input
 		this._containerElements.searchInput.val('');
 		
 		// show permissions
 		this._containerElements.permissionList.show();
+		
+		WCF.DOMNodeInsertedHandler.forceExecution();
 	},
 	
 	/**
@@ -199,7 +201,7 @@ WCF.ACL.List = Class.extend({
 	_createListItem: function(objectID, label, type) {
 		var $listItem = $('<li><span class="icon icon16 icon-' + (type === 'group' ? 'group' : 'user') + '" /> <span>' + label + '</span></li>').appendTo(this._containerElements.aclList);
 		$listItem.data('objectID', objectID).data('type', type).click($.proxy(this._click, this));
-		$('<span class="icon icon16 icon-remove jsTooltip" title="' + WCF.Language.get('wcf.global.button.delete') + '" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
+		$('<span class="icon icon16 icon-remove jsTooltip pointer" title="' + WCF.Language.get('wcf.global.button.delete') + '" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
 		
 		return $listItem;
 	},
@@ -258,8 +260,8 @@ WCF.ACL.List = Class.extend({
 			var $option = data.returnValues.options[$optionID];
 			
 			var $listItem = $('<li><span>' + $option.label +  '</span></li>').data('optionID', $optionID).data('optionName', $option.optionName);
-			var $grantPermission = $('<input type="checkbox" id="grant' + $optionID + '" />').appendTo($listItem).wrap('<label for="grant' + $optionID + '" />');
-			var $denyPermission = $('<input type="checkbox" id="deny' + $optionID + '" />').appendTo($listItem).wrap('<label for="deny' + $optionID + '" />');
+			var $grantPermission = $('<input type="checkbox" id="grant' + $optionID + '" />').appendTo($listItem).wrap('<label for="grant' + $optionID + '" class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.grant') + '" />');
+			var $denyPermission = $('<input type="checkbox" id="deny' + $optionID + '" />').appendTo($listItem).wrap('<label for="deny' + $optionID + '" class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.deny') + '" />');
 			
 			$grantPermission.data('type', 'grant').data('optionID', $optionID).change($.proxy(this._change, this));
 			$denyPermission.data('type', 'deny').data('optionID', $optionID).change($.proxy(this._change, this));
@@ -281,8 +283,8 @@ WCF.ACL.List = Class.extend({
 		// add a "full access" permission if there are more than one option
 		if ($count > 1) {
 			var $listItem = $('<li class="aclFullAccess"><span>' + WCF.Language.get('wcf.acl.option.fullAccess') + '</span></li>').prependTo(this._containerElements.permissionList);
-			this._containerElements.grantAll = $('<input type="checkbox" id="grantAll" />').appendTo($listItem).wrap('<label for="grantAll" />');
-			this._containerElements.denyAll = $('<input type="checkbox" id="denyAll" />').appendTo($listItem).wrap('<label for="denyAll" />');
+			this._containerElements.grantAll = $('<input type="checkbox" id="grantAll" />').appendTo($listItem).wrap('<label for="grantAll" class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.grant') + '" />');
+			this._containerElements.denyAll = $('<input type="checkbox" id="denyAll" />').appendTo($listItem).wrap('<label for="denyAll" class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.deny') + '" />');
 			
 			// bind events
 			this._containerElements.grantAll.data('type', 'grant').change($.proxy(this._changeAll, this));
@@ -334,6 +336,8 @@ WCF.ACL.List = Class.extend({
 		
 		// add options
 		this._values[type] = data.returnValues[type].option;
+		
+		WCF.DOMNodeInsertedHandler.forceExecution();
 	},
 	
 	/**
@@ -382,26 +386,26 @@ WCF.ACL.List = Class.extend({
 		
 		if ($checkbox.is(':checked')) {
 			if ($type === 'deny') {
-				$('#grant' + $optionID).removeAttr('checked');
+				$('#grant' + $optionID).prop('checked', false);
 				
 				if (this._containerElements.grantAll !== null) {
-					this._containerElements.grantAll.removeAttr('checked');
+					this._containerElements.grantAll.prop('checked', false);
 				}
 			}
 			else {
-				$('#deny' + $optionID).removeAttr('checked');
+				$('#deny' + $optionID).prop('checked', false);
 				
 				if (this._containerElements.denyAll !== null) {
-					this._containerElements.denyAll.removeAttr('checked');
+					this._containerElements.denyAll.prop('checked', false);
 				}
 			}
 		}
 		else {
 			if ($type === 'deny' && this._containerElements.denyAll !== null) {
-				this._containerElements.denyAll.removeAttr('checked');
+				this._containerElements.denyAll.prop('checked', false);
 			}
 			else if ($type === 'grant' && this._containerElements.grantAll !== null) {
-				this._containerElements.grantAll.removeAttr('checked');
+				this._containerElements.grantAll.prop('checked', false);
 			}
 		}
 		
@@ -418,14 +422,14 @@ WCF.ACL.List = Class.extend({
 		});
 		if ($type == 'deny') {
 			if (this._containerElements.denyAll !== null) {
-				if ($allChecked) this._containerElements.denyAll.prop('checked', 'checked')
-				else this._containerElements.denyAll.removeAttr('checked');
+				if ($allChecked) this._containerElements.denyAll.prop('checked', true)
+				else this._containerElements.denyAll.prop('checked', false);
 			}
 		}
 		else {
 			if (this._containerElements.grantAll !== null) {
-				if ($allChecked) this._containerElements.grantAll.prop('checked', 'checked')
-				else this._containerElements.grantAll.removeAttr('checked');
+				if ($allChecked) this._containerElements.grantAll.prop('checked', true)
+				else this._containerElements.grantAll.prop('checked', false);
 			}
 		}
 	},
@@ -441,48 +445,48 @@ WCF.ACL.List = Class.extend({
 		
 		if ($checkbox.is(':checked')) {
 			if ($type === 'deny') {
-				this._containerElements.grantAll.removeAttr('checked');
+				this._containerElements.grantAll.prop('checked', false);
 				
 				this._containerElements.permissionList.find('input[type=checkbox]').each(function(index, item) {
 					var $item = $(item);
 					
 					if ($item.data('type') === 'deny' && $item.attr('id') !== 'denyAll') {
-						$item.prop('checked', 'checked').trigger('change');
+						$item.prop('checked', true).trigger('change');
 					}
 				});
 			}
 			else {
-				this._containerElements.denyAll.removeAttr('checked');
+				this._containerElements.denyAll.prop('checked', false);
 				
 				this._containerElements.permissionList.find('input[type=checkbox]').each(function(index, item) {
 					var $item = $(item);
 					
 					if ($item.data('type') === 'grant' && $item.attr('id') !== 'grantAll') {
-						$item.prop('checked', 'checked').trigger('change');
+						$item.prop('checked', true).trigger('change');
 					}
 				});
 			}
 		}
 		else {
 			if ($type === 'deny') {
-				this._containerElements.grantAll.removeAttr('checked');
+				this._containerElements.grantAll.prop('checked', false);
 				
 				this._containerElements.permissionList.find('input[type=checkbox]').each(function(index, item) {
 					var $item = $(item);
 					
 					if ($item.data('type') === 'deny' && $item.attr('id') !== 'denyAll') {
-						$item.removeAttr('checked').trigger('change');
+						$item.prop('checked', false).trigger('change');
 					}
 				});
 			}
 			else {
-				this._containerElements.denyAll.removeAttr('checked');
+				this._containerElements.denyAll.prop('checked', false);
 				
 				this._containerElements.permissionList.find('input[type=checkbox]').each(function(index, item) {
 					var $item = $(item);
 					
 					if ($item.data('type') === 'grant' && $item.attr('id') !== 'grantAll') {
-						$item.removeAttr('checked').trigger('change');
+						$item.prop('checked', false).trigger('change');
 					}
 				});
 			}
@@ -497,16 +501,16 @@ WCF.ACL.List = Class.extend({
 	 */
 	_setupPermissions: function(type, objectID) {
 		// reset all checkboxes to unchecked
-		this._containerElements.permissionList.find("input[type='checkbox']").removeAttr('checked');
+		this._containerElements.permissionList.find("input[type='checkbox']").prop('checked', false);
 		
 		// use stored permissions if applicable
 		if (this._values[type] && this._values[type][objectID]) {
 			for (var $optionID in this._values[type][objectID]) {
 				if (this._values[type][objectID][$optionID] == 1) {
-					$('#grant' + $optionID).attr('checked', 'checked').trigger('change');
+					$('#grant' + $optionID).prop('checked', true).trigger('change');
 				}
 				else {
-					$('#deny' + $optionID).attr('checked', 'checked').trigger('change');
+					$('#deny' + $optionID).prop('checked', true).trigger('change');
 				}
 			}
 		}
@@ -540,7 +544,7 @@ WCF.ACL.List = Class.extend({
 					self._values[$type][$objectID][$optionID] = $optionValue;
 					
 					// reset value afterwards
-					$checkbox.removeAttr('checked');
+					$checkbox.prop('checked', false);
 				}
 				else if (self._values[$type] && self._values[$type][$objectID] && self._values[$type][$objectID][$optionID] && self._values[$type][$objectID][$optionID] == $optionValue) {
 					delete self._values[$type][$objectID][$optionID];

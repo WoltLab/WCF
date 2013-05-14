@@ -5,6 +5,9 @@
 		<item name="wcf.acl.option.fullAccess"><![CDATA[Full Access]]></item>
 		<item name="wcf.acl.option.grant"><![CDATA[Grant]]></item>
 		<item name="wcf.acl.permissions"><![CDATA[User and Group Permissions]]></item>
+		<item name="wcf.acl.user.permissions"><![CDATA[User Permissions]]></item>
+		<item name="wcf.acl.search.description"><![CDATA[TODO: Benutzer- oder Benutzergruppenname eingeben …]]></item>
+		<item name="wcf.acl.search.user.description"><![CDATA[TODO: Benutzername eingeben …]]></item>
 	</category>
 	
 	<category name="wcf.acp.application">
@@ -261,7 +264,7 @@
 		<item name="wcf.acp.menu.link.user.list"><![CDATA[List Users]]></item>
 		<item name="wcf.acp.menu.link.user.mail"><![CDATA[Email Users]]></item>
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Users]]></item>
-		<item name="wcf.acp.menu.link.user.massProcessing"><![CDATA[Bulk Processing]]></item>
+		<item name="wcf.acp.menu.link.user.bulkProcessing"><![CDATA[Bulk Processing]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Search Users]]></item>
 		<item name="wcf.acp.menu.link.user.option"><![CDATA[Custom User Fields]]></item>
 		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[List Custom User Fields]]></item>
@@ -325,6 +328,7 @@
 		<item name="wcf.acp.option.category.user.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Censorship]]></item>
+		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
 		
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookie Domain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Should be left blank except for special circumstances.]]></item>
@@ -412,8 +416,12 @@
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[The attribute “rel="nofollow"” tells search engines to disregard external links.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Open external links in a new window]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Appends the attribute “target="_blank"” to external links, causing the user’s browser to open the link in a new window.]]></item>
+		<item name="wcf.acp.option.jquery_source"><![CDATA[jQuery Source]]></item>
+		<item name="wcf.acp.option.jquery_source.local"><![CDATA[Local Version]]></item>
+		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
+		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
 	</category>
-
+	
 	<category name="wcf.acp.package">
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installed Applications]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Applications]]></item>
@@ -428,6 +436,7 @@
 		<item name="wcf.acp.package.dependencies.required.description"><![CDATA[Packages required by this package]]></item>
 		<item name="wcf.acp.package.dependencies.title"><![CDATA[Dependencies]]></item>
 		<item name="wcf.acp.package.description"><![CDATA[Description]]></item>
+		<item name="wcf.acp.package.error.noUniqueAbbrevation"><![CDATA[There is already an application installed which has the same abbrevation.]]></item>
 		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[The uploaded archive is invalid.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Overwrite Existing Tables]]></item>
 		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[The tables above already exist and will be replaced during the installation. Any contained data will be lost.]]></item>
@@ -474,6 +483,10 @@
 		<item name="wcf.acp.package.type.application"><![CDATA[Application]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Plugin]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package “{@$package->getName()}”?]]></item>
+		<item name="wcf.acp.package.uninstallation.step.prepare"><![CDATA[TODO: Deinstallation wird vorbereitet …]]></item>
+		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[TODO: Deinstallation abgeschlossen]]></item>
+		<item name="wcf.acp.package.uninstallation.title"><![CDATA[TODO: Deinstallation]]></item>
+		<item name="wcf.acp.package.uninstallation.title.packageName"><![CDATA[TODO: Paket „{$queue->packageName}“ wird deinstalliert …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Credentials]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Your credentials are invalid, please verify {if $updateServer->requiresLicense()}license and serial number{else}username and password{/if}.]]></item>
@@ -626,6 +639,7 @@
 		<item name="wcf.acp.style.import.source"><![CDATA[Data Source]]></item>
 		<item name="wcf.acp.style.import.source.upload"><![CDATA[Upload Style]]></item>
 		<item name="wcf.acp.style.import.source.upload.description"><![CDATA[Upload a style from your local machine.]]></item>
+		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[TODO: Der Stil konnte nicht importiert werden. Es handelt sich nicht um eine gültige Stil-Datei.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.style.list"><![CDATA[List Styles]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Package Identifier]]></item>
@@ -694,11 +708,11 @@
 		<item name="wcf.acp.user.list"><![CDATA[Users]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[All Users]]></item>
 		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} Users]]></item>
-		<item name="wcf.acp.user.massProcessing"><![CDATA[Bulk Processing]]></item>
-		<item name="wcf.acp.user.massProcessing.action"><![CDATA[Actions]]></item>
-		<item name="wcf.acp.user.massProcessing.conditions"><![CDATA[Conditions]]></item>
-		<item name="wcf.acp.user.massProcessing.success"><![CDATA[Executed action affected {#$affectedUsers} user{if $affectedUsers != 1}s{/if}.]]></item>
-		<item name="wcf.acp.user.massProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below without any further confirmation prompt! Processing can be fairly slow if many users are affected by your conditions, it is recommended to enable “Maintenance Mode” in first place. Any change cannot be undone, please be careful!]]></item>
+		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Bulk Processing]]></item>
+		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Actions]]></item>
+		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Conditions]]></item>
+		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Executed action affected {#$affectedUsers} user{if $affectedUsers != 1}s{/if}.]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below without any further confirmation prompt! Processing can be fairly slow if many users are affected by your conditions, it is recommended to enable “Maintenance Mode” in first place. Any change cannot be undone, please be careful!]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Search Users]]></item>
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profile]]></item>
@@ -1116,4 +1130,7 @@
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[Entered text is invalid.]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[Your user account has been banned{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
 	</category>
+	
+	<!-- i18n category -->
+	<category name="wcf.user.option" />
 </language>

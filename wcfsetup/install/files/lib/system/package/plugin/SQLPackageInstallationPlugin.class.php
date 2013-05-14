@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\package\Package;
+use wcf\data\package\PackageList;
 use wcf\system\exception\SystemException;
 use wcf\system\form\container\GroupFormElementContainer;
 use wcf\system\form\element\LabelFormElement;
@@ -35,17 +36,17 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		// extract sql file from archive
 		if ($queries = $this->getSQL($this->instruction['value'])) {
 			$package = $this->installation->getPackage();
-			if ($package->isApplication == 1) {
-				// package is application
-				$packageAbbr = Package::getAbbreviation($package->package);
-				$tablePrefix = WCF_N.'_';
-				
-				// Replace the variable xyz1_1 with $tablePrefix in the table names.
-				$queries = StringUtil::replace($packageAbbr.'1_', $packageAbbr.$tablePrefix, $queries);
-			}
 			
-			// replace wcf1_ with the actual WCF_N value
-			$queries = str_replace("wcf1_", "wcf".WCF_N."_", $queries);
+			// replace app1_ with app{WCF_N}_ in the table names for
+			// all applications
+			$packageList = new PackageList();
+			$packageList->getConditionBuilder()->add('package.isApplication = ?', array(1));
+			$packageList->readObjects();
+			foreach ($packageList as $package) {
+				$abbreviation = Package::getAbbreviation($package->package);
+				
+				$queries = StringUtil::replace($abbreviation.'1_', $abbreviation.WCF_N.'_', $queries);
+			}
 			
 			// check queries
 			$parser = new PackageInstallationSQLParser($queries, $this->installation->getPackage(), $this->installation->getAction());

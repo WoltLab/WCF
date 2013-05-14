@@ -2,9 +2,9 @@
 namespace wcf\acp\form;
 use wcf\data\style\StyleEditor;
 use wcf\form\AbstractForm;
+use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Shows the style import form.
@@ -53,7 +53,7 @@ class StyleImportForm extends AbstractForm {
 	 */
 	public function validate() {
 		parent::validate();
-	
+		
 		if (empty($this->source['name'])) {
 			throw new UserInputException('source');
 		}
@@ -62,11 +62,12 @@ class StyleImportForm extends AbstractForm {
 			throw new UserInputException('source', 'uploadFailed');
 		}
 		
-		// get filename
-		$this->source['name'] = FileUtil::getTemporaryFilename('style_', preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', basename($this->source['name'])));
-		
-		if (!@move_uploaded_file($this->source['tmp_name'], $this->source['name'])) {
-			throw new UserInputException('source', 'uploadFailed');
+		try {
+			$this->style = StyleEditor::import($this->source['tmp_name']);
+		}
+		catch (\Exception $e) {
+			@unlink($this->source['tmp_name']);
+			throw new UserInputException('source', 'importFailed');
 		}
 	}
 	
@@ -76,14 +77,9 @@ class StyleImportForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		try {
-			$this->style = StyleEditor::import($this->source['name']);
-		}
-		catch (\Exception $e) {
-			@unlink($this->source['name']);
-		}
+		StyleCacheBuilder::getInstance()->reset();
 		
-		@unlink($this->source['name']);
+		@unlink($this->source['tmp_name']);
 		$this->saved();
 		
 		WCF::getTPL()->assign('success', true);

@@ -233,6 +233,16 @@ select[multiple] {
 	border-style: solid;
 	border-width: 1px;
 	color: @wcfInputColor;
+	
+	&::-webkit-input-placeholder { /* WebKit browsers */
+		color: lighten(@wcfInputColor, 20%);
+	}
+	&::-moz-placeholder { /* Mozilla Firefox 19+ */
+		color: lighten(@wcfInputColor, 20%);
+	}
+	&:-ms-input-placeholder { /* Internet Explorer 10+ */
+		color: lighten(@wcfInputColor, 20%);
+	}
 }
 
 /* hover */

@@ -5,6 +5,9 @@
 		<item name="wcf.acl.option.fullAccess"><![CDATA[Vollzugriff]]></item>
 		<item name="wcf.acl.option.grant"><![CDATA[Erlauben]]></item>
 		<item name="wcf.acl.permissions"><![CDATA[Benutzer- und Benutzergruppenrechte]]></item>
+		<item name="wcf.acl.user.permissions"><![CDATA[Benutzerrechte]]></item>
+		<item name="wcf.acl.search.description"><![CDATA[Benutzer- oder Benutzergruppenname eingeben …]]></item>
+		<item name="wcf.acl.search.user.description"><![CDATA[Benutzername eingeben …]]></item>
 	</category>
 	
 	<category name="wcf.acp.application">
@@ -26,7 +29,7 @@
 		<item name="wcf.acp.application.list"><![CDATA[Installierte Anwendungen]]></item>
 		<item name="wcf.acp.application.primaryApplication"><![CDATA[Primäre Anwendung]]></item>
 		<item name="wcf.acp.application.setAsPrimary"><![CDATA[Als primäre Anwendung festlegen]]></item>
-		<item name="wcf.acp.application.setAsPrimary.confirmMessage"><![CDATA[Möchten Sie „{$application->getPackage()->getName()}“ wirklich als primäre Anwendung festlegen?]]></item>
+		<item name="wcf.acp.application.setAsPrimary.confirmMessage"><![CDATA[Wollen Sie „{$application->getPackage()->getName()}“ wirklich als primäre Anwendung festlegen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -80,10 +83,10 @@
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.notValid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Sind Sie sicher, dass Sie den Cronjob „{$cronjob->description|language}“ löschen möchten?]]></item>
+		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Wollen Sie den Cronjob „{$cronjob->description|language}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Protokoll leeren]]></item>
-		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Sind Sie sicher, dass Sie alle Protokoll-Einträge löschen möchten?]]></item>
+		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Wollen Sie alle Protokoll-Einträge wirklich löschen?]]></item>
 		<item name="wcf.acp.cronjob.log.execTime"><![CDATA[Ausgeführt]]></item>
 		<item name="wcf.acp.cronjob.log.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.cronjob.log.success"><![CDATA[Erfolgreich]]></item>
@@ -102,7 +105,7 @@
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Fehlermeldung kopieren]]></item>
 		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[Es wurde kein Fehler mit der ID „{$exceptionID}“ gefunden.]]></item>
-		<item name="wcf.acp.exceptionLog.noneAvailable"><![CDATA[Es sind keine protokollierte Fehler vorhanden.]]></item>
+		<item name="wcf.acp.exceptionLog.noneAvailable"><![CDATA[Es sind keine protokollierten Fehler vorhanden.]]></item>
 		<item name="wcf.acp.exceptionLog.search"><![CDATA[Suche]]></item>
 		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Fehler-ID]]></item>
 		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Datei]]></item>
@@ -261,7 +264,7 @@
 		<item name="wcf.acp.menu.link.user.list"><![CDATA[Benutzer auflisten]]></item>
 		<item name="wcf.acp.menu.link.user.mail"><![CDATA[E-Mail an alle Benutzer]]></item>
 		<item name="wcf.acp.menu.link.user.management"><![CDATA[Benutzer]]></item>
-		<item name="wcf.acp.menu.link.user.massProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
+		<item name="wcf.acp.menu.link.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.menu.link.user.search"><![CDATA[Benutzer suchen]]></item>
 		<item name="wcf.acp.menu.link.user.option"><![CDATA[Benutzerprofilfelder]]></item>
 		<item name="wcf.acp.menu.link.user.option.list"><![CDATA[Benutzerprofilfelder auflisten]]></item>
@@ -325,6 +328,7 @@
 		<item name="wcf.acp.option.category.user.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Zensur]]></item>
+		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
 		
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookiedomain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Standardmäßig sollten Sie dieses Feld frei lassen, da ein Ausfüllen nur in wenigen Fällen notwendig ist.]]></item>
@@ -412,8 +416,12 @@
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[Das Attribut „rel="nofollow"“ weist Suchmaschinen an, einen bestimmten Link auf einer Seite zu ignorieren.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Externe Links in neuem Fenster öffnen]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Setzt das Attribut „target="_blank"“ auf externe Links und weist den Browser dadurch an, einen aufgerufenen Link in einem neuen Browser-Fenster zu öffnen.]]></item>
+		<item name="wcf.acp.option.jquery_source"><![CDATA[jQuery-Quelle]]></item>
+		<item name="wcf.acp.option.jquery_source.local"><![CDATA[lokale Version]]></item>
+		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
+		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
 	</category>
-
+	
 	<category name="wcf.acp.package">
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installierte Anwendungen]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Anwendungen]]></item>
@@ -428,6 +436,7 @@
 		<item name="wcf.acp.package.dependencies.required.description"><![CDATA[Pakete, die zwingend für den Betrieb dieses Paketes benötigt werden]]></item>
 		<item name="wcf.acp.package.dependencies.title"><![CDATA[Abhängigkeiten]]></item>
 		<item name="wcf.acp.package.description"><![CDATA[Beschreibung]]></item>
+		<item name="wcf.acp.package.error.noUniqueAbbrevation"><![CDATA[Es ist bereits eine Anwendung installiert, die die gleiche Abkürzung besitzt.]]></item>
 		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[Das angegebene Archiv ist kein gültiges Paket.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Existierende Tabellen überschreiben]]></item>
 		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[Die oben genannten Tabellen existieren bereits und werden beim Fortfahren der Installation überschrieben. Alle Daten dieser Tabellen gehen unwiderruflich verloren.]]></item>
@@ -474,6 +483,10 @@
 		<item name="wcf.acp.package.type.application"><![CDATA[Anwendung]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Erweiterung]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren?]]></item>
+		<item name="wcf.acp.package.uninstallation.step.prepare"><![CDATA[Deinstallation wird vorbereitet …]]></item>
+		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[Deinstallation abgeschlossen]]></item>
+		<item name="wcf.acp.package.uninstallation.title"><![CDATA[Deinstallation]]></item>
+		<item name="wcf.acp.package.uninstallation.title.packageName"><![CDATA[Paket „{$queue->packageName}“ wird deinstalliert …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Zugangsdaten]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Ihre Angaben sind ungültig, bitte überprüfen Sie {if $updateServer->requiresLicense()}Lizenz- und Seriennummer{else}Benutzername und Passwort{/if}.]]></item>
@@ -495,7 +508,7 @@
 		<item name="wcf.acp.pageMenu.add"><![CDATA[Menüpunkt hinzufügen]]></item>
 		<item name="wcf.acp.pageMenu.advanced"><![CDATA[Erweitert]]></item>
 		<item name="wcf.acp.pageMenu.data"><![CDATA[Allgemein]]></item>
-		<item name="wcf.acp.pageMenu.delete.sure"><![CDATA[Möchten Sie den Menüpunkt „{$__menuItem}“ und alle Untermenüpunkte wirklich löschen?]]></item>
+		<item name="wcf.acp.pageMenu.delete.sure"><![CDATA[Wollen Sie den Menüpunkt „{$__menuItem}“ und alle Untermenüpunkte wirklich löschen?]]></item>
 		<item name="wcf.acp.pageMenu.edit"><![CDATA[Menüpunkt bearbeiten]]></item>
 		<item name="wcf.acp.pageMenu.footer"><![CDATA[Fußzeile]]></item>
 		<item name="wcf.acp.pageMenu.header"><![CDATA[Hauptmenü]]></item>
@@ -596,8 +609,8 @@
 		<item name="wcf.acp.style.colors.userPanel"><![CDATA[Benutzerleiste]]></item>
 		<item name="wcf.acp.style.copyright"><![CDATA[Copyright]]></item>
 		<item name="wcf.acp.style.copyStyle"><![CDATA[Stil kopieren]]></item>
-		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Möchten Sie den Stil „{$style->styleName}“ wirklich duplizieren?]]></item>
-		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Möchten Sie den Stil „{$style->styleName}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.style.copyStyle.confirmMessage"><![CDATA[Wollen Sie den Stil „{$style->styleName}“ wirklich duplizieren?]]></item>
+		<item name="wcf.acp.style.delete.confirmMessage"><![CDATA[Wollen Sie den Stil „{$style->styleName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.style.edit"><![CDATA[Stil bearbeiten]]></item>
 		<item name="wcf.acp.style.exportAsPackage"><![CDATA[Als Paket exportieren]]></item>
 		<item name="wcf.acp.style.exportImages"><![CDATA[Grafiken exportieren ({$style->imagePath})]]></item>
@@ -626,6 +639,7 @@
 		<item name="wcf.acp.style.import.source"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.style.import.source.upload"><![CDATA[Stil hochladen]]></item>
 		<item name="wcf.acp.style.import.source.upload.description"><![CDATA[Geben Sie eine Stil-Datei von Ihrem lokalen Rechner an.]]></item>
+		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[Der Stil konnte nicht importiert werden. Es handelt sich nicht um eine gültige Stil-Datei.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[Lizenz]]></item>
 		<item name="wcf.acp.style.list"><![CDATA[Stile auflisten]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Paketbezeichner]]></item>
@@ -694,11 +708,11 @@
 		<item name="wcf.acp.user.list"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[Alle Benutzer]]></item>
 		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} Benutzer]]></item>
-		<item name="wcf.acp.user.massProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
-		<item name="wcf.acp.user.massProcessing.action"><![CDATA[Aktion]]></item>
-		<item name="wcf.acp.user.massProcessing.conditions"><![CDATA[Bedingungen]]></item>
-		<item name="wcf.acp.user.massProcessing.success"><![CDATA[Die gewählte Aktion wurde erfolgreich auf {#$affectedUsers} Benutzer ausgeführt.]]></item>
-		<item name="wcf.acp.user.massProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> auf alle Benutzer aus, die unter die eingestellten Bedingungen fallen. Die Bearbeitungen können unter Umständen sehr rechenintensiv werden und sollten deshalb möglichst nur dann ausgeführt werden, wenn sich die Seite im Wartungsmodus befindet! Die Veränderungen können nicht rückgängig gemacht werden. Bitte benutzen Sie diese Funktion mit der nötigen Vorsicht!]]></item>
+		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
+		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Aktion]]></item>
+		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Bedingungen]]></item>
+		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Die gewählte Aktion wurde erfolgreich auf {#$affectedUsers} Benutzer ausgeführt.]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> auf alle Benutzer aus, die unter die eingestellten Bedingungen fallen. Die Bearbeitungen können unter Umständen sehr rechenintensiv werden und sollten deshalb möglichst nur dann ausgeführt werden, wenn sich die Seite im Wartungsmodus befindet! Die Veränderungen können nicht rückgängig gemacht werden. Bitte benutzen Sie diese Funktion mit der nötigen Vorsicht!]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Benutzer suchen]]></item>
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profil]]></item>
@@ -782,7 +796,7 @@
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 		<item name="wcf.category.button.list"><![CDATA[Kategorien auflisten]]></item>
-		<item name="wcf.category.delete.sure"><![CDATA[Sind Sie sicher, dass Sie diese Kategorie löschen möchten? Alle sich in dieser Kategorie befindlichen Unterkategorien werden in die Elternkategorie dieser Kategorie verschoben.]]></item>
+		<item name="wcf.category.delete.sure"><![CDATA[Wollen Sie diese Kategorie wirklich löschen? Alle sich in dieser Kategorie befindlichen Unterkategorien werden in die Elternkategorie dieser Kategorie verschoben.]]></item>
 		<item name="wcf.category.edit"><![CDATA[Kategorie bearbeiten]]></item>
 		<item name="wcf.category.isDisabled"><![CDATA[Kategorie deaktivieren]]></item>
 		<item name="wcf.category.list"><![CDATA[Kategorien]]></item>
@@ -1127,4 +1141,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[Ihr Benutzeraccount wurde gesperrt{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
 	</category>
+	
+	<!-- i18n category -->
+	<category name="wcf.user.option" />
 </language>

@@ -139,7 +139,7 @@
 			{/if}
 			
 			<div id="logo" class="logo">
-				<a href="{link controller='Index'}{/link}">
+				<a href="{link}{/link}">
 					<h1>{lang}wcf.global.acp{/lang}</h1>
 					{if PACKAGE_ID > 1}
 						{event name='headerLogo'}

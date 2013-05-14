@@ -52,9 +52,9 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("menuItem IN (?)", array(array_keys($languageItems)));
-		$conditions->add("menuItemLink <> ''");
+		$conditions->add("menuItemController <> ''");
 		
-		$sql = "SELECT	menuItem, menuItemLink, permissions, options
+		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_acp_menu_item
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here

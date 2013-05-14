@@ -3,8 +3,8 @@
 		<span class="icon icon48 icon-spinner"></span>
 		
 		<div>
-			<h1>Paket &raquo;{$queue->packageName}&laquo; wird deinstalliert &hellip;</h1><!-- ToDo: Language variables -->
-			<p>Aktueller Schritt: <span id="packageInstallationAction">{lang}wcf.package.uninstallation.step.prepare{/lang}</span></p>
+			<h1>{lang}wcf.acp.package.uninstallation.title.packageName{/lang}</h1>
+			<p id="packageInstallationAction">{lang}wcf.acp.package.uninstallation.step.prepare{/lang}</span></p>
 			<p><progress id="packageInstallationProgress" value="0" max="100">0%</progress></p>
 		</div>
 	</header>
