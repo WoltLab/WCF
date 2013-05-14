@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system\cli\command;
-use wcf\util\JSON;
-
 use phpline\internal\Log;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
@@ -14,6 +12,7 @@ use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\CLIWCF;
 use wcf\util\CLIUtil;
 use wcf\util\FileUtil;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 use Zend\Console\ColorInterface as Color;
 use Zend\Console\Exception\RuntimeException as ArgvException;
@@ -115,6 +114,9 @@ class PackageCommand implements ICommand {
 		else {
 			if (!$archive->isValidInstall()) {
 				$this->error('noValidInstall');
+			}
+			else if ($archive->getPackageInfo('isApplication')) {
+				$this->error('installIsApplication');
 			}
 			else if ($archive->isAlreadyInstalled()) {
 				$this->error('uniqueAlreadyInstalled');
