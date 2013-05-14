@@ -3317,7 +3317,12 @@ WCF.TabMenu = {
 					
 					// set panel id as location hash
 					if (WCF.TabMenu._didInit) {
-						location.hash = '#' + $panel.attr('id');
+						if (window.history) {
+							window.history.pushState(null, document.title, window.location.toString().replace(/#.+$/, '') + '#' + $panel.attr('id'));
+						}
+						else {
+							location.hash = '#' + $panel.attr('id');
+						}
 					}
 					
 					//$container.trigger('tabsbeforeactivate', event, eventData);
@@ -7372,8 +7377,15 @@ WCF.EditableItemList = Class.extend({
 	 * @param	object		event
 	 */
 	_keyDown: function(event) {
+		// 188 = [,]
 		if (event === null || event.which === 188) {
 			var $value = $.trim(this._searchInput.val());
+			
+			// read everything left from caret position
+			if (event && event.which === 188) {
+				$value = $value.substring(0, this._searchInput.getCaret());
+			}
+			
 			if ($value === '') {
 				return true;
 			}
@@ -7384,7 +7396,12 @@ WCF.EditableItemList = Class.extend({
 			});
 			
 			// reset input
-			this._searchInput.val('');
+			if (event && event.which === 188) {
+				this._searchInput.val($.trim(this._searchInput.val().substr(this._searchInput.getCaret())));
+			}
+			else {
+				this._searchInput.val('');
+			}
 			
 			if (event !== null) {
 				event.stopPropagation();
