@@ -226,7 +226,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				$repeat = count($parameters) / $step;
 				
 				$sql = "INSERT INTO		wcf".WCF_N."_language_item
-								(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
+								(languageID, languageItem, languageItemValue, languageCategoryID". ($packageID ? ", packageID" : "") . ")
 					VALUES			".substr(str_repeat('(?, ?, ?, ?'. ($packageID ? ', ?' : '') .'), ', $repeat), 0, -2)."
 					ON DUPLICATE KEY
 					UPDATE			languageItemValue = VALUES(languageItemValue),
