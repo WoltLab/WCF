@@ -98,8 +98,6 @@
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Logged errors]]></item>
 		<item name="wcf.acp.exceptionLog.exception.file"><![CDATA[File (Line)]]></item>
-		<item name="wcf.acp.exceptionLog.exception.phpVersion"><![CDATA[PHP version]]></item>
-		<item name="wcf.acp.exceptionLog.exception.wcfVersion"><![CDATA[WCF version]]></item>
 		<item name="wcf.acp.exceptionLog.exception.requestURI"><![CDATA[Requested URL]]></item>
 		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
@@ -109,6 +107,8 @@
 		<item name="wcf.acp.exceptionLog.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Error-ID]]></item>
 		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Logfile]]></item>
+		<item name="wcf.acp.exceptionLog.exception.date"><![CDATA[Time]]></item>
+		<item name="wcf.acp.exceptionLog.exception.userAgent"><![CDATA[User Agent]]></item>
 	</category>
 	
 	<category name="wcf.acp.group">
@@ -168,6 +168,25 @@
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[The given value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[The given value is too low.{if $option->minvalue !== null} The minimum value is {#$option->minvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.showMembers"><![CDATA[Show Members]]></item>
+		<item name="wcf.acp.group.option.admin.general.canViewPageDuringOfflineMode"><![CDATA[TODO: Kann Seite im Wartungsmodus aufrufen]]></item>
+		<item name="wcf.acp.group.option.admin.user.canBanUser"><![CDATA[TODO: Kann Benutzer sperren]]></item>
+		<item name="wcf.acp.group.option.category.admin.template"><![CDATA[TODO: Templates]]></item>
+		<item name="wcf.acp.group.option.admin.template.canManageTemplate"><![CDATA[TODO: Kann Templates verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.style.canManageStyle"><![CDATA[TODO: Kann Stile verwalten]]></item>
+		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[TODO: Inhalte]]></item>
+		<item name="wcf.acp.group.option.category.admin.community"><![CDATA[TODO: Community]]></item>
+		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[TODO: Allgemeine Rechte]]></item>
+	</category>
+	
+	<category name="wcf.acp.index">
+		<item name="wcf.acp.index.credits"><![CDATA[TODO: Über WoltLab&reg; Community Framework]]></item>
+		<item name="wcf.acp.index.credits.contributor"><![CDATA[TODO: Mitwirkende]]></item>
+		<item name="wcf.acp.index.credits.designer"><![CDATA[TODO: Design]]></item>
+		<item name="wcf.acp.index.credits.developedBy"><![CDATA[TODO: Software entwickelt von]]></item>
+		<item name="wcf.acp.index.credits.developer"><![CDATA[TODO: Programmierung]]></item>
+		<item name="wcf.acp.index.credits.productManager"><![CDATA[TODO: Projektleitung]]></item>
+		<item name="wcf.acp.index.credits.trademarks"><![CDATA[TODO: „WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Gemeinschaftsmarken beim europäischen Harmonisierungsamt für den Binnenmarkt (OHIM) in Alicante, Spanien.]]></item>
+		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[TODO: Weitere]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
@@ -421,6 +440,11 @@
 		<item name="wcf.acp.option.jquery_source.local"><![CDATA[Local Version]]></item>
 		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
 		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
+		<item name="wcf.acp.option.enable_benchmark"><![CDATA[TODO: Benchmark aktivieren]]></item>
+		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[TODO: Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
+		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[TODO: Update-Server]]></item>
+		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[TODO: Authentifizierung-Code]]></item>
+		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[TODO: Ihren Authentifizierung-Code finden Sie in Ihrem Kundenkonto auf woltlab.com.]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -503,6 +527,7 @@
 		<item name="wcf.acp.package.update.username"><![CDATA[Username]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
+		<item name="wcf.acp.package.upload"><![CDATA[TODO: Paket hochladen]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">

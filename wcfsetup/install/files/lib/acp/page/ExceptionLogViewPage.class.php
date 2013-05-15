@@ -31,6 +31,11 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	public $neededPermissions = array('admin.system.canViewLog');
 	
 	/**
+	 * @see	wcf\page\MultipleLinkPage::$itemsPerPage
+	 */
+	public $itemsPerPage = 10;
+	
+	/**
 	 * given exceptionID
 	 * @var	string
 	 */
