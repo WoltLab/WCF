@@ -76,7 +76,7 @@
 		<fieldset>
 			<legend>{lang}wcf.acp.application.cookie{/lang}</legend>
 			
-			<p class="warning">{lang}wcf.acp.application.cookie.warning{/lang}</p>
+			<small>{lang}wcf.acp.application.cookie.warning{/lang}</small>
 			
 			<dl class="marginTop {if $errorField == 'cookieDomain'} formError{/if}">
 				<dt><label for="cookieDomain">{lang}wcf.acp.application.cookieDomain{/lang}</label></dt>

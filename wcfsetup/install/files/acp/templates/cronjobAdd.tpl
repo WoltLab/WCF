@@ -18,9 +18,6 @@
 	<nav>
 		<ul>
 			<li><a href="{link controller='CronjobList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.cronjob.list{/lang}</span></a></li>
-			{if $action == 'edit'}
-				<li><a href="{link controller='CronjobExecute' id=$cronjobID}{/link}" class="button"><span class="icon icon16 icon-play"></span> <span>{lang}wcf.acp.cronjob.execute{/lang}</span></a></li>
-			{/if}
 			
 			{event name='contentNavigationButtons'}
 		</ul>
