@@ -51,65 +51,12 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			// check queries
 			$parser = new PackageInstallationSQLParser($queries, $this->installation->getPackage(), $this->installation->getAction());
 			$conflicts = $parser->test();
-			if (!empty($conflicts)) {
-				if (isset($conflicts['CREATE TABLE']) || isset($conflicts['DROP TABLE'])) {
-					if (!PackageInstallationFormManager::findForm($this->installation->queue, 'overwriteDatabaseTables')) {
-						$container = new GroupFormElementContainer();
-						
-						if (isset($conflicts['CREATE TABLE'])) {
-							$text = implode('<br />', $conflicts['CREATE TABLE']);
-							$label = WCF::getLanguage()->get('wcf.acp.package.error.sql.createTable');
-							$description = WCF::getLanguage()->get('wcf.acp.package.error.sql.createTable.description');
-							
-							$element = new LabelFormElement($container);
-							$element->setLabel($label);
-							$element->setText($text);
-							$element->setDescription($description);
-							$container->appendChild($element);
-						}
-						
-						if (isset($conflicts['DROP TABLE'])) {
-							$text = implode('<br />', $conflicts['DROP TABLE']);
-							$label = WCF::getLanguage()->get('wcf.acp.package.error.sql.dropTable');
-							$description = WCF::getLanguage()->get('wcf.acp.package.error.sql.dropTable.description');
-							
-							$element = new LabelFormElement($container);
-							$element->setLabel($label);
-							$element->setText($text);
-							$element->setDescription($description);
-							$container->appendChild($element);
-						}
-						
-						$document = new FormDocument('overwriteDatabaseTables');
-						$document->appendContainer($container);
-						
-						PackageInstallationFormManager::registerForm($this->installation->queue, $document);
-						return $document;
-					}
-					else {
-						/*
-						 * At this point the user decided to continue the installation (he would called the rollback
-						 * otherwise), thus we do not care about the form anymore
-						 */
-					}
-				}
+			if (!empty($conflicts) && (isset($conflicts['CREATE TABLE']) || isset($conflicts['DROP TABLE']))) {
+				WCF::getTPL()->assign(array(
+					'conflicts' => $conflicts
+				));
 				
-				// ask user here
-				// search default value in session
-				if (!WCF::getSession()->getVar('overrideAndDontAskAgain')) {
-					// show page
-					if (!empty($_POST['override']) || !empty($_POST['overrideAndDontAskAgain'])) {
-						if (!empty($_POST['overrideAndDontAskAgain'])) {
-							WCF::getSession()->register('overrideAndDontAskAgain', true);
-							WCF::getSession()->update();
-						}
-					}
-					else {
-						WCF::getTPL()->assign('conflicts', $conflicts);
-						WCF::getTPL()->display('packageInstallationCheckOverrideTables');
-						exit;
-					}
-				}
+				throw new SystemException(WCF::getTPL()->fetch('packageInstallationDatabaseConflict'));
 			}
 			
 			// execute queries

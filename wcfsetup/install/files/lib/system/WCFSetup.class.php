@@ -580,17 +580,12 @@ class WCFSetup extends WCF {
 			$dbClass = $dbClass['class'];
 			break;
 		}
-		$overwriteTables = false;
 		
 		if (isset($_POST['send'])) {
 			if (isset($_POST['dbHost'])) $dbHost = $_POST['dbHost'];
 			if (isset($_POST['dbUser'])) $dbUser = $_POST['dbUser'];
 			if (isset($_POST['dbPassword'])) $dbPassword = $_POST['dbPassword'];
 			if (isset($_POST['dbName'])) $dbName = $_POST['dbName'];
-			if (isset($_POST['overwriteTables'])) $overwriteTables = intval($_POST['overwriteTables']);
-			// Should the user not be prompted if converted or default n match an
-			// existing installation number? By now the existing installation
-			// will be overwritten just so!
 			
 			// ensure that $dbNumber is zero or a positive integer
 			if (isset($_POST['dbNumber'])) $dbNumber = max(0, intval($_POST['dbNumber']));
@@ -635,13 +630,9 @@ class WCFSetup extends WCF {
 				
 				// check for table conflicts
 				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
-				if (!empty($conflictedTables) && ($overwriteTables || self::$developerMode)) {
-					// remove tables
-					$db->getEditor()->dropConflictedTables($conflictedTables);
-				}
 				
 				// write config.inc
-				if (empty($conflictedTables) || $overwriteTables || self::$developerMode) {
+				if (empty($conflictedTables)) {
 					// connection successfully established
 					// write configuration to config.inc.php
 					$file = new File(WCF_DIR.'config.inc.php');
