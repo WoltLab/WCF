@@ -176,6 +176,8 @@
 		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[Inhalte]]></item>
 		<item name="wcf.acp.group.option.category.admin.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[Allgemeine Rechte]]></item>
+		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[Benutzerprofilfelder]]></item>
+		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Kann Benutzerprofilfelder verwalten]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
