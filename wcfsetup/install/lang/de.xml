@@ -740,7 +740,7 @@
 		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Aktion]]></item>
 		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Bedingungen]]></item>
 		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Die gewählte Aktion wurde erfolgreich auf {#$affectedUsers} Benutzer ausgeführt.]]></item>
-		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> bei allen Benutzern aus, die unter die eingestellten Bedingungen fallen. Die Bearbeitungen können unter Umständen sehr rechenintensiv werden und sollten deshalb möglichst nur dann ausgeführt werden, wenn sich die Seite im Wartungsmodus befindet! Die Veränderungen können nicht rückgängig gemacht werden. Bitte benutzen Sie diese Funktion mit der nötigen Vorsicht!]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Die Massenbearbeitung von Benutzern führt die unten ausgewählte Aktion <b>ohne zusätzliche Sicherheitsabfrage</b> bei allen Benutzern aus, die unter die eingestellten Bedingungen fallen.]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Benutzer suchen]]></item>
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profil]]></item>
@@ -811,6 +811,7 @@
 		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP-Klasse für Ausgabe]]></item>
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Erlaubt die Angabe einer speziellen PHP-Klasse für die Ausgabeformatierung bei der Anzeige des Feldes.]]></item>
 		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
+		<item name="wcf.acp.user.search.conditions"><![CDATA[Bedingungen]]></item>
 	</category>
 	
 	<category name="wcf.ajax">

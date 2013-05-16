@@ -143,6 +143,8 @@
 				
 				{event name='conditionFields'}
 			</fieldset>
+			
+			{event name='conditionFieldsets'}
 		</div>
 		
 		{if $options|count}
@@ -152,6 +154,8 @@
 			
 					{include file='optionFieldList' langPrefix='wcf.user.option.'}
 				</fieldset>
+				
+				{event name='profileFieldsets'}
 			</div>
 		{/if}
 	
@@ -172,7 +176,7 @@
 							<label><input type="radio" name="action" value="delete" {if $action == 'delete'}checked="checked" {/if}/> {lang}wcf.acp.user.delete{/lang}</label>
 						{/if}
 						
-						{event name='additionalActions'}
+						{event name='actions'}
 						
 						{if $errorField == 'action'}
 							<small class="innerError">
@@ -279,7 +283,7 @@
 				</fieldset>
 			</div>
 			
-			{event name='actionSettings'}
+			{event name='actionFieldsets'}
 		</div>
 	</div>
 	
