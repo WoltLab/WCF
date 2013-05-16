@@ -160,9 +160,9 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 		
 		// insert new groups
 		if (!empty($groupIDs)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_user_to_group
-						(userID, groupID)
-				VALUES		(?, ?)";
+			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_to_group
+							(userID, groupID)
+				VALUES			(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($groupIDs as $groupID) {
 				$statement->execute(array($this->userID, $groupID));
@@ -176,24 +176,11 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * @param	integer	$groupID
 	 */
 	public function addToGroup($groupID) {
-		$sql = "SELECT	COUNT(*) AS count
-			FROM	wcf".WCF_N."_user_to_group
-			WHERE	userID = ?
-				AND groupID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$this->userID,
-			$groupID
-		));
-		$row = $statement->fetchArray();
-		
-		if (!$row['count']) {
-			$sql = "INSERT INTO	wcf".WCF_N."_user_to_group
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_to_group
 						(userID, groupID)
-				VALUES		(?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->userID, $groupID));
-		}
+			VALUES			(?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->userID, $groupID));
 	}
 	
 	/**
