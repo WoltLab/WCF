@@ -153,6 +153,12 @@
 				<defaultvalue>1</defaultvalue>
 			</option>
 			
+			<option name="enable_woltlab_news">
+				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
 			<!-- general.page -->
 			<option name="page_title">
 				<categoryname>general.page</categoryname>
