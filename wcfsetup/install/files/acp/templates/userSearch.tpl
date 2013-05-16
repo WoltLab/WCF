@@ -39,7 +39,7 @@
 	<div class="tabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
-				<li><a href="{@$__wcf->getAnchor('__general')}">{lang}wcf.acp.user.search.conditions.general{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('conditions')}">{lang}wcf.acp.user.search.conditions{/lang}</a></li>
 				
 				{if $optionTree|count}
 					<li><a href="{@$__wcf->getAnchor('profile')}">{lang}wcf.acp.user.search.conditions.profile{/lang}</a></li>
@@ -51,9 +51,9 @@
 			</ul>
 		</nav>
 		
-		<div id="__general" class="container containerPadding tabMenuContent hidden">
+		<div id="conditions" class="container containerPadding tabMenuContent hidden">
 			<fieldset>
-				<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
+				<legend>{lang}wcf.acp.user.search.conditions{/lang}</legend>
 				
 				<dl>
 					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
@@ -102,8 +102,10 @@
 					</dl>
 				{/if}
 				
-				{event name='generalFields'}
+				{event name='conditionFields'}
 			</fieldset>
+			
+			{event name='conditionFieldsets'}
 		</div>
 		
 		{if $optionTree|count}
@@ -152,6 +154,8 @@
 						<input type="number" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" class="tiny" />
 					</dd>
 				</dl>
+				
+				{event name='searchDisplayFields'}
 			</fieldset>
 			
 			<fieldset>
@@ -176,8 +180,11 @@
 					<dd>
 						<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
 						<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
+						{event name='searchDisplayColumns'}
 					</dd>
 				</dl>
+				
+				{event name='searchDisplayColumnFields'}
 			</fieldset>
 			
 			{event name='resultOptionFieldsets'}

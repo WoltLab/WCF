@@ -740,7 +740,7 @@
 		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Actions]]></item>
 		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Executed action affected {#$affectedUsers} user{if $affectedUsers != 1}s{/if}.]]></item>
-		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below without any further confirmation prompt! Processing can be fairly slow if many users are affected by your conditions, it is recommended to enable “Maintenance Mode” in first place. Any change cannot be undone, please be careful!]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below without any further confirmation prompt!]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Search Users]]></item>
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profile]]></item>
@@ -811,6 +811,7 @@
 		<item name="wcf.acp.user.option.outputClass"><![CDATA[TODO: PHP-Klasse für Ausgabe]]></item>
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[TODO: Erlaubt die Angabe einer speziellen PHP-Klasse für die Ausgabeformatierung bei der Anzeige des Feldes.]]></item>
 		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
+		<item name="wcf.acp.user.search.conditions"><![CDATA[TODO: Bedingungen]]></item>
 	</category>
 	
 	<category name="wcf.ajax">
