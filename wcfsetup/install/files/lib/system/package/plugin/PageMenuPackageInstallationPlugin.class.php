@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\page\menu\item\PageMenuItemEditor;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 
 /**
  * Installs, updates and deletes page page menu items.
@@ -49,9 +51,73 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	}
 	
 	/**
+	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
+	 */
+	protected function import(array $row, array $data) {
+		if (!empty($row)) {
+			// ignore show order if null
+			if ($data['showOrder'] === null) {
+				unset($data['showOrder']);
+			}
+			else if ($data['showOrder'] != $row['showOrder']) {
+				$data['showOrder'] = $this->getMenuItemPosition($data);
+			}
+		}
+		else {
+			$data['showOrder'] = $this->getMenuItemPosition($data);
+		}
+		
+		parent::import($row, $data);
+	}
+	
+	/**
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getShowOrder()
 	 */
 	protected function getShowOrder($showOrder, $parentName = null, $columnName = null, $tableNameExtension = '') {
+		// will be recalculated anyway
 		return $showOrder;
+	}
+	
+	/**
+	 * Returns menu item position.
+	 * 
+	 * @param	array		$data
+	 * @return	integer
+	 */
+	protected function getMenuItemPosition(array $data) {
+		if ($data['showOrder'] === null) {
+			// get greatest showOrder value
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("menuPosition = ?", array($data['menuPosition']));
+			if ($data['parentMenuItem']) $conditions->add("parentMenuItem = ?", array($data['parentMenuItem']));
+			
+			$sql = "SELECT	MAX(showOrder) AS showOrder
+				FROM	wcf".WCF_N."_".$this->tableName."
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			$maxShowOrder = $statement->fetchArray();
+			return (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
+		}
+		else {
+			// increase all showOrder values which are >= $showOrder
+			$sql = "UPDATE	wcf".WCF_N."_".$this->tableName."
+				SET	showOrder = showOrder + 1
+				WHERE	showOrder >= ?
+					AND menuPosition = ?
+				".($data['parentMenuItem'] ? "AND parentMenuItem = ?" : "");
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			$data = array(
+				$data['showOrder'],
+				$data['menuPosition']
+			);
+			if ($data['parentMenuItem']) $data[] = $data['parentMenuItem'];
+			
+			$statement->execute($data);
+			
+			// return the wanted showOrder level
+			return $data['showOrder'];
+		}
 	}
 }
