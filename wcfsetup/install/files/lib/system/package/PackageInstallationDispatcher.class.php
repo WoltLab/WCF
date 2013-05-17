@@ -655,6 +655,7 @@ class PackageInstallationDispatcher {
 				$optionalPackage->setName('optionalPackages');
 				$optionalPackage->setLabel($package['packageName']);
 				$optionalPackage->setValue($package['package']);
+				$optionalPackage->setDescription($package['packageDescription']);
 				
 				$container->appendChild($optionalPackage);
 			}

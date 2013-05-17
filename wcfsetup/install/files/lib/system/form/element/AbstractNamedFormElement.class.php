@@ -14,6 +14,12 @@ use wcf\util\StringUtil;
  */
 abstract class AbstractNamedFormElement extends AbstractFormElement {
 	/**
+	 * element description
+	 * @var string
+	 */
+	protected $description = '';
+	
+	/**
 	 * element name
 	 * @var	string
 	 */
@@ -24,6 +30,24 @@ abstract class AbstractNamedFormElement extends AbstractFormElement {
 	 * @var	string
 	 */
 	protected $value = '';
+	
+	/**
+	 * Sets element description.
+	 *
+	 * @param	string		$description
+	 */
+	public function setDescription($description) {
+		$this->description = $description;
+	}
+	
+	/**
+	 * Returns element description.
+	 *
+	 * @return	string
+	 */
+	public function getDescription() {
+		return $this->description;
+	}
 	
 	/**
 	 * Sets element name.
