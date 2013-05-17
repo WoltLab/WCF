@@ -108,13 +108,13 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 				".($data['parentMenuItem'] ? "AND parentMenuItem = ?" : "");
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
-			$data = array(
+			$parameters = array(
 				$data['showOrder'],
 				$data['menuPosition']
 			);
-			if ($data['parentMenuItem']) $data[] = $data['parentMenuItem'];
+			if ($data['parentMenuItem']) $parameters[] = $data['parentMenuItem'];
 			
-			$statement->execute($data);
+			$statement->execute($parameters);
 			
 			// return the wanted showOrder level
 			return $data['showOrder'];
