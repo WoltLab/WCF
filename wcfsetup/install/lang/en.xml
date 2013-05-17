@@ -6,8 +6,8 @@
 		<item name="wcf.acl.option.grant"><![CDATA[Grant]]></item>
 		<item name="wcf.acl.permissions"><![CDATA[User and Group Permissions]]></item>
 		<item name="wcf.acl.user.permissions"><![CDATA[User Permissions]]></item>
-		<item name="wcf.acl.search.description"><![CDATA[TODO: Benutzer- oder Benutzergruppenname eingeben …]]></item>
-		<item name="wcf.acl.search.user.description"><![CDATA[TODO: Benutzername eingeben …]]></item>
+		<item name="wcf.acl.search.description"><![CDATA[Enter username or group …]]></item>
+		<item name="wcf.acl.search.user.description"><![CDATA[Enter username …]]></item>
 	</category>
 	
 	<category name="wcf.acp.application">
@@ -164,38 +164,38 @@
 		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderative Permissions]]></item>
 		<item name="wcf.acp.group.option.category.user"><![CDATA[General Permissions]]></item>
-		<item name="wcf.acp.group.option.category.user.message"><![CDATA[TODO: Nachrichten]]></item>
+		<item name="wcf.acp.group.option.category.user.message"><![CDATA[Messages]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[The given value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[The given value is too low.{if $option->minvalue !== null} The minimum value is {#$option->minvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.showMembers"><![CDATA[Show Members]]></item>
-		<item name="wcf.acp.group.option.admin.general.canViewPageDuringOfflineMode"><![CDATA[TODO: Kann Seite im Wartungsmodus aufrufen]]></item>
-		<item name="wcf.acp.group.option.admin.user.canBanUser"><![CDATA[TODO: Kann Benutzer sperren]]></item>
-		<item name="wcf.acp.group.option.category.admin.template"><![CDATA[TODO: Templates]]></item>
-		<item name="wcf.acp.group.option.admin.template.canManageTemplate"><![CDATA[TODO: Kann Templates verwalten]]></item>
-		<item name="wcf.acp.group.option.admin.style.canManageStyle"><![CDATA[TODO: Kann Stile verwalten]]></item>
-		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[TODO: Inhalte]]></item>
-		<item name="wcf.acp.group.option.category.admin.community"><![CDATA[TODO: Community]]></item>
-		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[TODO: Allgemeine Rechte]]></item>
-		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[TODO: Benutzerprofilfelder]]></item>
-		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[TODO: Kann Benutzerprofilfelder verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.general.canViewPageDuringOfflineMode"><![CDATA[Can access page during maintenance mode]]></item>
+		<item name="wcf.acp.group.option.admin.user.canBanUser"><![CDATA[Can ban users]]></item>
+		<item name="wcf.acp.group.option.category.admin.template"><![CDATA[Templates]]></item>
+		<item name="wcf.acp.group.option.admin.template.canManageTemplate"><![CDATA[Can manage templates]]></item>
+		<item name="wcf.acp.group.option.admin.style.canManageStyle"><![CDATA[Can manage styles]]></item>
+		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[Content]]></item>
+		<item name="wcf.acp.group.option.category.admin.community"><![CDATA[Community]]></item>
+		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[General]]></item>
+		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[User Profile Fields]]></item>
+		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Can manage user profile fields]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
-		<item name="wcf.acp.index.credits"><![CDATA[TODO: Über WoltLab&reg; Community Framework]]></item>
-		<item name="wcf.acp.index.credits.contributor"><![CDATA[TODO: Mitwirkende]]></item>
-		<item name="wcf.acp.index.credits.designer"><![CDATA[TODO: Design]]></item>
-		<item name="wcf.acp.index.credits.developedBy"><![CDATA[TODO: Software entwickelt von]]></item>
-		<item name="wcf.acp.index.credits.developer"><![CDATA[TODO: Programmierung]]></item>
-		<item name="wcf.acp.index.credits.productManager"><![CDATA[TODO: Projektleitung]]></item>
-		<item name="wcf.acp.index.credits.trademarks"><![CDATA[TODO: „WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Gemeinschaftsmarken beim europäischen Harmonisierungsamt für den Binnenmarkt (OHIM) in Alicante, Spanien.]]></item>
-		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[TODO: Weitere]]></item>
+		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab&reg; Community Framework]]></item>
+		<item name="wcf.acp.index.credits.contributor"><![CDATA[Contributions]]></item>
+		<item name="wcf.acp.index.credits.designer"><![CDATA[Designer]]></item>
+		<item name="wcf.acp.index.credits.developedBy"><![CDATA[Software developed by]]></item>
+		<item name="wcf.acp.index.credits.developer"><![CDATA[Developer]]></item>
+		<item name="wcf.acp.index.credits.productManager"><![CDATA[Product Manager]]></item>
+		<item name="wcf.acp.index.credits.trademarks"><![CDATA[“WoltLab&reg;” and “Burning Board&reg;” are registered Community Trade Marks at The Office of Harmonization for the Internal Market (OHIM) in Alicante, Spain.]]></item>
+		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[More]]></item>
 		<item name="wcf.acp.index.credits.news"><![CDATA[News]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
 		<item name="wcf.acp.language.add"><![CDATA[Add Language]]></item>
 		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[Language code is already in use by an installed language.]]></item>
-		<item name="wcf.acp.language.add.source"><![CDATA[TODO: Vorlage]]></item>
+		<item name="wcf.acp.language.add.source"><![CDATA[Origin]]></item>
 		<item name="wcf.acp.language.code"><![CDATA[ISO Code]]></item>
 		<item name="wcf.acp.language.code.description"><![CDATA[Please enter the <strong>ISO 639-1</strong> language code, you can lookup the language code at <a href="http://en.wikipedia.org/wiki/ISO_639-1" class="externalURL">http://en.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
 		<item name="wcf.acp.language.customVariables"><![CDATA[Custom Phrases]]></item>
@@ -221,13 +221,13 @@
 		<item name="wcf.acp.language.import"><![CDATA[Import Language]]></item>
 		<item name="wcf.acp.language.item.list"><![CDATA[Manage Phrases]]></item>
 		<item name="wcf.acp.language.category"><![CDATA[Category]]></item>
-		<item name="wcf.acp.language.item.value"><![CDATA[TODO: Inhalt]]></item>
-		<item name="wcf.acp.language.item.customValue"><![CDATA[TODO: Eigener Inhalt]]></item>
-		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[TODO: Eigene Version verwenden]]></item>
-		<item name="wcf.acp.language.item.hasCustomValue"><![CDATA[TODO: Inhalte mit eigener Version]]></item>
-		<item name="wcf.acp.language.item.customValues"><![CDATA[TODO: Veränderte Inhalte finden]]></item>
-		<item name="wcf.acp.language.name.description"><![CDATA[TODO: Name der Sprache]]></item>
-		<item name="wcf.acp.language.add.source.description"><![CDATA[TODO: Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
+		<item name="wcf.acp.language.item.value"><![CDATA[Content]]></item>
+		<item name="wcf.acp.language.item.customValue"><![CDATA[Custom Value]]></item>
+		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[Use custom value]]></item>
+		<item name="wcf.acp.language.item.hasCustomValue"><![CDATA[Phrases with custom values]]></item>
+		<item name="wcf.acp.language.item.customValues"><![CDATA[Customized values]]></item>
+		<item name="wcf.acp.language.name.description"><![CDATA[Language Name]]></item>
+		<item name="wcf.acp.language.add.source.description"><![CDATA[The selected language will be used as origin, all phrases will be copied into the new language.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -443,12 +443,12 @@
 		<item name="wcf.acp.option.jquery_source.local"><![CDATA[Local Version]]></item>
 		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
 		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
-		<item name="wcf.acp.option.enable_benchmark"><![CDATA[TODO: Benchmark aktivieren]]></item>
-		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[TODO: Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
-		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[TODO: Update-Server]]></item>
-		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[TODO: Authentifizierung-Code]]></item>
-		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[TODO: Ihren Authentifizierung-Code finden Sie in Ihrem Kundenkonto auf woltlab.com.]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[TODO: WoltLab-Nachrichten auf der Startseite der Administrationsoberfläche anzeigen]]></item>
+		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Enable benchmark]]></item>
+		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[It is strongly recommended to disable this option in productive environments.]]></item>
+		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
+		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
+		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
+		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Show WoltLab news on the administration control panel’s start page.]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -512,10 +512,10 @@
 		<item name="wcf.acp.package.type.application"><![CDATA[Application]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Plugin]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package “{@$package->getName()}”?]]></item>
-		<item name="wcf.acp.package.uninstallation.step.prepare"><![CDATA[TODO: Deinstallation wird vorbereitet …]]></item>
-		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[TODO: Deinstallation abgeschlossen]]></item>
-		<item name="wcf.acp.package.uninstallation.title"><![CDATA[TODO: Deinstallation]]></item>
-		<item name="wcf.acp.package.uninstallation.title.packageName"><![CDATA[TODO: Paket „{$queue->packageName}“ wird deinstalliert …]]></item>
+		<item name="wcf.acp.package.uninstallation.step.prepare"><![CDATA[Prepairing uninstallation …]]></item>
+		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[Uninstallation completed]]></item>
+		<item name="wcf.acp.package.uninstallation.title"><![CDATA[Uninstallation]]></item>
+		<item name="wcf.acp.package.uninstallation.title.packageName"><![CDATA[Package “{$queue->packageName}” is being uninstalled …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Credentials]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Your credentials are invalid, please verify {if $updateServer->requiresLicense()}license and serial number{else}username and password{/if}.]]></item>
@@ -531,9 +531,9 @@
 		<item name="wcf.acp.package.update.username"><![CDATA[Username]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
-		<item name="wcf.acp.package.upload"><![CDATA[TODO: Paket hochladen]]></item>
-		<item name="wcf.acp.package.optionalPackages"><![CDATA[TODO: Optionale Pakete]]></item>
-		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[TODO: Es stehen folgende optionale Pakete zur Auswahl:]]></item>
+		<item name="wcf.acp.package.upload"><![CDATA[Upload package]]></item>
+		<item name="wcf.acp.package.optionalPackages"><![CDATA[Optional packages]]></item>
+		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[The following optional packages are available for installation:]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -671,7 +671,7 @@
 		<item name="wcf.acp.style.import.source"><![CDATA[Data Source]]></item>
 		<item name="wcf.acp.style.import.source.upload"><![CDATA[Upload Style]]></item>
 		<item name="wcf.acp.style.import.source.upload.description"><![CDATA[Upload a style from your local machine.]]></item>
-		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[TODO: Der Stil konnte nicht importiert werden. Es handelt sich nicht um eine gültige Stil-Datei.]]></item>
+		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[Unable to import the selected style, uploaded file is not a valid style.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.style.list"><![CDATA[List Styles]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Package Identifier]]></item>
@@ -689,41 +689,41 @@
 	<category name="wcf.acp.template">
 		<item name="wcf.acp.template.list"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.template.group"><![CDATA[Template Group]]></item>
-		<item name="wcf.acp.template.group.default"><![CDATA[TODO: Standardtemplates]]></item>
+		<item name="wcf.acp.template.group.default"><![CDATA[Default Templates]]></item>
 		<item name="wcf.acp.template.add"><![CDATA[Add Template]]></item>
 		<item name="wcf.acp.template.edit"><![CDATA[Edit Template]]></item>
 		<item name="wcf.acp.template.copy"><![CDATA[Copy Template]]></item>
-		<item name="wcf.acp.template.lastModificationTime"><![CDATA[TODO: Letzte Änderung]]></item>
+		<item name="wcf.acp.template.lastModificationTime"><![CDATA[Last Modification]]></item>
 		<item name="wcf.acp.template.group.list"><![CDATA[Template Groups]]></item>
 		<item name="wcf.acp.template.group.add"><![CDATA[Add Template Group]]></item>
 		<item name="wcf.acp.template.group.edit"><![CDATA[Edit Template Group]]></item>
 		<item name="wcf.acp.template.group.templates"><![CDATA[Templates]]></item>
-		<item name="wcf.acp.template.error.noGroups"><![CDATA[TODO: Bevor sie ein eigenes Template erstellen können, müssen Sie eine <a href="{link controller='TemplateGroupAdd'}{/link}">Templategruppe hinzufügen</a>.]]></item>
-		<item name="wcf.acp.template.group.noItems"><![CDATA[TODO: Es sind keine Templategruppen vorhanden.]]></item>
-		<item name="wcf.acp.template.group.folderName"><![CDATA[TODO: Verzeichnis]]></item>
-		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[TODO: Übergeordnete Templategruppe]]></item>
-		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[TODO: Der eingegebene Name wird bereits von einer anderen Templategruppe verwendet.]]></item>
-		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[TODO: Sie haben einen ungültigen Verzeichnis-Namen eingegeben.]]></item>
-		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[TODO: Das angegebene Verzeichnis wird bereits von einer anderen Templategruppe verwendet.]]></item>
-		<item name="wcf.acp.template.group.delete.sure"><![CDATA[TODO: Wollen Sie die Templategruppe „{$templateGroup->templateGroupName}“ wirklich löschen?]]></item>
-		<item name="wcf.acp.template.noItems"><![CDATA[TODO: Es wurden keine Templates gefunden.]]></item>
-		<item name="wcf.acp.template.source"><![CDATA[TODO: Template-Quelltext]]></item>
-		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[TODO: Der eingegebene Name wird bereits von einem anderen Templaten verwendet.]]></item>
-		<item name="wcf.acp.template.name.error.notValid"><![CDATA[TODO: Sie haben einen ungültigen Namen eingegeben.]]></item>
-		<item name="wcf.acp.template.delete.sure"><![CDATA[TODO: Wollen Sie das Template „{$template->templateName}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.template.error.noGroups"><![CDATA[You must create a <a href="{link controller='TemplateGroupAdd'}{/link}">template group</a> first.]]></item>
+		<item name="wcf.acp.template.group.noItems"><![CDATA[There are no template groups.]]></item>
+		<item name="wcf.acp.template.group.folderName"><![CDATA[Directory]]></item>
+		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[Parent Template Group]]></item>
+		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[This name is already taken by a different template group.]]></item>
+		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[The specified directory is invalid.]]></item>
+		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[The specified directory is already in use by an other template group.]]></item>
+		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Do you really want to remove the template group “{$templateGroup->templateGroupName}”?]]></item>
+		<item name="wcf.acp.template.noItems"><![CDATA[There are no templates.]]></item>
+		<item name="wcf.acp.template.source"><![CDATA[Template Source Code]]></item>
+		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a differen template]]></item>
+		<item name="wcf.acp.template.name.error.notValid"><![CDATA[The specified name is invalid]]></item>
+		<item name="wcf.acp.template.delete.sure"><![CDATA[Do you really want to delete the template “{$template->templateName}”?]]></item>
 	</category>
 	
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Add User]]></item>
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Assign to User Group]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Assigning the following users to user groups selected below]]></item>
-		<item name="wcf.acp.user.banUser"><![CDATA[TODO: Benutzer sperren]]></item>
-		<item name="wcf.acp.user.banUser.description"><![CDATA[TODO: Der Benutzer wird dauerhaft von der Nutzung aller Funktionen ausgeschlossen und erhält beim Aufruf der Seite eine entsprechende Fehlermeldung.]]></item>
-		<item name="wcf.acp.user.banReason"><![CDATA[TODO: Begründung]]></item>
-		<item name="wcf.acp.user.banReason.description"><![CDATA[TODO: Die Begründung wird dem gesperrten Benutzer beim Aufruf der Seite angezeigt.]]></item>
-		<item name="wcf.acp.user.ban"><![CDATA[TODO: Sperren]]></item>
-		<item name="wcf.acp.user.unban"><![CDATA[TODO: Sperrung aufheben]]></item>
-		<item name="wcf.acp.user.ban.sure"><![CDATA[TODO: Wollen Sie den/die Benutzer wirklich sperren?]]></item>
+		<item name="wcf.acp.user.banUser"><![CDATA[Ban User]]></item>
+		<item name="wcf.acp.user.banUser.description"><![CDATA[The user is permanently banned from using any site functions and will be notified on site access.]]></item>
+		<item name="wcf.acp.user.banReason"><![CDATA[Reason]]></item>
+		<item name="wcf.acp.user.banReason.description"><![CDATA[The reason will be displayed for the affected users.]]></item>
+		<item name="wcf.acp.user.ban"><![CDATA[Ban]]></item>
+		<item name="wcf.acp.user.unban"><![CDATA[Unban]]></item>
+		<item name="wcf.acp.user.ban.sure"><![CDATA[Do you really want to ban this user?]]></item>
 		<item name="wcf.acp.user.delete.sure"><![CDATA[Do you really want to delete the user “{$user->username}”?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Heads up! You’re editing your own user account and changes might result in yourself being locked out from the Administration Control Panel.]]></item>
@@ -770,52 +770,52 @@
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[Send email to following users]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Text]]></item>
-		<item name="wcf.acp.user.quickSearch"><![CDATA[TODO: Schnellsuche]]></item>
-		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[TODO: Gesperrte Benutzer]]></item>
-		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[TODO: Neueste Benutzer]]></item>
-		<item name="wcf.acp.user.option.access"><![CDATA[TODO: Zugriff]]></item>
+		<item name="wcf.acp.user.quickSearch"><![CDATA[Quick Search]]></item>
+		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[Banned Users]]></item>
+		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[Newest Users]]></item>
+		<item name="wcf.acp.user.option.access"><![CDATA[Access]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Add Custom User Field]]></item>
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Add Custom User Field Category]]></item>
 		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[Do you really want to delete the category “{lang}wcf.user.option.category.{$category->categoryName}{/lang}”?]]></item>
 		<item name="wcf.acp.user.option.category.edit"><![CDATA[Edit Custom User Field Category]]></item>
-		<item name="wcf.acp.user.option.category.showOrder"><![CDATA[TODO: Reihenfolge]]></item>
+		<item name="wcf.acp.user.option.category.showOrder"><![CDATA[Show Order]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Fields]]></item>
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Custom User Field Categories]]></item>
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
-		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[TODO: Wert, der beim erstmaligen Ausfüllen als Standard vorgegeben ist.]]></item>
+		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Value will be used as preset on first time access.]]></item>
 		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Dou you really want to delete the field “{lang}wcf.user.option.{$option->optionName}{/lang}”?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Edit Custom User Field]]></item>
-		<item name="wcf.acp.user.option.editable"><![CDATA[TODO: Wer darf den Inhalt verändern?]]></item>
-		<item name="wcf.acp.user.option.editable.1"><![CDATA[TODO: Eigentümer]]></item>
-		<item name="wcf.acp.user.option.editable.2"><![CDATA[TODO: Administrator]]></item>
-		<item name="wcf.acp.user.option.editable.3"><![CDATA[TODO: Eigentümer und Administrator]]></item>
-		<item name="wcf.acp.user.option.optionType"><![CDATA[TODO: Feldtyp]]></item>
-		<item name="wcf.acp.user.option.optionType.description"><![CDATA[TODO: Die Namen entsprechen in der Regel den HTML-Elementen, die benötigt werden, um so ein Feld beim Benutzer abzufragen.]]></item>
-		<item name="wcf.acp.user.option.askDuringRegistration"><![CDATA[TODO: Das Feld wird im Registrierungs-Formular angezeigt.]]></item>
-		<item name="wcf.acp.user.option.required"><![CDATA[TODO: Das Feld muss zwingend durch den Eigentümer ausgefüllt werden.]]></item>
-		<item name="wcf.acp.user.option.searchable"><![CDATA[TODO: Das Feld kann über die Mitgliedersuche durchsucht werden.]]></item>
-		<item name="wcf.acp.user.option.selectOptions"><![CDATA[TODO: Auswahloptionen]]></item>
-		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[TODO: Hier können Sie pro Zeile Auswahloptionen eintragen, beispielsweise bei einer Select-Box.]]></item>
+		<item name="wcf.acp.user.option.editable"><![CDATA[Who may edit it’s value?]]></item>
+		<item name="wcf.acp.user.option.editable.1"><![CDATA[Owner]]></item>
+		<item name="wcf.acp.user.option.editable.2"><![CDATA[Administrator]]></item>
+		<item name="wcf.acp.user.option.editable.3"><![CDATA[Owner and Administrator]]></item>
+		<item name="wcf.acp.user.option.optionType"><![CDATA[Option Type]]></item>
+		<item name="wcf.acp.user.option.optionType.description"><![CDATA[Option names usually equal the HTML-tag used as input element.]]></item>
+		<item name="wcf.acp.user.option.askDuringRegistration"><![CDATA[Field will be visible during registration.]]></item>
+		<item name="wcf.acp.user.option.required"><![CDATA[Owner must provide a valid value.]]></item>
+		<item name="wcf.acp.user.option.searchable"><![CDATA[Field values are searchable in the member search]]></item>
+		<item name="wcf.acp.user.option.selectOptions"><![CDATA[Select Options]]></item>
+		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[One select option per line, e.g. for use with a select-box.]]></item>
 		<item name="wcf.acp.user.option.setDefaults"><![CDATA[Manage User Field Settings]]></item>
-		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers"><![CDATA[TODO: Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
-		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[TODO: Die hier eingestellten Änderungen der Vorgabewerte für Benutzerprofil-Einstellungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.]]></item>
-		<item name="wcf.acp.user.option.showOrder"><![CDATA[TODO: Reihenfolge]]></item>
-		<item name="wcf.acp.user.option.validationPattern"><![CDATA[TODO: Regulärer Ausdruck zur Validierung]]></item>
-		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[TODO: Tragen Sie hier den Regulären Ausdruck ein, um die Eingabe der Benutzer zu validieren.]]></item>
+		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users too]]></item>
+		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Any changes to default values for user profile settings will be applied to existing users. This overrides all affected settings previously changed by the respective user itself.]]></item>
+		<item name="wcf.acp.user.option.showOrder"><![CDATA[Show Order]]></item>
+		<item name="wcf.acp.user.option.validationPattern"><![CDATA[Regular Expression for Validation]]></item>
+		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[Provide a regular expression to validate user input.]]></item>
 		<item name="wcf.acp.user.option.list"><![CDATA[Custom User Fields]]></item>
-		<item name="wcf.acp.user.option.visible"><![CDATA[TODO: Wer darf den Inhalt sehen?]]></item>
-		<item name="wcf.acp.user.option.visible.1"><![CDATA[TODO: Eigentümer]]></item>
-		<item name="wcf.acp.user.option.visible.2"><![CDATA[TODO: Administrator]]></item>
-		<item name="wcf.acp.user.option.visible.3"><![CDATA[TODO: Eigentümer und Administrator]]></item>
-		<item name="wcf.acp.user.option.visible.7"><![CDATA[TODO: Registrierte Benutzer]]></item>
-		<item name="wcf.acp.user.option.visible.15"><![CDATA[TODO: Jeder]]></item>
-		<item name="wcf.acp.user.option.typeData"><![CDATA[TODO: Eigenschaften]]></item>
-		<item name="wcf.acp.user.option.outputClass"><![CDATA[TODO: PHP-Klasse für Ausgabe]]></item>
-		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[TODO: Erlaubt die Angabe einer speziellen PHP-Klasse für die Ausgabeformatierung bei der Anzeige des Feldes.]]></item>
+		<item name="wcf.acp.user.option.visible"><![CDATA[Who may view it’s value?]]></item>
+		<item name="wcf.acp.user.option.visible.1"><![CDATA[Owner]]></item>
+		<item name="wcf.acp.user.option.visible.2"><![CDATA[Administrator]]></item>
+		<item name="wcf.acp.user.option.visible.3"><![CDATA[Owner and Administrator]]></item>
+		<item name="wcf.acp.user.option.visible.7"><![CDATA[Registered Users]]></item>
+		<item name="wcf.acp.user.option.visible.15"><![CDATA[Everyone]]></item>
+		<item name="wcf.acp.user.option.typeData"><![CDATA[Properties]]></item>
+		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP Class Name for Output]]></item>
+		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Allows custom output formatting using a PHP class.]]></item>
 		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
-		<item name="wcf.acp.user.search.conditions"><![CDATA[TODO: Bedingungen]]></item>
+		<item name="wcf.acp.user.search.conditions"><![CDATA[Conditions]]></item>
 	</category>
 	
 	<category name="wcf.ajax">
@@ -844,7 +844,7 @@
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Unmark All]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Assign to User Group]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[TODO: Sperren ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[Ban ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} user{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[Export Email addresses]]></item>
