@@ -553,6 +553,7 @@ class PackageInstallationNodeBuilder {
 				'archive' => $fileName,
 				'package' => $archive->getPackageInfo('name'),
 				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
+				'packageDescription' => $archive->getLocalizedPackageInfo('packageDescription'),
 				'selected' => 0
 			);
 		}
