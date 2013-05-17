@@ -532,6 +532,8 @@
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
 		<item name="wcf.acp.package.upload"><![CDATA[TODO: Paket hochladen]]></item>
+		<item name="wcf.acp.package.optionalPackages"><![CDATA[TODO: Optionale Pakete]]></item>
+		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[TODO: Es stehen folgende optionale Pakete zur Auswahl:]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">

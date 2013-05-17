@@ -647,6 +647,8 @@ class PackageInstallationDispatcher {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'optionalPackages')) {
 			$container = new MultipleSelectionFormElementContainer();
 			$container->setName('optionalPackages');
+			$container->setLabel(WCF::getLanguage()->get('wcf.acp.package.optionalPackages'));
+			$container->setDescription(WCF::getLanguage()->get('wcf.acp.package.optionalPackages.description'));
 			
 			foreach ($packages as $package) {
 				$optionalPackage = new MultipleSelectionFormElement($container);
