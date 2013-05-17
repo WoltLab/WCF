@@ -30,7 +30,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 	public function getHTML($formName) {
 		return <<<HTML
 <label><input type="checkbox" name="{$formName}{$this->getParent()->getName()}[]" value="{$this->getValue()}" /> {$this->getLabel()}</label>
-<small>{$this->getDesciption()}</small>
+<small>{$this->getDescription()}</small>
 HTML;
 	}
 }
