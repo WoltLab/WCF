@@ -23,6 +23,7 @@ $neededFilesPattern = array(
 	'!^install/files/acp/style/setup/.*!',
 	'!^install/files/lib/data/.*!',
 	'!^install/files/icon/.*!',
+	'!^install/files/font/.*!',
 	'!^install/files/lib/system/.*!',
 	'!^install/files/lib/util/.*!',
 	'!^install/lang/.*!',
