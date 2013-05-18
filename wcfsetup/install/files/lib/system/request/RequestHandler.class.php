@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\request;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
@@ -27,10 +28,28 @@ class RequestHandler extends SingletonFactory {
 	protected $activeRequest = null;
 	
 	/**
+	 * true, if current domain mismatch any known domain
+	 * @var	boolean
+	 */
+	protected $inRescueMode = true;
+	
+	/**
 	 * indicates if the request is an acp request
 	 * @var	boolean
 	 */
 	protected $isACPRequest = false;
+	
+	/**
+	 * @see	wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			if ($application->domainName == $_SERVER['HTTP_HOST']) {
+				$this->inRescueMode = false;
+				break;
+			}
+		}
+	}
 	
 	/**
 	 * Handles a http request.
@@ -170,5 +189,14 @@ class RequestHandler extends SingletonFactory {
 	 */
 	public function isACPRequest() {
 		return $this->isACPRequest;
+	}
+	
+	/**
+	 * Returns true, if current host mismatches any known domain.
+	 * 
+	 * @return	boolean
+	 */
+	public function inRescueMode() {
+		return $this->inRescueMode;
 	}
 }
