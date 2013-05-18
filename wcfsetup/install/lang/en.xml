@@ -115,7 +115,7 @@
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group “{$group->groupName|language}”?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit User Group]]></item>
-		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Heads up! You’re a member of this user group, change may cause yourself being locked out from the Administration Control Panel.]]></item>
+		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Heads up! You’re a member of this user group, changes may cause yourself being locked out from the Administration Control Panel.]]></item>
 		<item name="wcf.acp.group.group1"><![CDATA[Everyone]]></item>
 		<item name="wcf.acp.group.group2"><![CDATA[Guests]]></item>
 		<item name="wcf.acp.group.group3"><![CDATA[Users]]></item>
@@ -547,8 +547,8 @@
 		<item name="wcf.acp.pageMenu.isDisabled"><![CDATA[Disable menu item]]></item>
 		<item name="wcf.acp.pageMenu.landingPage.description"><![CDATA[The first menu item is always the website’s landing page, sort items to change it.]]></item>
 		<item name="wcf.acp.pageMenu.link"><![CDATA[Link]]></item>
-		<item name="wcf.acp.pageMenu.link.external"><![CDATA[External Link]]></item>
-		<item name="wcf.acp.pageMenu.link.internal"><![CDATA[Internal Link]]></item>
+		<item name="wcf.acp.pageMenu.link.external"><![CDATA[External link]]></item>
+		<item name="wcf.acp.pageMenu.link.internal"><![CDATA[Internal link]]></item>
 		<item name="wcf.acp.pageMenu.list"><![CDATA[List Menu Items]]></item>
 		<item name="wcf.acp.pageMenu.menuItemController"><![CDATA[Controller]]></item>
 		<item name="wcf.acp.pageMenu.menuItemController.description"><![CDATA[PHP class name including namespace, e.g. “wcf\page\DashboardPage”.]]></item>
@@ -715,7 +715,7 @@
 	
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Add User]]></item>
-		<item name="wcf.acp.user.assignToGroup"><![CDATA[Assign to User Group]]></item>
+		<item name="wcf.acp.user.assignToGroup"><![CDATA[Assign to user group]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Assigning the following users to user groups selected below]]></item>
 		<item name="wcf.acp.user.banUser"><![CDATA[Ban User]]></item>
 		<item name="wcf.acp.user.banUser.description"><![CDATA[The user is permanently banned from using any site functions and will be notified on site access.]]></item>
@@ -727,7 +727,7 @@
 		<item name="wcf.acp.user.delete.sure"><![CDATA[Do you really want to delete the user “{$user->username}”?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Heads up! You’re editing your own user account and changes might result in yourself being locked out from the Administration Control Panel.]]></item>
-		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[Export Email Addresses]]></item>
+		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[Export email addresses]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType"><![CDATA[Export Format]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.csv"><![CDATA[CSV (<em>Character Separated Values</em>)]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.xml"><![CDATA[XML (<em>Extensible Markup Language</em>)]]></item>
@@ -763,7 +763,7 @@
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Sender]]></item>
 		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[<p>Specify the sender’s email address.{if MAIL_USE_FORMATTED_ADDRESS} It is possible to use the following format:{/if}</p>
 {if MAIL_USE_FORMATTED_ADDRESS}<p style="line-height: 2em;"><code>Sender Name &lt;email@example.com&gt;</code></p>{/if}
-<p>You can define the default sender in <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em>. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.</p>]]></item>
+<p>You can define the default sender in <em>System -&gt; Options -&gt; General -&gt; Emails</em>. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.</p>]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[Email to user group]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[Send email to members of the following user groups]]></item>
 		<item name="wcf.acp.user.sendMail.mail"><![CDATA[Email]]></item>
@@ -783,11 +783,11 @@
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Custom User Field Categories]]></item>
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
-		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Value will be used as preset on first time access.]]></item>
+		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Value will be used as preset on first time editing.]]></item>
 		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Dou you really want to delete the field “{lang}wcf.user.option.{$option->optionName}{/lang}”?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Edit Custom User Field]]></item>
-		<item name="wcf.acp.user.option.editable"><![CDATA[Who may edit it’s value?]]></item>
+		<item name="wcf.acp.user.option.editable"><![CDATA[Editable by]]></item>
 		<item name="wcf.acp.user.option.editable.1"><![CDATA[Owner]]></item>
 		<item name="wcf.acp.user.option.editable.2"><![CDATA[Administrator]]></item>
 		<item name="wcf.acp.user.option.editable.3"><![CDATA[Owner and Administrator]]></item>
@@ -805,7 +805,7 @@
 		<item name="wcf.acp.user.option.validationPattern"><![CDATA[Regular Expression for Validation]]></item>
 		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[Provide a regular expression to validate user input.]]></item>
 		<item name="wcf.acp.user.option.list"><![CDATA[Custom User Fields]]></item>
-		<item name="wcf.acp.user.option.visible"><![CDATA[Who may view it’s value?]]></item>
+		<item name="wcf.acp.user.option.visible"><![CDATA[Visible for]]></item>
 		<item name="wcf.acp.user.option.visible.1"><![CDATA[Owner]]></item>
 		<item name="wcf.acp.user.option.visible.2"><![CDATA[Administrator]]></item>
 		<item name="wcf.acp.user.option.visible.3"><![CDATA[Owner and Administrator]]></item>
@@ -1080,6 +1080,7 @@
 		<item name="wcf.global.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
 		<item name="wcf.global.title"><![CDATA[Title]]></item>
+		<item name="wcf.global.toLandingPage"><![CDATA[To Front Page]]></item>
 		<item name="wcf.global.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.global.multiSelect"><![CDATA[Multiple items can be selected by holding the “Ctrl/Shift” key (Windows) or “Command” (Mac OS) key and clicking on the desired items.]]></item>
 		<item name="wcf.global.page.jumpTo"><![CDATA[Go to Page]]></item>
