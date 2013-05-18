@@ -119,8 +119,10 @@
 							<li id="userMenu" class="dropdown">
 								<a class="dropdownToggle framed" data-toggle="userMenu">{event name='userAvatar'} {lang}wcf.user.userNote{/lang}</a>
 								<ul class="dropdownMenu">
-									<li><a href="../">FRONTEND</a></li>
-									<li class="dropdownDivider"></li>
+									{if PACKAGE_ID > 1}
+										<li><a href="{@$__wcf->getPageMenu()->getLandingPage()->getLink()}">{lang}wcf.global.toLandingPage{/lang}</a></li>
+										<li class="dropdownDivider"></li>
+									{/if}
 									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
 							</li>

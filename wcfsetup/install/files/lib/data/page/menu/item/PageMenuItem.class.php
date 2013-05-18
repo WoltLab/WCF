@@ -66,7 +66,7 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 		}
 		
 		$this->parseController();
-		return LinkHandler::getInstance()->getLink($this->controller, array('application' => $this->application), WCF::getLanguage()->get($this->menuItemLink));
+		return LinkHandler::getInstance()->getLink($this->controller, array('application' => $this->application, 'forceFrontend' => true), WCF::getLanguage()->get($this->menuItemLink));
 	}
 	
 	/**
