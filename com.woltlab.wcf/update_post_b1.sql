@@ -1,5 +1,5 @@
-ALTER TABLE wcf1_acp_template ADD UNIQUE KEY applicationTemplate (application, templateName);
+CREATE UNIQUE INDEX applicationTemplate ON wcf1_acp_template (application, templateName);
 
-ALTER TABLE wcf1_package_installation_file_log ADD UNIQUE KEY applicationFile (application, filename);
+CREATE UNIQUE INDEX applicationFile ON wcf1_package_installation_file_log (application, filename);
 
-ALTER TABLE wcf1_template ADD UNIQUE KEY applicationTemplate (application, templateGroupID templateName);
+CREATE UNIQUE INDEX applicationTemplate ON wcf1_template (application, templateGroupID templateName);
