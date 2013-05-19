@@ -6,8 +6,8 @@ use wcf\system\io\File;
  * DebugMailSender is a debug implementation of mailsender which writes emails in
  * a log file.
  * 
- * @author	Michael Schaefer
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.mail

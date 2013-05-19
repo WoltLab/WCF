@@ -66,7 +66,7 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 		}
 		
 		$this->parseController();
-		return LinkHandler::getInstance()->getLink($this->controller, array('application' => $this->application), WCF::getLanguage()->get($this->menuItemLink));
+		return LinkHandler::getInstance()->getLink($this->controller, array('application' => $this->application, 'forceFrontend' => true), WCF::getLanguage()->get($this->menuItemLink));
 	}
 	
 	/**
@@ -144,7 +144,7 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	protected function parseController() {
 		if ($this->controller === null) {
 			$this->controller = '';
-				
+			
 			// resolve application and controller
 			if ($this->menuItemController) {
 				$parts = explode('\\', $this->menuItemController);
@@ -163,6 +163,6 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	 * @return	string
 	 */
 	public function __toString() {
-		return WCF::getLanguage()->get($this->menuItem);
+		return WCF::getLanguage()->getDynamicVariable($this->menuItem);
 	}
 }

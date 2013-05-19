@@ -29,7 +29,7 @@ use wcf\util\StringUtil;
 @set_time_limit(0);
 
 // define current wcf version
-define('WCF_VERSION', '2.0.0 Alpha 1 (Maelstrom)');
+define('WCF_VERSION', '2.0.0 Beta 1 (Maelstrom)');
 
 // define current unix timestamp
 define('TIME_NOW', time());

@@ -21,6 +21,44 @@ use wcf\system\WCF;
  */
 class IndexPage extends AbstractPage {
 	/**
+	 * server information
+	 * @var array
+	 */
+	public $server = array();
+	
+	/**
+	 * @see wcf\page\IPage::readData()
+	 */
+	public function readData() {
+		parent::readData();
+	
+		$this->server = array(
+			'os' => PHP_OS,
+			'webserver' => (isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : ''),		
+			'mySQLVersion' => WCF::getDB()->getVersion(),
+			'load' => ''
+		);
+		
+		// get load
+		if ($uptime = @exec("uptime")) {
+			if (preg_match("/averages?: ([0-9\.]+,?[\s]+[0-9\.]+,?[\s]+[0-9\.]+)/", $uptime, $match)) {
+				$this->server['load'] = $match[1];
+			}
+		}
+	}
+	
+	/**
+	 * @see wcf\page\IPage::assignVariables()
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+	
+		WCF::getTPL()->assign(array(
+			'server' => $this->server
+		));
+	}
+	
+	/**
 	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {

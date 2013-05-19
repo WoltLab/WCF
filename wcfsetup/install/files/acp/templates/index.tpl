@@ -14,10 +14,17 @@
 	}
 </style>
 
-<div class="tabMenuContainer" data-active="{if ENABLE_WOLTLAB_NEWS}news{else}credits{/if}" data-store="activeTabMenuItem">
+<header class="boxHeadline">
+	<h1>{lang}wcf.global.acp{/lang}</h1>
+</header>
+
+{event name='userNotice'}
+
+<div class="tabMenuContainer" data-active="{if ENABLE_WOLTLAB_NEWS}news{else}system{/if}" data-store="activeTabMenuItem">
 	<nav class="tabMenu">
 		<ul>
 			{if ENABLE_WOLTLAB_NEWS}<li><a href="{@$__wcf->getAnchor('news')}">{lang}wcf.acp.index.news{/lang}</a></li>{/if}
+			<li><a href="{@$__wcf->getAnchor('system')}">{lang}wcf.acp.index.system{/lang}</a></li>
 			<li><a href="{@$__wcf->getAnchor('credits')}">{lang}wcf.acp.index.credits{/lang}</a></li>
 			
 			{event name='tabMenuTabs'}
@@ -32,6 +39,56 @@
 			{/literal}
 		</div>
 	{/if}
+	
+	<div id="system" class="container containerPadding hidden tabMenuContent">
+		<fieldset>
+			<legend>{lang}wcf.acp.index.system.software{/lang}</legend>
+		
+			{event name='softwareVersions'}
+		
+			<dl>
+				<dt>{lang}wcf.acp.index.system.software.wcfVersion{/lang}</dt>
+				<dd>{@WCF_VERSION}</dd>
+			</dl>
+			
+			{event name='softwareFields'}
+		</fieldset>
+		
+		<fieldset>
+			<legend>{lang}wcf.acp.index.system.server{/lang}</legend>
+		
+			<dl>
+				<dt>{lang}wcf.acp.index.system.os{/lang}</dt>
+				<dd>{$server[os]}</dd>
+			</dl>
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.system.webserver{/lang}</dt>
+				<dd>{$server[webserver]}</dd>
+			</dl>
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.system.php{/lang}</dt>
+				<dd><a href="{link controller='PHPInfo'}{/link}">{PHP_VERSION}</a></dd>
+			</dl>
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.system.mySQLVersion{/lang}</dt>
+				<dd>{$server[mySQLVersion]}</dd>
+			</dl>
+			
+			{if $server[load]}
+				<dl>
+					<dt>{lang}wcf.acp.index.system.load{/lang}</dt>
+					<dd>{$server[load]}</dd>
+				</dl>
+			{/if}
+			
+			{event name='serverFields'}
+		</fieldset>
+		
+		{event name='systemFieldsets'}
+	</div>
 	
 	<div id="credits" class="container containerPadding hidden tabMenuContent">
 		<fieldset>
@@ -97,4 +154,5 @@
 	
 	{event name='tabMenuContents'}
 </div>
+
 {include file='footer'}

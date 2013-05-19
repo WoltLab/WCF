@@ -256,7 +256,7 @@ class PackageInstallationDispatcher {
 				// check version requirements
 				if ($requirementData['minVersion']) {
 					if (Package::compareVersion($row['packageVersion'], $requirementData['minVersion']) < 0) {
-						throw new SystemException("Package '".$nodeData['packageName']."' requires the package '".$row['packageName']."' in version '".$requirementData['minVersion']."', but version '".$row['packageVersion']."'");
+						throw new SystemException("Package '".$nodeData['packageName']."' requires package '".$row['packageName']."' in version '".$requirementData['minVersion']."', but only version '".$row['packageVersion']."' is installed");
 					}
 				}
 			}
