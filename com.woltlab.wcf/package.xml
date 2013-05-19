@@ -34,12 +34,13 @@
 	<instructions type="update" fromversion="2.0.0 Alpha 1">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">template_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="clipboardAction">clipboardAction.xml</instruction>
 		<instruction type="coreObject">coreObject.xml</instruction>
 		<instruction type="option">option.xml</instruction>
+		<instruction type="sql">update_b1.sql</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 	</instructions>
 </package>
