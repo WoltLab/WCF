@@ -589,8 +589,8 @@ CREATE TABLE wcf1_template (
 	application VARCHAR(255) NOT NULL,
 	templateGroupID INT(10),
 	lastModificationTime INT(10) NOT NULL DEFAULT 0,
-	UNIQUE KEY applicationTemplate (application, templateName),
-	UNIQUE KEY templateGroupID (application, templateGroupID, templateName)
+	UNIQUE KEY applicationTemplate (application, templateGroupID, templateName),
+	KEY templateGroupID (packageID, templateGroupID, templateName)
 );
 
 DROP TABLE IF EXISTS wcf1_template_group;

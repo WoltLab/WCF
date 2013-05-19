@@ -1,5 +1,7 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupAction;
 use wcf\data\template\group\TemplateGroupList;
@@ -75,6 +77,12 @@ class TemplateAddForm extends AbstractForm {
 	public $copiedTemplate = null;
 	
 	/**
+	 * application the template belongs to
+	 * @var	string
+	 */
+	public $application = '';
+	
+	/**
 	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -87,6 +95,7 @@ class TemplateAddForm extends AbstractForm {
 				throw new IllegalLinkException();
 			}
 			
+			$this->application = $this->copiedTemplate->application;
 			$this->packageID = $this->copiedTemplate->packageID;
 		}
 	}
@@ -173,7 +182,12 @@ class TemplateAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
+		if (empty($this->application)) {
+			$this->application = Package::getAbbreviation(PackageCache::getInstance()->getPackage($this->package));
+		}
+		
 		$this->objectAction = new TemplateAction(array(), 'create', array('data' => array(
+			'application' => $this->application,
 			'templateName' => $this->tplName,
 			'packageID' => $this->packageID,
 			'templateGroupID' => $this->templateGroupID
