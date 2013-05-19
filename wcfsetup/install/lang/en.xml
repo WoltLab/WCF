@@ -189,7 +189,7 @@
 		<item name="wcf.acp.index.credits.productManager"><![CDATA[Product Manager]]></item>
 		<item name="wcf.acp.index.credits.trademarks"><![CDATA[“WoltLab&reg;” and “Burning Board&reg;” are registered Community Trade Marks at The Office of Harmonization for the Internal Market (OHIM) in Alicante, Spain.]]></item>
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[More]]></item>
-		<item name="wcf.acp.index.credits.news"><![CDATA[News]]></item>
+		<item name="wcf.acp.index.news"><![CDATA[News]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
