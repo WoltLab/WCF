@@ -34,7 +34,7 @@
 	<instructions type="update" fromversion="2.0.0 Alpha 1">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
+		<instruction type="template">template.tar</instruction>
 		
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="clipboardAction">clipboardAction.xml</instruction>
