@@ -190,6 +190,14 @@
 		<item name="wcf.acp.index.credits.trademarks"><![CDATA[„WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Gemeinschaftsmarken beim europäischen Harmonisierungsamt für den Binnenmarkt (OHIM) in Alicante, Spanien.]]></item>
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[Weitere]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[Nachrichten]]></item>
+		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
+		<item name="wcf.acp.index.system.software.wcfVersion"><![CDATA[Community Framework&trade; Version]]></item>
+		<item name="wcf.acp.index.system.server"><![CDATA[Server]]></item>
+		<item name="wcf.acp.index.system.os"><![CDATA[Betriebssystem]]></item>
+		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
+		<item name="wcf.acp.index.system.php"><![CDATA[PHP Version]]></item>
+		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL Version]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
