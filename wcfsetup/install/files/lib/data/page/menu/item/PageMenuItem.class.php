@@ -144,7 +144,7 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	protected function parseController() {
 		if ($this->controller === null) {
 			$this->controller = '';
-				
+			
 			// resolve application and controller
 			if ($this->menuItemController) {
 				$parts = explode('\\', $this->menuItemController);
@@ -163,6 +163,6 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	 * @return	string
 	 */
 	public function __toString() {
-		return WCF::getLanguage()->get($this->menuItem);
+		return WCF::getLanguage()->getDynamicVariable($this->menuItem);
 	}
 }
