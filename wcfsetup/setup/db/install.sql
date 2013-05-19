@@ -106,8 +106,9 @@ DROP TABLE IF EXISTS wcf1_acp_template;
 CREATE TABLE wcf1_acp_template (
 	templateID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10),
-	templateName VARCHAR(255) NOT NULL DEFAULT '',
-	UNIQUE KEY (packageID, templateName)
+	templateName VARCHAR(255) NOT NULL,
+	application VARCHAR(255) NOT NULL,
+	UNIQUE KEY applicationTemplate (application, templateName)
 );
 
 DROP TABLE IF EXISTS wcf1_application;
@@ -345,8 +346,9 @@ CREATE TABLE wcf1_package_exclusion (
 DROP TABLE IF EXISTS wcf1_package_installation_file_log;
 CREATE TABLE wcf1_package_installation_file_log (
 	packageID INT(10),
-	filename VARCHAR(255) NOT NULL DEFAULT '',
-	UNIQUE KEY packageID (packageID, filename)
+	filename VARCHAR(255) NOT NULL,
+	application VARCHAR(255) NOT NULL,
+	UNIQUE KEY applicationFile (application, filename)
 );
 
 DROP TABLE IF EXISTS wcf1_package_installation_form;
@@ -583,11 +585,12 @@ DROP TABLE IF EXISTS wcf1_template;
 CREATE TABLE wcf1_template (
 	templateID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL,
-	templateName VARCHAR(255) NOT NULL DEFAULT '',
+	templateName VARCHAR(255) NOT NULL,
+	application VARCHAR(255) NOT NULL,
 	templateGroupID INT(10),
 	lastModificationTime INT(10) NOT NULL DEFAULT 0,
-	KEY packageID (packageID, templateName),
-	KEY templateGroupID (packageID, templateGroupID, templateName)
+	UNIQUE KEY applicationTemplate (application, templateName),
+	UNIQUE KEY templateGroupID (application, templateGroupID, templateName)
 );
 
 DROP TABLE IF EXISTS wcf1_template_group;

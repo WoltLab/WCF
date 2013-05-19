@@ -777,13 +777,13 @@ class WCFSetup extends WCF {
 		// save acp template log
 		if (!empty($acpTemplateInserts)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_acp_template
-						(templateName)
-				VALUES		(?)";
+						(templateName, application)
+				VALUES		(?, ?)";
 			$statement = self::getDB()->prepareStatement($sql);
 			
 			self::getDB()->beginTransaction();
 			foreach ($acpTemplateInserts as $acpTemplate) {
-				$statement->executeUnbuffered(array($acpTemplate));
+				$statement->executeUnbuffered(array($acpTemplate, 'wcf'));
 			}
 			self::getDB()->commitTransaction();
 		}
@@ -792,13 +792,13 @@ class WCFSetup extends WCF {
 		// save file log
 		if (!empty($fileInserts)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_file_log
-						(filename)
-				VALUES		(?)";
+						(filename, application)
+				VALUES		(?, ?)";
 			$statement = self::getDB()->prepareStatement($sql);
 			
 			self::getDB()->beginTransaction();
 			foreach ($fileInserts as $file) {
-				$statement->executeUnbuffered(array($file));
+				$statement->executeUnbuffered(array($file, 'wcf'));
 			}
 			self::getDB()->commitTransaction();
 		}

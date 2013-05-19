@@ -8,7 +8,7 @@ use wcf\system\WCF;
 /**
  * File handler implementation for the installation of ACP template files.
  * 
- * @author	Alexander Ebert
+ * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -27,24 +27,21 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 	 */
 	public function checkFiles(array $files) {
 		if ($this->packageInstallation->getPackage()->package != 'com.woltlab.wcf') {
-			$packageID = $this->packageInstallation->getPackageID();
-			
-			// build sql string with ACP-templateNames
-			$fileNames = array();
-			foreach ($files as $file) {
-				$fileNames[] = substr($file, 0, -4);
-			}
-			
 			// check if files are existing already
-			if (!empty($fileNames)) {
+			if (!empty($files)) {
+				foreach ($files as &$file) {
+					$file = substr($file, 0, -4);
+				}
+				unset($file);
+				
 				// get by other packages registered files
 				$conditions = new PreparedStatementConditionBuilder();
-				$conditions->add("packageID <> ?", array($packageID));
-				$conditions->add("packageID IN (SELECT packageID FROM wcf".WCF_N."_package WHERE packageDir = ? AND isApplication = ?)", array($this->packageInstallation->getPackage()->packageDir, 0));
-				$conditions->add("templateName IN (?)", array($fileNames));
+				$conditions->add('packageID <> ?', array($this->packageInstallation->getPackageID()));
+				$conditions->add('templateName IN (?)', array($files));
+				$conditions->add('application = ?', array($this->application));
 				
-				$sql = "SELECT		*
-					FROM		wcf".WCF_N."_".$this->tableName."
+				$sql = "SELECT	packageID, templateName
+					FROM	wcf".WCF_N."_".$this->tableName."
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());
@@ -54,12 +51,15 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 					$lockedFiles[$row['templateName']] = $row['packageID'];
 				}
 				
-				// check if files from installing package are in conflict with already installed files
+				// check if acp templates from the package beeing
+				// installed are in conflict with already installed
+				// files
 				if (!$this->packageInstallation->getPackage()->isApplication && !empty($lockedFiles)) {
-					foreach ($fileNames as $key => $file) {
-						if (isset($lockedFiles[$file]) && $packageID != $lockedFiles[$file]) {
+					foreach ($files as $file) {
+						if (isset($lockedFiles[$file])) {
 							$owningPackage = new Package($lockedFiles[$file]);
-							throw new SystemException("A non-application package can't overwrite template files. Only an update from the package which owns the template can do that. (Package '".$this->packageInstallation->getPackage()->package."' tries to overwrite template '".$file."', which is owned by package '".$owningPackage->package."')");
+							
+							throw new SystemException("A package can't overwrite templates from other packages. Only an update from the package which owns the template can do that. (Package '".$this->packageInstallation->getPackage()->package."' tries to overwrite template '".$file."', which is owned by package '".$owningPackage->package."')");
 						}
 					}
 				}
@@ -71,23 +71,26 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 	 * @see	wcf\system\setup\IFileHandler::logFiles()
 	 */
 	public function logFiles(array $files) {
-		$packageID = $this->packageInstallation->getPackageID();
-		
 		// remove file extension
 		foreach ($files as &$file) {
 			$file = substr($file, 0, -4);
 		}
 		unset($file);
 		
-		// get existing templates
+		// fetch already installed acp templates
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add('packageID = ?', array($this->packageInstallation->getPackageID()));
+		$conditions->add('templateName IN (?)', array($files));
+		$conditions->add('application = ?', array($this->application));
+		
 		$sql = "SELECT	templateName
 			FROM	wcf".WCF_N."_".$this->tableName."
-			WHERE	packageID = ?";
+			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute($conditions->getParameters());
 		
-		while ($row = $statement->fetchArray()) {
-			$index = array_search($row['templateName'], $files);
+		while ($templateName = $statement->fetchColumn()) {
+			$index = array_search($templateName, $files);
 			
 			if ($index !== false) {
 				unset($files[$index]);
@@ -96,14 +99,15 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 		
 		if (!empty($files)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_".$this->tableName."
-						(packageID, templateName)
-				VALUES		(?, ?)";
+						(packageID, templateName, application)
+				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($files as $file) {
 				$statement->execute(array(
-					$packageID,
-					$file
+					$this->packageInstallation->getPackageID(),
+					$file,
+					$this->application
 				));
 			}
 		}

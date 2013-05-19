@@ -92,7 +92,7 @@ class TemplateListPage extends SortablePage {
 	public function readData() {
 		parent::readData();
 		
-		// get template groups		
+		// get template groups
 		$templateGroupList = new TemplateGroupList();
 		$templateGroupList->readObjects();
 		$this->availableTemplateGroups = $templateGroupList->getObjects();

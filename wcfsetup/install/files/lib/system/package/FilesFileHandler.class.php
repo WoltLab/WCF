@@ -1,13 +1,15 @@
 <?php
 namespace wcf\system\package;
+use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
  * File handler implementation for the installation of regular files.
  * 
- * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Matthias Schmidt, Marcel Werk
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
@@ -20,29 +22,30 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 	public function checkFiles(array $files) {
 		if ($this->packageInstallation->getPackage()->package != 'com.woltlab.wcf') {
 			if (!empty($files)) {
-				// get by other packages registered files
+				// get registered files of other packages for the
+				// same application
 				$conditions = new PreparedStatementConditionBuilder();
-				$conditions->add("file_log.packageID <> ?", array($this->packageInstallation->getPackageID()));
-				$conditions->add("file_log.filename IN (?)", array($files));
+				$conditions->add('packageID <> ?', array($this->packageInstallation->getPackageID()));
+				$conditions->add('filename IN (?)', array($files));
+				$conditions->add('application = ?', array($this->application));
 				
-				$sql = "SELECT		file_log.filename, package.packageDir
-					FROM		wcf".WCF_N."_package_installation_file_log file_log
-					LEFT JOIN	wcf".WCF_N."_package package
-					ON		(package.packageID = file_log.packageID)
+				$sql = "SELECT	filename, packageID
+					FROM	wcf".WCF_N."_package_installation_file_log
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());
 				$lockedFiles = array();
 				while ($row = $statement->fetchArray()) {
-					$lockedFiles[$row['packageDir'].$row['filename']] = true;
+					$lockedFiles[$row['filename']] = $row['packageID'];
 				}
 				
 				// check delivered files
 				if (!empty($lockedFiles)) {
-					$dir = $this->packageInstallation->getPackage()->packageDir;
 					foreach ($files as $key => $file) {
-						if (isset($lockedFiles[$dir.$file])) {
-							unset($files[$key]);
+						if (isset($lockedFiles[$file])) {
+							$owningPackage = new Package($lockedFiles[$file]);
+							
+							throw new SystemException("A package can't overwrite files from other packages. Only an update from the package which owns the file can do that. (Package '".$this->packageInstallation->getPackage()->package."' tries to overwrite file '".$file."', which is owned by package '".$owningPackage->package."')");
 						}
 					}
 				}
@@ -60,39 +63,35 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 		
 		// fetch already installed files
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("packageID = ?", array($this->packageInstallation->getPackageID()));
-		$conditions->add("filename IN (?)", array($files));
+		$conditions->add('packageID = ?', array($this->packageInstallation->getPackageID()));
+		$conditions->add('filename IN (?)', array($files));
+		$conditions->add('application = ?', array($this->application));
 		
 		$sql = "SELECT	filename
 			FROM	wcf".WCF_N."_package_installation_file_log
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
-		$installedFiles = array();
-		while ($row = $statement->fetchArray()) {
-			$installedFiles[] = $row['filename'];
-		}
 		
-		// ignore files which have already been installed
-		$installFiles = array();
-		foreach ($files as $file) {
-			if (in_array($file, $installedFiles)) {
-				continue;
-			}
+		while ($filename = $statement->fetchColumn()) {
+			$index = array_search($filename, $files);
 			
-			$installFiles[] = $file;
+			if ($index !== false) {
+				unset($files[$index]);
+			}
 		}
 		
-		if (!empty($installFiles)) {
+		if (!empty($files)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_file_log
-						(packageID, filename)
-				VALUES		(?, ?)";
+						(packageID, filename, application)
+				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
-			foreach ($installFiles as $file) {
+			foreach ($files as $file) {
 				$statement->execute(array(
 					$this->packageInstallation->getPackageID(),
-					$file
+					$file,
+					$this->application
 				));
 			}
 		}

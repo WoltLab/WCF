@@ -36,17 +36,18 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler {
 		$sql = "SELECT	templateName, templateID
 			FROM	wcf".WCF_N."_template
 			WHERE	packageID = ?
+				AND application = ?
 				AND templateGroupID IS NULL";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($packageID));
+		$statement->execute(array($packageID, $this->application));
 		while ($row = $statement->fetchArray()) {
 			$existingTemplates[$row['templateName']] = $row['templateID'];
 		}
 	
 		// save new templates
 		$sql = "INSERT INTO	wcf".WCF_N."_template
-					(packageID, templateName, lastModificationTime)
-			VALUES		(?, ?, ?)";
+					(packageID, templateName, lastModificationTime, application)
+			VALUES		(?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($files as $file) {
 			if (isset($existingTemplates[$file])) {
@@ -57,7 +58,8 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler {
 			$statement->execute(array(
 				$packageID,
 				$file,
-				TIME_NOW
+				TIME_NOW,
+				$this->application
 			));
 		}
 		

@@ -1,14 +1,15 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\application\Application;
+use wcf\data\package\Package;
 use wcf\system\package\TemplatesFileHandler;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Installs, updates and deletes templates.
  * 
- * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Alexander Ebert, Matthias Schmidt
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -26,16 +27,24 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 	public function install() {
 		parent::install();
 		
+		$abbreviation = 'wcf';
+		if (isset($this->instruction['attributes']['application'])) {
+			$abbreviation = $this->instruction['attributes']['application'];
+		}
+		else if ($this->installation->getPackage()->isApplication) {
+			$abbreviation = Package::getAbbreviation($this->installation->getPackage()->package);
+		}
+		
+		// absolute path to package dir
+		$packageDir = Application::getDirectory($abbreviation);
+		
 		// extract files.tar to temp folder
 		$sourceFile = $this->installation->getArchive()->extractTar($this->instruction['value'], 'templates_');
 		
 		// create file handler
-		$fileHandler = new TemplatesFileHandler($this->installation);
+		$fileHandler = new TemplatesFileHandler($this->installation, $abbreviation);
 		
-		// extract content of files.tar
-		$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$this->installation->getPackage()->packageDir));
-		
-		$fileInstaller = $this->installation->extractFiles($packageDir.'templates/', $sourceFile, $fileHandler);
+		$this->installation->extractFiles($packageDir.'templates/', $sourceFile, $fileHandler);
 		
 		// delete temporary sourceArchive
 		@unlink($sourceFile);
@@ -45,24 +54,24 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 	 * Uninstalls the templates of this package.
 	 */
 	public function uninstall() {
-		// create templates list
-		$templates = array();
-		
-		// get templates from log
-		$sql = "SELECT	templateName
+		// fetch templates from log
+		$sql = "SELECT	templateName, application
 			FROM	wcf".WCF_N."_template
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
+		
+		$templates = array();
 		while ($row = $statement->fetchArray()) {
-			$templates[] = 'templates/'.$row['templateName'].'.tpl';
+			if (!isset($templates[$row['application']])) {
+				$templates[$row['application']] = array();
+			}
+			
+			$templates[$row['application']][] = 'templates/'.$row['templateName'].'.tpl';
 		}
 		
-		if (!empty($templates)) {
-			// delete template files
-			$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$this->installation->getPackage()->packageDir));
-			$deleteEmptyDirectories = $this->installation->getPackage()->isApplication;
-			$this->installation->deleteFiles($packageDir, $templates, false, $deleteEmptyDirectories);
+		foreach ($templates as $application => $templateNames) {
+			$this->installation->deleteFiles(Application::getDirectory($application), $templateNames, false, $this->installation->getPackage()->isApplication);
 			
 			// delete log entries
 			parent::uninstall();

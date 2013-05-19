@@ -75,15 +75,6 @@ class Template extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns the abbreviation of the package name.
-	 *
-	 * @return	string
-	 */
-	public function getPackageAbbreviation() {
-		return Package::getAbbreviation($this->package);
-	}
-	
-	/**
 	 * Searches in templates.
 	 * 
 	 * @param	string		$search		search query
