@@ -720,7 +720,7 @@ class PackageInstallationDispatcher {
 			exit;
 		}
 		else {
-			$url = LinkHandler::getInstance()->getLink('PackageInstallationConfirm', array(), 'action='.$packageInstallation['action'].'&queueID='.$packageInstallation['queueID']);
+			$url = LinkHandler::getInstance()->getLink('PackageInstallationConfirm', array(), 'queueID='.$packageInstallation['queueID']);
 			HeaderUtil::redirect($url);
 			exit;
 		}

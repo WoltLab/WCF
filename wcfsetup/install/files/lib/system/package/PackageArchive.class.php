@@ -102,6 +102,15 @@ class PackageArchive {
 	}
 	
 	/**
+	 * Sets associated package object.
+	 * 
+	 * @param	wcf\data\package\Package	$package
+	 */
+	public function setPackage(Package $package) {
+		$this->package = $package;
+	}
+	
+	/**
 	 * Returns the name of the package archive.
 	 * 
 	 * @return	string
