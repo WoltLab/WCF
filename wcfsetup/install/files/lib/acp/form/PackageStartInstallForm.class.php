@@ -5,6 +5,7 @@ use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageArchive;
@@ -18,7 +19,7 @@ use wcf\util\StringUtil;
  * Shows the package install and update form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -29,12 +30,6 @@ class PackageStartInstallForm extends AbstractForm {
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.install';
-	
-	/**
-	 * id of the updated package
-	 * @var	integer
-	 */
-	public $packageID = 0;
 	
 	/**
 	 * updated package object
@@ -65,25 +60,6 @@ class PackageStartInstallForm extends AbstractForm {
 	 * @var	wcf\data\package\installation\queue\PackageInstallationQueue
 	 */
 	public $queue = null;
-	
-	/**
-	 * @see	wcf\form\IForm::readParameters()
-	 */
-	public function readParameters() {
-		parent::readParameters();
-		
-		if (isset($_REQUEST['id'])) {
-			$this->packageID = intval($_REQUEST['id']);
-			if ($this->packageID != 0) {
-				try {
-					$this->package = new Package($this->packageID);
-				}
-				catch (SystemException $e) {
-					throw new IllegalLinkException();
-				}
-			}
-		}
-	}
 	
 	/**
 	 * @see	wcf\form\IForm::readFormParameters()
@@ -182,13 +158,30 @@ class PackageStartInstallForm extends AbstractForm {
 			throw new UserInputException($type, 'phpRequirements');
 		}
 		
+		// try to find existing package
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_package
+			WHERE	package = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->archive->getPackageInfo('name')));
+		$row = $statement->fetchArray();
+		if ($row !== false) {
+			$this->package = new Package(null, $row);
+		}
+		
 		// check update or install support
 		if ($this->package !== null) {
+			WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+			$this->activeMenuItem = 'wcf.acp.menu.link.package';
+			
+			$this->archive->setPackage($this->package);
 			if (!$this->archive->isValidUpdate()) {
 				throw new UserInputException($type, 'noValidUpdate');
 			}
 		}
 		else {
+			WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+			
 			if (!$this->archive->isValidInstall()) {
 				throw new UserInputException($type, 'noValidInstall');
 			}
@@ -211,7 +204,7 @@ class PackageStartInstallForm extends AbstractForm {
 		$processNo = PackageInstallationQueue::getNewProcessNo();
 		
 		// obey foreign key
-		$packageID = ($this->packageID) ? $this->packageID : null;
+		$packageID = ($this->package) ? $this->package->packageID : null;
 		
 		// insert queue
 		$this->queue = PackageInstallationQueueEditor::create(array(
@@ -238,7 +231,6 @@ class PackageStartInstallForm extends AbstractForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'packageID' => $this->packageID,
 			'package' => $this->package
 		));
 	}
@@ -247,10 +239,8 @@ class PackageStartInstallForm extends AbstractForm {
 	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
-		if ($this->action == 'install') WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
-		else {
-			WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
-			$this->activeMenuItem = 'wcf.acp.menu.link.package';
+		if (!WCF::getSession()->getPermission('admin.system.package.canInstallPackage') && !WCF::getSession()->getPermission('admin.system.package.canUpdatePackage')) {
+			throw new PermissionDeniedException();
 		}
 		
 		// check master password

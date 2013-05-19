@@ -11,7 +11,7 @@ use wcf\system\WCFACP;
  * Shows a confirmation page prior to start installing.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -70,6 +70,13 @@ class PackageInstallationConfirmPage extends AbstractPage {
 		if (!$this->queue->queueID || $this->queue->done) {
 			throw new IllegalLinkException();
 		}
+		
+		if ($this->queue->action == 'install') {
+			WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+		}
+		else {
+			WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+		}
 	}
 	
 	/**
@@ -119,7 +126,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 			'missingPackages' => $this->missingPackages,
 			'excludingPackages' => $this->packageInstallationDispatcher->getArchive()->getConflictedExcludingPackages(),
 			'excludedPackages' => $this->packageInstallationDispatcher->getArchive()->getConflictedExcludedPackages(),
-			'queueID' => $this->queue->queueID
+			'queue' => $this->queue
 		));
 	}
 	
@@ -129,13 +136,6 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	public function show() {
 		// check master password
 		WCFACP::checkMasterPassword();
-		
-		if ($this->action == 'install') {
-			WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
-		}
-		else {
-			WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
-		}
 		
 		parent::show();
 	}
