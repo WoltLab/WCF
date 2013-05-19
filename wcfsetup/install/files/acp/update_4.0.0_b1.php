@@ -46,3 +46,22 @@ foreach ($packageList as $package) {
 		$package->packageID
 	));
 }
+
+// assign all other files/templates to WCF
+$sql = "UPDATE	wcf".WCF_N."_acp_template
+	SET	application = ?
+	WHERE	application = ?";
+$statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute(array('wcf', ''));
+
+$sql = "UPDATE	wcf".WCF_N."_package_installation_file_log
+	SET	application = ?
+	WHERE	application = ?";
+$statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute(array('wcf', ''));
+
+$sql = "UPDATE	wcf".WCF_N."_template
+	SET	application = ?
+	WHERE	application = ?";
+$statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute(array('wcf', ''));

@@ -437,15 +437,25 @@ class PackageInstallationNodeBuilder {
 			$archive = new PackageArchive($fileName);
 			$archive->openArchive();
 			
+			// get package id
+			$sql = "SELECT	packageID
+				FROM	wcf".WCF_N."_package
+				WHERE	package = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($archive->getPackageInfo('name')));
+			$row = $statement->fetchArray();
+			$packageID = ($row === false) ? null : $row['packageID'];
+			
 			// create new queue
 			$queue = PackageInstallationQueueEditor::create(array(
 				'parentQueueID' => $queue->queueID,
 				'processNo' => $queue->processNo,
 				'userID' => WCF::getUser()->userID,
 				'package' => $archive->getPackageInfo('name'),
+				'packageID' => $packageID,
 				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
 				'archive' => $fileName,
-				'action' => $queue->action
+				'action' => ($packageID ? 'update' : 'install')
 			));
 			
 			// spawn nodes
