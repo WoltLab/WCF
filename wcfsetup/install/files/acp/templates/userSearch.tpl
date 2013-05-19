@@ -102,7 +102,30 @@
 					</dl>
 				{/if}
 				
+				<dl>
+					<dt><label for="registrationDateStart">{lang}wcf.user.registrationDate{/lang}</label></dt>
+					<dd>
+						<input type="date" id="registrationDateStart" name="registrationDateStart" value="{$registrationDateStart}" placeholder="{lang}wcf.date.period.start{/lang}" />
+						<input type="date" id="registrationDateEnd" name="registrationDateEnd" value="{$registrationDateEnd}" placeholder="{lang}wcf.date.period.end{/lang}" />
+					</dd>
+				</dl>
+				
 				{event name='conditionFields'}
+			</fieldset>
+			
+			<fieldset>
+				<legend>{lang}wcf.acp.user.search.conditions.states{/lang}</legend>
+				
+				<dl>
+					<dd>
+						<label><input type="checkbox" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.banned{/lang}</label>
+						<label><input type="checkbox" name="notBanned" value="1" {if $notBanned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.notBanned{/lang}</label>
+						
+						{event name='states'}
+					</dd>
+				</dl>
+				
+				{event name='stateFields'}
 			</fieldset>
 			
 			{event name='conditionFieldsets'}

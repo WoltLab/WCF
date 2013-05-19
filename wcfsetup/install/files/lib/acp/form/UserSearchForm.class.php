@@ -72,6 +72,30 @@ class UserSearchForm extends UserOptionListForm {
 	public $languageIDs = array();
 	
 	/**
+	 * registration start date
+	 * @var string
+	 */
+	public $registrationDateStart = '';
+	
+	/**
+	 * registration start date
+	 * @var string
+	 */
+	public $registrationDateEnd = '';
+	
+	/**
+	 * banned state
+	 * @var boolean
+	 */
+	public $banned = 0;
+	
+	/**
+	 * not banned state
+	 * @var boolean
+	 */
+	public $notBanned = 0;
+	
+	/**
 	 * matches
 	 * @var	array<integer>
 	 */
@@ -131,6 +155,10 @@ class UserSearchForm extends UserOptionListForm {
 		if (isset($_POST['groupIDs']) && is_array($_POST['groupIDs'])) $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
 		if (isset($_POST['languageIDs']) && is_array($_POST['languageIDs'])) $this->languageIDs = ArrayUtil::toIntegerArray($_POST['languageIDs']);
 		if (isset($_POST['invertGroupIDs'])) $this->invertGroupIDs = intval($_POST['invertGroupIDs']);
+		if (isset($_POST['registrationDateStart'])) $this->registrationDateStart = $_POST['registrationDateStart'];
+		if (isset($_POST['registrationDateEnd'])) $this->registrationDateEnd = $_POST['registrationDateEnd'];
+		if (isset($_POST['banned'])) $this->banned = intval($_POST['banned']);
+		if (isset($_POST['notBanned'])) $this->notBanned = intval($_POST['notBanned']);
 		
 		if (isset($_POST['itemsPerPage'])) $this->itemsPerPage = intval($_POST['itemsPerPage']);
 		if (isset($_POST['sortField'])) $this->sortField = $_POST['sortField'];
@@ -178,6 +206,10 @@ class UserSearchForm extends UserOptionListForm {
 			'availableGroups' => $this->getAvailableGroups(),
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'invertGroupIDs' => $this->invertGroupIDs,
+			'registrationDateStart' => $this->registrationDateStart,
+			'registrationDateEnd' => $this->registrationDateEnd,
+			'banned' => $this->banned,
+			'notBanned' => $this->notBanned,
 			'sortField' => $this->sortField,
 			'sortOrder' => $this->sortOrder,
 			'itemsPerPage' => $this->itemsPerPage,
@@ -288,6 +320,21 @@ class UserSearchForm extends UserOptionListForm {
 		}
 		if (!empty($this->languageIDs)) {
 			$this->conditions->add("user_table.languageID IN (?)", array($this->languageIDs));
+		}
+		
+		// registration date
+		if ($startDate = @strtotime($this->registrationDateStart)) {
+			$this->conditions->add('user_table.registrationDate >= ?', array($startDate));
+		}
+		if ($endDate = @strtotime($this->registrationDateEnd)) {
+			$this->conditions->add('user_table.registrationDate <= ?', array($endDate));
+		}
+		
+		if ($this->banned) {
+			$this->conditions->add('user_table.banned = ?', array(1));
+		}
+		if ($this->notBanned) {
+			$this->conditions->add('user_table.banned = ?', array(0));
 		}
 	}
 	

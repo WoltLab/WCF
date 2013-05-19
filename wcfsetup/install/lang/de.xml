@@ -1029,6 +1029,9 @@
 		<item name="wcf.date.timezone.pacific.fiji"><![CDATA[(UTC+12:00) Fidschi]]></item>
 		<item name="wcf.date.timezone.asia.kamchatka"><![CDATA[(UTC+12:00) Kamtschatka]]></item>
 		<item name="wcf.date.timezone.pacific.tongatapu"><![CDATA[(UTC+13:00) Nuku'alofa]]></item>
+		
+		<item name="wcf.date.period.start"><![CDATA[von]]></item>
+		<item name="wcf.date.period.end"><![CDATA[bis]]></item>
 	</category>
 	
 	<category name="wcf.global">

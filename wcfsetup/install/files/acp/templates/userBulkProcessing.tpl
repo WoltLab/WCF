@@ -125,7 +125,7 @@
 					<dl>
 						<dt><label>{lang}wcf.acp.user.groups{/lang}</label></dt>
 						<dd>
-							{htmlCheckboxes options=$availableGroups name='groupIDArray' selected=$groupIDArray}
+							{htmlCheckboxes options=$availableGroups name='groupIDs' selected=$groupIDs}
 							
 							<label class="marginTop"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
 						</dd>
@@ -136,12 +136,35 @@
 					<dl>
 						<dt><label>{lang}wcf.user.language{/lang}</label></dt>
 						<dd>
-							{htmlCheckboxes options=$availableLanguages name='languageIDArray' selected=$languageIDArray disableEncoding=true}
+							{htmlCheckboxes options=$availableLanguages name='languageIDs' selected=$languageIDs disableEncoding=true}
 						</dd>
 					</dl>
 				{/if}
 				
+				<dl>
+					<dt><label for="registrationDateStart">{lang}wcf.user.registrationDate{/lang}</label></dt>
+					<dd>
+						<input type="date" id="registrationDateStart" name="registrationDateStart" value="{$registrationDateStart}" placeholder="{lang}wcf.date.period.start{/lang}" />
+						<input type="date" id="registrationDateEnd" name="registrationDateEnd" value="{$registrationDateEnd}" placeholder="{lang}wcf.date.period.end{/lang}" />
+					</dd>
+				</dl>
+				
 				{event name='conditionFields'}
+			</fieldset>
+			
+			<fieldset>
+				<legend>{lang}wcf.acp.user.search.conditions.states{/lang}</legend>
+				
+				<dl>
+					<dd>
+						<label><input type="checkbox" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.banned{/lang}</label>
+						<label><input type="checkbox" name="notBanned" value="1" {if $notBanned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.notBanned{/lang}</label>
+						
+						{event name='states'}
+					</dd>
+				</dl>
+				
+				{event name='stateFields'}
 			</fieldset>
 			
 			{event name='conditionFieldsets'}
@@ -271,9 +294,9 @@
 					<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 					
 					<dl>
-						<dd{if $errorField == 'assignToGroupIDArray'} class="formError"{/if}>
-							{htmlCheckboxes options=$availableGroups name=assignToGroupIDArray selected=$assignToGroupIDArray}
-							{if $errorField == 'assignToGroupIDArray'}
+						<dd{if $errorField == 'assignToGroupIDs'} class="formError"{/if}>
+							{htmlCheckboxes options=$availableGroups name=assignToGroupIDs selected=$assignToGroupIDs}
+							{if $errorField == 'assignToGroupIDs'}
 								<small class="innerError">
 									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 								</small>
