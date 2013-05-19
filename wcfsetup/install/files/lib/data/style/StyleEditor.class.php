@@ -409,7 +409,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 					$statement->execute(array(
 						$package,
 						1
-						));
+					));
 					while ($row = $statement->fetchArray()) {
 						// get template path
 						$templatesDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$row['packageDir']).'templates/'.$templateGroupFolderName);
@@ -425,6 +425,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							$templatesTar->extract($template['index'], $templatesDir.$template['filename']);
 							
 							TemplateEditor::create(array(
+								'application' => Package::getAbbreviation($package),
 								'packageID' => $row['packageID'],
 								'templateName' => StringUtil::replace('.tpl', '', $template['filename']),
 								'templateGroupID' => $styleData['templateGroupID']

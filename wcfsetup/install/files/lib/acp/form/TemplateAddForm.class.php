@@ -183,7 +183,7 @@ class TemplateAddForm extends AbstractForm {
 		parent::save();
 		
 		if (empty($this->application)) {
-			$this->application = Package::getAbbreviation(PackageCache::getInstance()->getPackage($this->package));
+			$this->application = Package::getAbbreviation(PackageCache::getInstance()->getPackage($this->packageID));
 		}
 		
 		$this->objectAction = new TemplateAction(array(), 'create', array('data' => array(
