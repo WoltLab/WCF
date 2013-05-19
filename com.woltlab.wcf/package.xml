@@ -37,7 +37,6 @@
 		<instruction type="sql">update_post_b1.sql</instruction>
 		
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">template.tar</instruction>
 		
 		<instruction type="acpMenu">acpMenu.xml</instruction>
