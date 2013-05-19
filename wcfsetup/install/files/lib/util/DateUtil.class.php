@@ -369,7 +369,7 @@ final class DateUtil {
 		}
 		
 		// convert back to ISO-8601, if date was bogus (e.g. 2000-02-31) data() returns a different date than $date
-		if (date('Y-m-d', $time) != $date) {
+		if (gmdate('Y-m-d', $time) != $date) {
 			throw new SystemException("date '".$date."' is invalid");
 		}
 	}
