@@ -69,6 +69,12 @@ final class Regex {
 	const MULTILINE = 64;
 	
 	/**
+	 * indicates that pattern string is treated as UTF-8.
+	 * @var integer
+	 */
+	const UTF_8 = 128;
+	
+	/**
 	 * indicates that no flags are set
 	 * @var	integer
 	 */
@@ -145,6 +151,7 @@ final class Regex {
 		if ($modifier & self::IGNORE_WHITESPACE) $this->regex .= 'x';
 		if ($modifier & self::DOT_ALL) $this->regex .= 's';
 		if ($modifier & self::MULTILINE) $this->regex .= 'm';
+		if ($modifier & self::UTF_8) $this->regex .= 'u';
 	}
 	
 	/**
@@ -285,3 +292,4 @@ final class Regex {
 		return $this->regex;
 	}
 }
+
