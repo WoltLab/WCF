@@ -12,7 +12,7 @@
 	<script type="text/javascript">
 		//<![CDATA[
 		$(function() {
-			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', {
+			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', '', {
 				mailID: {@$mailID}
 			});
 		});
