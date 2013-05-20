@@ -280,9 +280,6 @@ class PackageInstallationDispatcher {
 				}
 			}
 			
-			// if package is plugin to com.woltlab.wcf it must not have any other requirement
-			$requirements = $this->getArchive()->getRequirements();
-				
 			// insert requirements and dependencies
 			$requirements = $this->getArchive()->getAllExistingRequirements();
 			if (!empty($requirements)) {
@@ -290,7 +287,7 @@ class PackageInstallationDispatcher {
 								(packageID, requirement)
 					VALUES			(?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
-			
+				
 				foreach ($requirements as $identifier => $possibleRequirements) {
 					if (count($possibleRequirements) == 1) {
 						$requirement = array_shift($possibleRequirements);
@@ -298,11 +295,10 @@ class PackageInstallationDispatcher {
 					else {
 						$requirement = $possibleRequirements[$this->selectedRequirements[$identifier]];
 					}
-						
+					
 					$statement->execute(array($this->queue->packageID, $requirement['packageID']));
 				}
 			}
-				
 		}
 		else {
 			// create package entry
@@ -325,9 +321,6 @@ class PackageInstallationDispatcher {
 					$statement->execute(array($package->packageID, $excludedPackage['name'], (!empty($excludedPackage['version']) ? $excludedPackage['version'] : '')));
 				}
 			}
-			
-			// if package is plugin to com.woltlab.wcf it must not have any other requirement
-			$requirements = $this->getArchive()->getRequirements();
 			
 			// insert requirements and dependencies
 			$requirements = $this->getArchive()->getAllExistingRequirements();
