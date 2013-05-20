@@ -119,5 +119,10 @@
 			<name>com.woltlab.wcf.searchableObjectType</name>
 			<interfacename>wcf\system\search\ISearchableObjectType</interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.poll</name>
+			<interfacename>wcf\system\poll\IPollHandler</interfacename>
+		</definition>
 	</import>
 </data>

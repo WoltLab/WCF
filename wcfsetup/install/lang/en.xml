@@ -770,6 +770,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Default Sort Field]]></item>
 		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Default Sort Order]]></item>
 		<item name="wcf.acp.option.search_use_captcha"><![CDATA[Enable reCAPTCHA protection for search]]></item>
+		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
+		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
+		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum number of options]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1701,6 +1704,31 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Page {#$pageNo} of {#$pages}]]></item>
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[User Account]]></item>
+	</category>
+	
+	<category name="wcf.poll">
+		<item name="wcf.poll.button.addOption"><![CDATA[Add Another Option]]></item>
+		<item name="wcf.poll.button.removeOption"><![CDATA[Remove Option]]></item>
+		<item name="wcf.poll.button.showParticipants"><![CDATA[List Participants]]></item>
+		<item name="wcf.poll.button.showResult"><![CDATA[Show Result]]></item>
+		<item name="wcf.poll.button.showVote"><![CDATA[Vote]]></item>
+		<item name="wcf.poll.button.vote"><![CDATA[Vote]]></item>
+		<item name="wcf.poll.endTime"><![CDATA[Poll Ends (optional)]]></item>
+		<item name="wcf.poll.isChangeable"><![CDATA[Votes can be changed]]></item>
+		<item name="wcf.poll.isPublic"><![CDATA[Publicize participants]]></item>
+		<item name="wcf.poll.management"><![CDATA[Poll]]></item>
+		<item name="wcf.poll.maxVotes"><![CDATA[Number of Allowed Votes]]></item>
+		<item name="wcf.poll.maxVotes.error.notValid"><![CDATA[Maximum number of allowed votes exceeds number of available options.]]></item>
+		<item name="wcf.poll.multipleVotes"><![CDATA[You may select up to {#$poll->maxVotes} options.]]></item>
+		<item name="wcf.poll.options"><![CDATA[Options]]></item>
+		<item name="wcf.poll.options.description"><![CDATA[You can sort the options with drag and drop to change their order. You can create up to {@POLL_MAX_OPTIONS} options.]]></item>
+		<item name="wcf.poll.question"><![CDATA[Question]]></item>
+		<item name="wcf.poll.restrictedResult"><![CDATA[Result is only visible for participants]]></item>
+		<item name="wcf.poll.resultsRequireVote"><![CDATA[Restrict results for participants only]]></item>
+		<item name="wcf.poll.resultsRequireVote.description"><![CDATA[Results are invisible unless the poll ended or the user voted.]]></item>
+		<item name="wcf.poll.sortByVotes"><![CDATA[Sort result by votes]]></item>
+		<item name="wcf.poll.totalVotes"><![CDATA[A total of {#$poll->votes} vote{if $poll->votes != 1}s{/if}]]></item>
+		<item name="wcf.poll.noVotes"><![CDATA[No votes yet]]></item>
 	</category>
 	
 	<category name="wcf.recaptcha">

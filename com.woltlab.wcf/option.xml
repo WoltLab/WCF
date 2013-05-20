@@ -168,6 +168,10 @@
 					<category name="message.general.likes">
 						<parent>message.general</parent>
 					</category>
+					<category name="message.general.poll">
+						<parent>message.general</parent>
+						<options>module_poll</options>
+					</category>
 				
 				<category name="message.attachment">
 					<parent>message</parent>
@@ -303,6 +307,12 @@
 			
 			<option name="module_tagging">
 				<categoryname>module.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_poll">
+				<categoryname>module.community</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
@@ -1056,6 +1066,16 @@ username:wcf.search.sortBy.username]]></selectoptions>
 				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
 DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			</option>
+			
+			<!-- message.general.poll -->
+			<option name="poll_max_options">
+				<categoryname>message.general.poll</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>20</defaultvalue>
+				<minvalue>2</minvalue>
+				<maxvalue>100</maxvalue>
+			</option>
+			<!-- /message.general.poll -->
 		</options>
 	</import>
 </data>

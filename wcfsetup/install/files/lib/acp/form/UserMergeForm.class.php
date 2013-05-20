@@ -107,6 +107,15 @@ class UserMergeForm extends AbstractForm {
 		
 		parent::save();
 		
+		// poll_option_vote
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
+		$sql = "UPDATE IGNORE	wcf".WCF_N."_poll_option_vote
+			SET		userID = ?
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		
 		// comment
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID IN (?)", array($this->mergedUserIDs));

@@ -771,6 +771,9 @@
 		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Standardsortierung]]></item>
 		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Standardreihenfolge]]></item>
 		<item name="wcf.acp.option.search_use_captcha"><![CDATA[reCAPTCHA in Suchfunktion aktivieren]]></item>
+		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Umfragen]]></item>
+		<item name="wcf.acp.option.module_poll"><![CDATA[Umfragen]]></item>
+		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximale Anzahl an Antworten]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1703,6 +1706,31 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Seite {#$pageNo} von {#$pages}]]></item>
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[Benutzerkonto]]></item>
+	</category>
+	
+	<category name="wcf.poll">
+		<item name="wcf.poll.button.addOption"><![CDATA[Weitere Antwort hinzufügen]]></item>
+		<item name="wcf.poll.button.removeOption"><![CDATA[Antwort entfernen]]></item>
+		<item name="wcf.poll.button.showParticipants"><![CDATA[Teilnehmer auflisten]]></item>
+		<item name="wcf.poll.button.showResult"><![CDATA[Ergebnis anzeigen]]></item>
+		<item name="wcf.poll.button.showVote"><![CDATA[Zur Abstimmung]]></item>
+		<item name="wcf.poll.button.vote"><![CDATA[Abstimmen]]></item>
+		<item name="wcf.poll.endTime"><![CDATA[Umfrage endet (optional)]]></item>
+		<item name="wcf.poll.isChangeable"><![CDATA[Abgegebene Stimmen dürfen verändert werden]]></item>
+		<item name="wcf.poll.isPublic"><![CDATA[Teilnehmer sind sichtbar]]></item>
+		<item name="wcf.poll.management"><![CDATA[Umfrage]]></item>
+		<item name="wcf.poll.maxVotes"><![CDATA[Anzahl erlaubter Antworten]]></item>
+		<item name="wcf.poll.maxVotes.error.notValid"><![CDATA[Die Anzahl der erlaubten Antworten liegt über den tatsächlich verfügbaren Antworten.]]></item>
+		<item name="wcf.poll.multipleVotes"><![CDATA[Sie können {#$poll->maxVotes} Antwortmöglichkeiten wählen.]]></item>
+		<item name="wcf.poll.options"><![CDATA[Antworten]]></item>
+		<item name="wcf.poll.options.description"><![CDATA[Sie können die Antworten mittels Drücken und Festhalten in ihrer Reihenfolge ändern. Sie können {@POLL_MAX_OPTIONS} Antwortmöglichkeiten vorgeben.]]></item>
+		<item name="wcf.poll.question"><![CDATA[Frage]]></item>
+		<item name="wcf.poll.restrictedResult"><![CDATA[Das Ergebnis nur für Teilnehmer sichtbar]]></item>
+		<item name="wcf.poll.resultsRequireVote"><![CDATA[Ergebnis erst nach Abgabe der Stimme sichtbar]]></item>
+		<item name="wcf.poll.resultsRequireVote.description"><![CDATA[Das Ergebnis ist erst mit dem Ablauf der Umfrage oder der Abgabe einer Stimme möglich.]]></item>
+		<item name="wcf.poll.sortByVotes"><![CDATA[Ergebnis nach Stimmen sortieren]]></item>
+		<item name="wcf.poll.totalVotes"><![CDATA[Insgesamt {#$poll->votes} Stimme{if $poll->votes != 1}n{/if}]]></item>
+		<item name="wcf.poll.noVotes"><![CDATA[Bisher keine Stimmen]]></item>
 	</category>
 	
 	<category name="wcf.recaptcha">
