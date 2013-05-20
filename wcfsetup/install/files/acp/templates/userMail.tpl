@@ -108,7 +108,7 @@
 							{/if}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.user.sendMail.from.description{/lang}</small><!-- ToDo: Language variable contains paragraphs! -->
+					<small>{lang}wcf.acp.user.sendMail.from.description{/lang}</small>
 				</dd>
 			</dl>
 			
