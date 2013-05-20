@@ -157,6 +157,7 @@ class InstallPackageAction extends AbstractDialogAction {
 		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $nextNode);
 		
 		WCF::getTPL()->assign(array(
+			'installationType' => $this->queue->action,
 			'packageName' => $this->installation->queue->packageName
 		));
 		
