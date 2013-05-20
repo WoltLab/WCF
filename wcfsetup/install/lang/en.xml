@@ -492,6 +492,8 @@
 		<item name="wcf.acp.package.installation.step.install"><![CDATA[Installing “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation completed]]></item>
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Preparing Installation …]]></item>
+		<item name="wcf.acp.package.installation.step.update"><![CDATA[Updating “{$packageName}” …]]></item>
+		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Updated completed]]></item>
 		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required Version]]></item>
 		<item name="wcf.acp.package.license"><![CDATA[License]]></item>
@@ -535,6 +537,7 @@
 		<item name="wcf.acp.package.update.server"><![CDATA[Package Server]]></item>
 		<item name="wcf.acp.package.update.server.message"><![CDATA[Server Notice]]></item>
 		<item name="wcf.acp.package.update.server.url"><![CDATA[URL]]></item>
+		<item name="wcf.acp.package.update.title"><![CDATA[Update]]></item>
 		<item name="wcf.acp.package.update.unauthorized"><![CDATA[Authorization Required]]></item>
 		<item name="wcf.acp.package.update.username"><![CDATA[Username]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>

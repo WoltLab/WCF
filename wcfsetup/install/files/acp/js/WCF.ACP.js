@@ -385,9 +385,19 @@ WCF.ACP.Package.Installation = Class.extend({
 		this._allowRollback = (allowRollback === true) ? true : false;
 		this._queueID = queueID;
 		
-		this._dialogTitle = 'wcf.acp.package.installation.title';
-		if (actionName == 'UninstallPackage') {
-			this._dialogTitle = 'wcf.acp.package.uninstallation.title';
+		switch (actionName) {
+			case 'InstallPackage':
+				if (allowRollback) {
+					this._dialogTitle = 'wcf.acp.package.installation.title';
+				}
+				else {
+					this._dialogTitle = 'wcf.acp.package.update.title';
+				}
+			break;
+			
+			case 'UninstallPackage':
+				this._dialogTitle = 'wcf.acp.package.uninstallation.title';
+			break;
 		}
 		
 		this._initProxy();

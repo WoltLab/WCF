@@ -42,7 +42,7 @@
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="clipboardAction">clipboardAction.xml</instruction>
 		<instruction type="coreObject">coreObject.xml</instruction>
-		<instruction type="language">languages/*.xml</instruction>
+		<instruction type="language">language/*.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 	</instructions>

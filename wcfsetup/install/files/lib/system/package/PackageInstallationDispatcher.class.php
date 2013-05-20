@@ -184,7 +184,31 @@ class PackageInstallationDispatcher {
 			// clear user storage
 			UserStorageHandler::getInstance()->clear();
 			
+			// rebuild config files for affected applications
+			$sql = "SELECT		package.packageID
+				FROM		wcf1_package_installation_queue queue,
+						wcf1_package package
+				WHERE		queue.processNo = ?
+						AND package.packageID = queue.packageID
+						AND package.packageID <> ?
+						AND package.isApplication = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array(
+				$this->queue->processNo,
+				1,
+				1
+			));
+			while ($row = $statement->fetchArray()) {
+				Package::writeConfigFile($row['packageID']);
+			}
+			
 			EventHandler::getInstance()->fireAction($this, 'postInstall');
+			
+			// remove queues with the same process no
+			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
+				WHERE		processNo = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->queue->processNo));
 		}
 		
 		if ($this->requireRestructureVersionTables) {

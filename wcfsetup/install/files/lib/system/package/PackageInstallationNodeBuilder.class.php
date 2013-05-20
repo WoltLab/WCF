@@ -137,6 +137,23 @@ class PackageInstallationNodeBuilder {
 	}
 	
 	/**
+	 * Returns installation type by queue id.
+	 * 
+	 * @param	integer		$queueID
+	 * @return	string
+	 */
+	public function getInstallationTypeByQueue($queueID) {
+		$sql = "SELECT	action
+			FROM	wcf".WCF_N."_package_installation_queue
+			WHERE	queueID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($queueID));
+		$row = $statement->fetchArray();
+		
+		return $row['action'];
+	}
+	
+	/**
 	 * Returns data for current node.
 	 * 
 	 * @param	string		$node
