@@ -205,5 +205,10 @@
 			<classname>wcf\system\moderation\queue\report\CommentResponseModerationQueueReportHandler</classname>
 		</type>
 		<!-- /moderation -->
+		
+		<type>
+			<name>com.woltlab.wcf.label</name>
+			<definitionname>com.woltlab.wcf.acl</definitionname>
+		</type>
 	</import>
 </data>

@@ -490,6 +490,38 @@
 			<permissions>admin.content.dashboard.canEditDashboard</permissions>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.label">
+			<parent>wcf.acp.menu.link.content</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.label.list">
+			<controller><![CDATA[wcf\acp\page\LabelListPage]]></controller>
+			<parent>wcf.acp.menu.link.label</parent>
+			<permissions>admin.content.label.canManageLabel</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.label.add">
+			<controller><![CDATA[wcf\acp\form\LabelAddForm]]></controller>
+			<parent>wcf.acp.menu.link.label</parent>
+			<permissions>admin.content.label.canManageLabel</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.label.group.list">
+			<controller><![CDATA[wcf\acp\page\LabelGroupListPage]]></controller>
+			<parent>wcf.acp.menu.link.label</parent>
+			<permissions>admin.content.label.canManageLabel</permissions>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.label.group.add">
+			<controller><![CDATA[wcf\acp\form\LabelGroupAddForm]]></controller>
+			<parent>wcf.acp.menu.link.label</parent>
+			<permissions>admin.content.label.canManageLabel</permissions>
+			<showorder>4</showorder>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.community">
 			<showorder>5</showorder>
 		</acpmenuitem>

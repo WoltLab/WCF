@@ -99,5 +99,15 @@
 			<name>com.woltlab.wcf.comment.commentableContent</name>
 			<interfacename>wcf\system\comment\manager\ICommentManager</interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.label.object</name>
+			<interfacename>wcf\system\label\object\ILabelObjectHandler</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.label.objectType</name>
+			<interfacename>wcf\system\label\object\type\ILabelObjectTypeHandler</interfacename>
+		</definition>
 	</import>
 </data>

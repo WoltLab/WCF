@@ -326,6 +326,38 @@ CREATE TABLE wcf1_event_listener (
 	UNIQUE KEY packageID (packageID, environment, eventClassName, eventName, listenerClassName)
 );
 
+DROP TABLE IF EXISTS wcf1_label;
+CREATE TABLE wcf1_label (
+	labelID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	groupID INT(10) NOT NULL,
+	label VARCHAR(80) NOT NULL,
+	cssClassName VARCHAR(255) NOT NULL
+);
+
+DROP TABLE IF EXISTS wcf1_label_group;
+CREATE TABLE wcf1_label_group (
+	groupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	groupName VARCHAR(80) NOT NULL,
+	forceSelection TINYINT(1) NOT NULL DEFAULT 0,
+);
+
+DROP TABLE IF EXISTS wcf1_label_group_to_object;
+CREATE TABLE wcf1_label_group_to_object (
+	groupID INT(10) NOT NULL,
+	objectTypeID INT(10) NOT NULL,
+	objectID INT(10) NULL
+);
+
+DROP TABLE IF EXISTS wcf1_label_object;
+CREATE TABLE wcf1_label_object (
+	labelID INT(10) NOT NULL,
+	objectTypeID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL,
+	
+	KEY (objectTypeID, labelID),
+	KEY (objectTypeID, objectID)
+);
+
 DROP TABLE IF EXISTS wcf1_language;
 CREATE TABLE wcf1_language (
 	languageID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1383,6 +1415,14 @@ ALTER TABLE wcf1_comment ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) 
 
 ALTER TABLE wcf1_comment_response ADD FOREIGN KEY (commentID) REFERENCES wcf1_comment (commentID) ON DELETE CASCADE;
 ALTER TABLE wcf1_comment_response ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_label ADD FOREIGN KEY (groupID) REFERENCES wcf1_label_group (groupID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_label_group_to_object ADD FOREIGN KEY (groupID) REFERENCES wcf1_label_group (groupID) ON DELETE CASCADE;
+ALTER TABLE wcf1_label_group_to_object ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_label_object ADD FOREIGN KEY (labelID) REFERENCES wcf1_label (labelID) ON DELETE CASCADE;
+ALTER TABLE wcf1_label_object ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 
 /* default inserts */

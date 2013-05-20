@@ -10,6 +10,11 @@
 		<item name="wcf.acl.search.user.description"><![CDATA[Benutzername eingeben …]]></item>
 	</category>
 	
+	<category name="wcf.acl.option">
+		<item name="wcf.acl.option.com.woltlab.wcf.label.canViewLabel"><![CDATA[Kann Labels sehen]]></item>
+		<item name="wcf.acl.option.com.woltlab.wcf.label.canSetLabel"><![CDATA[Kann Labels setzen]]></item>
+	</category>
+	
 	<category name="wcf.acp.application">
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie-Einstellungen]]></item>
 		<item name="wcf.acp.application.cookie.warning"><![CDATA[Die folgenden Einstellungen stellen sicher, dass der Login gespeichert wird und ein automatischer Login möglich ist. Sie müssen diese Einstellungen anpassen, sollten sich Domain und/oder Pfad geändert haben. Sollten Sie sich bei den korrekten Werten nicht sicher sein, übernehmen Sie bitte die exakten Angaben der beiden obigen Eingabefelder.]]></item>
@@ -304,6 +309,8 @@
 		<item name="wcf.acp.group.option.mod.profileComment.canDeleteComment"><![CDATA[Kann Pinnwand-Kommentare löschen]]></item>
 		<item name="wcf.acp.group.option.mod.profileComment.canModerateComment"><![CDATA[Kann Pinnwand-Kommentare moderieren]]></item>
 		<item name="wcf.acp.group.option.category.mod.profileComment"><![CDATA[Benutzerprofil-Pinnwand]]></item>
+		<item name="wcf.acp.group.option.admin.content.label.canManageLabel"><![CDATA[Kann Labels verwalten]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.label"><![CDATA[Labels]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -324,6 +331,27 @@
 		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
 		<item name="wcf.acp.index.system.php"><![CDATA[PHP-Version]]></item>
 		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL-Version]]></item>
+	</category>
+	
+	<category name="wcf.acp.label">
+		<item name="wcf.acp.label.add"><![CDATA[Label hinzufügen]]></item>
+		<item name="wcf.acp.label.cssClassName"><![CDATA[CSS-Klassen]]></item>
+		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
+		<item name="wcf.acp.label.edit"><![CDATA[Label bearbeiten]]></item>
+		<item name="wcf.acp.label.error.noGroups"><![CDATA[Bevor Sie ein Label hinzufügen können, müssen Sie eine <a href="{link controller='LabelGroupAdd'}{/link}">Labelgruppe hinzufügen</a>.]]></item>
+		<item name="wcf.acp.label.group"><![CDATA[Labelgruppe]]></item>
+		<item name="wcf.acp.label.group.add"><![CDATA[Labelgruppe hinzufügen]]></item>
+		<item name="wcf.acp.label.group.edit"><![CDATA[Labelgruppe bearbeiten]]></item>
+		<item name="wcf.acp.label.group.groupName"><![CDATA[Gruppenname]]></item>
+		<item name="wcf.acp.label.group.list"><![CDATA[Labelgruppen]]></item>
+		<item name="wcf.acp.label.group.noneAvailable"><![CDATA[Es wurde noch keine Labelgruppe hinzugefügt.]]></item>
+		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
+		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.label.noneAvailable"><![CDATA[Es wurde noch kein Label hinzugefügt.]]></item>
+		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Label aus dieser Gruppe muss zwingend ausgewählt werden]]></item>
+		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Wollen Sie die Labelgruppe „{$group->groupName}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.label.group.category.connect"><![CDATA[Verfügbarkeit]]></item>
+		<item name="wcf.acp.label.delete.sure"><![CDATA[Wollen Sie das Label „{$label}“ wirklich löschen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
@@ -452,6 +480,11 @@
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[Benutzerränge auflisten]]></item>
 		<item name="wcf.acp.menu.link.user.rank.add"><![CDATA[Benutzerrang hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.menu.link.label.add"><![CDATA[Label hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.label.list"><![CDATA[Labels auflisten]]></item>
+		<item name="wcf.acp.menu.link.label.group.add"><![CDATA[Labelgruppe hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.label.group.list"><![CDATA[Labelgruppen auflisten]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -1517,6 +1550,14 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.imageViewer.enlarge"><![CDATA[Bild direkt anzeigen]]></item>
 		<item name="wcf.imageViewer.next"><![CDATA[Nächstes Bild]]></item>
 		<item name="wcf.imageViewer.previous"><![CDATA[Vorheriges Bild]]></item>
+	</category>
+	
+	<category name="wcf.label">
+		<item name="wcf.label.all"><![CDATA[Alle]]></item>
+		<item name="wcf.label.label"><![CDATA[Label]]></item>
+		<item name="wcf.label.labels"><![CDATA[Labels]]></item>
+		<item name="wcf.label.none"><![CDATA[Keine Auswahl]]></item>
+		<item name="wcf.label.withoutSelection"><![CDATA[Ohne Label]]></item>
 	</category>
 	
 	<category name="wcf.like">

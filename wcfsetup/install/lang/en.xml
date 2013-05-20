@@ -10,6 +10,11 @@
 		<item name="wcf.acl.search.user.description"><![CDATA[Enter username …]]></item>
 	</category>
 	
+	<category name="wcf.acl.option">
+		<item name="wcf.acl.option.com.woltlab.wcf.label.canViewLabel"><![CDATA[Can view labels]]></item>
+		<item name="wcf.acl.option.com.woltlab.wcf.label.canSetLabel"><![CDATA[Can set labels]]></item>
+	</category>
+	
 	<category name="wcf.acp.application">
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie Settings]]></item>
 		<item name="wcf.acp.application.cookie.warning"><![CDATA[The settings below are used to establish a persistent login for your website; Keep in mind to update these values whenever the domain name or path changes. If you are unsure which values you need to provide, you can safely copy both values from above.]]></item>
@@ -303,6 +308,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.mod.profileComment.canDeleteComment"><![CDATA[Can delete comments]]></item>
 		<item name="wcf.acp.group.option.mod.profileComment.canModerateComment"><![CDATA[Can moderate comments]]></item>
 		<item name="wcf.acp.group.option.category.mod.profileComment"><![CDATA[User Profile Wall]]></item>
+		<item name="wcf.acp.group.option.admin.content.label.canManageLabel"><![CDATA[Can manage labels]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.label"><![CDATA[Labels]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -323,6 +330,27 @@ Examples for medium ID detection:
 		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
 		<item name="wcf.acp.index.system.php"><![CDATA[PHP Version]]></item>
 		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL Version]]></item>
+	</category>
+	
+	<category name="wcf.acp.label">
+		<item name="wcf.acp.label.add"><![CDATA[Add Label]]></item>
+		<item name="wcf.acp.label.cssClassName"><![CDATA[CSS Class Name]]></item>
+		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
+		<item name="wcf.acp.label.edit"><![CDATA[Edit Label]]></item>
+		<item name="wcf.acp.label.error.noGroups"><![CDATA[Please <a href="{link controller='LabelGroupAdd'}{/link}">add a label group</a> prior to creating labels.]]></item>
+		<item name="wcf.acp.label.group"><![CDATA[Label Group]]></item>
+		<item name="wcf.acp.label.group.add"><![CDATA[Add Label Group]]></item>
+		<item name="wcf.acp.label.group.edit"><![CDATA[Edit Label Group]]></item>
+		<item name="wcf.acp.label.group.groupName"><![CDATA[Title]]></item>
+		<item name="wcf.acp.label.group.list"><![CDATA[Label Groups]]></item>
+		<item name="wcf.acp.label.group.noneAvailable"><![CDATA[There are no label groups yet.]]></item>
+		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
+		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.label.noneAvailable"><![CDATA[There are no labels yet.]]></item>
+		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
+		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group “{$group->groupName}”?]]></item>
+		<item name="wcf.acp.label.group.category.connect"><![CDATA[Availability]]></item>
+		<item name="wcf.acp.label.delete.sure"><![CDATA[Do you really want to delete the group “{$label}”?]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
@@ -451,6 +479,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[List User Ranks]]></item>
 		<item name="wcf.acp.menu.link.user.rank.add"><![CDATA[Add User Rank]]></item>
+		<item name="wcf.acp.menu.link.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.menu.link.label.add"><![CDATA[Add Label]]></item>
+		<item name="wcf.acp.menu.link.label.list"><![CDATA[List Labels]]></item>
+		<item name="wcf.acp.menu.link.label.group.add"><![CDATA[Add Label Group]]></item>
+		<item name="wcf.acp.menu.link.label.group.list"><![CDATA[List Label Groups]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -1515,6 +1548,14 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.imageViewer.enlarge"><![CDATA[View Full Image]]></item>
 		<item name="wcf.imageViewer.next"><![CDATA[Next Image]]></item>
 		<item name="wcf.imageViewer.previous"><![CDATA[Previous Image]]></item>
+	</category>
+	
+	<category name="wcf.label">
+		<item name="wcf.label.all"><![CDATA[All]]></item>
+		<item name="wcf.label.label"><![CDATA[Label]]></item>
+		<item name="wcf.label.labels"><![CDATA[Labels]]></item>
+		<item name="wcf.label.none"><![CDATA[No Selection]]></item>
+		<item name="wcf.label.withoutSelection"><![CDATA[Without Label]]></item>
 	</category>
 	
 	<category name="wcf.like">
