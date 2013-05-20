@@ -824,6 +824,9 @@
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Erlaubt die Angabe einer speziellen PHP-Klasse für die Ausgabeformatierung bei der Anzeige des Feldes.]]></item>
 		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
 		<item name="wcf.acp.user.search.conditions"><![CDATA[Bedingungen]]></item>
+		<item name="wcf.acp.user.search.conditions.states"><![CDATA[Zustände]]></item>
+		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Gesperrt]]></item>
+		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Nicht gesperrt]]></item>
 	</category>
 	
 	<category name="wcf.ajax">
