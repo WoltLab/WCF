@@ -5,6 +5,7 @@ use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\mail\Mail;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -125,7 +126,7 @@ class MailWorker extends AbstractWorker {
 	 */
 	protected function sendMail(User $user) {
 		try {
-			$mail = new Mail(array($user->username => $user->email), $this->userMailData['subject'], StringUtil::replace('{$username}', $user->username, $this->mailData['text']), $this->mailData['from']);
+			$mail = new Mail(array($user->username => $user->email), $this->mailData['subject'], StringUtil::replace('{$username}', $user->username, $this->mailData['text']), $this->mailData['from']);
 			if ($this->mailData['enableHTML']) $mail->setContentType('text/html');
 			$mail->setLanguage($user->getLanguage());
 			$mail->send();
@@ -139,7 +140,6 @@ class MailWorker extends AbstractWorker {
 	 * @see	wcf\system\worker\IWorker::getProceedURL()
 	 */
 	public function getProceedURL() {
-		// todo: use LinkHander?
-		return 'index.php?page=UserList' . SID_ARG_2ND_NOT_ENCODED;
+		return LinkHandler::getInstance()->getLink('UserList');
 	}
 }

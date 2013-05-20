@@ -1,5 +1,17 @@
 {include file='header' pageTitle='wcf.acp.user.bulkProcessing'}
 
+{if $mailID|isset}
+	<script type="text/javascript">
+		//<![CDATA[
+		$(function() {
+			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', '', {
+				mailID: {@$mailID}
+			});
+		});
+		//]]>
+	</script>
+{/if}
+
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
@@ -214,6 +226,18 @@
 				<fieldset>
 					<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
 					
+					<dl{if $errorField == 'subject'} class="formError"{/if}>
+						<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
+						<dd>
+							<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
+							{if $errorField == 'subject'}
+								<small class="innerError">
+									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					
 					<dl{if $errorField == 'from'} class="formError"{/if}>
 						<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
 						<dd>
@@ -227,19 +251,6 @@
 						</dd>
 					</dl>
 					
-					<dl{if $errorField == 'subject'} class="formError"{/if}>
-						<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
-						<dd>
-							<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
-							{if $errorField == 'subject'}
-								<small class="innerError">
-									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-								</small>
-							{/if}
-							<small>{lang}wcf.acp.user.sendMail.subject.description{/lang}</small>
-						</dd>
-					</dl>
-					
 					<dl{if $errorField == 'text'} class="formError"{/if}>
 						<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
 						<dd>
@@ -249,7 +260,6 @@
 									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 								</small>
 							{/if}
-							<small>{lang}wcf.acp.user.sendMail.text.description{/lang}</small>
 						</dd>
 					</dl>
 					

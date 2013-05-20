@@ -370,7 +370,7 @@
 			<permissions>admin.language.canManageLanguage</permissions>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.language.server">
+		<!-- <acpmenuitem name="wcf.acp.menu.link.language.server">
 			<parent>wcf.acp.menu.link.language</parent>
 		</acpmenuitem>
 		
@@ -378,7 +378,7 @@
 			<controller><![CDATA[wcf\acp\page\LanguageServerListPage]]></controller>
 			<parent>wcf.acp.menu.link.language.server</parent>
 			<permissions>admin.language.canManageLanguage</permissions>
-		</acpmenuitem>
+		</acpmenuitem>-->
 		<!-- /language -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.content">

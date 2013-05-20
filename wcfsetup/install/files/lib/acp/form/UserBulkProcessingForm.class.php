@@ -254,7 +254,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 				$mailID = count($userMailData);
 				$userMailData[$mailID] = array(
 					'action' => '',
-					'userIDs' => implode(',', $userIDs),
+					'userIDs' => $userIDs,
 					'groupIDs' => '',
 					'subject' => $this->subject,
 					'text' => $this->text,
@@ -262,17 +262,8 @@ class UserBulkProcessingForm extends UserOptionListForm {
 					'enableHTML' => $this->enableHTML
 				);
 				WCF::getSession()->register('userMailData', $userMailData);
-				$this->saved();
 				
-				$url = LinkHandler::getInstance()->getLink('UserMail', array('id' => $mailID));
-				
-				// show worker template
-				WCF::getTPL()->assign(array(
-					'pageTitle' => WCF::getLanguage()->get('wcf.acp.user.sendMail'),
-					'url' => $url
-				));
-				WCF::getTPL()->display('worker');
-				exit;
+				WCF::getTPL()->assign('mailID', $mailID);
 			break;
 			
 			case 'exportMailAddress':

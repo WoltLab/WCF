@@ -772,9 +772,9 @@
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[Send email to all users]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Enable HTML for email]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Sender]]></item>
-		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[<p>Specify the sender’s email address.{if MAIL_USE_FORMATTED_ADDRESS} It is possible to use the following format:{/if}</p>
-{if MAIL_USE_FORMATTED_ADDRESS}<p style="line-height: 2em;"><code>Sender Name &lt;email@example.com&gt;</code></p>{/if}
-<p>You can define the default sender in <em>System -&gt; Options -&gt; General -&gt; Emails</em>. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.</p>]]></item>
+		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Specify the sender’s email address.{if MAIL_USE_FORMATTED_ADDRESS} It is possible to use the following format:{/if}<br />
+{if MAIL_USE_FORMATTED_ADDRESS}<em>Sender Name &lt;email@example.com&gt;</em><br />{/if}
+You can define the default sender in <em>System -&gt; Options -&gt; General -&gt; Emails</em>. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[Email to user group]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[Send email to members of the following user groups]]></item>
 		<item name="wcf.acp.user.sendMail.mail"><![CDATA[Email]]></item>
@@ -827,6 +827,9 @@
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Allows custom output formatting using a PHP class.]]></item>
 		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
 		<item name="wcf.acp.user.search.conditions"><![CDATA[Conditions]]></item>
+		<item name="wcf.acp.user.search.conditions.states"><![CDATA[States]]></item>
+		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Banned]]></item>
+		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Not banned]]></item>
 	</category>
 	
 	<category name="wcf.ajax">
