@@ -22,5 +22,8 @@
 		<coreobject>
 			<objectname><![CDATA[wcf\system\MetaTagHandler]]></objectname>
 		</coreobject>
+		<coreobject>
+			<objectname><![CDATA[wcf\system\bbcode\BBCodeHandler]]></objectname>
+		</coreobject>
 	</import>
 </data>

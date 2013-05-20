@@ -121,6 +121,78 @@ CREATE TABLE wcf1_application (
 	isPrimary TINYINT(1) NOT NULL DEFAULT 0
 );
 
+DROP TABLE IF EXISTS wcf1_attachment;
+CREATE TABLE wcf1_attachment (
+	attachmentID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	objectTypeID INT(10) NOT NULL,
+	objectID INT(10),
+	userID INT(10),
+	tmpHash VARCHAR(40) NOT NULL DEFAULT '',
+	filename VARCHAR(255) NOT NULL DEFAULT '',
+	filesize INT(10) NOT NULL DEFAULT 0,
+	fileType VARCHAR(255) NOT NULL DEFAULT '',
+	fileHash VARCHAR(40) NOT NULL DEFAULT '',
+	
+	isImage TINYINT(1) NOT NULL DEFAULT 0,
+	width SMALLINT(5) NOT NULL DEFAULT 0,
+	height SMALLINT(5) NOT NULL DEFAULT 0, 
+	
+	tinyThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
+	tinyThumbnailSize INT(10) NOT NULL DEFAULT 0,
+	tinyThumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
+	tinyThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
+	
+	thumbnailType VARCHAR(255) NOT NULL DEFAULT '',
+	thumbnailSize INT(10) NOT NULL DEFAULT 0,
+	thumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
+	thumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
+	
+	downloads INT(10) NOT NULL DEFAULT 0,
+	lastDownloadTime INT(10) NOT NULL DEFAULT 0,
+	uploadTime INT(10) NOT NULL DEFAULT 0,
+	showOrder SMALLINT(5) NOT NULL DEFAULT 0,
+	KEY (objectTypeID, objectID),
+	KEY (objectTypeID, tmpHash),
+	KEY (objectID, uploadTime)
+);
+
+DROP TABLE IF EXISTS wcf1_bbcode;
+CREATE TABLE wcf1_bbcode (
+	bbcodeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	bbcodeTag VARCHAR(255) NOT NULL,
+	packageID INT(10) NOT NULL,
+	htmlOpen VARCHAR(255) NOT NULL DEFAULT '',
+	htmlClose VARCHAR(255) NOT NULL DEFAULT '',
+	allowedChildren VARCHAR(255) NOT NULL DEFAULT 'all',
+	className VARCHAR(255) NOT NULL DEFAULT '',
+	wysiwygIcon varchar(255) NOT NULL DEFAULT '',
+	buttonLabel VARCHAR(255) NOT NULL DEFAULT '',
+	isSourceCode TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	showButton TINYINT(1) NOT NULL DEFAULT 0,
+	UNIQUE KEY bbcodeTag (bbcodeTag)
+);
+
+DROP TABLE IF EXISTS wcf1_bbcode_attribute;
+CREATE TABLE wcf1_bbcode_attribute (
+	attributeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	bbcodeID INT(10) NOT NULL,
+	attributeNo TINYINT(3) NOT NULL DEFAULT 0,
+	attributeHtml VARCHAR(255) NOT NULL DEFAULT '',
+	validationPattern VARCHAR(255) NOT NULL DEFAULT '',
+	required TINYINT(1) NOT NULL DEFAULT 0,
+	useText TINYINT(1) NOT NULL DEFAULT 0,
+	UNIQUE KEY attributeNo (bbcodeID, attributeNo)
+);
+
+DROP TABLE IF EXISTS wcf1_bbcode_media_provider;
+CREATE TABLE wcf1_bbcode_media_provider (
+	providerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(255) NOT NULL,
+	regex TEXT NOT NULL,
+	html TEXT NOT NULL
+);
+
 DROP TABLE IF EXISTS wcf1_category;
 CREATE TABLE wcf1_category (
 	categoryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -537,6 +609,19 @@ CREATE TABLE wcf1_sitemap (
 	UNIQUE KEY sitemapName (packageID, sitemapName)
 );
 
+DROP TABLE IF EXISTS wcf1_smiley;
+CREATE TABLE wcf1_smiley (
+	smileyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL,
+	categoryID INT(10),
+	smileyPath VARCHAR(255) NOT NULL DEFAULT '',
+	smileyTitle VARCHAR(255) NOT NULL DEFAULT '',
+	smileyCode VARCHAR(255) NOT NULL DEFAULT '',
+	aliases TEXT NOT NULL,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY smileyCode (smileyCode)
+);
+
 DROP TABLE IF EXISTS wcf1_spider;
 CREATE TABLE wcf1_spider (
 	spiderID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -776,6 +861,13 @@ ALTER TABLE wcf1_acp_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_packag
 
 ALTER TABLE wcf1_application ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_attachment ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+ALTER TABLE wcf1_attachment ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_bbcode ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_bbcode_attribute ADD FOREIGN KEY (bbcodeID) REFERENCES wcf1_bbcode (bbcodeID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_category ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_clipboard_action ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
@@ -847,6 +939,9 @@ ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) 
 ALTER TABLE wcf1_session ADD FOREIGN KEY (spiderID) REFERENCES wcf1_spider (spiderID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_sitemap ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_smiley ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_smiley ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_user_storage ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
@@ -1002,3 +1097,26 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLa
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideLess', '');
+
+-- media providers
+-- Videos
+	-- Youtube
+	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('YouTube', 'https?://(?:.+?\\.)?youtu(?:\\.be/|be\\.com/watch\\?(?:.*?&)?v=)(?<ID>[a-zA-Z0-9_-]+)(?<start>#t=(?:\\d+|(?:\\d+h(?:\\d+m)?(?:\\d+s)?)|(?:\\d+m(?:\\d+s)?)|(?:\\d+s))$)?', '<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{$ID}?wmode=transparent{$start}" frameborder="0" allowfullscreen></iframe>');
+	-- Vimeo
+	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Vimeo', 'http://vimeo\\.com/(?<ID>\\d+)', '<iframe src="http://player.vimeo.com/video/{$ID}" width="400" height="225" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+	-- MyVideo
+	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('MyVideo', 'http://(?:www\\.)?myvideo\\.de/watch/(?<ID>\\d+)', '<object style="width:611px;height:383px;" width="611" height="383"><embed src="http://www.myvideo.de/movie/{$ID}" width="611" height="383" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true"></embed><param name="movie" value="http://www.myvideo.de/movie/{$ID}"></param><param name="AllowFullscreen" value="true"></param><param name="AllowScriptAccess" value="always"></param></object>');
+	-- Clipfish
+	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Clipfish', 'http://(?:www\\.)?clipfish\\.de/video/(?<ID>\\d+)/', '<div style="width:464px; height:404px;"><div style="width:464px; height:384px;"><iframe src="http://www.clipfish.de/embed_video/?vid={$ID}&amp;as=0&amp;col=990000" name="Clipfish Embedded Video" width="464" height="384" align="left" marginheight="0" marginwidth="0" frameborder="0" scrolling="no"></iframe></div></div>');
+	-- Veoh
+	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Veoh', 'http://(?:www\\.)?veoh\\.com/watch/v(?<ID>\\d+[a-zA-Z0-9]+)', '<object width="410" height="341" id="veohFlashPlayer" name="veohFlashPlayer"><param name="movie" value="http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1308&amp;permalinkId=v{$ID}&amp;player=videodetailsembedded&amp;videoAutoPlay=0&amp;id=anonymous"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1308&amp;permalinkId=v{$ID}&amp;player=videodetailsembedded&amp;videoAutoPlay=0&amp;id=anonymous" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="410" height="341" id="veohFlashPlayerEmbed" name="veohFlashPlayerEmbed"></embed></object>');
+	-- DailyMotion
+	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('DailyMotion', 'https?://(?:www\\.)?dailymotion\\.com/video/(?<ID>[a-zA-Z0-9]+)', '<iframe frameborder="0" width="480" height="208" src="http://www.dailymotion.com/embed/video/{$ID}"></iframe>');
+	-- YouKu
+	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('YouKu', 'https?://(?:.+?\\.)?youku\\.com/v_show/id_(?<ID>[a-zA-Z0-9_-]+)(?:\\.html)?', '<iframe height=498 width=510 src="http://player.youku.com/embed/{$ID}" frameborder="0" allowfullscreen></iframe>');
+-- Misc
+	-- github gist
+	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('github gist', 'https://gist.github.com/(?<ID>[^/]+/[0-9a-zA-Z]+)', '<script src="https://gist.github.com/{$ID}.js"> </script>');
+	-- soundcloud
+	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Soundcloud', 'https?://soundcloud.com/(?<artist>[a-zA-Z0-9_-]+)/(?<song>[a-zA-Z0-9_-]+)', '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2F{$song}"></iframe>');
+

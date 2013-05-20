@@ -24,6 +24,11 @@
 
 		<definition>
 			<name>com.woltlab.wcf.versionableObject</name>
-		</definition>		
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.attachment.objectType</name>
+			<interfacename>wcf\system\attachment\IAttachmentObjectType</interfacename>
+		</definition>	
 	</import>
 </data>

@@ -32,6 +32,61 @@
 		<item name="wcf.acp.application.setAsPrimary.confirmMessage"><![CDATA[Wollen Sie „{$application->getPackage()->getName()}“ wirklich als primäre Anwendung festlegen?]]></item>
 	</category>
 	
+	<category name="wcf.acp.attachment">
+		<item name="wcf.acp.attachment.list"><![CDATA[Dateianhänge]]></item>
+		<item name="wcf.acp.attachment.stats"><![CDATA[{#$stats.count} {if $stats.count == 1}Dateianhang{else}Dateianhänge{/if} - {@$stats.size|filesize} - {#$stats.downloads} Download{if $stats.downloads != 1}s{/if}]]></item>
+		<item name="wcf.acp.attachment.noItems"><![CDATA[Es wurden keine Dateianhänge gefunden.]]></item>
+	</category>
+	
+	<category name="wcf.acp.bbcode">
+		<item name="wcf.acp.bbcode.add"><![CDATA[BBCode hinzufügen]]></item>
+		<item name="wcf.acp.bbcode.add.userGroupOptionInfo"><![CDATA[Beachten Sie, dass der neu erstellte BBCode standardmäßig überall verwenden werden kann. Soll das nicht der Fall sein, bearbeiten Sie nach der Erstellung des BBCodes die entsprechenden Benutzergruppenrechte.]]></item>
+		<item name="wcf.acp.bbcode.allowedChildren"><![CDATA[Erlaubte Kindelemente]]></item>
+		<item name="wcf.acp.bbcode.allowedChildren.error.notValid"><![CDATA[Die Form für die erlaubten Kindelemente ist ungültig.]]></item>
+		<item name="wcf.acp.bbcode.attribute"><![CDATA[Attribut]]></item>
+		<item name="wcf.acp.bbcode.attribute.attributeHtml"><![CDATA[HTML-Code des Attributs]]></item>
+		<item name="wcf.acp.bbcode.attribute.validationPattern.error.notValid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
+		<item name="wcf.acp.bbcode.attribute.validationPattern"><![CDATA[Regulärer Ausdruck zur Validierung]]></item>
+		<item name="wcf.acp.bbcode.attribute.required"><![CDATA[Attribut muss ausgefüllt sein]]></item>
+		<item name="wcf.acp.bbcode.attribute.useText"><![CDATA[Inhalt übernehmen]]></item>
+		<item name="wcf.acp.bbcode.attribute.useText.description"><![CDATA[Soll der Inhalt des BBCodes als Wert für dieses Attribut übernommen werden, wenn es nicht gesetzt ist?]]></item>
+		<item name="wcf.acp.bbcode.attributes"><![CDATA[Attribute]]></item>
+		<item name="wcf.acp.bbcode.bbcodeTag"><![CDATA[BBCode]]></item>
+		<item name="wcf.acp.bbcode.bbcodeTag.error.inUse"><![CDATA[Dieser BBCode ist bereits vorhanden.]]></item>
+		<item name="wcf.acp.bbcode.bbcodeTag.error.notValid"><![CDATA[Dieser BBCode ist ungültig.]]></item>
+		<item name="wcf.acp.bbcode.className"><![CDATA[Klassen-Name]]></item>
+		<item name="wcf.acp.bbcode.className.error.notFound"><![CDATA[Diese Klasse wurde nicht gefunden.]]></item>
+		<item name="wcf.acp.bbcode.delete.sure"><![CDATA[Wollen Sie den BBCode „[{$bbcode->bbcodeTag}]“ wirklich löschen?]]></item>
+		<item name="wcf.acp.bbcode.edit"><![CDATA[BBCode bearbeiten]]></item>
+		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Schließendes HTML-Tag]]></item>
+		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Öffnendes HTML-Tag]]></item>
+		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>
+		
+		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Medienanbieter hinzufügen]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[Wollen Sie den Medienanbieter „{$mediaProvider->title}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.edit"><![CDATA[Medienanbieter bearbeiten]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.html"><![CDATA[HTML-Code]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{literal}Geben Sie hier den HTML-Code für das Medium an. Variablen im Format <code>{$variable}</code> werden durch die entsprechend benannte Untergruppe des regulären Ausdrucks ersetzt.<br />
+		Beispiel:<br />
+		<code>{$ID}</code> wird durch die beispielhaften Medium-IDs der Erklärung oberhalb ersetzt.{/literal}]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.list"><![CDATA[Medienanbieter]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.regex"><![CDATA[Regulärer Ausdruck]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.regex.description"><![CDATA[Geben Sie hier das Linkformat als <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Fde.wikipedia.org%2Fwiki%2FRegul%25C3%25A4rer_Ausdruck">regulären Ausdruck</a> an.<br />
+		Mehrere Ausdrücke können zeilenweise angegeben werden.<br />
+		Beispiele für die Medium-ID Erkennungen:
+		<ul>
+			<li><code>(?&lt;ID&gt;[0-9]+)</code> erkennt eine Medium-ID aus Zahlen.</li>
+			<li><code>(?&lt;ID&gt;[0-9a-zA-Z]+)</code> erkennt eine alphanumerische Medium-ID.</li>
+		</ul>]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.regex.error.notValid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Medienanbieter]]></item>
+		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Inhalt als Quelltext behandeln]]></item>
+		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Der Inhalt dieses BBCodes wird als Quelltext interpretiert, BBCodes und Smileys werden nicht umgewandelt.]]></item>
+		<item name="wcf.acp.bbcode.showButton"><![CDATA[Button im WYSIWYG-Editor anzeigen]]></item>
+		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button-Beschriftung]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button-Grafik]]></item>
+	</category>
+	
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>
 		<item name="wcf.acp.cache.clear.sure"><![CDATA[Wollen Sie den Cache wirklich komplett leeren?]]></item>
@@ -178,6 +233,19 @@
 		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[Benutzerprofilfelder]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Kann Benutzerprofilfelder verwalten]]></item>
+		<item name="wcf.acp.group.option.category.user.message.attachment"><![CDATA[Dateianhänge]]></item>
+		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximale Dateianhangsgröße]]></item>
+		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
+		<item name="wcf.acp.group.option.user.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
+		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
+		<item name="wcf.acp.group.option.user.attachment.quota"><![CDATA[Maximaler Speicherverbrauch]]></item>
+		<item name="wcf.acp.group.option.user.attachment.quota.description"><![CDATA[Dem Nutzer zur Verfügung stehenden Speicherplatz für alle Dateianhänge insgesamt.]]></item>
+		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Dateianhänge]]></item>
+		<item name="wcf.acp.group.option.admin.attachment.canManageAttachment"><![CDATA[Kann Dateianhänge verwalten]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.bbcode"><![CDATA[BBCodes]]></item>
+		<item name="wcf.acp.group.option.admin.content.bbcode.canManageBBCode"><![CDATA[Kann BBCodes verwalten]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smileys]]></item>
+		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Kann Smileys verwalten]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -253,8 +321,8 @@
 	</category>
 	
 	<category name="wcf.acp.menu">
-		<item name="wcf.acp.menu.link.application"><![CDATA[Anwendungen]]></item>
-		<item name="wcf.acp.menu.link.application.cache"><![CDATA[Cache]]></item>
+		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Wartung]]></item>
+		<item name="wcf.acp.menu.link.maintenance.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.application.management"><![CDATA[Anwendungen verwalten]]></item>
 		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Inhalt]]></item>
@@ -308,6 +376,18 @@
 		<item name="wcf.acp.menu.link.template.add"><![CDATA[Template hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.template.group.list"><![CDATA[Templategruppen auflisten]]></item>
 		<item name="wcf.acp.menu.link.template.group.add"><![CDATA[Templategruppe hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.attachment"><![CDATA[Dateianhänge]]></item>
+		<item name="wcf.acp.menu.link.attachment.list"><![CDATA[Dateianhänge verwalten]]></item>
+		<item name="wcf.acp.menu.link.bbcode"><![CDATA[BBCodes]]></item>
+		<item name="wcf.acp.menu.link.bbcode.add"><![CDATA[BBCode hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.bbcode.list"><![CDATA[BBCodes auflisten]]></item>
+		<item name="wcf.acp.menu.link.bbcode.mediaProvider.add"><![CDATA[Medienanbieter hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.bbcode.mediaProvider.list"><![CDATA[Medienanbieter auflisten]]></item>
+		<item name="wcf.acp.menu.link.smiley"><![CDATA[Smileys]]></item>
+		<item name="wcf.acp.menu.link.smiley.add"><![CDATA[Smiley hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[Smileys auflisten]]></item>
+		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Smiley-Kategorie hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[Smiley-Kategorien auflisten]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -325,7 +405,6 @@
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Dateisystem (Standard)]]></item>
 		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached]]></item>
 		<item name="wcf.acp.option.cache_source_type.no"><![CDATA[Caching deaktivieren (Nicht empfohlen)]]></item>
-		
 		<item name="wcf.acp.option.category.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[Allgemein]]></item>
@@ -360,42 +439,34 @@
 		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Zensur]]></item>
 		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
-		
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookiedomain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Standardmäßig sollten Sie dieses Feld frei lassen, da ein Ausfüllen nur in wenigen Fällen notwendig ist.]]></item>
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookiepfad]]></item>
 		<item name="wcf.acp.option.cookie_path.description"><![CDATA[Der Cookiepfad wird absolut zum Document Root angegeben - also z.B. "/forum" für http://www.woltlab.de/forum.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Präfix für Cookienamen]]></item>
-		
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
-		
 		<item name="wcf.acp.option.export"><![CDATA[Optionen sichern]]></item>
 		<item name="wcf.acp.option.export.download"><![CDATA[Sicherung der Optionen herunterladen]]></item>
 		<item name="wcf.acp.option.export.download.description"><![CDATA[Laden Sie eine Sicherung der Optionen auf Ihren lokalen Rechner herunter.]]></item>
-		
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Gzip-Komprimierung aktivieren]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Aktiviert die Komprimierung der Inhalte bei der Übertragung vom Server an den Client. Dies reduziert den Traffic und kann den Ladevorgang erheblich beschleunigen.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Seitencaching im Client-Browser verhindern]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers.description"><![CDATA[Verhindert zuverlässig das Cachen von einzelnen Seiten und sorgt somit dafür, dass beim Seitenaufruf immer die neueste Version der Seite geladen wird. Führt umgekehrt aber zu höherem Traffic und mehr Serverlast.]]></item>
-		
 		<item name="wcf.acp.option.http_gzip_level"><![CDATA[Gzip-Komprimierungslevel]]></item>
 		<item name="wcf.acp.option.http_gzip_level.description"><![CDATA[Werte von 1-9 sind zulässig. Als Optimum zwischen Komprimierung und Serverlast empfiehlt sich Level 1.]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Bibliothek für die Generierung von Grafiken, wird z.B. für die Skalierung von hochgeladenen Bildern verwendet. „ImageMagick“ ist in der Regel deutlich schneller, steht aber nicht auf jedem Server zur Verfügung.]]></item>
-		
 		<item name="wcf.acp.option.import"><![CDATA[Optionen importieren]]></item>
 		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[Die Optionen konnten nicht erfolgreich importiert werden.]]></item>
 		<item name="wcf.acp.option.import.success"><![CDATA[Die Optionen wurden erfolgreich importiert.]]></item>
 		<item name="wcf.acp.option.import.upload"><![CDATA[Sicherung der Optionen vom lokalen Computer hochladen]]></item>
 		<item name="wcf.acp.option.import.upload.description"><![CDATA[Wählen Sie eine Sicherung der Optionen von Ihrem lokalen Rechner aus.]]></item>
 		<item name="wcf.acp.option.importAndExport"><![CDATA[Optionen sichern &amp; wiederherstellen]]></item>
-		
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Speicherung von IP-Adressen]]></item>
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Aktiviert die Speicherung von IP-Adressen der Benutzer in z.B. Sitzungen, Benutzerprofilen, Forenbeiträgen.]]></item>
-		
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator-Adresse]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[E-Mail-Adresse des Administrators]]></item>
 		<item name="wcf.acp.option.mail_debug_logfile_path"><![CDATA[Debug Logfile-Pfad]]></item>
@@ -457,6 +528,20 @@
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentifizierung-Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Ihren Authentifizierung-Code finden Sie in Ihrem Kundenkonto auf woltlab.com.]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[WoltLab-Nachrichten auf der Startseite der Administrationsoberfläche anzeigen]]></item>
+		<item name="wcf.acp.option.module_system_recaptcha"><![CDATA[Sicherheitsabfragen („reCAPTCHA“)]]></item>
+		<item name="wcf.acp.option.module_system_recaptcha.description"><![CDATA[Aktiviert Sicherheitsabfragen um das automatisierte Absenden von Formular durch so genannte Bots zu verhindern.]]></item>
+		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public-API-Key]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[Einen eigenen API-Key für die Nutzung der reCAPTCHA-Funktion können Sie auf der Website von <a href="https://www.google.com/recaptcha/admin/create" class="externalURL">reCAPTCHA</a> beantragen.]]></item>
+		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private-API-Key]]></item>
+		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Dateianhänge]]></item>
+		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Vorschaugrafiken von hochgeladenen Bilder erzeugen]]></item>
+		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Höhe der Vorschaugrafiken]]></item>
+		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Breite der Vorschaugrafiken]]></item>
+		<item name="wcf.acp.option.attachment_storage"><![CDATA[Speicherort der Dateianhänge]]></item>
+		<item name="wcf.acp.option.attachment_storage.description"><![CDATA[Sie können optional einen vom Standard abweichenden Speicherort für die Dateianhänge definieren. Bereits existierende Dateianhänge müssen bei einer Änderung des Speicherortes manuell in den neuen Ort übertragen werden.]]></item>
+		<item name="wcf.acp.option.module_attachment"><![CDATA[Dateianhänge]]></item>
+		<item name="wcf.acp.option.module_smiley"><![CDATA[Smileys]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -610,6 +695,22 @@
 		<item name="wcf.acp.sessionLog.requestMethod"><![CDATA[Methode]]></item>
 		<item name="wcf.acp.sessionLog.requestURI"><![CDATA[URI]]></item>
 		<item name="wcf.acp.sessionLog.time"><![CDATA[Datum]]></item>
+	</category>
+	
+	<category name="wcf.acp.smiley">
+		<item name="wcf.acp.smiley.list"><![CDATA[Smileys]]></item>
+		<item name="wcf.acp.smiley.noItems"><![CDATA[Es sind keine Smileys vorhanden.]]></item>
+		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Wollen Sie das Smiley „{$smiley->smileyTitle|language}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.smiley.add"><![CDATA[Smiley hinzufügen]]></item>
+		<item name="wcf.acp.smiley.edit"><![CDATA[Smiley bearbeiten]]></item>
+		<item name="wcf.acp.smiley.title"><![CDATA[Titel]]></item>
+		<item name="wcf.acp.smiley.category.noItems"><![CDATA[Diese Kategorie enthält keine Smileys.]]></item>
+		<item name="wcf.acp.smiley.categoryID"><![CDATA[Kategorie]]></item>
+		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Standard-Kategorie]]></item>
+		<item name="wcf.acp.smiley.categoryID.error.notValid"><![CDATA[Die gewählte Kategorie ist nicht gültig.]]></item>
+		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primärer Smiley-Code]]></item>
+		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley-Codes]]></item>
+		<item name="wcf.acp.smiley.showOrder"><![CDATA[Position]]></item>
 	</category>
 	
 	<category name="wcf.acp.style">
@@ -839,6 +940,55 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.ajax.error.permissionDenied"><![CDATA[Sie besitzen leider nicht die notwendigen Zugriffsrechte, um diese Aktion auszuführen.]]></item>
 		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Ihre Sitzung ist abgelaufen, bitte loggen Sie sich erneut ein.]]></item>
 	</category>
+	
+	<category name="wcf.attachment">
+		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, <b>{#$attachment->downloads}</b> mal heruntergeladen{if $attachment->downloads > 0}, zuletzt: {@$attachment->lastDownloadTime|time}{/if})]]></item>
+		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width}×{#$attachment->height}, {#$attachment->downloads} mal angesehen]]></item>
+		<item name="wcf.attachment.files"><![CDATA[Dateien]]></item>
+		<item name="wcf.attachment.images"><![CDATA[Bilder]]></item>
+		<item name="wcf.attachment.attachments"><![CDATA[Dateianhänge]]></item>
+		<item name="wcf.attachment.delete.sure"><![CDATA[Wollen Sie diesen Dateianhang wirklich löschen?]]></item>
+		<item name="wcf.attachment.upload.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
+		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[Die Datei ist zu groß.]]></item>
+		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[Sie haben die maximale Anzahl an Dateianhängen erreicht.]]></item>
+		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[Sie haben zu viele Dateianhänge ausgewählt, maximal verbleibend: #remaining#.]]></item>
+		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
+		<item name="wcf.attachment.upload.limits"><![CDATA[Maximale Anzahl an Dateianhängen: {#$attachmentHandler->getMaxCount()}<br />
+Maximale Dateigröße: {@$attachmentHandler->getMaxSize()|filesize}<br />
+Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]></item>
+		<item name="wcf.attachment.insert"><![CDATA[In Text einfügen]]></item>
+		<item name="wcf.attachment.delete.sure"><![CDATA[Wollen Sie den Dateianhang wirklich löschen?]]></item>
+		<item name="wcf.attachment.filename"><![CDATA[Dateiname]]></item>
+		<item name="wcf.attachment.uploadTime"><![CDATA[Hochgeladen]]></item>
+		<item name="wcf.attachment.filesize"><![CDATA[Größe]]></item>
+		<item name="wcf.attachment.downloads"><![CDATA[Downloads]]></item>
+		<item name="wcf.attachment.lastDownloadTime"><![CDATA[Letzter Download]]></item>
+		<item name="wcf.attachment.fileType"><![CDATA[Dateityp]]></item>
+	</category>
+	
+	<category name="wcf.bbcode">
+		<item name="wcf.bbcode.code.text"><![CDATA[{@$highlighterTitle} ({#$lines} Zeile{if $lines != 1}n{/if})]]></item>
+		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
+		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck-Quellcode]]></item>
+		<item name="wcf.bbcode.code.c.title"><![CDATA[C-Quellcode]]></item>
+		<item name="wcf.bbcode.code.css.title"><![CDATA[CSS-Quellcode]]></item>
+		<item name="wcf.bbcode.code.diff.title"><![CDATA[Unterschiede-Datei]]></item>
+		<item name="wcf.bbcode.code.html.title"><![CDATA[HTML-Quellcode]]></item>
+		<item name="wcf.bbcode.code.java.title"><![CDATA[Java-Quellcode]]></item>
+		<item name="wcf.bbcode.code.js.title"><![CDATA[JavaScript-Quellcode]]></item>
+		<item name="wcf.bbcode.code.perl.title"><![CDATA[Perl-Quellcode]]></item>
+		<item name="wcf.bbcode.code.php.title"><![CDATA[PHP-Quellcode]]></item>
+		<item name="wcf.bbcode.code.plain.title"><![CDATA[Quellcode]]></item>
+		<item name="wcf.bbcode.code.sql.title"><![CDATA[SQL-Abfrage]]></item>
+		<item name="wcf.bbcode.code.tex.title"><![CDATA[TeX-Quellcode]]></item>
+		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty-Template]]></item>
+		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML-Quellcode]]></item>
+		<item name="wcf.bbcode.quote.title"><![CDATA[{@$quoteAuthor} schrieb:]]></item>
+		<item name="wcf.bbcode.quote.text"><![CDATA[Zitat{if $cite} von {@$cite}{/if}: „{@$content}“]]></item>
+		<item name="wcf.bbcode.spoiler.show"><![CDATA[Spoiler anzeigen]]></item>
+		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Versteckter Text)]]></item>
+	</category>
+	
 	
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
@@ -1128,6 +1278,16 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.page.pagePosition"><![CDATA[Seite {#$pageNo} von {#$pages}]]></item>
 	</category>
 	
+	<category name="wcf.recaptcha">
+		<item name="wcf.recaptcha.title"><![CDATA[Sicherheitsabfrage („reCAPTCHA“)]]></item>
+		<item name="wcf.recaptcha.description"><![CDATA[Bitte geben Sie die untenstehenden Zeichen in das leere Feld ein. Groß- und Kleinschreibung müssen nicht beachtet werden. Sollten Sie das Bild trotz Neuladen nicht identifizieren können, wenden Sie sich an den Administrator.]]></item>
+		<item name="wcf.recaptcha.reload"><![CDATA[Neuladen]]></item>
+		<item name="wcf.recaptcha.audio"><![CDATA[Audio-Version]]></item>
+		<item name="wcf.recaptcha.image"><![CDATA[Bild-Version]]></item>
+		<item name="wcf.recaptcha.help"><![CDATA[Hilfe]]></item>
+		<item name="wcf.recaptcha.error.recaptchaString.false"><![CDATA[Sie haben leider nicht die korrekten Zeichen eingegeben. Bitte versuchen Sie es erneut!]]></item>
+	</category>
+	
 	<category name="wcf.style">
 		<item name="wcf.style.changeStyle"><![CDATA[Stil ändern]]></item>
 		<item name="wcf.style.colorPicker"><![CDATA[Farbwähler]]></item>
@@ -1171,6 +1331,7 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.user.error.isBanned"><![CDATA[Ihr Benutzeraccount wurde gesperrt{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
 	</category>
 	
-	<!-- i18n category -->
+	<!-- i18n categories -->
 	<category name="wcf.user.option" />
+	<category name="wcf.smiley" />
 </language>

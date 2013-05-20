@@ -65,5 +65,18 @@
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
+		
+		<cronjob>
+			<classname>wcf\system\cronjob\AttachmentCleanUpCronjob</classname>
+			<description><![CDATA[Deletes orphaned attachments]]></description>
+			<description language="de"><![CDATA[Löscht verwaiste Dateianhänge]]></description>
+			<startminute>0</startminute>
+			<starthour>2</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
 	</import>
 </data>

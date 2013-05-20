@@ -6,6 +6,9 @@
 			<category name="user.message">
 				<parent>user</parent>
 			</category>
+			<category name="user.message.attachment">
+				<parent>user.message</parent>
+			</category>
 			
 			<category name="mod"></category>
 			<category name="mod.general">
@@ -54,6 +57,16 @@
 			<category name="admin.content">
 				<parent>admin</parent>
 			</category>
+			<category name="admin.attachment">
+				<parent>admin.content</parent>
+			</category>
+			<category name="admin.content.bbcode">
+				<parent>admin.content</parent>
+			</category>
+			<category name="admin.content.smiley">
+				<parent>admin.content</parent>
+			</category>
+			
 			<category name="admin.community">
 				<parent>admin</parent>
 			</category>
@@ -219,6 +232,55 @@
 			
 			<option name="admin.template.canManageTemplate">
 				<categoryname>admin.template</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			
+			<option name="user.attachment.maxSize">
+				<categoryname>user.message.attachment</categoryname>
+				<optiontype>fileSize</optiontype>
+				<defaultvalue>1000000</defaultvalue>
+			</option>
+			<option name="user.attachment.allowedExtensions">
+				<categoryname>user.message.attachment</categoryname>
+				<optiontype>textarea</optiontype>
+				<defaultvalue><![CDATA[gif
+jpg
+jpeg
+png
+bmp
+zip
+txt
+pdf]]></defaultvalue>
+			</option>
+			<option name="user.attachment.maxCount">
+				<categoryname>user.message.attachment</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>10</defaultvalue>
+			</option>
+			<option name="user.attachment.quota">
+				<categoryname>user.message.attachment</categoryname>
+				<optiontype>fileSize</optiontype>
+				<defaultvalue>100000000</defaultvalue>
+			</option>
+			
+			<option name="admin.attachment.canManageAttachment">
+				<categoryname>admin.attachment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			
+			<option name="admin.content.bbcode.canManageBBCode">
+				<categoryname>admin.content.bbcode</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			
+			<option name="admin.content.smiley.canManageSmiley">
+				<categoryname>admin.content.smiley</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>

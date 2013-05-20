@@ -29,6 +29,8 @@
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="acpSearchProvider">acpSearchProvider.xml</instruction>
 		<instruction type="style">woltlab-basic-style.tgz</instruction>
+		<instruction type="bbcode">bbcode.xml</instruction>
+		<instruction type="smiley">smiley.xml</instruction> 
 	</instructions>
 	
 	<instructions type="update" fromversion="2.0.0 Alpha 1">
