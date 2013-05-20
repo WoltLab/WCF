@@ -41,18 +41,22 @@
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.application.management">
+			<controller><![CDATA[wcf\acp\page\ApplicationManagementPage]]></controller>
+			<parent>wcf.acp.menu.link.package.management</parent>
+			<permissions>admin.system.canManageApplication</permissions>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.package.list">
 			<controller><![CDATA[wcf\acp\page\PackageListPage]]></controller>
 			<parent>wcf.acp.menu.link.package.management</parent>
 			<permissions>admin.system.package.canUpdatePackage,admin.system.package.canUninstallPackage</permissions>
-			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.install">
 			<controller><![CDATA[wcf\acp\form\PackageStartInstallForm]]></controller>
 			<parent>wcf.acp.menu.link.package.management</parent>
 			<permissions>admin.system.package.canInstallPackage</permissions>
-			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.server">
@@ -68,29 +72,10 @@
 		</acpmenuitem>
 		<!-- /packages -->
 		
-		<!-- application -->
-		<acpmenuitem name="wcf.acp.menu.link.application">
-			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.application.management">
-			<controller><![CDATA[wcf\acp\page\ApplicationManagementPage]]></controller>
-			<parent>wcf.acp.menu.link.application</parent>
-			<permissions>admin.system.canManageApplication</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.application.cache">
-			<controller><![CDATA[wcf\acp\page\CacheListPage]]></controller>
-			<parent>wcf.acp.menu.link.application</parent>
-			<permissions>admin.system.canManageApplication</permissions>
-		</acpmenuitem>
-		<!-- /application -->
-		
 		<!-- cronjobs -->
 		<acpmenuitem name="wcf.acp.menu.link.cronjob">
 			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>4</showorder>
+			<showorder>3</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.list">
@@ -107,6 +92,19 @@
 			<showorder>2</showorder>
 		</acpmenuitem>
 		<!-- /cronjobs -->
+		
+		<!-- maintenance -->
+		<acpmenuitem name="wcf.acp.menu.link.maintenance">
+			<parent>wcf.acp.menu.link.system</parent>
+			<showorder>4</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.maintenance.cache">
+			<controller><![CDATA[wcf\acp\page\CacheListPage]]></controller>
+			<parent>wcf.acp.menu.link.maintenance</parent>
+			<permissions>admin.system.canManageApplication</permissions>
+		</acpmenuitem>
+		<!-- /maintenance -->
 		
 		<!-- log -->
 		<acpmenuitem name="wcf.acp.menu.link.log">

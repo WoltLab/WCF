@@ -23,7 +23,7 @@ class CacheListPage extends AbstractPage {
 	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.application.cache';
+	public $activeMenuItem = 'wcf.acp.menu.link.maintenance.cache';
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
