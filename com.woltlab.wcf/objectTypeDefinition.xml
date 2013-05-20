@@ -74,5 +74,20 @@
 			<name>com.woltlab.wcf.visitTracker.objectType</name>
 			<!-- <interfacename>wcf\system\visitTracker\IVisitTrackerObjectType</interfacename>-->
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.moderation.type</name>
+			<interfacename>wcf\system\moderation\queue\IModerationQueueManager</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.moderation.activation</name>
+			<interfacename>wcf\system\moderation\queue\activation\IModerationQueueActivationHandler</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.moderation.report</name>
+			<interfacename>wcf\system\moderation\queue\report\IModerationQueueReportHandler</interfacename>
+		</definition>
 	</import>
 </data>

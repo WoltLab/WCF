@@ -292,6 +292,7 @@
 		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Umbenennung]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Zeitraum nach dem Mitglieder dieser Benutzergruppe ihren Benutzernamen ändern können. [Zeit in Tagen]]]></item>
 		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Kann nicht ignoriert werden]]></item>
+		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Kann Moderation benutzen]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -1520,6 +1521,58 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[Ihre Nachricht enthält die folgenden BBCodes, die Sie nicht verwenden dürfen: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
 		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[Der Editor ist bereits aktiv, beenden Sie die Bearbeitung bevor Sie fortfahren.]]></item>
 		<item name="wcf.message.error.tooLong"><![CDATA[Ihre Nachricht ist zu lang. Es stehen maximal {#$maxTextLength} Zeichen zur Verfügung.]]></item>
+	</category>
+	
+	<category name="wcf.moderation">
+		<item name="wcf.moderation.assignedUser"><![CDATA[Zugewiesener Benutzer]]></item>
+		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Niemand]]></item>
+		<item name="wcf.moderation.comment"><![CDATA[Kommentar (intern)]]></item>
+		<item name="wcf.moderation.filterByType"><![CDATA[Typ]]></item>
+		<item name="wcf.moderation.filterByUser"><![CDATA[Zugewiesener Benutzer]]></item>
+		<item name="wcf.moderation.filterByUser.allEntries"><![CDATA[Alle Einträge]]></item>
+		<item name="wcf.moderation.filterByUser.myself"><![CDATA[Ich ({$__wcf->getUser()->username})]]></item>
+		<item name="wcf.moderation.filterByUser.nobody"><![CDATA[Niemand]]></item>
+		<item name="wcf.moderation.outstandingItems"><![CDATA[Ausstehende Elemente]]></item>
+		<item name="wcf.moderation.doneItems"><![CDATA[Erledigte Elemente]]></item>
+		<item name="wcf.moderation.lastChangeTime"><![CDATA[Letzte Änderung]]></item>
+		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
+		<item name="wcf.moderation.noItems"><![CDATA[Keine Einträge entsprechen den gewählten Kriterien]]></item>
+		<item name="wcf.moderation.noMoreItems"><![CDATA[Keine weiteren Einträge]]></item>
+		<item name="wcf.moderation.status"><![CDATA[Status]]></item>
+		<item name="wcf.moderation.status.all"><![CDATA[Alle Einträge]]></item>
+		<item name="wcf.moderation.status.done"><![CDATA[Erledigt]]></item>
+		<item name="wcf.moderation.time"><![CDATA[Datum]]></item>
+		<item name="wcf.moderation.title"><![CDATA[Titel]]></item>
+		<item name="wcf.moderation.type"><![CDATA[Typ]]></item>
+		<item name="wcf.moderation.type.all"><![CDATA[Alle Einträge]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation"><![CDATA[Freischaltung]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report"><![CDATA[Meldung]]></item>
+		<item name="wcf.moderation.showAll"><![CDATA[Alle Einträge anzeigen]]></item>
+	</category>
+	
+	<category name="wcf.moderation.activation">
+		<item name="wcf.moderation.activation"><![CDATA[Freischaltung]]></item>
+		<item name="wcf.moderation.activation.content"><![CDATA[Freizuschaltender Inhalt]]></item>
+		<item name="wcf.moderation.activation.enableContent"><![CDATA[Inhalt freischalten]]></item>
+		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[Wollen Sie diesen Inhalt wirklich freischalten?]]></item>
+		<item name="wcf.moderation.activation.removeContent"><![CDATA[Inhalt löschen]]></item>
+		<item name="wcf.moderation.activation.removeContent.confirmMessage"><![CDATA[Wollen Sie diesen Inhalt wirklich löschen?]]></item>
+	</category>
+	
+	<category name="wcf.moderation.report">
+		<item name="wcf.moderation.report"><![CDATA[Meldung bearbeiten]]></item>
+		<item name="wcf.moderation.report.alreadyReported"><![CDATA[Dieser Inhalt wurde bereits gemeldet.]]></item>
+		<item name="wcf.moderation.report.details"><![CDATA[Meldung]]></item>
+		<item name="wcf.moderation.report.reason"><![CDATA[Grund der Meldung]]></item>
+		<item name="wcf.moderation.report.reason.description"><![CDATA[Diese Funktion ist ausschließlich zu verwenden bei: Spam, Werbung und anderen problematischen (rassistischen, gewaltverherrlichenden, agressiven, beleidigenden oder sexistischen) Inhalten.]]></item>
+		<item name="wcf.moderation.report.removeContent"><![CDATA[Gemeldeten Inhalt löschen]]></item>
+		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Wollen Sie den gemeldeten Inhalt wirklich löschen?]]></item>
+		<item name="wcf.moderation.report.removeReport"><![CDATA[Meldung löschen]]></item>
+		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[Wollen Sie diese Meldung wirklich löschen?]]></item>
+		<item name="wcf.moderation.report.reportContent"><![CDATA[Inhalt melden]]></item>
+		<item name="wcf.moderation.report.reportedBy"><![CDATA[Gemeldet von]]></item>
+		<item name="wcf.moderation.report.reportedContent"><![CDATA[Gemeldeter Inhalt]]></item>
+		<item name="wcf.moderation.report.success"><![CDATA[Der Inhalt wurde den Moderatoren gemeldet.]]></item>
 	</category>
 		
 	<category name="wcf.page">

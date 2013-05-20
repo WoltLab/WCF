@@ -1,13 +1,8 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\user\avatar\UserAvatarAction;
-
 use wcf\data\user\avatar\Gravatar;
-
-use wcf\system\exception\UserInputException;
-
 use wcf\data\user\avatar\UserAvatar;
-
+use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
@@ -16,6 +11,8 @@ use wcf\data\user\UserProfileAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
+use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -291,6 +288,15 @@ class UserEditForm extends UserAddForm {
 			$action = new UserProfileAction(array($editor), 'updateUserOnlineMarking');
 			$action->executeAction();
 		}
+		
+		// remove assignments
+		$sql = "DELETE FROM	wcf".WCF_N."_moderation_queue_to_user
+			WHERE		userID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->user->userID));
+		
+		// reset moderation count
+		ModerationQueueManager::getInstance()->resetModerationCount($this->user->userID);
 		$this->saved();
 		
 		// reset password

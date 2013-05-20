@@ -120,5 +120,18 @@
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
+		
+		<cronjob>
+			<classname>wcf\system\cronjob\ModerationQueueCronjob</classname>
+			<description>Moderation Queue Cleanup</description>
+			<startminute>0</startminute>
+			<starthour>1</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
 	</import>
 </data>

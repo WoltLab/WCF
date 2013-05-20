@@ -126,5 +126,18 @@
 			<controller>wcf\form\SignatureEditForm</controller>
 			<languagevariable>wcf.user.usersOnline.location.SignatureEditForm</languagevariable>
 		</type>
+		
+		<!-- moderation type -->
+		<type>
+			<name>com.woltlab.wcf.moderation.activation</name>
+			<definitionname>com.woltlab.wcf.moderation.type</definitionname>
+			<classname>wcf\system\moderation\queue\ModerationQueueActivationManager</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.moderation.report</name>
+			<definitionname>com.woltlab.wcf.moderation.type</definitionname>
+			<classname>wcf\system\moderation\queue\ModerationQueueReportManager</classname>
+		</type>
+		<!-- /moderation type -->
 	</import>
 </data>

@@ -45,5 +45,9 @@
 		<coreobject>
 			<objectname><![CDATA[wcf\system\user\object\watch\UserObjectWatchHandler]]></objectname>
 		</coreobject>
+		
+		<coreobject>
+			<objectname><![CDATA[wcf\system\moderation\queue\ModerationQueueManager]]></objectname>
+		</coreobject>
 	</import>
 </data>
