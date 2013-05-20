@@ -325,7 +325,6 @@
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Filesystem (default)]]></item>
 		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached]]></item>
 		<item name="wcf.acp.option.cache_source_type.no"><![CDATA[Disable caching (not recommended)]]></item>
-		
 		<item name="wcf.acp.option.category.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
@@ -360,42 +359,34 @@
 		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Censorship]]></item>
 		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
-		
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookie Domain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Should be left blank except for special circumstances.]]></item>
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookie Path]]></item>
 		<item name="wcf.acp.option.cookie_path.description"><![CDATA[Value should be absolute to Document Root, e.g. “/forum” for “http://www.woltlab.com/forum”.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Cookie Prefix]]></item>
-		
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Exceeds the maximum value{if $option->maxvalue !== null} of {#$option->maxvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Below the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
-		
 		<item name="wcf.acp.option.export"><![CDATA[Download Options]]></item>
 		<item name="wcf.acp.option.export.download"><![CDATA[Download Options]]></item>
 		<item name="wcf.acp.option.export.download.description"><![CDATA[Downloads a backup of the configuration settings to your local machine. This is not a replacement for a backup!]]></item>
-		
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Enable gzip-compression]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Compresses content transfered to users, reduces traffic and page load time. Does not affect files, e.g. images.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Prevent Browser-caching]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers.description"><![CDATA[Prevents Browser’s caching ensuring your users are always viewing the latest content. Increases both traffic and server load.]]></item>
-		
 		<item name="wcf.acp.option.http_gzip_level"><![CDATA[gzip-compression level]]></item>
 		<item name="wcf.acp.option.http_gzip_level.description"><![CDATA[Values between 1 and 9 are valid, it is recommended to use “1” for good compression without causing high server loads.]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Graphics Library]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Library used for image processing, e.g. scaling uploaded images. “ImageMagick” is a lot faster, but is not available on every machine.]]></item>
-		
 		<item name="wcf.acp.option.import"><![CDATA[Restore Options]]></item>
 		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[Unable to restore options.]]></item>
 		<item name="wcf.acp.option.import.success"><![CDATA[Options have been restored.]]></item>
 		<item name="wcf.acp.option.import.upload"><![CDATA[Upload Options]]></item>
 		<item name="wcf.acp.option.import.upload.description"><![CDATA[Upload previously downloaded options file.]]></item>
 		<item name="wcf.acp.option.importAndExport"><![CDATA[Save &amp; Restore Options]]></item>
-		
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Store IP addresses]]></item>
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses for user-generated content, e.g. sessions, profiles or forum posts.]]></item>
-		
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[Administrator’s email address]]></item>
 		<item name="wcf.acp.option.mail_debug_logfile_path"><![CDATA[Debug Log Filename]]></item>
@@ -457,6 +448,12 @@
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Show WoltLab news on the administration control panel’s start page.]]></item>
+		<item name="wcf.acp.option.module_system_recaptcha"><![CDATA[Verification (“reCAPTCHA”)]]></item>
+		<item name="wcf.acp.option.module_system_recaptcha.description"><![CDATA[Enables security measures to prevent automatic form submission for bots.]]></item>
+		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request an own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin/create" class="externalURL">reCAPTCHA website</a>.]]></item>
+		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private API Key]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1126,6 +1123,16 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.page.sitemap"><![CDATA[Sitemap]]></item>
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Page {#$pageNo} of {#$pages}]]></item>
+	</category>
+	
+	<category name="wcf.recaptcha">
+		<item name="wcf.recaptcha.title"><![CDATA[Verification (“reCAPTCHA”)]]></item>
+		<item name="wcf.recaptcha.description"><![CDATA[Please enter the letters that are shown in the picture below (letters are not case-sensitive). If you cannot identify the captcha even after reloading it, please contact the administrator.]]></item>
+		<item name="wcf.recaptcha.reload"><![CDATA[Reload]]></item>
+		<item name="wcf.recaptcha.audio"><![CDATA[Audio Version]]></item>
+		<item name="wcf.recaptcha.image"><![CDATA[Image Version]]></item>
+		<item name="wcf.recaptcha.help"><![CDATA[Help]]></item>
+		<item name="wcf.recaptcha.error.recaptchaString.false"><![CDATA[You have entered the security code incorrectly. Please try again.]]></item>
 	</category>
 	
 	<category name="wcf.style">

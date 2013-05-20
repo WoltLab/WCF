@@ -103,6 +103,10 @@
 				<category name="security.antispam">
 					<parent>security</parent>
 				</category>
+					<category name="security.antispam.recaptcha">
+						<parent>security.antispam</parent>
+					</category>
+				
 				<category name="security.censorship">
 					<parent>security</parent>
 				</category>
@@ -154,6 +158,12 @@
 			</option>
 			
 			<option name="enable_woltlab_news">
+				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_system_recaptcha">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
@@ -312,6 +322,24 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<optiontype>textarea</optiontype>
 			</option>
 			<!-- /security.blacklist -->
+			
+			<option name="recaptcha_publickey">
+				<categoryname>security.antispam.recaptcha</categoryname>
+				<optiontype>text</optiontype>
+				<validationpattern>^[^/]*$</validationpattern>
+				<!-- wcf-recaptcha.woltlab.com global key -->
+				<defaultvalue>6LfOlMYSAAAAADvo3s4puBAYDqI-6YK2ybe7BJE5</defaultvalue>
+				<showorder>1</showorder>
+			</option>
+			
+			<option name="recaptcha_privatekey">
+				<categoryname>security.antispam.recaptcha</categoryname>
+				<optiontype>text</optiontype>
+				<validationpattern>^[^/]*$</validationpattern>
+				<!-- wcf-recaptcha.woltlab.com global key -->
+				<defaultvalue>6LfOlMYSAAAAAKR3m_EFxmDv1xS8PCfeaSZ2LdG9</defaultvalue>
+				<showorder>2</showorder>
+			</option>
 			
 			<!-- general.system.date -->
 			<option name="timezone">
