@@ -3,8 +3,8 @@
 		<span class="icon icon48 icon-spinner"></span>
 		
 		<div>
-			<h1>{lang}wcf.acp.package.installation.title{/lang}</h1>
-			<p id="packageInstallationAction">{lang}wcf.acp.package.installation.step.prepare{/lang}</span></p>
+			<h1>{lang}wcf.acp.package.{@$installationType}.title{/lang}</h1>
+			<p id="packageInstallationAction">{lang}wcf.acp.package.{@$installationType}.step.prepare{/lang}</span></p>
 			<small><progress id="packageInstallationProgress" value="0" max="100">0%</progress> <span id="packageInstallationProgressLabel">0%</span></small>
 		</div>
 	</header>

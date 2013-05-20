@@ -65,6 +65,12 @@ class Tar implements IArchive {
 	protected $mode = 'rb';
 	
 	/**
+	 * chunk size for extracting
+	 * @var	integer
+	 */
+	const CHUNK_SIZE = 8192;
+	
+	/**
 	 * Creates a new Tar object.
 	 * archiveName must be tarball or gzipped tarball
 	 * 
@@ -209,18 +215,11 @@ class Tar implements IArchive {
 		
 		$targetFile = new File($destination);
 		
-		// read data
-		$n = floor($header['size'] / 512);
-		for ($i = 0; $i < $n; $i++) {
-			$content = $this->file->read(512);
-			$targetFile->write($content, 512);
-		}
-		if (($header['size'] % 512) != 0) {
-			$content = $this->file->read(512);
-			$targetFile->write($content, ($header['size'] % 512));
-		}
-		
+		// read and write data
+		$buffer = $this->file->read($header['size']);
+		$targetFile->write($buffer);
 		$targetFile->close();
+		
 		if (FileUtil::isApacheModule() || !@$targetFile->is_writable()) {
 			@$targetFile->chmod(0777);
 		}
