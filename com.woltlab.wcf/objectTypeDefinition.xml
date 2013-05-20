@@ -29,6 +29,11 @@
 		<definition>
 			<name>com.woltlab.wcf.attachment.objectType</name>
 			<interfacename>wcf\system\attachment\IAttachmentObjectType</interfacename>
-		</definition>	
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.message.quote</name>
+			<interfacename>wcf\system\message\IMessageQuoteHandler</interfacename>
+		</definition>
 	</import>
 </data>

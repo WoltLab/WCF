@@ -246,6 +246,11 @@
 		<item name="wcf.acp.group.option.admin.content.bbcode.canManageBBCode"><![CDATA[Kann BBCodes verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Kann Smileys verwalten]]></item>
+		<item name="wcf.acp.group.option.user.message.canUseSmilies"><![CDATA[Kann Smileys benutzen]]></item>
+		<item name="wcf.acp.group.option.user.message.canUseHtml"><![CDATA[Kann HTML benutzen]]></item>
+		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Kann BBCodes benutzen]]></item>
+		<item name="wcf.acp.group.option.user.message.allowedBBCodes"><![CDATA[Erlaubte BBCodes]]></item>
+		<item name="wcf.acp.group.option.user.message.allowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitglieder dieser Benutzergruppe verwendet werden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -542,6 +547,21 @@
 		<item name="wcf.acp.option.attachment_storage.description"><![CDATA[Sie können optional einen vom Standard abweichenden Speicherort für die Dateianhänge definieren. Bereits existierende Dateianhänge müssen bei einer Änderung des Speicherortes manuell in den neuen Ort übertragen werden.]]></item>
 		<item name="wcf.acp.option.module_attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smileys]]></item>
+		<item name="wcf.acp.option.category.message.censorship"><![CDATA[Zensur-Funktion]]></item>
+		<item name="wcf.acp.option.censored_words"><![CDATA[Zu zensierende Wörter]]></item>
+		<item name="wcf.acp.option.censored_words.description"><![CDATA[Ein Wort pro Zeile. Sollte bei der Erstellung einer Nachricht eines dieser Wörter verwendet werden, so wird die Erstellung verweigert.<br />
+<em>Verwenden Sie „*“, um Wortteile zu finden: „wolt*“ findet auch „woltlab“</em><br />
+<em>Verwenden Sie „~“, um Worttrennungen zu finden: „wolt~“ findet auch „wolt-lab“</em>]]></item>
+		<item name="wcf.acp.option.enable_censorship"><![CDATA[Zensur aktivieren]]></item>
+		<item name="wcf.acp.option.enable_censorship.description"><![CDATA[Aktiviert die Zensur der unten angegebenen Wörter in allen von Benutzern geschriebenen Texten.]]></item>
+		<item name="wcf.acp.option.category.message.general.share"><![CDATA[Teilen]]></item>
+		<item name="wcf.acp.option.enable_bbcodes_default_value"><![CDATA[Darstellung von BBCodes aktivieren [Vorgabewert]]]></item>
+		<item name="wcf.acp.option.enable_html_default_value"><![CDATA[Darstellung von HTML aktivieren [Vorgabewert]]]></item>
+		<item name="wcf.acp.option.enable_smilies_default_value"><![CDATA[Darstellung von Smileys aktivieren [Vorgabewert]]]></item>
+		<item name="wcf.acp.option.pre_parse_default_value"><![CDATA[URLs automatisch erkennen [Vorgabewert]]]></item>
+		<item name="wcf.acp.option.show_signature_default_value"><![CDATA[Signatur anzeigen [Vorgabewert]]]></item>
+		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Buttons zum Teilen von Inhalten anzeigen]]></item>
+		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Anzahl der Teilungen anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1268,6 +1288,46 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.imageViewer.enlarge"><![CDATA[Bild direkt anzeigen]]></item>
 		<item name="wcf.imageViewer.next"><![CDATA[Nächstes Bild]]></item>
 		<item name="wcf.imageViewer.previous"><![CDATA[Vorheriges Bild]]></item>
+	</category>
+	
+	<category name="wcf.message">
+		<item name="wcf.message.bbcode.code.copy"><![CDATA[Inhalt kopieren]]></item>
+		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Alle Zitate einfügen]]></item>
+		<item name="wcf.message.quote.insertQuote"><![CDATA[Zitat einfügen]]></item>
+		<item name="wcf.message.quote.insertSelectedQuotes"><![CDATA[Markierte Zitate einfügen]]></item>
+		<item name="wcf.message.quote.manageQuotes"><![CDATA[Zitate verwalten]]></item>
+		<item name="wcf.message.quote.quoteSelected"><![CDATA[Auswahl zitieren]]></item>
+		<item name="wcf.message.quote.showQuotes"><![CDATA[Zitate (#count#)]]></item>
+		<item name="wcf.message.quote.quoteMessage"><![CDATA[Zitieren]]></item>
+		<item name="wcf.message.quote.removeAllQuotes"><![CDATA[Alle Zitate entfernen]]></item>
+		<item name="wcf.message.quote.removeSelectedQuotes"><![CDATA[Markierte Zitate entfernen]]></item>
+		<item name="wcf.message.settings"><![CDATA[Einstellungen]]></item>
+		<item name="wcf.message.settings.enableBBCodes"><![CDATA[Darstellung von BBCodes aktivieren]]></item>
+		<item name="wcf.message.settings.enableBBCodes.description"><![CDATA[Sie können BBCodes zur Formatierung nutzen, sofern diese Option aktiviert ist.]]></item>
+		<item name="wcf.message.settings.enableHtml"><![CDATA[Darstellung von HTML aktivieren]]></item>
+		<item name="wcf.message.settings.enableHtml.description"><![CDATA[Wenn Sie diese Option aktiviert haben, können Sie HTML zur Formatierung verwenden.]]></item>
+		<item name="wcf.message.settings.enableSmilies"><![CDATA[Darstellung von Smileys aktivieren]]></item>
+		<item name="wcf.message.settings.enableSmilies.description"><![CDATA[Smiley-Code wird in Ihrem Beitrag automatisch als Smiley-Grafik dargestellt.]]></item>
+		<item name="wcf.message.settings.preParse"><![CDATA[URLs automatisch erkennen]]></item>
+		<item name="wcf.message.settings.preParse.description"><![CDATA[Internet-Adressen werden automatisch erkannt und umgewandelt.]]></item>
+		<item name="wcf.message.settings.showSignature"><![CDATA[Signatur anzeigen]]></item>
+		<item name="wcf.message.settings.showSignature.description"><![CDATA[Die im Profil eingestellte Signatur wird an diese Nachricht angehängt.]]></item>
+		<item name="wcf.message.share"><![CDATA[Teilen]]></item>
+		<item name="wcf.message.share.facebook"><![CDATA[Facebook]]></item>
+		<item name="wcf.message.share.google"><![CDATA[Google Plus]]></item>
+		<item name="wcf.message.share.permalink"><![CDATA[Permalink]]></item>
+		<item name="wcf.message.share.permalink.bbcode"><![CDATA[BBCode]]></item>
+		<item name="wcf.message.share.permalink.html"><![CDATA[HTML]]></item>
+		<item name="wcf.message.share.reddit"><![CDATA[Reddit]]></item>
+		<item name="wcf.message.share.twitter"><![CDATA[Twitter]]></item>
+		<item name="wcf.message.smilies"><![CDATA[Smileys]]></item>
+		<item name="wcf.message.button.extendedReply"><![CDATA[Erweiterte Antwort]]></item>
+		<item name="wcf.message.button.extendedEdit"><![CDATA[Erweiterte Bearbeitung]]></item>
+		<item name="wcf.message.new"><![CDATA[Neu]]></item>
+		<item name="wcf.message.error.censoredWordsFound"><![CDATA[Ihre Nachricht enthält folgende zensierte Wörter: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}]]></item>
+		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[Ihre Nachricht enthält die folgenden BBCodes, die Sie nicht verwenden dürfen: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
+		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[Der Editor ist bereits aktiv, beenden Sie die Bearbeitung bevor Sie fortfahren.]]></item>
+		<item name="wcf.message.error.tooLong"><![CDATA[Ihre Nachricht ist zu lang. Es stehen maximal {#$maxTextLength} Zeichen zur Verfügung.]]></item>
 	</category>
 		
 	<category name="wcf.page">

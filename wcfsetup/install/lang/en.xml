@@ -245,6 +245,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.content.bbcode.canManageBBCode"><![CDATA[Can manage BBCodes]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Can manage smilies]]></item>
+		<item name="wcf.acp.group.option.user.message.canUseSmilies"><![CDATA[Can use smilies]]></item>
+		<item name="wcf.acp.group.option.user.message.canUseHtml"><![CDATA[Can use HTML]]></item>
+		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Can use BBCodes]]></item>
+		<item name="wcf.acp.group.option.user.message.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
+		<item name="wcf.acp.group.option.user.message.allowedBBCodes.description"><![CDATA[Selected BBCodes may be used by members of this group.]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -541,6 +546,21 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.attachment_storage.description"><![CDATA[Changes storage location for attachments. Heads up! You are responsible to move already existing attachments to the new location.]]></item>
 		<item name="wcf.acp.option.module_attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smilies]]></item>
+		<item name="wcf.acp.option.category.message.censorship"><![CDATA[Censorship]]></item>
+		<item name="wcf.acp.option.censored_words"><![CDATA[Censored Words]]></item>
+		<item name="wcf.acp.option.censored_words.description"><![CDATA[One word per Line. Using at least one of these words within a message causes an immediate rejection.<br />
+<em>Use “*” to match parts: “wolt*” matches “woltlab”</em><br />
+<em>Use “~” to find splitted parts: “wolt~” matches “wolt-lab”</em>]]></item>
+		<item name="wcf.acp.option.enable_censorship"><![CDATA[Enable Censorship]]></item>
+		<item name="wcf.acp.option.enable_censorship.description"><![CDATA[Enables censorship for all messages containing the words below.]]></item>
+		<item name="wcf.acp.option.category.message.general.share"><![CDATA[Share]]></item>
+		<item name="wcf.acp.option.enable_bbcodes_default_value"><![CDATA[Enable BBCodes [default value]]]></item>
+		<item name="wcf.acp.option.enable_html_default_value"><![CDATA[Enable HTML [default value]]]></item>
+		<item name="wcf.acp.option.enable_smilies_default_value"><![CDATA[Enable smilies [default value]]]></item>
+		<item name="wcf.acp.option.pre_parse_default_value"><![CDATA[Detect URLs [default value]]]></item>
+		<item name="wcf.acp.option.show_signature_default_value"><![CDATA[Show signatures [default value]]]></item>
+		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Show content share button]]></item>
+		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Show number of shares]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1267,6 +1287,46 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.imageViewer.previous"><![CDATA[Previous Image]]></item>
 	</category>
 		
+	<category name="wcf.message">
+		<item name="wcf.message.bbcode.code.copy"><![CDATA[Copy Contents]]></item>
+		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Insert All Quotes]]></item>
+		<item name="wcf.message.quote.insertQuote"><![CDATA[Insert Quote]]></item>
+		<item name="wcf.message.quote.insertSelectedQuotes"><![CDATA[Insert Marked Quotes]]></item>
+		<item name="wcf.message.quote.manageQuotes"><![CDATA[Manage Quotes]]></item>
+		<item name="wcf.message.quote.quoteSelected"><![CDATA[Quote Selection]]></item>
+		<item name="wcf.message.quote.showQuotes"><![CDATA[Quotes (#count#)]]></item>
+		<item name="wcf.message.quote.quoteMessage"><![CDATA[Quote]]></item>
+		<item name="wcf.message.quote.removeAllQuotes"><![CDATA[Remove All Quotes]]></item>
+		<item name="wcf.message.quote.removeSelectedQuotes"><![CDATA[Removed Marked Quotes]]></item>
+		<item name="wcf.message.settings"><![CDATA[Settings]]></item>
+		<item name="wcf.message.settings.enableBBCodes"><![CDATA[Enable BBCodes]]></item>
+		<item name="wcf.message.settings.enableBBCodes.description"><![CDATA[Allows BBCode usage once enabled.]]></item>
+		<item name="wcf.message.settings.enableHtml"><![CDATA[Enable HTML]]></item>
+		<item name="wcf.message.settings.enableHtml.description"><![CDATA[Allows HTML usage once enabled.]]></item>
+		<item name="wcf.message.settings.enableSmilies"><![CDATA[Enable smilies]]></item>
+		<item name="wcf.message.settings.enableSmilies.description"><![CDATA[Smilies will be displayed as a smiley-image.]]></item>
+		<item name="wcf.message.settings.preParse"><![CDATA[Detect links]]></item>
+		<item name="wcf.message.settings.preParse.description"><![CDATA[Links to webpages are automatically detected.]]></item>
+		<item name="wcf.message.settings.showSignature"><![CDATA[Show signature]]></item>
+		<item name="wcf.message.settings.showSignature.description"><![CDATA[Appends signature to this message, can be edited in your profile.]]></item>
+		<item name="wcf.message.share"><![CDATA[Share]]></item>
+		<item name="wcf.message.share.facebook"><![CDATA[Facebook]]></item>
+		<item name="wcf.message.share.google"><![CDATA[Google Plus]]></item>
+		<item name="wcf.message.share.permalink"><![CDATA[Permalink]]></item>
+		<item name="wcf.message.share.permalink.bbcode"><![CDATA[BBCode]]></item>
+		<item name="wcf.message.share.permalink.html"><![CDATA[HTML]]></item>
+		<item name="wcf.message.share.reddit"><![CDATA[Reddit]]></item>
+		<item name="wcf.message.share.twitter"><![CDATA[Twitter]]></item>
+		<item name="wcf.message.smilies"><![CDATA[Smilies]]></item>
+		<item name="wcf.message.button.extendedReply"><![CDATA[More Options]]></item>
+		<item name="wcf.message.button.extendedEdit"><![CDATA[More Options]]></item>
+		<item name="wcf.message.new"><![CDATA[New]]></item>
+		<item name="wcf.message.error.censoredWordsFound"><![CDATA[Message contains censored words: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}]]></item>
+		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[Message contains disallowed BBCodes: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
+		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[Editor is already in use, please finish editing before continuing.]]></item>
+		<item name="wcf.message.error.tooLong"><![CDATA[Message is too long, must be below {#$maxTextLength} characters.]]></item>
+	</category>
+	
 	<category name="wcf.page">
 		<item name="wcf.page.pageNo"><![CDATA[Page {#$pageNo}]]></item>
 		<item name="wcf.page.offline"><![CDATA[Page is currently in maintenance mode{if OFFLINE_MESSAGE != ''}:{else}.{/if}]]></item>

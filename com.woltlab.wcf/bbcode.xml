@@ -159,5 +159,19 @@
 			<allowedchildren>none</allowedchildren>
 			<sourcecode>1</sourcecode>
 		</bbcode>
+		
+		<bbcode name="attach">
+			<classname>wcf\system\bbcode\AttachmentBBCode</classname>
+			<attributes>
+				<attribute name="0">
+					<validationpattern>^\d+$</validationpattern>
+					<required>1</required>
+					<usetext>1</usetext>
+				</attribute>
+				<attribute name="1">
+					<validationpattern>^(left|right)$</validationpattern>
+				</attribute>
+			</attributes>
+		</bbcode>
 	</import>
 </data>
