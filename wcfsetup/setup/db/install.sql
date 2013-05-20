@@ -339,6 +339,31 @@ CREATE TABLE wcf1_language_server (
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0
 );
 
+DROP TABLE IF EXISTS wcf1_like;
+CREATE TABLE wcf1_like (
+	likeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	objectID INT(10) NOT NULL DEFAULT 0,
+	objectTypeID INT(10) NOT NULL,
+	objectUserID INT(10),
+	userID INT(10) NOT NULL,
+	time INT(10) NOT NULL DEFAULT 0,
+	likeValue TINYINT(1) NOT NULL DEFAULT 1,
+	UNIQUE KEY (objectTypeID, objectID, userID)
+);
+
+DROP TABLE IF EXISTS wcf1_like_object;
+CREATE TABLE wcf1_like_object (
+	likeObjectID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	objectTypeID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL DEFAULT 0, 
+	objectUserID INT(10),
+	likes MEDIUMINT(7) NOT NULL DEFAULT 0,
+	dislikes MEDIUMINT(7) NOT NULL DEFAULT 0,
+	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
+	cachedUsers TEXT,
+	UNIQUE KEY (objectTypeID, objectID)
+);
+
 DROP TABLE IF EXISTS wcf1_moderation_queue;
 CREATE TABLE wcf1_moderation_queue (
 	queueID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -804,13 +829,15 @@ CREATE TABLE wcf1_user (
 	activityPoints INT(10) NOT NULL DEFAULT 0,
 	notificationMailToken VARCHAR(20) NOT NULL DEFAULT '',
 	authData VARCHAR(255) NOT NULL DEFAULT '',
+	likesReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
 	
 	KEY username (username),
 	KEY registrationDate (registrationDate),
 	KEY styleID (styleID),
 	KEY activationCode (activationCode),
 	KEY registrationData (registrationIpAddress, registrationDate),
-	KEY activityPoints (activityPoints)
+	KEY activityPoints (activityPoints),
+	KEY likesReceived (likesReceived)
 );
 
 DROP TABLE IF EXISTS wcf1_user_activity_event;
@@ -1316,6 +1343,13 @@ ALTER TABLE wcf1_moderation_queue ADD FOREIGN KEY (assignedUserID) REFERENCES wc
 
 ALTER TABLE wcf1_moderation_queue_to_user ADD FOREIGN KEY (queueID) REFERENCES wcf1_moderation_queue (queueID) ON DELETE CASCADE;
 ALTER TABLE wcf1_moderation_queue_to_user ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_like ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+ALTER TABLE wcf1_like ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_like ADD FOREIGN KEY (objectUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_like_object ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+ALTER TABLE wcf1_like_object ADD FOREIGN KEY (objectUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 
 /* default inserts */

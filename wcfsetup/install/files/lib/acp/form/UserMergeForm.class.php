@@ -106,6 +106,32 @@ class UserMergeForm extends AbstractForm {
 		
 		parent::save();
 		
+		// like (userID)
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
+		$sql = "UPDATE IGNORE	wcf".WCF_N."_like
+			SET		userID = ?
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		// like (objectUserID)
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("objectUserID IN (?)", array($this->mergedUserIDs));
+		$sql = "UPDATE	wcf".WCF_N."_like
+			SET	objectUserID = ?
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		
+		// like_object
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("objectUserID IN (?)", array($this->mergedUserIDs));
+		$sql = "UPDATE	wcf".WCF_N."_like_object
+			SET	objectUserID = ?
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		
 		// user_follow (userID)
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID IN (?)", array($this->mergedUserIDs));

@@ -292,6 +292,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Minimum period until members may rename themselves. [time in days]]]></item>
 		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Can not be ignored]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Can access moderation]]></item>
+		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Like System]]></item>
+		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Can view likes]]></item>
+		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Can like content]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -699,6 +702,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Profile visitors will be discarded if they are older than the given period. [time in days]]]></item>
 		<item name="wcf.acp.option.recent_activity_items"><![CDATA[Number of Entries]]></item>
 		<item name="wcf.acp.option.recent_activity_sidebar_items"><![CDATA[Number of Entries]]></item>
+		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Like System]]></item>
+		<item name="wcf.acp.option.module_like"><![CDATA[Like System]]></item>
+		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Users can like their own content]]></item>
+		<item name="wcf.acp.option.like_enable_dislike"><![CDATA[Users can dislike content]]></item>
+		<item name="wcf.acp.option.like_show_summary"><![CDATA[Show like summary]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1224,6 +1232,8 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.dashboard.objectType.com.woltlab.wcf.user.MembersListPage"><![CDATA[Members List]]></item>
 		<item name="wcf.dashboard.box.mostActiveMembers.points"><![CDATA[{#$activeMember->activityPoints} Point{if $activeMember->activityPoints != 1}s{/if}]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.recentActivity"><![CDATA[Recent Activity]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.like.mostLikedMembers"><![CDATA[Most Liked Members]]></item>
+		<item name="wcf.dashboard.box.mostLikedMembers.likes"><![CDATA[{#$likedMember->likesReceived} Like{if $likedMember->likesReceived != 1}s{/if}]]></item>
 	</category>
 	
 	<category name="wcf.date">
@@ -1479,7 +1489,20 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.imageViewer.next"><![CDATA[Next Image]]></item>
 		<item name="wcf.imageViewer.previous"><![CDATA[Previous Image]]></item>
 	</category>
-		
+	
+	<category name="wcf.like">
+		<item name="wcf.like.cumulativeLikes"><![CDATA[Likes]]></item>
+		<item name="wcf.like.tooltip"><![CDATA[{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}]]></item>
+		<item name="wcf.like.jsTooltip"><![CDATA[($likes > 0 ? ($likes + " Like" + ($likes != 1 ? "s" : "") + ($dislikes > 0 ? ", " : "")) : "") + ($dislikes > 0 ? ($dislikes + " Dislike" + ($dislikes != 1 ? "s" : "")) : "")]]></item>
+		<item name="wcf.like.button.like"><![CDATA[Like]]></item>
+		<item name="wcf.like.button.dislike"><![CDATA[Dislike]]></item>
+		<item name="wcf.like.likesReceived"><![CDATA[Likes Received]]></item>
+		<item name="wcf.like.summary"><![CDATA[$userArray.join(", ") + ($others > 0 ? (" and " + $others + (" other" + ($others > 1 ? "s" : ""))) : "") + " like" + ($userArray.length == 1 ? "s" : "") +  " this."]]></item>
+		<item name="wcf.like.details"><![CDATA[Details]]></item>
+		<item name="wcf.like.details.like"><![CDATA[Likes]]></item>
+		<item name="wcf.like.details.dislike"><![CDATA[Dislikes]]></item>
+	</category>
+	
 	<category name="wcf.message">
 		<item name="wcf.message.bbcode.code.copy"><![CDATA[Copy Contents]]></item>
 		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Insert All Quotes]]></item>
@@ -1795,6 +1818,7 @@ Your {@PAGE_TITLE|language} team]]></item>
 		<item name="wcf.user.login.3rdParty"><![CDATA[Third-Party Login]]></item>
 		<item name="wcf.user.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Last Activity]]></item>
+		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Likes Received]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

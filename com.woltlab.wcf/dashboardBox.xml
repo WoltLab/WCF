@@ -35,5 +35,10 @@
 			<classname><![CDATA[wcf\system\dashboard\box\MostActiveMembersDashboardBox]]></classname>
 			<boxtype>sidebar</boxtype>
 		</dashboardbox>
+		
+		<dashboardbox name="com.woltlab.wcf.like.mostLikedMembers">
+			<classname><![CDATA[wcf\system\dashboard\box\MostLikedMembersDashboardBox]]></classname>
+			<boxtype>sidebar</boxtype>
+		</dashboardbox>
 	</import>
 </data>

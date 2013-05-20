@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>6
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
 	<category name="wcf.acl">
 		<item name="wcf.acl.option.deny"><![CDATA[Verweigern]]></item>
@@ -293,6 +293,9 @@
 		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Zeitraum nach dem Mitglieder dieser Benutzergruppe ihren Benutzernamen ändern können. [Zeit in Tagen]]]></item>
 		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Kann nicht ignoriert werden]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Kann Moderation benutzen]]></item>
+		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Like-System]]></item>
+		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Kann vergebene Likes sehen]]></item>
+		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Kann Inhalte liken]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -700,6 +703,11 @@
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Zeitraum nach dem Profil-Besucher automatisch verworfen werden. [Zeitraum in Tagen]]]></item>
 		<item name="wcf.acp.option.recent_activity_items"><![CDATA[Anzahl Einträge]]></item>
 		<item name="wcf.acp.option.recent_activity_sidebar_items"><![CDATA[Anzahl Einträge]]></item>
+		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Like-System]]></item>
+		<item name="wcf.acp.option.module_like"><![CDATA[Like-System]]></item>
+		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Benutzer können eigene Inhalte liken]]></item>
+		<item name="wcf.acp.option.like_enable_dislike"><![CDATA[Benutzer können Inhalte disliken]]></item>
+		<item name="wcf.acp.option.like_show_summary"><![CDATA[Zusammenfassung anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1227,6 +1235,8 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.dashboard.objectType.com.woltlab.wcf.user.MembersListPage"><![CDATA[Mitgliederliste]]></item>
 		<item name="wcf.dashboard.box.mostActiveMembers.points"><![CDATA[{#$activeMember->activityPoints} Punkt{if $activeMember->activityPoints != 1}e{/if}]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.recentActivity"><![CDATA[Letzte Aktivität]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.like.mostLikedMembers"><![CDATA[Mitglieder mit den meisten Likes]]></item>
+		<item name="wcf.dashboard.box.mostLikedMembers.likes"><![CDATA[{#$likedMember->likesReceived} Like{if $likedMember->likesReceived != 1}s{/if}]]></item>
 	</category>
 	
 	<category name="wcf.date">
@@ -1481,6 +1491,19 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.imageViewer.enlarge"><![CDATA[Bild direkt anzeigen]]></item>
 		<item name="wcf.imageViewer.next"><![CDATA[Nächstes Bild]]></item>
 		<item name="wcf.imageViewer.previous"><![CDATA[Vorheriges Bild]]></item>
+	</category>
+	
+	<category name="wcf.like">
+		<item name="wcf.like.cumulativeLikes"><![CDATA[Likes]]></item>
+		<item name="wcf.like.tooltip"><![CDATA[{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}]]></item>
+		<item name="wcf.like.jsTooltip"><![CDATA[($likes > 0 ? ($likes + " Like" + ($likes != 1 ? "s" : "") + ($dislikes > 0 ? ", " : "")) : "") + ($dislikes > 0 ? ($dislikes + " Dislike" + ($dislikes != 1 ? "s" : "")) : "")]]></item>
+		<item name="wcf.like.button.like"><![CDATA[Gefällt mir]]></item>
+		<item name="wcf.like.button.dislike"><![CDATA[Gefällt mir nicht]]></item>
+		<item name="wcf.like.likesReceived"><![CDATA[Erhaltene Likes]]></item>
+		<item name="wcf.like.summary"><![CDATA[$userArray.join(", ") + ($others > 0 ? (" und " + $others + (" weitere" + ($others > 1 ? "n" : "m"))) : "") + " gefällt das."]]></item>
+		<item name="wcf.like.details"><![CDATA[Details]]></item>
+		<item name="wcf.like.details.like"><![CDATA[Likes]]></item>
+		<item name="wcf.like.details.dislike"><![CDATA[Dislikes]]></item>
 	</category>
 	
 	<category name="wcf.message">
@@ -1792,6 +1815,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.login.3rdParty"><![CDATA[Anmeldung über Drittanbieter]]></item>
 		<item name="wcf.user.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
+		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Erhaltene Likes]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

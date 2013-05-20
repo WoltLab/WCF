@@ -165,6 +165,9 @@
 					<category name="message.general.share">
 						<parent>message.general</parent>
 					</category>
+					<category name="message.general.likes">
+						<parent>message.general</parent>
+					</category>
 				
 				<category name="message.attachment">
 					<parent>message</parent>
@@ -274,6 +277,12 @@
 			</option>
 			<option name="module_dashboard_page">
 				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_like">
+				<categoryname>module.community</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
@@ -849,7 +858,8 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<defaultvalue><![CDATA[username]]></defaultvalue>
 				<selectoptions><![CDATA[username:wcf.user.username
 registrationDate:wcf.user.registrationDate
-activityPoints:wcf.user.activityPoint]]></selectoptions>
+activityPoints:wcf.user.activityPoint
+likedReceived:wcf.like.likesReceived]]></selectoptions>
 			</option>
 			<option name="members_list_default_sort_order">
 				<categoryname>user.list.members</categoryname>
@@ -928,6 +938,27 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<defaultvalue>5</defaultvalue>
 			</option>
 			<!-- /dashboard -->
+			
+			<option name="like_allow_for_own_content">
+				<categoryname>message.general.likes</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_like</options>
+			</option>
+			
+			<option name="like_enable_dislike">
+				<categoryname>message.general.likes</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_like</options>
+			</option>
+			
+			<option name="like_show_summary">
+				<categoryname>message.general.likes</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_like</options>
+			</option>
 		</options>
 	</import>
 </data>

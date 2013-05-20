@@ -16,6 +16,11 @@
 	<dl class="plain statsDataList">
 		{event name='statistics'}
 		
+		{if MODULE_LIKE}
+			<dt>{lang}wcf.like.likesReceived{/lang}</dt>
+			<dd>{#$user->likesReceived}</dd>
+		{/if}
+		
 		<dt>{if $user->activityPoints}<a class="activityPointsDisplay jsTooltip" title="{lang}wcf.user.activityPoint.showDetails{/lang}" data-user-id="{@$user->userID}">{lang}wcf.user.activityPoint{/lang}</a>{else}{lang}wcf.user.activityPoint{/lang}{/if}</dt>
 		<dd>{#$user->activityPoints}</dd>
 		
