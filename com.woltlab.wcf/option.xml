@@ -173,6 +173,10 @@
 					<parent>message</parent>
 					<options>module_attachment</options>
 				</category>
+				
+				<category name="message.sidebar">
+					<parent>message</parent>
+				</category>
 			<!-- /message -->
 			
 			<category name="dashboard">
@@ -964,6 +968,44 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<options>module_like</options>
+			</option>
+			
+			<option name="message_sidebar_enable_online_status">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="message_sidebar_enable_rank">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_user_rank</options>
+			</option>
+			<option name="message_sidebar_enable_avatar">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="message_sidebar_enable_message_group_starter_icon">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="message_sidebar_enable_likes_received">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_like</options>
+			</option>
+			<option name="message_sidebar_enable_activity_points">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="message_sidebar_user_options">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>useroptions</optiontype>
+				<defaultvalue></defaultvalue>
 			</option>
 		</options>
 	</import>
