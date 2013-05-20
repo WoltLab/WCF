@@ -296,6 +296,14 @@
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Like-System]]></item>
 		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Kann vergebene Likes sehen]]></item>
 		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Kann Inhalte liken]]></item>
+		<item name="wcf.acp.group.option.category.user.profileComment"><![CDATA[Benutzerprofil-Pinnwand]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canAddComment"><![CDATA[Kann Pinnwand-Kommentare erstellen]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Kann eigene Pinnwand-Kommentare bearbeiten]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Kann eigene Pinnwand-Kommentare löschen]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canEditComment"><![CDATA[Kann Pinnwand-Kommentare bearbeiten]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canDeleteComment"><![CDATA[Kann Pinnwand-Kommentare löschen]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canModerateComment"><![CDATA[Kann Pinnwand-Kommentare moderieren]]></item>
+		<item name="wcf.acp.group.option.category.mod.profileComment"><![CDATA[Benutzerprofil-Pinnwand]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -708,6 +716,7 @@
 		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Benutzer können eigene Inhalte liken]]></item>
 		<item name="wcf.acp.option.like_enable_dislike"><![CDATA[Benutzer können Inhalte disliken]]></item>
 		<item name="wcf.acp.option.like_show_summary"><![CDATA[Zusammenfassung anzeigen]]></item>
+		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[Benutzerprofil-Pinnwand]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1190,7 +1199,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Versteckter Text)]]></item>
 	</category>
 	
-	
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 		<item name="wcf.category.button.list"><![CDATA[Kategorien auflisten]]></item>
@@ -1217,6 +1225,16 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer markiert]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Zusammenfügen]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Aktivieren]]></item>
+	</category>
+	
+	<category name="wcf.comment">
+		<item name="wcf.comment.add"><![CDATA[Kommentar schreiben …]]></item>
+		<item name="wcf.comment.delete.confirmMessage"><![CDATA[Wollen Sie diesen Kommentar wirklich löschen?]]></item>
+		<item name="wcf.comment.description"><![CDATA[Drücken Sie die Eingabetaste, um abzusenden oder Escape, um abzubrechen.]]></item>
+		<item name="wcf.comment.more"><![CDATA[Weitere Kommentare]]></item>
+		<item name="wcf.comment.response.add"><![CDATA[Antworten …]]></item>
+		<item name="wcf.comment.response.more"><![CDATA[Weitere Antworten]]></item>
+		<item name="wcf.comment.button.response.add"><![CDATA[Antworten]]></item>
 	</category>
 	
 	<category name="wcf.dashboard">
@@ -1504,6 +1522,8 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.like.details"><![CDATA[Details]]></item>
 		<item name="wcf.like.details.like"><![CDATA[Likes]]></item>
 		<item name="wcf.like.details.dislike"><![CDATA[Dislikes]]></item>
+		<item name="wcf.like.objectType.com.woltlab.wcf.comment"><![CDATA[Kommentar]]></item>
+		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Kommentar-Antwort]]></item>
 	</category>
 	
 	<category name="wcf.message">
@@ -1965,6 +1985,8 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.recentActivity.noMoreEntries"><![CDATA[Keine weiteren Aktivitäten]]></item>
 		<item name="wcf.user.recentActivity.noEntries"><![CDATA[Es sind keine Aktivitäten vorhanden.]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.recentActivityEvent.follow"><![CDATA[Folgen]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.recentActivityEvent"><![CDATA[Pinnwand-Kommentar]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.response.recentActivityEvent"><![CDATA[Pinnwand-Antwort]]></item>
 	</category>
 	
 	<category name="wcf.user.3rdparty">
@@ -2065,6 +2087,21 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.showAll"><![CDATA[Alle Benachrichtigungen anzeigen]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user"><![CDATA[Benutzer-Profile]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.follow.following"><![CDATA[Jemand folgt Ihnen]]></item>
+		<item name="wcf.user.notification.comment.title"><![CDATA[Neuer Kommentar (Pinnwand)]]></item>
+		<item name="wcf.user.notification.comment.message"><![CDATA[Hat einen Kommentar an Ihrer Pinnwand verfasst.]]></item>
+		<item name="wcf.user.notification.comment.mail"><![CDATA[{@$author->username} hat einen Kommentar an Ihrer Pinnwand verfasst:
+{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+		<item name="wcf.user.notification.commentResponse.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
+		<item name="wcf.user.notification.commentResponse.message"><![CDATA[Hat eine Antwort zu Ihrem Kommentar an der Pinnwand von {$owner->username} verfasst.]]></item>
+		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{@$author->username} hat eine Antwort zu Ihrem Kommentar an der Pinnwand von "{@$owner->username}" verfasst:
+{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[Hat eine Antwort zum Kommentar von {$commentAuthor->username} an Ihrer Pinnwand verfasst.]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.mail"><![CDATA[{@$author->username} hat eine Antwort zum Kommentar von "{@$commentAuthor->username}" an Ihrer Pinnwand verfasst:
+{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[Neuer Kommentar an Ihrer Pinnwand]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar an Ihrer Pinnwand]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar von Ihnen]]></item>
 	</category>
 	
 	<category name="wcf.user.profile">
@@ -2079,6 +2116,12 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.profile.oldUsername"><![CDATA[Hieß früher „{$user->getOldUsername()}“]]></item>
 		<item name="wcf.user.profile.recentActivity.follow"><![CDATA[Folgt nun <a href="{link controller='User' object=$user}{/link}">{$user->username}</a>.]]></item>
 		<item name="wcf.user.profile.visitors"><![CDATA[Profil-Besucher]]></item>
+		<item name="wcf.user.profile.content.wall.comment"><![CDATA[Kommentar an der Pinnwand]]></item>
+		<item name="wcf.user.profile.content.wall.commentResponse"><![CDATA[Antwort auf einen Pinnwand-Kommentar]]></item>
+		<item name="wcf.user.profile.content.wall.noEntries"><![CDATA[Es wurden noch keine Einträge an der Pinnwand verfasst.]]></item>
+		<item name="wcf.user.profile.menu.wall"><![CDATA[Pinnwand]]></item>
+		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[Hat einen Kommentar an die <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a> geschrieben.]]></item>
+		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a> geantwortet.]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">
@@ -2123,6 +2166,7 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
 		<item name="wcf.user.option.googlePlus.description"><![CDATA[Geben Sie Ihre 21-stellige Google+-ID an.]]></item>
+		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Kann Pinnwand-Kommentare schreiben]]></item>
 	</category>
 	
 	<category name="wcf.user.mail">

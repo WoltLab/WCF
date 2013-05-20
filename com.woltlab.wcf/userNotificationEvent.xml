@@ -6,5 +6,24 @@
 			<objecttype>com.woltlab.wcf.user.follow</objecttype>
 			<classname>wcf\system\user\notification\event\UserFollowFollowingUserNotificationEvent</classname>
 		</event>
+		
+		<event>
+			<name>comment</name>
+			<objecttype>com.woltlab.wcf.user.profileComment.notification</objecttype>
+			<classname>wcf\system\user\notification\event\UserProfileCommentUserNotificationEvent</classname>
+			<preset>1</preset>
+		</event>
+		<event>
+			<name>commentResponse</name>
+			<objecttype>com.woltlab.wcf.user.profileComment.response.notification</objecttype>
+			<classname>wcf\system\user\notification\event\UserProfileCommentResponseUserNotificationEvent</classname>
+			<preset>1</preset>
+		</event>
+		<event>
+			<name>commentResponseOwner</name>
+			<objecttype>com.woltlab.wcf.user.profileComment.response.notification</objecttype>
+			<classname>wcf\system\user\notification\event\UserProfileCommentResponseOwnerUserNotificationEvent</classname>
+			<preset>1</preset>
+		</event>
 	</import>
 </data>

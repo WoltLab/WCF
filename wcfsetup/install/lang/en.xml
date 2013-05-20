@@ -295,6 +295,14 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Like System]]></item>
 		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Can view likes]]></item>
 		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Can like content]]></item>
+		<item name="wcf.acp.group.option.category.user.profileComment"><![CDATA[User Profile Wall]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canAddComment"><![CDATA[Can create comments]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Cam edit own comments]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Cam delete own comments]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canEditComment"><![CDATA[Cam edit comments]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canDeleteComment"><![CDATA[Can delete comments]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canModerateComment"><![CDATA[Can moderate comments]]></item>
+		<item name="wcf.acp.group.option.category.mod.profileComment"><![CDATA[User Profile Wall]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -707,6 +715,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Users can like their own content]]></item>
 		<item name="wcf.acp.option.like_enable_dislike"><![CDATA[Users can dislike content]]></item>
 		<item name="wcf.acp.option.like_show_summary"><![CDATA[Show like summary]]></item>
+		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[User Profile Wall]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1216,6 +1225,16 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Approve]]></item>
 	</category>
 	
+	<category name="wcf.comment">
+		<item name="wcf.comment.add"><![CDATA[Write a comment …]]></item>
+		<item name="wcf.comment.delete.confirmMessage"><![CDATA[Do you really want to delete this comment?]]></item>
+		<item name="wcf.comment.description"><![CDATA[Press Enter to send or Escape to cancel.]]></item>
+		<item name="wcf.comment.more"><![CDATA[More Comments]]></item>
+		<item name="wcf.comment.response.add"><![CDATA[Reply …]]></item>
+		<item name="wcf.comment.response.more"><![CDATA[More Replies]]></item>
+		<item name="wcf.comment.button.response.add"><![CDATA[Reply]]></item>
+	</category>
+	
 	<category name="wcf.dashboard">
 		<item name="wcf.dashboard.box.availableBoxes"><![CDATA[Disabled Boxes]]></item>
 		<item name="wcf.dashboard.box.enabledBoxes"><![CDATA[Active Boxes]]></item>
@@ -1501,6 +1520,8 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.like.details"><![CDATA[Details]]></item>
 		<item name="wcf.like.details.like"><![CDATA[Likes]]></item>
 		<item name="wcf.like.details.dislike"><![CDATA[Dislikes]]></item>
+		<item name="wcf.like.objectType.com.woltlab.wcf.comment"><![CDATA[Comment]]></item>
+		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
 	</category>
 	
 	<category name="wcf.message">
@@ -1928,6 +1949,8 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.recentActivity.noMoreEntries"><![CDATA[No more activities]]></item>
 		<item name="wcf.user.recentActivity.noEntries"><![CDATA[There are no activities.]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.recentActivityEvent.follow"><![CDATA[Follow]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.recentActivityEvent"><![CDATA[Wall Comment]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.response.recentActivityEvent"><![CDATA[Wall Reply]]></item>
 	</category>
 	
 	<category name="wcf.user.3rdparty">
@@ -2028,6 +2051,21 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.notification.showAll"><![CDATA[Show All Notifications]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user"><![CDATA[User Profiles]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.follow.following"><![CDATA[New follower]]></item>
+		<item name="wcf.user.notification.comment.title"><![CDATA[New Comment (Wall)]]></item>
+		<item name="wcf.user.notification.comment.message"><![CDATA[Wrote a comment on your wall.]]></item>
+		<item name="wcf.user.notification.comment.mail"><![CDATA[{@$author->username} wrote a comment on your wall:
+{link controller='User' object=$owner encode=false forceFrontend=true}#wall{/link}]]></item>
+		<item name="wcf.user.notification.commentResponse.title"><![CDATA[New Reply (Wall)]]></item>
+		<item name="wcf.user.notification.commentResponse.message"><![CDATA[Wrote a reply to your comment on {$owner->username}’s wall.]]></item>
+		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{@$author->username} wrote a reply to your comment on {@$owner->username}’s wall:
+{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[New Reply (Wall)]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[Wrote a reply to {$commentAuthor->username}’s comment on your wall.]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.mail"><![CDATA[{@$author->username} wrote a reply to {@$commentAuthor->username}’s comment on your wall:
+{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[New comment on your wall]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[New reply to a comment on your wall]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[New reply to one of your comments]]></item>
 	</category>
 	
 	<category name="wcf.user.profile">
@@ -2042,6 +2080,12 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.profile.oldUsername"><![CDATA[Used to be called “{$user->getOldUsername()}”]]></item>
 		<item name="wcf.user.profile.recentActivity.follow"><![CDATA[Now follows <a href="{link controller='User' object=$user}{/link}">{$user->username}</a>.]]></item>
 		<item name="wcf.user.profile.visitors"><![CDATA[Profile Visitors]]></item>
+		<item name="wcf.user.profile.content.wall.comment"><![CDATA[Wall Comment]]></item>
+		<item name="wcf.user.profile.content.wall.commentResponse"><![CDATA[Reply to wall comment]]></item>
+		<item name="wcf.user.profile.content.wall.noEntries"><![CDATA[There are no comments yet.]]></item>
+		<item name="wcf.user.profile.menu.wall"><![CDATA[Wall]]></item>
+		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[Wrote a comment on <a href="{link controller='User' object=$user}{/link}#wall">{$user->username}’s wall</a>.]]></item>
+		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on <a href="{link controller='User' object=$user}{/link}#wall">{$user->username}’s wall</a>.]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">
@@ -2086,6 +2130,7 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
 		<item name="wcf.user.option.googlePlus.description"><![CDATA[Enter your Google Plus user ID with a length of 21 digits.]]></item>
+		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Can Write Comments on My Wall]]></item>
 	</category>
 	
 	<category name="wcf.user.mail">

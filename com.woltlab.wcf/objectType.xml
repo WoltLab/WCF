@@ -148,5 +148,62 @@
 			<classname>wcf\system\user\activity\point\ReceivedLikesUserActivityPointObjectProcessor</classname>
 		</type>
 		<!-- /activity points -->
+		
+		<type>
+			<name>com.woltlab.wcf.user.profileComment</name>
+			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
+			<classname>wcf\system\comment\manager\UserProfileCommentManager</classname>
+		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.comment</name>
+			<definitionname>com.woltlab.wcf.like.likeableObject</definitionname>
+			<classname>wcf\data\comment\LikeableCommentProvider</classname>
+		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.comment.response</name>
+			<definitionname>com.woltlab.wcf.like.likeableObject</definitionname>
+			<classname>wcf\data\comment\response\LikeableCommentResponseProvider</classname>
+		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.user.profileComment.recentActivityEvent</name>
+			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
+			<classname>wcf\system\user\activity\event\ProfileCommentUserActivityEvent</classname>
+		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.user.profileComment.response.recentActivityEvent</name>
+			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
+			<classname>wcf\system\user\activity\event\ProfileCommentResponseUserActivityEvent</classname>
+		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.user.profileComment.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\UserProfileCommentUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.user</category>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.profileComment.response.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\UserProfileCommentResponseUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.user</category>
+		</type>
+		
+		<!-- moderation -->
+		<type>
+			<name>com.woltlab.wcf.comment.comment</name>
+			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
+			<classname>wcf\system\moderation\queue\report\CommentCommentModerationQueueReportHandler</classname>
+		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.comment.response</name>
+			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
+			<classname>wcf\system\moderation\queue\report\CommentResponseModerationQueueReportHandler</classname>
+		</type>
+		<!-- /moderation -->
 	</import>
 </data>

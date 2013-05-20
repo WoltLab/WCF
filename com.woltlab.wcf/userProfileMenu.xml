@@ -10,5 +10,11 @@
 			<classname>wcf\system\menu\user\profile\content\RecentActivityUserProfileMenuContent</classname>
 			<showorder>1</showorder>
 		</userprofilemenuitem>
+		
+		<userprofilemenuitem name="wall">
+			<classname>wcf\system\menu\user\profile\content\CommentUserProfileMenuContent</classname>
+			<showorder>1</showorder>
+			<options>module_user_profile_wall</options>
+		</userprofilemenuitem>
 	</import>
 </data>

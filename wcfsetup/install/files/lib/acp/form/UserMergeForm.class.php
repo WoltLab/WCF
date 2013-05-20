@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserAction;
 use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
@@ -105,6 +106,35 @@ class UserMergeForm extends AbstractForm {
 		}
 		
 		parent::save();
+		
+		// comment
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
+		$sql = "UPDATE	wcf".WCF_N."_comment
+			SET	userID = ?
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		
+		// comment_response
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("userID IN (?)", array($this->mergedUserIDs));
+		$sql = "UPDATE	wcf".WCF_N."_comment_response
+			SET	userID = ?
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
+		
+		// profile comments
+		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.user.profileComment');
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("objectTypeID = ?", array($objectType->objectTypeID));
+		$conditions->add("objectID IN (?)", array($this->mergedUserIDs));
+		$sql = "UPDATE	wcf".WCF_N."_comment
+			SET	objectID = ?
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array_merge(array($this->destinationUserID), $conditions->getParameters()));
 		
 		// like (userID)
 		$conditions = new PreparedStatementConditionBuilder();

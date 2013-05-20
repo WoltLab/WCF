@@ -94,5 +94,10 @@
 			<name>com.woltlab.wcf.like.likeableObject</name>
 			<interfacename>wcf\data\like\ILikeObjectTypeProvider</interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.comment.commentableContent</name>
+			<interfacename>wcf\system\comment\manager\ICommentManager</interfacename>
+		</definition>
 	</import>
 </data>

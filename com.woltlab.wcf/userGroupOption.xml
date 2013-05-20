@@ -15,6 +15,9 @@
 			<category name="user.profile">
 				<parent>user</parent>
 			</category>
+			<category name="user.profileComment">
+				<parent>user.profile</parent>
+			</category>
 			
 			<category name="user.signature">
 				<parent>user.profile</parent>
@@ -27,6 +30,9 @@
 			<category name="mod"></category>
 			<category name="mod.general">
 				<parent>mod</parent>
+			</category>
+			<category name="mod.profileComment">
+				<parent>mod.general</parent>
 			</category>
 			
 			<category name="admin"></category>
@@ -487,6 +493,48 @@ png]]></defaultvalue>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			
+			<!-- mod.general -->
+			<option name="mod.profileComment.canEditComment">
+				<categoryname>mod.profileComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="mod.profileComment.canDeleteComment">
+				<categoryname>mod.profileComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="mod.profileComment.canModerateComment">
+				<categoryname>mod.profileComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<!-- /mod.general -->
+			
+			<!-- user.profileComment -->
+			<option name="user.profileComment.canAddComment">
+				<categoryname>user.profileComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="user.profileComment.canEditComment">
+				<categoryname>user.profileComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="user.profileComment.canDeleteComment">
+				<categoryname>user.profileComment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<!-- /user.profileComment -->
 		</options>
 	</import>
 </data>

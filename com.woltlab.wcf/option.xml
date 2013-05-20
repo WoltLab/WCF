@@ -287,6 +287,12 @@
 				<defaultvalue>1</defaultvalue>
 			</option>
 			
+			<option name="module_user_profile_wall">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
 			<!-- general.page -->
 			<option name="page_title">
 				<categoryname>general.page</categoryname>
