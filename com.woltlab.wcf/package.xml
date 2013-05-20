@@ -38,7 +38,8 @@
 		<instruction type="userProfileMenu">userProfileMenu.xml</instruction>
 		<instruction type="userMenu">userMenu.xml</instruction>
 		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
-		<instruction type="aclOption">aclOption.xml</instruction> 
+		<instruction type="aclOption">aclOption.xml</instruction>
+		<instruction type="script">acp/post_install.php</instruction> 
 	</instructions>
 	
 	<instructions type="update" fromversion="2.0.0 Alpha 1">
