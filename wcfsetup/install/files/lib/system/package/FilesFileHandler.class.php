@@ -61,39 +61,14 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 			return;
 		}
 		
-		// fetch already installed files
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add('packageID = ?', array($this->packageInstallation->getPackageID()));
-		$conditions->add('filename IN (?)', array($files));
-		$conditions->add('application = ?', array($this->application));
-		
-		$sql = "SELECT	filename
-			FROM	wcf".WCF_N."_package_installation_file_log
-			".$conditions;
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
-		
-		while ($filename = $statement->fetchColumn()) {
-			$index = array_search($filename, $files);
-			
-			if ($index !== false) {
-				unset($files[$index]);
-			}
-		}
-		
-		if (!empty($files)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_file_log
-						(packageID, filename, application)
-				VALUES		(?, ?, ?)";
+		// insert 50 files per loop
+		for ($i = 0, $steps = ceil(count($files) / 50); $i < $steps; $i++) {
+			$items = array_slice($files, 0, 50);
+			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_package_installation_file_log
+							(packageID, filename, application)
+				VALUES			".substr(str_repeat("(".$this->packageInstallation->getPackageID().", ?, '".$this->application."'), ", count($items)), 0, -2);
 			$statement = WCF::getDB()->prepareStatement($sql);
-			
-			foreach ($files as $file) {
-				$statement->execute(array(
-					$this->packageInstallation->getPackageID(),
-					$file,
-					$this->application
-				));
-			}
+			$statement->execute($items);
 		}
 	}
 }
