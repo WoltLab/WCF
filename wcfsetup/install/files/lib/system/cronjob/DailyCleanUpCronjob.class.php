@@ -22,6 +22,22 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
 		
+		// clean up search keywords
+		$sql = "SELECT 	AVG(searches) AS searches
+			FROM	wcf".WCF_N."_search_keyword";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		if (($row = $statement->fetchArray()) !== false) {
+			$sql = "DELETE FROM	wcf".WCF_N."_search_keyword
+				WHERE		searches <= ?
+						AND lastSearchTime < ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array(
+					floor($row['searches'] / 4),
+					(TIME_NOW - 86400 * 30)
+			));
+		}
+		
 		// clean up notifications
 		$sql = "DELETE FROM	wcf".WCF_N."_user_notification
 			WHERE		time < ?";

@@ -13,7 +13,7 @@
 					</ul>
 				{/hascontent}
 				
-				{event name='searchArea'}
+				{include file='searchArea'}
 			</div>
 		</nav>
 		

@@ -766,6 +766,11 @@
 		<item name="wcf.acp.option.module_tagging"><![CDATA[Tagging]]></item>
 		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Aktiviert die Funktion für das Taggen von Inhalten.]]></item>
 		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximale Tag-Länge]]></item>
+		<item name="wcf.acp.option.category.message.search"><![CDATA[Suchfunktion]]></item>
+		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Ergebnisse pro Seite]]></item>
+		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Standardsortierung]]></item>
+		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Standardreihenfolge]]></item>
+		<item name="wcf.acp.option.search_use_captcha"><![CDATA[reCAPTCHA in Suchfunktion aktivieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1708,6 +1713,28 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.recaptcha.image"><![CDATA[Bild-Version]]></item>
 		<item name="wcf.recaptcha.help"><![CDATA[Hilfe]]></item>
 		<item name="wcf.recaptcha.error.recaptchaString.false"><![CDATA[Sie haben leider nicht die korrekten Zeichen eingegeben. Bitte versuchen Sie es erneut!]]></item>
+	</category>
+	
+	<category name="wcf.search">
+		<item name="wcf.search.author"><![CDATA[Suche nach Autor]]></item>
+		<item name="wcf.search.extended"><![CDATA[Erweiterte Suche]]></item>
+		<item name="wcf.search.general"><![CDATA[Allgemeine Suchangaben]]></item>
+		<item name="wcf.search.matchExactly"><![CDATA[Exakter Treffer]]></item>
+		<item name="wcf.search.period"><![CDATA[Im Zeitraum]]></item>
+		<item name="wcf.search.query"><![CDATA[Suche nach Begriff]]></item>
+		<item name="wcf.search.query.description"><![CDATA[Geben Sie einen oder mehrere Begriffe ein. Ein Begriff muss mindestens vier Zeichen lang sein.]]></item>
+		<item name="wcf.search.results"><![CDATA[Suchergebnisse]]></item>
+		<item name="wcf.search.results.change"><![CDATA[Suche ändern]]></item>
+		<item name="wcf.search.results.description"><![CDATA[Suchergebnisse {#$startIndex}-{#$endIndex} von insgesamt {#$items}{if $query} für „<strong>{$query}</strong>“{/if}.{if $items == 1000} Es gibt noch weitere Suchergebnisse, bitte verfeinern Sie Ihre Suche.{/if}{if $highlight}<br />Diese Suchbegriffe wurden hervorgehoben: <span class="highlight">{$highlight}</span>{/if}]]></item>
+		<item name="wcf.search.sortBy"><![CDATA[Sortierung]]></item>
+		<item name="wcf.search.sortBy.relevance"><![CDATA[Relevanz]]></item>
+		<item name="wcf.search.sortBy.time"><![CDATA[Datum]]></item>
+		<item name="wcf.search.sortBy.username"><![CDATA[Autor]]></item>
+		<item name="wcf.search.subjectOnly"><![CDATA[Nur Betreff durchsuchen]]></item>
+		<item name="wcf.search.title"><![CDATA[Suche]]></item>
+		<item name="wcf.search.type"><![CDATA[Suche in]]></item>
+		<item name="wcf.search.error.noMatches"><![CDATA[Es wurde kein{if !$query|empty} mit Ihrer Suchanfrage „{$query}“ übereinstimmender{/if} Eintrag gefunden.]]></item>
+		<item name="wcf.search.error.user.noMatches"><![CDATA[Es wurde kein Eintrag von diesem Autor gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.style">

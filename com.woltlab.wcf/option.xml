@@ -177,6 +177,10 @@
 				<category name="message.sidebar">
 					<parent>message</parent>
 				</category>
+				
+				<category name="message.search">
+					<parent>message</parent>
+				</category>
 			<!-- /message -->
 			
 			<category name="dashboard">
@@ -1023,6 +1027,35 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<maxvalue>255</maxvalue>
 			</option>
 			<!-- /message.general -->
+			
+			<option name="search_results_per_page">
+				<categoryname>message.search</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>20</defaultvalue>
+				<minvalue>5</minvalue>
+				<maxvalue>40</maxvalue>
+			</option>
+			<option name="search_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+			</option>
+			
+			<option name="search_default_sort_field">
+				<categoryname>message.search</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions><![CDATA[relevance:wcf.search.sortBy.relevance
+subject:wcf.global.subject
+time:wcf.search.sortBy.time
+username:wcf.search.sortBy.username]]></selectoptions>
+				<defaultvalue><![CDATA[relevance]]></defaultvalue>
+			</option>
+			<option name="search_default_sort_order">
+				<categoryname>message.search</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue>DESC</defaultvalue>
+				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending]]></selectoptions>
+			</option>
 		</options>
 	</import>
 </data>

@@ -114,5 +114,10 @@
 			<name>com.woltlab.wcf.tagging.taggableObject</name>
 			<interfacename>wcf\system\tagging\ITaggable</interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.searchableObjectType</name>
+			<interfacename>wcf\system\search\ISearchableObjectType</interfacename>
+		</definition>
 	</import>
 </data>

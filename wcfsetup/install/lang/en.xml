@@ -765,6 +765,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_tagging"><![CDATA[Tagging]]></item>
 		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Enables the tagging of content.]]></item>
 		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximum Length of a Tag]]></item>
+		<item name="wcf.acp.option.category.message.search"><![CDATA[Search]]></item>
+		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results per Page]]></item>
+		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Default Sort Field]]></item>
+		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Default Sort Order]]></item>
+		<item name="wcf.acp.option.search_use_captcha"><![CDATA[Enable reCAPTCHA protection for search]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1706,6 +1711,28 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.recaptcha.image"><![CDATA[Image Version]]></item>
 		<item name="wcf.recaptcha.help"><![CDATA[Help]]></item>
 		<item name="wcf.recaptcha.error.recaptchaString.false"><![CDATA[You have entered the security code incorrectly. Please try again.]]></item>
+	</category>
+	
+	<category name="wcf.search">
+		<item name="wcf.search.author"><![CDATA[Search By Author]]></item>
+		<item name="wcf.search.extended"><![CDATA[More Options]]></item>
+		<item name="wcf.search.general"><![CDATA[General Search Terms]]></item>
+		<item name="wcf.search.matchExactly"><![CDATA[Exact match]]></item>
+		<item name="wcf.search.period"><![CDATA[Timeframe]]></item>
+		<item name="wcf.search.query"><![CDATA[Search for Term]]></item>
+		<item name="wcf.search.query.description"><![CDATA[Type in one or more search terms, each must be at least 4 characters.]]></item>
+		<item name="wcf.search.results"><![CDATA[Search Results]]></item>
+		<item name="wcf.search.results.change"><![CDATA[Change Search]]></item>
+		<item name="wcf.search.results.description"><![CDATA[Search results {#$startIndex}-{#$endIndex} of {#$items}{if $query} for “<strong>{$query}</strong>”{/if}.{if $items == 1000} There are more results available, please enhance your search parameters.{/if}{if $highlight}<br />These terms were highlighted: <span class="highlight">{$highlight}</span>{/if}]]></item>
+		<item name="wcf.search.sortBy"><![CDATA[Sort By]]></item>
+		<item name="wcf.search.sortBy.relevance"><![CDATA[Relevance]]></item>
+		<item name="wcf.search.sortBy.time"><![CDATA[Time]]></item>
+		<item name="wcf.search.sortBy.username"><![CDATA[Author]]></item>
+		<item name="wcf.search.subjectOnly"><![CDATA[Search subject only]]></item>
+		<item name="wcf.search.title"><![CDATA[Search]]></item>
+		<item name="wcf.search.type"><![CDATA[Search in]]></item>
+		<item name="wcf.search.error.noMatches"><![CDATA[No items matched your search{if !$query|empty} terms: “{$query}”{/if}.]]></item>
+		<item name="wcf.search.error.user.noMatches"><![CDATA[There were no items matching this author.]]></item>
 	</category>
 	
 	<category name="wcf.style">
