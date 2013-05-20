@@ -1,5 +1,17 @@
 {include file='header' pageTitle='wcf.acp.user.bulkProcessing'}
 
+{if $mailID|isset}
+	<script type="text/javascript">
+		//<![CDATA[
+		$(function() {
+			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', '', {
+				mailID: {@$mailID}
+			});
+		});
+		//]]>
+	</script>
+{/if}
+
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
