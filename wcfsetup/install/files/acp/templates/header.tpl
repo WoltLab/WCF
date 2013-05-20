@@ -117,7 +117,7 @@
 					<div class="layoutFluid clearfix">
 						<ul class="userPanelItems">
 							<li id="userMenu" class="dropdown">
-								<a class="dropdownToggle framed" data-toggle="userMenu">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)} {lang}wcf.user.userNote{/lang}</a>
+								<a class="dropdownToggle framed" data-toggle="userMenu">{if PACKAGE_ID}{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)} {/if}{lang}wcf.user.userNote{/lang}</a>
 								<ul class="dropdownMenu">
 									{if PACKAGE_ID > 1}
 										<li><a href="{@$__wcf->getPageMenu()->getLandingPage()->getLink()}">{lang}wcf.global.toLandingPage{/lang}</a></li>
