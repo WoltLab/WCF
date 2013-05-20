@@ -268,21 +268,12 @@ class PackageInstallationDispatcher {
 			$packageEditor = new PackageEditor(new Package($this->queue->packageID));
 			$packageEditor->update($nodeData);
 			
-			// update excluded packages
-			if (count($this->getArchive()->getExcludedPackages()) > 0) {
-				$sql = "INSERT IGNORE INTO	wcf".WCF_N."_package_exclusion
-								(packageID, excludedPackage, excludedPackageVersion)
-					VALUES			(?, ?, ?)";
-				$statement = WCF::getDB()->prepareStatement($sql);
+			// delete old excluded packages
+			$sql = "DELETE FROM	wcf".WCF_N."_package_exclusion
+				WHERE		packageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->queue->packageID));
 			
-				foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
-					$statement->execute(array($this->queue->packageID, $excludedPackage['name'], (!empty($excludedPackage['version']) ? $excludedPackage['version'] : '')));
-				}
-			}
-			
-			// if package is plugin to com.woltlab.wcf it must not have any other requirement
-			$requirements = $this->getArchive()->getRequirements();
-				
 			// insert requirements and dependencies
 			$requirements = $this->getArchive()->getAllExistingRequirements();
 			if (!empty($requirements)) {
@@ -290,7 +281,7 @@ class PackageInstallationDispatcher {
 								(packageID, requirement)
 					VALUES			(?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
-			
+				
 				foreach ($requirements as $identifier => $possibleRequirements) {
 					if (count($possibleRequirements) == 1) {
 						$requirement = array_shift($possibleRequirements);
@@ -298,11 +289,10 @@ class PackageInstallationDispatcher {
 					else {
 						$requirement = $possibleRequirements[$this->selectedRequirements[$identifier]];
 					}
-						
+					
 					$statement->execute(array($this->queue->packageID, $requirement['packageID']));
 				}
 			}
-				
 		}
 		else {
 			// create package entry
@@ -313,21 +303,6 @@ class PackageInstallationDispatcher {
 			$queueEditor->update(array(
 				'packageID' => $package->packageID
 			));
-			
-			// save excluded packages
-			if (count($this->getArchive()->getExcludedPackages()) > 0) {
-				$sql = "INSERT INTO	wcf".WCF_N."_package_exclusion 
-							(packageID, excludedPackage, excludedPackageVersion)
-					VALUES		(?, ?, ?)";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				
-				foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
-					$statement->execute(array($package->packageID, $excludedPackage['name'], (!empty($excludedPackage['version']) ? $excludedPackage['version'] : '')));
-				}
-			}
-			
-			// if package is plugin to com.woltlab.wcf it must not have any other requirement
-			$requirements = $this->getArchive()->getRequirements();
 			
 			// insert requirements and dependencies
 			$requirements = $this->getArchive()->getAllExistingRequirements();
@@ -365,6 +340,18 @@ class PackageInstallationDispatcher {
 					'cookiePath' => $path,
 					'packageID' => $package->packageID
 				));
+			}
+		}
+		
+		// save excluded packages
+		if (count($this->getArchive()->getExcludedPackages())) {
+			$sql = "INSERT INTO	wcf".WCF_N."_package_exclusion
+							(packageID, excludedPackage, excludedPackageVersion)
+					VALUES		(?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
+				$statement->execute(array($this->queue->packageID, $excludedPackage['name'], (!empty($excludedPackage['version']) ? $excludedPackage['version'] : '')));
 			}
 		}
 		
