@@ -783,8 +783,13 @@ class PackageArchive {
 	public function getConflictedExcludedPackages() {
 		$conflictedPackages = array();
 		if (!empty($this->excludedPackages)) {
+			$excludedPackages = array();
+			foreach ($this->excludedPackages as $excludedPackageData) {
+				$excludedPackages[] = $excludedPackageData['name'];
+			}
+			
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("package IN (?)", array(array_keys($this->excludedPackages)));
+			$conditions->add("package IN (?)", array($excludedPackages));
 			
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_package
