@@ -297,6 +297,12 @@
 				<defaultvalue>1</defaultvalue>
 			</option>
 			
+			<option name="module_tagging">
+				<categoryname>module.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
 			<!-- general.page -->
 			<option name="page_title">
 				<categoryname>general.page</categoryname>
@@ -1007,6 +1013,16 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<optiontype>useroptions</optiontype>
 				<defaultvalue></defaultvalue>
 			</option>
+			
+			<!-- message.general -->
+			<option name="tagging_max_tag_length">
+				<categoryname>message.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>30</defaultvalue>
+				<minvalue>1</minvalue>
+				<maxvalue>255</maxvalue>
+			</option>
+			<!-- /message.general -->
 		</options>
 	</import>
 </data>

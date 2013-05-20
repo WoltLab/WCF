@@ -310,6 +310,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.mod.profileComment"><![CDATA[User Profile Wall]]></item>
 		<item name="wcf.acp.group.option.admin.content.label.canManageLabel"><![CDATA[Can manage labels]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
+		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Can manage tags]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -484,6 +486,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.label.list"><![CDATA[List Labels]]></item>
 		<item name="wcf.acp.menu.link.label.group.add"><![CDATA[Add Label Group]]></item>
 		<item name="wcf.acp.menu.link.label.group.list"><![CDATA[List Label Groups]]></item>
+		<item name="wcf.acp.menu.link.tag"><![CDATA[Tags]]></item>
+		<item name="wcf.acp.menu.link.tag.add"><![CDATA[Add Tag]]></item>
+		<item name="wcf.acp.menu.link.tag.list"><![CDATA[List Tags]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -757,6 +762,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.message_sidebar_enable_likes_received"><![CDATA[Show author’s likes received]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_activity_points"><![CDATA[Show author’s activity points]]></item>
 		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Show selected author profile fields]]></item>
+		<item name="wcf.acp.option.module_tagging"><![CDATA[Tagging]]></item>
+		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Enables the tagging of content.]]></item>
+		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximum Length of a Tag]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1011,6 +1019,22 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.styleVersion"><![CDATA[Version]]></item>
 		<item name="wcf.acp.style.templateGroupID"><![CDATA[Template Group]]></item>
 		<item name="wcf.acp.style.users"><![CDATA[Users]]></item>
+	</category>
+	
+	<category name="wcf.acp.tag">
+		<item name="wcf.acp.tag.add"><![CDATA[Add Tag]]></item>
+		<item name="wcf.acp.tag.edit"><![CDATA[Edit Tag]]></item>
+		<item name="wcf.acp.tag.delete.sure"><![CDATA[Do you really want to delete the tag “{$tag}”?]]></item>
+		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Selected language is invalid]]></item>
+		<item name="wcf.acp.tag.languageID"><![CDATA[Language]]></item>
+		<item name="wcf.acp.tag.list"><![CDATA[List Tags]]></item>
+		<item name="wcf.acp.tag.list.search"><![CDATA[Search Tags]]></item>
+		<item name="wcf.acp.tag.list.search.query"><![CDATA[Search Term]]></item>
+		<item name="wcf.acp.tag.noneAvailable"><![CDATA[No tag have been added yet.]]></item>
+		<item name="wcf.acp.tag.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.tag.synonyms"><![CDATA[Synonyms]]></item>
+		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym for]]></item>
+		<item name="wcf.acp.tag.usageCount"><![CDATA[Usages]]></item>
 	</category>
 	
 	<category name="wcf.acp.template">
@@ -1690,6 +1714,14 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.style.colorPicker.new"><![CDATA[new]]></item>
 		<item name="wcf.style.colorPicker.current"><![CDATA[current]]></item>
 		<item name="wcf.style.currentStyle"><![CDATA[Current Style]]></item>
+	</category>
+	
+	<category name="wcf.tagging">
+		<item name="wcf.tagging.tags"><![CDATA[Tags]]></item>
+		<item name="wcf.tagging.tags.add"><![CDATA[Tags]]></item>
+		<item name="wcf.tagging.tags.description"><![CDATA[Add multiple tags by separating them with a comma.]]></item>
+		<item name="wcf.tagging.objectTypes"><![CDATA[Content]]></item>
+		<item name="wcf.tagging.taggedObjects.noResults"><![CDATA[No items matched this tag.]]></item>
 	</category>
 	
 	<category name="wcf.user">

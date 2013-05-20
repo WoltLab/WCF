@@ -109,5 +109,10 @@
 			<name>com.woltlab.wcf.label.objectType</name>
 			<interfacename>wcf\system\label\object\type\ILabelObjectTypeHandler</interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.tagging.taggableObject</name>
+			<interfacename>wcf\system\tagging\ITaggable</interfacename>
+		</definition>
 	</import>
 </data>

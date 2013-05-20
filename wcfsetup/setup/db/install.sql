@@ -798,6 +798,26 @@ CREATE TABLE wcf1_style_variable_value (
 	UNIQUE KEY (styleID, variableID)
 );
 
+DROP TABLE IF EXISTS wcf1_tag;
+CREATE TABLE wcf1_tag (
+	tagID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	languageID INT(10) NOT NULL DEFAULT 0,
+	name VARCHAR(255) NOT NULL,
+	synonymFor INT(10),
+	UNIQUE KEY (languageID, name)
+);
+
+DROP TABLE IF EXISTS wcf1_tag_to_object;
+CREATE TABLE wcf1_tag_to_object (
+	objectID INT(10) NOT NULL,
+	tagID INT(10) NOT NULL,
+	objectTypeID INT(10) NOT NULL,
+	languageID INT(10) NOT NULL,
+	UNIQUE KEY (objectTypeID, languageID, objectID, tagID),
+	KEY (objectTypeID, languageID, tagID),
+	KEY (tagID, objectTypeID)
+);
+
 DROP TABLE IF EXISTS wcf1_template;
 CREATE TABLE wcf1_template (
 	templateID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1423,6 +1443,12 @@ ALTER TABLE wcf1_label_group_to_object ADD FOREIGN KEY (objectTypeID) REFERENCES
 
 ALTER TABLE wcf1_label_object ADD FOREIGN KEY (labelID) REFERENCES wcf1_label (labelID) ON DELETE CASCADE;
 ALTER TABLE wcf1_label_object ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_tag ADD FOREIGN KEY (synonymFor) REFERENCES wcf1_tag (tagID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_tag_to_object ADD FOREIGN KEY (tagID) REFERENCES wcf1_tag (tagID) ON DELETE CASCADE;
+ALTER TABLE wcf1_tag_to_object ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_tag_to_object ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 
 /* default inserts */

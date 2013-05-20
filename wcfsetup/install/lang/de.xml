@@ -311,6 +311,8 @@
 		<item name="wcf.acp.group.option.category.mod.profileComment"><![CDATA[Benutzerprofil-Pinnwand]]></item>
 		<item name="wcf.acp.group.option.admin.content.label.canManageLabel"><![CDATA[Kann Labels verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
+		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Kann Tags verwalten]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -485,6 +487,9 @@
 		<item name="wcf.acp.menu.link.label.list"><![CDATA[Labels auflisten]]></item>
 		<item name="wcf.acp.menu.link.label.group.add"><![CDATA[Labelgruppe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.label.group.list"><![CDATA[Labelgruppen auflisten]]></item>
+		<item name="wcf.acp.menu.link.tag"><![CDATA[Tags]]></item>
+		<item name="wcf.acp.menu.link.tag.add"><![CDATA[Tag hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.tag.list"><![CDATA[Tags auflisten]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -758,6 +763,9 @@
 		<item name="wcf.acp.option.message_sidebar_enable_likes_received"><![CDATA[Anzahl der erhaltenen Likes der Autoren anzeigen]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_activity_points"><![CDATA[Aktivitätspunkte der Autoren anzeigen]]></item>
 		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Ausgewählte Profilfelder der Autoren anzeigen]]></item>
+		<item name="wcf.acp.option.module_tagging"><![CDATA[Tagging]]></item>
+		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Aktiviert die Funktion für das Taggen von Inhalten.]]></item>
+		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximale Tag-Länge]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1012,6 +1020,22 @@
 		<item name="wcf.acp.style.styleVersion"><![CDATA[Version]]></item>
 		<item name="wcf.acp.style.templateGroupID"><![CDATA[Template-Gruppe]]></item>
 		<item name="wcf.acp.style.users"><![CDATA[Benutzer]]></item>
+	</category>
+	
+	<category name="wcf.acp.tag">
+		<item name="wcf.acp.tag.add"><![CDATA[Tag hinzufügen]]></item>
+		<item name="wcf.acp.tag.edit"><![CDATA[Tag bearbeiten]]></item>
+		<item name="wcf.acp.tag.delete.sure"><![CDATA[Wollen Sie den Tag „{$tag}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Die gewählte Sprache ist ungültig]]></item>
+		<item name="wcf.acp.tag.languageID"><![CDATA[Sprache]]></item>
+		<item name="wcf.acp.tag.list"><![CDATA[Tags auflisten]]></item>
+		<item name="wcf.acp.tag.list.search"><![CDATA[Tags suchen]]></item>
+		<item name="wcf.acp.tag.list.search.query"><![CDATA[Suchbegriff]]></item>
+		<item name="wcf.acp.tag.noneAvailable"><![CDATA[Es sind noch keine Tags vorhanden.]]></item>
+		<item name="wcf.acp.tag.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.tag.synonyms"><![CDATA[Synonyme]]></item>
+		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym für]]></item>
+		<item name="wcf.acp.tag.usageCount"><![CDATA[Verwendungen]]></item>
 	</category>
 	
 	<category name="wcf.acp.template">
@@ -1692,6 +1716,14 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.style.colorPicker.new"><![CDATA[neu]]></item>
 		<item name="wcf.style.colorPicker.current"><![CDATA[aktuell]]></item>
 		<item name="wcf.style.currentStyle"><![CDATA[Aktiver Stil]]></item>
+	</category>
+	
+	<category name="wcf.tagging">
+		<item name="wcf.tagging.tags"><![CDATA[Tags]]></item>
+		<item name="wcf.tagging.tags.add"><![CDATA[Tags]]></item>
+		<item name="wcf.tagging.tags.description"><![CDATA[Mehrere Tags müssen durch ein Komma getrennt werden.]]></item>
+		<item name="wcf.tagging.objectTypes"><![CDATA[Inhalte]]></item>
+		<item name="wcf.tagging.taggedObjects.noResults"><![CDATA[Es wurden keine Einträge mit diesem Tag gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.user">

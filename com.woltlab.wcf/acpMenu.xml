@@ -522,6 +522,24 @@
 			<showorder>4</showorder>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.tag">
+			<parent>wcf.acp.menu.link.content</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.tag.list">
+			<controller><![CDATA[wcf\acp\page\TagListPage]]></controller>
+			<parent>wcf.acp.menu.link.tag</parent>
+			<permissions>admin.content.tag.canManageTag</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.tag.add">
+			<controller><![CDATA[wcf\acp\form\TagAddForm]]></controller>
+			<parent>wcf.acp.menu.link.tag</parent>
+			<permissions>admin.content.tag.canManageTag</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.community">
 			<showorder>5</showorder>
 		</acpmenuitem>
