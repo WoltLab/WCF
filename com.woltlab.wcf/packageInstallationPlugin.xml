@@ -23,5 +23,7 @@
 		<pip name="sitemap">wcf\system\package\plugin\SitemapPackageInstallationPlugin</pip>
 		<pip name="acpSearchProvider">wcf\system\package\plugin\ACPSearchProviderPackageInstallationPlugin</pip>
 		<pip name="style">wcf\system\package\plugin\StylePackageInstallationPlugin</pip>
+		<pip name="bbcode">wcf\system\package\plugin\BBCodePackageInstallationPlugin</pip>
+		<pip name="smiley">wcf\system\package\plugin\SmileyPackageInstallationPlugin</pip>
 	</import>
 </data>

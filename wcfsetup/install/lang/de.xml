@@ -38,6 +38,55 @@
 		<item name="wcf.acp.attachment.noItems"><![CDATA[Es wurden keine Dateianhänge gefunden.]]></item>
 	</category>
 	
+	<category name="wcf.acp.bbcode">
+		<item name="wcf.acp.bbcode.add"><![CDATA[BBCode hinzufügen]]></item>
+		<item name="wcf.acp.bbcode.add.userGroupOptionInfo"><![CDATA[Beachten Sie, dass der neu erstellte BBCode standardmäßig überall verwenden werden kann. Soll das nicht der Fall sein, bearbeiten Sie nach der Erstellung des BBCodes die entsprechenden Benutzergruppenrechte.]]></item>
+		<item name="wcf.acp.bbcode.allowedChildren"><![CDATA[Erlaubte Kindelemente]]></item>
+		<item name="wcf.acp.bbcode.allowedChildren.error.notValid"><![CDATA[Die Form für die erlaubten Kindelemente ist ungültig.]]></item>
+		<item name="wcf.acp.bbcode.attribute"><![CDATA[Attribut]]></item>
+		<item name="wcf.acp.bbcode.attribute.attributeHtml"><![CDATA[HTML-Code des Attributs]]></item>
+		<item name="wcf.acp.bbcode.attribute.validationPattern.error.notValid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
+		<item name="wcf.acp.bbcode.attribute.validationPattern"><![CDATA[Regulärer Ausdruck zur Validierung]]></item>
+		<item name="wcf.acp.bbcode.attribute.required"><![CDATA[Attribut muss ausgefüllt sein]]></item>
+		<item name="wcf.acp.bbcode.attribute.useText"><![CDATA[Inhalt übernehmen]]></item>
+		<item name="wcf.acp.bbcode.attribute.useText.description"><![CDATA[Soll der Inhalt des BBCodes als Wert für dieses Attribut übernommen werden, wenn es nicht gesetzt ist?]]></item>
+		<item name="wcf.acp.bbcode.attributes"><![CDATA[Attribute]]></item>
+		<item name="wcf.acp.bbcode.bbcodeTag"><![CDATA[BBCode]]></item>
+		<item name="wcf.acp.bbcode.bbcodeTag.error.inUse"><![CDATA[Dieser BBCode ist bereits vorhanden.]]></item>
+		<item name="wcf.acp.bbcode.bbcodeTag.error.notValid"><![CDATA[Dieser BBCode ist ungültig.]]></item>
+		<item name="wcf.acp.bbcode.className"><![CDATA[Klassen-Name]]></item>
+		<item name="wcf.acp.bbcode.className.error.notFound"><![CDATA[Diese Klasse wurde nicht gefunden.]]></item>
+		<item name="wcf.acp.bbcode.delete.sure"><![CDATA[Wollen Sie den BBCode „[{$bbcode->bbcodeTag}]“ wirklich löschen?]]></item>
+		<item name="wcf.acp.bbcode.edit"><![CDATA[BBCode bearbeiten]]></item>
+		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Schließendes HTML-Tag]]></item>
+		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Öffnendes HTML-Tag]]></item>
+		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>
+		
+		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Medienanbieter hinzufügen]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[Wollen Sie den Medienanbieter „{$mediaProvider->title}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.edit"><![CDATA[Medienanbieter bearbeiten]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.html"><![CDATA[HTML-Code]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{literal}Geben Sie hier den HTML-Code für das Medium an. Variablen im Format <code>{$variable}</code> werden durch die entsprechend benannte Untergruppe des regulären Ausdrucks ersetzt.<br />
+		Beispiel:<br />
+		<code>{$ID}</code> wird durch die beispielhaften Medium-IDs der Erklärung oberhalb ersetzt.{/literal}]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.list"><![CDATA[Medienanbieter]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.regex"><![CDATA[Regulärer Ausdruck]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.regex.description"><![CDATA[Geben Sie hier das Linkformat als <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Fde.wikipedia.org%2Fwiki%2FRegul%25C3%25A4rer_Ausdruck">regulären Ausdruck</a> an.<br />
+		Mehrere Ausdrücke können zeilenweise angegeben werden.<br />
+		Beispiele für die Medium-ID Erkennungen:
+		<ul>
+			<li><code>(?&lt;ID&gt;[0-9]+)</code> erkennt eine Medium-ID aus Zahlen.</li>
+			<li><code>(?&lt;ID&gt;[0-9a-zA-Z]+)</code> erkennt eine alphanumerische Medium-ID.</li>
+		</ul>]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.regex.error.notValid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Medienanbieter]]></item>
+		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Inhalt als Quelltext behandeln]]></item>
+		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Der Inhalt dieses BBCodes wird als Quelltext interpretiert, BBCodes und Smileys werden nicht umgewandelt.]]></item>
+		<item name="wcf.acp.bbcode.showButton"><![CDATA[Button im WYSIWYG-Editor anzeigen]]></item>
+		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button-Beschriftung]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button-Grafik]]></item>
+	</category>
+	
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>
 		<item name="wcf.acp.cache.clear.sure"><![CDATA[Wollen Sie den Cache wirklich komplett leeren?]]></item>
@@ -193,6 +242,10 @@
 		<item name="wcf.acp.group.option.user.attachment.quota.description"><![CDATA[Dem Nutzer zur Verfügung stehenden Speicherplatz für alle Dateianhänge insgesamt.]]></item>
 		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.group.option.admin.attachment.canManageAttachment"><![CDATA[Kann Dateianhänge verwalten]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.bbcode"><![CDATA[BBCodes]]></item>
+		<item name="wcf.acp.group.option.admin.content.bbcode.canManageBBCode"><![CDATA[Kann BBCodes verwalten]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smileys]]></item>
+		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Kann Smileys verwalten]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -325,6 +378,16 @@
 		<item name="wcf.acp.menu.link.template.group.add"><![CDATA[Templategruppe hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.menu.link.attachment.list"><![CDATA[Dateianhänge verwalten]]></item>
+		<item name="wcf.acp.menu.link.bbcode"><![CDATA[BBCodes]]></item>
+		<item name="wcf.acp.menu.link.bbcode.add"><![CDATA[BBCode hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.bbcode.list"><![CDATA[BBCodes auflisten]]></item>
+		<item name="wcf.acp.menu.link.bbcode.mediaProvider.add"><![CDATA[Medienanbieter hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.bbcode.mediaProvider.list"><![CDATA[Medienanbieter auflisten]]></item>
+		<item name="wcf.acp.menu.link.smiley"><![CDATA[Smileys]]></item>
+		<item name="wcf.acp.menu.link.smiley.add"><![CDATA[Smiley hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[Smileys auflisten]]></item>
+		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Smiley-Kategorie hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[Smiley-Kategorien auflisten]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -478,6 +541,7 @@
 		<item name="wcf.acp.option.attachment_storage"><![CDATA[Speicherort der Dateianhänge]]></item>
 		<item name="wcf.acp.option.attachment_storage.description"><![CDATA[Sie können optional einen vom Standard abweichenden Speicherort für die Dateianhänge definieren. Bereits existierende Dateianhänge müssen bei einer Änderung des Speicherortes manuell in den neuen Ort übertragen werden.]]></item>
 		<item name="wcf.acp.option.module_attachment"><![CDATA[Dateianhänge]]></item>
+		<item name="wcf.acp.option.module_smiley"><![CDATA[Smileys]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -631,6 +695,22 @@
 		<item name="wcf.acp.sessionLog.requestMethod"><![CDATA[Methode]]></item>
 		<item name="wcf.acp.sessionLog.requestURI"><![CDATA[URI]]></item>
 		<item name="wcf.acp.sessionLog.time"><![CDATA[Datum]]></item>
+	</category>
+	
+	<category name="wcf.acp.smiley">
+		<item name="wcf.acp.smiley.list"><![CDATA[Smileys]]></item>
+		<item name="wcf.acp.smiley.noItems"><![CDATA[Es sind keine Smileys vorhanden.]]></item>
+		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Wollen Sie das Smiley „{$smiley->smileyTitle|language}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.smiley.add"><![CDATA[Smiley hinzufügen]]></item>
+		<item name="wcf.acp.smiley.edit"><![CDATA[Smiley bearbeiten]]></item>
+		<item name="wcf.acp.smiley.title"><![CDATA[Titel]]></item>
+		<item name="wcf.acp.smiley.category.noItems"><![CDATA[Diese Kategorie enthält keine Smileys.]]></item>
+		<item name="wcf.acp.smiley.categoryID"><![CDATA[Kategorie]]></item>
+		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Standard-Kategorie]]></item>
+		<item name="wcf.acp.smiley.categoryID.error.notValid"><![CDATA[Die gewählte Kategorie ist nicht gültig.]]></item>
+		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primärer Smiley-Code]]></item>
+		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley-Codes]]></item>
+		<item name="wcf.acp.smiley.showOrder"><![CDATA[Position]]></item>
 	</category>
 	
 	<category name="wcf.acp.style">
@@ -885,6 +965,30 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.attachment.lastDownloadTime"><![CDATA[Letzter Download]]></item>
 		<item name="wcf.attachment.fileType"><![CDATA[Dateityp]]></item>
 	</category>
+	
+	<category name="wcf.bbcode">
+		<item name="wcf.bbcode.code.text"><![CDATA[{@$highlighterTitle} ({#$lines} Zeile{if $lines != 1}n{/if})]]></item>
+		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
+		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck-Quellcode]]></item>
+		<item name="wcf.bbcode.code.c.title"><![CDATA[C-Quellcode]]></item>
+		<item name="wcf.bbcode.code.css.title"><![CDATA[CSS-Quellcode]]></item>
+		<item name="wcf.bbcode.code.diff.title"><![CDATA[Unterschiede-Datei]]></item>
+		<item name="wcf.bbcode.code.html.title"><![CDATA[HTML-Quellcode]]></item>
+		<item name="wcf.bbcode.code.java.title"><![CDATA[Java-Quellcode]]></item>
+		<item name="wcf.bbcode.code.js.title"><![CDATA[JavaScript-Quellcode]]></item>
+		<item name="wcf.bbcode.code.perl.title"><![CDATA[Perl-Quellcode]]></item>
+		<item name="wcf.bbcode.code.php.title"><![CDATA[PHP-Quellcode]]></item>
+		<item name="wcf.bbcode.code.plain.title"><![CDATA[Quellcode]]></item>
+		<item name="wcf.bbcode.code.sql.title"><![CDATA[SQL-Abfrage]]></item>
+		<item name="wcf.bbcode.code.tex.title"><![CDATA[TeX-Quellcode]]></item>
+		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty-Template]]></item>
+		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML-Quellcode]]></item>
+		<item name="wcf.bbcode.quote.title"><![CDATA[{@$quoteAuthor} schrieb:]]></item>
+		<item name="wcf.bbcode.quote.text"><![CDATA[Zitat{if $cite} von {@$cite}{/if}: „{@$content}“]]></item>
+		<item name="wcf.bbcode.spoiler.show"><![CDATA[Spoiler anzeigen]]></item>
+		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Versteckter Text)]]></item>
+	</category>
+	
 	
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
@@ -1227,6 +1331,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.user.error.isBanned"><![CDATA[Ihr Benutzeraccount wurde gesperrt{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
 	</category>
 	
-	<!-- i18n category -->
+	<!-- i18n categories -->
 	<category name="wcf.user.option" />
+	<category name="wcf.smiley" />
 </language>

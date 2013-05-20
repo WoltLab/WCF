@@ -11,5 +11,11 @@
 			<name>com.woltlab.wcf.collapsibleSidebar</name>
 			<definitionname>com.woltlab.wcf.collapsibleContent</definitionname>
 		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.bbcode.smiley</name>
+			<definitionname>com.woltlab.wcf.category</definitionname>
+			<classname>wcf\system\category\SmileyCategoryType</classname>
+		</type>
 	</import>
 </data>

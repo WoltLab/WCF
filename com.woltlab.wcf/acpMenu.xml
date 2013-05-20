@@ -387,6 +387,70 @@
 			<parent>wcf.acp.menu.link.content</parent>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.bbcode">
+			<parent>wcf.acp.menu.link.content</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.bbcode.list">
+			<controller><![CDATA[wcf\acp\page\BBCodeListPage]]></controller>
+			<parent>wcf.acp.menu.link.bbcode</parent>
+			<permissions>admin.content.bbcode.canManageBBCode</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.bbcode.add">
+			<controller><![CDATA[wcf\acp\form\BBCodeAddForm]]></controller>
+			<parent>wcf.acp.menu.link.bbcode</parent>
+			<permissions>admin.content.bbcode.canManageBBCode</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.bbcode.mediaProvider.list">
+			<controller><![CDATA[wcf\acp\page\BBCodeMediaProviderListPage]]></controller>
+			<parent>wcf.acp.menu.link.bbcode</parent>
+			<permissions>admin.content.bbcode.canManageBBCode</permissions>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.bbcode.mediaProvider.add">
+			<controller><![CDATA[wcf\acp\form\BBCodeMediaProviderAddForm]]></controller>
+			<parent>wcf.acp.menu.link.bbcode</parent>
+			<permissions>admin.content.bbcode.canManageBBCode</permissions>
+			<showorder>4</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.smiley">
+			<parent>wcf.acp.menu.link.content</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.smiley.list">
+			<controller><![CDATA[wcf\acp\page\SmileyListPage]]></controller>
+			<parent>wcf.acp.menu.link.smiley</parent>
+			<permissions>admin.content.smiley.canManageSmiley</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.smiley.add">
+			<controller><![CDATA[wcf\acp\form\SmileyAddForm]]></controller>
+			<parent>wcf.acp.menu.link.smiley</parent>
+			<permissions>admin.content.smiley.canManageSmiley</permissions>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.smiley.category.list">
+			<controller><![CDATA[wcf\acp\page\SmileyCategoryListPage]]></controller>
+			<parent>wcf.acp.menu.link.smiley</parent>
+			<permissions>admin.content.smiley.canManageSmiley</permissions>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.smiley.category.add">
+			<controller><![CDATA[wcf\acp\form\SmileyCategoryAddForm]]></controller>
+			<parent>wcf.acp.menu.link.smiley</parent>
+			<permissions>admin.content.smiley.canManageSmiley</permissions>
+			<showorder>4</showorder>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.attachment.list">
 			<controller><![CDATA[wcf\acp\page\AttachmentListPage]]></controller>
 			<parent>wcf.acp.menu.link.attachment</parent>
