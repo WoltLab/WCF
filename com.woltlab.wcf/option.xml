@@ -120,6 +120,11 @@
 				<category name="message.general">
 					<parent>message</parent>
 				</category>
+				
+				<category name="message.attachment">
+					<parent>message</parent>
+					<options>module_attachment</options>
+				</category>
 			<!-- /message -->
 		</categories>
 		
@@ -165,6 +170,12 @@
 			
 			<option name="module_system_recaptcha">
 				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_attachment">
+				<categoryname>module.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
@@ -452,6 +463,27 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<optiontype>boolean</optiontype>
 			</option>
 			<!-- /general.cache -->
+			
+			<option name="attachment_storage">
+				<categoryname>message.attachment</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<option name="attachment_enable_thumbnails">
+				<categoryname>message.attachment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<enableoptions>attachment_thumbnail_height,attachment_thumbnail_width</enableoptions>
+			</option>
+			<option name="attachment_thumbnail_height">
+				<categoryname>message.attachment</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue><![CDATA[210]]></defaultvalue>
+			</option>
+			<option name="attachment_thumbnail_width">
+				<categoryname>message.attachment</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue><![CDATA[280]]></defaultvalue>
+			</option>
 		</options>
 	</import>
 </data>

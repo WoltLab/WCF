@@ -32,6 +32,12 @@
 		<item name="wcf.acp.application.setAsPrimary.confirmMessage"><![CDATA[Do you really want to set “{$application->getPackage()->getName()}” as the primary application?]]></item>
 	</category>
 	
+	<category name="wcf.acp.attachment">
+		<item name="wcf.acp.attachment.list"><![CDATA[Attachments]]></item>
+		<item name="wcf.acp.attachment.stats"><![CDATA[{#$stats.count} Attachment{if $stats.count != 1}s{/if} - {@$stats.size|filesize} - {#$stats.downloads} Download{if $stats.downloads != 1}s{/if}]]></item>
+		<item name="wcf.acp.attachment.noItems"><![CDATA[There are no attachments.]]></item>
+	</category>
+	
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Clear Cache]]></item>
 		<item name="wcf.acp.cache.clear.sure"><![CDATA[Do you really want to clear the cache?]]></item>
@@ -178,6 +184,15 @@
 		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[User Profile Fields]]></item>
 		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Can manage user profile fields]]></item>
+		<item name="wcf.acp.group.option.category.user.message.attachment"><![CDATA[Attachments]]></item>
+		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximum File Size]]></item>
+		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Allowed File Extensions]]></item>
+		<item name="wcf.acp.group.option.user.attachment.allowedExtensions.description"><![CDATA[One extension per line]]></item>
+		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
+		<item name="wcf.acp.group.option.user.attachment.quota"><![CDATA[Quota]]></item>
+		<item name="wcf.acp.group.option.user.attachment.quota.description"><![CDATA[Total quota for all attachments uploaded by a user]]></item>
+		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Attachments]]></item>
+		<item name="wcf.acp.group.option.admin.attachment.canManageAttachment"><![CDATA[Can manage attachments]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -308,6 +323,8 @@
 		<item name="wcf.acp.menu.link.template.add"><![CDATA[Add Template]]></item>
 		<item name="wcf.acp.menu.link.template.group.list"><![CDATA[List Template Groups]]></item>
 		<item name="wcf.acp.menu.link.template.group.add"><![CDATA[Add Template Group]]></item>
+		<item name="wcf.acp.menu.link.attachment"><![CDATA[Attachments]]></item>
+		<item name="wcf.acp.menu.link.attachment.list"><![CDATA[Browse Attachments]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -454,6 +471,13 @@
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request an own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin/create" class="externalURL">reCAPTCHA website</a>.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private API Key]]></item>
+		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Attachments]]></item>
+		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Create thumbnails for uploaded images]]></item>
+		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Thumbnail Height in Pixel]]></item>
+		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Thumbnail Width in Pixel]]></item>
+		<item name="wcf.acp.option.attachment_storage"><![CDATA[Storage Location]]></item>
+		<item name="wcf.acp.option.attachment_storage.description"><![CDATA[Changes storage location for attachments. Heads up! You are responsible to move already existing attachments to the new location.]]></item>
+		<item name="wcf.acp.option.module_attachment"><![CDATA[Attachments]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -835,6 +859,30 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.ajax.error.internalError"><![CDATA[The server encountered an unresolvable problem, please try again later.]]></item>
 		<item name="wcf.ajax.error.permissionDenied"><![CDATA[You’re not authorized to execute this action.]]></item>
 		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Your session expired, please login again.]]></item>
+	</category>
+	
+	<category name="wcf.attachment">
+		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, downloaded <b>{#$attachment->downloads}</b> times{if $attachment->downloads > 0}, last: {@$attachment->lastDownloadTime|time}{/if})]]></item>
+		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width}×{#$attachment->height}, viewed {#$attachment->downloads} times]]></item>
+		<item name="wcf.attachment.files"><![CDATA[Files]]></item>
+		<item name="wcf.attachment.images"><![CDATA[Images]]></item>
+		<item name="wcf.attachment.attachments"><![CDATA[Attachments]]></item>
+		<item name="wcf.attachment.delete.sure"><![CDATA[Do you really want to delete this attachment?]]></item>
+		<item name="wcf.attachment.upload.error.invalidExtension"><![CDATA[File extension is invalid.]]></item>
+		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[File is too big.]]></item>
+		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[You have reached the maximum number of attachments.]]></item>
+		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[You have chosen too many attachments, remaining: #remaining#.]]></item>
+		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[An unknown error occured during upload.]]></item>
+		<item name="wcf.attachment.upload.limits"><![CDATA[Maximum number of attachments: {#$attachmentHandler->getMaxCount()}<br />
+Maximum file size: {@$attachmentHandler->getMaxSize()|filesize}<br />
+Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]></item>
+		<item name="wcf.attachment.insert"><![CDATA[Insert into message]]></item>
+		<item name="wcf.attachment.filename"><![CDATA[Filename]]></item>
+		<item name="wcf.attachment.uploadTime"><![CDATA[Upload Time]]></item>
+		<item name="wcf.attachment.filesize"><![CDATA[Size]]></item>
+		<item name="wcf.attachment.downloads"><![CDATA[Downloads]]></item>
+		<item name="wcf.attachment.lastDownloadTime"><![CDATA[Last Download]]></item>
+		<item name="wcf.attachment.fileType"><![CDATA[Type]]></item>
 	</category>
 	
 	<category name="wcf.category">

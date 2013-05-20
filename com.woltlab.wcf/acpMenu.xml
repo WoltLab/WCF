@@ -383,6 +383,16 @@
 			<showorder>4</showorder>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.attachment">
+			<parent>wcf.acp.menu.link.content</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.attachment.list">
+			<controller><![CDATA[wcf\acp\page\AttachmentListPage]]></controller>
+			<parent>wcf.acp.menu.link.attachment</parent>
+			<permissions>admin.attachment.canManageAttachment</permissions>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.community">
 			<showorder>5</showorder>
 		</acpmenuitem>

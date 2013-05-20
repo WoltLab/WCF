@@ -1,0 +1,107 @@
+/* attachment thumbnail list */
+.attachmentThumbnailList, .attachmentFileList {
+	padding-top: 7px !important;
+	
+	> fieldset {
+		padding: 0;
+		
+		> legend {
+			border-bottom: 0;
+			font-size: @wcfTitleFontSize;
+			padding-bottom: 7px;
+		}
+	}
+}
+
+.attachmentThumbnailList {
+	padding-bottom: 7px !important;
+	
+	> fieldset {
+		> ul {
+			padding: 0 @wcfGapSmall+@wcfGapTiny 0 @wcfGapTiny;
+			
+			> li {
+				margin: 0 0 @wcfGapMedium @wcfGapSmall;
+			}
+		}
+	}
+}
+
+.attachmentFileList {
+	> fieldset > ul > li {
+		&:not(:first-child) {
+			margin-top: @wcfGapTiny;
+		}
+	}
+}
+
+.attachmentThumbnail {
+	background-color: white;
+	display: inline-block;
+	min-height: 210px;
+	min-width: 280px;
+	position: relative;
+	vertical-align: top;
+	
+	> a {
+		display: inline-block;
+		min-height: 210px;
+		min-width: 280px;
+	}
+	
+	> div {
+		background-color: rgba(0, 0, 0, 0.6);
+		bottom: 0;
+		color: #fff;
+		position: absolute;
+		width: 100%;
+		padding: @wcfGapSmall 0;
+		
+		> p,
+		> small {
+			margin: 0 @wcfGapSmall;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		
+		> small {
+			display: block;
+			height: 0;
+			
+			.transition(height, .25s, ease-out);
+		}
+	}
+	
+	&:hover {
+		> div > small {
+			height: 1.27em;
+		}
+	}
+}
+
+/* attachment form */
+.formAttachmentList {
+	border-bottom: 1px solid @wcfContainerBorderColor;
+	padding-bottom: @wcfGapSmall;
+		
+	> li {
+		width: 33%;
+		float: left;
+		
+		> div {
+			padding-top: @wcfGapSmall;
+			
+			> div {
+				float: left;
+				margin-right: @wcfGapSmall;
+			}
+		}
+	}
+}
+
+.box48 .attachmentTinyThumbnail {
+	border-radius: 6px;
+	max-height: 48px;
+	max-width: 48px;
+}
