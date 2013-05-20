@@ -161,6 +161,14 @@
 					</dd>
 				</dl>
 				
+				<dl>
+					<dt><label for="lastActivityTimeStart">{lang}wcf.user.lastActivityTime{/lang}</label></dt>
+					<dd>
+						<input type="date" id="lastActivityTimeStart" name="lastActivityTimeStart" value="{$lastActivityTimeStart}" placeholder="{lang}wcf.date.period.start{/lang}" />
+						<input type="date" id="lastActivityTimeEnd" name="lastActivityTimeEnd" value="{$lastActivityTimeEnd}" placeholder="{lang}wcf.date.period.end{/lang}" />
+					</dd>
+				</dl>
+				
 				{event name='conditionFields'}
 			</fieldset>
 			
@@ -171,6 +179,8 @@
 					<dd>
 						<label><input type="checkbox" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.banned{/lang}</label>
 						<label><input type="checkbox" name="notBanned" value="1" {if $notBanned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.notBanned{/lang}</label>
+						<label><input type="checkbox" name="enabled" value="1" {if $enabled == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.enabled{/lang}</label>
+						<label><input type="checkbox" name="disabled" value="1" {if $disabled == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.disabled{/lang}</label>
 						
 						{event name='states'}
 					</dd>

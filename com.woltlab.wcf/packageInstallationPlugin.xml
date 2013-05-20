@@ -25,5 +25,9 @@
 		<pip name="style">wcf\system\package\plugin\StylePackageInstallationPlugin</pip>
 		<pip name="bbcode">wcf\system\package\plugin\BBCodePackageInstallationPlugin</pip>
 		<pip name="smiley">wcf\system\package\plugin\SmileyPackageInstallationPlugin</pip>
+		<pip name="userProfileMenu">wcf\system\package\plugin\UserProfileMenuPackageInstallationPlugin</pip>
+		<pip name="userMenu">wcf\system\package\plugin\UserMenuPackageInstallationPlugin</pip>
+		<pip name="userNotificationEvent">wcf\system\package\plugin\UserNotificationEventPackageInstallationPlugin</pip>
+		<pip name="dashboardBox">wcf\system\package\plugin\DashboardBoxPackageInstallationPlugin</pip>
 	</import>
 </data>

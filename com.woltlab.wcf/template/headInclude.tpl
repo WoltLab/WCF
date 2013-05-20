@@ -43,6 +43,8 @@
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 	//]]>
 </script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {event name='javascriptInclude'}
 
 <!-- Stylesheets -->
@@ -127,6 +129,7 @@
 		WCF.System.PageNavigation.init('.pageNavigation');
 		WCF.Date.Picker.init();
 		WCF.System.MobileNavigation.init();
+		new WCF.User.ProfilePreview();
 		
 		{event name='javascriptInit'}
 		

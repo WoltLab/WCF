@@ -1,9 +1,18 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\user\avatar\UserAvatarAction;
+
+use wcf\data\user\avatar\Gravatar;
+
+use wcf\system\exception\UserInputException;
+
+use wcf\data\user\avatar\UserAvatar;
+
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
+use wcf\data\user\UserProfileAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -56,6 +65,30 @@ class UserEditForm extends UserAddForm {
 	public $banReason = '';
 	
 	/**
+	 * user avatar object
+	 * @var wcf\data\user\avatar\UserAvatar
+	 */
+	public $userAvatar = null;
+	
+	/**
+	 * avatar type
+	 * @var	string
+	 */
+	public $avatarType = 'none';
+	
+	/**
+	 * true to disable this avatar
+	 * @var boolean
+	 */
+	public $disableAvatar = 0;
+	
+	/**
+	 * reason
+	 * @var string
+	 */
+	public $disableAvatarReason = '';
+	
+	/**
 	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -91,6 +124,9 @@ class UserEditForm extends UserAddForm {
 		
 		if (!empty($_POST['banned'])) $this->banned = 1;
 		if (isset($_POST['banReason'])) $this->banReason = StringUtil::trim($_POST['banReason']);
+		if (isset($_POST['avatarType'])) $this->avatarType = $_POST['avatarType'];
+		if (!empty($_POST['disableAvatar'])) $this->disableAvatar = 1;
+		if (isset($_POST['disableAvatarReason'])) $this->disableAvatarReason = StringUtil::trim($_POST['disableAvatarReason']);
 	}
 	
 	/**
@@ -103,6 +139,11 @@ class UserEditForm extends UserAddForm {
 			
 			// default values
 			$this->readDefaultValues();
+		}
+		
+		// get avatar object
+		if ($this->avatarType == 'custom') {
+			$this->userAvatar = new UserAvatar($this->user->avatarID);
 		}
 		
 		parent::readData();
@@ -125,6 +166,19 @@ class UserEditForm extends UserAddForm {
 		$this->languageID = $this->user->languageID;
 		$this->banned = $this->user->banned;
 		$this->banReason = $this->user->banReason;
+		$this->userTitle = $this->user->userTitle;
+		
+		$this->signature = $this->user->signature;
+		$this->signatureEnableBBCodes = $this->user->signatureEnableBBCodes;
+		$this->signatureEnableSmilies = $this->user->signatureEnableSmilies;
+		$this->signatureEnableHtml = $this->user->signatureEnableHtml;
+		$this->disableSignature = $this->user->disableSignature;
+		$this->disableSignatureReason = $this->user->disableSignatureReason;
+		$this->disableAvatar = $this->user->disableAvatar;
+		$this->disableAvatarReason = $this->user->disableAvatarReason;
+			
+		if ($this->user->avatarID) $this->avatarType = 'custom';
+		else if (MODULE_GRAVATAR && $this->user->enableGravatar) $this->avatarType = 'gravatar';
 	}
 	
 	/**
@@ -140,7 +194,11 @@ class UserEditForm extends UserAddForm {
 			'markedUsers' => 0,
 			'user' => $this->user,
 			'banned' => $this->banned,
-			'banReason' => $this->banReason
+			'banReason' => $this->banReason,
+			'avatarType' => $this->avatarType,
+			'disableAvatar' => $this->disableAvatar,
+			'disableAvatarReason' => $this->disableAvatarReason,
+			'userAvatar' => $this->userAvatar
 		));
 	}
 	
@@ -149,6 +207,40 @@ class UserEditForm extends UserAddForm {
 	 */
 	public function save() {
 		AbstractForm::save();
+		
+		// handle avatar
+		if ($this->avatarType != 'custom') {
+			// delete custom avatar
+			if ($this->user->avatarID) {
+				$action = new UserAvatarAction(array($this->user->avatarID), 'delete');
+				$action->executeAction();
+			}
+		}
+		switch ($this->avatarType) {
+			case 'none':
+				$avatarData = array(
+					'avatarID' => null,
+					'enableGravatar' => 0
+				);
+				break;
+		
+			case 'custom':
+				$avatarData = array(
+					'avatarID' => null,
+					'enableGravatar' => 0
+				);
+				break;
+		
+			case 'gravatar':
+				$avatarData = array(
+					'avatarID' => null,
+					'enableGravatar' => 1
+				);
+				break;
+		}
+		$avatarData['disableAvatar'] = $this->disableAvatar;
+		$avatarData['disableAvatarReason'] = $this->disableAvatarReason;
+		$this->additionalFields = array_merge($this->additionalFields, $avatarData);
 		
 		// add default groups
 		$defaultGroups = UserGroup::getAccessibleGroups(array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS));
@@ -173,7 +265,14 @@ class UserEditForm extends UserAddForm {
 				'email' => $this->email,
 				'password' => $this->password,
 				'banned' => $this->banned,
-				'banReason' => $this->banReason
+				'banReason' => $this->banReason,
+				'userTitle' => $this->userTitle,
+				'signature' => $this->signature,
+				'signatureEnableBBCodes' => $this->signatureEnableBBCodes,
+				'signatureEnableSmilies' => $this->signatureEnableSmilies,
+				'signatureEnableHtml' => $this->signatureEnableHtml,
+				'disableSignature' => $this->disableSignature,
+				'disableSignatureReason' => $this->disableSignatureReason
 			)),
 			'groups' => $this->groupIDs,
 			'languages' => $this->visibleLanguages,
@@ -182,6 +281,16 @@ class UserEditForm extends UserAddForm {
 		$this->objectAction = new UserAction(array($this->userID), 'update', $data);
 		$this->objectAction->executeAction();
 		
+		// update user rank
+		$editor = new UserEditor(new User($this->userID));
+		if (MODULE_USER_RANK) {
+			$action = new UserProfileAction(array($editor), 'updateUserRank');
+			$action->executeAction();
+		}
+		if (MODULE_USERS_ONLINE) {
+			$action = new UserProfileAction(array($editor), 'updateUserOnlineMarking');
+			$action->executeAction();
+		}
 		$this->saved();
 		
 		// reset password
@@ -216,5 +325,45 @@ class UserEditForm extends UserAddForm {
 		if (!empty($password) || !empty($confirmPassword)) {
 			parent::validatePassword($password, $confirmPassword);
 		}
+	}
+	
+	/**
+	 * Validates the user avatar.
+	 */
+	protected function validateAvatar() {
+		if ($this->avatarType != 'custom' && $this->avatarType != 'gravatar') $this->avatarType = 'none';
+	
+		try {
+			switch ($this->avatarType) {
+				case 'custom':
+					if (!$this->user->avatarID) {
+						throw new UserInputException('customAvatar');
+					}
+					break;
+						
+				case 'gravatar':
+					if (!MODULE_GRAVATAR) {
+						$this->avatarType = 'none';
+						break;
+					}
+						
+					// test gravatar
+					if (!Gravatar::test($this->user->email)) {
+						throw new UserInputException('gravatar', 'notFound');
+					}
+			}
+		}
+		catch (UserInputException $e) {
+			$this->errorType[$e->getField()] = $e->getType();
+		}
+	}
+	
+	/**
+	 * @see	wcf\form\IForm::validate()
+	 */
+	public function validate() {
+		$this->validateAvatar();
+		
+		parent::validate();
 	}
 }

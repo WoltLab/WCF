@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/userNotificationEvent.xsd">
+	<import>
+		<event>
+			<name>following</name>
+			<objecttype>com.woltlab.wcf.user.follow</objecttype>
+			<classname>wcf\system\user\notification\event\UserFollowFollowingUserNotificationEvent</classname>
+		</event>
+	</import>
+</data>

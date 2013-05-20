@@ -25,7 +25,10 @@
 				<ul class="dropdownMenu">
 					<li><a href="{link controller='UserQuickSearch'}mode=banned{/link}">{lang}wcf.acp.user.quickSearch.banned{/lang}</a></li>
 					<li><a href="{link controller='UserQuickSearch'}mode=newest{/link}">{lang}wcf.acp.user.quickSearch.newest{/lang}</a></li>
-					
+					<li><a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{lang}wcf.acp.user.quickSearch.disabled{/lang}</a></li>
+					<li><a href="{link controller='UserQuickSearch'}mode=disabledAvatars{/link}">{lang}wcf.acp.user.quickSearch.disabledAvatars{/lang}</a></li>
+					<li><a href="{link controller='UserQuickSearch'}mode=disabledSignatures{/link}">{lang}wcf.acp.user.quickSearch.disabledSignatures{/lang}</a></li>
+
 					{event name='quickSearchItems'}
 				</ul>
 			</li>
@@ -110,6 +113,14 @@
 					</dd>
 				</dl>
 				
+				<dl>
+					<dt><label for="lastActivityTimeStart">{lang}wcf.user.lastActivityTime{/lang}</label></dt>
+					<dd>
+						<input type="date" id="lastActivityTimeStart" name="lastActivityTimeStart" value="{$lastActivityTimeStart}" placeholder="{lang}wcf.date.period.start{/lang}" />
+						<input type="date" id="lastActivityTimeEnd" name="lastActivityTimeEnd" value="{$lastActivityTimeEnd}" placeholder="{lang}wcf.date.period.end{/lang}" />
+					</dd>
+				</dl>
+				
 				{event name='conditionFields'}
 			</fieldset>
 			
@@ -120,6 +131,8 @@
 					<dd>
 						<label><input type="checkbox" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.banned{/lang}</label>
 						<label><input type="checkbox" name="notBanned" value="1" {if $notBanned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.notBanned{/lang}</label>
+						<label><input type="checkbox" name="enabled" value="1" {if $enabled == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.enabled{/lang}</label>
+						<label><input type="checkbox" name="disabled" value="1" {if $disabled == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.disabled{/lang}</label>
 						
 						{event name='states'}
 					</dd>

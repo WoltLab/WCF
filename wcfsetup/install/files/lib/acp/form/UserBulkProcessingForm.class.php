@@ -88,6 +88,30 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	 */
 	public $notBanned = 0;
 	
+	/**
+	 * last activity start time
+	 * @var string
+	 */
+	public $lastActivityTimeStart = '';
+	
+	/**
+	 * last activity end time
+	 * @var string
+	 */
+	public $lastActivityTimeEnd = '';
+	
+	/**
+	 * enabled state
+	 * @var boolean
+	 */
+	public $enabled = 0;
+	
+	/**
+	 * disabled state
+	 * @var boolean
+	 */
+	public $disabled = 0;
+	
 	// assign to group
 	public $assignToGroupIDs = array();
 	
@@ -135,6 +159,10 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		if (isset($_POST['registrationDateEnd'])) $this->registrationDateEnd = $_POST['registrationDateEnd'];
 		if (isset($_POST['banned'])) $this->banned = intval($_POST['banned']);
 		if (isset($_POST['notBanned'])) $this->notBanned = intval($_POST['notBanned']);
+		if (isset($_POST['lastActivityTimeStart'])) $this->lastActivityTimeStart = $_POST['lastActivityTimeStart'];
+		if (isset($_POST['lastActivityTimeEnd'])) $this->lastActivityTimeEnd = $_POST['lastActivityTimeEnd'];
+		if (isset($_POST['enabled'])) $this->enabled = intval($_POST['enabled']);
+		if (isset($_POST['disabled'])) $this->disabled = intval($_POST['disabled']);
 		
 		// assign to group
 		if (isset($_POST['assignToGroupIDs']) && is_array($_POST['assignToGroupIDs'])) $this->assignToGroupIDs = ArrayUtil::toIntegerArray($_POST['assignToGroupIDs']);
@@ -219,6 +247,21 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		}
 		if ($this->notBanned) {
 			$this->conditions->add('user_table.banned = ?', array(0));
+		}
+		
+		// last activity time
+		if ($startDate = @strtotime($this->lastActivityTimeStart)) {
+			$this->conditions->add('user_table.lastActivityTime >= ?', array($startDate));
+		}
+		if ($endDate = @strtotime($this->lastActivityTimeEnd)) {
+			$this->conditions->add('user_table.lastActivityTime <= ?', array($endDate));
+		}
+		
+		if ($this->enabled) {
+			$this->conditions->add('user_table.activationCode = ?', array(0));
+		}
+		if ($this->disabled) {
+			$this->conditions->add('user_table.activationCode <> ?', array(0));
 		}
 		
 		// dynamic fields
@@ -434,7 +477,11 @@ class UserBulkProcessingForm extends UserOptionListForm {
 			'registrationDateEnd' => $this->registrationDateEnd,
 			'banned' => $this->banned,
 			'notBanned' => $this->notBanned,
-				
+			'lastActivityTimeStart' => $this->lastActivityTimeStart,
+			'lastActivityTimeEnd' => $this->lastActivityTimeEnd,
+			'enabled' => $this->enabled,
+			'disabled' => $this->disabled,
+			
 			'availableGroups' => $this->availableGroups,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'options' => $this->options,

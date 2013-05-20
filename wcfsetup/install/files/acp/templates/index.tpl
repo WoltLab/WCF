@@ -18,6 +18,10 @@
 	<h1>{lang}wcf.global.acp{/lang}</h1>
 </header>
 
+{if $usersAwaitingApproval}
+	<p class="info">{lang}wcf.acp.user.usersAwaitingApprovalInfo{/lang}</p>
+{/if}
+
 {event name='userNotice'}
 
 <div class="tabMenuContainer" data-active="{if ENABLE_WOLTLAB_NEWS}news{else}system{/if}" data-store="activeTabMenuItem">

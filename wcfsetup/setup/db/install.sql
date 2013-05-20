@@ -269,6 +269,23 @@ CREATE TABLE wcf1_cronjob_log (
 	error TEXT
 );
 
+DROP TABLE IF EXISTS wcf1_dashboard_box;
+CREATE TABLE wcf1_dashboard_box (
+	boxID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL,
+	boxName VARCHAR(255) NOT NULL DEFAULT '',
+	boxType VARCHAR(30) NOT NULL DEFAULT 'sidebar', -- can be 'content' or 'sidebar'
+	className VARCHAR(255) NOT NULL DEFAULT ''
+);
+
+DROP TABLE IF EXISTS wcf1_dashboard_option;
+CREATE TABLE wcf1_dashboard_option (
+	objectTypeID INT(10) NOT NULL,
+	boxID INT(10) NOT NULL,
+	showOrder INT(10) NOT NULL,
+	UNIQUE KEY dashboardOption (objectTypeID, boxID)
+);
+
 DROP TABLE IF EXISTS wcf1_event_listener;
 CREATE TABLE wcf1_event_listener (
 	listenerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -698,6 +715,25 @@ CREATE TABLE wcf1_template_listener (
 	KEY templateName (environment, templateName)
 );
 
+DROP TABLE IF EXISTS wcf1_tracked_visit;
+CREATE TABLE wcf1_tracked_visit (
+	objectTypeID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	visitTime INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY (objectTypeID, objectID, userID),
+	KEY (userID, visitTime)
+);
+
+DROP TABLE IF EXISTS wcf1_tracked_visit_type;
+CREATE TABLE wcf1_tracked_visit_type (
+	objectTypeID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	visitTime INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY (objectTypeID, userID),
+	KEY (userID, visitTime)
+);
+
 DROP TABLE IF EXISTS wcf1_user;
 CREATE TABLE wcf1_user (
 	userID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -710,10 +746,87 @@ CREATE TABLE wcf1_user (
 	styleID INT(10) NOT NULL DEFAULT 0,
 	banned TINYINT(1) NOT NULL DEFAULT 0,
 	banReason MEDIUMTEXT NULL,
+	activationCode INT(10) NOT NULL DEFAULT 0,
+	lastLostPasswordRequestTime INT(10) NOT NULL DEFAULT 0,
+	lostPasswordKey VARCHAR(40) NOT NULL DEFAULT '',
+	lastUsernameChange INT(10) NOT NULL DEFAULT 0,
+	newEmail VARCHAR(255) NOT NULL DEFAULT '',
+	oldUsername VARCHAR(255) NOT NULL DEFAULT '',
+	quitStarted INT(10) NOT NULL DEFAULT 0,
+	reactivationCode INT(10) NOT NULL DEFAULT 0,
+	registrationIpAddress VARCHAR(39) NOT NULL DEFAULT '',
+	avatarID INT(10),
+	disableAvatar TINYINT(1) NOT NULL DEFAULT 0,
+	disableAvatarReason TEXT,
+	enableGravatar TINYINT(1) NOT NULL DEFAULT 0,
+	signature TEXT,
+	signatureEnableBBCodes TINYINT(1) NOT NULL DEFAULT 1,
+	signatureEnableHtml TINYINT(1) NOT NULL DEFAULT 0,
+	signatureEnableSmilies TINYINT(1) NOT NULL DEFAULT 1,
+	disableSignature TINYINT(1) NOT NULL DEFAULT 0,
+	disableSignatureReason TEXT,
+	lastActivityTime INT(10) NOT NULL DEFAULT 0,
+	profileHits INT(10) NOT NULL DEFAULT 0,
+	rankID INT(10),
+	userTitle VARCHAR(255) NOT NULL DEFAULT '',
+	userOnlineGroupID INT(10),
+	activityPoints INT(10) NOT NULL DEFAULT 0,
+	notificationMailToken VARCHAR(20) NOT NULL DEFAULT '',
+	authData VARCHAR(255) NOT NULL DEFAULT '',
 	
 	KEY username (username),
 	KEY registrationDate (registrationDate),
-	KEY styleID (styleID)
+	KEY styleID (styleID),
+	KEY activationCode (activationCode),
+	KEY registrationData (registrationIpAddress, registrationDate),
+	KEY activityPoints (activityPoints)
+);
+
+DROP TABLE IF EXISTS wcf1_user_activity_event;
+CREATE TABLE wcf1_user_activity_event (
+	eventID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	objectTypeID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL,
+	languageID INT(10),
+	userID INT(10) NOT NULL,
+	time INT(10) NOT NULL,
+	additionalData TEXT,
+	
+	KEY (time),
+	KEY (userID, time),
+	KEY (objectTypeID, objectID)
+);
+
+DROP TABLE IF EXISTS wcf1_user_activity_point;
+CREATE TABLE wcf1_user_activity_point (
+	userID INT(10) NOT NULL,
+	objectTypeID INT(10) NOT NULL,
+	activityPoints INT(10) NOT NULL DEFAULT 0,
+	PRIMARY KEY (userID, objectTypeID),
+	KEY (objectTypeID)
+);
+
+DROP TABLE IF EXISTS wcf1_user_activity_point_event;
+CREATE TABLE wcf1_user_activity_point_event (
+	eventID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	objectTypeID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	additionalData TEXT,
+	UNIQUE KEY (objectTypeID, userID, objectID)
+);
+
+DROP TABLE IF EXISTS wcf1_user_avatar;
+CREATE TABLE wcf1_user_avatar (
+	avatarID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	avatarName VARCHAR(255) NOT NULL DEFAULT '',
+	avatarExtension VARCHAR(7) NOT NULL DEFAULT '',
+	width SMALLINT(5) NOT NULL DEFAULT 0,
+	height SMALLINT(5) NOT NULL DEFAULT 0,
+	userID INT(10),
+	fileHash VARCHAR(40) NOT NULL DEFAULT '',
+	cropX SMALLINT(5) NOT NULL DEFAULT 0,
+	cropY SMALLINT(5) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_user_collapsible_content;
@@ -724,11 +837,23 @@ CREATE TABLE wcf1_user_collapsible_content (
 	UNIQUE KEY (objectTypeID, objectID, userID)
 );
 
+DROP TABLE IF EXISTS wcf1_user_follow;
+CREATE TABLE wcf1_user_follow (
+	followID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	userID INT(10) NOT NULL,
+	followUserID INT(10) NOT NULL,
+	time INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY (userID, followUserID)
+);
+
 DROP TABLE IF EXISTS wcf1_user_group;
 CREATE TABLE wcf1_user_group (
 	groupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	groupName VARCHAR(255) NOT NULL DEFAULT '',
-	groupType TINYINT(1) NOT NULL DEFAULT 4
+	groupType TINYINT(1) NOT NULL DEFAULT 4,
+	priority MEDIUMINT(8) NOT NULL DEFAULT 0,
+	userOnlineMarking VARCHAR(255) NOT NULL DEFAULT '%s',
+	showOnTeamPage TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_option;
@@ -767,6 +892,89 @@ CREATE TABLE wcf1_user_group_option_value (
 	optionID INT(10) NOT NULL,
 	optionValue MEDIUMTEXT NOT NULL,
 	UNIQUE KEY groupID (groupID, optionID)
+);
+
+DROP TABLE IF EXISTS wcf1_user_ignore;
+CREATE TABLE wcf1_user_ignore (
+	ignoreID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	userID INT(10) NOT NULL,
+	ignoreUserID INT(10) NOT NULL,
+	time INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY (userID, ignoreUserID)
+);
+
+DROP TABLE IF EXISTS wcf1_user_menu_item;
+CREATE TABLE wcf1_user_menu_item (
+	menuItemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL,
+	menuItem VARCHAR(255) NOT NULL DEFAULT '',
+	parentMenuItem VARCHAR(255) NOT NULL DEFAULT '',
+	menuItemController VARCHAR(255) NOT NULL DEFAULT '',
+	menuItemLink VARCHAR(255) NOT NULL DEFAULT '',
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	permissions TEXT,
+	options TEXT,
+	className VARCHAR(255) NOT NULL DEFAULT '',
+	UNIQUE KEY menuItem (menuItem, packageID)
+);
+
+-- notifications
+DROP TABLE IF EXISTS wcf1_user_notification;
+CREATE TABLE wcf1_user_notification (
+	notificationID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL,
+	eventID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL DEFAULT 0,
+	eventHash VARCHAR(40) NOT NULL DEFAULT '',
+	authorID INT(10),
+	time INT(10) NOT NULL DEFAULT 0,
+	additionalData TEXT,
+	KEY (eventHash),
+	UNIQUE KEY (packageID, eventID, objectID)
+);
+
+-- notification recipients
+DROP TABLE IF EXISTS wcf1_user_notification_to_user;
+CREATE TABLE wcf1_user_notification_to_user (
+	notificationID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	mailNotified TINYINT(1) NOT NULL DEFAULT 0,
+	UNIQUE KEY notificationID (notificationID, userID)
+);
+
+-- events that create notifications
+DROP TABLE IF EXISTS wcf1_user_notification_event;
+CREATE TABLE wcf1_user_notification_event (
+	eventID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL,
+	eventName VARCHAR(255) NOT NULL DEFAULT '',
+	objectTypeID INT(10) NOT NULL,
+	className VARCHAR(255) NOT NULL DEFAULT '',
+	permissions TEXT,
+	options TEXT,
+	preset TINYINT(1) NOT DEFAULT 0,
+	UNIQUE KEY eventName (eventName, objectTypeID)
+);
+
+-- user configuration for events
+DROP TABLE IF EXISTS wcf1_user_notification_event_to_user;
+CREATE TABLE wcf1_user_notification_event_to_user (
+	userID INT(10) NOT NULL,
+	eventID INT(10) NOT NULL,
+	mailNotificationType ENUM('none', 'instant', 'daily') NOT NULL DEFAULT 'none',
+	UNIQUE KEY (eventID, userID)
+);
+
+DROP TABLE IF EXISTS wcf1_user_object_watch;
+CREATE TABLE wcf1_user_object_watch (
+	watchID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	objectTypeID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	notification TINYINT(1) NOT NULL DEFAULT 0,
+	
+	UNIQUE KEY (objectTypeID, userID, objectID),
+	KEY (objectTypeID, objectID)
 );
 
 DROP TABLE IF EXISTS wcf1_user_option;
@@ -810,6 +1018,40 @@ CREATE TABLE wcf1_user_option_category (
 DROP TABLE IF EXISTS wcf1_user_option_value;
 CREATE TABLE wcf1_user_option_value (
 	userID INT(10) NOT NULL PRIMARY KEY
+);
+
+DROP TABLE IF EXISTS wcf1_user_profile_menu_item;
+CREATE TABLE wcf1_user_profile_menu_item (
+	menuItemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL,
+	menuItem VARCHAR(255) NOT NULL,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	permissions TEXT NULL,
+	options TEXT NULL,
+	className VARCHAR(255) NOT NULL,
+	UNIQUE KEY (packageID, menuItem)
+);
+
+DROP TABLE IF EXISTS wcf1_user_profile_visitor;
+CREATE TABLE wcf1_user_profile_visitor (
+	visitorID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	ownerID INT(10),
+	userID INT(10),
+	time INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY (ownerID, userID),
+	KEY (time)
+);
+
+DROP TABLE IF EXISTS wcf1_user_rank;
+CREATE TABLE wcf1_user_rank (
+	rankID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	groupID INT(10),
+	requiredPoints INT(10) NOT NULL DEFAULT 0,
+	rankTitle VARCHAR(255) NOT NULL DEFAULT '',
+	cssClassName VARCHAR(255) NOT NULL DEFAULT '',
+	rankImage VARCHAR(255) NOT NULL DEFAULT '',
+	repeatImage TINYINT(3) NOT NULL DEFAULT 1,
+	requiredGender TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_user_storage;
@@ -979,6 +1221,65 @@ ALTER TABLE wcf1_user_to_group ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_gr
 ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_dashboard_box ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_dashboard_option ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+ALTER TABLE wcf1_dashboard_option ADD FOREIGN KEY (boxID) REFERENCES wcf1_dashboard_box (boxID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_tracked_visit ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+ALTER TABLE wcf1_tracked_visit ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_tracked_visit_type ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+ALTER TABLE wcf1_tracked_visit_type ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user ADD FOREIGN KEY (avatarID) REFERENCES wcf1_user_avatar (avatarID) ON DELETE SET NULL;
+ALTER TABLE wcf1_user ADD FOREIGN KEY (rankID) REFERENCES wcf1_user_rank (rankID) ON DELETE SET NULL;
+ALTER TABLE wcf1_user ADD FOREIGN KEY (userOnlineGroupID) REFERENCES wcf1_user_group (groupID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_user_avatar ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_follow ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_follow ADD FOREIGN KEY (followUserID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_ignore ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_ignore ADD FOREIGN KEY (ignoreUserID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_notification ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_notification ADD FOREIGN KEY (eventID) REFERENCES wcf1_user_notification_event (eventID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_notification ADD FOREIGN KEY (authorID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_user_notification_to_user ADD FOREIGN KEY (notificationID) REFERENCES wcf1_user_notification (notificationID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_notification_to_user ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_notification_event ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_notification_event ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_notification_event_to_user ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_notification_event_to_user ADD FOREIGN KEY (eventID) REFERENCES wcf1_user_notification_event (eventID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_profile_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_rank ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_user_activity_event ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_activity_event ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_activity_event ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE SET NULL;
+
+ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_activity_point_event ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_activity_point_event ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (ownerID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+
 /* default inserts */
 -- default user groups
 INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group1', 1);
@@ -1120,3 +1421,23 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('overrideLe
 	-- soundcloud
 	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Soundcloud', 'https?://soundcloud.com/(?<artist>[a-zA-Z0-9_-]+)/(?<song>[a-zA-Z0-9_-]+)', '<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2F{$song}"></iframe>');
 
+-- default priorities
+UPDATE wcf1_user_group SET priority = 10 WHERE groupID = 3;
+UPDATE wcf1_user_group SET priority = 1000 WHERE groupID = 4;
+UPDATE wcf1_user_group SET priority = 50 WHERE groupID = 5;
+UPDATE wcf1_user_group SET priority = 100 WHERE groupID = 6;
+
+-- default 'showOnTeamPage' setting
+UPDATE wcf1_user_group SET showOnTeamPage = 1 WHERE groupID IN (4, 5, 6);
+
+-- default ranks
+INSERT INTO wcf1_user_rank (groupID, requiredPoints, rankTitle, cssClassName) VALUES
+	(4, 0, 'wcf.user.rank.administrator', 'blue'),
+	(5, 0, 'wcf.user.rank.moderator', 'blue'),
+	(6, 0, 'wcf.user.rank.superModerator', 'blue'),
+	(3, 0, 'wcf.user.rank.user0', ''),
+	(3, 300, 'wcf.user.rank.user1', ''),
+	(3, 900, 'wcf.user.rank.user2', ''),
+	(3, 3000, 'wcf.user.rank.user3', ''),
+	(3, 9000, 'wcf.user.rank.user4', ''),
+	(3, 15000, 'wcf.user.rank.user5', '');

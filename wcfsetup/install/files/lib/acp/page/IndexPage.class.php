@@ -53,6 +53,18 @@ class IndexPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 	
+		$usersAwaitingApproval = 0;
+		if (REGISTER_ACTIVATION_METHOD == 2) {
+			$sql = "SELECT	COUNT(*) AS count
+				FROM	wcf".WCF_N."_user
+				WHERE	activationCode <> 0";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute();
+			$row = $statement->fetchArray();
+			$usersAwaitingApproval = $row['count'];
+		}
+		WCF::getTPL()->assign('usersAwaitingApproval', $usersAwaitingApproval);
+		
 		WCF::getTPL()->assign(array(
 			'server' => $this->server
 		));

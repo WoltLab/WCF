@@ -1,0 +1,214 @@
+/* user profile sidebar */
+.sidebar {
+	.userAvatar {
+		text-align: center;
+		overflow: hidden;
+		
+		> a {
+			display: block;
+		}
+	}
+}
+
+.framedIconList {
+	li {
+		float: left;
+		margin: 0 2px 4px 0;
+		
+		.framed {
+			display: inline-block;
+		}
+	}
+	
+	&:after {
+		content: "";
+		height: 0;
+		display: block;
+		clear: both;
+	}
+}
+
+/* user information */
+.userInformation {
+	> .inlineDataList,
+	> .dataList {
+		font-size: @wcfSmallFontSize;
+	}
+	
+	> .dataList {
+		margin-top: 0;
+	}
+	
+	> .inlineDataList {
+		margin-top: @wcfGapSmall;
+		
+		~ .inlineDataList {
+			margin-top: 0;
+		}
+	}
+	
+	> .containerHeadline + .inlineDataList {
+		margin-top: 0;
+	}
+	
+	> .containerHeadline > p {
+		margin-bottom: 2px;
+	}
+}
+
+.userTitleBadge {
+	font-weight: normal;
+	max-width: 154px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.userProfilePreview {
+	position: relative;
+
+	> .userInformation {
+		padding-bottom: 16px;// + @wcfGapTiny;
+		
+		> .userStats,
+		> .userFields {
+			margin-bottom: @wcfGapTiny+1;
+			padding-top: @wcfGapTiny+1;
+			border-top: 1px dotted @wcfContainerBorderColor;
+		}
+		
+		> .userFields {
+			padding-bottom: @wcfGapTiny+1;
+			border-bottom: 1px dotted @wcfContainerBorderColor;
+		}
+		
+		> .buttonGroupNavigation {
+			position: absolute;
+			bottom: 0;
+			right: 0;
+		}
+	}
+}
+
+/* ##### User List #### */
+.userHeadline {
+	position: relative;
+	
+	> nav.buttonGroupNavigation {
+		position: absolute;
+		right: @wcfGapTiny;
+		top: @wcfGapTiny;
+	}
+}
+
+.letters {
+	> li {
+		margin-bottom: @wcfGapTiny;
+		
+		> .button {
+			min-width: 1.2em;
+			text-align: center;
+		}
+	}
+}
+
+/* recent activities */
+.recentActivityList {
+	> li {
+		&.recentActivitiesMore {
+			text-align: center;
+			
+			> button {
+				padding-left: 30px;
+				padding-right: 30px;
+			}
+			
+			> small {
+				color: @wcfDimmedColor;
+			}
+		}
+		
+		> div.box48 > div {
+			overflow: hidden;
+		}
+	}
+}
+
+/* dashboard boxes */
+.dashboardBoxRegisterButton {
+	padding-bottom: @wcfGapLarge !important;
+	
+	> div {
+		text-align: center;
+		
+		> .button {
+			font-size: 120%;
+			padding: 5px 13px;
+		}
+	}
+}
+
+.usersOnline {
+	.usersOnlineLegend {
+		margin-top: @wcfGapSmall;
+		
+		> p {
+			display: inline-block;
+		}
+		
+		> ul {
+			display: inline-block;
+		}
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	#tplUser .userHeadline {
+		overflow: visible;
+		
+		> .invisible {
+			display: block;
+			float: left;
+		}
+		
+		> *:not(.invisible) {
+			margin-left: 59px;
+		}
+		
+		> h1 {
+			margin-right: 30px;
+		}
+	}
+}
+
+/* avatar cropping */
+
+.userAvatarCrop {
+	cursor: pointer;
+}
+
+#userAvatarCropSelection {
+	position: relative;
+	margin: 0 auto;
+}
+
+#userAvatarCropOverlay {
+	background-color: #000000;
+	height: 100%;
+	opacity: 0.5;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	z-index: 10;
+}
+
+#userAvatarCropOverlaySelection {
+	cursor: move;
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 128px;
+	overflow: hidden;
+	width: 128px;
+	z-index: 20;
+}

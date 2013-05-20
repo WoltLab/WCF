@@ -78,5 +78,47 @@
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
+		
+		<cronjob>
+			<classname>wcf\system\cronjob\LastActivityCronjob</classname>
+			<description><![CDATA[Updates last activity timestamp]]></description>
+			<description language="de"><![CDATA[Aktualisiert Zeitpunkt der letzten Aktivität]]></description>
+			<startminute>*/5</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob>
+			<classname>wcf\system\cronjob\UserQuitCronjob</classname>
+			<description><![CDATA[Deletes canceled user accounts]]></description>
+			<description language="de"><![CDATA[Löscht gekündigte Benutzer-Accounts]]></description>
+			<startminute>0</startminute>
+			<starthour>0</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob>
+			<classname>wcf\system\cronjob\DailyMailNotificationCronjob</classname>
+			<description><![CDATA[Sends daily mail notifications]]></description>
+			<description language="de"><![CDATA[Versendet tägliche E-Mail-Benachrichtigungen]]></description>
+			<startminute>*/30</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
 	</import>
 </data>

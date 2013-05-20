@@ -6,7 +6,10 @@
 			<div class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if} clearfix">
 				{hascontent}
 					<ul class="userPanelItems">
-						{content}{event name='topMenu'}{/content}
+						{content}
+							{include file='userPanel'}
+							{event name='topMenu'}
+						{/content}
 					</ul>
 				{/hascontent}
 				

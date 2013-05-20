@@ -25,5 +25,25 @@
 		<coreobject>
 			<objectname><![CDATA[wcf\system\bbcode\BBCodeHandler]]></objectname>
 		</coreobject>
+		
+		<coreobject>
+			<objectname><![CDATA[wcf\system\user\UserProfileHandler]]></objectname>
+		</coreobject>
+		
+		<coreobject>
+			<objectname><![CDATA[wcf\system\menu\user\profile\UserProfileMenu]]></objectname>
+		</coreobject>
+		
+		<coreobject>
+			<objectname><![CDATA[wcf\system\menu\user\UserMenu]]></objectname>
+		</coreobject>
+		
+		<coreobject>
+			<objectname><![CDATA[wcf\system\user\notification\UserNotificationHandler]]></objectname>
+		</coreobject>
+		
+		<coreobject>
+			<objectname><![CDATA[wcf\system\user\object\watch\UserObjectWatchHandler]]></objectname>
+		</coreobject>
 	</import>
 </data>

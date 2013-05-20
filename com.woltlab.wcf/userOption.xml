@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/userOption.xsd">
+	<import>
+		<categories>
+			<category name="profile">
+				<showorder>1</showorder>
+			</category>
+			
+			<!-- profile -->
+			<category name="profile.aboutMe">
+				<parent>profile</parent>
+			</category>
+			<category name="profile.personal">
+				<parent>profile</parent>
+			</category>
+			<category name="profile.contact">
+				<parent>profile</parent>
+			</category>
+			<!-- /profile -->
+			
+			<category name="settings">
+				<showorder>2</showorder>
+			</category>
+			
+			<!-- settings -->
+			<category name="settings.general">
+				<showorder>1</showorder>
+				<parent>settings</parent>
+			</category>
+			<category name="settings.general.appearance">
+				<showorder>1</showorder>
+				<parent>settings.general</parent>
+			</category>
+			<category name="settings.general.interface">
+				<showorder>2</showorder>
+				<parent>settings.general</parent>
+			</category>
+			<category name="settings.general.date">
+				<showorder>3</showorder>
+				<parent>settings.general</parent>
+			</category>
+			
+			<category name="settings.privacy">
+				<showorder>2</showorder>
+				<parent>settings</parent>
+			</category>
+			<category name="settings.privacy.content">
+				<parent>settings.privacy</parent>
+			</category>
+			<category name="settings.privacy.messaging">
+				<parent>settings.privacy</parent>
+			</category>
+			<!-- /settings -->
+		</categories>
+
+		<options>
+			<!-- profile -->
+			<option name="aboutMe">
+				<categoryname>profile.aboutMe</categoryname>
+				<optiontype>message</optiontype>
+				<outputclass>wcf\system\option\user\MessageUserOptionOutput</outputclass>
+				<visible>15</visible>
+				<editable>3</editable>
+				<maxlength>1000</maxlength>
+			</option>
+			<option name="birthday">
+				<categoryname>profile.personal</categoryname>
+				<optiontype>birthday</optiontype>
+				<outputclass>wcf\system\option\user\BirthdayUserOptionOutput</outputclass>
+				<searchable>1</searchable>
+				<visible>15</visible>
+				<editable>3</editable>
+			</option>
+			<option name="birthdayShowYear">
+				<categoryname>profile.personal</categoryname>
+				<optiontype>boolean</optiontype>
+				<visible>0</visible>
+				<editable>3</editable>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="gender">
+				<categoryname>profile.personal</categoryname>
+				<optiontype>radioButton</optiontype>
+				<outputclass>wcf\system\option\user\SelectOptionsUserOptionOutput</outputclass>
+				<selectoptions>
+					<![CDATA[0:wcf.global.noDeclaration
+1:wcf.user.gender.male
+2:wcf.user.gender.female]]>
+				</selectoptions>
+				<defaultvalue>0</defaultvalue>
+				<searchable>1</searchable>
+				<visible>15</visible>
+				<editable>3</editable>
+			</option>
+			<option name="location">
+				<categoryname>profile.personal</categoryname>
+				<optiontype>text</optiontype>
+				<searchable>1</searchable>
+				<visible>15</visible>
+				<editable>3</editable>
+			</option>
+			<option name="occupation">
+				<categoryname>profile.personal</categoryname>
+				<optiontype>text</optiontype>
+				<searchable>1</searchable>
+				<visible>15</visible>
+				<editable>3</editable>
+			</option>
+			<option name="hobbies">
+				<categoryname>profile.personal</categoryname>
+				<optiontype>text</optiontype>
+				<searchable>1</searchable>
+				<visible>15</visible>
+				<editable>3</editable>
+			</option>
+			<option name="adminComment">
+				<categoryname>profile.personal</categoryname>
+				<optiontype>textarea</optiontype>
+				<editable>3</editable>
+				<outputclass>wcf\system\option\user\NewlineToBreakUserOptionOutput</outputclass>
+				<visible>2</visible>
+				<editable>2</editable>
+			</option>
+			<option name="homepage">
+				<categoryname>profile.contact</categoryname>
+				<optiontype>text</optiontype>
+				<outputclass>wcf\system\option\user\URLUserOptionOutput</outputclass>
+				<searchable>1</searchable>
+				<validationpattern>^$|^https?://</validationpattern>
+				<visible>15</visible>
+				<editable>3</editable>
+			</option>
+			<option name="icq">
+				<categoryname>profile.contact</categoryname>
+				<optiontype>text</optiontype>
+				<searchable>1</searchable>
+				<validationpattern>^$|^([0-9](-| )?)+[0-9]$</validationpattern>
+				<contentpattern>^(\d{3})-(\d{3})-(\d{3})$</contentpattern>
+				<visible>15</visible>
+				<editable>3</editable>
+			</option>
+			<option name="skype">
+				<categoryname>profile.contact</categoryname>
+				<optiontype>text</optiontype>
+				<searchable>1</searchable>
+				<visible>15</visible>
+				<editable>3</editable>
+			</option>
+			<option name="facebook">
+				<categoryname>profile.contact</categoryname>
+				<optiontype>text</optiontype>
+				<outputclass>wcf\system\option\user\FacebookUserOptionOutput</outputclass>
+				<validationpattern>^$|^[A-Za-z\d.]{5,}$</validationpattern>
+				<contentpattern>^https?://www.facebook.com/([A-Za-z\d.]{5,})$</contentpattern>
+				<searchable>1</searchable>
+				<visible>15</visible>
+				<editable>3</editable>
+			</option>
+			<option name="twitter">
+				<categoryname>profile.contact</categoryname>
+				<optiontype>text</optiontype>
+				<outputclass>wcf\system\option\user\TwitterUserOptionOutput</outputclass>
+				<validationpattern>^$|^[A-Za-z0-9_]+$</validationpattern>
+				<contentpattern>^https?://twitter.com/([A-Za-z0-9_]+)$</contentpattern>
+				<searchable>1</searchable>
+				<visible>15</visible>
+				<editable>3</editable>
+			</option>
+			<option name="googlePlus">
+				<categoryname>profile.contact</categoryname>
+				<optiontype>text</optiontype>
+				<outputclass>wcf\system\option\user\GooglePlusUserOptionOutput</outputclass>
+				<validationpattern>^$|^[0-9]{21}$</validationpattern>
+				<contentpattern>^https?://plus.google.com/([0-9]{21})$</contentpattern>
+				<searchable>1</searchable>
+				<visible>15</visible>
+				<editable>3</editable>
+			</option>
+			<!-- /profile -->
+			
+			<!-- settings -->
+			<option name="timezone">
+				<categoryname>settings.general.date</categoryname>
+				<optiontype>timezone</optiontype>
+				<editable>3</editable>
+			</option>
+			<option name="showSignature">
+				<categoryname>settings.general.appearance</categoryname>
+				<optiontype>boolean</optiontype>
+				<editable>3</editable>
+				<defaultvalue>1</defaultvalue>
+				<options>module_user_signature</options>
+			</option>
+			
+			<!-- settings.privacy.content -->
+			<option name="canViewOnlineStatus">
+				<categoryname>settings.privacy.content</categoryname>
+				<optiontype>select</optiontype>
+				<editable>3</editable>
+				<selectoptions><![CDATA[0:wcf.user.access.everyone
+1:wcf.user.access.registered
+2:wcf.user.access.following
+3:wcf.user.access.nobody]]></selectoptions>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="canViewProfile">
+				<categoryname>settings.privacy.content</categoryname>
+				<optiontype>select</optiontype>
+				<editable>3</editable>
+				<selectoptions><![CDATA[0:wcf.user.access.everyone
+1:wcf.user.access.registered
+2:wcf.user.access.following
+3:wcf.user.access.nobody]]></selectoptions>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			
+			<!-- settings.privacy.messaging -->
+			<option name="canViewEmailAddress">
+				<categoryname>settings.privacy.messaging</categoryname>
+				<optiontype>select</optiontype>
+				<editable>3</editable>
+				<selectoptions><![CDATA[0:wcf.user.access.everyone
+1:wcf.user.access.registered
+2:wcf.user.access.following
+3:wcf.user.access.nobody]]></selectoptions>
+				<defaultvalue>3</defaultvalue>
+			</option>
+			<option name="canMail">
+				<categoryname>settings.privacy.messaging</categoryname>
+				<optiontype>select</optiontype>
+				<editable>3</editable>
+				<selectoptions><![CDATA[0:wcf.user.access.everyone
+1:wcf.user.access.registered
+2:wcf.user.access.following
+3:wcf.user.access.nobody]]></selectoptions>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="adminCanMail">
+				<categoryname>settings.privacy.messaging</categoryname>
+				<optiontype>boolean</optiontype>
+				<editable>3</editable>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- /settings -->
+		</options>
+	</import>
+</data>

@@ -32,7 +32,7 @@ class UserGroupListPage extends SortablePage {
 	/**
 	 * @see	wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('groupID', 'groupName', 'groupType', 'members');
+	public $validSortFields = array('groupID', 'groupName', 'groupType', 'members', 'priority');
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName

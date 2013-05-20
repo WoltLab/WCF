@@ -35,5 +35,44 @@
 			<name>com.woltlab.wcf.message.quote</name>
 			<interfacename>wcf\system\message\IMessageQuoteHandler</interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.user.recentActivityEvent</name>
+			<interfacename>wcf\system\user\activity\event\IUserActivityEvent</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.user.activityPointEvent</name>
+			<interfacename>wcf\system\user\activity\point\IUserActivityPointObjectProcessor</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.notification.notificationType</name>
+			<interfacename>wcf\system\user\notification\type\IUserNotificationType</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.notification.objectType</name>
+			<interfacename>wcf\system\user\notification\object\type\IUserNotificationObjectType</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.user.dashboardContainer</name>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.user.online.location</name>
+			<interfacename>wcf\system\user\online\location\IUserOnlineLocation</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.user.objectWatch</name>
+			<interfacename>wcf\system\user\object\watch\IUserObjectWatch</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.visitTracker.objectType</name>
+			<!-- <interfacename>wcf\system\visitTracker\IVisitTrackerObjectType</interfacename>-->
+		</definition>
 	</import>
 </data>

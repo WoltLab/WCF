@@ -185,6 +185,12 @@
 			<permissions>admin.user.canMailUser</permissions>
 			<showorder>2</showorder>
 		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.activityPoint">
+			<parent>wcf.acp.menu.link.user.management</parent>
+			<controller><![CDATA[wcf\acp\form\UserActivityPointOptionForm]]></controller>
+			<permissions>admin.user.canEditActivityPoints</permissions>
+		</acpmenuitem>
 		<!-- /users -->
 		
 		<!-- user groups -->
@@ -260,6 +266,23 @@
 			<permissions>admin.user.canManageUserOption</permissions>
 		</acpmenuitem>
 		<!-- /user options -->
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.rank">
+			<parent>wcf.acp.menu.link.user</parent>
+			<options>module_user_rank</options>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.rank.list">
+			<parent>wcf.acp.menu.link.user.rank</parent>
+			<controller><![CDATA[wcf\acp\page\UserRankListPage]]></controller>
+			<permissions>admin.user.rank.canManageRank</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.rank.add">
+			<parent>wcf.acp.menu.link.user.rank</parent>
+			<controller><![CDATA[wcf\acp\form\UserRankAddForm]]></controller>
+			<permissions>admin.user.rank.canManageRank</permissions>
+		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.display">
 			<showorder>3</showorder>
@@ -387,6 +410,12 @@
 			<parent>wcf.acp.menu.link.content</parent>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.attachment.list">
+			<controller><![CDATA[wcf\acp\page\AttachmentListPage]]></controller>
+			<parent>wcf.acp.menu.link.attachment</parent>
+			<permissions>admin.attachment.canManageAttachment</permissions>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.bbcode">
 			<parent>wcf.acp.menu.link.content</parent>
 		</acpmenuitem>
@@ -451,10 +480,14 @@
 			<showorder>4</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.attachment.list">
-			<controller><![CDATA[wcf\acp\page\AttachmentListPage]]></controller>
-			<parent>wcf.acp.menu.link.attachment</parent>
-			<permissions>admin.attachment.canManageAttachment</permissions>
+		<acpmenuitem name="wcf.acp.menu.link.dashboard">
+			<parent>wcf.acp.menu.link.content</parent>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.dashboard.list">
+			<parent>wcf.acp.menu.link.dashboard</parent>
+			<controller><![CDATA[wcf\acp\page\DashboardListPage]]></controller>
+			<permissions>admin.content.dashboard.canEditDashboard</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.community">

@@ -9,6 +9,17 @@
 			<category name="user.message.attachment">
 				<parent>user.message</parent>
 			</category>
+			<category name="user.profile">
+				<parent>user</parent>
+			</category>
+			
+			<category name="user.signature">
+				<parent>user.profile</parent>
+			</category>
+			
+			<category name="user.profile.avatar">
+				<parent>user.profile</parent>
+			</category>
 			
 			<category name="mod"></category>
 			<category name="mod.general">
@@ -40,6 +51,9 @@
 			<category name="admin.user.option">
 				<parent>admin.user</parent>
 			</category>
+			<category name="admin.user.rank">
+				<parent>admin.user</parent>
+			</category>
 			
 			<category name="admin.display">
 				<parent>admin</parent>
@@ -64,6 +78,9 @@
 				<parent>admin.content</parent>
 			</category>
 			<category name="admin.content.smiley">
+				<parent>admin.content</parent>
+			</category>
+			<category name="admin.content.dashboard">
 				<parent>admin.content</parent>
 			</category>
 			
@@ -309,6 +326,146 @@ pdf]]></defaultvalue>
 				<defaultvalue>all</defaultvalue>
 			</option>
 			<!-- /user.message -->
+			
+			<option name="admin.user.canViewInvisible">
+				<categoryname>admin.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canViewIpAddress">
+				<categoryname>admin.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canEnableUser">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canEditActivityPoints">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			
+			<option name="admin.content.dashboard.canEditDashboard">
+				<categoryname>admin.content.dashboard</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.rank.canManageRank">
+				<categoryname>admin.user.rank</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			
+			<!-- user.signature -->
+			<option name="user.signature.canUseSmilies">
+				<categoryname>user.signature</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="user.signature.canUseHtml">
+				<categoryname>user.signature</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="user.signature.canUseBBCodes">
+				<categoryname>user.signature</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="user.signature.allowedBBCodes">
+				<categoryname>user.signature</categoryname>
+				<optiontype>BBCodeSelect</optiontype>
+				<defaultvalue>all</defaultvalue>
+			</option>
+			<!-- /user.signature -->
+			
+			<!-- user.profile -->
+			<option name="user.profile.canMail">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="user.profile.canChangeEmail">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="user.profile.canQuit">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="user.profile.canRename">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>user.profile.renamePeriod</enableoptions>
+			</option>
+			<option name="user.profile.renamePeriod">
+				<categoryname>user.profile</categoryname>
+				<optiontype>inverseInteger</optiontype>
+				<defaultvalue>182</defaultvalue>
+			</option>
+			<option name="user.profile.canEditUserTitle">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="user.profile.canViewMembersList">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="user.profile.canViewUsersOnlineList">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_users_online</options>
+			</option>
+			<option name="user.profile.canViewUserProfile">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="user.profile.cannotBeIgnored">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			
+			<option name="user.profile.avatar.canUploadAvatar">
+				<categoryname>user.profile.avatar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>user.profile.avatar.maxSize,user.profile.avatar.allowedFileExtensions</enableoptions>
+			</option>
+			<option name="user.profile.avatar.maxSize">
+				<categoryname>user.profile.avatar</categoryname>
+				<optiontype>fileSize</optiontype>
+				<defaultvalue>100000</defaultvalue>
+				<minvalue>10000</minvalue>
+			</option>
+			<option name="user.profile.avatar.allowedFileExtensions">
+				<categoryname>user.profile.avatar</categoryname>
+				<optiontype>textarea</optiontype>
+				<defaultvalue><![CDATA[gif
+jpg
+jpeg
+png]]></defaultvalue>
+			</option>
+			<!-- /user.profile -->
 		</options>
 	</import>
 </data>

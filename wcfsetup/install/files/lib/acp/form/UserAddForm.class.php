@@ -2,6 +2,8 @@
 namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserAction;
+use wcf\data\user\UserEditor;
+use wcf\data\user\UserProfileAction;
 use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
@@ -89,6 +91,48 @@ class UserAddForm extends UserOptionListForm {
 	public $additionalFields = array();
 	
 	/**
+	 * title of the user
+	 * @var	string
+	 */
+	protected $userTitle = '';
+	
+	/**
+	 * signature text
+	 * @var string
+	 */
+	public $signature = '';
+	
+	/**
+	 * enables smilies
+	 * @var boolean
+	 */
+	public $signatureEnableSmilies = 1;
+	
+	/**
+	 * enables bbcodes
+	 * @var boolean
+	 */
+	public $signatureEnableBBCodes = 1;
+	
+	/**
+	 * enables html
+	 * @var boolean
+	 */
+	public $signatureEnableHtml = 0;
+	
+	/**
+	 * true to disable this signature
+	 * @var boolean
+	 */
+	public $disableSignature = 0;
+	
+	/**
+	 * reason
+	 * @var string
+	 */
+	public $disableSignatureReason = '';
+	
+	/**
 	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
@@ -102,6 +146,16 @@ class UserAddForm extends UserOptionListForm {
 		if (isset($_POST['groupIDs']) && is_array($_POST['groupIDs'])) $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
 		if (isset($_POST['visibleLanguages']) && is_array($_POST['visibleLanguages'])) $this->visibleLanguages = ArrayUtil::toIntegerArray($_POST['visibleLanguages']);
 		if (isset($_POST['languageID'])) $this->languageID = intval($_POST['languageID']);
+		if (isset($_POST['userTitle'])) $this->userTitle = $_POST['userTitle'];
+		
+		if (isset($_POST['signature'])) $this->signature = StringUtil::trim($_POST['signature']);
+		if (isset($_POST['disableSignatureReason'])) $this->disableSignatureReason = StringUtil::trim($_POST['disableSignatureReason']);
+		
+		$this->signatureEnableBBCodes = $this->signatureEnableSmilies = 0;
+		if (!empty($_POST['signatureEnableBBCodes'])) $this->signatureEnableBBCodes = 1;
+		if (!empty($_POST['signatureEnableSmilies'])) $this->signatureEnableSmilies = 1;
+		if (!empty($_POST['signatureEnableHtml'])) $this->signatureEnableHtml = 1;
+		if (!empty($_POST['disableSignature'])) $this->disableSignature = 1;
 	}
 	
 	/**
@@ -167,6 +221,19 @@ class UserAddForm extends UserOptionListForm {
 			$this->visibleLanguages[] = $this->languageID;
 		}
 		
+		// validate user title
+		try {
+			if (StringUtil::length($this->userTitle) > USER_TITLE_MAX_LENGTH) {
+				throw new UserInputException('userTitle', 'tooLong');
+			}
+			if (!StringUtil::executeWordFilter($this->userTitle, USER_FORBIDDEN_TITLES)) {
+				throw new UserInputException('userTitle', 'forbidden');
+			}
+		}
+		catch (UserInputException $e) {
+			$this->errorType[$e->getField()] = $e->getType();
+		}
+		
 		// validate dynamic options
 		parent::validate();
 	}
@@ -185,6 +252,13 @@ class UserAddForm extends UserOptionListForm {
 				'username' => $this->username,
 				'email' => $this->email,
 				'password' => $this->password,
+				'userTitle' => $this->userTitle,
+				'signature' => $this->signature,
+				'signatureEnableBBCodes' => $this->signatureEnableBBCodes,
+				'signatureEnableSmilies' => $this->signatureEnableSmilies,
+				'signatureEnableHtml' => $this->signatureEnableHtml,
+				'disableSignature' => $this->disableSignature,
+				'disableSignatureReason' => $this->disableSignatureReason
 			)),
 			'groups' => $this->groupIDs,
 			'languages' => $this->visibleLanguages,
@@ -192,6 +266,18 @@ class UserAddForm extends UserOptionListForm {
 		);
 		$this->objectAction = new UserAction(array(), 'create', $data);
 		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->getReturnValues();
+		
+		// set user rank
+		$editor = new UserEditor($returnValues['returnValues']);
+		if (MODULE_USER_RANK) {
+			$action = new UserProfileAction(array($editor), 'updateUserRank');
+			$action->executeAction();
+		}
+		if (MODULE_USERS_ONLINE) {
+			$action = new UserProfileAction(array($editor), 'updateUserOnlineMarking');
+			$action->executeAction();
+		}
 		$this->saved();
 		
 		// show empty add form
@@ -306,7 +392,14 @@ class UserAddForm extends UserOptionListForm {
 			'languageID' => $this->languageID,
 			'visibleLanguages' => $this->visibleLanguages,
 			'availableContentLanguages' => LanguageFactory::getInstance()->getContentLanguages(),
-			'action' => 'add'
+			'action' => 'add',
+			'userTitle' => $this->userTitle,
+			'signature' => $this->signature,
+			'signatureEnableBBCodes' => $this->signatureEnableBBCodes,
+			'signatureEnableSmilies' => $this->signatureEnableSmilies,
+			'signatureEnableHtml' => $this->signatureEnableHtml,
+			'disableSignature' => $this->disableSignature,
+			'disableSignatureReason' => $this->disableSignatureReason
 		));
 	}
 	

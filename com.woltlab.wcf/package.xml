@@ -29,8 +29,15 @@
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="acpSearchProvider">acpSearchProvider.xml</instruction>
 		<instruction type="style">woltlab-basic-style.tgz</instruction>
+		<instruction type="userOption">userOption.xml</instruction>
 		<instruction type="bbcode">bbcode.xml</instruction>
-		<instruction type="smiley">smiley.xml</instruction> 
+		<instruction type="smiley">smiley.xml</instruction>
+		<instruction type="pageMenu">pageMenu.xml</instruction>
+		<instruction type="sitemap">sitemap.xml</instruction>
+		<instruction type="dashboardBox">dashboardBox.xml</instruction>
+		<instruction type="userProfileMenu">userProfileMenu.xml</instruction>
+		<instruction type="userMenu">userMenu.xml</instruction>
+		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
 	</instructions>
 	
 	<instructions type="update" fromversion="2.0.0 Alpha 1">

@@ -82,9 +82,48 @@
 				<showorder>3</showorder>
 			</category>
 			
-			<category name="user.general">
-				<parent>user</parent>
-			</category>
+				<category name="user.general">
+					<parent>user</parent>
+				</category>
+				
+				<category name="user.profile">
+					<parent>user</parent>
+				</category>
+					<category name="user.avatar">
+						<parent>user.profile</parent>
+					</category>
+					<category name="user.signature">
+						<parent>user.profile</parent>
+					</category>
+					<category name="user.title">
+						<parent>user.profile</parent>
+					</category>
+					<category name="user.cleanup">
+						<parent>user.profile</parent>
+					</category>
+				
+				<category name="user.list">
+					<parent>user</parent>
+				</category>
+					<category name="user.list.members">
+						<parent>user.list</parent>
+					</category>
+					<category name="user.list.online">
+						<parent>user.list</parent>
+					</category>
+				
+				<category name="user.register">
+					<parent>user</parent>
+				</category>
+					<category name="user.3rdPartyAuth">
+						<parent>user.register</parent>
+					</category>
+					<category name="user.password">
+						<parent>user.register</parent>
+					</category>
+					<category name="user.ban">
+						<parent>user.register</parent>
+					</category>
 			<!-- /user -->
 			
 			<!-- security -->
@@ -132,6 +171,22 @@
 					<options>module_attachment</options>
 				</category>
 			<!-- /message -->
+			
+			<category name="dashboard">
+			</category>
+				<category name="dashboard.content">
+					<parent>dashboard</parent>
+				</category>
+					<category name="dashboard.content.recentActivities">
+						<parent>dashboard.content</parent>
+					</category>
+				
+				<category name="dashboard.sidebar">
+					<parent>dashboard</parent>
+				</category>
+					<category name="dashboard.sidebar.recentActivities">
+						<parent>dashboard.sidebar</parent>
+					</category>
 		</categories>
 		
 		<options>
@@ -188,6 +243,37 @@
 			
 			<option name="module_smiley">
 				<categoryname>module.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_gravatar">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="module_users_online">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="module_user_rank">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="module_user_signature">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="module_team_page">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="module_dashboard_page">
+				<categoryname>module.user</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
@@ -550,6 +636,298 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<optiontype>textarea</optiontype>
 			</option>
 			<!-- /message.censorship -->
+			
+			<option name="register_enable_password_security_check">
+				<categoryname>user.password</categoryname>
+				<optiontype>boolean</optiontype>
+				<enableoptions><![CDATA[register_password_min_length,register_password_must_contain_lower_case,register_password_must_contain_upper_case,register_password_must_contain_digit,register_password_must_contain_special_char]]></enableoptions>
+			</option>
+			<option name="register_password_min_length">
+				<categoryname>user.password</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue><![CDATA[8]]></defaultvalue>
+			</option>
+			<option name="register_password_must_contain_lower_case">
+				<categoryname>user.password</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<option name="register_password_must_contain_upper_case">
+				<categoryname>user.password</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<option name="register_password_must_contain_digit">
+				<categoryname>user.password</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<option name="register_password_must_contain_special_char">
+				<categoryname>user.password</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<!-- /user.password -->
+			
+			<!-- user.ban -->
+			<option name="register_forbidden_usernames">
+				<categoryname>user.ban</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
+			<option name="register_forbidden_emails">
+				<categoryname>user.ban</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
+			<option name="register_allowed_emails">
+				<categoryname>user.ban</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
+			<!-- /user.ban -->
+			
+			<!-- user.register -->
+			<option name="register_username_min_length">
+				<categoryname>user.register</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>3</defaultvalue>
+				<minvalue>3</minvalue>
+				<maxvalue>255</maxvalue>
+			</option>
+			<option name="register_username_max_length">
+				<categoryname>user.register</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>25</defaultvalue>
+				<minvalue>3</minvalue>
+				<maxvalue>255</maxvalue>
+			</option>
+			<option name="register_username_force_ascii">
+				<categoryname>user.register</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="register_disabled">
+				<categoryname>user.register</categoryname>
+				<optiontype>boolean</optiontype>
+				<enableoptions><![CDATA[!register_enable_disclaimer,!register_admin_notification,!register_activation_method]]></enableoptions>
+			</option>
+			<option name="register_enable_disclaimer">
+				<categoryname>user.register</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<option name="register_admin_notification">
+				<categoryname>user.register</categoryname>
+				<optiontype>boolean</optiontype>
+			</option>
+			<option name="register_activation_method">
+				<categoryname>user.register</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<selectoptions><![CDATA[0:wcf.acp.option.register_activation_method.disabled
+1:wcf.acp.option.register_activation_method.byUser
+2:wcf.acp.option.register_activation_method.byAdmin]]></selectoptions>
+			</option>
+			<!-- /user.register -->
+			
+			<!-- user.3rdPartyAuth -->
+			<option name="github_public_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="github_private_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="twitter_public_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="twitter_private_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="facebook_public_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="facebook_private_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="google_public_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="google_private_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<!-- /user.3rdPartyAuth -->
+			
+			<!-- user.security -->
+			<option name="register_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<option name="lost_password_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<option name="profile_mail_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<!-- /user.security -->
+			
+			<!-- user.avatar -->
+			<option name="max_avatar_width">
+				<categoryname>user.avatar</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>192</defaultvalue>
+				<minvalue>48</minvalue>
+			</option>
+			<option name="max_avatar_height">
+				<categoryname>user.avatar</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>192</defaultvalue>
+				<minvalue>48</minvalue>
+			</option>
+			<!-- /user.avatar -->
+			
+			<!-- user.signature -->
+			<option name="signature_max_image_height">
+				<categoryname>user.signature</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>150</defaultvalue>
+			</option>
+			<!-- /user.signature -->
+			
+			<!-- user.title -->
+			<option name="user_title_max_length">
+				<categoryname>user.title</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>25</defaultvalue>
+				<options>module_user_rank</options>
+				<minvalue>0</minvalue>
+			</option>
+			<option name="user_forbidden_titles">
+				<categoryname>user.title</categoryname>
+				<optiontype>textarea</optiontype>
+				<options>module_user_rank</options>
+			</option>
+			<!-- /user.title -->
+			
+			<!-- user.profile -->
+			<option name="profile_show_old_username">
+				<categoryname>user.profile</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>182</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<!-- /user.profile -->
+			
+			<!-- user.list.members -->
+			<option name="members_list_users_per_page">
+				<categoryname>user.list.members</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>30</defaultvalue>
+			</option>
+			<option name="members_list_default_sort_field">
+				<categoryname>user.list.members</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue><![CDATA[username]]></defaultvalue>
+				<selectoptions><![CDATA[username:wcf.user.username
+registrationDate:wcf.user.registrationDate
+activityPoints:wcf.user.activityPoint]]></selectoptions>
+			</option>
+			<option name="members_list_default_sort_order">
+				<categoryname>user.list.members</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue><![CDATA[DESC]]></defaultvalue>
+				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending]]></selectoptions>
+			</option>
+			<!-- /user.list.members -->
+			
+			<!-- user.list.online -->
+			<option name="users_online_show_guests">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="users_online_show_robots">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="users_online_default_sort_field">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue><![CDATA[lastActivityTime]]></defaultvalue>
+				<selectoptions><![CDATA[username:wcf.user.username
+lastActivityTime:wcf.user.usersOnline.lastActivity
+requestURI:wcf.user.usersOnline.location]]></selectoptions>
+			</option>
+			<option name="users_online_default_sort_order">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue><![CDATA[DESC]]></defaultvalue>
+				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending]]></selectoptions>
+			</option>
+			<option name="users_online_page_refresh">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<!-- /user.list.online -->
+			
+			<!-- user.cleanup -->
+			<option name="user_cleanup_notification_lifetime">
+				<categoryname>user.cleanup</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>60</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<option name="user_cleanup_activity_event_lifetime">
+				<categoryname>user.cleanup</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>60</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<option name="user_cleanup_profile_visitor_lifetime">
+				<categoryname>user.cleanup</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>60</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<!-- /user.cleanup -->
+			
+			<!-- dashboard -->
+			<option name="recent_activity_items">
+				<categoryname>dashboard.content.recentActivities</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>10</defaultvalue>
+			</option>
+			
+			<option name="recent_activity_sidebar_items">
+				<categoryname>dashboard.sidebar.recentActivities</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>5</defaultvalue>
+			</option>
+			<!-- /dashboard -->
 		</options>
 	</import>
 </data>
