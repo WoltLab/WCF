@@ -245,7 +245,8 @@ class UserSearchForm extends UserOptionListForm {
 			'lastActivityTimeStart' => $this->lastActivityTimeStart,
 			'lastActivityTimeEnd' => $this->lastActivityTimeEnd,
 			'enabled' => $this->enabled,
-			'disabled' => $this->disabled
+			'disabled' => $this->disabled,
+			'columnOptions' => $this->optionHandler->getCategoryOptions('profile')
 		));
 	}
 	

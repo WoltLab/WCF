@@ -89,7 +89,7 @@
 						<!-- TODO: Implement boolean option mode -->
 					{else}
 						<dl>
-							<dt>objectTypeID = {@$container->getObjectTypeID()}</dt>
+							<dt>{lang}wcf.acp.label.container.{$container->getObjectTypeName()}{/lang}</dt>
 							<dd>
 								<ul class="container structuredList">
 									{foreach from=$container item=objectType}

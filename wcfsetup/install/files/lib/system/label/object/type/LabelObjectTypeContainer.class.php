@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\label\object\type;
+use wcf\data\object\type\ObjectTypeCache;
 
 /**
  * Label object type container.
@@ -71,6 +72,15 @@ class LabelObjectTypeContainer implements \Countable, \Iterator {
 	 */
 	public function getObjectTypeID() {
 		return $this->objectTypeID;
+	}
+	
+	/**
+	 * Returns the object type name.
+	 *
+	 * @return	string
+	 */
+	public function getObjectTypeName() {
+		return ObjectTypeCache::getInstance()->getObjectType($this->getObjectTypeID())->objectType;
 	}
 	
 	/**
