@@ -63,7 +63,7 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 		
 		// insert 50 files per loop
 		for ($i = 0, $steps = ceil(count($files) / 50); $i < $steps; $i++) {
-			$items = array_slice($files, $i, 50);
+			$items = array_slice($files, $i * 50, 50);
 			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_package_installation_file_log
 							(packageID, filename, application)
 				VALUES			".substr(str_repeat("(".$this->packageInstallation->getPackageID().", ?, '".$this->application."'), ", count($items)), 0, -2);
