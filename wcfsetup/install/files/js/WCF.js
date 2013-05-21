@@ -2361,7 +2361,6 @@ WCF.Date.Picker = {
 		
 		// do the actual replacement
 		// this is not perfect, but a basic implementation and should work in 99% of the cases
-		// TODO: support literals (magics are escaped in PHP date() by an \, in jQuery UI DatePicker they are enclosed in '')
 		this._dateFormat = WCF.Language.get('wcf.date.dateFormat').replace(/([^dDjlzSFmMnoYyU\\]*(?:\\.[^dDjlzSFmMnoYyU\\]*)*)([dDjlzSFmMnoYyU])/g, function(match, part1, part2, offset, string) {
 			for (var $key in $replacementTable) {
 				if (part2 == $key) {
@@ -3101,7 +3100,6 @@ WCF.MultipleLanguageInput = Class.extend({
 		
 		// close selection and set focus on input element
 		if (this._didInit) {
-			// this._closeSelection(); todo: still needed?
 			this._element.blur().focus();
 		}
 	},

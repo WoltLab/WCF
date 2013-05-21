@@ -1801,7 +1801,7 @@ WCF.Message.Quote.Handler = Class.extend({
 		}
 		else if (document.selection && document.selection.type != "Control") { // IE
 			var $range = document.selection.createRange();
-			// TODO: Check coordinates if they're relative too!
+			
 			$coordinates = {
 				left: $range.boundingLeft,
 				right: $range.boundingRight,
@@ -2193,7 +2193,6 @@ WCF.Message.Quote.Manager = Class.extend({
 		this._dialog.find('input.jsCheckbox').change($.proxy(this._changeButtons, this));
 		
 		// mark quotes for removal
-		// TODO: is this still supported?
 		if (this._removeOnSubmit.length) {
 			var self = this;
 			this._dialog.find('input.jsRemoveQuote').each(function(index, input) {
