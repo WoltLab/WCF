@@ -51,10 +51,18 @@
 		<instruction type="template">template.tar</instruction>
 		
 		<instruction type="acpMenu">acpMenu.xml</instruction>
+		<instruction type="bbcode">bbcode.xml</instruction>
 		<instruction type="clipboardAction">clipboardAction.xml</instruction>
+		<instruction type="cronjob">cronjob.xml</instruction>
 		<instruction type="coreObject">coreObject.xml</instruction>
+		<instruction type="eventListener">eventListener.xml</instruction>
 		<instruction type="language">language/*.xml</instruction>
+		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="option">option.xml</instruction>
+		<instruction type="templateListener">templateListener.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
+		<instruction type="userOption">userOption.xml</instruction>
+		<instruction type="userProfileMenu">userProfileMenu.xml</instruction>
 	</instructions>
 </package>
