@@ -197,19 +197,19 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.user.search.display.columns{/lang}</legend>
 				
-				{* TODO: Do we still want all this columns supported? *}
-				{*if $optionTree|count}
+				{if $columnOptions|count}
 					<dl>
 						<dt>
 							<label>{lang}wcf.acp.user.search.display.columns.profile{/lang}</label>
 						</dt>
 						<dd>
-							{foreach from=$optionTree item=option}
+							{foreach from=$columnOptions item=optionData}
+								{assign var='option' value=$optionData.object}
 								<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
 							{/foreach}
 						</dd>
 					</dl>
-				{/if*}
+				{/if}
 				
 				<dl>
 					<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>
