@@ -25,35 +25,18 @@ class TagEditor extends DatabaseObjectEditor {
 	 * @param	wcf\data\tag\Tag	$synonym
 	 */
 	public function addSynonym(Tag $synonym) {
-		// clear up objects with both tags: the target and the synonym
-		// TODO: Optimize this!
-		$sql = "SELECT	(objectTypeID || '-' || languageID || '-' || objectID || '-' || tagID) AS hash
-			FROM	wcf".WCF_N."_tag_to_object
-			WHERE	tagID = ?";
+		// assign all associations for the synonym with this tag
+		$sql = "UPDATE IGNORE	wcf".WCF_N."_tag_to_object
+			SET		tagID = ?
+			WHERE		tagID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$this->tagID
-		));
-		$parameters = array($this->tagID, $synonym->tagID, $this->tagID, ' ');
-		$notIn = '?';
-		while ($row = $statement->fetchArray()) {
-			$parameters[] = $row['hash'];
-			$notIn .= ', ?';
-		}
+		$statement->execute(array($this->tagID, $synonym->tagID));
 		
-		$sql = "UPDATE	wcf".WCF_N."_tag_to_object
-			SET	tagID = ?
-			WHERE		tagID = ?
-				AND	".str_replace('tagID', '?', $concat)." NOT IN (".$notIn.")";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($parameters);
-		
+		// remove remaining associations (object was tagged with both tags => duplicate key previously ignored)
 		$sql = "DELETE FROM	wcf".WCF_N."_tag_to_object
 			WHERE		tagID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$synonym->tagID,
-		));
+		$statement->execute(array($synonym->tagID));
 		
 		$editor = new TagEditor($synonym);
 		$editor->update(array(
