@@ -8,10 +8,12 @@
 <fieldset{if !$serverAuthData|empty} class="marginTop"{/if}>
 	<legend>{lang}wcf.acp.package.update.server{/lang}</legend>
 	
-	<dl>
-		<dt>{lang}wcf.acp.package.name{/lang}</dt>
-		<dd>{$packageUpdateVersion[packageName]} ({$packageUpdateVersion[packageVersion]})</dd>
-	</dl>
+	{if $packageUpdateVersion[packageName]|isset}
+		<dl>
+			<dt>{lang}wcf.acp.package.name{/lang}</dt>
+			<dd>{$packageUpdateVersion[packageName]} ({$packageUpdateVersion[packageVersion]})</dd>
+		</dl>
+	{/if}
 	<dl>
 		<dt>{lang}wcf.acp.package.update.server.url{/lang}</dt>
 		<dd>{@$updateServer->getHighlightedURL()}</dd>

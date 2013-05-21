@@ -8,7 +8,9 @@ use wcf\data\package\update\PackageUpdateEditor;
 use wcf\data\package\update\PackageUpdateList;
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
+use wcf\system\package\PackageUpdateUnauthorizedException;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -78,12 +80,11 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			$request->execute();
 			$reply = $request->getReply();
 		}
+		catch (HTTPUnauthorizedException $e) {
+			throw new PackageUpdateUnauthorizedException($request, $updateServer);
+		}
 		catch (SystemException $e) {
 			$reply = $request->getReply();
-			
-			if ($reply['statusCode'] == 401) {
-				throw new PackageUpdateAuthorizationRequiredException($updateServer['packageUpdateServerID'], $updateServer['server'], $reply);
-			}
 			
 			throw new SystemException(WCF::getLanguage()->get('wcf.acp.packageUpdate.error.listNotFound') . ' ('.reset($reply['headers']).')');
 		}
