@@ -810,7 +810,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Preparing Installation …]]></item>
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[Updating “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Updated completed]]></item>
-		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
+		<item name="wcf.acp.package.install.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required Version]]></item>
 		<item name="wcf.acp.package.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Packages]]></item>
