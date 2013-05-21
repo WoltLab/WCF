@@ -1861,10 +1861,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 if you have lost your password you can request a new one using the link below.
 Request a new password: {link controller='NewPassword' encode=false}u={@$userID}&k={@$key}{/link}  
 
-If you have not lost your password, you can safely ignore this email.
-
-Have a nice day,
-Your {@PAGE_TITLE|language} team]]></item>
+If you have not lost your password, you can safely ignore this email.]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[You should receive an email shortly.]]></item>
 		<item name="wcf.user.newPassword"><![CDATA[Request New Password]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Security Key]]></item>
@@ -1876,10 +1873,7 @@ your new password for "{@PAGE_TITLE|language}" is:
 {@$newPassword} 
 
 You can change your password any time at:
-{link controller='AccountManagement' encode=false}{/link}
-
-Have a nice day,
-Your {@PAGE_TITLE|language} team]]></item>
+{link controller='AccountManagement' encode=false}{/link}]]></item>
 		<item name="wcf.user.newPassword.mail.subject"><![CDATA[New Password for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.newPassword.success"><![CDATA[You should receive an email with your password shortly.]]></item>
 		<item name="wcf.user.accountManagement"><![CDATA[Account Management]]></item>
@@ -1924,10 +1918,7 @@ Once prompted please provide the following details:
 You User ID: 		{@$userID} 
 Activation Code: 	{@$activationCode} 
 
-If you cannot activate your email address or have any troubles following the instructions, please contact the administrator: {@MAIL_ADMIN_ADDRESS}
-
-Have a nice day,
-Your {@PAGE_TITLE|language} team]]></item>
+If you cannot activate your email address or have any troubles following the instructions, please contact the administrator: {@MAIL_ADMIN_ADDRESS}]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.subject"><![CDATA[Email Activation for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.changePassword.success"><![CDATA[Password has been changed.]]></item>
 		<item name="wcf.user.activationCode"><![CDATA[9-digit Activation Code]]></item>
