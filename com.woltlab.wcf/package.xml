@@ -59,7 +59,6 @@
 		<instruction type="language">language/*.xml</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="option">option.xml</instruction>
-		<instruction type="templateListener">templateListener.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
 		<instruction type="userOption">userOption.xml</instruction>
