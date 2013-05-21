@@ -941,7 +941,9 @@
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Standard-Kategorie]]></item>
 		<item name="wcf.acp.smiley.categoryID.error.notValid"><![CDATA[Die gewählte Kategorie ist nicht gültig.]]></item>
 		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primärer Smiley-Code]]></item>
+		<item name="wcf.acp.smiley.smileyCode.error.notUnique"><![CDATA[Dieser Smiley-Code wird bereits von einem anderen Smiley verwendet]]></item>
 		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley-Codes]]></item>
+		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[Mindestens ein alternative Smiley-Code wird bereits von einem anderen Smiley verwendet]]></item>
 		<item name="wcf.acp.smiley.showOrder"><![CDATA[Position]]></item>
 	</category>
 	

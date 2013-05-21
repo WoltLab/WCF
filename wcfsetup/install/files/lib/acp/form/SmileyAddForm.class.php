@@ -147,7 +147,7 @@ class SmileyAddForm extends AbstractForm {
 				'smileyCode' => $this->smileyCode,
 				'showOrder' => $this->showOrder,
 				'categoryID' => $this->categoryID ?: null,
-				'packageID' => PackageCache::getInstance()->getPackageID('com.woltlab.wcf.bbcode'),
+				'packageID' => 1,
 				'aliases' => $this->aliases
 			)
 		));
@@ -157,7 +157,7 @@ class SmileyAddForm extends AbstractForm {
 		$smileyID = $returnValues['returnValues']->smileyID;
 		
 		if (!I18nHandler::getInstance()->isPlainValue('smileyTitle')) {
-			I18nHandler::getInstance()->save('smileyTitle', 'wcf.smiley.title'.$smileyID, 'wcf.smiley', PackageCache::getInstance()->getPackageID('com.woltlab.wcf.bbcode'));
+			I18nHandler::getInstance()->save('smileyTitle', 'wcf.smiley.title'.$smileyID, 'wcf.smiley', 1);
 			
 			// update title
 			$smileyEditor->update(array(
@@ -189,17 +189,40 @@ class SmileyAddForm extends AbstractForm {
 			throw new UserInputException('smileyTitle');
 		}
 		
-		if ($this->categoryID !== 0) {
+		if ($this->categoryID) {
 			$category = new Category($this->categoryID);
 			if (!$category->categoryID) {
 				throw new UserInputException('categoryID', 'notValid');
 			}
 		}
 		
-		if ($this->smileyCode === '') {
+		if (empty($this->smileyCode)) {
 			throw new UserInputException('smileyCode');
 		}
 		
-		// TODO: Validate uniqueness of smileyCode and aliases
+		// validate smiley code and aliases against existing smilies
+		$sql = "SELECT	smileyCode, aliases
+			FROM	wcf".WCF_N."_smiley";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		
+		$aliases = explode("\n", $this->aliases);
+		while ($row = $statement->fetchArray()) {
+			$known = array();
+			if (!empty($row['aliases'])) {
+				$known = explode("\n", $row['aliases']);
+			}
+			$known[] = $row['smileyCode'];
+			
+			if (in_array($this->smileyCode, $known)) {
+				throw new UserInputException('smileyCode', 'notUnique');
+			}
+			else {
+				$conflicts = array_intersect($aliases, $known);
+				if (!empty($conflicts)) {
+					throw new UserInputException('aliases', 'notUnique');
+				}
+			}
+		}
 	}
 }

@@ -91,7 +91,7 @@
 					
 					{if $errorField == 'aliases'}
 						<small class="innerError">
-							{lang}wcf.acp.smiley.smileyCode.error.{@$errorType}{/lang}
+							{lang}wcf.acp.smiley.aliases.error.{@$errorType}{/lang}
 						</small>
 					{/if}
 				</dd>
@@ -104,7 +104,7 @@
 					
 					{if $errorField == 'showOrder'}
 						<small class="innerError">
-							{lang}wcf.acp.smiley.smileyCode.error.{@$errorType}{/lang}
+							{lang}wcf.acp.smiley.showOrder.error.{@$errorType}{/lang}
 						</small>
 					{/if}
 				</dd>

@@ -940,7 +940,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Default Category]]></item>
 		<item name="wcf.acp.smiley.categoryID.error.notValid"><![CDATA[Chosen category is invalid.]]></item>
 		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primary Smiley Code]]></item>
+		<item name="wcf.acp.smiley.smileyCode.error.notUnique"><![CDATA[This smiley code is already in use by an other smiley]]></item>
 		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley Codes]]></item>
+		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[At least one alternative smiley code is already in use by an other smiley]]></item>
 		<item name="wcf.acp.smiley.showOrder"><![CDATA[Show Order]]></item>
 	</category>
 	
