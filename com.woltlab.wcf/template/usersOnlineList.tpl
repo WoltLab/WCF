@@ -120,7 +120,6 @@
 		{capture append=robotsOnlineList}
 			<li>
 				<div class="box48">
-					{*todo: we need an avatar placeholder for search robots here*}
 					<p class="framed"><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon48" /></p>
 					
 					<div class="details userInformation">
@@ -141,7 +140,6 @@
 		{capture append=guestsOnlineList}
 			<li>
 				<div class="box48">
-					{*todo: we need an avatar placeholder for guests here*}
 					<p class="framed"><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon48" /></p>
 					
 					<div class="details userInformation">
