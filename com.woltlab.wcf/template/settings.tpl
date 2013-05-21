@@ -90,7 +90,6 @@
 				<dl>
 					<dt><label for="styleID">{lang}wcf.user.style{/lang}</label></dt>
 					<dd>
-						<!-- TODO: Add some fancy JavaScript to display preview images, this should be common enough to use it in boardAdd.tpl too! -->
 						<select id="styleID" name="styleID">
 							<option value="0"></option>
 							{foreach from=$availableStyles item=style}
