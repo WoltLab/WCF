@@ -125,7 +125,7 @@
 					{if $__3rdPartyButtons|trim}
 						<fieldset>
 							<legend>{lang}wcf.user.login.3rdParty{/lang}</legend>
-							<ul class="buttonGroup" style="text-align: center;"> {* todo: inline CSS *}
+							<ul class="buttonGroup thirdPartyLogin">
 								{@$__3rdPartyButtons}	
 							</ul>
 						</fieldset>
