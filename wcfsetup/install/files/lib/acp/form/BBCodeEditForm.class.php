@@ -75,7 +75,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 				$this->buttonLabel = I18nHandler::getInstance()->getValue('buttonLabel');
 			}
 			else {
-				I18nHandler::getInstance()->save('buttonLabel', $this->buttonLabel, 'wcf.bbcode', PackageCache::getInstance()->getPackageID('com.woltlab.wcf.bbcode'));
+				I18nHandler::getInstance()->save('buttonLabel', $this->buttonLabel, 'wcf.bbcode', 1);
 			}
 		}
 		

@@ -62,11 +62,11 @@ class LabelEditForm extends LabelAddForm {
 		
 		$this->label = 'wcf.acp.label.label'.$this->labelObj->labelID;
 		if (I18nHandler::getInstance()->isPlainValue('label')) {
-			I18nHandler::getInstance()->remove($this->label, PackageCache::getInstance()->getPackageID('com.woltlab.wcf.label'));
+			I18nHandler::getInstance()->remove($this->label, 1);
 			$this->label = I18nHandler::getInstance()->getValue('label');
 		}
 		else {
-			I18nHandler::getInstance()->save('label', $this->label, 'wcf.acp.label', PackageCache::getInstance()->getPackageID('com.woltlab.wcf.label'));
+			I18nHandler::getInstance()->save('label', $this->label, 'wcf.acp.label', 1);
 		}
 		
 		// update label
@@ -95,7 +95,7 @@ class LabelEditForm extends LabelAddForm {
 		parent::readData();
 		
 		if (empty($_POST)) {
-			I18nHandler::getInstance()->setOptions('label', PackageCache::getInstance()->getPackageID('com.woltlab.wcf.label'), $this->labelObj->label, 'wcf.acp.label.label\d+');
+			I18nHandler::getInstance()->setOptions('label', 1, $this->labelObj->label, 'wcf.acp.label.label\d+');
 			$this->label = $this->labelObj->label;
 			
 			$this->cssClassName = $this->labelObj->cssClassName;

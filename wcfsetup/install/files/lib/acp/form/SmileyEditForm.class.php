@@ -66,7 +66,7 @@ class SmileyEditForm extends SmileyAddForm {
 			$this->smileyTitle = I18nHandler::getInstance()->getValue('smileyTitle');
 		}
 		else {
-			I18nHandler::getInstance()->save('smileyTitle', $this->smileyTitle, 'wcf.smiley', PackageCache::getInstance()->getPackageID('com.woltlab.wcf.bbcode'));
+			I18nHandler::getInstance()->save('smileyTitle', $this->smileyTitle, 'wcf.smiley', 1);
 		}
 		
 		// update bbcode

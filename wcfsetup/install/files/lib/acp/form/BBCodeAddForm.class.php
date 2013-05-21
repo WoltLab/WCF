@@ -218,7 +218,7 @@ class BBCodeAddForm extends AbstractForm {
 			'htmlOpen' => $this->htmlOpen,
 			'htmlClose' => $this->htmlClose,
 			'isSourceCode' => ($this->isSourceCode ? 1 : 0),
-			'packageID' => PackageCache::getInstance()->getPackageID('com.woltlab.wcf.bbcode'),
+			'packageID' => 1,
 			'showButton' => ($this->showButton ? 1 : 0),
 			'wysiwygIcon' => $this->wysiwygIcon
 		)));
@@ -237,7 +237,7 @@ class BBCodeAddForm extends AbstractForm {
 		
 		if ($this->showButton && !I18nHandler::getInstance()->isPlainValue('buttonLabel')) {
 			$bbcodeID = $returnValues['returnValues']->bbcodeID;
-			I18nHandler::getInstance()->save('buttonLabel', 'wcf.bbcode.buttonLabel'.$bbcodeID, 'wcf.bbcode', PackageCache::getInstance()->getPackageID('com.woltlab.wcf.bbcode'));
+			I18nHandler::getInstance()->save('buttonLabel', 'wcf.bbcode.buttonLabel'.$bbcodeID, 'wcf.bbcode', 1);
 			
 			// update button label
 			$bbcodeEditor = new BBCodeEditor($returnValues['returnValues']);

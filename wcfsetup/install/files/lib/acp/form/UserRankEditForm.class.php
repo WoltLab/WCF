@@ -57,11 +57,11 @@ class UserRankEditForm extends UserRankAddForm {
 		
 		$this->rankTitle = 'wcf.user.rank.userRank'.$this->rank->rankID;
 		if (I18nHandler::getInstance()->isPlainValue('rankTitle')) {
-			I18nHandler::getInstance()->remove($this->rankTitle, PackageCache::getInstance()->getPackageID('com.woltlab.wcf.user'));
+			I18nHandler::getInstance()->remove($this->rankTitle, 1);
 			$this->rankTitle = I18nHandler::getInstance()->getValue('rankTitle');
 		}
 		else {
-			I18nHandler::getInstance()->save('rankTitle', $this->rankTitle, 'wcf.user', PackageCache::getInstance()->getPackageID('com.woltlab.wcf.user'));
+			I18nHandler::getInstance()->save('rankTitle', $this->rankTitle, 'wcf.user', 1);
 		}
 		
 		// update label
@@ -93,7 +93,7 @@ class UserRankEditForm extends UserRankAddForm {
 		parent::readData();
 		
 		if (empty($_POST)) {
-			I18nHandler::getInstance()->setOptions('rankTitle', PackageCache::getInstance()->getPackageID('com.woltlab.wcf.user'), $this->rank->rankTitle, 'wcf.user.rank.userRank\d+');
+			I18nHandler::getInstance()->setOptions('rankTitle', 1, $this->rank->rankTitle, 'wcf.user.rank.userRank\d+');
 			$this->rankTitle = $this->rank->rankTitle;
 			$this->cssClassName = $this->rank->cssClassName;
 			if (!in_array($this->cssClassName, $this->availableCssClassNames)) {

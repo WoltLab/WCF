@@ -191,7 +191,7 @@ class UserRankAddForm extends AbstractForm {
 		if (!I18nHandler::getInstance()->isPlainValue('rankTitle')) {
 			$returnValues = $this->objectAction->getReturnValues();
 			$rankID = $returnValues['returnValues']->rankID;
-			I18nHandler::getInstance()->save('rankTitle', 'wcf.user.rank.userRank'.$rankID, 'wcf.user', PackageCache::getInstance()->getPackageID('com.woltlab.wcf.user'));
+			I18nHandler::getInstance()->save('rankTitle', 'wcf.user.rank.userRank'.$rankID, 'wcf.user', 1);
 			
 			// update name
 			$rankEditor = new UserRankEditor($returnValues['returnValues']);
