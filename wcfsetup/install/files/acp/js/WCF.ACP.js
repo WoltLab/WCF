@@ -385,7 +385,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		this._allowRollback = (allowRollback === true) ? true : false;
 		this._queueID = queueID;
 		
-		switch (actionName) {
+		switch (this._actionName) {
 			case 'InstallPackage':
 				if (allowRollback) {
 					this._dialogTitle = 'wcf.acp.package.installation.title';
