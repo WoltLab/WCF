@@ -1009,6 +1009,12 @@ WCF.Message.InlineEditor = Class.extend({
 	_proxy: null,
 	
 	/**
+	 * quote manager object
+	 * @var	WCF.Message.Quote.Manager
+	 */
+	_quoteManager: null,
+	
+	/**
 	 * support for extended editing form
 	 * @var	boolean
 	 */
@@ -1017,15 +1023,17 @@ WCF.Message.InlineEditor = Class.extend({
 	/**
 	 * Initializes a new WCF.Message.InlineEditor object.
 	 * 
-	 * @param	integer		containerID
-	 * @param	boolean		supportExtendedForm
+	 * @param	integer				containerID
+	 * @param	boolean				supportExtendedForm
+	 * @param	WCF.Message.Quote.Manager	quoteManager
 	 */
-	init: function(containerID, supportExtendedForm) {
+	init: function(containerID, supportExtendedForm, quoteManager) {
 		this._activeElementID = '';
 		this._cache = '';
 		this._container = { };
 		this._containerID = parseInt(containerID);
 		this._dropdowns = { };
+		this._quoteManager = quoteManager || null;
 		this._supportExtendedForm = (supportExtendedForm) ? true : false;
 		this._proxy = new WCF.Action.Proxy({
 			failure: $.proxy(this._failure, this),
@@ -1206,6 +1214,10 @@ WCF.Message.InlineEditor = Class.extend({
 		this._container[this._activeElementID].find('.messageOptions').removeClass('forceHidden');
 		
 		this._activeElementID = '';
+		
+		if (this._quoteManager) {
+			this._quoteManager.clearAlternativeCKEditor();
+		}
 	},
 	
 	/**
@@ -1257,7 +1269,12 @@ WCF.Message.InlineEditor = Class.extend({
 		new WCF.PeriodicalExecuter($.proxy(function(pe) {
 			pe.stop();
 			
-			$('#' + this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID')).ckeditorGet().ui.editor.focus();
+			var $ckEditor = $('#' + this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID'));
+			$ckEditor.ckeditorGet().ui.editor.focus();
+			
+			if (this._quoteManager) {
+				this._quoteManager.setAlternativeCKEditor($ckEditor);
+			}
 		}, this), 250);
 	},
 	
@@ -1268,6 +1285,10 @@ WCF.Message.InlineEditor = Class.extend({
 		var $messageBody = this._container[this._activeElementID].find('.messageBody');
 		$messageBody.children('span.icon-spinner').remove();
 		$messageBody.find('.messageText').children().show();
+		
+		if (this._quoteManager) {
+			this._quoteManager.clearAlternativeCKEditor();
+		}
 	},
 	
 	/**
@@ -1343,6 +1364,10 @@ WCF.Message.InlineEditor = Class.extend({
 		var $messageBody = this._container[this._activeElementID].find('.messageBody');
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
 		$messageBody.find('.messageText').children().hide();
+		
+		if (this._quoteManager) {
+			this._quoteManager.clearAlternativeCKEditor();
+		}
 	},
 	
 	/**
@@ -1375,6 +1400,10 @@ WCF.Message.InlineEditor = Class.extend({
 		this._updateHistory(this._getHash($container.data('objectID')));
 		
 		this._notification.show();
+		
+		if (this._quoteManager) {
+			this._quoteManager.clearAlternativeCKEditor();
+		}
 	},
 	
 	/**
@@ -1935,10 +1964,16 @@ WCF.Message.Quote.Manager = Class.extend({
 	_buttons: { },
 	
 	/**
-	 * ckEditor element
+	 * CKEditor element
 	 * @var	jQuery
 	 */
 	_ckEditor: null,
+	
+	/**
+	 * alternative CKEditor element
+	 * @var	jQuery
+	 */
+	_ckEditorAlternative: null,
 	
 	/**
 	 * number of stored quotes
@@ -2014,6 +2049,7 @@ WCF.Message.Quote.Manager = Class.extend({
 			remove: null
 		};
 		this._ckEditor = null;
+		this._ckEditorAlternative = null;
 		this._count = parseInt(count) || 0;
 		this._dialog = null;
 		this._form = null;
@@ -2051,6 +2087,22 @@ WCF.Message.Quote.Manager = Class.extend({
 		});
 		
 		this._toggleShowQuotes();
+	},
+	
+	/**
+	 * Sets an alternative CKEditor instance on runtime.
+	 * 
+	 * @param	jQuery		ckEditor
+	 */
+	setAlternativeCKEditor: function(ckEditor) {
+		this._ckEditorAlternative = ckEditor;
+	},
+	
+	/**
+	 * Clears alternative CKEditor instance.
+	 */
+	clearAlternativeCKEditor: function() {
+		this._ckEditorAlternative = null;
 	},
 	
 	/**
@@ -2248,10 +2300,12 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * Inserts the selected quotes.
 	 */
 	_insertSelected: function() {
-		var $api = $('.jsQuickReply:eq(0)').data('__api');
-		if ($api && !$api.getContainer().is(':visible')) {
-			this._insertQuotes = false;
-			$api.click(null);
+		if (this._ckEditorAlternative === null) {
+			var $api = $('.jsQuickReply:eq(0)').data('__api');
+			if ($api && !$api.getContainer().is(':visible')) {
+				this._insertQuotes = false;
+				$api.click(null);
+			}
 		}
 		
 		if (!this._dialog.find('input.jsCheckbox:checked').length) {
@@ -2274,7 +2328,7 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * @param	object		inputElement
 	 */
 	_insertQuote: function(event, inputElement) {
-		if (event !== null) {
+		if (event !== null && this._ckEditorAlternative === null) {
 			var $api = $('.jsQuickReply:eq(0)').data('__api');
 			if ($api && !$api.getContainer().is(':visible')) {
 				this._insertQuotes = false;
@@ -2290,14 +2344,30 @@ WCF.Message.Quote.Manager = Class.extend({
 		$quote = "[quote='" + $message.attr('data-username') + "','" + $message.data('link') + "']" + $quote + "[/quote]";
 		
 		// insert into ckEditor
-		var $ckEditor = ($.browser.mobile) ? null : this._ckEditor.ckeditorGet();
+		var $ckEditor = null;
+		if (!$.browser.mobile) {
+			if (this._ckEditorAlternative === null) {
+				$ckEditor = this._ckEditor.ckeditorGet();
+			}
+			else {
+				$ckEditor = this._ckEditorAlternative.ckeditorGet();
+			}
+		}
+		
 		if ($ckEditor !== null && $ckEditor.mode === 'wysiwyg') {
 			// in design mode
 			$ckEditor.insertText($quote + "\n\n");
 		}
 		else {
 			// in source mode
-			var $textarea = ($.browser.mobile) ? this._ckEditor : this._ckEditor.next('.cke_editor_text').find('textarea');
+			var $textarea = null;
+			if (this._ckEditorAlternative === null) {
+				$textarea = ($.browser.mobile) ? this._ckEditor : this._ckEditor.next('.cke_editor_text').find('textarea');
+			}
+			else {
+				$textarea = ($.browser.mobile) ? this._ckEditorAlternative : this._ckEditorAlternative.next('.cke_editor_text').find('textarea');
+			}
+			
 			var $value = $textarea.val();
 			$quote += "\n\n";
 			if ($value.length == 0) {
