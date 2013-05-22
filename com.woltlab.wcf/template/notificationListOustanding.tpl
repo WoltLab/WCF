@@ -5,7 +5,7 @@
 				{@$notification[event]->getAuthor()->getAvatar()->getImageTag(24)}
 			</div>
 			<div>
-				<h3>{$notification[event]->getMessage()}</h3>
+				<h3>{@$notification[event]->getMessage()}</h3>
 				<small>{$notification[event]->getAuthor()->username} - {@$notification[time]|time}</small>
 			</div>
 		</a>
