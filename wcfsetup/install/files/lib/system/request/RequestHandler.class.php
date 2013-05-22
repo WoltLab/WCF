@@ -61,7 +61,12 @@ class RequestHandler extends SingletonFactory {
 		$this->isACPRequest = $isACPRequest;
 		
 		if (!RouteHandler::getInstance()->matches()) {
-			throw new SystemException("Cannot handle request, no valid route provided.");
+			if (ENABLE_DEBUG_MODE) {
+				throw new SystemException("Cannot handle request, no valid route provided.");
+			}
+			else {
+				throw new IllegalLinkException();
+			}
 		}
 		
 		// build request
