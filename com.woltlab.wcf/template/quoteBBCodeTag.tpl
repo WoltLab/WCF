@@ -9,12 +9,6 @@
 				{/if}
 			</h3>
 		</header>
-	{else}
-		<header class="invisible">
-			<h3>
-				{lang}wcf.bbcode.quote{/lang}
-			</h3>
-		</header>
 	{/if}
 	
 	<div>
