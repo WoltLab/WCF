@@ -50,9 +50,9 @@
 			<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
 			
 			<dl>
-				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
+				<dt><label for="searchUsername">{lang}wcf.user.username{/lang}</label></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" class="medium" />
+					<input type="text" id="searchUsername" name="username" value="{$username}" class="medium" />
 				</dd>
 			</dl>
 			
