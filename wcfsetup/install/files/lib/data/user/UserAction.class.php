@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\group\UserGroup;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
@@ -103,6 +105,42 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		parent::validateDelete();
 		
 		$this->__validateAccessibleGroups();
+	}
+	
+	/**
+	 * @see	wcf\data\IDeleteAction::delete()
+	 */
+	public function delete() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		// delete avatars
+		$avatarIDs = array();
+		foreach ($this->objects as $user) {
+			if ($user->avatarID) $avatarIDs[] = $user->avatarID;
+		}
+		if (!empty($avatarIDs)) {
+			$action = new UserAvatarAction($avatarIDs, 'delete');
+			$action->executeAction();
+		}
+		
+		// delete profile comments
+		if (!empty($this->objectIDs)) {
+			$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.user.profileComment');
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('objectTypeID = ?', array($objectType->objectTypeID));
+			$conditionBuilder->add('objectID IN (?)', array($this->objectIDs));
+			
+			$sql = "DELETE FROM	wcf".WCF_N."_comment
+				".$conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+		}
+		
+		$returnValue = parent::delete();
+		
+		return $returnValue;
 	}
 	
 	/**
@@ -272,7 +310,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 	}
 	
-	
+	/**
+	 * Add users to given groups.
+	 */
 	public function addToGroups() {
 		if (empty($this->objects)) {
 			$this->readObjects();
