@@ -107,7 +107,7 @@ CREATE TABLE wcf1_acp_template (
 	templateID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10),
 	templateName VARCHAR(255) NOT NULL,
-	application VARCHAR(255) NOT NULL,
+	application VARCHAR(20) NOT NULL,
 	UNIQUE KEY applicationTemplate (application, templateName)
 );
 
@@ -551,7 +551,7 @@ DROP TABLE IF EXISTS wcf1_package_installation_file_log;
 CREATE TABLE wcf1_package_installation_file_log (
 	packageID INT(10),
 	filename VARCHAR(255) NOT NULL,
-	application VARCHAR(255) NOT NULL,
+	application VARCHAR(20) NOT NULL,
 	UNIQUE KEY applicationFile (application, filename)
 );
 
@@ -885,7 +885,7 @@ CREATE TABLE wcf1_template (
 	templateID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	packageID INT(10) NOT NULL,
 	templateName VARCHAR(255) NOT NULL,
-	application VARCHAR(255) NOT NULL,
+	application VARCHAR(20) NOT NULL,
 	templateGroupID INT(10),
 	lastModificationTime INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY applicationTemplate (application, templateGroupID, templateName),
