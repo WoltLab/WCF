@@ -11,6 +11,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
+use wcf\system\database\DatabaseException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
@@ -29,7 +30,7 @@ use wcf\system\WCF;
  * $likeObjects = LikeHandler::getInstance()->getLikeObjects($objectType);
  *
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.like
  * @subpackage	system.like
@@ -152,10 +153,6 @@ class LikeHandler extends SingletonFactory {
 	 * @return	array
 	 */
 	public function like(ILikeObject $likeable, User $user, $likeValue, $time = TIME_NOW) {
-		if ($user->userID == 35) {
-			file_put_contents(WCF_DIR.'__like.dt', microtime(true) . "\tt={$likeable->getObjectType()->objectType}\to={$likeable->getObjectID()}\tlike={$likeValue}\n", FILE_APPEND);
-		}
-		
 		// verify if object is already liked by user
 		$like = Like::getLike($likeable->getObjectType()->objectTypeID, $likeable->getObjectID(), $user->userID);
 		
@@ -167,134 +164,143 @@ class LikeHandler extends SingletonFactory {
 			return $this->revertLike($like, $likeable, $likeObject, $user);
 		}
 		
-		// like data
-		$cumulativeLikes = 0;
-		$newValue = $oldValue = null;
-		$users = array();
-		
-		// update existing object
-		if ($likeObject->likeObjectID) {
-			$likes = $likeObject->likes;
-			$dislikes = $likeObject->dislikes;
-			$cumulativeLikes = $likeObject->cumulativeLikes;
+		try {
+			WCF::getDB()->beginTransaction();
 			
-			// previous (dis-)like already exists
-			if ($like->likeID) {
-				$oldValue = $like->likeValue;
+			// like data
+			$cumulativeLikes = 0;
+			$newValue = $oldValue = null;
+			$users = array();
+			
+			// update existing object
+			if ($likeObject->likeObjectID) {
+				$likes = $likeObject->likes;
+				$dislikes = $likeObject->dislikes;
+				$cumulativeLikes = $likeObject->cumulativeLikes;
 				
-				// revert like and replace it with a dislike
-				if ($like->likeValue == Like::LIKE) {
-					$likes--;
-					$dislikes++;
-					$cumulativeLikes -= 2;
-					$newValue = Like::DISLIKE;
+				// previous (dis-)like already exists
+				if ($like->likeID) {
+					$oldValue = $like->likeValue;
+					
+					// revert like and replace it with a dislike
+					if ($like->likeValue == Like::LIKE) {
+						$likes--;
+						$dislikes++;
+						$cumulativeLikes -= 2;
+						$newValue = Like::DISLIKE;
+					}
+					else {
+						// revert dislike and replace it with a like
+						$likes++;
+						$dislikes--;
+						$cumulativeLikes += 2;
+						$newValue = Like::LIKE;
+					}
 				}
 				else {
-					// revert dislike and replace it with a like
-					$likes++;
-					$dislikes--;
-					$cumulativeLikes += 2;
-					$newValue = Like::LIKE;
+					if ($likeValue == Like::LIKE) {
+						$likes++;
+						$cumulativeLikes++;
+						$newValue = Like::LIKE;
+					}
+					else {
+						$dislikes++;
+						$cumulativeLikes--;
+						$newValue = Like::DISLIKE;
+					}
 				}
+				
+				// build update date
+				$updateData = array(
+					'likes' => $likes,
+					'dislikes' => $dislikes,
+					'cumulativeLikes' => $cumulativeLikes
+				);
+				
+				if ($likeValue == 1) {
+					$users = unserialize($likeObject->cachedUsers);
+					if (count($users) < 3) {
+						$users[$user->userID] = array('userID' => $user->userID, 'username' => $user->username);
+						$updateData['cachedUsers'] = serialize($users);
+					}
+				}
+				else if ($likeValue == -1) {
+					$users = unserialize($likeObject->cachedUsers);
+					if (isset($users[$user->userID])) {
+						unset($users[$user->userID]);
+						$updateData['cachedUsers'] = serialize($users);
+					}
+				}
+				
+				// update data
+				$likeObjectEditor = new LikeObjectEditor($likeObject);
+				$likeObjectEditor->update($updateData);
 			}
 			else {
-				if ($likeValue == Like::LIKE) {
-					$likes++;
-					$cumulativeLikes++;
-					$newValue = Like::LIKE;
-				}
-				else {
-					$dislikes++;
-					$cumulativeLikes--;
-					$newValue = Like::DISLIKE;
-				}
-			}
-			
-			// build update date
-			$updateData = array(
-				'likes' => $likes,
-				'dislikes' => $dislikes,
-				'cumulativeLikes' => $cumulativeLikes
-			);
-			
-			if ($likeValue == 1) {
-				$users = unserialize($likeObject->cachedUsers);
-				if (count($users) < 3) {
-					$users[$user->userID] = array('userID' => $user->userID, 'username' => $user->username);
-					$updateData['cachedUsers'] = serialize($users);
-				}
-			}
-			else if ($likeValue == -1) {
-				$users = unserialize($likeObject->cachedUsers);
-				if (isset($users[$user->userID])) {
-					unset($users[$user->userID]);
-					$updateData['cachedUsers'] = serialize($users);
-				}
-			}
-			
-			// update data
-			$likeObjectEditor = new LikeObjectEditor($likeObject);
-			$likeObjectEditor->update($updateData);
-		}
-		else {
-			$cumulativeLikes = $likeValue;
-			$newValue = $likeValue;
-			$users = array();
-			if ($likeValue == 1) $users = array($user->userID => array('userID' => $user->userID, 'username' => $user->username));
-			
-			// create cache
-			$likeObject = LikeObjectEditor::create(array(
-				'objectTypeID' => $likeable->getObjectType()->objectTypeID,
-				'objectID' => $likeable->getObjectID(),
-				'objectUserID' => ($likeable->getUserID() ?: null),
-				'likes' => ($likeValue == Like::LIKE) ? 1 : 0,
-				'dislikes' => ($likeValue == Like::DISLIKE) ? 1 : 0,
-				'cumulativeLikes' => $cumulativeLikes,
-				'cachedUsers' => serialize($users)
-			));
-		}
-		
-		// update owner's like counter
-		if ($likeable->getUserID()) {
-			if ($like->likeID) {
-				$userEditor = new UserEditor(new User($likeable->getUserID()));
-				$userEditor->updateCounters(array(
-					'likesReceived' => ($like->likeValue == Like::LIKE ? -1 : 1)
+				$cumulativeLikes = $likeValue;
+				$newValue = $likeValue;
+				$users = array();
+				if ($likeValue == 1) $users = array($user->userID => array('userID' => $user->userID, 'username' => $user->username));
+				
+				// create cache
+				$likeObject = LikeObjectEditor::create(array(
+					'objectTypeID' => $likeable->getObjectType()->objectTypeID,
+					'objectID' => $likeable->getObjectID(),
+					'objectUserID' => ($likeable->getUserID() ?: null),
+					'likes' => ($likeValue == Like::LIKE) ? 1 : 0,
+					'dislikes' => ($likeValue == Like::DISLIKE) ? 1 : 0,
+					'cumulativeLikes' => $cumulativeLikes,
+					'cachedUsers' => serialize($users)
 				));
 			}
-			else if ($likeValue == Like::LIKE) {
-				$userEditor = new UserEditor(new User($likeable->getUserID()));
-				$userEditor->updateCounters(array(
-					'likesReceived' => 1
-				));
+			
+			// update owner's like counter
+			if ($likeable->getUserID()) {
+				if ($like->likeID) {
+					$userEditor = new UserEditor(new User($likeable->getUserID()));
+					$userEditor->updateCounters(array(
+						'likesReceived' => ($like->likeValue == Like::LIKE ? -1 : 1)
+					));
+				}
+				else if ($likeValue == Like::LIKE) {
+					$userEditor = new UserEditor(new User($likeable->getUserID()));
+					$userEditor->updateCounters(array(
+						'likesReceived' => 1
+					));
+				}
 			}
-		}
-		
-		if (!$like->likeID) {
-			// save like
-			$like = LikeEditor::create(array(
-				'objectID' => $likeable->getObjectID(),
-				'objectTypeID' => $likeable->getObjectType()->objectTypeID,
-				'objectUserID' => ($likeable->getUserID() ?: null),
-				'userID' => $user->userID,
-				'time' => $time,
-				'likeValue' => $likeValue
-			));
 			
-			if ($likeValue == Like::LIKE && $likeable->getUserID()) UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
-		}
-		else {
-			$likeEditor = new LikeEditor($like);
-			$likeEditor->update(array(
-				'time' => $time,
-				'likeValue' => $likeValue
-			));
+			if (!$like->likeID) {
+				// save like
+				$like = LikeEditor::create(array(
+					'objectID' => $likeable->getObjectID(),
+					'objectTypeID' => $likeable->getObjectType()->objectTypeID,
+					'objectUserID' => ($likeable->getUserID() ?: null),
+					'userID' => $user->userID,
+					'time' => $time,
+					'likeValue' => $likeValue
+				));
+				
+				if ($likeValue == Like::LIKE && $likeable->getUserID()) UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
+			}
+			else {
+				$likeEditor = new LikeEditor($like);
+				$likeEditor->update(array(
+					'time' => $time,
+					'likeValue' => $likeValue
+				));
+				
+				if ($likeValue == Like::DISLIKE) UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($like->likeID));
+			}
 			
-			if ($likeValue == Like::DISLIKE) UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($like->likeID));
+			// update object's like counter
+			$likeable->updateLikeCounter($cumulativeLikes);
+			
+			WCF::getDB()->commitTransaction();
 		}
-		
-		// update object's like counter
-		$likeable->updateLikeCounter($cumulativeLikes);
+		catch (DatabaseException $e) {
+			WCF::getDB()->rollBackTransaction();
+		}
 		
 		return array(
 			'data' => $this->loadLikeStatus($likeObject, $user),
@@ -315,66 +321,75 @@ class LikeHandler extends SingletonFactory {
 	 * @return	array
 	 */
 	public function revertLike(Like $like, ILikeObject $likeable, LikeObject $likeObject, User $user) {
-		// delete like
-		$editor = new LikeEditor($like);
-		$editor->delete();
-		
-		// update like object cache
-		$likes = $likeObject->likes;
-		$dislikes = $likeObject->dislikes;
-		$cumulativeLikes = $likeObject->cumulativeLikes;
-		
-		if ($like->likeValue == Like::LIKE) {
-			$likes--;
-			$cumulativeLikes--;
-		}
-		else {
-			$dislikes--;
-			$cumulativeLikes++;
-		}
-		
-		// build update data
-		$updateData = array(
-			'likes' => $likes,
-			'dislikes' => $dislikes,
-			'cumulativeLikes' => $cumulativeLikes
-		);
-		
-		$users = $likeObject->getUsers();
-		$usersArray = array();
-		foreach ($users as $user2) {
-			$usersArray[$user2->userID] = array('userID' => $user2->userID, 'username' => $user2->username);
-		}
-		
-		if (isset($usersArray[$user->userID])) {
-			unset($usersArray[$user->userID]);
-			$updateData['cachedUsers'] = serialize($usersArray);
-		}
-		
-		$likeObjectEditor = new LikeObjectEditor($likeObject);
-		if (!$updateData['likes'] && !$updateData['dislikes']) {
-			// remove object instead
-			$likeObjectEditor->delete();
-		}
-		else {
-			// update data
-			$likeObjectEditor->update($updateData);
-		}
-		
-		// update owner's like counter and activity points
-		if ($likeable->getUserID()) {
+		try {
+			WCF::getDB()->beginTransaction();
+			
+			// delete like
+			$editor = new LikeEditor($like);
+			$editor->delete();
+			
+			// update like object cache
+			$likes = $likeObject->likes;
+			$dislikes = $likeObject->dislikes;
+			$cumulativeLikes = $likeObject->cumulativeLikes;
+			
 			if ($like->likeValue == Like::LIKE) {
-				$userEditor = new UserEditor(new User($likeable->getUserID()));
-				$userEditor->updateCounters(array(
-					'likesReceived' => -1
-				));
+				$likes--;
+				$cumulativeLikes--;
+			}
+			else {
+				$dislikes--;
+				$cumulativeLikes++;
 			}
 			
-			UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($like->likeID));
+			// build update data
+			$updateData = array(
+				'likes' => $likes,
+				'dislikes' => $dislikes,
+				'cumulativeLikes' => $cumulativeLikes
+			);
+			
+			$users = $likeObject->getUsers();
+			$usersArray = array();
+			foreach ($users as $user2) {
+				$usersArray[$user2->userID] = array('userID' => $user2->userID, 'username' => $user2->username);
+			}
+			
+			if (isset($usersArray[$user->userID])) {
+				unset($usersArray[$user->userID]);
+				$updateData['cachedUsers'] = serialize($usersArray);
+			}
+			
+			$likeObjectEditor = new LikeObjectEditor($likeObject);
+			if (!$updateData['likes'] && !$updateData['dislikes']) {
+				// remove object instead
+				$likeObjectEditor->delete();
+			}
+			else {
+				// update data
+				$likeObjectEditor->update($updateData);
+			}
+			
+			// update owner's like counter and activity points
+			if ($likeable->getUserID()) {
+				if ($like->likeValue == Like::LIKE) {
+					$userEditor = new UserEditor(new User($likeable->getUserID()));
+					$userEditor->updateCounters(array(
+						'likesReceived' => -1
+					));
+				}
+				
+				UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($like->likeID));
+			}
+			
+			// update object's like counter
+			$likeable->updateLikeCounter($cumulativeLikes);
+			
+			WCF::getDB()->commitTransaction();
 		}
-		
-		// update object's like counter
-		$likeable->updateLikeCounter($cumulativeLikes);
+		catch (DatabaseException $e) {
+			WCF::getDB()->rollBackTransaction();
+		}
 		
 		return array(
 			'data' => $this->loadLikeStatus($likeObject, $user),
