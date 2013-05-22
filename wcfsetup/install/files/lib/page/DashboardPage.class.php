@@ -27,6 +27,11 @@ class DashboardPage extends AbstractPage {
 	public $neededModules = array('MODULE_DASHBOARD_PAGE');
 	
 	/**
+	 * @see	wcf\page\AbstractPage::$enableTracking
+	 */
+	public $enableTracking = true;
+	
+	/**
 	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
