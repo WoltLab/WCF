@@ -310,7 +310,7 @@ class StyleAddForm extends AbstractForm {
 		}
 		
 		$lines = explode("\n", StringUtil::unifyNewlines($this->variables['overrideLess']));
-		$regEx = new Regex('^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%\#]+);$');
+		$regEx = new Regex('^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%\#-]+);$');
 		$errors = array();
 		foreach ($lines as $index => &$line) {
 			$line = StringUtil::trim($line);
