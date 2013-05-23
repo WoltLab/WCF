@@ -9,7 +9,7 @@
 			
 			<div class="commentContent commentResponseContent">
 				<div class="containerHeadline">
-					<h3><a href="{link controller='User' object=$response->getUserProfile()}{/link}">{$response->username}</a><small> - {@$response->time|time}</small></h3> 
+					<h3><a href="{link controller='User' object=$response->getUserProfile()}{/link}" class="userLink" data-user-id="{@$response->userID}">{$response->username}</a><small> - {@$response->time|time}</small></h3> 
 				</div>
 				
 				<p class="userMessage">{@$response->getFormattedMessage()}</p>
