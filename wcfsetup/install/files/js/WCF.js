@@ -5364,7 +5364,7 @@ WCF.Search.Base = Class.extend({
 				var $part = this._oldSearchString[$i];
 				if ($result.toLowerCase().indexOf($part.toLowerCase()) === 0) {
 					this._oldSearchString[$i] = $result;
-					this._searchInput.attr('value', this._oldSearchString.join(', '));
+					this._searchInput.val(this._oldSearchString.join(', '));
 					
 					if ($.browser.webkit) {
 						// chrome won't display the new value until the textarea is rendered again
