@@ -147,30 +147,31 @@
 			</script>
 		</li>
 	{/if}
-	<!-- language switcher -->
-	<li id="pageLanguageContainer">
-		<script type="text/javascript">
-			//<![CDATA[
-			$(function() {
-				var $languages = {
-					{implode from=$__wcf->getLanguage()->getLanguages() item=language}
-						'{@$language->languageID}': {
-							iconPath: '{@$language->getIconPath()}',
-							languageName: '{$language}'
-						}
-					{/implode}
-				};
-				
-				new WCF.Language.Chooser('pageLanguageContainer', 'languageID', {@$__wcf->getLanguage()->languageID}, $languages, function(item) {
-					var $location = window.location.toString().replace(/#.*/, '').replace(/(\?|&)l=[0-9]+/g, '');
-					var $delimiter = ($location.indexOf('?') == -1) ? '?' : '&';
+	{if $__wcf->getLanguage()->getLanguages()|count > 1}
+		<li id="pageLanguageContainer">
+			<script type="text/javascript">
+				//<![CDATA[
+				$(function() {
+					var $languages = {
+						{implode from=$__wcf->getLanguage()->getLanguages() item=language}
+							'{@$language->languageID}': {
+								iconPath: '{@$language->getIconPath()}',
+								languageName: '{$language}'
+							}
+						{/implode}
+					};
 					
-					window.location = $location + $delimiter + 'l=' + item.data('languageID') + window.location.hash;
+					new WCF.Language.Chooser('pageLanguageContainer', 'languageID', {@$__wcf->getLanguage()->languageID}, $languages, function(item) {
+						var $location = window.location.toString().replace(/#.*/, '').replace(/(\?|&)l=[0-9]+/g, '');
+						var $delimiter = ($location.indexOf('?') == -1) ? '?' : '&';
+						
+						window.location = $location + $delimiter + 'l=' + item.data('languageID') + window.location.hash;
+					});
 				});
-			});
-			//]]>
-		</script>
-	</li>
+				//]]>
+			</script>
+		</li>
+	{/if}
 {/if}
 
 {if !$__hideUserMenu|isset}
