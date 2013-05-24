@@ -400,7 +400,7 @@ class SearchForm extends RecaptchaForm {
 		}
 		
 		// language
-		if (LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
+		if (!empty($this->query) && LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
 			$this->searchIndexCondition->add('(languageID IN (?) OR languageID IS NULL)', array(WCF::getUser()->getLanguageIDs()));
 		}
 		
