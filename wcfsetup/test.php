@@ -21,7 +21,7 @@ $neededPhpVersion = '5.3.2';
 $configArray = @ini_get_all();
 if (!(version_compare($comparePhpVersion, $neededPhpVersion) >= 0)) {
 	?>
-	<p>Your PHP version '<?php echo $phpVersion; ?>' is insufficient for installation of this software. PHP version <?php echo $neededPhpVersion; ?> or greater is required.<br />
+	<p style="color:red;" >Your PHP version '<?php echo $phpVersion; ?>' is insufficient for installation of this software. PHP version <?php echo $neededPhpVersion; ?> or greater is required.<br />
 	Ihre PHP Version '<?php echo $phpVersion; ?>' ist unzureichend f&uuml;r die Installation dieser Software. PHP Version <?php echo $neededPhpVersion; ?> oder h&ouml;her wird ben&ouml;tigt.</p>
 	<?php
 }
@@ -61,7 +61,7 @@ else if ((is_array($configArray) && !empty($configArray['safe_mode']['local_valu
 // everything is fine
 else {
 	?>
-	<p>PHP <?php echo $neededPhpVersion; ?> or greater is available. You can <a href="install.php">start</a> the installation now.<br />
+	<p style="color:green;">PHP <?php echo $neededPhpVersion; ?> or greater is available. You can <a href="install.php">start</a> the installation now.<br />
 	PHP <?php echo $neededPhpVersion; ?> oder h&ouml;her wurde gefunden. Sie k&ouml;nnen mit der Installation <a href="install.php">beginnen</a>.</p>
 	<?php
 }
