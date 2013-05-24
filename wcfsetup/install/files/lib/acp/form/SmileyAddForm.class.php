@@ -6,6 +6,7 @@ use wcf\data\package\PackageCache;
 use wcf\data\smiley\SmileyAction;
 use wcf\data\smiley\SmileyEditor;
 use wcf\form\AbstractForm;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
@@ -201,10 +202,15 @@ class SmileyAddForm extends AbstractForm {
 		}
 		
 		// validate smiley code and aliases against existing smilies
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		if (isset($this->smiley)) {
+			$conditionBuilder->add('smileyID <> ?', array($this->smiley->smileyID));
+		}
 		$sql = "SELECT	smileyCode, aliases
-			FROM	wcf".WCF_N."_smiley";
+			FROM	wcf".WCF_N."_smiley
+			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
+		$statement->execute($conditionBuilder->getParameters());
 		
 		$aliases = explode("\n", $this->aliases);
 		while ($row = $statement->fetchArray()) {
