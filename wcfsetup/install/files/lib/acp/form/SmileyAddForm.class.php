@@ -10,6 +10,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -69,6 +70,12 @@ class SmileyAddForm extends AbstractForm {
 	public $aliases = '';
 	
 	/**
+	 * smileyPath
+	 * @var	string
+	 */
+	public $smileyPath = '';
+	
+	/**
 	 * node tree with available smiley categories
 	 * @var	wcf\data\category\CategoryNodeTree
 	 */
@@ -89,6 +96,7 @@ class SmileyAddForm extends AbstractForm {
 			'categoryID' => $this->categoryID,
 			'smileyCode' => $this->smileyCode,
 			'aliases' => $this->aliases,
+			'smileyPath' => $this->smileyPath,
 			'categoryNodeList' => $this->categoryNodeTree->getIterator()
 		));
 	}
@@ -122,18 +130,11 @@ class SmileyAddForm extends AbstractForm {
 		
 		if (I18nHandler::getInstance()->isPlainValue('smileyTitle')) $this->smileyTitle = I18nHandler::getInstance()->getValue('smileyTitle');
 		
-		if (isset($_POST['showOrder'])) {
-			$this->showOrder = intval($_POST['showOrder']);
-		}
-		if (isset($_POST['smileyCode'])) {
-			$this->smileyCode = StringUtil::trim($_POST['smileyCode']);
-		}
-		if (isset($_POST['categoryID'])) {
-			$this->categoryID = intval($_POST['categoryID']);
-		}
-		if (isset($_POST['aliases'])) {
-			$this->aliases = StringUtil::unifyNewlines(StringUtil::trim($_POST['aliases']));
-		}
+		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
+		if (isset($_POST['categoryID'])) $this->categoryID = intval($_POST['categoryID']);
+		if (isset($_POST['smileyCode'])) $this->smileyCode = StringUtil::trim($_POST['smileyCode']);
+		if (isset($_POST['aliases'])) $this->aliases = StringUtil::unifyNewlines(StringUtil::trim($_POST['aliases']));
+		if (isset($_POST['smileyPath'])) $this->smileyPath = FileUtil::removeLeadingSlash(StringUtil::trim($_POST['smileyPath']));
 	}
 	
 	/**
@@ -146,10 +147,11 @@ class SmileyAddForm extends AbstractForm {
 			'data' => array(
 				'smileyTitle' => $this->smileyTitle,
 				'smileyCode' => $this->smileyCode,
+				'aliases' => $this->aliases,
+				'smileyPath' => $this->smileyPath,
 				'showOrder' => $this->showOrder,
 				'categoryID' => $this->categoryID ?: null,
-				'packageID' => 1,
-				'aliases' => $this->aliases
+				'packageID' => 1
 			)
 		));
 		$this->objectAction->executeAction();
@@ -199,6 +201,14 @@ class SmileyAddForm extends AbstractForm {
 		
 		if (empty($this->smileyCode)) {
 			throw new UserInputException('smileyCode');
+		}
+		
+		if (empty($this->smileyPath)) {
+			throw new UserInputException('smileyPath');
+		}
+		
+		if (!file_exists(WCF_DIR.$this->smileyPath)) {
+			throw new UserInputException('smileyPath', 'notFound');
 		}
 		
 		// validate smiley code and aliases against existing smilies

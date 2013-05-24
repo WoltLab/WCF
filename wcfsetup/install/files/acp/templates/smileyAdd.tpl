@@ -34,6 +34,7 @@
 				<dt><label for="smileyTitle">{lang}wcf.acp.smiley.title{/lang}</label></dt>
 				<dd>
 					<input type="text" id="smileyTitle" name="smileyTitle" value="{$smileyTitle}" autofocus="autofocus" class="long" />
+					
 					{if $errorField == 'smileyTitle'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -72,6 +73,7 @@
 				<dt><label for="smileyCode">{lang}wcf.acp.smiley.smileyCode{/lang}</label></dt>
 				<dd>
 					<input type="text" id="smileyCode" name="smileyCode" value="{$smileyCode}" required="required" class="medium" />
+					
 					{if $errorField == 'smileyCode'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -94,6 +96,24 @@
 							{lang}wcf.acp.smiley.aliases.error.{@$errorType}{/lang}
 						</small>
 					{/if}
+				</dd>
+			</dl>
+			
+			<dl{if $errorField == 'smileyPath'} class="formError"{/if}>
+				<dt><label for="smileyPath">{lang}wcf.acp.smiley.smileyPath{/lang}</label></dt>
+				<dd>
+					<input type="text" id="smileyPath" name="smileyPath" value="{$smileyPath}" required="required" class="long" />
+					
+					{if $errorField == 'smileyPath'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.smiley.smileyPath.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.smiley.smileyPath.description{/lang}</small>
 				</dd>
 			</dl>
 			

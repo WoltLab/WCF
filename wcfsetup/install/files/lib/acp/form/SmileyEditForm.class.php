@@ -73,9 +73,10 @@ class SmileyEditForm extends SmileyAddForm {
 		$this->objectAction = new SmileyAction(array($this->smileyID), 'update', array('data' => array(
 			'smileyTitle' => $this->smileyTitle,
 			'smileyCode' => $this->smileyCode,
+			'aliases' => $this->aliases,
+			'smileyPath' => $this->smileyPath,
 			'showOrder' => $this->showOrder,
-			'categoryID' => $this->categoryID ?: null,
-			'aliases' => $this->aliases
+			'categoryID' => $this->categoryID ?: null
 		)));
 		$this->objectAction->executeAction();
 		
@@ -99,6 +100,7 @@ class SmileyEditForm extends SmileyAddForm {
 			
 			$this->smileyCode = $this->smiley->smileyCode;
 			$this->aliases = $this->smiley->aliases;
+			$this->smileyPath = $this->smiley->smileyPath;
 			$this->showOrder = $this->smiley->showOrder;
 			$this->categoryID = $this->smiley->categoryID;
 		}
