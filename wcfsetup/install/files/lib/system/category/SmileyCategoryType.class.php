@@ -17,7 +17,7 @@ class SmileyCategoryType extends AbstractCategoryType {
 	/**
 	 * @see	wcf\system\category\AbstractCategoryType::$langVarPrefix
 	 */
-	protected $langVarPrefix = 'wcf.smiley.category';
+	protected $langVarPrefix = 'wcf.acp.smiley.category';
 	
 	/**
 	 * @see	wcf\system\category\AbstractCategoryType::$forceDescription

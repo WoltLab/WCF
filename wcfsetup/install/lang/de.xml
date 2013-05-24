@@ -937,13 +937,16 @@
 		<item name="wcf.acp.smiley.edit"><![CDATA[Smiley bearbeiten]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Titel]]></item>
 		<item name="wcf.acp.smiley.category.noItems"><![CDATA[Diese Kategorie enthält keine Smileys.]]></item>
+		<item name="wcf.acp.smiley.category.add"><![CDATA[Smiley-Kategorie hinzufügen]]></item>
+		<item name="wcf.acp.smiley.category.edit"><![CDATA[Smiley-Kategorie bearbeiten]]></item>
+		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley-Kategorien]]></item>
 		<item name="wcf.acp.smiley.categoryID"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Standard-Kategorie]]></item>
 		<item name="wcf.acp.smiley.categoryID.error.notValid"><![CDATA[Die gewählte Kategorie ist nicht gültig.]]></item>
 		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primärer Smiley-Code]]></item>
 		<item name="wcf.acp.smiley.smileyCode.error.notUnique"><![CDATA[Dieser Smiley-Code wird bereits von einem anderen Smiley verwendet]]></item>
 		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley-Codes]]></item>
-		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[Mindestens ein alternative Smiley-Code wird bereits von einem anderen Smiley verwendet]]></item>
+		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[Mindestens ein alternativer Smiley-Code wird bereits von einem anderen Smiley verwendet]]></item>
 		<item name="wcf.acp.smiley.showOrder"><![CDATA[Position]]></item>
 	</category>
 	
