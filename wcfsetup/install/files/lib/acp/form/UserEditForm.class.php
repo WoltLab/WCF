@@ -223,7 +223,6 @@ class UserEditForm extends UserAddForm {
 		
 			case 'custom':
 				$avatarData = array(
-					'avatarID' => null,
 					'enableGravatar' => 0
 				);
 				break;
