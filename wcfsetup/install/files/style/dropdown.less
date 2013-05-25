@@ -207,3 +207,19 @@
 .boxFlag > .box24, .boxFlag.box24 {
 	min-height: 20px;
 }
+
+@media only screen and (max-width: 800px) {
+	.dropdownMenu {
+		left: 0 !important;
+		right: 0 !important;
+		
+		li {
+			overflow: hidden;
+			
+			> a,
+			> span {
+				white-space: normal;
+			}
+		}
+	}
+}

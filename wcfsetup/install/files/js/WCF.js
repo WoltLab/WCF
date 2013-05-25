@@ -1400,6 +1400,7 @@ WCF.Clipboard = {
 				var $item = $editor.items[$itemIndex];
 				
 				var $listItem = $('<li><span>' + $item.label + '</span></li>').appendTo($itemList);
+				$listItem.data('container', $container);
 				$listItem.data('objectType', $typeName);
 				$listItem.data('actionName', $item.actionName).data('parameters', $item.parameters);
 				$listItem.data('internalData', $item.internalData).data('url', $item.url).data('type', $typeName);
@@ -1483,7 +1484,7 @@ WCF.Clipboard = {
 		}
 		
 		// fire event
-		$listItem.trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName'), $listItem.data('parameters') ]);
+		$listItem.data('container').trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName'), $listItem.data('parameters') ]);
 	},
 	
 	/**
@@ -1522,7 +1523,7 @@ WCF.Clipboard = {
 			},
 			success: $.proxy(function(data) {
 				if (listItem.data('parameters').actionName !== 'unmarkAll') {
-					listItem.trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
+					listItem.data('container').trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
 				}
 				
 				this._loadMarkedItems();
