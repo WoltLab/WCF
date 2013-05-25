@@ -277,10 +277,18 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		return $filename;
 	}
 	
+	/**
+	 * Validates the 'getCropDialog' action.
+	 */
 	public function validateGetCropDialog() {
 		$this->avatar = $this->getSingleObject();
 	}
 	
+	/**
+	 * Returns the data for the dialog to crop an avatar.
+	 * 
+	 * @return	array
+	 */
 	public function getCropDialog() {
 		return array(
 			'cropX' => $this->avatar->cropX,

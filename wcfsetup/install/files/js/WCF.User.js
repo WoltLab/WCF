@@ -1274,7 +1274,7 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 	 * @see	WCF.UserPanel._after()
 	 */
 	_after: function(dropdownMenu) {
-		this._container.find('li.jsNotificationItem').click($.proxy(this._markAsConfirmed, this));
+		WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify()).children('li.jsNotificationItem').click($.proxy(this._markAsConfirmed, this));
 	},
 	
 	/**
@@ -1328,7 +1328,7 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 			break;
 			
 			case 'markAsConfirmed':
-				this._container.find('li.jsNotificationItem').each(function(index, item) {
+				WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify()).children('li.jsNotificationItem').each(function(index, item) {
 					var $item = $(item);
 					if (data.returnValues.notificationID == $item.data('notificationID')) {
 						window.location = $item.data('link');

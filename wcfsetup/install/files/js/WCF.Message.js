@@ -1163,11 +1163,11 @@ WCF.Message.InlineEditor = Class.extend({
 	/**
 	 * Forces message options to stay visible if toggling dropdown menu.
 	 * 
-	 * @param	jQuery		dropdown
+	 * @param	string		containerID
 	 * @param	string		action
 	 */
-	_toggleDropdown: function(dropdown, action) {
-		dropdown.parents('.messageOptions').toggleClass('forceOpen');
+	_toggleDropdown: function(containerID, action) {
+		WCF.Dropdown.getDropdown(containerID).parents('.messageOptions').toggleClass('forceOpen');
 	},
 	
 	/**

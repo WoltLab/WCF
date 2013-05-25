@@ -139,7 +139,7 @@ WCF.Label.Chooser = Class.extend({
 		// pre-select labels
 		if ($.getLength(selectedLabelIDs)) {
 			for (var $groupID in selectedLabelIDs) {
-				this._groups[$groupID].find('.dropdownMenu > li').each($.proxy(function(index, label) {
+				WCF.Dropdown.getDropdownMenu(this._groups[$groupID].wcfIdentify()).children('li').each($.proxy(function(index, label) {
 					var $label = $(label);
 					var $labelID = $label.data('labelID') || 0;
 					if ($labelID && selectedLabelIDs[$groupID] == $labelID) {
@@ -178,19 +178,19 @@ WCF.Label.Chooser = Class.extend({
 			
 			if (!this._groups[$groupID]) {
 				this._groups[$groupID] = $group;
-				var $dropdownMenu = $group.find('.dropdownMenu');
-				$dropdownMenu.find('li').click($.proxy(this._click, this));
+				var $dropdownMenu = WCF.Dropdown.getDropdownMenu($group.wcfIdentify());
+				$dropdownMenu.children('li').data('groupID', $groupID).click($.proxy(this._click, this));
 				
 				if (!$group.data('forceSelection') || this._showWithoutSelection) {
 					$('<li class="dropdownDivider" />').appendTo($dropdownMenu);
 				}
 				
 				if (this._showWithoutSelection) {
-					$('<li data-label-id="-1"><span><span class="badge label">' + WCF.Language.get('wcf.label.withoutSelection') + '</span></span></li>').appendTo($dropdownMenu).click($.proxy(this._click, this));
+					$('<li data-label-id="-1"><span><span class="badge label">' + WCF.Language.get('wcf.label.withoutSelection') + '</span></span></li>').data('groupID', $groupID).appendTo($dropdownMenu).click($.proxy(this._click, this));
 				}
 				
 				if (!$group.data('forceSelection')) {
-					var $buttonEmpty = $('<li data-label-id="0"><span><span class="badge label">' + WCF.Language.get('wcf.label.none') + '</span></span></li>').appendTo($dropdownMenu);
+					var $buttonEmpty = $('<li data-label-id="0"><span><span class="badge label">' + WCF.Language.get('wcf.label.none') + '</span></span></li>').data('groupID', $groupID).appendTo($dropdownMenu);
 					$buttonEmpty.click($.proxy(this._click, this));
 				}
 			}
@@ -213,7 +213,7 @@ WCF.Label.Chooser = Class.extend({
 	 * @param	boolean		onInit
 	 */
 	_selectLabel: function(label, onInit) {
-		var $group = label.parents('.dropdown');
+		var $group = this._groups[label.data('groupID')];
 		
 		// already initialized, ignore
 		if (onInit && $group.data('labelID') !== undefined) {

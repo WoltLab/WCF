@@ -757,6 +757,24 @@ WCF.Dropdown = {
 	},
 	
 	/**
+	 * Initializes a dropdown fragment which behaves like a usual dropdown
+	 * but is not controlled by a trigger element.
+	 * 
+	 * @param	jQuery		dropdown
+	 * @param	jQuery		dropdownMenu
+	 */
+	initDropdownFragment: function(dropdown, dropdownMenu) {
+		var $containerID = dropdown.wcfIdentify();
+		if (this._dropdowns[$containerID]) {
+			console.debug("[WCF.Dropdown] Cannot register dropdown identified by '" + $containerID + "' as a fragement.");
+			return;
+		}
+		
+		this._dropdowns[$containerID] = dropdown;
+		this._menus[$containerID] = dropdownMenu.detach().appendTo(this._menuContainer);
+	},
+	
+	/**
 	 * Registers a callback notified upon dropdown state change.
 	 * 
 	 * @param	string		identifier
@@ -805,8 +823,10 @@ WCF.Dropdown = {
 			}
 		}
 		
-		event.stopPropagation();
-		return false;
+		if (event !== null) {
+			event.stopPropagation();
+			return false;
+		}
 	},
 	
 	/**
@@ -1380,6 +1400,7 @@ WCF.Clipboard = {
 				var $item = $editor.items[$itemIndex];
 				
 				var $listItem = $('<li><span>' + $item.label + '</span></li>').appendTo($itemList);
+				$listItem.data('container', $container);
 				$listItem.data('objectType', $typeName);
 				$listItem.data('actionName', $item.actionName).data('parameters', $item.parameters);
 				$listItem.data('internalData', $item.internalData).data('url', $item.url).data('type', $typeName);
@@ -1463,7 +1484,7 @@ WCF.Clipboard = {
 		}
 		
 		// fire event
-		$listItem.trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName'), $listItem.data('parameters') ]);
+		$listItem.data('container').trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName'), $listItem.data('parameters') ]);
 	},
 	
 	/**
@@ -1502,7 +1523,7 @@ WCF.Clipboard = {
 			},
 			success: $.proxy(function(data) {
 				if (listItem.data('parameters').actionName !== 'unmarkAll') {
-					listItem.trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
+					listItem.data('container').trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
 				}
 				
 				this._loadMarkedItems();
@@ -5208,6 +5229,8 @@ WCF.Search.Base = Class.extend({
 		}
 		
 		this._searchInput.blur($.proxy(this._blur, this));
+		
+		WCF.Dropdown.initDropdownFragment(this._searchInput.parent(), this._list);
 	},
 	
 	/**
