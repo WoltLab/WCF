@@ -177,8 +177,11 @@
 			color: @wcfDropdownColor;
 			cursor: pointer;
 			display: block;
+			max-width: 300px;
+			overflow: hidden;
 			padding: @wcfGapTiny @wcfGapMedium;
 			text-decoration: none;
+			text-overflow: ellipsis;
 			white-space: nowrap;
 			
 			.textShadow(@wcfDropdownBackgroundColor);
@@ -187,6 +190,11 @@
 				color: @wcfDropdownColor;
 				
 				.textShadow(@wcfDropdownHoverBackgroundColor);
+			}
+			
+			> div > h3 {
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 		}
 		
@@ -199,6 +207,16 @@
 			
 			> p {
 				font-size: @wcfSmallFontSize;
+			}
+		}
+		
+		&.notificationItem {
+			> a {
+				white-space: normal;
+				
+				> div > h3 {
+					font-size: @wcfSmallFontSize;
+				}
 			}
 		}
 	}
@@ -218,6 +236,7 @@
 			
 			> a,
 			> span {
+				max-width: none;
 				white-space: normal;
 			}
 		}
