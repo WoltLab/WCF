@@ -33,7 +33,7 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
 	public function getHTML($formName) {
 		$content = '';
 		foreach ($this->getChildren() as $element) {
-			$content .= $element->getHTML($formName);
+			$content .= '<dd>'.$element->getHTML($formName).'</dd>';
 		}
 		
 		return <<<HTML
@@ -43,7 +43,7 @@ class MultipleSelectionFormElementContainer extends SelectionFormElementContaine
 	<small>{$this->getDescription()}</small>
 	
 	<dl class="wide">
-		<dd>{$content}</dd>
+		{$content}
 	</dl>
 </fieldset>
 HTML;
