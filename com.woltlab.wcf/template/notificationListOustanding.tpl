@@ -1,5 +1,5 @@
 {foreach from=$notifications[notifications] item=notification}
-	<li class="jsNotificationItem" data-link="{$notification[event]->getLink()}" data-notification-id="{@$notification[notificationID]}">
+	<li class="jsNotificationItem notificationItem" data-link="{$notification[event]->getLink()}" data-notification-id="{@$notification[notificationID]}">
 		<a class="box24">
 			<div class="framed">
 				{@$notification[event]->getAuthor()->getAvatar()->getImageTag(24)}
