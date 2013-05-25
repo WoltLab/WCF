@@ -9,7 +9,7 @@
 			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}',
 			'wcf.acp.package.update.title': '{lang}wcf.acp.package.update.title{/lang}'
 		});
-		new WCF.ACP.Package.Installation({@$queue->queueID}, undefined, {if $queue->action == 'install'}true{else}false{/if});
+		new WCF.ACP.Package.Installation({@$queue->queueID}, undefined, {if $queue->action == 'install'}true, false{else}false, true{/if});
 	});
 	//]]>
 </script>

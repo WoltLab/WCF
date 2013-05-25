@@ -379,8 +379,9 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	integer		queueID
 	 * @param	string		actionName
 	 * @param	boolean		allowRollback
+	 * @param	boolean		isUpdate
 	 */
-	init: function(queueID, actionName, allowRollback) {
+	init: function(queueID, actionName, allowRollback, isUpdate) {
 		this._actionName = (actionName) ? actionName : 'InstallPackage';
 		if (this._actionName === 'Setup') {
 			// 'Setup' is an alias for 'InstallPackage' used during WCFSetup
@@ -391,11 +392,11 @@ WCF.ACP.Package.Installation = Class.extend({
 		
 		switch (this._actionName) {
 			case 'InstallPackage':
-				if (allowRollback || actionName === 'Setup') {
-					this._dialogTitle = 'wcf.acp.package.installation.title';
+				if (isUpdate) {
+					this._dialogTitle = 'wcf.acp.package.update.title';
 				}
 				else {
-					this._dialogTitle = 'wcf.acp.package.update.title';
+					this._dialogTitle = 'wcf.acp.package.installation.title';
 				}
 			break;
 			
@@ -1290,7 +1291,7 @@ WCF.ACP.Package.Update.Manager = Class.extend({
 				this._dialog.wcfDialog('close');
 			}
 			
-			var $installation = new WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false);
+			var $installation = new WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false, true);
 			$installation.prepareInstallation();
 		}
 		else if (data.returnValues.template) {
