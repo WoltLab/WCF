@@ -63,4 +63,17 @@ class PackageCache extends SingletonFactory {
 	public function getPackages() {
 		return $this->packages;
 	}
+	
+	/**
+	 * Returns a specific package.
+	 * 
+	 * @param	string		$package
+	 * @return	wcf\data\package\Package
+	 */
+	public function getPackageByIdentifier($package) {
+		$packageID = $this->getPackageID($package);
+		if ($packageID === null) return null;
+		
+		return $this->getPackage($packageID);
+	}
 }

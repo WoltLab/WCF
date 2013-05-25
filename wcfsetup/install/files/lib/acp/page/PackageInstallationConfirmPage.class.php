@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
+use wcf\data\package\PackageCache;
 use wcf\page\AbstractPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageInstallationDispatcher;
@@ -110,6 +111,8 @@ class PackageInstallationConfirmPage extends AbstractPage {
 			else {
 				$requirement['status'] = 'installed';
 			}
+			
+			$requirement['package'] = PackageCache::getInstance()->getPackageByIdentifier($requirement['name']);
 		}
 		unset($requirement);
 	}
