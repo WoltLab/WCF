@@ -937,7 +937,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.smiley.title"><![CDATA[Title]]></item>
 		<item name="wcf.acp.smiley.category.noItems"><![CDATA[This category contains no smilies.]]></item>
 		<item name="wcf.acp.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
-		<item name="wcf.acp.smiley.category.edit"><![CDATA[Edit Smiley Category]]></item
+		<item name="wcf.acp.smiley.category.edit"><![CDATA[Edit Smiley Category]]></item>
 		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley Categories]]></item>
 		<item name="wcf.acp.smiley.categoryID"><![CDATA[Category]]></item>
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Default Category]]></item>
