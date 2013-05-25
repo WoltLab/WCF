@@ -90,14 +90,14 @@
 			</attributes>
 		</bbcode>
 		<bbcode name="quote">
-			<classname>wcf\system\bbcode\QuoteBBCode</classname>
+			<classname><![CDATA[wcf\system\bbcode\QuoteBBCode]]></classname>
 			<attributes>
 				<attribute name="0"></attribute>
 				<attribute name="1"></attribute>
 			</attributes>
 		</bbcode>
 		<bbcode name="code">
-			<classname>wcf\system\bbcode\CodeBBCode</classname>
+			<classname><![CDATA[wcf\system\bbcode\CodeBBCode]]></classname>
 			<allowedchildren>none</allowedchildren>
 			<attributes>
 				<attribute name="0">
@@ -107,7 +107,7 @@
 			<sourcecode>1</sourcecode>
 		</bbcode>
 		<bbcode name="img">
-			<classname>wcf\system\bbcode\ImageBBCode</classname>
+			<classname><![CDATA[wcf\system\bbcode\ImageBBCode]]></classname>
 			<allowedchildren>none</allowedchildren>
 			<attributes>
 				<attribute name="0">
@@ -121,7 +121,7 @@
 			</attributes>
 		</bbcode>
 		<bbcode name="url">
-			<classname>wcf\system\bbcode\URLBBCode</classname>
+			<classname><![CDATA[wcf\system\bbcode\URLBBCode]]></classname>
 			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font</allowedchildren>
 			<attributes>
 				<attribute name="0">
@@ -132,7 +132,7 @@
 			</attributes>
 		</bbcode>
 		<bbcode name="list">
-			<classname>wcf\system\bbcode\ListBBCode</classname>
+			<classname><![CDATA[wcf\system\bbcode\ListBBCode]]></classname>
 			<attributes>
 				<attribute name="0">
 					<validationpattern>^(1|a|none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)$</validationpattern>
@@ -140,15 +140,15 @@
 			</attributes>
 		</bbcode>
 		<bbcode name="table">
-			<classname>wcf\system\bbcode\TableBBCode</classname>
+			<classname><![CDATA[wcf\system\bbcode\TableBBCode]]></classname>
 			<allowedchildren>all^table</allowedchildren>
 		</bbcode>
 		<bbcode name="media">
-			<classname>wcf\system\bbcode\MediaBBCode</classname>
+			<classname><![CDATA[wcf\system\bbcode\MediaBBCode]]></classname>
 			<sourcecode>1</sourcecode>
 		</bbcode>
 		<bbcode name="spoiler">
-			<classname>wcf\system\bbcode\SpoilerBBCode</classname>
+			<classname><![CDATA[wcf\system\bbcode\SpoilerBBCode]]></classname>
 			<attributes>
 				<attribute name="0"></attribute>
 			</attributes>
@@ -161,7 +161,7 @@
 		</bbcode>
 		
 		<bbcode name="attach">
-			<classname>wcf\system\bbcode\AttachmentBBCode</classname>
+			<classname><![CDATA[wcf\system\bbcode\AttachmentBBCode]]></classname>
 			<attributes>
 				<attribute name="0">
 					<validationpattern>^\d+$</validationpattern>
