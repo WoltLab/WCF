@@ -757,6 +757,24 @@ WCF.Dropdown = {
 	},
 	
 	/**
+	 * Initializes a dropdown fragment which behaves like a usual dropdown
+	 * but is not controlled by a trigger element.
+	 * 
+	 * @param	jQuery		dropdown
+	 * @param	jQuery		dropdownMenu
+	 */
+	initDropdownFragment: function(dropdown, dropdownMenu) {
+		var $containerID = dropdown.wcfIdentify();
+		if (this._dropdowns[$containerID]) {
+			console.debug("[WCF.Dropdown] Cannot register dropdown identified by '" + $containerID + "' as a fragement.");
+			return;
+		}
+		
+		this._dropdowns[$containerID] = dropdown;
+		this._menus[$containerID] = dropdownMenu.detach().appendTo(this._menuContainer);
+	},
+	
+	/**
 	 * Registers a callback notified upon dropdown state change.
 	 * 
 	 * @param	string		identifier
@@ -805,8 +823,10 @@ WCF.Dropdown = {
 			}
 		}
 		
-		event.stopPropagation();
-		return false;
+		if (event !== null) {
+			event.stopPropagation();
+			return false;
+		}
 	},
 	
 	/**
@@ -5208,6 +5228,8 @@ WCF.Search.Base = Class.extend({
 		}
 		
 		this._searchInput.blur($.proxy(this._blur, this));
+		
+		WCF.Dropdown.initDropdownFragment(this._searchInput.parent(), this._list);
 	},
 	
 	/**
