@@ -383,21 +383,12 @@ WCF.ACP.Package.Installation = Class.extend({
 	 */
 	init: function(queueID, actionName, allowRollback, isUpdate) {
 		this._actionName = (actionName) ? actionName : 'InstallPackage';
-		if (this._actionName === 'Setup') {
-			// 'Setup' is an alias for 'InstallPackage' used during WCFSetup
-			this._actionName = 'InstallPackage';
-		}
 		this._allowRollback = (allowRollback === true) ? true : false;
 		this._queueID = queueID;
 		
 		switch (this._actionName) {
 			case 'InstallPackage':
-				if (isUpdate) {
-					this._dialogTitle = 'wcf.acp.package.update.title';
-				}
-				else {
-					this._dialogTitle = 'wcf.acp.package.installation.title';
-				}
+				this._dialogTitle = 'wcf.acp.package.' + (isUpdate ? 'update' : 'install') + '.title';
 			break;
 			
 			case 'UninstallPackage':
