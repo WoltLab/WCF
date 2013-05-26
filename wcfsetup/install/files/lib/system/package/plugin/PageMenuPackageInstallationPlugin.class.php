@@ -86,9 +86,8 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 */
 	protected function getMenuItemPosition(array $data) {
 		file_put_contents(WCF_DIR.'__pageMenu.log', "Resolving menu position for '" . $data['menuItem'] . "' (" . $data['menuPosition'] . ") ...\n", FILE_APPEND);
-		file_put_contents(WCF_DIR.'__pageMenu.log', "  showOrder = ".($data['showOrder'] === null) ? 'null' : $data['showOrder'] . "\n", FILE_APPEND);
+		file_put_contents(WCF_DIR.'__pageMenu.log', "  showOrder = ".($data['showOrder'] === null ? 'null' : $data['showOrder']) . "\n", FILE_APPEND);
 		file_put_contents(WCF_DIR.'__pageMenu.log', "  parentMenuItem = ". $data['parentMenuItem'] . "\n", FILE_APPEND);
-		file_put_contents(WCF_DIR.'__pageMenu.log', "  menu = ". $data['parentMenuItem'] . "\n", FILE_APPEND);
 		
 		if ($data['showOrder'] === null) {
 			// get greatest showOrder value
@@ -106,6 +105,7 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 			$showOrder = (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
 		}
 		else {
+			file_put_contents(WCF_DIR.'__pageMenu.log', "\tINCREASING SHOW ORDER\n", FILE_APPEND);
 			// increase all showOrder values which are >= $showOrder
 			$sql = "UPDATE	wcf".WCF_N."_".$this->tableName."
 				SET	showOrder = showOrder + 1
