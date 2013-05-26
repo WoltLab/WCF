@@ -86,9 +86,9 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 */
 	protected function getMenuItemPosition(array $data) {
 		file_put_contents(WCF_DIR.'__pageMenu.log', "Resolving menu position for '" . $data['menuItem'] . "' (" . $data['menuPosition'] . ") ...\n", FILE_APPEND);
-		file_put_contents(WCF_DIR.'__pageMenu.log', "  showOrder = ".($data['showOrder'] === null) ? 'null' : $data['showOrder'] . "\n");
-		file_put_contents(WCF_DIR.'__pageMenu.log', "  parentMenuItem = ". $data['parentMenuItem'] . "\n");
-		file_put_contents(WCF_DIR.'__pageMenu.log', "  menu = ". $data['parentMenuItem'] . "\n");
+		file_put_contents(WCF_DIR.'__pageMenu.log', "  showOrder = ".($data['showOrder'] === null) ? 'null' : $data['showOrder'] . "\n", FILE_APPEND);
+		file_put_contents(WCF_DIR.'__pageMenu.log', "  parentMenuItem = ". $data['parentMenuItem'] . "\n", FILE_APPEND);
+		file_put_contents(WCF_DIR.'__pageMenu.log', "  menu = ". $data['parentMenuItem'] . "\n", FILE_APPEND);
 		
 		if ($data['showOrder'] === null) {
 			// get greatest showOrder value
@@ -127,7 +127,7 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 			$showOrder = $data['showOrder'];
 		}
 		
-		file_put_contents(WCF_DIR.'__pageMenu.log', "  calculated show order = ". $showOrder . "\n\n");
+		file_put_contents(WCF_DIR.'__pageMenu.log', "  calculated show order = ". $showOrder . "\n\n", FILE_APPEND);
 		return $showOrder;
 	}
 }
