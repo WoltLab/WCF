@@ -128,6 +128,6 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		}
 		
 		file_put_contents(WCF_DIR.'__pageMenu.log', "  calculated show order = ". $showOrder . "\n\n");
-		return $showOrder
+		return $showOrder;
 	}
 }
