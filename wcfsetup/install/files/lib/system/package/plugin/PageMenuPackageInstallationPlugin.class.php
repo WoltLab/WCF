@@ -105,7 +105,7 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 				SET	showOrder = showOrder + 1
 				WHERE	showOrder >= ?
 					AND menuPosition = ?
-				".($data['parentMenuItem'] ? "AND parentMenuItem = ?" : "");
+					AND parentMenuItem = ".($data['parentMenuItem'] ? "?" : "''");
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			$parameters = array(
