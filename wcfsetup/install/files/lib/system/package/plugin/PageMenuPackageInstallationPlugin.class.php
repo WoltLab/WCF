@@ -85,6 +85,11 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 * @return	integer
 	 */
 	protected function getMenuItemPosition(array $data) {
+		file_put_contents(WCF_DIR.'__pageMenu.log', "Resolving menu position for '" . $data['menuItem'] . "' (" . $data['menuPosition'] . ") ...\n", FILE_APPEND);
+		file_put_contents(WCF_DIR.'__pageMenu.log', "  showOrder = ".($data['showOrder'] === null) ? 'null' : $data['showOrder'] . "\n");
+		file_put_contents(WCF_DIR.'__pageMenu.log', "  parentMenuItem = ". $data['parentMenuItem'] . "\n");
+		file_put_contents(WCF_DIR.'__pageMenu.log', "  menu = ". $data['parentMenuItem'] . "\n");
+		
 		if ($data['showOrder'] === null) {
 			// get greatest showOrder value
 			$conditions = new PreparedStatementConditionBuilder();
@@ -97,7 +102,8 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			$maxShowOrder = $statement->fetchArray();
-			return (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
+			//return (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
+			$showOrder = (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
 		}
 		else {
 			// increase all showOrder values which are >= $showOrder
@@ -117,7 +123,11 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 			$statement->execute($parameters);
 			
 			// return the wanted showOrder level
-			return $data['showOrder'];
+			//return $data['showOrder'];
+			$showOrder = $data['showOrder'];
 		}
+		
+		file_put_contents(WCF_DIR.'__pageMenu.log', "  calculated show order = ". $showOrder . "\n\n");
+		return $showOrder
 	}
 }
