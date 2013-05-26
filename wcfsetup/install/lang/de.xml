@@ -811,7 +811,7 @@
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[„{$packageName}“ wird aktualisiert …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Aktualisierung abgeschlossen]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Installation wird vorbereitet …]]></item>
-		<item name="wcf.acp.package.install.title"><![CDATA[Installation]]></item>
+		<item name="wcf.acp.package.install.title"><![CDATA[Paket-Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Benötigte Version]]></item>
 		<item name="wcf.acp.package.license"><![CDATA[Lizenz]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Paketliste]]></item>
@@ -854,7 +854,7 @@
 		<item name="wcf.acp.package.update.server"><![CDATA[Paket-Server]]></item>
 		<item name="wcf.acp.package.update.server.message"><![CDATA[Servermeldung]]></item>
 		<item name="wcf.acp.package.update.server.url"><![CDATA[URL]]></item>
-		<item name="wcf.acp.package.update.title"><![CDATA[Aktualisierung]]></item>
+		<item name="wcf.acp.package.update.title"><![CDATA[Paket-Aktualisierung]]></item>
 		<item name="wcf.acp.package.update.unauthorized"><![CDATA[Authentifizierung erforderlich]]></item>
 		<item name="wcf.acp.package.update.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
