@@ -807,9 +807,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[Insufficient Version (installed: {$package.existingVersion})]]></item>
 		<item name="wcf.acp.package.installation.step.install"><![CDATA[Installing “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation completed]]></item>
-		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Preparing Installation …]]></item>
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[Updating “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Updated completed]]></item>
+		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Preparing Installation …]]></item>
 		<item name="wcf.acp.package.install.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required Version]]></item>
 		<item name="wcf.acp.package.license"><![CDATA[License]]></item>
@@ -838,10 +838,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.type.application"><![CDATA[Application]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Plugin]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package “{@$package->getName()}”?]]></item>
-		<item name="wcf.acp.package.uninstallation.step.prepare"><![CDATA[Prepairing uninstallation …]]></item>
 		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[Uninstallation completed]]></item>
 		<item name="wcf.acp.package.uninstallation.title"><![CDATA[Uninstallation]]></item>
 		<item name="wcf.acp.package.uninstallation.title.packageName"><![CDATA[Package “{$queue->packageName}” is being uninstalled …]]></item>
+		<item name="wcf.acp.package.uninstall.step.prepare"><![CDATA[Prepairing uninstallation …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Credentials]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Your credentials are invalid, please verify {if $updateServer->requiresLicense()}license and serial number{else}username and password{/if}.]]></item>
