@@ -314,6 +314,10 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * @return	integer	
 	 */
 	protected function getShowOrder($showOrder, $parentName = null, $columnName = null, $tableNameExtension = '') {
+		if ($this instanceof PageMenuPackageInstallationPlugin) {
+			file_put_contents(WCF_DIR.'__pageMenu.log', "\tWARNING: Accessed AbstractXMLPackageInstallationPlugin::getShowOrder() (page menu pip has own method: " . (method_exists('wcf\system\package\plugin\PageMenuPackageInstallationPlugin', 'getShowOrder') ? 'yes' : 'no') . ")\n", FILE_APPEND);
+		}
+		
 		if ($showOrder === null) {
 			// get greatest showOrder value
 			$conditions = new PreparedStatementConditionBuilder();
