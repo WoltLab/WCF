@@ -2,30 +2,30 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/eventListener.xsd">
 	<import>
 		<eventlistener>
-			<eventclassname>wcf\page\AbstractPage</eventclassname>
+			<eventclassname><![CDATA[wcf\page\AbstractPage]]></eventclassname>
 			<eventname>readParameters</eventname>
 			<environment>admin</environment>
 			<inherit>1</inherit>
-			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
+			<listenerclassname><![CDATA[wcf\system\event\listener\SessionAccessLogListener]]></listenerclassname>
 		</eventlistener>
 		<eventlistener>
-			<eventclassname>wcf\form\AbstractForm</eventclassname>
+			<eventclassname><![CDATA[wcf\form\AbstractForm]]></eventclassname>
 			<eventname>readParameters</eventname>
 			<environment>admin</environment>
 			<inherit>1</inherit>
-			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
+			<listenerclassname><![CDATA[wcf\system\event\listener\SessionAccessLogListener]]></listenerclassname>
 		</eventlistener>
 		<eventlistener>
-			<eventclassname>wcf\action\AbstractAction</eventclassname>
+			<eventclassname><![CDATA[wcf\action\AbstractAction]]></eventclassname>
 			<eventname>readParameters</eventname>
 			<environment>admin</environment>
 			<inherit>1</inherit>
-			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
+			<listenerclassname><![CDATA[wcf\system\event\listener\SessionAccessLogListener]]></listenerclassname>
 		</eventlistener>
 		<eventlistener>
-			<eventclassname>wcf\system\bbcode\PreParser</eventclassname>
+			<eventclassname><![CDATA[wcf\system\bbcode\PreParser]]></eventclassname>
 			<eventname>beforeParsing</eventname>
-			<listenerclassname>wcf\system\event\listener\PreParserAtUserListener</listenerclassname>
+			<listenerclassname><![CDATA[wcf\system\event\listener\PreParserAtUserListener]]></listenerclassname>
 			<environment>user</environment>
 		</eventlistener>
 	</import>
