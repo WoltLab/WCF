@@ -44,6 +44,12 @@ nbactions.xml
 *.imlworkspace
 .xml
 
+# Sublime Text 2
+*.sublime-*
+
+# Textmate
+*.tmproj 
+
 # Community Framework
 # Ignore packages build directly in the workspace. They can however be added manually via git add, if wanted.
 *.tar

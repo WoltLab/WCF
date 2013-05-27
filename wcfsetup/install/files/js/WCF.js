@@ -8387,6 +8387,12 @@ $.widget('ui.wcfDialog', {
 	 * Renders this dialog, should be called whenever content is updated.
 	 */
 	render: function() {
+		// check if this if dialog was previously hidden and container is fixed
+		// at 0px (mobile optimization), in this case scroll to top
+		if (!this._container.is(':visible') && this._container.css('top') === '0px') {
+			window.scrollTo(0, 0);
+		}
+		
 		// force dialog and it's contents to be visible
 		this._container.show();
 		this._content.children().show();
@@ -8415,13 +8421,10 @@ $.widget('ui.wcfDialog', {
 			this._content.removeClass('dialogForm').css({ marginBottom: '0px' });
 		}
 		
-		// force 800px or 80% width
+		// force 800px or 90% width
 		var $windowDimensions = $(window).getDimensions();
-		if ($windowDimensions.width * 0.8 > 800) {
-			this._content.css('maxWidth', '800px');
-		}
-		else {
-			this._content.css('maxWidth', '80%');
+		if ($windowDimensions.width * 0.9 > 800) {
+			this._container.css('maxWidth', '800px');
 		}
 		
 		// calculate dimensions
