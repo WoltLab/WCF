@@ -8,7 +8,7 @@
 
 <footer id="pageFooter" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if} footer">
 	<div>
-		<nav id="footerNavigation" class="navigation navigationFooter clearfix">
+		<nav id="footerNavigation" class="navigation navigationFooter">
 			{include file='footerMenu'}
 			
 			<ul class="navigationIcons">

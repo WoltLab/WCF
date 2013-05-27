@@ -114,7 +114,7 @@
 		<div>
 			{if $__wcf->user->userID}
 				<nav id="topMenu" class="userPanel">
-					<div class="layoutFluid clearfix">
+					<div class="layoutFluid">
 						<ul class="userPanelItems">
 							<li id="userMenu" class="dropdown">
 								<a class="dropdownToggle framed" data-toggle="userMenu">{if PACKAGE_ID}{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)} {/if}{lang}wcf.user.userNote{/lang}</a>
@@ -160,7 +160,7 @@
 				{/hascontent}
 			{/if}
 			
-			<nav class="navigation navigationHeader clearfix">
+			<nav class="navigation navigationHeader">
 				<ul class="navigationIcons">
 					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-down"></span> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 					{event name='navigationIcons'}
@@ -206,5 +206,5 @@
 				</aside>
 			{/hascontent}
 			
-			<section id="content" class="content clearfix">
+			<section id="content" class="content">
 				
