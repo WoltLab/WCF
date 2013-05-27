@@ -898,6 +898,13 @@ WCF.Dropdown = {
 		var $menuDimensions = dropdownMenu.getDimensions('outer');
 		var $windowWidth = $(window).width();
 		
+		// check if button belongs to an i18n textarea
+		var $button = dropdown.find('.dropdownToggle');
+		if ($button.hasClass('dropdownCaptionTextarea')) {
+			// use button dimensions instead
+			$dropdownDimensions = $button.getDimensions('outer');
+		}
+		
 		// validate if current alignment is still fine, prevents "jumping"
 		var $align = null;
 		switch (dropdownMenu.data('orientationX')) {
