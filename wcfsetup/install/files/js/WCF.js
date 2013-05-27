@@ -8387,6 +8387,12 @@ $.widget('ui.wcfDialog', {
 	 * Renders this dialog, should be called whenever content is updated.
 	 */
 	render: function() {
+		// check if this if dialog was previously hidden and container is fixed
+		// at 0px (mobile optimization), in this case scroll to top
+		if (!this._container.is(':visible') && this._container.css('top') === '0px') {
+			window.scrollTo(0, 0);
+		}
+		
 		// force dialog and it's contents to be visible
 		this._container.show();
 		this._content.children().show();
