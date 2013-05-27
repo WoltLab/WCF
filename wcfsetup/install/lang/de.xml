@@ -1036,6 +1036,10 @@
 		<item name="wcf.acp.style.styleVersion"><![CDATA[Version]]></item>
 		<item name="wcf.acp.style.templateGroupID"><![CDATA[Template-Gruppe]]></item>
 		<item name="wcf.acp.style.users"><![CDATA[Benutzer]]></item>
+		<item name="wcf.acp.style.image.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
+		<item name="wcf.acp.style.imagePath.error.notValid"><![CDATA[Sie haben einen ungültigen Pfad eingegeben.]]></item>
+		<item name="wcf.acp.style.styleVersion.error.notValid"><![CDATA[Sie haben eine ungültigen Versionsnummer eingegeben.]]></item>
+		<item name="wcf.acp.style.styleDate.error.notValid"><![CDATA[Sie haben ein ungültiges Datum eingegeben.]]></item>
 	</category>
 	
 	<category name="wcf.acp.tag">
