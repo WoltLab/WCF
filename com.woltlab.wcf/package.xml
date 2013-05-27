@@ -2,8 +2,8 @@
 <package name="com.woltlab.wcf" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd">
 	<packageinformation>
 		<packagename>WoltLab Community Framework</packagename>
-		<packagedescription>Free web-framework, designed and developed for complex community applications.</packagedescription>
-		<packagedescription language="de">Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.</packagedescription>
+		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
+		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
 		<version>2.0.0 Beta 1</version> <!-- codename: maelstrom -->
 		<date>2013-05-18</date>
