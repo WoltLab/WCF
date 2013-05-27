@@ -177,8 +177,15 @@ WCF.Label.Chooser = Class.extend({
 			var $groupID = $group.data('groupID');
 			
 			if (!this._groups[$groupID]) {
+				var $containerID = $group.wcfIdentify();
+				var $dropdownMenu = WCF.Dropdown.getDropdownMenu($containerID);
+				if ($dropdownMenu === null) {
+					WCF.Dropdown.initDropdown($group.find('.dropdownToggle'));
+					$dropdownMenu = WCF.Dropdown.getDropdownMenu($containerID);
+				}
+				
 				this._groups[$groupID] = $group;
-				var $dropdownMenu = WCF.Dropdown.getDropdownMenu($group.wcfIdentify());
+				
 				$dropdownMenu.children('li').data('groupID', $groupID).click($.proxy(this._click, this));
 				
 				if (!$group.data('forceSelection') || this._showWithoutSelection) {
