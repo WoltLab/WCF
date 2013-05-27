@@ -3116,6 +3116,8 @@ WCF.MultipleLanguageInput = Class.extend({
 		WCF.Dropdown.initDropdown(this._button, enableOnInit);
 		
 		if (enableOnInit || this._forceSelection) {
+			this._isEnabled = true;
+			
 			// pre-select current language
 			this._list.children('li').each($.proxy(function(index, listItem) {
 				var $listItem = $(listItem);
