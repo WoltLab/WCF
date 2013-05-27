@@ -2,7 +2,7 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/cronjob.xsd">
 	<import>
 		<cronjob>
-			<classname>wcf\system\cronjob\GetUpdateInfoCronjob</classname>
+			<classname><![CDATA[wcf\system\cronjob\GetUpdateInfoCronjob]]></classname>
 			<description><![CDATA[Updates package information]]></description>
 			<description language="de"><![CDATA[Aktualisiert Paket-Informationen]]></description>
 			<startminute>0</startminute>
@@ -15,7 +15,7 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname>wcf\system\cronjob\RefreshSearchRobotsCronjob</classname>
+			<classname><![CDATA[wcf\system\cronjob\RefreshSearchRobotsCronjob]]></classname>
 			<description><![CDATA[Refreshes list of search robots]]></description>
 			<description language="de"><![CDATA[Aktualisiert die Liste der Suchroboter]]></description>
 			<startminute>0</startminute>
@@ -28,7 +28,7 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname>wcf\system\cronjob\DailyCleanUpCronjob</classname>
+			<classname><![CDATA[wcf\system\cronjob\DailyCleanUpCronjob]]></classname>
 			<description><![CDATA[Executes daily Cleanup]]></description>
 			<description language="de"><![CDATA[Führt tägliche Aufräumarbeiten aus]]></description>
 			<startminute>0</startminute>
@@ -41,7 +41,7 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname>wcf\system\cronjob\HourlyCleanUpCronjob</classname>
+			<classname><![CDATA[wcf\system\cronjob\HourlyCleanUpCronjob]]></classname>
 			<description><![CDATA[Executes hourly Cleanup]]></description>
 			<description language="de"><![CDATA[Führt stündliche Aufräumarbeiten aus]]></description>
 			<startminute>0</startminute>
@@ -54,7 +54,7 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname>wcf\system\cronjob\SessionCleanUpCronjob</classname>
+			<classname><![CDATA[wcf\system\cronjob\SessionCleanUpCronjob]]></classname>
 			<description><![CDATA[Deletes expired sessions]]></description>
 			<description language="de"><![CDATA[Löscht abgelaufene Sessions]]></description>
 			<startminute>*/30</startminute>
@@ -67,7 +67,7 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname>wcf\system\cronjob\AttachmentCleanUpCronjob</classname>
+			<classname><![CDATA[wcf\system\cronjob\AttachmentCleanUpCronjob]]></classname>
 			<description><![CDATA[Deletes orphaned attachments]]></description>
 			<description language="de"><![CDATA[Löscht verwaiste Dateianhänge]]></description>
 			<startminute>0</startminute>
@@ -80,7 +80,7 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname>wcf\system\cronjob\LastActivityCronjob</classname>
+			<classname><![CDATA[wcf\system\cronjob\LastActivityCronjob]]></classname>
 			<description><![CDATA[Updates last activity timestamp]]></description>
 			<description language="de"><![CDATA[Aktualisiert Zeitpunkt der letzten Aktivität]]></description>
 			<startminute>*/5</startminute>
@@ -94,7 +94,7 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname>wcf\system\cronjob\UserQuitCronjob</classname>
+			<classname><![CDATA[wcf\system\cronjob\UserQuitCronjob]]></classname>
 			<description><![CDATA[Deletes canceled user accounts]]></description>
 			<description language="de"><![CDATA[Löscht gekündigte Benutzer-Accounts]]></description>
 			<startminute>0</startminute>
@@ -108,7 +108,7 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname>wcf\system\cronjob\DailyMailNotificationCronjob</classname>
+			<classname><![CDATA[wcf\system\cronjob\DailyMailNotificationCronjob]]></classname>
 			<description><![CDATA[Sends daily mail notifications]]></description>
 			<description language="de"><![CDATA[Versendet tägliche E-Mail-Benachrichtigungen]]></description>
 			<startminute>*/30</startminute>
@@ -122,8 +122,8 @@
 		</cronjob>
 		
 		<cronjob>
-			<classname>wcf\system\cronjob\ModerationQueueCronjob</classname>
-			<description>Moderation Queue Cleanup</description>
+			<classname><![CDATA[wcf\system\cronjob\ModerationQueueCronjob]]></classname>
+			<description><![CDATA[Moderation Queue Cleanup]]></description>
 			<startminute>0</startminute>
 			<starthour>1</starthour>
 			<startdom>*</startdom>
