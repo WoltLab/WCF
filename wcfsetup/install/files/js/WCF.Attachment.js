@@ -205,7 +205,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			$li.css('display', 'block');
 		}
 		
-		WCF.DOMNodeInsertedHandler.forceExecution();
+		WCF.DOMNodeInsertedHandler.execute();
 	},
 	
 	/**

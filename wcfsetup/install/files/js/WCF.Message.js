@@ -31,7 +31,7 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 		this._initCodeBoxes();
 		
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.Message.BBCode.CodeViewer', $.proxy(this._initCodeBoxes, this));
-		WCF.DOMNodeInsertedHandler.forceExecution();
+		WCF.DOMNodeInsertedHandler.execute();
 	},
 	
 	/**
@@ -1116,14 +1116,12 @@ WCF.Message.InlineEditor = Class.extend({
 		if (!$button.hasClass('dropdownToggle')) {
 			var $containerID = $button.data('containerID');
 			
-			WCF.DOMNodeInsertedHandler.enable();
-			
 			$button.addClass('dropdownToggle').parent().addClass('dropdown');
 			
 			var $dropdownMenu = $('<ul class="dropdownMenu" />').insertAfter($button);
 			this._initDropdownMenu($containerID, $dropdownMenu);
 			
-			WCF.DOMNodeInsertedHandler.disable();
+			WCF.DOMNodeInsertedHandler.execute();
 			
 			this._dropdowns[this._container[$containerID].data('objectID')] = $dropdownMenu;
 			

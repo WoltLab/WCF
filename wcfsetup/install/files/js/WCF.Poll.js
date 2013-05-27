@@ -100,7 +100,7 @@ WCF.Poll.Management = Class.extend({
 			$input.focus();
 		}
 		
-		WCF.DOMNodeInsertedHandler.forceExecution();
+		WCF.DOMNodeInsertedHandler.execute();
 	},
 	
 	/**

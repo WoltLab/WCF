@@ -2016,12 +2016,12 @@ WCF.User.Avatar.Crop = Class.extend({
 			break;
 			
 			case 'cropAvatar':
-				WCF.DOMNodeInsertedHandler.enable();
 				$('#avatarUpload > dt > img').replaceWith($('<img src="' + data.returnValues.url + '" alt="" class="userAvatarCrop jsTooltip" title="' + WCF.Language.get('wcf.user.avatar.type.custom.crop') + '" />').css({
 					width: '96px',
 					height: '96px'
 				}).click($.proxy(this._showCropDialog, this)));
-				WCF.DOMNodeInsertedHandler.disable();
+				
+				WCF.DOMNodeInsertedHandler.execute();
 				
 				this._dialog.wcfDialog('close');
 				
@@ -2136,7 +2136,6 @@ WCF.User.Avatar.Upload = WCF.Upload.extend({
 	 * @param	boolean		canCrop
 	 */
 	_updateImage: function(url, canCrop) {
-		WCF.DOMNodeInsertedHandler.enable();
 		$('#avatarUpload > dt > img').remove();
 		var $image = $('<img src="' + url + '" alt="" />').css({
 			'height': 'auto',
@@ -2150,7 +2149,8 @@ WCF.User.Avatar.Upload = WCF.Upload.extend({
 		}
 		
 		$('#avatarUpload > dt').prepend($image);
-		WCF.DOMNodeInsertedHandler.disable();
+		
+		WCF.DOMNodeInsertedHandler.execute();
 	},
 	
 	/**

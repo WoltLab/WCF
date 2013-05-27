@@ -187,7 +187,7 @@ WCF.ACL.List = Class.extend({
 		// show permissions
 		this._containerElements.permissionList.show();
 		
-		WCF.DOMNodeInsertedHandler.forceExecution();
+		WCF.DOMNodeInsertedHandler.execute();
 	},
 	
 	/**
@@ -337,7 +337,7 @@ WCF.ACL.List = Class.extend({
 		// add options
 		this._values[type] = data.returnValues[type].option;
 		
-		WCF.DOMNodeInsertedHandler.forceExecution();
+		WCF.DOMNodeInsertedHandler.execute();
 	},
 	
 	/**

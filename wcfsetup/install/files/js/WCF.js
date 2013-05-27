@@ -1834,9 +1834,6 @@ WCF.Action.Proxy = Class.extend({
 	 * @param	object		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		// enable DOMNodeInserted event
-		WCF.DOMNodeInsertedHandler.enable();
-		
 		// call child method if applicable
 		if ($.isFunction(this.options.success)) {
 			// trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
@@ -1866,8 +1863,7 @@ WCF.Action.Proxy = Class.extend({
 			}
 		}
 		
-		// disable DOMNodeInserted event
-		WCF.DOMNodeInsertedHandler.disable();
+		WCF.DOMNodeInsertedHandler.execute();
 		
 		// fix anchor tags generated through WCF::getAnchor()
 		$('a[href*=#]').each(function(index, link) {
@@ -4378,11 +4374,11 @@ WCF.Collapsible.Sidebar = Class.extend({
 		this._userPanelHeight = $('#topMenu').outerHeight();
 		
 		// add toggle button
-		WCF.DOMNodeInsertedHandler.enable();
 		this._button = $('<a class="collapsibleButton jsTooltip" title="' + WCF.Language.get('wcf.global.button.collapsible') + '" />').prependTo(this._sidebar);
 		this._button.click($.proxy(this._click, this));
 		this._buttonHeight = this._button.outerHeight();
-		WCF.DOMNodeInsertedHandler.disable();
+		
+		WCF.DOMNodeInsertedHandler.execute();
 		
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
@@ -4844,28 +4840,10 @@ WCF.DOMNodeInsertedHandler = {
 	_callbacks: [ ],
 	
 	/**
-	 * true if DOMNodeInserted event should be ignored
-	 * @var	boolean
-	 */
-	_discardEvent: true,
-	
-	/**
-	 * counts requests to enable WCF.DOMNodeInsertedHandler
-	 * @var	integer
-	 */
-	_discardEventCount: 0,
-	
-	/**
 	 * prevent infinite loop if a callback manipulates DOM
 	 * @var	boolean
 	 */
 	_isExecuting: false,
-	
-	/**
-	 * indicates that overlay handler is listening to click events on body-tag
-	 * @var	boolean
-	 */
-	_isListening: false,
 	
 	/**
 	 * Adds a new callback.
@@ -4874,28 +4852,14 @@ WCF.DOMNodeInsertedHandler = {
 	 * @param	object		callback
 	 */
 	addCallback: function(identifier, callback) {
-		this._discardEventCount = 0;
-		this._bindListener();
-		
 		this._callbacks.push(callback);
-	},
-	
-	/**
-	 * Binds click event handler.
-	 */
-	_bindListener: function() {
-		if (this._isListening) return;
-		
-		$(document).bind('DOMNodeInserted', $.proxy(this._executeCallbacks, this));
-		
-		this._isListening = true;
 	},
 	
 	/**
 	 * Executes callbacks on click.
 	 */
 	_executeCallbacks: function() {
-		if (this._discardEvent || this._isExecuting) return;
+		if (this._isExecuting) return;
 		
 		// do not track events while executing callbacks
 		this._isExecuting = true;
@@ -4909,35 +4873,10 @@ WCF.DOMNodeInsertedHandler = {
 	},
 	
 	/**
-	 * Disables DOMNodeInsertedHandler, should be used after you've enabled it.
+	 * Executes all callbacks.
 	 */
-	disable: function() {
-		this._discardEventCount--;
-		
-		if (this._discardEventCount < 1) {
-			this._discardEvent = true;
-			this._discardEventCount = 0;
-		}
-	},
-	
-	/**
-	 * Enables DOMNodeInsertedHandler, should be used if you're inserting HTML (e.g. via AJAX)
-	 * which might contain event-related elements. You have to disable the DOMNodeInsertedHandler
-	 * once you've enabled it, if you fail it will cause an infinite loop!
-	 */
-	enable: function() {
-		this._discardEventCount++;
-		
-		this._discardEvent = false;
-	},
-	
-	/**
-	 * Forces execution of DOMNodeInsertedHandler.
-	 */
-	forceExecution: function() {
-		this.enable();
+	execute: function() {
 		this._executeCallbacks();
-		this.disable();
 	}
 };
 
@@ -7074,11 +7013,9 @@ WCF.Popover = Class.extend({
 		
 		// insert html
 		if (!this._data[this._activeElementID].loading && this._data[this._activeElementID].content) {
-			WCF.DOMNodeInsertedHandler.enable();
-			
 			this._popoverContent.html(this._data[this._activeElementID].content);
 			
-			WCF.DOMNodeInsertedHandler.disable();
+			WCF.DOMNodeInsertedHandler.execute();
 		}
 		else {
 			this._data[this._activeElementID].loading = true;
@@ -7146,8 +7083,6 @@ WCF.Popover = Class.extend({
 		
 		// only update content if element id is active
 		if (this._activeElementID === elementID) {
-			WCF.DOMNodeInsertedHandler.enable();
-			
 			if (animate) {
 				// get current dimensions
 				var $dimensions = this._popoverContent.getDimensions();
@@ -7172,21 +7107,19 @@ WCF.Popover = Class.extend({
 					height: $newDimensions.height + 'px',
 					width: $newDimensions.width + 'px'
 				}, 300, function() {
-					WCF.DOMNodeInsertedHandler.enable();
-					
 					self._popover.children('span').hide();
 					self._popoverContent.html(self._data[elementID].content).css({ opacity: 0 }).animate({ opacity: 1 }, 200);
 					
-					WCF.DOMNodeInsertedHandler.disable();
+					WCF.DOMNodeInsertedHandler.execute();
 				});
 			}
 			else {
 				// insert new content
 				this._popover.children('span').hide();
 				this._popoverContent.html(this._data[elementID].content);
+				
+				WCF.DOMNodeInsertedHandler.execute();
 			}
-			
-			WCF.DOMNodeInsertedHandler.disable();
 		}
 	},
 	
@@ -8233,8 +8166,6 @@ $.widget('ui.wcfDialog', {
 			this.options.closeButtonLabel = WCF.Language.get('wcf.global.button.close');
 		}
 		
-		WCF.DOMNodeInsertedHandler.enable();
-		
 		// create dialog container
 		this._container = $('<div class="dialogContainer" />').hide().css({ zIndex: this.options.zIndex }).appendTo(document.body);
 		this._titlebar = $('<header class="dialogTitlebar" />').hide().appendTo(this._container);
@@ -8268,7 +8199,7 @@ $.widget('ui.wcfDialog', {
 			}
 		}
 		
-		WCF.DOMNodeInsertedHandler.disable();
+		WCF.DOMNodeInsertedHandler.execute();
 	},
 	
 	/**
@@ -8286,11 +8217,9 @@ $.widget('ui.wcfDialog', {
 			}
 		} else if (key == 'closable' || key == 'closeButtonLabel') {
 			if (this.options.closable) {
-				WCF.DOMNodeInsertedHandler.enable();
-				
 				this._closeButton.attr('title', this.options.closeButtonLabel).show().find('span').html(this.options.closeButtonLabel);
 				
-				WCF.DOMNodeInsertedHandler.disable();
+				WCF.DOMNodeInsertedHandler.execute();
 			} else {
 				this._closeButton.hide();
 			}

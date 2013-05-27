@@ -96,8 +96,6 @@ WCF.Comment.Handler = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		WCF.DOMNodeInsertedHandler.enable();
-		
 		this._initComments();
 		this._initResponses();
 		
@@ -106,7 +104,7 @@ WCF.Comment.Handler = Class.extend({
 			this._initAddComment();
 		}
 		
-		WCF.DOMNodeInsertedHandler.disable();
+		WCF.DOMNodeInsertedHandler.execute();
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.Comment.Handler', $.proxy(this._domNodeInserted, this));
 	},
 	
@@ -501,7 +499,7 @@ WCF.Comment.Handler = Class.extend({
 			break;
 		}
 		
-		WCF.DOMNodeInsertedHandler.forceExecution();
+		WCF.DOMNodeInsertedHandler.execute();
 	},
 	
 	/**

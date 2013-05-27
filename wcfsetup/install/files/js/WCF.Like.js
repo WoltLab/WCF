@@ -142,7 +142,7 @@ WCF.Like = Class.extend({
 			new WCF.PeriodicalExecuter(function(pe) {
 				pe.stop();
 				
-				WCF.DOMNodeInsertedHandler.forceExecution();
+				WCF.DOMNodeInsertedHandler.execute();
 			}, 250);
 		}
 	},

@@ -69,9 +69,9 @@ WCF.ACP.Application.SetAsPrimary = Class.extend({
 				$('#setAsPrimary').parent().remove();
 				
 				// insert icon
-				WCF.DOMNodeInsertedHandler.enable();
 				$('<span class="icon icon16 icon-home jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($('.boxHeadline > h1'));
-				WCF.DOMNodeInsertedHandler.disable();
+				
+				WCF.DOMNodeInsertedHandler.execute();
 			}, this)
 		});
 	}
@@ -1155,12 +1155,10 @@ WCF.ACP.Package.Search = Class.extend({
 			this._proxy.sendRequest();
 		}
 		else {
-			WCF.DOMNodeInsertedHandler.enable();
-			
 			// show cached content
 			this._packageSearchResultList.html(this._content[this._pageNo]);
 			
-			WCF.DOMNodeInsertedHandler.disable();
+			WCF.DOMNodeInsertedHandler.execute();
 		}
 	}
 });
