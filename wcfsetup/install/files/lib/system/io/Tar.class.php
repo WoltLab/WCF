@@ -204,6 +204,11 @@ class Tar implements IArchive {
 		}
 		$header = $this->getFileInfo($index);
 		
+		// check file size
+		if (!$header['size']) {
+			throw new SystemException("Could not untar file '".$header['filename']."', file is empty.");
+		}
+		
 		FileUtil::makePath(dirname($destination));
 		if ($header['type'] === 'folder') {
 			FileUtil::makePath($destination);
