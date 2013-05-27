@@ -298,25 +298,11 @@ class PackageInstallationDispatcher {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->queue->packageID));
 			
-			// insert requirements and dependencies
-			$requirements = $this->getArchive()->getAllExistingRequirements();
-			if (!empty($requirements)) {
-				$sql = "INSERT IGNORE INTO	wcf".WCF_N."_package_requirement
-								(packageID, requirement)
-					VALUES			(?, ?)";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				
-				foreach ($requirements as $identifier => $possibleRequirements) {
-					if (count($possibleRequirements) == 1) {
-						$requirement = array_shift($possibleRequirements);
-					}
-					else {
-						$requirement = $possibleRequirements[$this->selectedRequirements[$identifier]];
-					}
-					
-					$statement->execute(array($this->queue->packageID, $requirement['packageID']));
-				}
-			}
+			// delete old requirements and dependencies
+			$sql = "DELETE FROM	wcf".WCF_N."_package_requirement
+				WHERE		packageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->queue->packageID));
 		}
 		else {
 			// create package entry
@@ -327,26 +313,6 @@ class PackageInstallationDispatcher {
 			$queueEditor->update(array(
 				'packageID' => $package->packageID
 			));
-			
-			// insert requirements and dependencies
-			$requirements = $this->getArchive()->getAllExistingRequirements();
-			if (!empty($requirements)) {
-				$sql = "INSERT INTO	wcf".WCF_N."_package_requirement
-							(packageID, requirement)
-					VALUES		(?, ?)";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				
-				foreach ($requirements as $identifier => $possibleRequirements) {
-					if (count($possibleRequirements) == 1) {
-						$requirement = array_shift($possibleRequirements);
-					}
-					else {
-						$requirement = $possibleRequirements[$this->selectedRequirements[$identifier]];
-					}
-					
-					$statement->execute(array($package->packageID, $requirement['packageID']));
-				}
-			}
 			
 			// reload queue
 			$this->queue = new PackageInstallationQueue($this->queue->queueID);
@@ -370,12 +336,32 @@ class PackageInstallationDispatcher {
 		// save excluded packages
 		if (count($this->getArchive()->getExcludedPackages())) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_exclusion
-							(packageID, excludedPackage, excludedPackageVersion)
-					VALUES		(?, ?, ?)";
+						(packageID, excludedPackage, excludedPackageVersion)
+				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
 				$statement->execute(array($this->queue->packageID, $excludedPackage['name'], (!empty($excludedPackage['version']) ? $excludedPackage['version'] : '')));
+			}
+		}
+		
+		// insert requirements and dependencies
+		$requirements = $this->getArchive()->getAllExistingRequirements();
+		if (!empty($requirements)) {
+			$sql = "INSERT INTO	wcf".WCF_N."_package_requirement
+						(packageID, requirement)
+				VALUES		(?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($requirements as $identifier => $possibleRequirements) {
+				if (count($possibleRequirements) == 1) {
+					$requirement = array_shift($possibleRequirements);
+				}
+				else {
+					$requirement = $possibleRequirements[$this->selectedRequirements[$identifier]];
+				}
+				
+				$statement->execute(array($this->queue->packageID, $requirement['packageID']));
 			}
 		}
 		

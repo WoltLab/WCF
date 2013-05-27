@@ -623,6 +623,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.jquery_source.local"><![CDATA[Local Version]]></item>
 		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
 		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
+		<item name="wcf.acp.option.jquery_source.cloudflare"><![CDATA[Cloudflare CDN]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Enable benchmark]]></item>
 		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[It is strongly recommended to disable this option in productive environments.]]></item>
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
@@ -1035,6 +1036,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.styleVersion"><![CDATA[Version]]></item>
 		<item name="wcf.acp.style.templateGroupID"><![CDATA[Template Group]]></item>
 		<item name="wcf.acp.style.users"><![CDATA[Users]]></item>
+		<item name="wcf.acp.style.image.error.invalidExtension"><![CDATA[TODO: Die Datei hat eine ungültige Dateiendung.]]></item>
+		<item name="wcf.acp.style.imagePath.error.notValid"><![CDATA[TODO: Sie haben einen ungültigen Pfad eingegeben.]]></item>
+		<item name="wcf.acp.style.styleVersion.error.notValid"><![CDATA[TODO: Sie haben eine ungültigen Versionsnummer eingegeben.]]></item>
+		<item name="wcf.acp.style.styleDate.error.notValid"><![CDATA[TODO: Sie haben ein ungültiges Datum eingegeben.]]></item>
 	</category>
 	
 	<category name="wcf.acp.tag">

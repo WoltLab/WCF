@@ -4,7 +4,7 @@
 		<type>
 			<name>com.woltlab.wcf.user</name>
 			<definitionname>com.woltlab.wcf.clipboardItem</definitionname>
-			<listclassname>wcf\data\user\UserList</listclassname>
+			<listclassname><![CDATA[wcf\data\user\UserList]]></listclassname>
 		</type>
 		
 		<type>
@@ -15,20 +15,20 @@
 		<type>
 			<name>com.woltlab.wcf.bbcode.smiley</name>
 			<definitionname>com.woltlab.wcf.category</definitionname>
-			<classname>wcf\system\category\SmileyCategoryType</classname>
+			<classname><![CDATA[wcf\system\category\SmileyCategoryType]]></classname>
 		</type>
 		
 		<type>
 			<name>com.woltlab.wcf.user.follow</name>
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
-			<classname>wcf\system\user\notification\object\type\UserFollowUserNotificationObjectType</classname>
+			<classname><![CDATA[wcf\system\user\notification\object\type\UserFollowUserNotificationObjectType]]></classname>
 			<category>com.woltlab.wcf.user</category>
 		</type>
 		
 		<type>
 			<name>com.woltlab.wcf.user.recentActivityEvent.follow</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
-			<classname>wcf\system\user\activity\event\FollowUserActivityEvent</classname>
+			<classname><![CDATA[wcf\system\user\activity\event\FollowUserActivityEvent]]></classname>
 		</type>
 		
 		<type>
@@ -49,81 +49,81 @@
 		<type>
 			<name>com.woltlab.wcf.user.UserPage</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<classname>wcf\system\user\online\location\UserLocation</classname>
-			<controller>wcf\page\UserPage</controller>
+			<classname><![CDATA[wcf\system\user\online\location\UserLocation]]></classname>
+			<controller><![CDATA[wcf\page\UserPage]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.UserPage</languagevariable>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.UsersOnlineListPage</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller>wcf\page\UsersOnlineListPage</controller>
+			<controller><![CDATA[wcf\page\UsersOnlineListPage]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.UsersOnlineListPage</languagevariable>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.MembersListPage</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller>wcf\page\MembersListPage</controller>
+			<controller><![CDATA[wcf\page\MembersListPage]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.MembersListPage</languagevariable>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.TeamPage</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller>wcf\page\TeamPage</controller>
+			<controller><![CDATA[wcf\page\TeamPage]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.TeamPage</languagevariable>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.DashboardPage</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller>wcf\page\DashboardPage</controller>
+			<controller><![CDATA[wcf\page\DashboardPage]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.DashboardPage</languagevariable>
 		</type>
 		
 		<type>
 			<name>com.woltlab.wcf.user.RegisterForm</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller>wcf\form\RegisterForm</controller>
+			<controller><![CDATA[wcf\form\RegisterForm]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.RegisterForm</languagevariable>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.LostPasswordForm</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller>wcf\form\LostPasswordForm</controller>
+			<controller><![CDATA[wcf\form\LostPasswordForm]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.LostPasswordForm</languagevariable>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.NewPasswordForm</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller>wcf\form\NewPasswordForm</controller>
+			<controller><![CDATA[wcf\form\NewPasswordForm]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.LostPasswordForm</languagevariable>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.LoginForm</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller>wcf\form\LoginForm</controller>
+			<controller><![CDATA[wcf\form\LoginForm]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.LoginForm</languagevariable>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.AccountManagementForm</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller>wcf\form\AccountManagementForm</controller>
+			<controller><![CDATA[wcf\form\AccountManagementForm]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.AccountManagementForm</languagevariable>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.AvatarEditForm</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller>wcf\form\AvatarEditForm</controller>
+			<controller><![CDATA[wcf\form\AvatarEditForm]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.AvatarEditForm</languagevariable>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.SettingsForm</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller>wcf\form\SettingsForm</controller>
+			<controller><![CDATA[wcf\form\SettingsForm]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.SettingsForm</languagevariable>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.SignatureEditForm</name>
 			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
-			<controller>wcf\form\SignatureEditForm</controller>
+			<controller><![CDATA[wcf\form\SignatureEditForm]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.SignatureEditForm</languagevariable>
 		</type>
 		
@@ -131,12 +131,12 @@
 		<type>
 			<name>com.woltlab.wcf.moderation.activation</name>
 			<definitionname>com.woltlab.wcf.moderation.type</definitionname>
-			<classname>wcf\system\moderation\queue\ModerationQueueActivationManager</classname>
+			<classname><![CDATA[wcf\system\moderation\queue\ModerationQueueActivationManager]]></classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.moderation.report</name>
 			<definitionname>com.woltlab.wcf.moderation.type</definitionname>
-			<classname>wcf\system\moderation\queue\ModerationQueueReportManager</classname>
+			<classname><![CDATA[wcf\system\moderation\queue\ModerationQueueReportManager]]></classname>
 		</type>
 		<!-- /moderation type -->
 		
@@ -145,50 +145,50 @@
 			<name>com.woltlab.wcf.like.activityPointEvent.receivedLikes</name>
 			<definitionname>com.woltlab.wcf.user.activityPointEvent</definitionname>
 			<points>1</points>
-			<classname>wcf\system\user\activity\point\ReceivedLikesUserActivityPointObjectProcessor</classname>
+			<classname><![CDATA[wcf\system\user\activity\point\ReceivedLikesUserActivityPointObjectProcessor]]></classname>
 		</type>
 		<!-- /activity points -->
 		
 		<type>
 			<name>com.woltlab.wcf.user.profileComment</name>
 			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
-			<classname>wcf\system\comment\manager\UserProfileCommentManager</classname>
+			<classname><![CDATA[wcf\system\comment\manager\UserProfileCommentManager]]></classname>
 		</type>
 		
 		<type>
 			<name>com.woltlab.wcf.comment</name>
 			<definitionname>com.woltlab.wcf.like.likeableObject</definitionname>
-			<classname>wcf\data\comment\LikeableCommentProvider</classname>
+			<classname><![CDATA[wcf\data\comment\LikeableCommentProvider]]></classname>
 		</type>
 		
 		<type>
 			<name>com.woltlab.wcf.comment.response</name>
 			<definitionname>com.woltlab.wcf.like.likeableObject</definitionname>
-			<classname>wcf\data\comment\response\LikeableCommentResponseProvider</classname>
+			<classname><![CDATA[wcf\data\comment\response\LikeableCommentResponseProvider]]></classname>
 		</type>
 		
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.recentActivityEvent</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
-			<classname>wcf\system\user\activity\event\ProfileCommentUserActivityEvent</classname>
+			<classname><![CDATA[wcf\system\user\activity\event\ProfileCommentUserActivityEvent]]></classname>
 		</type>
 		
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.response.recentActivityEvent</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
-			<classname>wcf\system\user\activity\event\ProfileCommentResponseUserActivityEvent</classname>
+			<classname><![CDATA[wcf\system\user\activity\event\ProfileCommentResponseUserActivityEvent]]></classname>
 		</type>
 		
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.notification</name>
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
-			<classname>wcf\system\user\notification\object\type\UserProfileCommentUserNotificationObjectType</classname>
+			<classname><![CDATA[wcf\system\user\notification\object\type\UserProfileCommentUserNotificationObjectType]]></classname>
 			<category>com.woltlab.wcf.user</category>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.response.notification</name>
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
-			<classname>wcf\system\user\notification\object\type\UserProfileCommentResponseUserNotificationObjectType</classname>
+			<classname><![CDATA[wcf\system\user\notification\object\type\UserProfileCommentResponseUserNotificationObjectType]]></classname>
 			<category>com.woltlab.wcf.user</category>
 		</type>
 		
@@ -196,13 +196,13 @@
 		<type>
 			<name>com.woltlab.wcf.comment.comment</name>
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
-			<classname>wcf\system\moderation\queue\report\CommentCommentModerationQueueReportHandler</classname>
+			<classname><![CDATA[wcf\system\moderation\queue\report\CommentCommentModerationQueueReportHandler]]></classname>
 		</type>
 		
 		<type>
 			<name>com.woltlab.wcf.comment.response</name>
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
-			<classname>wcf\system\moderation\queue\report\CommentResponseModerationQueueReportHandler</classname>
+			<classname><![CDATA[wcf\system\moderation\queue\report\CommentResponseModerationQueueReportHandler]]></classname>
 		</type>
 		<!-- /moderation -->
 		

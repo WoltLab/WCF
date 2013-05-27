@@ -102,7 +102,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.style.error.styleName.{$errorType}{/lang}
+									{lang}wcf.acp.style.styleName.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -117,7 +117,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.style.error.authorName.{$errorType}{/lang}
+									{lang}wcf.acp.style.authorName.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -132,7 +132,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.style.error.copyright.{$errorType}{/lang}
+									{lang}wcf.acp.style.copyright.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -147,7 +147,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.style.error.styleVersion.{$errorType}{/lang}
+									{lang}wcf.acp.style.styleVersion.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -162,7 +162,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.style.error.styleDate.{$errorType}{/lang}
+									{lang}wcf.acp.style.styleDate.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -177,7 +177,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.style.error.license.{$errorType}{/lang}
+									{lang}wcf.acp.style.license.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -192,7 +192,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.style.error.authorURL.{$errorType}{/lang}
+									{lang}wcf.acp.style.authorURL.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -207,7 +207,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.style.error.styleDescription.{$errorType}{/lang}
+									{lang}wcf.acp.style.styleDescription.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -232,7 +232,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.style.error.image.{$errorType}{/lang}
+									{lang}wcf.acp.style.image.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
@@ -254,7 +254,7 @@
 									{if $errorType == 'empty'}
 										{lang}wcf.global.form.error.empty{/lang}
 									{else}
-										{lang}wcf.acp.style.error.templateGroupID.{$errorType}{/lang}
+										{lang}wcf.acp.style.templateGroupID.error.{$errorType}{/lang}
 									{/if}
 								</small>
 							{/if}
@@ -270,7 +270,7 @@
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
 								{else}
-									{lang}wcf.acp.style.error.imagePath.{$errorType}{/lang}
+									{lang}wcf.acp.style.imagePath.error.{$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
