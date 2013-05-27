@@ -107,7 +107,9 @@
 	<nav>
 		<ul>
 			<li class="jsOnly"><button id="removeContent">{lang}wcf.moderation.report.removeContent{/lang}</button></li>
-			<li class="jsOnly"><button id="removeReport">{lang}wcf.moderation.report.removeReport{/lang}</button></li>
+			{if $queue->status != 2}
+				<li class="jsOnly"><button id="removeReport">{lang}wcf.moderation.report.removeReport{/lang}</button></li>
+			{/if}
 			<li><a href="{link controller='ModerationList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.moderation.moderation{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsBottom'}
