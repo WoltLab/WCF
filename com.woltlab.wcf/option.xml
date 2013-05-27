@@ -504,7 +504,8 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>google</defaultvalue>
 				<selectoptions>local:wcf.acp.option.jquery_source.local
 google:wcf.acp.option.jquery_source.google
-microsoft:wcf.acp.option.jquery_source.microsoft</selectoptions>
+microsoft:wcf.acp.option.jquery_source.microsoft
+cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
 			</option>
 			<!-- /general.system.jquery -->
 			
