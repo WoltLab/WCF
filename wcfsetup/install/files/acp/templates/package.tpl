@@ -5,7 +5,13 @@
 	$(function() {
 		WCF.TabMenu.init()
 		
-		new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
+		{if PACKAGE_ID != $package->packageID && $package->canUninstall()}
+			WCF.Language.addObject({
+				'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}'
+			});
+			
+			new WCF.ACP.Package.Uninstallation($('.jsUninstallButton'));
+		{/if}
 	});
 	//]]>
 </script>
@@ -212,7 +218,7 @@
 	<nav>
 		<ul>
 			{if PACKAGE_ID != $package->packageID && $package->canUninstall()}
-				<li><a href="{link controller='Package'}action=startUninstall&packageID={@$package->packageID}{/link}" onclick="return confirm('{lang}wcf.acp.package.button.uninstall.sure{/lang}')" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></a></li>
+				<li><a class="button jsUninstallButton" data-object-id="{@$package->packageID}" data-confirm-message="{lang}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}"><span class="icon icon16 icon-remove pointer jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span> <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></a></li>
 			{/if}
 			
 			{event name='contentNavigationButtonsBottom'}

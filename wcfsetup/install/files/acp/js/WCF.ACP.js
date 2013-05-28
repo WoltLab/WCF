@@ -715,7 +715,7 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	 * @param	object		event
 	 */
 	_prepareQueue: function(event) {
-		var $element = $(event.target);
+		var $element = $(event.currentTarget);
 		
 		if ($element.data('isRequired')) {
 			new WCF.Action.Proxy({
