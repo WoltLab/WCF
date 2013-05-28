@@ -571,43 +571,60 @@
 #main {
 	z-index: 110;
 	
+	box-sizing:border-box;
+	-moz-box-sizing: border-box; /* Firefox */
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+	
 	> div {
-		background-color: @wcfSidebarBackgroundColor;
+		display: table-row;
 		
+		> .sidebar,
+		> .content {
+			display: table-cell;
+			vertical-align: top;
+		}
+				
 		> .sidebar {
-			position: relative;
+			background-color: @wcfSidebarBackgroundColor;
 			width: 300px;
 			z-index: 120;
 			
 			.transition(width, .2s, ease);
 			
-			> .collapsibleButton {
-				background-color: @wcfSidebarBackgroundColor;
-				border-radius: 6px 0 0 6px;
-				display: block;
-				height: 24px;
-				left: -20px;
-				position: absolute;
-				text-decoration: none;
-				top: 0;
-				width: 24px;
+			> span {
+				position: relative;
 				
-				&:before {
-					content: "\f054";
-					font-family: FontAwesome;
-					font-size: 14px;
+				> .collapsibleButton {
+					background-color: @wcfSidebarBackgroundColor;
+					border-radius: 6px 0 0 6px;
+					display: block;
+					height: 24px;
+					left: -20px;
 					position: absolute;
-					left: 6px;
-					top: 4px;
+					text-decoration: none;
+					top: 0;
+					width: 24px;
 					
-					.textShadow(@wcfSidebarBackgroundColor);
+					&:before {
+						content: "\f054";
+						font-family: FontAwesome;
+						font-size: 14px;
+						position: absolute;
+						left: 6px;
+						top: 4px;
+						
+						.textShadow(@wcfSidebarBackgroundColor);
+					}
 				}
-				
-				.transition(left, .2s, ease);
 			}
 			
 			> div {
 				overflow: hidden;
+				width: 300px;
+				
+				.transition(width, .2s, ease);
 			}
 		}
 		
@@ -616,8 +633,6 @@
 			min-height: 100px;
 			padding: @wcfGapSmall @wcfGapLarge * 2 - @wcfGapTiny @wcfGapLarge;
 			z-index: 130;
-			
-			.transition(margin, .2s, ease);
 		}
 	}
 	
@@ -627,54 +642,49 @@
 		}
 	}
 	
-	&.sidebarOrientationLeft {
-		.content {
-			margin-left: 300px;
+	&.sidebarOrientationRight {
+		direction: rtl;
+		
+		> div {
+			> .sidebar,
+			> .content {
+				direction: ltr;
+			}
 		}
 		
-		.sidebar {
-			float: left;
-		}
-	}
-	
-	&.sidebarOrientationRight {
 		&.sidebarCollapsed > div {
-			> .content {
-				margin-right: 20px;
-			}
-			
 			> .sidebar {
-				width: 0;
+				width: 20px;
 				
-				> .collapsibleButton {
-					left: -40px;
-					
+				> span > .collapsibleButton {
 					&:before {
 						content: "\f053";
 					}
 				}
+				
+				> div {
+					width: 0;
+				}
 			}
 		}
-
-		.content {
-			margin-right: 300px;
-		}
-		
-		.sidebar {
-			float: right;
-		}
-	}
-	
-	.content {
-		.clearfix;
 	}
 }
 
 @media only screen and (max-width: 800px) {
 	/* hide sidebar */
 	#main {
+		display: block;
 		position: relative;
 		margin-top: 7px;
+		
+		> div {
+			display: block;
+		
+			> .sidebar,
+			> .content {
+				display: block;
+			}
+		}
 		
 		&.sidebarOrientationRight {
 			.sidebar {
@@ -684,8 +694,8 @@
 		
 		&.sidebarOrientationLeft {
 			.sidebar {
-				float: none;
-				padding-top: 0;
+				background-color: transparent;
+				padding: 0;
 				position: absolute;
 				right: 0px;
 				top: 14px;
@@ -711,6 +721,7 @@
 						background-color: @wcfSidebarBackgroundColor;
 						margin-top: 28px;
 						padding-top: 14px;
+						width: 100%;
 					}
 				}
 				
@@ -1912,7 +1923,7 @@ ul.inlineDataList {
 }
 
 .sidebar {
-	padding-top: @wcfGapLarge;
+	padding: @wcfGapLarge 0 @wcfGapSmall;
 	
 	fieldset {
 		padding: @wcfGapSmall @wcfGapMedium @wcfGapMedium;

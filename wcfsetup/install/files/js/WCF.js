@@ -4420,6 +4420,7 @@ WCF.Collapsible.Sidebar = Class.extend({
 		
 		// add toggle button
 		this._button = $('<a class="collapsibleButton jsTooltip" title="' + WCF.Language.get('wcf.global.button.collapsible') + '" />').prependTo(this._sidebar);
+		this._button.wrap('<span />');
 		this._button.click($.proxy(this._click, this));
 		this._buttonHeight = this._button.outerHeight();
 		
