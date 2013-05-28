@@ -105,6 +105,16 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		else {
 			file_put_contents(WCF_DIR.'__pageMenu.log', "\t!!! INCREASING SHOW ORDER !!!\n", FILE_APPEND);
 			
+			$sql = "SELECT	showOrder
+				FROM	wcf".WCF_N."_page_menu_item
+				WHERE	menuItem = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array('wcf.user.dashboard'));
+			$row = $statement->fetchArray();
+			if ($row) {
+				file_put_contents(WCF_DIR.'__pageMenu.log', "  show order of dashboard is currently {$row['showOrder']}\n\n", FILE_APPEND);
+			}
+			
 			// increase all showOrder values which are >= $showOrder
 			$sql = "UPDATE	wcf".WCF_N."_".$this->tableName."
 				SET	showOrder = showOrder + 1
