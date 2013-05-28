@@ -99,7 +99,8 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			$maxShowOrder = $statement->fetchArray();
-			return (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
+			//return (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
+			$showOrder = (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
 		}
 		else {
 			file_put_contents(WCF_DIR.'__pageMenu.log', "\t!!! INCREASING SHOW ORDER !!!\n", FILE_APPEND);
@@ -121,7 +122,8 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 			$statement->execute($parameters);
 			
 			// return the wanted showOrder level
-			return $data['showOrder'];
+			//return $data['showOrder'];
+			$showOrder = $data['showOrder'];
 		}
 		
 		$sql = "SELECT	showOrder
@@ -133,5 +135,7 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		if ($row) {
 			file_put_contents(WCF_DIR.'__pageMenu.log', "  show order of dashboard is now {$row['showOrder']}\n\n", FILE_APPEND);
 		}
+		
+		return $showOrder;
 	}
 }
