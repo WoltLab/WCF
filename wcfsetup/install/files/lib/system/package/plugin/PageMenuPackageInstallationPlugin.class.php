@@ -85,6 +85,8 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 * @return	integer
 	 */
 	protected function getMenuItemPosition(array $data) {
+		file_put_contents(WCF_DIR.'__pageMenu.log', "Calculating show order for '{$data['menuItem']}'\n", FILE_APPEND);
+		
 		if ($data['showOrder'] === null) {
 			// get greatest showOrder value
 			$conditions = new PreparedStatementConditionBuilder();
@@ -100,6 +102,8 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 			return (!$maxShowOrder) ? 1 : ($maxShowOrder['showOrder'] + 1);
 		}
 		else {
+			file_put_contents(WCF_DIR.'__pageMenu.log', "\t!!! INCREASING SHOW ORDER !!!\n", FILE_APPEND);
+			
 			// increase all showOrder values which are >= $showOrder
 			$sql = "UPDATE	wcf".WCF_N."_".$this->tableName."
 				SET	showOrder = showOrder + 1
@@ -118,6 +122,16 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 			
 			// return the wanted showOrder level
 			return $data['showOrder'];
+		}
+		
+		$sql = "SELECT	showOrder
+			FROM	wcf".WCF_N."_page_menu_item
+			WHERE	menuItem = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array('wcf.user.dashboard'));
+		$row = $statement->fetchArray();
+		if ($row) {
+			file_put_contents(WCF_DIR.'__pageMenu.log', "  show order of dashboard is now {$row['showOrder']}\n\n", FILE_APPEND);
 		}
 	}
 }
