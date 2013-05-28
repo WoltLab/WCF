@@ -3,6 +3,10 @@
 			{if $skipBreadcrumbs|empty}{include file='breadcrumbs' __microdata=false}{/if}
 			
 		</section>
+		
+		{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
+			{@$__sidebar}
+		{/if} 
 	</div>
 </div>
 
