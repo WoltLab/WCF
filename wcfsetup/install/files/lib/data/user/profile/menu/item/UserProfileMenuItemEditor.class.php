@@ -106,7 +106,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
 			else $showOrder = 1;
 		}
 		else {
-			$sql = "UPDATE	wcf".WCF_N."_page_menu_item
+			$sql = "UPDATE	wcf".WCF_N."_user_profile_menu_item
 				SET	showOrder = showOrder + 1
 				WHERE	showOrder >= ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
