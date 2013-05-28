@@ -1367,7 +1367,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<!-- variables for dynamic javascript datetime -->
 		<item name="wcf.date.relative.now"><![CDATA[Vor einem Moment]]></item>
 		<item name="wcf.date.relative.minutes"><![CDATA[{literal}Vor {if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}{/literal}]]></item>
-		<item name="wcf.date.relative.hours"><![CDATA[{literal}Vor {if $hours > 1}{#$minutes} Stunden{else}einer Stunde{/if}{/literal}]]></item>
+		<item name="wcf.date.relative.hours"><![CDATA[{literal}Vor {if $hours > 1}{#$hours} Stunden{else}einer Stunde{/if}{/literal}]]></item>
 		<item name="wcf.date.relative.pastDays"><![CDATA[{literal}{if $days > 1}{$day}{else}Gestern{/if}, {$time}{/literal}]]></item>
 		
 		<!-- variables for localized date formats -->
