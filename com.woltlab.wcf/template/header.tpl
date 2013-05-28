@@ -3,7 +3,7 @@
 <header id="pageHeader" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}">
 	<div>
 		<nav id="topMenu" class="userPanel">
-			<div class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if} clearfix">
+			<div class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}">
 				{hascontent}
 					<ul class="userPanelItems">
 						{content}
@@ -30,7 +30,7 @@
 		
 		{include file='mainMenu'}
 		
-		<nav class="navigation navigationHeader clearfix">
+		<nav class="navigation navigationHeader">
 			{include file='mainMenuSubMenu'}
 			
 			<ul class="navigationIcons">
@@ -43,7 +43,7 @@
 	</div>
 </header>
 
-<div id="main" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst} clearfix{if $sidebarOrientation == 'right' && $sidebarCollapsed} sidebarCollapsed{/if}{/if}">
+<div id="main" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst}{if $sidebarOrientation == 'right' && $sidebarCollapsed} sidebarCollapsed{/if}{/if}">
 	<div>
 		{if $sidebar|isset}
 			<aside class="sidebar"{if $sidebarOrientation|isset && $sidebarOrientation == 'right'} data-is-open="{if $sidebarCollapsed}false{else}true{/if}" data-sidebar-name="{$sidebarName}"{/if}>
@@ -67,7 +67,7 @@
 			{/if}
 		{/if}
 				
-		<section id="content" class="content clearfix">
+		<section id="content" class="content">
 			
 			{event name='contents'}
 			
