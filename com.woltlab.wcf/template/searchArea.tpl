@@ -25,7 +25,7 @@
 	</form>
 </aside>
 
-<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.Search.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.Search.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
