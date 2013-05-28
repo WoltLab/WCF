@@ -1,5 +1,5 @@
 {include file='header'}
-<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Label{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Label{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {

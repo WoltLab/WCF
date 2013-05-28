@@ -514,7 +514,10 @@ class WCF {
 	 */
 	protected function assignDefaultTemplateVariables() {
 		self::getTPL()->registerPrefilter(array('event', 'hascontent', 'lang'));
-		self::getTPL()->assign(array('__wcf' => $this));
+		self::getTPL()->assign(array(
+			'__wcf' => $this,
+			'__wcfVersion' => StringUtil::substring(sha1(WCF_VERSION), 0, 8)
+		));
 	}
 	
 	/**
