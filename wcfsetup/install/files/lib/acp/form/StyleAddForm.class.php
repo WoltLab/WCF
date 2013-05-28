@@ -88,12 +88,6 @@ class StyleAddForm extends AbstractForm {
 	public $copyright = '';
 	
 	/**
-	 * font family
-	 * @var	string
-	 */
-	public $fontFamily = '';
-	
-	/**
 	 * list of global variables
 	 * @var	array
 	 */
@@ -442,7 +436,8 @@ class StyleAddForm extends AbstractForm {
 			'individualLess',
 			'overrideLess',
 			'pageLogo',
-			'useFluidLayout'
+			'useFluidLayout',
+			'wcfBaseFontFamily'
 		);
 		
 		EventHandler::getInstance()->fireAction($this, 'setVariables');
@@ -499,7 +494,7 @@ class StyleAddForm extends AbstractForm {
 		$this->saved();
 		
 		// reset variables
-		$this->authorName = $this->authorURL = $this->copyright = $this->fontFamily = $this->image = '';
+		$this->authorName = $this->authorURL = $this->copyright = $this->image = '';
 		$this->license = $this->styleDate = $this->styleDescription = $this->styleName = $this->styleVersion = '';
 		
 		$this->imagePath = 'images/';
@@ -529,7 +524,6 @@ class StyleAddForm extends AbstractForm {
 			'availableTemplateGroups' => $this->availableTemplateGroups,
 			'availableUnits' => $this->availableUnits,
 			'copyright' => $this->copyright,
-			'fontFamily' => $this->fontFamily,
 			'imagePath' => $this->imagePath,
 			'license' => $this->license,
 			'styleDate' => $this->styleDate,
