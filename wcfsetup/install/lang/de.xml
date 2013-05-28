@@ -1612,7 +1612,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.like.button.like"><![CDATA[Gefällt mir]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Gefällt mir nicht]]></item>
 		<item name="wcf.like.likesReceived"><![CDATA[Erhaltene Likes]]></item>
-		<item name="wcf.like.summary"><![CDATA[{literal}{if $others == 0}{@$users.slice(0, -1).join(", ")}{if $users.length > 1} und {/if}{@$users.slice(-1)[0]}{else}{@$users.join(", ")} und {if $others == 1}einem{else}{#$others}{/if} weitere{if $others > 1}n{else}m{/if}{/if} gefällt das.{/literal}]]></item>
+		<item name="wcf.like.summary"><![CDATA[{literal}{if $others == 0}{@$users.slice(0, -1).join(", ")}{if $users.length > 1} und {/if}{@$users.slice(-1)[0]}{else}{@$users.join(", ")} und {if $others == 1}einem{else}{#$others}{/if} weiteren{/if} gefällt das.{/literal}]]></item>
 		<item name="wcf.like.details"><![CDATA[Details]]></item>
 		<item name="wcf.like.details.like"><![CDATA[Likes]]></item>
 		<item name="wcf.like.details.dislike"><![CDATA[Dislikes]]></item>
