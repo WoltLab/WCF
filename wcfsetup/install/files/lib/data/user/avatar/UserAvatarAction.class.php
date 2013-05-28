@@ -258,10 +258,18 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		$imageData = getimagesize($filename);
 		if ($imageData[0] > MAX_AVATAR_WIDTH || $imageData[1] > MAX_AVATAR_HEIGHT) {
 			try {
+				$obtainDimensions = true;
+				if (MAX_AVATAR_WIDTH / $imageData[0] < MAX_AVATAR_HEIGHT / $imageData[1]) {
+					if (round($imageData[1] * (MAX_AVATAR_WIDTH / $imageData[0])) < 48) $obtainDimensions = false;
+				}
+				else {
+					if (round($imageData[0] * (MAX_AVATAR_HEIGHT / $imageData[1])) < 48) $obtainDimensions = false;
+				}
+				
 				$adapter = ImageHandler::getInstance()->getAdapter();
 				$adapter->loadFile($filename);
 				$filename = FileUtil::getTemporaryFilename();
-				$thumbnail = $adapter->createThumbnail(MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT, false);
+				$thumbnail = $adapter->createThumbnail(MAX_AVATAR_WIDTH, MAX_AVATAR_HEIGHT, $obtainDimensions);
 				$adapter->writeImage($thumbnail, $filename);
 			}
 			catch (SystemException $e) {
