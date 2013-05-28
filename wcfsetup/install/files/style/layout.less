@@ -574,8 +574,11 @@
 	box-sizing:border-box;
 	-moz-box-sizing: border-box; /* Firefox */
 	display: table;
-	width: 100%;
 	table-layout: fixed;
+	
+	&.layoutFluid {
+		width: 100%;
+	}
 	
 	> div {
 		display: table-row;
