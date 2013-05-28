@@ -16,6 +16,12 @@ use wcf\system\WCF;
  */
 abstract class AbstractPackageInstallationPlugin implements IPackageInstallationPlugin {
 	/**
+	 * table application prefix
+	 * @var	string
+	 */
+	public $application = 'wcf';
+	
+	/**
 	 * database table name
 	 * @var	string
 	 */
@@ -73,7 +79,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 		EventHandler::getInstance()->fireAction($this, 'hasUninstall');
 		
 		$sql = "SELECT	COUNT(*) AS count
-			FROM	wcf".WCF_N."_".$this->tableName."
+			FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
@@ -88,7 +94,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 		// call 'uninstall' event
 		EventHandler::getInstance()->fireAction($this, 'uninstall');
 		
-		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
+		$sql = "DELETE FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE		packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
