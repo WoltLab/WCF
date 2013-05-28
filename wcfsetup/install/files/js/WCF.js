@@ -5437,8 +5437,6 @@ WCF.Search.Base = Class.extend({
 			this._createListItem($item);
 		}
 		
-		WCF.Dropdown.toggleDropdown(this._searchInput.parent().wcfIdentify());
-		
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
 		
 		// pre-select first item

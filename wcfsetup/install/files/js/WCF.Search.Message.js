@@ -50,7 +50,7 @@ WCF.Search.Message.KeywordList = WCF.Search.Base.extend({
 			}
 		}, this));
 		
-		var $dropdownMenu = this._searchInput.next('.dropdownMenu');
+		var $dropdownMenu = WCF.Dropdown.getDropdownMenu(this._searchInput.parents('.dropdown').wcfIdentify());
 		var $lastDivider = $dropdownMenu.find('li.dropdownDivider').last();
 		this._divider = $('<li class="dropdownDivider" />').hide().insertBefore($lastDivider);
 		this._list = $('<li class="dropdownList" />').hide().insertBefore($lastDivider);
