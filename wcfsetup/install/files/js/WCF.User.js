@@ -1255,8 +1255,10 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 	 */
 	_addDefaultItems: function(dropdownMenu) {
 		this._addDivider(dropdownMenu);
-		$('<li><a href="' + this._showAllLink + '">' + WCF.Language.get('wcf.user.notification.showAll') + '</a></li>').appendTo(dropdownMenu);
-		this._addDivider(dropdownMenu);
+		if (this._container.data('count')) {
+			$('<li><a href="' + this._showAllLink + '">' + WCF.Language.get('wcf.user.notification.showAll') + '</a></li>').appendTo(dropdownMenu);
+			this._addDivider(dropdownMenu);
+		}
 		$('<li id="userNotificationsMarkAllAsConfirmed"><a>' + WCF.Language.get('wcf.user.notification.markAllAsConfirmed') + '</a></li>').click($.proxy(this._markAllAsConfirmed, this)).appendTo(dropdownMenu);
 	},
 	
