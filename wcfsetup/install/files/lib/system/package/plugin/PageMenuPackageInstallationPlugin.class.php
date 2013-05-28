@@ -121,6 +121,8 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 			
 			$statement->execute($parameters);
 			
+			file_put_contents(WCF_DIR.'__pageMenu.log', "\n\nSQL\n\n{$sql}\n\nPARAMETERS\n\n".print_r($parameters, true)."\n\n", FILE_APPEND);
+			
 			// return the wanted showOrder level
 			//return $data['showOrder'];
 			$showOrder = $data['showOrder'];
