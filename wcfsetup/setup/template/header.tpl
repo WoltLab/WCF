@@ -34,7 +34,7 @@
 				</a>
 			</div>
 			
-			<nav class="navigation navigationHeader clearfix">
+			<nav class="navigation navigationHeader">
 				<ul class="navigationIcons">
 					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-down"></span> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 				</ul>
@@ -44,7 +44,7 @@
 	
 	<div id="main" class="layoutFluid">
 		<div>
-			<section id="content" class="content clearfix">
+			<section id="content" class="content">
 				<header class="boxHeadline">
 					<h1>{lang}wcf.global.title{/lang}</h1>
 					<p>{lang}wcf.global.title.subtitle{/lang}</p>
