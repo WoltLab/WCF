@@ -3844,7 +3844,13 @@ WCF.Template = Class.extend({
 		
 		template = "$output += '" + template + "';";
 		
-		this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
+		try {
+			this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
+		}
+		catch (e) {
+			console.debug("var $output = ''; " + template + ' return $output;');
+			throw e;
+		}
 	},
 	
 	/**
