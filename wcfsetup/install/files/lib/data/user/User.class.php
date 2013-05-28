@@ -3,7 +3,6 @@ namespace wcf\data\user;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObject;
-use wcf\system\api\rest\response\IRESTfulResponse;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
@@ -21,7 +20,7 @@ use wcf\util\PasswordUtil;
  * @subpackage	data.user
  * @category	Community Framework
  */
-final class User extends DatabaseObject implements IRESTfulResponse, IRouteController {
+final class User extends DatabaseObject implements IRouteController {
 	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -401,23 +400,4 @@ final class User extends DatabaseObject implements IRESTfulResponse, IRouteContr
 	public function canEdit() {
 		return (WCF::getSession()->getPermission('admin.user.canEditUser') && UserGroup::isAccessibleGroup($this->getGroupIDs()));
 	}
-	
-	/**
-	 * @see	wcf\system\api\rest\response\IRESTfulResponse::getResponseFields()
-	 */
-	public function getResponseFields() {	
-		$fields = array('userID', 'username', 'languageID', 'registrationDate');
-	
-		if ($this->canViewEmailAddress == 0) {
-			$fields[] = 'email';
-		}
-	
-		if ($this->canViewProfile == 0) {
-			return $fields;
-		}
-		else {
-			// return only userID so we know there is an user but hidden
-			return array('userID');
-		}
-	}	
 }

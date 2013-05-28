@@ -392,7 +392,7 @@ WCF.Like = Class.extend({
 			// update tooltip
 			var $likes = this._containerData[containerID].likes;
 			var $dislikes = this._containerData[containerID].dislikes;
-			$badge.data('tooltip', eval(WCF.Language.get('wcf.like.tooltip')));
+			$badge.data('tooltip', WCF.Language.get('wcf.like.tooltip', { likes: $likes, dislikes: $dislikes }));
 		}
 	},
 	
@@ -408,7 +408,7 @@ WCF.Like = Class.extend({
 			for (var $userID in $users) $userArray.push($users[$userID].username);
 			var $others = this._containerData[containerID].likes - $userArray.length;
 			
-			this._containerData[containerID].summary.children('span').html(eval(WCF.Language.get('wcf.like.summary')));
+			this._containerData[containerID].summary.children('span').html(WCF.Language.get('wcf.like.summary', { users: $userArray, others: $others }));
 		}
 	},
 	

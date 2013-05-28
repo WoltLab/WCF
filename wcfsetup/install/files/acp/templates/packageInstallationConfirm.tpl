@@ -5,7 +5,7 @@
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.acp.package.installation.title': '{lang}wcf.acp.package.installation.title{/lang}',
+			'wcf.acp.package.install.title': '{lang}wcf.acp.package.install.title{/lang}',
 			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}',
 			'wcf.acp.package.update.title': '{lang}wcf.acp.package.update.title{/lang}'
 		});
