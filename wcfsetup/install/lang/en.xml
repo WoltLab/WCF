@@ -1364,9 +1364,9 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		
 		<!-- variables for dynamic javascript datetime -->
 		<item name="wcf.date.relative.now"><![CDATA[A moment ago]]></item>
-		<item name="wcf.date.relative.minutes"><![CDATA[(($minutes > 1) ? $minutes + ' minutes' : 'A minute') + ' ago']]></item>
-		<item name="wcf.date.relative.hours"><![CDATA[(($hours > 1) ? $hours + ' hours' : 'An hour' ) + ' ago']]></item>
-		<item name="wcf.date.relative.pastDays"><![CDATA[(($days > 1) ? '%day%' : 'Yesterday' ) + ', %time%']]></item>
+		<item name="wcf.date.relative.minutes"><![CDATA[{literal}{if $minutes > 1}{#$minutes} minutes{else}A minute{/if} ago{/literal}]]></item>
+		<item name="wcf.date.relative.hours"><![CDATA[{literal}{if $hours > 1}{#$hours} hours{else}An hour{/if} ago{/literal}]]></item>
+		<item name="wcf.date.relative.pastDays"><![CDATA[{literal}{if $days > 1}{$day}{else}Yesterday{/if}, {$time}{/literal}]]></item>
 		
 		<!-- variables for localized date formats -->
 		<item name="wcf.date.hour"><![CDATA[Hour]]></item>
@@ -1606,11 +1606,12 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 	<category name="wcf.like">
 		<item name="wcf.like.cumulativeLikes"><![CDATA[Likes]]></item>
 		<item name="wcf.like.tooltip"><![CDATA[{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}]]></item>
-		<item name="wcf.like.jsTooltip"><![CDATA[($likes > 0 ? ($likes + " Like" + ($likes != 1 ? "s" : "") + ($dislikes > 0 ? ", " : "")) : "") + ($dislikes > 0 ? ($dislikes + " Dislike" + ($dislikes != 1 ? "s" : "")) : "")]]></item>
+		<item name="wcf.like.jsTooltip"><![CDATA[{literal}{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}{/literal}]]></item>
 		<item name="wcf.like.button.like"><![CDATA[Like]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Dislike]]></item>
 		<item name="wcf.like.likesReceived"><![CDATA[Likes Received]]></item>
 		<item name="wcf.like.summary"><![CDATA[$userArray.join(", ") + ($others > 0 ? (" and " + $others + (" other" + ($others > 1 ? "s" : ""))) : "") + " like" + ($userArray.length == 1 ? "s" : "") +  " this."]]></item>
+		<item name="wcf.like.summary"><![CDATA[{literal}{if $others == 0}{@$users.slice(0, -1).join(", ")}{if $users.length > 1} and {/if}{@$users.slice(-1)[0]}{else}{@$users.join(", ")} and {if $others == 1}one{else}{#$others}{/if} other{if $others > 1}s{/if}{/if} like{if $users.length == 1}s{/if} this.{/literal}]]></item>
 		<item name="wcf.like.details"><![CDATA[Details]]></item>
 		<item name="wcf.like.details.like"><![CDATA[Likes]]></item>
 		<item name="wcf.like.details.dislike"><![CDATA[Dislikes]]></item>
