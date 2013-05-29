@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<title>PHP 5.3 Check</title>
+	<title>WoltLab Community Framework 2.0 System Requirements</title>
 </head>
 <body>
 <?php
@@ -10,7 +10,7 @@
  * ><p><b>Support for PHP is missing.<br />PHP Unterst&uuml;tzung nicht gefunden</b></p> <!--
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 // check php version
@@ -26,19 +26,51 @@ if (!(version_compare($comparePhpVersion, $neededPhpVersion) >= 0)) {
 	<?php
 }
 
-// check simplexml
-else if (!function_exists('simplexml_load_file')) {
+// check mbstring
+else if (!extension_loaded('mbstring')) {
 	?>
-	<p>The 'simplexml' PHP extension is missing. Simplexml is required for a stable work of this software.<br />
-	Die 'simplexml' Erweiterung f&uuml;r PHP wurde nicht gefunden. Diese Erweiterung ist f&uuml;r den Betrieb der Software notwendig.</p>
+	<p>The 'mbstring' PHP extension is missing. Mbstring is required for a stable work of this software.<br />
+	Die 'mbstring' Erweiterung f&uuml;r PHP wurde nicht gefunden. Diese Erweiterung ist f&uuml;r den Betrieb der Software notwendig.</p>
+	<?php
+}
+
+// check libxml
+else if (!extension_loaded('libxml')) {
+	?>
+	<p>The 'libxml' PHP extension is missing. Libxml is required for a stable work of this software.<br />
+	Die 'libxml' Erweiterung f&uuml;r PHP wurde nicht gefunden. Diese Erweiterung ist f&uuml;r den Betrieb der Software notwendig.</p>
+	<?php
+}
+
+// check DOM
+else if (!extension_loaded('dom')) {
+	?>
+	<p>The 'DOM' PHP extension is missing. DOM is required for a stable work of this software.<br />
+	Die 'DOM' Erweiterung f&uuml;r PHP wurde nicht gefunden. Diese Erweiterung ist f&uuml;r den Betrieb der Software notwendig.</p>
 	<?php
 }
 
 // check zlib extension
-else if (!function_exists('gzopen')) {
+else if (!extension_loaded('zlib')) {
 	?>
 	<p>The 'zlib' PHP extension is missing. ZLib is required for a stable work of this software.<br />
 	Die 'zlib' Erweiterung f&uuml;r PHP wurde nicht gefunden. Diese Erweiterung ist f&uuml;r den Betrieb der Software notwendig.</p>
+	<?php
+}
+
+// check PDO extension
+else if (!extension_loaded('pdo')) {
+	?>
+	<p>The 'PDO' PHP extension is missing. PDO is required for a stable work of this software.<br />
+	Die 'PDO' Erweiterung f&uuml;r PHP wurde nicht gefunden. Diese Erweiterung ist f&uuml;r den Betrieb der Software notwendig.</p>
+	<?php
+}
+
+// check PDO MySQL extension
+else if (!extension_loaded('pdo_mysql')) {
+	?>
+	<p>The 'PDO_MYSQL' PHP extension is missing. PDO_MYSQL is required for a stable work of this software.<br />
+	Die 'PDO_MYSQL' Erweiterung f&uuml;r PHP wurde nicht gefunden. Diese Erweiterung ist f&uuml;r den Betrieb der Software notwendig.</p>
 	<?php
 }
 
