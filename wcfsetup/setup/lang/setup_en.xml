@@ -33,8 +33,6 @@
 		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[The current configuration of the installed “PHP” version does not allow file uploads. Due to this configuration, some features of this software will not be available.]]></item>
 		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Installed version of the graphics library “GDLib”]]></item>
 		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[The graphics-library “GDLib” is needed for the dynamic image generation. Without this library, some features of this software will not be available.]]></item>
-		<item name="wcf.global.systemRequirements.mbString"><![CDATA[The multibyte-character library “MBString”]]></item>
-		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[This library is required for a proper operation of the software.]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[Enabled]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[Not enabled]]></item>
 		<item name="wcf.global.wcfDir"><![CDATA[Choose the installation-folder]]></item>

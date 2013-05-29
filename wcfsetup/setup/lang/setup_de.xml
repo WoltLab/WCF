@@ -33,8 +33,6 @@
 		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[Die derzeitige Konfiguration der Skriptsprache „PHP“ macht das Hochladen von Dateien unmöglich. Einige Funktionalitäten werden durch diese Konfiguration nur eingeschränkt funktionieren.]]></item>
 		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Installierte Version der Grafikbearbeitungs-Bibliothek „gdlib“]]></item>
 		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[Grafikbearbeitungs-Bibliothek „gdlib“ ist für die dynamische Generierung von Bildern zuständig. Ohne sie werden einige Funktionalitäten der Software nicht funktionieren.]]></item>
-		<item name="wcf.global.systemRequirements.mbString"><![CDATA[Bibliothek für Zeichen mit mehreren Bytes („multibyte string“)]]></item>
-		<item name="wcf.global.systemRequirements.mbString.description"><![CDATA[Diese Bibliothek ist für den Betrieb der Software zwingend erforderlich.]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[nicht aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.memoryLimit"><![CDATA[Zur Verfügung stehender Arbeitsspeicher]]></item>

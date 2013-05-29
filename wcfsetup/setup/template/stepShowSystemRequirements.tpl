@@ -29,17 +29,6 @@
 			</dd>
 		</dl>
 	</fieldset>
-	
-	<fieldset>
-		<legend>{lang}wcf.global.systemRequirements.mbString{/lang}</legend>
-		<dl>
-			<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</dt>
-			<dd>
-				{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.mbString.result}red{else}green{/if}">{if !$system.mbString.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}{lang}wcf.global.systemRequirements.active{/lang}{/if}</span>{if !$system.mbString.result}<small>{lang}wcf.global.systemRequirements.mbString.description{/lang}</small>{/if}
-			</dd>
-		</dl>
-		
-	</fieldset>
 </div>
 
 <header class="boxHeadline boxSubHeadline">
@@ -83,7 +72,7 @@
 
 <form method="post" action="install.php">
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.mbString.result} disabled="disabled"{/if} accesskey="s"/>
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result} disabled="disabled"{/if} accesskey="s"/>
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
 		<input type="hidden" name="languageCode" value="{@$languageCode}" />

@@ -391,9 +391,6 @@ class WCFSetup extends WCF {
 		}
 		$system['gdLib']['result'] = (version_compare($system['gdLib']['value'], '2.0.0') >= 0);
 		
-		// mb string
-		$system['mbString']['result'] = extension_loaded('mbstring');
-		
 		// memory limit
 		$system['memoryLimit']['value'] = ini_get('memory_limit');
 		$system['memoryLimit']['result'] = $this->compareMemoryLimit();
