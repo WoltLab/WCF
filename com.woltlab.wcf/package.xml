@@ -6,7 +6,7 @@
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
 		<version>2.0.0 Beta 1</version> <!-- codename: maelstrom -->
-		<date>2013-05-18</date>
+		<date>2013-05-29</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -40,28 +40,5 @@
 		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
 		<instruction type="aclOption">aclOption.xml</instruction>
 		<instruction type="script">acp/post_install.php</instruction> 
-	</instructions>
-	
-	<instructions type="update" fromversion="2.0.0 Alpha 1">
-		<instruction type="sql">update_b1.sql</instruction>
-		<instruction type="script">acp/update_4.0.0_b1.php</instruction>
-		<instruction type="sql">update_post_b1.sql</instruction>
-		
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="template">template.tar</instruction>
-		
-		<instruction type="acpMenu">acpMenu.xml</instruction>
-		<instruction type="bbcode">bbcode.xml</instruction>
-		<instruction type="clipboardAction">clipboardAction.xml</instruction>
-		<instruction type="cronjob">cronjob.xml</instruction>
-		<instruction type="coreObject">coreObject.xml</instruction>
-		<instruction type="eventListener">eventListener.xml</instruction>
-		<instruction type="language">language/*.xml</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
-		<instruction type="option">option.xml</instruction>
-		<instruction type="userGroupOption">userGroupOption.xml</instruction>
-		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
-		<instruction type="userOption">userOption.xml</instruction>
-		<instruction type="userProfileMenu">userProfileMenu.xml</instruction>
 	</instructions>
 </package>
