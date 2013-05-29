@@ -60,7 +60,7 @@
 			<dl{if $errorType.priority|isset} class="formError"{/if}>
 				<dt><label for="priority">{lang}wcf.acp.group.priority{/lang}</label></dt>
 				<dd>
-					<input type="number" id="priority" name="priority" value="{@$priority}" class="medium" />
+					<input type="number" id="priority" name="priority" value="{@$priority}" class="tiny" />
 					{if $errorType.priority|isset}
 						<small class="innerError">
 							{lang}wcf.acp.group.priority.error.{@$errorType.priority}{/lang}

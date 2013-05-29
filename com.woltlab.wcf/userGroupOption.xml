@@ -3,6 +3,19 @@
 	<import>
 		<categories>
 			<category name="user"></category>
+			<category name="user.profile">
+				<parent>user</parent>
+			</category>
+			<category name="user.profileComment">
+				<parent>user.profile</parent>
+			</category>
+			<category name="user.signature">
+				<parent>user.profile</parent>
+			</category>
+			<category name="user.profile.avatar">
+				<parent>user.profile</parent>
+			</category>
+			
 			<category name="user.message">
 				<parent>user</parent>
 			</category>
@@ -11,20 +24,6 @@
 			</category>
 			<category name="user.message.attachment">
 				<parent>user.message</parent>
-			</category>
-			<category name="user.profile">
-				<parent>user</parent>
-			</category>
-			<category name="user.profileComment">
-				<parent>user.profile</parent>
-			</category>
-			
-			<category name="user.signature">
-				<parent>user.profile</parent>
-			</category>
-			
-			<category name="user.profile.avatar">
-				<parent>user.profile</parent>
 			</category>
 			
 			<category name="mod"></category>

@@ -24,7 +24,6 @@
 		
 		<acpmenuitem name="wcf.acp.menu.link.option.importAndExport">
 			<parent>wcf.acp.menu.link.option.management</parent>
-			<showorder>1</showorder>
 			<controller><![CDATA[wcf\acp\form\OptionImportForm]]></controller>
 		</acpmenuitem>
 		<!-- /options -->
@@ -36,39 +35,28 @@
 			<permissions>admin.system.package.canInstallPackage,admin.system.package.canUpdatePackage,admin.system.package.canUninstallPackage,admin.system.package.canEditServer</permissions>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.package.management">
-			<parent>wcf.acp.menu.link.package</parent>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.application.management">
 			<controller><![CDATA[wcf\acp\page\ApplicationManagementPage]]></controller>
-			<parent>wcf.acp.menu.link.package.management</parent>
+			<parent>wcf.acp.menu.link.package</parent>
 			<permissions>admin.system.canManageApplication</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.list">
 			<controller><![CDATA[wcf\acp\page\PackageListPage]]></controller>
-			<parent>wcf.acp.menu.link.package.management</parent>
+			<parent>wcf.acp.menu.link.package</parent>
 			<permissions>admin.system.package.canUpdatePackage,admin.system.package.canUninstallPackage</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.install">
 			<controller><![CDATA[wcf\acp\form\PackageStartInstallForm]]></controller>
-			<parent>wcf.acp.menu.link.package.management</parent>
-			<permissions>admin.system.package.canInstallPackage</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.package.server">
 			<parent>wcf.acp.menu.link.package</parent>
-			<showorder>2</showorder>
+			<permissions>admin.system.package.canInstallPackage</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.package.server.list">
 			<controller><![CDATA[wcf\acp\page\PackageUpdateServerListPage]]></controller>
-			<parent>wcf.acp.menu.link.package.server</parent>
+			<parent>wcf.acp.menu.link.package</parent>
 			<permissions>admin.system.package.canEditServer</permissions>
-			<showorder>1</showorder>
 		</acpmenuitem>
 		<!-- /packages -->
 		
@@ -141,49 +129,35 @@
 			<showorder>1</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.user.management.general">
-			<parent>wcf.acp.menu.link.user.management</parent>
-			<showorder>1</showorder>
-		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.user.search">
 			<controller><![CDATA[wcf\acp\form\UserSearchForm]]></controller>
-			<parent>wcf.acp.menu.link.user.management.general</parent>
+			<parent>wcf.acp.menu.link.user.management</parent>
 			<permissions>admin.user.canSearchUser</permissions>
-			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.list">
 			<controller><![CDATA[wcf\acp\page\UserListPage]]></controller>
-			<parent>wcf.acp.menu.link.user.management.general</parent>
+			<parent>wcf.acp.menu.link.user.management</parent>
 			<permissions>admin.user.canSearchUser</permissions>
-			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.add">
 			<controller><![CDATA[wcf\acp\form\UserAddForm]]></controller>
-			<parent>wcf.acp.menu.link.user.management.general</parent>
-			<permissions>admin.user.canAddUser</permissions>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.management.additional">
 			<parent>wcf.acp.menu.link.user.management</parent>
-			<showorder>2</showorder>
+			<permissions>admin.user.canAddUser</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.bulkProcessing">
 			<controller><![CDATA[wcf\acp\form\UserBulkProcessingForm]]></controller>
-			<parent>wcf.acp.menu.link.user.management.additional</parent>
+			<parent>wcf.acp.menu.link.user.management</parent>
 			<permissions>admin.user.canEditUser,admin.user.canDeleteUser,admin.user.canMailUser</permissions>
-			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.mail">
 			<controller><![CDATA[wcf\acp\form\UserMailForm]]></controller>
 			<link><![CDATA[action=all]]></link>
-			<parent>wcf.acp.menu.link.user.management.additional</parent>
+			<parent>wcf.acp.menu.link.user.management</parent>
 			<permissions>admin.user.canMailUser</permissions>
-			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.activityPoint">
@@ -199,43 +173,48 @@
 			<showorder>2</showorder>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.group.general">
-			<parent>wcf.acp.menu.link.group</parent>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.group.list">
 			<controller><![CDATA[wcf\acp\page\UserGroupListPage]]></controller>
-			<parent>wcf.acp.menu.link.group.general</parent>
+			<parent>wcf.acp.menu.link.group</parent>
 			<permissions>admin.user.canEditGroup,admin.user.canDeleteGroup</permissions>
-			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.group.add">
 			<controller><![CDATA[wcf\acp\form\UserGroupAddForm]]></controller>
-			<parent>wcf.acp.menu.link.group.general</parent>
-			<permissions>admin.user.canAddGroup</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.group.additional">
 			<parent>wcf.acp.menu.link.group</parent>
-			<showorder>2</showorder>
+			<permissions>admin.user.canAddGroup</permissions>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.group.mail">
 			<controller><![CDATA[wcf\acp\form\UserMailForm]]></controller>
 			<link><![CDATA[action=group]]></link>
-			<parent>wcf.acp.menu.link.group.additional</parent>
+			<parent>wcf.acp.menu.link.group</parent>
 			<permissions>admin.user.canMailUser</permissions>
-			<showorder>1</showorder>
 		</acpmenuitem>
 		<!-- user groups -->
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.rank">
+			<parent>wcf.acp.menu.link.user</parent>
+			<options>module_user_rank</options>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.rank.list">
+			<parent>wcf.acp.menu.link.user.rank</parent>
+			<controller><![CDATA[wcf\acp\page\UserRankListPage]]></controller>
+			<permissions>admin.user.rank.canManageRank</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.user.rank.add">
+			<parent>wcf.acp.menu.link.user.rank</parent>
+			<controller><![CDATA[wcf\acp\form\UserRankAddForm]]></controller>
+			<permissions>admin.user.rank.canManageRank</permissions>
+		</acpmenuitem>
 		
 		<!-- user options -->
 		<acpmenuitem name="wcf.acp.menu.link.user.option">
 			<parent>wcf.acp.menu.link.user</parent>
-			<showorder>3</showorder>
+			<showorder>4</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.user.option.list">
@@ -267,46 +246,9 @@
 		</acpmenuitem>
 		<!-- /user options -->
 		
-		<acpmenuitem name="wcf.acp.menu.link.user.rank">
-			<parent>wcf.acp.menu.link.user</parent>
-			<options>module_user_rank</options>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.rank.list">
-			<parent>wcf.acp.menu.link.user.rank</parent>
-			<controller><![CDATA[wcf\acp\page\UserRankListPage]]></controller>
-			<permissions>admin.user.rank.canManageRank</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.user.rank.add">
-			<parent>wcf.acp.menu.link.user.rank</parent>
-			<controller><![CDATA[wcf\acp\form\UserRankAddForm]]></controller>
-			<permissions>admin.user.rank.canManageRank</permissions>
-		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.display">
 			<showorder>3</showorder>
 		</acpmenuitem>
-		
-		<!-- page menu -->
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu">
-			<parent>wcf.acp.menu.link.display</parent>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu.list">
-			<controller><![CDATA[wcf\acp\page\PageMenuItemListPage]]></controller>
-			<parent>wcf.acp.menu.link.pageMenu</parent>
-			<permissions>admin.display.canManagePageMenu</permissions>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu.add">
-			<controller><![CDATA[wcf\acp\form\PageMenuItemAddForm]]></controller>
-			<parent>wcf.acp.menu.link.pageMenu</parent>
-			<permissions>admin.display.canManagePageMenu</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		<!-- /page menu -->
 		
 		<!-- style -->
 		<acpmenuitem name="wcf.acp.menu.link.style">
@@ -318,27 +260,44 @@
 			<controller><![CDATA[wcf\acp\page\StyleListPage]]></controller>
 			<parent>wcf.acp.menu.link.style</parent>
 			<permissions>admin.style.canManageStyle</permissions>
-			<showorder>1</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.style.add">
 			<controller><![CDATA[wcf\acp\form\StyleAddForm]]></controller>
 			<parent>wcf.acp.menu.link.style</parent>
 			<permissions>admin.style.canManageStyle</permissions>
-			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.style.import">
 			<controller><![CDATA[wcf\acp\form\StyleImportForm]]></controller>
 			<parent>wcf.acp.menu.link.style</parent>
 			<permissions>admin.style.canManageStyle</permissions>
-			<showorder>3</showorder>
 		</acpmenuitem>
 		<!-- /style -->
+		
+		<!-- page menu -->
+		<acpmenuitem name="wcf.acp.menu.link.pageMenu">
+			<parent>wcf.acp.menu.link.display</parent>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.pageMenu.list">
+			<controller><![CDATA[wcf\acp\page\PageMenuItemListPage]]></controller>
+			<parent>wcf.acp.menu.link.pageMenu</parent>
+			<permissions>admin.display.canManagePageMenu</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.pageMenu.add">
+			<controller><![CDATA[wcf\acp\form\PageMenuItemAddForm]]></controller>
+			<parent>wcf.acp.menu.link.pageMenu</parent>
+			<permissions>admin.display.canManagePageMenu</permissions>
+		</acpmenuitem>
+		<!-- /page menu -->
 		
 		<!-- template -->
 		<acpmenuitem name="wcf.acp.menu.link.template">
 			<parent>wcf.acp.menu.link.display</parent>
+			<showorder>3</showorder>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.template.list">
 			<controller><![CDATA[wcf\acp\page\TemplateListPage]]></controller>
@@ -365,6 +324,7 @@
 		<!-- language -->
 		<acpmenuitem name="wcf.acp.menu.link.language">
 			<parent>wcf.acp.menu.link.display</parent>
+			<showorder>4</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.language.list">
@@ -406,8 +366,101 @@
 			<showorder>4</showorder>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.smiley">
+			<parent>wcf.acp.menu.link.content</parent>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.smiley.list">
+			<controller><![CDATA[wcf\acp\page\SmileyListPage]]></controller>
+			<parent>wcf.acp.menu.link.smiley</parent>
+			<permissions>admin.content.smiley.canManageSmiley</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.smiley.add">
+			<controller><![CDATA[wcf\acp\form\SmileyAddForm]]></controller>
+			<parent>wcf.acp.menu.link.smiley</parent>
+			<permissions>admin.content.smiley.canManageSmiley</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.smiley.category.list">
+			<controller><![CDATA[wcf\acp\page\SmileyCategoryListPage]]></controller>
+			<parent>wcf.acp.menu.link.smiley</parent>
+			<permissions>admin.content.smiley.canManageSmiley</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.smiley.category.add">
+			<controller><![CDATA[wcf\acp\form\SmileyCategoryAddForm]]></controller>
+			<parent>wcf.acp.menu.link.smiley</parent>
+			<permissions>admin.content.smiley.canManageSmiley</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.label">
+			<parent>wcf.acp.menu.link.content</parent>
+			<showorder>2</showorder>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.label.list">
+			<controller><![CDATA[wcf\acp\page\LabelListPage]]></controller>
+			<parent>wcf.acp.menu.link.label</parent>
+			<permissions>admin.content.label.canManageLabel</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.label.add">
+			<controller><![CDATA[wcf\acp\form\LabelAddForm]]></controller>
+			<parent>wcf.acp.menu.link.label</parent>
+			<permissions>admin.content.label.canManageLabel</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.label.group.list">
+			<controller><![CDATA[wcf\acp\page\LabelGroupListPage]]></controller>
+			<parent>wcf.acp.menu.link.label</parent>
+			<permissions>admin.content.label.canManageLabel</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.label.group.add">
+			<controller><![CDATA[wcf\acp\form\LabelGroupAddForm]]></controller>
+			<parent>wcf.acp.menu.link.label</parent>
+			<permissions>admin.content.label.canManageLabel</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.bbcode">
+			<parent>wcf.acp.menu.link.content</parent>
+			<showorder>3</showorder>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.bbcode.list">
+			<controller><![CDATA[wcf\acp\page\BBCodeListPage]]></controller>
+			<parent>wcf.acp.menu.link.bbcode</parent>
+			<permissions>admin.content.bbcode.canManageBBCode</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.bbcode.add">
+			<controller><![CDATA[wcf\acp\form\BBCodeAddForm]]></controller>
+			<parent>wcf.acp.menu.link.bbcode</parent>
+			<permissions>admin.content.bbcode.canManageBBCode</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.bbcode.mediaProvider.list">
+			<controller><![CDATA[wcf\acp\page\BBCodeMediaProviderListPage]]></controller>
+			<parent>wcf.acp.menu.link.bbcode</parent>
+			<permissions>admin.content.bbcode.canManageBBCode</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.bbcode.mediaProvider.add">
+			<controller><![CDATA[wcf\acp\form\BBCodeMediaProviderAddForm]]></controller>
+			<parent>wcf.acp.menu.link.bbcode</parent>
+			<permissions>admin.content.bbcode.canManageBBCode</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.tag">
+			<parent>wcf.acp.menu.link.content</parent>
+			<showorder>4</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.tag.list">
+			<controller><![CDATA[wcf\acp\page\TagListPage]]></controller>
+			<parent>wcf.acp.menu.link.tag</parent>
+			<permissions>admin.content.tag.canManageTag</permissions>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.tag.add">
+			<controller><![CDATA[wcf\acp\form\TagAddForm]]></controller>
+			<parent>wcf.acp.menu.link.tag</parent>
+			<permissions>admin.content.tag.canManageTag</permissions>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.attachment">
 			<parent>wcf.acp.menu.link.content</parent>
+			<showorder>5</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.attachment.list">
@@ -416,132 +469,18 @@
 			<permissions>admin.attachment.canManageAttachment</permissions>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.bbcode">
-			<parent>wcf.acp.menu.link.content</parent>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.bbcode.list">
-			<controller><![CDATA[wcf\acp\page\BBCodeListPage]]></controller>
-			<parent>wcf.acp.menu.link.bbcode</parent>
-			<permissions>admin.content.bbcode.canManageBBCode</permissions>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.bbcode.add">
-			<controller><![CDATA[wcf\acp\form\BBCodeAddForm]]></controller>
-			<parent>wcf.acp.menu.link.bbcode</parent>
-			<permissions>admin.content.bbcode.canManageBBCode</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.bbcode.mediaProvider.list">
-			<controller><![CDATA[wcf\acp\page\BBCodeMediaProviderListPage]]></controller>
-			<parent>wcf.acp.menu.link.bbcode</parent>
-			<permissions>admin.content.bbcode.canManageBBCode</permissions>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.bbcode.mediaProvider.add">
-			<controller><![CDATA[wcf\acp\form\BBCodeMediaProviderAddForm]]></controller>
-			<parent>wcf.acp.menu.link.bbcode</parent>
-			<permissions>admin.content.bbcode.canManageBBCode</permissions>
-			<showorder>4</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.smiley">
-			<parent>wcf.acp.menu.link.content</parent>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.smiley.list">
-			<controller><![CDATA[wcf\acp\page\SmileyListPage]]></controller>
-			<parent>wcf.acp.menu.link.smiley</parent>
-			<permissions>admin.content.smiley.canManageSmiley</permissions>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.smiley.add">
-			<controller><![CDATA[wcf\acp\form\SmileyAddForm]]></controller>
-			<parent>wcf.acp.menu.link.smiley</parent>
-			<permissions>admin.content.smiley.canManageSmiley</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.smiley.category.list">
-			<controller><![CDATA[wcf\acp\page\SmileyCategoryListPage]]></controller>
-			<parent>wcf.acp.menu.link.smiley</parent>
-			<permissions>admin.content.smiley.canManageSmiley</permissions>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.smiley.category.add">
-			<controller><![CDATA[wcf\acp\form\SmileyCategoryAddForm]]></controller>
-			<parent>wcf.acp.menu.link.smiley</parent>
-			<permissions>admin.content.smiley.canManageSmiley</permissions>
-			<showorder>4</showorder>
+		<acpmenuitem name="wcf.acp.menu.link.community">
+			<showorder>5</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.dashboard">
-			<parent>wcf.acp.menu.link.content</parent>
+			<parent>wcf.acp.menu.link.community</parent>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.dashboard.list">
 			<parent>wcf.acp.menu.link.dashboard</parent>
 			<controller><![CDATA[wcf\acp\page\DashboardListPage]]></controller>
 			<permissions>admin.content.dashboard.canEditDashboard</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.label">
-			<parent>wcf.acp.menu.link.content</parent>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.label.list">
-			<controller><![CDATA[wcf\acp\page\LabelListPage]]></controller>
-			<parent>wcf.acp.menu.link.label</parent>
-			<permissions>admin.content.label.canManageLabel</permissions>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.label.add">
-			<controller><![CDATA[wcf\acp\form\LabelAddForm]]></controller>
-			<parent>wcf.acp.menu.link.label</parent>
-			<permissions>admin.content.label.canManageLabel</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.label.group.list">
-			<controller><![CDATA[wcf\acp\page\LabelGroupListPage]]></controller>
-			<parent>wcf.acp.menu.link.label</parent>
-			<permissions>admin.content.label.canManageLabel</permissions>
-			<showorder>3</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.label.group.add">
-			<controller><![CDATA[wcf\acp\form\LabelGroupAddForm]]></controller>
-			<parent>wcf.acp.menu.link.label</parent>
-			<permissions>admin.content.label.canManageLabel</permissions>
-			<showorder>4</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.tag">
-			<parent>wcf.acp.menu.link.content</parent>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.tag.list">
-			<controller><![CDATA[wcf\acp\page\TagListPage]]></controller>
-			<parent>wcf.acp.menu.link.tag</parent>
-			<permissions>admin.content.tag.canManageTag</permissions>
-			<showorder>1</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.tag.add">
-			<controller><![CDATA[wcf\acp\form\TagAddForm]]></controller>
-			<parent>wcf.acp.menu.link.tag</parent>
-			<permissions>admin.content.tag.canManageTag</permissions>
-			<showorder>2</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.community">
-			<showorder>5</showorder>
 		</acpmenuitem>
 	</import>
 </data>
