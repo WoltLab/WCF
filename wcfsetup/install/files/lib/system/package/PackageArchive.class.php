@@ -152,7 +152,7 @@ class PackageArchive {
 			throw new SystemException("package information file '".(self::INFO_FILE)."' not found in '".$this->archive."'");
 		}
 		
-		// extract package.xml, parse with SimpleXML
+		// extract package.xml, parse XML
 		// and compile an array with XML::getElementTree()
 		$xml = new XML();
 		try {

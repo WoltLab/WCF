@@ -282,7 +282,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			throw new SystemException("xml file '".$filename."' not found in '".$this->installation->getArchive()->getArchive()."'");
 		}
 		
-		// Extract acpmenu file and parse with SimpleXML
+		// Extract acpmenu file and parse XML
 		$xml = new XML();
 		$tmpFile = FileUtil::getTemporaryFilename('xml_');
 		try {
