@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\io;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -26,6 +27,7 @@ class ZipWriter {
 	public function addDir($name) {
 		// replace backward slashes with forward slashes in the dirname
 		$name = StringUtil::replace("\\", "/", $name);
+		$name = FileUtil::addTrailingSlash($name);
 		
 		// construct the general header information for the directory
 		$header = "\x50\x4b\x03\x04";
