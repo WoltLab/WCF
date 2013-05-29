@@ -26,14 +26,6 @@ if (!(version_compare($comparePhpVersion, $neededPhpVersion) >= 0)) {
 	<?php
 }
 
-// check ze1_compatibility_mode
-else if (ini_get('zend.ze1_compatibility_mode')) {
-	?>
-	<p>The option 'zend.ze1_compatibility_mode' is enabled. Please disable the option in your PHP configuration (php.ini) for a stable work of this software.<br />
-	Die Einstellung 'zend.ze1_compatibility_mode' ist aktiv. F&uuml;r einen einwandfreien Betrieb dieser Software muss die Einstellung in der PHP-Konfiguration (php.ini) deaktiviert werden.</p>
-	<?php
-}
-
 // check simplexml
 else if (!function_exists('simplexml_load_file')) {
 	?>
