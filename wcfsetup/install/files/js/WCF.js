@@ -3661,6 +3661,9 @@ WCF.Template = Class.extend({
 			return id;
 		}, this));
 		
+		// remove comments
+		template = template.replace(/\{\*.*?\*\}/g, '');
+		
 		var parseParameterList = function(parameterString) {
 			var $chars = parameterString.split('');
 			var $parameters = { };
