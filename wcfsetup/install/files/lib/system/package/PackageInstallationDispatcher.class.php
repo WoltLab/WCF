@@ -669,7 +669,7 @@ class PackageInstallationDispatcher {
 				
 				// create directory and set permissions
 				@mkdir($packageDir, 0777, true);
-				@chmod($packageDir, 0777);
+				FileUtil::makeWritable($packageDir);
 			}
 			
 			return null;

@@ -34,7 +34,7 @@ final class FileUtil {
 				// create tmp folder in document root automatically
 				if (!@file_exists($_SERVER['DOCUMENT_ROOT'].'/tmp')) { 
 					@mkdir($_SERVER['DOCUMENT_ROOT'].'/tmp/', 0777);
-					@chmod($_SERVER['DOCUMENT_ROOT'].'/tmp/', 0777);
+					self::makeWritable($_SERVER['DOCUMENT_ROOT'].'/tmp/');
 				}
 			}
 			if (@file_exists($_SERVER['DOCUMENT_ROOT'].'/tmp') && @is_writable($_SERVER['DOCUMENT_ROOT'].'/tmp')) {
@@ -183,10 +183,9 @@ final class FileUtil {
 	 * necessary.
 	 * 
 	 * @param	string		$path
-	 * @param	integer		$chmod
 	 * @return	boolean
 	 */
-	public static function makePath($path, $chmod = 0777) {
+	public static function makePath($path) {
 		// directory already exists, abort
 		if (file_exists($path)) {
 			return false;
@@ -200,24 +199,18 @@ final class FileUtil {
 			$parent = self::addTrailingSlash($parent);
 			if (!@file_exists($parent)) {
 				// could not create parent directory either => abort
-				if (!self::makePath($parent, $chmod)) {
+				if (!self::makePath($parent)) {
 					return false;
 				}
 			}
 			
 			// well, the parent directory exists or has been created
 			// lets create this path
-			$oldumask = @umask(0);
-			if (!@mkdir($path, $chmod)) {
+			if (!@mkdir($path)) {
 				return false;
 			}
-			@umask($oldumask);
-			/*if (!@chmod($path, $chmod)) {
-				return false;
-			}*/
-			if (self::isApacheModule() || !@is_writable($path)) {
-				@chmod($path, 0777);
-			}
+			
+			self::makeWritable($path);
 			
 			return true;
 		}
@@ -457,12 +450,8 @@ final class FileUtil {
 		}
 		$targetFile->close();
 		$sourceFile->close();
-		@$targetFile->chmod(0777);
 		
-		/*if ($filesize != filesize($destination)) {
-			@unlink($destination);
-			return false;
-		}*/
+		self::makeWritable($destination);
 		
 		return true;
 	}
@@ -489,6 +478,37 @@ final class FileUtil {
 		}
 		
 		return self::$finfo->file($filename);
+	}
+	
+	/**
+	 * Tries to make a file or directory writable. It starts of with the least
+	 * permissions and goes up until 0777.
+	 * 
+	 * @param	string		$filename
+	 */
+	public static function makeWritable($filename) {
+		if (is_writable($filename)) {
+			return;
+		}
+		
+		$chmods = array('0644', '0755', '0775', '0777');
+		
+		$startIndex = 0;
+		if (is_dir($filename)) {
+			$startIndex = 1;
+		}
+		
+		for ($i = $startIndex; $i < 4; $i++) {
+			@chmod($filename, octdec($chmods[$i]));
+			
+			if (is_writable($filename)) {
+				break;
+			}
+			else if ($i == 3) {
+				// does not work with 0777
+				throw new SystemException("Unable to make '".$filename."' writable. This is a misconfiguration of your server, please contact your system administrator or hosting provider.");
+			}
+		}
 	}
 	
 	private function __construct() { }

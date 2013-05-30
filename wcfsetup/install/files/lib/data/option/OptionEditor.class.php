@@ -6,6 +6,7 @@ use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\io\File;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 
 /**
  * Provides functions to edit options.
@@ -138,6 +139,6 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		
 		// close file
 		$file->close();
-		@$file->chmod(0777);
+		FileUtil::makeWritable(WCF_DIR.'options.inc.php');
 	}
 }

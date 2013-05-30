@@ -6,8 +6,8 @@ use wcf\util\FileUtil;
 /**
  * Reads zip files.
  * 
- * @author	Tim Düsterhus
- * @copyright	2012 Tim Düsterhus
+ * @author	Tim Duesterhus
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
@@ -114,12 +114,7 @@ class Zip extends File implements IArchive {
 		$targetFile->write($file['content'], strlen($file['content']));
 		$targetFile->close();
 		
-		if (FileUtil::isApacheModule() || !@$targetFile->is_writable()) {
-			@$targetFile->chmod(0777);
-		}
-		else {
-			@$targetFile->chmod(0755);
-		}
+		FileUtil::makeWritable($destination);
 		
 		if ($file['header']['mtime']) {
 			@$targetFile->touch($file['header']['mtime']);
