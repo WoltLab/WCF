@@ -225,12 +225,7 @@ class Tar implements IArchive {
 		$targetFile->write($buffer);
 		$targetFile->close();
 		
-		if (FileUtil::isApacheModule() || !@$targetFile->is_writable()) {
-			@$targetFile->chmod(0777);
-		}
-		else {
-			@$targetFile->chmod(0755);
-		}
+		FileUtil::makeWritable($destination);
 		
 		if ($header['mtime']) {
 			@$targetFile->touch($header['mtime']);

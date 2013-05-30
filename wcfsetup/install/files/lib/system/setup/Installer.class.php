@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
  * Extracts files and directories from a tar archive.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.setup
@@ -203,11 +203,6 @@ class Installer {
 	 * @param	string		$target
 	 */
 	protected function makeWriteable($target) {
-		if (!preg_match('/^WIN/i', PHP_OS)) {
-			if (!@chmod($target, 0777)) {
-				// todo: what to do in this case?
-				//throw new SystemException("Could not chmod file '".$target."'");
-			}
-		}
+		FileUtil::makeWritable($target);
 	}
 }

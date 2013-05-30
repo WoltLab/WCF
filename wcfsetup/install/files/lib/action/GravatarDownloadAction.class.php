@@ -73,7 +73,7 @@ class GravatarDownloadAction extends AbstractAction {
 				$tmpFile = FileUtil::downloadFileFromHttp($gravatarURL, 'gravatar');
 				copy($tmpFile, WCF_DIR.$cachedFilename);
 				@unlink($tmpFile);
-				@chmod(WCF_DIR.$cachedFilename, 0777);
+				FileUtil::makeWritable(WCF_DIR.$cachedFilename);
 				
 				@header('Content-Type: image/png');
 				@readfile(WCF_DIR.$cachedFilename);

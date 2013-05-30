@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\language;
+use wcf\util\FileUtil;
+
 use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\category\LanguageCategoryEditor;
 use wcf\data\language\item\LanguageItemEditor;
@@ -95,8 +97,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				}
 			}
 			
-			$file = new File(WCF_DIR.'language/'.$this->languageID.'_'.$category->languageCategory.'.php');
-			@$file->chmod(0777);
+			$filename = WCF_DIR.'language/'.$this->languageID.'_'.$category->languageCategory.'.php';
+			$file = new File($filename);
+			FileUtil::makeWritable($filename);
 			$file->write($content . '?>');
 			$file->close();
 		}

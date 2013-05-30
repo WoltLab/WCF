@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\template;
+use wcf\util\FileUtil;
+
 use wcf\data\DatabaseObjectEditor;
 use wcf\system\io\File;
 use wcf\system\Regex;
@@ -50,7 +52,7 @@ class TemplateEditor extends DatabaseObjectEditor {
 		$file = new File($path);
 		$file->write($source);
 		$file->close();
-		@$file->chmod(0777);
+		FileUtil::makeWritable($path);
 	}
 	
 	/**

@@ -233,7 +233,7 @@ class BasicFileUtil {
 		if (!empty($_SERVER['DOCUMENT_ROOT'])) {
 			if (!@file_exists($_SERVER['DOCUMENT_ROOT'].'/tmp/'.$tmpDirName)) {
 				@mkdir($_SERVER['DOCUMENT_ROOT'].'/tmp/'.$tmpDirName, 0777, true);
-				@chmod($_SERVER['DOCUMENT_ROOT'].'/tmp/'.$tmpDirName, 0777);
+				self::makeWritable($_SERVER['DOCUMENT_ROOT'].'/tmp/'.$tmpDirName);
 			}
 			
 			if (@file_exists($_SERVER['DOCUMENT_ROOT'].'/tmp/'.$tmpDirName) && @is_writable($_SERVER['DOCUMENT_ROOT'].'/tmp/'.$tmpDirName)) {
@@ -245,7 +245,7 @@ class BasicFileUtil {
 			if (isset($_ENV[$tmpDir]) && @is_writable($_ENV[$tmpDir])) {
 				$dir = $_ENV[$tmpDir] . '/' . $tmpDirName;
 				@mkdir($dir, 0777);
-				@chmod($dir, 0777);
+				self::makeWritable($dir);
 				
 				if (@file_exists($dir) && @is_writable($dir)) {
 					return $dir;
@@ -255,7 +255,7 @@ class BasicFileUtil {
 		
 		$dir = INSTALL_SCRIPT_DIR . 'tmp/' . $tmpDirName;
 		@mkdir($dir, 0777);
-		@chmod($dir, 0777);
+		self::makeWritable($dir);
 		
 		if (!@file_exists($dir) || !@is_writable($dir)) {
 			$tmpDir = explode('/', $dir);
@@ -266,6 +266,37 @@ class BasicFileUtil {
 		}
 		
 		return $dir;
+	}
+	
+	/**
+	 * Tries to make a file or directory writable. It starts of with the least
+	 * permissions and goes up until 0777.
+	 *
+	 * @param	string		$filename
+	 */
+	public static function makeWritable($filename) {
+		if (is_writable($filename)) {
+			return;
+		}
+		
+		$chmods = array('0644', '0755', '0775', '0777');
+		
+		$startIndex = 0;
+		if (is_dir($filename)) {
+			$startIndex = 1;
+		}
+		
+		for ($i = $startIndex; $i < 4; $i++) {
+			@chmod($filename, octdec($chmods[$i]));
+			
+			if (is_writable($filename)) {
+				break;
+			}
+			else if ($i == 3) {
+				// does not work with 0777
+				throw new SystemException("Unable to make '".$filename."' writable. This is a misconfiguration of your server, please contact your system administrator or hosting provider.");
+			}
+		}
 	}
 }
 
@@ -465,12 +496,7 @@ class Tar {
 		}
 		
 		$targetFile->close();
-		if (function_exists('apache_get_version') || !@$targetFile->is_writable()) {
-			@$targetFile->chmod(0777);
-		}
-		else {
-			@$targetFile->chmod(0755);
-		}
+		BasicFileUtil::makeWritable($destination);
 		
 		if ($header['mtime']) {
 			@$targetFile->touch($header['mtime']);
@@ -788,7 +814,7 @@ if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
 				$dir = TMP_DIR . dirname($file['filename']);
 				if (!@is_dir($dir)) {
 					@mkdir($dir, 0777, true);
-					@chmod($dir, 0777);
+					BasicFileUtil::makeWritable($dir);
 				}
 				
 				$tar->extract($file['index'], TMP_DIR . $file['filename']);
@@ -799,10 +825,10 @@ if (!file_exists(TMP_DIR . 'install/files/lib/system/WCFSetup.class.php')) {
 	
 	// create cache folders
 	@mkdir(TMP_DIR . 'setup/lang/cache/', 0777);
-	@chmod(TMP_DIR . 'setup/lang/cache/', 0777);
+	BasicFileUtil::makeWritable(TMP_DIR . 'setup/lang/cache/');
 	
 	@mkdir(TMP_DIR . 'setup/template/compiled/', 0777);
-	@chmod(TMP_DIR . 'setup/template/compiled/', 0777);
+	BasicFileUtil::makeWritable(TMP_DIR . 'setup/template/compiled/');
 }
 
 if (!class_exists('wcf\system\WCFSetup')) {
