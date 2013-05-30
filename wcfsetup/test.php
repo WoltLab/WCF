@@ -78,6 +78,14 @@ else if (!extension_loaded('pdo_mysql')) {
 	<?php
 }
 
+// check JSON extension
+else if (!extension_loaded('json')) {
+	?>
+	<p>The 'JSON' PHP extension is missing. JSON is required for a stable work of this software.<br />
+	Die 'JSON' Erweiterung f&uuml;r PHP wurde nicht gefunden. Diese Erweiterung ist f&uuml;r den Betrieb der Software notwendig.</p>
+	<?php
+}
+
 // check safemode
 else if ((is_array($configArray) && !empty($configArray['safe_mode']['local_value'])) || @ini_get('safe_mode')) {
 	?>
