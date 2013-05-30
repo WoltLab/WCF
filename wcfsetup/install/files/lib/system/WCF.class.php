@@ -28,6 +28,11 @@ use wcf\util\StringUtil;
 // try to disable execution time limit
 @set_time_limit(0);
 
+// fix timezone warning issue
+if (!@ini_get('date.timezone')) {
+	@date_default_timezone_set('Europe/London');
+}
+
 // define current wcf version
 define('WCF_VERSION', '2.0.0 Beta 1 (Maelstrom)');
 

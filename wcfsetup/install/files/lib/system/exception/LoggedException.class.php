@@ -61,7 +61,7 @@ class LoggedException extends \Exception {
 			return;
 		}
 		
-		$logFile = WCF_DIR . 'log/' . date('Y-m-d', TIME_NOW) . '.txt';
+		$logFile = WCF_DIR . 'log/' . gmdate('Y-m-d', TIME_NOW) . '.txt';
 		
 		// try to create file
 		@touch($logFile);
@@ -80,7 +80,7 @@ class LoggedException extends \Exception {
 		$e = ($this->getPrevious() ?: $this);
 		
 		// don't forget to update ExceptionLogViewPage, when changing the log file format
-		$message = date('r', TIME_NOW)."\n".
+		$message = gmdate('r', TIME_NOW)."\n".
 			'Message: '.$e->getMessage()."\n".
 			'File: '.$e->getFile().' ('.$e->getLine().")\n".
 			'PHP version: '.phpversion()."\n".

@@ -174,7 +174,7 @@ class Zip extends File implements IArchive {
 			$day = $data['mdate'] & 31 /* 5 bits */;
 			$month = ($data['mdate'] >> 5) & 15 /* 4 bits */;
 			$year = (($data['mdate'] >> 9) & 127 /* 7 bits */) + 1980;
-			$data['mtime'] = mktime($hour, $minute, $second, $month, $day, $year);
+			$data['mtime'] = gmmktime($hour, $minute, $second, $month, $day, $year);
 			
 			$data += unpack('Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength/vfileCommentLength/vdiskNo/vinternalAttr/vexternalAttr', $this->read(26));
 			$data['offset'] = $this->readAndUnpack(4, 'v');
@@ -284,7 +284,7 @@ class Zip extends File implements IArchive {
 		$day = $header['mdate'] & 31 /* 5 bits */;
 		$month = ($header['mdate'] >> 5) & 15 /* 4 bits */;
 		$year = (($header['mdate'] >> 9) & 127 /* 7 bits */) + 1980;
-		$header['x-timestamp'] = mktime($hour, $minute, $second, $month, $day, $year);
+		$header['x-timestamp'] = gmmktime($hour, $minute, $second, $month, $day, $year);
 		$header += unpack('Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength', $this->read(16));
 		
 		// read filename
