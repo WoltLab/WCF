@@ -1,4 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<?php
+if (isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO'])) {
+	die("PASSED");
+}
+?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<title>WoltLab Community Framework 2.0 System Requirements</title>
@@ -84,10 +88,45 @@ else if ((is_array($configArray) && !empty($configArray['safe_mode']['local_valu
 
 // everything is fine
 else {
+	// check for broken nginx setups
+	$isNginx = false;
+	if (isset($_SERVER['SERVER_SOFTWARE']) && stripos($_SERVER['SERVER_SOFTWARE'], 'nginx') !== false) {
+		$isNginx = true;
+	}
+	
+	if ($isNginx) { ?>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
+		<script>
+			$(function() {
+				$.ajax('test.php/test/', {
+					dataType: 'html',
+					error: function() {
+						$('#worker').remove();
+						$('#nginxFailure').show();
+					},
+					success: function() {
+						$('#worker').remove();
+						$('#nginx').show();
+					}
+				});
+			});
+		</script>
+		<p id="worker">Please wait &hellip;<br />Bitte warten &hellip;</p>
+		<p id="nginxFailure" style="color:red; display: none;">
+			You are running nginx, but your current configuration prevents a successful installation. Please fix the PATH_INFO support for PHP, guides can be found <a href="https://www.google.de/search?q=nginx+php+path_info" target="_blank">here</a>. If you're on a hosted solution, please ask your hosting company to fix their configuration.<br />
+			<br />
+			Sie verwenden nginx als Webserver, jedoch verhindert die aktuelle Konfiguration eine erfolgreiche Installation. Bitte aktivieren Sie die PATH_INFO-Unterst&uuml;zung f&uuml;r PHP, Anleitungen sind <a href="https://www.google.de/search?q=nginx+php+path_info" target="_blank">hier</a> verf&uuml;gbar. Sollten Sie nur einen Webspace gemietet haben, so wenden Sie sich bitte an Ihren Anbieter, damit dieser die fehlerhafte Konfiguration korrigiert.
+		</p>
+		<div id="nginx" style="display:none;">
+	<?php
+	}
+	
 	?>
 	<p style="color:green;">PHP <?php echo $neededPhpVersion; ?> or greater is available. You can <a href="install.php">start</a> the installation now.<br />
 	PHP <?php echo $neededPhpVersion; ?> oder h&ouml;her wurde gefunden. Sie k&ouml;nnen mit der Installation <a href="install.php">beginnen</a>.</p>
 	<?php
+	
+	if ($isNginx) { ?></div><?php }
 }
 ?>
 </body>
