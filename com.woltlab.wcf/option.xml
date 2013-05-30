@@ -1065,4 +1065,8 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			<!-- /message.general.poll -->
 		</options>
 	</import>
+	
+	<delete>
+		<option name="cache_source_memcached_use_pconnect" />
+	</delete>
 </data>
