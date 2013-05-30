@@ -1,7 +1,5 @@
 <?php
 namespace wcf\data\language;
-use wcf\util\FileUtil;
-
 use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\category\LanguageCategoryEditor;
 use wcf\data\language\item\LanguageItemEditor;
@@ -16,6 +14,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;
 
