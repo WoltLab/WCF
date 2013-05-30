@@ -67,9 +67,7 @@ final class FileUtil {
 			return $path;
 		}
 		else {
-			if (ini_get('safe_mode')) $reason = "due to php safe_mode restrictions";
-			else $reason = "due to an unknown reason";
-			throw new SystemException('There is no access to the system temporary folder '.$reason.' and no user specific temporary folder exists in '.WCF_DIR.'! This is a misconfiguration of your webserver software! Please create a folder called '.$path.' using your favorite ftp program, make it writable and then retry this installation.');
+			throw new SystemException('There is no access to the system temporary folder due to an unknown reason and no user specific temporary folder exists in '.WCF_DIR.'! This is a misconfiguration of your webserver software! Please create a folder called '.$path.' using your favorite ftp program, make it writable and then retry this installation.');
 		}
 	}
 	
