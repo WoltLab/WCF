@@ -1,18 +1,17 @@
 <?php
 namespace wcf\data\template;
-use wcf\util\FileUtil;
-
 use wcf\data\DatabaseObjectEditor;
 use wcf\system\io\File;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
+use wcf\util\FileUtil;
 
 /**
  * Provides functions to edit templates.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.template
