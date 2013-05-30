@@ -143,7 +143,11 @@ class LabelGroupAddForm extends AbstractForm {
 		
 		// save object type relations
 		$this->saveObjectTypeRelations($returnValues['returnValues']->groupID);
-				
+
+		foreach ($this->labelObjectTypes as $objectTypeID => $labelObjectType) {
+			$labelObjectType->save();
+		}
+		
 		$this->saved();
 		
 		// reset values
@@ -223,10 +227,10 @@ class LabelGroupAddForm extends AbstractForm {
 		}
 		
 		// no data provided and no POST data exists
-		if ($data === null || !is_array($data)) {
+		/*if ($data === null || !is_array($data)) {
 			// nothing to do here
 			return;
-		}
+		}*/
 		
 		foreach ($this->labelObjectTypeContainers as $objectTypeID => $container) {
 			if ($container->isBooleanOption()) {

@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\label\group\LabelGroupList;
 use wcf\data\label\LabelAction;
 use wcf\data\label\LabelEditor;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\package\PackageCache;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
@@ -166,6 +167,11 @@ class LabelAddForm extends AbstractForm {
 			$labelEditor->update(array(
 				'label' => 'wcf.acp.label.label'.$labelID
 			));
+		}
+		
+		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType');
+		foreach ($objectTypes as $objectType) {
+			$objectType->getProcessor()->save();
 		}
 		
 		$this->saved();

@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the label group edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.label
  * @subpackage	acp.form
@@ -71,6 +71,10 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 		
 		// update object type relations
 		$this->saveObjectTypeRelations($this->groupID);
+		
+		foreach ($this->labelObjectTypes as $objectTypeID => $labelObjectType) {
+			$labelObjectType->save();
+		}
 		
 		$this->saved();
 		

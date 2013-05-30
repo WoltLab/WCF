@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\label\Label;
 use wcf\data\label\LabelAction;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\package\PackageCache;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
@@ -76,6 +77,11 @@ class LabelEditForm extends LabelAddForm {
 			'groupID' => $this->groupID
 		)));
 		$this->objectAction->executeAction();
+		
+		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType');
+		foreach ($objectTypes as $objectType) {
+			$objectType->getProcessor()->save();
+		}
 		
 		$this->saved();
 		
