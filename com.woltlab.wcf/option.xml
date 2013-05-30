@@ -586,11 +586,6 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<categoryname>general.cache.memcached</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
-			
-			<option name="cache_source_memcached_use_pconnect">
-				<categoryname>general.cache.memcached</categoryname>
-				<optiontype>boolean</optiontype>
-			</option>
 			<!-- /general.cache -->
 			
 			<option name="attachment_storage">

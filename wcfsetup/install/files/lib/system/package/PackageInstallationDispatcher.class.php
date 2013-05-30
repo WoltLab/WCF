@@ -186,8 +186,8 @@ class PackageInstallationDispatcher {
 			
 			// rebuild config files for affected applications
 			$sql = "SELECT		package.packageID
-				FROM		wcf1_package_installation_queue queue,
-						wcf1_package package
+				FROM		wcf".WCF_N."_package_installation_queue queue,
+						wcf".WCF_N."_package package
 				WHERE		queue.processNo = ?
 						AND package.packageID = queue.packageID
 						AND package.packageID <> ?
