@@ -97,6 +97,9 @@ final class StringUtil {
 	public static function encodeJS($string) {
 		if (is_object($string)) $string = $string->__toString();
 		
+		// unify newlines
+		$string = self::unifyNewlines($string);
+		
 		// escape backslash
 		$string = self::replace("\\", "\\\\", $string);
 		
