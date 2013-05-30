@@ -944,7 +944,7 @@ WCF.Dropdown = {
 			else {
 				dropdownMenu.addClass('dropdownArrowRight');
 				
-				$right = $dropdownOffsets.left + $dropdownDimensions.width + 'px';
+				$right = ($windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width)) + 'px';
 			}
 			
 			dropdownMenu.css({
@@ -5438,6 +5438,10 @@ WCF.Search.Base = Class.extend({
 		}
 		
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
+		
+		if (!this._list.is(':visible')) {
+			WCF.Dropdown.toggleDropdown(this._searchInput.parents('.dropdown').wcfIdentify());
+		}
 		
 		// pre-select first item
 		this._itemIndex = -1;
