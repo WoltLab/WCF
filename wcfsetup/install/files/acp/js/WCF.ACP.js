@@ -656,6 +656,33 @@ WCF.ACP.Package.Installation = Class.extend({
 });
 
 /**
+ * Handles canceling the package installation at the package installation
+ * confirm page.
+ */
+WCF.ACP.Package.Installation.Cancel = Class.extend({
+	/**
+	 * Creates a new instance of WCF.ACP.Package.Installation.Cancel.
+	 * 
+	 * @param	integer		queueID
+	 */
+	init: function(queueID) {
+		$('#backButton').click(function() {
+			new WCF.Action.Proxy({
+				autoSend: true,
+				data: {
+					actionName: 'cancelInstallation',
+					className: 'wcf\\data\\package\\installation\\queue\\PackageInstallationQueueAction',
+					objectIDs: [ queueID ]
+				},
+				success: function(data) {
+					window.location = data.returnValues.url;
+				}
+			});
+		});
+	}
+});
+
+/**
  * Provides the package uninstallation.
  * 
  * @param	jQuery		elements
