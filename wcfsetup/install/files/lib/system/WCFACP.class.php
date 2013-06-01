@@ -60,7 +60,7 @@ class WCFACP extends WCF {
 	protected function initAuth() {
 		// this is a work-around since neither RequestHandler
 		// nor RouteHandler are populated right now
-		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
+		$pathInfo = RouteHandler::getPathInfo();
 		if (empty($pathInfo) || !preg_match('~^/(ACPCaptcha|Login|Logout)/~', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
 				// build redirect path

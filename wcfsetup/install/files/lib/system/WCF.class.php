@@ -15,6 +15,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\request\RouteHandler;
 use wcf\system\session\SessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
@@ -691,7 +692,8 @@ class WCF {
 	public static function getRequestURI() {
 		// resolve path and query components
 		$scriptName = $_SERVER['SCRIPT_NAME'];
-		if (empty($_SERVER['PATH_INFO'])) {
+		$pathInfo = RouteHandler::getPathInfo();
+		if (empty($pathInfo)) {
 			// bug fix if URL omits script name and path
 			$scriptName = substr($scriptName, 0, strrpos($scriptName, '/'));
 		}
