@@ -633,11 +633,11 @@ class PackageInstallationDispatcher {
 		else {
 			$document = PackageInstallationFormManager::getForm($this->queue, 'packageDir');
 			$document->handleRequest();
-			$packageDir = $document->getValue('packageDir');
+			$packageDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator($document->getValue('packageDir')));
 			
 			if ($packageDir !== null) {
 				// validate package dir
-				if (file_exists(FileUtil::addTrailingSlash($packageDir) . 'global.php')) {
+				if (file_exists($packageDir . 'global.php')) {
 					$document->setError('packageDir', WCF::getLanguage()->get('wcf.acp.package.packageDir.notAvailable'));
 					return $document;
 				}
@@ -648,15 +648,11 @@ class PackageInstallationDispatcher {
 					'packageDir' => FileUtil::getRelativePath(WCF_DIR, $packageDir)
 				));
 				
-				// parse domain path
-				$domainPath = FileUtil::getRelativePath(FileUtil::unifyDirSeperator($_SERVER['DOCUMENT_ROOT']), FileUtil::unifyDirSeperator($packageDir));
-				
-				// work-around for applications installed in document root
-				if ($domainPath == './') {
-					$domainPath = '';
-				}
-				
-				$domainPath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($domainPath));
+				// determine domain path, in some environments (e.g. ISPConfig) the $_SERVER paths are
+				// faked and differ from the real filesystem path
+				$currentPath = RouteHandler::getPath();
+				$pathToDocumentRoot = str_replace(RouteHandler::getPath(), '', FileUtil::unifyDirSeperator(WCF_DIR));
+				$domainPath = str_replace($pathToDocumentRoot, '', $packageDir);
 				
 				// update application path
 				$application = new Application($this->getPackage()->packageID);
