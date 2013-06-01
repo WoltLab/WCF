@@ -620,8 +620,7 @@ class PackageInstallationDispatcher {
 			$packageDir->setName('packageDir');
 			$packageDir->setLabel(WCF::getLanguage()->get('wcf.acp.package.packageDir.input'));
 			
-			$path = RouteHandler::getPath(array('wcf', 'acp'));
-			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator($_SERVER['DOCUMENT_ROOT'] . $path));
+			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(StringUtil::substring(WCF_DIR, 0, -4)));
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);
 			
