@@ -751,7 +751,7 @@ else {
 define('TMP_FILE_PREFIX', $prefix);
 
 // try to find the temp folder
-define('TMP_DIR', BasicFileUtil::getTempFolder());
+define('TMP_DIR', BasicFileUtil::getInstallTempFolder());
 
 /**
  * Reads a file resource from temp folder.
