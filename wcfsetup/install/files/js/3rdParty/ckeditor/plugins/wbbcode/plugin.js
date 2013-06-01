@@ -225,7 +225,7 @@
 		data = data.replace(/\[u\](.*?)\[\/u]/gi, '<u>$1</u>');
 		
 		// [s]
-		data = data.replace(/\[s\](.*?)\[\/s]/gi, '<strike>$1</strike>');
+		data = data.replace(/\[s\](.*?)\[\/s]/gi, '<s>$1</s>');
 		
 		// [sub]
 		data = data.replace(/\[sub\](.*?)\[\/sub]/gi, '<sub>$1</sub>');
@@ -327,8 +327,8 @@
 		html = html.replace(/<\/u>/gi, '[/u]');
 		
 		// [s]
-		html = html.replace(/<strike>/gi, '[s]');
-		html = html.replace(/<\/strike>/gi, '[/s]');
+		html = html.replace(/<s>/gi, '[s]');
+		html = html.replace(/<\/s>/gi, '[/s]');
 		
 		// [sub
 		html = html.replace(/<sub>/gi, '[sub]');

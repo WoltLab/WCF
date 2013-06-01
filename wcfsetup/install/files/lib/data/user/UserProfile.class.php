@@ -680,7 +680,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 */
 	public function showSignature() {
 		if (!$this->signature) return false;
-		if ($this->disabledSignature) return false;
+		if ($this->disableSignature) return false;
 		if (WCF::getUser()->userID && !WCF::getUser()->showSignature) return false;
 		
 		return true;
