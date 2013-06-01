@@ -5521,7 +5521,7 @@ WCF.Search.Base = Class.extend({
 			this._searchInput.val('');
 		}
 		
-		this._list.parent().removeClass('dropdownOpen').end().empty();
+		this._list.removeClass('dropdownOpen').end().empty();
 		
 		WCF.CloseOverlayHandler.removeCallback('WCF.Search.Base');
 		
