@@ -105,7 +105,29 @@ class RouteHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function matches() {
-		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
+		$pathInfo = '';
+		if (isset($_SERVER['ORIG_PATH_INFO'])) {
+			$pathInfo = $_SERVER['ORIG_PATH_INFO'];
+			
+			// in some configurations ORIG_PATH_INFO contains the path to the file
+			// if the intended PATH_INFO component is empty
+			if (!empty($pathInfo)) {
+				if (isset($_SERVER['SCRIPT_NAME']) && ($pathInfo == $_SERVER['SCRIPT_NAME'])) {
+					$pathInfo = '';
+				}
+				
+				if (isset($_SERVER['PHP_SELF']) && ($pathInfo == $_SERVER['PHP_SELF'])) {
+					$pathInfo = '';
+				}
+				
+				if (isset($_SERVER['SCRIPT_URL']) && ($pathInfo == $_SERVER['SCRIPT_URL'])) {
+					$pathInfo = '';
+				}
+			}
+		}
+		else if (isset($_SERVER['PATH_INFO'])) {
+			$pathInfo = $_SERVER['PATH_INFO'];
+		}
 		
 		foreach ($this->routes as $route) {
 			if (RequestHandler::getInstance()->isACPRequest() != $route->isACP()) {
