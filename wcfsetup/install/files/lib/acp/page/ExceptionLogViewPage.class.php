@@ -127,16 +127,16 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		$this->calculateNumberOfPages();
 		
 		$i = 0;
-		$exceptionRegex = new Regex('(?<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})
-Message: (?<message>.*?)
-File: (?<file>.*?) \((?<line>\d+)\)
-PHP version: (?<phpVersion>.*?)
-WCF version: (?<wcfVersion>.*?)
-Request URI: (?<requestURI>.*?)
-Referrer: (?<referrer>.*?)
-User-Agent: (?<userAgent>.*?)
+		$exceptionRegex = new Regex('(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})
+Message: (?P<message>.*?)
+File: (?P<file>.*?) \((?P<line>\d+)\)
+PHP version: (?P<phpVersion>.*?)
+WCF version: (?P<wcfVersion>.*?)
+Request URI: (?P<requestURI>.*?)
+Referrer: (?P<referrer>.*?)
+User-Agent: (?P<userAgent>.*?)
 Stacktrace: 
-(?<stacktrace>.*)', Regex::DOT_ALL);
+(?P<stacktrace>.*)', Regex::DOT_ALL);
 		$stackTraceFormatter = new Regex('^\s+(#\d+)', Regex::MULTILINE);
 		foreach ($this->exceptions as $key => $val) {
 			$i++;
