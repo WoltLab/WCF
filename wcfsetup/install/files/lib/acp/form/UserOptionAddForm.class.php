@@ -124,13 +124,13 @@ class UserOptionAddForm extends AbstractForm {
 	 * available option types
 	 * @var array<string>
 	 */
-	public static $availableOptionTypes = array('birthday', 'boolean', 'date', 'integer', 'float', 'password', 'multiselect', 'radiobuttons', 'select', 'text', 'textarea', 'message');
+	public static $availableOptionTypes = array('birthday', 'boolean', 'date', 'integer', 'float', 'password', 'multiSelect', 'radioButton', 'select', 'text', 'textarea', 'message');
 	
 	/**
 	 * list of option type that require select options
 	 * @var array<string>
 	 */
-	public static $optionTypesUsingSelectOptions = array('multiselect', 'radiobuttons', 'select');
+	public static $optionTypesUsingSelectOptions = array('multiSelect', 'radioButton', 'select');
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()

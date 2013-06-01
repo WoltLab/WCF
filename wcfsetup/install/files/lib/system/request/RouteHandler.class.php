@@ -261,7 +261,10 @@ class RouteHandler extends SingletonFactory {
 	 */
 	public static function getPathInfo() {
 		if (empty(self::$pathInfo)) {
-			if (isset($_SERVER['ORIG_PATH_INFO'])) {
+			if (isset($_SERVER['PATH_INFO'])) {
+				self::$pathInfo = $_SERVER['PATH_INFO'];
+			}
+			else if (isset($_SERVER['ORIG_PATH_INFO'])) {
 				self::$pathInfo = $_SERVER['ORIG_PATH_INFO'];
 					
 				// in some configurations ORIG_PATH_INFO contains the path to the file
@@ -279,9 +282,6 @@ class RouteHandler extends SingletonFactory {
 						self::$pathInfo = '';
 					}
 				}
-			}
-			else if (isset($_SERVER['PATH_INFO'])) {
-				self::$pathInfo = $_SERVER['PATH_INFO'];
 			}
 		}
 		

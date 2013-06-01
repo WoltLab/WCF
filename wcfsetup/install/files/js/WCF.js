@@ -5290,7 +5290,7 @@ WCF.Search.Base = Class.extend({
 				data: {
 					excludedSearchValues: this._excludedSearchValues,
 					searchString: $content
-				}		
+				}
 			};
 			
 			this._proxy.setOption('data', {
@@ -5442,7 +5442,7 @@ WCF.Search.Base = Class.extend({
 		
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
 		
-		if (!this._list.is(':visible')) {
+		if (!WCF.Dropdown.getDropdownMenu(this._searchInput.parents('.dropdown').wcfIdentify()).hasClass('dropdownOpen')) {
 			WCF.Dropdown.toggleDropdown(this._searchInput.parents('.dropdown').wcfIdentify());
 		}
 		
@@ -5521,7 +5521,11 @@ WCF.Search.Base = Class.extend({
 			this._searchInput.val('');
 		}
 		
-		this._list.parent().removeClass('dropdownOpen').end().empty();
+		// close dropdown
+		WCF.Dropdown.getDropdown(this._searchInput.parents('.dropdown').wcfIdentify()).removeClass('dropdownOpen');
+		WCF.Dropdown.getDropdownMenu(this._searchInput.parents('.dropdown').wcfIdentify()).removeClass('dropdownOpen');
+		
+		this._list.end().empty();
 		
 		WCF.CloseOverlayHandler.removeCallback('WCF.Search.Base');
 		
