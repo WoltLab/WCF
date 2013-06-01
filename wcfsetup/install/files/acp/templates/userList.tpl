@@ -7,7 +7,7 @@
 {include file='header'}
 
 {event name='javascriptInclude'}
-<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.User.js?v={@$__wcfVersion}"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
