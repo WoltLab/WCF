@@ -10,7 +10,10 @@
 			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}',
 			'wcf.acp.package.update.title': '{lang}wcf.acp.package.update.title{/lang}'
 		});
+		
 		new WCF.ACP.Package.Installation({@$queue->queueID}, undefined, {if $queue->action == 'install'}true, false{else}false, true{/if});
+		
+		new WCF.ACP.Package.Installation.Cancel({@$queue->queueID});
 	});
 	//]]>
 </script>
@@ -114,7 +117,7 @@
 {/if}
 
 <div class="formSubmit">
-	{* @todo: <input type="button" onclick="document.location.href=fixURL('{link controller='Package'}action={@$action}&queueID={@$queue->queueID}&step=cancel{/link}')" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />*}
+	<input type="button" id="backButton" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />
 	{if $missingPackages == 0 && $excludingPackages|count == 0 && $excludedPackages|count == 0}
 		<input type="button" class="buttonPrimary" id="submitButton" value="{lang}wcf.global.button.next{/lang}" class="default" accesskey="s" />
 	{/if}

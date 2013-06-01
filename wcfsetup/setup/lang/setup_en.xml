@@ -59,7 +59,7 @@
 		<item name="wcf.global.configureDB.password"><![CDATA[Password]]></item>
 		<item name="wcf.global.configureDB.database"><![CDATA[Database Name]]></item>
 		<item name="wcf.global.configureDB.database.description"><![CDATA[The database must already exist.]]></item>
-		<item name="wcf.global.configureDB.number"><![CDATA[Installatio Number]]></item>
+		<item name="wcf.global.configureDB.number"><![CDATA[Installation Number]]></item>
 		<item name="wcf.global.configureDB.number.description"><![CDATA[The installation number allows you to install multiple installations of this software into the same database. If this is your first installation in this database, you should enter <em>1</em>.]]></item>	
 		<item name="wcf.global.configureDB.error"><![CDATA[An error has accured while trying to connect to your database:
 		<br /><strong>{$exception->getMessage()}{if $exception|get_class == 'DatabaseException'}<br />{$exception->getErrorDesc()}{/if}</strong>]]></item>
