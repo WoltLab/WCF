@@ -117,11 +117,7 @@ class Poll extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function isFinished() {
-		if ($this->endTime >= TIME_NOW) {
-			return true;
-		}
-		
-		return false;
+		return $this->endTime <= TIME_NOW;
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\comment;
 use wcf\data\comment\response\StructuredCommentResponse;
+use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
 
@@ -101,6 +102,10 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 	 * @return	wcf\data\user\UserProfile
 	 */
 	public function getUserProfile() {
+		if ($this->userProfile === null) {
+			$this->userProfile = new UserProfile(new User(null, $this->data));
+		}
+		
 		return $this->userProfile;
 	}
 	

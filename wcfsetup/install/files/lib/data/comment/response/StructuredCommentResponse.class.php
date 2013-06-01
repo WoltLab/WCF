@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\comment\response;
+use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
 
@@ -52,6 +53,10 @@ class StructuredCommentResponse extends DatabaseObjectDecorator {
 	 * @return	wcf\data\user\UserProfile
 	 */
 	public function getUserProfile() {
+		if ($this->userProfile === null) {
+			$this->userProfile = new UserProfile(new User(null, $this->data));
+		}
+		
 		return $this->userProfile;
 	}
 	

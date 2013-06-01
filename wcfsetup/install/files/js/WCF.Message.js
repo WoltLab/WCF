@@ -2408,6 +2408,7 @@ WCF.Message.Quote.Manager = Class.extend({
 			
 			this._proxy.setOption('data', {
 				actionName: 'remove',
+				getFullQuoteObjectIDs: this._handlers.length > 0,
 				objectTypes: $objectTypes,
 				quoteIDs: $quoteIDs
 			});
@@ -2452,12 +2453,13 @@ WCF.Message.Quote.Manager = Class.extend({
 	},
 	
 	/**
-	 * Remoes all marked quote ids.
+	 * Removes all marked quote ids.
 	 */
 	removeMarkedQuotes: function() {
 		if (this._removeOnSubmit.length) {
 			this._proxy.setOption('data', {
-				actionName: 'removeMarkedQuotes'
+				actionName: 'removeMarkedQuotes',
+				getFullQuoteObjectIDs: this._handlers.length > 0
 			});
 			this._proxy.sendRequest();
 		}
@@ -2474,6 +2476,7 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		this._proxy.setOption('data', {
 			actionName: 'count',
+			getFullQuoteObjectIDs: this._handlers.length > 0,
 			objectTypes: $objectTypes
 		});
 		this._proxy.sendRequest();
