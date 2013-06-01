@@ -12,13 +12,20 @@ use wcf\util\StringUtil;
  * Handles message quotes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.message
  * @subpackage	action
  * @category	Community Framework
  */
 class MessageQuoteAction extends AJAXProxyAction {
+	/**
+	 * indicates if the WCF.Message.Quote.Manager object requesting data has any
+	 * quote handlers which require updated object ids of full quotes
+	 * @var	integer
+	 */
+	public $_getFullQuoteObjectIDs = false;
+	
 	/**
 	 * list of quote ids
 	 * @var	array<string>
@@ -38,6 +45,7 @@ class MessageQuoteAction extends AJAXProxyAction {
 		AbstractSecureAction::readParameters();
 		
 		if (isset($_POST['actionName'])) $this->actionName = StringUtil::trim($_POST['actionName']);
+		if (isset($_POST['getFullQuoteObjectIDs'])) $this->_getFullQuoteObjectIDs = intval($_POST['getFullQuoteObjectIDs']); 
 		if (isset($_POST['objectTypes']) && is_array($_POST['objectTypes'])) $this->objectTypes = ArrayUtil::trim($_POST['objectTypes']); 
 		if (isset($_POST['quoteIDs'])) {
 			$this->quoteIDs = ArrayUtil::trim($_POST['quoteIDs']);
@@ -61,13 +69,14 @@ class MessageQuoteAction extends AJAXProxyAction {
 		switch ($this->actionName) {
 			case 'count':
 				$returnValues = array(
-					'count' => $this->count(),
-					'fullQuoteObjectIDs' => $this->getFullQuoteObjectIDs()
+					'count' => $this->count()
 				);
 			break;
 			
 			case 'getQuotes':
-				$returnValues = array('template' => $this->getQuotes());
+				$returnValues = array(
+					'template' => $this->getQuotes()
+				);
 			break;
 			
 			case 'markForRemoval':
@@ -76,21 +85,23 @@ class MessageQuoteAction extends AJAXProxyAction {
 			
 			case 'remove':
 				$returnValues = array(
-					'count' => $this->remove(),
-					'fullQuoteObjectIDs' => $this->getFullQuoteObjectIDs()
+					'count' => $this->remove()
 				);
 			break;
 			
 			case 'removeMarkedQuotes':
 				$returnValues = array(
-					'count' => $this->removeMarkedQuotes(),
-					'fullQuoteObjectIDs' => $this->getFullQuoteObjectIDs()
+					'count' => $this->removeMarkedQuotes()
 				);
 			break;
 			
 			default:
 				throw new SystemException("Unknown action '".$this->actionName."'");
 			break;
+		}
+		
+		if (is_array($returnValues) && $this->_getFullQuoteObjectIDs) {
+			$returnValues['fullQuoteObjectIDs'] = $this->getFullQuoteObjectIDs();
 		}
 		
 		$this->executed();
