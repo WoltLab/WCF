@@ -94,7 +94,7 @@ class Gravatar extends DefaultAvatar {
 	 * @return	boolean
 	 */
 	public static function test($email) {
-		$gravatarURL = sprintf(self::GRAVATAR_BASE, md5(StringUtil::toLowerCase($email)), 80, '404');
+		$gravatarURL = sprintf(self::GRAVATAR_BASE, md5(StringUtil::toLowerCase($email)), 80, GRAVATAR_DEFAULT_TYPE);
 		try {
 			$tmpFile = FileUtil::downloadFileFromHttp($gravatarURL, 'gravatar');
 			@unlink($tmpFile);
