@@ -336,14 +336,14 @@ class BasicFileUtil {
 		$startIndex = 0;
 		if (is_dir($filename)) {
 			if (self::$mode == 0644) {
-				chmod($filename, 0755);
+				@chmod($filename, 0755);
 			}
 			else {
-				chmod($filename, 0777);
+				@chmod($filename, 0777);
 			}
 		}
 		else {
-			chmod($filename, self::$mode);
+			@chmod($filename, self::$mode);
 		}
 		
 		if (!is_writable($filename)) {
