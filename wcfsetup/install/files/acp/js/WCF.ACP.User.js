@@ -59,7 +59,7 @@ WCF.ACP.User.EnableHandler = {
 	disable: function(userIDs) {
 		this._proxy.setOption('data', {
 			actionName: 'disable',
-			className: 'wcf\\data\\user\\ExtendedUserAction',
+			className: 'wcf\\data\\user\\UserAction',
 			objectIDs: userIDs
 		});
 		this._proxy.sendRequest();
@@ -73,7 +73,7 @@ WCF.ACP.User.EnableHandler = {
 	enable: function(userIDs) {
 		this._proxy.setOption('data', {
 			actionName: 'enable',
-			className: 'wcf\\data\\user\\ExtendedUserAction',
+			className: 'wcf\\data\\user\\UserAction',
 			objectIDs: userIDs
 		});
 		this._proxy.sendRequest();

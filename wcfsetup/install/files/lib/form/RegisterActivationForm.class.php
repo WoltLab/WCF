@@ -1,7 +1,7 @@
 <?php
 namespace wcf\form;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\ExtendedUserAction;
+use wcf\data\user\UserAction;
 use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
@@ -80,7 +80,7 @@ class RegisterActivationForm extends AbstractForm {
 		parent::save();
 		
 		// enable user
-		$this->objectAction = new ExtendedUserAction(array($this->user), 'enable');
+		$this->objectAction = new UserAction(array($this->user), 'enable');
 		$this->objectAction->executeAction();
 		$this->saved();
 		
