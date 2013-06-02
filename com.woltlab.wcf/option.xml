@@ -829,6 +829,17 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<defaultvalue>192</defaultvalue>
 				<minvalue>48</minvalue>
 			</option>
+			<option name="gravatar_default_type">
+				<categoryname>user.avatar</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue><![CDATA[404]]></defaultvalue>
+				<selectoptions><![CDATA[404:wcf.user.avatar.404
+identicon:wcf.user.avatar.gravatarType.identicon
+wavatar:wcf.user.avatar.gravatarType.wavatar
+monsterid:wcf.user.avatar.gravatarType.monsterid
+retro:wcf.user.avatar.gravatarType.retro]]></selectoptions>
+				<options>module_gravatar</options>
+			</option>
 			<!-- /user.avatar -->
 			
 			<!-- user.signature -->

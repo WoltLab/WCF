@@ -690,6 +690,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Third-Party Authentication]]></item>
 		<item name="wcf.acp.option.max_avatar_height"><![CDATA[Maximum Avatar Height]]></item>
 		<item name="wcf.acp.option.max_avatar_width"><![CDATA[Maximum Avatar Width]]></item>
+		<item name="wcf.acp.option.gravatar_default_type"><![CDATA[Default Gravatar Type]]></item>
+		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[The <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https://de.gravatar.com/site/implement/images/#default-image">default Gravatar type</a> used if no matching Gravatar was found.]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
 		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Enables support for Gravatars (“Global Recognized Avatar”).]]></item>
 		<item name="wcf.acp.option.module_users_online"><![CDATA[“Users Online” List]]></item>
@@ -2142,6 +2144,11 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.avatar.alt"><![CDATA[User Avatar]]></item>
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID || $__wcf->user->enableGravatar}have banned your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
+		<item name="wcf.user.avatar.gravatarType.404"><![CDATA[No default Gravatar]]></item>
+		<item name="wcf.user.avatar.gravatarType.identicon"><![CDATA[Identicon]]></item>
+		<item name="wcf.user.avatar.gravatarType.wavatar"><![CDATA[Wavatar]]></item>
+		<item name="wcf.user.avatar.gravatarType.monsterid"><![CDATA[Monster id]]></item>
+		<item name="wcf.user.avatar.gravatarType.retro"><![CDATA[Retro]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Own Avatar]]></item>
 		<item name="wcf.user.avatar.type.custom.crop"><![CDATA[Crop Avatar]]></item>
 		<item name="wcf.user.avatar.type.custom.crop.description"><![CDATA[The scaled versions of your avatar are based on a square cutout. You may specify an individual cutout by holding down your mouse button and moving the highlighted area to the desired position.]]></item>
