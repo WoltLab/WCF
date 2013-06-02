@@ -144,6 +144,7 @@
 				</category>
 					<category name="security.antispam.recaptcha">
 						<parent>security.antispam</parent>
+						<options>module_system_recaptcha</options>
 					</category>
 				
 				<category name="security.censorship">
@@ -803,16 +804,19 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<categoryname>security.antispam</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<options>module_system_recaptcha</options>
 			</option>
 			<option name="lost_password_use_captcha">
 				<categoryname>security.antispam</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<options>module_system_recaptcha</options>
 			</option>
 			<option name="profile_mail_use_captcha">
 				<categoryname>security.antispam</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<options>module_system_recaptcha</options>
 			</option>
 			<!-- /user.security -->
 			
@@ -1035,6 +1039,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			<option name="search_use_captcha">
 				<categoryname>security.antispam</categoryname>
 				<optiontype>boolean</optiontype>
+				<options>module_system_recaptcha</options>
 			</option>
 			
 			<option name="search_default_sort_field">
