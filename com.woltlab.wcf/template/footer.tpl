@@ -1,12 +1,13 @@
-			{event name='contents'}
+				{event name='contents'}
+				
+				{if $skipBreadcrumbs|empty}{include file='breadcrumbs' __microdata=false}{/if}
+				
+			</section>
 			
-			{if $skipBreadcrumbs|empty}{include file='breadcrumbs' __microdata=false}{/if}
-			
-		</section>
-		
-		{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
-			{@$__sidebar}
-		{/if} 
+			{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
+				{@$__sidebar}
+			{/if}
+		</div>
 	</div>
 </div>
 

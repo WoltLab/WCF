@@ -173,40 +173,41 @@
 	
 	<div id="main" class="layoutFluid{if PACKAGE_ID && $__wcf->user->userID && $__wcf->getACPMenu()->getMenuItems('')|count} sidebarOrientationLeft{/if}">
 		<div>
-			{hascontent}
-				<aside class="sidebar collapsibleMenu">
-					<div>
-						{content}
-							{* work-around for unknown core-object during WCFSetup *}
-							{if PACKAGE_ID && $__wcf->user->userID}
-								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_parentMenuItem}
-									<div id="{$_parentMenuItem->menuItem}-container" style="display: none;" class="menuGroup collapsibleMenus" data-parent-menu-item="{$_parentMenuItem->menuItem}">
-										{foreach from=$__wcf->getACPMenu()->getMenuItems($_parentMenuItem->menuItem) item=_menuItem}
-											<fieldset>
-												<legend class="menuHeader" data-menu-item="{$_menuItem->menuItem}">{@$_menuItem}</legend>
-												
-												<nav class="menuGroupItems">
-													<ul id="{$_menuItem->menuItem}">
-														{foreach from=$__wcf->getACPMenu()->getMenuItems($_menuItem->menuItem) item=menuItemCategory}
-															{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
-																{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
-																	<li id="{$subMenuItem->menuItem}" data-menu-item="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{@$subMenuItem}</a></li>
-																{/foreach}
-															{else}
-																<li id="{$menuItemCategory->menuItem}" data-menu-item="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{@$menuItemCategory}</a></li>
-															{/if}
-														{/foreach}
-													</ul>
-												</nav>
-											</fieldset>
-										{/foreach}
-									</div>
-								{/foreach}
-							{/if}
-						{/content}
-					</div>
-				</aside>
-			{/hascontent}
-			
-			<section id="content" class="content">
+			<div>
+				{hascontent}
+					<aside class="sidebar collapsibleMenu">
+						<div>
+							{content}
+								{* work-around for unknown core-object during WCFSetup *}
+								{if PACKAGE_ID && $__wcf->user->userID}
+									{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_parentMenuItem}
+										<div id="{$_parentMenuItem->menuItem}-container" style="display: none;" class="menuGroup collapsibleMenus" data-parent-menu-item="{$_parentMenuItem->menuItem}">
+											{foreach from=$__wcf->getACPMenu()->getMenuItems($_parentMenuItem->menuItem) item=_menuItem}
+												<fieldset>
+													<legend class="menuHeader" data-menu-item="{$_menuItem->menuItem}">{@$_menuItem}</legend>
+													
+													<nav class="menuGroupItems">
+														<ul id="{$_menuItem->menuItem}">
+															{foreach from=$__wcf->getACPMenu()->getMenuItems($_menuItem->menuItem) item=menuItemCategory}
+																{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
+																	{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
+																		<li id="{$subMenuItem->menuItem}" data-menu-item="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{@$subMenuItem}</a></li>
+																	{/foreach}
+																{else}
+																	<li id="{$menuItemCategory->menuItem}" data-menu-item="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{@$menuItemCategory}</a></li>
+																{/if}
+															{/foreach}
+														</ul>
+													</nav>
+												</fieldset>
+											{/foreach}
+										</div>
+									{/foreach}
+								{/if}
+							{/content}
+						</div>
+					</aside>
+				{/hascontent}
+				
+				<section id="content" class="content">
 				
