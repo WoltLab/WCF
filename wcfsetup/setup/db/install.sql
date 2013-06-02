@@ -338,7 +338,7 @@ DROP TABLE IF EXISTS wcf1_label_group;
 CREATE TABLE wcf1_label_group (
 	groupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	groupName VARCHAR(80) NOT NULL,
-	forceSelection TINYINT(1) NOT NULL DEFAULT 0,
+	forceSelection TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_label_group_to_object;
@@ -1151,7 +1151,7 @@ CREATE TABLE wcf1_user_notification_event (
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	permissions TEXT,
 	options TEXT,
-	preset TINYINT(1) NOT DEFAULT 0,
+	preset TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY eventName (eventName, objectTypeID)
 );
 
