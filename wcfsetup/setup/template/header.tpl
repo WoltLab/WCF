@@ -44,10 +44,10 @@
 	
 	<div id="main" class="layoutFluid">
 		<div>
-			<section id="content" class="content">
-				<header class="boxHeadline">
-					<h1>{lang}wcf.global.title{/lang}</h1>
-					<p>{lang}wcf.global.title.subtitle{/lang}</p>
-					<p><progress id="packageInstallationProgress" value="{@$progress}" max="100" style="width: 300px;" title="{@$progress}%">{@$progress}%</progress></p>
-				</header>
-				
+			<div>
+				<section id="content" class="content">
+					<header class="boxHeadline">
+						<h1>{lang}wcf.global.title{/lang}</h1>
+						<p>{lang}wcf.global.title.subtitle{/lang}</p>
+						<p><progress id="packageInstallationProgress" value="{@$progress}" max="100" style="width: 300px;" title="{@$progress}%">{@$progress}%</progress></p>
+					</header>

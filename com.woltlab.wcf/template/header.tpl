@@ -45,37 +45,38 @@
 
 <div id="main" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst}{if $sidebarOrientation == 'right' && $sidebarCollapsed} sidebarCollapsed{/if}{/if}">
 	<div>
-		{capture assign='__sidebar'}
-			{if $sidebar|isset}
-				<aside class="sidebar"{if $sidebarOrientation|isset && $sidebarOrientation == 'right'} data-is-open="{if $sidebarCollapsed}false{else}true{/if}" data-sidebar-name="{$sidebarName}"{/if}>
-					<div>
-						{event name='sidebarBoxesTop'}
-						
-						{@$sidebar}
-						
-						{event name='sidebarBoxesBottom'}
-					</div>
-				</aside>
-				
-				{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
-					<script type="text/javascript">
-						//<![CDATA[
-						$(function() {
-							new WCF.Collapsible.Sidebar();
-						});
-						//]]>
-					</script>
+		<div>
+			{capture assign='__sidebar'}
+				{if $sidebar|isset}
+					<aside class="sidebar"{if $sidebarOrientation|isset && $sidebarOrientation == 'right'} data-is-open="{if $sidebarCollapsed}false{else}true{/if}" data-sidebar-name="{$sidebarName}"{/if}>
+						<div>
+							{event name='sidebarBoxesTop'}
+							
+							{@$sidebar}
+							
+							{event name='sidebarBoxesBottom'}
+						</div>
+					</aside>
+					
+					{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
+						<script type="text/javascript">
+							//<![CDATA[
+							$(function() {
+								new WCF.Collapsible.Sidebar();
+							});
+							//]]>
+						</script>
+					{/if}
 				{/if}
-			{/if}
-		{/capture}
-		
-		{if !$sidebarOrientation|isset || $sidebarOrientation == 'left'}
-			{@$__sidebar}
-		{/if} 
+			{/capture}
+			
+			{if !$sidebarOrientation|isset || $sidebarOrientation == 'left'}
+				{@$__sidebar}
+			{/if} 
+					
+			<section id="content" class="content">
 				
-		<section id="content" class="content">
-			
-			{event name='contents'}
-			
-			{if $skipBreadcrumbs|empty}{include file='breadcrumbs'}{/if}
+				{event name='contents'}
+				
+				{if $skipBreadcrumbs|empty}{include file='breadcrumbs'}{/if}
 			

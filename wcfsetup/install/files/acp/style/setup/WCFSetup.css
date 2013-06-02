@@ -1,4 +1,4 @@
-/* stylesheet for 'Blue Temptation', generated on Tue, 28 May 2013 13:51:45 +0000 -- DO NOT EDIT */
+/* stylesheet for 'Blue Temptation', generated on Sun, 02 Jun 2013 17:58:58 +0000 -- DO NOT EDIT */
 
 html,
 body,
@@ -415,6 +415,7 @@ q:after {
 }
 .codeBox {
   background-color: #ffffff;
+  clear: both;
 }
 .codeBox > div {
   padding: 14px 21px 14px 14px;
@@ -544,6 +545,7 @@ q:after {
 }
 .quoteBox {
   background-color: #ffffff;
+  clear: both;
   min-height: 28px;
   margin-bottom: 4px;
   position: relative;
@@ -590,6 +592,7 @@ q:after {
 }
 .spoilerBox {
   background-color: #ffffff;
+  clear: both;
   padding-bottom: 7px;
 }
 .spoilerBox > header {
@@ -2233,7 +2236,7 @@ a.badge:hover.pink {
 @font-face {
   font-family: 'FontAwesome';
   src: url('../font/fontawesome-webfont.eot?v=3.1.1');
-  src: url('../font/fontawesome-webfont.eot?#iefix&v=3.1.1') format('embedded-opentype'), url('../font/fontawesome-webfont.ttf?v=3.1.1') format('truetype');
+  src: url('../font/fontawesome-webfont.eot?#iefix&v=3.1.1') format('embedded-opentype'), url('../font/fontawesome-webfont.woff?v=3.1.1') format('woff'), url('../font/fontawesome-webfont.ttf?v=3.1.1') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -2282,7 +2285,6 @@ a > span.icon:not(.pointer) {
 }
 .icon-spinner {
   height: auto;
-  width: auto;
   -moz-animation: spin 2s infinite linear;
   -o-animation: spin 2s infinite linear;
   -webkit-animation: spin 2s infinite linear;
@@ -3422,7 +3424,7 @@ a > span.icon:not(.pointer) {
 }
 @media only screen and (min-width: 801px) {
   body {
-    min-width: 1024px;
+    min-width: 980px;
   }
 }
 #pageHeader {
@@ -3994,21 +3996,21 @@ a > span.icon:not(.pointer) {
 }
 #main {
   z-index: 110;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  display: table;
-  width: 100%;
-  table-layout: fixed;
 }
 #main > div {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+#main > div > div {
   display: table-row;
 }
-#main > div > .sidebar,
-#main > div > .content {
+#main > div > div > .sidebar,
+#main > div > div > .content {
   display: table-cell;
   vertical-align: top;
 }
-#main > div > .sidebar {
+#main > div > div > .sidebar {
   background-color: #d8e7f5;
   width: 300px;
   z-index: 120;
@@ -4019,10 +4021,10 @@ a > span.icon:not(.pointer) {
   -webkit-transition-timing-function: ease;
   transition-timing-function: ease;
 }
-#main > div > .sidebar > span {
+#main > div > div > .sidebar > span {
   position: relative;
 }
-#main > div > .sidebar > span > .collapsibleButton {
+#main > div > div > .sidebar > span > .collapsibleButton {
   background-color: #d8e7f5;
   border-radius: 6px 0 0 6px;
   display: block;
@@ -4033,7 +4035,7 @@ a > span.icon:not(.pointer) {
   top: 0;
   width: 24px;
 }
-#main > div > .sidebar > span > .collapsibleButton:before {
+#main > div > div > .sidebar > span > .collapsibleButton:before {
   content: "\f054";
   font-family: FontAwesome;
   font-size: 14px;
@@ -4042,7 +4044,7 @@ a > span.icon:not(.pointer) {
   top: 4px;
   text-shadow: 0 1px 0 rgba(255,255,255,0.8);
 }
-#main > div > .sidebar > div {
+#main > div > div > .sidebar > div {
   overflow: hidden;
   width: 300px;
   -webkit-transition-property: width;
@@ -4052,7 +4054,7 @@ a > span.icon:not(.pointer) {
   -webkit-transition-timing-function: ease;
   transition-timing-function: ease;
 }
-#main > div > .content {
+#main > div > div > .content {
   background-color: #ffffff;
   min-height: 100px;
   padding: 7px 38px 21px;
@@ -4061,26 +4063,28 @@ a > span.icon:not(.pointer) {
 #main:not(.sidebarOrientationLeft):not(.sidebarOrientationRight) .sidebar {
   display: none;
 }
-#main.sidebarOrientationRight.sidebarCollapsed > div > .sidebar {
+#main.sidebarOrientationRight.sidebarCollapsed > div > div > .sidebar {
   width: 20px;
 }
-#main.sidebarOrientationRight.sidebarCollapsed > div > .sidebar > span > .collapsibleButton:before {
+#main.sidebarOrientationRight.sidebarCollapsed > div > div > .sidebar > span > .collapsibleButton:before {
   content: "\f053";
 }
-#main.sidebarOrientationRight.sidebarCollapsed > div > .sidebar > div {
+#main.sidebarOrientationRight.sidebarCollapsed > div > div > .sidebar > div {
   width: 0;
 }
 @media only screen and (max-width: 800px) {
   #main {
-    display: block;
     position: relative;
     margin-top: 7px;
   }
   #main > div {
     display: block;
   }
-  #main > div > .sidebar,
-  #main > div > .content {
+  #main > div > div {
+    display: block;
+  }
+  #main > div > div > .sidebar,
+  #main > div > div > .content {
     display: block;
   }
   #main.sidebarOrientationRight .sidebar {
@@ -5927,6 +5931,9 @@ li:nth-child(2n+1) .message .messageContent {
 .cke_combo__fontsize .cke_combo_text {
   width: auto !important;
 }
+.cke_dialog_background_cover {
+  background-color: #000 !important;
+}
 @media only screen and (max-width: 800px) {
   .message.messageSidebarOrientationLeft .messageContent,
   .message.messageSidebarOrientationRight .messageContent {
@@ -6817,10 +6824,10 @@ body,
     -webkit-transition-timing-function: linear;
     transition-timing-function: linear;
   }
-  #main > div > .sidebar {
+  #main > div > div > .sidebar {
     box-shadow: inset 0 0 2px 0 rgba(0,0,0,0.1);
   }
-  #main > div > .sidebar > span > .collapsibleButton {
+  #main > div > div > .sidebar > span > .collapsibleButton {
     border-width: 1px 0 1px 1px;
     border-style: solid;
     border-color: #b8d3ed;
