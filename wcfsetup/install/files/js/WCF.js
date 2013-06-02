@@ -2561,6 +2561,9 @@ WCF.Date.Picker = {
 			// update $input
 			$input.prop('type', 'text').addClass('jsDatePicker');
 			
+			// set placeholder
+			if ($input.data('placeholder')) $input.attr('placeholder', $input.data('placeholder'));
+			
 			// insert a hidden element representing the actual date
 			$input.removeAttr('name');
 			$input.before('<input type="hidden" id="' + $input.wcfIdentify() + 'DatePicker" name="' + $inputName + '" value="' + $inputValue + '" />');
