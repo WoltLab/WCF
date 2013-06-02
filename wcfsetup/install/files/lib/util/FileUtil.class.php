@@ -500,10 +500,10 @@ final class FileUtil {
 			if (defined('NO_IMPORTS')) {
 				// do not use PHP_OS here, as this represents the system it was built on != running on
 				if (strpos(php_uname(), 'Windows') !== false) {
-					self::$mode = 0777;
+					self::$mode = '0777';
 				}
 				else {
-					self::$mode = 0666;
+					self::$mode = '0666';
 				
 					$tmpFilename = '__permissions_'.sha1(time()).'.txt';
 					@touch($tmpFilename);
@@ -516,7 +516,7 @@ final class FileUtil {
 						$fileOwner = fileowner($tmpFilename);
 							
 						if ($scriptOwner === $fileOwner) {
-							self::$mode = 0644;
+							self::$mode = '0644';
 						}
 							
 						@unlink($tmpFilename);
