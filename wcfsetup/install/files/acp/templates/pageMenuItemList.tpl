@@ -94,7 +94,7 @@
 		<legend>{lang}wcf.acp.pageMenu.footer{/lang}</legend>
 		
 		<div id="pageMenuItemFooterList" class="container containerPadding sortableListContainer">
-			<ol class="sortableList simpleSortableList">
+			<ol class="sortableList simpleSortableList" data-object-id="0">
 				{content}
 					{foreach from=$footerItems item=menuItem}
 						<li class="sortableNode" data-object-id="{@$menuItem->menuItemID}">
