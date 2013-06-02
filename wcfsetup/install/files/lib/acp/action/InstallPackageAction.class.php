@@ -157,6 +157,7 @@ class InstallPackageAction extends AbstractDialogAction {
 		$queueID = $this->installation->nodeBuilder->getQueueByNode($this->installation->queue->processNo, $nextNode);
 		
 		WCF::getTPL()->assign(array(
+			'installationType' => $this->queue->action,
 			'packageName' => $this->installation->queue->packageName
 		));
 		
@@ -208,12 +209,13 @@ class InstallPackageAction extends AbstractDialogAction {
 	protected function getCurrentAction($queueID) {
 		if ($queueID === null) {
 			// success message
-			$currentAction = WCF::getLanguage()->get('wcf.acp.package.installation.step.install.success');
+			$currentAction = WCF::getLanguage()->get('wcf.acp.package.installation.step.' . $this->queue->action . '.success');
 		}
 		else {
 			// build package name
 			$packageName = $this->installation->nodeBuilder->getPackageNameByQueue($queueID);
-			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.installation.step.install', array('packageName' => $packageName));
+			$installationType = $this->installation->nodeBuilder->getInstallationTypeByQueue($queueID);
+			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.installation.step.'.$installationType, array('packageName' => $packageName));
 		}
 		
 		return $currentAction;

@@ -12,7 +12,7 @@
 	<script type="text/javascript">
 		//<![CDATA[
 		$(function() {
-			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', {
+			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', '', {
 				mailID: {@$mailID}
 			});
 		});
@@ -108,7 +108,7 @@
 							{/if}
 						</small>
 					{/if}
-					<small>{lang}wcf.acp.user.sendMail.from.description{/lang}</small><!-- ToDo: Language variable contains paragraphs! -->
+					<small>{lang}wcf.acp.user.sendMail.from.description{/lang}</small>
 				</dd>
 			</dl>
 			

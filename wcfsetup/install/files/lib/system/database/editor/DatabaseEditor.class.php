@@ -127,11 +127,4 @@ abstract class DatabaseEditor {
 	 * @param	string		$indexName
 	 */
 	abstract public function dropForeignKey($tableName, $indexName);
-	
-	/**
-	 * Drops all given databases.
-	 * 
-	 * @param	array		$conflictedTables
-	 */
-	abstract public function dropConflictedTables(array $conflictedTables);
 }

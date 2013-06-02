@@ -66,6 +66,26 @@ final class DirectoryUtil {
 	);
 	
 	/**
+	 * Creates a new instance of DirectoryUtil.
+	 * 
+	 * @param	string		$directory	directory path
+	 * @param	boolean		$recursive	created a recursive directory iterator
+	 * @see		wcf\util\DirectoryUtil::getInstance()
+	 */
+	public function __construct($directory, $recursive = true) {
+		$this->directory = $directory;
+		$this->recursive = $recursive;
+		
+		// handle iterator type
+		if ($this->recursive) {
+			$this->obj = new \RecursiveDirectoryIterator($directory);
+		}
+		else {
+			$this->obj = new \DirectoryIterator($directory);
+		}
+	}
+	
+	/**
 	 * Returns an instance of DirectoryUtil (or child).
 	 * 
 	 * @param	string		$directory	path
@@ -87,26 +107,6 @@ final class DirectoryUtil {
 		}
 		
 		return static::$instances[$recursive][$directory];
-	}
-	
-	/**
-	 * Creates a new instance of DirectoryUtil.
-	 * 
-	 * @param	string		$directory	directory path
-	 * @param	boolean		$recursive	created a recursive directory iterator
-	 * @see		wcf\util\DirectoryUtil::getInstance()
-	 */
-	protected function __construct($directory, $recursive = true) {
-		$this->directory = $directory;
-		$this->recursive = $recursive;
-		
-		// handle iterator type
-		if ($this->recursive) {
-			$this->obj = new \RecursiveDirectoryIterator($directory);
-		}
-		else {
-			$this->obj = new \DirectoryIterator($directory);
-		}
 	}
 	
 	/**

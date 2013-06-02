@@ -1,7 +1,9 @@
 /**
  * Class and function collection for WCF.
  * 
- * @author	Markus Bartz, Tim Düsterhus, Alexander Ebert, Matthias Schmidt
+ * Major Contributors: Markus Bartz, Tim Duesterhus, Matthias Schmidt and Marcel Werk
+ * 
+ * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
@@ -113,6 +115,12 @@ String.prototype.hashCode = function() {
 	jQuery.browser = browser;
 	jQuery.browser.touch = (!!('ontouchstart' in window) || !!('msmaxtouchpoints' in window.navigator));
 })();
+
+/**
+ * jQuery.browser.mobile (http://detectmobilebrowser.com/)
+ * jQuery.browser.mobile will be true if the browser is a mobile device
+ **/
+(function(a){jQuery.browser.mobile=/android.+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od|ad)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|e\-|e\/|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(di|rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|xda(\-|2|g)|yas\-|your|zeto|zte\-/i.test(a.substr(0,4))})(navigator.userAgent||navigator.vendor||window.opera);
 
 /**
  * Initialize WCF namespace
@@ -677,42 +685,28 @@ WCF.Dropdown = {
 	_dropdowns: { },
 	
 	/**
+	 * container for dropdown menus
+	 * @var	object
+	 */
+	_menuContainer: null,
+	
+	/**
+	 * list of registered dropdown menus
+	 * @var	object
+	 */
+	_menus: { },
+	
+	/**
 	 * Initializes dropdowns.
 	 */
 	init: function() {
-		var $userPanelHeight = $('#topMenu').outerHeight();
+		if (this._menuContainer === null) {
+			this._menuContainer = $('<div id="dropdownMenuContainer" />').appendTo(document.body);
+		}
+		
 		var self = this;
-		$('.dropdownToggle').each(function(index, button) {
-			var $button = $(button);
-			if ($button.data('target')) {
-				return true;
-			}
-			
-			var $dropdown = $button.parents('.dropdown');
-			if (!$dropdown.length) {
-				// broken dropdown, ignore
-				return true;
-			}
-			
-			var $containerID = $dropdown.wcfIdentify();
-			if (!self._dropdowns[$containerID]) {
-				$button.click($.proxy(self._toggle, self));
-				self._dropdowns[$containerID] = $dropdown;
-				
-				var $dropdownHeight = $dropdown.outerHeight();
-				var $top = $dropdownHeight + 7;
-				if ($dropdown.parents('#topMenu').length) {
-					// fix calculation for user panel (elements may be shorter than they appear)
-					$top = $userPanelHeight;
-				}
-				
-				// calculate top offset for menu
-				$button.next('.dropdownMenu').css({
-					top: $top + 'px'
-				});
-			}
-			
-			$button.data('target', $containerID);
+		$('.dropdownToggle:not(.jsDropdownEnabled)').each(function(index, button) {
+			self.initDropdown($(button), false);
 		});
 		
 		if (!this._didInit) {
@@ -721,6 +715,63 @@ WCF.Dropdown = {
 			WCF.CloseOverlayHandler.addCallback('WCF.Dropdown', $.proxy(this._closeAll, this));
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Dropdown', $.proxy(this.init, this));
 		}
+	},
+	
+	/**
+	 * Initializes a dropdown.
+	 * 
+	 * @param	jQuery		button
+	 * @param	boolean		isLazyInitialization
+	 */
+	initDropdown: function(button, isLazyInitialization) {
+		if (button.hasClass('jsDropdownEnabled') || button.data('target')) {
+			return;
+		}
+		
+		var $dropdown = button.parents('.dropdown');
+		if (!$dropdown.length) {
+			// broken dropdown, ignore
+			return;
+		}
+		
+		var $dropdownMenu = button.next('.dropdownMenu');
+		if (!$dropdownMenu.length) {
+			// broken dropdown, ignore
+			return;
+		}
+		
+		$dropdownMenu.detach().appendTo(this._menuContainer);
+		var $containerID = $dropdown.wcfIdentify();
+		if (!this._dropdowns[$containerID]) {
+			button.addClass('jsDropdownEnabled').click($.proxy(this._toggle, this));
+			
+			this._dropdowns[$containerID] = $dropdown;
+			this._menus[$containerID] = $dropdownMenu;
+		}
+		
+		button.data('target', $containerID);
+		
+		if (isLazyInitialization) {
+			button.trigger('click');
+		}
+	},
+	
+	/**
+	 * Initializes a dropdown fragment which behaves like a usual dropdown
+	 * but is not controlled by a trigger element.
+	 * 
+	 * @param	jQuery		dropdown
+	 * @param	jQuery		dropdownMenu
+	 */
+	initDropdownFragment: function(dropdown, dropdownMenu) {
+		var $containerID = dropdown.wcfIdentify();
+		if (this._dropdowns[$containerID]) {
+			console.debug("[WCF.Dropdown] Cannot register dropdown identified by '" + $containerID + "' as a fragement.");
+			return;
+		}
+		
+		this._dropdowns[$containerID] = dropdown;
+		this._menus[$containerID] = dropdownMenu.detach().appendTo(this._menuContainer);
 	},
 	
 	/**
@@ -746,35 +797,92 @@ WCF.Dropdown = {
 	 * Toggles a dropdown.
 	 * 
 	 * @param	object		event
+	 * @param	string		targetID
 	 */
-	_toggle: function(event) {
-		var $targetID = $(event.currentTarget).data('target');
+	_toggle: function(event, targetID) {
+		var $targetID = (event === null) ? targetID : $(event.currentTarget).data('target');
 		
 		// close all dropdowns
 		for (var $containerID in this._dropdowns) {
 			var $dropdown = this._dropdowns[$containerID];
+			var $dropdownMenu = this._menus[$containerID];
+			
 			if ($dropdown.hasClass('dropdownOpen')) {
 				$dropdown.removeClass('dropdownOpen');
-				this._notifyCallbacks($dropdown, 'close');
+				$dropdownMenu.removeClass('dropdownOpen');
+				
+				this._notifyCallbacks($containerID, 'close');
 			}
 			else if ($containerID === $targetID) {
-				// fix top offset
-				var $dropdownMenu = $dropdown.find('.dropdownMenu');
-				if ($dropdownMenu.css('top') === '7px') {
-					$dropdownMenu.css({
-						top: $dropdown.outerHeight() + 7
-					});
-				}
-				
 				$dropdown.addClass('dropdownOpen');
-				this._notifyCallbacks($dropdown, 'open');
+				$dropdownMenu.addClass('dropdownOpen');
 				
-				this.setAlignment($dropdown);
+				this._notifyCallbacks($containerID, 'open');
+				
+				this.setAlignment($dropdown, $dropdownMenu);
 			}
 		}
 		
-		event.stopPropagation();
-		return false;
+		if (event !== null) {
+			event.stopPropagation();
+			return false;
+		}
+	},
+	
+	/**
+	 * Toggles a dropdown.
+	 * 
+	 * @param	string		containerID
+	 */
+	toggleDropdown: function(containerID) {
+		this._toggle(null, containerID);
+	},
+	
+	/**
+	 * Returns dropdown by container id.
+	 * 
+	 * @param	string		containerID
+	 * @return	jQuery
+	 */
+	getDropdown: function(containerID) {
+		if (this._dropdowns[containerID]) {
+			return this._dropdowns[containerID];
+		}
+		
+		return null;
+	},
+	
+	/**
+	 * Returns dropdown menu by container id.
+	 * 
+	 * @param	string		containerID
+	 * @return	jQuery
+	 */
+	getDropdownMenu: function(containerID) {
+		if (this._menus[containerID]) {
+			return this._menus[containerID];
+		}
+		
+		return null;
+	},
+	
+	/**
+	 * Sets alignment for given container id.
+	 * 
+	 * @param	string		containerID
+	 */
+	setAlignmentByID: function(containerID) {
+		var $dropdown = this.getDropdown(containerID);
+		if ($dropdown === null) {
+			console.debug("[WCF.Dropdown] Unable to find dropdown identified by '" + containerID + "'");
+		}
+		
+		var $dropdownMenu = this.getDropdownMenu(containerID);
+		if ($dropdownMenu === null) {
+			console.debug("[WCF.Dropdown] Unable to find dropdown menu identified by '" + containerID + "'");
+		}
+		
+		this.setAlignment($dropdown, $dropdownMenu);
 	},
 	
 	/**
@@ -784,24 +892,66 @@ WCF.Dropdown = {
 	 * @param	jQuery		dropdownMenu
 	 */
 	setAlignment: function(dropdown, dropdownMenu) {
-		var $dropdownMenu = (dropdown) ? dropdown.find('.dropdownMenu:eq(0)') : dropdownMenu;
-		
-		// calculate if dropdown should be right-aligned if there is not enough space
-		var $dimensions = $dropdownMenu.getDimensions('outer');
-		var $offsets = $dropdownMenu.getOffsets('offset');
+		// get dropdown position
+		var $dropdownDimensions = dropdown.getDimensions('outer');
+		var $dropdownOffsets = dropdown.getOffsets('offset');
+		var $menuDimensions = dropdownMenu.getDimensions('outer');
 		var $windowWidth = $(window).width();
 		
-		if (($offsets.left + $dimensions.width) > $windowWidth) {
-			$dropdownMenu.css({
-				left: 'auto',
-				right: '0px'
-			}).addClass('dropdownArrowRight');
+		// check if button belongs to an i18n textarea
+		var $button = dropdown.find('.dropdownToggle');
+		if ($button.hasClass('dropdownCaptionTextarea')) {
+			// use button dimensions instead
+			$dropdownDimensions = $button.getDimensions('outer');
 		}
-		else if ($dropdownMenu.css('right') != '0px') {
-			$dropdownMenu.css({
-				left: '0px',
-				right: 'auto'
-			}).removeClass('dropdownArrowRight');
+		
+		// validate if current alignment is still fine, prevents "jumping"
+		var $align = null;
+		switch (dropdownMenu.data('orientationX')) {
+			case 'left':
+				if (($dropdownOffsets.left + $menuDimensions.width) > $windowWidth) {
+					$align = 'right';
+				}
+			break;
+			
+			case 'right':
+				if (($dropdownOffsets.left + $dropdownDimensions.width - $menuDimensions.width) < 0) {
+					$align = 'left';
+				}
+			break;
+			
+			default:
+				$align = 'left';
+				
+				if (($dropdownOffsets.left + $menuDimensions.width) > $windowWidth) {
+					$align = 'right';
+				}
+			break;
+		}
+		
+		// alignment has changed
+		if ($align !== null) {
+			dropdownMenu.data('orientationX', $align);
+			
+			var $left = 'auto';
+			var $right = 'auto';
+			
+			if ($align === 'left') {
+				dropdownMenu.removeClass('dropdownArrorRight');
+				
+				$left = $dropdownOffsets.left + 'px';
+			}
+			else {
+				dropdownMenu.addClass('dropdownArrowRight');
+				
+				$right = ($windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width)) + 'px';
+			}
+			
+			dropdownMenu.css({
+				left: $left,
+				right: $right,
+				top: $dropdownOffsets.top + $dropdownDimensions.height + 7 + 'px'
+			});
 		}
 	},
 	
@@ -813,8 +963,9 @@ WCF.Dropdown = {
 			var $dropdown = this._dropdowns[$containerID];
 			if ($dropdown.hasClass('dropdownOpen')) {
 				$dropdown.removeClass('dropdownOpen');
+				this._menus[$containerID].removeClass('dropdownOpen');
 				
-				this._notifyCallbacks($dropdown, 'close');
+				this._notifyCallbacks($containerID, 'close');
 			}
 		}
 	},
@@ -829,23 +980,23 @@ WCF.Dropdown = {
 			return;
 		}
 		
-		this._dropdowns[containerID].removeClass('open');
+		this._dropdowns[containerID].removeClass('dropdownMenu');
+		this._menus[containerID].removeClass('dropdownMenu');
 	},
 	
 	/**
 	 * Notifies callbacks.
 	 * 
-	 * @param	jQuery		dropdown
+	 * @param	string		containerID
 	 * @param	string		action
 	 */
-	_notifyCallbacks: function(dropdown, action) {
-		var $containerID = dropdown.wcfIdentify();
-		if (!this._callbacks[$containerID]) {
+	_notifyCallbacks: function(containerID, action) {
+		if (!this._callbacks[containerID]) {
 			return;
 		}
 		
-		for (var $i = 0, $length = this._callbacks[$containerID].length; $i < $length; $i++) {
-			this._callbacks[$containerID][$i](dropdown, action);
+		for (var $i = 0, $length = this._callbacks[containerID].length; $i < $length; $i++) {
+			this._callbacks[containerID][$i](containerID, action);
 		}
 	}
 };
@@ -1244,20 +1395,19 @@ WCF.Clipboard = {
 			var $container = $containers[$typeName];
 			var $list = $container.children('ul');
 			if ($list.length == 0) {
-				$list = $('<ul class="dropdown"></ul>').appendTo($container);
+				$list = $('<ul />').appendTo($container);
 			}
 			
 			var $editor = data.items[$typeName];
-			var $label = $('<li><span class="dropdownToggle button">' + $editor.label + '</span></li>').appendTo($list);
+			var $label = $('<li class="dropdown"><span class="dropdownToggle button">' + $editor.label + '</span></li>').appendTo($list);
 			var $itemList = $('<ol class="dropdownMenu"></ol>').appendTo($label);
-			
-			$label.click(function() { $list.toggleClass('dropdownOpen'); });
 			
 			// create editor items
 			for (var $itemIndex in $editor.items) {
 				var $item = $editor.items[$itemIndex];
 				
 				var $listItem = $('<li><span>' + $item.label + '</span></li>').appendTo($itemList);
+				$listItem.data('container', $container);
 				$listItem.data('objectType', $typeName);
 				$listItem.data('actionName', $item.actionName).data('parameters', $item.parameters);
 				$listItem.data('internalData', $item.internalData).data('url', $item.url).data('type', $typeName);
@@ -1289,14 +1439,7 @@ WCF.Clipboard = {
 				this._proxy.sendRequest();
 			}, this));
 			
-			// block click event
-			$container.click(function(event) {
-				event.stopPropagation();
-			});
-			
-			// register event handler
-			var $containerID = $container.wcfIdentify();
-			WCF.CloseOverlayHandler.addCallback($containerID, $.proxy(this._closeLists, this));
+			WCF.Dropdown.initDropdown($label.children('.dropdownToggle'), false);
 		}
 	},
 	
@@ -1348,7 +1491,7 @@ WCF.Clipboard = {
 		}
 		
 		// fire event
-		$listItem.trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName'), $listItem.data('parameters') ]);
+		$listItem.data('container').trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName'), $listItem.data('parameters') ]);
 	},
 	
 	/**
@@ -1387,7 +1530,7 @@ WCF.Clipboard = {
 			},
 			success: $.proxy(function(data) {
 				if (listItem.data('parameters').actionName !== 'unmarkAll') {
-					listItem.trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
+					listItem.data('container').trigger('clipboardActionResponse', [ data, listItem.data('type'), listItem.data('actionName'), listItem.data('parameters') ]);
 				}
 				
 				this._loadMarkedItems();
@@ -1567,6 +1710,12 @@ WCF.Action.Proxy = Class.extend({
 	_suppressErrors: false,
 	
 	/**
+	 * last request
+	 * @var	jqXHR
+	 */
+	_lastRequest: null,
+	
+	/**
 	 * Initializes AJAXProxy.
 	 * 
 	 * @param	object		options
@@ -1586,7 +1735,9 @@ WCF.Action.Proxy = Class.extend({
 			success: null,
 			suppressErrors: false,
 			type: 'POST',
-			url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+			url: 'index.php/AJAXProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND,
+			aborted: null,
+			autoAbortPrevious: false
 		}, options);
 		
 		this.confirmationDialog = null;
@@ -1605,11 +1756,18 @@ WCF.Action.Proxy = Class.extend({
 	
 	/**
 	 * Sends an AJAX request.
+	 * 
+	 * @param	abortPrevious	boolean
+	 * @return	jqXHR
 	 */
-	sendRequest: function() {
+	sendRequest: function(abortPrevious) {
 		this._init();
 		
-		$.ajax({
+		if (abortPrevious || this.options.autoAbortPrevious) {
+			this.abortPrevious();
+		}
+		
+		this._lastRequest = $.ajax({
 			data: this.options.data,
 			dataType: this.options.dataType,
 			jsonp: this.options.jsonp,
@@ -1619,6 +1777,17 @@ WCF.Action.Proxy = Class.extend({
 			success: $.proxy(this._success, this),
 			error: $.proxy(this._failure, this)
 		});
+		return this._lastRequest;
+	},
+	
+	/**
+	 * Aborts the previous request
+	 */
+	abortPrevious: function() {
+		if (this._lastRequest !== null) {
+			this._lastRequest.abort();
+			this._lastRequest = null;
+		}
 	},
 	
 	/**
@@ -1656,6 +1825,15 @@ WCF.Action.Proxy = Class.extend({
 	 * @param	string		errorThrown
 	 */
 	_failure: function(jqXHR, textStatus, errorThrown) {
+		if (textStatus == 'abort') {
+			// call child method if applicable
+			if ($.isFunction(this.options.aborted)) {
+				this.options.aborted(jqXHR);
+			}
+			
+			return;
+		}
+		
 		try {
 			var $data = $.parseJSON(jqXHR.responseText);
 			
@@ -1698,9 +1876,6 @@ WCF.Action.Proxy = Class.extend({
 	 * @param	object		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		// enable DOMNodeInserted event
-		WCF.DOMNodeInsertedHandler.enable();
-		
 		// call child method if applicable
 		if ($.isFunction(this.options.success)) {
 			// trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
@@ -1718,6 +1893,7 @@ WCF.Action.Proxy = Class.extend({
 	 * Fires after an AJAX request, hides global loading status.
 	 */
 	_after: function() {
+		this._lastRequest = null;
 		if ($.isFunction(this.options.after)) {
 			this.options.after();
 		}
@@ -1730,8 +1906,7 @@ WCF.Action.Proxy = Class.extend({
 			}
 		}
 		
-		// disable DOMNodeInserted event
-		WCF.DOMNodeInsertedHandler.disable();
+		WCF.DOMNodeInsertedHandler.execute();
 		
 		// fix anchor tags generated through WCF::getAnchor()
 		$('a[href*=#]').each(function(index, link) {
@@ -2353,7 +2528,6 @@ WCF.Date.Picker = {
 		
 		// do the actual replacement
 		// this is not perfect, but a basic implementation and should work in 99% of the cases
-		// TODO: support literals (magics are escaped in PHP date() by an \, in jQuery UI DatePicker they are enclosed in '')
 		this._dateFormat = WCF.Language.get('wcf.date.dateFormat').replace(/([^dDjlzSFmMnoYyU\\]*(?:\\.[^dDjlzSFmMnoYyU\\]*)*)([dDjlzSFmMnoYyU])/g, function(match, part1, part2, offset, string) {
 			for (var $key in $replacementTable) {
 				if (part2 == $key) {
@@ -2631,23 +2805,23 @@ WCF.Date.Time = Class.extend({
 		// timestamp is less than 60 minutes ago (display 1 hour ago rather than 60 minutes ago)
 		else if (this._timestamp < ($timestamp + 3540)) {
 			var $minutes = Math.max(Math.round((this._timestamp - $timestamp) / 60), 1);
-			$element.text(eval(WCF.Language.get('wcf.date.relative.minutes')));
+			$element.text(WCF.Language.get('wcf.date.relative.minutes', { minutes: $minutes }));
 		}
 		// timestamp is less than 24 hours ago
 		else if (this._timestamp < ($timestamp + 86400)) {
 			var $hours = Math.round((this._timestamp - $timestamp) / 3600);
-			$element.text(eval(WCF.Language.get('wcf.date.relative.hours')));
+			$element.text(WCF.Language.get('wcf.date.relative.hours', { hours: $hours }));
 		}
 		// timestamp is less than a week ago
 		else if (this._timestamp < ($timestamp + 604800)) {
 			var $days = Math.round((this._timestamp - $timestamp) / 86400);
-			var $string = eval(WCF.Language.get('wcf.date.relative.pastDays'));
 			
 			// get day of week
 			var $dateObj = WCF.Date.Util.getTimezoneDate(($timestamp * 1000), $offset);
 			var $dow = $dateObj.getDay();
+			var $day = WCF.Language.get('__days')[$dow];
 			
-			$element.text($string.replace(/\%day\%/, WCF.Language.get('__days')[$dow]).replace(/\%time\%/, $time));
+			$element.text(WCF.Language.get('wcf.date.relative.pastDays', { days: $days, day: $day, time: $time }));
 		}
 		// timestamp is between ~700 million years BC and last week
 		else {
@@ -2856,6 +3030,12 @@ WCF.MultipleLanguageInput = Class.extend({
 	_availableLanguages: {},
 	
 	/**
+	 * button element
+	 * @var	jQuery
+	 */
+	_button: null,
+	
+	/**
 	 * initialization state
 	 * @var	boolean
 	 */
@@ -2913,6 +3093,7 @@ WCF.MultipleLanguageInput = Class.extend({
 	 * @param	object		availableLanguages
 	 */
 	init: function(elementID, forceSelection, values, availableLanguages) {
+		this._button = null;
 		this._element = $('#' + $.wcfEscapeID(elementID));
 		this._forceSelection = forceSelection;
 		this._values = values;
@@ -2942,23 +3123,19 @@ WCF.MultipleLanguageInput = Class.extend({
 	 * @param	boolean		enableOnInit
 	 */
 	_prepareElement: function(enableOnInit) {
-		// enable DOMNodeInserted event
-		WCF.DOMNodeInsertedHandler.enable();
-		
 		this._element.wrap('<div class="dropdown preInput" />');
 		var $wrapper = this._element.parent();
-		var $button = $('<p class="button dropdownToggle"><span>' + WCF.Language.get('wcf.global.button.disabledI18n') + '</span></p>').prependTo($wrapper);
-		$button.data('target', $wrapper.wcfIdentify()).click($.proxy(this._enable, this));
+		this._button = $('<p class="button dropdownToggle"><span>' + WCF.Language.get('wcf.global.button.disabledI18n') + '</span></p>').prependTo($wrapper);
 		
 		// insert list
-		this._list = $('<ul class="dropdownMenu"></ul>').insertAfter($button);
+		this._list = $('<ul class="dropdownMenu"></ul>').insertAfter(this._button);
 		
 		// add a special class if next item is a textarea
-		if ($button.nextAll('textarea').length) {
-			$button.addClass('dropdownCaptionTextarea');
+		if (this._button.nextAll('textarea').length) {
+			this._button.addClass('dropdownCaptionTextarea');
 		}
 		else {
-			$button.addClass('dropdownCaption');
+			this._button.addClass('dropdownCaption');
 		}
 		
 		// insert available languages
@@ -2972,8 +3149,10 @@ WCF.MultipleLanguageInput = Class.extend({
 			$('<li><span>' + WCF.Language.get('wcf.global.button.disabledI18n') + '</span></li>').click($.proxy(this._disable, this)).appendTo(this._list);
 		}
 		
+		WCF.Dropdown.initDropdown(this._button, enableOnInit);
+		
 		if (enableOnInit || this._forceSelection) {
-			$button.trigger('click');
+			this._isEnabled = true;
 			
 			// pre-select current language
 			this._list.children('li').each($.proxy(function(index, listItem) {
@@ -2985,19 +3164,19 @@ WCF.MultipleLanguageInput = Class.extend({
 		}
 		
 		WCF.Dropdown.registerCallback($wrapper.wcfIdentify(), $.proxy(this._handleAction, this));
-		
-		// disable DOMNodeInserted event
-		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
 	 * Handles dropdown actions.
 	 * 
-	 * @param	jQuery		dropdown
+	 * @param	string		containerID
 	 * @param	string		action
 	 */
-	_handleAction: function(dropdown, action) {
-		if (action === 'close') {
+	_handleAction: function(containerID, action) {
+		if (action === 'open') {
+			this._enable();
+		}
+		else {
 			this._closeSelection();
 		}
 	},
@@ -3009,15 +3188,7 @@ WCF.MultipleLanguageInput = Class.extend({
 	 */
 	_enable: function(event) {
 		if (!this._isEnabled) {
-			var $button = $(event.currentTarget);
-			$button.next('.dropdownMenu').css({
-				top: ($button.outerHeight() - 1) + 'px'
-			});
-			
-			if ($button.is('p')) {
-				$button = $button.children('span:eq(0)');
-			}
-			
+			var $button = (this._button.is('p')) ? this._button.children('span:eq(0)') : this._button;
 			$button.addClass('active');
 			
 			this._isEnabled = true;
@@ -3027,9 +3198,6 @@ WCF.MultipleLanguageInput = Class.extend({
 		if (this._list.is(':visible')) {
 			this._showSelection();
 		}
-		
-		// discard event
-		event.stopPropagation();
 	},
 	
 	/**
@@ -3089,11 +3257,10 @@ WCF.MultipleLanguageInput = Class.extend({
 		$button.addClass('active');
 		
 		// update label
-		this._list.prev('.dropdownToggle').children('span').text(this._availableLanguages[this._languageID]);
+		this._button.children('span').addClass('active').text(this._availableLanguages[this._languageID]);
 		
 		// close selection and set focus on input element
 		if (this._didInit) {
-			// this._closeSelection(); todo: still needed?
 			this._element.blur().focus();
 		}
 	},
@@ -3113,7 +3280,7 @@ WCF.MultipleLanguageInput = Class.extend({
 		}
 		
 		// remove active marking
-		this._list.prev('.dropdownToggle').children('span').removeClass('active').text(WCF.Language.get('wcf.global.button.disabledI18n'));
+		this._button.children('span').removeClass('active').text(WCF.Language.get('wcf.global.button.disabledI18n'));
 		
 		// update element value
 		if (this._values[LANGUAGE_ID]) {
@@ -3317,7 +3484,12 @@ WCF.TabMenu = {
 					
 					// set panel id as location hash
 					if (WCF.TabMenu._didInit) {
-						location.hash = '#' + $panel.attr('id');
+						if (window.history) {
+							window.history.pushState(null, document.title, window.location.toString().replace(/#.+$/, '') + '#' + $panel.attr('id'));
+						}
+						else {
+							location.hash = '#' + $panel.attr('id');
+						}
 					}
 					
 					//$container.trigger('tabsbeforeactivate', event, eventData);
@@ -3488,6 +3660,9 @@ WCF.Template = Class.extend({
 			
 			return id;
 		}, this));
+		
+		// remove comments
+		template = template.replace(/\{\*.*?\*\}/g, '');
 		
 		var parseParameterList = function(parameterString) {
 			var $chars = parameterString.split('');
@@ -3672,7 +3847,13 @@ WCF.Template = Class.extend({
 		
 		template = "$output += '" + template + "';";
 		
-		this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
+		try {
+			this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
+		}
+		catch (e) {
+			console.debug("var $output = ''; " + template + ' return $output;');
+			throw e;
+		}
 	},
 	
 	/**
@@ -4247,11 +4428,12 @@ WCF.Collapsible.Sidebar = Class.extend({
 		this._userPanelHeight = $('#topMenu').outerHeight();
 		
 		// add toggle button
-		WCF.DOMNodeInsertedHandler.enable();
 		this._button = $('<a class="collapsibleButton jsTooltip" title="' + WCF.Language.get('wcf.global.button.collapsible') + '" />').prependTo(this._sidebar);
+		this._button.wrap('<span />');
 		this._button.click($.proxy(this._click, this));
 		this._buttonHeight = this._button.outerHeight();
-		WCF.DOMNodeInsertedHandler.disable();
+		
+		WCF.DOMNodeInsertedHandler.execute();
 		
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
@@ -4459,7 +4641,7 @@ WCF.Effect.BalloonTooltip = Class.extend({
 	 * Initializes tooltips.
 	 */
 	init: function() {
-		if (jQuery.browser.touch) return;
+		if (jQuery.browser.mobile) return;
 
 		if (!this._didInit) {
 			// create empty div
@@ -4713,28 +4895,10 @@ WCF.DOMNodeInsertedHandler = {
 	_callbacks: [ ],
 	
 	/**
-	 * true if DOMNodeInserted event should be ignored
-	 * @var	boolean
-	 */
-	_discardEvent: true,
-	
-	/**
-	 * counts requests to enable WCF.DOMNodeInsertedHandler
-	 * @var	integer
-	 */
-	_discardEventCount: 0,
-	
-	/**
 	 * prevent infinite loop if a callback manipulates DOM
 	 * @var	boolean
 	 */
 	_isExecuting: false,
-	
-	/**
-	 * indicates that overlay handler is listening to click events on body-tag
-	 * @var	boolean
-	 */
-	_isListening: false,
 	
 	/**
 	 * Adds a new callback.
@@ -4743,28 +4907,14 @@ WCF.DOMNodeInsertedHandler = {
 	 * @param	object		callback
 	 */
 	addCallback: function(identifier, callback) {
-		this._discardEventCount = 0;
-		this._bindListener();
-		
 		this._callbacks.push(callback);
-	},
-	
-	/**
-	 * Binds click event handler.
-	 */
-	_bindListener: function() {
-		if (this._isListening) return;
-		
-		$(document).bind('DOMNodeInserted', $.proxy(this._executeCallbacks, this));
-		
-		this._isListening = true;
 	},
 	
 	/**
 	 * Executes callbacks on click.
 	 */
 	_executeCallbacks: function() {
-		if (this._discardEvent || this._isExecuting) return;
+		if (this._isExecuting) return;
 		
 		// do not track events while executing callbacks
 		this._isExecuting = true;
@@ -4778,35 +4928,10 @@ WCF.DOMNodeInsertedHandler = {
 	},
 	
 	/**
-	 * Disables DOMNodeInsertedHandler, should be used after you've enabled it.
+	 * Executes all callbacks.
 	 */
-	disable: function() {
-		this._discardEventCount--;
-		
-		if (this._discardEventCount < 1) {
-			this._discardEvent = true;
-			this._discardEventCount = 0;
-		}
-	},
-	
-	/**
-	 * Enables DOMNodeInsertedHandler, should be used if you're inserting HTML (e.g. via AJAX)
-	 * which might contain event-related elements. You have to disable the DOMNodeInsertedHandler
-	 * once you've enabled it, if you fail it will cause an infinite loop!
-	 */
-	enable: function() {
-		this._discardEventCount++;
-		
-		this._discardEvent = false;
-	},
-	
-	/**
-	 * Forces execution of DOMNodeInsertedHandler.
-	 */
-	forceExecution: function() {
-		this.enable();
+	execute: function() {
 		this._executeCallbacks();
-		this.disable();
 	}
 };
 
@@ -5090,7 +5215,8 @@ WCF.Search.Base = Class.extend({
 		
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: (showLoadingOverlay !== true ? false : true),
-			success: $.proxy(this._success, this)
+			success: $.proxy(this._success, this),
+			autoAbortPrevious: true
 		});
 		
 		if (this._searchInput.is('input')) {
@@ -5098,6 +5224,8 @@ WCF.Search.Base = Class.extend({
 		}
 		
 		this._searchInput.blur($.proxy(this._blur, this));
+		
+		WCF.Dropdown.initDropdownFragment(this._searchInput.parent(), this._list);
 	},
 	
 	/**
@@ -5162,7 +5290,7 @@ WCF.Search.Base = Class.extend({
 				data: {
 					excludedSearchValues: this._excludedSearchValues,
 					searchString: $content
-				}		
+				}
 			};
 			
 			this._proxy.setOption('data', {
@@ -5312,10 +5440,11 @@ WCF.Search.Base = Class.extend({
 			this._createListItem($item);
 		}
 		
-		this._list.parent().addClass('dropdownOpen');
-		WCF.Dropdown.setAlignment(undefined, this._list);
-		
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
+		
+		if (!WCF.Dropdown.getDropdownMenu(this._searchInput.parents('.dropdown').wcfIdentify()).hasClass('dropdownOpen')) {
+			WCF.Dropdown.toggleDropdown(this._searchInput.parents('.dropdown').wcfIdentify());
+		}
 		
 		// pre-select first item
 		this._itemIndex = -1;
@@ -5353,7 +5482,7 @@ WCF.Search.Base = Class.extend({
 				var $part = this._oldSearchString[$i];
 				if ($result.toLowerCase().indexOf($part.toLowerCase()) === 0) {
 					this._oldSearchString[$i] = $result;
-					this._searchInput.attr('value', this._oldSearchString.join(', '));
+					this._searchInput.val(this._oldSearchString.join(', '));
 					
 					if ($.browser.webkit) {
 						// chrome won't display the new value until the textarea is rendered again
@@ -5392,7 +5521,11 @@ WCF.Search.Base = Class.extend({
 			this._searchInput.val('');
 		}
 		
-		this._list.parent().removeClass('dropdownOpen').end().empty();
+		// close dropdown
+		WCF.Dropdown.getDropdown(this._searchInput.parents('.dropdown').wcfIdentify()).removeClass('dropdownOpen');
+		WCF.Dropdown.getDropdownMenu(this._searchInput.parents('.dropdown').wcfIdentify()).removeClass('dropdownOpen');
+		
+		this._list.end().empty();
 		
 		WCF.CloseOverlayHandler.removeCallback('WCF.Search.Base');
 		
@@ -6061,12 +6194,11 @@ WCF.InlineEditor = Class.extend({
 	_show: function(event) {
 		var $elementID = $(event.currentTarget).data('elementID');
 		
-		// build drop down
+		// build dropdown
+		var $trigger = null;
 		if (!this._dropdowns[$elementID]) {
-			var $trigger = this._getTriggerElement(this._elements[$elementID]).addClass('dropdownToggle').wrap('<span class="dropdown" />');
-			var $dropdown = $trigger.parent('span');
-			$trigger.data('target', $dropdown.wcfIdentify());
-			this._dropdowns[$elementID] = $('<ul class="dropdownMenu" style="top: ' + ($dropdown.outerHeight() + 14) + 'px;" />').insertAfter($trigger);
+			$trigger = this._getTriggerElement(this._elements[$elementID]).addClass('dropdownToggle').wrap('<span class="dropdown" />');
+			this._dropdowns[$elementID] = $('<ul class="dropdownMenu" />').insertAfter($trigger);
 		}
 		this._dropdowns[$elementID].empty();
 		
@@ -6092,13 +6224,15 @@ WCF.InlineEditor = Class.extend({
 		}
 		
 		if ($hasOptions) {
-			this._dropdowns[$elementID].parent('span').addClass('dropdownOpen');
-			
 			// if last child is divider, remove it
 			var $lastChild = this._dropdowns[$elementID].children().last();
 			if ($lastChild.hasClass('dropdownDivider')) {
 				$lastChild.remove();
 			}
+		}
+		
+		if ($trigger !== null) {
+			WCF.Dropdown.initDropdown($trigger, true);
 		}
 		
 		return false;
@@ -6675,10 +6809,10 @@ WCF.Sortable.List = Class.extend({
 		
 		// send request
 		var $parameters = $.extend(true, {
-				data: {
-					offset: this._offset,
-					structure: this._structure
-				}
+			data: {
+				offset: this._offset,
+				structure: this._structure
+			}
 		}, this._additionalParameters);
 		
 		this._proxy.setOption('data', {
@@ -6819,6 +6953,8 @@ WCF.Popover = Class.extend({
 	 * @param	string		selector
 	 */
 	init: function(selector) {
+		if ($.browser.mobile) return;
+		
 		// assign default values
 		this._activeElementID = '';
 		this._cancelPopover = false;
@@ -6856,6 +6992,8 @@ WCF.Popover = Class.extend({
 	 * Initializes all element triggers.
 	 */
 	_initContainers: function() {
+		if ($.browser.mobile) return;
+		
 		var $elements = $(this._selector);
 		if (!$elements.length) {
 			return;
@@ -6937,11 +7075,9 @@ WCF.Popover = Class.extend({
 		
 		// insert html
 		if (!this._data[this._activeElementID].loading && this._data[this._activeElementID].content) {
-			WCF.DOMNodeInsertedHandler.enable();
-			
 			this._popoverContent.html(this._data[this._activeElementID].content);
 			
-			WCF.DOMNodeInsertedHandler.disable();
+			WCF.DOMNodeInsertedHandler.execute();
 		}
 		else {
 			this._data[this._activeElementID].loading = true;
@@ -7009,8 +7145,6 @@ WCF.Popover = Class.extend({
 		
 		// only update content if element id is active
 		if (this._activeElementID === elementID) {
-			WCF.DOMNodeInsertedHandler.enable();
-			
 			if (animate) {
 				// get current dimensions
 				var $dimensions = this._popoverContent.getDimensions();
@@ -7035,21 +7169,19 @@ WCF.Popover = Class.extend({
 					height: $newDimensions.height + 'px',
 					width: $newDimensions.width + 'px'
 				}, 300, function() {
-					WCF.DOMNodeInsertedHandler.enable();
-					
 					self._popover.children('span').hide();
 					self._popoverContent.html(self._data[elementID].content).css({ opacity: 0 }).animate({ opacity: 1 }, 200);
 					
-					WCF.DOMNodeInsertedHandler.disable();
+					WCF.DOMNodeInsertedHandler.execute();
 				});
 			}
 			else {
 				// insert new content
 				this._popover.children('span').hide();
 				this._popoverContent.html(this._data[elementID].content);
+				
+				WCF.DOMNodeInsertedHandler.execute();
 			}
-			
-			WCF.DOMNodeInsertedHandler.disable();
 		}
 	},
 	
@@ -7891,9 +8023,7 @@ WCF.UserPanel = Class.extend({
 			return;
 		}
 		
-		WCF.DOMNodeInsertedHandler.enable();
 		this._convert();
-		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**
@@ -7903,7 +8033,7 @@ WCF.UserPanel = Class.extend({
 		this._container.addClass('dropdown');
 		this._link = this._container.children('a').remove();
 		
-		$('<a class="dropdownToggle">' + this._link.html() + '</a>').appendTo(this._container).click($.proxy(this._click, this));
+		var $button = $('<a class="dropdownToggle">' + this._link.html() + '</a>').appendTo(this._container).click($.proxy(this._click, this));
 		var $dropdownMenu = $('<ul class="dropdownMenu" />').appendTo(this._container);
 		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').appendTo($dropdownMenu);
 		
@@ -7913,6 +8043,8 @@ WCF.UserPanel = Class.extend({
 			window.location = this._link.attr('href');
 			return false;
 		}, this));
+		
+		WCF.Dropdown.initDropdown($button, false);
 	},
 	
 	/**
@@ -7965,7 +8097,7 @@ WCF.UserPanel = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		var $dropdownMenu = this._container.children('.dropdownMenu');
+		var $dropdownMenu = WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify());
 		$dropdownMenu.children('.jsDropdownPlaceholder').remove();
 		
 		if (data.returnValues && data.returnValues.template) {
@@ -8096,8 +8228,6 @@ $.widget('ui.wcfDialog', {
 			this.options.closeButtonLabel = WCF.Language.get('wcf.global.button.close');
 		}
 		
-		WCF.DOMNodeInsertedHandler.enable();
-		
 		// create dialog container
 		this._container = $('<div class="dialogContainer" />').hide().css({ zIndex: this.options.zIndex }).appendTo(document.body);
 		this._titlebar = $('<header class="dialogTitlebar" />').hide().appendTo(this._container);
@@ -8131,7 +8261,7 @@ $.widget('ui.wcfDialog', {
 			}
 		}
 		
-		WCF.DOMNodeInsertedHandler.disable();
+		WCF.DOMNodeInsertedHandler.execute();
 	},
 	
 	/**
@@ -8149,11 +8279,9 @@ $.widget('ui.wcfDialog', {
 			}
 		} else if (key == 'closable' || key == 'closeButtonLabel') {
 			if (this.options.closable) {
-				WCF.DOMNodeInsertedHandler.enable();
-				
 				this._closeButton.attr('title', this.options.closeButtonLabel).show().find('span').html(this.options.closeButtonLabel);
 				
-				WCF.DOMNodeInsertedHandler.disable();
+				WCF.DOMNodeInsertedHandler.execute();
 			} else {
 				this._closeButton.hide();
 			}
@@ -8250,6 +8378,12 @@ $.widget('ui.wcfDialog', {
 	 * Renders this dialog, should be called whenever content is updated.
 	 */
 	render: function() {
+		// check if this if dialog was previously hidden and container is fixed
+		// at 0px (mobile optimization), in this case scroll to top
+		if (!this._container.is(':visible') && this._container.css('top') === '0px') {
+			window.scrollTo(0, 0);
+		}
+		
 		// force dialog and it's contents to be visible
 		this._container.show();
 		this._content.children().show();
@@ -8278,13 +8412,10 @@ $.widget('ui.wcfDialog', {
 			this._content.removeClass('dialogForm').css({ marginBottom: '0px' });
 		}
 		
-		// force 800px or 80% width
+		// force 800px or 90% width
 		var $windowDimensions = $(window).getDimensions();
-		if ($windowDimensions.width * 0.8 > 800) {
-			this._content.css('maxWidth', '800px');
-		}
-		else {
-			this._content.css('maxWidth', '80%');
+		if ($windowDimensions.width * 0.9 > 800) {
+			this._container.css('maxWidth', '800px');
 		}
 		
 		// calculate dimensions

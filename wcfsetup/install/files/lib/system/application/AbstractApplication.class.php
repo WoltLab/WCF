@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\application;
+use wcf\data\package\PackageCache;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
@@ -58,6 +59,15 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	 */
 	public function isActiveApplication() {
 		return $this->isActiveApplication;
+	}
+	
+	/**
+	 * Returns application package.
+	 * 
+	 * @return	wcf\data\package\Package
+	 */
+	public function getPackage() {
+		return PackageCache::getInstance()->getPackage($this->packageID);
 	}
 	
 	/**

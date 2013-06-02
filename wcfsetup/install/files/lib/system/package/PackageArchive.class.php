@@ -102,6 +102,15 @@ class PackageArchive {
 	}
 	
 	/**
+	 * Sets associated package object.
+	 * 
+	 * @param	wcf\data\package\Package	$package
+	 */
+	public function setPackage(Package $package) {
+		$this->package = $package;
+	}
+	
+	/**
 	 * Returns the name of the package archive.
 	 * 
 	 * @return	string
@@ -143,7 +152,7 @@ class PackageArchive {
 			throw new SystemException("package information file '".(self::INFO_FILE)."' not found in '".$this->archive."'");
 		}
 		
-		// extract package.xml, parse with SimpleXML
+		// extract package.xml, parse XML
 		// and compile an array with XML::getElementTree()
 		$xml = new XML();
 		try {
@@ -774,8 +783,13 @@ class PackageArchive {
 	public function getConflictedExcludedPackages() {
 		$conflictedPackages = array();
 		if (!empty($this->excludedPackages)) {
+			$excludedPackages = array();
+			foreach ($this->excludedPackages as $excludedPackageData) {
+				$excludedPackages[] = $excludedPackageData['name'];
+			}
+			
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("package IN (?)", array(array_keys($this->excludedPackages)));
+			$conditions->add("package IN (?)", array($excludedPackages));
 			
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_package

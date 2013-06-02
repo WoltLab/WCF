@@ -365,7 +365,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				foreach ($contentList as $key => $val) {
 					if ($val['type'] == 'file') {
 						$imagesTar->extract($key, $imagesLocation.basename($val['filename']));
-						@chmod($imagesLocation.basename($val['filename']), 0666);
+						FileUtil::makeWritable($imagesLocation.basename($val['filename']));
 					}
 				}
 				
@@ -409,7 +409,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 					$statement->execute(array(
 						$package,
 						1
-						));
+					));
 					while ($row = $statement->fetchArray()) {
 						// get template path
 						$templatesDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$row['packageDir']).'templates/'.$templateGroupFolderName);
@@ -417,7 +417,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						// create template path
 						if (!file_exists($templatesDir)) {
 							@mkdir($templatesDir, 0777);
-							@chmod($templatesDir, 0777);
+							FileUtil::makeWritable($templatesDir);
 						}
 						
 						// copy templates
@@ -425,6 +425,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							$templatesTar->extract($template['index'], $templatesDir.$template['filename']);
 							
 							TemplateEditor::create(array(
+								'application' => Package::getAbbreviation($package),
 								'packageID' => $row['packageID'],
 								'templateName' => StringUtil::replace('.tpl', '', $template['filename']),
 								'templateGroupID' => $styleData['templateGroupID']
@@ -455,7 +456,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			if ($index !== false) {
 				$filename = WCF_DIR.'images/stylePreview-'.$style->styleID.$fileExtension;
 				$tar->extract($index, $filename);
-				@chmod($filename, 0777);
+				FileUtil::makeWritable($filename);
 				
 				if (file_exists($filename)) {
 					$style->update(array('image' => 'stylePreview-'.$style->styleID.$fileExtension));
@@ -540,7 +541,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$directory = $location . ($index === null ? '' : $index);
 			if (!is_dir($directory)) {
 				@mkdir($directory, 0777, true);
-				@chmod($directory, 0777);
+				FileUtil::makeWritable($directory);
 				
 				return FileUtil::addTrailingSlash($directory);
 			}
@@ -642,7 +643,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			// create templates tar
 			$templatesTarName = FileUtil::getTemporaryFilename('templates', '.tar');
 			$templatesTar = new TarWriter($templatesTarName);
-			@chmod($templatesTarName, 0777);
+			FileUtil::makeWritable($templatesTarName);
 			
 			// append templates to tar
 			// get templates
@@ -671,7 +672,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			// create images tar
 			$imagesTarName = FileUtil::getTemporaryFilename('images_', '.tar');
 			$imagesTar = new TarWriter($imagesTarName);
-			@chmod($imagesTarName, 0777);
+			FileUtil::makeWritable($imagesTarName);
 			
 			// append images to tar
 			$path = FileUtil::addTrailingSlash(WCF_DIR.$this->imagePath);

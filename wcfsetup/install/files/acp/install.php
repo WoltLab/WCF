@@ -1,5 +1,4 @@
 <?php
-namespace wcf\acp;
 use wcf\data\language\LanguageEditor;
 use wcf\system\cache\CacheHandler;
 use wcf\system\session\SessionHandler;
@@ -58,15 +57,6 @@ $sql = "UPDATE	wcf".WCF_N."_user_group_option
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute(array(1));
 
-// reset all caches
-CacheHandler::getInstance()->flushAll();
-
-// delete language files
-LanguageEditor::deleteLanguageFiles();
-
-// delete all compiled templates
-ACPTemplateEngine::deleteCompiledTemplates(WCF_DIR.'acp/templates/compiled/');
-
 // get server timezone
 if ($timezone = @date_default_timezone_get()) {
 	if ($timezone != 'Europe/London' && in_array($timezone, DateUtil::getAvailableTimezones())) {
@@ -77,3 +67,5 @@ if ($timezone = @date_default_timezone_get()) {
 		$statement->execute(array($timezone, 'timezone'));
 	}
 }
+
+

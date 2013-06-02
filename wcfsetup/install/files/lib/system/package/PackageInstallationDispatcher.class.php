@@ -118,11 +118,15 @@ class PackageInstallationDispatcher {
 			
 			switch ($data['nodeType']) {
 				case 'package':
+					file_put_contents(WCF_DIR.'__installPerformance.log', "\n\nInstalling ".$nodeData['package']."\n", FILE_APPEND);
 					$step = $this->installPackage($nodeData);
 				break;
 				
 				case 'pip':
+					$start = microtime(true);
 					$step = $this->executePIP($nodeData);
+					$end = round(microtime(true) - $start, 4);
+					file_put_contents(WCF_DIR.'__installPerformance.log', "Executing PIP ".$nodeData['pip']."... {$end}\n", FILE_APPEND);
 				break;
 				
 				case 'optionalPackages':
@@ -180,7 +184,31 @@ class PackageInstallationDispatcher {
 			// clear user storage
 			UserStorageHandler::getInstance()->clear();
 			
+			// rebuild config files for affected applications
+			$sql = "SELECT		package.packageID
+				FROM		wcf".WCF_N."_package_installation_queue queue,
+						wcf".WCF_N."_package package
+				WHERE		queue.processNo = ?
+						AND package.packageID = queue.packageID
+						AND package.packageID <> ?
+						AND package.isApplication = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array(
+				$this->queue->processNo,
+				1,
+				1
+			));
+			while ($row = $statement->fetchArray()) {
+				Package::writeConfigFile($row['packageID']);
+			}
+			
 			EventHandler::getInstance()->fireAction($this, 'postInstall');
+			
+			// remove queues with the same process no
+			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
+				WHERE		processNo = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->queue->processNo));
 		}
 		
 		if ($this->requireRestructureVersionTables) {
@@ -252,14 +280,31 @@ class PackageInstallationDispatcher {
 				// check version requirements
 				if ($requirementData['minVersion']) {
 					if (Package::compareVersion($row['packageVersion'], $requirementData['minVersion']) < 0) {
-						throw new SystemException("Package '".$nodeData['packageName']."' requires the package '".$row['packageName']."' in version '".$requirementData['minVersion']."', but version '".$row['packageVersion']."'");
+						throw new SystemException("Package '".$nodeData['packageName']."' requires package '".$row['packageName']."' in version '".$requirementData['minVersion']."', but only version '".$row['packageVersion']."' is installed");
 					}
 				}
 			}
 		}
 		unset($nodeData['requirements']);
 		
-		if (!$this->queue->packageID) {
+		// update package
+		if ($this->queue->packageID) {
+			$packageEditor = new PackageEditor(new Package($this->queue->packageID));
+			$packageEditor->update($nodeData);
+			
+			// delete old excluded packages
+			$sql = "DELETE FROM	wcf".WCF_N."_package_exclusion
+				WHERE		packageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->queue->packageID));
+			
+			// delete old requirements and dependencies
+			$sql = "DELETE FROM	wcf".WCF_N."_package_requirement
+				WHERE		packageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->queue->packageID));
+		}
+		else {
 			// create package entry
 			$package = PackageEditor::create($nodeData);
 			
@@ -268,41 +313,6 @@ class PackageInstallationDispatcher {
 			$queueEditor->update(array(
 				'packageID' => $package->packageID
 			));
-			
-			// save excluded packages
-			if (count($this->getArchive()->getExcludedPackages()) > 0) {
-				$sql = "INSERT INTO	wcf".WCF_N."_package_exclusion 
-							(packageID, excludedPackage, excludedPackageVersion)
-					VALUES		(?, ?, ?)";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				
-				foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
-					$statement->execute(array($package->packageID, $excludedPackage['name'], (!empty($excludedPackage['version']) ? $excludedPackage['version'] : '')));
-				}
-			}
-			
-			// if package is plugin to com.woltlab.wcf it must not have any other requirement
-			$requirements = $this->getArchive()->getRequirements();
-			
-			// insert requirements and dependencies
-			$requirements = $this->getArchive()->getAllExistingRequirements();
-			if (!empty($requirements)) {
-				$sql = "INSERT INTO	wcf".WCF_N."_package_requirement
-							(packageID, requirement)
-					VALUES		(?, ?)";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				
-				foreach ($requirements as $identifier => $possibleRequirements) {
-					if (count($possibleRequirements) == 1) {
-						$requirement = array_shift($possibleRequirements);
-					}
-					else {
-						$requirement = $possibleRequirements[$this->selectedRequirements[$identifier]];
-					}
-					
-					$statement->execute(array($package->packageID, $requirement['packageID']));
-				}
-			}
 			
 			// reload queue
 			$this->queue = new PackageInstallationQueue($this->queue->queueID);
@@ -320,6 +330,38 @@ class PackageInstallationDispatcher {
 					'cookiePath' => $path,
 					'packageID' => $package->packageID
 				));
+			}
+		}
+		
+		// save excluded packages
+		if (count($this->getArchive()->getExcludedPackages())) {
+			$sql = "INSERT INTO	wcf".WCF_N."_package_exclusion
+						(packageID, excludedPackage, excludedPackageVersion)
+				VALUES		(?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($this->getArchive()->getExcludedPackages() as $excludedPackage) {
+				$statement->execute(array($this->queue->packageID, $excludedPackage['name'], (!empty($excludedPackage['version']) ? $excludedPackage['version'] : '')));
+			}
+		}
+		
+		// insert requirements and dependencies
+		$requirements = $this->getArchive()->getAllExistingRequirements();
+		if (!empty($requirements)) {
+			$sql = "INSERT INTO	wcf".WCF_N."_package_requirement
+						(packageID, requirement)
+				VALUES		(?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($requirements as $identifier => $possibleRequirements) {
+				if (count($possibleRequirements) == 1) {
+					$requirement = array_shift($possibleRequirements);
+				}
+				else {
+					$requirement = $possibleRequirements[$this->selectedRequirements[$identifier]];
+				}
+				
+				$statement->execute(array($this->queue->packageID, $requirement['packageID']));
 			}
 		}
 		
@@ -578,8 +620,7 @@ class PackageInstallationDispatcher {
 			$packageDir->setName('packageDir');
 			$packageDir->setLabel(WCF::getLanguage()->get('wcf.acp.package.packageDir.input'));
 			
-			$path = RouteHandler::getPath(array('wcf', 'acp'));
-			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator($_SERVER['DOCUMENT_ROOT'] . $path));
+			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(StringUtil::substring(WCF_DIR, 0, -4)));
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);
 			
@@ -592,11 +633,11 @@ class PackageInstallationDispatcher {
 		else {
 			$document = PackageInstallationFormManager::getForm($this->queue, 'packageDir');
 			$document->handleRequest();
-			$packageDir = $document->getValue('packageDir');
+			$packageDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator($document->getValue('packageDir')));
 			
 			if ($packageDir !== null) {
 				// validate package dir
-				if (file_exists(FileUtil::addTrailingSlash($packageDir) . 'global.php')) {
+				if (file_exists($packageDir . 'global.php')) {
 					$document->setError('packageDir', WCF::getLanguage()->get('wcf.acp.package.packageDir.notAvailable'));
 					return $document;
 				}
@@ -607,15 +648,11 @@ class PackageInstallationDispatcher {
 					'packageDir' => FileUtil::getRelativePath(WCF_DIR, $packageDir)
 				));
 				
-				// parse domain path
-				$domainPath = FileUtil::getRelativePath(FileUtil::unifyDirSeperator($_SERVER['DOCUMENT_ROOT']), FileUtil::unifyDirSeperator($packageDir));
-				
-				// work-around for applications installed in document root
-				if ($domainPath == './') {
-					$domainPath = '';
-				}
-				
-				$domainPath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($domainPath));
+				// determine domain path, in some environments (e.g. ISPConfig) the $_SERVER paths are
+				// faked and differ from the real filesystem path
+				$currentPath = RouteHandler::getPath();
+				$pathToDocumentRoot = str_replace(RouteHandler::getPath(array('acp')), '', FileUtil::unifyDirSeperator(WCF_DIR));
+				$domainPath = str_replace($pathToDocumentRoot, '', $packageDir);
 				
 				// update application path
 				$application = new Application($this->getPackage()->packageID);
@@ -627,7 +664,7 @@ class PackageInstallationDispatcher {
 				
 				// create directory and set permissions
 				@mkdir($packageDir, 0777, true);
-				@chmod($packageDir, 0777);
+				FileUtil::makeWritable($packageDir);
 			}
 			
 			return null;
@@ -643,12 +680,15 @@ class PackageInstallationDispatcher {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'optionalPackages')) {
 			$container = new MultipleSelectionFormElementContainer();
 			$container->setName('optionalPackages');
+			$container->setLabel(WCF::getLanguage()->get('wcf.acp.package.optionalPackages'));
+			$container->setDescription(WCF::getLanguage()->get('wcf.acp.package.optionalPackages.description'));
 			
 			foreach ($packages as $package) {
 				$optionalPackage = new MultipleSelectionFormElement($container);
 				$optionalPackage->setName('optionalPackages');
 				$optionalPackage->setLabel($package['packageName']);
 				$optionalPackage->setValue($package['package']);
+				$optionalPackage->setDescription($package['packageDescription']);
 				
 				$container->appendChild($optionalPackage);
 			}
@@ -713,7 +753,7 @@ class PackageInstallationDispatcher {
 			exit;
 		}
 		else {
-			$url = LinkHandler::getInstance()->getLink('PackageInstallationConfirm', array(), 'action='.$packageInstallation['action'].'&queueID='.$packageInstallation['queueID']);
+			$url = LinkHandler::getInstance()->getLink('PackageInstallationConfirm', array(), 'queueID='.$packageInstallation['queueID']);
 			HeaderUtil::redirect($url);
 			exit;
 		}

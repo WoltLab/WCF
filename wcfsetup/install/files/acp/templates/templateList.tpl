@@ -30,6 +30,18 @@
 			</dl>
 			
 			<dl>
+				<dt><label for="application">{lang}wcf.acp.template.application{/lang}</label></dt>
+				<dd>
+					<select name="application" id="templateGroupID">
+						<option value="">{lang}wcf.acp.template.application.all{/lang}</option>
+						{foreach from=$availableApplications key=abbreviation item=availableApplication}
+							<option value="{$abbreviation}"{if $abbreviation == $application} selected="selected"{/if}>{$availableApplication}</option>
+						{/foreach}
+					</select>
+				</dd>
+			</dl>
+			
+			<dl>
 				<dt><label for="searchTemplateName">{lang}wcf.global.name{/lang}</label></dt>
 				<dd>
 					<input type="text" id="searchTemplateName" name="searchTemplateName" value="{$searchTemplateName}" class="long" />
@@ -93,7 +105,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$template->templateID}</td>
-						<td class="columnTitle columnTemplateName">{if $template->packageDir}[{$template->getPackageAbbreviation()}] {/if}{if $template->templateGroupID}<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}">{$template->templateName}</a>{else}{$template->templateName}{/if}</td>
+						<td class="columnTitle columnTemplateName">{if $template->application != 'wcf'}[{$template->application}] {/if}{if $template->templateGroupID}<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}">{$template->templateName}</a>{else}{$template->templateName}{/if}</td>
 						<td class="columnDate columnLastModificationTime">{@$template->lastModificationTime|time}</td>
 						
 						{event name='columns'}

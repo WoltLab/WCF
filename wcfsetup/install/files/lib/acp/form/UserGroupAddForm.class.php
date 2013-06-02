@@ -8,6 +8,7 @@ use wcf\system\language\I18nHandler;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
+use wcf\util\StringUtil;
 
 /**
  * Shows the group add form.
@@ -66,6 +67,24 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $defaultValues = array();
 	
 	/**
+	 * group priority
+	 * @var	integer
+	 */
+	protected $priority = 0;
+	
+	/**
+	 * user online marking string
+	 * @var	string
+	 */
+	protected $userOnlineMarking = '%s';
+	
+	/**
+	 * shows the members of this group on the team page
+	 * @var	integer
+	 */
+	protected $showOnTeamPage = 0;
+	
+	/**
 	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -83,6 +102,10 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		I18nHandler::getInstance()->readValues();
 		
 		if (I18nHandler::getInstance()->isPlainValue('groupName')) $this->groupName = I18nHandler::getInstance()->getValue('groupName');
+		
+		if (isset($_POST['priority'])) $this->priority = intval($_POST['priority']);
+		if (isset($_POST['userOnlineMarking'])) $this->userOnlineMarking = StringUtil::trim($_POST['userOnlineMarking']);
+		if (isset($_POST['showOnTeamPage'])) $this->showOnTeamPage = intval($_POST['showOnTeamPage']);
 	}
 	
 	/**
@@ -129,7 +152,12 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		}
 		
 		$data = array(
-			'data' => array_merge($this->additionalFields, array('groupName' => $this->groupName)),
+			'data' => array_merge($this->additionalFields, array(
+				'groupName' => $this->groupName,
+				'priority' => $this->priority,
+				'userOnlineMarking' => $this->userOnlineMarking,
+				'showOnTeamPage' => $this->showOnTeamPage
+			)),
 			'options' => $saveOptions
 		);
 		$this->objectAction = new UserGroupAction(array(), 'create', $data);
@@ -184,7 +212,10 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		WCF::getTPL()->assign(array(
 			'groupName' => $this->groupName,
 			'optionTree' => $this->optionTree,
-			'action' => 'add'
+			'action' => 'add',
+			'priority' => $this->priority,
+			'userOnlineMarking' => $this->userOnlineMarking,
+			'showOnTeamPage' => $this->showOnTeamPage
 		));
 	}
 	

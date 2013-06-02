@@ -9,121 +9,158 @@
 </script>
 
 <style type="text/css">
-	#health ul {
-		list-style: disc;
-		padding-left: 16px;
+	#news iframe {
+		width: 100%;	
 	}
 </style>
 
-<p class="{@$health}">{lang}wcf.acp.index.health.summary.{@$health}{/lang}</p>
+<header class="boxHeadline">
+	<h1>{lang}wcf.global.acp{/lang}</h1>
+</header>
 
-{event name='boxes'}
+{if $usersAwaitingApproval}
+	<p class="info">{lang}wcf.acp.user.usersAwaitingApprovalInfo{/lang}</p>
+{/if}
 
-<div class="tabMenuContainer" data-active="{if $health !== 'success'}health{else}news{/if}" data-store="activeTabMenuItem">
+{event name='userNotice'}
+
+<div class="tabMenuContainer" data-active="{if ENABLE_WOLTLAB_NEWS}news{else}system{/if}" data-store="activeTabMenuItem">
 	<nav class="tabMenu">
 		<ul>
-			{if $health !== 'success'}<li><a href="{@$__wcf->getAnchor('health')}" title="Health">Health</a></li>{/if}
-			<li><a href="{@$__wcf->getAnchor('news')}" title="News">News</a></li>
-			<li><a href="{@$__wcf->getAnchor('credits')}" title="Credits">Credits</a></li>
+			{if ENABLE_WOLTLAB_NEWS}<li><a href="{@$__wcf->getAnchor('news')}">{lang}wcf.acp.index.news{/lang}</a></li>{/if}
+			<li><a href="{@$__wcf->getAnchor('system')}">{lang}wcf.acp.index.system{/lang}</a></li>
+			<li><a href="{@$__wcf->getAnchor('credits')}">{lang}wcf.acp.index.credits{/lang}</a></li>
 			
 			{event name='tabMenuTabs'}
 		</ul>
 	</nav>
 	
-	{if $health !== 'success'}
-		<div id="health" class="container containerPadding hidden tabMenuContent">
-			{foreach from=$healthDetails item='issues' key='healthType'}
-				{hascontent}
-					<fieldset>
-						<legend>{lang}wcf.acp.index.health.detail.{@$healthType}{/lang}</legend>
-						
-						<ul>
-							{content}
-								{foreach from=$issues item='issue'}
-									<li>{@$issue}</li>
-								{/foreach}
-							{/content}
-						</ul>
-					</fieldset>
-				{/hascontent}
-			{/foreach}
+	{if ENABLE_WOLTLAB_NEWS}
+		<div id="news" class="container containerPadding hidden tabMenuContent">
+			{if $__wcf->language->languageCode == 'de'}
+				<a class="twitter-timeline" href="https://twitter.com/woltlab_de" data-chrome="nofooter transparent" data-widget-id="339042086949093376">Tweets von @woltlab_de</a>
+			{else}
+				<a class="twitter-timeline" href="https://twitter.com/woltlab" data-chrome="nofooter transparent" data-widget-id="335166618281865217">Tweets by @woltlab</a>
+			{/if}
+			{literal}
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			{/literal}
 		</div>
 	{/if}
 	
-	<div id="news" class="container containerPadding hidden tabMenuContent">
-		WoltLab Community Framework is twice as cool now, as the version number is twice as high.
+	<div id="system" class="container containerPadding hidden tabMenuContent">
+		<fieldset>
+			<legend>{lang}wcf.acp.index.system.software{/lang}</legend>
+		
+			{event name='softwareVersions'}
+		
+			<dl>
+				<dt>{lang}wcf.acp.index.system.software.wcfVersion{/lang}</dt>
+				<dd>{@WCF_VERSION}</dd>
+			</dl>
+			
+			{event name='softwareFields'}
+		</fieldset>
+		
+		<fieldset>
+			<legend>{lang}wcf.acp.index.system.server{/lang}</legend>
+		
+			<dl>
+				<dt>{lang}wcf.acp.index.system.os{/lang}</dt>
+				<dd>{$server[os]}</dd>
+			</dl>
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.system.webserver{/lang}</dt>
+				<dd>{$server[webserver]}</dd>
+			</dl>
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.system.php{/lang}</dt>
+				<dd><a href="{link controller='PHPInfo'}{/link}">{PHP_VERSION}</a></dd>
+			</dl>
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.system.mySQLVersion{/lang}</dt>
+				<dd>{$server[mySQLVersion]}</dd>
+			</dl>
+			
+			{if $server[load]}
+				<dl>
+					<dt>{lang}wcf.acp.index.system.load{/lang}</dt>
+					<dd>{$server[load]}</dd>
+				</dl>
+			{/if}
+			
+			{event name='serverFields'}
+		</fieldset>
+		
+		{event name='systemFieldsets'}
 	</div>
 	
-	<fieldset id="credits" class="container containerPadding hidden tabMenuContent">
-		<dl>
-			<dt>{lang}wcf.acp.index.credits.developedBy{/lang}</dt>
-			<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}" class="externalURL">WoltLab&reg; GmbH</a></dd>
-		</dl>
+	<div id="credits" class="container containerPadding hidden tabMenuContent">
+		<fieldset>
+			<legend>{lang}wcf.acp.index.credits{/lang}</legend>
 		
-		<dl>
-			<dt>{lang}wcf.acp.index.credits.productManager{/lang}</dt>
-			<dd>
-				<ul class="dataList">
-					<li>Marcel Werk</li>
-				</ul>
-			</dd>
-		</dl>
-		
-		<dl>
-			<dt>{lang}wcf.acp.index.credits.developer{/lang}</dt>
-			<dd>
-				<ul class="dataList">
-					<li>Alexander Ebert</li>
-					<li>Marcel Werk</li>
-				</ul>
-			</dd>
-		</dl>
-		
-		<dl>
-			<dt>{lang}wcf.acp.index.credits.designer{/lang}</dt>
-			<dd>
-				<ul class="dataList">
-					<li>Harald Szekely</li>
-					<li>Marcel Werk</li>
-				</ul>
-			</dd>
-		</dl>
-		
-		<dl>
-			<dt>{lang}wcf.acp.index.credits.contributor{/lang}</dt>
-			<dd>
-				<ul class="dataList">
-					<li>Thorsten Buitkamp</li>
-					<li>Tim D&uuml;sterhus</li>
-					<li>Matthias Schmidt</li>
-					<li>
-						<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://github.com/WoltLab/WCF/contributors"|rawurlencode}" class="externalURL">
-							{lang}wcf.acp.index.credits.contributor.more{/lang}
-						</a>
-					</li>
-				</ul>
-			</dd>
-		</dl>
-		
-		{*<dl>
-			<dt>{lang}wcf.acp.index.credits.translators{/lang}</dt>
-			<dd>
-				<ul class="dataList">
-				</ul>
-			</dd>
-		</dl>*}
-		
-		<dl>
-			<dt></dt>
-			<dd>Copyright &copy; 2001-2012 WoltLab&reg; GmbH. All rights reserved.</dd>
-		</dl>
-		
-		<dl>
-			<dt></dt>
-			<dd>{lang}wcf.acp.index.credits.trademarks{/lang}</dd>
-		</dl>
-	</fieldset>
+			<dl>
+				<dt>{lang}wcf.acp.index.credits.developedBy{/lang}</dt>
+				<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}" class="externalURL">WoltLab&reg; GmbH</a></dd>
+			</dl>
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.credits.productManager{/lang}</dt>
+				<dd>
+					<ul class="dataList">
+						<li>Marcel Werk</li>
+					</ul>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.credits.developer{/lang}</dt>
+				<dd>
+					<ul class="dataList">
+						<li>Tim D&uuml;sterhus</li>
+						<li>Alexander Ebert</li>
+						<li>Matthias Schmidt</li>
+						<li>Marcel Werk</li>
+					</ul>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.credits.designer{/lang}</dt>
+				<dd>
+					<ul class="dataList">
+						<li>Harald Szekely</li>
+						<li>Marcel Werk</li>
+					</ul>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.credits.contributor{/lang}</dt>
+				<dd>
+					<ul class="dataList">
+						<li>Thorsten Buitkamp</li>
+						<li>
+							<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://github.com/WoltLab/WCF/contributors"|rawurlencode}" class="externalURL">{lang}wcf.acp.index.credits.contributor.more{/lang}</a>
+						</li>
+					</ul>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dd>Copyright &copy; 2001-2013 WoltLab&reg; GmbH. All rights reserved.</dd>
+			</dl>
+			
+			<dl>
+				<dd>{lang}wcf.acp.index.credits.trademarks{/lang}</dd>
+			</dl>
+		</fieldset>
+	</div>
 	
 	{event name='tabMenuContents'}
 </div>
+
 {include file='footer'}

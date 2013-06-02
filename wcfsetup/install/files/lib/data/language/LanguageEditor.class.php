@@ -14,6 +14,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;
 
@@ -95,8 +96,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				}
 			}
 			
-			$file = new File(WCF_DIR.'language/'.$this->languageID.'_'.$category->languageCategory.'.php');
-			@$file->chmod(0777);
+			$filename = WCF_DIR.'language/'.$this->languageID.'_'.$category->languageCategory.'.php';
+			$file = new File($filename);
+			FileUtil::makeWritable($filename);
 			$file->write($content . '?>');
 			$file->close();
 		}
@@ -199,7 +201,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		}
 		
 		// loop through categories to import items
-		$items = array();
+		$itemData = array();
 		foreach ($categories as $category) {
 			$categoryName = $category->getAttribute('name');
 			$categoryID = $usedCategories[$categoryName];
@@ -210,76 +212,30 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				$itemName = $element->getAttribute('name');
 				$itemValue = $element->nodeValue;
 				
-				$items[$itemName] = array(
-					'name' => $itemName,
-					'value' => $itemValue,
-					'categoryID' => $categoryID
-				);
+				$itemData[] = $this->languageID;
+				$itemData[] = $itemName;
+				$itemData[] = $itemValue;
+				$itemData[] = $categoryID;
+				if ($packageID) $itemData[] = $packageID;
 			}
 		}
 		
-		if (!empty($items)) {
-			$existingItems = $statementParameters = array();
-			
-			// find existing items
-			$itemList = new LanguageItemList();
-			$itemList->getConditionBuilder()->add("language_item.languageItem IN (?)", array(array_keys($items)));
-			$itemList->getConditionBuilder()->add("language_item.languageID = ?", array($this->languageID));
-			$itemList->readObjects();
-			
-			foreach ($itemList->getObjects() as $languageItem) {
-				$existingItems[$languageItem->languageItem] = $languageItem;
-			}
-			
-			foreach ($items as $item) {
-				if (isset($existingItems[$item['name']])) {
-					// update existing item
-					$itemEditor = new LanguageItemEditor($existingItems[$item['name']]);
-					$itemEditor->update(array(
-						'languageItemValue' => $item['value'],
-						'languageCategoryID' => $item['categoryID'],
-						'languageUseCustomValue' => 0,
-						'languageItem' => $item['name']
-					));
-				}
-				else {
-					// store item for later insert
-					$statementParameters[] = $item;
-				}
-			}
-			
-			if (!empty($statementParameters)) {
-				if ($packageID) {
-					$sql = "INSERT INTO	wcf".WCF_N."_language_item
-								(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
-						VALUES		(?, ?, ?, ?, ?)";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					
-					foreach ($statementParameters as $item) {
-						$statement->execute(array(
-							$this->languageID,
-							$item['name'],
-							$item['value'],
-							$item['categoryID'],
-							$packageID
-						));
-					}
-				}
-				else {
-					$sql = "INSERT INTO	wcf".WCF_N."_language_item
-								(languageID, languageItem, languageItemValue, languageCategoryID)
-						VALUES		(?, ?, ?, ?)";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					
-					foreach ($statementParameters as $item) {
-						$statement->execute(array(
-							$this->languageID,
-							$item['name'],
-							$item['value'],
-							$item['categoryID']
-						));
-					}
-				}
+		if (!empty($itemData)) {
+			// insert/update a maximum of 50 items per run (prevents issues with max_allowed_packet)
+			$step = ($packageID) ? 5 : 4;
+			for ($i = 0, $length = count($itemData); $i < $length; $i += 50 * $step) {
+				$parameters = array_slice($itemData, $i, 50 * $step);
+				$repeat = count($parameters) / $step;
+				
+				$sql = "INSERT INTO		wcf".WCF_N."_language_item
+								(languageID, languageItem, languageItemValue, languageCategoryID". ($packageID ? ", packageID" : "") . ")
+					VALUES			".substr(str_repeat('(?, ?, ?, ?'. ($packageID ? ', ?' : '') .'), ', $repeat), 0, -2)."
+					ON DUPLICATE KEY
+					UPDATE			languageItemValue = VALUES(languageItemValue),
+								languageCategoryID = VALUES(languageCategoryID),
+								languageUseCustomValue = 0";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute($parameters);
 			}
 		}
 		

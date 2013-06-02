@@ -14,7 +14,7 @@
 		</definition>
 		
 		<definition>
-			<interfacename>wcf\system\category\ICategoryType</interfacename>
+			<interfacename><![CDATA[wcf\system\category\ICategoryType]]></interfacename>
 			<name>com.woltlab.wcf.category</name>
 		</definition>
 		
@@ -24,6 +24,105 @@
 
 		<definition>
 			<name>com.woltlab.wcf.versionableObject</name>
-		</definition>		
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.attachment.objectType</name>
+			<interfacename><![CDATA[wcf\system\attachment\IAttachmentObjectType]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.message.quote</name>
+			<interfacename><![CDATA[wcf\system\message\IMessageQuoteHandler]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.user.recentActivityEvent</name>
+			<interfacename><![CDATA[wcf\system\user\activity\event\IUserActivityEvent]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.user.activityPointEvent</name>
+			<interfacename><![CDATA[wcf\system\user\activity\point\IUserActivityPointObjectProcessor]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.notification.notificationType</name>
+			<interfacename><![CDATA[wcf\system\user\notification\type\IUserNotificationType]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.notification.objectType</name>
+			<interfacename><![CDATA[wcf\system\user\notification\object\type\IUserNotificationObjectType]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.user.dashboardContainer</name>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.user.online.location</name>
+			<interfacename><![CDATA[wcf\system\user\online\location\IUserOnlineLocation]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.user.objectWatch</name>
+			<interfacename><![CDATA[wcf\system\user\object\watch\IUserObjectWatch]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.visitTracker.objectType</name>
+			<!-- <interfacename><![CDATA[wcf\system\visitTracker\IVisitTrackerObjectType]]></interfacename>-->
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.moderation.type</name>
+			<interfacename><![CDATA[wcf\system\moderation\queue\IModerationQueueManager]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.moderation.activation</name>
+			<interfacename><![CDATA[wcf\system\moderation\queue\activation\IModerationQueueActivationHandler]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.moderation.report</name>
+			<interfacename><![CDATA[wcf\system\moderation\queue\report\IModerationQueueReportHandler]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.like.likeableObject</name>
+			<interfacename><![CDATA[wcf\data\like\ILikeObjectTypeProvider]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.comment.commentableContent</name>
+			<interfacename><![CDATA[wcf\system\comment\manager\ICommentManager]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.label.object</name>
+			<interfacename><![CDATA[wcf\system\label\object\ILabelObjectHandler]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.label.objectType</name>
+			<interfacename><![CDATA[wcf\system\label\object\type\ILabelObjectTypeHandler]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.tagging.taggableObject</name>
+			<interfacename><![CDATA[wcf\system\tagging\ITaggable]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.searchableObjectType</name>
+			<interfacename><![CDATA[wcf\system\search\ISearchableObjectType]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.poll</name>
+			<interfacename><![CDATA[wcf\system\poll\IPollHandler]]></interfacename>
+		</definition>
 	</import>
 </data>

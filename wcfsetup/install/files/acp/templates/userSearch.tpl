@@ -25,7 +25,10 @@
 				<ul class="dropdownMenu">
 					<li><a href="{link controller='UserQuickSearch'}mode=banned{/link}">{lang}wcf.acp.user.quickSearch.banned{/lang}</a></li>
 					<li><a href="{link controller='UserQuickSearch'}mode=newest{/link}">{lang}wcf.acp.user.quickSearch.newest{/lang}</a></li>
-					
+					<li><a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{lang}wcf.acp.user.quickSearch.disabled{/lang}</a></li>
+					<li><a href="{link controller='UserQuickSearch'}mode=disabledAvatars{/link}">{lang}wcf.acp.user.quickSearch.disabledAvatars{/lang}</a></li>
+					<li><a href="{link controller='UserQuickSearch'}mode=disabledSignatures{/link}">{lang}wcf.acp.user.quickSearch.disabledSignatures{/lang}</a></li>
+
 					{event name='quickSearchItems'}
 				</ul>
 			</li>
@@ -39,7 +42,7 @@
 	<div class="tabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
-				<li><a href="{@$__wcf->getAnchor('__general')}">{lang}wcf.acp.user.search.conditions.general{/lang}</a></li>
+				<li><a href="{@$__wcf->getAnchor('conditions')}">{lang}wcf.acp.user.search.conditions{/lang}</a></li>
 				
 				{if $optionTree|count}
 					<li><a href="{@$__wcf->getAnchor('profile')}">{lang}wcf.acp.user.search.conditions.profile{/lang}</a></li>
@@ -51,9 +54,9 @@
 			</ul>
 		</nav>
 		
-		<div id="__general" class="container containerPadding tabMenuContent hidden">
+		<div id="conditions" class="container containerPadding tabMenuContent hidden">
 			<fieldset>
-				<legend>{lang}wcf.acp.user.search.conditions.general{/lang}</legend>
+				<legend>{lang}wcf.acp.user.search.conditions{/lang}</legend>
 				
 				<dl>
 					<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
@@ -102,8 +105,43 @@
 					</dl>
 				{/if}
 				
-				{event name='generalFields'}
+				<dl>
+					<dt><label for="registrationDateStart">{lang}wcf.user.registrationDate{/lang}</label></dt>
+					<dd>
+						<input type="date" id="registrationDateStart" name="registrationDateStart" value="{$registrationDateStart}" placeholder="{lang}wcf.date.period.start{/lang}" />
+						<input type="date" id="registrationDateEnd" name="registrationDateEnd" value="{$registrationDateEnd}" placeholder="{lang}wcf.date.period.end{/lang}" />
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt><label for="lastActivityTimeStart">{lang}wcf.user.lastActivityTime{/lang}</label></dt>
+					<dd>
+						<input type="date" id="lastActivityTimeStart" name="lastActivityTimeStart" value="{$lastActivityTimeStart}" placeholder="{lang}wcf.date.period.start{/lang}" />
+						<input type="date" id="lastActivityTimeEnd" name="lastActivityTimeEnd" value="{$lastActivityTimeEnd}" placeholder="{lang}wcf.date.period.end{/lang}" />
+					</dd>
+				</dl>
+				
+				{event name='conditionFields'}
 			</fieldset>
+			
+			<fieldset>
+				<legend>{lang}wcf.acp.user.search.conditions.states{/lang}</legend>
+				
+				<dl>
+					<dd>
+						<label><input type="checkbox" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.banned{/lang}</label>
+						<label><input type="checkbox" name="notBanned" value="1" {if $notBanned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.notBanned{/lang}</label>
+						<label><input type="checkbox" name="enabled" value="1" {if $enabled == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.enabled{/lang}</label>
+						<label><input type="checkbox" name="disabled" value="1" {if $disabled == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.disabled{/lang}</label>
+						
+						{event name='states'}
+					</dd>
+				</dl>
+				
+				{event name='stateFields'}
+			</fieldset>
+			
+			{event name='conditionFieldsets'}
 		</div>
 		
 		{if $optionTree|count}
@@ -152,32 +190,37 @@
 						<input type="number" id="itemsPerPage" name="itemsPerPage" value="{@$itemsPerPage}" class="tiny" />
 					</dd>
 				</dl>
+				
+				{event name='searchDisplayFields'}
 			</fieldset>
 			
 			<fieldset>
 				<legend>{lang}wcf.acp.user.search.display.columns{/lang}</legend>
 				
-				{* TODO: Do we still want all this columns supported? *}
-				{*if $optionTree|count}
+				{if $columnOptions|count}
 					<dl>
 						<dt>
 							<label>{lang}wcf.acp.user.search.display.columns.profile{/lang}</label>
 						</dt>
 						<dd>
-							{foreach from=$optionTree item=option}
+							{foreach from=$columnOptions item=optionData}
+								{assign var='option' value=$optionData.object}
 								<label><input type="checkbox" name="columns[]" value="{$option->optionName}" {if $option->optionName|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.option.{$option->optionName}{/lang}</label>
 							{/foreach}
 						</dd>
 					</dl>
-				{/if*}
+				{/if}
 				
 				<dl>
 					<dt><label>{lang}wcf.acp.user.search.display.columns.other{/lang}</label></dt>
 					<dd>
 						<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
 						<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
+						{event name='searchDisplayColumns'}
 					</dd>
 				</dl>
+				
+				{event name='searchDisplayColumnFields'}
 			</fieldset>
 			
 			{event name='resultOptionFieldsets'}

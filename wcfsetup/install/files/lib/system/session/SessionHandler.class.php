@@ -10,6 +10,7 @@ use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 
@@ -232,7 +233,7 @@ class SessionHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function checkSecurityToken($token) {
-		return ($this->getSecurityToken() === $token);
+		return PasswordUtil::secureCompare($this->getSecurityToken(), $token);
 	}
 	
 	/**

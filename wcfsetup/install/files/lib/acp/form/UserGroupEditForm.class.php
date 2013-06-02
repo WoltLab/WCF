@@ -69,6 +69,9 @@ class UserGroupEditForm extends UserGroupAddForm {
 		if (empty($_POST)) {
 			I18nHandler::getInstance()->setOptions('groupName', 1, $this->group->groupName, 'wcf.acp.group.group\d+');
 			$this->groupName = $this->group->groupName;
+			$this->priority = $this->group->priority;
+			$this->userOnlineMarking = $this->group->userOnlineMarking;
+			$this->showOnTeamPage = $this->group->showOnTeamPage;
 			$options = $this->optionHandler->getCategoryOptions();
 			
 			// get default values
@@ -150,7 +153,12 @@ class UserGroupEditForm extends UserGroupAddForm {
 		}
 		
 		$data = array(
-			'data' => array_merge(array('groupName' => $this->groupName), $this->additionalFields),
+			'data' => array_merge(array(
+				'groupName' => $this->groupName,
+				'priority' => $this->priority,
+				'userOnlineMarking' => $this->userOnlineMarking,
+				'showOnTeamPage' => $this->showOnTeamPage
+			), $this->additionalFields),
 			'options' => $saveOptions
 		);
 		$this->objectAction = new UserGroupAction(array($this->groupID), 'update', $data);

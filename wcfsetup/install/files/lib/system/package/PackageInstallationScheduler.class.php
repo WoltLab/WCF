@@ -235,11 +235,6 @@ class PackageInstallationScheduler {
 			$response = $request->getReply();
 			
 			// check response
-			// 401 = missing/invalid auth data, 403 = valid auth data, but unaccessible
-			if ($response['statusCode'] == 401 || $response['statusCode'] == 403) {
-				throw new PackageUpdateAuthorizationRequiredException($packageUpdateVersion['packageUpdateServerID'], (!empty($packageUpdateVersion['file']) ? $packageUpdateVersion['file'] : $packageUpdateVersion['server']), $response);
-			}
-			
 			if ($response['statusCode'] != 200) {
 				throw new SystemException(WCF::getLanguage()->get('wcf.acp.packageUpdate.error.downloadFailed', array('$package' => $package)) . ' ('.$response['body'].')');
 			}

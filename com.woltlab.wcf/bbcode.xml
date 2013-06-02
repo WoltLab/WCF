@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/bbcode.xsd">
+	<import>
+		<bbcode name="b">
+			<htmlopen>b</htmlopen>
+			<htmlclose>b</htmlclose>
+			<allowedchildren>all^b</allowedchildren>
+		</bbcode>
+		<bbcode name="i">
+			<htmlopen>i</htmlopen>
+			<htmlclose>i</htmlclose>
+			<allowedchildren>all^i</allowedchildren>
+		</bbcode>
+		<bbcode name="u">
+			<htmlopen>span style="text-decoration: underline"</htmlopen>
+			<htmlclose>span</htmlclose>
+			<allowedchildren>all^u</allowedchildren>
+		</bbcode>
+		<bbcode name="s">
+			<htmlopen>s</htmlopen>
+			<htmlclose>s</htmlclose>
+			<allowedchildren>all^s</allowedchildren>
+		</bbcode>
+		<bbcode name="sub">
+			<htmlopen>sub</htmlopen>
+			<htmlclose>sub</htmlclose>
+			<allowedchildren>all^sub</allowedchildren>
+		</bbcode>
+		<bbcode name="sup">
+			<htmlopen>sup</htmlopen>
+			<htmlclose>sup</htmlclose>
+			<allowedchildren>all^sup</allowedchildren>
+		</bbcode>
+		<bbcode name="email">
+			<htmlopen>a</htmlopen>
+			<htmlclose>a</htmlclose>
+			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font</allowedchildren>
+			<attributes>
+				<attribute name="0">
+					<html>href="mailto:%s"</html>
+					<required>1</required>
+					<usetext>1</usetext>
+					<validationpattern>^[^\s]+@[^\s]+$</validationpattern>
+				</attribute>
+			</attributes>
+		</bbcode>
+		<bbcode name="color">
+			<htmlopen>span</htmlopen>
+			<htmlclose>span</htmlclose>
+			<attributes>
+				<attribute name="0">
+					<html>style="color: %s"</html>
+					<validationpattern>^(#([0-9a-f]{3}|[0-9a-f]{6})|[a-z]+)$</validationpattern>
+					<required>1</required>
+				</attribute>
+			</attributes>
+		</bbcode>
+		<bbcode name="size">
+			<htmlopen>span</htmlopen>
+			<htmlclose>span</htmlclose>
+			<attributes>
+				<attribute name="0">
+					<html>style="font-size: %dpt"</html>
+					<validationpattern>^([89]{1}|[1-3]{1}[0-9]{1})$</validationpattern>
+					<required>1</required>
+				</attribute>
+			</attributes>
+			<wysiwyg>1</wysiwyg>
+		</bbcode>
+		<bbcode name="font">
+			<htmlopen>span</htmlopen>
+			<htmlclose>span</htmlclose>
+			<attributes>
+				<attribute name="0">
+					<html>style="font-family: %s"</html>
+					<validationpattern>^[^"';}\(\)]*$</validationpattern>
+					<required>1</required>
+				</attribute>
+			</attributes>
+		</bbcode>
+		<bbcode name="align">
+			<htmlopen>div</htmlopen>
+			<htmlclose>div</htmlclose>
+			<attributes>
+				<attribute name="0">
+					<html>style="text-align: %s"</html>
+					<validationpattern>^(left|right|center|justify)$</validationpattern>
+					<required>1</required>
+				</attribute>
+			</attributes>
+		</bbcode>
+		<bbcode name="quote">
+			<classname><![CDATA[wcf\system\bbcode\QuoteBBCode]]></classname>
+			<attributes>
+				<attribute name="0"></attribute>
+				<attribute name="1"></attribute>
+			</attributes>
+		</bbcode>
+		<bbcode name="code">
+			<classname><![CDATA[wcf\system\bbcode\CodeBBCode]]></classname>
+			<allowedchildren>none</allowedchildren>
+			<attributes>
+				<attribute name="0">
+					<validationpattern>^\d+$</validationpattern>
+				</attribute>
+			</attributes>
+			<sourcecode>1</sourcecode>
+		</bbcode>
+		<bbcode name="img">
+			<classname><![CDATA[wcf\system\bbcode\ImageBBCode]]></classname>
+			<allowedchildren>none</allowedchildren>
+			<attributes>
+				<attribute name="0">
+					<required>1</required>
+					<usetext>1</usetext>
+					<validationpattern>^.+$</validationpattern>
+				</attribute>
+				<attribute name="1">
+					<validationpattern>^(left|right)$</validationpattern>
+				</attribute>
+			</attributes>
+		</bbcode>
+		<bbcode name="url">
+			<classname><![CDATA[wcf\system\bbcode\URLBBCode]]></classname>
+			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font</allowedchildren>
+			<attributes>
+				<attribute name="0">
+					<required>1</required>
+					<usetext>1</usetext>
+					<validationpattern>^.+$</validationpattern>
+				</attribute>
+			</attributes>
+		</bbcode>
+		<bbcode name="list">
+			<classname><![CDATA[wcf\system\bbcode\ListBBCode]]></classname>
+			<attributes>
+				<attribute name="0">
+					<validationpattern>^(1|a|none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)$</validationpattern>
+				</attribute>
+			</attributes>
+		</bbcode>
+		<bbcode name="table">
+			<classname><![CDATA[wcf\system\bbcode\TableBBCode]]></classname>
+			<allowedchildren>all^table</allowedchildren>
+		</bbcode>
+		<bbcode name="media">
+			<classname><![CDATA[wcf\system\bbcode\MediaBBCode]]></classname>
+			<sourcecode>1</sourcecode>
+		</bbcode>
+		<bbcode name="spoiler">
+			<classname><![CDATA[wcf\system\bbcode\SpoilerBBCode]]></classname>
+			<attributes>
+				<attribute name="0"></attribute>
+			</attributes>
+		</bbcode>
+		<bbcode name="tt">
+			<htmlopen>code class="inlineCode"</htmlopen>
+			<htmlclose>code</htmlclose>
+			<allowedchildren>none</allowedchildren>
+			<sourcecode>1</sourcecode>
+		</bbcode>
+		
+		<bbcode name="attach">
+			<classname><![CDATA[wcf\system\bbcode\AttachmentBBCode]]></classname>
+			<attributes>
+				<attribute name="0">
+					<validationpattern>^\d+$</validationpattern>
+					<required>1</required>
+					<usetext>1</usetext>
+				</attribute>
+				<attribute name="1">
+					<validationpattern>^(left|right)$</validationpattern>
+				</attribute>
+			</attributes>
+		</bbcode>
+	</import>
+</data>

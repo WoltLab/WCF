@@ -31,6 +31,11 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	public $neededPermissions = array('admin.system.canViewLog');
 	
 	/**
+	 * @see	wcf\page\MultipleLinkPage::$itemsPerPage
+	 */
+	public $itemsPerPage = 10;
+	
+	/**
 	 * given exceptionID
 	 * @var	string
 	 */
@@ -103,6 +108,9 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 			return;
 		}
 		
+		// unify newlines
+		$contents = StringUtil::unifyNewlines($contents);
+		
 		// split contents
 		$split = new Regex('(?:^|\n<<<<\n\n)(?:<<<<<<<<([a-f0-9]{40})<<<<\n|$)');
 		$contents = $split->split($contents, Regex::SPLIT_NON_EMPTY_ONLY | Regex::CAPTURE_SPLIT_DELIMITER);
@@ -119,16 +127,16 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		$this->calculateNumberOfPages();
 		
 		$i = 0;
-		$exceptionRegex = new Regex('(?<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})
-Message: (?<message>.*?)
-File: (?<file>.*?) \((?<line>\d+)\)
-PHP version: (?<phpVersion>.*?)
-WCF version: (?<wcfVersion>.*?)
-Request URI: (?<requestURI>.*?)
-Referrer: (?<referrer>.*?)
-User-Agent: (?<userAgent>.*?)
+		$exceptionRegex = new Regex('(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})
+Message: (?P<message>.*?)
+File: (?P<file>.*?) \((?P<line>\d+)\)
+PHP version: (?P<phpVersion>.*?)
+WCF version: (?P<wcfVersion>.*?)
+Request URI: (?P<requestURI>.*?)
+Referrer: (?P<referrer>.*?)
+User-Agent: (?P<userAgent>.*?)
 Stacktrace: 
-(?<stacktrace>.*)', Regex::DOT_ALL);
+(?P<stacktrace>.*)', Regex::DOT_ALL);
 		$stackTraceFormatter = new Regex('^\s+(#\d+)', Regex::MULTILINE);
 		foreach ($this->exceptions as $key => $val) {
 			$i++;

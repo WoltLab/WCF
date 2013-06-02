@@ -10,8 +10,8 @@ use wcf\util\XML;
 /**
  * Abstract implementation of a package installation plugin using a XML file.
  * 
- * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -282,7 +282,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			throw new SystemException("xml file '".$filename."' not found in '".$this->installation->getArchive()->getArchive()."'");
 		}
 		
-		// Extract acpmenu file and parse with SimpleXML
+		// Extract acpmenu file and parse XML
 		$xml = new XML();
 		$tmpFile = FileUtil::getTemporaryFilename('xml_');
 		try {

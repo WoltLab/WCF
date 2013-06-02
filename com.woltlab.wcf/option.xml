@@ -82,9 +82,48 @@
 				<showorder>3</showorder>
 			</category>
 			
-			<category name="user.general">
-				<parent>user</parent>
-			</category>
+				<category name="user.general">
+					<parent>user</parent>
+				</category>
+				
+				<category name="user.profile">
+					<parent>user</parent>
+				</category>
+					<category name="user.avatar">
+						<parent>user.profile</parent>
+					</category>
+					<category name="user.signature">
+						<parent>user.profile</parent>
+					</category>
+					<category name="user.title">
+						<parent>user.profile</parent>
+					</category>
+					<category name="user.cleanup">
+						<parent>user.profile</parent>
+					</category>
+				
+				<category name="user.list">
+					<parent>user</parent>
+				</category>
+					<category name="user.list.members">
+						<parent>user.list</parent>
+					</category>
+					<category name="user.list.online">
+						<parent>user.list</parent>
+					</category>
+				
+				<category name="user.register">
+					<parent>user</parent>
+				</category>
+					<category name="user.3rdPartyAuth">
+						<parent>user.register</parent>
+					</category>
+					<category name="user.password">
+						<parent>user.register</parent>
+					</category>
+					<category name="user.ban">
+						<parent>user.register</parent>
+					</category>
 			<!-- /user -->
 			
 			<!-- security -->
@@ -103,9 +142,16 @@
 				<category name="security.antispam">
 					<parent>security</parent>
 				</category>
+					<category name="security.antispam.recaptcha">
+						<parent>security.antispam</parent>
+					</category>
+				
 				<category name="security.censorship">
 					<parent>security</parent>
 				</category>
+					<category name="message.censorship">
+						<parent>security.censorship</parent>
+					</category>
 			<!-- /security -->
 			
 			<!-- message -->
@@ -116,7 +162,46 @@
 				<category name="message.general">
 					<parent>message</parent>
 				</category>
+					<category name="message.general.share">
+						<parent>message.general</parent>
+					</category>
+					<category name="message.general.likes">
+						<parent>message.general</parent>
+					</category>
+					<category name="message.general.poll">
+						<parent>message.general</parent>
+						<options>module_poll</options>
+					</category>
+				
+				<category name="message.attachment">
+					<parent>message</parent>
+					<options>module_attachment</options>
+				</category>
+				
+				<category name="message.sidebar">
+					<parent>message</parent>
+				</category>
+				
+				<category name="message.search">
+					<parent>message</parent>
+				</category>
 			<!-- /message -->
+			
+			<category name="dashboard">
+			</category>
+				<category name="dashboard.content">
+					<parent>dashboard</parent>
+				</category>
+					<category name="dashboard.content.recentActivities">
+						<parent>dashboard.content</parent>
+					</category>
+				
+				<category name="dashboard.sidebar">
+					<parent>dashboard</parent>
+				</category>
+					<category name="dashboard.sidebar.recentActivities">
+						<parent>dashboard.sidebar</parent>
+					</category>
 		</categories>
 		
 		<options>
@@ -129,26 +214,96 @@
 			<option name="enable_debug_mode">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
-				<!-- TODO: change to '0' (production mode) later -->
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			
 			<option name="enable_benchmark">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
-				<!-- TODO: change to '0' (production mode) later -->
-				<defaultvalue>1</defaultvalue>
-			</option>
-			
-			<option name="module_api_access">
-				<categoryname>module.system</categoryname>
-				<optiontype>boolean</optiontype>
-				<!-- TODO: change to '0' (production mode) later -->
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			
 			<option name="log_ip_address">
 				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="enable_woltlab_news">
+				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_system_recaptcha">
+				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_attachment">
+				<categoryname>module.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_smiley">
+				<categoryname>module.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_gravatar">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="module_users_online">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="module_user_rank">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="module_user_signature">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="module_team_page">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="module_dashboard_page">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_like">
+				<categoryname>module.community</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_user_profile_wall">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_tagging">
+				<categoryname>module.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_poll">
+				<categoryname>module.community</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
@@ -307,6 +462,24 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			</option>
 			<!-- /security.blacklist -->
 			
+			<option name="recaptcha_publickey">
+				<categoryname>security.antispam.recaptcha</categoryname>
+				<optiontype>text</optiontype>
+				<validationpattern>^[^/]*$</validationpattern>
+				<!-- wcf-recaptcha.woltlab.com global key -->
+				<defaultvalue>6LfOlMYSAAAAADvo3s4puBAYDqI-6YK2ybe7BJE5</defaultvalue>
+				<showorder>1</showorder>
+			</option>
+			
+			<option name="recaptcha_privatekey">
+				<categoryname>security.antispam.recaptcha</categoryname>
+				<optiontype>text</optiontype>
+				<validationpattern>^[^/]*$</validationpattern>
+				<!-- wcf-recaptcha.woltlab.com global key -->
+				<defaultvalue>6LfOlMYSAAAAAKR3m_EFxmDv1xS8PCfeaSZ2LdG9</defaultvalue>
+				<showorder>2</showorder>
+			</option>
+			
 			<!-- general.system.date -->
 			<option name="timezone">
 				<categoryname>general.system.date</categoryname>
@@ -322,7 +495,8 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>google</defaultvalue>
 				<selectoptions>local:wcf.acp.option.jquery_source.local
 google:wcf.acp.option.jquery_source.google
-microsoft:wcf.acp.option.jquery_source.microsoft</selectoptions>
+microsoft:wcf.acp.option.jquery_source.microsoft
+cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
 			</option>
 			<!-- /general.system.jquery -->
 			
@@ -412,12 +586,487 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<categoryname>general.cache.memcached</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
+			<!-- /general.cache -->
 			
-			<option name="cache_source_memcached_use_pconnect">
-				<categoryname>general.cache.memcached</categoryname>
+			<option name="attachment_storage">
+				<categoryname>message.attachment</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<option name="attachment_enable_thumbnails">
+				<categoryname>message.attachment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<enableoptions>attachment_thumbnail_height,attachment_thumbnail_width</enableoptions>
+			</option>
+			<option name="attachment_thumbnail_height">
+				<categoryname>message.attachment</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue><![CDATA[210]]></defaultvalue>
+			</option>
+			<option name="attachment_thumbnail_width">
+				<categoryname>message.attachment</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue><![CDATA[280]]></defaultvalue>
+			</option>
+			
+			<!-- message.general -->
+			<option name="enable_bbcodes_default_value">
+				<categoryname>message.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="enable_html_default_value">
+				<categoryname>message.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="enable_smilies_default_value">
+				<categoryname>message.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="pre_parse_default_value">
+				<categoryname>message.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="show_signature_default_value">
+				<categoryname>message.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- /message.general -->
+			
+			<!-- message.general.share -->
+			<option name="enable_share_buttons">
+				<categoryname>message.general.share</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions><![CDATA[share_buttons_show_count]]></enableoptions>
+			</option>
+			<option name="share_buttons_show_count">
+				<categoryname>message.general.share</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- /message.general.share -->
+			
+			<!-- message.censorship -->
+			<option name="enable_censorship">
+				<categoryname>message.censorship</categoryname>
+				<optiontype>boolean</optiontype>
+				<enableoptions><![CDATA[censored_words]]></enableoptions>
+			</option>
+			<option name="censored_words">
+				<categoryname>message.censorship</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
+			<!-- /message.censorship -->
+			
+			<option name="register_enable_password_security_check">
+				<categoryname>user.password</categoryname>
+				<optiontype>boolean</optiontype>
+				<enableoptions><![CDATA[register_password_min_length,register_password_must_contain_lower_case,register_password_must_contain_upper_case,register_password_must_contain_digit,register_password_must_contain_special_char]]></enableoptions>
+			</option>
+			<option name="register_password_min_length">
+				<categoryname>user.password</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue><![CDATA[8]]></defaultvalue>
+			</option>
+			<option name="register_password_must_contain_lower_case">
+				<categoryname>user.password</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<option name="register_password_must_contain_upper_case">
+				<categoryname>user.password</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<option name="register_password_must_contain_digit">
+				<categoryname>user.password</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<option name="register_password_must_contain_special_char">
+				<categoryname>user.password</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<!-- /user.password -->
+			
+			<!-- user.ban -->
+			<option name="register_forbidden_usernames">
+				<categoryname>user.ban</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
+			<option name="register_forbidden_emails">
+				<categoryname>user.ban</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
+			<option name="register_allowed_emails">
+				<categoryname>user.ban</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
+			<!-- /user.ban -->
+			
+			<!-- user.register -->
+			<option name="register_username_min_length">
+				<categoryname>user.register</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>3</defaultvalue>
+				<minvalue>3</minvalue>
+				<maxvalue>255</maxvalue>
+			</option>
+			<option name="register_username_max_length">
+				<categoryname>user.register</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>25</defaultvalue>
+				<minvalue>3</minvalue>
+				<maxvalue>255</maxvalue>
+			</option>
+			<option name="register_username_force_ascii">
+				<categoryname>user.register</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="register_disabled">
+				<categoryname>user.register</categoryname>
+				<optiontype>boolean</optiontype>
+				<enableoptions><![CDATA[!register_enable_disclaimer,!register_admin_notification,!register_activation_method]]></enableoptions>
+			</option>
+			<option name="register_enable_disclaimer">
+				<categoryname>user.register</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<option name="register_admin_notification">
+				<categoryname>user.register</categoryname>
 				<optiontype>boolean</optiontype>
 			</option>
-			<!-- /general.cache -->
+			<option name="register_activation_method">
+				<categoryname>user.register</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<selectoptions><![CDATA[0:wcf.acp.option.register_activation_method.disabled
+1:wcf.acp.option.register_activation_method.byUser
+2:wcf.acp.option.register_activation_method.byAdmin]]></selectoptions>
+			</option>
+			<!-- /user.register -->
+			
+			<!-- user.3rdPartyAuth -->
+			<option name="github_public_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="github_private_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="twitter_public_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="twitter_private_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="facebook_public_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="facebook_private_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="google_public_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<option name="google_private_key">
+				<categoryname>user.3rdPartyAuth</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			<!-- /user.3rdPartyAuth -->
+			
+			<!-- user.security -->
+			<option name="register_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<option name="lost_password_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<option name="profile_mail_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+			</option>
+			<!-- /user.security -->
+			
+			<!-- user.avatar -->
+			<option name="max_avatar_width">
+				<categoryname>user.avatar</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>192</defaultvalue>
+				<minvalue>48</minvalue>
+			</option>
+			<option name="max_avatar_height">
+				<categoryname>user.avatar</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>192</defaultvalue>
+				<minvalue>48</minvalue>
+			</option>
+			<!-- /user.avatar -->
+			
+			<!-- user.signature -->
+			<option name="signature_max_image_height">
+				<categoryname>user.signature</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>150</defaultvalue>
+			</option>
+			<!-- /user.signature -->
+			
+			<!-- user.title -->
+			<option name="user_title_max_length">
+				<categoryname>user.title</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>25</defaultvalue>
+				<options>module_user_rank</options>
+				<minvalue>0</minvalue>
+			</option>
+			<option name="user_forbidden_titles">
+				<categoryname>user.title</categoryname>
+				<optiontype>textarea</optiontype>
+				<options>module_user_rank</options>
+			</option>
+			<!-- /user.title -->
+			
+			<!-- user.profile -->
+			<option name="profile_show_old_username">
+				<categoryname>user.profile</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>182</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<!-- /user.profile -->
+			
+			<!-- user.list.members -->
+			<option name="members_list_users_per_page">
+				<categoryname>user.list.members</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>30</defaultvalue>
+			</option>
+			<option name="members_list_default_sort_field">
+				<categoryname>user.list.members</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue><![CDATA[username]]></defaultvalue>
+				<selectoptions><![CDATA[username:wcf.user.username
+registrationDate:wcf.user.registrationDate
+activityPoints:wcf.user.activityPoint
+likedReceived:wcf.like.likesReceived]]></selectoptions>
+			</option>
+			<option name="members_list_default_sort_order">
+				<categoryname>user.list.members</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue><![CDATA[DESC]]></defaultvalue>
+				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending]]></selectoptions>
+			</option>
+			<!-- /user.list.members -->
+			
+			<!-- user.list.online -->
+			<option name="users_online_show_guests">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="users_online_show_robots">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="users_online_default_sort_field">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue><![CDATA[lastActivityTime]]></defaultvalue>
+				<selectoptions><![CDATA[username:wcf.user.username
+lastActivityTime:wcf.user.usersOnline.lastActivity
+requestURI:wcf.user.usersOnline.location]]></selectoptions>
+			</option>
+			<option name="users_online_default_sort_order">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue><![CDATA[DESC]]></defaultvalue>
+				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending]]></selectoptions>
+			</option>
+			<option name="users_online_page_refresh">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<!-- /user.list.online -->
+			
+			<!-- user.cleanup -->
+			<option name="user_cleanup_notification_lifetime">
+				<categoryname>user.cleanup</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>60</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<option name="user_cleanup_activity_event_lifetime">
+				<categoryname>user.cleanup</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>60</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<option name="user_cleanup_profile_visitor_lifetime">
+				<categoryname>user.cleanup</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>60</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<!-- /user.cleanup -->
+			
+			<!-- dashboard -->
+			<option name="recent_activity_items">
+				<categoryname>dashboard.content.recentActivities</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>10</defaultvalue>
+			</option>
+			
+			<option name="recent_activity_sidebar_items">
+				<categoryname>dashboard.sidebar.recentActivities</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>5</defaultvalue>
+			</option>
+			<!-- /dashboard -->
+			
+			<option name="like_allow_for_own_content">
+				<categoryname>message.general.likes</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_like</options>
+			</option>
+			
+			<option name="like_enable_dislike">
+				<categoryname>message.general.likes</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_like</options>
+			</option>
+			
+			<option name="like_show_summary">
+				<categoryname>message.general.likes</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_like</options>
+			</option>
+			
+			<option name="message_sidebar_enable_online_status">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="message_sidebar_enable_rank">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_user_rank</options>
+			</option>
+			<option name="message_sidebar_enable_avatar">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="message_sidebar_enable_message_group_starter_icon">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="message_sidebar_enable_likes_received">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_like</options>
+			</option>
+			<option name="message_sidebar_enable_activity_points">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="message_sidebar_user_options">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>useroptions</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
+			
+			<!-- message.general -->
+			<option name="tagging_max_tag_length">
+				<categoryname>message.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>30</defaultvalue>
+				<minvalue>1</minvalue>
+				<maxvalue>255</maxvalue>
+			</option>
+			<!-- /message.general -->
+			
+			<option name="search_results_per_page">
+				<categoryname>message.search</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>20</defaultvalue>
+				<minvalue>5</minvalue>
+				<maxvalue>40</maxvalue>
+			</option>
+			<option name="search_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+			</option>
+			
+			<option name="search_default_sort_field">
+				<categoryname>message.search</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions><![CDATA[relevance:wcf.search.sortBy.relevance
+subject:wcf.global.subject
+time:wcf.search.sortBy.time
+username:wcf.search.sortBy.username]]></selectoptions>
+				<defaultvalue><![CDATA[relevance]]></defaultvalue>
+			</option>
+			<option name="search_default_sort_order">
+				<categoryname>message.search</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue>DESC</defaultvalue>
+				<selectoptions><![CDATA[ASC:wcf.global.sortOrder.ascending
+DESC:wcf.global.sortOrder.descending]]></selectoptions>
+			</option>
+			
+			<!-- message.general.poll -->
+			<option name="poll_max_options">
+				<categoryname>message.general.poll</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>20</defaultvalue>
+				<minvalue>2</minvalue>
+				<maxvalue>100</maxvalue>
+			</option>
+			<!-- /message.general.poll -->
 		</options>
 	</import>
+	
+	<delete>
+		<option name="cache_source_memcached_use_pconnect" />
+	</delete>
 </data>

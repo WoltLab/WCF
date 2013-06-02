@@ -15,6 +15,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\request\RouteHandler;
 use wcf\system\session\SessionFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\style\StyleHandler;
@@ -28,8 +29,13 @@ use wcf\util\StringUtil;
 // try to disable execution time limit
 @set_time_limit(0);
 
+// fix timezone warning issue
+if (!@ini_get('date.timezone')) {
+	@date_default_timezone_set('Europe/London');
+}
+
 // define current wcf version
-define('WCF_VERSION', '2.0.0 Alpha 1 (Maelstrom)');
+define('WCF_VERSION', '2.0.0 Beta 2 (Maelstrom)');
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -514,7 +520,10 @@ class WCF {
 	 */
 	protected function assignDefaultTemplateVariables() {
 		self::getTPL()->registerPrefilter(array('event', 'hascontent', 'lang'));
-		self::getTPL()->assign(array('__wcf' => $this));
+		self::getTPL()->assign(array(
+			'__wcf' => $this,
+			'__wcfVersion' => StringUtil::substring(sha1(WCF_VERSION), 0, 8)
+		));
 	}
 	
 	/**
@@ -683,7 +692,8 @@ class WCF {
 	public static function getRequestURI() {
 		// resolve path and query components
 		$scriptName = $_SERVER['SCRIPT_NAME'];
-		if (empty($_SERVER['PATH_INFO'])) {
+		$pathInfo = RouteHandler::getPathInfo();
+		if (empty($pathInfo)) {
 			// bug fix if URL omits script name and path
 			$scriptName = substr($scriptName, 0, strrpos($scriptName, '/'));
 		}

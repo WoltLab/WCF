@@ -69,9 +69,9 @@ WCF.ACP.Application.SetAsPrimary = Class.extend({
 				$('#setAsPrimary').parent().remove();
 				
 				// insert icon
-				WCF.DOMNodeInsertedHandler.enable();
 				$('<span class="icon icon16 icon-home jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($('.boxHeadline > h1'));
-				WCF.DOMNodeInsertedHandler.disable();
+				
+				WCF.DOMNodeInsertedHandler.execute();
 			}, this)
 		});
 	}
@@ -379,15 +379,21 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	integer		queueID
 	 * @param	string		actionName
 	 * @param	boolean		allowRollback
+	 * @param	boolean		isUpdate
 	 */
-	init: function(queueID, actionName, allowRollback) {
+	init: function(queueID, actionName, allowRollback, isUpdate) {
 		this._actionName = (actionName) ? actionName : 'InstallPackage';
 		this._allowRollback = (allowRollback === true) ? true : false;
 		this._queueID = queueID;
 		
-		this._dialogTitle = 'wcf.acp.package.installation.title';
-		if (actionName == 'UninstallPackage') {
-			this._dialogTitle = 'wcf.acp.package.uninstallation.title';
+		switch (this._actionName) {
+			case 'InstallPackage':
+				this._dialogTitle = 'wcf.acp.package.' + (isUpdate ? 'update' : 'install') + '.title';
+			break;
+			
+			case 'UninstallPackage':
+				this._dialogTitle = 'wcf.acp.package.uninstallation.title';
+			break;
 		}
 		
 		this._initProxy();
@@ -579,7 +585,30 @@ WCF.ACP.Package.Installation = Class.extend({
 				return false;
 			}
 			
-			$additionalData[$inputElement.attr('name')] = $inputElement.val();
+			var $name = $inputElement.attr('name');
+			if ($name.match(/(.*)\[([^[]*)\]$/)) {
+				$name = RegExp.$1;
+				$key = RegExp.$2;
+				
+				if ($additionalData[$name] === undefined) {
+					if ($key) {
+						$additionalData[$name] = { };
+					}
+					else {
+						$additionalData[$name] = [ ];
+					}
+				}
+				
+				if ($key) {
+					$additionalData[$name][$key] = $inputElement.val();
+				}
+				else {
+					$additionalData[$name].push($inputElement.val());
+				}
+			}
+			else {
+				$additionalData[$name] = $inputElement.val();
+			}
 		});
 		
 		this._executeStep(data.step, data.node, $additionalData);
@@ -623,6 +652,33 @@ WCF.ACP.Package.Installation = Class.extend({
 		
 		this._proxy.setOption('data', $data);
 		this._proxy.sendRequest();
+	}
+});
+
+/**
+ * Handles canceling the package installation at the package installation
+ * confirm page.
+ */
+WCF.ACP.Package.Installation.Cancel = Class.extend({
+	/**
+	 * Creates a new instance of WCF.ACP.Package.Installation.Cancel.
+	 * 
+	 * @param	integer		queueID
+	 */
+	init: function(queueID) {
+		$('#backButton').click(function() {
+			new WCF.Action.Proxy({
+				autoSend: true,
+				data: {
+					actionName: 'cancelInstallation',
+					className: 'wcf\\data\\package\\installation\\queue\\PackageInstallationQueueAction',
+					objectIDs: [ queueID ]
+				},
+				success: function(data) {
+					window.location = data.returnValues.url;
+				}
+			});
+		});
 	}
 });
 
@@ -686,7 +742,7 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	 * @param	object		event
 	 */
 	_prepareQueue: function(event) {
-		var $element = $(event.target);
+		var $element = $(event.currentTarget);
 		
 		if ($element.data('isRequired')) {
 			new WCF.Action.Proxy({
@@ -1126,12 +1182,10 @@ WCF.ACP.Package.Search = Class.extend({
 			this._proxy.sendRequest();
 		}
 		else {
-			WCF.DOMNodeInsertedHandler.enable();
-			
 			// show cached content
 			this._packageSearchResultList.html(this._content[this._pageNo]);
 			
-			WCF.DOMNodeInsertedHandler.disable();
+			WCF.DOMNodeInsertedHandler.execute();
 		}
 	}
 });
@@ -1253,7 +1307,7 @@ WCF.ACP.Package.Update.Manager = Class.extend({
 				this._dialog.wcfDialog('close');
 			}
 			
-			var $installation = new WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false);
+			var $installation = new WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false, true);
 			$installation.prepareInstallation();
 		}
 		else if (data.returnValues.template) {
@@ -1619,12 +1673,6 @@ WCF.ACP.Options.Group = Class.extend({
  */
 WCF.ACP.Worker = Class.extend({
 	/**
-	 * true, if worker was aborted
-	 * @var	boolean
-	 */
-	_aborted: false,
-	
-	/**
 	 * dialog id
 	 * @var	string
 	 */
@@ -1657,7 +1705,6 @@ WCF.ACP.Worker = Class.extend({
 	 * @param	object		parameters
 	 */
 	init: function(dialogID, className, title, parameters) {
-		this._aborted = false;
 		this._dialogID = dialogID + 'Worker';
 		this._dialog = null;
 		this._proxy = new WCF.Action.Proxy({
@@ -1679,15 +1726,13 @@ WCF.ACP.Worker = Class.extend({
 	 * @param	object		data
 	 */
 	_success: function(data) {
-		if (this._aborted) {
-			return;
-		}
-		
 		// init binding
 		if (this._dialog === null) {
 			this._dialog = $('<div id="' + this._dialogID + '" />').hide().appendTo(document.body);
 			this._dialog.wcfDialog({
-				onClose:  $.proxy(function() { this._aborted = true; }, this),
+				onClose:  $.proxy(function() {
+					this._proxy.abortPrevious();
+				}, this),
 				title: this._title
 			});
 		}

@@ -77,7 +77,7 @@ class AJAXException extends LoggedException {
 			break;
 			
 			case self::SESSION_EXPIRED:
-				$statusHeader = 'HTTP/1.0 401 Unauthorized';
+				$statusHeader = 'HTTP/1.0 430 Session Expired';
 			break;
 			
 			case self::INSUFFICIENT_PERMISSIONS:
@@ -85,7 +85,7 @@ class AJAXException extends LoggedException {
 			break;
 			
 			case self::BAD_PARAMETERS:
-				$statusHeader = 'HTTP/1.0 412 Precondition Failed';
+				$statusHeader = 'HTTP/1.0 431 Bad Parameters';
 				
 				$responseData['exceptionID'] = $exceptionID;
 			break;

@@ -1,6 +1,6 @@
 /*!
-	Slimbox v2.04 - The ultimate lightweight Lightbox clone for jQuery
-	(c) 2007-2010 Christophe Beyls <http://www.digitalia.be>
+	Slimbox v2.05 - The ultimate lightweight Lightbox clone for jQuery
+	(c) 2007-2013 Christophe Beyls <http://www.digitalia.be>
 	MIT-style license.
 	
 	Modified by WoltLab GmbH to support large images.
@@ -26,7 +26,7 @@
 		// Append the Slimbox HTML code at the bottom of the document
 		$("body").append(
 			$([
-				overlay = $('<div id="lbOverlay" />')[0],
+				overlay = $('<div id="lbOverlay" />').click(close)[0],
 				center = $('<div id="lbCenter" />')[0],
 				bottomContainer = $('<div id="lbBottomContainer" />')[0]
 			]).css("display", "none")
@@ -40,7 +40,7 @@
 		)[0];
 
 		bottom = $('<div id="lbBottom" />').appendTo(bottomContainer).append([
-			$('<a id="lbCloseLink" href="#" />').add(overlay).click(close)[0],
+			$('<a id="lbCloseLink" href="#" />').click(close)[0],
 			caption = $('<div id="lbCaption" />')[0],
 			number = $('<div id="lbNumber" />')[0],
 			$('<div style="clear: both;" />')[0]
@@ -161,12 +161,12 @@
 	}
 
 	function keyDown(event) {
-		var code = event.keyCode, fn = $.inArray;
+		var code = event.which, fn = $.inArray;
 		// Prevent default keyboard action (like navigating inside the page)
 		return (fn(code, options.closeKeys) >= 0) ? close()
 			: (fn(code, options.nextKeys) >= 0) ? next()
 			: (fn(code, options.previousKeys) >= 0) ? previous()
-			: false;
+			: null;
 	}
 
 	function previous() {
@@ -285,6 +285,7 @@
 			activeImage = prevImage = nextImage = -1;
 			$(center).hide();
 			$(overlay).stop().fadeOut(options.overlayFadeDuration, setup);
+			
 			// WoltLab modifications	BEGIN
 			
 			WCF.System.DisableScrolling.enable();

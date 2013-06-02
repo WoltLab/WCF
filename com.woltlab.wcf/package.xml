@@ -2,11 +2,11 @@
 <package name="com.woltlab.wcf" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/package.xsd">
 	<packageinformation>
 		<packagename>WoltLab Community Framework</packagename>
-		<packagedescription>Free web-framework, designed and developed for complex community applications.</packagedescription>
-		<packagedescription language="de">Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.</packagedescription>
+		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
+		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.0.0 Alpha 1</version> <!-- codename: maelstrom -->
-		<date>2011-05-19</date>
+		<version>2.0.0 Beta 2</version> <!-- codename: maelstrom -->
+		<date>2013-06-01</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -29,5 +29,24 @@
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="acpSearchProvider">acpSearchProvider.xml</instruction>
 		<instruction type="style">woltlab-basic-style.tgz</instruction>
+		<instruction type="userOption">userOption.xml</instruction>
+		<instruction type="bbcode">bbcode.xml</instruction>
+		<instruction type="smiley">smiley.xml</instruction>
+		<instruction type="pageMenu">pageMenu.xml</instruction>
+		<instruction type="sitemap">sitemap.xml</instruction>
+		<instruction type="dashboardBox">dashboardBox.xml</instruction>
+		<instruction type="userProfileMenu">userProfileMenu.xml</instruction>
+		<instruction type="userMenu">userMenu.xml</instruction>
+		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
+		<instruction type="aclOption">aclOption.xml</instruction>
+		<instruction type="script">acp/post_install.php</instruction> 
+	</instructions>
+	
+	<instructions type="update" fromversion="2.0.0 Beta 1">
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="language">language/*.xml</instruction>
+		<instruction type="option">option.xml</instruction>
+		<instruction type="sql">update_b2.sql</instruction>
+		<instruction type="template">templates_update.tar</instruction>
 	</instructions>
 </package>

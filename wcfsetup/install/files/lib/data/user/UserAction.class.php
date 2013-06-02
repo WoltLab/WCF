@@ -1,9 +1,12 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\group\UserGroup;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
+use wcf\system\cache\builder\UserNotificationEventCacheBuilder;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
@@ -105,6 +108,42 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
+	 * @see	wcf\data\IDeleteAction::delete()
+	 */
+	public function delete() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		// delete avatars
+		$avatarIDs = array();
+		foreach ($this->objects as $user) {
+			if ($user->avatarID) $avatarIDs[] = $user->avatarID;
+		}
+		if (!empty($avatarIDs)) {
+			$action = new UserAvatarAction($avatarIDs, 'delete');
+			$action->executeAction();
+		}
+		
+		// delete profile comments
+		if (!empty($this->objectIDs)) {
+			$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.user.profileComment');
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('objectTypeID = ?', array($objectType->objectTypeID));
+			$conditionBuilder->add('objectID IN (?)', array($this->objectIDs));
+			
+			$sql = "DELETE FROM	wcf".WCF_N."_comment
+				".$conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+		}
+		
+		$returnValue = parent::delete();
+		
+		return $returnValue;
+	}
+	
+	/**
 	 * Validates permissions and parameters.
 	 */
 	public function validateUpdate() {
@@ -203,6 +242,21 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$languageIDs = (isset($this->parameters['languages'])) ? $this->parameters['languages'] : array();
 		$userEditor->addToLanguages($languageIDs);
 		
+		if (PACKAGE_ID) {
+			// set default notifications
+			$sql = "INSERT INTO	wcf".WCF_N."_user_notification_event_to_user
+						(userID, eventID)
+				VALUES		(?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			foreach (UserNotificationEventCacheBuilder::getInstance()->getData() as $events) {
+				foreach ($events as $event) {
+					if ($event->preset) {
+						$statement->execute(array($user->userID, $event->eventID));
+					}
+				}
+			}
+		}
+		
 		return $user;
 	}
 	
@@ -256,7 +310,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 	}
 	
-	
+	/**
+	 * Add users to given groups.
+	 */
 	public function addToGroups() {
 		if (empty($this->objects)) {
 			$this->readObjects();
@@ -269,6 +325,15 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		foreach ($this->objects as $userEditor) {
 			$userEditor->addToGroups($groupIDs, $deleteOldGroups, $addDefaultGroups);
+		}
+		
+		if (MODULE_USER_RANK) {
+			$action = new UserProfileAction($this->objects, 'updateUserRank');
+			$action->executeAction();
+		}
+		if (MODULE_USERS_ONLINE) {
+			$action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
+			$action->executeAction();
 		}
 	}
 	

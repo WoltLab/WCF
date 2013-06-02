@@ -144,18 +144,25 @@ class LinkHandler extends SingletonFactory {
 			$url = RouteHandler::getHost() . RouteHandler::getPath(array('acp')) . ($isACP ? 'acp/' : '') . $url;
 		}
 		else {
-			// try to resolve abbreviation
-			$application = null;
-			if ($abbreviation != 'wcf') {
-				$application = ApplicationHandler::getInstance()->getApplication($abbreviation);
+			if (RequestHandler::getInstance()->inRescueMode()) {
+				$pageURL = RouteHandler::getHost() . RouteHandler::getPath(array('acp'));
+			}
+			else {
+				// try to resolve abbreviation
+				$application = null;
+				if ($abbreviation != 'wcf') {
+					$application = ApplicationHandler::getInstance()->getApplication($abbreviation);
+				}
+				
+				// fallback to primary application if abbreviation is 'wcf' or unknown
+				if ($application === null) {
+					$application = ApplicationHandler::getInstance()->getPrimaryApplication();
+				}
+				
+				$pageURL = $application->getPageURL();
 			}
 			
-			// fallback to primary application if abbreviation is 'wcf' or unknown
-			if ($application === null) {
-				$application = ApplicationHandler::getInstance()->getPrimaryApplication();
-			}
-			
-			$url = $application->getPageURL() . ($isACP ? 'acp/' : '') . $url;
+			$url = $pageURL . ($isACP ? 'acp/' : '') . $url;
 		}
 		
 		// append previously removed anchor

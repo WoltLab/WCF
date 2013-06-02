@@ -22,16 +22,6 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	protected static $baseClass = 'wcf\data\page\menu\item\PageMenuItem';
 	
 	/**
-	 * @see	wcf\data\IEditableObject::create()
-	 */
-	public static function create(array $parameters = array()) {
-		// calculate show order
-		$parameters['showOrder'] = self::getShowOrder($parameters['showOrder'], $parameters['menuPosition'], $parameters['parentMenuItem']);
-		
-		return parent::create($parameters);
-	}
-	
-	/**
 	 * @see	wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
@@ -105,7 +95,7 @@ class PageMenuItemEditor extends DatabaseObjectEditor implements IEditableCached
 	 * @param	string		$menuPosition
 	 * @return	integer
 	 */
-	protected static function getShowOrder($showOrder, $menuPosition, $parentMenuItem = '') {
+	public static function getShowOrder($showOrder, $menuPosition, $parentMenuItem = '') {
 		if ($showOrder == 0) {
 			// get next number in row
 			$sql = "SELECT	MAX(showOrder) AS showOrder

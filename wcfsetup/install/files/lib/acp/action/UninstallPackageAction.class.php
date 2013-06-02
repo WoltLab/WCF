@@ -59,7 +59,7 @@ class UninstallPackageAction extends InstallPackageAction {
 	 */
 	protected function stepPrepare() {
 		$package = new Package($this->packageID);
-		if (!$package->packageID) {
+		if (!$package->packageID || !$package->canUninstall()) {
 			throw new IllegalLinkException();
 		}
 		

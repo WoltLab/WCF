@@ -59,13 +59,6 @@
 					<small>{lang}wcf.global.configureDB.number.description{/lang}</small>
 				</dd>
 			</dl>
-			
-			{if $conflictedTables|isset}
-				<dl>
-					<dd><label><input type="checkbox" name="overwriteTables" value="1" /> {lang}wcf.global.configureDB.conflictedTables.overwrite{/lang}</label></dd>
-				</dl>
-			{/if}
-			
 		</fieldset>
 	</div>
 		

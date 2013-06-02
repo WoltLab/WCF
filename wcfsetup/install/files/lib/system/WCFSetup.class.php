@@ -391,9 +391,6 @@ class WCFSetup extends WCF {
 		}
 		$system['gdLib']['result'] = (version_compare($system['gdLib']['value'], '2.0.0') >= 0);
 		
-		// mb string
-		$system['mbString']['result'] = extension_loaded('mbstring');
-		
 		// memory limit
 		$system['memoryLimit']['value'] = ini_get('memory_limit');
 		$system['memoryLimit']['result'] = $this->compareMemoryLimit();
@@ -580,17 +577,12 @@ class WCFSetup extends WCF {
 			$dbClass = $dbClass['class'];
 			break;
 		}
-		$overwriteTables = false;
 		
 		if (isset($_POST['send'])) {
 			if (isset($_POST['dbHost'])) $dbHost = $_POST['dbHost'];
 			if (isset($_POST['dbUser'])) $dbUser = $_POST['dbUser'];
 			if (isset($_POST['dbPassword'])) $dbPassword = $_POST['dbPassword'];
 			if (isset($_POST['dbName'])) $dbName = $_POST['dbName'];
-			if (isset($_POST['overwriteTables'])) $overwriteTables = intval($_POST['overwriteTables']);
-			// Should the user not be prompted if converted or default n match an
-			// existing installation number? By now the existing installation
-			// will be overwritten just so!
 			
 			// ensure that $dbNumber is zero or a positive integer
 			if (isset($_POST['dbNumber'])) $dbNumber = max(0, intval($_POST['dbNumber']));
@@ -635,13 +627,9 @@ class WCFSetup extends WCF {
 				
 				// check for table conflicts
 				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
-				if (!empty($conflictedTables) && ($overwriteTables || self::$developerMode)) {
-					// remove tables
-					$db->getEditor()->dropConflictedTables($conflictedTables);
-				}
 				
 				// write config.inc
-				if (empty($conflictedTables) || $overwriteTables || self::$developerMode) {
+				if (empty($conflictedTables)) {
 					// connection successfully established
 					// write configuration to config.inc.php
 					$file = new File(WCF_DIR.'config.inc.php');
@@ -768,6 +756,8 @@ class WCFSetup extends WCF {
 		
 		$this->getInstalledFiles(WCF_DIR);
 		$acpTemplateInserts = $fileInserts = array();
+		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "Logging files:\n");
+		$start = microtime(true);
 		foreach (self::$installedFiles as $file) {
 			$match = array();
 			if (preg_match('!/acp/templates/([^/]+)\.tpl$!', $file, $match)) {
@@ -779,35 +769,37 @@ class WCFSetup extends WCF {
 				$fileInserts[] = StringUtil::replace(WCF_DIR, '', $file);
 			}
 		}
-		
+		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "\tRead files: " . round(microtime(true) - $start, 3) . "\n", FILE_APPEND);
+		$start = microtime(true);
 		// save acp template log
 		if (!empty($acpTemplateInserts)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_acp_template
-						(templateName)
-				VALUES		(?)";
+						(templateName, application)
+				VALUES		(?, ?)";
 			$statement = self::getDB()->prepareStatement($sql);
 			
 			self::getDB()->beginTransaction();
 			foreach ($acpTemplateInserts as $acpTemplate) {
-				$statement->executeUnbuffered(array($acpTemplate));
+				$statement->executeUnbuffered(array($acpTemplate, 'wcf'));
 			}
 			self::getDB()->commitTransaction();
 		}
-		
+		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "\tRegistered ACP templates: " . round(microtime(true) - $start, 3) . "\n", FILE_APPEND);
+		$start = microtime(true);
 		// save file log
 		if (!empty($fileInserts)) {
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_file_log
-						(filename)
-				VALUES		(?)";
+						(filename, application)
+				VALUES		(?, ?)";
 			$statement = self::getDB()->prepareStatement($sql);
 			
 			self::getDB()->beginTransaction();
 			foreach ($fileInserts as $file) {
-				$statement->executeUnbuffered(array($file));
+				$statement->executeUnbuffered(array($file, 'wcf'));
 			}
 			self::getDB()->commitTransaction();
 		}
-		
+		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "\tRegistered files: " . round(microtime(true) - $start, 3) . "\n", FILE_APPEND);
 		$this->gotoNextStep('installLanguage');
 	}
 	
@@ -835,6 +827,7 @@ class WCFSetup extends WCF {
 	protected function installLanguage() {
 		$this->initDB();
 		
+		$start = microtime(true);
 		foreach (self::$selectedLanguages as $language) {
 			// get language.xml file name
 			$filename = TMP_DIR.'install/lang/'.$language.'.xml';
@@ -851,7 +844,7 @@ class WCFSetup extends WCF {
 			// import xml
 			LanguageEditor::importFromXML($xml, 0);
 		}
-		
+		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "\nInstalled languages: " . round(microtime(true) - $start, 3) . "\n", FILE_APPEND);
 		// set default language
 		$language = LanguageFactory::getInstance()->getLanguageByCode(in_array(self::$selectedLanguageCode, self::$selectedLanguages) ? self::$selectedLanguageCode : self::$selectedLanguages[0]);
 		LanguageFactory::getInstance()->makeDefault($language->languageID);

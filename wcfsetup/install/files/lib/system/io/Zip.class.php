@@ -6,8 +6,8 @@ use wcf\util\FileUtil;
 /**
  * Reads zip files.
  * 
- * @author	Tim Düsterhus
- * @copyright	2012 Tim Düsterhus
+ * @author	Tim Duesterhus
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
@@ -114,12 +114,7 @@ class Zip extends File implements IArchive {
 		$targetFile->write($file['content'], strlen($file['content']));
 		$targetFile->close();
 		
-		if (FileUtil::isApacheModule() || !@$targetFile->is_writable()) {
-			@$targetFile->chmod(0777);
-		}
-		else {
-			@$targetFile->chmod(0755);
-		}
+		FileUtil::makeWritable($destination);
 		
 		if ($file['header']['mtime']) {
 			@$targetFile->touch($file['header']['mtime']);
@@ -174,13 +169,13 @@ class Zip extends File implements IArchive {
 			$day = $data['mdate'] & 31 /* 5 bits */;
 			$month = ($data['mdate'] >> 5) & 15 /* 4 bits */;
 			$year = (($data['mdate'] >> 9) & 127 /* 7 bits */) + 1980;
-			$data['mtime'] = mktime($hour, $minute, $second, $month, $day, $year);
+			$data['mtime'] = gmmktime($hour, $minute, $second, $month, $day, $year);
 			
 			$data += unpack('Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength/vfileCommentLength/vdiskNo/vinternalAttr/vexternalAttr', $this->read(26));
-			if ($data['compressedSize'] > 0) $data['type'] = 'file';
-			else $data['type'] = 'folder';
 			$data['offset'] = $this->readAndUnpack(4, 'v');
 			$data['filename'] = $this->read($data['filenameLength']);
+			if (substr($data['filename'], -1) == '/') $data['type'] = 'folder';
+			else $data['type'] = 'file';
 			
 			// read extraField
 			if ($data['extraFieldLength'] > 0) $data['extraField'] = $this->read($data['extraFieldLength']);
@@ -284,7 +279,7 @@ class Zip extends File implements IArchive {
 		$day = $header['mdate'] & 31 /* 5 bits */;
 		$month = ($header['mdate'] >> 5) & 15 /* 4 bits */;
 		$year = (($header['mdate'] >> 9) & 127 /* 7 bits */) + 1980;
-		$header['x-timestamp'] = mktime($hour, $minute, $second, $month, $day, $year);
+		$header['x-timestamp'] = gmmktime($hour, $minute, $second, $month, $day, $year);
 		$header += unpack('Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength', $this->read(16));
 		
 		// read filename
@@ -295,7 +290,7 @@ class Zip extends File implements IArchive {
 		
 		// read contents
 		$header['type'] = 'file';
-		if ($header['compressedSize'] > 0) $content = $this->read($header['compressedSize']);
+		if (substr($header['filename'], -1) != '/') $content = $this->read($header['compressedSize']);
 		else {
 			$header['type'] = 'folder';
 			$content = false;

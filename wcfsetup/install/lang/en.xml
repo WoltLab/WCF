@@ -6,8 +6,13 @@
 		<item name="wcf.acl.option.grant"><![CDATA[Grant]]></item>
 		<item name="wcf.acl.permissions"><![CDATA[User and Group Permissions]]></item>
 		<item name="wcf.acl.user.permissions"><![CDATA[User Permissions]]></item>
-		<item name="wcf.acl.search.description"><![CDATA[TODO: Benutzer- oder Benutzergruppenname eingeben …]]></item>
-		<item name="wcf.acl.search.user.description"><![CDATA[TODO: Benutzername eingeben …]]></item>
+		<item name="wcf.acl.search.description"><![CDATA[Enter username or group …]]></item>
+		<item name="wcf.acl.search.user.description"><![CDATA[Enter username …]]></item>
+	</category>
+	
+	<category name="wcf.acl.option">
+		<item name="wcf.acl.option.com.woltlab.wcf.label.canViewLabel"><![CDATA[Can view labels]]></item>
+		<item name="wcf.acl.option.com.woltlab.wcf.label.canSetLabel"><![CDATA[Can set labels]]></item>
 	</category>
 	
 	<category name="wcf.acp.application">
@@ -30,6 +35,60 @@
 		<item name="wcf.acp.application.primaryApplication"><![CDATA[Primary Application]]></item>
 		<item name="wcf.acp.application.setAsPrimary"><![CDATA[Set As Primary Application]]></item>
 		<item name="wcf.acp.application.setAsPrimary.confirmMessage"><![CDATA[Do you really want to set “{$application->getPackage()->getName()}” as the primary application?]]></item>
+	</category>
+	
+	<category name="wcf.acp.attachment">
+		<item name="wcf.acp.attachment.list"><![CDATA[Attachments]]></item>
+		<item name="wcf.acp.attachment.stats"><![CDATA[{#$stats.count} Attachment{if $stats.count != 1}s{/if} - {@$stats.size|filesize} - {#$stats.downloads} Download{if $stats.downloads != 1}s{/if}]]></item>
+		<item name="wcf.acp.attachment.noItems"><![CDATA[There are no attachments.]]></item>
+	</category>
+	
+	<category name="wcf.acp.bbcode">
+		<item name="wcf.acp.bbcode.add"><![CDATA[Add BBCode]]></item>
+		<item name="wcf.acp.bbcode.add.userGroupOptionInfo"><![CDATA[Newly created BBCodes will be accessible for everyone. You can restrict usage by editing the specific user group permissions.]]></item>
+		<item name="wcf.acp.bbcode.allowedChildren"><![CDATA[Allowed Children]]></item>
+		<item name="wcf.acp.bbcode.allowedChildren.error.notValid"><![CDATA[List of allowed children is invalid.]]></item>
+		<item name="wcf.acp.bbcode.attribute"><![CDATA[Attribute]]></item>
+		<item name="wcf.acp.bbcode.attribute.attributeHtml"><![CDATA[Attribute HTML code]]></item>
+		<item name="wcf.acp.bbcode.attribute.validationPattern.error.notValid"><![CDATA[Regular expression failed to validate.]]></item>
+		<item name="wcf.acp.bbcode.attribute.validationPattern"><![CDATA[Regular Expression for Validation]]></item>
+		<item name="wcf.acp.bbcode.attribute.required"><![CDATA[Required]]></item>
+		<item name="wcf.acp.bbcode.attribute.useText"><![CDATA[Use content]]></item>
+		<item name="wcf.acp.bbcode.attribute.useText.description"><![CDATA[Content between BBCode tags will be used as attribute value unless it was explicitly specified]]></item>
+		<item name="wcf.acp.bbcode.attributes"><![CDATA[Attribute]]></item>
+		<item name="wcf.acp.bbcode.bbcodeTag"><![CDATA[BBCode]]></item>
+		<item name="wcf.acp.bbcode.bbcodeTag.error.inUse"><![CDATA[BBCode already exists.]]></item>
+		<item name="wcf.acp.bbcode.bbcodeTag.error.notValid"><![CDATA[BBCode is invalid.]]></item>
+		<item name="wcf.acp.bbcode.className"><![CDATA[PHP Class Name]]></item>
+		<item name="wcf.acp.bbcode.className.error.notFound"><![CDATA[Unable to find specified class.]]></item>
+		<item name="wcf.acp.bbcode.delete.sure"><![CDATA[Do you really want to delete the BBCode “[{$bbcode->bbcodeTag}]”?]]></item>
+		<item name="wcf.acp.bbcode.edit"><![CDATA[Edit BBCode]]></item>
+		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Closing HTML tag]]></item>
+		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Opening HTML tag]]></item>
+		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>
+		
+		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Add Media Provider]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[Do you really want to delete the media provider “{$mediaProvider->title}”?]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.edit"><![CDATA[Edit Media Provider]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.html"><![CDATA[HTML Code]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{literal}Enter the media’s HTML code. Variables are recognized as {$variable} and will be replaced with the regular expression’s matching named group.<br />
+Example:<br />
+<code>{$ID}</code> will be replaced with the medium ID as shown above.{/literal}]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.list"><![CDATA[Media Providers]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.regex"><![CDATA[Regular Expression]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.regex.description"><![CDATA[Provide the link format as a <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http%3A%2F%2Fen.wikipedia.org%2Fwiki%2FRegular_expression">regular expression</a>. One expression per line.<br />
+Examples for medium ID detection:
+<ul>
+	<li><code>(?&lt;ID&gt;[0-9]+)</code> detects a numeric ID.</li>
+	<li><code>(?&lt;ID&gt;[0-9a-zA-Z]+)</code> detects an alphanumeric ID</li>
+</ul>]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.regex.error.notValid"><![CDATA[Regular expression failed to validate.]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Media Providers]]></item>
+		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Content represents source code]]></item>
+		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Disables conversion of bbcodes and smilies.]]></item>
+		<item name="wcf.acp.bbcode.showButton"><![CDATA[Show button in WYSIWYG editor]]></item>
+		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button Label]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button Image]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -95,11 +154,15 @@
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Error Message]]></item>
 	</category>
 	
+	<category name="wcf.acp.dashboard">
+		<item name="wcf.acp.dashboard.list"><![CDATA[Dashboard Management]]></item>
+		<item name="wcf.acp.dashboard.option"><![CDATA[Configure Dashboard Boxes]]></item>
+		<item name="wcf.acp.dashboard.box.sort"><![CDATA[Sort boxes to determine show order. You can enable or disable boxes by moving them between the boxes “Active Boxes” and “Disabled Boxes”.]]></item>
+	</category>
+	
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Logged errors]]></item>
 		<item name="wcf.acp.exceptionLog.exception.file"><![CDATA[File (Line)]]></item>
-		<item name="wcf.acp.exceptionLog.exception.phpVersion"><![CDATA[PHP version]]></item>
-		<item name="wcf.acp.exceptionLog.exception.wcfVersion"><![CDATA[WCF version]]></item>
 		<item name="wcf.acp.exceptionLog.exception.requestURI"><![CDATA[Requested URL]]></item>
 		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
@@ -109,13 +172,15 @@
 		<item name="wcf.acp.exceptionLog.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Error-ID]]></item>
 		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Logfile]]></item>
+		<item name="wcf.acp.exceptionLog.exception.date"><![CDATA[Time]]></item>
+		<item name="wcf.acp.exceptionLog.exception.userAgent"><![CDATA[User Agent]]></item>
 	</category>
 	
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group “{$group->groupName|language}”?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit User Group]]></item>
-		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Heads up! You’re a member of this user group, change may cause yourself being locked out from the Administration Control Panel.]]></item>
+		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Heads up! You’re a member of this user group, changes may cause yourself being locked out from the Administration Control Panel.]]></item>
 		<item name="wcf.acp.group.group1"><![CDATA[Everyone]]></item>
 		<item name="wcf.acp.group.group2"><![CDATA[Guests]]></item>
 		<item name="wcf.acp.group.group3"><![CDATA[Users]]></item>
@@ -164,15 +229,136 @@
 		<item name="wcf.acp.group.option.category.admin.user.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderative Permissions]]></item>
 		<item name="wcf.acp.group.option.category.user"><![CDATA[General Permissions]]></item>
+		<item name="wcf.acp.group.option.category.user.message"><![CDATA[Messages]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[The given value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[The given value is too low.{if $option->minvalue !== null} The minimum value is {#$option->minvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.showMembers"><![CDATA[Show Members]]></item>
+		<item name="wcf.acp.group.option.admin.general.canViewPageDuringOfflineMode"><![CDATA[Can access page during maintenance mode]]></item>
+		<item name="wcf.acp.group.option.admin.user.canBanUser"><![CDATA[Can ban users]]></item>
+		<item name="wcf.acp.group.option.category.admin.template"><![CDATA[Templates]]></item>
+		<item name="wcf.acp.group.option.admin.template.canManageTemplate"><![CDATA[Can manage templates]]></item>
+		<item name="wcf.acp.group.option.admin.style.canManageStyle"><![CDATA[Can manage styles]]></item>
+		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[Content]]></item>
+		<item name="wcf.acp.group.option.category.admin.community"><![CDATA[Community]]></item>
+		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[General]]></item>
+		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[User Profile Fields]]></item>
+		<item name="wcf.acp.group.option.admin.user.canManageUserOption"><![CDATA[Can manage user profile fields]]></item>
+		<item name="wcf.acp.group.option.category.user.message.attachment"><![CDATA[Attachments]]></item>
+		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximum File Size]]></item>
+		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Allowed File Extensions]]></item>
+		<item name="wcf.acp.group.option.user.attachment.allowedExtensions.description"><![CDATA[One extension per line]]></item>
+		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
+		<item name="wcf.acp.group.option.user.attachment.quota"><![CDATA[Quota]]></item>
+		<item name="wcf.acp.group.option.user.attachment.quota.description"><![CDATA[Total quota for all attachments uploaded by a user]]></item>
+		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Attachments]]></item>
+		<item name="wcf.acp.group.option.admin.attachment.canManageAttachment"><![CDATA[Can manage attachments]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.bbcode"><![CDATA[BBCodes]]></item>
+		<item name="wcf.acp.group.option.admin.content.bbcode.canManageBBCode"><![CDATA[Can manage BBCodes]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smilies]]></item>
+		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Can manage smilies]]></item>
+		<item name="wcf.acp.group.option.user.message.canUseSmilies"><![CDATA[Can use smilies]]></item>
+		<item name="wcf.acp.group.option.user.message.canUseHtml"><![CDATA[Can use HTML]]></item>
+		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Can use BBCodes]]></item>
+		<item name="wcf.acp.group.option.user.message.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
+		<item name="wcf.acp.group.option.user.message.allowedBBCodes.description"><![CDATA[Selected BBCodes may be used by members of this group.]]></item>
+		<item name="wcf.acp.group.option.admin.content.dashboard.canEditDashboard"><![CDATA[Can manage dashboard boxes]]></item>
+		<item name="wcf.acp.group.option.admin.user.rank.canManageRank"><![CDATA[Can manage user ranks]]></item>
+		<item name="wcf.acp.group.option.admin.user.canEditActivityPoints"><![CDATA[Can manage activity points]]></item>
+		<item name="wcf.acp.group.option.admin.user.canViewInvisible"><![CDATA[Can see invisible users]]></item>
+		<item name="wcf.acp.group.option.admin.user.canViewIpAddress"><![CDATA[Can see IP addresses]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.dashboard"><![CDATA[Dashboard]]></item>
+		<item name="wcf.acp.group.option.category.user.profile"><![CDATA[User Profiles]]></item>
+		<item name="wcf.acp.group.option.category.user.profile.avatar"><![CDATA[Avatars]]></item>
+		<item name="wcf.acp.group.option.category.admin.user.rank"><![CDATA[User Ranks]]></item>
+		<item name="wcf.acp.group.option.category.user.signature"><![CDATA[Signatures]]></item>
+		<item name="wcf.acp.group.option.user.profile.avatar.allowedFileExtensions"><![CDATA[Allowed File Extensions]]></item>
+		<item name="wcf.acp.group.option.user.profile.avatar.canUploadAvatar"><![CDATA[Can upload own avatar]]></item>
+		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximimum File Size]]></item>
+		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Can change email address]]></item>
+		<item name="wcf.acp.group.option.user.profile.canEditUserTitle"><![CDATA[Can edit own user title]]></item>
+		<item name="wcf.acp.group.option.user.profile.canMail"><![CDATA[Can see email addresses]]></item>
+		<item name="wcf.acp.group.option.user.profile.canQuit"><![CDATA[Can quit own user account]]></item>
+		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Can rename own user]]></item>
+		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Can see members list]]></item>
+		<item name="wcf.acp.group.option.user.profile.canViewUserProfile"><![CDATA[Can see user profiles]]></item>
+		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Can see users online list]]></item>
+		<item name="wcf.acp.group.option.user.signature.canUseBBCodes"><![CDATA[Can use BBCodes within signature]]></item>
+		<item name="wcf.acp.group.option.user.signature.canUseHtml"><![CDATA[Can use HTML within signature]]></item>
+		<item name="wcf.acp.group.option.user.signature.canUseSmilies"><![CDATA[Can use Smilies within signature]]></item>
+		<item name="wcf.acp.group.option.user.signature.allowedBBCodes"><![CDATA[Allowed BBCodes]]></item>
+		<item name="wcf.acp.group.option.user.signature.allowedBBCodes.description"><![CDATA[All marked BBCodes may be used within the signature.]]></item>
+		<item name="wcf.acp.group.priority"><![CDATA[Priority]]></item>
+		<item name="wcf.acp.group.priority.description"><![CDATA[Determines show order on team page, user rank and “Who is Online” marking based on highest priority.]]></item>
+		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[“Who is Online” Marking]]></item>
+		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[Adjust the HTML formatting for members of this group in the “Who is Online” list. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> results in a bolder appearance.]]></item>
+		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Show members on team page]]></item>
+		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Can approve users]]></item>
+		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Rename]]></item>
+		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Minimum period until members may rename themselves. [time in days]]]></item>
+		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Can not be ignored]]></item>
+		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Can access moderation]]></item>
+		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Like System]]></item>
+		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Can view likes]]></item>
+		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Can like content]]></item>
+		<item name="wcf.acp.group.option.category.user.profileComment"><![CDATA[User Profile Wall]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canAddComment"><![CDATA[Can create comments]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Cam edit own comments]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Cam delete own comments]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canEditComment"><![CDATA[Cam edit comments]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canDeleteComment"><![CDATA[Can delete comments]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canModerateComment"><![CDATA[Can moderate comments]]></item>
+		<item name="wcf.acp.group.option.category.mod.profileComment"><![CDATA[User Profile Wall]]></item>
+		<item name="wcf.acp.group.option.admin.content.label.canManageLabel"><![CDATA[Can manage labels]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
+		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Can manage tags]]></item>
+	</category>
+	
+	<category name="wcf.acp.index">
+		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab&reg; Community Framework]]></item>
+		<item name="wcf.acp.index.credits.contributor"><![CDATA[Contributions]]></item>
+		<item name="wcf.acp.index.credits.designer"><![CDATA[Designer]]></item>
+		<item name="wcf.acp.index.credits.developedBy"><![CDATA[Software developed by]]></item>
+		<item name="wcf.acp.index.credits.developer"><![CDATA[Developer]]></item>
+		<item name="wcf.acp.index.credits.productManager"><![CDATA[Product Manager]]></item>
+		<item name="wcf.acp.index.credits.trademarks"><![CDATA[“WoltLab&reg;” and “Burning Board&reg;” are registered Community Trade Marks at The Office of Harmonization for the Internal Market (OHIM) in Alicante, Spain.]]></item>
+		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[More]]></item>
+		<item name="wcf.acp.index.news"><![CDATA[News]]></item>
+		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
+		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
+		<item name="wcf.acp.index.system.software.wcfVersion"><![CDATA[Community Framework&trade; Version]]></item>
+		<item name="wcf.acp.index.system.server"><![CDATA[Server]]></item>
+		<item name="wcf.acp.index.system.os"><![CDATA[Operating System]]></item>
+		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
+		<item name="wcf.acp.index.system.php"><![CDATA[PHP Version]]></item>
+		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL Version]]></item>
+	</category>
+	
+	<category name="wcf.acp.label">
+		<item name="wcf.acp.label.add"><![CDATA[Add Label]]></item>
+		<item name="wcf.acp.label.cssClassName"><![CDATA[CSS Class Name]]></item>
+		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
+		<item name="wcf.acp.label.edit"><![CDATA[Edit Label]]></item>
+		<item name="wcf.acp.label.error.noGroups"><![CDATA[Please <a href="{link controller='LabelGroupAdd'}{/link}">add a label group</a> prior to creating labels.]]></item>
+		<item name="wcf.acp.label.group"><![CDATA[Label Group]]></item>
+		<item name="wcf.acp.label.group.add"><![CDATA[Add Label Group]]></item>
+		<item name="wcf.acp.label.group.edit"><![CDATA[Edit Label Group]]></item>
+		<item name="wcf.acp.label.group.groupName"><![CDATA[Title]]></item>
+		<item name="wcf.acp.label.group.list"><![CDATA[Label Groups]]></item>
+		<item name="wcf.acp.label.group.noneAvailable"><![CDATA[There are no label groups yet.]]></item>
+		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
+		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.label.noneAvailable"><![CDATA[There are no labels yet.]]></item>
+		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
+		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group “{$group->groupName}”?]]></item>
+		<item name="wcf.acp.label.group.category.connect"><![CDATA[Availability]]></item>
+		<item name="wcf.acp.label.delete.sure"><![CDATA[Do you really want to delete the group “{$label}”?]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
 		<item name="wcf.acp.language.add"><![CDATA[Add Language]]></item>
 		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[Language code is already in use by an installed language.]]></item>
-		<item name="wcf.acp.language.add.source"><![CDATA[TODO: Vorlage]]></item>
+		<item name="wcf.acp.language.add.source"><![CDATA[Origin]]></item>
 		<item name="wcf.acp.language.code"><![CDATA[ISO Code]]></item>
 		<item name="wcf.acp.language.code.description"><![CDATA[Please enter the <strong>ISO 639-1</strong> language code, you can lookup the language code at <a href="http://en.wikipedia.org/wiki/ISO_639-1" class="externalURL">http://en.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
 		<item name="wcf.acp.language.customVariables"><![CDATA[Custom Phrases]]></item>
@@ -198,13 +384,13 @@
 		<item name="wcf.acp.language.import"><![CDATA[Import Language]]></item>
 		<item name="wcf.acp.language.item.list"><![CDATA[Manage Phrases]]></item>
 		<item name="wcf.acp.language.category"><![CDATA[Category]]></item>
-		<item name="wcf.acp.language.item.value"><![CDATA[TODO: Inhalt]]></item>
-		<item name="wcf.acp.language.item.customValue"><![CDATA[TODO: Eigener Inhalt]]></item>
-		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[TODO: Eigene Version verwenden]]></item>
-		<item name="wcf.acp.language.item.hasCustomValue"><![CDATA[TODO: Inhalte mit eigener Version]]></item>
-		<item name="wcf.acp.language.item.customValues"><![CDATA[TODO: Veränderte Inhalte finden]]></item>
-		<item name="wcf.acp.language.name.description"><![CDATA[TODO: Name der Sprache]]></item>
-		<item name="wcf.acp.language.add.source.description"><![CDATA[TODO: Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
+		<item name="wcf.acp.language.item.value"><![CDATA[Content]]></item>
+		<item name="wcf.acp.language.item.customValue"><![CDATA[Custom Value]]></item>
+		<item name="wcf.acp.language.item.useCustomValue"><![CDATA[Use custom value]]></item>
+		<item name="wcf.acp.language.item.hasCustomValue"><![CDATA[Phrases with custom values]]></item>
+		<item name="wcf.acp.language.item.customValues"><![CDATA[Customized values]]></item>
+		<item name="wcf.acp.language.name.description"><![CDATA[Language Name]]></item>
+		<item name="wcf.acp.language.add.source.description"><![CDATA[The selected language will be used as origin, all phrases will be copied into the new language.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -222,8 +408,8 @@
 	</category>
 	
 	<category name="wcf.acp.menu">
-		<item name="wcf.acp.menu.link.application"><![CDATA[Applications]]></item>
-		<item name="wcf.acp.menu.link.application.cache"><![CDATA[Cache]]></item>
+		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Maintenance]]></item>
+		<item name="wcf.acp.menu.link.maintenance.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.menu.link.application.management"><![CDATA[Manage Applications]]></item>
 		<item name="wcf.acp.menu.link.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.menu.link.content"><![CDATA[Content]]></item>
@@ -277,6 +463,32 @@
 		<item name="wcf.acp.menu.link.template.add"><![CDATA[Add Template]]></item>
 		<item name="wcf.acp.menu.link.template.group.list"><![CDATA[List Template Groups]]></item>
 		<item name="wcf.acp.menu.link.template.group.add"><![CDATA[Add Template Group]]></item>
+		<item name="wcf.acp.menu.link.attachment"><![CDATA[Attachments]]></item>
+		<item name="wcf.acp.menu.link.attachment.list"><![CDATA[Browse Attachments]]></item>
+		<item name="wcf.acp.menu.link.bbcode"><![CDATA[BBCodes]]></item>
+		<item name="wcf.acp.menu.link.bbcode.add"><![CDATA[Add BBCode]]></item>
+		<item name="wcf.acp.menu.link.bbcode.list"><![CDATA[List BBCodes]]></item>
+		<item name="wcf.acp.menu.link.bbcode.mediaProvider.add"><![CDATA[Add Media Provider]]></item>
+		<item name="wcf.acp.menu.link.bbcode.mediaProvider.list"><![CDATA[List Media Provider]]></item>
+		<item name="wcf.acp.menu.link.smiley"><![CDATA[Smilies]]></item>
+		<item name="wcf.acp.menu.link.smiley.add"><![CDATA[Add Smiley]]></item>
+		<item name="wcf.acp.menu.link.smiley.list"><![CDATA[List Smilies]]></item>
+		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
+		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[List Smiley Categories]]></item>
+		<item name="wcf.acp.menu.link.dashboard"><![CDATA[Dashboard]]></item>
+		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[Configuration]]></item>
+		<item name="wcf.acp.menu.link.activityPoint"><![CDATA[Activity Points]]></item>
+		<item name="wcf.acp.menu.link.user.rank"><![CDATA[User Ranks]]></item>
+		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[List User Ranks]]></item>
+		<item name="wcf.acp.menu.link.user.rank.add"><![CDATA[Add User Rank]]></item>
+		<item name="wcf.acp.menu.link.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.menu.link.label.add"><![CDATA[Add Label]]></item>
+		<item name="wcf.acp.menu.link.label.list"><![CDATA[List Labels]]></item>
+		<item name="wcf.acp.menu.link.label.group.add"><![CDATA[Add Label Group]]></item>
+		<item name="wcf.acp.menu.link.label.group.list"><![CDATA[List Label Groups]]></item>
+		<item name="wcf.acp.menu.link.tag"><![CDATA[Tags]]></item>
+		<item name="wcf.acp.menu.link.tag.add"><![CDATA[Add Tag]]></item>
+		<item name="wcf.acp.menu.link.tag.list"><![CDATA[List Tags]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -294,7 +506,6 @@
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Filesystem (default)]]></item>
 		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached]]></item>
 		<item name="wcf.acp.option.cache_source_type.no"><![CDATA[Disable caching (not recommended)]]></item>
-		
 		<item name="wcf.acp.option.category.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
@@ -329,42 +540,34 @@
 		<item name="wcf.acp.option.category.security.antispam"><![CDATA[Anti-Spam]]></item>
 		<item name="wcf.acp.option.category.security.censorship"><![CDATA[Censorship]]></item>
 		<item name="wcf.acp.option.category.general.system.jquery"><![CDATA[jQuery]]></item>
-		
 		<item name="wcf.acp.option.cookie_domain"><![CDATA[Cookie Domain]]></item>
 		<item name="wcf.acp.option.cookie_domain.description"><![CDATA[Should be left blank except for special circumstances.]]></item>
 		<item name="wcf.acp.option.cookie_path"><![CDATA[Cookie Path]]></item>
 		<item name="wcf.acp.option.cookie_path.description"><![CDATA[Value should be absolute to Document Root, e.g. “/forum” for “http://www.woltlab.com/forum”.]]></item>
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Cookie Prefix]]></item>
-		
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Exceeds the maximum value{if $option->maxvalue !== null} of {#$option->maxvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Below the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
-		
 		<item name="wcf.acp.option.export"><![CDATA[Download Options]]></item>
 		<item name="wcf.acp.option.export.download"><![CDATA[Download Options]]></item>
 		<item name="wcf.acp.option.export.download.description"><![CDATA[Downloads a backup of the configuration settings to your local machine. This is not a replacement for a backup!]]></item>
-		
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Enable gzip-compression]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Compresses content transfered to users, reduces traffic and page load time. Does not affect files, e.g. images.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Prevent Browser-caching]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers.description"><![CDATA[Prevents Browser’s caching ensuring your users are always viewing the latest content. Increases both traffic and server load.]]></item>
-		
 		<item name="wcf.acp.option.http_gzip_level"><![CDATA[gzip-compression level]]></item>
 		<item name="wcf.acp.option.http_gzip_level.description"><![CDATA[Values between 1 and 9 are valid, it is recommended to use “1” for good compression without causing high server loads.]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Graphics Library]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Library used for image processing, e.g. scaling uploaded images. “ImageMagick” is a lot faster, but is not available on every machine.]]></item>
-		
 		<item name="wcf.acp.option.import"><![CDATA[Restore Options]]></item>
 		<item name="wcf.acp.option.import.error.importFailed"><![CDATA[Unable to restore options.]]></item>
 		<item name="wcf.acp.option.import.success"><![CDATA[Options have been restored.]]></item>
 		<item name="wcf.acp.option.import.upload"><![CDATA[Upload Options]]></item>
 		<item name="wcf.acp.option.import.upload.description"><![CDATA[Upload previously downloaded options file.]]></item>
 		<item name="wcf.acp.option.importAndExport"><![CDATA[Save &amp; Restore Options]]></item>
-		
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Store IP addresses]]></item>
 		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses for user-generated content, e.g. sessions, profiles or forum posts.]]></item>
-		
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[Administrator’s email address]]></item>
 		<item name="wcf.acp.option.mail_debug_logfile_path"><![CDATA[Debug Log Filename]]></item>
@@ -420,6 +623,157 @@
 		<item name="wcf.acp.option.jquery_source.local"><![CDATA[Local Version]]></item>
 		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
 		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
+		<item name="wcf.acp.option.jquery_source.cloudflare"><![CDATA[Cloudflare CDN]]></item>
+		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Enable benchmark]]></item>
+		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[It is strongly recommended to disable this option in productive environments.]]></item>
+		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
+		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
+		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
+		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Show WoltLab news on the administration control panel’s start page.]]></item>
+		<item name="wcf.acp.option.module_system_recaptcha"><![CDATA[Verification (“reCAPTCHA”)]]></item>
+		<item name="wcf.acp.option.module_system_recaptcha.description"><![CDATA[Enables security measures to prevent automatic form submission for bots.]]></item>
+		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request an own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin/create" class="externalURL">reCAPTCHA website</a>.]]></item>
+		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private API Key]]></item>
+		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Attachments]]></item>
+		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Create thumbnails for uploaded images]]></item>
+		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Thumbnail Height in Pixel]]></item>
+		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Thumbnail Width in Pixel]]></item>
+		<item name="wcf.acp.option.attachment_storage"><![CDATA[Storage Location]]></item>
+		<item name="wcf.acp.option.attachment_storage.description"><![CDATA[Changes storage location for attachments. Heads up! You are responsible to move already existing attachments to the new location.]]></item>
+		<item name="wcf.acp.option.module_attachment"><![CDATA[Attachments]]></item>
+		<item name="wcf.acp.option.module_smiley"><![CDATA[Smilies]]></item>
+		<item name="wcf.acp.option.category.message.censorship"><![CDATA[Censorship]]></item>
+		<item name="wcf.acp.option.censored_words"><![CDATA[Censored Words]]></item>
+		<item name="wcf.acp.option.censored_words.description"><![CDATA[One word per Line. Using at least one of these words within a message causes an immediate rejection.<br />
+<em>Use “*” to match parts: “wolt*” matches “woltlab”</em><br />
+<em>Use “~” to find splitted parts: “wolt~” matches “wolt-lab”</em>]]></item>
+		<item name="wcf.acp.option.enable_censorship"><![CDATA[Enable Censorship]]></item>
+		<item name="wcf.acp.option.enable_censorship.description"><![CDATA[Enables censorship for all messages containing the words below.]]></item>
+		<item name="wcf.acp.option.category.message.general.share"><![CDATA[Share]]></item>
+		<item name="wcf.acp.option.enable_bbcodes_default_value"><![CDATA[Enable BBCodes [default value]]]></item>
+		<item name="wcf.acp.option.enable_html_default_value"><![CDATA[Enable HTML [default value]]]></item>
+		<item name="wcf.acp.option.enable_smilies_default_value"><![CDATA[Enable smilies [default value]]]></item>
+		<item name="wcf.acp.option.pre_parse_default_value"><![CDATA[Detect URLs [default value]]]></item>
+		<item name="wcf.acp.option.show_signature_default_value"><![CDATA[Show signatures [default value]]]></item>
+		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Show content share button]]></item>
+		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Show number of shares]]></item>
+		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
+		<item name="wcf.acp.option.github_public_key.description"><![CDATA[You can obtain both your Client ID and Client Secret at <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a>.]]></item>
+		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
+		<item name="wcf.acp.option.twitter_public_key"><![CDATA[Twitter Consumer key]]></item>
+		<item name="wcf.acp.option.twitter_public_key.description"><![CDATA[You can obtain both your Consumer key and Consumer secret at <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://dev.twitter.com/apps'|rawurlencode}" class="externalURL">Twitter</a>.]]></item>
+		<item name="wcf.acp.option.twitter_private_key"><![CDATA[Twitter Consumer secret]]></item>
+		<item name="wcf.acp.option.facebook_public_key"><![CDATA[Facebook APP-ID]]></item>
+		<item name="wcf.acp.option.facebook_public_key.description"><![CDATA[You can obtain your APP-ID and Application Secret at <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://developers.facebook.com/apps'|rawurlencode}" class="externalURL">Facebook</a>.]]></item>
+		<item name="wcf.acp.option.facebook_private_key"><![CDATA[Facebook Application Secret]]></item>
+		<item name="wcf.acp.option.google_public_key"><![CDATA[Google Client ID]]></item>
+		<item name="wcf.acp.option.google_public_key.description"><![CDATA[You can obtain your Client ID and Client Secret at <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://code.google.com/apis/console/'|rawurlencode}" class="externalURL">Google</a>.]]></item>
+		<item name="wcf.acp.option.google_private_key"><![CDATA[Google Client Secret]]></item>
+		<item name="wcf.acp.option.category.dashboard"><![CDATA[Dashboard]]></item>
+		<item name="wcf.acp.option.category.dashboard.content"><![CDATA[Content Area]]></item>
+		<item name="wcf.acp.option.category.dashboard.sidebar"><![CDATA[Sidebar]]></item>
+		<item name="wcf.acp.option.category.dashboard.content.recentActivities"><![CDATA[Recent Activities]]></item>
+		<item name="wcf.acp.option.category.dashboard.sidebar.recentActivities"><![CDATA[Recent Activities]]></item>
+		<item name="wcf.acp.option.category.user.profile"><![CDATA[Profile]]></item>
+		<item name="wcf.acp.option.category.user.avatar"><![CDATA[Avatar]]></item>
+		<item name="wcf.acp.option.category.user.signature"><![CDATA[Signature]]></item>
+		<item name="wcf.acp.option.category.user.title"><![CDATA[User Title]]></item>
+		<item name="wcf.acp.option.category.user.cleanup"><![CDATA[Cleanup]]></item>
+		<item name="wcf.acp.option.category.user.list"><![CDATA[Member Lists]]></item>
+		<item name="wcf.acp.option.category.user.list.members"><![CDATA[Members List]]></item>
+		<item name="wcf.acp.option.category.user.list.online"><![CDATA[“Users Online” List]]></item>
+		<item name="wcf.acp.option.category.user.register"><![CDATA[Registration]]></item>
+		<item name="wcf.acp.option.category.user.password"><![CDATA[Password]]></item>
+		<item name="wcf.acp.option.category.user.ban"><![CDATA[Filter]]></item>
+		<item name="wcf.acp.option.category.user.3rdPartyAuth"><![CDATA[Third-Party Authentication]]></item>
+		<item name="wcf.acp.option.max_avatar_height"><![CDATA[Maximum Avatar Height]]></item>
+		<item name="wcf.acp.option.max_avatar_width"><![CDATA[Maximum Avatar Width]]></item>
+		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
+		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Enables support for Gravatars (“Global Recognized Avatar”).]]></item>
+		<item name="wcf.acp.option.module_users_online"><![CDATA[“Users Online” List]]></item>
+		<item name="wcf.acp.option.module_user_rank"><![CDATA[User Ranks]]></item>
+		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signatures]]></item>
+		<item name="wcf.acp.option.module_team_page"><![CDATA[Staff List]]></item>
+		<item name="wcf.acp.option.module_dashboard_page"><![CDATA[Dashboard]]></item>
+		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
+		<item name="wcf.acp.option.register_enable_password_security_check"><![CDATA[Enable password validation]]></item>
+		<item name="wcf.acp.option.register_enable_password_security_check.description"><![CDATA[Password complexity will be validated, unsafe passwords will be rejected.]]></item>
+		<item name="wcf.acp.option.register_password_min_length"><![CDATA[Minimum Password Length]]></item>
+		<item name="wcf.acp.option.register_password_must_contain_digit"><![CDATA[Password must contain digits]]></item>
+		<item name="wcf.acp.option.register_password_must_contain_lower_case"><![CDATA[Password must contain lowercase characters]]></item>
+		<item name="wcf.acp.option.register_password_must_contain_special_char"><![CDATA[Password must contain special characters]]></item>
+		<item name="wcf.acp.option.register_password_must_contain_upper_case"><![CDATA[Password must container uppercase characters]]></item>
+		<item name="wcf.acp.option.register_forbidden_usernames"><![CDATA[Reserved Usernames]]></item>
+		<item name="wcf.acp.option.register_forbidden_usernames.description"><![CDATA[List of names unavailable for registration, one name per line.]]></item>
+		<item name="wcf.acp.option.register_forbidden_emails"><![CDATA[Reserved Email Addresses]]></item>
+		<item name="wcf.acp.option.register_forbidden_emails.description"><![CDATA[List of email addresses unavailable for registration, one address per line.]]></item>
+		<item name="wcf.acp.option.register_allowed_emails"><![CDATA[Allowed Email Addresses]]></item>
+		<item name="wcf.acp.option.register_allowed_emails.description"><![CDATA[List of valid email addresses for registration, one address per line.]]></item>
+		<item name="wcf.acp.option.register_username_min_length"><![CDATA[Minimum Username Length]]></item>
+		<item name="wcf.acp.option.register_username_max_length"><![CDATA[Maximum Username Length]]></item>
+		<item name="wcf.acp.option.register_username_force_ascii"><![CDATA[Require ASCII characters for usernames]]></item>
+		<item name="wcf.acp.option.register_disabled"><![CDATA[Disable registration]]></item>
+		<item name="wcf.acp.option.register_disabled.description"><![CDATA[Disables registration for all users, new users may be created through an administrator.]]></item>
+		<item name="wcf.acp.option.register_enable_disclaimer"><![CDATA[Enable disclaimer]]></item>
+		<item name="wcf.acp.option.register_enable_disclaimer.description"><![CDATA[Disclaimer must be explicitly accepted during registration.]]></item>
+		<item name="wcf.acp.option.register_admin_notification"><![CDATA[Notify administrator of new registrations]]></item>
+		<item name="wcf.acp.option.register_activation_method"><![CDATA[Approval]]></item>
+		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Only administrators can approve]]></item>
+		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Approval through email confirmation]]></item>
+		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[No approval required]]></item>
+		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Enable reCAPTCHA protection during registration]]></item>
+		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[Enable reCAPTCHA protection for “Lost Password”]]></item>
+		<item name="wcf.acp.option.profile_mail_use_captcha"><![CDATA[Enable reCAPTCHA protection for “Send Email to User”]]></item>
+		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Height of Images in Signatures]]></item>
+		<item name="wcf.acp.option.user_title_max_length"><![CDATA[Maximum User Title Length]]></item>
+		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reserved User Titles]]></item>
+		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[List of user titles unavailable for members, one title per line.]]></item>
+		<item name="wcf.acp.option.profile_show_old_username"><![CDATA[Show Previous Username]]></item>
+		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Previous username will be additionally displayed for the given period. [time in days]]]></item>
+		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Members per Page]]></item>
+		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Default Sort Field]]></item>
+		<item name="wcf.acp.option.members_list_default_sort_order"><![CDATA[Default Sort Order]]></item>
+		<item name="wcf.acp.option.users_online_show_guests"><![CDATA[Show guests]]></item>
+		<item name="wcf.acp.option.users_online_show_robots"><![CDATA[Show search engine spiders]]></item>
+		<item name="wcf.acp.option.users_online_default_sort_field"><![CDATA[Default Sort Field]]></item>
+		<item name="wcf.acp.option.users_online_default_sort_order"><![CDATA[Default Sort Order]]></item>
+		<item name="wcf.acp.option.users_online_page_refresh"><![CDATA[Refresh Page Every]]></item>
+		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Page will be periodically refreshed. [time in seconds, 0 to disable]]]></item>
+		<item name="wcf.acp.option.user_cleanup_notification_lifetime"><![CDATA[Notification]]></item>
+		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Notifications will be discarded if they are older than the given period. [time in days]]]></item>
+		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime"><![CDATA[Recent Activity]]></item>
+		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Activities will be discarded if they are older than the given period. [time in days]]]></item>
+		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime"><![CDATA[Profile Visitors]]></item>
+		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Profile visitors will be discarded if they are older than the given period. [time in days]]]></item>
+		<item name="wcf.acp.option.recent_activity_items"><![CDATA[Number of Entries]]></item>
+		<item name="wcf.acp.option.recent_activity_sidebar_items"><![CDATA[Number of Entries]]></item>
+		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Like System]]></item>
+		<item name="wcf.acp.option.module_like"><![CDATA[Like System]]></item>
+		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Users can like their own content]]></item>
+		<item name="wcf.acp.option.like_enable_dislike"><![CDATA[Users can dislike content]]></item>
+		<item name="wcf.acp.option.like_show_summary"><![CDATA[Show like summary]]></item>
+		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[User Profile Wall]]></item>
+		<item name="wcf.acp.option.category.message.sidebar"><![CDATA[Sidebar]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_avatar"><![CDATA[Show avatar]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_online_status"><![CDATA[Show online status]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_rank"><![CDATA[Show user rank]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_message_group_starter_icon"><![CDATA[Highlight thread starter]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_likes_received"><![CDATA[Show author’s likes received]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_activity_points"><![CDATA[Show author’s activity points]]></item>
+		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Show selected author profile fields]]></item>
+		<item name="wcf.acp.option.module_tagging"><![CDATA[Tagging]]></item>
+		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Enables the tagging of content.]]></item>
+		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximum Length of a Tag]]></item>
+		<item name="wcf.acp.option.category.message.search"><![CDATA[Search]]></item>
+		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results per Page]]></item>
+		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Default Sort Field]]></item>
+		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Default Sort Order]]></item>
+		<item name="wcf.acp.option.search_use_captcha"><![CDATA[Enable reCAPTCHA protection for search]]></item>
+		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
+		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
+		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum number of options]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -452,10 +806,13 @@
 		<item name="wcf.acp.package.installation.packageStatus.installed"><![CDATA[Already Installed]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missing"><![CDATA[Missing]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[Insufficient Version (installed: {$package.existingVersion})]]></item>
+		<item name="wcf.acp.package.installation.rollback"><![CDATA[Rollback Installation]]></item>
 		<item name="wcf.acp.package.installation.step.install"><![CDATA[Installing “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation completed]]></item>
-		<item name="wcf.acp.package.installation.step.prepare"><![CDATA[Preparing Installation …]]></item>
-		<item name="wcf.acp.package.installation.title"><![CDATA[Installation]]></item>
+		<item name="wcf.acp.package.installation.step.update"><![CDATA[Updating “{$packageName}” …]]></item>
+		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Updated completed]]></item>
+		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Preparing Installation …]]></item>
+		<item name="wcf.acp.package.install.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required Version]]></item>
 		<item name="wcf.acp.package.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Packages]]></item>
@@ -483,10 +840,10 @@
 		<item name="wcf.acp.package.type.application"><![CDATA[Application]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Plugin]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package “{@$package->getName()}”?]]></item>
-		<item name="wcf.acp.package.uninstallation.step.prepare"><![CDATA[TODO: Deinstallation wird vorbereitet …]]></item>
-		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[TODO: Deinstallation abgeschlossen]]></item>
-		<item name="wcf.acp.package.uninstallation.title"><![CDATA[TODO: Deinstallation]]></item>
-		<item name="wcf.acp.package.uninstallation.title.packageName"><![CDATA[TODO: Paket „{$queue->packageName}“ wird deinstalliert …]]></item>
+		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[Uninstallation completed]]></item>
+		<item name="wcf.acp.package.uninstallation.title"><![CDATA[Uninstallation]]></item>
+		<item name="wcf.acp.package.uninstallation.title.packageName"><![CDATA[Package “{$queue->packageName}” is being uninstalled …]]></item>
+		<item name="wcf.acp.package.uninstall.step.prepare"><![CDATA[Prepairing uninstallation …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Credentials]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Your credentials are invalid, please verify {if $updateServer->requiresLicense()}license and serial number{else}username and password{/if}.]]></item>
@@ -498,10 +855,14 @@
 		<item name="wcf.acp.package.update.server"><![CDATA[Package Server]]></item>
 		<item name="wcf.acp.package.update.server.message"><![CDATA[Server Notice]]></item>
 		<item name="wcf.acp.package.update.server.url"><![CDATA[URL]]></item>
+		<item name="wcf.acp.package.update.title"><![CDATA[Update]]></item>
 		<item name="wcf.acp.package.update.unauthorized"><![CDATA[Authorization Required]]></item>
 		<item name="wcf.acp.package.update.username"><![CDATA[Username]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
+		<item name="wcf.acp.package.upload"><![CDATA[Upload package]]></item>
+		<item name="wcf.acp.package.optionalPackages"><![CDATA[Optional packages]]></item>
+		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[The following optional packages are available for installation:]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -515,8 +876,8 @@
 		<item name="wcf.acp.pageMenu.isDisabled"><![CDATA[Disable menu item]]></item>
 		<item name="wcf.acp.pageMenu.landingPage.description"><![CDATA[The first menu item is always the website’s landing page, sort items to change it.]]></item>
 		<item name="wcf.acp.pageMenu.link"><![CDATA[Link]]></item>
-		<item name="wcf.acp.pageMenu.link.external"><![CDATA[External Link]]></item>
-		<item name="wcf.acp.pageMenu.link.internal"><![CDATA[Internal Link]]></item>
+		<item name="wcf.acp.pageMenu.link.external"><![CDATA[External link]]></item>
+		<item name="wcf.acp.pageMenu.link.internal"><![CDATA[Internal link]]></item>
 		<item name="wcf.acp.pageMenu.list"><![CDATA[List Menu Items]]></item>
 		<item name="wcf.acp.pageMenu.menuItemController"><![CDATA[Controller]]></item>
 		<item name="wcf.acp.pageMenu.menuItemController.description"><![CDATA[PHP class name including namespace, e.g. “wcf\page\DashboardPage”.]]></item>
@@ -567,6 +928,30 @@
 		<item name="wcf.acp.sessionLog.requestMethod"><![CDATA[Method]]></item>
 		<item name="wcf.acp.sessionLog.requestURI"><![CDATA[URI]]></item>
 		<item name="wcf.acp.sessionLog.time"><![CDATA[Time]]></item>
+	</category>
+	
+	<category name="wcf.acp.smiley">
+		<item name="wcf.acp.smiley.list"><![CDATA[Smilies]]></item>
+		<item name="wcf.acp.smiley.noItems"><![CDATA[There are no smilies.]]></item>
+		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Do you really want to delete the smiley “{$smiley->smileyTitle|language}”?]]></item>
+		<item name="wcf.acp.smiley.add"><![CDATA[Add Smiley]]></item>
+		<item name="wcf.acp.smiley.edit"><![CDATA[Edit Smiley]]></item>
+		<item name="wcf.acp.smiley.title"><![CDATA[Title]]></item>
+		<item name="wcf.acp.smiley.category.noItems"><![CDATA[This category contains no smilies.]]></item>
+		<item name="wcf.acp.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
+		<item name="wcf.acp.smiley.category.edit"><![CDATA[Edit Smiley Category]]></item>
+		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley Categories]]></item>
+		<item name="wcf.acp.smiley.categoryID"><![CDATA[Category]]></item>
+		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Default Category]]></item>
+		<item name="wcf.acp.smiley.categoryID.error.notValid"><![CDATA[Chosen category is invalid]]></item>
+		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primary Smiley Code]]></item>
+		<item name="wcf.acp.smiley.smileyCode.error.notUnique"><![CDATA[This smiley code is already in use by an other smiley]]></item>
+		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley Codes]]></item>
+		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[At least one alternative smiley code is already in use by an other smiley]]></item>
+		<item name="wcf.acp.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
+		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[Smiley path is relative too „{$__wcf->getPath()}“.]]></item>
+		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Unable to find a file on given path]]></item>
+		<item name="wcf.acp.smiley.showOrder"><![CDATA[Show Order]]></item>
 	</category>
 	
 	<category name="wcf.acp.style">
@@ -639,7 +1024,7 @@
 		<item name="wcf.acp.style.import.source"><![CDATA[Data Source]]></item>
 		<item name="wcf.acp.style.import.source.upload"><![CDATA[Upload Style]]></item>
 		<item name="wcf.acp.style.import.source.upload.description"><![CDATA[Upload a style from your local machine.]]></item>
-		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[TODO: Der Stil konnte nicht importiert werden. Es handelt sich nicht um eine gültige Stil-Datei.]]></item>
+		<item name="wcf.acp.style.import.source.error.importFailed"><![CDATA[Unable to import the selected style, uploaded file is not a valid style.]]></item>
 		<item name="wcf.acp.style.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.style.list"><![CDATA[List Styles]]></item>
 		<item name="wcf.acp.style.packageName"><![CDATA[Package Identifier]]></item>
@@ -652,50 +1037,72 @@
 		<item name="wcf.acp.style.styleVersion"><![CDATA[Version]]></item>
 		<item name="wcf.acp.style.templateGroupID"><![CDATA[Template Group]]></item>
 		<item name="wcf.acp.style.users"><![CDATA[Users]]></item>
+		<item name="wcf.acp.style.image.error.invalidExtension"><![CDATA[The file extensions is invalid.]]></item>
+		<item name="wcf.acp.style.imagePath.error.notValid"><![CDATA[You have provided an invalid path.]]></item>
+		<item name="wcf.acp.style.styleVersion.error.notValid"><![CDATA[You have provided an invalid version number.]]></item>
+		<item name="wcf.acp.style.styleDate.error.notValid"><![CDATA[You have provided an invalid date.]]></item>
+	</category>
+	
+	<category name="wcf.acp.tag">
+		<item name="wcf.acp.tag.add"><![CDATA[Add Tag]]></item>
+		<item name="wcf.acp.tag.edit"><![CDATA[Edit Tag]]></item>
+		<item name="wcf.acp.tag.delete.sure"><![CDATA[Do you really want to delete the tag “{$tag}”?]]></item>
+		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Selected language is invalid]]></item>
+		<item name="wcf.acp.tag.languageID"><![CDATA[Language]]></item>
+		<item name="wcf.acp.tag.list"><![CDATA[List Tags]]></item>
+		<item name="wcf.acp.tag.list.search"><![CDATA[Search Tags]]></item>
+		<item name="wcf.acp.tag.list.search.query"><![CDATA[Search Term]]></item>
+		<item name="wcf.acp.tag.noneAvailable"><![CDATA[No tag have been added yet.]]></item>
+		<item name="wcf.acp.tag.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.tag.synonyms"><![CDATA[Synonyms]]></item>
+		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym for]]></item>
+		<item name="wcf.acp.tag.usageCount"><![CDATA[Usages]]></item>
 	</category>
 	
 	<category name="wcf.acp.template">
 		<item name="wcf.acp.template.list"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.template.group"><![CDATA[Template Group]]></item>
-		<item name="wcf.acp.template.group.default"><![CDATA[TODO: Standardtemplates]]></item>
+		<item name="wcf.acp.template.group.default"><![CDATA[Default Templates]]></item>
+		<item name="wcf.acp.template.application"><![CDATA[Application]]></item>
+		<item name="wcf.acp.template.application.all"><![CDATA[TODO: Keine Filterung]]></item>
 		<item name="wcf.acp.template.add"><![CDATA[Add Template]]></item>
 		<item name="wcf.acp.template.edit"><![CDATA[Edit Template]]></item>
 		<item name="wcf.acp.template.copy"><![CDATA[Copy Template]]></item>
-		<item name="wcf.acp.template.lastModificationTime"><![CDATA[TODO: Letzte Änderung]]></item>
+		<item name="wcf.acp.template.lastModificationTime"><![CDATA[Last Modification]]></item>
 		<item name="wcf.acp.template.group.list"><![CDATA[Template Groups]]></item>
 		<item name="wcf.acp.template.group.add"><![CDATA[Add Template Group]]></item>
 		<item name="wcf.acp.template.group.edit"><![CDATA[Edit Template Group]]></item>
 		<item name="wcf.acp.template.group.templates"><![CDATA[Templates]]></item>
-		<item name="wcf.acp.template.error.noGroups"><![CDATA[TODO: Bevor sie ein eigenes Template erstellen können, müssen Sie eine <a href="{link controller='TemplateGroupAdd'}{/link}">Templategruppe hinzufügen</a>.]]></item>
-		<item name="wcf.acp.template.group.noItems"><![CDATA[TODO: Es sind keine Templategruppen vorhanden.]]></item>
-		<item name="wcf.acp.template.group.folderName"><![CDATA[TODO: Verzeichnis]]></item>
-		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[TODO: Übergeordnete Templategruppe]]></item>
-		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[TODO: Der eingegebene Name wird bereits von einer anderen Templategruppe verwendet.]]></item>
-		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[TODO: Sie haben einen ungültigen Verzeichnis-Namen eingegeben.]]></item>
-		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[TODO: Das angegebene Verzeichnis wird bereits von einer anderen Templategruppe verwendet.]]></item>
-		<item name="wcf.acp.template.group.delete.sure"><![CDATA[TODO: Wollen Sie die Templategruppe „{$templateGroup->templateGroupName}“ wirklich löschen?]]></item>
-		<item name="wcf.acp.template.noItems"><![CDATA[TODO: Es wurden keine Templates gefunden.]]></item>
-		<item name="wcf.acp.template.source"><![CDATA[TODO: Template-Quelltext]]></item>
-		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[TODO: Der eingegebene Name wird bereits von einem anderen Templaten verwendet.]]></item>
-		<item name="wcf.acp.template.name.error.notValid"><![CDATA[TODO: Sie haben einen ungültigen Namen eingegeben.]]></item>
-		<item name="wcf.acp.template.delete.sure"><![CDATA[TODO: Wollen Sie das Template „{$template->templateName}“ wirklich löschen?]]></item>
+		<item name="wcf.acp.template.error.noGroups"><![CDATA[You must create a <a href="{link controller='TemplateGroupAdd'}{/link}">template group</a> first.]]></item>
+		<item name="wcf.acp.template.group.noItems"><![CDATA[There are no template groups.]]></item>
+		<item name="wcf.acp.template.group.folderName"><![CDATA[Directory]]></item>
+		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[Parent Template Group]]></item>
+		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[This name is already taken by a different template group.]]></item>
+		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[The specified directory is invalid.]]></item>
+		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[The specified directory is already in use by an other template group.]]></item>
+		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Do you really want to remove the template group “{$templateGroup->templateGroupName}”?]]></item>
+		<item name="wcf.acp.template.noItems"><![CDATA[There are no templates.]]></item>
+		<item name="wcf.acp.template.source"><![CDATA[Template Source Code]]></item>
+		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a differen template]]></item>
+		<item name="wcf.acp.template.name.error.notValid"><![CDATA[The specified name is invalid]]></item>
+		<item name="wcf.acp.template.delete.sure"><![CDATA[Do you really want to delete the template “{$template->templateName}”?]]></item>
 	</category>
 	
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Add User]]></item>
-		<item name="wcf.acp.user.assignToGroup"><![CDATA[Assign to User Group]]></item>
+		<item name="wcf.acp.user.assignToGroup"><![CDATA[Assign to user group]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Assigning the following users to user groups selected below]]></item>
-		<item name="wcf.acp.user.banUser"><![CDATA[TODO: Benutzer sperren]]></item>
-		<item name="wcf.acp.user.banUser.description"><![CDATA[TODO: Der Benutzer wird dauerhaft von der Nutzung aller Funktionen ausgeschlossen und erhält beim Aufruf der Seite eine entsprechende Fehlermeldung.]]></item>
-		<item name="wcf.acp.user.banReason"><![CDATA[TODO: Begründung]]></item>
-		<item name="wcf.acp.user.banReason.description"><![CDATA[TODO: Die Begründung wird dem gesperrten Benutzer beim Aufruf der Seite angezeigt.]]></item>
-		<item name="wcf.acp.user.ban"><![CDATA[TODO: Sperren]]></item>
-		<item name="wcf.acp.user.unban"><![CDATA[TODO: Sperrung aufheben]]></item>
-		<item name="wcf.acp.user.ban.sure"><![CDATA[TODO: Wollen Sie den/die Benutzer wirklich sperren?]]></item>
+		<item name="wcf.acp.user.banUser"><![CDATA[Ban User]]></item>
+		<item name="wcf.acp.user.banUser.description"><![CDATA[The user is permanently banned from using any site functions and will be notified on site access.]]></item>
+		<item name="wcf.acp.user.banReason"><![CDATA[Reason]]></item>
+		<item name="wcf.acp.user.banReason.description"><![CDATA[The reason will be displayed for the affected users.]]></item>
+		<item name="wcf.acp.user.ban"><![CDATA[Ban]]></item>
+		<item name="wcf.acp.user.unban"><![CDATA[Unban]]></item>
+		<item name="wcf.acp.user.ban.sure"><![CDATA[Do you really want to ban this user?]]></item>
 		<item name="wcf.acp.user.delete.sure"><![CDATA[Do you really want to delete the user “{$user->username}”?]]></item>
 		<item name="wcf.acp.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.acp.user.edit.warning.selfEdit"><![CDATA[Heads up! You’re editing your own user account and changes might result in yourself being locked out from the Administration Control Panel.]]></item>
-		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[Export Email Addresses]]></item>
+		<item name="wcf.acp.user.exportEmailAddress"><![CDATA[Export email addresses]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType"><![CDATA[Export Format]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.csv"><![CDATA[CSV (<em>Character Separated Values</em>)]]></item>
 		<item name="wcf.acp.user.exportEmailAddress.fileType.xml"><![CDATA[XML (<em>Extensible Markup Language</em>)]]></item>
@@ -712,7 +1119,7 @@
 		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Actions]]></item>
 		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.user.bulkProcessing.success"><![CDATA[Executed action affected {#$affectedUsers} user{if $affectedUsers != 1}s{/if}.]]></item>
-		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below without any further confirmation prompt! Processing can be fairly slow if many users are affected by your conditions, it is recommended to enable “Maintenance Mode” in first place. Any change cannot be undone, please be careful!]]></item>
+		<item name="wcf.acp.user.bulkProcessing.warning"><![CDATA[Heads up! The bulk processing executes all actions below without any further confirmation prompt!]]></item>
 		<item name="wcf.acp.user.search"><![CDATA[Search Users]]></item>
 		<item name="wcf.acp.user.search.conditions.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.user.search.conditions.profile"><![CDATA[Profile]]></item>
@@ -729,60 +1136,99 @@
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[Send email to all users]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Enable HTML for email]]></item>
 		<item name="wcf.acp.user.sendMail.from"><![CDATA[Sender]]></item>
-		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[<p>Specify the sender’s email address.{if MAIL_USE_FORMATTED_ADDRESS} It is possible to use the following format:{/if}</p>
-{if MAIL_USE_FORMATTED_ADDRESS}<p style="line-height: 2em;"><code>Sender Name &lt;email@example.com&gt;</code></p>{/if}
-<p>You can define the default sender in <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em>. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.</p>]]></item>
+		<item name="wcf.acp.user.sendMail.from.description"><![CDATA[Specify the sender’s email address.{if MAIL_USE_FORMATTED_ADDRESS} It is possible to use the following format:{/if}<br />
+{if MAIL_USE_FORMATTED_ADDRESS}<em>Sender Name &lt;email@example.com&gt;</em><br />{/if}
+You can define the default sender in <em>System -&gt; Options -&gt; General -&gt; Emails</em>. The sender’s email must be known to the server if using SMTP, otherwise it would be rejected.]]></item>
 		<item name="wcf.acp.user.sendMail.group"><![CDATA[Email to user group]]></item>
 		<item name="wcf.acp.user.sendMail.groups"><![CDATA[Send email to members of the following user groups]]></item>
 		<item name="wcf.acp.user.sendMail.mail"><![CDATA[Email]]></item>
 		<item name="wcf.acp.user.sendMail.markedUsers"><![CDATA[Send email to following users]]></item>
 		<item name="wcf.acp.user.sendMail.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.acp.user.sendMail.text"><![CDATA[Text]]></item>
-		<item name="wcf.acp.user.quickSearch"><![CDATA[TODO: Schnellsuche]]></item>
-		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[TODO: Gesperrte Benutzer]]></item>
-		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[TODO: Neueste Benutzer]]></item>
-		<item name="wcf.acp.user.option.access"><![CDATA[TODO: Zugriff]]></item>
+		<item name="wcf.acp.user.quickSearch"><![CDATA[Quick Search]]></item>
+		<item name="wcf.acp.user.quickSearch.banned"><![CDATA[Banned Users]]></item>
+		<item name="wcf.acp.user.quickSearch.newest"><![CDATA[Newest Users]]></item>
+		<item name="wcf.acp.user.option.access"><![CDATA[Access]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Add Custom User Field]]></item>
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Add Custom User Field Category]]></item>
 		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[Do you really want to delete the category “{lang}wcf.user.option.category.{$category->categoryName}{/lang}”?]]></item>
 		<item name="wcf.acp.user.option.category.edit"><![CDATA[Edit Custom User Field Category]]></item>
-		<item name="wcf.acp.user.option.category.showOrder"><![CDATA[TODO: Reihenfolge]]></item>
+		<item name="wcf.acp.user.option.category.showOrder"><![CDATA[Show Order]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Fields]]></item>
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Custom User Field Categories]]></item>
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
-		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[TODO: Wert, der beim erstmaligen Ausfüllen als Standard vorgegeben ist.]]></item>
+		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Value will be used as preset on first time editing.]]></item>
 		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Dou you really want to delete the field “{lang}wcf.user.option.{$option->optionName}{/lang}”?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Edit Custom User Field]]></item>
-		<item name="wcf.acp.user.option.editable"><![CDATA[TODO: Wer darf den Inhalt verändern?]]></item>
-		<item name="wcf.acp.user.option.editable.1"><![CDATA[TODO: Eigentümer]]></item>
-		<item name="wcf.acp.user.option.editable.2"><![CDATA[TODO: Administrator]]></item>
-		<item name="wcf.acp.user.option.editable.3"><![CDATA[TODO: Eigentümer und Administrator]]></item>
-		<item name="wcf.acp.user.option.optionType"><![CDATA[TODO: Feldtyp]]></item>
-		<item name="wcf.acp.user.option.optionType.description"><![CDATA[TODO: Die Namen entsprechen in der Regel den HTML-Elementen, die benötigt werden, um so ein Feld beim Benutzer abzufragen.]]></item>
-		<item name="wcf.acp.user.option.askDuringRegistration"><![CDATA[TODO: Das Feld wird im Registrierungs-Formular angezeigt.]]></item>
-		<item name="wcf.acp.user.option.required"><![CDATA[TODO: Das Feld muss zwingend durch den Eigentümer ausgefüllt werden.]]></item>
-		<item name="wcf.acp.user.option.searchable"><![CDATA[TODO: Das Feld kann über die Mitgliedersuche durchsucht werden.]]></item>
-		<item name="wcf.acp.user.option.selectOptions"><![CDATA[TODO: Auswahloptionen]]></item>
-		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[TODO: Hier können Sie pro Zeile Auswahloptionen eintragen, beispielsweise bei einer Select-Box.]]></item>
+		<item name="wcf.acp.user.option.editable"><![CDATA[Editable by]]></item>
+		<item name="wcf.acp.user.option.editable.1"><![CDATA[Owner]]></item>
+		<item name="wcf.acp.user.option.editable.2"><![CDATA[Administrator]]></item>
+		<item name="wcf.acp.user.option.editable.3"><![CDATA[Owner and Administrator]]></item>
+		<item name="wcf.acp.user.option.optionType"><![CDATA[Option Type]]></item>
+		<item name="wcf.acp.user.option.optionType.description"><![CDATA[Option names usually equal the HTML-tag used as input element.]]></item>
+		<item name="wcf.acp.user.option.askDuringRegistration"><![CDATA[Field will be visible during registration.]]></item>
+		<item name="wcf.acp.user.option.required"><![CDATA[Owner must provide a valid value.]]></item>
+		<item name="wcf.acp.user.option.searchable"><![CDATA[Field values are searchable in the member search]]></item>
+		<item name="wcf.acp.user.option.selectOptions"><![CDATA[Select Options]]></item>
+		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[One select option per line, e.g. for use with a select-box.]]></item>
 		<item name="wcf.acp.user.option.setDefaults"><![CDATA[Manage User Field Settings]]></item>
-		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers"><![CDATA[TODO: Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
-		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[TODO: Die hier eingestellten Änderungen der Vorgabewerte für Benutzerprofil-Einstellungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.]]></item>
-		<item name="wcf.acp.user.option.showOrder"><![CDATA[TODO: Reihenfolge]]></item>
-		<item name="wcf.acp.user.option.validationPattern"><![CDATA[TODO: Regulärer Ausdruck zur Validierung]]></item>
-		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[TODO: Tragen Sie hier den Regulären Ausdruck ein, um die Eingabe der Benutzer zu validieren.]]></item>
+		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users too]]></item>
+		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Any changes to default values for user profile settings will be applied to existing users. This overrides all affected settings previously changed by the respective user itself.]]></item>
+		<item name="wcf.acp.user.option.showOrder"><![CDATA[Show Order]]></item>
+		<item name="wcf.acp.user.option.validationPattern"><![CDATA[Regular Expression for Validation]]></item>
+		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[Provide a regular expression to validate user input.]]></item>
 		<item name="wcf.acp.user.option.list"><![CDATA[Custom User Fields]]></item>
-		<item name="wcf.acp.user.option.visible"><![CDATA[TODO: Wer darf den Inhalt sehen?]]></item>
-		<item name="wcf.acp.user.option.visible.1"><![CDATA[TODO: Eigentümer]]></item>
-		<item name="wcf.acp.user.option.visible.2"><![CDATA[TODO: Administrator]]></item>
-		<item name="wcf.acp.user.option.visible.3"><![CDATA[TODO: Eigentümer und Administrator]]></item>
-		<item name="wcf.acp.user.option.visible.7"><![CDATA[TODO: Registrierte Benutzer]]></item>
-		<item name="wcf.acp.user.option.visible.15"><![CDATA[TODO: Jeder]]></item>
-		<item name="wcf.acp.user.option.typeData"><![CDATA[TODO: Eigenschaften]]></item>
-		<item name="wcf.acp.user.option.outputClass"><![CDATA[TODO: PHP-Klasse für Ausgabe]]></item>
-		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[TODO: Erlaubt die Angabe einer speziellen PHP-Klasse für die Ausgabeformatierung bei der Anzeige des Feldes.]]></item>
+		<item name="wcf.acp.user.option.visible"><![CDATA[Visible for]]></item>
+		<item name="wcf.acp.user.option.visible.1"><![CDATA[Owner]]></item>
+		<item name="wcf.acp.user.option.visible.2"><![CDATA[Administrator]]></item>
+		<item name="wcf.acp.user.option.visible.3"><![CDATA[Owner and Administrator]]></item>
+		<item name="wcf.acp.user.option.visible.7"><![CDATA[Registered Users]]></item>
+		<item name="wcf.acp.user.option.visible.15"><![CDATA[Everyone]]></item>
+		<item name="wcf.acp.user.option.typeData"><![CDATA[Properties]]></item>
+		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP Class Name for Output]]></item>
+		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Allows custom output formatting using a PHP class.]]></item>
 		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
+		<item name="wcf.acp.user.search.conditions"><![CDATA[Conditions]]></item>
+		<item name="wcf.acp.user.search.conditions.states"><![CDATA[States]]></item>
+		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Banned]]></item>
+		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Not banned]]></item>
+		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Activity Points]]></item>
+		<item name="wcf.acp.user.activityPoint.updateCache"><![CDATA[Update Activity Point Cache]]></item>
+		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Update Points Per Activity]]></item>
+		<item name="wcf.acp.user.delete"><![CDATA[Delete user(s)]]></item>
+		<item name="wcf.acp.user.general"><![CDATA[User]]></item>
+		<item name="wcf.acp.user.rank.add"><![CDATA[Add User Rank]]></item>
+		<item name="wcf.acp.user.rank.cssClassName"><![CDATA[CSS Class Name]]></item>
+		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[You can select a predefined appearance or provide an own <abbr title="Cascading Style Sheets">CSS</abbr> class name.]]></item>
+		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Current Rank Image]]></item>
+		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Do you really want to delete the user rank “{$userRank->rankTitle|language}”?]]></item>
+		<item name="wcf.acp.user.rank.edit"><![CDATA[Edit User Rank]]></item>
+		<item name="wcf.acp.user.rank.image"><![CDATA[Rank Image]]></item>
+		<item name="wcf.acp.user.rank.list"><![CDATA[User Ranks]]></item>
+		<item name="wcf.acp.user.rank.rankImage.description"><![CDATA[Path must be either relative to WCF’s directory or absolute.]]></item>
+		<item name="wcf.acp.user.rank.requiredGender.description"><![CDATA[Rank might be optionally restricted to a specific gender.]]></item>
+		<item name="wcf.acp.user.rank.requiredPoints"><![CDATA[Points]]></item>
+		<item name="wcf.acp.user.rank.requiredPoints.description"><![CDATA[Required amount of activity points to obtain this rank.]]></item>
+		<item name="wcf.acp.user.rank.requirement"><![CDATA[Restrictions]]></item>
+		<item name="wcf.acp.user.rank.repeatImage"><![CDATA[Repeat User Image]]></item>
+		<item name="wcf.acp.user.rank.repeatImage.description"><![CDATA[Number of times the rank image will be repeated.]]></item>
+		<item name="wcf.acp.user.rank.title"><![CDATA[Title]]></item>
+		<item name="wcf.acp.user.rank.userGroup.description"><![CDATA[Rank is restricted to members of the selected user groups.]]></item>
+		<item name="wcf.acp.user.rank.updateRanks"><![CDATA[Update User Ranks]]></item>
+		<item name="wcf.acp.user.disableSignature"><![CDATA[Block signature]]></item>
+		<item name="wcf.acp.user.disableSignatureReason"><![CDATA[Reason]]></item>
+		<item name="wcf.acp.user.disableAvatar"><![CDATA[Block avatar]]></item>
+		<item name="wcf.acp.user.disableAvatarReason"><![CDATA[Reason]]></item>
+		<item name="wcf.acp.user.disable"><![CDATA[Disable]]></item>
+		<item name="wcf.acp.user.enable"><![CDATA[Approve]]></item>
+		<item name="wcf.acp.user.quickSearch.disabled"><![CDATA[Users awaiting approval]]></item>
+		<item name="wcf.acp.user.quickSearch.disabledAvatars"><![CDATA[Blocked avatars]]></item>
+		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Blocked signatures]]></item>
+		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
+		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
+		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting approval]]></item>
 	</category>
 	
 	<category name="wcf.ajax">
@@ -791,6 +1237,53 @@
 		<item name="wcf.ajax.error.internalError"><![CDATA[The server encountered an unresolvable problem, please try again later.]]></item>
 		<item name="wcf.ajax.error.permissionDenied"><![CDATA[You’re not authorized to execute this action.]]></item>
 		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Your session expired, please login again.]]></item>
+	</category>
+	
+	<category name="wcf.attachment">
+		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, downloaded <b>{#$attachment->downloads}</b> times{if $attachment->downloads > 0}, last: {@$attachment->lastDownloadTime|time}{/if})]]></item>
+		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width}×{#$attachment->height}, viewed {#$attachment->downloads} times]]></item>
+		<item name="wcf.attachment.files"><![CDATA[Files]]></item>
+		<item name="wcf.attachment.images"><![CDATA[Images]]></item>
+		<item name="wcf.attachment.attachments"><![CDATA[Attachments]]></item>
+		<item name="wcf.attachment.delete.sure"><![CDATA[Do you really want to delete this attachment?]]></item>
+		<item name="wcf.attachment.upload.error.invalidExtension"><![CDATA[File extension is invalid.]]></item>
+		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[File is too big.]]></item>
+		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[You have reached the maximum number of attachments.]]></item>
+		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[You have chosen too many attachments, remaining: #remaining#.]]></item>
+		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[An unknown error occured during upload.]]></item>
+		<item name="wcf.attachment.upload.limits"><![CDATA[Maximum number of attachments: {#$attachmentHandler->getMaxCount()}<br />
+Maximum file size: {@$attachmentHandler->getMaxSize()|filesize}<br />
+Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]></item>
+		<item name="wcf.attachment.insert"><![CDATA[Insert into message]]></item>
+		<item name="wcf.attachment.filename"><![CDATA[Filename]]></item>
+		<item name="wcf.attachment.uploadTime"><![CDATA[Upload Time]]></item>
+		<item name="wcf.attachment.filesize"><![CDATA[Size]]></item>
+		<item name="wcf.attachment.downloads"><![CDATA[Downloads]]></item>
+		<item name="wcf.attachment.lastDownloadTime"><![CDATA[Last Download]]></item>
+		<item name="wcf.attachment.fileType"><![CDATA[Type]]></item>
+	</category>
+	
+	<category name="wcf.bbcode">
+		<item name="wcf.bbcode.code.text"><![CDATA[{@$highlighterTitle} ({#$lines} line{if $lines != 1}s{/if})]]></item>
+		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
+		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck Source Code]]></item>
+		<item name="wcf.bbcode.code.c.title"><![CDATA[C Source Code]]></item>
+		<item name="wcf.bbcode.code.css.title"><![CDATA[CSS Source Code]]></item>
+		<item name="wcf.bbcode.code.diff.title"><![CDATA[Difference-File]]></item>
+		<item name="wcf.bbcode.code.html.title"><![CDATA[HTML Source Code]]></item>
+		<item name="wcf.bbcode.code.java.title"><![CDATA[Java Source Code]]></item>
+		<item name="wcf.bbcode.code.js.title"><![CDATA[JavaScript Source Code]]></item>
+		<item name="wcf.bbcode.code.perl.title"><![CDATA[Perl Source Code]]></item>
+		<item name="wcf.bbcode.code.php.title"><![CDATA[PHP Source Code]]></item>
+		<item name="wcf.bbcode.code.plain.title"><![CDATA[Source Code]]></item>
+		<item name="wcf.bbcode.code.sql.title"><![CDATA[SQL-Query]]></item>
+		<item name="wcf.bbcode.code.tex.title"><![CDATA[TeX Source Code]]></item>
+		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty-Template]]></item>
+		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML Source Code]]></item>
+		<item name="wcf.bbcode.quote.title"><![CDATA[{@$quoteAuthor} wrote:]]></item>
+		<item name="wcf.bbcode.quote.text"><![CDATA[Quote{if $cite} from {@$cite}{/if}: “{@$content}”]]></item>
+		<item name="wcf.bbcode.spoiler.show"><![CDATA[Show Spoiler]]></item>
+		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Hidden Content)]]></item>
 	</category>
 	
 	<category name="wcf.category">
@@ -822,12 +1315,44 @@
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Unmark All]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Assign to User Group]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[TODO: Sperren ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[Ban ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} user{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[Export Email addresses]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[Send Email]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{#$count} User{if $count != 1}s{/if} marked]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Merge]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Approve]]></item>
+	</category>
+	
+	<category name="wcf.comment">
+		<item name="wcf.comment.add"><![CDATA[Write a comment …]]></item>
+		<item name="wcf.comment.delete.confirmMessage"><![CDATA[Do you really want to delete this comment?]]></item>
+		<item name="wcf.comment.description"><![CDATA[Press Enter to send or Escape to cancel.]]></item>
+		<item name="wcf.comment.more"><![CDATA[More Comments]]></item>
+		<item name="wcf.comment.response.add"><![CDATA[Reply …]]></item>
+		<item name="wcf.comment.response.more"><![CDATA[More Replies]]></item>
+		<item name="wcf.comment.button.response.add"><![CDATA[Reply]]></item>
+	</category>
+	
+	<category name="wcf.dashboard">
+		<item name="wcf.dashboard.box.availableBoxes"><![CDATA[Disabled Boxes]]></item>
+		<item name="wcf.dashboard.box.enabledBoxes"><![CDATA[Active Boxes]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.recentActivitySidebar"><![CDATA[Recent Activity]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.statsSidebar"><![CDATA[Statistics]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.newestMembers"><![CDATA[Newest Members]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.mostActiveMembers"><![CDATA[Most Active Members]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.registerButton"><![CDATA[Register Button]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.signedInAs"><![CDATA[Signed In As]]></item>
+		<item name="wcf.dashboard.boxType.content"><![CDATA[Content Area]]></item>
+		<item name="wcf.dashboard.boxType.sidebar"><![CDATA[Sidebar]]></item>
+		<item name="wcf.dashboard.objectType"><![CDATA[Page]]></item>
+		<item name="wcf.dashboard.objectType.com.woltlab.wcf.user.DashboardPage"><![CDATA[Dashboard]]></item>
+		<item name="wcf.dashboard.objectType.com.woltlab.wcf.user.MembersListPage"><![CDATA[Members List]]></item>
+		<item name="wcf.dashboard.box.mostActiveMembers.points"><![CDATA[{#$activeMember->activityPoints} Point{if $activeMember->activityPoints != 1}s{/if}]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.recentActivity"><![CDATA[Recent Activity]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.like.mostLikedMembers"><![CDATA[Most Liked Members]]></item>
+		<item name="wcf.dashboard.box.mostLikedMembers.likes"><![CDATA[{#$likedMember->likesReceived} Like{if $likedMember->likesReceived != 1}s{/if}]]></item>
 	</category>
 	
 	<category name="wcf.date">
@@ -853,9 +1378,9 @@
 		
 		<!-- variables for dynamic javascript datetime -->
 		<item name="wcf.date.relative.now"><![CDATA[A moment ago]]></item>
-		<item name="wcf.date.relative.minutes"><![CDATA[(($minutes > 1) ? $minutes + ' minutes' : 'A minute') + ' ago']]></item>
-		<item name="wcf.date.relative.hours"><![CDATA[(($hours > 1) ? $hours + ' hours' : 'An hour' ) + ' ago']]></item>
-		<item name="wcf.date.relative.pastDays"><![CDATA[(($days > 1) ? '%day%' : 'Yesterday' ) + ', %time%']]></item>
+		<item name="wcf.date.relative.minutes"><![CDATA[{literal}{if $minutes > 1}{#$minutes} minutes{else}A minute{/if} ago{/literal}]]></item>
+		<item name="wcf.date.relative.hours"><![CDATA[{literal}{if $hours > 1}{#$hours} hours{else}An hour{/if} ago{/literal}]]></item>
+		<item name="wcf.date.relative.pastDays"><![CDATA[{literal}{if $days > 1}{$day}{else}Yesterday{/if}, {$time}{/literal}]]></item>
 		
 		<!-- variables for localized date formats -->
 		<item name="wcf.date.hour"><![CDATA[Hour]]></item>
@@ -999,6 +1524,9 @@
 		<item name="wcf.date.timezone.pacific.fiji"><![CDATA[(UTC+12:00) Fiji]]></item>
 		<item name="wcf.date.timezone.asia.kamchatka"><![CDATA[(UTC+12:00) Kamchatka]]></item>
 		<item name="wcf.date.timezone.pacific.tongatapu"><![CDATA[(UTC+13:00) Nuku'alofa]]></item>
+		
+		<item name="wcf.date.period.start"><![CDATA[from]]></item>
+		<item name="wcf.date.period.end"><![CDATA[to]]></item>
 	</category>
 	
 	<category name="wcf.global">
@@ -1058,6 +1586,7 @@
 		<item name="wcf.global.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
 		<item name="wcf.global.title"><![CDATA[Title]]></item>
+		<item name="wcf.global.toLandingPage"><![CDATA[To Front Page]]></item>
 		<item name="wcf.global.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.global.multiSelect"><![CDATA[Multiple items can be selected by holding the “Ctrl/Shift” key (Windows) or “Command” (Mac OS) key and clicking on the desired items.]]></item>
 		<item name="wcf.global.page.jumpTo"><![CDATA[Go to Page]]></item>
@@ -1079,13 +1608,187 @@
 		<item name="wcf.imageViewer.next"><![CDATA[Next Image]]></item>
 		<item name="wcf.imageViewer.previous"><![CDATA[Previous Image]]></item>
 	</category>
-		
+	
+	<category name="wcf.label">
+		<item name="wcf.label.all"><![CDATA[All]]></item>
+		<item name="wcf.label.label"><![CDATA[Label]]></item>
+		<item name="wcf.label.labels"><![CDATA[Labels]]></item>
+		<item name="wcf.label.none"><![CDATA[No Selection]]></item>
+		<item name="wcf.label.withoutSelection"><![CDATA[Without Label]]></item>
+	</category>
+	
+	<category name="wcf.like">
+		<item name="wcf.like.cumulativeLikes"><![CDATA[Likes]]></item>
+		<item name="wcf.like.tooltip"><![CDATA[{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}]]></item>
+		<item name="wcf.like.jsTooltip"><![CDATA[{literal}{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}{/literal}]]></item>
+		<item name="wcf.like.button.like"><![CDATA[Like]]></item>
+		<item name="wcf.like.button.dislike"><![CDATA[Dislike]]></item>
+		<item name="wcf.like.likesReceived"><![CDATA[Likes Received]]></item>
+		<item name="wcf.like.summary"><![CDATA[$userArray.join(", ") + ($others > 0 ? (" and " + $others + (" other" + ($others > 1 ? "s" : ""))) : "") + " like" + ($userArray.length == 1 ? "s" : "") +  " this."]]></item>
+		<item name="wcf.like.summary"><![CDATA[{literal}{if $others == 0}{@$users.slice(0, -1).join(", ")}{if $users.length > 1} and {/if}{@$users.slice(-1)[0]}{else}{@$users.join(", ")} and {if $others == 1}one{else}{#$others}{/if} other{if $others > 1}s{/if}{/if} like{if $users.length == 1}s{/if} this.{/literal}]]></item>
+		<item name="wcf.like.details"><![CDATA[Details]]></item>
+		<item name="wcf.like.details.like"><![CDATA[Likes]]></item>
+		<item name="wcf.like.details.dislike"><![CDATA[Dislikes]]></item>
+		<item name="wcf.like.objectType.com.woltlab.wcf.comment"><![CDATA[Comment]]></item>
+		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
+	</category>
+	
+	<category name="wcf.message">
+		<item name="wcf.message.bbcode.code.copy"><![CDATA[Copy Contents]]></item>
+		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Insert All Quotes]]></item>
+		<item name="wcf.message.quote.insertQuote"><![CDATA[Insert Quote]]></item>
+		<item name="wcf.message.quote.insertSelectedQuotes"><![CDATA[Insert Marked Quotes]]></item>
+		<item name="wcf.message.quote.manageQuotes"><![CDATA[Manage Quotes]]></item>
+		<item name="wcf.message.quote.quoteSelected"><![CDATA[Quote Selection]]></item>
+		<item name="wcf.message.quote.showQuotes"><![CDATA[Quotes (#count#)]]></item>
+		<item name="wcf.message.quote.quoteMessage"><![CDATA[Quote]]></item>
+		<item name="wcf.message.quote.removeAllQuotes"><![CDATA[Remove All Quotes]]></item>
+		<item name="wcf.message.quote.removeSelectedQuotes"><![CDATA[Removed Marked Quotes]]></item>
+		<item name="wcf.message.settings"><![CDATA[Settings]]></item>
+		<item name="wcf.message.settings.enableBBCodes"><![CDATA[Enable BBCodes]]></item>
+		<item name="wcf.message.settings.enableBBCodes.description"><![CDATA[Allows BBCode usage once enabled.]]></item>
+		<item name="wcf.message.settings.enableHtml"><![CDATA[Enable HTML]]></item>
+		<item name="wcf.message.settings.enableHtml.description"><![CDATA[Allows HTML usage once enabled.]]></item>
+		<item name="wcf.message.settings.enableSmilies"><![CDATA[Enable smilies]]></item>
+		<item name="wcf.message.settings.enableSmilies.description"><![CDATA[Smilies will be displayed as a smiley-image.]]></item>
+		<item name="wcf.message.settings.preParse"><![CDATA[Detect links]]></item>
+		<item name="wcf.message.settings.preParse.description"><![CDATA[Links to webpages are automatically detected.]]></item>
+		<item name="wcf.message.settings.showSignature"><![CDATA[Show signature]]></item>
+		<item name="wcf.message.settings.showSignature.description"><![CDATA[Appends signature to this message, can be edited in your profile.]]></item>
+		<item name="wcf.message.share"><![CDATA[Share]]></item>
+		<item name="wcf.message.share.facebook"><![CDATA[Facebook]]></item>
+		<item name="wcf.message.share.google"><![CDATA[Google Plus]]></item>
+		<item name="wcf.message.share.permalink"><![CDATA[Permalink]]></item>
+		<item name="wcf.message.share.permalink.bbcode"><![CDATA[BBCode]]></item>
+		<item name="wcf.message.share.permalink.html"><![CDATA[HTML]]></item>
+		<item name="wcf.message.share.reddit"><![CDATA[Reddit]]></item>
+		<item name="wcf.message.share.twitter"><![CDATA[Twitter]]></item>
+		<item name="wcf.message.smilies"><![CDATA[Smilies]]></item>
+		<item name="wcf.message.button.extendedReply"><![CDATA[More Options]]></item>
+		<item name="wcf.message.button.extendedEdit"><![CDATA[More Options]]></item>
+		<item name="wcf.message.new"><![CDATA[New]]></item>
+		<item name="wcf.message.error.censoredWordsFound"><![CDATA[Message contains censored words: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}]]></item>
+		<item name="wcf.message.error.disallowedBBCodes"><![CDATA[Message contains disallowed BBCodes: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
+		<item name="wcf.message.error.editorAlreadyInUse"><![CDATA[Editor is already in use, please finish editing before continuing.]]></item>
+		<item name="wcf.message.error.tooLong"><![CDATA[Message is too long, must be below {#$maxTextLength} characters.]]></item>
+	</category>
+	
+	<category name="wcf.moderation">
+		<item name="wcf.moderation.assignedUser"><![CDATA[Assigned User]]></item>
+		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Nobody]]></item>
+		<item name="wcf.moderation.comment"><![CDATA[Comment (internal)]]></item>
+		<item name="wcf.moderation.filterByType"><![CDATA[Type]]></item>
+		<item name="wcf.moderation.filterByUser"><![CDATA[Assigned User]]></item>
+		<item name="wcf.moderation.filterByUser.allEntries"><![CDATA[All Items]]></item>
+		<item name="wcf.moderation.filterByUser.myself"><![CDATA[Myself ({$__wcf->getUser()->username})]]></item>
+		<item name="wcf.moderation.filterByUser.nobody"><![CDATA[Nobody]]></item>
+		<item name="wcf.moderation.outstandingItems"><![CDATA[Outstanding Items]]></item>
+		<item name="wcf.moderation.doneItems"><![CDATA[Done Items]]></item>
+		<item name="wcf.moderation.lastChangeTime"><![CDATA[Last Change]]></item>
+		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
+		<item name="wcf.moderation.noItems"><![CDATA[No items matched your criteria.]]></item>
+		<item name="wcf.moderation.noMoreItems"><![CDATA[No more items]]></item>
+		<item name="wcf.moderation.status"><![CDATA[Status]]></item>
+		<item name="wcf.moderation.status.all"><![CDATA[All Items]]></item>
+		<item name="wcf.moderation.status.done"><![CDATA[Done]]></item>
+		<item name="wcf.moderation.time"><![CDATA[Time]]></item>
+		<item name="wcf.moderation.title"><![CDATA[Title]]></item>
+		<item name="wcf.moderation.type"><![CDATA[Type]]></item>
+		<item name="wcf.moderation.type.all"><![CDATA[All Items]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation"><![CDATA[Approval]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report"><![CDATA[Report]]></item>
+		<item name="wcf.moderation.showAll"><![CDATA[Show All Items]]></item>
+	</category>
+	
+	<category name="wcf.moderation.activation">
+		<item name="wcf.moderation.activation"><![CDATA[Approval]]></item>
+		<item name="wcf.moderation.activation.content"><![CDATA[Content Awaiting Approval]]></item>
+		<item name="wcf.moderation.activation.enableContent"><![CDATA[Approve]]></item>
+		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[Do you really want to approve this content?]]></item>
+		<item name="wcf.moderation.activation.removeContent"><![CDATA[Delete Content]]></item>
+		<item name="wcf.moderation.activation.removeContent.confirmMessage"><![CDATA[Do you really want to delete this content?]]></item>
+	</category>
+	
+	<category name="wcf.moderation.report">
+		<item name="wcf.moderation.report"><![CDATA[Edit Report]]></item>
+		<item name="wcf.moderation.report.alreadyReported"><![CDATA[This content has already been reported.]]></item>
+		<item name="wcf.moderation.report.details"><![CDATA[Report]]></item>
+		<item name="wcf.moderation.report.reason"><![CDATA[Reason]]></item>
+		<item name="wcf.moderation.report.reason.description"><![CDATA[This function is reserved for: Spam, Advertisement and other questionable (rassism, glorification of violence, offending or sexist) content]]></item>
+		<item name="wcf.moderation.report.removeContent"><![CDATA[Delete Reported Content]]></item>
+		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Do you really want to delete the reported content?]]></item>
+		<item name="wcf.moderation.report.removeReport"><![CDATA[Delete Report]]></item>
+		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[Do you really want to delete this report?]]></item>
+		<item name="wcf.moderation.report.reportContent"><![CDATA[Report Content]]></item>
+		<item name="wcf.moderation.report.reportedBy"><![CDATA[Reported By]]></item>
+		<item name="wcf.moderation.report.reportedContent"><![CDATA[Reported Content]]></item>
+		<item name="wcf.moderation.report.success"><![CDATA[Content has been reported.]]></item>
+	</category>
+	
 	<category name="wcf.page">
 		<item name="wcf.page.pageNo"><![CDATA[Page {#$pageNo}]]></item>
 		<item name="wcf.page.offline"><![CDATA[Page is currently in maintenance mode{if OFFLINE_MESSAGE != ''}:{else}.{/if}]]></item>
 		<item name="wcf.page.sitemap"><![CDATA[Sitemap]]></item>
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Page {#$pageNo} of {#$pages}]]></item>
+		<item name="wcf.page.sitemap.userAccount"><![CDATA[User Account]]></item>
+	</category>
+	
+	<category name="wcf.poll">
+		<item name="wcf.poll.button.addOption"><![CDATA[Add Another Option]]></item>
+		<item name="wcf.poll.button.removeOption"><![CDATA[Remove Option]]></item>
+		<item name="wcf.poll.button.showParticipants"><![CDATA[List Participants]]></item>
+		<item name="wcf.poll.button.showResult"><![CDATA[Show Result]]></item>
+		<item name="wcf.poll.button.showVote"><![CDATA[Vote]]></item>
+		<item name="wcf.poll.button.vote"><![CDATA[Vote]]></item>
+		<item name="wcf.poll.endTime"><![CDATA[Poll Ends (optional)]]></item>
+		<item name="wcf.poll.isChangeable"><![CDATA[Votes can be changed]]></item>
+		<item name="wcf.poll.isPublic"><![CDATA[Publicize participants]]></item>
+		<item name="wcf.poll.management"><![CDATA[Poll]]></item>
+		<item name="wcf.poll.maxVotes"><![CDATA[Number of Allowed Votes]]></item>
+		<item name="wcf.poll.maxVotes.error.notValid"><![CDATA[Maximum number of allowed votes exceeds number of available options.]]></item>
+		<item name="wcf.poll.multipleVotes"><![CDATA[You may select up to {#$poll->maxVotes} options.]]></item>
+		<item name="wcf.poll.options"><![CDATA[Options]]></item>
+		<item name="wcf.poll.options.description"><![CDATA[You can sort the options with drag and drop to change their order. You can create up to {@POLL_MAX_OPTIONS} options.]]></item>
+		<item name="wcf.poll.question"><![CDATA[Question]]></item>
+		<item name="wcf.poll.restrictedResult"><![CDATA[Result is only visible for participants]]></item>
+		<item name="wcf.poll.resultsRequireVote"><![CDATA[Restrict results for participants only]]></item>
+		<item name="wcf.poll.resultsRequireVote.description"><![CDATA[Results are invisible unless the poll ended or the user voted.]]></item>
+		<item name="wcf.poll.sortByVotes"><![CDATA[Sort result by votes]]></item>
+		<item name="wcf.poll.totalVotes"><![CDATA[A total of {#$poll->votes} vote{if $poll->votes != 1}s{/if}]]></item>
+		<item name="wcf.poll.noVotes"><![CDATA[No votes yet]]></item>
+	</category>
+	
+	<category name="wcf.recaptcha">
+		<item name="wcf.recaptcha.title"><![CDATA[Verification (“reCAPTCHA”)]]></item>
+		<item name="wcf.recaptcha.description"><![CDATA[Please enter the letters that are shown in the picture below (letters are not case-sensitive). If you cannot identify the captcha even after reloading it, please contact the administrator.]]></item>
+		<item name="wcf.recaptcha.reload"><![CDATA[Reload]]></item>
+		<item name="wcf.recaptcha.audio"><![CDATA[Audio Version]]></item>
+		<item name="wcf.recaptcha.image"><![CDATA[Image Version]]></item>
+		<item name="wcf.recaptcha.help"><![CDATA[Help]]></item>
+		<item name="wcf.recaptcha.error.recaptchaString.false"><![CDATA[You have entered the security code incorrectly. Please try again.]]></item>
+	</category>
+	
+	<category name="wcf.search">
+		<item name="wcf.search.author"><![CDATA[Search By Author]]></item>
+		<item name="wcf.search.extended"><![CDATA[More Options]]></item>
+		<item name="wcf.search.general"><![CDATA[General Search Terms]]></item>
+		<item name="wcf.search.matchExactly"><![CDATA[Exact match]]></item>
+		<item name="wcf.search.period"><![CDATA[Timeframe]]></item>
+		<item name="wcf.search.query"><![CDATA[Search for Term]]></item>
+		<item name="wcf.search.query.description"><![CDATA[Type in one or more search terms, each must be at least 4 characters.]]></item>
+		<item name="wcf.search.results"><![CDATA[Search Results]]></item>
+		<item name="wcf.search.results.change"><![CDATA[Change Search]]></item>
+		<item name="wcf.search.results.description"><![CDATA[Search results {#$startIndex}-{#$endIndex} of {#$items}{if $query} for “<strong>{$query}</strong>”{/if}.{if $items == 1000} There are more results available, please enhance your search parameters.{/if}{if $highlight}<br />These terms were highlighted: <span class="highlight">{$highlight}</span>{/if}]]></item>
+		<item name="wcf.search.sortBy"><![CDATA[Sort By]]></item>
+		<item name="wcf.search.sortBy.relevance"><![CDATA[Relevance]]></item>
+		<item name="wcf.search.sortBy.time"><![CDATA[Time]]></item>
+		<item name="wcf.search.sortBy.username"><![CDATA[Author]]></item>
+		<item name="wcf.search.subjectOnly"><![CDATA[Search subject only]]></item>
+		<item name="wcf.search.title"><![CDATA[Search]]></item>
+		<item name="wcf.search.type"><![CDATA[Search in]]></item>
+		<item name="wcf.search.error.noMatches"><![CDATA[No items matched your search{if !$query|empty} terms: “{$query}”{/if}.]]></item>
+		<item name="wcf.search.error.user.noMatches"><![CDATA[There were no items matching this author.]]></item>
 	</category>
 	
 	<category name="wcf.style">
@@ -1094,6 +1797,14 @@
 		<item name="wcf.style.colorPicker.new"><![CDATA[new]]></item>
 		<item name="wcf.style.colorPicker.current"><![CDATA[current]]></item>
 		<item name="wcf.style.currentStyle"><![CDATA[Current Style]]></item>
+	</category>
+	
+	<category name="wcf.tagging">
+		<item name="wcf.tagging.tags"><![CDATA[Tags]]></item>
+		<item name="wcf.tagging.tags.add"><![CDATA[Tags]]></item>
+		<item name="wcf.tagging.tags.description"><![CDATA[Add multiple tags by separating them with a comma.]]></item>
+		<item name="wcf.tagging.objectTypes"><![CDATA[Content]]></item>
+		<item name="wcf.tagging.taggedObjects.noResults"><![CDATA[No items matched this tag.]]></item>
 	</category>
 	
 	<category name="wcf.user">
@@ -1129,8 +1840,484 @@
 		<item name="wcf.user.option.error.tooShort"><![CDATA[Entered text is too short.]]></item>
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[Entered text is invalid.]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[Your user account has been banned{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
+		<item name="wcf.user.access.everyone"><![CDATA[Everyone]]></item>
+		<item name="wcf.user.access.following"><![CDATA[Users I’m following]]></item>
+		<item name="wcf.user.access.nobody"><![CDATA[Nobody]]></item>
+		<item name="wcf.user.access.registered"><![CDATA[Registered Users]]></item>
+		<item name="wcf.user.button.login"><![CDATA[Login]]></item>
+		<item name="wcf.user.button.register"><![CDATA[Register]]></item>
+		<item name="wcf.user.button.registerNow"><![CDATA[Register Now]]></item>
+		<item name="wcf.user.error.username.3rdParty"><![CDATA[Account is connected with a 3rd party website, password cannot be requested.]]></item>
+		<item name="wcf.user.login.action"><![CDATA[Are you already registered?]]></item>
+		<item name="wcf.user.login.action.login"><![CDATA[Yes, my password is:]]></item>
+		<item name="wcf.user.login.action.register"><![CDATA[No, register now.]]></item>
+		<item name="wcf.user.login.redirect"><![CDATA[You have been logged in.]]></item>
+		<item name="wcf.user.loginOrRegister"><![CDATA[Login{if !REGISTER_DISABLED} or register{/if}]]></item>
+		<item name="wcf.user.logout.redirect"><![CDATA[You have been logged off.]]></item>
+		<item name="wcf.user.useCookies"><![CDATA[Remain logged in]]></item>
+		<item name="wcf.user.usernameOrEmail"><![CDATA[Username or Email Address]]></item>
+		<item name="wcf.user.gender.male"><![CDATA[Male]]></item>
+		<item name="wcf.user.gender.female"><![CDATA[Female]]></item>
+		<item name="wcf.user.members"><![CDATA[Members]]></item>
+		<item name="wcf.user.members.noMembers"><![CDATA[No members matched your criteria.]]></item>
+		<item name="wcf.user.members.sort"><![CDATA[Sort Field]]></item>
+		<item name="wcf.user.members.sort.letters"><![CDATA[First Letter]]></item>
+		<item name="wcf.user.members.sort.letters.all"><![CDATA[All]]></item>
+		<item name="wcf.user.membersList.registrationDate"><![CDATA[Member since {@$user->registrationDate|date}]]></item>
+		<item name="wcf.user.membersList.location"><![CDATA[from {$user->location}]]></item>
+		<item name="wcf.user.myProfile"><![CDATA[My Profile]]></item>
+		<item name="wcf.user.editProfile"><![CDATA[Edit Profile]]></item>
+		<item name="wcf.user.profileHits"><![CDATA[Profile Hits]]></item>
+		<item name="wcf.user.profileHits.hitsPerDay"><![CDATA[{#$user->profileHits/$user->getProfileAge()} hits per day]]></item>
+		<item name="wcf.user.online"><![CDATA[Online]]></item>
+		<item name="wcf.user.online.title"><![CDATA[“{$username}” is online]]></item>
+		<item name="wcf.user.button.follow"><![CDATA[Follow]]></item>
+		<item name="wcf.user.button.unfollow"><![CDATA[Unfollow]]></item>
+		<item name="wcf.user.button.ignore"><![CDATA[Block]]></item>
+		<item name="wcf.user.button.unignore"><![CDATA[Unblock]]></item>
+		<item name="wcf.user.style"><![CDATA[Styles]]></item>
+		<item name="wcf.user.style.description"><![CDATA[Forces a specific style instead of the default one.]]></item>
+		<item name="wcf.user.username.description"><![CDATA[Username must be {REGISTER_USERNAME_MIN_LENGTH} up to {REGISTER_USERNAME_MAX_LENGTH} characters long.]]></item>
+		<item name="wcf.user.password.description"><![CDATA[{if REGISTER_ENABLE_PASSWORD_SECURITY_CHECK && REGISTER_PASSWORD_MIN_LENGTH}Password must be at least {REGISTER_PASSWORD_MIN_LENGTH} characters.{else}A secure password should be at least 8 characters long.{/if}]]></item>
+		<item name="wcf.user.lostPassword"><![CDATA[Lost Password]]></item>
+		<item name="wcf.user.lostPassword.description"><![CDATA[You must provide your username or email address to request a new password. Contact the site’s administrator if you need assistance.]]></item>
+		<item name="wcf.user.lostPassword.email.error.notFound"><![CDATA[“{$email}” is not used by any account.]]></item>
+		<item name="wcf.user.lostPassword.error.tooManyRequests"><![CDATA[Password has been requested at least once in the past 24 hours. For security reasons you must wait at least {#$hours} hour{if $hours != 1}s{/if} before requesting it again.]]></item>
+		<item name="wcf.user.lostPassword.mail.subject"><![CDATA[Lost Password for Website: {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.lostPassword.mail"><![CDATA[Dear {@$username},
+
+if you have lost your password you can request a new one using the link below.
+Request a new password: {link controller='NewPassword' encode=false}u={@$userID}&k={@$key}{/link}  
+
+If you have not lost your password, you can safely ignore this email.]]></item>
+		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[You should receive an email shortly.]]></item>
+		<item name="wcf.user.newPassword"><![CDATA[Request New Password]]></item>
+		<item name="wcf.user.lostPasswordKey"><![CDATA[Security Key]]></item>
+		<item name="wcf.user.lostPasswordKey.error.invalid"><![CDATA[Security Key is invalid.]]></item>
+		<item name="wcf.user.userID.error.invalid"><![CDATA[User ID is invalid.]]></item>
+		<item name="wcf.user.newPassword.mail"><![CDATA[Dear {@$username},
+
+your new password for "{@PAGE_TITLE|language}" is:
+{@$newPassword} 
+
+You can change your password any time at:
+{link controller='AccountManagement' encode=false}{/link}]]></item>
+		<item name="wcf.user.newPassword.mail.subject"><![CDATA[New Password for Website: {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.newPassword.success"><![CDATA[You should receive an email with your password shortly.]]></item>
+		<item name="wcf.user.accountManagement"><![CDATA[Account Management]]></item>
+		<item name="wcf.user.accountManagement.warning"><![CDATA[Heads up! You’re editing your own user account, careless changes might lock you out!]]></item>
+		<item name="wcf.user.accountManagement.password.description"><![CDATA[Please confirm changes with your password!]]></item>
+		<item name="wcf.user.newPassword"><![CDATA[New Password]]></item>
+		<item name="wcf.user.changeUsername"><![CDATA[Change Username]]></item>
+		<item name="wcf.user.changeUsername.description"><![CDATA[You may change your username every {$renamePeriod} days. Changes between upper or lower case are always allowed.
+		{if $__wcf->getUser()->lastUsernameChange}Last change was {@$__wcf->getUser()->lastUsernameChange|date}.{/if}]]></item>
+		<item name="wcf.user.changePassword"><![CDATA[Change Password]]></item>
+		<item name="wcf.user.changeEmail"><![CDATA[Change Email Address]]></item>
+		<item name="wcf.user.newEmail"><![CDATA[New Email Address]]></item>
+		<item name="wcf.user.newUsername"><![CDATA[New Username]]></item>
+		<item name="wcf.user.quit"><![CDATA[Quit User Account]]></item>
+		<item name="wcf.user.quit.sure"><![CDATA[Do you really want to delete your user account and all associated, private data?]]></item>
+		<item name="wcf.user.quit.cancel"><![CDATA[Your user account will be delete on {$quitStarted+7*86400|date}. Please enable this option if you wish to abort deletion.]]></item>
+		<item name="wcf.user.quit.description"><![CDATA[Note: Post, Attachments and similar content will remain even after your account was deleted.]]></item>
+		<item name="wcf.user.quit.success"><![CDATA[Your user account will be deleted on {TIME_NOW+7*86400|date}. During this period you can abort deletion on this page.]]></item>
+		<item name="wcf.user.quit.cancel.success"><![CDATA[Account deletion has been aborted.]]></item>
+		<item name="wcf.user.emailActivation"><![CDATA[Verify New Email Address]]></item>
+		<item name="wcf.user.password.error.notSecure"><![CDATA[Due to security reasons every password must be at least {REGISTER_PASSWORD_MIN_LENGTH} characters long{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{*
+		*}and contain {*
+		*}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}lower-case letters{/if}{*
+		*}{if REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} and{/if} {/if}upper-case letters{/if}{*
+		*}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} and{/if} {/if}digits{/if}{*
+		*}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT} and {/if}special chars{/if}{/if}.]]></item>
+		<item name="wcf.user.changeUsername.success"><![CDATA[Username was changed.]]></item>
+		<item name="wcf.user.changeEmail.success"><![CDATA[Email Address was changed.]]></item>
+		<item name="wcf.user.changeEmail.needReactivation"><![CDATA[Your new email address must be verified first. You should’ve received an email sent to your new email address containing an activation link. Open the link to verify your new email address.]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail"><![CDATA[Dear {@$username},
+
+you’ve changed your email address on: {@PAGE_TITLE|language}. It is required to open the link below in order to verify this email address.
+
+{link controller='EmailActivation' encode=false}u={@$userID}&a={@$activationCode}{/link} 
+
+**** Unable to click or open the link above? ****
+Please open the link below in your browser:
+{link controller='EmailActivation' encode=false}{/link}
+
+Once prompted please provide the following details:
+
+You User ID: 		{@$userID} 
+Activation Code: 	{@$activationCode} 
+
+If you cannot activate your email address or have any troubles following the instructions, please contact the administrator: {@MAIL_ADMIN_ADDRESS}]]></item>
+		<item name="wcf.user.changeEmail.needReactivation.mail.subject"><![CDATA[Email Activation for Website: {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.changePassword.success"><![CDATA[Password has been changed.]]></item>
+		<item name="wcf.user.activationCode"><![CDATA[9-digit Activation Code]]></item>
+		<item name="wcf.user.newActivationCode"><![CDATA[Request New Activation Code]]></item>
+		<item name="wcf.user.registerActivation"><![CDATA[Complete Registration]]></item>
+		<item name="wcf.user.registerActivation.error.userAlreadyEnabled"><![CDATA[User is already activated.]]></item>
+		<item name="wcf.user.registerActivation.success"><![CDATA[User account has been activated.]]></item>
+		<item name="wcf.user.activationCode.error.notValid"><![CDATA[You have provided an invalid activation code. Click the button below if you wish to request a new activation code.]]></item>
+		<item name="wcf.user.registerNewActivationCode.email.description"><![CDATA[You may provide a different email address or leave it empty to send the code to the same email address again.]]></item>
+		<item name="wcf.user.newActivationCode.success"><![CDATA[Activiation code has been sent to “{$email}”.]]></item>
+		<item name="wcf.user.emailActivation.error.emailAlreadyEnabled"><![CDATA[Email address is already activated.]]></item>
+		<item name="wcf.user.emailActivation.success"><![CDATA[Email address has been activated.]]></item>
+		<item name="wcf.user.registerActivation.info"><![CDATA[An email containing the 9-digit activation code was sent to “{$__wcf->user->email}”.]]></item>
+		<item name="wcf.user.username.error.alreadyRenamed"><![CDATA[Username was already changed within the last {#$__wcf->getSession()->getPermission('user.profile.renamePeriod')} day.]]></item>
+		<item name="wcf.user.guest"><![CDATA[Guest]]></item>
+		<item name="wcf.user.signature"><![CDATA[Signature]]></item>
+		<item name="wcf.user.signature.edit"><![CDATA[Edit Signature]]></item>
+		<item name="wcf.user.signature.current"><![CDATA[Current Signature]]></item>
+		<item name="wcf.user.signature.error.disabled"><![CDATA[Your signature has been disabled{if $__wcf->user->disableSignatureReason}: {$__wcf->user->disableSignatureReason}{else}.{/if}]]></item>
+		<item name="wcf.user.activityPoint"><![CDATA[Points]]></item>
+		<item name="wcf.user.activityPoint.showDetails"><![CDATA[Show Details]]></item>
+		<item name="wcf.user.activityPoint.objects"><![CDATA[Count]]></item>
+		<item name="wcf.user.activityPoint.objectType"><![CDATA[Type]]></item>
+		<item name="wcf.user.activityPoint.pointsPerObject"><![CDATA[Points]]></item>
+		<item name="wcf.user.activityPoint.sum"><![CDATA[Sum]]></item>
+		<item name="wcf.user.stats"><![CDATA[Statistics]]></item>
+		<item name="wcf.user.usercp"><![CDATA[User Account]]></item>
+		<item name="wcf.user.button.mail"><![CDATA[Send Email]]></item>
+		<item name="wcf.user.ignoredUsers"><![CDATA[You’re blocking the following users]]></item>
+		<item name="wcf.user.ignoredUsers.noUsers"><![CDATA[You’re not blocking any users.]]></item>
+		<item name="wcf.user.following"><![CDATA[You’re following these users]]></item>
+		<item name="wcf.user.following.noUsers"><![CDATA[You’re not following anyone.]]></item>
+		<item name="wcf.user.userTitle"><![CDATA[Custom User Title]]></item>
+		<item name="wcf.user.userTitle.description"><![CDATA[You may enter a custom user title.]]></item>
+		<item name="wcf.user.userTitle.error.tooLong"><![CDATA[Title exceeded the maximum length of {#USER_TITLE_MAX_LENGTH} characters.]]></item>
+		<item name="wcf.user.userTitle.error.forbidden"><![CDATA[User Title is invalid.]]></item>
+		<item name="wcf.user.team"><![CDATA[Staff Members]]></item>
+		<item name="wcf.user.birthday.age"><![CDATA[Age]]></item>
+		<item name="wcf.user.birthday.age.from"><![CDATA[from]]></item>
+		<item name="wcf.user.birthday.age.to"><![CDATA[to]]></item>
+		<item name="wcf.user.search"><![CDATA[Search Members]]></item>
+		<item name="wcf.user.search.error.noMatches"><![CDATA[Your criteria did not match any member.]]></item>
+		<item name="wcf.user.dashboard"><![CDATA[Dashboard]]></item>
+		<item name="wcf.user.newestMember"><![CDATA[Newest Member]]></item>
+		<item name="wcf.user.login.3rdParty"><![CDATA[Third-Party Login]]></item>
+		<item name="wcf.user.search.results"><![CDATA[Search Results]]></item>
+		<item name="wcf.user.lastActivityTime"><![CDATA[Last Activity]]></item>
+		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Likes Received]]></item>
 	</category>
 	
-	<!-- i18n category -->
-	<category name="wcf.user.option" />
+	<category name="wcf.user.menu">
+		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>
+		<item name="wcf.user.menu.community.notification"><![CDATA[Notifications]]></item>
+		<item name="wcf.user.menu.community.following"><![CDATA[Followed Users]]></item>
+		<item name="wcf.user.menu.community.ignoredUsers"><![CDATA[Blocked Users]]></item>
+		<item name="wcf.user.menu.profile"><![CDATA[User Account]]></item>
+		<item name="wcf.user.menu.profile.accountManagement"><![CDATA[Account Management]]></item>
+		<item name="wcf.user.menu.profile.avatar"><![CDATA[Avatar]]></item>
+		<item name="wcf.user.menu.profile.signature"><![CDATA[Signature]]></item>
+		<item name="wcf.user.menu.settings"><![CDATA[Settings]]></item>
+		<item name="wcf.user.menu.settings.notification"><![CDATA[Notifications]]></item>
+	</category>
+	
+	<category name="wcf.user.register">
+		<item name="wcf.user.register"><![CDATA[Registration]]></item>
+		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Activate Your Registration for Website: {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.register.needActivation"><![CDATA[Thank you for registering, {$user->username}.<br />
+An email was sent to “{$user->email}” containing a one-time link to verify your account and ultimately completing your registration.]]></item>
+		<item name="wcf.user.register.awaitActivation"><![CDATA[Thank you for registering, {$user->username}.<br />
+Your account is awating approval from an administrator.<br />
+A notification will be sent once your account has been approved.]]></item>
+		<item name="wcf.user.register.notification.mail"><![CDATA[Dear Administrator,
+
+someone registered with your website {@PAGE_TITLE|language}: {@$user->username} 
+
+Email address used: {@$user->email} 
+
+Open the link below to access the user profile:
+{link controller='User' object=$user encode=false}{/link} ]]></item>
+		<item name="wcf.user.register.notification.mail.subject"><![CDATA[New Registration with Your Website: {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.user.register.error.disabled"><![CDATA[Registration is currently disabled.]]></item>
+		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br />
+Your registration is now completed.]]></item>
+		<item name="wcf.user.register.needActivation.mail"><![CDATA[Dear {@$user->username},
+
+thank you for registering on our website: {@PAGE_TITLE|language}. 
+Please validate your email address to complete your registration.
+
+Open the link below:
+{link controller='RegisterActivation' encode=false}{/link} 
+
+Once prompted provide the details as shown below:
+
+Your username: 		{@$user->username} 
+Activation Code: 	{@$user->activationCode} 
+
+If you cannot open the link or have troubles following the instructions, please contact the administrator: {@MAIL_ADMIN_ADDRESS} 
+
+You can safely ignore this email if you did not register with the website: {@PAGE_TITLE|language}.]]></item>
+<item name="wcf.user.register.needActivation"><![CDATA[Your user account is not activated yet. You must complete the <a href="{link controller='RegisterActivation'}{/link}">activation process</a> first.]]></item>
+<item name="wcf.user.register.disclaimer"><![CDATA[Disclaimer]]></item>
+		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Accept]]></item>
+		<item name="wcf.user.register.disclaimer.decline"><![CDATA[Decline]]></item>
+		<item name="wcf.user.register.disclaimer.text"><![CDATA[<p>The registration and use of this forum is completely free for you. Press “Accept” if you agree with the rules mentioned below. You will then be able to register.</p>
+
+<p>Even though administrators and moderators of “{@PAGE_TITLE|language}” try to delete or edit all the unwanted posts, it is impossible for them to check all the posts. All the posts express the opinion of the author, the owners of “{@PAGE_TITLE}” and WoltLab GmbH (the developers of Burning Board) cannot be held responsible for the content of those posts.</p>
+
+<p>By registering, you agree not to post messages that are vulgar, impolite, disrespectful or that express (extreme) political views or (verbal) law offences.</p>
+
+<p>Additionally, the Administrators and Moderators of this board can edit or even delete your account for any reason.</p>
+
+<p>Enjoy your stay at {@PAGE_TITLE}!</p>]]></item>
+	</category>
+	
+	<category name="wcf.user.usersOnline">
+		<item name="wcf.user.usersOnline"><![CDATA[Users Online]]></item>
+		<item name="wcf.user.usersOnline.detail"><![CDATA[
+{if $usersOnlineList->stats[members] > 0}
+	{#$usersOnlineList->stats[members]} Member{if $usersOnlineList->stats[members] != 1}s{/if}
+{/if} 
+{if $usersOnlineList->stats[invisible] > 0}
+	({#$usersOnlineList->stats[invisible]} invisible)
+{/if}
+{if $usersOnlineList->stats[guests] > 0 && $usersOnlineList->stats[members] > 0}and{/if}
+{if $usersOnlineList->stats[guests] > 0}
+	{#$usersOnlineList->stats[guests]} Guest{if $usersOnlineList->stats[guests] != 1}s{/if}
+{/if}]]></item>
+		<item name="wcf.user.usersOnline.invisible"><![CDATA[ (invisible)]]></item>
+		<item name="wcf.user.usersOnline.marking.legend"><![CDATA[Legend]]></item>
+		<item name="wcf.user.usersOnline.location.UserPage"><![CDATA[<a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">User Profile of “{$user->username}”</a>]]></item>
+		<item name="wcf.user.usersOnline.location.UsersOnlineListPage"><![CDATA[Users Online]]></item>
+		<item name="wcf.user.usersOnline.location.MembersListPage"><![CDATA[Members List]]></item>
+		<item name="wcf.user.usersOnline.location.TeamPage"><![CDATA[Staff Members]]></item>
+		<item name="wcf.user.usersOnline.location.DashboardPage"><![CDATA[Dashboard]]></item>
+		<item name="wcf.user.usersOnline.location.RegisterForm"><![CDATA[Registration]]></item>
+		<item name="wcf.user.usersOnline.location.LostPasswordForm"><![CDATA[Lost Password-Form]]></item>
+		<item name="wcf.user.usersOnline.location.LoginForm"><![CDATA[Login]]></item>
+		<item name="wcf.user.usersOnline.location.AccountManagementForm"><![CDATA[Account Management]]></item>
+		<item name="wcf.user.usersOnline.location.AvatarEditForm"><![CDATA[Avatar Management]]></item>
+		<item name="wcf.user.usersOnline.location.SettingsForm"><![CDATA[Settings]]></item>
+		<item name="wcf.user.usersOnline.location.SignatureEditForm"><![CDATA[Signature Management]]></item>
+		<item name="wcf.user.usersOnline.guests"><![CDATA[Guests]]></item>
+		<item name="wcf.user.usersOnline.location"><![CDATA[Location]]></item>
+		<item name="wcf.user.usersOnline.ipAddress"><![CDATA[IP Address]]></item>
+		<item name="wcf.user.usersOnline.userAgent"><![CDATA[Browser]]></item>
+		<item name="wcf.user.usersOnline.lastActivity"><![CDATA[Last Activity]]></item>
+		<item name="wcf.user.usersOnline.location.unknown"><![CDATA[Unknown location]]></item>
+		<item name="wcf.user.usersOnline.robots"><![CDATA[Search Engine Robots]]></item>
+	</category>
+	
+	<category name="wcf.user.recentActivity">
+		<item name="wcf.user.recentActivity"><![CDATA[Recent Activities]]></item>
+		<item name="wcf.user.recentActivity.filteredByFollowedUsers"><![CDATA[Of users you follow]]></item>
+		<item name="wcf.user.recentActivity.more"><![CDATA[Show More]]></item>
+		<item name="wcf.user.recentActivity.noMoreEntries"><![CDATA[No more activities]]></item>
+		<item name="wcf.user.recentActivity.noEntries"><![CDATA[There are no activities.]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.recentActivityEvent.follow"><![CDATA[Follow]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.recentActivityEvent"><![CDATA[Wall Comment]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.response.recentActivityEvent"><![CDATA[Wall Reply]]></item>
+	</category>
+	
+	<category name="wcf.user.3rdparty">
+		<item name="wcf.user.3rdparty"><![CDATA[Third-Party Login]]></item>
+		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
+		<item name="wcf.user.3rdparty.github.login"><![CDATA[GitHub]]></item>
+		<item name="wcf.user.3rdparty.github.login.error.access_denied"><![CDATA[Access to your GitHub account has been rejected.]]></item>
+		<item name="wcf.user.3rdparty.github.register"><![CDATA[You’re creating an account through <span class="icon icon16 icon-github"></span>&nbsp;GitHub.]]></item>
+		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Connect with your GitHub account{if $__wcf->session->getVar('__githubUsername')} “<a href="https://github.com/{$__wcf->session->getVar('__githubUsername')}">{$__wcf->session->getVar('__githubUsername')}</a>”{/if}]]></item>
+		<item name="wcf.user.3rdparty.github.connect.success"><![CDATA[Your user account has been connected with GitHub.]]></item>
+		<item name="wcf.user.3rdparty.github.connect.error.inuse"><![CDATA[Your GitHub account is already connected to a different user.]]></item>
+		<item name="wcf.user.3rdparty.github.disconnect"><![CDATA[Cancel connection with GitHub]]></item>
+		<item name="wcf.user.3rdparty.github.disconnect.success"><![CDATA[Your account is no longer connected with GitHub.]]></item>
+		<item name="wcf.user.3rdparty.twitter"><![CDATA[Twitter]]></item>
+		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Twitter]]></item>
+		<item name="wcf.user.3rdparty.twitter.login.error.denied"><![CDATA[Access to your Twitter account has been rejected.]]></item>
+		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[You’re creating an account through <span class="icon icon16 icon-twitter"></span>&nbsp;Twitter.]]></item>
+		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Connect with your Twitter account{if $__wcf->session->getVar('__twitterUsername')} “<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}">{$__wcf->session->getVar('__twitterUsername')}</a>”{/if}]]></item>
+		<item name="wcf.user.3rdparty.twitter.connect.success"><![CDATA[Your user account has been connected with Twitter.]]></item>
+		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[Your Twitter account is already connected to a different user.]]></item>
+		<item name="wcf.user.3rdparty.twitter.disconnect"><![CDATA[Cancel connection with Twitter]]></item>
+		<item name="wcf.user.3rdparty.twitter.disconnect.success"><![CDATA[Your account is no longer connected with Twitter.]]></item>
+		<item name="wcf.user.3rdparty.facebook"><![CDATA[Facebook]]></item>
+		<item name="wcf.user.3rdparty.facebook.login"><![CDATA[Facebook]]></item>
+		<item name="wcf.user.3rdparty.facebook.login.error.access_denied"><![CDATA[Access to your Facebook account has been rejected.]]></item>
+		<item name="wcf.user.3rdparty.facebook.register"><![CDATA[You’re creating an account through <span class="icon icon16 icon-facebook"></span>&nbsp;Facebook.]]></item>
+		<item name="wcf.user.3rdparty.facebook.connect"><![CDATA[Connect with your Facebook account{if $__wcf->session->getVar('__facebookUsername')} “{$__wcf->session->getVar('__facebookUsername')}”{/if}]]></item>
+		<item name="wcf.user.3rdparty.facebook.connect.success"><![CDATA[Your user account has been connected with Facebook.]]></item>
+		<item name="wcf.user.3rdparty.facebook.connect.error.inuse"><![CDATA[Your Facebook account is already connected to a different user.]]></item>
+		<item name="wcf.user.3rdparty.facebook.disconnect"><![CDATA[Cancel connection with Facebook]]></item>
+		<item name="wcf.user.3rdparty.facebook.disconnect.success"><![CDATA[Your account is no longer connected with Facebook.]]></item>
+		<item name="wcf.user.3rdparty.google"><![CDATA[Google]]></item>
+		<item name="wcf.user.3rdparty.google.login"><![CDATA[Google]]></item>
+		<item name="wcf.user.3rdparty.google.login.error.access_denied"><![CDATA[Access to your Google account has been rejected.]]></item>
+		<item name="wcf.user.3rdparty.google.register"><![CDATA[You’re creating an account through <span class="icon icon16 icon-google-plus"></span>&nbsp;Google.]]></item>
+		<item name="wcf.user.3rdparty.google.connect"><![CDATA[Connect with your Google account{if $__wcf->session->getVar('__googleUsername')} “{$__wcf->session->getVar('__googleUsername')}”{/if}]]></item>
+		<item name="wcf.user.3rdparty.google.connect.success"><![CDATA[Your user account has been connected with Google.]]></item>
+		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[Your Google account is already connected to a different user.]]></item>
+		<item name="wcf.user.3rdparty.google.disconnect"><![CDATA[Cancel connection with Google]]></item>
+		<item name="wcf.user.3rdparty.google.disconnect.success"><![CDATA[Your account is no longer connected with Google.]]></item>
+	</category>
+	
+	<category name="wcf.user.avatar">
+		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
+		<item name="wcf.user.avatar.alt"><![CDATA[User Avatar]]></item>
+		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
+		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID || $__wcf->user->enableGravatar}have banned your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
+		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Own Avatar]]></item>
+		<item name="wcf.user.avatar.type.custom.crop"><![CDATA[Crop Avatar]]></item>
+		<item name="wcf.user.avatar.type.custom.crop.description"><![CDATA[The scaled versions of your avatar are based on a square cutout. You may specify an individual cutout by holding down your mouse button and moving the highlighted area to the desired position.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The minimum dimensions are 48×48 pixel, it is recommend to provide a dimension of {@MAX_AVATAR_WIDTH}×{@MAX_AVATAR_HEIGHT} pixel. Any avatar that exceeds this limit will be scaled down if possible.]]></item>
+		<item name="wcf.user.avatar.type.gravatar"><![CDATA[Use Gravatar]]></item>
+		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Gravatar (Global Recognized Avatar) provides a globally reusable avatar connected with your email address “{$__wcf->user->email}”. Visit <a href="http://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a> to set up or change your avatar.]]></item>
+		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Your email address is not connected with a gravatar.]]></item>
+		<item name="wcf.user.avatar.type.none"><![CDATA[No Avatar]]></item>
+		<item name="wcf.user.avatar.type.none.description"><![CDATA[Your currently used avatar will be deleted.]]></item>
+		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[Uploaded image is invalid.]]></item>
+		<item name="wcf.user.avatar.upload.error.invalidExtension"><![CDATA[Image does not match the allowed file extensions.]]></item>
+		<item name="wcf.user.avatar.upload.error.tooLarge"><![CDATA[Image exceeds maximum file size.]]></item>
+		<item name="wcf.user.avatar.upload.error.tooSmall"><![CDATA[Image dimensions are below the minimum sizes.]]></item>
+		<item name="wcf.user.avatar.upload.error.uploadFailed"><![CDATA[An unknown error occured.]]></item>
+		<item name="wcf.user.avatar.upload.success"><![CDATA[Avatar has been saved.]]></item>
+	</category>
+	
+	<category name="wcf.user.notification">
+		<item name="wcf.user.notification.button.confirmed"><![CDATA[OK]]></item>
+		<item name="wcf.user.notification.count"><![CDATA[if (data.returnValues.count == 0) { "No Notifications" } else if (data.returnValues.count == 1) { "1 Notification" } else { data.returnValues.count + " Notifications" }]]></item>
+		<item name="wcf.user.notification.follow.message"><![CDATA[“{$author->username}” follows you.]]></item>
+		<item name="wcf.user.notification.follow.mail"><![CDATA[{@$author->username} follows you.]]></item>
+		<item name="wcf.user.notification.follow.title"><![CDATA[New Follower]]></item>
+		<item name="wcf.user.notification.mail.disabled"><![CDATA[Email notification has been disabled.]]></item>
+		<item name="wcf.user.notification.mail.footer"><![CDATA[This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
+		
+You can manage your notification settings for {@PAGE_TITLE|language} on the page below:
+{link controller='NotificationSettings' encode=false}{/link} 
+
+If you do not want to receive further email notifications for this event, you can quickly disable it by opening the link below:
+{link controller='NotificationDisable' encode=false}eventID={@$notification->eventID}&userID={@$user->userID}&token={@$token}{/link}]]></item>
+		<item name="wcf.user.notification.mail.header"><![CDATA[Dear {@$user->username},]]></item>
+		<item name="wcf.user.notification.mail.subject"><![CDATA[New Notification: {@$title}]]></item>
+		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
+		<item name="wcf.user.notification.mail.daily.footer"><![CDATA[This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
+		
+You can manage your notification settings for {@PAGE_TITLE|language} on the page below:
+{link controller='NotificationSettings' encode=false}{/link} 
+
+If you do not want to receive further email notifications for this event, you can quickly disable it by opening the link below:
+{link controller='NotificationDisable' encode=false}userID={@$user->userID}&token={@$token}{/link}]]></item>
+		<item name="wcf.user.notification.mailNotificationType.none"><![CDATA[No Email Notification]]></item>
+		<item name="wcf.user.notification.mailNotificationType.instant"><![CDATA[Instant Email Notification]]></item>
+		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Daily Email Notification]]></item>
+		<item name="wcf.user.notification.markAllAsConfirmed"><![CDATA[Discard All Notifications]]></item>
+		<item name="wcf.user.notification.markAllAsConfirmed.confirmMessage"><![CDATA[Do you really want to discard all notifications?]]></item>
+		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Discard]]></item>
+		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[No more notifications]]></item>
+		<item name="wcf.user.notification.noNotifications"><![CDATA[There are no more notifications.]]></item>
+		<item name="wcf.user.notification.notifications"><![CDATA[Notifications]]></item>
+		<item name="wcf.user.notification.showAll"><![CDATA[Show All Notifications]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user"><![CDATA[User Profiles]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.follow.following"><![CDATA[New follower]]></item>
+		<item name="wcf.user.notification.comment.title"><![CDATA[New Comment (Wall)]]></item>
+		<item name="wcf.user.notification.comment.message"><![CDATA[Wrote a comment on your wall.]]></item>
+		<item name="wcf.user.notification.comment.mail"><![CDATA[{@$author->username} wrote a comment on your wall:
+{link controller='User' object=$owner encode=false forceFrontend=true}#wall{/link}]]></item>
+		<item name="wcf.user.notification.commentResponse.title"><![CDATA[New Reply (Wall)]]></item>
+		<item name="wcf.user.notification.commentResponse.message"><![CDATA[Wrote a reply to your comment on {$owner->username}’s wall.]]></item>
+		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{@$author->username} wrote a reply to your comment on {@$owner->username}’s wall:
+{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[New Reply (Wall)]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[Wrote a reply to {$commentAuthor->username}’s comment on your wall.]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.mail"><![CDATA[{@$author->username} wrote a reply to {@$commentAuthor->username}’s comment on your wall:
+{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[New comment on your wall]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[New reply to a comment on your wall]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[New reply to one of your comments]]></item>
+	</category>
+	
+	<category name="wcf.user.profile">
+		<item name="wcf.user.profile"><![CDATA[User Profile of “{$user->username}”]]></item>
+		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You did not provide any details yet.{else}There are no details visible to you.{/if}]]></item>
+		<item name="wcf.user.profile.content.recentActivity.noEntries"><![CDATA[There are no recent activities available yet.]]></item>
+		<item name="wcf.user.profile.followers"><![CDATA[{$user->username}’s Follower]]></item>
+		<item name="wcf.user.profile.userList.showAll"><![CDATA[Show All]]></item>
+		<item name="wcf.user.profile.following"><![CDATA[{$user->username} Follows]]></item>
+		<item name="wcf.user.profile.menu.about"><![CDATA[About Me]]></item>
+		<item name="wcf.user.profile.menu.recentActivity"><![CDATA[Recent Activity]]></item>
+		<item name="wcf.user.profile.oldUsername"><![CDATA[Used to be called “{$user->getOldUsername()}”]]></item>
+		<item name="wcf.user.profile.recentActivity.follow"><![CDATA[Now follows <a href="{link controller='User' object=$user}{/link}">{$user->username}</a>.]]></item>
+		<item name="wcf.user.profile.visitors"><![CDATA[Profile Visitors]]></item>
+		<item name="wcf.user.profile.content.wall.comment"><![CDATA[Wall Comment]]></item>
+		<item name="wcf.user.profile.content.wall.commentResponse"><![CDATA[Reply to wall comment]]></item>
+		<item name="wcf.user.profile.content.wall.noEntries"><![CDATA[There are no comments yet.]]></item>
+		<item name="wcf.user.profile.menu.wall"><![CDATA[Wall]]></item>
+		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[Wrote a comment on <a href="{link controller='User' object=$user}{/link}#wall">{$user->username}’s wall</a>.]]></item>
+		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on <a href="{link controller='User' object=$user}{/link}#wall">{$user->username}’s wall</a>.]]></item>
+	</category>
+	
+	<category name="wcf.user.objectWatch">
+		<item name="wcf.user.objectWatch.manageSubscription"><![CDATA[Manage Subscription]]></item>
+	</category>
+	
+	<category name="wcf.user.option">
+		<item name="wcf.user.option.aboutMe"><![CDATA[About Me]]></item>
+		<item name="wcf.user.option.adminCanMail"><![CDATA[Accept emails sent by administrators]]></item>
+		<item name="wcf.user.option.adminComment"><![CDATA[Comment (internal)]]></item>
+		<item name="wcf.user.option.birthday"><![CDATA[Birthday]]></item>
+		<item name="wcf.user.option.birthdayShowYear"><![CDATA[Show year of birth]]></item>
+		<item name="wcf.user.option.birthdayShowYear.description"><![CDATA[Allows members to view your age.]]></item>
+		<item name="wcf.user.option.canMail"><![CDATA[Can Send Me Emails]]></item>
+		<item name="wcf.user.option.canViewEmailAddress"><![CDATA[Can View My Email Address]]></item>
+		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Can View My Online Status]]></item>
+		<item name="wcf.user.option.canViewProfile"><![CDATA[Can View My Profile]]></item>
+		
+		<item name="wcf.user.option.category.profile"><![CDATA[Personal Data]]></item>
+		<item name="wcf.user.option.category.profile.aboutMe"><![CDATA[About Me]]></item>
+		<item name="wcf.user.option.category.profile.contact"><![CDATA[Contact Options]]></item>
+		<item name="wcf.user.option.category.profile.personal"><![CDATA[Personal Details]]></item>
+		<item name="wcf.user.option.category.settings"><![CDATA[Settings]]></item>
+		<item name="wcf.user.option.category.settings.general"><![CDATA[General]]></item>
+		<item name="wcf.user.option.category.settings.general.date"><![CDATA[Date &amp; Time]]></item>
+		<item name="wcf.user.option.category.settings.general.appearance"><![CDATA[Appearance]]></item>
+		<item name="wcf.user.option.category.settings.general.interface"><![CDATA[Interface]]></item>
+		<item name="wcf.user.option.category.settings.privacy"><![CDATA[Privacy]]></item>
+		<item name="wcf.user.option.category.settings.privacy.content"><![CDATA[Content]]></item>
+		<item name="wcf.user.option.category.settings.privacy.messaging"><![CDATA[Messaging]]></item>
+		
+		<item name="wcf.user.option.gender"><![CDATA[Gender]]></item>
+		<item name="wcf.user.option.hobbies"><![CDATA[Hobbies]]></item>
+		<item name="wcf.user.option.homepage"><![CDATA[Website]]></item>
+		<item name="wcf.user.option.location"><![CDATA[Location]]></item>
+		<item name="wcf.user.option.occupation"><![CDATA[Occupation]]></item>
+		<item name="wcf.user.option.showSignature"><![CDATA[Show members signatures]]></item>
+		<item name="wcf.user.option.timezone"><![CDATA[Timezone]]></item>
+		<item name="wcf.user.option.icq"><![CDATA[ICQ]]></item>
+		<item name="wcf.user.option.skype"><![CDATA[Skype]]></item>
+		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
+		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
+		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
+		<item name="wcf.user.option.googlePlus.description"><![CDATA[21 digits Google Plus user ID]]></item>
+		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Can Write Comments on My Wall]]></item>
+	</category>
+	
+	<category name="wcf.user.mail">
+		<item name="wcf.user.mail.information"><![CDATA[Details]]></item>
+		<item name="wcf.user.mail.mail"><![CDATA[Dear {@$recipient->username},
+
+"{@$username}" sent you a message on "{@PAGE_TITLE|language}":
+{@$message}]]></item>
+		<item name="wcf.user.mail.mail.subject"><![CDATA[Message From {@$username}: {@$subject}]]></item>
+		<item name="wcf.user.mail.message"><![CDATA[Message]]></item>
+		<item name="wcf.user.mail.senderEmail"><![CDATA[Your email address]]></item>
+		<item name="wcf.user.mail.sent"><![CDATA[Message has been sent to “{$user->username}”.]]></item>
+		<item name="wcf.user.mail.showAddress"><![CDATA[Use my email address as sender address, the recipient can directly reply to me.]]></item>
+		<item name="wcf.user.mail.subject"><![CDATA[Subject]]></item>
+		<item name="wcf.user.mail.title"><![CDATA[Send an email to “{$user->username}”]]></item>
+	</category>
+	
+	<category name="wcf.user.rank">
+		<item name="wcf.user.rank.administrator"><![CDATA[Administrator]]></item>
+		<item name="wcf.user.rank.moderator"><![CDATA[Moderator]]></item>
+		<item name="wcf.user.rank.superModerator"><![CDATA[Super-Moderator]]></item>
+		
+		<!-- TODO: These rank translations are bullshit, find something better -->
+		
+		<item name="wcf.user.rank.user0"><![CDATA[Beginner]]></item>
+		<item name="wcf.user.rank.user1"><![CDATA[Student]]></item>
+		<item name="wcf.user.rank.user2"><![CDATA[Intermediate]]></item>
+		<item name="wcf.user.rank.user3"><![CDATA[Professional]]></item>
+		<item name="wcf.user.rank.user4"><![CDATA[Master]]></item>
+		<item name="wcf.user.rank.user5"><![CDATA[Enlightened]]></item>
+	</category>
+	
+	<!-- i18n categories -->
+	<category name="wcf.smiley" />
 </language>

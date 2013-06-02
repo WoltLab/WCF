@@ -1,5 +1,17 @@
 {include file='header' pageTitle='wcf.acp.user.bulkProcessing'}
 
+{if $mailID|isset}
+	<script type="text/javascript">
+		//<![CDATA[
+		$(function() {
+			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', '', {
+				mailID: {@$mailID}
+			});
+		});
+		//]]>
+	</script>
+{/if}
+
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
@@ -125,7 +137,7 @@
 					<dl>
 						<dt><label>{lang}wcf.acp.user.groups{/lang}</label></dt>
 						<dd>
-							{htmlCheckboxes options=$availableGroups name='groupIDArray' selected=$groupIDArray}
+							{htmlCheckboxes options=$availableGroups name='groupIDs' selected=$groupIDs}
 							
 							<label class="marginTop"><input type="checkbox" name="invertGroupIDs" value="1" {if $invertGroupIDs == 1}checked="checked" {/if}/> {lang}wcf.acp.user.groups.invertSearch{/lang}</label>
 						</dd>
@@ -136,13 +148,48 @@
 					<dl>
 						<dt><label>{lang}wcf.user.language{/lang}</label></dt>
 						<dd>
-							{htmlCheckboxes options=$availableLanguages name='languageIDArray' selected=$languageIDArray disableEncoding=true}
+							{htmlCheckboxes options=$availableLanguages name='languageIDs' selected=$languageIDs disableEncoding=true}
 						</dd>
 					</dl>
 				{/if}
 				
+				<dl>
+					<dt><label for="registrationDateStart">{lang}wcf.user.registrationDate{/lang}</label></dt>
+					<dd>
+						<input type="date" id="registrationDateStart" name="registrationDateStart" value="{$registrationDateStart}" placeholder="{lang}wcf.date.period.start{/lang}" />
+						<input type="date" id="registrationDateEnd" name="registrationDateEnd" value="{$registrationDateEnd}" placeholder="{lang}wcf.date.period.end{/lang}" />
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt><label for="lastActivityTimeStart">{lang}wcf.user.lastActivityTime{/lang}</label></dt>
+					<dd>
+						<input type="date" id="lastActivityTimeStart" name="lastActivityTimeStart" value="{$lastActivityTimeStart}" placeholder="{lang}wcf.date.period.start{/lang}" />
+						<input type="date" id="lastActivityTimeEnd" name="lastActivityTimeEnd" value="{$lastActivityTimeEnd}" placeholder="{lang}wcf.date.period.end{/lang}" />
+					</dd>
+				</dl>
+				
 				{event name='conditionFields'}
 			</fieldset>
+			
+			<fieldset>
+				<legend>{lang}wcf.acp.user.search.conditions.states{/lang}</legend>
+				
+				<dl>
+					<dd>
+						<label><input type="checkbox" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.banned{/lang}</label>
+						<label><input type="checkbox" name="notBanned" value="1" {if $notBanned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.notBanned{/lang}</label>
+						<label><input type="checkbox" name="enabled" value="1" {if $enabled == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.enabled{/lang}</label>
+						<label><input type="checkbox" name="disabled" value="1" {if $disabled == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.disabled{/lang}</label>
+						
+						{event name='states'}
+					</dd>
+				</dl>
+				
+				{event name='stateFields'}
+			</fieldset>
+			
+			{event name='conditionFieldsets'}
 		</div>
 		
 		{if $options|count}
@@ -152,6 +199,8 @@
 			
 					{include file='optionFieldList' langPrefix='wcf.user.option.'}
 				</fieldset>
+				
+				{event name='profileFieldsets'}
 			</div>
 		{/if}
 	
@@ -172,7 +221,7 @@
 							<label><input type="radio" name="action" value="delete" {if $action == 'delete'}checked="checked" {/if}/> {lang}wcf.acp.user.delete{/lang}</label>
 						{/if}
 						
-						{event name='additionalActions'}
+						{event name='actions'}
 						
 						{if $errorField == 'action'}
 							<small class="innerError">
@@ -187,6 +236,18 @@
 				<fieldset>
 					<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
 					
+					<dl{if $errorField == 'subject'} class="formError"{/if}>
+						<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
+						<dd>
+							<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
+							{if $errorField == 'subject'}
+								<small class="innerError">
+									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					
 					<dl{if $errorField == 'from'} class="formError"{/if}>
 						<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
 						<dd>
@@ -200,19 +261,6 @@
 						</dd>
 					</dl>
 					
-					<dl{if $errorField == 'subject'} class="formError"{/if}>
-						<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
-						<dd>
-							<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
-							{if $errorField == 'subject'}
-								<small class="innerError">
-									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-								</small>
-							{/if}
-							<small>{lang}wcf.acp.user.sendMail.subject.description{/lang}</small>
-						</dd>
-					</dl>
-					
 					<dl{if $errorField == 'text'} class="formError"{/if}>
 						<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
 						<dd>
@@ -222,7 +270,6 @@
 									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 								</small>
 							{/if}
-							<small>{lang}wcf.acp.user.sendMail.text.description{/lang}</small>
 						</dd>
 					</dl>
 					
@@ -267,9 +314,9 @@
 					<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 					
 					<dl>
-						<dd{if $errorField == 'assignToGroupIDArray'} class="formError"{/if}>
-							{htmlCheckboxes options=$availableGroups name=assignToGroupIDArray selected=$assignToGroupIDArray}
-							{if $errorField == 'assignToGroupIDArray'}
+						<dd{if $errorField == 'assignToGroupIDs'} class="formError"{/if}>
+							{htmlCheckboxes options=$availableGroups name=assignToGroupIDs selected=$assignToGroupIDs}
+							{if $errorField == 'assignToGroupIDs'}
 								<small class="innerError">
 									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 								</small>
@@ -279,7 +326,7 @@
 				</fieldset>
 			</div>
 			
-			{event name='actionSettings'}
+			{event name='actionFieldsets'}
 		</div>
 	</div>
 	

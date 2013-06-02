@@ -26,8 +26,9 @@ class FileSizeOptionType extends TextOptionType {
 	 */
 	public function getData(Option $option, $newValue) {
 		$number = StringUtil::replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
-		$d = preg_quote(WCF::getLanguage()->get('wcf.global.decimalPoint'), '~');
-		if (!preg_match('~^(?:\d*)(?:'.$d.')?\d+~', $number, $matches)) return 0;
+		$number = StringUtil::replace(WCF::getLanguage()->get('wcf.global.decimalPoint'), '.', $number);
+		
+		if (!preg_match('~^(?:\d*)\.?\d+~', $number, $matches)) return 0;
 		
 		$number = $matches[0];
 		if (preg_match('/[kmgt]i?b$/i', $newValue, $multiplier)) {

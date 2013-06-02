@@ -1,7 +1,11 @@
 <?php
 namespace wcf\data\application;
+use wcf\data\package\Package;
+use wcf\data\package\PackageList;
 use wcf\data\DatabaseObject;
 use wcf\system\request\RouteHandler;
+use wcf\system\exception\SystemException;
+use wcf\util\FileUtil;
 
 /**
  * Represents an application.
@@ -14,6 +18,12 @@ use wcf\system\request\RouteHandler;
  * @category	Community Framework
  */
 class Application extends DatabaseObject {
+	/**
+	 * absolute page URL
+	 * @var	string
+	 */
+	protected $pageURL = '';
+	
 	/**
 	 * @see	wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -30,10 +40,10 @@ class Application extends DatabaseObject {
 	protected static $databaseTableIndexIsIdentity = false;
 	
 	/**
-	 * absolute page URL
-	 * @var	string
+	 * list of all available application directories
+	 * @var	array<string>
 	 */
-	protected $pageURL = '';
+	protected static $directories = null;
 	
 	/**
 	 * Returns absolute page URL.
@@ -46,5 +56,31 @@ class Application extends DatabaseObject {
 		}
 		
 		return $this->pageURL;
+	}
+	
+	/**
+	 * Returns the directory of the application with the given abbrevation.
+	 * 
+	 * @param	string		$abbreviation
+	 * @return	string
+	 */
+	public static function getDirectory($abbreviation) {
+		if (static::$directories === null) {
+			static::$directories = array();
+			
+			// read application directories
+			$packageList = new PackageList();
+			$packageList->getConditionBuilder()->add('package.isApplication = ?', array(1));
+			$packageList->readObjects();
+			foreach ($packageList as $package) {
+				static::$directories[Package::getAbbreviation($package->package)] = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$package->packageDir));
+			}
+		}
+		
+		if (!isset(static::$directories[$abbreviation])) {
+			throw new SystemException("Unknown application '".$abbreviation."'");
+		}
+		
+		return static::$directories[$abbreviation];
 	}
 }

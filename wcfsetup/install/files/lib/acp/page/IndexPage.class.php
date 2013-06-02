@@ -21,94 +21,53 @@ use wcf\system\WCF;
  */
 class IndexPage extends AbstractPage {
 	/**
-	 * health status data
-	 * @var	array
+	 * server information
+	 * @var array
 	 */
-	public $healthDetails = array('error' => array(), 'warning' => array(), 'info' => array());
+	public $server = array();
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
-	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		$health = 'success';
-		if (!empty($this->healthDetails['error'])) $health = 'error';
-		else if (!empty($this->healthDetails['warning'])) $health = 'warning';
-		else if (!empty($this->healthDetails['info'])) $health = 'info';
-		
-		WCF::getTPL()->assign(array(
-			'health' => $health,
-			'healthDetails' => $this->healthDetails
-		));
-	}
-	
-	/**
-	 * Performs various health checks
-	 */
-	public function calculateHealth() {
-		try {
-			// InnoDB's innodb_flush_log_at_trx_commit=1 causes poor performance, 2 is a better choice
-			if (get_class(WCF::getDB()) == 'wcf\system\database\MySQLDatabase') {
-				$sql = "SHOW VARIABLES LIKE ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array('innodb_flush_log_at_trx_commit'));
-				$row = $statement->fetchArray();
-				if ($row['Value'] == '1') {
-					$this->healthDetails['warning'][] = WCF::getLanguage()->get('wcf.acp.index.health.innodbFlushLog');
-				}
-			}
-			
-			// TODO: Fill this list
-			$shouldBeWritable = array(WCF_DIR);
-			foreach ($shouldBeWritable as $file) {
-				if (!is_writable($file)) {
-					$this->healthDetails['warning'][] = WCF::getLanguage()->getDynamicVariable('wcf.acp.index.health.notWritable', array(
-						'file' => $file
-					));
-				}
-			}
-			
-			for ($i = 0; $i < 7; $i++) {
-				if (file_exists(WCF_DIR.'log/'.date('Y-m-d', TIME_NOW - 86400 * $i).'.txt')) {
-					$this->healthDetails['error'][] = WCF::getLanguage()->getDynamicVariable('wcf.acp.index.health.exception', array(
-						'date' => TIME_NOW - 86400 * $i
-					));
-					break;
-				}
-			}
-			
-			if (CacheHandler::getInstance()->getCacheSource() instanceof NoCacheSource) {
-				$this->healthDetails['warning'][] = WCF::getLanguage()->get('wcf.acp.index.health.noCacheSource');
-			}
-			else if (get_class(CacheHandler::getInstance()->getCacheSource()) != 'wcf\system\cache\source\\'.ucfirst(CACHE_SOURCE_TYPE).'CacheSource') {
-				$this->healthDetails['error'][] = WCF::getLanguage()->getDynamicVariable('wcf.acp.index.health.cacheFallback', array(
-					'shouldBe' => WCF::getLanguage()->get('wcf.acp.option.cache_source_type.'.CACHE_SOURCE_TYPE)
-				));
-			}
-			
-			if (MAIL_SEND_METHOD === 'debug') {
-				$this->healthDetails['warning'][] = WCF::getLanguage()->get('wcf.acp.index.health.debugMailSender');
-			}
-			
-			if (IMAGE_ADAPTER_TYPE === 'imagick' && !ImagickImageAdapter::isSupported()) {
-				$this->healthDetails['error'][] = WCF::getLanguage()->get('wcf.acp.index.health.imageAdapterFallback');
-			}
-			
-			EventHandler::getInstance()->fireAction($this, 'calculateHealth');
-		}
-		catch (\Exception $e) {
-			$this->healthDetails['error'][] = $e->getMessage();
-		}
-	}
-	
-	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
+	
+		$this->server = array(
+			'os' => PHP_OS,
+			'webserver' => (isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : ''),		
+			'mySQLVersion' => WCF::getDB()->getVersion(),
+			'load' => ''
+		);
 		
-		$this->calculateHealth();
+		// get load
+		if ($uptime = @exec("uptime")) {
+			if (preg_match("/averages?: ([0-9\.]+,?[\s]+[0-9\.]+,?[\s]+[0-9\.]+)/", $uptime, $match)) {
+				$this->server['load'] = $match[1];
+			}
+		}
+	}
+	
+	/**
+	 * @see wcf\page\IPage::assignVariables()
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+	
+		$usersAwaitingApproval = 0;
+		if (REGISTER_ACTIVATION_METHOD == 2) {
+			$sql = "SELECT	COUNT(*) AS count
+				FROM	wcf".WCF_N."_user
+				WHERE	activationCode <> 0";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute();
+			$row = $statement->fetchArray();
+			$usersAwaitingApproval = $row['count'];
+		}
+		WCF::getTPL()->assign('usersAwaitingApproval', $usersAwaitingApproval);
+		
+		WCF::getTPL()->assign(array(
+			'server' => $this->server
+		));
 	}
 	
 	/**

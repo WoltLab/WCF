@@ -53,6 +53,9 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 			$this->parameters['data']['packageID'] = PACKAGE_ID;
 		}
 		
+		// calculate show order
+		$this->parameters['data']['showOrder'] = PageMenuItemEditor::getShowOrder($this->parameters['data']['showOrder'], $this->parameters['data']['menuPosition'], $this->parameters['data']['parentMenuItem']);
+		
 		$menuItem = parent::create();
 		
 		if ($menuItem->menuPosition == 'header') {

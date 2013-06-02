@@ -49,13 +49,13 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	 * ids of the searched user group ids
 	 * @var	array<integer>
 	 */
-	public $groupIDArray = array();
+	public $groupIDs = array();
 	
 	/**
 	 * ids of the users' languages
 	 * @var	array<integer>
 	 */
-	public $languageIDArray = array();
+	public $languageIDs = array();
 	
 	/**
 	 * indicates if the user may not be in the user groups with the selected
@@ -64,8 +64,56 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	 */
 	public $invertGroupIDs = 0;
 	
+	/**
+	 * registration start date
+	 * @var string
+	 */
+	public $registrationDateStart = '';
+	
+	/**
+	 * registration start date
+	 * @var string
+	 */
+	public $registrationDateEnd = '';
+	
+	/**
+	 * banned state
+	 * @var boolean
+	 */
+	public $banned = 0;
+	
+	/**
+	 * not banned state
+	 * @var boolean
+	 */
+	public $notBanned = 0;
+	
+	/**
+	 * last activity start time
+	 * @var string
+	 */
+	public $lastActivityTimeStart = '';
+	
+	/**
+	 * last activity end time
+	 * @var string
+	 */
+	public $lastActivityTimeEnd = '';
+	
+	/**
+	 * enabled state
+	 * @var boolean
+	 */
+	public $enabled = 0;
+	
+	/**
+	 * disabled state
+	 * @var boolean
+	 */
+	public $disabled = 0;
+	
 	// assign to group
-	public $assignToGroupIDArray = array();
+	public $assignToGroupIDs = array();
 	
 	// export mail address
 	public $fileType = 'csv';
@@ -104,11 +152,20 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		
 		if (isset($_POST['username'])) $this->username = StringUtil::trim($_POST['username']);
 		if (isset($_POST['email'])) $this->email = StringUtil::trim($_POST['email']);
-		if (isset($_POST['groupIDArray']) && is_array($_POST['groupIDArray'])) $this->groupIDArray = ArrayUtil::toIntegerArray($_POST['groupIDArray']);
-		if (isset($_POST['languageIDArray']) && is_array($_POST['languageIDArray'])) $this->languageIDArray = ArrayUtil::toIntegerArray($_POST['languageIDArray']);
+		if (isset($_POST['groupIDs']) && is_array($_POST['groupIDs'])) $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
+		if (isset($_POST['languageIDs']) && is_array($_POST['languageIDs'])) $this->languageIDs = ArrayUtil::toIntegerArray($_POST['languageIDs']);
 		if (isset($_POST['invertGroupIDs'])) $this->invertGroupIDs = intval($_POST['invertGroupIDs']);
+		if (isset($_POST['registrationDateStart'])) $this->registrationDateStart = $_POST['registrationDateStart'];
+		if (isset($_POST['registrationDateEnd'])) $this->registrationDateEnd = $_POST['registrationDateEnd'];
+		if (isset($_POST['banned'])) $this->banned = intval($_POST['banned']);
+		if (isset($_POST['notBanned'])) $this->notBanned = intval($_POST['notBanned']);
+		if (isset($_POST['lastActivityTimeStart'])) $this->lastActivityTimeStart = $_POST['lastActivityTimeStart'];
+		if (isset($_POST['lastActivityTimeEnd'])) $this->lastActivityTimeEnd = $_POST['lastActivityTimeEnd'];
+		if (isset($_POST['enabled'])) $this->enabled = intval($_POST['enabled']);
+		if (isset($_POST['disabled'])) $this->disabled = intval($_POST['disabled']);
+		
 		// assign to group
-		if (isset($_POST['assignToGroupIDArray']) && is_array($_POST['assignToGroupIDArray'])) $this->assignToGroupIDArray = ArrayUtil::toIntegerArray($_POST['assignToGroupIDArray']);
+		if (isset($_POST['assignToGroupIDs']) && is_array($_POST['assignToGroupIDs'])) $this->assignToGroupIDs = ArrayUtil::toIntegerArray($_POST['assignToGroupIDs']);
 		// export mail address
 		if (isset($_POST['fileType']) && $_POST['fileType'] == 'xml') $this->fileType = $_POST['fileType'];
 		if (isset($_POST['separator'])) $this->separator = $_POST['separator'];
@@ -133,8 +190,8 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		
 		// assign to group
 		if ($this->action == 'assignToGroup') {
-			if (empty($this->assignToGroupIDArray)) {
-				throw new UserInputException('assignToGroupIDArray');
+			if (empty($this->assignToGroupIDs)) {
+				throw new UserInputException('assignToGroupIDs');
 			}
 		}
 		
@@ -165,16 +222,46 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		
 		// static fields
 		if (!empty($this->username)) {
-			$this->conditions->add("user.username LIKE ?", array('%'.addcslashes($this->username, '_%').'%'));
+			$this->conditions->add("user_table.username LIKE ?", array('%'.addcslashes($this->username, '_%').'%'));
 		}
 		if (!empty($this->email)) {
-			$this->conditions->add("user.email LIKE ?", array('%'.addcslashes($this->email, '_%').'%'));
+			$this->conditions->add("user_table.email LIKE ?", array('%'.addcslashes($this->email, '_%').'%'));
 		}
-		if (!empty($this->groupIDArray)) {
-			$this->conditions->add("user.userID ".($this->invertGroupIDs == 1 ? 'NOT ' : '')."IN (SELECT userID FROM wcf".WCF_N."_user_to_group WHERE groupID IN (?))", array($this->groupIDArray));
+		if (!empty($this->groupIDs)) {
+			$this->conditions->add("user_table.userID ".($this->invertGroupIDs == 1 ? 'NOT ' : '')."IN (SELECT userID FROM wcf".WCF_N."_user_to_group WHERE groupID IN (?))", array($this->groupIDs));
 		}
-		if (!empty($this->languageIDArray)) {
-			$this->conditions->add("user.languageID IN (?)", array($this->languageIDArray));
+		if (!empty($this->languageIDs)) {
+			$this->conditions->add("user_table.languageID IN (?)", array($this->languageIDs));
+		}
+		
+		// registration date
+		if ($startDate = @strtotime($this->registrationDateStart)) {
+			$this->conditions->add('user_table.registrationDate >= ?', array($startDate));
+		}
+		if ($endDate = @strtotime($this->registrationDateEnd)) {
+			$this->conditions->add('user_table.registrationDate <= ?', array($endDate));
+		}
+		
+		if ($this->banned) {
+			$this->conditions->add('user_table.banned = ?', array(1));
+		}
+		if ($this->notBanned) {
+			$this->conditions->add('user_table.banned = ?', array(0));
+		}
+		
+		// last activity time
+		if ($startDate = @strtotime($this->lastActivityTimeStart)) {
+			$this->conditions->add('user_table.lastActivityTime >= ?', array($startDate));
+		}
+		if ($endDate = @strtotime($this->lastActivityTimeEnd)) {
+			$this->conditions->add('user_table.lastActivityTime <= ?', array($endDate));
+		}
+		
+		if ($this->enabled) {
+			$this->conditions->add('user_table.activationCode = ?', array(0));
+		}
+		if ($this->disabled) {
+			$this->conditions->add('user_table.activationCode <> ?', array(0));
 		}
 		
 		// dynamic fields
@@ -191,16 +278,16 @@ class UserBulkProcessingForm extends UserOptionListForm {
 			case 'sendMail':
 				WCF::getSession()->checkPermissions(array('admin.user.canMailUser'));
 				// get user ids
-				$userIDArray = array();
-				$sql = "SELECT		user.userID
-					FROM		wcf".WCF_N."_user user
+				$userIDs = array();
+				$sql = "SELECT		user_table.userID
+					FROM		wcf".WCF_N."_user user_table
 					LEFT JOIN	wcf".WCF_N."_user_option_value option_value
-					ON		(option_value.userID = user.userID)".
+					ON		(option_value.userID = user_table.userID)".
 					$this->conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($this->conditions->getParameters());
 				while ($row = $statement->fetchArray()) {
-					$userIDArray[] = $row['userID'];
+					$userIDs[] = $row['userID'];
 					$this->affectedUsers++;
 				}
 				
@@ -210,7 +297,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 				$mailID = count($userMailData);
 				$userMailData[$mailID] = array(
 					'action' => '',
-					'userIDs' => implode(',', $userIDArray),
+					'userIDs' => $userIDs,
 					'groupIDs' => '',
 					'subject' => $this->subject,
 					'text' => $this->text,
@@ -218,17 +305,8 @@ class UserBulkProcessingForm extends UserOptionListForm {
 					'enableHTML' => $this->enableHTML
 				);
 				WCF::getSession()->register('userMailData', $userMailData);
-				$this->saved();
 				
-				$url = LinkHandler::getInstance()->getLink('UserMail', array('id' => $mailID));
-				
-				// show worker template
-				WCF::getTPL()->assign(array(
-					'pageTitle' => WCF::getLanguage()->get('wcf.acp.user.sendMail'),
-					'url' => $url
-				));
-				WCF::getTPL()->display('worker');
-				exit;
+				WCF::getTPL()->assign('mailID', $mailID);
 			break;
 			
 			case 'exportMailAddress':
@@ -243,21 +321,21 @@ class UserBulkProcessingForm extends UserOptionListForm {
 				
 				// count users
 				$sql = "SELECT		COUNT(*) AS count
-					FROM		wcf".WCF_N."_user user
+					FROM		wcf".WCF_N."_user user_table
 					LEFT JOIN	wcf".WCF_N."_user_option_value option_value
-					ON		(option_value.userID = user.userID)
+					ON		(option_value.userID = user_table.userID)
 					".$this->conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($this->conditions->getParameters());
 				$count = $statement->fetchArray();
 				
 				// get users
-				$sql = "SELECT		user.email
-					FROM		wcf".WCF_N."_user user
+				$sql = "SELECT		user_table.email
+					FROM		wcf".WCF_N."_user user_table
 					LEFT JOIN	wcf".WCF_N."_user_option_value option_value
-					ON		(option_value.userID = user.userID)
+					ON		(option_value.userID = user_table.userID)
 					".$this->conditions."
-					ORDER BY	user.email";
+					ORDER BY	user_table.email";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($this->conditions->getParameters());
 				
@@ -280,20 +358,20 @@ class UserBulkProcessingForm extends UserOptionListForm {
 				WCF::getSession()->checkPermissions(array('admin.user.canEditUser'));
 				
 				$_this = $this;
-				$userIDArray = $this->fetchUsers(function($userID, array $userData) use ($_this) {
+				$userIDs = $this->fetchUsers(function($userID, array $userData) use ($_this) {
 					$user = new UserEditor(new User(null, $userData));
-					$user->addToGroups($_this->assignToGroupIDArray, false, false);
+					$user->addToGroups($_this->assignToGroupIDs, false, false);
 				});
 				
-				UserStorageHandler::getInstance()->reset($userIDArray, 'groupIDs', 1);
+				UserStorageHandler::getInstance()->reset($userIDs, 'groupIDs', 1);
 			break;
 			
 			case 'delete':
 				WCF::getSession()->checkPermissions(array('admin.user.canDeleteUser'));
 				
-				$userIDArray = $this->fetchUsers();
+				$userIDs = $this->fetchUsers();
 				
-				UserEditor::deleteUsers($userIDArray);
+				UserEditor::deleteUsers($userIDs);
 			break;
 		}
 		$this->saved();
@@ -309,10 +387,10 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	 */
 	protected function fetchUsers($loopFunction = null) {
 		// select users
-		$sql = "SELECT		user.*
-			FROM		wcf".WCF_N."_user user
+		$sql = "SELECT		user_table.*
+			FROM		wcf".WCF_N."_user user_table
 			LEFT JOIN	wcf".WCF_N."_user_option_value option_value
-			ON		(option_value.userID = user.userID)
+			ON		(option_value.userID = user_table.userID)
 			".$this->conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($this->conditions->getParameters());
@@ -350,11 +428,11 @@ class UserBulkProcessingForm extends UserOptionListForm {
 				$loopFunction($userID, $userData);
 			}
 			
-			$userIDArray[] = $userID;
+			$userIDs[] = $userID;
 			$this->affectedUsers++;
 		}
 		
-		return $userIDArray;
+		return $userIDs;
 	}
 	
 	/**
@@ -392,15 +470,24 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		WCF::getTPL()->assign(array(
 			'username' => $this->username,
 			'email' => $this->email,
-			'groupIDArray' => $this->groupIDArray,
-			'languageIDArray' => $this->languageIDArray,
+			'groupIDs' => $this->groupIDs,
+			'languageIDs' => $this->languageIDs,
 			'invertGroupIDs' => $this->invertGroupIDs,
+			'registrationDateStart' => $this->registrationDateStart,
+			'registrationDateEnd' => $this->registrationDateEnd,
+			'banned' => $this->banned,
+			'notBanned' => $this->notBanned,
+			'lastActivityTimeStart' => $this->lastActivityTimeStart,
+			'lastActivityTimeEnd' => $this->lastActivityTimeEnd,
+			'enabled' => $this->enabled,
+			'disabled' => $this->disabled,
+			
 			'availableGroups' => $this->availableGroups,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'options' => $this->options,
 			'availableActions' => $this->availableActions,
 			// assign to group
-			'assignToGroupIDArray' => $this->assignToGroupIDArray,
+			'assignToGroupIDs' => $this->assignToGroupIDs,
 			// export mail address
 			'separator' => $this->separator,
 			'textSeparator' => $this->textSeparator,

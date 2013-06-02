@@ -60,12 +60,21 @@ class WCFACP extends WCF {
 	protected function initAuth() {
 		// this is a work-around since neither RequestHandler
 		// nor RouteHandler are populated right now
-		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
+		$pathInfo = RouteHandler::getPathInfo();
 		if (empty($pathInfo) || !preg_match('~^/(ACPCaptcha|Login|Logout)/~', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
 				// build redirect path
 				$application = ApplicationHandler::getInstance()->getActiveApplication();
-				$path = $application->getPageURL() . 'acp/index.php/Login/' . SID_ARG_1ST . '&url=' . rawurlencode(WCF::getSession()->requestURI);
+				
+				// fallback for unknown host (rescue mode)
+				if ($application->domainName != $_SERVER['HTTP_HOST']) {
+					$pageURL = RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . RouteHandler::getPath(array('acp'));
+				}
+				else {
+					$pageURL = $application->getPageURL();
+				}
+				
+				$path = $pageURL . 'acp/index.php/Login/' . SID_ARG_1ST . '&url=' . rawurlencode(WCF::getSession()->requestURI);
 				
 				HeaderUtil::redirect($path);
 				exit;

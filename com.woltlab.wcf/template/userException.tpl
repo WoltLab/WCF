@@ -23,7 +23,7 @@
 {if ENABLE_DEBUG_MODE}
 	<!-- 
 	{$name} thrown in {$file} ({@$line})
-	Stracktrace:
+	Stacktrace:
 	{$stacktrace}
 	-->
 {/if}

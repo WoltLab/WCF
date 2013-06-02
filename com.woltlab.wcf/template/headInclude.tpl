@@ -16,33 +16,39 @@
 	//]]>
 </script>
 {if JQUERY_SOURCE == 'google'}
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-{else if JQUERY_SOURCE == 'microsoft'}
-<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.0.min.js"></script>
-<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+{elseif JQUERY_SOURCE == 'microsoft'}
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
+<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+{elseif JQUERY_SOURCE == 'cloudflare'}
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 {else}
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"></script>
 {/if}
 {if JQUERY_SOURCE != 'local'}
 <script type="text/javascript">
 	//<![CDATA[
 	if (!window.jQuery) {
-		document.write('<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js"><\/script>');
-		document.write('<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js"><\/script>');
+		document.write('<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"><\/script>');
+		document.write('<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"><\/script>');
 	}
 	//]]>
 </script>
 {/if}
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js?v={@$__wcfVersion}"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js?v={@$__wcfVersion}"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 	//]]>
 </script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.Like{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 {event name='javascriptInclude'}
 
 <!-- Stylesheets -->
@@ -114,6 +120,14 @@
 			'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 			'wcf.page.sitemap': '{lang}wcf.page.sitemap{/lang}',
 			'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}'
+			{if MODULE_LIKE}
+				,'wcf.like.button.like': '{lang}wcf.like.button.like{/lang}',
+				'wcf.like.button.dislike': '{lang}wcf.like.button.dislike{/lang}',
+				'wcf.like.tooltip': '{lang}wcf.like.jsTooltip{/lang}',
+				'wcf.like.summary': '{lang}wcf.like.summary{/lang}',
+				'wcf.like.details': '{lang}wcf.like.details{/lang}'
+			{/if}
+			
 			{event name='javascriptLanguageImport'}
 		});
 		
@@ -127,6 +141,7 @@
 		WCF.System.PageNavigation.init('.pageNavigation');
 		WCF.Date.Picker.init();
 		WCF.System.MobileNavigation.init();
+		new WCF.User.ProfilePreview();
 		
 		{event name='javascriptInit'}
 		

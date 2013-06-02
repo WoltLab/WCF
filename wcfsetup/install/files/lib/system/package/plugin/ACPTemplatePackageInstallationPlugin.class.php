@@ -1,15 +1,15 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\system\exception\SystemException;
+use wcf\data\application\Application;
+use wcf\data\package\Package;
 use wcf\system\package\ACPTemplatesFileHandler;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Installs, updates and deletes ACP templates.
  * 
- * @author	Benjamin Kunz
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Alexander Ebert, Matthias Schmidt
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -27,25 +27,25 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 	public function install() {
 		parent::install();
 		
+		$abbreviation = 'wcf';
+		if (isset($this->instruction['attributes']['application'])) {
+			$abbreviation = $this->instruction['attributes']['application'];
+		}
+		else if ($this->installation->getPackage()->isApplication) {
+			$abbreviation = Package::getAbbreviation($this->installation->getPackage()->package);
+		}
+		
+		// absolute path to package dir
+		$packageDir = Application::getDirectory($abbreviation);
+		
 		// extract files.tar to temp folder
 		$sourceFile = $this->installation->getArchive()->extractTar($this->instruction['value'], 'acptemplates_');
 		
 		// create file handler
-		$fileHandler = new ACPTemplatesFileHandler($this->installation);
+		$fileHandler = new ACPTemplatesFileHandler($this->installation, $abbreviation);
 		
-		// extract content of files.tar
-		$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$this->installation->getPackage()->packageDir));
-		
-		try {
-			$fileInstaller = $this->installation->extractFiles($packageDir.'acp/templates/', $sourceFile, $fileHandler);
-		}
-		catch (SystemException $e) {
-			WCF::getTPL()->assign(array(
-				'exception' => $e
-			));
-			WCF::getTPL()->display('packageInstallationFileInstallationFailed');
-			exit;
-		}
+		// extract templates
+		$this->installation->extractFiles($packageDir.'acp/templates/', $sourceFile, $fileHandler);
 		
 		// delete temporary sourceArchive
 		@unlink($sourceFile);
@@ -55,25 +55,24 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
-		// create ACP-templates list
-		$templates = array();
-		
-		// get ACP-templates from log
-		$sql = "SELECT	*
+		// fetch ACP templates from log
+		$sql = "SELECT	templateName, application
 			FROM	wcf".WCF_N."_acp_template
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
+		
+		$templates = array();
 		while ($row = $statement->fetchArray()) {
-			// store acp template with suffix (_$packageID)
-			$templates[] = 'acp/templates/'.$row['templateName'].'.tpl';
+			if (!isset($templates[$row['application']])) {
+				$templates[$row['application']] = array();
+			}
+			
+			$templates[$row['application']][] = 'acp/templates/'.$row['templateName'].'.tpl';
 		}
 		
-		if (!empty($templates)) {
-			// delete template files
-			$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$this->installation->getPackage()->packageDir));
-			$deleteEmptyDirectories = $this->installation->getPackage()->isApplication;
-			$this->installation->deleteFiles($packageDir, $templates, false, $deleteEmptyDirectories);
+		foreach ($templates as $application => $templateNames) {
+			$this->installation->deleteFiles(Application::getDirectory($application), $templateNames, false, $this->installation->getPackage()->isApplication);
 			
 			// delete log entries
 			parent::uninstall();

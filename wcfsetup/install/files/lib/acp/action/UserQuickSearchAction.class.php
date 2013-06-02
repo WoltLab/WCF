@@ -113,6 +113,48 @@ class UserQuickSearchAction extends AbstractAction {
 					$this->matches[] = $row['userID'];
 				}
 				break;
+			
+			case 'disabled':
+				$this->sortField = 'registrationDate';
+				$this->sortOrder = 'DESC';
+				$sql = "SELECT		user_table.userID
+					FROM		wcf".WCF_N."_user user_table
+					LEFT JOIN	wcf".WCF_N."_user_option_value option_value
+					ON		(option_value.userID = user_table.userID)
+					WHERE		activationCode <> ?
+					ORDER BY	user_table.registrationDate DESC";
+				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
+				$statement->execute(array(0));
+				while ($row = $statement->fetchArray()) {
+					$this->matches[] = $row['userID'];
+				}
+				break;
+			
+			case 'disabledAvatars':
+				$sql = "SELECT		user_table.userID
+					FROM		wcf".WCF_N."_user user_table
+					LEFT JOIN	wcf".WCF_N."_user_option_value option_value
+					ON		(option_value.userID = user_table.userID)
+					WHERE		disableAvatar = ?";
+				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
+				$statement->execute(array(1));
+				while ($row = $statement->fetchArray()) {
+					$this->matches[] = $row['userID'];
+				}
+				break;
+					
+			case 'disabledSignatures':
+				$sql = "SELECT		user_table.userID
+					FROM		wcf".WCF_N."_user user_table
+					LEFT JOIN	wcf".WCF_N."_user_option_value option_value
+					ON		(option_value.userID = user_table.userID)
+					WHERE		disableSignature = ?";
+				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
+				$statement->execute(array(1));
+				while ($row = $statement->fetchArray()) {
+					$this->matches[] = $row['userID'];
+				}
+				break;
 		}
 		
 		if (empty($this->matches)) {

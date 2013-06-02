@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/maelstrom/userNotificationEvent.xsd">
+	<import>
+		<event>
+			<name>following</name>
+			<objecttype>com.woltlab.wcf.user.follow</objecttype>
+			<classname><![CDATA[wcf\system\user\notification\event\UserFollowFollowingUserNotificationEvent]]></classname>
+		</event>
+		
+		<event>
+			<name>comment</name>
+			<objecttype>com.woltlab.wcf.user.profileComment.notification</objecttype>
+			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentUserNotificationEvent]]></classname>
+			<preset>1</preset>
+		</event>
+		<event>
+			<name>commentResponse</name>
+			<objecttype>com.woltlab.wcf.user.profileComment.response.notification</objecttype>
+			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentResponseUserNotificationEvent]]></classname>
+			<preset>1</preset>
+		</event>
+		<event>
+			<name>commentResponseOwner</name>
+			<objecttype>com.woltlab.wcf.user.profileComment.response.notification</objecttype>
+			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentResponseOwnerUserNotificationEvent]]></classname>
+			<preset>1</preset>
+		</event>
+	</import>
+</data>

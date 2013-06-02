@@ -11,10 +11,6 @@ WCF.ImageViewer = Class.extend({
 	 * Initializes the ImageViewer for every a-tag with the attribute rel = imageviewer.
 	 */
 	init: function() {
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.ImageViewer', $.proxy(this._domNodeInserted, this));
-		
-		WCF.DOMNodeInsertedHandler.enable();
-		
 		// navigation buttons
 		$('<span class="icon icon16 icon-chevron-left jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.previous') + '" />').appendTo($('#lbPrevLink'));
 		$('<span class="icon icon16 icon-chevron-right jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.next') + '" />').appendTo($('#lbNextLink'));
@@ -23,12 +19,13 @@ WCF.ImageViewer = Class.extend({
 		$('<span class="icon icon32 icon-remove jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.close') + '" />').appendTo($('#lbCloseLink'));
 		var $buttonEnlarge = $('<span class="icon icon32 icon-resize-full jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.enlarge') + '" id="lbEnlarge" />').insertAfter($('#lbCloseLink'));
 		
-		WCF.DOMNodeInsertedHandler.disable();
-		
 		// handle enlarge button
 		$buttonEnlarge.click($.proxy(this._enlarge, this));
 		
 		this._initImageViewer();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.ImageViewer', $.proxy(this._domNodeInserted, this));
+		WCF.DOMNodeInsertedHandler.execute();
 	},
 	
 	/**
@@ -43,8 +40,6 @@ WCF.ImageViewer = Class.extend({
 	 * Initializes the image viewer for all links with class ".jsImageViewer"
 	 */
 	_initImageViewer: function() {
-		WCF.DOMNodeInsertedHandler.enable();
-		
 		var $links = $('a.jsImageViewer');
 		if ($links.length) {
 			$links.removeClass('jsImageViewer').slimbox({
@@ -52,8 +47,6 @@ WCF.ImageViewer = Class.extend({
 				loop: true
 			});
 		}
-		
-		WCF.DOMNodeInsertedHandler.disable();
 	},
 	
 	/**

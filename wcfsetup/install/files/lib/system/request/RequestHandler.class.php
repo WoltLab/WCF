@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\request;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
@@ -27,10 +28,28 @@ class RequestHandler extends SingletonFactory {
 	protected $activeRequest = null;
 	
 	/**
+	 * true, if current domain mismatch any known domain
+	 * @var	boolean
+	 */
+	protected $inRescueMode = true;
+	
+	/**
 	 * indicates if the request is an acp request
 	 * @var	boolean
 	 */
 	protected $isACPRequest = false;
+	
+	/**
+	 * @see	wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			if ($application->domainName == $_SERVER['HTTP_HOST']) {
+				$this->inRescueMode = false;
+				break;
+			}
+		}
+	}
 	
 	/**
 	 * Handles a http request.
@@ -42,7 +61,12 @@ class RequestHandler extends SingletonFactory {
 		$this->isACPRequest = $isACPRequest;
 		
 		if (!RouteHandler::getInstance()->matches()) {
-			throw new SystemException("Cannot handle request, no valid route provided.");
+			if (ENABLE_DEBUG_MODE) {
+				throw new SystemException("Cannot handle request, no valid route provided.");
+			}
+			else {
+				throw new IllegalLinkException();
+			}
 		}
 		
 		// build request
@@ -84,7 +108,9 @@ class RequestHandler extends SingletonFactory {
 				if ($landingPage !== null && RouteHandler::getInstance()->isDefaultController()) {
 					// check if redirect URL matches current URL
 					$redirectURL = $landingPage->getLink();
-					if (StringUtil::replace(RouteHandler::getHost(), '', $redirectURL) == $_SERVER['REQUEST_URI']) {
+					$relativeRoute = StringUtil::replace(RouteHandler::getHost(), '', $redirectURL);
+					
+					if ($relativeRoute == $_SERVER['REQUEST_URI'] || $relativeRoute == preg_replace('~([?&]s=[a-f0-9]{40})~', '', $_SERVER['REQUEST_URI'])) {
 						$routeData['controller'] = $landingPage->getController();
 					}
 					else {
@@ -168,5 +194,14 @@ class RequestHandler extends SingletonFactory {
 	 */
 	public function isACPRequest() {
 		return $this->isACPRequest;
+	}
+	
+	/**
+	 * Returns true, if current host mismatches any known domain.
+	 * 
+	 * @return	boolean
+	 */
+	public function inRescueMode() {
+		return $this->inRescueMode;
 	}
 }

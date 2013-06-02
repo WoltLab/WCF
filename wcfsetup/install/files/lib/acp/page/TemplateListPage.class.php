@@ -1,7 +1,9 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\package\PackageCache;
 use wcf\data\template\group\TemplateGroupList;
 use wcf\page\SortablePage;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -59,10 +61,22 @@ class TemplateListPage extends SortablePage {
 	public $searchTemplateName = '';
 	
 	/**
+	 * application
+	 * @var string
+	 */
+	public $application = '';
+	
+	/**
 	 * available template groups
 	 * @var array
 	 */
 	public $availableTemplateGroups = array();
+	
+	/**
+	 * available applications
+	 * @var array
+	 */
+	public $availableApplications = array();
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
@@ -72,6 +86,7 @@ class TemplateListPage extends SortablePage {
 	
 		if (isset($_REQUEST['templateGroupID'])) $this->templateGroupID = intval($_REQUEST['templateGroupID']);
 		if (isset($_REQUEST['searchTemplateName'])) $this->searchTemplateName = StringUtil::trim($_REQUEST['searchTemplateName']);
+		if (isset($_REQUEST['application'])) $this->application = StringUtil::trim($_REQUEST['application']);
 	}
 	
 	/**
@@ -84,6 +99,7 @@ class TemplateListPage extends SortablePage {
 		else $this->objectList->getConditionBuilder()->add('template.templateGroupID IS NULL');
 		
 		if ($this->searchTemplateName) $this->objectList->getConditionBuilder()->add('templateName LIKE ?', array($this->searchTemplateName.'%'));
+		if ($this->application) $this->objectList->getConditionBuilder()->add('application = ?', array($this->application));
 	}
 	
 	/**
@@ -92,10 +108,17 @@ class TemplateListPage extends SortablePage {
 	public function readData() {
 		parent::readData();
 		
-		// get template groups		
+		// get template groups
 		$templateGroupList = new TemplateGroupList();
 		$templateGroupList->readObjects();
 		$this->availableTemplateGroups = $templateGroupList->getObjects();
+		
+		// get applications
+		$applications = ApplicationHandler::getInstance()->getApplications();
+		foreach ($applications as $application) {
+			$package = PackageCache::getInstance()->getPackage($application->packageID);
+			$this->availableApplications[ApplicationHandler::getInstance()->getAbbreviation($package->packageID)] = $package;
+		}
 	}
 	
 	/**
@@ -107,7 +130,9 @@ class TemplateListPage extends SortablePage {
 		WCF::getTPL()->assign(array(
 			'templateGroupID' => $this->templateGroupID,
 			'searchTemplateName' => $this->searchTemplateName,
-			'availableTemplateGroups' => $this->availableTemplateGroups
+			'application' => $this->application,
+			'availableTemplateGroups' => $this->availableTemplateGroups,
+			'availableApplications' => $this->availableApplications
 		));
 	}
 }

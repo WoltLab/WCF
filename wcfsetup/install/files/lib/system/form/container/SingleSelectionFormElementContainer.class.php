@@ -47,20 +47,15 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer 
 		}
 		
 		return <<<HTML
-<dl>
-	<dt><label>{$this->getLabel()}</label></dt>
-	<dd>
-		<fieldset>
-			<legend>{$this->getLabel()}</legend>
-			
-			<div>
-				{$content}
-			</div>
-		</fieldset>
-	</dd>
+<fieldset>
+	<legend>{$this->getLabel()}</legend>
+	
 	<small>{$this->getDescription()}</small>
-	</div>
-</dl>
+	
+	<dl>
+		<dd>{$content}</dd>
+	</dl>
+</fieldset>
 HTML;
 	}
 }

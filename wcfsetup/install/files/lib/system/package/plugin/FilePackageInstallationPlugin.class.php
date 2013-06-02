@@ -1,17 +1,17 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\application\Application;
 use wcf\data\package\Package;
 use wcf\system\package\FilesFileHandler;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\StyleUtil;
 
 /**
  * Installs, updates and deletes files.
  * 
- * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Matthias Schmidt, Marcel Werk
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -29,14 +29,22 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	public function install() {
 		parent::install();
 		
+		$abbreviation = 'wcf';
+		if (isset($this->instruction['attributes']['application'])) {
+			$abbreviation = $this->instruction['attributes']['application'];
+		}
+		else if ($this->installation->getPackage()->isApplication) {
+			$abbreviation = Package::getAbbreviation($this->installation->getPackage()->package);
+		}
+		
 		// absolute path to package dir
-		$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$this->installation->getPackage()->packageDir));
+		$packageDir = Application::getDirectory($abbreviation);
 		
 		// extract files.tar to temp folder
 		$sourceFile = $this->installation->getArchive()->extractTar($this->instruction['value'], 'files_');
 		
 		// create file handler
-		$fileHandler = new FilesFileHandler($this->installation);
+		$fileHandler = new FilesFileHandler($this->installation, $abbreviation);
 		
 		// extract content of files.tar
 		$fileInstaller = $this->installation->extractFiles($packageDir, $sourceFile, $fileHandler);
@@ -51,10 +59,14 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			
 			// log file
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_file_log
-						(packageID, filename)
-				VALUES		(?, 'config.inc.php')";
+						(packageID, filename, application)
+				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->installation->getPackageID()));
+			$statement->execute(array(
+				$this->installation->getPackageID(),
+				'config.inc.php',
+				Package::getAbbreviation($this->installation->getPackage()->package)
+			));
 		}
 		
 		// delete temporary sourceArchive
@@ -68,25 +80,24 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
-		// get absolute package dir
-		$packageDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(realpath(WCF_DIR.$this->installation->getPackage()->packageDir)));
-		
-		// create file list
-		$files = array();
-		
-		// get files from log
-		$sql = "SELECT	*
+		// fetch files from log
+		$sql = "SELECT	filename, application
 			FROM	wcf".WCF_N."_package_installation_file_log
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
+		
+		$files = array();
 		while ($row = $statement->fetchArray()) {
-			$files[] = $row['filename'];
+			if (!isset($files[$row['application']])) {
+				$files[$row['application']] = array();
+			}
+			
+			$files[$row['application']][] = $row['filename'];
 		}
 		
-		if (!empty($files)) {
-			// delete files
-			$this->installation->deleteFiles($packageDir, $files);
+		foreach ($files as $application => $filenames) {
+			$this->installation->deleteFiles(Application::getDirectory($application), $filenames);
 			
 			// delete log entries
 			parent::uninstall();

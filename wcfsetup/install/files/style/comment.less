@@ -1,0 +1,114 @@
+/* ############## Profile Comments ############## */
+.comment,
+.commentResponse {
+	position: relative;
+}
+
+.commentList .buttonGroupNavigation {
+	position: absolute;
+	top: @wcfGapTiny;
+	right: @wcfGapMedium;
+	
+	> ul {
+		> li {
+			float: left;
+			opacity: 0;
+			
+			.transition(opacity, .1s);
+			
+			> a {
+				padding: @wcfGapTiny;
+			}
+		}
+	}
+}
+
+.commentResponseList .buttonGroupNavigation {
+	top: @wcfGapSmall;
+	right: @wcfGapSmall;
+}
+
+.commentContent:hover > .buttonGroupNavigation > ul > li {
+	opacity: 1;
+}
+
+.commentList input[type='text'] {
+	+ small {
+		color: @wcfDimmedColor;
+		opacity: 0;
+		
+		.transition(opacity, .1s);
+	}
+	
+	&:focus + small {
+		opacity: 1;
+	}
+}
+
+.commentResponse {
+	border-top: 1px solid @wcfContainerBorderColor;
+	padding: @wcfGapSmall;
+}
+
+.commentResponseAdd {
+	border-top: 1px solid @wcfContainerBorderColor;
+	margin-top: @wcfGapMedium;
+	padding: 7px 7px 0;
+}
+
+.commentResponseList .commentResponse:first-child {
+	margin-top: @wcfGapMedium;
+}
+
+.commentResponseAdd + .commentResponseList .commentResponse:first-child {
+	margin-top: 7px;
+}
+
+.commentList > li:nth-child(2n) .commentResponseList .commentResponse:nth-child(2n+1) {
+	background-color: @wcfContainerBackgroundColor;
+	
+	.transition(background-color, .1s);
+}
+
+.commentList > li:nth-child(2n+1) .commentResponseList .commentResponse:nth-child(2n+1) {
+	background-color: @wcfContainerAccentBackgroundColor;
+	
+	.transition(background-color, .1s);
+}
+
+.commentResponseList > li:hover {
+	background-color: @wcfContainerHoverBackgroundColor !important;
+}
+
+.commentList > li:not(.commentAdd):hover {
+	background-color: @wcfContainerBackgroundColor;
+	
+	&:nth-child(2n) {
+		background-color: @wcfContainerAccentBackgroundColor;
+	}
+}
+
+/* buttons to load comments/responses */
+.commentList > .commentLoadNext,
+.comment .responseLoadNext {
+	text-align: center;
+	
+	> button {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+}
+
+.comment .responseLoadNext {
+	padding-top: @wcfGapMedium;
+}
+
+.commentList .userMessage {
+	margin-top: 0;
+}
+
+/* like display */
+.commentList .likesBadge {
+	display: inline-block;
+	margin: -2px 0 -2px @wcfGapTiny;
+}

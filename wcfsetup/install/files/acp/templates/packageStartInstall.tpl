@@ -1,4 +1,4 @@
-{if $packageID == 0}
+{if $package === null}
 	{assign var='pageTitle' value='wcf.acp.package.startInstall'}
 {else}
 	{assign var='pageTitle' value='wcf.acp.package.startUpdate'}
@@ -125,7 +125,6 @@
 			<div class="formSubmit">
 				<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 				<input type="hidden" name="action" value="{$action}" />
-				{if $packageID != 0}<input type="hidden" name="id" value="{@$packageID}" />{/if}
 			</div>
 		</form>
 	</div>

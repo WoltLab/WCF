@@ -126,10 +126,10 @@ body, .tabularBox, .dialogTitlebar {
 
 	#main {
 		> div {
-			.boxShadowInset(0, 0, rgba(0, 0, 0, .1), 2px);
-			
 			> .sidebar {
-				> .collapsibleButton {
+				.boxShadowInset(0, 0, rgba(0, 0, 0, .1), 2px);
+				
+				> span > .collapsibleButton {
 					border-width: 1px 0 1px 1px;
 					border-style: solid;
 					border-color: darken(@wcfSidebarBackgroundColor, 8%);
@@ -141,22 +141,20 @@ body, .tabularBox, .dialogTitlebar {
 		}
 		
 		&.sidebarOrientationLeft {
-			.content {
-				border-left: 1px solid darken(@wcfSidebarBackgroundColor, 8%);
-				margin-left: 299px;
+			.sidebar {
+				border-right: 1px solid darken(@wcfSidebarBackgroundColor, 8%);
+				
+				> div {
+					width: 301px
+				}
 			}
 		}
 		
 		&.sidebarOrientationRight {
-			.content {
-				border-right: 1px solid darken(@wcfSidebarBackgroundColor, 8%);
-				margin-right: 299px;
+			.sidebar {
+				border-left: 1px solid darken(@wcfSidebarBackgroundColor, 8%);
 			}
 		}
-	}
-
-	.content {
-		.boxShadow(0, 0, rgba(0, 0, 0, .1), 2px);
 	}
 }
 
@@ -412,11 +410,11 @@ button.active:hover {
 	.tabularBox:not(.tabularBoxTitle) .table {
 		thead tr:first-child th {
 			&:first-child {
-				.borderRadius(@wcfContainerBorderRadius - 2, 0, 0, 0);
+				border-top-left-radius: @wcfContainerBorderRadius - 2;
 			}
 			
 			&:last-child {
-				.borderRadius(0, @wcfContainerBorderRadius - 2, 0, 0);
+				border-top-right-radius: @wcfContainerBorderRadius - 2;
 			}
 		}
 	}
@@ -424,11 +422,11 @@ button.active:hover {
 	.tabularBox .table {
 		tbody tr:last-child td {
 			&:first-child {
-				.borderRadius(0, 0, 0, @wcfContainerBorderRadius - 2);
+				border-bottom-left-radius: @wcfContainerBorderRadius - 2;
 			}
 			
 			&:last-child {
-				.borderRadius(0, 0, @wcfContainerBorderRadius - 2, 0);
+				border-bottom-right-radius: @wcfContainerBorderRadius - 2;
 			}
 		}
 	}
@@ -437,21 +435,21 @@ button.active:hover {
 		> tbody > tr {
 			&:first-child > td {
 				&:first-child {
-					.borderRadius(@wcfContainerBorderRadius - 2, 0, 0, 0);
+					border-top-left-radius: @wcfContainerBorderRadius - 2;
 				}
 				
 				&:last-child {
-					.borderRadius(0, @wcfContainerBorderRadius - 2, 0, 0);
+					border-top-right-radius: @wcfContainerBorderRadius - 2;
 				}
 			}
 			
 			&:last-child > td {
 				&:first-child {
-					.borderRadius(0, 0, 0, @wcfContainerBorderRadius - 2);
+					border-bottom-left-radius: @wcfContainerBorderRadius - 2;
 				}
 				
 				&:last-child {
-					.borderRadius(0, 0, @wcfContainerBorderRadius - 2, 0);
+					border-bottom-right-radius: @wcfContainerBorderRadius - 2;
 				}
 			}
 		}

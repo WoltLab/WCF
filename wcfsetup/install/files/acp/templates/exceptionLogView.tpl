@@ -3,7 +3,6 @@
 	//<![CDATA[
 	$(function() {
 		{if $exceptionID}window.location.hash = '{$exceptionID|encodeJS}';{/if}
-		WCF.Collapsible.Simple.init();
 		
 		$('#exceptionID').on('keyup keydown keypress', function () {
 			if ($.trim($(this).val()) == '') {
@@ -26,13 +25,13 @@
 </header>
 
 {if !$logFiles|empty}
-	<form action="{link controller='ExceptionLogView'}{/link}">
+	<form method="get" action="{link controller='ExceptionLogView'}{/link}">
 		<div class="container containerPadding marginTop">
 			<fieldset><legend>{lang}wcf.acp.exceptionLog.search{/lang}</legend>
 				<dl>
 					<dt><label for="exceptionID">{lang}wcf.acp.exceptionLog.search.exceptionID{/lang}</label></dt>
 					<dd>
-						<input type="text" id="exceptionID" name="exceptionID" value="{$exceptionID}" autofocus="autofocus" class="medium" />
+						<input type="text" id="exceptionID" name="exceptionID" value="{$exceptionID}" autofocus="autofocus" class="long" />
 					</dd>
 				</dl>
 				<dl>
@@ -44,11 +43,11 @@
 					</dd>
 				</dl>
 			</fieldset>
-			
-			<div class="formSubmit">
-				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-				{@SID_INPUT_TAG}
-			</div>
+		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			{@SID_INPUT_TAG}
 		</div>
 	</form>
 {/if}
@@ -70,24 +69,18 @@
 {if !$logFiles|empty}
 	{if $logFile}
 		{foreach from=$exceptions item='exception' key='exceptionKey'}
-			<div class="tabularBox tabularBoxTitle marginTop" id="{$exceptionKey}">
-				<header>
-					<h2><a class="jsCollapsible jsTooltip" data-is-open="{if $exceptionKey == $exceptionID}1{else}0{/if}" data-collapsible-container="exception_{$exceptionKey}" title="{lang}wcf.global.button.collapsible{/lang}" class="jsTooltip"><span class="icon icon16 icon-chevron-{if $exceptionKey == $exceptionID}down{else}right{/if}"></span></a> {$exception[message]}</h2>
-					<small>{$exception[date]|strtotime|plainTime}</small>
-				</header>
-				
-				<div id="exception_{$exceptionKey}" class="container containerPadding" {if $exceptionKey != $exceptionID} style="display: none;"{/if}>
+			<div id="{$exceptionKey}" class="container containerPadding marginTop">
+				<fieldset>
+					<legend>{$exception[message]}</legend>
+					
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.date{/lang}</dt>
+						<dd>{$exception[date]|strtotime|plainTime}</dd>
+					</dl>
+					
 					<dl>
 						<dt>{lang}wcf.acp.exceptionLog.exception.file{/lang}</dt>
 						<dd>{$exception[file]} ({$exception[line]})</dd>
-					</dl>
-					<dl>
-						<dt>{lang}wcf.acp.exceptionLog.exception.phpVersion{/lang}</dt>
-						<dd>{$exception[phpVersion]}</dd>
-					</dl>
-					<dl>
-						<dt>{lang}wcf.acp.exceptionLog.exception.wcfVersion{/lang}</dt>
-						<dd>{$exception[wcfVersion]}</dd>
 					</dl>
 					<dl>
 						<dt>{lang}wcf.acp.exceptionLog.exception.requestURI{/lang}</dt>
@@ -110,10 +103,10 @@
 						</dd>
 					</dl>
 					<dl>
-						<dt>{lang}wcf.acp.exceptionLog.exception.copy{/lang}</dt>
-						<dd><textarea rows="5" cols="40" class="jsCopyException" readonly="readonly">{$exception[0]}</textarea></dd>
+						<dt><label for="copyException{$exceptionKey}">{lang}wcf.acp.exceptionLog.exception.copy{/lang}</label></dt>
+						<dd><textarea id="copyException{$exceptionKey}" rows="5" cols="40" class="jsCopyException" readonly="readonly">{$exception[0]}</textarea></dd>
 					</dl>
-				</div>
+				</fieldset>
 			</div>
 		{/foreach}
 	{elseif $exceptionID}

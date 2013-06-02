@@ -99,7 +99,9 @@
 			WCF.System.PageNavigation.init('.pageNavigation');
 			WCF.Date.Picker.init();
 			
-			new WCF.ACP.Search();
+			{if $__wcf->user->userID}
+				new WCF.ACP.Search();
+			{/if}
 			
 			{event name='javascriptInit'}
 		});
@@ -114,13 +116,15 @@
 		<div>
 			{if $__wcf->user->userID}
 				<nav id="topMenu" class="userPanel">
-					<div class="layoutFluid clearfix">
+					<div class="layoutFluid">
 						<ul class="userPanelItems">
 							<li id="userMenu" class="dropdown">
-								<a class="dropdownToggle framed" data-toggle="userMenu">{event name='userAvatar'} {lang}wcf.user.userNote{/lang}</a>
+								<a class="dropdownToggle framed" data-toggle="userMenu">{if PACKAGE_ID}{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)} {/if}{lang}wcf.user.userNote{/lang}</a>
 								<ul class="dropdownMenu">
-									<li><a href="../">FRONTEND</a></li>
-									<li class="dropdownDivider"></li>
+									{if PACKAGE_ID > 1}
+										<li><a href="{@$__wcf->getPageMenu()->getLandingPage()->getLink()}">{lang}wcf.global.toLandingPage{/lang}</a></li>
+										<li class="dropdownDivider"></li>
+									{/if}
 									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
 							</li>
@@ -158,7 +162,7 @@
 				{/hascontent}
 			{/if}
 			
-			<nav class="navigation navigationHeader clearfix">
+			<nav class="navigation navigationHeader">
 				<ul class="navigationIcons">
 					<li id="toBottomLink" class="toBottomLink"><a href="{@$__wcf->getAnchor('bottom')}" title="{lang}wcf.global.scrollDown{/lang}" class="jsTooltip"><span class="icon icon16 icon-arrow-down"></span> <span class="invisible">{lang}wcf.global.scrollDown{/lang}</span></a></li>
 					{event name='navigationIcons'}
@@ -204,5 +208,5 @@
 				</aside>
 			{/hascontent}
 			
-			<section id="content" class="content clearfix">
+			<section id="content" class="content">
 				

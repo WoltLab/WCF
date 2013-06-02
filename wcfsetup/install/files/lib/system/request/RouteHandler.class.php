@@ -32,6 +32,12 @@ class RouteHandler extends SingletonFactory {
 	protected static $path = '';
 	
 	/**
+	 * current path info component
+	 * @var	string
+	 */
+	protected static $pathInfo = '';
+	
+	/**
 	 * HTTP protocol, either 'http://' or 'https://'
 	 * @var	string
 	 */
@@ -81,15 +87,6 @@ class RouteHandler extends SingletonFactory {
 		$acpRoute->setParameterOption('id', null, '\d+', true);
 		$this->addRoute($acpRoute);
 		
-		if (MODULE_API_ACCESS) {
-			$apiRoute = new Route('api');
-			$apiRoute->setSchema('/{controller}/{className}-{id}');
-			$apiRoute->setParameterOption('controller', 'API');
-			$apiRoute->setParameterOption('className', null, '\w+');
-			$apiRoute->setParameterOption('id', null, '\d+');
-			$this->addRoute($apiRoute);
-		}
-		
 		$defaultRoute = new Route('default');
 		$defaultRoute->setSchema('/{controller}/{id}');
 		$defaultRoute->setParameterOption('controller', null, null, true);
@@ -114,14 +111,12 @@ class RouteHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function matches() {
-		$pathInfo = (isset($_SERVER['PATH_INFO'])) ? $_SERVER['PATH_INFO'] : '';
-		
 		foreach ($this->routes as $route) {
 			if (RequestHandler::getInstance()->isACPRequest() != $route->isACP()) {
 				continue;
 			}
 			
-			if ($route->matches($pathInfo)) {
+			if ($route->matches(self::getPathInfo())) {
 				$this->routeData = $route->getRouteData();
 				
 				$this->isDefaultController = $this->routeData['isDefaultController'];
@@ -257,5 +252,39 @@ class RouteHandler extends SingletonFactory {
 		}
 		
 		return self::$path;
+	}
+	
+	/**
+	 * Returns current path info component.
+	 * 
+	 * @return	string
+	 */
+	public static function getPathInfo() {
+		if (empty(self::$pathInfo)) {
+			if (isset($_SERVER['PATH_INFO'])) {
+				self::$pathInfo = $_SERVER['PATH_INFO'];
+			}
+			else if (isset($_SERVER['ORIG_PATH_INFO'])) {
+				self::$pathInfo = $_SERVER['ORIG_PATH_INFO'];
+					
+				// in some configurations ORIG_PATH_INFO contains the path to the file
+				// if the intended PATH_INFO component is empty
+				if (!empty(self::$pathInfo)) {
+					if (isset($_SERVER['SCRIPT_NAME']) && (self::$pathInfo == $_SERVER['SCRIPT_NAME'])) {
+						self::$pathInfo = '';
+					}
+			
+					if (isset($_SERVER['PHP_SELF']) && (self::$pathInfo == $_SERVER['PHP_SELF'])) {
+						self::$pathInfo = '';
+					}
+			
+					if (isset($_SERVER['SCRIPT_URL']) && (self::$pathInfo == $_SERVER['SCRIPT_URL'])) {
+						self::$pathInfo = '';
+					}
+				}
+			}
+		}
+		
+		return self::$pathInfo;
 	}
 }

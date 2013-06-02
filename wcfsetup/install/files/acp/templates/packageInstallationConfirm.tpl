@@ -1,19 +1,25 @@
-{include file='header' pageTitle=$archive->getLocalizedPackageInfo('packageName')}
+{capture assign='pageTitle'}{lang}wcf.acp.package.{@$queue->action}.title{/lang}: {$archive->getLocalizedPackageInfo('packageName')}{/capture}
+{include file='header'}
 
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.acp.package.installation.title': '{lang}wcf.acp.package.installation.title{/lang}',
-			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}'
+			'wcf.acp.package.install.title': '{lang}wcf.acp.package.install.title{/lang}',
+			'wcf.acp.package.installation.rollback': '{lang}wcf.acp.package.installation.rollback{/lang}',
+			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}',
+			'wcf.acp.package.update.title': '{lang}wcf.acp.package.update.title{/lang}'
 		});
-		new WCF.ACP.Package.Installation({@$queueID}, undefined, true);
+		
+		new WCF.ACP.Package.Installation({@$queue->queueID}, undefined, {if $queue->action == 'install'}true, false{else}false, true{/if});
+		
+		new WCF.ACP.Package.Installation.Cancel({@$queue->queueID});
 	});
 	//]]>
 </script>
 
 <header class="boxHeadline">
-	<h1>{$archive->getLocalizedPackageInfo('packageName')}</h1>
+	<h1>{lang}wcf.acp.package.{@$queue->action}.title{/lang}: {$archive->getLocalizedPackageInfo('packageName')}</h1>
 	<p>{$archive->getLocalizedPackageInfo('packageDescription')}</p>
 </header>
 
@@ -41,38 +47,40 @@
 	</div>
 {/if}
 
-<fieldset class="marginTop">
-	<legend>{lang}wcf.acp.package.information.properties{/lang}</legend>
-	
-	<dl>
-		<dt>{lang}wcf.acp.package.identifier{/lang}</dt>
-		<dd>{$archive->getPackageInfo('name')}</dd>
-	</dl>
-	
-	<dl>
-		<dt>{lang}wcf.acp.package.version{/lang}</dt>
-		<dd>{$archive->getPackageInfo('version')}</dd>
-	</dl>
-	
-	<dl>
-		<dt>{lang}wcf.acp.package.packageDate{/lang}</dt>
-		<dd>{@$archive->getPackageInfo('date')|date}</dd>
-	</dl>
-	
-	{if $archive->getPackageInfo('packageURL') != ''}
+<div class="container containerPadding marginTop">
+	<fieldset>
+		<legend>{lang}wcf.acp.package.information.properties{/lang}</legend>
+		
 		<dl>
-			<dt>{lang}wcf.acp.package.url{/lang}</dt>
-			<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
+			<dt>{lang}wcf.acp.package.identifier{/lang}</dt>
+			<dd>{$archive->getPackageInfo('name')}</dd>
 		</dl>
-	{/if}
-	
-	<dl>
-		<dt>{lang}wcf.acp.package.author{/lang}</dt>
-		<dd>{if $archive->getAuthorInfo('authorURL')}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getAuthorInfo('authorURL')|rawurlencode}" class="externalURL">{$archive->getAuthorInfo('author')}</a>{else}{$archive->getAuthorInfo('author')}{/if}</dd>
-	</dl>
-	
-	{event name='propertyFields'}
-</fieldset>
+		
+		<dl>
+			<dt>{lang}wcf.acp.package.version{/lang}</dt>
+			<dd>{$archive->getPackageInfo('version')}</dd>
+		</dl>
+		
+		<dl>
+			<dt>{lang}wcf.acp.package.packageDate{/lang}</dt>
+			<dd>{@$archive->getPackageInfo('date')|date}</dd>
+		</dl>
+		
+		{if $archive->getPackageInfo('packageURL') != ''}
+			<dl>
+				<dt>{lang}wcf.acp.package.url{/lang}</dt>
+				<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
+			</dl>
+		{/if}
+		
+		<dl>
+			<dt>{lang}wcf.acp.package.author{/lang}</dt>
+			<dd>{if $archive->getAuthorInfo('authorURL')}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getAuthorInfo('authorURL')|rawurlencode}" class="externalURL">{$archive->getAuthorInfo('author')}</a>{else}{$archive->getAuthorInfo('author')}{/if}</dd>
+		</dl>
+		
+		{event name='propertyFields'}
+	</fieldset>
+</div>
 
 {if $requiredPackages|count > 0}
 	<div class="tabularBox tabularBoxTitle marginTop">
@@ -83,9 +91,10 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnTitle">{lang}wcf.acp.package.name{/lang}</th>
-					<th class="columnText">{lang}wcf.acp.package.installation.packageStatus{/lang}</th>
-					<th class="columnDigits">{lang}wcf.acp.package.installation.requiredVersion{/lang}</th>
+					<th class="columnTitle columnPackageName">{lang}wcf.acp.package.name{/lang}</th>
+					<th class="columnText columnPackage">{lang}wcf.acp.package.identifier{/lang}</th>
+					<th class="columnText columnPackageVersion">{lang}wcf.acp.package.installation.requiredVersion{/lang}</th>
+					<th class="columnText columnStatus">{lang}wcf.acp.package.installation.packageStatus{/lang}</th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -94,9 +103,10 @@
 			<tbody>
 				{foreach from=$requiredPackages item=$package}
 					<tr>
-						<td class="columnTitle"><span class="badge label {if $package.status == 'installed'}green{elseif $package.status == 'delivered'}yellow{else}red{/if}">{@$package.name}</span></td>
-						<td class="columnText">{lang}wcf.acp.package.installation.packageStatus.{@$package.status}{/lang}</td>
-						<td class="columnDigits">{if $package.minversion|isset}{if $package.status == 'missingVersion'}<span class="badge label red">{/if}{$package.minversion}{if $package.status == 'missingVersion'}</span>{/if}{/if}</td>
+						<td class="columnTitle columnPackageName">{if $package[package]}{$package[package]->packageName}{/if}</td>
+						<td class="columnText columnPackage">{@$package.name}</td>
+						<td class="columnText columnPackageVersion">{if $package.minversion|isset}{if $package.status == 'missingVersion'}<span class="badge label red">{/if}{$package.minversion}{if $package.status == 'missingVersion'}</span>{/if}{/if}</td>
+						<td class="columnText columnStatus"><span class="badge label {if $package.status == 'installed'}green{elseif $package.status == 'delivered'}yellow{else}red{/if}">{lang}wcf.acp.package.installation.packageStatus.{@$package.status}{/lang}</span></td>
 						
 						{event name='columns'}
 					</tr>
@@ -107,9 +117,9 @@
 {/if}
 
 <div class="formSubmit">
-	<input type="button" onclick="document.location.href=fixURL('{link controller='Package'}action={@$action}&queueID={@$queueID}&step=cancel{/link}')" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />
+	<input type="button" id="backButton" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />
 	{if $missingPackages == 0 && $excludingPackages|count == 0 && $excludedPackages|count == 0}
-		<input type="button" id="submitButton" value="{lang}wcf.global.button.next{/lang}" class="default" accesskey="s" />
+		<input type="button" class="buttonPrimary" id="submitButton" value="{lang}wcf.global.button.next{/lang}" class="default" accesskey="s" />
 	{/if}
 </div>
 

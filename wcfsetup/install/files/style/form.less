@@ -203,6 +203,7 @@ select[multiple] {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
+	font-family: @wcfBaseFontFamily;
 	padding: 4px 3px;
 	margin: 0;
 }
@@ -404,7 +405,7 @@ textarea {
 	margin-top: @wcfGapSmall;
 }
 
-/* todo: element list with checkboxes */
+/* element list with checkboxes */
 .structuredList {
 	background-color: @wcfContainerBackgroundColor;
 	
@@ -425,7 +426,6 @@ textarea {
 		}
 		
 		&.category {
-			/* TODO: This color was @wcfNavigationBackgroundColor which does not exist anymore */
 			background-color: @wcfNavigationHeaderBackgroundColor;
 			
 			&:hover {
@@ -445,7 +445,7 @@ textarea {
 	}
 }
 
-/* todo: missing doc */
+/* tag input list */
 .editableItemList ul li {
 	cursor: pointer;
 	margin-left: @wcfGapTiny;
@@ -455,8 +455,7 @@ textarea {
 	}
 }
 
-/* todo */
+/* Fixes weird firefox bug */
 select > option {
-	/* Fixes weird firefox bug */
 	display: block !important;
 }

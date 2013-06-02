@@ -124,7 +124,7 @@ final class CronjobUtil {
 		self::calculateTime($values);
 		
 		// return timestamp
-		return mktime(
+		return gmmktime(
 			self::$result['hour'],
 			self::$result['minute'],
 			1,
@@ -142,8 +142,8 @@ final class CronjobUtil {
 	protected static function calculateTime(array &$values) {
 		// calculation starts with month, thus start with
 		// month of $time (if within values)
-		$currentMonth = date('n', self::$timeBase);
-		$currentYear = date('Y', self::$timeBase);
+		$currentMonth = gmdate('n', self::$timeBase);
+		$currentYear = gmdate('Y', self::$timeBase);
 		$index = self::findKey($currentMonth, $values['month']);
 		
 		self::calculateDay($values);
@@ -165,20 +165,20 @@ final class CronjobUtil {
 		
 		if ($addAnDay) {
 			$date = getdate($timeBase);
-			$timeBase = mktime(0, 0, 1, $date['mon'], $date['mday'] + 1, $date['year']);
+			$timeBase = gmmktime(0, 0, 1, $date['mon'], $date['mday'] + 1, $date['year']);
 		}
 		
-		$day = date('j', $timeBase);
-		$month = date('n', $timeBase);
-		$year = date('Y', $timeBase);
+		$day = gmdate('j', $timeBase);
+		$month = gmdate('n', $timeBase);
+		$year = gmdate('Y', $timeBase);
 		
 		// calculate date of next execution based upon day of week
 		$dateDow = self::calculateDow($month, $year, $values, $day);
-		$dateDowTimestamp = mktime(0, 0, 1, $dateDow['month'], $dateDow['day'], $dateDow['year']);
+		$dateDowTimestamp = gmmktime(0, 0, 1, $dateDow['month'], $dateDow['day'], $dateDow['year']);
 		
 		// calculate date of next execution based upon day of month
 		$dateDom = self::calculateDom($month, $year, $values, $day);
-		$dateDomTimestamp = mktime(0, 0, 1, $dateDom['month'], $dateDom['day'], $dateDom['year']);
+		$dateDomTimestamp = gmmktime(0, 0, 1, $dateDom['month'], $dateDom['day'], $dateDom['year']);
 		
 		// pick the earlier date if both dom and dow are restricted
 		if (self::$domRestricted && self::$dowRestricted) {
@@ -216,7 +216,7 @@ final class CronjobUtil {
 		// compare day, month and year wether we have to recalculate hour and minute
 		if (($day != self::$result['day']) || ($month != self::$result['month']) || ($year != self::$result['year'])) {
 			// calculate new time base
-			$timeBase = mktime(0, 0, 1, self::$result['month'], self::$result['day'], self::$result['year']);
+			$timeBase = gmmktime(0, 0, 1, self::$result['month'], self::$result['day'], self::$result['year']);
 			
 			self::calculateHour($values, $timeBase);
 		}
@@ -232,11 +232,11 @@ final class CronjobUtil {
 	 * @return	array
 	 */
 	protected static function calculateDow($month, $year, array &$values, $day = 1) {
-		$days = date('t', mktime(0, 0, 1, $month, $day, $year));
+		$days = gmdate('t', gmmktime(0, 0, 1, $month, $day, $year));
 		
 		for ($i = $day; $i <= $days; $i++) {
 			// get dow
-			$dow = date('w', mktime(0, 0, 1, $month, $i, $year));
+			$dow = gmdate('w', gmmktime(0, 0, 1, $month, $i, $year));
 			
 			if (in_array($dow, $values['dow'])) {
 				return array(
@@ -261,7 +261,7 @@ final class CronjobUtil {
 	 * @return	array
 	 */
 	protected static function calculateDom($month, $year, array &$values, $day = 1) {
-		$days = date('t', mktime(0, 0, 1, $month, $day, $year));
+		$days = gmdate('t', gmmktime(0, 0, 1, $month, $day, $year));
 		
 		for ($i = $day; $i <= $days; $i++) {
 			if (in_array($i, $values['dom'])) {
@@ -333,7 +333,7 @@ final class CronjobUtil {
 			$minute = 0;
 		}
 		else {
-			$minute = date('i', $timeBase);
+			$minute = gmdate('i', $timeBase);
 		}
 		
 		$index = self::findKey($minute, $values['minute'], false);
