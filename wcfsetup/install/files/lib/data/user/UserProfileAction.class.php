@@ -46,7 +46,9 @@ class UserProfileAction extends UserAction {
 		if (isset($this->parameters['options']['enableBBCodes']) && WCF::getSession()->getPermission('user.signature.canUseBBCodes')) {
 			$disallowedBBCodes = BBCodeParser::getInstance()->validateBBCodes($this->parameters['data']['message'], explode(',', WCF::getSession()->getPermission('user.signature.allowedBBCodes')));
 			if (!empty($disallowedBBCodes)) {
-				throw new UserInputException('message', 'disallowedBBCodes', $disallowedBBCodes);
+				throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', array(
+					'disallowedBBCodes' => $disallowedBBCodes
+				)));
 			}
 		}
 	}

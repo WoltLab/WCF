@@ -6809,10 +6809,10 @@ WCF.Sortable.List = Class.extend({
 		
 		// send request
 		var $parameters = $.extend(true, {
-				data: {
-					offset: this._offset,
-					structure: this._structure
-				}
+			data: {
+				offset: this._offset,
+				structure: this._structure
+			}
 		}, this._additionalParameters);
 		
 		this._proxy.setOption('data', {

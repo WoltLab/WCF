@@ -7,13 +7,14 @@ use wcf\system\bbcode\MessageParser;
 use wcf\system\bbcode\PreParser;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
  * Provides a default message preview action.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.message
  * @subpackage	data.message
@@ -50,10 +51,22 @@ class MessagePreviewAction extends BBCodeAction {
 		$enableSmilies = (isset($this->parameters['options']['enableSmilies'])) ? 1 : 0;
 		$preParse = (isset($this->parameters['options']['preParse'])) ? 1 : 0;
 		
+		$allowedBBCodesPermission = (isset($this->parameters['allowedBBCodesPermission'])) ? $this->parameters['allowedBBCodesPermission'] : 'user.message.allowedBBCodes';
+		
 		// validate permissions for options
 		if ($enableBBCodes && !WCF::getSession()->getPermission('user.message.canUseBBCodes')) $enableBBCodes = 0;
 		if ($enableHtml && !WCF::getSession()->getPermission('user.message.canUseHtml')) $enableHtml = 0;
 		if ($enableSmilies && !WCF::getSession()->getPermission('user.message.canUseSmilies')) $enableSmilies = 0;
+		
+		// check if disallowed bbcode are used
+		if ($enableBBCodes && $allowedBBCodesPermission) {
+			$disallowedBBCodes = MessageParser::getInstance()->validateBBCodes($this->parameters['data']['message'], ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($allowedBBCodesPermission))));
+			if (!empty($disallowedBBCodes)) {
+				throw new UserInputException('message', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', array(
+					'disallowedBBCodes' => $disallowedBBCodes
+				)));
+			}
+		}
 		
 		// get attachments
 		if (!empty($this->parameters['attachmentObjectType'])) {
@@ -93,7 +106,12 @@ class MessagePreviewAction extends BBCodeAction {
 		
 		// parse URLs
 		if ($preParse && $enableBBCodes) {
-			$message = PreParser::getInstance()->parse($message);
+			if ($allowedBBCodesPermission) {
+				$message = PreParser::getInstance()->parse($message, ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($allowedBBCodesPermission))));
+			}
+			else {
+				$message = PreParser::getInstance()->parse($message);
+			}
 		}
 		
 		// parse message

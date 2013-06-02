@@ -169,6 +169,7 @@ WCF.Message.Preview = Class.extend({
 		
 		this._previewButton.click($.proxy(this._click, this));
 		this._proxy = new WCF.Action.Proxy({
+			failure: $.proxy(this._failure, this),
 			success: $.proxy(this._success, this)
 		});
 	},
@@ -252,6 +253,9 @@ WCF.Message.Preview = Class.extend({
 		// restore preview button
 		this._previewButton.html(this._previewButtonLabel).enable();
 		
+		// remove error message
+		this._messageField.parent().children('small.innerError').remove();
+		
 		// evaluate message
 		this._handleResponse(data);
 	},
@@ -261,7 +265,33 @@ WCF.Message.Preview = Class.extend({
 	 * 
 	 * @param	object		data
 	 */
-	_handleResponse: function(data) { }
+	_handleResponse: function(data) { },
+	
+	/**
+	 * Handles errors during preview requests.
+	 * 
+	 * The return values indicates if the default error overlay is shown.
+	 * 
+	 * @param	object		data
+	 * @return	boolean
+	 */
+	_failure: function(data) {
+		if (data === null || data.returnValues === undefined || data.returnValues.errorType === undefined) {
+			return true;
+		}
+		
+		// restore preview button
+		this._previewButton.html(this._previewButtonLabel).enable();
+		
+		var $innerError = this._messageField.next('small.innerError').empty();
+		if (!$innerError.length) {
+			$innerError = $('<small class="innerError" />').appendTo(this._messageField.parent());
+		}
+		
+		$innerError.html(data.returnValues.errorType);
+		
+		return false;
+	}
 });
 
 /**
