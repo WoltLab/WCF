@@ -497,7 +497,7 @@ final class FileUtil {
 		
 		if (self::$mode === null) {
 			// WCFSetup
-			if (defined('NO_IMPORTS')) {
+			if (defined('INSTALL_SCRIPT')) {
 				// do not use PHP_OS here, as this represents the system it was built on != running on
 				if (strpos(php_uname(), 'Windows') !== false) {
 					self::$mode = '0777';
@@ -512,7 +512,7 @@ final class FileUtil {
 					// as this file (uploaded through FTP), we can safely grant write
 					// permissions exclusively to the owner rather than everyone
 					if (file_exists($tmpFilename)) {
-						$scriptOwner = fileowner(__FILE__);
+						$scriptOwner = fileowner(INSTALL_SCRIPT);
 						$fileOwner = fileowner($tmpFilename);
 							
 						if ($scriptOwner === $fileOwner) {
