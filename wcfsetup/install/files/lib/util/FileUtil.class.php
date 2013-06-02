@@ -504,21 +504,21 @@ final class FileUtil {
 				}
 				else {
 					self::$mode = '0666';
-				
+					
 					$tmpFilename = '__permissions_'.sha1(time()).'.txt';
 					@touch($tmpFilename);
-				
+					
 					// create a new file and check the file owner, if it is the same
 					// as this file (uploaded through FTP), we can safely grant write
 					// permissions exclusively to the owner rather than everyone
 					if (file_exists($tmpFilename)) {
 						$scriptOwner = fileowner(INSTALL_SCRIPT);
 						$fileOwner = fileowner($tmpFilename);
-							
+						
 						if ($scriptOwner === $fileOwner) {
 							self::$mode = '0644';
 						}
-							
+						
 						@unlink($tmpFilename);
 					}
 				}
@@ -535,14 +535,14 @@ final class FileUtil {
 		
 		if (is_dir($filename)) {
 			if (self::$mode == '0644') {
-				chmod($filename, 0755);
+				@chmod($filename, 0755);
 			}
 			else {
-				chmod($filename, 0777);
+				@chmod($filename, 0777);
 			}
 		}
 		else {
-			chmod($filename, octdec(self::$mode));
+			@chmod($filename, octdec(self::$mode));
 		}
 		
 		if (!is_writable($filename)) {
