@@ -8,6 +8,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\message\censorship\Censorship;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
@@ -256,7 +257,7 @@ abstract class MessageForm extends RecaptchaForm {
 		}
 		
 		if ($this->enableBBCodes && $this->allowedBBCodesPermission) {
-			$disallowedBBCodes = BBCodeParser::getInstance()->validateBBCodes($this->text, explode(',', WCF::getSession()->getPermission($this->allowedBBCodesPermission)));
+			$disallowedBBCodes = BBCodeParser::getInstance()->validateBBCodes($this->text, ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($this->allowedBBCodesPermission))));
 			if (!empty($disallowedBBCodes)) {
 				WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
 				throw new UserInputException('text', 'disallowedBBCodes');
@@ -298,7 +299,7 @@ abstract class MessageForm extends RecaptchaForm {
 			// BBCodes are enabled
 			if ($this->enableBBCodes) {
 				if ($this->allowedBBCodesPermission) {
-					$this->text = PreParser::getInstance()->parse($this->text, explode(',', WCF::getSession()->getPermission($this->allowedBBCodesPermission)));
+					$this->text = PreParser::getInstance()->parse($this->text, ArrayUtil::trim(explode(',', WCF::getSession()->getPermission($this->allowedBBCodesPermission))));
 				}
 				else {
 					$this->text = PreParser::getInstance()->parse($this->text);
@@ -378,7 +379,7 @@ abstract class MessageForm extends RecaptchaForm {
 		));
 		
 		if ($this->allowedBBCodesPermission) {
-			WCF::getTPL()->assign('allowedBBCodes', explode(',', WCF::getSession()->getPermission($this->allowedBBCodesPermission)));
+			WCF::getTPL()->assign('allowedBBCodes', explode(',', ArrayUtil::trim(WCF::getSession()->getPermission($this->allowedBBCodesPermission))));
 		}
 	}
 }

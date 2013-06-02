@@ -6,12 +6,13 @@ use wcf\data\smiley\SmileyCache;
 use wcf\system\bbcode\BBCodeParser;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 
 /**
  * Option type implementation for message.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.user
  * @subpackage	system.option
@@ -47,7 +48,7 @@ class MessageOptionType extends TextareaOptionType {
 		parent::validate($option, $newValue);
 		
 		if ($option->allowedbbcodepermission) {
-			$disallowedBBCodes = BBCodeParser::getInstance()->validateBBCodes($newValue, explode(',', WCF::getSession()->getPermission($option->allowedbbcodepermission)));
+			$disallowedBBCodes = BBCodeParser::getInstance()->validateBBCodes($newValue, explode(',', ArrayUtil::trim(WCF::getSession()->getPermission($option->allowedbbcodepermission))));
 			if (!empty($disallowedBBCodes)) {
 				WCF::getTPL()->assign('disallowedBBCodes', $disallowedBBCodes);
 				throw new UserInputException($option->optionName, 'disallowedBBCodes');
