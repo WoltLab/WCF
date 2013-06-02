@@ -727,6 +727,12 @@ class WCFSetup extends WCF {
 		// installation number value 'n' (WCF_N) must be reflected in the executed sql queries
 		$sql = StringUtil::replace('wcf1_', 'wcf'.WCF_N.'_', $sql);
 		
+		$GLOBALS['__db'] = array(
+			'parse' => 0,
+			'modify' => 0,
+			'insert' => 0
+		);
+		
 		// execute sql queries
 		$parser = new SQLParser($sql);
 		$parser->execute();
@@ -735,6 +741,7 @@ class WCFSetup extends WCF {
 		preg_match_all("~CREATE\s+TABLE\s+(\w+)~i", $sql, $matches);
 		
 		if (!empty($matches[1])) {
+			$s2 = microtime(true);
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log
 						(sqlTable)
 				VALUES		(?)";
@@ -742,7 +749,10 @@ class WCFSetup extends WCF {
 			foreach ($matches[1] as $tableName) {
 				$statement->execute(array($tableName));
 			}
+			$GLOBALS['__db']['insert'] = round(microtime(true) - $s2, 3);
 		}
+		
+		file_put_contents(WCF_DIR.'__sqlPerformance.log', print_r($GLOBALS['__db']));
 		
 		/*
 		 * Manually install PIPPackageInstallationPlugin since install.sql content is not escaped resulting

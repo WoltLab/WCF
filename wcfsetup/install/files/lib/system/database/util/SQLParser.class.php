@@ -46,7 +46,11 @@ class SQLParser {
 			if (preg_match('~^(ALTER\s+TABLE|CREATE\s+INDEX|CREATE\s+TABLE|DROP\s+INDEX|DROP\s+TABLE|INSERT|UPDATE|DELETE)~i', $query, $match)) {
 				$statement = strtoupper(preg_replace('~\s+~', ' ', $match[0]));
 				
+				$GLOBALS['__db']['parse']++;
+				
+				$s = microtime(true);
 				$this->executeStatement($statement, $query);
+				$GLOBALS['__db']['modify'] += round(microtime(true) - $s, 3);
 			}
 		}
 	}
