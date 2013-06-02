@@ -2,7 +2,7 @@
 namespace wcf\system\user\activity\event;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\CommentList;
-use wcf\data\user\UserList;
+use wcf\data\user\UserProfileList;
 use wcf\system\user\activity\event\IUserActivityEvent;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -52,7 +52,7 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
 			$userIDs[] = $comment->userID;
 		}
 		if (!empty($userIDs)) {
-			$userList = new UserList();
+			$userList = new UserProfileList();
 			$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
 			$userList->readObjects();
 			$users = $userList->getObjects();
@@ -63,7 +63,7 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
 			if (isset($responses[$event->objectID])) {
 				$response = $responses[$event->objectID];
 				$comment = $comments[$response->commentID];
-				if (isset($users[$comment->objectID]) && isset($users[$comment->userID])) {
+				if (isset($users[$comment->objectID]) && isset($users[$comment->userID]) && !$users[$comment->objectID]->isProtected()) {
 					$event->setIsAccessible();
 					
 					// title
