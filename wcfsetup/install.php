@@ -300,7 +300,7 @@ class BasicFileUtil {
 	 * @param	string		$filename
 	 */
 	public static function makeWritable($filename) {
-		if (!file_exists($filename) || is_writable($filename)) {
+		if (!file_exists($filename)) {
 			return;
 		}
 		
