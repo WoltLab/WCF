@@ -495,13 +495,42 @@ final class FileUtil {
 			return;
 		}
 		
-		// mirror permissions of WCF.class.php
 		if (self::$mode === null) {
-			if (!file_exists(WCF_DIR . 'lib/system/WCF.class.php')) {
-				throw new SystemException("Unable to find 'wcf/lib/system/WCF.class.php'.");
+			// WCFSetup
+			if (defined('NO_IMPORTS')) {
+				// do not use PHP_OS here, as this represents the system it was built on != running on
+				if (strpos(php_uname(), 'Windows') !== false) {
+					self::$mode = 0777;
+				}
+				else {
+					self::$mode = 0666;
+				
+					$tmpFilename = '__permissions_'.sha1(time()).'.txt';
+					@touch($tmpFilename);
+				
+					// create a new file and check the file owner, if it is the same
+					// as this file (uploaded through FTP), we can safely grant write
+					// permissions exclusively to the owner rather than everyone
+					if (file_exists($tmpFilename)) {
+						$scriptOwner = fileowner(__FILE__);
+						$fileOwner = fileowner($tmpFilename);
+							
+						if ($scriptOwner === $fileOwner) {
+							self::$mode = 0644;
+						}
+							
+						@unlink($tmpFilename);
+					}
+				}
 			}
-			
-			self::$mode = '0' . substr(sprintf('%o', fileperms(WCF_DIR . 'lib/system/WCF.class.php')), -3);
+			else {
+				// mirror permissions of WCF.class.php
+				if (!file_exists(WCF_DIR . 'lib/system/WCF.class.php')) {
+					throw new SystemException("Unable to find 'wcf/lib/system/WCF.class.php'.");
+				}
+				
+				self::$mode = '0' . substr(sprintf('%o', fileperms(WCF_DIR . 'lib/system/WCF.class.php')), -3);
+			}
 		}
 		
 		if (is_dir($filename)) {
