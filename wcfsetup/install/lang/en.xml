@@ -965,8 +965,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.advanced.overrideLess.error.notValid"><![CDATA[Input for “{$error[text]}” invalid]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.error.predefined"><![CDATA[Variable “{$error[text]}” is already defined by the style editor]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.error.unknown"><![CDATA[Variable “{$error[text]}” is not recognized]]></item>
-		<item name="wcf.acp.style.advanced.overrideLess.warning"><![CDATA[Flawed input values can harm style creation. You should not override LESS variables unless it is not possible otherwise!]]></item>
-		<item name="wcf.acp.style.advanced.syntax"><![CDATA[You can use both CSS and <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http://www.lesscss.org">LESS</a>. Please be aware that the style cannot be created if the LESS-code is flawed.]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Author]]></item>
 		<item name="wcf.acp.style.authorURL"><![CDATA[Website]]></item>
 		<item name="wcf.acp.style.button.exportStyle"><![CDATA[Start Export]]></item>
