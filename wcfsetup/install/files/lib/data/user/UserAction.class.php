@@ -454,22 +454,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			'data' => array(
 				'activationCode' => 0
 			),
-			'groups' => array(
-				UserGroup::USERS
-			),
-			'removeGroups' => array(
-				UserGroup::GUESTS
-			)
+			'removeGroups' => UserGroup::getGroupIDsByType(array(UserGroup::GUESTS))
 		));
 		$action->executeAction();
-	
-		// update user rank
-		if (MODULE_USER_RANK) {
-			$action = new UserProfileAction($this->objects, 'updateUserRank');
-			$action->executeAction();
-		}
-		// update user online marking
-		$action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
+		$action = new UserAction($this->objects, 'addToGroups', array(
+			'groups' => UserGroup::getGroupIDsByType(array(UserGroup::USERS)),
+			'deleteOldGroups' => false,
+			'addDefaultGroups' => false	
+		));
 		$action->executeAction();
 	}
 	
@@ -483,22 +475,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			'data' => array(
 				'activationCode' => UserRegistrationUtil::getActivationCode()
 			),
-			'removeGroups' => array(
-				UserGroup::USERS
-			),
-			'groups' => array(
-				UserGroup::GUESTS
-			)
+			'removeGroups' => UserGroup::getGroupIDsByType(array(UserGroup::USERS)),
 		));
 		$action->executeAction();
-	
-		// update user rank
-		if (MODULE_USER_RANK) {
-			$action = new UserProfileAction($this->objects, 'updateUserRank');
-			$action->executeAction();
-		}
-		// update user online marking
-		$action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
+		$action = new UserAction($this->objects, 'addToGroups', array(
+			'groups' => UserGroup::getGroupIDsByType(array(UserGroup::GUESTS)),
+			'deleteOldGroups' => false,
+			'addDefaultGroups' => false
+		));
 		$action->executeAction();
 	}
 }
