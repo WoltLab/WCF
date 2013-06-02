@@ -291,22 +291,24 @@ class UserBulkProcessingForm extends UserOptionListForm {
 					$this->affectedUsers++;
 				}
 				
-				// save config in session
-				$userMailData = WCF::getSession()->getVar('userMailData');
-				if ($userMailData === null) $userMailData = array();
-				$mailID = count($userMailData);
-				$userMailData[$mailID] = array(
-					'action' => '',
-					'userIDs' => $userIDs,
-					'groupIDs' => '',
-					'subject' => $this->subject,
-					'text' => $this->text,
-					'from' => $this->from,
-					'enableHTML' => $this->enableHTML
-				);
-				WCF::getSession()->register('userMailData', $userMailData);
-				
-				WCF::getTPL()->assign('mailID', $mailID);
+				if (!empty($userIDs)) {
+					// save config in session
+					$userMailData = WCF::getSession()->getVar('userMailData');
+					if ($userMailData === null) $userMailData = array();
+					$mailID = count($userMailData);
+					$userMailData[$mailID] = array(
+						'action' => '',
+						'userIDs' => $userIDs,
+						'groupIDs' => '',
+						'subject' => $this->subject,
+						'text' => $this->text,
+						'from' => $this->from,
+						'enableHTML' => $this->enableHTML
+					);
+					WCF::getSession()->register('userMailData', $userMailData);
+					
+					WCF::getTPL()->assign('mailID', $mailID);
+				}
 			break;
 			
 			case 'exportMailAddress':

@@ -505,28 +505,32 @@
 		
 		{* advanced *}
 		<div id="advanced" class="container containerPadding tabMenuContainer tabMenuContent">
-			<p class="info">{lang}wcf.acp.style.advanced.syntax{/lang}</p>
-			
 			<fieldset class="marginTop">
 				<legend>{lang}wcf.acp.style.advanced.individualLess{/lang}</legend>
 				
-				<textarea id="individualLess" rows="20" cols="40" name="individualLess">{$variables[individualLess]}</textarea>
-				<small>{lang}wcf.acp.style.advanced.individualLess.description{/lang}</small>
+				<dl class="wide">
+					<dd>
+						<textarea id="individualLess" rows="20" cols="40" name="individualLess">{$variables[individualLess]}</textarea>
+						<small>{lang}wcf.acp.style.advanced.individualLess.description{/lang}</small>
+					</dd>
+				</dl>
 			</fieldset>
 			
 			<fieldset{if $errorField == 'overrideLess'} class="formError"{/if}>
 				<legend>{lang}wcf.acp.style.advanced.overrideLess{/lang}</legend>
 				
-				<p class="warning">{lang}wcf.acp.style.advanced.overrideLess.warning{/lang}</p>
-				
-				<textarea id="overrideLess" rows="20" cols="40" name="overrideLess" class="marginTop">{$variables[overrideLess]}</textarea>
-				{if $errorField == 'overrideLess'}
-					<small class="innerError">
-						{lang}wcf.acp.style.advanced.overrideLess.error{/lang}
-						{implode from=$errorType item=error}{lang}wcf.acp.style.advanced.overrideLess.error.{$error.error}{/lang}{/implode}
-					</small>
-				{/if}
-				<small>{lang}wcf.acp.style.advanced.overrideLess.description{/lang}</small>
+				<dl class="wide">
+					<dd>
+						<textarea id="overrideLess" rows="20" cols="40" name="overrideLess">{$variables[overrideLess]}</textarea>
+						{if $errorField == 'overrideLess'}
+							<small class="innerError">
+								{lang}wcf.acp.style.advanced.overrideLess.error{/lang}
+								{implode from=$errorType item=error}{lang}wcf.acp.style.advanced.overrideLess.error.{$error.error}{/lang}{/implode}
+							</small>
+						{/if}
+						<small>{lang}wcf.acp.style.advanced.overrideLess.description{/lang}</small>
+					</dd>
+				</dl>
 			</fieldset>
 			{include file='codemirror' codemirrorMode='less' codemirrorSelector='#individualLess, #overrideLess'}
 			

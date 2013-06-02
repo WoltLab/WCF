@@ -5,6 +5,7 @@ use wcf\form\AbstractForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\RouteHandler;
 use wcf\system\user\authentication\EmailUserAuthentication;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
@@ -52,6 +53,11 @@ class LoginForm extends AbstractForm {
 	public function __run() {
 		if (WCF::getUser()->userID) {
 			throw new PermissionDeniedException();
+		}
+		else if (PACKAGE_ID == 1 && PACKAGE_ID != ApplicationHandler::getInstance()->getPrimaryApplication()->packageID) {
+			$application = ApplicationHandler::getInstance()->getPrimaryApplication();
+			HeaderUtil::redirect(RouteHandler::getProtocol() . $application->domainName . $application->domainPath . 'acp/index.php/Login/');
+			exit;
 		}
 		
 		parent::__run();

@@ -39,7 +39,7 @@ abstract class RecaptchaForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (WCF::getUser()->userID || WCF::getSession()->getVar('recaptchaDone')) {
+		if (!MODULE_SYSTEM_RECAPTCHA || WCF::getUser()->userID || WCF::getSession()->getVar('recaptchaDone')) {
 			$this->useCaptcha = false;
 		}
 	}

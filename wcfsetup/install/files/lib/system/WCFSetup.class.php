@@ -614,6 +614,9 @@ class WCFSetup extends WCF {
 				$db = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
 				$db->connect();
 				
+				$start = microtime(true);
+				file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "Validating database ...", FILE_APPEND);
+				
 				// check sql version
 				if (!empty($availableDBClasses[$dbClass]['minversion'])) {
 					$sqlVersion = $db->getVersion();
@@ -625,8 +628,15 @@ class WCFSetup extends WCF {
 					}
 				}
 				
+				$end = microtime(true);
+				file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', round($end - $start, 3)."\nChecking for table conflicts ...", FILE_APPEND);
+				$start = $end;
+				
 				// check for table conflicts
 				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
+				
+				$end = microtime(true);
+				file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', round($end - $start, 3)."\n\n", FILE_APPEND);
 				
 				// write config.inc
 				if (empty($conflictedTables)) {
@@ -708,6 +718,9 @@ class WCFSetup extends WCF {
 	protected function createDB() {
 		$this->initDB();
 		
+		$start = microtime(true);
+		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "Creating database ...", FILE_APPEND);
+		
 		// get content of the sql structure file
 		$sql = file_get_contents(TMP_DIR.'setup/db/install.sql');
 		
@@ -746,6 +759,9 @@ class WCFSetup extends WCF {
 		));
 		
 		$this->gotoNextStep('logFiles');
+		
+		$end = microtime(true);
+		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', round($end - $start, 3) . "\n\n", FILE_APPEND);
 	}
 	
 	/**
@@ -756,7 +772,7 @@ class WCFSetup extends WCF {
 		
 		$this->getInstalledFiles(WCF_DIR);
 		$acpTemplateInserts = $fileInserts = array();
-		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "Logging files:\n");
+		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "Logging files:\n", FILE_APPEND);
 		$start = microtime(true);
 		foreach (self::$installedFiles as $file) {
 			$match = array();

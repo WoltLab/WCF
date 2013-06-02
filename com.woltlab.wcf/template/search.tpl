@@ -61,8 +61,8 @@
 			<dl>
 				<dt><label for="startDate">{lang}wcf.search.period{/lang}</label></dt>
 				<dd>
-					<input type="date" id="startDate" name="startDate" value="{$startDate}" placeholder="{lang}wcf.date.period.start{/lang}" />
-					<input type="date" id="endDate" name="endDate" value="{$endDate}" placeholder="{lang}wcf.date.period.end{/lang}" />
+					<input type="date" id="startDate" name="startDate" value="{$startDate}" data-placeholder="{lang}wcf.date.period.start{/lang}" />
+					<input type="date" id="endDate" name="endDate" value="{$endDate}" data-placeholder="{lang}wcf.date.period.end{/lang}" />
 					{event name='periodOptions'}
 				</dd>
 			</dl>

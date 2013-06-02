@@ -1,8 +1,8 @@
 <?php
 namespace wcf\form;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\ExtendedUserAction;
 use wcf\data\user\User;
+use wcf\data\user\UserAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Shows the user activation form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.user
  * @subpackage	form
@@ -80,7 +80,7 @@ class RegisterActivationForm extends AbstractForm {
 		parent::save();
 		
 		// enable user
-		$this->objectAction = new ExtendedUserAction(array($this->user), 'enable');
+		$this->objectAction = new UserAction(array($this->user), 'enable');
 		$this->objectAction->executeAction();
 		$this->saved();
 		
