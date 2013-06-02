@@ -222,6 +222,12 @@ function handleError($errorNo, $message, $filename, $lineNo) {
  */
 class BasicFileUtil {
 	/**
+	 * chmod mode
+	 * @var	integer
+	 */
+	protected static $mode = null;
+	
+	/**
 	 * Tries to find the temp folder.
 	 *
 	 * @return	string
@@ -289,32 +295,58 @@ class BasicFileUtil {
 	
 	/**
 	 * Tries to make a file or directory writable. It starts of with the least
-	 * permissions and goes up until 0777.
+	 * permissions and goes up until 0666 for files and 0777 for directories.
 	 *
 	 * @param	string		$filename
 	 */
 	public static function makeWritable($filename) {
-		if (is_writable($filename)) {
+		if (!file_exists($filename) || is_writable($filename)) {
 			return;
 		}
 		
-		$chmods = array('0644', '0755', '0775', '0777');
+		// determine mode
+		if (self::$mode === null) {
+			// do not use PHP_OS here, as this represents the system it was built on != running on
+			if (strpos(php_uname(), 'Windows') !== false) {
+				self::$mode = 0777;
+			}
+			else {
+				self::$mode = 0666;
+				
+				$filename = '__permissions_'.sha1(time()).'.txt';
+				@touch($filename);
+				
+				// create a new file and check the file owner, if it is the same
+				// as this file (uploaded through FTP), we can safely grant write
+				// permissions exclusively to the owner rather than everyone
+				if (file_exists($filename)) {
+					$scriptOwner = fileowner(__FILE__);
+					$fileOwner = fileowner($filename);
+					
+					if ($scriptOwner === $fileOwner) {
+						self::$mode = 0644;
+					}
+					
+					@unlink($filename);
+				}
+			}
+		}
 		
 		$startIndex = 0;
 		if (is_dir($filename)) {
-			$startIndex = 1;
+			if (self::$mode == 0644) {
+				chmod($filename, 0755);
+			}
+			else {
+				chmod($filename, 0777);
+			}
+		}
+		else {
+			chmod($filename, self::$mode);
 		}
 		
-		for ($i = $startIndex; $i < 4; $i++) {
-			@chmod($filename, octdec($chmods[$i]));
-			
-			if (is_writable($filename)) {
-				break;
-			}
-			else if ($i == 3) {
-				// does not work with 0777
-				throw new SystemException("Unable to make '".$filename."' writable. This is a misconfiguration of your server, please contact your system administrator or hosting provider.");
-			}
+		if (!is_writable($filename)) {
+			throw new SystemException("Unable to make '".$filename."' writable. This is a misconfiguration of your server, please contact your system administrator or hosting provider.");
 		}
 	}
 }
