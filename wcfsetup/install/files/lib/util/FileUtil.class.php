@@ -525,7 +525,7 @@ final class FileUtil {
 			}
 			else {
 				// mirror permissions of WCF.class.php
-				if (!file_exists()) {
+				if (!file_exists(WCF_DIR . 'lib/system/WCF.class.php')) {
 					throw new SystemException("Unable to find 'wcf/lib/system/WCF.class.php'.");
 				}
 				
