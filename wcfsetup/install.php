@@ -313,21 +313,21 @@ class BasicFileUtil {
 			else {
 				self::$mode = 0666;
 				
-				$filename = '__permissions_'.sha1(time()).'.txt';
-				@touch($filename);
+				$tmpFilename = '__permissions_'.sha1(time()).'.txt';
+				@touch($tmpFilename);
 				
 				// create a new file and check the file owner, if it is the same
 				// as this file (uploaded through FTP), we can safely grant write
 				// permissions exclusively to the owner rather than everyone
-				if (file_exists($filename)) {
+				if (file_exists($tmpFilename)) {
 					$scriptOwner = fileowner(__FILE__);
-					$fileOwner = fileowner($filename);
+					$fileOwner = fileowner($tmpFilename);
 					
 					if ($scriptOwner === $fileOwner) {
 						self::$mode = 0644;
 					}
 					
-					@unlink($filename);
+					@unlink($tmpFilename);
 				}
 			}
 		}
