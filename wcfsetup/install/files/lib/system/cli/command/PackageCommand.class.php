@@ -3,6 +3,7 @@ namespace wcf\system\cli\command;
 use phpline\internal\Log;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
+use wcf\data\package\Package;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -14,7 +15,6 @@ use wcf\util\CLIUtil;
 use wcf\util\FileUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
-use Zend\Console\ColorInterface as Color;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
 use Zend\ProgressBar\Adapter\Console as ConsoleProgressBar;
@@ -46,34 +46,13 @@ class PackageCommand implements ICommand {
 		
 		list($action, $file) = $this->argv->getRemainingArgs();
 		CLIWCF::getReader()->setHistoryEnabled(false);
-		$package = null;
-		switch ($action) {
-			case 'update':
-				$line = CLIWCF::getReader()->readLine(CLIWCF::getLanguage()->get('wcf.cli.command.package.updatePackage'));
-				
-				if ($line === null) return;
-				$line = StringUtil::trim($line);
-				if ($line == '') return;
-				$sql = "SELECT	*
-					FROM	wcf".WCF_N."_package
-					WHERE	packageName = ?";
-				$statement = CLIWCF::getDB()->prepareStatement($sql);
-				$statement->execute(array($line));
-				$package = $statement->fetchObject('wcf\data\package\Package');
-				if ($package === null) {
-					$this->error('unknownPackage', array('package' => $line));
-				}
-			case 'install':
-			break;
-			default:
-				$this->error('invalidAction', array('action' => $action));
-			break;
-		}
+		
+		if ($action !== 'install') throw new ArgvException('', $this->fixUsage($this->argv->getUsageMessage()));
 		
 		// PackageStartInstallForm::validateDownloadPackage()
 		if (FileUtil::isURL($file)) {
 			// download package
-			$archive = new PackageArchive($file, $package);
+			$archive = new PackageArchive($file, null);
 			
 			try {
 				if (VERBOSITY >= 1) Log::info("Downloading '".$file."'");
@@ -89,7 +68,7 @@ class PackageCommand implements ICommand {
 				$this->error('notFound', array('file' => $file));
 			}
 			
-			$archive = new PackageArchive($file, $package);
+			$archive = new PackageArchive($file, null);
 		}
 		
 		// PackageStartInstallForm::validateArchive()
@@ -108,12 +87,30 @@ class PackageCommand implements ICommand {
 			$this->error('phpRequirements', array('errors' => $errors));
 		}
 		
+		// try to find existing package
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_package
+			WHERE	package = ?";
+		$statement = CLIWCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($archive->getPackageInfo('name')));
+		$row = $statement->fetchArray();
+		$package = null;
+		if ($row !== false) {
+			$package = new Package(null, $row);
+		}
+		
+		// check update or install support
 		if ($package !== null) {
+			CLIWCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+			
+			$archive->setPackage($package);
 			if (!$archive->isValidUpdate()) {
 				$this->error('noValidUpdate');
 			}
 		}
 		else {
+			CLIWCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
+			
 			if (!$archive->isValidInstall()) {
 				$this->error('noValidInstall');
 			}
@@ -122,6 +119,9 @@ class PackageCommand implements ICommand {
 			}
 			else if ($archive->isAlreadyInstalled()) {
 				$this->error('uniqueAlreadyInstalled');
+			}
+			else if ($archive->getPackageInfo('isApplication') && $this->archive->hasUniqueAbbreviation()) {
+				$this->error('noUniqueAbbrevation');
 			}
 		}
 		
@@ -134,9 +134,9 @@ class PackageCommand implements ICommand {
 			'userID' => CLIWCF::getUser()->userID,
 			'package' => $archive->getPackageInfo('name'),
 			'packageName' => $archive->getLocalizedPackageInfo('packageName'),
-			'packageID' => ($package && $package->packageID) ? $package->packageID : null,
+			'packageID' => ($package !== null) ? $package->packageID : null,
 			'archive' => $file,
-			'action' => $action,
+			'action' => ($package !== null ? 'update' : 'install'),
 			'confirmInstallation' => 1
 		));
 		
@@ -214,9 +214,8 @@ class PackageCommand implements ICommand {
 			return;
 		}
 		
-		switch ($action) {
+		switch ('install') {
 			case 'install':
-			case 'update':
 				// AbstractDialogAction::readParameters()
 				$step = 'prepare';
 				$queueID = $queue->queueID;
@@ -317,7 +316,7 @@ class PackageCommand implements ICommand {
 	}
 	
 	public function fixUsage($usage) {
-		return str_replace($_SERVER['argv'][0].' [ options ]', $_SERVER['argv'][0].' [ options ] <install|update> <package>', $usage);
+		return str_replace($_SERVER['argv'][0].' [ options ]', $_SERVER['argv'][0].' [ options ] install <package>', $usage);
 	}
 	
 	/**
