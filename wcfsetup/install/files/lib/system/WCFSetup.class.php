@@ -728,13 +728,17 @@ class WCFSetup extends WCF {
 		$sql = StringUtil::replace('wcf1_', 'wcf'.WCF_N.'_', $sql);
 		
 		$GLOBALS['__db'] = array(
+			'__construct' => 0,
 			'parse' => 0,
 			'modify' => 0,
 			'insert' => 0,
 			'tableCount' => 0,
 			'table' => 0,
+			'tableGlobal' => 0,
 			'default' => 0,
-			'defaultCount' => 0
+			'defaultCount' => 0,
+			'key' => 0,
+			'keyCount' => 0
 		);
 		
 		// execute sql queries
