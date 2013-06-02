@@ -292,7 +292,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$userOptions = (isset($this->parameters['options'])) ? $this->parameters['options'] : array();
 		
 		if (!empty($groupIDs)) {
-			$action = new UserAction($this->objects, 'addToGroups', array('groups' => $groupIDs));
+			$action = new UserAction($this->objects, 'addToGroups', array(
+				'groups' => $groupIDs,
+				'addDefaultGroups' => false
+			));
 			$action->executeAction();
 		}
 		
