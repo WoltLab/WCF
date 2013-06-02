@@ -730,7 +730,11 @@ class WCFSetup extends WCF {
 		$GLOBALS['__db'] = array(
 			'parse' => 0,
 			'modify' => 0,
-			'insert' => 0
+			'insert' => 0,
+			'tableCount' => 0,
+			'table' => 0,
+			'default' => 0,
+			'defaultCount' => 0
 		);
 		
 		// execute sql queries

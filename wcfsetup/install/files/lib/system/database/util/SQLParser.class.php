@@ -114,7 +114,10 @@ class SQLParser {
 						}
 					}
 					
+					$s = microtime(true);
 					$this->executeCreateTableStatement($tableName, $columns, $indices);
+					$GLOBALS['__db']['tableCount']++;
+					$GLOBALS['__db']['table'] += round(microtime(true) - $s, 3);
 				}
 			break;
 			
@@ -201,7 +204,10 @@ class SQLParser {
 			case 'INSERT': 
 			case 'UPDATE': 
 			case 'DELETE': 
+				$s = microtime(true);
 				$this->executeStandardStatement($query);
+				$GLOBALS['__db']['defaultCount']++;
+				$GLOBALS['__db']['default'] += round(microtime(true) - $s, 3);
 			break;
 		}
 	}
