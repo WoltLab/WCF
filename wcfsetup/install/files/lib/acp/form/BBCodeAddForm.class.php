@@ -133,6 +133,13 @@ class BBCodeAddForm extends AbstractForm {
 		}
 		
 		I18nHandler::getInstance()->readValues();
+		$this->readButtonLabelFormParameter();
+	}
+	
+	/**
+	 * Reads the form parameter for the button label.
+	 */
+	protected function readButtonLabelFormParameter() {
 		if (I18nHandler::getInstance()->isPlainValue('buttonLabel')) $this->buttonLabel = I18nHandler::getInstance()->getValue('buttonLabel');
 	}
 	
