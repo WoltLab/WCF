@@ -22,6 +22,12 @@ final class FileUtil {
 	protected static $finfo = null;
 	
 	/**
+	 * chmod mode
+	 * @var	string
+	 */
+	protected static $mode = null;
+	
+	/**
 	 * Tries to find the temp folder.
 	 * 
 	 * @return	string
@@ -480,32 +486,39 @@ final class FileUtil {
 	
 	/**
 	 * Tries to make a file or directory writable. It starts of with the least
-	 * permissions and goes up until 0777.
+	 * permissions and goes up until 0666 for files and 0777 for directories.
 	 * 
 	 * @param	string		$filename
 	 */
 	public static function makeWritable($filename) {
-		if (is_writable($filename)) {
+		if (!file_exists($filename) || is_writable($filename)) {
 			return;
 		}
 		
-		$chmods = array('0644', '0755', '0775', '0777');
-		
-		$startIndex = 0;
-		if (is_dir($filename)) {
-			$startIndex = 1;
+		// mirror permissions of WCF.class.php
+		if (self::$mode === null) {
+			if (!file_exists(WCF_DIR . 'lib/system/WCF.class.php')) {
+				throw new SystemException("Unable to find 'wcf/lib/system/WCF.class.php'.");
+			}
+			
+			self::$mode = '0' . substr(sprintf('%o', fileperms(WCF_DIR . 'lib/system/WCF.class.php')), -3);
 		}
 		
-		for ($i = $startIndex; $i < 4; $i++) {
-			@chmod($filename, octdec($chmods[$i]));
-			
-			if (is_writable($filename)) {
-				break;
+		if (is_dir($filename)) {
+			if (self::$mode == '0644') {
+				chmod($filename, 0755);
 			}
-			else if ($i == 3) {
-				// does not work with 0777
-				throw new SystemException("Unable to make '".$filename."' writable. This is a misconfiguration of your server, please contact your system administrator or hosting provider.");
+			else {
+				chmod($filename, 0777);
 			}
+		}
+		else {
+			chmod($filename, octdec(self::$mode));
+		}
+		
+		if (!is_writable($filename)) {
+			// does not work with 0777
+			throw new SystemException("Unable to make '".$filename."' writable. This is a misconfiguration of your server, please contact your system administrator or hosting provider.");
 		}
 	}
 	
