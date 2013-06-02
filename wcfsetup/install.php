@@ -3,10 +3,11 @@
  * This script tries to find the temp folder and unzip all setup files into.
  *
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 // define constants
+define('INSTALL_SCRIPT', __FILE__);
 define('INSTALL_SCRIPT_DIR', dirname(__FILE__).'/');
 define('SETUP_FILE', INSTALL_SCRIPT_DIR . 'WCFSetup.tar.gz');
 define('NO_IMPORTS', 1);
