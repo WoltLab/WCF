@@ -752,7 +752,7 @@ class WCFSetup extends WCF {
 			$GLOBALS['__db']['insert'] = round(microtime(true) - $s2, 3);
 		}
 		
-		file_put_contents(WCF_DIR.'__sqlPerformance.log', print_r($GLOBALS['__db']));
+		file_put_contents(WCF_DIR.'__sqlPerformance.log', print_r($GLOBALS['__db'], true));
 		
 		/*
 		 * Manually install PIPPackageInstallationPlugin since install.sql content is not escaped resulting
