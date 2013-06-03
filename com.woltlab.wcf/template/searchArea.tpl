@@ -5,7 +5,7 @@
 
 {event name='settings'}
 
-<aside id="search" class="searchBar dropdown">
+<aside id="search" class="searchBar dropdown" data-disable-auto-focus="true">
 	<form method="post" action="{@$__searchFormLink}">
 		<input type="search" name="q" placeholder="{@$__searchInputPlaceholder}" autocomplete="off" required="required" value="" class="dropdownToggle" data-toggle="search" />
 		

@@ -5254,7 +5254,12 @@ WCF.Search.Base = Class.extend({
 	 */
 	_keyDown: function(event) {
 		if (event.which === 13) {
-			event.preventDefault();
+			if (this._searchInput.parents('.dropdown').data('disableAutoFocus') && this._itemIndex === -1) {
+				// allow submitting
+			}
+			else {
+				event.preventDefault();
+			}
 		}
 	},
 	
@@ -5434,26 +5439,38 @@ WCF.Search.Base = Class.extend({
 	_success: function(data, textStatus, jqXHR) {
 		this._clearList(false);
 		
-		// no items available, abort
-		if (!$.getLength(data.returnValues)) {
-			return;
+		if ($.getLength(data.returnValues)) {
+			for (var $i in data.returnValues) {
+				var $item = data.returnValues[$i];
+				
+				this._createListItem($item);
+			}
 		}
-		
-		for (var $i in data.returnValues) {
-			var $item = data.returnValues[$i];
-			
-			this._createListItem($item);
+		else if (!this._handleEmptyResult()) {
+			return;
 		}
 		
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
 		
-		if (!WCF.Dropdown.getDropdownMenu(this._searchInput.parents('.dropdown').wcfIdentify()).hasClass('dropdownOpen')) {
-			WCF.Dropdown.toggleDropdown(this._searchInput.parents('.dropdown').wcfIdentify());
+		var $containerID = this._searchInput.parents('.dropdown').wcfIdentify();
+		if (!WCF.Dropdown.getDropdownMenu($containerID).hasClass('dropdownOpen')) {
+			WCF.Dropdown.toggleDropdown($containerID);
 		}
 		
 		// pre-select first item
 		this._itemIndex = -1;
-		this._selectNextItem();
+		if (!WCF.Dropdown.getDropdown($containerID).data('disableAutoFocus')) {
+			this._selectNextItem();
+		}
+	},
+	
+	/**
+	 * Handles empty result lists, should return false if dropdown should be hidden.
+	 * 
+	 * @return	boolean
+	 */
+	_handleEmptyResult: function() {
+		return false;
 	},
 	
 	/**
