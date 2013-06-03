@@ -6457,13 +6457,13 @@ WCF.Upload = Class.extend({
 	 */
 	_createButton: function() {
 		if (this._supportsAJAXUpload) {
-			this._fileUpload = $('<input type="file" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/>');
+			this._fileUpload = $('<input type="file" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/>');
 			this._fileUpload.change($.proxy(this._upload, this));
-			var $button = $('<p class="button uploadButton"><span>'+WCF.Language.get('wcf.global.button.upload')+'</span></p>');
+			var $button = $('<p class="button uploadButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
 			$button.prepend(this._fileUpload);
 		}
 		else {
-			var $button = $('<p class="button uploadFallbackButton"><span>'+WCF.Language.get('wcf.global.button.upload')+'</span></p>');
+			var $button = $('<p class="button uploadFallbackButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
 			$button.click($.proxy(this._showOverlay, this));
 		}
 		
@@ -6477,6 +6477,18 @@ WCF.Upload = Class.extend({
 	 */
 	_insertButton: function(button) {
 		this._buttonSelector.append(button);
+	},
+	
+	/**
+	 * Removes the upload button.
+	 */
+	_removeButton: function() {
+		var $selector = '.uploadButton';
+		if (!this._supportsAJAXUpload) {
+			$selector = '.uploadFallbackButton';
+		}
+		
+		this._buttonSelector.find($selector).remove();
 	},
 	
 	/**

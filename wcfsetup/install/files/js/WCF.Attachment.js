@@ -75,11 +75,6 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			
 			$innerError.html($errorMessage);
 			
-			// reset value of file input (the 'files' prop is actually readonly!)
-			if (this._fileUpload) {
-				this._fileUpload.attr('value', '');
-			}
-			
 			return false;
 		}
 		
@@ -94,15 +89,15 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @see	WCF.Upload._upload()
 	 */
 	_upload: function() {
-		if (!this._validateLimit()) {
-			return false;
+		if (this._validateLimit()) {
+			this._super();
 		}
 		
-		this._super();
-		
-		// reset value of file input (the 'files' prop is actually readonly!)
 		if (this._fileUpload) {
-			this._fileUpload.attr('value', '');
+			// remove and re-create the upload button since the 'files' property
+			// of the input field is readonly thus it can't be reset
+			this._removeButton();
+			this._createButton();
 		}
 	},
 	
