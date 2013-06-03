@@ -21,7 +21,7 @@ class UserRankEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	protected static $baseClass = 'wcf\data\user\rank\UserRank';
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache
+	 * @see	wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		UserStorageHandler::getInstance()->resetAll('userRank');
