@@ -5,7 +5,7 @@ use wcf\util\StringUtil;
 
 /**
  * Creates a Zip file archive.
- * 
+ *
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -174,7 +174,7 @@ class ZipWriter {
 			pack("V", strlen($headers)).
 			"\x00\x00";
 	}
-
+	
 	/**
 	 * Converts an unix timestamp to Zip file time.
 	 *
@@ -184,7 +184,7 @@ class ZipWriter {
 	protected static function getDosDatetime($date) {
 		// Ensure we have a numeric value
 		$date = intval($date);
-
+		
 		$day = gmdate('d', $date);
 		$month = gmdate('m', $date);
 		$year = gmdate('Y', $date);
