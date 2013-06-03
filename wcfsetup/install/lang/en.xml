@@ -152,6 +152,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Error]]></item>
 		<item name="wcf.acp.cronjob.log.error.showDetails"><![CDATA[Show Details]]></item>
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Error Message]]></item>
+		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[TODO: Derzeit sind keine Einträge vorhanden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.dashboard">
@@ -775,6 +776,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum number of options]]></item>
+		<item name="wcf.acp.option.error.validationFailed"><![CDATA[TOOD: Sie haben einen ungültigen Inhalt eingegeben.]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

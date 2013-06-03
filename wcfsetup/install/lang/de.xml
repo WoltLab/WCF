@@ -153,6 +153,7 @@
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Fehler]]></item>
 		<item name="wcf.acp.cronjob.log.error.showDetails"><![CDATA[Details anzeigen]]></item>
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Fehlermeldung]]></item>
+		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[Derzeit sind keine Einträge vorhanden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.dashboard">
@@ -776,6 +777,7 @@
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximale Anzahl an Antworten]]></item>
+		<item name="wcf.acp.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
