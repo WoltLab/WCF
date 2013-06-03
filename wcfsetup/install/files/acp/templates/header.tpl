@@ -87,7 +87,7 @@
 				'wcf.global.success': '{lang}wcf.global.success{/lang}',
 				'wcf.global.success.add': '{lang}wcf.global.success.add{/lang}',
 				'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
-				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
+				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}'
 				{event name='javascriptLanguageImport'}
 			});
 			
