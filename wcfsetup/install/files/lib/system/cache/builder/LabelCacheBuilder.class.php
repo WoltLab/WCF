@@ -27,6 +27,7 @@ class LabelCacheBuilder extends AbstractCacheBuilder {
 		
 		// get label groups
 		$groupList = new LabelGroupList();
+		$groupList->sqlOrderBy = 'groupName';
 		$groupList->readObjects();
 		$groups = $groupList->getObjects();
 		foreach ($groups as &$group) {
@@ -59,6 +60,7 @@ class LabelCacheBuilder extends AbstractCacheBuilder {
 		if (count($groupList)) {
 			// get labels
 			$labelList = new LabelList();
+			$labelList->sqlOrderBy = 'label';
 			$labelList->readObjects();
 			foreach ($labelList as $label) {
 				$data['groups'][$label->groupID]->addLabel($label);
