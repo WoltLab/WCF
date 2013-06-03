@@ -1428,6 +1428,8 @@ WCF.Clipboard = {
 						var $__container = $(this._containers[$__containerID]);
 						if ($__container.data('type') == $typeName) {
 							$__container.find('.jsClipboardMarkAll, .jsClipboardItem').prop('checked', false);
+							$__container.find('.jsClipboardObject').removeClass('jsMarked');
+							
 							break;
 						}
 					}
