@@ -9,7 +9,7 @@
  */
 
 (function() {
-	// store original implementation
+	// store original implementationj
 	var $jQueryData = jQuery.fn.data;
 	
 	/**
@@ -4750,10 +4750,10 @@ WCF.Effect.BalloonTooltip = Class.extend({
 		
 		// determine alignment
 		var $alignment = 'center';
-		if (($elementCenter - $tooltipHalfWidth) < 5) {
+		if ((($elementCenter - $tooltipHalfWidth) < 5) || $element.hasClass('jsTooltipLeft')) {
 			$alignment = 'left';
 		}
-		else if ((this._viewportDimensions.width - 5) < ($elementCenter + $tooltipHalfWidth)) {
+		else if (((this._viewportDimensions.width - 5) < ($elementCenter + $tooltipHalfWidth)) || $element.hasClass('jsTooltipRight')) {
 			$alignment = 'right';
 		}
 		
