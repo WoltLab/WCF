@@ -14,6 +14,11 @@
 		{foreach from=$selectedLanguages item=language}
 			<input type="hidden" name="selectedLanguages[]" value="{$language}" />
 		{/foreach}
+		{if $__additionalParameters|isset}
+			{foreach from=$__additionalParameters key=__name value=__value}
+				<input type="hidden" name="{@$__name}" value="{@$__value}" />
+			{/foreach}
+		{/if}
 	</div>
 </form>
 

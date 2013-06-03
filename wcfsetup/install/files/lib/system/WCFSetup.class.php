@@ -719,27 +719,21 @@ class WCFSetup extends WCF {
 		$this->initDB();
 		
 		$start = microtime(true);
-		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "Creating database ...", FILE_APPEND);
+		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "Creating database: ", FILE_APPEND);
 		
 		// get content of the sql structure file
 		$sql = file_get_contents(TMP_DIR.'setup/db/install.sql');
 		
+		// split by offsets
+		$sqlData = explode('/* SQL_PARSER_OFFSET */', $sql);
+		$offset = (isset($_POST['offset'])) ? intval($_POST['offset']) : 0;
+		if (!isset($sqlData[$offset])) {
+			throw new SystemException("Offset for SQL parser is out of bounds, ".$offset." was requested, but there are only ".count($sqlData)." sections");
+		}
+		$sql = $sqlData[$offset];
+		
 		// installation number value 'n' (WCF_N) must be reflected in the executed sql queries
 		$sql = StringUtil::replace('wcf1_', 'wcf'.WCF_N.'_', $sql);
-		
-		$GLOBALS['__db'] = array(
-			'__construct' => 0,
-			'parse' => 0,
-			'modify' => 0,
-			'insert' => 0,
-			'tableCount' => 0,
-			'table' => 0,
-			'tableGlobal' => 0,
-			'default' => 0,
-			'defaultCount' => 0,
-			'key' => 0,
-			'keyCount' => 0
-		);
 		
 		// execute sql queries
 		$parser = new SQLParser($sql);
@@ -749,7 +743,6 @@ class WCFSetup extends WCF {
 		preg_match_all("~CREATE\s+TABLE\s+(\w+)~i", $sql, $matches);
 		
 		if (!empty($matches[1])) {
-			$s2 = microtime(true);
 			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log
 						(sqlTable)
 				VALUES		(?)";
@@ -757,26 +750,32 @@ class WCFSetup extends WCF {
 			foreach ($matches[1] as $tableName) {
 				$statement->execute(array($tableName));
 			}
-			$GLOBALS['__db']['insert'] = round(microtime(true) - $s2, 3);
 		}
 		
-		file_put_contents(WCF_DIR.'__sqlPerformance.log', print_r($GLOBALS['__db'], true));
-		
-		/*
-		 * Manually install PIPPackageInstallationPlugin since install.sql content is not escaped resulting
-		 * in different behaviour in MySQL and MSSQL. You SHOULD NOT move this into install.sql!
-		 */
-		$sql = "INSERT INTO	wcf".WCF_N."_package_installation_plugin
-					(pluginName, priority, className)
-			VALUES		(?, ?, ?)";
-		$statement = self::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			'packageInstallationPlugin',
-			1,
-			'wcf\system\package\plugin\PIPPackageInstallationPlugin'
-		));
-		
-		$this->gotoNextStep('logFiles');
+		if ($offset < (count($sqlData) - 1)) {
+			WCF::getTPL()->assign(array(
+				'offset' => $offset + 1
+			));
+			
+			$this->gotoNextStep('createDB');
+		}
+		else {
+			/*
+			 * Manually install PIPPackageInstallationPlugin since install.sql content is not escaped resulting
+			* in different behaviour in MySQL and MSSQL. You SHOULD NOT move this into install.sql!
+			*/
+			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_plugin
+						(pluginName, priority, className)
+				VALUES		(?, ?, ?)";
+			$statement = self::getDB()->prepareStatement($sql);
+			$statement->execute(array(
+				'packageInstallationPlugin',
+				1,
+				'wcf\system\package\plugin\PIPPackageInstallationPlugin'
+			));
+			
+			$this->gotoNextStep('logFiles');
+		}
 		
 		$end = microtime(true);
 		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', round($end - $start, 3) . "\n\n", FILE_APPEND);

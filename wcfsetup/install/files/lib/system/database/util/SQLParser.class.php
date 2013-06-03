@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Given queries will be parsed, converted and executed in the active database.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database.util
@@ -30,14 +30,12 @@ class SQLParser {
 	 */
 	public function __construct($queries) {
 		// delete comments
-		$start = microtime(true);
 		$queries = preg_replace("~('[^'\\\\]*(?:\\\\.[^'\\\\]*)*')|(?:(?:--|#)[^\n]*|/\*.*?\*/)~s", '$1', $queries);
 		
 		// split queries by semicolon
 		if (preg_match_all("~(?:[^;']+(?:'[^'\\\\]*(?:\\\\.[^'\\\\]*)*')*)*(?=;|\$)~s", $queries, $matches)) {
 			$this->queryArray = ArrayUtil::trim($matches[0]);
 		}
-		$GLOBALS['__db']['__construct'] = round(microtime(true) - $start, 3);
 	}
 	
 	/**
@@ -48,11 +46,7 @@ class SQLParser {
 			if (preg_match('~^(ALTER\s+TABLE|CREATE\s+INDEX|CREATE\s+TABLE|DROP\s+INDEX|DROP\s+TABLE|INSERT|UPDATE|DELETE)~i', $query, $match)) {
 				$statement = strtoupper(preg_replace('~\s+~', ' ', $match[0]));
 				
-				$GLOBALS['__db']['parse']++;
-				
-				$s = microtime(true);
 				$this->executeStatement($statement, $query);
-				$GLOBALS['__db']['modify'] += round(microtime(true) - $s, 3);
 			}
 		}
 	}
@@ -68,7 +62,6 @@ class SQLParser {
 			case 'CREATE TABLE':
 				// get table name
 				if (preg_match('~^CREATE\s+TABLE\s+(\w+)\s*\(~i', $query, $match)) {
-					$startG = microtime(true);
 					$tableName = $match[1];
 					$columns = $indices = array();
 					
@@ -117,11 +110,7 @@ class SQLParser {
 						}
 					}
 					
-					$s = microtime(true);
 					$this->executeCreateTableStatement($tableName, $columns, $indices);
-					$GLOBALS['__db']['tableCount']++;
-					$GLOBALS['__db']['table'] += round(microtime(true) - $s, 3);
-					$GLOBALS['__db']['tableGlobal'] += round(microtime(true) - $startG, 3);
 				}
 			break;
 			
@@ -132,10 +121,7 @@ class SQLParser {
 				}
 				// add foreign key
 				else if (preg_match('~^ALTER\s+TABLE\s+(\w+)\s+ADD\s+FOREIGN KEY\s+(?:(\w+)\s*)?\((\s*\w+\s*(?:,\s*\w+\s*)*)\)\s+REFERENCES\s+(\w+)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)(?:\s+ON\s+(UPDATE|DELETE)\s+(CASCADE|SET NULL|NO ACTION))?~is', $query, $match)) {
-					$s = microtime(true);
 					$this->executeAddForeignKeyStatement($match[1], ($match[2] ?: self::getGenericIndexName($match[1], $match[3], 'fk')), array('columns' => $match[3], 'referencedTable' => $match[4], 'referencedColumns' => $match[5], 'operation' => $match[6], 'action' => $match[7]));
-					$GLOBALS['__db']['keyCount']++;
-					$GLOBALS['__db']['key'] += round(microtime(true) - $s, 3);
 				}
 				// add/change column
 				else if (preg_match("~^ALTER\s+TABLE\s+(\w+)\s+(?:(ADD)\s+(?:COLUMN\s+)?|(CHANGE)\s+(?:COLUMN\s+)?(\w+)\s+)(\w+)\s+(\w+)(?:\s*\((\s*(?:\d+(?:\s*,\s*\d+)?|'[^']*'(?:\s*,\s*'[^']*')*))\))?(?:\s+UNSIGNED)?(?:\s+(NOT NULL|NULL))?(?:\s+DEFAULT\s+(-?\d+.\d+|-?\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\s+(AUTO_INCREMENT))?(?:\s+(UNIQUE|PRIMARY)(?: KEY)?)?~is", $query, $match)) {
@@ -211,10 +197,7 @@ class SQLParser {
 			case 'INSERT': 
 			case 'UPDATE': 
 			case 'DELETE': 
-				$s = microtime(true);
 				$this->executeStandardStatement($query);
-				$GLOBALS['__db']['defaultCount']++;
-				$GLOBALS['__db']['default'] += round(microtime(true) - $s, 3);
 			break;
 		}
 	}
