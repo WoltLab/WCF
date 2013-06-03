@@ -238,7 +238,7 @@ class WCFSetup extends WCF {
 	 */
 	protected function calcProgress($currentStep) {
 		// calculate progress
-		$progress = round((100 / 12) * ++$currentStep, 0);
+		$progress = round((100 / 15) * ++$currentStep, 0);
 		self::getTPL()->assign(array('progress' => $progress));
 	}
 	
@@ -294,27 +294,32 @@ class WCFSetup extends WCF {
 			break;
 			
 			case 'createDB':
-				$this->calcProgress(7);
+				$currentStep = 7;
+				if (isset($_POST['offset'])) {
+					$currentStep += intval($_POST['offset']);
+				}
+				
+				$this->calcProgress($currentStep);
 				$this->createDB();
 			break;
 			
 			case 'logFiles':
-				$this->calcProgress(8);
+				$this->calcProgress(11);
 				$this->logFiles();
 			break;
 			
 			case 'installLanguage':
-				$this->calcProgress(9);
+				$this->calcProgress(12);
 				$this->installLanguage();
 			break;
 			
 			case 'createUser':
-				$this->calcProgress(10);
+				$this->calcProgress(13);
 				$this->createUser();
 			break;
 			
 			case 'installPackages':
-				$this->calcProgress(11);
+				$this->calcProgress(14);
 				$this->installPackages();
 			break;
 		}
@@ -754,7 +759,9 @@ class WCFSetup extends WCF {
 		
 		if ($offset < (count($sqlData) - 1)) {
 			WCF::getTPL()->assign(array(
-				'offset' => $offset + 1
+				'__additionalParameters' => array(
+					'offset' => $offset + 1
+				)
 			));
 			
 			$this->gotoNextStep('createDB');
