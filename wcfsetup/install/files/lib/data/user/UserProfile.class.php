@@ -3,6 +3,7 @@ namespace wcf\data\user;
 use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\UserAvatar;
+use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\online\UserOnline;
 use wcf\data\user\rank\UserRank;
 use wcf\data\DatabaseObjectDecorator;
@@ -693,5 +694,21 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 */
 	public function getSignature() {
 		return SignatureCache::getInstance()->getSignature($this->getDecoratedObject());
+	}
+	
+	/**
+	 * Returns the formatted value of the user option with the given name.
+	 *
+	 * @param	string		$name
+	 * @return	mixed
+	 */
+	public function getFormattedUserOption($name) {
+		// get value
+		$value = $this->getUserOption($name);
+		if (!$value) return '';
+		
+		$option = ViewableUserOption::getUserOption($name);
+		$option->setOptionValue($this->getDecoratedObject());
+		return $option->optionValue;
 	}
 }

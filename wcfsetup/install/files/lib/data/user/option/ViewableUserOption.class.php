@@ -2,6 +2,7 @@
 namespace wcf\data\user\option;
 use wcf\data\user\User;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
@@ -27,6 +28,12 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	 * @var	array<wcf\system\option\user\IUserOptionOutput>
 	 */
 	public static $outputObjects = array();
+	
+	/**
+	 * cached user options
+	 * @var array<wcf\data\user\option\ViewableUserOption>
+	 */
+	public static $userOptions = array();
 	
 	/**
 	 * user option value
@@ -74,5 +81,20 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 		}
 		
 		return self::$outputObjects[$this->outputClass];
+	}
+	
+	/**
+	 * Gets user option by name
+	 * 
+	 * @param 	string		$name
+	 * @return	wcf\data\user\option\ViewableUserOption
+	 */
+	public static function getUserOption($name) {
+		if (!isset(self::$userOptions[$name])) {
+			$options = UserOptionCacheBuilder::getInstance()->getData(array(), 'options');
+			self::$userOptions[$name] = new ViewableUserOption($options[$name]);
+		}
+		
+		return self::$userOptions[$name];
 	}
 }

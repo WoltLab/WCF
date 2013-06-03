@@ -85,7 +85,7 @@
 								{foreach from=$__sidebarUserOptions item='__sidebarUserOption'}
 									{if $userProfile->getUserOption($__sidebarUserOption)}
 										<dt>{lang}wcf.user.option.{$__sidebarUserOption}{/lang}</dt>
-										<dd{if $__sidebarUserOption == 'location'} itemprop="locality"{/if}>{$userProfile->getUserOption($__sidebarUserOption)}</dd>
+										<dd{if $__sidebarUserOption == 'location'} itemprop="locality"{/if}>{@$userProfile->getFormattedUserOption($__sidebarUserOption)}</dd>
 									{/if}
 								{/foreach}
 							{/if}
