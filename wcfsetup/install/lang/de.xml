@@ -392,6 +392,7 @@
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Veränderte Inhalte finden]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Name der Sprache]]></item>
 		<item name="wcf.acp.language.add.source.description"><![CDATA[Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
+		<item name="wcf.acp.language.item.noItems"><![CDATA[Es wurden keine Texte gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -1041,6 +1042,8 @@
 		<item name="wcf.acp.style.imagePath.error.notValid"><![CDATA[Sie haben einen ungültigen Pfad eingegeben.]]></item>
 		<item name="wcf.acp.style.styleVersion.error.notValid"><![CDATA[Sie haben eine ungültigen Versionsnummer eingegeben.]]></item>
 		<item name="wcf.acp.style.styleDate.error.notValid"><![CDATA[Sie haben ein ungültiges Datum eingegeben.]]></item>
+		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Seitenlogo]]></item>
+		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[Name der Grafik-Datei für das Seitenlogo]]></item>
 	</category>
 	
 	<category name="wcf.acp.tag">
@@ -1057,6 +1060,7 @@
 		<item name="wcf.acp.tag.synonyms"><![CDATA[Synonyme]]></item>
 		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym für]]></item>
 		<item name="wcf.acp.tag.usageCount"><![CDATA[Verwendungen]]></item>
+		<item name="wcf.acp.tag.error.name.duplicate"><![CDATA[Ein Tag mit diesem Namen existiert bereits.]]></item>
 	</category>
 	
 	<category name="wcf.acp.template">

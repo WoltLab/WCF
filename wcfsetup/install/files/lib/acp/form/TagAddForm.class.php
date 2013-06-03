@@ -105,8 +105,10 @@ class TagAddForm extends AbstractForm {
 		}
 		
 		// validate synonyms
-		foreach ($this->synonyms as $synonym) {
-			if (StringUtil::toLowerCase($synonym) == StringUtil::toLowerCase($this->name)) throw new UserInputException('synonyms', 'duplicate');
+		foreach ($this->synonyms as $key => $synonym) {
+			if (StringUtil::toLowerCase($synonym) == StringUtil::toLowerCase($this->name)) {
+				unset($this->synonyms[$key]);
+			}
 		}
 	}
 	

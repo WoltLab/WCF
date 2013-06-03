@@ -391,6 +391,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Customized values]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Language Name]]></item>
 		<item name="wcf.acp.language.add.source.description"><![CDATA[The selected language will be used as origin, all phrases will be copied into the new language.]]></item>
+		<item name="wcf.acp.language.item.noItems"><![CDATA[TODO: Es wurden keine Texte gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -1040,6 +1041,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.imagePath.error.notValid"><![CDATA[You have provided an invalid path.]]></item>
 		<item name="wcf.acp.style.styleVersion.error.notValid"><![CDATA[You have provided an invalid version number.]]></item>
 		<item name="wcf.acp.style.styleDate.error.notValid"><![CDATA[You have provided an invalid date.]]></item>
+		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[TODO: Seitenlogo]]></item>
+		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[TODO: Name der Grafik-Datei für das Seitenlogo]]></item>
 	</category>
 	
 	<category name="wcf.acp.tag">
@@ -1056,6 +1059,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.tag.synonyms"><![CDATA[Synonyms]]></item>
 		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym for]]></item>
 		<item name="wcf.acp.tag.usageCount"><![CDATA[Usages]]></item>
+		<item name="wcf.acp.tag.error.name.duplicate"><![CDATA[TODO: Ein Tag mit diesem Namen existiert bereits.]]></item>
 	</category>
 	
 	<category name="wcf.acp.template">
