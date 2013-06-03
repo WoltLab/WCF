@@ -2,7 +2,11 @@
 	<li>
 		<a href="{@$queue->getLink()}" class="box24">
 			<div class="framed">
-				{@$queue->getUserProfile()->getAvatar()->getImageTag(24)}
+				{if $queue->userID}
+					{@$queue->getUserProfile()->getAvatar()->getImageTag(24)}
+				{else}
+					<img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" style="width: 24px; height: 24px;" />
+				{/if}
 			</div>
 			<div>
 				<h3>{$queue->getAffectedObject()->getTitle()}</h3>
