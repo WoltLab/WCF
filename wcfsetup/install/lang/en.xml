@@ -147,6 +147,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Clear Protocol]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Do you really want to clear the cronjob log?]]></item>
 		<item name="wcf.acp.cronjob.log.execTime"><![CDATA[Time]]></item>
+		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[There are currently no log entries available.]]></item>
 		<item name="wcf.acp.cronjob.log.status"><![CDATA[Result]]></item>
 		<item name="wcf.acp.cronjob.log.success"><![CDATA[Success]]></item>
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Error]]></item>
@@ -548,6 +549,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Cookie Prefix]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Exceeds the maximum value{if $option->maxvalue !== null} of {#$option->maxvalue}{/if}.]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Below the minimum value{if $option->minvalue !== null} of {#$option->minvalue}{/if}.]]></item>
+		<item name="wcf.acp.option.error.validationFailed"><![CDATA[The information you have entered is not valid.]]></item>
 		<item name="wcf.acp.option.export"><![CDATA[Download Options]]></item>
 		<item name="wcf.acp.option.export.download"><![CDATA[Download Options]]></item>
 		<item name="wcf.acp.option.export.download.description"><![CDATA[Downloads a backup of the configuration settings to your local machine. This is not a replacement for a backup!]]></item>

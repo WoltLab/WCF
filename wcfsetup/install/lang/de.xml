@@ -148,6 +148,7 @@
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Protokoll leeren]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Wollen Sie alle Protokoll-Einträge wirklich löschen?]]></item>
 		<item name="wcf.acp.cronjob.log.execTime"><![CDATA[Ausgeführt]]></item>
+		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[Derzeit sind keine Einträge vorhanden.]]></item>
 		<item name="wcf.acp.cronjob.log.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.cronjob.log.success"><![CDATA[Erfolgreich]]></item>
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Fehler]]></item>
@@ -549,6 +550,7 @@
 		<item name="wcf.acp.option.cookie_prefix"><![CDATA[Präfix für Cookienamen]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
+		<item name="wcf.acp.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.acp.option.export"><![CDATA[Optionen sichern]]></item>
 		<item name="wcf.acp.option.export.download"><![CDATA[Sicherung der Optionen herunterladen]]></item>
 		<item name="wcf.acp.option.export.download.description"><![CDATA[Laden Sie eine Sicherung der Optionen auf Ihren lokalen Rechner herunter.]]></item>
