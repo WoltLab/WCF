@@ -28,7 +28,6 @@
 
 /* ### header ### */
 #pageHeader {
-	margin-top: 57px;
 	z-index: 100;
 }
 
@@ -237,6 +236,7 @@
 /* header logo */
 .logo {
 	margin-bottom: @wcfGapLarge;
+	margin-top: @wcfGapMedium;
 	
 	a {
 		display: block;
@@ -254,6 +254,10 @@
 			.textShadow(@wcfPageBackgroundColor);
 		}
 	}
+}
+
+.userPanel + .logo {
+	margin-top: @wcfGapMedium + 43px;
 }
 
 @media only screen and (max-width: 800px) {
