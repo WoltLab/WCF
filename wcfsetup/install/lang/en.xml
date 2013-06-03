@@ -892,6 +892,7 @@ Examples for medium ID detection:
 	</category>
 	
 	<category name="wcf.acp.search">
+		<item name="wcf.acp.search.noResults"><![CDATA[No results]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[ACP Menu]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.option"><![CDATA[Options]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.package"><![CDATA[Packages]]></item>

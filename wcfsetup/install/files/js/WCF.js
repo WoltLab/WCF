@@ -5253,8 +5253,13 @@ WCF.Search.Base = Class.extend({
 	 * @param	object		event
 	 */
 	_keyDown: function(event) {
-		if (event.which === 13 && this._itemIndex !== -1) {
-			event.preventDefault();
+		if (event.which === 13) {
+			if (this._searchInput.parents('.dropdown').data('disableAutoFocus') && this._itemIndex === -1) {
+				// allow submitting
+			}
+			else {
+				event.preventDefault();
+			}
 		}
 	},
 	
@@ -5434,15 +5439,15 @@ WCF.Search.Base = Class.extend({
 	_success: function(data, textStatus, jqXHR) {
 		this._clearList(false);
 		
-		// no items available, abort
-		if (!$.getLength(data.returnValues)) {
-			return;
+		if ($.getLength(data.returnValues)) {
+			for (var $i in data.returnValues) {
+				var $item = data.returnValues[$i];
+				
+				this._createListItem($item);
+			}
 		}
-		
-		for (var $i in data.returnValues) {
-			var $item = data.returnValues[$i];
-			
-			this._createListItem($item);
+		else if (!this._handleEmptyResult()) {
+			return;
 		}
 		
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
@@ -5457,6 +5462,15 @@ WCF.Search.Base = Class.extend({
 		if (!WCF.Dropdown.getDropdown($containerID).data('disableAutoFocus')) {
 			this._selectNextItem();
 		}
+	},
+	
+	/**
+	 * Handles empty result lists, should return false if dropdown should be hidden.
+	 * 
+	 * @return	boolean
+	 */
+	_handleEmptyResult: function() {
+		return false;
 	},
 	
 	/**
