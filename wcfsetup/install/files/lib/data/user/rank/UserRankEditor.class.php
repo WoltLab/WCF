@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\user\rank;
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
+use wcf\system\user\storage\UserStorageHandler;
 
 /**
  * Provides functions to edit user ranks.
@@ -12,9 +14,16 @@ use wcf\data\DatabaseObjectEditor;
  * @subpackage	data.user.rank
  * @category	Community Framework
  */
-class UserRankEditor extends DatabaseObjectEditor {
+class UserRankEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\rank\UserRank';
+	
+	/**
+	 * @see	wcf\data\IEditableCachedObject::resetCache
+	 */
+	public static function resetCache() {
+		UserStorageHandler::getInstance()->resetAll('userRank');
+	}
 }
