@@ -782,6 +782,7 @@
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installierte Anwendungen]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Anwendungen]]></item>
 		<item name="wcf.acp.package.author"><![CDATA[Entwickler]]></item>
+		<item name="wcf.acp.package.availableVersions"><![CDATA[Verfügbare Versionen]]></item>
 		<item name="wcf.acp.package.button.info"><![CDATA[Informationen]]></item>
 		<item name="wcf.acp.package.button.installPackage"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.package.button.uninstall"><![CDATA[Deinstallieren]]></item>
@@ -813,6 +814,7 @@
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation abgeschlossen]]></item>
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[„{$packageName}“ wird aktualisiert …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Aktualisierung abgeschlossen]]></item>
+		<item name="wcf.acp.package.installedVersion"><![CDATA[Installierte Version]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Installation wird vorbereitet …]]></item>
 		<item name="wcf.acp.package.install.title"><![CDATA[Paket-Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Benötigte Version]]></item>

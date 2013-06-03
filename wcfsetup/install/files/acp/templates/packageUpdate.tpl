@@ -1,4 +1,4 @@
-{include file='header' pageTitle='wcf.acp.packageUpdate'}
+{include file='header' pageTitle='wcf.acp.package.update.title'}
 
 <script type="text/javascript">
 	//<![CDATA[
@@ -13,7 +13,7 @@
 </script>
 
 <header class="boxHeadline">
-	<h1>{lang}wcf.acp.packageUpdate{/lang}</h1>
+	<h1>{lang}wcf.acp.package.update.title{/lang}</h1>
 </header>
 
 <div class="container containerPadding marginTop">

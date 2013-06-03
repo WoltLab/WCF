@@ -382,7 +382,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			PackageUpdateServer::storeAuthData($this->parameters['authData']['packageUpdateServerID'], $this->parameters['authData']['username'], $this->parameters['authData']['password'], $this->parameters['authData']['saveCredentials']);
 		}
 		
-		$scheduler = new PackageInstallationScheduler($this->parameters['package']);
+		$scheduler = new PackageInstallationScheduler($this->parameters['packages']);
 		
 		try {
 			$scheduler->buildPackageInstallationStack();
