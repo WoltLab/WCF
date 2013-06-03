@@ -1049,7 +1049,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 subject:wcf.global.subject
 time:wcf.search.sortBy.time
 username:wcf.search.sortBy.username]]></selectoptions>
-				<defaultvalue><![CDATA[relevance]]></defaultvalue>
+				<defaultvalue><![CDATA[time]]></defaultvalue>
 			</option>
 			<option name="search_default_sort_order">
 				<categoryname>message.search</categoryname>
