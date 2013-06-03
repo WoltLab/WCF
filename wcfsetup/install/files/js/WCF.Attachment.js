@@ -53,6 +53,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		
 		this._buttonSelector.children('p.button').click($.proxy(this._validateLimit, this));
 		this._fileListSelector.find('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
+		
+		WCF.DOMNodeRemovedHandler.addCallback('WCF.Attachment.Upload', $.proxy(this._removeLimitError, this));
 	},
 	
 	/**
@@ -84,6 +86,17 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		return true;
 	},
 	
+	/**
+	 * Removes the limit error message.
+	 * 
+	 * @param	object		event
+	 */
+	_removeLimitError: function(event) {
+		var $target = $(event.target);
+		if ($target.is('li.box48') && $target.parent().wcfIdentify() === this._fileListSelector.wcfIdentify()) {
+			this._buttonSelector.next('small.innerError').remove();
+		}
+	},
 	
 	/**
 	 * @see	WCF.Upload._upload()
