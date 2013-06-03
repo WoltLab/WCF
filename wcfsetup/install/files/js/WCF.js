@@ -5253,7 +5253,7 @@ WCF.Search.Base = Class.extend({
 	 * @param	object		event
 	 */
 	_keyDown: function(event) {
-		if (event.which === 13) {
+		if (event.which === 13 && this._itemIndex !== -1) {
 			event.preventDefault();
 		}
 	},
@@ -5447,13 +5447,16 @@ WCF.Search.Base = Class.extend({
 		
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
 		
-		if (!WCF.Dropdown.getDropdownMenu(this._searchInput.parents('.dropdown').wcfIdentify()).hasClass('dropdownOpen')) {
-			WCF.Dropdown.toggleDropdown(this._searchInput.parents('.dropdown').wcfIdentify());
+		var $containerID = this._searchInput.parents('.dropdown').wcfIdentify();
+		if (!WCF.Dropdown.getDropdownMenu($containerID).hasClass('dropdownOpen')) {
+			WCF.Dropdown.toggleDropdown($containerID);
 		}
 		
 		// pre-select first item
 		this._itemIndex = -1;
-		this._selectNextItem();
+		if (!WCF.Dropdown.getDropdown($containerID).data('disableAutoFocus')) {
+			this._selectNextItem();
+		}
 	},
 	
 	/**

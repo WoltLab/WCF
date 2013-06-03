@@ -43,8 +43,8 @@ WCF.Search.Message.KeywordList = WCF.Search.Base.extend({
 		this._searchInput = $(searchInput).keyup($.proxy(this._keyUp, this)).keydown($.proxy(function(event) {
 			// block form submit
 			if (event.which === 13) {
-				// ... unless there are no suggestions
-				if (this._itemCount) {
+				// ... unless there are no suggestions or suggestions are optional and none is selected
+				if (this._itemCount && this._itemIndex !== -1) {
 					event.preventDefault();
 				}
 			}
