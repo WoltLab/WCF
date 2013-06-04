@@ -19,7 +19,7 @@
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 		<instruction type="option">option.xml</instruction>
-		<instruction type="template">template.tar</instruction>
+		<instruction type="template">templates.tar</instruction>
 		<instruction type="eventListener">eventListener.xml</instruction>
 		<instruction type="script">acp/install.php</instruction>
 		<instruction type="cronjob">cronjob.xml</instruction>
