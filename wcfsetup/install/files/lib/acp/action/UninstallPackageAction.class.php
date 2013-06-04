@@ -169,7 +169,6 @@ class UninstallPackageAction extends InstallPackageAction {
 			break;
 			
 			default:
-				die(print_r($_POST, true)); // todo: remove/replace
 				throw new IllegalLinkException();
 			break;
 		}
