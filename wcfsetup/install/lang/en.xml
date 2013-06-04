@@ -303,9 +303,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Can like content]]></item>
 		<item name="wcf.acp.group.option.category.user.profileComment"><![CDATA[User Profile Wall]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canAddComment"><![CDATA[Can create comments]]></item>
-		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Cam edit own comments]]></item>
-		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Cam delete own comments]]></item>
-		<item name="wcf.acp.group.option.mod.profileComment.canEditComment"><![CDATA[Cam edit comments]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Can edit own comments]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Can delete own comments]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canEditComment"><![CDATA[Can edit comments]]></item>
 		<item name="wcf.acp.group.option.mod.profileComment.canDeleteComment"><![CDATA[Can delete comments]]></item>
 		<item name="wcf.acp.group.option.mod.profileComment.canModerateComment"><![CDATA[Can moderate comments]]></item>
 		<item name="wcf.acp.group.option.category.mod.profileComment"><![CDATA[User Profile Wall]]></item>
@@ -353,7 +353,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
 		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group “{$group->groupName}”?]]></item>
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Availability]]></item>
-		<item name="wcf.acp.label.delete.sure"><![CDATA[Do you really want to delete the group “{$label}”?]]></item>
+		<item name="wcf.acp.label.delete.sure"><![CDATA[Do you really want to delete the label “{$label}”?]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
