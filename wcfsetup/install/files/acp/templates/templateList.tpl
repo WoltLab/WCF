@@ -4,6 +4,18 @@
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\template\\TemplateAction', '.jsTemplateRow');
+		
+		var options = { };
+		{if $pages > 1}
+			options.refreshPage = true;
+			{if $pages == $pageNo}
+				options.updatePageNumber = -1;
+			{/if}
+		{else}
+			options.emptyMessage = '{lang}wcf.acp.template.noItems{/lang}';
+		{/if}
+		
+		new WCF.Table.EmptyTableHandler($('#templateTableContainer'), 'jsTemplateRow', options);
 	});
 	//]]>
 </script>
@@ -72,7 +84,7 @@
 </div>
 
 {if $objects|count}
-	<div class="tabularBox tabularBoxTitle marginTop">
+	<div id="templateTableContainer" class="tabularBox tabularBoxTitle marginTop">
 		<header>
 			<h2>{lang}wcf.acp.template.list{/lang} <span class="badge badgeInverse">{#$items}</span></h2>
 		</header>
