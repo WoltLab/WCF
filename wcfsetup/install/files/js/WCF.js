@@ -3372,7 +3372,7 @@ WCF.String = {
 	 * @return	string
 	 */
 	escapeHTML: function (string) {
-		return string.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+		return String(string).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 	},
 	
 	/**
@@ -3383,7 +3383,7 @@ WCF.String = {
 	 * @return	string
 	 */
 	escapeRegExp: function(string) {
-		return string.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
+		return String(string).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
 	},
 	
 	/**
@@ -3409,7 +3409,7 @@ WCF.String = {
 	 * @return	string
 	 */
 	lcfirst: function(string) {
-		return string.substring(0, 1).toLowerCase() + string.substring(1);
+		return String(string).substring(0, 1).toLowerCase() + string.substring(1);
 	},
 	
 	/**
@@ -3419,7 +3419,7 @@ WCF.String = {
 	 * @return	string
 	 */
 	ucfirst: function(string) {
-		return string.substring(0, 1).toUpperCase() + string.substring(1);
+		return String(string).substring(0, 1).toUpperCase() + string.substring(1);
 	}
 };
 
