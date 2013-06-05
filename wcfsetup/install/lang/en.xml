@@ -863,6 +863,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.update.title"><![CDATA[Update]]></item>
 		<item name="wcf.acp.package.update.unauthorized"><![CDATA[Authorization Required]]></item>
 		<item name="wcf.acp.package.update.username"><![CDATA[Username]]></item>
+		<item name="wcf.acp.package.update.step.prepare"><![CDATA[Prepairing update …]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
 		<item name="wcf.acp.package.upload"><![CDATA[Upload package]]></item>
