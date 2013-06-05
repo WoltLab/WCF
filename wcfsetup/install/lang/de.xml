@@ -864,6 +864,7 @@
 		<item name="wcf.acp.package.update.title"><![CDATA[Paket-Aktualisierung]]></item>
 		<item name="wcf.acp.package.update.unauthorized"><![CDATA[Authentifizierung erforderlich]]></item>
 		<item name="wcf.acp.package.update.username"><![CDATA[Benutzername]]></item>
+		<item name="wcf.acp.package.update.step.prepare"><![CDATA[Aktualisierung wird vorbereitet …]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installationsverzeichnis]]></item>
 		<item name="wcf.acp.package.upload"><![CDATA[Paket hochladen]]></item>
