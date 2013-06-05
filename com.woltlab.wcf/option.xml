@@ -274,6 +274,11 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="module_members_list">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<option name="module_team_page">
 				<categoryname>module.user</categoryname>
 				<optiontype>boolean</optiontype>

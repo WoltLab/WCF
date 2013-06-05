@@ -11,6 +11,7 @@
 			<controller><![CDATA[wcf\page\MembersListPage]]></controller>
 			<position>header</position>
 			<permissions>user.profile.canViewMembersList</permissions>
+			<options>module_members_list</options>
 		</pagemenuitem>
 		
 		<pagemenuitem name="wcf.user.recentActivity">
@@ -40,6 +41,7 @@
 			<position>header</position>
 			<parent>wcf.user.members</parent>
 			<permissions>user.profile.canViewMembersList</permissions>
+			<options>module_members_list</options>
 		</pagemenuitem>
 	</import>
 </data>

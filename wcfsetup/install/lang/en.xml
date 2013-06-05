@@ -777,6 +777,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum number of options]]></item>
 		<item name="wcf.acp.option.error.validationFailed"><![CDATA[TOOD: Sie haben einen ungültigen Inhalt eingegeben.]]></item>
+		<item name="wcf.acp.option.module_members_list"><![CDATA[Members List]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

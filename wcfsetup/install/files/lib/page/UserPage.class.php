@@ -117,7 +117,7 @@ class UserPage extends AbstractPage {
 		parent::readData();
 		
 		// add breadcrumbs
-		WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('wcf.user.members'), LinkHandler::getInstance()->getLink('MembersList')));
+		if (MODULE_MEMBERS_LIST) WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('wcf.user.members'), LinkHandler::getInstance()->getLink('MembersList')));
 		
 		// get profile content
 		if ($this->editOnInit) {

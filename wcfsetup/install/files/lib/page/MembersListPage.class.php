@@ -36,6 +36,11 @@ class MembersListPage extends SortablePage {
 	public $neededPermissions = array('user.profile.canViewMembersList');
 	
 	/**
+	 * @see	wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_MEMBERS_LIST');
+	
+	/**
 	 * @see	wcf\page\AbstractPage::$enableTracking
 	 */
 	public $enableTracking = true;

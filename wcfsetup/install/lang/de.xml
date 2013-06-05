@@ -778,6 +778,7 @@
 		<item name="wcf.acp.option.module_poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximale Anzahl an Antworten]]></item>
 		<item name="wcf.acp.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
+		<item name="wcf.acp.option.module_members_list"><![CDATA[Mitgliederliste]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
