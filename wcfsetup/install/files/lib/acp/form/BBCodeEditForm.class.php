@@ -60,6 +60,10 @@ class BBCodeEditForm extends BBCodeAddForm {
 		if (!$this->bbcode->bbcodeID) {
 			throw new IllegalLinkException();
 		}
+		
+		if (!in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes)) {
+			I18nHandler::getInstance()->register('buttonLabel');
+		}
 	}
 	
 	/**
