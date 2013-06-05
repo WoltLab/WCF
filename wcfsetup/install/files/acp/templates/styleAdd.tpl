@@ -44,6 +44,13 @@
 			var $target = $(event.currentTarget);
 			$target.prev().attr('step', ($target.val() == 'em' ? '0.01' : '1'));
 		}).trigger('change');
+		
+		$('.tabMenuContainer').on('wcftabsbeforeactivate', function () {
+			setTimeout(function() {
+				$('#individualLess')[0].codemirror.refresh();
+				$('#overrideLess')[0].codemirror.refresh();
+			}, 100);
+		});
 	});
 	//]]>
 </script>
@@ -503,7 +510,7 @@
 				
 				<dl class="wide">
 					<dd>
-						<textarea rows="20" cols="40" name="individualLess">{$variables[individualLess]}</textarea>
+						<textarea id="individualLess" rows="20" cols="40" name="individualLess">{$variables[individualLess]}</textarea>
 						<small>{lang}wcf.acp.style.advanced.individualLess.description{/lang}</small>
 					</dd>
 				</dl>
@@ -514,7 +521,7 @@
 				
 				<dl class="wide">
 					<dd>
-						<textarea rows="20" cols="40" name="overrideLess">{$variables[overrideLess]}</textarea>
+						<textarea id="overrideLess" rows="20" cols="40" name="overrideLess">{$variables[overrideLess]}</textarea>
 						{if $errorField == 'overrideLess'}
 							<small class="innerError">
 								{lang}wcf.acp.style.advanced.overrideLess.error{/lang}
@@ -525,6 +532,7 @@
 					</dd>
 				</dl>
 			</fieldset>
+			{include file='codemirror' codemirrorMode='less' codemirrorSelector='#individualLess, #overrideLess'}
 			
 			{event name='syntaxFieldsets'}
 		</div>
