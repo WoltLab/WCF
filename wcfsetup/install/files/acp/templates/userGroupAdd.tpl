@@ -4,6 +4,7 @@
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
+		new WCF.ACP.Options();
 	});
 	//]]>
 </script>
