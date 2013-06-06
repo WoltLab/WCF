@@ -48,9 +48,10 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns the message for this notification event.
 	 *
+	 * @param	string		$notificationType
 	 * @return	string
 	 */
-	public function getEmailMessage();
+	public function getEmailMessage($notificationType = 'instant');
 	
 	/**
 	 * Returns the author id for this notification event.
