@@ -89,6 +89,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Show button in WYSIWYG editor]]></item>
 		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button Label]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button Image]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[TODO: Die Grafik muss sich im Verzeichnis wcf/icon/ befinden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
