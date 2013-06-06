@@ -56,6 +56,13 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
 	}
 	
 	/**
+	 * @see	wcf\system\cache\builder\ICacheBuilder::setMaxLifetime()
+	 */
+	public function setMaxLifetime($maxLifetime = 0) {
+		$this->maxLifetime = $maxLifetime;
+	}
+	
+	/**
 	 * @see	wcf\system\cache\builder\ICacheBuilder::getMaxLifetime()
 	 */
 	public function getMaxLifetime() {

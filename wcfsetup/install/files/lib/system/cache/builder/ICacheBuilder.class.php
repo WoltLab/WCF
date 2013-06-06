@@ -22,6 +22,13 @@ interface ICacheBuilder {
 	public function getData(array $parameters = array(), $arrayIndex = '');
 	
 	/**
+	 * Sets maximum lifetime for cache resource.
+	 * 
+	 * @param	int		$maxLifetime
+	 */
+	public function setMaxLifetime($maxLifetime = 0);
+	
+	/**
 	 * Returns maximum lifetime for cache resource.
 	 * 
 	 * @return	integer
