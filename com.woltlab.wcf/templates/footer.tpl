@@ -40,5 +40,6 @@
 </footer>
 
 {event name='footer'}
+{@FOOTER_CODE}
 
 <a id="bottom"></a>
