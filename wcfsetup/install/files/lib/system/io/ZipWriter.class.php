@@ -5,7 +5,7 @@ use wcf\util\StringUtil;
 
 /**
  * Creates a Zip file archive.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2012 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -177,7 +177,7 @@ class ZipWriter {
 	
 	/**
 	 * Converts an unix timestamp to Zip file time.
-	 *
+	 * 
 	 * @param	integer		$date		unix timestamp
 	 * @return	string
 	 */
