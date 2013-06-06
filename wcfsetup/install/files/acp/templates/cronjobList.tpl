@@ -58,12 +58,12 @@
 								<span class="icon icon16 icon-play jsExecuteButton jsTooltip pointer" title="{lang}wcf.acp.cronjob.execute{/lang}" data-object-id="{@$cronjob->cronjobID}"></span>
 								
 								{if $cronjob->canBeDisabled()}
-									<span class="icon icon16 icon-{if !$cronjob->isDisabled}circle-blank{else}off{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$cronjob->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$cronjob->cronjobID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
+									<span class="icon icon16 icon-check{if $cronjob->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$cronjob->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$cronjob->cronjobID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
 								{else}
 									{if !$cronjob->isDisabled}
-										<span class="icon icon16 icon-circle-blank disabled" title="{lang}wcf.global.button.disable{/lang}"></span>
+										<span class="icon icon16 icon-check disabled" title="{lang}wcf.global.button.disable{/lang}"></span>
 									{else}
-										<span class="icon icon16 icon-off disabled" title="{lang}wcf.global.button.enable{/lang}"></span>
+										<span class="icon icon16 icon-check-empty disabled" title="{lang}wcf.global.button.enable{/lang}"></span>
 									{/if}
 								{/if}
 								

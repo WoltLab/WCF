@@ -2125,10 +2125,10 @@ WCF.ACP.User.EnableHandler = {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
 				if (data.actionName == 'disable') {
-					$button.data('enabled', false).data('tooltip', $button.data('enableMessage')).removeClass('icon-circle-blank').addClass('icon-off');
+					$button.data('enabled', false).data('tooltip', $button.data('enableMessage')).removeClass('icon-check').addClass('icon-check-empty');
 				}
 				else {
-					$button.data('enabled', true).data('tooltip', $button.data('disableMessage')).removeClass('icon-off').addClass('icon-circle-blank');
+					$button.data('enabled', true).data('tooltip', $button.data('disableMessage')).removeClass('icon-check-empty').addClass('icon-check');
 				}
 			}
 		});
