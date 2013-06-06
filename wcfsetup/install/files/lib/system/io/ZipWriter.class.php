@@ -181,7 +181,10 @@ class ZipWriter {
 	 * @param	integer		$date		unix timestamp
 	 * @return	string
 	 */
-	protected static function getDosDatetime($date = 0) {
+	protected static function getDosDatetime($date) {
+		// Ensure we have a numeric value
+		$date = intval($date);
+		
 		$day = gmdate('d', $date);
 		$month = gmdate('m', $date);
 		$year = gmdate('Y', $date);
