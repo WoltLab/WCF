@@ -469,12 +469,12 @@ WCF.User.Profile.IgnoreUser = Class.extend({
 	 */
 	_updateButton: function() {
 		if (this._button === null) {
-			this._button = $('<li id="ignoreUser"><a class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'ignore')+'"><span class="icon icon16 icon-off"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'ignore')+'</span></a></li>').prependTo($('#profileButtonContainer'));
+			this._button = $('<li id="ignoreUser"><a class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'ignore')+'"><span class="icon icon16 icon-ban-circle"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'ignore')+'</span></a></li>').prependTo($('#profileButtonContainer'));
 		}
 		
 		this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.' + (this._isIgnoredUser ? 'un' : '') + 'ignore'));
-		if (this._isIgnoredUser) this._button.find('.button').addClass('active').children('.icon').removeClass('icon-off').addClass('icon-circle-blank');
-		else this._button.find('.button').removeClass('active').children('.icon').removeClass('icon-circle-blank').addClass('icon-off');
+		if (this._isIgnoredUser) this._button.find('.button').addClass('active').children('.icon').removeClass('icon-ban-circle').addClass('icon-circle-blank');
+		else this._button.find('.button').removeClass('active').children('.icon').removeClass('icon-circle-blank').addClass('icon-ban-circle');
 	}
 });
 
@@ -1843,10 +1843,10 @@ WCF.User.Action.Ignore = Class.extend({
 				
 				// toogle icon title
 				if (data.returnValues.isIgnoredUser) {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.unignore')).children('.icon').removeClass('icon-off').addClass('icon-circle-blank');
+					button.data('tooltip', WCF.Language.get('wcf.user.button.unignore')).children('.icon').removeClass('icon-ban-circle').addClass('icon-circle-blank');
 				}
 				else {
-					button.data('tooltip', WCF.Language.get('wcf.user.button.ignore')).children('.icon').removeClass('icon-circle-blank').addClass('icon-off');
+					button.data('tooltip', WCF.Language.get('wcf.user.button.ignore')).children('.icon').removeClass('icon-circle-blank').addClass('icon-ban-circle');
 				}
 				
 				button.data('ignored', data.returnValues.isIgnoredUser);

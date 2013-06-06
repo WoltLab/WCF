@@ -8,7 +8,7 @@
 					</span>
 					<div class="details">
 						<div class="containerHeadline">
-							<h3>{$style->styleName}{if $style->styleID == $__wcf->getStyleHandler()->getStyle()->styleID} <span class="icon icon16 icon-check" title="{lang}wcf.style.currentStyle{/lang}"></span>{/if}</h3>
+							<h3>{$style->styleName}{if $style->styleID == $__wcf->getStyleHandler()->getStyle()->styleID} <span class="icon icon16 icon-ok-sign" title="{lang}wcf.style.currentStyle{/lang}"></span>{/if}</h3>
 						</div>
 						{if $style->styleDescription}<small>{lang}{@$style->styleDescription}{/lang}</small>{/if}
 					</div>

@@ -45,7 +45,7 @@
 								
 								{if !$style->isDefault}
 									<li><span class="icon icon16 icon-{if $style->isDisabled}off{else}circle-blank{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $style->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$style->styleID}"></span></li>
-									<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><span class="icon icon16 icon-check"></span></a></li>
+									<li><a title="{lang}wcf.acp.style.button.setAsDefault{/lang}" class="jsSetAsDefault jsTooltip"><span class="icon icon16 icon-ok-sign"></span></a></li>
 									<li><a title="{lang}wcf.global.button.delete{/lang}" class="jsDelete jsTooltip" data-confirm-message="{lang}wcf.acp.style.delete.confirmMessage{/lang}"><span class="icon icon16 icon-remove"></span></a></li>
 								{/if}
 								
