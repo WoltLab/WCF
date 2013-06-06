@@ -22,40 +22,43 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
 	 * @see	wcf\system\user\activity\event\IUserActivityEvent::prepare()
 	 */
 	public function prepare(array $events) {
-		$responseIDs = array();
-		foreach ($events as $event) {
-			$responseIDs[] = $event->objectID;
-		}
+		$responses = $responseIDs = array();
 		
-		// fetch responses
-		$responseList = new CommentResponseList();
-		$responseList->getConditionBuilder()->add("comment_response.responseID IN (?)", array($responseIDs));
-		$responseList->readObjects();
-		$responses = $responseList->getObjects();
-		
-		// fetch comments
-		$commentIDs = $comments = array();
-		foreach ($responses as $response) {
-			$commentIDs[] = $response->commentID;
-		}
-		if (!empty($commentIDs)) {
-			$commentList = new CommentList();
-			$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
-			$commentList->readObjects();
-			$comments = $commentList->getObjects();
-		}
-		
-		// fetch users
-		$userIDs = $users = array();
-		foreach ($comments as $comment) {
-			$userIDs[] = $comment->objectID;
-			$userIDs[] = $comment->userID;
-		}
-		if (!empty($userIDs)) {
-			$userList = new UserProfileList();
-			$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
-			$userList->readObjects();
-			$users = $userList->getObjects();
+		if (WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+			foreach ($events as $event) {
+				$responseIDs[] = $event->objectID;
+			}
+			
+			// fetch responses
+			$responseList = new CommentResponseList();
+			$responseList->getConditionBuilder()->add("comment_response.responseID IN (?)", array($responseIDs));
+			$responseList->readObjects();
+			$responses = $responseList->getObjects();
+			
+			// fetch comments
+			$commentIDs = $comments = array();
+			foreach ($responses as $response) {
+				$commentIDs[] = $response->commentID;
+			}
+			if (!empty($commentIDs)) {
+				$commentList = new CommentList();
+				$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
+				$commentList->readObjects();
+				$comments = $commentList->getObjects();
+			}
+			
+			// fetch users
+			$userIDs = $users = array();
+			foreach ($comments as $comment) {
+				$userIDs[] = $comment->objectID;
+				$userIDs[] = $comment->userID;
+			}
+			if (!empty($userIDs)) {
+				$userList = new UserProfileList();
+				$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
+				$userList->readObjects();
+				$users = $userList->getObjects();
+			}
 		}
 		
 		// set message
