@@ -874,6 +874,11 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<defaultvalue>182</defaultvalue>
 				<minvalue>0</minvalue>
 			</option>
+			<option name="profile_enable_visitors">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<!-- /user.profile -->
 			
 			<!-- user.list.members -->

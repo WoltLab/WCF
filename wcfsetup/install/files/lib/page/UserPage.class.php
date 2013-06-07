@@ -143,10 +143,12 @@ class UserPage extends AbstractPage {
 		$this->followingList->readObjects();
 		
 		// get visitors
-		$this->visitorList = new UserProfileVisitorList();
-		$this->visitorList->getConditionBuilder()->add('user_profile_visitor.ownerID = ?', array($this->userID));
-		$this->visitorList->sqlLimit = 10;
-		$this->visitorList->readObjects();
+		if (PROFILE_ENABLE_VISITORS) {
+			$this->visitorList = new UserProfileVisitorList();
+			$this->visitorList->getConditionBuilder()->add('user_profile_visitor.ownerID = ?', array($this->userID));
+			$this->visitorList->sqlLimit = 10;
+			$this->visitorList->readObjects();
+		}
 		
 		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('User', array('object' => $this->user->getDecoratedObject())), true);
 		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'profile', true);
@@ -171,8 +173,8 @@ class UserPage extends AbstractPage {
 			'followerCount' => $this->followerList->countObjects(),
 			'following' => $this->followingList->getObjects(),
 			'followingCount' => $this->followingList->countObjects(),
-			'visitors' => $this->visitorList->getObjects(),
-			'visitorCount' => $this->visitorList->countObjects(),
+			'visitors' => ($this->visitorList !== null ? $this->visitorList->getObjects() : array()),
+			'visitorCount' => ($this->visitorList !== null ? $this->visitorList->countObjects() : 0),
 			'allowSpidersToIndexThisPage' => true
 		));
 	}
@@ -187,7 +189,7 @@ class UserPage extends AbstractPage {
 			$editor->updateCounters(array('profileHits' => 1));
 			
 			// save visitor
-			if (WCF::getUser()->userID && !WCF::getUser()->invisible) {
+			if (PROFILE_ENABLE_VISITORS && WCF::getUser()->userID && !WCF::getUser()->invisible) {
 				if (($visitor = UserProfileVisitor::getObject($this->user->userID, WCF::getUser()->userID)) !== null) {
 					$editor = new UserProfileVisitorEditor($visitor);
 					$editor->update(array(

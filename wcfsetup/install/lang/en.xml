@@ -781,6 +781,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Members List]]></item>
 		<item name="wcf.acp.option.footer_code"><![CDATA[TOOD: Footer-Code]]></item>
 		<item name="wcf.acp.option.footer_code.description"><![CDATA[TOOD: Der hier angegebene Code wird im Fußbereich jeder Seite ausgegeben. Der Footer-Code eignet sich z.B. sehr gut für die Einbindung von Diensten wie „Google Analytics“ oder „Piwik“.]]></item>
+		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[TODO: Profil-Besucher anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
