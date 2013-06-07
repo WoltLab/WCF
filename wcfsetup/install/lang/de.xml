@@ -2253,15 +2253,27 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.comment.title"><![CDATA[Neuer Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.message"><![CDATA[Hat einen Kommentar an Ihrer Pinnwand verfasst.]]></item>
 		<item name="wcf.user.notification.comment.mail"><![CDATA[{@$author->username} hat einen Kommentar an Ihrer Pinnwand verfasst:
-{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+{if $notificationType == 'instant'}
+---------------------------------
+{@$comment->message} 
+---------------------------------
+{/if}{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.message"><![CDATA[Hat eine Antwort zu Ihrem Kommentar an der Pinnwand von {$owner->username} verfasst.]]></item>
 		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{@$author->username} hat eine Antwort zu Ihrem Kommentar an der Pinnwand von "{@$owner->username}" verfasst:
-{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+{if $notificationType == 'instant'}
+---------------------------------
+{@$response->message} 
+---------------------------------
+{/if}{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[Hat eine Antwort zum Kommentar von {$commentAuthor->username} an Ihrer Pinnwand verfasst.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail"><![CDATA[{@$author->username} hat eine Antwort zum Kommentar von "{@$commentAuthor->username}" an Ihrer Pinnwand verfasst:
-{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+{if $notificationType == 'instant'}
+---------------------------------
+{@$response->message} 
+---------------------------------
+{/if}{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[Neuer Kommentar an Ihrer Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar an Ihrer Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar von Ihnen]]></item>

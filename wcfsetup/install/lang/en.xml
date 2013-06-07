@@ -2209,15 +2209,27 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.notification.comment.title"><![CDATA[New Comment (Wall)]]></item>
 		<item name="wcf.user.notification.comment.message"><![CDATA[Wrote a comment on your wall.]]></item>
 		<item name="wcf.user.notification.comment.mail"><![CDATA[{@$author->username} wrote a comment on your wall:
-{link controller='User' object=$owner encode=false forceFrontend=true}#wall{/link}]]></item>
+{if $notificationType == 'instant'}
+---------------------------------
+{@$comment->message} 
+---------------------------------
+{/if}{link controller='User' object=$owner encode=false forceFrontend=true}#wall{/link}]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.message"><![CDATA[Wrote a reply to your comment on {$owner->username}’s wall.]]></item>
 		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{@$author->username} wrote a reply to your comment on {@$owner->username}’s wall:
-{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+{if $notificationType == 'instant'}
+---------------------------------
+{@$response->message} 
+---------------------------------
+{/if}{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[Wrote a reply to {$commentAuthor->username}’s comment on your wall.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail"><![CDATA[{@$author->username} wrote a reply to {@$commentAuthor->username}’s comment on your wall:
-{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+{if $notificationType == 'instant'}
+---------------------------------
+{@$response->message} 
+---------------------------------
+{/if}{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[New comment on your wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[New reply to a comment on your wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[New reply to one of your comments]]></item>
