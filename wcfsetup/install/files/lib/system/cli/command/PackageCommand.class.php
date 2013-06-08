@@ -327,7 +327,7 @@ class PackageCommand implements ICommand {
 		// UninstallPackageAction::prepare()
 		$package = new Package($packageID);
 		if (!$package->packageID || !$package->canUninstall()) {
-			throw new IllegalLinkException();
+			$this->error('invalidUninstallation');
 		}
 		
 		// get new process no
