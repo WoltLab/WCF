@@ -608,6 +608,8 @@ CREATE TABLE wcf1_package_installation_sql_log (
 	UNIQUE KEY packageID (packageID, sqlTable, sqlColumn, sqlIndex) 
 );
 
+/* SQL_PARSER_OFFSET */
+
 DROP TABLE IF EXISTS wcf1_package_requirement;
 CREATE TABLE wcf1_package_requirement (
 	packageID INT(10) NOT NULL,
@@ -1359,6 +1361,8 @@ ALTER TABLE wcf1_package_installation_queue ADD FOREIGN KEY (packageID) REFERENC
 
 ALTER TABLE wcf1_package_installation_sql_log ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
+/* SQL_PARSER_OFFSET */
+
 ALTER TABLE wcf1_package_requirement ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_package_requirement ADD FOREIGN KEY (requirement) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
@@ -1463,6 +1467,8 @@ ALTER TABLE wcf1_user_notification_event_to_user ADD FOREIGN KEY (userID) REFERE
 ALTER TABLE wcf1_user_notification_event_to_user ADD FOREIGN KEY (eventID) REFERENCES wcf1_user_notification_event (eventID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_profile_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+/* SQL_PARSER_OFFSET */
 
 ALTER TABLE wcf1_user_rank ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE SET NULL;
 
