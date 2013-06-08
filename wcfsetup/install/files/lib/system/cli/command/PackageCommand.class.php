@@ -1,19 +1,17 @@
 <?php
 namespace wcf\system\cli\command;
-use wcf\system\package\PackageUninstallationDispatcher;
-
-use wcf\data\package\PackageCache;
-
 use phpline\internal\Log;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\package\PackageUninstallationDispatcher;
 use wcf\system\CLIWCF;
 use wcf\util\CLIUtil;
 use wcf\util\FileUtil;
@@ -35,7 +33,12 @@ use Zend\ProgressBar\ProgressBar;
  * @category	Community Framework
  */
 class PackageCommand implements ICommand {
+	/**
+	 * arguments parser
+	 * @var Zend\Console\Getopt
+	 */
 	private $argv = null;
+	
 	/**
 	 * @see \wcf\system\cli\command\ICommand::execute()
 	 */
@@ -64,6 +67,11 @@ class PackageCommand implements ICommand {
 		}
 	}
 	
+	/**
+	 * Installs the specified package.
+	 * 
+	 * @param	string	$file
+	 */
 	private function install($file) {
 		// PackageStartInstallForm::validateDownloadPackage()
 		if (FileUtil::isURL($file)) {
@@ -316,6 +324,12 @@ class PackageCommand implements ICommand {
 		}
 	}
 	
+	/**
+	 * Uninstalls the specified package.
+	 * $package may either be the packageID or the package identifier.
+	 * 
+	 * @param	mixed	$package
+	 */
 	private function uninstall($package) {
 		if (Package::isValidPackageName($package)) {
 			$packageID = PackageCache::getInstance()->getPackageID($package);
@@ -332,7 +346,7 @@ class PackageCommand implements ICommand {
 		
 		// get new process no
 		$processNo = PackageInstallationQueue::getNewProcessNo();
-			
+		
 		// create queue
 		$queue = PackageInstallationQueueEditor::create(array(
 			'processNo' => $processNo,
@@ -405,6 +419,12 @@ class PackageCommand implements ICommand {
 		}
 	}
 	
+	/**
+	 * Displays an error message.
+	 * 
+	 * @param	string	$name
+	 * @param	array	$parameters
+	 */
 	public function error($name, array $parameters = array()) {
 		Log::error('package.'.$name.':'.JSON::encode($parameters));
 		
@@ -416,6 +436,12 @@ class PackageCommand implements ICommand {
 		}
 	}
 	
+	/**
+	 * Fixed the usage message of the ArgvParser
+	 * 
+	 * @param	string	$usage
+	 * @return	string
+	 */
 	public function fixUsage($usage) {
 		return str_replace($_SERVER['argv'][0].' [ options ]', $_SERVER['argv'][0].' [ options ] <install|uninstall> <package>', $usage);
 	}
