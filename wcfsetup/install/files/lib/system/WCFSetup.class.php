@@ -238,7 +238,7 @@ class WCFSetup extends WCF {
 	 */
 	protected function calcProgress($currentStep) {
 		// calculate progress
-		$progress = round((100 / 15) * ++$currentStep, 0);
+		$progress = round((100 / 18) * ++$currentStep, 0);
 		self::getTPL()->assign(array('progress' => $progress));
 	}
 	
