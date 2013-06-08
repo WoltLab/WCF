@@ -852,8 +852,8 @@
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Erweiterung]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich deinstallieren?]]></item>
 		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[Deinstallation abgeschlossen]]></item>
+		<item name="wcf.acp.package.uninstallation.step.uninstall"><![CDATA[Paket „{$queue->packageName}“ wird deinstalliert …]]></item>
 		<item name="wcf.acp.package.uninstallation.title"><![CDATA[Deinstallation]]></item>
-		<item name="wcf.acp.package.uninstallation.title.packageName"><![CDATA[Paket „{$queue->packageName}“ wird deinstalliert …]]></item>
 		<item name="wcf.acp.package.uninstall.step.prepare"><![CDATA[Deinstallation wird vorbereitet …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Zugangsdaten]]></item>

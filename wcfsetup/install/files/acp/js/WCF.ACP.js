@@ -503,6 +503,12 @@ WCF.ACP.Package.Installation = Class.extend({
 			this._queueID = data.queueID;
 		}
 		
+		// update template
+		if (data.template && !data.ignoreTemplate) {
+			this._dialog.html(data.template);
+			this._shouldRender = true;
+		}
+		
 		// update progress
 		if (data.progress) {
 			$('#packageInstallationProgress').attr('value', data.progress).text(data.progress + '%');
@@ -526,12 +532,6 @@ WCF.ACP.Package.Installation = Class.extend({
 			}, this));
 			
 			return;
-		}
-		
-		// update template
-		if (data.template && !data.ignoreTemplate) {
-			this._dialog.html(data.template);
-			this._shouldRender = true;
 		}
 		
 		// handle inner template
