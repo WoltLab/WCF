@@ -151,7 +151,7 @@ Stacktrace:
 			}
 			
 			$this->exceptions[$key] = $exceptionRegex->getMatches();
-			$this->exceptions[$key]['stacktrace'] = explode("\n", $stackTraceFormatter->replace($this->exceptions[$key]['stacktrace'], '<strong>\\1</strong>'));
+			$this->exceptions[$key]['stacktrace'] = explode("\n", $stackTraceFormatter->replace(StringUtil::encodeHTML($this->exceptions[$key]['stacktrace']), '<strong>\\1</strong>'));
 		}
 	}
 	
