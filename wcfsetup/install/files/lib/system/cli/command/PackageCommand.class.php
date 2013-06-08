@@ -1,5 +1,9 @@
 <?php
 namespace wcf\system\cli\command;
+use wcf\system\package\PackageUninstallationDispatcher;
+
+use wcf\data\package\PackageCache;
+
 use phpline\internal\Log;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
@@ -44,16 +48,28 @@ class PackageCommand implements ICommand {
 			throw new ArgvException('', $this->fixUsage($this->argv->getUsageMessage()));
 		}
 		
-		list($action, $file) = $this->argv->getRemainingArgs();
+		list($action, $package) = $this->argv->getRemainingArgs();
 		CLIWCF::getReader()->setHistoryEnabled(false);
 		
-		if ($action !== 'install') throw new ArgvException('', $this->fixUsage($this->argv->getUsageMessage()));
-		
+		switch ($action) {
+			case 'install':
+				$this->install($package);
+			break;
+			case 'uninstall':
+				$this->uninstall($package);
+			break;
+			default:
+				throw new ArgvException('', $this->fixUsage($this->argv->getUsageMessage()));
+			break;
+		}
+	}
+	
+	private function install($file) {
 		// PackageStartInstallForm::validateDownloadPackage()
 		if (FileUtil::isURL($file)) {
 			// download package
 			$archive = new PackageArchive($file, null);
-			
+				
 			try {
 				if (VERBOSITY >= 1) Log::info("Downloading '".$file."'");
 				$file = $archive->downloadArchive();
@@ -67,7 +83,7 @@ class PackageCommand implements ICommand {
 			if (!file_exists($file)) {
 				$this->error('notFound', array('file' => $file));
 			}
-			
+				
 			$archive = new PackageArchive($file, null);
 		}
 		
@@ -102,7 +118,7 @@ class PackageCommand implements ICommand {
 		// check update or install support
 		if ($package !== null) {
 			CLIWCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
-			
+				
 			$archive->setPackage($package);
 			if (!$archive->isValidUpdate()) {
 				$this->error('noValidUpdate');
@@ -110,7 +126,7 @@ class PackageCommand implements ICommand {
 		}
 		else {
 			CLIWCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
-			
+				
 			if (!$archive->isValidInstall()) {
 				$this->error('noValidInstall');
 			}
@@ -130,14 +146,14 @@ class PackageCommand implements ICommand {
 		
 		// insert queue
 		$queue = PackageInstallationQueueEditor::create(array(
-			'processNo' => $processNo,
-			'userID' => CLIWCF::getUser()->userID,
-			'package' => $archive->getPackageInfo('name'),
-			'packageName' => $archive->getLocalizedPackageInfo('packageName'),
-			'packageID' => ($package !== null) ? $package->packageID : null,
-			'archive' => $file,
-			'action' => ($package !== null ? 'update' : 'install'),
-			'confirmInstallation' => 1
+				'processNo' => $processNo,
+				'userID' => CLIWCF::getUser()->userID,
+				'package' => $archive->getPackageInfo('name'),
+				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
+				'packageID' => ($package !== null) ? $package->packageID : null,
+				'archive' => $file,
+				'action' => ($package !== null ? 'update' : 'install'),
+				'confirmInstallation' => 1
 		));
 		
 		// PackageInstallationDispatcher::openQueue()
@@ -214,93 +230,178 @@ class PackageCommand implements ICommand {
 			return;
 		}
 		
-		switch ('install') {
-			case 'install':
-				// AbstractDialogAction::readParameters()
-				$step = 'prepare';
-				$queueID = $queue->queueID;
-				$node = '';
-				
-				// initialize progressbar
-				$progressbar = new ProgressBar(new ConsoleProgressBar(array(
-					'width' => CLIWCF::getTerminal()->getWidth(),
-					'elements' => array(
-						ConsoleProgressBar::ELEMENT_PERCENT,
-						ConsoleProgressBar::ELEMENT_BAR,
-						ConsoleProgressBar::ELEMENT_TEXT
-					),
-					'textWidth' => min(floor(CLIWCF::getTerminal()->getWidth() / 2), 50)
-				)));
-				
-				// InstallPackageAction::readParameters()
-				$finished = false;
-				while (!$finished) {
-					$queue = new PackageInstallationQueue($queueID);
+		// AbstractDialogAction::readParameters()
+		$step = 'prepare';
+		$queueID = $queue->queueID;
+		$node = '';
+		
+		// initialize progressbar
+		$progressbar = new ProgressBar(new ConsoleProgressBar(array(
+			'width' => CLIWCF::getTerminal()->getWidth(),
+			'elements' => array(
+				ConsoleProgressBar::ELEMENT_PERCENT,
+				ConsoleProgressBar::ELEMENT_BAR,
+				ConsoleProgressBar::ELEMENT_TEXT
+			),
+			'textWidth' => min(floor(CLIWCF::getTerminal()->getWidth() / 2), 50)
+		)));
+		
+		// InstallPackageAction::readParameters()
+		$finished = false;
+		while (!$finished) {
+			$queue = new PackageInstallationQueue($queueID);
+			
+			if (!$queue->queueID) {
+				// todo: what to output?
+				echo "InstallPackageAction::readParameters()";
+				return;
+			}
+			$installation = new PackageInstallationDispatcher($queue);
+			
+			switch ($step) {
+				case 'prepare':
+					// InstallPackageAction::stepPrepare()
+					// update package information
+					$installation->updatePackage();
 					
-					if (!$queue->queueID) {
-						// todo: what to output?
-						echo "InstallPackageAction::readParameters()";
-						return;
-					}
-					$installation = new PackageInstallationDispatcher($queue);
+					// clean-up previously created nodes
+					$installation->nodeBuilder->purgeNodes();
 					
-					switch ($step) {
-						case 'prepare':
-							// InstallPackageAction::stepPrepare()
-							// update package information
-							$installation->updatePackage();
-							
-							// clean-up previously created nodes
-							$installation->nodeBuilder->purgeNodes();
-							
-							// create node tree
-							$installation->nodeBuilder->buildNodes();
-							$node = $installation->nodeBuilder->getNextNode();
-							$queueID = $installation->nodeBuilder->getQueueByNode($installation->queue->processNo, $node);
-							
-							$step = 'install';
-							$progress = 0;
-							$currentAction = $installation->nodeBuilder->getPackageNameByQueue($queueID);
-						break;
+					// create node tree
+					$installation->nodeBuilder->buildNodes();
+					$node = $installation->nodeBuilder->getNextNode();
+					$queueID = $installation->nodeBuilder->getQueueByNode($installation->queue->processNo, $node);
+					
+					$step = 'install';
+					$progress = 0;
+					$currentAction = $installation->nodeBuilder->getPackageNameByQueue($queueID);
+				break;
+				
+				case 'install':
+					// InstallPackageAction::stepInstall()
+					$step_ = $installation->install($node);
+					$queueID = $installation->nodeBuilder->getQueueByNode($installation->queue->processNo, $step_->getNode());
 						
-						case 'install':
-							// InstallPackageAction::stepInstall()
-							$step_ = $installation->install($node);
-							$queueID = $installation->nodeBuilder->getQueueByNode($installation->queue->processNo, $step_->getNode());
+					if ($step_->hasDocument()) {
+						$innerTemplate = $step_->getTemplate();
+						$progress = $installation->nodeBuilder->calculateProgress($node);
+						$node = $step_->getNode();
+						$currentAction = $installation->nodeBuilder->getPackageNameByQueue($queueID);
+					}
+					else {
+						if ($step_->getNode() == '') {
+							// perform final actions
+							$installation->completeSetup();
+							// InstallPackageAction::finalize()
+							CacheHandler::getInstance()->flushAll();
+							// /InstallPackageAction::finalize()
+								
+							// show success
+							$progress = 100;
+							$currentAction = CLIWCF::getLanguage()->get('wcf.acp.package.installation.step.install.success');
+							$finished = true;
+							continue;
+						}
+						else {
+							// continue with next node
+							$progress = $installation->nodeBuilder->calculateProgress($node);
+							$node = $step_->getNode();
+							$currentAction = $installation->nodeBuilder->getPackageNameByQueue($queueID);
+						}
+					}
+					break;
+			}
+			
+			$progressbar->update($progress, $currentAction);
+		}
+	}
+	
+	private function uninstall($package) {
+		if (Package::isValidPackageName($package)) {
+			$packageID = PackageCache::getInstance()->getPackageID($package);
+		}
+		else {
+			$packageID = $package;
+		}
+		
+		// UninstallPackageAction::prepare()
+		$package = new Package($packageID);
+		if (!$package->packageID || !$package->canUninstall()) {
+			throw new IllegalLinkException();
+		}
+		
+		// get new process no
+		$processNo = PackageInstallationQueue::getNewProcessNo();
+			
+		// create queue
+		$queue = PackageInstallationQueueEditor::create(array(
+			'processNo' => $processNo,
+			'userID' => CLIWCF::getUser()->userID,
+			'packageName' => $package->getName(),
+			'packageID' => $package->packageID,
+			'action' => 'uninstall'
+		));
+		
+		// initialize uninstallation
+		$installation = new PackageUninstallationDispatcher($queue);
+		
+		$installation->nodeBuilder->purgeNodes();
+		$installation->nodeBuilder->buildNodes();
+		
+		CLIWCF::getTPL()->assign(array(
+			'queue' => $queue
+		));
+		
+		$queueID = $installation->nodeBuilder->getQueueByNode($queue->processNo, $installation->nodeBuilder->getNextNode());
+		$step = 'uninstall';
+		$node = $installation->nodeBuilder->getNextNode();
+		$currentAction = CLIWCF::getLanguage()->get('wcf.package.installation.step.uninstalling');
+		$progress = 0;
+		
+		// initialize progressbar
+		$progressbar = new ProgressBar(new ConsoleProgressBar(array(
+			'width' => CLIWCF::getTerminal()->getWidth(),
+			'elements' => array(
+				ConsoleProgressBar::ELEMENT_PERCENT,
+				ConsoleProgressBar::ELEMENT_BAR,
+				ConsoleProgressBar::ELEMENT_TEXT
+			),
+			'textWidth' => min(floor(CLIWCF::getTerminal()->getWidth() / 2), 50)
+		)));
+		
+		// InstallPackageAction::readParameters()
+		$finished = false;
+		while (!$finished) {
+			$queue = new PackageInstallationQueue($queueID);
+			$installation = new PackageUninstallationDispatcher($queue);
+			
+			switch ($step) {
+				case 'uninstall':
+					$_node = $installation->uninstall($node);
+					
+					if ($_node == '') {
+						// remove node data
+						$installation->nodeBuilder->purgeNodes();
+						// UninstallPackageAction::finalize()
+						CacheHandler::getInstance()->flushAll();
+						// /UninstallPackageAction::finalize()
 							
-							if ($step_->hasDocument()) {
-								$innerTemplate = $step_->getTemplate();
-								$progress = $installation->nodeBuilder->calculateProgress($node);
-								$node = $step_->getNode();
-								$currentAction = $installation->nodeBuilder->getPackageNameByQueue($queueID);
-							}
-							else {
-								if ($step_->getNode() == '') {
-									// perform final actions
-									$installation->completeSetup();
-									// InstallPackageAction::finalize()
-									CacheHandler::getInstance()->flushAll();
-									// /InstallPackageAction::finalize()
-									
-									// show success
-									$progress = 100;
-									$currentAction = CLIWCF::getLanguage()->get('wcf.acp.package.installation.step.install.success');
-									$finished = true;
-									continue;
-								}
-								else {
-									// continue with next node
-									$progress = $installation->nodeBuilder->calculateProgress($node);
-									$node = $step_->getNode();
-									$currentAction = $installation->nodeBuilder->getPackageNameByQueue($queueID);
-								}
-							}
-						break;
+						// show success
+						$currentAction = CLIWCF::getLanguage()->get('wcf.acp.package.uninstallation.step.success');
+						$progress = 100;
+						$step = 'success';
+						$finished = true;
+						continue;
 					}
 					
-					$progressbar->update($progress, $currentAction);
-				}
-			break;
+					// continue with next node
+					$queueID = $installation->nodeBuilder->getQueueByNode($installation->queue->processNo, $installation->nodeBuilder->getNextNode($node));
+					$step = 'uninstall';
+					$progress = $installation->nodeBuilder->calculateProgress($node);
+					$node = $_node;
+			}
+			
+			$progressbar->update($progress, $currentAction);
 		}
 	}
 	
@@ -316,7 +417,7 @@ class PackageCommand implements ICommand {
 	}
 	
 	public function fixUsage($usage) {
-		return str_replace($_SERVER['argv'][0].' [ options ]', $_SERVER['argv'][0].' [ options ] install <package>', $usage);
+		return str_replace($_SERVER['argv'][0].' [ options ]', $_SERVER['argv'][0].' [ options ] <install|uninstall> <package>', $usage);
 	}
 	
 	/**
