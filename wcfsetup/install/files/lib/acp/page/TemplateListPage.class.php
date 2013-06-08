@@ -115,10 +115,14 @@ class TemplateListPage extends SortablePage {
 		
 		// get applications
 		$applications = ApplicationHandler::getInstance()->getApplications();
+		$applications[] = ApplicationHandler::getInstance()->getWCF();
 		foreach ($applications as $application) {
 			$package = PackageCache::getInstance()->getPackage($application->packageID);
 			$this->availableApplications[ApplicationHandler::getInstance()->getAbbreviation($package->packageID)] = $package;
 		}
+		uasort($this->availableApplications, function ($a, $b) {
+			return $a->getName() > $b->getName();
+		});
 	}
 	
 	/**
