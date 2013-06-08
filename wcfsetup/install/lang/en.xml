@@ -960,7 +960,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley Codes]]></item>
 		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[At least one alternative smiley code is already in use by an other smiley]]></item>
 		<item name="wcf.acp.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
-		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[Smiley path is relative too „{$__wcf->getPath()}“.]]></item>
+		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[Smiley path is relative to „{$__wcf->getPath()}“.]]></item>
 		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Unable to find a file on given path]]></item>
 		<item name="wcf.acp.smiley.showOrder"><![CDATA[Show Order]]></item>
 	</category>
