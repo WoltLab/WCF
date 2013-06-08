@@ -55,6 +55,7 @@ dl:not(.plain) {
 			margin-top: 2px;
 			position: absolute;
 			text-align: left;
+			white-space: nowrap;
 			width: auto;
 			
 			~ dd > input[type='checkbox'], ~ dd > input[type='radio'] {
@@ -127,7 +128,7 @@ dl:not(.plain) {
 	}
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1024px) {
 	dl:not(.plain) {
 		> dt {
 			float: none;

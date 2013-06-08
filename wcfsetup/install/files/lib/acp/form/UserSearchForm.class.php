@@ -168,6 +168,28 @@ class UserSearchForm extends UserOptionListForm {
 	public $maxResults = 0;
 	
 	/**
+	 * @see wcf\page\IPage::readParameters()
+	 */
+	public function readParameters() {
+		parent::readParameters();
+	
+		// search user from passed groupID by group-view
+		if (isset($_GET['groupID'])) {
+			$this->groupIDs[] = intval($_GET['groupID']);
+				
+			// do search
+			try {
+				$this->validate();
+				$this->save();
+			}
+			catch (UserInputException $e) {
+				$this->errorField = $e->getField();
+				$this->errorType = $e->getType();
+			}
+		}
+	}
+	
+	/**
 	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {

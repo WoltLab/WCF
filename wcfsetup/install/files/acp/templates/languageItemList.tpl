@@ -1,6 +1,6 @@
 {include file='header' pageTitle="wcf.acp.language.item.list"}
 
-<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Language.js"></script>
+<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Language.js?v={@$__wcfVersion}"></script>
 <script type="text/javascript">
 	//<![CDATA[
 	$(function() {

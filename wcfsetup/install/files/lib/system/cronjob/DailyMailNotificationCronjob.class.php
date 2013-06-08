@@ -145,7 +145,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 				$class->setLanguage($user->getLanguage());
 				
 				if ($message != '') $message .= "\n\n";
-				$message .= $class->getEmailMessage();
+				$message .= $class->getEmailMessage('daily');
 			}
 			
 			// append notification mail footer

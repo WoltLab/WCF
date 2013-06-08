@@ -53,12 +53,25 @@ class BBCodeEditForm extends BBCodeAddForm {
 	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
-		parent::readParameters();
+		AbstractForm::readParameters();
 		
 		if (isset($_REQUEST['id'])) $this->bbcodeID = intval($_REQUEST['id']);
 		$this->bbcode = new BBCode($this->bbcodeID);
 		if (!$this->bbcode->bbcodeID) {
 			throw new IllegalLinkException();
+		}
+		
+		if (!in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes)) {
+			I18nHandler::getInstance()->register('buttonLabel');
+		}
+	}
+	
+	/**
+	 * @see	wcf\acp\form\BBCodeAddForm::readButtonLabelFormParameter()
+	 */
+	protected function readButtonLabelFormParameter() {
+		if (!in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes)) {
+			parent::readButtonLabelFormParameter();
 		}
 	}
 	

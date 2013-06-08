@@ -53,6 +53,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		
 		this._buttonSelector.children('p.button').click($.proxy(this._validateLimit, this));
 		this._fileListSelector.find('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
+		
+		WCF.DOMNodeRemovedHandler.addCallback('WCF.Attachment.Upload', $.proxy(this._removeLimitError, this));
 	},
 	
 	/**
@@ -75,11 +77,6 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			
 			$innerError.html($errorMessage);
 			
-			// reset value of file input (the 'files' prop is actually readonly!)
-			if (this._fileUpload) {
-				this._fileUpload.attr('value', '');
-			}
-			
 			return false;
 		}
 		
@@ -89,20 +86,31 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		return true;
 	},
 	
+	/**
+	 * Removes the limit error message.
+	 * 
+	 * @param	object		event
+	 */
+	_removeLimitError: function(event) {
+		var $target = $(event.target);
+		if ($target.is('li.box48') && $target.parent().wcfIdentify() === this._fileListSelector.wcfIdentify()) {
+			this._buttonSelector.next('small.innerError').remove();
+		}
+	},
 	
 	/**
 	 * @see	WCF.Upload._upload()
 	 */
 	_upload: function() {
-		if (!this._validateLimit()) {
-			return false;
+		if (this._validateLimit()) {
+			this._super();
 		}
 		
-		this._super();
-		
-		// reset value of file input (the 'files' prop is actually readonly!)
 		if (this._fileUpload) {
-			this._fileUpload.attr('value', '');
+			// remove and re-create the upload button since the 'files' property
+			// of the input field is readonly thus it can't be reset
+			this._removeButton();
+			this._createButton();
 		}
 	},
 	

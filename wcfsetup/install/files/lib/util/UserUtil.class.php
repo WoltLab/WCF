@@ -166,19 +166,26 @@ final class UserUtil {
 		
 		// check if ip is a masked IPv4 address
 		if (substr($ip, 0, 7) == '::ffff:') {
-			$ip = explode(':', substr($ip, 7));
-			$ip[0] = base_convert($ip[0], 16, 10);
-			$ip[1] = base_convert($ip[1], 16, 10);
-			
-			$ipParts = array();
-			$tmp = $ip[0] % 256;
-			$ipParts[] = ($ip[0] - $tmp) / 256;
-			$ipParts[] = $tmp;
-			$tmp = $ip[1] % 256;
-			$ipParts[] = ($ip[1] - $tmp) / 256;
-			$ipParts[] = $tmp;
-			
-			return implode('.', $ipParts);
+			$ip = substr($ip, 7);
+			if (preg_match('~^([a-f0-9]{4}):([a-f0-9]{4})$~', $ip, $matches)) {
+				$ip = array(
+					base_convert($matches[1], 16, 10),
+					base_convert($matches[2], 16, 10)
+				);
+				
+				$ipParts = array();
+				$tmp = $ip[0] % 256;
+				$ipParts[] = ($ip[0] - $tmp) / 256;
+				$ipParts[] = $tmp;
+				$tmp = $ip[1] % 256;
+				$ipParts[] = ($ip[1] - $tmp) / 256;
+				$ipParts[] = $tmp;
+				
+				return implode('.', $ipParts);
+			}
+			else {
+				return $ip;
+			}
 		}
 		else {
 			// given ip is an IPv6 address and cannot be converted

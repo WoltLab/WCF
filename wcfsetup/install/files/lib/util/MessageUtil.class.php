@@ -7,7 +7,7 @@ use wcf\system\Regex;
  * Contains message-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.message
  * @subpackage	util
@@ -33,5 +33,70 @@ class MessageUtil {
 		$text = StringUtil::unifyNewlines($text);
 		
 		return $text;
+	}
+	
+	/**
+	 * Gets mentioned users.
+	 * 
+	 * @param	string		$text
+	 * @return	array<string>
+	 */
+	public static function getMentionedUsers($text) {
+		// remove quotes
+		$newText = $text;
+		if (preg_match_all("~(?:\[quote|\[/quote\])~i", $text, $matches)) {
+			$newText = '';
+			$substrings = preg_split("~(?:\[quote|\[/quote\])~i", $text);
+			
+			$inQuote = 0;
+			foreach ($matches[0] as $i => $tag) {
+				if (!$inQuote) {
+					$newText .= $substrings[$i];
+				}
+				
+				if ($tag == '[quote') {
+					$inQuote++;
+				}
+				else {
+					$inQuote--;
+				}
+			}
+			
+			if (!$inQuote) $newText .= $substrings[count($substrings) - 1];
+		}
+		
+		// check for mentions
+		if (preg_match_all("~\[url='[^']+'\]@(.+?)\[/url\]~", $newText, $matches)) {
+			return $matches[1];
+		}
+		
+		return array();
+	}
+	
+	/**
+	 * Gets quoted users.
+	 *
+	 * @param	string		$text
+	 * @return	array<string>
+	 */
+	public static function getQuotedUsers($text) {
+		$usernames = array();
+		if (preg_match_all("~(?:\[(quote)=(?:')?(.+?)(?:')?(?:,[^\]]*)?\]|\[/quote\])~i", $text, $matches)) {
+			$level = 0;
+			
+			foreach ($matches[1] as $i => $tag) {
+				if ($tag == 'quote') {
+					if (!$level) {
+						$usernames[] = $matches[2][$i];
+					}
+					$level++;
+				}
+				else {
+					$level--;
+				}
+			}
+		}
+		
+		return $usernames;
 	}
 }

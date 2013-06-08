@@ -40,13 +40,15 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractUserNotifi
 	/**
 	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
 	 */
-	public function getEmailMessage() {
+	public function getEmailMessage($notificationType = 'instant') {
 		$comment = new Comment($this->userNotificationObject->commentID);
 		$user = new User($comment->objectID);
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.mail', array(
+			'response' => $this->userNotificationObject,
 			'author' => $this->author,
-			'owner' => $user
+			'owner' => $user,
+			'notificationType' => $notificationType
 		));
 	}
 	

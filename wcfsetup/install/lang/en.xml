@@ -89,6 +89,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Show button in WYSIWYG editor]]></item>
 		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button Label]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button Image]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[TODO: Die Grafik muss sich im Verzeichnis wcf/icon/ befinden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -152,6 +153,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Error]]></item>
 		<item name="wcf.acp.cronjob.log.error.showDetails"><![CDATA[Show Details]]></item>
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Error Message]]></item>
+		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[TODO: Derzeit sind keine Einträge vorhanden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.dashboard">
@@ -302,9 +304,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Can like content]]></item>
 		<item name="wcf.acp.group.option.category.user.profileComment"><![CDATA[User Profile Wall]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canAddComment"><![CDATA[Can create comments]]></item>
-		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Cam edit own comments]]></item>
-		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Cam delete own comments]]></item>
-		<item name="wcf.acp.group.option.mod.profileComment.canEditComment"><![CDATA[Cam edit comments]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Can edit own comments]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Can delete own comments]]></item>
+		<item name="wcf.acp.group.option.mod.profileComment.canEditComment"><![CDATA[Can edit comments]]></item>
 		<item name="wcf.acp.group.option.mod.profileComment.canDeleteComment"><![CDATA[Can delete comments]]></item>
 		<item name="wcf.acp.group.option.mod.profileComment.canModerateComment"><![CDATA[Can moderate comments]]></item>
 		<item name="wcf.acp.group.option.category.mod.profileComment"><![CDATA[User Profile Wall]]></item>
@@ -352,7 +354,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
 		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group “{$group->groupName}”?]]></item>
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Availability]]></item>
-		<item name="wcf.acp.label.delete.sure"><![CDATA[Do you really want to delete the group “{$label}”?]]></item>
+		<item name="wcf.acp.label.delete.sure"><![CDATA[Do you really want to delete the label “{$label}”?]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
@@ -391,6 +393,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Customized values]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Language Name]]></item>
 		<item name="wcf.acp.language.add.source.description"><![CDATA[The selected language will be used as origin, all phrases will be copied into the new language.]]></item>
+		<item name="wcf.acp.language.item.noItems"><![CDATA[TODO: Es wurden keine Texte gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -774,12 +777,18 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum number of options]]></item>
+		<item name="wcf.acp.option.error.validationFailed"><![CDATA[TOOD: Sie haben einen ungültigen Inhalt eingegeben.]]></item>
+		<item name="wcf.acp.option.module_members_list"><![CDATA[Members List]]></item>
+		<item name="wcf.acp.option.footer_code"><![CDATA[TOOD: Footer-Code]]></item>
+		<item name="wcf.acp.option.footer_code.description"><![CDATA[TOOD: Der hier angegebene Code wird im Fußbereich jeder Seite ausgegeben. Der Footer-Code eignet sich z.B. sehr gut für die Einbindung von Diensten wie „Google Analytics“ oder „Piwik“.]]></item>
+		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[TODO: Profil-Besucher anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installed Applications]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Applications]]></item>
 		<item name="wcf.acp.package.author"><![CDATA[Developer]]></item>
+		<item name="wcf.acp.package.availableVersions"><![CDATA[Available Versions]]></item>
 		<item name="wcf.acp.package.button.info"><![CDATA[Details]]></item>
 		<item name="wcf.acp.package.button.installPackage"><![CDATA[Install Package]]></item>
 		<item name="wcf.acp.package.button.uninstall"><![CDATA[Uninstall]]></item>
@@ -811,6 +820,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation completed]]></item>
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[Updating “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Updated completed]]></item>
+		<item name="wcf.acp.package.installedVersion"><![CDATA[Installed Version]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Preparing Installation …]]></item>
 		<item name="wcf.acp.package.install.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required Version]]></item>
@@ -892,6 +902,7 @@ Examples for medium ID detection:
 	</category>
 	
 	<category name="wcf.acp.search">
+		<item name="wcf.acp.search.noResults"><![CDATA[No results]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[ACP Menu]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.option"><![CDATA[Options]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.package"><![CDATA[Packages]]></item>
@@ -949,7 +960,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley Codes]]></item>
 		<item name="wcf.acp.smiley.aliases.error.notUnique"><![CDATA[At least one alternative smiley code is already in use by an other smiley]]></item>
 		<item name="wcf.acp.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
-		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[Smiley path is relative too „{$__wcf->getPath()}“.]]></item>
+		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[Smiley path is relative to “{$__wcf->getPath()}”.]]></item>
 		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Unable to find a file on given path]]></item>
 		<item name="wcf.acp.smiley.showOrder"><![CDATA[Show Order]]></item>
 	</category>
@@ -965,8 +976,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.advanced.overrideLess.error.notValid"><![CDATA[Input for “{$error[text]}” invalid]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.error.predefined"><![CDATA[Variable “{$error[text]}” is already defined by the style editor]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.error.unknown"><![CDATA[Variable “{$error[text]}” is not recognized]]></item>
-		<item name="wcf.acp.style.advanced.overrideLess.warning"><![CDATA[Flawed input values can harm style creation. You should not override LESS variables unless it is not possible otherwise!]]></item>
-		<item name="wcf.acp.style.advanced.syntax"><![CDATA[You can use both CSS and <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http://www.lesscss.org">LESS</a>. Please be aware that the style cannot be created if the LESS-code is flawed.]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Author]]></item>
 		<item name="wcf.acp.style.authorURL"><![CDATA[Website]]></item>
 		<item name="wcf.acp.style.button.exportStyle"><![CDATA[Start Export]]></item>
@@ -1041,6 +1050,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.imagePath.error.notValid"><![CDATA[You have provided an invalid path.]]></item>
 		<item name="wcf.acp.style.styleVersion.error.notValid"><![CDATA[You have provided an invalid version number.]]></item>
 		<item name="wcf.acp.style.styleDate.error.notValid"><![CDATA[You have provided an invalid date.]]></item>
+		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[TODO: Seitenlogo]]></item>
+		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[TODO: Name der Grafik-Datei für das Seitenlogo]]></item>
 	</category>
 	
 	<category name="wcf.acp.tag">
@@ -1057,6 +1068,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.tag.synonyms"><![CDATA[Synonyms]]></item>
 		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym for]]></item>
 		<item name="wcf.acp.tag.usageCount"><![CDATA[Usages]]></item>
+		<item name="wcf.acp.tag.error.name.duplicate"><![CDATA[TODO: Ein Tag mit diesem Namen existiert bereits.]]></item>
 	</category>
 	
 	<category name="wcf.acp.template">
@@ -1083,7 +1095,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Do you really want to remove the template group “{$templateGroup->templateGroupName}”?]]></item>
 		<item name="wcf.acp.template.noItems"><![CDATA[There are no templates.]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template Source Code]]></item>
-		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a differen template]]></item>
+		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a different template]]></item>
 		<item name="wcf.acp.template.name.error.notValid"><![CDATA[The specified name is invalid]]></item>
 		<item name="wcf.acp.template.delete.sure"><![CDATA[Do you really want to delete the template “{$template->templateName}”?]]></item>
 	</category>
@@ -2209,15 +2221,27 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.notification.comment.title"><![CDATA[New Comment (Wall)]]></item>
 		<item name="wcf.user.notification.comment.message"><![CDATA[Wrote a comment on your wall.]]></item>
 		<item name="wcf.user.notification.comment.mail"><![CDATA[{@$author->username} wrote a comment on your wall:
-{link controller='User' object=$owner encode=false forceFrontend=true}#wall{/link}]]></item>
+{if $notificationType == 'instant'}
+---------------------------------
+{@$comment->message} 
+---------------------------------
+{/if}{link controller='User' object=$owner encode=false forceFrontend=true}#wall{/link}]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.message"><![CDATA[Wrote a reply to your comment on {$owner->username}’s wall.]]></item>
 		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{@$author->username} wrote a reply to your comment on {@$owner->username}’s wall:
-{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+{if $notificationType == 'instant'}
+---------------------------------
+{@$response->message} 
+---------------------------------
+{/if}{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[Wrote a reply to {$commentAuthor->username}’s comment on your wall.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail"><![CDATA[{@$author->username} wrote a reply to {@$commentAuthor->username}’s comment on your wall:
-{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+{if $notificationType == 'instant'}
+---------------------------------
+{@$response->message} 
+---------------------------------
+{/if}{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[New comment on your wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[New reply to a comment on your wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[New reply to one of your comments]]></item>

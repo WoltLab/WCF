@@ -163,6 +163,20 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
+	 * Gets the object type id with the given definition name and given name.
+	 *
+	 * @param	string		$definitionName
+	 * @param	string		$objectTypeName
+	 * @return	integer
+	 */
+	public function getObjectTypeIDByName($definitionName, $objectTypeName) {
+		$objectType = $this->getObjectTypeByName($definitionName, $objectTypeName);
+		if ($objectType !== null) return $objectType->objectTypeID;
+		
+		return null;
+	}
+	
+	/**
 	 * Resets and reloads the object type cache.
 	 */
 	public function resetCache() {

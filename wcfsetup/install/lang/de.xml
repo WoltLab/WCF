@@ -90,6 +90,7 @@
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Button im WYSIWYG-Editor anzeigen]]></item>
 		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button-Beschriftung]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button-Grafik]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis wcf/icon/ befinden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -153,6 +154,7 @@
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Fehler]]></item>
 		<item name="wcf.acp.cronjob.log.error.showDetails"><![CDATA[Details anzeigen]]></item>
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Fehlermeldung]]></item>
+		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[Derzeit sind keine Einträge vorhanden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.dashboard">
@@ -392,6 +394,7 @@
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Veränderte Inhalte finden]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Name der Sprache]]></item>
 		<item name="wcf.acp.language.add.source.description"><![CDATA[Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
+		<item name="wcf.acp.language.item.noItems"><![CDATA[Es wurden keine Texte gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -775,12 +778,18 @@
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximale Anzahl an Antworten]]></item>
+		<item name="wcf.acp.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
+		<item name="wcf.acp.option.module_members_list"><![CDATA[Mitgliederliste]]></item>
+		<item name="wcf.acp.option.footer_code"><![CDATA[Footer-Code]]></item>
+		<item name="wcf.acp.option.footer_code.description"><![CDATA[Der hier angegebene Code wird im Fußbereich jeder Seite ausgegeben. Der Footer-Code eignet sich z.B. sehr gut für die Einbindung von Diensten wie „Google Analytics“ oder „Piwik“.]]></item>
+		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Profil-Besucher anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installierte Anwendungen]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Anwendungen]]></item>
 		<item name="wcf.acp.package.author"><![CDATA[Entwickler]]></item>
+		<item name="wcf.acp.package.availableVersions"><![CDATA[Verfügbare Versionen]]></item>
 		<item name="wcf.acp.package.button.info"><![CDATA[Informationen]]></item>
 		<item name="wcf.acp.package.button.installPackage"><![CDATA[Paket installieren]]></item>
 		<item name="wcf.acp.package.button.uninstall"><![CDATA[Deinstallieren]]></item>
@@ -812,6 +821,7 @@
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation abgeschlossen]]></item>
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[„{$packageName}“ wird aktualisiert …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Aktualisierung abgeschlossen]]></item>
+		<item name="wcf.acp.package.installedVersion"><![CDATA[Installierte Version]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Installation wird vorbereitet …]]></item>
 		<item name="wcf.acp.package.install.title"><![CDATA[Paket-Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Benötigte Version]]></item>
@@ -893,6 +903,7 @@
 	</category>
 	
 	<category name="wcf.acp.search">
+		<item name="wcf.acp.search.noResults"><![CDATA[Keine Treffer]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[Seiten]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.option"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.package"><![CDATA[Pakete]]></item>
@@ -966,8 +977,6 @@
 		<item name="wcf.acp.style.advanced.overrideLess.error.notValid"><![CDATA[Eingabe „{$error[text]}“ ungültig]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.error.predefined"><![CDATA[Variable „{$error[text]}“ wird bereits durch den Stil-Editor gesetzt]]></item>
 		<item name="wcf.acp.style.advanced.overrideLess.error.unknown"><![CDATA[Variable „{$error[text]}“ unbekannt]]></item>
-		<item name="wcf.acp.style.advanced.overrideLess.warning"><![CDATA[Fehlerhafte Eingaben führen dazu, dass der Stil nicht erzeugt werden kann. Überschreiben Sie LESS-Variablen nur, wenn Sie sich den Auswirkungen bewusst sind und eine Änderung nicht anderweitig möglich ist.]]></item>
-		<item name="wcf.acp.style.advanced.syntax"><![CDATA[Sie können sowohl CSS als auch <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=http://www.lesscss.org">LESS</a> verwenden. Bitte beachten Sie, dass der Stil nicht erzeugt werden kann, wenn der LESS-Code ungültig ist.]]></item>
 		<item name="wcf.acp.style.authorName"><![CDATA[Autor]]></item>
 		<item name="wcf.acp.style.authorURL"><![CDATA[Website]]></item>
 		<item name="wcf.acp.style.button.exportStyle"><![CDATA[Export starten]]></item>
@@ -1042,6 +1051,8 @@
 		<item name="wcf.acp.style.imagePath.error.notValid"><![CDATA[Sie haben einen ungültigen Pfad eingegeben.]]></item>
 		<item name="wcf.acp.style.styleVersion.error.notValid"><![CDATA[Sie haben eine ungültigen Versionsnummer eingegeben.]]></item>
 		<item name="wcf.acp.style.styleDate.error.notValid"><![CDATA[Sie haben ein ungültiges Datum eingegeben.]]></item>
+		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Seitenlogo]]></item>
+		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[Name der Grafik-Datei für das Seitenlogo]]></item>
 	</category>
 	
 	<category name="wcf.acp.tag">
@@ -1058,6 +1069,7 @@
 		<item name="wcf.acp.tag.synonyms"><![CDATA[Synonyme]]></item>
 		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym für]]></item>
 		<item name="wcf.acp.tag.usageCount"><![CDATA[Verwendungen]]></item>
+		<item name="wcf.acp.tag.error.name.duplicate"><![CDATA[Ein Tag mit diesem Namen existiert bereits.]]></item>
 	</category>
 	
 	<category name="wcf.acp.template">
@@ -2261,15 +2273,27 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.comment.title"><![CDATA[Neuer Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.message"><![CDATA[Hat einen Kommentar an Ihrer Pinnwand verfasst.]]></item>
 		<item name="wcf.user.notification.comment.mail"><![CDATA[{@$author->username} hat einen Kommentar an Ihrer Pinnwand verfasst:
-{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+{if $notificationType == 'instant'}
+---------------------------------
+{@$comment->message} 
+---------------------------------
+{/if}{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.message"><![CDATA[Hat eine Antwort zu Ihrem Kommentar an der Pinnwand von {$owner->username} verfasst.]]></item>
 		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{@$author->username} hat eine Antwort zu Ihrem Kommentar an der Pinnwand von "{@$owner->username}" verfasst:
-{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+{if $notificationType == 'instant'}
+---------------------------------
+{@$response->message} 
+---------------------------------
+{/if}{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[Hat eine Antwort zum Kommentar von {$commentAuthor->username} an Ihrer Pinnwand verfasst.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail"><![CDATA[{@$author->username} hat eine Antwort zum Kommentar von "{@$commentAuthor->username}" an Ihrer Pinnwand verfasst:
-{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+{if $notificationType == 'instant'}
+---------------------------------
+{@$response->message} 
+---------------------------------
+{/if}{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[Neuer Kommentar an Ihrer Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar an Ihrer Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar von Ihnen]]></item>

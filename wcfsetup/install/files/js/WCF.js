@@ -1428,6 +1428,8 @@ WCF.Clipboard = {
 						var $__container = $(this._containers[$__containerID]);
 						if ($__container.data('type') == $typeName) {
 							$__container.find('.jsClipboardMarkAll, .jsClipboardItem').prop('checked', false);
+							$__container.find('.jsClipboardObject').removeClass('jsMarked');
+							
 							break;
 						}
 					}
@@ -2320,13 +2322,13 @@ WCF.Action.Toggle = Class.extend({
 	_toggleButton: function($container, $toggleButton) {
 		// toggle icon source
 		WCF.LoadingOverlayHandler.updateIcon($toggleButton, false);
-		if ($toggleButton.hasClass('icon-off')) {
-			$toggleButton.removeClass('icon-off').addClass('icon-circle-blank');
+		if ($toggleButton.hasClass('icon-check-empty')) {
+			$toggleButton.removeClass('icon-check-empty').addClass('icon-check');
 			$newTitle = ($toggleButton.data('disableTitle') ? $toggleButton.data('disableTitle') : WCF.Language.get('wcf.global.button.disable'));
 			$toggleButton.attr('title', $newTitle);
 		}
 		else {
-			$toggleButton.removeClass('icon-circle-blank').addClass('icon-off');
+			$toggleButton.removeClass('icon-check').addClass('icon-check-empty');
 			$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
 			$toggleButton.attr('title', $newTitle);
 		}
@@ -2560,6 +2562,9 @@ WCF.Date.Picker = {
 			
 			// update $input
 			$input.prop('type', 'text').addClass('jsDatePicker');
+			
+			// set placeholder
+			if ($input.data('placeholder')) $input.attr('placeholder', $input.data('placeholder'));
 			
 			// insert a hidden element representing the actual date
 			$input.removeAttr('name');
@@ -3367,7 +3372,7 @@ WCF.String = {
 	 * @return	string
 	 */
 	escapeHTML: function (string) {
-		return string.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+		return String(string).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 	},
 	
 	/**
@@ -3378,7 +3383,7 @@ WCF.String = {
 	 * @return	string
 	 */
 	escapeRegExp: function(string) {
-		return string.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
+		return String(string).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
 	},
 	
 	/**
@@ -3404,7 +3409,7 @@ WCF.String = {
 	 * @return	string
 	 */
 	lcfirst: function(string) {
-		return string.substring(0, 1).toLowerCase() + string.substring(1);
+		return String(string).substring(0, 1).toLowerCase() + string.substring(1);
 	},
 	
 	/**
@@ -3414,7 +3419,7 @@ WCF.String = {
 	 * @return	string
 	 */
 	ucfirst: function(string) {
-		return string.substring(0, 1).toUpperCase() + string.substring(1);
+		return String(string).substring(0, 1).toUpperCase() + string.substring(1);
 	}
 };
 
@@ -5249,7 +5254,12 @@ WCF.Search.Base = Class.extend({
 	 */
 	_keyDown: function(event) {
 		if (event.which === 13) {
-			event.preventDefault();
+			if (this._searchInput.parents('.dropdown').data('disableAutoFocus') && this._itemIndex === -1) {
+				// allow submitting
+			}
+			else {
+				event.preventDefault();
+			}
 		}
 	},
 	
@@ -5429,26 +5439,38 @@ WCF.Search.Base = Class.extend({
 	_success: function(data, textStatus, jqXHR) {
 		this._clearList(false);
 		
-		// no items available, abort
-		if (!$.getLength(data.returnValues)) {
-			return;
+		if ($.getLength(data.returnValues)) {
+			for (var $i in data.returnValues) {
+				var $item = data.returnValues[$i];
+				
+				this._createListItem($item);
+			}
 		}
-		
-		for (var $i in data.returnValues) {
-			var $item = data.returnValues[$i];
-			
-			this._createListItem($item);
+		else if (!this._handleEmptyResult()) {
+			return;
 		}
 		
 		WCF.CloseOverlayHandler.addCallback('WCF.Search.Base', $.proxy(function() { this._clearList(); }, this));
 		
-		if (!WCF.Dropdown.getDropdownMenu(this._searchInput.parents('.dropdown').wcfIdentify()).hasClass('dropdownOpen')) {
-			WCF.Dropdown.toggleDropdown(this._searchInput.parents('.dropdown').wcfIdentify());
+		var $containerID = this._searchInput.parents('.dropdown').wcfIdentify();
+		if (!WCF.Dropdown.getDropdownMenu($containerID).hasClass('dropdownOpen')) {
+			WCF.Dropdown.toggleDropdown($containerID);
 		}
 		
 		// pre-select first item
 		this._itemIndex = -1;
-		this._selectNextItem();
+		if (!WCF.Dropdown.getDropdown($containerID).data('disableAutoFocus')) {
+			this._selectNextItem();
+		}
+	},
+	
+	/**
+	 * Handles empty result lists, should return false if dropdown should be hidden.
+	 * 
+	 * @return	boolean
+	 */
+	_handleEmptyResult: function() {
+		return false;
 	},
 	
 	/**
@@ -6452,13 +6474,13 @@ WCF.Upload = Class.extend({
 	 */
 	_createButton: function() {
 		if (this._supportsAJAXUpload) {
-			this._fileUpload = $('<input type="file" name="'+this._name+'" '+(this._options.multiple ? 'multiple="true" ' : '')+'/>');
+			this._fileUpload = $('<input type="file" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/>');
 			this._fileUpload.change($.proxy(this._upload, this));
-			var $button = $('<p class="button uploadButton"><span>'+WCF.Language.get('wcf.global.button.upload')+'</span></p>');
+			var $button = $('<p class="button uploadButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
 			$button.prepend(this._fileUpload);
 		}
 		else {
-			var $button = $('<p class="button uploadFallbackButton"><span>'+WCF.Language.get('wcf.global.button.upload')+'</span></p>');
+			var $button = $('<p class="button uploadFallbackButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
 			$button.click($.proxy(this._showOverlay, this));
 		}
 		
@@ -6472,6 +6494,18 @@ WCF.Upload = Class.extend({
 	 */
 	_insertButton: function(button) {
 		this._buttonSelector.append(button);
+	},
+	
+	/**
+	 * Removes the upload button.
+	 */
+	_removeButton: function() {
+		var $selector = '.uploadButton';
+		if (!this._supportsAJAXUpload) {
+			$selector = '.uploadFallbackButton';
+		}
+		
+		this._buttonSelector.find($selector).remove();
 	},
 	
 	/**

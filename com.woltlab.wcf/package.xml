@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.0.0 Beta 2</version> <!-- codename: maelstrom -->
-		<date>2013-06-01</date>
+		<version>2.0.0 Beta 3</version> <!-- codename: maelstrom -->
+		<date>2013-06-04</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -19,7 +19,7 @@
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 		<instruction type="option">option.xml</instruction>
-		<instruction type="template">template.tar</instruction>
+		<instruction type="template">templates.tar</instruction>
 		<instruction type="eventListener">eventListener.xml</instruction>
 		<instruction type="script">acp/install.php</instruction>
 		<instruction type="cronjob">cronjob.xml</instruction>
@@ -47,6 +47,16 @@
 		<instruction type="language">language/*.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="sql">update_b2.sql</instruction>
+		<instruction type="sql">update_b3.sql</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+	</instructions>
+	
+	<instructions type="update" fromversion="2.0.0 Beta 2">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="language">language/*.xml</instruction>
+		<instruction type="option">option.xml</instruction>
+		<instruction type="sql">update_b3.sql</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 	</instructions>
 </package>

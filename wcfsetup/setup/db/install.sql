@@ -346,7 +346,7 @@ DROP TABLE IF EXISTS wcf1_label_group;
 CREATE TABLE wcf1_label_group (
 	groupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	groupName VARCHAR(80) NOT NULL,
-	forceSelection TINYINT(1) NOT NULL DEFAULT 0,
+	forceSelection TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_label_group_to_object;
@@ -766,7 +766,7 @@ CREATE TABLE wcf1_search_index (
 	userID INT(10),
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	languageID INT(10),
-	UNIQUE KEY (objectTypeID, objectID),
+	UNIQUE KEY (objectTypeID, objectID, languageID),
 	FULLTEXT INDEX fulltextIndex (subject, message, metaData),
 	FULLTEXT INDEX fulltextIndexSubjectOnly (subject),
 	KEY (userID, objectTypeID, time)
@@ -1159,7 +1159,7 @@ CREATE TABLE wcf1_user_notification_event (
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	permissions TEXT,
 	options TEXT,
-	preset TINYINT(1) NOT DEFAULT 0,
+	preset TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY eventName (eventName, objectTypeID)
 );
 
@@ -1282,6 +1282,8 @@ CREATE TABLE wcf1_user_to_language (
 	languageID INT(10) NOT NULL,
 	UNIQUE KEY userID (userID, languageID)
 );
+
+/* SQL_PARSER_OFFSET */
 
 /* foreign keys */
 ALTER TABLE wcf1_acl_option ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
@@ -1418,6 +1420,8 @@ ALTER TABLE wcf1_user_group_option_category ADD FOREIGN KEY (packageID) REFERENC
 ALTER TABLE wcf1_user_group_option_value ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_group_option_value ADD FOREIGN KEY (optionID) REFERENCES wcf1_user_group_option (optionID) ON DELETE CASCADE;
 
+/* SQL_PARSER_OFFSET */
+
 ALTER TABLE wcf1_user_option ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_option_category ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
@@ -1532,6 +1536,8 @@ ALTER TABLE wcf1_poll_option ADD FOREIGN KEY (pollID) REFERENCES wcf1_poll (poll
 ALTER TABLE wcf1_poll_option_vote ADD FOREIGN KEY (pollID) REFERENCES wcf1_poll (pollID) ON DELETE CASCADE;
 ALTER TABLE wcf1_poll_option_vote ADD FOREIGN KEY (optionID) REFERENCES wcf1_poll_option (optionID) ON DELETE CASCADE;
 ALTER TABLE wcf1_poll_option_vote ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+/* SQL_PARSER_OFFSET */
 
 /* default inserts */
 -- default user groups

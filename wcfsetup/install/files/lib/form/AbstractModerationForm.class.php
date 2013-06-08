@@ -46,6 +46,11 @@ abstract class AbstractModerationForm extends AbstractForm {
 	public $loginRequired = true;
 	
 	/**
+	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 */
+	public $neededPermissions = array('mod.general.canUseModeration');
+	
+	/**
 	 * moderation queue object
 	 * @var	wcf\data\moderation\queue\ViewableModerationQueue
 	 */
@@ -65,7 +70,7 @@ abstract class AbstractModerationForm extends AbstractForm {
 		
 		if (isset($_REQUEST['id'])) $this->queueID = intval($_REQUEST['id']);
 		$this->queue = ViewableModerationQueue::getViewableModerationQueue($this->queueID);
-		if (!$this->queue === null) {
+		if ($this->queue === null) {
 			throw new IllegalLinkException();
 		}
 		

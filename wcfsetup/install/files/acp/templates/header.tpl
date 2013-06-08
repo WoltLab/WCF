@@ -13,12 +13,12 @@
 		var TIME_NOW = {@TIME_NOW};
 		//]]>
 	</script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.js"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js?v={@$__wcfVersion}"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js?v={@$__wcfVersion}"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.js?v={@$__wcfVersion}"></script>
+	<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?v={@$__wcfVersion}"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
@@ -45,6 +45,7 @@
 				'__daysShort': [ '{lang}wcf.date.day.sun{/lang}', '{lang}wcf.date.day.mon{/lang}', '{lang}wcf.date.day.tue{/lang}', '{lang}wcf.date.day.wed{/lang}', '{lang}wcf.date.day.thu{/lang}', '{lang}wcf.date.day.fri{/lang}', '{lang}wcf.date.day.sat{/lang}' ],
 				'__months': [ '{lang}wcf.date.month.january{/lang}', '{lang}wcf.date.month.february{/lang}', '{lang}wcf.date.month.march{/lang}', '{lang}wcf.date.month.april{/lang}', '{lang}wcf.date.month.may{/lang}', '{lang}wcf.date.month.june{/lang}', '{lang}wcf.date.month.july{/lang}', '{lang}wcf.date.month.august{/lang}', '{lang}wcf.date.month.september{/lang}', '{lang}wcf.date.month.october{/lang}', '{lang}wcf.date.month.november{/lang}', '{lang}wcf.date.month.december{/lang}' ], 
 				'__monthsShort': [ '{lang}wcf.date.month.jan{/lang}', '{lang}wcf.date.month.feb{/lang}', '{lang}wcf.date.month.mar{/lang}', '{lang}wcf.date.month.apr{/lang}', '{lang}wcf.date.month.may{/lang}', '{lang}wcf.date.month.jun{/lang}', '{lang}wcf.date.month.jul{/lang}', '{lang}wcf.date.month.aug{/lang}', '{lang}wcf.date.month.sep{/lang}', '{lang}wcf.date.month.oct{/lang}', '{lang}wcf.date.month.nov{/lang}', '{lang}wcf.date.month.dec{/lang}' ],
+				'wcf.acp.search.noResults': '{lang}wcf.acp.search.noResults{/lang}',
 				'wcf.clipboard.item.unmarkAll': '{lang}wcf.clipboard.item.unmarkAll{/lang}',
 				'wcf.date.relative.now': '{lang}wcf.date.relative.now{/lang}',
 				'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
@@ -86,7 +87,7 @@
 				'wcf.global.success': '{lang}wcf.global.success{/lang}',
 				'wcf.global.success.add': '{lang}wcf.global.success.add{/lang}',
 				'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
-				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
+				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}'
 				{event name='javascriptLanguageImport'}
 			});
 			
@@ -133,7 +134,7 @@
 						
 						{if $__wcf->getSession()->getPermission('admin.general.canUseAcp')}
 							<aside id="search" class="searchBar">
-								<form method="post" action="{link controller='Search'}{/link}">
+								<form>
 									<input type="search" name="q" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" value="" />
 								</form>
 							</aside>
@@ -173,40 +174,41 @@
 	
 	<div id="main" class="layoutFluid{if PACKAGE_ID && $__wcf->user->userID && $__wcf->getACPMenu()->getMenuItems('')|count} sidebarOrientationLeft{/if}">
 		<div>
-			{hascontent}
-				<aside class="sidebar collapsibleMenu">
-					<div>
-						{content}
-							{* work-around for unknown core-object during WCFSetup *}
-							{if PACKAGE_ID && $__wcf->user->userID}
-								{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_parentMenuItem}
-									<div id="{$_parentMenuItem->menuItem}-container" style="display: none;" class="menuGroup collapsibleMenus" data-parent-menu-item="{$_parentMenuItem->menuItem}">
-										{foreach from=$__wcf->getACPMenu()->getMenuItems($_parentMenuItem->menuItem) item=_menuItem}
-											<fieldset>
-												<legend class="menuHeader" data-menu-item="{$_menuItem->menuItem}">{@$_menuItem}</legend>
-												
-												<nav class="menuGroupItems">
-													<ul id="{$_menuItem->menuItem}">
-														{foreach from=$__wcf->getACPMenu()->getMenuItems($_menuItem->menuItem) item=menuItemCategory}
-															{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
-																{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
-																	<li id="{$subMenuItem->menuItem}" data-menu-item="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{@$subMenuItem}</a></li>
-																{/foreach}
-															{else}
-																<li id="{$menuItemCategory->menuItem}" data-menu-item="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{@$menuItemCategory}</a></li>
-															{/if}
-														{/foreach}
-													</ul>
-												</nav>
-											</fieldset>
-										{/foreach}
-									</div>
-								{/foreach}
-							{/if}
-						{/content}
-					</div>
-				</aside>
-			{/hascontent}
-			
-			<section id="content" class="content">
+			<div>
+				{hascontent}
+					<aside class="sidebar collapsibleMenu">
+						<div>
+							{content}
+								{* work-around for unknown core-object during WCFSetup *}
+								{if PACKAGE_ID && $__wcf->user->userID}
+									{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_parentMenuItem}
+										<div id="{$_parentMenuItem->menuItem}-container" style="display: none;" class="menuGroup collapsibleMenus" data-parent-menu-item="{$_parentMenuItem->menuItem}">
+											{foreach from=$__wcf->getACPMenu()->getMenuItems($_parentMenuItem->menuItem) item=_menuItem}
+												<fieldset>
+													<legend class="menuHeader" data-menu-item="{$_menuItem->menuItem}">{@$_menuItem}</legend>
+													
+													<nav class="menuGroupItems">
+														<ul id="{$_menuItem->menuItem}">
+															{foreach from=$__wcf->getACPMenu()->getMenuItems($_menuItem->menuItem) item=menuItemCategory}
+																{if $__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem)|count > 0}
+																	{foreach from=$__wcf->getACPMenu()->getMenuItems($menuItemCategory->menuItem) item=subMenuItem}
+																		<li id="{$subMenuItem->menuItem}" data-menu-item="{$subMenuItem->menuItem}"><a href="{$subMenuItem->getLink()}">{@$subMenuItem}</a></li>
+																	{/foreach}
+																{else}
+																	<li id="{$menuItemCategory->menuItem}" data-menu-item="{$menuItemCategory->menuItem}"><a href="{$menuItemCategory->getLink()}">{@$menuItemCategory}</a></li>
+																{/if}
+															{/foreach}
+														</ul>
+													</nav>
+												</fieldset>
+											{/foreach}
+										</div>
+									{/foreach}
+								{/if}
+							{/content}
+						</div>
+					</aside>
+				{/hascontent}
+				
+				<section id="content" class="content">
 				

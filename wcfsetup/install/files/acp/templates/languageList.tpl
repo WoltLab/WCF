@@ -60,9 +60,9 @@
 							<a href="{link controller='LanguageExport' id=$language->languageID}{/link}" title="{lang}wcf.acp.language.export{/lang}" class="jsTooltip"><span class="icon icon16 icon-download-alt"></span></a>
 							
 							{if !$language->isDefault}
-								<span class="icon icon16 icon-check jsSetAsDefaultButton jsTooltip pointer" title="{lang}wcf.acp.language.setAsDefault{/lang}" title="{lang}wcf.acp.language.setAsDefault{/lang}" data-object-id="{@$language->languageID}"></span>
+								<span class="icon icon16 icon-ok-sign jsSetAsDefaultButton jsTooltip pointer" title="{lang}wcf.acp.language.setAsDefault{/lang}" title="{lang}wcf.acp.language.setAsDefault{/lang}" data-object-id="{@$language->languageID}"></span>
 							{else}
-								<span class="icon icon16 icon-check disabled" title="{lang}wcf.acp.language.setAsDefault{/lang}"></span>
+								<span class="icon icon16 icon-ok-sign disabled" title="{lang}wcf.acp.language.setAsDefault{/lang}"></span>
 							{/if}
 							
 							<a href="{link controller='LanguageEdit' id=$language->languageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>

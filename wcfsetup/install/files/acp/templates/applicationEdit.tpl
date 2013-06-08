@@ -16,7 +16,7 @@
 {/if}
 
 <header class="boxHeadline">
-	<h1>{lang}wcf.acp.application.edit.title{/lang}{if $application->isPrimary} <span class="icon icon16 icon-home jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}"></span>{/if}</h1>
+	<h1>{lang}wcf.acp.application.edit.title{/lang}{if $application->isPrimary} <span class="icon icon16 icon-ok-sign jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}"></span>{/if}</h1>
 </header>
 
 {if $errorField}
@@ -31,7 +31,7 @@
 	<nav>
 		<ul>
 			{if $application->packageID != 1 && !$application->isPrimary}
-				<li><a id="setAsPrimary" class="button"><span class="icon icon16 icon-check"></span> <span>{lang}wcf.acp.application.setAsPrimary{/lang}</span></a></li>
+				<li><a id="setAsPrimary" class="button"><span class="icon icon16 icon-ok-sign"></span> <span>{lang}wcf.acp.application.setAsPrimary{/lang}</span></a></li>
 			{/if}
 			<li><a href="{link controller='ApplicationManagement'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.application.management{/lang}</span></a></li>
 			

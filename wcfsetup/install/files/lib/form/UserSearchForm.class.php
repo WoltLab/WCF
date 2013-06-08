@@ -29,6 +29,11 @@ class UserSearchForm extends UserOptionListForm {
 	public $activeMenuItem = 'wcf.user.search';
 	
 	/**
+	 * @see	wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_MEMBERS_LIST');
+	
+	/**
 	 * username
 	 * @var	string
 	 */

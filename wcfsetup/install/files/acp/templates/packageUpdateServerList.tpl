@@ -54,7 +54,7 @@
 					{foreach from=$objects item=updateServer}
 						<tr class="jsUpdateServerRow">
 							<td class="columnIcon">
-								<span class="icon icon16 icon-{if !$updateServer->isDisabled}circle-blank{else}off{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$updateServer->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
+								<span class="icon icon16 icon-check{if $updateServer->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$updateServer->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
 								<a href="{link controller='PackageUpdateServerEdit' id=$updateServer->packageUpdateServerID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
 								<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$updateServer->packageUpdateServerID}" data-confirm-message="{lang}wcf.acp.updateServer.delete.sure{/lang}"></span>
 								

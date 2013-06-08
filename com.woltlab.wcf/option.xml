@@ -144,6 +144,7 @@
 				</category>
 					<category name="security.antispam.recaptcha">
 						<parent>security.antispam</parent>
+						<options>module_system_recaptcha</options>
 					</category>
 				
 				<category name="security.censorship">
@@ -273,6 +274,11 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="module_members_list">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<option name="module_team_page">
 				<categoryname>module.user</categoryname>
 				<optiontype>boolean</optiontype>
@@ -346,6 +352,10 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="footer_code">
+				<categoryname>general.page</categoryname>
+				<optiontype>textarea</optiontype>
 			</option>
 			<!-- /general.page -->
 			
@@ -803,16 +813,19 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<categoryname>security.antispam</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<options>module_system_recaptcha</options>
 			</option>
 			<option name="lost_password_use_captcha">
 				<categoryname>security.antispam</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<options>module_system_recaptcha</options>
 			</option>
 			<option name="profile_mail_use_captcha">
 				<categoryname>security.antispam</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<options>module_system_recaptcha</options>
 			</option>
 			<!-- /user.security -->
 			
@@ -860,6 +873,11 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>182</defaultvalue>
 				<minvalue>0</minvalue>
+			</option>
+			<option name="profile_enable_visitors">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /user.profile -->
 			
@@ -1035,6 +1053,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			<option name="search_use_captcha">
 				<categoryname>security.antispam</categoryname>
 				<optiontype>boolean</optiontype>
+				<options>module_system_recaptcha</options>
 			</option>
 			
 			<option name="search_default_sort_field">
@@ -1044,7 +1063,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 subject:wcf.global.subject
 time:wcf.search.sortBy.time
 username:wcf.search.sortBy.username]]></selectoptions>
-				<defaultvalue><![CDATA[relevance]]></defaultvalue>
+				<defaultvalue><![CDATA[time]]></defaultvalue>
 			</option>
 			<option name="search_default_sort_order">
 				<categoryname>message.search</categoryname>

@@ -114,7 +114,7 @@
 								{/if}
 								
 								{if $objectType->getProcessor()->canEditCategory()}
-									<span class="icon icon16 icon-{if !$category->isDisabled}circle-blank{else}off{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$category->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$category->categoryID}"></span>
+									<span class="icon icon16 icon-check{if $category->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$category->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$category->categoryID}"></span>
 								{/if}
 								
 								{event name='itemButtons'}

@@ -206,6 +206,7 @@
 								{/if}
 							</small>
 						{/if}
+						<small>{lang}wcf.acp.bbcode.wysiwygIcon.description{/lang}</small>
 					</dd>
 				</dl>
 			{/if}

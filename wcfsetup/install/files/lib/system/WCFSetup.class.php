@@ -238,7 +238,7 @@ class WCFSetup extends WCF {
 	 */
 	protected function calcProgress($currentStep) {
 		// calculate progress
-		$progress = round((100 / 12) * ++$currentStep, 0);
+		$progress = round((100 / 15) * ++$currentStep, 0);
 		self::getTPL()->assign(array('progress' => $progress));
 	}
 	
@@ -294,27 +294,32 @@ class WCFSetup extends WCF {
 			break;
 			
 			case 'createDB':
-				$this->calcProgress(7);
+				$currentStep = 7;
+				if (isset($_POST['offset'])) {
+					$currentStep += intval($_POST['offset']);
+				}
+				
+				$this->calcProgress($currentStep);
 				$this->createDB();
 			break;
 			
 			case 'logFiles':
-				$this->calcProgress(8);
+				$this->calcProgress(11);
 				$this->logFiles();
 			break;
 			
 			case 'installLanguage':
-				$this->calcProgress(9);
+				$this->calcProgress(12);
 				$this->installLanguage();
 			break;
 			
 			case 'createUser':
-				$this->calcProgress(10);
+				$this->calcProgress(13);
 				$this->createUser();
 			break;
 			
 			case 'installPackages':
-				$this->calcProgress(11);
+				$this->calcProgress(14);
 				$this->installPackages();
 			break;
 		}
@@ -614,6 +619,9 @@ class WCFSetup extends WCF {
 				$db = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
 				$db->connect();
 				
+				$start = microtime(true);
+				file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "Validating database ...", FILE_APPEND);
+				
 				// check sql version
 				if (!empty($availableDBClasses[$dbClass]['minversion'])) {
 					$sqlVersion = $db->getVersion();
@@ -625,8 +633,15 @@ class WCFSetup extends WCF {
 					}
 				}
 				
+				$end = microtime(true);
+				file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', round($end - $start, 3)."\nChecking for table conflicts ...", FILE_APPEND);
+				$start = $end;
+				
 				// check for table conflicts
 				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
+				
+				$end = microtime(true);
+				file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', round($end - $start, 3)."\n\n", FILE_APPEND);
 				
 				// write config.inc
 				if (empty($conflictedTables)) {
@@ -708,8 +723,19 @@ class WCFSetup extends WCF {
 	protected function createDB() {
 		$this->initDB();
 		
+		$start = microtime(true);
+		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "Creating database: ", FILE_APPEND);
+		
 		// get content of the sql structure file
 		$sql = file_get_contents(TMP_DIR.'setup/db/install.sql');
+		
+		// split by offsets
+		$sqlData = explode('/* SQL_PARSER_OFFSET */', $sql);
+		$offset = (isset($_POST['offset'])) ? intval($_POST['offset']) : 0;
+		if (!isset($sqlData[$offset])) {
+			throw new SystemException("Offset for SQL parser is out of bounds, ".$offset." was requested, but there are only ".count($sqlData)." sections");
+		}
+		$sql = $sqlData[$offset];
 		
 		// installation number value 'n' (WCF_N) must be reflected in the executed sql queries
 		$sql = StringUtil::replace('wcf1_', 'wcf'.WCF_N.'_', $sql);
@@ -731,21 +757,35 @@ class WCFSetup extends WCF {
 			}
 		}
 		
-		/*
-		 * Manually install PIPPackageInstallationPlugin since install.sql content is not escaped resulting
-		 * in different behaviour in MySQL and MSSQL. You SHOULD NOT move this into install.sql!
-		 */
-		$sql = "INSERT INTO	wcf".WCF_N."_package_installation_plugin
-					(pluginName, priority, className)
-			VALUES		(?, ?, ?)";
-		$statement = self::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			'packageInstallationPlugin',
-			1,
-			'wcf\system\package\plugin\PIPPackageInstallationPlugin'
-		));
+		if ($offset < (count($sqlData) - 1)) {
+			WCF::getTPL()->assign(array(
+				'__additionalParameters' => array(
+					'offset' => $offset + 1
+				)
+			));
+			
+			$this->gotoNextStep('createDB');
+		}
+		else {
+			/*
+			 * Manually install PIPPackageInstallationPlugin since install.sql content is not escaped resulting
+			* in different behaviour in MySQL and MSSQL. You SHOULD NOT move this into install.sql!
+			*/
+			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_plugin
+						(pluginName, priority, className)
+				VALUES		(?, ?, ?)";
+			$statement = self::getDB()->prepareStatement($sql);
+			$statement->execute(array(
+				'packageInstallationPlugin',
+				1,
+				'wcf\system\package\plugin\PIPPackageInstallationPlugin'
+			));
+			
+			$this->gotoNextStep('logFiles');
+		}
 		
-		$this->gotoNextStep('logFiles');
+		$end = microtime(true);
+		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', round($end - $start, 3) . "\n\n", FILE_APPEND);
 	}
 	
 	/**
@@ -756,7 +796,7 @@ class WCFSetup extends WCF {
 		
 		$this->getInstalledFiles(WCF_DIR);
 		$acpTemplateInserts = $fileInserts = array();
-		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "Logging files:\n");
+		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "Logging files:\n", FILE_APPEND);
 		$start = microtime(true);
 		foreach (self::$installedFiles as $file) {
 			$match = array();

@@ -8,6 +8,10 @@
 		});
 		
 		new WCF.Label.ACPList();
+		
+		$('#customCssClassName').click(function() {
+			$(this).parents('li').find('input[type=radio]').click();
+		});
 	});
 	//]]>
 </script>
@@ -64,7 +68,7 @@
 				<dl{if $errorField == 'label'} class="formError"{/if}>
 					<dt><label for="label">{lang}wcf.acp.label.label{/lang}</label></dt>
 					<dd>
-						<input type="text" id="label" name="label" value="{$label}" autofocus="autofocus" class="long" />
+						<input type="text" id="label" name="label" value="{$i18nPlainValues['label']}" autofocus="autofocus" class="long" />
 						{if $errorField == 'label'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -86,7 +90,7 @@
 						<ul id="labelList">
 							{foreach from=$availableCssClassNames item=className}
 								{if $className == 'custom'}
-									<li class="labelCustomClass"><label><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked="checked"{/if} /> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long" /></span></label></li>
+									<li class="labelCustomClass"><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked="checked"{/if} /> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="long" /></span></li>
 								{else}
 									<li><label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked="checked"{/if} /> <span class="badge label{if $className != 'none'} {$className}{/if}">Label</span></label></li>
 								{/if}

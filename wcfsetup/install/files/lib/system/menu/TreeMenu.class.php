@@ -161,13 +161,15 @@ abstract class TreeMenu extends SingletonFactory {
 	 * @param	string		$menuItem	name of the active menu item
 	 */
 	public function setActiveMenuItem($menuItem) {
-		$this->activeMenuItems = array();
-		
-		// build active menu list
+		$newActiveMenuItems = array();
 		while (isset($this->menuItemList[$menuItem])) {
-			$this->activeMenuItems[] = $menuItem;
+			$newActiveMenuItems[] = $menuItem;
 			$menuItem = $this->menuItemList[$menuItem]->parentMenuItem;
+			
+			if ($menuItem && !isset($this->menuItemList[$menuItem])) return false;
 		}
+		
+		if (!empty($newActiveMenuItems)) $this->activeMenuItems = $newActiveMenuItems;
 	}
 	
 	/**

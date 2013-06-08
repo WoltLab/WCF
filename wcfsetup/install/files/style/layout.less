@@ -28,7 +28,6 @@
 
 /* ### header ### */
 #pageHeader {
-	margin-top: 57px;
 	z-index: 100;
 }
 
@@ -237,6 +236,7 @@
 /* header logo */
 .logo {
 	margin-bottom: @wcfGapLarge;
+	margin-top: @wcfGapMedium;
 	
 	a {
 		display: block;
@@ -254,6 +254,10 @@
 			.textShadow(@wcfPageBackgroundColor);
 		}
 	}
+}
+
+.userPanel + .logo {
+	margin-top: @wcfGapMedium + 43px;
 }
 
 @media only screen and (max-width: 800px) {
@@ -571,71 +575,68 @@
 #main {
 	z-index: 110;
 	
-	box-sizing:border-box;
-	-moz-box-sizing: border-box; /* Firefox */
-	display: table;
-	table-layout: fixed;
-	
-	&.layoutFluid {
-		width: 100%;
-	}
-	
 	> div {
-		display: table-row;
+		display: table;
+		table-layout: fixed;
+		width: 100%;
 		
-		> .sidebar,
-		> .content {
-			display: table-cell;
-			vertical-align: top;
-		}
-				
-		> .sidebar {
-			background-color: @wcfSidebarBackgroundColor;
-			width: 300px;
-			z-index: 120;
+		> div {
+			display: table-row;
 			
-			.transition(width, .2s, ease);
-			
-			> span {
-				position: relative;
-				
-				> .collapsibleButton {
-					background-color: @wcfSidebarBackgroundColor;
-					border-radius: 6px 0 0 6px;
-					display: block;
-					height: 24px;
-					left: -20px;
-					position: absolute;
-					text-decoration: none;
-					top: 0;
-					width: 24px;
+			> .sidebar,
+			> .content {
+				display: table-cell;
+				vertical-align: top;
+			}
 					
-					&:before {
-						content: "\f054";
-						font-family: FontAwesome;
-						font-size: 14px;
+			> .sidebar {
+				background-color: @wcfSidebarBackgroundColor;
+				width: 300px;
+				z-index: 120;
+				
+				.transition(width, .2s, ease);
+				
+				> span {
+					position: relative;
+					
+					> .collapsibleButton {
+						background-color: @wcfSidebarBackgroundColor;
+						border-radius: 6px 0 0 6px;
+						display: block;
+						height: 24px;
+						left: -20px;
 						position: absolute;
-						left: 6px;
-						top: 4px;
+						text-decoration: none;
+						top: 0;
+						width: 24px;
 						
-						.textShadow(@wcfSidebarBackgroundColor);
+						&:before {
+							content: "\f054";
+							font-family: FontAwesome;
+							font-size: 14px;
+							position: absolute;
+							left: 6px;
+							top: 4px;
+							
+							.textShadow(@wcfSidebarBackgroundColor);
+						}
 					}
+				}
+				
+				> div {
+					overflow: hidden;
+					width: 300px;
+					
+					.transition(width, .2s, ease);
 				}
 			}
 			
-			> div {
-				overflow: hidden;
-				width: 300px;
-				
-				.transition(width, .2s, ease);
+			> .content {
+				background-color: @wcfContentBackgroundColor;
+				min-height: 100px;
+				padding: @wcfGapSmall @wcfGapLarge * 2 - @wcfGapTiny @wcfGapLarge;
+				z-index: 130;
 			}
-		}
-		
-		> .content {
-			background-color: @wcfContentBackgroundColor;
-			min-height: 100px;
-			padding: @wcfGapSmall @wcfGapLarge * 2 - @wcfGapTiny @wcfGapLarge;
-			z-index: 130;
 		}
 	}
 	
@@ -646,7 +647,7 @@
 	}
 	
 	&.sidebarOrientationRight {
-		&.sidebarCollapsed > div {
+		&.sidebarCollapsed > div > div {
 			> .sidebar {
 				width: 20px;
 				
@@ -667,16 +668,19 @@
 @media only screen and (max-width: 800px) {
 	/* hide sidebar */
 	#main {
-		display: block;
 		position: relative;
 		margin-top: 7px;
 		
 		> div {
 			display: block;
 		
-			> .sidebar,
-			> .content {
+			> div {
 				display: block;
+			
+				> .sidebar,
+				> .content {
+					display: block;
+				}
 			}
 		}
 		

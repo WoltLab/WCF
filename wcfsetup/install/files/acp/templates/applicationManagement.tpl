@@ -45,7 +45,7 @@
 						{if $application->isPrimary}
 							<aside class="statusDisplay">
 								<ul class="statusIcons">
-									<li><span class="icon icon16 icon-home jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}"></span></li>
+									<li><span class="icon icon16 icon-ok-sign jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}"></span></li>
 								</ul>
 							</aside>
 						{/if}
