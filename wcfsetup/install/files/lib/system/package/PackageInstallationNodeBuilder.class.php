@@ -504,6 +504,7 @@ class PackageInstallationNodeBuilder {
 		$instructions = ($this->installation->getAction() == 'install') ? $this->installation->getArchive()->getInstallInstructions() : $this->installation->getArchive()->getUpdateInstructions();
 		foreach ($instructions as $pip) {
 			if (isset($pip['attributes']['run']) && ($pip['attributes']['run'] == 'standalone')) {
+				// move into a new node
 				$this->parentNode = $this->node;
 				$this->node = $this->getToken();
 				$this->sequenceNo = 0;
@@ -514,6 +515,11 @@ class PackageInstallationNodeBuilder {
 					'parentNode' => $this->parentNode,
 					'sequenceNo' => $this->sequenceNo
 				);
+				
+				// create a new node for following PIPs
+				$this->parentNode = $this->node;
+				$this->node = $this->getToken();
+				$this->sequenceNo = 0;
 			}
 			else {
 				$this->sequenceNo++;
