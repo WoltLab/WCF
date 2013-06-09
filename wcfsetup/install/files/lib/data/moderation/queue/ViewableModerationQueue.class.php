@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\moderation\queue;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
@@ -151,5 +152,15 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	 */
 	public function getFormattedMessage() {
 		return nl2br(htmlspecialchars($this->message));
+	}
+	
+	/**
+	 * Returns the object type name.
+	 * 
+	 * @return	string
+	 */
+	public function getObjectTypeName() {
+		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
+		return $objectType->objectType;
 	}
 }
