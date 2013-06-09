@@ -113,7 +113,7 @@
 								{/if}
 							</small>
 						{/if}
-						<small>{lang}wcf.acp.user.option.optionType{/lang}</small>
+						<small>{lang}wcf.acp.user.option.optionType.description{/lang}</small>
 					</dd>
 				</dl>
 				

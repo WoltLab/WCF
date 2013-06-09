@@ -124,7 +124,7 @@ class UserOptionAddForm extends AbstractForm {
 	 * available option types
 	 * @var array<string>
 	 */
-	public static $availableOptionTypes = array('birthday', 'boolean', 'date', 'integer', 'float', 'password', 'multiSelect', 'radioButton', 'select', 'text', 'textarea', 'message');
+	public static $availableOptionTypes = array('birthday', 'boolean', 'date', 'integer', 'float', 'password', 'multiSelect', 'radioButton', 'select', 'text', 'textarea', 'message', 'URL');
 	
 	/**
 	 * list of option type that require select options
