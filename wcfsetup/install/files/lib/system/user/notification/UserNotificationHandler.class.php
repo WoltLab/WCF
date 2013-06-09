@@ -132,7 +132,7 @@ class UserNotificationHandler extends SingletonFactory {
 						'packageID' => $objectTypeObject->packageID,
 						'eventID' => $event->eventID,
 						'objectID' => $notificationObject->getObjectID(),
-						'authorID' => $event->getAuthorID(),
+						'authorID' => ($event->getAuthorID() ?: null),
 						'time' => TIME_NOW,
 						'eventHash' => $event->getEventHash(),
 						'additionalData' => serialize($additionalData)
