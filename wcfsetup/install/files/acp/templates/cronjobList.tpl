@@ -107,7 +107,7 @@
 		</table>
 	</div>
 {hascontentelse}
-	<p class="info">{lang}wcf.acp.cronjob.noneAvailable{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/hascontent}
 
 <div class="contentNavigation">

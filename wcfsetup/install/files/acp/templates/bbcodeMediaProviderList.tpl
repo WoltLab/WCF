@@ -73,7 +73,7 @@
 {else}
 	<div class="container containerPadding">
 		<div>
-			<p class="warning">{lang}wcf.acp.bbcode.mediaProvider.noneAvailable{/lang}</p>
+			<p class="warning">{lang}wcf.global.noItems{/lang}</p>
 		</div>
 	</div>
 {/if}

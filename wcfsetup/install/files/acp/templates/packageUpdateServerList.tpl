@@ -88,7 +88,7 @@
 		</nav>
 	</div>
 {hascontentelse}
-	<p class="warning">{lang}wcf.acp.updateServer.list.noneAvailable{/lang}</p>
+	<p class="warning">{lang}wcf.global.noItems{/lang}</p>
 {/hascontent}
 
 {include file='footer'}

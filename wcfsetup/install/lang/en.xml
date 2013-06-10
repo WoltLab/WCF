@@ -40,7 +40,6 @@
 	<category name="wcf.acp.attachment">
 		<item name="wcf.acp.attachment.list"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.attachment.stats"><![CDATA[{#$stats.count} Attachment{if $stats.count != 1}s{/if} - {@$stats.size|filesize} - {#$stats.downloads} Download{if $stats.downloads != 1}s{/if}]]></item>
-		<item name="wcf.acp.attachment.noItems"><![CDATA[There are no attachments.]]></item>
 	</category>
 	
 	<category name="wcf.acp.bbcode">
@@ -170,7 +169,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Copy error message]]></item>
 		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[No error with the ID “{$exceptionID}” was found.]]></item>
-		<item name="wcf.acp.exceptionLog.noneAvailable"><![CDATA[There are no logged errors.]]></item>
 		<item name="wcf.acp.exceptionLog.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Error-ID]]></item>
 		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Logfile]]></item>
@@ -347,10 +345,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.label.group.edit"><![CDATA[Edit Label Group]]></item>
 		<item name="wcf.acp.label.group.groupName"><![CDATA[Title]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Label Groups]]></item>
-		<item name="wcf.acp.label.group.noneAvailable"><![CDATA[There are no label groups yet.]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
-		<item name="wcf.acp.label.noneAvailable"><![CDATA[There are no labels yet.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
 		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group “{$group->groupName}”?]]></item>
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Availability]]></item>
@@ -393,7 +389,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Customized values]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Language Name]]></item>
 		<item name="wcf.acp.language.add.source.description"><![CDATA[The selected language will be used as origin, all phrases will be copied into the new language.]]></item>
-		<item name="wcf.acp.language.item.noItems"><![CDATA[TODO: Es wurden keine Texte gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -943,12 +938,10 @@ Examples for medium ID detection:
 	
 	<category name="wcf.acp.smiley">
 		<item name="wcf.acp.smiley.list"><![CDATA[Smilies]]></item>
-		<item name="wcf.acp.smiley.noItems"><![CDATA[There are no smilies.]]></item>
 		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Do you really want to delete the smiley “{$smiley->smileyTitle|language}”?]]></item>
 		<item name="wcf.acp.smiley.add"><![CDATA[Add Smiley]]></item>
 		<item name="wcf.acp.smiley.edit"><![CDATA[Edit Smiley]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Title]]></item>
-		<item name="wcf.acp.smiley.category.noItems"><![CDATA[This category contains no smilies.]]></item>
 		<item name="wcf.acp.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
 		<item name="wcf.acp.smiley.category.edit"><![CDATA[Edit Smiley Category]]></item>
 		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley Categories]]></item>
@@ -1063,7 +1056,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.tag.list"><![CDATA[List Tags]]></item>
 		<item name="wcf.acp.tag.list.search"><![CDATA[Search Tags]]></item>
 		<item name="wcf.acp.tag.list.search.query"><![CDATA[Search Term]]></item>
-		<item name="wcf.acp.tag.noneAvailable"><![CDATA[No tag have been added yet.]]></item>
 		<item name="wcf.acp.tag.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.tag.synonyms"><![CDATA[Synonyms]]></item>
 		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym for]]></item>
@@ -1086,14 +1078,12 @@ Examples for medium ID detection:
 		<item name="wcf.acp.template.group.edit"><![CDATA[Edit Template Group]]></item>
 		<item name="wcf.acp.template.group.templates"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.template.error.noGroups"><![CDATA[You must create a <a href="{link controller='TemplateGroupAdd'}{/link}">template group</a> first.]]></item>
-		<item name="wcf.acp.template.group.noItems"><![CDATA[There are no template groups.]]></item>
 		<item name="wcf.acp.template.group.folderName"><![CDATA[Directory]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[Parent Template Group]]></item>
 		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[This name is already taken by a different template group.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[The specified directory is invalid.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[The specified directory is already in use by an other template group.]]></item>
 		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Do you really want to remove the template group “{$templateGroup->templateGroupName}”?]]></item>
-		<item name="wcf.acp.template.noItems"><![CDATA[There are no templates.]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template Source Code]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a different template]]></item>
 		<item name="wcf.acp.template.name.error.notValid"><![CDATA[The specified name is invalid]]></item>
@@ -1600,6 +1590,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.global.acp.short"><![CDATA[Administration]]></item>
 		<item name="wcf.global.worker.executing"><![CDATA[Executing …]]></item>
 		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
+		<item name="wcf.global.noItems"><![CDATA[There are no items.]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">
@@ -1687,7 +1678,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.moderation.doneItems"><![CDATA[Done Items]]></item>
 		<item name="wcf.moderation.lastChangeTime"><![CDATA[Last Change]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
-		<item name="wcf.moderation.noItems"><![CDATA[No items matched your criteria.]]></item>
 		<item name="wcf.moderation.noMoreItems"><![CDATA[No more items]]></item>
 		<item name="wcf.moderation.status"><![CDATA[Status]]></item>
 		<item name="wcf.moderation.status.all"><![CDATA[All Items]]></item>

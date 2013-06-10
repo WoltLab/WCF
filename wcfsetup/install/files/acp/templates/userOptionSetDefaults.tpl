@@ -58,7 +58,7 @@
 		</div>
 	</form>
 {else}
-	<p class="info">{lang}wcf.acp.user.option.noItems{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 {include file='footer'}

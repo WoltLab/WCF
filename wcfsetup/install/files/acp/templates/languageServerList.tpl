@@ -26,7 +26,7 @@
 </div>
 
 {if !$languageServers|count}
-	<p class="warning">{lang}wcf.acp.languageServer.view.noneAvailable{/lang}</p>
+	<p class="warning">{lang}wcf.global.noItems{/lang}</p>
 {else}
 	<div class="tabularBox tabularBoxTitle marginTop">
 		<header>

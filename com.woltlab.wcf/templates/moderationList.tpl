@@ -133,7 +133,7 @@
 		{/hascontent}
 	</div>
 {else}
-	<p class="info">{lang}wcf.moderation.noItems{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 {include file='footer'}

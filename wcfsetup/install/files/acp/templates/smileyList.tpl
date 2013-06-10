@@ -58,12 +58,12 @@
 					<button class="button" data-type="submit">{lang}wcf.global.button.submit{/lang}</button>
 				</div>
 			{else}
-				<p class="info">{lang}wcf.acp.smiley.category.noItems{/lang}</p>
+				<p class="info">{lang}wcf.global.noItems{/lang}</p>
 			{/if}
 		</section>
 	</div>
 {else}
-	<p class="warning">{lang}wcf.acp.smiley.noItems{/lang}</p>
+	<p class="warning">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 {include file='footer'}
