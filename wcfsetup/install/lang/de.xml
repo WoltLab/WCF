@@ -40,7 +40,6 @@
 	<category name="wcf.acp.attachment">
 		<item name="wcf.acp.attachment.list"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.attachment.stats"><![CDATA[{#$stats.count} {if $stats.count == 1}Dateianhang{else}Dateianhänge{/if} - {@$stats.size|filesize} - {#$stats.downloads} Download{if $stats.downloads != 1}s{/if}]]></item>
-		<item name="wcf.acp.attachment.noItems"><![CDATA[Es wurden keine Dateianhänge gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.bbcode">
@@ -171,7 +170,6 @@
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Fehlermeldung kopieren]]></item>
 		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[Es wurde kein Fehler mit der ID „{$exceptionID}“ gefunden.]]></item>
-		<item name="wcf.acp.exceptionLog.noneAvailable"><![CDATA[Es sind keine protokollierten Fehler vorhanden.]]></item>
 		<item name="wcf.acp.exceptionLog.search"><![CDATA[Suche]]></item>
 		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Fehler-ID]]></item>
 		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Datei]]></item>
@@ -348,10 +346,8 @@
 		<item name="wcf.acp.label.group.edit"><![CDATA[Labelgruppe bearbeiten]]></item>
 		<item name="wcf.acp.label.group.groupName"><![CDATA[Gruppenname]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Labelgruppen]]></item>
-		<item name="wcf.acp.label.group.noneAvailable"><![CDATA[Es wurde noch keine Labelgruppe hinzugefügt.]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
-		<item name="wcf.acp.label.noneAvailable"><![CDATA[Es wurde noch kein Label hinzugefügt.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Label aus dieser Gruppe muss zwingend ausgewählt werden]]></item>
 		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Wollen Sie die Labelgruppe „{$group->groupName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Verfügbarkeit]]></item>
@@ -394,7 +390,6 @@
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Veränderte Inhalte finden]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Name der Sprache]]></item>
 		<item name="wcf.acp.language.add.source.description"><![CDATA[Die ausgewählte Sprache wird als Vorlage benutzt. Alle Sprachvariablen werden in die neue Sprache kopiert.]]></item>
-		<item name="wcf.acp.language.item.noItems"><![CDATA[Es wurden keine Texte gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -944,12 +939,10 @@
 	
 	<category name="wcf.acp.smiley">
 		<item name="wcf.acp.smiley.list"><![CDATA[Smileys]]></item>
-		<item name="wcf.acp.smiley.noItems"><![CDATA[Es sind keine Smileys vorhanden.]]></item>
 		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Wollen Sie das Smiley „{$smiley->smileyTitle|language}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.smiley.add"><![CDATA[Smiley hinzufügen]]></item>
 		<item name="wcf.acp.smiley.edit"><![CDATA[Smiley bearbeiten]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Titel]]></item>
-		<item name="wcf.acp.smiley.category.noItems"><![CDATA[Diese Kategorie enthält keine Smileys.]]></item>
 		<item name="wcf.acp.smiley.category.add"><![CDATA[Smiley-Kategorie hinzufügen]]></item>
 		<item name="wcf.acp.smiley.category.edit"><![CDATA[Smiley-Kategorie bearbeiten]]></item>
 		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley-Kategorien]]></item>
@@ -1064,7 +1057,6 @@
 		<item name="wcf.acp.tag.list"><![CDATA[Tags auflisten]]></item>
 		<item name="wcf.acp.tag.list.search"><![CDATA[Tags suchen]]></item>
 		<item name="wcf.acp.tag.list.search.query"><![CDATA[Suchbegriff]]></item>
-		<item name="wcf.acp.tag.noneAvailable"><![CDATA[Es sind noch keine Tags vorhanden.]]></item>
 		<item name="wcf.acp.tag.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.tag.synonyms"><![CDATA[Synonyme]]></item>
 		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym für]]></item>
@@ -1087,14 +1079,12 @@
 		<item name="wcf.acp.template.group.edit"><![CDATA[Templategruppe bearbeiten]]></item>
 		<item name="wcf.acp.template.group.templates"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.template.error.noGroups"><![CDATA[Bevor Sie ein eigenes Template erstellen können, müssen Sie eine <a href="{link controller='TemplateGroupAdd'}{/link}">Templategruppe hinzufügen</a>.]]></item>
-		<item name="wcf.acp.template.group.noItems"><![CDATA[Es sind keine Templategruppen vorhanden.]]></item>
 		<item name="wcf.acp.template.group.folderName"><![CDATA[Verzeichnis]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[Übergeordnete Templategruppe]]></item>
 		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[Der eingegebene Name wird bereits von einer anderen Templategruppe verwendet.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[Sie haben einen ungültigen Verzeichnis-Namen eingegeben.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[Das angegebene Verzeichnis wird bereits von einer anderen Templategruppe verwendet.]]></item>
 		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Wollen Sie die Templategruppe „{$templateGroup->templateGroupName}“ wirklich löschen?]]></item>
-		<item name="wcf.acp.template.noItems"><![CDATA[Es wurden keine Templates gefunden.]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template-Quelltext]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[Der eingegebene Name wird bereits von einem anderen Templaten verwendet.]]></item>
 		<item name="wcf.acp.template.name.error.notValid"><![CDATA[Sie haben einen ungültigen Namen eingegeben.]]></item>
@@ -1602,6 +1592,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.global.acp.short"><![CDATA[Administration]]></item>
 		<item name="wcf.global.worker.executing"><![CDATA[Aufgaben werden ausgeführt …]]></item>
 		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
+		<item name="wcf.global.noItems"><![CDATA[Es wurden keine Einträge gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">
@@ -1688,7 +1679,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.moderation.doneItems"><![CDATA[Erledigte Elemente]]></item>
 		<item name="wcf.moderation.lastChangeTime"><![CDATA[Letzte Änderung]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
-		<item name="wcf.moderation.noItems"><![CDATA[Keine Einträge entsprechen den gewählten Kriterien]]></item>
 		<item name="wcf.moderation.noMoreItems"><![CDATA[Keine weiteren Einträge]]></item>
 		<item name="wcf.moderation.status"><![CDATA[Status]]></item>
 		<item name="wcf.moderation.status.all"><![CDATA[Alle Einträge]]></item>

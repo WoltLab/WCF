@@ -98,7 +98,7 @@
 		</nav>
 	</div>
 {else}
-	<p class="info">{lang}wcf.acp.tag.noneAvailable{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 {include file='footer'}

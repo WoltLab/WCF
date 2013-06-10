@@ -113,7 +113,7 @@
 		<p class="error">{lang}wcf.acp.exceptionLog.exceptionNotFound{/lang}</p>
 	{/if}
 {else}
-	<p class="info">{lang}wcf.acp.exceptionLog.noneAvailable{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 {include file='footer'}

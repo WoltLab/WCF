@@ -12,7 +12,7 @@
 				options.updatePageNumber = -1;
 			{/if}
 		{else}
-			options.emptyMessage = '{lang}wcf.acp.template.noItems{/lang}';
+			options.emptyMessage = '{lang}wcf.global.noItems{/lang}';
 		{/if}
 		
 		new WCF.Table.EmptyTableHandler($('#templateTableContainer'), 'jsTemplateRow', options);
@@ -140,7 +140,7 @@
 		</nav>
 	</div>
 {else}
-	<p class="info">{lang}wcf.acp.template.noItems{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 {include file='footer'}
