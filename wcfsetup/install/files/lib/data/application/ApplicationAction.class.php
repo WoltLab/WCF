@@ -5,6 +5,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Executes application-related actions.
@@ -45,11 +46,16 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		// calculate cookie path
 		$domains = array();
 		foreach ($this->objects as $application) {
-			if (!isset($domains[$application->domainName])) {
-				$domains[$application->domainName] = array();
+			$domainName = $application->domainName;
+			if (StringUtil::endsWith($domainName, $application->cookieDomain)) {
+				$domainName = $application->cookieDomain;
 			}
 			
-			$domains[$application->domainName][$application->packageID] = explode('/', FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($application->domainPath)));
+			if (!isset($domains[$domainName])) {
+				$domains[$domainName] = array();
+			}
+			
+			$domains[$domainName][$application->packageID] = explode('/', FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($application->domainPath)));
 		}
 		
 		WCF::getDB()->beginTransaction();
