@@ -2478,6 +2478,7 @@ WCF.Message.Quote.Manager = Class.extend({
 				actionName: 'markForRemoval',
 				quoteIDs: this._removeOnSubmit
 			});
+			this._proxy.suppressErrors();
 			this._proxy.sendRequest();
 		}
 	},
