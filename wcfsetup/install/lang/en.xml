@@ -801,6 +801,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.error.sql.dropTable"><![CDATA[Remove Existing Tables]]></item>
 		<item name="wcf.acp.package.error.sql.dropTable.description"><![CDATA[The tables above already exist and will be removed during the installation. Any contained data will be lost.]]></item>
 		<item name="wcf.acp.package.error.uniqueAlreadyInstalled"><![CDATA[This package is already installed.]]></item>
+		<item name="wcf.acp.package.error.noValidInstall"><![CDATA[TODO: Das angegebene Paket lässt keine Neuinstallation zu.]]></item>
+		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[TODO: Paket „{$package->packageName}“ kann mit dem angegebenen Archiv nicht aktualisiert werden.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Identifier]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Properties]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Details]]></item>
@@ -863,11 +865,14 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.update.title"><![CDATA[Update]]></item>
 		<item name="wcf.acp.package.update.unauthorized"><![CDATA[Authorization Required]]></item>
 		<item name="wcf.acp.package.update.username"><![CDATA[Username]]></item>
+		<item name="wcf.acp.package.update.step.prepare"><![CDATA[Preparing Update …]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
 		<item name="wcf.acp.package.upload"><![CDATA[Upload package]]></item>
 		<item name="wcf.acp.package.optionalPackages"><![CDATA[Optional packages]]></item>
 		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[The following optional packages are available for installation:]]></item>
+		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[TODO: Es wurden keine Pakete gefunden.]]></item>
+		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[TODO: Die Abhängigkeiten dieses Paketes konnten nicht aufgelöst werden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -1695,6 +1700,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 	
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Approval]]></item>
+		<item name="wcf.moderation.activation.details"><![CDATA[Information]]></item>
 		<item name="wcf.moderation.activation.content"><![CDATA[Content Awaiting Approval]]></item>
 		<item name="wcf.moderation.activation.enableContent"><![CDATA[Approve]]></item>
 		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[Do you really want to approve this content?]]></item>
@@ -1705,7 +1711,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 	<category name="wcf.moderation.report">
 		<item name="wcf.moderation.report"><![CDATA[Edit Report]]></item>
 		<item name="wcf.moderation.report.alreadyReported"><![CDATA[This content has already been reported.]]></item>
-		<item name="wcf.moderation.report.details"><![CDATA[Report]]></item>
+		<item name="wcf.moderation.report.details"><![CDATA[Information]]></item>
 		<item name="wcf.moderation.report.reason"><![CDATA[Reason]]></item>
 		<item name="wcf.moderation.report.reason.description"><![CDATA[This function is reserved for: Spam, Advertisement and other questionable (rassism, glorification of violence, offending or sexist) content]]></item>
 		<item name="wcf.moderation.report.removeContent"><![CDATA[Delete Reported Content]]></item>
@@ -1750,6 +1756,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.poll.sortByVotes"><![CDATA[Sort result by votes]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[A total of {#$poll->votes} vote{if $poll->votes != 1}s{/if}]]></item>
 		<item name="wcf.poll.noVotes"><![CDATA[No votes yet]]></item>
+		<item name="wcf.poll.endTime.error.notValid"><![CDATA[TODO: Sie haben ein ungültiges Datum eingegeben.]]></item>
 	</category>
 	
 	<category name="wcf.recaptcha">
