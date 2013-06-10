@@ -1,12 +1,11 @@
 <?php
 namespace wcf\data\application;
-use wcf\util\StringUtil;
-
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Executes application-related actions.
