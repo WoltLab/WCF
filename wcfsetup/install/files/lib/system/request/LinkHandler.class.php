@@ -145,7 +145,7 @@ class LinkHandler extends SingletonFactory {
 		}
 		else {
 			if (RequestHandler::getInstance()->inRescueMode()) {
-				$pageURL = RouteHandler::getHost() . RouteHandler::getPath(array('acp'));
+				$pageURL = RouteHandler::getHost() . str_replace('//', '/', RouteHandler::getPath(array('acp')));
 			}
 			else {
 				// try to resolve abbreviation
