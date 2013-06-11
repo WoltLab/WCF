@@ -37,6 +37,7 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 		
 		// get "real" menu items
 		$menuItemList = new ACPMenuItemList();
+		$menuItemList->sqlOrderBy = "acp_menu_item.showOrder";
 		$menuItemList->readObjects();
 		foreach ($menuItemList as $menuItem) {
 			$data[$menuItem->parentMenuItem][] = $menuItem;

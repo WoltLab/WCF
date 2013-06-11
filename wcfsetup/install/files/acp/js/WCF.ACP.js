@@ -441,8 +441,14 @@ WCF.ACP.Package.Installation = Class.extend({
 	
 	/**
 	 * Performs a rollback.
+	 * 
+	 * @param	object		event
 	 */
-	_rollback: function() {
+	_rollback: function(event) {
+		if (event) {
+			$(event.currentTarget).disable();
+		}
+		
 		this._executeStep('rollback');
 	},
 	
@@ -524,7 +530,10 @@ WCF.ACP.Package.Installation = Class.extend({
 		if (data.step === 'success') {
 			this._purgeTemplateContent($.proxy(function() {
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() { window.location = data.redirectLocation; });
+				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() {
+					$(this).disable();
+					window.location = data.redirectLocation;
+				});
 				
 				$('#packageInstallationInnerContentContainer').show();
 				
@@ -546,7 +555,11 @@ WCF.ACP.Package.Installation = Class.extend({
 			// create button to handle next step
 			if (data.step && data.node) {
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function() { this._submit(data); }, this)); 
+				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function(event) {
+					$(event.currentTarget).disable();
+					
+					this._submit(data);
+				}, this)); 
 			}
 			
 			$('#packageInstallationInnerContentContainer').show();
