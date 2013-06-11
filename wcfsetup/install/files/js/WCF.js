@@ -1863,7 +1863,11 @@ WCF.Action.Proxy = Class.extend({
 			
 			if (!this._suppressErrors && $showError !== false) {
 				var $message = (textStatus === 'timeout') ? WCF.Language.get('wcf.global.error.timeout') : jqXHR.responseText;
-				$('<div class="ajaxDebugMessage"><p>' + $message + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+				
+				// validate if $message is neither empty nor 'undefined'
+				if ($message && $message != 'undefined') {
+					$('<div class="ajaxDebugMessage"><p>' + $message + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+				}
 			}
 		}
 		
