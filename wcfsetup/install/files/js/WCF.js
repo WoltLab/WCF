@@ -2817,8 +2817,8 @@ WCF.Date.Time = Class.extend({
 			var $hours = Math.round((this._timestamp - $timestamp) / 3600);
 			$element.text(WCF.Language.get('wcf.date.relative.hours', { hours: $hours }));
 		}
-		// timestamp is less than a week ago
-		else if (this._timestamp < ($timestamp + 604800)) {
+		// timestamp is less than 6 days ago
+		else if (this._timestamp < ($timestamp + 518400)) {
 			var $days = Math.round((this._timestamp - $timestamp) / 86400);
 			
 			// get day of week
