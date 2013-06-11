@@ -1167,7 +1167,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Value will be used as preset on first time editing.]]></item>
-		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Dou you really want to delete the field “{lang}wcf.user.option.{$option->optionName}{/lang}”?]]></item>
+		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Do you really want to delete the field “{lang}wcf.user.option.{$option->optionName}{/lang}”?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Edit Custom User Field]]></item>
 		<item name="wcf.acp.user.option.editable"><![CDATA[Editable by]]></item>
