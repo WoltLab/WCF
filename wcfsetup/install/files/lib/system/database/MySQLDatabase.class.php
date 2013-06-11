@@ -24,9 +24,16 @@ class MySQLDatabase extends Database {
 		if (!$this->port) $this->port = 3306; // mysql default port
 		
 		try {
-			$this->pdo = new \PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->database, $this->user, $this->password, array(
-				\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8', SESSION sql_mode = 'ANSI,ONLY_FULL_GROUP_BY,STRICT_ALL_TABLES'"
-			));
+			$driverOptions = array(
+				\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"
+			);
+			if (!$this->failsafeTest) {
+				$driverOptions = array(
+					\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8', SESSION sql_mode = 'ANSI,ONLY_FULL_GROUP_BY,STRICT_ALL_TABLES'"
+				);
+			}
+			
+			$this->pdo = new \PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->database, $this->user, $this->password, $driverOptions);
 			$this->setAttributes();
 		}
 		catch (\PDOException $e) {

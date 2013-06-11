@@ -57,6 +57,12 @@ abstract class Database {
 	protected $database = '';
 	
 	/**
+	 * enables failsafe connection
+	 * @var boolean
+	 */
+	protected $failsafeTest = false;
+	
+	/**
 	 * number of executed queries
 	 * @var	integer
 	 */
@@ -89,12 +95,13 @@ abstract class Database {
 	 * @param	string		$database		SQL database server database name
 	 * @param	integer		$port			SQL database server port
 	 */
-	public function __construct($host, $user, $password, $database, $port) {
+	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false) {
 		$this->host = $host;
 		$this->port = $port;
 		$this->user = $user;
 		$this->password = $password;
 		$this->database = $database;
+		$this->failsafeTest = $failsafeTest;
 		
 		// connect database
 		$this->connect();
