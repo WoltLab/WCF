@@ -1,3 +1,5 @@
+{event name='beforeUserAvatar'}
+
 <fieldset>
 	<legend class="invisible">{lang}wcf.user.avatar{/lang}</legend>
 	
@@ -9,6 +11,8 @@
 		{/if}
 	</div>
 </fieldset>
+
+{event name='beforeStatistics'}
 
 <fieldset>
 	<legend class="invisible">{lang}wcf.user.stats{/lang}</legend>
@@ -29,6 +33,8 @@
 	</dl>
 </fieldset>
 
+{event name='beforeFollowing'}
+
 {if $followingCount}
 	<fieldset>
 		<legend>{lang}wcf.user.profile.following{/lang} <span class="badge">{#$followingCount}</span></legend>
@@ -47,6 +53,8 @@
 	</fieldset>
 {/if}
 
+{event name='beforeFollower'}
+
 {if $followerCount}
 	<fieldset>
 		<legend>{lang}wcf.user.profile.followers{/lang} <span class="badge">{#$followerCount}</span></legend>
@@ -64,6 +72,8 @@
 		</div>
 	</fieldset>
 {/if}
+
+{event name='beforeVisitor'}
 
 {if $visitorCount}
 	<fieldset>
