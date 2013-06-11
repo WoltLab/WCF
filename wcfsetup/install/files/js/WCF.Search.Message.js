@@ -114,6 +114,20 @@ WCF.Search.Message.SearchArea = Class.extend({
 				return false;
 			}
 		});
+		
+		if (this._searchArea.hasClass('dropdown')) {
+			var $containerID = this._searchArea.wcfIdentify();
+			var $form = this._searchArea.find('form').submit(function() {
+				var $dropdownMenu = WCF.Dropdown.getDropdownMenu($containerID);
+				
+				$form.find('input[type=hidden]').remove();
+				$dropdownMenu.find('input[type=checkbox]:checked').each(function(index, input) {
+					var $input = $(input);
+					
+					$('<input type="hidden" name="' + $input.attr('name') + '" value="' + $input.attr('value') + '" />').appendTo($form);
+				});
+			});
+		}
 	},
 	
 	_callback: function(data) {
