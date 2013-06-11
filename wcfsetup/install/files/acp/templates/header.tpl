@@ -27,8 +27,8 @@
 	{event name='javascriptInclude'}
 	
 	<!-- Stylesheets -->
-	{* work-around for unknown core-object during WCFSetup *}
 	{@$__wcf->getStyleHandler()->getStylesheet()}
+	{event name='stylesheets'}
 	
 	<script type="text/javascript">
 		//<![CDATA[
