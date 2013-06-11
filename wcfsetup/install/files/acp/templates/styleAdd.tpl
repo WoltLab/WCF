@@ -72,7 +72,7 @@
 		<ul>
 			{if $action == 'edit'}
 				<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" class="button"><span class="icon icon16 icon-download-alt"></span> <span>{lang}wcf.acp.style.exportStyle{/lang}</span></a></li>
-				<li><a class="jsCopyStyle button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
+				<li><a class="jsCopyStyle button"><span class="icon icon16 icon-copy"></span> <span>{lang}wcf.acp.style.copyStyle{/lang}</span></a></li>
 			{/if}
 			
 			<li><a href="{link controller='StyleList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.style.list{/lang}</span></a></li>

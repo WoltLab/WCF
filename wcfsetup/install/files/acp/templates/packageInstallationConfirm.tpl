@@ -24,7 +24,7 @@
 </header>
 
 {if $missingPackages > 0}
-	<p class="error">{lang}wcf.acp.package.install.error{/lang}</p>
+	<p class="error">{lang}wcf.acp.package.install.error.missingRequirements{/lang}</p>
 {/if}
 
 {if $excludingPackages|count > 0}
