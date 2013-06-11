@@ -83,6 +83,7 @@ Examples for medium ID detection:
 </ul>]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex.error.notValid"><![CDATA[Regular expression failed to validate.]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Media Providers]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.noneAvailable"><![CDATA[There are no media providers yet.]]></item>
 		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Content represents source code]]></item>
 		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Disables conversion of bbcodes and smilies.]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Show button in WYSIWYG editor]]></item>

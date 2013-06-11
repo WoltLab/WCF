@@ -84,6 +84,7 @@
 		</ul>]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex.error.notValid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Medienanbieter]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.noneAvailable"><![CDATA[Es wurde noch kein Medienanbieter hinzugefügt.]]></item>
 		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Inhalt als Quelltext behandeln]]></item>
 		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Der Inhalt dieses BBCodes wird als Quelltext interpretiert, BBCodes und Smileys werden nicht umgewandelt.]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Button im WYSIWYG-Editor anzeigen]]></item>
