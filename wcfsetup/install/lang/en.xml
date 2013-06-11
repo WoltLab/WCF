@@ -312,6 +312,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.admin.content.label"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Can manage tags]]></item>
+		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[TODO: Maximale Signaturlänge]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
