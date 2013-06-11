@@ -1,3 +1,10 @@
+/**
+ * Color picker for WCF
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ */
 WCF.ColorPicker = Class.extend({
 	/**
 	 * hue bar element
@@ -246,6 +253,25 @@ WCF.ColorPicker = Class.extend({
 		// submit button
 		var $submitForm = $('<div class="formSubmit" />').appendTo(this._dialog);
 		$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.save') + '</button>').appendTo($submitForm).click($.proxy(this._submit, this));
+		
+		// allow pasting of colors like '#888888'
+		var self = this;
+		this._hex.on('paste', function() {
+			self._hex.attr('maxlength', '7');
+			
+			setTimeout(function() {
+				var $value = self._hex.val();
+				if ($value.substring(0, 1) == '#') {
+					$value = $value.substr(1);
+				}
+				
+				if ($value.length > 6) {
+					$value = $value.substring(0, 6);
+				}
+				
+				self._hex.attr('maxlength', '6').val($value);
+			}, 50);
+		});
 	},
 	
 	/**
