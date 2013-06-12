@@ -334,6 +334,7 @@
 		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
 		<item name="wcf.acp.index.system.php"><![CDATA[PHP-Version]]></item>
 		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL-Version]]></item>
+		<item name="wcf.acp.index.system.load"><![CDATA[Aktueller UNIX Load]]></item>
 	</category>
 	
 	<category name="wcf.acp.label">
@@ -631,7 +632,7 @@
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Ihren Authentifizierung-Code finden Sie in Ihrem Kundenkonto auf woltlab.com.]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[WoltLab-Nachrichten auf der Startseite der Administrationsoberfläche anzeigen]]></item>
 		<item name="wcf.acp.option.module_system_recaptcha"><![CDATA[Sicherheitsabfragen („reCAPTCHA“)]]></item>
-		<item name="wcf.acp.option.module_system_recaptcha.description"><![CDATA[Aktiviert Sicherheitsabfragen um das automatisierte Absenden von Formular durch so genannte Bots zu verhindern.]]></item>
+		<item name="wcf.acp.option.module_system_recaptcha.description"><![CDATA[Aktiviert Sicherheitsabfragen, um das automatisierte Absenden von Formularen durch so genannte Bots zu verhindern.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public-API-Key]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[Einen eigenen API-Key für die Nutzung der reCAPTCHA-Funktion können Sie auf der Website von <a href="https://www.google.com/recaptcha/admin/create" class="externalURL">reCAPTCHA</a> beantragen.]]></item>
@@ -1645,11 +1646,11 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.message.quote.removeSelectedQuotes"><![CDATA[Markierte Zitate entfernen]]></item>
 		<item name="wcf.message.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.message.settings.enableBBCodes"><![CDATA[Darstellung von BBCodes aktivieren]]></item>
-		<item name="wcf.message.settings.enableBBCodes.description"><![CDATA[Sie können BBCodes zur Formatierung nutzen, sofern diese Option aktiviert ist.]]></item>
+		<item name="wcf.message.settings.enableBBCodes.description"><![CDATA[Sie können BBCodes zur Formatierung Ihrer Nachricht nutzen.]]></item>
 		<item name="wcf.message.settings.enableHtml"><![CDATA[Darstellung von HTML aktivieren]]></item>
-		<item name="wcf.message.settings.enableHtml.description"><![CDATA[Wenn Sie diese Option aktiviert haben, können Sie HTML zur Formatierung verwenden.]]></item>
+		<item name="wcf.message.settings.enableHtml.description"><![CDATA[Sie können HTML zur Formatierung Ihrer Nachricht nutzen.]]></item>
 		<item name="wcf.message.settings.enableSmilies"><![CDATA[Darstellung von Smileys aktivieren]]></item>
-		<item name="wcf.message.settings.enableSmilies.description"><![CDATA[Smiley-Code wird in Ihrem Beitrag automatisch als Smiley-Grafik dargestellt.]]></item>
+		<item name="wcf.message.settings.enableSmilies.description"><![CDATA[Smiley-Code wird in Ihrer Nachricht automatisch als Smiley-Grafik dargestellt.]]></item>
 		<item name="wcf.message.settings.preParse"><![CDATA[URLs automatisch erkennen]]></item>
 		<item name="wcf.message.settings.preParse.description"><![CDATA[Internet-Adressen werden automatisch erkannt und umgewandelt.]]></item>
 		<item name="wcf.message.settings.showSignature"><![CDATA[Signatur anzeigen]]></item>
@@ -1982,7 +1983,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.button.mail"><![CDATA[E-Mail senden]]></item>
 		<item name="wcf.user.ignoredUsers"><![CDATA[Sie blockieren folgende Benutzer]]></item>
 		<item name="wcf.user.ignoredUsers.noUsers"><![CDATA[Sie blockieren derzeit keine Benutzer.]]></item>
-		<item name="wcf.user.following"><![CDATA[Sie folgen folgenden Benutzern]]></item>
+		<item name="wcf.user.following"><![CDATA[Sie folgen diesen Benutzern]]></item>
 		<item name="wcf.user.following.noUsers"><![CDATA[Sie folgen derzeit keinen Benutzern.]]></item>
 		<item name="wcf.user.userTitle"><![CDATA[Individueller Benutzertitel]]></item>
 		<item name="wcf.user.userTitle.description"><![CDATA[Sie können sich einen individuellen Benutzertitel geben.]]></item>
@@ -2144,7 +2145,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 	
 	<category name="wcf.user.recentActivity">
 		<item name="wcf.user.recentActivity"><![CDATA[Letzte Aktivitäten]]></item>
-		<item name="wcf.user.recentActivity.filteredByFollowedUsers"><![CDATA[Von Benutzern denen Sie folgen]]></item>
+		<item name="wcf.user.recentActivity.filteredByFollowedUsers"><![CDATA[Von Benutzern, denen Sie folgen]]></item>
 		<item name="wcf.user.recentActivity.more"><![CDATA[Weitere Aktivitäten]]></item>
 		<item name="wcf.user.recentActivity.noMoreEntries"><![CDATA[Keine weiteren Aktivitäten]]></item>
 		<item name="wcf.user.recentActivity.noEntries"><![CDATA[Es sind keine Aktivitäten vorhanden.]]></item>
