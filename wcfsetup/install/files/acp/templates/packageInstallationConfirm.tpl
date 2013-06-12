@@ -104,7 +104,7 @@
 				{foreach from=$requiredPackages item=$package}
 					<tr>
 						<td class="columnTitle columnPackageName">{if $package[package]}{$package[package]->packageName|language}{/if}</td>
-						<td class="columnText columnPackage">{@$package.name}</td>
+						<td class="columnText columnPackage">{lang}{@$package.name}{/lang}</td>
 						<td class="columnText columnPackageVersion">{if $package.minversion|isset}{if $package.status == 'missingVersion'}<span class="badge label red">{/if}{$package.minversion}{if $package.status == 'missingVersion'}</span>{/if}{/if}</td>
 						<td class="columnText columnStatus"><span class="badge label {if $package.status == 'installed'}green{elseif $package.status == 'delivered'}yellow{else}red{/if}">{lang}wcf.acp.package.installation.packageStatus.{@$package.status}{/lang}</span></td>
 						
