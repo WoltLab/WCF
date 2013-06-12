@@ -66,8 +66,8 @@
 			{if !$tagObj|isset || $tagObj->synonymFor === null}
 				<dl>
 					<dt><label for="synonyms">{lang}wcf.acp.tag.synonyms{/lang}</label></dt>
-					<dd id="synonymList" class="editableItemList"></dd>
 					<dd>
+						<div id="synonymList" class="editableItemList"></div>
 						<input id="synonyms" type="text" value="" class="long" />
 						{if $errorField == 'synonyms'}
 							<small class="innerError">
