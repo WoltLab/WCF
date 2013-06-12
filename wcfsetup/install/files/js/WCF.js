@@ -3108,6 +3108,13 @@ WCF.MultipleLanguageInput = Class.extend({
 		this._values = values;
 		this._availableLanguages = availableLanguages;
 		
+		// unescape values
+		if ($.getLength(this._values)) {
+			for (var $key in this._values) {
+				this._values[$key] = WCF.String.unescapeHTML(this._values[$key]);
+			}
+		}
+		
 		// default to current user language
 		this._languageID = LANGUAGE_ID;
 		if (this._element.length == 0) {
@@ -3328,7 +3335,7 @@ WCF.MultipleLanguageInput = Class.extend({
 				this._values[$languageID] = '';
 			}
 			
-			$('<input type="hidden" name="' + $elementID + '_i18n[' + $languageID + ']" value="' + this._values[$languageID] + '" />').appendTo($form);
+			$('<input type="hidden" name="' + $elementID + '_i18n[' + $languageID + ']" value="' + WCF.String.escapeHTML(this._values[$languageID]) + '" />').appendTo($form);
 		}
 		
 		// remove name attribute to prevent conflict with i18n values
@@ -3424,6 +3431,16 @@ WCF.String = {
 	 */
 	ucfirst: function(string) {
 		return String(string).substring(0, 1).toUpperCase() + string.substring(1);
+	},
+	
+	/**
+	 * Unescapes special HTML-characters within a string
+	 * 
+	 * @param	string		string
+	 * @return	string
+	 */
+	unescapeHTML: function (string) {
+		return String(string).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 	}
 };
 
