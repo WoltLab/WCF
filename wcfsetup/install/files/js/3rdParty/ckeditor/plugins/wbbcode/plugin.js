@@ -386,6 +386,9 @@
 		html = html.replace(/<tr>/gi, '[tr]');
 		html = html.replace(/<\/tr>/gi, '[/tr]');
 		
+		// [td]+[align]
+		html = html.replace(/<td style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)<\/td>/gi, "[td][align=$1]$2[/align][/td]");
+		
 		// [td]
 		html = html.replace(/<td>/gi, '[td]');
 		html = html.replace(/<\/td>/gi, '[/td]');
