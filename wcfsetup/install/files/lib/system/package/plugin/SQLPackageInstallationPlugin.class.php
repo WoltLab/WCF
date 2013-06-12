@@ -52,11 +52,30 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			$parser = new PackageInstallationSQLParser($queries, $this->installation->getPackage(), $this->installation->getAction());
 			$conflicts = $parser->test();
 			if (!empty($conflicts) && (isset($conflicts['CREATE TABLE']) || isset($conflicts['DROP TABLE']))) {
-				WCF::getTPL()->assign(array(
-					'conflicts' => $conflicts
-				));
+				$unknownCreateTable = isset($conflicts['CREATE TABLE']) ? $conflicts['CREATE TABLE'] : array();
+				$unknownDropTable = isset($conflicts['DROP TABLE']) ? $conflicts['DROP TABLE'] : array();
 				
-				throw new SystemException(WCF::getTPL()->fetch('packageInstallationDatabaseConflict'));
+				$errorMessage = "Can't";
+				if (!empty($unknownDropTable)) {
+					$errorMessage .= " drop unknown table";
+					if (count($unknownDropTable) > 1) {
+						$errorMessage .= "s";
+					}
+					$errorMessage .= " '".implode("', '", $unknownDropTable)."'";
+				}
+				if (!empty($unknownCreateTable)) {
+					if (!empty($unknownDropTable)) {
+						$errorMessage .= " and can't";
+					}
+					
+					$errorMessage .= " overwrite unknown table";
+					if (count($unknownCreateTable) > 1) {
+						$errorMessage .= "s";
+					}
+					$errorMessage .= " '".implode("', '", $unknownCreateTable)."'";
+				}
+				
+				throw new SystemException($errorMessage);
 			}
 			
 			// execute queries
