@@ -197,7 +197,7 @@ WCF.Label.Chooser = Class.extend({
 				}
 				
 				if (!$group.data('forceSelection')) {
-					var $buttonEmpty = $('<li data-label-id="0"><span><span class="badge label">' + WCF.Language.get('wcf.label.none') + '</span></span></li>').data('groupID', $groupID).appendTo($dropdownMenu);
+					var $buttonEmpty = $('<li data-label-id="0"><span><span class="badge label">' + WCF.Language.get('wcf.label.' + (this._showWithoutSelection ? 'all' : 'none')) + '</span></span></li>').data('groupID', $groupID).appendTo($dropdownMenu);
 					$buttonEmpty.click($.proxy(this._click, this));
 				}
 			}
