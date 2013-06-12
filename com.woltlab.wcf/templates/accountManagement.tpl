@@ -222,7 +222,7 @@
 								<label><input type="checkbox" name="{@$__authProvider}Disconnect" value="1" /> {lang}wcf.user.3rdparty.{@$__authProvider}.disconnect{/lang}</label>
 							</dd>
 						</dl>
-					{else}
+					{else if !$__wcf->getUser()->hasAdministrativeAccess()}
 						{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
 							<dl>
 								<dt>{lang}wcf.user.3rdparty.github{/lang}</dt>
