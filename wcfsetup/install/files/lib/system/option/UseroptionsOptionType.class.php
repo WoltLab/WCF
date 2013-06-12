@@ -66,7 +66,11 @@ class UseroptionsOptionType extends AbstractOptionType {
 			self::$userOptions = array();
 			$sql = "SELECT	optionName
 				FROM	wcf".WCF_N."_user_option
-				WHERE	categoryName LIKE 'profile%'
+				WHERE	categoryName IN (
+						SELECT	categoryName
+						FROM	wcf".WCF_N."_user_option_category
+						WHERE	parentCategoryName = 'profile'	
+					)
 					AND optionType <> 'boolean'";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();

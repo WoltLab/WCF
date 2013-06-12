@@ -1061,7 +1061,7 @@
 		<item name="wcf.acp.tag.delete.sure"><![CDATA[Wollen Sie den Tag „{$tag}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Die gewählte Sprache ist ungültig]]></item>
 		<item name="wcf.acp.tag.languageID"><![CDATA[Sprache]]></item>
-		<item name="wcf.acp.tag.list"><![CDATA[Tags auflisten]]></item>
+		<item name="wcf.acp.tag.list"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.tag.list.search"><![CDATA[Tags suchen]]></item>
 		<item name="wcf.acp.tag.list.search.query"><![CDATA[Suchbegriff]]></item>
 		<item name="wcf.acp.tag.name"><![CDATA[Name]]></item>

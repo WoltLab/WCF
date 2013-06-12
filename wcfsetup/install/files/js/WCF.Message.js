@@ -609,6 +609,12 @@ WCF.Message.QuickReply = Class.extend({
 	_notification: null,
 	
 	/**
+	 * true, if a request to save the message is pending
+	 * @var	boolean
+	 */
+	_pendingSave: false,
+	
+	/**
 	 * action proxy
 	 * @var	WCF.Action.Proxy
 	 */
@@ -641,6 +647,7 @@ WCF.Message.QuickReply = Class.extend({
 	init: function(supportExtendedForm, quoteManager) {
 		this._container = $('#messageQuickReply');
 		this._messageField = $('#text');
+		this._pendingSave = false;
 		if (!this._container || !this._messageField) {
 			return;
 		}
@@ -743,6 +750,10 @@ WCF.Message.QuickReply = Class.extend({
 	 * Saves message.
 	 */
 	_save: function() {
+		if (this._pendingSave) {
+			return;
+		}
+		
 		var $message = '';
 		
 		if ($.browser.mobile) {
@@ -766,6 +777,8 @@ WCF.Message.QuickReply = Class.extend({
 		else {
 			$innerError.remove();
 		}
+		
+		this._pendingSave = true;
 		
 		this._proxy.setOption('data', {
 			actionName: 'quickReply',
@@ -846,6 +859,8 @@ WCF.Message.QuickReply = Class.extend({
 	 * Prepares jump to extended message add form.
 	 */
 	_prepareExtended: function() {
+		this._pendingSave = true;
+		
 		// mark quotes for removal
 		if (this._quoteManager !== null) {
 			this._quoteManager.markQuotesForRemoval();
@@ -925,6 +940,8 @@ WCF.Message.QuickReply = Class.extend({
 			if (this._quoteManager !== null) {
 				this._quoteManager.countQuotes();
 			}
+			
+			this._pendingSave = false;
 		}
 	},
 	
@@ -932,6 +949,7 @@ WCF.Message.QuickReply = Class.extend({
 	 * Reverts quick reply on failure to preserve entered message.
 	 */
 	_failure: function(data) {
+		this._pendingSave = false;
 		this._revertQuickReply(false);
 		
 		if (data === null || data.returnValues === undefined || data.returnValues.errorType === undefined) {

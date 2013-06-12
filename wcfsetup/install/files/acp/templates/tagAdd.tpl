@@ -13,19 +13,13 @@
 {/if}
 
 <div class="contentNavigation">
-	{hascontent}
-		<nav>
-			<ul>
-				{content}
-					{if $__wcf->session->getPermission('admin.tag.canDeleteTag') || $__wcf->session->getPermission('admin.tag.canEditTag')}
-						<li><a href="{link controller='TagList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.tag.list{/lang}</span></a></li>
-					{/if}
-					
-					{event name='contentNavigationButtons'}
-				{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav>
+		<ul>
+			<li><a href="{link controller='TagList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.tag.list{/lang}</span></a></li>
+				
+			{event name='contentNavigationButtons'}
+		</ul>
+	</nav>
 </div>
 
 <form method="post" action="{if $action == 'add'}{link controller='TagAdd'}{/link}{else}{link controller='TagEdit' object=$tagObj}{/link}{/if}">
@@ -99,9 +93,9 @@
 				</script>
 			{elseif $tagObj|isset}
 				<dl>
-					<dt><label for="synonyms">{lang}wcf.acp.tag.synonyms{/lang}</label></dt>
+					<dt><label for="synonyms">{lang}wcf.acp.tag.synonymFor{/lang}</label></dt>
 					<dd>
-						<a href="{link controller='TagEdit' id=$tagObj->synonymFor}{/link}">{lang}wcf.acp.tag.synonyms.isSynonym{/lang}</a>
+						<a href="{link controller='TagEdit' id=$tagObj->synonymFor}{/link}" class="badge tag">{$synonym->name}</a>
 					</dd>
 				</dl>
 			{/if}
