@@ -204,6 +204,7 @@ select[multiple] {
 	box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
+	border-radius: @wcfInputBorderRadius;
 	font-family: @wcfBaseFontFamily;
 	padding: 4px 3px;
 	margin: 0;
@@ -459,4 +460,11 @@ textarea {
 /* Fixes weird firefox bug */
 select > option {
 	display: block !important;
+}
+
+/* reCaptcha */
+.reCaptcha {
+	input.marginTop {
+		margin-top: 14px;
+	}
 }

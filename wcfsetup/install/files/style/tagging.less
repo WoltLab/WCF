@@ -5,13 +5,12 @@
 }
 
 .tag {
+	border-radius: 0 4px 4px 0;
 	font-weight: normal;
 	height: 13px;
 	margin-left: 6px;
 	padding-bottom: 2px;
 	padding-left: 10px;
-	
-	.borderRadius(0, 4px, 4px, 0);
 		
 	&:before{
 		border-color: transparent @wcfColor transparent transparent;
@@ -28,6 +27,7 @@
 	
 	&:after{
 		background: @wcfContentBackgroundColor;
+		border-radius: 2px;
 		content: "";
 		height: 4px;
 		left: -2px;
@@ -35,7 +35,6 @@
 		top: 6px;
 		width: 4px;
 		
-		.borderRadius(2px);
 		.boxShadow(0, -1px, rgba(0, 0, 0, .2), 2px);
 	}
 	

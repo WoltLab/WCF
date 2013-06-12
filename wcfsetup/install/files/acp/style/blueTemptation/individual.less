@@ -249,7 +249,7 @@ button.active:hover {
 	.breadcrumbs {
 		background-color: @wcfContentBackgroundColor;
 		border: 1px solid @wcfContainerBorderColor;
-		.borderRadius();
+		border-radius: 6px;
 		
 		> ul {
 			> li {
@@ -307,9 +307,8 @@ button.active:hover {
 				}
 				
 				&:first-child > a {
+					border-radius: @wcfContainerBorderRadius - 2 0 0 @wcfContainerBorderRadius - 2;
 					padding-left: 9px;
-					
-					.borderRadius(@wcfContainerBorderRadius - 2, 0, 0, @wcfContainerBorderRadius - 2);
 				}
 			}
 		}
@@ -352,8 +351,9 @@ button.active:hover {
 	.dropdownMenu,
 	.attachmentThumbnail,
 	.attachmentThumbnail > img,
-	.attachmentThumbnail > a > img {
-		.borderRadius();
+	.attachmentThumbnail > a > img,
+	.box48 .attachmentTinyThumbnail {
+		border-radius: @wcfContainerBorderRadius;
 	}
 
 	.containerList {
@@ -371,15 +371,15 @@ button.active:hover {
 	}
 
 	.message.messageSidebarOrientationLeft .messageContent {
-		.borderRadius(0, @wcfContainerBorderRadius - 1, @wcfContainerBorderRadius - 1, 0);
+		border-radius: 0 @wcfContainerBorderRadius - 1 @wcfContainerBorderRadius - 1 0;
 	}
 
 	.message.messageSidebarOrientationRight .messageContent {
-		.borderRadius(@wcfContainerBorderRadius - 1, 0, 0, @wcfContainerBorderRadius - 1);
+		border-radius: @wcfContainerBorderRadius - 1 0 0 @wcfContainerBorderRadius - 1;
 	}
 
 	.message.messageReduced .messageContent {
-		.borderRadius(@wcfContainerBorderRadius - 1);
+		border-radius: @wcfContainerBorderRadius - 1;
 	}
 
 	.messageOptions {
@@ -406,7 +406,7 @@ button.active:hover {
 	}
 
 	.tabularBox {
-		.borderRadius();
+		border-radius: @wcfContainerBorderRadius;
 	}
 	
 	.tabularBox:not(.tabularBoxTitle) .table {
@@ -458,16 +458,16 @@ button.active:hover {
 	}
 
 	.attachmentThumbnail > div {
-		.borderRadius(0, 0, @wcfContainerBorderRadius - 2, @wcfContainerBorderRadius - 2);
+		border-radius: 0 0 @wcfContainerBorderRadius - 2 @wcfContainerBorderRadius - 2;
 	}
 
 	.wbbBoardList:not(.wbbBoardListReduced) {
 		> li.wbbBoardNodeTop:not(.wbbBoardNodeTopEmpty) > div {
-			.borderRadius(@wcfContainerBorderRadius - 2, 0);
+			border-radius: @wcfContainerBorderRadius - 2 @wcfContainerBorderRadius - 2 0 0;
 		}
 		
 		> li > ul > li:last-child div.wbbBoard:last-child, > li > ul > li.tabularBox:last-child {
-			.borderRadius(0, @wcfContainerBorderRadius - 2);
+			border-radius: 0 0 @wcfContainerBorderRadius - 2 @wcfContainerBorderRadius - 2;
 		}
 		
 		.tabularBox:not(.wbbBoardNodeTop) {
@@ -475,26 +475,26 @@ button.active:hover {
 		}
 		
 		.wbbBoardNodeTopEmpty div.wbbBoard {
-			.borderRadius(@wcfContainerBorderRadius - 2);
+			border-radius: @wcfContainerBorderRadius - 2;
 		}
 	}
 
 	.wbbBoardListReduced .tabularBox {
-		.borderRadius(0);
+		border-radius: 0;
 	}
 
 	.tabMenuContainer > .menu {
-		.borderRadius(@wcfContainerBorderRadius - 1, @wcfContainerBorderRadius - 1, 0, 0);
+		border-radius: @wcfContainerBorderRadius - 1 @wcfContainerBorderRadius - 1 0 0;
 	}
 
 	.pollContainer {
 		> .formSubmit {
-			.borderRadius(0, 0, 5px, 5px);
+			border-radius: 0 0 5px 5px;
 		}
 	}
 
 	.codeBox > div {
-		.borderRadius(@wcfContainerBorderRadius, 0, 0, @wcfContainerBorderRadius);
+		border-radius: @wcfContainerBorderRadius 0 0 @wcfContainerBorderRadius;
 	}
 }
 	
@@ -592,20 +592,9 @@ input[type='password'],
 textarea,
 select[multiple] {
 	border-color: darken(@wcfInputBorderColor, 20%) @wcfInputBorderColor lighten(@wcfInputBorderColor, 10%);
-	border-radius: 3px;
 	
 	.boxShadowInset(0, 1px, rgba(0, 0, 0, .1));
 	.transition(~"background-color, border, box-shadow", .2s);
-}
-
-.preInput {
-	> input[type='text'] {
-		border-radius: 0 3px 3px 0;
-	}
-	
-	> textarea {
-		border-radius: 0 3px 3px;
-	}
 }
 
 /* active / focus */
@@ -675,7 +664,9 @@ select[multiple]:focus {
 .error,
 .success,
 .warning {
+	border-radius: 7px;
 	border-width: 0;
+	
 	font-weight: bold;
 	
 	.boxShadowNative(~"0 1px 2px rgba(0, 0, 0, .5), inset 0 0 1px rgba(0, 0, 0, .2)");
@@ -698,6 +689,7 @@ select[multiple]:focus {
 }
 
 .innerError {
+	border-radius: 7px;
 	border-width: 0;
 	
 	.boxShadowNative(~"0 1px 2px rgba(0, 0, 0, .5), inset 0 0 1px rgba(0, 0, 0, .2)");
@@ -736,10 +728,10 @@ select[multiple]:focus {
 			
 			> div {
 				background-color: @wcfContentBackgroundColor;
+				border-radius: @wcfContainerBorderRadius;
 				padding: @wcfGapSmall;
 				margin-right: @wcfGapSmall;
 				
-				.borderRadius();
 				.boxShadowNative(~"inset 0 1px 1px rgba(0, 0, 0, .1)");
 			}
 		}
@@ -751,6 +743,7 @@ select[multiple]:focus {
 	.messageList {
 		.messageGroupStarter {
 			> .message.messageSidebarOrientationLeft:before {
+				border-top-left-radius: @wcfContainerBorderRadius;
 				content: "";
 				display: block;
 				height: 128px;
@@ -759,11 +752,11 @@ select[multiple]:focus {
 				top: 0;
 				width: 128px;
 				
-				.borderRadius(@wcfContainerBorderRadius, 0, 0, 0);
 				.linearGradientNative(~"left top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%");
 			}
 			
 			> .message.messageSidebarOrientationRight:before {
+				border-top-right-radius: @wcfContainerBorderRadius;
 				content: "";
 				display: block;
 				height: 128px;
@@ -772,7 +765,6 @@ select[multiple]:focus {
 				top: 0;
 				width: 128px;
 				
-				.borderRadius(0, @wcfContainerBorderRadius, 0, 0);
 				.linearGradientNative(~"right top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%");
 			}
 		}
