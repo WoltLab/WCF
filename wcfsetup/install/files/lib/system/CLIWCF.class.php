@@ -48,16 +48,23 @@ class CLIWCF extends WCF {
 	 * Calls all init functions of the WCF class.
 	 */
 	public function __construct() {
-		parent::__construct();
-		
-		// the destructor registered in core.functions.php will only call the destructor of the parent class
-		register_shutdown_function(array('wcf\system\CLIWCF', 'destruct'));
-		
 		// register additional autoloaders
 		require_once(WCF_DIR.'lib/system/api/phpline/phpline.phar');
 		require_once(WCF_DIR.'lib/system/api/zend/Loader/StandardAutoloader.php');
 		$zendLoader = new ZendLoader(array(ZendLoader::AUTOREGISTER_ZF => true));
 		$zendLoader->register();
+		
+		$argv = new ArgvParser(array(
+			'packageID=i' => ''
+		));
+		$argv->setOption(ArgvParser::CONFIG_FREEFORM_FLAGS, true);
+		$argv->parse();
+		define('PACKAGE_ID', $argv->packageID ?: 1);
+		
+		parent::__construct();
+		
+		// the destructor registered in core.functions.php will only call the destructor of the parent class
+		register_shutdown_function(array('wcf\system\CLIWCF', 'destruct'));
 		
 		$this->initArgv();
 		$this->initPHPLine();
@@ -93,7 +100,8 @@ class CLIWCF extends WCF {
 			'h|help-s' => WCF::getLanguage()->get('wcf.cli.help.help'),
 			'version' => WCF::getLanguage()->get('wcf.cli.help.version'),
 			'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck'),
-			'exitOnFail' => WCF::getLanguage()->get('wcf.cli.help.exitOnFail')
+			'exitOnFail' => WCF::getLanguage()->get('wcf.cli.help.exitOnFail'),
+			'packageID=i' => WCF::getLanguage()->get('wcf.cli.help.packageID')
 		));
 		self::getArgvParser()->setOptions(array(
 			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,
