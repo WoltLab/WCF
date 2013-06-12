@@ -100,7 +100,7 @@
 			<tbody>
 				{foreach from=$objects item=entry}
 					<tr>
-						<td class="columnID"><p class="framed">{@$entry->getUserProfile()->getAvatar()->getImageTag(32)}</p></td>
+						<td class="columnIcon"><p class="framed">{@$entry->getUserProfile()->getAvatar()->getImageTag(32)}</p></td>
 						<td class="columnID">{#$entry->queueID}</td>
 						<td class="columnText columnSubject">
 							<h3>

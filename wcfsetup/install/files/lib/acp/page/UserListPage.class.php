@@ -3,6 +3,7 @@ namespace wcf\acp\page;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\User;
+use wcf\data\user\UserProfile;
 use wcf\page\SortablePage;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\clipboard\ClipboardHandler;
@@ -231,10 +232,12 @@ class UserListPage extends SortablePage {
 				$userToGroups[$row['userID']][] = $row['groupID'];
 			}
 			
-			$sql = "SELECT		option_value.*, user_table.*
+			$sql = "SELECT		user_avatar.*, option_value.*, user_table.*
 				FROM		wcf".WCF_N."_user user_table
 				LEFT JOIN	wcf".WCF_N."_user_option_value option_value
 				ON		(option_value.userID = user_table.userID)
+				LEFT JOIN 	wcf".WCF_N."_user_avatar user_avatar
+				ON		(user_avatar.avatarID = user_table.avatarID)
 				".$conditions."
 				ORDER BY	".(($this->sortField != 'email' && isset($this->options[$this->sortField])) ? 'option_value.userOption'.$this->options[$this->sortField]['optionID'] : 'user_table.'.$this->sortField)." ".$this->sortOrder;
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -248,7 +251,7 @@ class UserListPage extends SortablePage {
 				$row['bannable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canBanUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
 				$row['isMarked'] = intval(in_array($row['userID'], $this->markedUsers));
 				
-				$this->users[] = new User(null, $row);
+				$this->users[] = new UserProfile(new User(null, $row));
 			}
 			
 			// get special columns

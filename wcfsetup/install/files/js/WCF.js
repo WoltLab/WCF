@@ -2730,6 +2730,12 @@ WCF.Date.Util = {
  */
 WCF.Date.Time = Class.extend({
 	/**
+	 * Date of current timestamp
+	 * @var	Date
+	 */
+	_date: 0,
+	
+	/**
 	 * list of time elements
 	 * @var	jQuery
 	 */
@@ -2777,8 +2783,8 @@ WCF.Date.Time = Class.extend({
 	 * Refreshes relative datetime for each element.
 	 */
 	_refresh: function() {
-		var $date = new Date();
-		this._timestamp = ($date.getTime() - $date.getMilliseconds()) / 1000;
+		this._date = new Date();
+		this._timestamp = (this._date.getTime() - this._date.getMilliseconds()) / 1000;
 		if (this._offset === null) {
 			this._offset = this._timestamp - TIME_NOW;
 		}
@@ -2823,7 +2829,8 @@ WCF.Date.Time = Class.extend({
 		}
 		// timestamp is less than 6 days ago
 		else if (this._timestamp < ($timestamp + 518400)) {
-			var $days = Math.round((this._timestamp - $timestamp) / 86400);
+			var $midnight = new Date(this._date.getFullYear(), this._date.getMonth(), this._date.getDate());
+			var $days = Math.ceil(($midnight / 1000 - $timestamp) / 86400);
 			
 			// get day of week
 			var $dateObj = WCF.Date.Util.getTimezoneDate(($timestamp * 1000), $offset);
