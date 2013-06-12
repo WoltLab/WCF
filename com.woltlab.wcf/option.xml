@@ -460,7 +460,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			<!-- security.blacklist -->
 			<option name="blacklist_ip_addresses">
 				<categoryname>security.blacklist</categoryname>
-				<optiontype>textareaIpAddress</optiontype>
+				<optiontype>textarea</optiontype>
 			</option>
 			<option name="blacklist_user_agents">
 				<categoryname>security.blacklist</categoryname>
