@@ -38,6 +38,12 @@ final class User extends DatabaseObject implements IRouteController {
 	protected $groupIDs = null;
 	
 	/**
+	 * true, if user has access to the ACP
+	 * @var	boolean
+	 */
+	protected $hasAdministrativePermissions = null;
+	
+	/**
 	 * list of language ids
 	 * @var	array<integer>
 	 */
@@ -399,5 +405,28 @@ final class User extends DatabaseObject implements IRouteController {
 	 */
 	public function canEdit() {
 		return (WCF::getSession()->getPermission('admin.user.canEditUser') && UserGroup::isAccessibleGroup($this->getGroupIDs()));
+	}
+	
+	/**
+	 * Returns true, if this user has access to the ACP.
+	 * 
+	 * @return	boolean
+	 */
+	public function hasAdministrativeAccess() {
+		if ($this->hasAdministrativePermissions === null) {
+			$this->hasAdministrativePermissions = false;
+			
+			if ($this->userID) {
+				foreach ($this->getGroupIDs() as $groupID) {
+					$group = UserGroup::getGroupByID($groupID);
+					if ($group->isAdminGroup()) {
+						$this->hasAdministrativePermissions = true;
+						break;
+					}
+				}
+			}
+		}
+		
+		return $this->hasAdministrativePermissions;
 	}
 }
