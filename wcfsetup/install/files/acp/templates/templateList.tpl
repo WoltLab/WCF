@@ -44,7 +44,7 @@
 			<dl>
 				<dt><label for="application">{lang}wcf.acp.template.application{/lang}</label></dt>
 				<dd>
-					<select name="application" id="templateGroupID">
+					<select name="application" id="application">
 						<option value="">{lang}wcf.acp.template.application.all{/lang}</option>
 						{foreach from=$availableApplications key=abbreviation item=availableApplication}
 							<option value="{$abbreviation}"{if $abbreviation == $application} selected="selected"{/if}>{$availableApplication}</option>
