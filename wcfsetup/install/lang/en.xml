@@ -1060,7 +1060,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.tag.delete.sure"><![CDATA[Do you really want to delete the tag “{$tag}”?]]></item>
 		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Selected language is invalid]]></item>
 		<item name="wcf.acp.tag.languageID"><![CDATA[Language]]></item>
-		<item name="wcf.acp.tag.list"><![CDATA[List Tags]]></item>
+		<item name="wcf.acp.tag.list"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.tag.list.search"><![CDATA[Search Tags]]></item>
 		<item name="wcf.acp.tag.list.search.query"><![CDATA[Search Term]]></item>
 		<item name="wcf.acp.tag.name"><![CDATA[Name]]></item>

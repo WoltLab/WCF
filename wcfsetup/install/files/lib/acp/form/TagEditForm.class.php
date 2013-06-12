@@ -134,7 +134,8 @@ class TagEditForm extends TagAddForm {
 		
 		WCF::getTPL()->assign(array(
 			'tagObj' => $this->tagObj,
-			'action' => 'edit'
+			'action' => 'edit',
+			'synonym' => (($this->tagObj !== null && $this->tagObj->synonymFor) ? new Tag($this->tagObj->synonymFor) : null)
 		));
 	}
 }
