@@ -120,27 +120,27 @@ class RequestHandler extends SingletonFactory {
 						exit;
 					}
 				}
-			}
-			
-			// check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
-			$applicationObject = ApplicationHandler::getInstance()->getApplication($application);
-			if ($applicationObject->domainName != $_SERVER['HTTP_HOST']) {
-				// build URL, e.g. http://example.net/forum/
-				$url = FileUtil::addTrailingSlash(RouteHandler::getProtocol() . $applicationObject->domainName . RouteHandler::getPath());
 				
-				// add path info, e.g. index.php/Board/2/
-				$pathInfo = RouteHandler::getPathInfo();
-				if (!empty($pathInfo)) {
-					$url .= 'index.php' . $pathInfo;
+				// check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
+				$applicationObject = ApplicationHandler::getInstance()->getApplication($application);
+				if ($applicationObject->domainName != $_SERVER['HTTP_HOST']) {
+					// build URL, e.g. http://example.net/forum/
+					$url = FileUtil::addTrailingSlash(RouteHandler::getProtocol() . $applicationObject->domainName . RouteHandler::getPath());
+					
+					// add path info, e.g. index.php/Board/2/
+					$pathInfo = RouteHandler::getPathInfo();
+					if (!empty($pathInfo)) {
+						$url .= 'index.php' . $pathInfo;
+					}
+					
+					// query string, e.g. ?foo=bar
+					if (!empty($_SERVER['QUERY_STRING'])) {
+						$url .= '?' . $_SERVER['QUERY_STRING'];
+					}
+					
+					HeaderUtil::redirect($url, true);
+					exit;
 				}
-				
-				// query string, e.g. ?foo=bar
-				if (!empty($_SERVER['QUERY_STRING'])) {
-					$url .= '?' . $_SERVER['QUERY_STRING'];
-				}
-				
-				HeaderUtil::redirect($url, true);
-				exit;
 			}
 			
 			$controller = $routeData['controller'];
