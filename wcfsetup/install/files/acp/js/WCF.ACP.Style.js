@@ -137,7 +137,7 @@ WCF.ACP.Style.ImageUpload = WCF.Upload.extend({
 			this._button.next('.innerError').remove();
 			
 			// show success message
-			var $notification = new WCF.System.Notification(WCF.Language.get('wcf.acp.style.image.success'));
+			var $notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'));
 			$notification.show();
 		}
 		else if (data.returnValues.errorType) {
