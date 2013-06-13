@@ -95,4 +95,15 @@ final class UserRegistrationUtil {
 	public static function getActivationCode($length = 9) {
 		return MathUtil::getRandomValue(pow(10, $length - 1), pow(10, $length) - 1);
 	}
+	
+	/**
+	 * Generates a random field name.
+	 * 
+	 * @param	string		$fieldName
+	 * @return	string
+	 */
+	public static function getRandomFieldName($fieldName) {
+		$hash = StringUtil::getHash($fieldName . StringUtil::getRandomID());
+		return substr($hash, 0, mt_rand(8, 16));
+	}
 }
