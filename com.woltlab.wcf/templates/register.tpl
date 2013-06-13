@@ -118,7 +118,7 @@
 			
 			<dl>
 				<dt>
-					<label for="username">{lang}wcf.user.email{/lang}</label>
+					<label for="email">{lang}wcf.user.email{/lang}</label>
 				</dt>
 				<dd>
 					<input type="email" id="email" name="email" value="" autocomplete="off" class="medium" tabindex="999" />
