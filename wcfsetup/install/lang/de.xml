@@ -1719,6 +1719,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.moderation.report.reason.description"><![CDATA[Diese Funktion ist ausschließlich zu verwenden bei: Spam, Werbung und anderen problematischen (rassistischen, gewaltverherrlichenden, agressiven, beleidigenden oder sexistischen) Inhalten.]]></item>
 		<item name="wcf.moderation.report.removeContent"><![CDATA[Gemeldeten Inhalt löschen]]></item>
 		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Wollen Sie den gemeldeten Inhalt wirklich löschen?]]></item>
+		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Begründung (optional)]]></item>
 		<item name="wcf.moderation.report.removeReport"><![CDATA[Meldung löschen]]></item>
 		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[Wollen Sie diese Meldung wirklich löschen?]]></item>
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Inhalt melden]]></item>
