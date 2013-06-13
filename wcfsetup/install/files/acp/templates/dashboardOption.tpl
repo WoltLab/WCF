@@ -49,7 +49,7 @@
 						{foreach from=$enabledBoxes item=boxID}
 							{if $boxes[$boxID]->boxType == 'content'}
 								<li class="sortableNode" data-object-id="{@$boxID}">
-									<span class="sortableNodeLabel">{lang}wcf.dashboard.box.{$boxes[$boxID]->boxName}{/lang}</span>
+									<span class="sortableNodeLabel">{lang}wcf.dashboard.box.{$boxes[$boxID]->boxName}{/lang}{if $boxes[$boxID]->packageID != 1} ({lang}{$boxes[$boxID]->getPackage()->packageName}{/lang}){/if}</span>
 								</li>
 							{/if}
 						{/foreach}
@@ -65,7 +65,7 @@
 						{foreach from=$boxes item=box}
 							{if $box->boxType == 'content' && !$box->boxID|in_array:$enabledBoxes}
 								<li class="sortableNode" data-object-id="{@$box->boxID}">
-									<span class="sortableNodeLabel">{lang}wcf.dashboard.box.{$box->boxName}{/lang}</span>
+									<span class="sortableNodeLabel">{lang}wcf.dashboard.box.{$box->boxName}{/lang}{if $box->packageID != 1} ({lang}{$box->getPackage()->packageName}{/lang}){/if}</span>
 								</li>
 							{/if}
 						{/foreach}
@@ -97,7 +97,7 @@
 						{foreach from=$enabledBoxes item=boxID}
 							{if $boxes[$boxID]->boxType == 'sidebar'}
 								<li class="sortableNode" data-object-id="{@$boxID}">
-									<span class="sortableNodeLabel">{lang}wcf.dashboard.box.{$boxes[$boxID]->boxName}{/lang}</span>
+									<span class="sortableNodeLabel">{lang}wcf.dashboard.box.{$boxes[$boxID]->boxName}{/lang}{if $boxes[$boxID]->packageID != 1} ({lang}{$boxes[$boxID]->getPackage()->packageName}{/lang}){/if}</span>
 								</li>
 							{/if}
 						{/foreach}
@@ -113,7 +113,7 @@
 						{foreach from=$boxes item=box}
 							{if $box->boxType == 'sidebar' && !$box->boxID|in_array:$enabledBoxes}
 								<li class="sortableNode" data-object-id="{@$box->boxID}">
-									<span class="sortableNodeLabel">{lang}wcf.dashboard.box.{$box->boxName}{/lang}</span>
+									<span class="sortableNodeLabel">{lang}wcf.dashboard.box.{$box->boxName}{/lang}{if $box->packageID != 1} ({lang}{$box->getPackage()->packageName}{/lang}){/if}</span>
 								</li>
 							{/if}
 						{/foreach}

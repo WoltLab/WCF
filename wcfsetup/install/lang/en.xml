@@ -1698,6 +1698,8 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.comment"><![CDATA[Comment]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
 		<item name="wcf.moderation.showAll"><![CDATA[Show All Items]]></item>
+		<item name="wcf.moderation.showDeletedContent"><![CDATA[TODO: Gelöschte Inhalte anzeigen]]></item>
+		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[TODO: Gelöschte Inhalte]]></item>
 	</category>
 	
 	<category name="wcf.moderation.activation">
@@ -1998,6 +2000,8 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Last Activity]]></item>
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Likes Received]]></item>
+		<item name="wcf.user.register.honeyPot"><![CDATA[TODO: Bitte ignorieren!]]></item>
+		<item name="wcf.user.register.honeyPot.description"><![CDATA[TODO: Falls Sie dies sehen können, füllen Sie bitte die nächsten zwei Eingabfelder <strong>NICHT</strong> aus!]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

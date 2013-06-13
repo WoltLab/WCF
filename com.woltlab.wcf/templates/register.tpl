@@ -103,9 +103,9 @@
 		</fieldset>
 		
 		<fieldset id="fieldset1">
-			<legend>{lang}wcf.user.honeyPot{/lang}</legend>
+			<legend>{lang}wcf.user.register.honeyPot{/lang}</legend>
 			
-			<small>{lang}wcf.user.honeyPot.description{/lang}</small>
+			<small>{lang}wcf.user.register.honeyPot.description{/lang}</small>
 			
 			<dl>
 				<dt>
