@@ -1699,6 +1699,8 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.comment"><![CDATA[Kommentar]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.response"><![CDATA[Antwort auf Kommentar]]></item>
 		<item name="wcf.moderation.showAll"><![CDATA[Alle Einträge anzeigen]]></item>
+		<item name="wcf.moderation.showDeletedContent"><![CDATA[Gelöschte Inhalte anzeigen]]></item>
+		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[Gelöschte Inhalte]]></item>
 	</category>
 	
 	<category name="wcf.moderation.activation">

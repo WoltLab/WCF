@@ -116,6 +116,11 @@
 		</definition>
 		
 		<definition>
+			<name>com.woltlab.wcf.deletedContent</name>
+			<interfacename><![CDATA[wcf\system\moderation\IDeletedContentProvider]]></interfacename>
+		</definition>
+		
+		<definition>
 			<name>com.woltlab.wcf.searchableObjectType</name>
 			<interfacename><![CDATA[wcf\system\search\ISearchableObjectType]]></interfacename>
 		</definition>

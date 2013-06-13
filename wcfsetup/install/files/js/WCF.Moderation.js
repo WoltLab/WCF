@@ -354,11 +354,18 @@ WCF.Moderation.UserPanel = WCF.UserPanel.extend({
 	_showAllLink: '',
 	
 	/**
+	 * link to deleted content list
+	 * @var	string
+	 */
+	_deletedContentLink: '',
+	
+	/**
 	 * @see	WCF.UserPanel.init()
 	 */
-	init: function(showAllLink) {
+	init: function(showAllLink, deletedContentLink) {
 		this._noItems = 'wcf.moderation.noMoreItems';
 		this._showAllLink = showAllLink;
+		this._deletedContentLink = deletedContentLink;
 		
 		this._super('outstandingModeration');
 	},
@@ -369,6 +376,8 @@ WCF.Moderation.UserPanel = WCF.UserPanel.extend({
 	_addDefaultItems: function(dropdownMenu) {
 		this._addDivider(dropdownMenu);
 		$('<li><a href="' + this._showAllLink + '">' + WCF.Language.get('wcf.moderation.showAll') + '</a></li>').appendTo(dropdownMenu);
+		this._addDivider(dropdownMenu);
+		$('<li><a href="' + this._deletedContentLink + '">' + WCF.Language.get('wcf.moderation.showDeletedContent') + '</a></li>').appendTo(dropdownMenu);
 	},
 	
 	/**
