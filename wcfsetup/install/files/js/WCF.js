@@ -2711,7 +2711,7 @@ WCF.Date.Util = {
 	
 	/**
 	 * Returns a Date object with precise offset (including timezone and local timezone).
-	 * Parameter timestamp must be in miliseconds!
+	 * Parameters timestamp and offset must be in miliseconds!
 	 * 
 	 * @param	integer		timestamp
 	 * @param	integer		offset
@@ -2719,9 +2719,9 @@ WCF.Date.Util = {
 	 */
 	getTimezoneDate: function(timestamp, offset) {
 		var $date = new Date(timestamp);
-		var $localOffset = $date.getTimezoneOffset() * -1 * 60000;
+		var $localOffset = $date.getTimezoneOffset() * 60000;
 		
-		return new Date((timestamp - $localOffset - offset));
+		return new Date((timestamp + $localOffset + offset));
 	}
 };
 
@@ -2833,7 +2833,7 @@ WCF.Date.Time = Class.extend({
 			var $days = Math.ceil(($midnight / 1000 - $timestamp) / 86400);
 			
 			// get day of week
-			var $dateObj = WCF.Date.Util.getTimezoneDate(($timestamp * 1000), $offset);
+			var $dateObj = WCF.Date.Util.getTimezoneDate(($timestamp * 1000), $offset * 1000);
 			var $dow = $dateObj.getDay();
 			var $day = WCF.Language.get('__days')[$dow];
 			
