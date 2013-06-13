@@ -72,15 +72,3 @@
 .boxShadowNative(@parameters) {
 	box-shadow: @parameters;
 }
-
-.borderRadius(@borderRadius: @wcfContainerBorderRadius) {
-	.borderRadius(@borderRadius, @borderRadius, @borderRadius, @borderRadius);
-}
-
-.borderRadius(@borderTopRadius, @borderBottomRadius) {
-	.borderRadius(@borderTopRadius, @borderTopRadius, @borderBottomRadius, @borderBottomRadius);
-}
-
-.borderRadius(@borderTopLeftRadius, @borderTopRightRadius, @borderBottomRightRadius, @borderBottomLeftRadius) {
-	border-radius: @arguments;
-}

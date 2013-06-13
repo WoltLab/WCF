@@ -19,15 +19,25 @@
 				'wcf.user.confirmPassword.error.notEqual' : '{lang}wcf.user.confirmPassword.error.notEqual{/lang}'
 			});
 			
-			new WCF.User.Registration.Validation.EmailAddress($('#email'), $('#confirmEmail'), null);
-			new WCF.User.Registration.Validation.Password($('#password'), $('#confirmPassword'), null);
-			new WCF.User.Registration.Validation.Username($('#username', null, {
+			new WCF.User.Registration.Validation.EmailAddress($('#{@$randomFieldNames[email]}'), $('#{@$randomFieldNames[confirmEmail]}'), null);
+			new WCF.User.Registration.Validation.Password($('#{@$randomFieldNames[password]}'), $('#{@$randomFieldNames[confirmPassword]}'), null);
+			new WCF.User.Registration.Validation.Username($('#{@$randomFieldNames[username]}', null, {
 				minlength: {@REGISTER_USERNAME_MIN_LENGTH},
 				maxlength: {@REGISTER_USERNAME_MAX_LENGTH}
 			}));
 		});
 		//]]>
 	</script>
+	
+	<style type="text/css">	
+		#fieldset1 {
+			height: 0;
+			overflow: hidden;
+			position: absolute;
+			left: -9000px;
+			max-width: 8000px; 
+		}
+	</style>
 </head>
 
 <body id="tpl{$templateName|ucfirst}">
@@ -74,10 +84,10 @@
 			
 			<dl{if $errorType.username|isset} class="formError"{/if}>
 				<dt>
-					<label for="username">{lang}wcf.user.username{/lang}</label>
+					<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label>
 				</dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" required="required" class="medium" />
+					<input type="text" id="{@$randomFieldNames[username]}" name="{@$randomFieldNames[username]}" value="{$username}" required="required" class="medium" />
 					{if $errorType.username|isset}
 						<small class="innerError">
 							{if $errorType.username == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -92,15 +102,41 @@
 			{event name='usernameFields'}
 		</fieldset>
 		
+		<fieldset id="fieldset1">
+			<legend>{lang}wcf.user.honeyPot{/lang}</legend>
+			
+			<small>{lang}wcf.user.honeyPot.description{/lang}</small>
+			
+			<dl>
+				<dt>
+					<label for="username">{lang}wcf.user.username{/lang}</label>
+				</dt>
+				<dd>
+					<input type="text" id="username" name="username" value="" autocomplete="off" class="medium" tabindex="998" />
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt>
+					<label for="username">{lang}wcf.user.email{/lang}</label>
+				</dt>
+				<dd>
+					<input type="email" id="email" name="email" value="" autocomplete="off" class="medium" tabindex="999" />
+				</dd>
+			</dl>
+			
+			{event name='honeyPotFields'}
+		</fieldset>
+		
 		<fieldset>
 			<legend>{lang}wcf.user.email{/lang}</legend>
 			
 			<dl{if $errorType.email|isset} class="formError"{/if}>
 				<dt>
-					<label for="email">{lang}wcf.user.email{/lang}</label>
+					<label for="{@$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label>
 				</dt>
 				<dd>
-					<input type="email" id="email" name="email" value="{$email}" required="required" class="medium" />
+					<input type="email" id="{@$randomFieldNames[email]}" name="{@$randomFieldNames[email]}" value="{$email}" required="required" class="medium" />
 					{if $errorType.email|isset}
 						<small class="innerError">
 							{if $errorType.email == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -113,10 +149,10 @@
 			
 			<dl{if $errorType.confirmEmail|isset} class="formError"{/if}>
 				<dt>
-					<label for="confirmEmail">{lang}wcf.user.confirmEmail{/lang}</label>
+					<label for="{@$randomFieldNames[confirmEmail]}">{lang}wcf.user.confirmEmail{/lang}</label>
 				</dt>
 				<dd>
-					<input type="email" id="confirmEmail" name="confirmEmail" value="{$confirmEmail}" required="required" class="medium" />
+					<input type="email" id="{@$randomFieldNames[confirmEmail]}" name="{@$randomFieldNames[confirmEmail]}" value="{$confirmEmail}" required="required" class="medium" />
 					{if $errorType.confirmEmail|isset}
 						<small class="innerError">
 							{if $errorType.confirmEmail == 'notEqual'}{lang}wcf.user.confirmEmail.error.notEqual{/lang}{/if}
@@ -134,10 +170,10 @@
 				
 				<dl{if $errorType.password|isset} class="formError"{/if}>
 					<dt>
-						<label for="password">{lang}wcf.user.password{/lang}</label>
+						<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label>
 					</dt>
 					<dd>
-						<input type="password" id="password" name="password" value="{$password}" required="required" class="medium" />
+						<input type="password" id="{@$randomFieldNames[password]}" name="{@$randomFieldNames[password]}" value="{$password}" required="required" class="medium" />
 						{if $errorType.password|isset}
 							<small class="innerError">
 								{if $errorType.password == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -150,10 +186,10 @@
 				
 				<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
 					<dt>
-						<label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label>
+						<label for="{@$randomFieldNames[confirmPassword]}">{lang}wcf.user.confirmPassword{/lang}</label>
 					</dt>
 					<dd>
-						<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" required="required" class="medium" />
+						<input type="password" id="{@$randomFieldNames[confirmPassword]}" name="{@$randomFieldNames[confirmPassword]}" value="{$confirmPassword}" required="required" class="medium" />
 						{if $errorType.confirmPassword|isset}
 							<small class="innerError">
 								{if $errorType.confirmPassword == 'notEqual'}{lang}wcf.user.confirmPassword.error.notEqual{/lang}{/if}

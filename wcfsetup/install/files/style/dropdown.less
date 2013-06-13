@@ -8,18 +8,15 @@
 		display: table;
 		width: 100%;
 		
-		/*input,
-		textarea {
-			min-width: 300px;
-		}*/
-		
 		input {
+			border-radius: 0 @wcfInputBorderRadius @wcfInputBorderRadius 0;
 			display: table-cell;
 			margin: 0;
 			width: 99%;
 		}
 		
 		textarea {
+			border-radius: 0 @wcfInputBorderRadius @wcfInputBorderRadius;
 			display: block;
 			margin-top: 0;
 		}
@@ -34,8 +31,7 @@
 			
 			&.button {
 				border-right-width: 0;
-				
-				.borderRadius(3px, 0, 0, 3px);
+				border-radius: @wcfInputBorderRadius 0 0 @wcfInputBorderRadius;
 			}
 			
 			span {
@@ -59,7 +55,7 @@
 			padding-right: @wcfGapSmall;
 			
 			&.button {
-				.borderRadius(3px, 0);
+				border-radius: @wcfInputBorderRadius @wcfInputBorderRadius 0 0;
 			}
 			
 			&~ .dropdownMenu {

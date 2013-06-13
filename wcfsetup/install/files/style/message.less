@@ -227,7 +227,7 @@
 			ul.smallButtons {
 				> li {
 					a.button {
-						.borderRadius(0);
+						border-radius: 0;
 					}
 				}
 			}
@@ -399,9 +399,8 @@
 }
 
 .message.messageSidebarOrientationLeft .newMessageBadge {
+	border-radius: 0 5px 5px 0;
 	left: -219px;
-	
-	.borderRadius(0, 5px, 5px, 0);
 	
 	&:before {
 		border-left: 6px solid transparent;
@@ -421,7 +420,7 @@
 .message.messageSidebarOrientationRight,
 .message.messageReduced {
 	.newMessageBadge {
-		.borderRadius(5px, 0, 0, 5px);
+		border-radius: 5px 0 0 5px;
 		
 		&:before {
 			border-right: 6px solid transparent;
@@ -573,13 +572,13 @@
 		text-align: left;
 		
 		> .badgeOnline {
+			border-radius: 0 5px 5px 0;
 			color: rgba(238, 255, 238, 1);
 			bottom: 7px;
 			left: -5px;
 			position: absolute;
 			text-transform: uppercase;
 			
-			.borderRadius(0, 5px, 5px, 0);
 			.boxShadow(1px, 1px, rgba(0, 0, 0, .2), 3px);
 			.linearGradient(darken(rgba(0, 153, 0, 1), 10%), rgba(0, 153, 0, 1), darken(rgba(0, 153, 0, 1), 10%));
 			.textShadow(darken(rgba(0, 153, 0, 1), 10%));
@@ -779,13 +778,12 @@ li:nth-child(2n+1) .message {
 		> .badge {
 			background-color: @wcfContainerBackgroundColor;
 			border: 1px solid @wcfContainerBorderColor;
+			border-radius: 3px;
 			color: @wcfColor;
 			line-height: 23px;
 			padding: 0 7px;
 			position: relative;
 			vertical-align: 1px;
-			
-			.borderRadius(3px);
 			
 			&:before {
 				border: 6px solid @wcfContainerBorderColor;
@@ -846,6 +844,24 @@ li:nth-child(2n+1) .message {
 	float: right;
 	margin-right: @wcfGapMedium;
 	margin-top: 0;
+}
+
+.messageSearchResultList {
+	> li > .box48 > div > .containerHeadline > h3 {
+		padding-right: 100px;
+	}
+}
+
+.likeButton.active {
+	.icon {
+		color: rgba(0, 153, 0, 1);
+	}
+}
+
+.dislikeButton.active {
+	.icon {
+		color: rgba(204, 0, 0, 1); 
+	}
 }
 
 /* ckeditor fixes */
@@ -974,3 +990,4 @@ li:nth-child(2n+1) .message {
 		right: @wcfGapMedium;
 	}
 }
+

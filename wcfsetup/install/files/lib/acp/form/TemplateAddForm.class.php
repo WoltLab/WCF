@@ -196,7 +196,7 @@ class TemplateAddForm extends AbstractForm {
 		$this->saved();
 		
 		// reset values
-		$this->templateName = $this->source = '';
+		$this->tplName = $this->templateSource = '';
 		$this->templateGroupID = 0;
 		
 		// show success

@@ -156,14 +156,13 @@ body > iframe[src="about:blank"] {
 /* balloon tooltips */
 .balloonTooltip {
 	background-color: @wcfTooltipBackgroundColor;
+	border-radius: 6px;
 	color: @wcfTooltipColor;
 	font-size: .85em;
 	max-width: 300px;
 	padding: 5px 10px 7px;
 	position: absolute;
 	z-index: 800;
-	
-	.borderRadius(6px);
 	
 	.pointer {
 		border-color: @wcfTooltipBackgroundColor transparent;
@@ -186,13 +185,13 @@ body > iframe[src="about:blank"] {
 /* popover */
 .popover {
 	background-color: rgba(0, 0, 0, .4);
+	border-radius: 6px;
 	padding: @wcfGapSmall;
 	position: absolute;
 	vertical-align: middle;
 	width: 400px !important;
 	z-index: 500;
 	
-	.borderRadius(6px);
 	.boxShadow(0, 1px, rgba(0, 0, 0, .3), 7px);
 	
 	> .icon-spinner {
@@ -208,14 +207,13 @@ body > iframe[src="about:blank"] {
 	
 	> .popoverContent {
 		background-color: @wcfContainerBackgroundColor;
+		border-radius: 6px;
 		color: @wcfColor;
 		max-height: 300px;
 		min-height: 32px;
 		opacity: 0;
 		overflow: hidden;
 		padding: @wcfGapSmall @wcfGapMedium;
-		
-		.borderRadius(6px);
 	}
 	
 	&:after {
@@ -252,6 +250,7 @@ body > iframe[src="about:blank"] {
 /* default values */
 .badge {
 	background-color: @wcfColor;
+	border-radius: 9px;
 	color: @wcfContentBackgroundColor;
 	display: inline-block;
 	font-size: 11px;
@@ -262,12 +261,9 @@ body > iframe[src="about:blank"] {
 	vertical-align: middle;
 	white-space: nowrap;
 	
-	.borderRadius(9px);
-	
 	&.label	{
+		border-radius: 4px;
 		font-weight: normal;
-		
-		.borderRadius(4px);
 	}
 	
 	/* colors */
