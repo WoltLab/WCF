@@ -30,7 +30,7 @@
 			'wcf.style.colorPicker.new': '{lang}wcf.style.colorPicker.new{/lang}',
 			'wcf.style.colorPicker.current': '{lang}wcf.style.colorPicker.current{/lang}'
 		});
-		new WCF.ACP.Style.ImageUpload(0, '{$tmpHash}');
+		new WCF.ACP.Style.ImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}');
 		
 		{if $action == 'edit'}
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
