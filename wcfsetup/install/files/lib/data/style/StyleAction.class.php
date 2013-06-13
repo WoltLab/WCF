@@ -244,7 +244,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		}
 		
 		$this->readString('tmpHash');
-		$this->readString('styleID', true);
+		$this->readInteger('styleID', true);
 		
 		if ($this->parameters['styleID']) {
 			$styles = StyleHandler::getInstance()->getStyles();
