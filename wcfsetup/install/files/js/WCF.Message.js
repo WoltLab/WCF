@@ -1762,7 +1762,7 @@ WCF.Message.Quote.Handler = Class.extend({
 		}
 		this._copyQuote.show();
 		
-		var $coordinates = this._getBoundingRectangle($selection);
+		var $coordinates = this._getBoundingRectangle($container, $selection);
 		var $dimensions = this._copyQuote.getDimensions('outer');
 		var $left = ($coordinates.right - $coordinates.left) / 2 - ($dimensions.width / 2) + $coordinates.left;
 		
@@ -1820,9 +1820,9 @@ WCF.Message.Quote.Handler = Class.extend({
 		var $elementID = WCF.getRandomID();
 		var $element = document.createElement('span');
 		$element.innerHTML = '<span id="' + $elementID + '"></span>';
-		var $fragment = document.createDocumentFragment(), $node, $lastNode;
+		var $fragment = document.createDocumentFragment(), $node;
 		while ($node = $element.firstChild) {
-			$lastNode = $fragment.appendChild($node);
+			$fragment.appendChild($node);
 		}
 		range.insertNode($fragment);
 		
@@ -1839,7 +1839,7 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * 
 	 * @return	object
 	 */
-	_getBoundingRectangle: function(selection) {
+	_getBoundingRectangle: function(container, selection) {
 		var $coordinates = null;
 		
 		if (document.createRange && typeof document.createRange().getBoundingClientRect != "undefined") { // Opera, Firefox, Safari, Chrome
@@ -1847,21 +1847,27 @@ WCF.Message.Quote.Handler = Class.extend({
 				// the coordinates returned by getBoundingClientRect() is relative to the window, not the document!
 				//var $rect = selection.getRangeAt(0).getBoundingClientRect();
 				var $rects = selection.getRangeAt(0).getClientRects();
+				var $rect = { };
 				if (!$.browser.mozilla && $rects.length > 1) {
+					// save current selection to restore it later
 					var $range = selection.getRangeAt(0);
+					var $bckp = this._saveSelection(container.get(0));
 					var $position1 = this._getOffset($range, true);
 					
 					var $range = selection.getRangeAt(0);
 					var $position2 = this._getOffset($range, false);
 					
-					var $rect = {
+					$rect = {
 						left: ($position1.left > $position2.left) ? $position2.left : $position1.left,
 						right: ($position1.left > $position2.left) ? $position1.left : $position2.left,
 						top: ($position1.top > $position2.top) ? $position2.top : $position1.top
 					};
+					
+					// restore selection
+					this._restoreSelection(container.get(0), $bckp);
 				}
 				else {
-					var $rect = selection.getRangeAt(0).getBoundingClientRect();
+					$rect = selection.getRangeAt(0).getBoundingClientRect();
 				}
 				
 				var $document = $(document);
@@ -1885,6 +1891,90 @@ WCF.Message.Quote.Handler = Class.extend({
 		}
 		
 		return $coordinates;
+	},
+	
+	/**
+	 * Saves current selection.
+	 * 
+	 * @see		http://stackoverflow.com/a/13950376
+	 * 
+	 * @param	object		containerEl
+	 * @return	object
+	 */
+	_saveSelection: function(containerEl) {
+		if (window.getSelection && document.createRange) {
+			var range = window.getSelection().getRangeAt(0);
+			var preSelectionRange = range.cloneRange();
+			preSelectionRange.selectNodeContents(containerEl);
+			preSelectionRange.setEnd(range.startContainer, range.startOffset);
+			var start = preSelectionRange.toString().length;
+			
+			return {
+				start: start,
+				end: start + range.toString().length
+			};
+		}
+		else {
+			var selectedTextRange = document.selection.createRange();
+			var preSelectionTextRange = document.body.createTextRange();
+			preSelectionTextRange.moveToElementText(containerEl);
+			preSelectionTextRange.setEndPoint("EndToStart", selectedTextRange);
+			var start = preSelectionTextRange.text.length;
+			
+			return {
+				start: start,
+				end: start + selectedTextRange.text.length
+			};
+		}
+	},
+	
+	/**
+	 * Restores a selection.
+	 * 
+	 * @see		http://stackoverflow.com/a/13950376
+	 * 
+	 * @param	object		containerEl
+	 * @param	object		savedSel
+	 */
+	_restoreSelection: function(containerEl, savedSel) {
+		if (window.getSelection && document.createRange) {
+			var charIndex = 0, range = document.createRange();
+			range.setStart(containerEl, 0);
+			range.collapse(true);
+			var nodeStack = [containerEl], node, foundStart = false, stop = false;
+			
+			while (!stop && (node = nodeStack.pop())) {
+				if (node.nodeType == 3) {
+					var nextCharIndex = charIndex + node.length;
+					if (!foundStart && savedSel.start >= charIndex && savedSel.start <= nextCharIndex) {
+						range.setStart(node, savedSel.start - charIndex);
+						foundStart = true;
+					}
+					if (foundStart && savedSel.end >= charIndex && savedSel.end <= nextCharIndex) {
+						range.setEnd(node, savedSel.end - charIndex);
+						stop = true;
+					}
+					charIndex = nextCharIndex;
+				} else {
+					var i = node.childNodes.length;
+					while (i--) {
+						nodeStack.push(node.childNodes[i]);
+					};
+				};
+			}
+			
+			var sel = window.getSelection();
+		        sel.removeAllRanges();
+		        sel.addRange(range);
+		}
+		else {
+			var textRange = document.body.createTextRange();
+		        textRange.moveToElementText(containerEl);
+		        textRange.collapse(true);
+		        textRange.moveEnd("character", savedSel.end);
+		        textRange.moveStart("character", savedSel.start);
+		        textRange.select();
+		}
 	},
 	
 	/**
