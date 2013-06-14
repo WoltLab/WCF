@@ -51,6 +51,16 @@ WCF.Poll.Management = Class.extend({
 		
 		// trigger resize event for field length calculation
 		this._resize();
+		
+		// update size on tab select
+		var $tabMenuContent = this._container.parents('.tabMenuContent:eq(0)');
+		var $tabMenuContentID = $tabMenuContent.wcfIdentify();
+		var self = this;
+		$tabMenuContent.parents('.tabMenuContainer:eq(0)').on('wcftabsactivate', function(event, ui) {
+			if (ui.newPanel.wcfIdentify() == $tabMenuContentID) {
+				self._resize();
+			}
+		});
 	},
 	
 	/**
