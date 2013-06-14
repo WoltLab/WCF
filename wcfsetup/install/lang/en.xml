@@ -1720,6 +1720,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.moderation.report.reason.description"><![CDATA[This function is reserved for: Spam, Advertisement and other questionable (rassism, glorification of violence, offending or sexist) content]]></item>
 		<item name="wcf.moderation.report.removeContent"><![CDATA[Delete Reported Content]]></item>
 		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Do you really want to delete the reported content?]]></item>
+		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Reason (optional)]]></item>
 		<item name="wcf.moderation.report.removeReport"><![CDATA[Delete Report]]></item>
 		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[Do you really want to delete this report?]]></item>
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Report Content]]></item>
