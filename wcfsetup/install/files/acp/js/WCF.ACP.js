@@ -198,13 +198,13 @@ WCF.ACP.Cronjob.LogList = Class.extend({
 		var $errorBadge = $(event.currentTarget);
 		
 		if (this._dialog === null) {
-			this._dialog = $('<div>' + $errorBadge.next().html() + '</div>').hide().appendTo(document.body);
+			this._dialog = $('<div style="overflow: auto"><pre>' + $errorBadge.next().html() + '</pre></div>').hide().appendTo(document.body);
 			this._dialog.wcfDialog({
 				title: WCF.Language.get('wcf.acp.cronjob.log.error.details')
 			});
 		}
 		else {
-			this._dialog.html($errorBadge.next().html());
+			this._dialog.html('<pre>' + $errorBadge.next().html() + '</pre>');
 			this._dialog.wcfDialog('open');
 		}
 	}
