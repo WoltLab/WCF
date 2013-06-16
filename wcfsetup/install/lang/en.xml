@@ -821,6 +821,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[Updating “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Updated completed]]></item>
 		<item name="wcf.acp.package.installedVersion"><![CDATA[Installed Version]]></item>
+		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[This package can't be installed because of the following already installed packages:]]></item>
+		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[“{$excludedPackage}” ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (excluded version: {$excludedPackage->excludedPackageVersion}, installed version: {$excludedPackage->packageVersion}){/if}]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following, already installed packages prohibit installing this package:]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[“{$excludingPackage}” ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (excluded version: {$excludingPackage->excludedPackageVersion}){/if}]]></item>
+		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[TODO: Die Abhängigkeiten dieses Paketes konnten nicht aufgelöst werden.]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Preparing Installation …]]></item>
 		<item name="wcf.acp.package.install.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required Version]]></item>
@@ -875,7 +880,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.optionalPackages"><![CDATA[Optional packages]]></item>
 		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[The following optional packages are available for installation:]]></item>
 		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[TODO: Es wurden keine Pakete gefunden.]]></item>
-		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[TODO: Die Abhängigkeiten dieses Paketes konnten nicht aufgelöst werden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -1748,12 +1752,14 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.poll.button.showVote"><![CDATA[Vote]]></item>
 		<item name="wcf.poll.button.vote"><![CDATA[Vote]]></item>
 		<item name="wcf.poll.endTime"><![CDATA[Poll Ends (optional)]]></item>
+		<item name="wcf.poll.endTime.error.notValid"><![CDATA[You entered an invalid date.]]></item>
 		<item name="wcf.poll.isChangeable"><![CDATA[Votes can be changed]]></item>
 		<item name="wcf.poll.isPublic"><![CDATA[Publicize participants]]></item>
 		<item name="wcf.poll.management"><![CDATA[Poll]]></item>
 		<item name="wcf.poll.maxVotes"><![CDATA[Number of Allowed Votes]]></item>
 		<item name="wcf.poll.maxVotes.error.notValid"><![CDATA[Maximum number of allowed votes exceeds number of available options.]]></item>
 		<item name="wcf.poll.multipleVotes"><![CDATA[You may select up to {#$poll->maxVotes} options.]]></item>
+		<item name="wcf.poll.noVotes"><![CDATA[No votes yet]]></item>
 		<item name="wcf.poll.options"><![CDATA[Options]]></item>
 		<item name="wcf.poll.options.description"><![CDATA[You can sort the options with drag and drop to change their order. You can create up to {@POLL_MAX_OPTIONS} options.]]></item>
 		<item name="wcf.poll.question"><![CDATA[Question]]></item>
@@ -1762,8 +1768,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.poll.resultsRequireVote.description"><![CDATA[Results are invisible unless the poll ended or the user voted.]]></item>
 		<item name="wcf.poll.sortByVotes"><![CDATA[Sort result by votes]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[A total of {#$poll->votes} vote{if $poll->votes != 1}s{/if}]]></item>
-		<item name="wcf.poll.noVotes"><![CDATA[No votes yet]]></item>
-		<item name="wcf.poll.endTime.error.notValid"><![CDATA[TODO: Sie haben ein ungültiges Datum eingegeben.]]></item>
 	</category>
 	
 	<category name="wcf.recaptcha">

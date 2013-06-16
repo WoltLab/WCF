@@ -822,6 +822,11 @@
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[„{$packageName}“ wird aktualisiert …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Aktualisierung abgeschlossen]]></item>
 		<item name="wcf.acp.package.installedVersion"><![CDATA[Installierte Version]]></item>
+		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[Dieses Paket kann aufgrund der folgenden bereits installierten Pakete nicht installiert werden:]]></item>
+		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[„{$excludedPackage}“ ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (ausgeschlossene Version: {$excludedPackage->excludedPackageVersion}, installierte Version: {$excludedPackage->packageVersion}){/if}]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[Die folgenden bereits installierten Pakete schließen eine Installation dieses Pakets aus:]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[„{$excludingPackage}“ ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (ausgeschlossene Version: {$excludingPackage->excludedPackageVersion}){/if}]]></item>
+		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Die Abhängigkeiten dieses Paketes konnten nicht aufgelöst werden.]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Installation wird vorbereitet …]]></item>
 		<item name="wcf.acp.package.install.title"><![CDATA[Paket-Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Benötigte Version]]></item>
@@ -876,7 +881,6 @@
 		<item name="wcf.acp.package.optionalPackages"><![CDATA[Optionale Pakete]]></item>
 		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[Es stehen folgende optionale Pakete zur Auswahl:]]></item>
 		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[Es wurden keine Pakete gefunden.]]></item>
-		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Die Abhängigkeiten dieses Paketes konnten nicht aufgelöst werden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -1748,12 +1752,14 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.poll.button.showVote"><![CDATA[Zur Abstimmung]]></item>
 		<item name="wcf.poll.button.vote"><![CDATA[Abstimmen]]></item>
 		<item name="wcf.poll.endTime"><![CDATA[Umfrage endet (optional)]]></item>
+		<item name="wcf.poll.endTime.error.notValid"><![CDATA[Sie haben ein ungültiges Datum eingegeben.]]></item>
 		<item name="wcf.poll.isChangeable"><![CDATA[Abgegebene Stimmen dürfen verändert werden]]></item>
 		<item name="wcf.poll.isPublic"><![CDATA[Teilnehmer sind sichtbar]]></item>
 		<item name="wcf.poll.management"><![CDATA[Umfrage]]></item>
 		<item name="wcf.poll.maxVotes"><![CDATA[Anzahl erlaubter Antworten]]></item>
 		<item name="wcf.poll.maxVotes.error.notValid"><![CDATA[Die Anzahl der erlaubten Antworten liegt über den tatsächlich verfügbaren Antworten.]]></item>
 		<item name="wcf.poll.multipleVotes"><![CDATA[Sie können {#$poll->maxVotes} Antwortmöglichkeiten wählen.]]></item>
+		<item name="wcf.poll.noVotes"><![CDATA[Bisher keine Stimmen]]></item>
 		<item name="wcf.poll.options"><![CDATA[Antworten]]></item>
 		<item name="wcf.poll.options.description"><![CDATA[Sie können die Antworten mittels Drücken und Festhalten in ihrer Reihenfolge ändern. Sie können {@POLL_MAX_OPTIONS} Antwortmöglichkeiten vorgeben.]]></item>
 		<item name="wcf.poll.question"><![CDATA[Frage]]></item>
@@ -1762,8 +1768,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.poll.resultsRequireVote.description"><![CDATA[Das Ergebnis ist erst mit dem Ablauf der Umfrage oder der Abgabe einer Stimme sichtbar.]]></item>
 		<item name="wcf.poll.sortByVotes"><![CDATA[Ergebnis nach Stimmen sortieren]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[Insgesamt {#$poll->votes} Stimme{if $poll->votes != 1}n{/if}]]></item>
-		<item name="wcf.poll.noVotes"><![CDATA[Bisher keine Stimmen]]></item>
-		<item name="wcf.poll.endTime.error.notValid"><![CDATA[Sie haben ein ungültiges Datum eingegeben.]]></item>
 	</category>
 	
 	<category name="wcf.recaptcha">
