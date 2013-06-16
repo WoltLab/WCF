@@ -1736,6 +1736,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Page {#$pageNo} of {#$pages}]]></item>
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[User Account]]></item>
+		<item name="wcf.page.javascriptDisabled"><![CDATA[TODO: In Ihrem Webbrowser ist Javascript deaktiviert. Um alle Funktionen dieser Webseite nutzen zu können, muss Javascript aktiviert sein.]]></item>
 	</category>
 	
 	<category name="wcf.poll">
