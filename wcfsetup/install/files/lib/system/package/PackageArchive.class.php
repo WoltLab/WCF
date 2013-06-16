@@ -749,16 +749,16 @@ class PackageArchive {
 	}
 	
 	/**
-	 * Returns a list of packages, which excluding this package.
+	 * Returns a list of packages which exclude this package.
 	 * 
-	 * @return	array
+	 * @return	array<wcf\data\package\Package>
 	 */
 	public function getConflictedExcludingPackages() {
 		$conflictedPackages = array();
 		$sql = "SELECT		package.*, package_exclusion.*
 			FROM		wcf".WCF_N."_package_exclusion package_exclusion
 			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(package.packageID = package_exclusion.packageID)	
+			ON		(package.packageID = package_exclusion.packageID)
 			WHERE		excludedPackage = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->packageInfo['name']));
@@ -769,27 +769,27 @@ class PackageArchive {
 				}
 			}
 			
-			$conflictedPackages[$row['packageID']] = $row;
+			$conflictedPackages[$row['packageID']] = new Package(null, $row);
 		}
 		
 		return $conflictedPackages;
 	}
 	
 	/**
-	 * Returns a list of packages, which are excluded by this package.
+	 * Returns a list of packages which are excluded by this package.
 	 * 
-	 * @return	array
+	 * @return	array<wcf\data\package\Package>
 	 */
 	public function getConflictedExcludedPackages() {
 		$conflictedPackages = array();
 		if (!empty($this->excludedPackages)) {
 			$excludedPackages = array();
 			foreach ($this->excludedPackages as $excludedPackageData) {
-				$excludedPackages[] = $excludedPackageData['name'];
+				$excludedPackages[$excludedPackageData['name']] = $excludedPackageData['version'];
 			}
 			
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("package IN (?)", array($excludedPackages));
+			$conditions->add("package IN (?)", array(array_keys($excludedPackages)));
 			
 			$sql = "SELECT	*
 				FROM	wcf".WCF_N."_package
@@ -797,13 +797,14 @@ class PackageArchive {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
-				if (!empty($this->excludedPackages[$row['package']]['version'])) {
-					if (Package::compareVersion($row['packageVersion'], $this->excludedPackages[$row['package']]['version'], '<')) {
+				if (!empty($excludedPackages[$row['package']])) {
+					if (Package::compareVersion($row['packageVersion'], $excludedPackages[$row['package']], '<')) {
 						continue;
 					}
+					$row['excludedPackageVersion'] = $excludedPackages[$row['package']];
 				}
 				
-				$conflictedPackages[$row['packageID']] = $row;
+				$conflictedPackages[$row['packageID']] = new Package(null, $row);
 			}
 		}
 		
