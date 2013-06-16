@@ -56,7 +56,7 @@ class UserActivityPointOptionForm extends AbstractForm {
 		parent::validate();
 		
 		foreach ($this->points as $objectTypeID => $points) {
-			if ($points < 0) throw new UserInputException($objectTypeID, 'invalid');
+			if ($points < 0) throw new UserInputException($objectTypeID, 'notValid');
 		}
 	}
 	

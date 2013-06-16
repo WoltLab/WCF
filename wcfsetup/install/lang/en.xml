@@ -399,7 +399,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Confirm Master Password]]></item>
 		<item name="wcf.acp.masterPassword.enter"><![CDATA[Master Password Required]]></item>
 		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[The page or action requires the master password for security reasons, the password will be remembered for your current session. In case you forgot the password, please reset it by removing the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
-		<item name="wcf.acp.masterPassword.error.invalid"><![CDATA[Password is incorrect. In case you forgot the password, please reset it by removing the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
+		<item name="wcf.acp.masterPassword.error.notValid"><![CDATA[Password is incorrect. In case you forgot the password, please reset it by removing the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
 		<item name="wcf.acp.masterPassword.error.notEqual"><![CDATA[Passwords do not match.]]></item>
 		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Password is regarded unsafe. It should be at least 8 characters, containing upper and lower latin letters, as well as numbers and special symbols.]]></item>
 		<item name="wcf.acp.masterPassword.example"><![CDATA[Suggestion]]></item>
@@ -1309,7 +1309,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.category.list"><![CDATA[Categories]]></item>
 		<item name="wcf.category.noneAvailable"><![CDATA[No category has been added yet.]]></item>
 		<item name="wcf.category.parentCategoryID"><![CDATA[Parent Category]]></item>
-		<item name="wcf.category.parentCategoryID.error.invalid"><![CDATA[The chosen category does not exist.]]></item>
+		<item name="wcf.category.parentCategoryID.error.notValid"><![CDATA[The chosen category does not exist.]]></item>
 		<item name="wcf.category.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.category.description"><![CDATA[Description]]></item>
 		<item name="wcf.category.title"><![CDATA[Title]]></item>
@@ -1904,8 +1904,8 @@ If you have not lost your password, you can safely ignore this email.]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[You should receive an email shortly.]]></item>
 		<item name="wcf.user.newPassword"><![CDATA[Request New Password]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Security Key]]></item>
-		<item name="wcf.user.lostPasswordKey.error.invalid"><![CDATA[Security Key is invalid.]]></item>
-		<item name="wcf.user.userID.error.invalid"><![CDATA[User ID is invalid.]]></item>
+		<item name="wcf.user.lostPasswordKey.error.notValid"><![CDATA[Security Key is invalid.]]></item>
+		<item name="wcf.user.userID.error.notValid"><![CDATA[User ID is invalid.]]></item>
 		<item name="wcf.user.newPassword.mail"><![CDATA[Dear {@$username},
 
 your new password for "{@PAGE_TITLE|language}" is:

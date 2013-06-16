@@ -127,7 +127,7 @@ class LabelAddForm extends AbstractForm {
 		}
 		$groups = $this->labelGroupList->getObjects();
 		if (!isset($groups[$this->groupID])) {
-			throw new UserInputException('groupID', 'invalid');
+			throw new UserInputException('groupID', 'notValid');
 		}
 		
 		if (empty($this->cssClassName)) {

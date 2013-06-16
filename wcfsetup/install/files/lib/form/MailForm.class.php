@@ -103,7 +103,7 @@ class MailForm extends RecaptchaForm {
 			}
 			
 			if (!UserUtil::isValidEmail($this->email)) {
-				throw new UserInputException('email', 'invalid');
+				throw new UserInputException('email', 'notValid');
 			}
 		}
 		

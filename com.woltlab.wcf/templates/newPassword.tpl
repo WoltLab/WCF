@@ -44,7 +44,7 @@
 					<input type="text" id="userID" name="u" value="{@$userID}" required="required" class="medium" />
 					{if $errorField == 'userID'}
 						<small class="innerError">
-							{if $errorType == 'invalid'}{lang}wcf.user.userID.error.invalid{/lang}{/if}
+							{lang}wcf.user.userID.error.{$errorType}{/lang}
 						</small>
 					{/if}
 				</dd>
@@ -58,8 +58,11 @@
 					<input type="text" id="lostPasswordKey" name="k" value="{$lostPasswordKey}" required="required" class="medium" />
 					{if $errorField == 'lostPasswordKey'}
 						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'invalid'}{lang}wcf.user.lostPasswordKey.error.invalid{/lang}{/if}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.user.lostPasswordKey.error.{$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 				</dd>

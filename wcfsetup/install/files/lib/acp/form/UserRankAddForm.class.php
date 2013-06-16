@@ -148,7 +148,7 @@ class UserRankAddForm extends AbstractForm {
 		}
 		$userGroup = UserGroup::getGroupByID($this->groupID);
 		if ($userGroup === null || $userGroup->groupType == UserGroup::GUESTS || $userGroup->groupType == UserGroup::EVERYONE) {
-			throw new UserInputException('groupID', 'invalid');
+			throw new UserInputException('groupID', 'notValid');
 		}
 		
 		// css class name
