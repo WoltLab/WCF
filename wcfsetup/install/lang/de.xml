@@ -1738,6 +1738,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Seite {#$pageNo} von {#$pages}]]></item>
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[Benutzerkonto]]></item>
+		<item name="wcf.page.javascriptDisabled"><![CDATA[In Ihrem Webbrowser ist JavaScript deaktiviert. Um alle Funktionen dieser Webseite nutzen zu können, muss JavaScript aktiviert sein.]]></item>
 	</category>
 	
 	<category name="wcf.poll">
