@@ -5,6 +5,7 @@ use wcf\form\AbstractForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\user\authentication\EmailUserAuthentication;
 use wcf\system\user\authentication\UserAuthenticationFactory;
@@ -140,8 +141,14 @@ class LoginForm extends AbstractForm {
 			HeaderUtil::redirect($this->url);
 		}
 		else {
-			$application = ApplicationHandler::getInstance()->getActiveApplication();
-			$path = $application->getPageURL() . 'acp/' . SID_ARG_1ST;
+			if (RequestHandler::getInstance()->inRescueMode()) {
+				$path = RouteHandler::getHost() . RouteHandler::getPath() . SID_ARG_1ST;
+			}
+			else {
+				$application = ApplicationHandler::getInstance()->getActiveApplication();
+				$path = $application->getPageURL() . 'acp/' . SID_ARG_1ST;
+			}
+			
 			HeaderUtil::redirect($path);
 		}
 		exit;
