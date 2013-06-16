@@ -88,7 +88,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Show button in WYSIWYG editor]]></item>
 		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button Label]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button Image]]></item>
-		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[TODO: Die Grafik muss sich im Verzeichnis wcf/icon/ befinden.]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/.]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -152,7 +152,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Error]]></item>
 		<item name="wcf.acp.cronjob.log.error.showDetails"><![CDATA[Show Details]]></item>
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Error Message]]></item>
-		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[TODO: Derzeit sind keine Einträge vorhanden.]]></item>
+		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[There are no entries yet.]]></item>
 	</category>
 	
 	<category name="wcf.acp.dashboard">
@@ -312,7 +312,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.admin.content.label"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Can manage tags]]></item>
-		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[TODO: Maximale Signaturlänge]]></item>
+		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximum Signature Length]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -334,7 +334,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
 		<item name="wcf.acp.index.system.php"><![CDATA[PHP Version]]></item>
 		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL Version]]></item>
-		<item name="wcf.acp.index.system.load"><![CDATA[TODO: Aktueller UNIX Load]]></item>
+		<item name="wcf.acp.index.system.load"><![CDATA[Current UNIX Load]]></item>
 	</category>
 	
 	<category name="wcf.acp.label">
@@ -775,11 +775,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum number of options]]></item>
-		<item name="wcf.acp.option.error.validationFailed"><![CDATA[TOOD: Sie haben einen ungültigen Inhalt eingegeben.]]></item>
+		<item name="wcf.acp.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Members List]]></item>
-		<item name="wcf.acp.option.footer_code"><![CDATA[TOOD: Footer-Code]]></item>
-		<item name="wcf.acp.option.footer_code.description"><![CDATA[TOOD: Der hier angegebene Code wird im Fußbereich jeder Seite ausgegeben. Der Footer-Code eignet sich z.B. sehr gut für die Einbindung von Diensten wie „Google Analytics“ oder „Piwik“.]]></item>
-		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[TODO: Profil-Besucher anzeigen]]></item>
+		<item name="wcf.acp.option.footer_code"><![CDATA[Footer Code]]></item>
+		<item name="wcf.acp.option.footer_code.description"><![CDATA[The entered code will be appended to the page footer of your site. You can use it to embed services like “Google Analytics” or “Piwik”.]]></item>
+		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Show profile visitors]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -804,8 +804,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.error.sql.dropTable"><![CDATA[Remove Existing Tables]]></item>
 		<item name="wcf.acp.package.error.sql.dropTable.description"><![CDATA[The tables above already exist and will be removed during the installation. Any contained data will be lost.]]></item>
 		<item name="wcf.acp.package.error.uniqueAlreadyInstalled"><![CDATA[This package is already installed.]]></item>
-		<item name="wcf.acp.package.error.noValidInstall"><![CDATA[TODO: Das angegebene Paket lässt keine Neuinstallation zu.]]></item>
-		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[TODO: Paket „{$package->packageName}“ kann mit dem angegebenen Archiv nicht aktualisiert werden.]]></item>
+		<item name="wcf.acp.package.error.noValidInstall"><![CDATA[The selected package does not support an installation.]]></item>
+		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[Package “{$package->packageName}” cannot be updated using the selected archive.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Identifier]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Properties]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Details]]></item>
@@ -874,8 +874,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.upload"><![CDATA[Upload package]]></item>
 		<item name="wcf.acp.package.optionalPackages"><![CDATA[Optional packages]]></item>
 		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[The following optional packages are available for installation:]]></item>
-		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[TODO: Es wurden keine Pakete gefunden.]]></item>
-		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[TODO: Die Abhängigkeiten dieses Paketes konnten nicht aufgelöst werden.]]></item>
+		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[No packages matched your criteria.]]></item>
+		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Unable to resolve requirements of this package.]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -1051,8 +1051,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.imagePath.error.notValid"><![CDATA[You have provided an invalid path.]]></item>
 		<item name="wcf.acp.style.styleVersion.error.notValid"><![CDATA[You have provided an invalid version number.]]></item>
 		<item name="wcf.acp.style.styleDate.error.notValid"><![CDATA[You have provided an invalid date.]]></item>
-		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[TODO: Seitenlogo]]></item>
-		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[TODO: Name der Grafik-Datei für das Seitenlogo]]></item>
+		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Page Logo]]></item>
+		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[Filename of the page logo image]]></item>
 	</category>
 	
 	<category name="wcf.acp.tag">
@@ -1068,7 +1068,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.tag.synonyms"><![CDATA[Synonyms]]></item>
 		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym for]]></item>
 		<item name="wcf.acp.tag.usageCount"><![CDATA[Usages]]></item>
-		<item name="wcf.acp.tag.error.name.duplicate"><![CDATA[TODO: Ein Tag mit diesem Namen existiert bereits.]]></item>
+		<item name="wcf.acp.tag.error.name.duplicate"><![CDATA[This tag name is already in use.]]></item>
 	</category>
 	
 	<category name="wcf.acp.template">
@@ -1076,7 +1076,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.template.group"><![CDATA[Template Group]]></item>
 		<item name="wcf.acp.template.group.default"><![CDATA[Default Templates]]></item>
 		<item name="wcf.acp.template.application"><![CDATA[Application]]></item>
-		<item name="wcf.acp.template.application.all"><![CDATA[TODO: Keine Filterung]]></item>
+		<item name="wcf.acp.template.application.all"><![CDATA[No Filter]]></item>
 		<item name="wcf.acp.template.add"><![CDATA[Add Template]]></item>
 		<item name="wcf.acp.template.edit"><![CDATA[Edit Template]]></item>
 		<item name="wcf.acp.template.copy"><![CDATA[Copy Template]]></item>
@@ -1699,8 +1699,8 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.comment"><![CDATA[Comment]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
 		<item name="wcf.moderation.showAll"><![CDATA[Show All Items]]></item>
-		<item name="wcf.moderation.showDeletedContent"><![CDATA[TODO: Gelöschte Inhalte anzeigen]]></item>
-		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[TODO: Gelöschte Inhalte]]></item>
+		<item name="wcf.moderation.showDeletedContent"><![CDATA[Show deleted content]]></item>
+		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[Deleted Content]]></item>
 	</category>
 	
 	<category name="wcf.moderation.activation">
@@ -1737,7 +1737,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Page {#$pageNo} of {#$pages}]]></item>
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[User Account]]></item>
-		<item name="wcf.page.javascriptDisabled"><![CDATA[TODO: In Ihrem Webbrowser ist Javascript deaktiviert. Um alle Funktionen dieser Webseite nutzen zu können, muss Javascript aktiviert sein.]]></item>
+		<item name="wcf.page.javascriptDisabled"><![CDATA[Your browser has JavaScript disabled. If you would like to use all features of this site, it is mandatory to enable JavaScript.]]></item>
 	</category>
 	
 	<category name="wcf.poll">
@@ -1763,7 +1763,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.poll.sortByVotes"><![CDATA[Sort result by votes]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[A total of {#$poll->votes} vote{if $poll->votes != 1}s{/if}]]></item>
 		<item name="wcf.poll.noVotes"><![CDATA[No votes yet]]></item>
-		<item name="wcf.poll.endTime.error.notValid"><![CDATA[TODO: Sie haben ein ungültiges Datum eingegeben.]]></item>
+		<item name="wcf.poll.endTime.error.notValid"><![CDATA[You have entered an invalid date.]]></item>
 	</category>
 	
 	<category name="wcf.recaptcha">
@@ -2002,8 +2002,8 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Last Activity]]></item>
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Likes Received]]></item>
-		<item name="wcf.user.register.honeyPot"><![CDATA[TODO: Bitte ignorieren!]]></item>
-		<item name="wcf.user.register.honeyPot.description"><![CDATA[TODO: Falls Sie dies sehen können, füllen Sie bitte die nächsten zwei Eingabfelder <strong>NICHT</strong> aus!]]></item>
+		<item name="wcf.user.register.honeyPot"><![CDATA[Please Ignore!]]></item>
+		<item name="wcf.user.register.honeyPot.description"><![CDATA[Heads up! If you can see this, you are strongly encouraged <strong>NOT</strong> to fill in the next two input fields!]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
