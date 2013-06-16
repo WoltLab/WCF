@@ -7,6 +7,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 
 /**
@@ -63,10 +64,11 @@ class IndexPage extends AbstractPage {
 			$row = $statement->fetchArray();
 			$usersAwaitingApproval = $row['count'];
 		}
-		WCF::getTPL()->assign('usersAwaitingApproval', $usersAwaitingApproval);
 		
 		WCF::getTPL()->assign(array(
-			'server' => $this->server
+			'inRescueMode' => RequestHandler::getInstance()->inRescueMode(),
+			'server' => $this->server,
+			'usersAwaitingApproval' => $usersAwaitingApproval
 		));
 	}
 	
