@@ -62,6 +62,8 @@
 			</ul>
 		</nav>
 	{/hascontent}
+	
+	<nav class="jsClipboardEditor" data-types="[ '{@$objectType}' ]"></nav>
 </div>
 
 {include file='footer'}

@@ -68,7 +68,7 @@ class MasterPasswordForm extends AbstractForm {
 		
 		// check password
 		if (!PasswordUtil::secureCompare(MASTER_PASSWORD, PasswordUtil::getDoubleSaltedHash($this->masterPassword, MASTER_PASSWORD))) {
-			throw new UserInputException('masterPassword', 'invalid');
+			throw new UserInputException('masterPassword', 'notValid');
 		}
 	}
 	

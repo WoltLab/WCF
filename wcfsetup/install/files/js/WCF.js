@@ -1649,6 +1649,12 @@ WCF.LoadingOverlayHandler = {
 	_loadingOverlay: null,
 	
 	/**
+	 * WCF.PeriodicalExecuter instance
+	 * @var	WCF.PeriodicalExecuter
+	 */
+	_pending: null,
+	
+	/**
 	 * Adds one loading-request and shows the loading overlay if nessercery
 	 */
 	show: function() {
@@ -1658,7 +1664,18 @@ WCF.LoadingOverlayHandler = {
 		
 		this._activeRequests++;
 		if (this._activeRequests == 1) {
-			this._loadingOverlay.stop(true, true).fadeIn(100);
+			if (this._pending === null) {
+				var self = this;
+				this._pending = new WCF.PeriodicalExecuter(function(pe) {
+					if (self._activeRequests) {
+						self._loadingOverlay.stop(true, true).fadeIn(100);
+					}
+					
+					pe.stop();
+					self._pending = null;
+				}, 250); 
+			}
+			
 		}
 	},
 	
@@ -1668,6 +1685,11 @@ WCF.LoadingOverlayHandler = {
 	hide: function() {
 		this._activeRequests--;
 		if (this._activeRequests == 0) {
+			if (this._pending !== null) {
+				this._pending.stop();
+				this._pending = null;
+			}
+			
 			this._loadingOverlay.stop(true, true).fadeOut(100);
 		}
 	},

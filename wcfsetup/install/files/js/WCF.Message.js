@@ -1234,6 +1234,9 @@ WCF.Message.InlineEditor = Class.extend({
 		var $content = $messageBody.find('.messageText');
 		this._cache = $content.html();
 		$content.empty();
+		
+		// hide unrelated content
+		$content.parent().children('.jsInlineEditorHideContent').hide();
 	},
 	
 	/**
@@ -1255,6 +1258,9 @@ WCF.Message.InlineEditor = Class.extend({
 		var $messageBody = $container.find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
 		$messageBody.find('.messageText').html(this._cache);
+		
+		// show unrelated content
+		$messageBody.find('.jsInlineEditorHideContent').show();
 		
 		// revert message options
 		this._container[this._activeElementID].find('.messageOptions').removeClass('forceHidden');
@@ -1331,6 +1337,9 @@ WCF.Message.InlineEditor = Class.extend({
 		var $messageBody = this._container[this._activeElementID].find('.messageBody');
 		$messageBody.children('span.icon-spinner').remove();
 		$messageBody.find('.messageText').children().show();
+		
+		// show unrelated content
+		$messageBody.find('.jsInlineEditorHideContent').show();
 		
 		if (this._quoteManager) {
 			this._quoteManager.clearAlternativeCKEditor();
@@ -1411,6 +1420,9 @@ WCF.Message.InlineEditor = Class.extend({
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
 		$messageBody.find('.messageText').children().hide();
 		
+		// show unrelated content
+		$messageBody.find('.jsInlineEditorHideContent').show();
+		
 		if (this._quoteManager) {
 			this._quoteManager.clearAlternativeCKEditor();
 		}
@@ -1426,6 +1438,9 @@ WCF.Message.InlineEditor = Class.extend({
 		var $messageBody = $container.find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
 		var $content = $messageBody.find('.messageText');
+		
+		// show unrelated content
+		$content.parent().children('.jsInlineEditorHideContent').show();
 		
 		// revert message options
 		this._container[this._activeElementID].find('.messageOptions').removeClass('forceHidden');

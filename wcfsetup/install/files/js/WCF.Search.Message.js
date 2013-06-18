@@ -53,7 +53,7 @@ WCF.Search.Message.KeywordList = WCF.Search.Base.extend({
 		var $dropdownMenu = WCF.Dropdown.getDropdownMenu(this._searchInput.parents('.dropdown').wcfIdentify());
 		var $lastDivider = $dropdownMenu.find('li.dropdownDivider').last();
 		this._divider = $('<li class="dropdownDivider" />').hide().insertBefore($lastDivider);
-		this._list = $('<li class="dropdownList" />').hide().insertBefore($lastDivider);
+		this._list = $('<li class="dropdownList"><ul /></li>').hide().insertBefore($lastDivider).children('ul');
 		
 		// supress clicks on checkboxes
 		$dropdownMenu.find('input, label').on('click', function(event) { event.stopPropagation(); });
@@ -69,7 +69,7 @@ WCF.Search.Message.KeywordList = WCF.Search.Base.extend({
 	 */
 	_createListItem: function(item) {
 		this._divider.show();
-		this._list.show();
+		this._list.parent().show();
 		
 		this._super(item);
 	},
@@ -83,7 +83,7 @@ WCF.Search.Message.KeywordList = WCF.Search.Base.extend({
 		}
 		
 		this._divider.hide();
-		this._list.hide().empty();
+		this._list.empty().parent().hide();
 		
 		WCF.CloseOverlayHandler.removeCallback('WCF.Search.Base');
 		

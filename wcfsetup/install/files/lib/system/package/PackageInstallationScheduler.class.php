@@ -215,15 +215,23 @@ class PackageInstallationScheduler {
 			// get auth data
 			$authData = $this->getAuthData($packageUpdateVersion);
 			
-			// create request
-			$request = new HTTPRequest(
-				$this->packageUpdateServers[$packageUpdateVersion['packageUpdateServerID']]->serverURL,
-				(!empty($authData) ? array('auth' => $authData) : array()),
-				array(
-					'packageName' => $packageUpdateVersion['package'],
-					'packageVersion' => $packageUpdateVersion['packageVersion']
-				)
-			);
+			if ($packageUpdateVersion['filename']) {
+				$request = new HTTPRequest(
+					$packageUpdateVersion['filename'],
+					(!empty($authData) ? array('auth' => $authData) : array())
+				);
+			}
+			else {
+				// create request
+				$request = new HTTPRequest(
+					$this->packageUpdateServers[$packageUpdateVersion['packageUpdateServerID']]->serverURL,
+					(!empty($authData) ? array('auth' => $authData) : array()),
+					array(
+						'packageName' => $packageUpdateVersion['package'],
+						'packageVersion' => $packageUpdateVersion['packageVersion']
+					)
+				);
+			}
 			
 			try {
 				$request->execute();

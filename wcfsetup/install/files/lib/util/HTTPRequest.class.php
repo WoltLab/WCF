@@ -111,7 +111,7 @@ final class HTTPRequest {
 		if (isset($this->options['auth'])) {
 			$this->addHeader('Authorization', "Basic ".base64_encode($options['auth']['username'].":".$options['auth']['password']));
 		}
-		$this->addHeader('Host', $this->host);
+		$this->addHeader('Host', $this->host.($this->port != ($this->useSSL ? 443 : 80) ? ':'.$this->port : ''));
 		$this->addHeader('Connection', 'Close');
 	}
 	

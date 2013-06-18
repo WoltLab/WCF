@@ -49,8 +49,8 @@
 		<item name="wcf.acp.bbcode.allowedChildren.error.notValid"><![CDATA[Die Form für die erlaubten Kindelemente ist ungültig.]]></item>
 		<item name="wcf.acp.bbcode.attribute"><![CDATA[Attribut]]></item>
 		<item name="wcf.acp.bbcode.attribute.attributeHtml"><![CDATA[HTML-Code des Attributs]]></item>
-		<item name="wcf.acp.bbcode.attribute.validationPattern.error.notValid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
 		<item name="wcf.acp.bbcode.attribute.validationPattern"><![CDATA[Regulärer Ausdruck zur Validierung]]></item>
+		<item name="wcf.acp.bbcode.attribute.validationPattern.error.notValid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
 		<item name="wcf.acp.bbcode.attribute.required"><![CDATA[Attribut muss ausgefüllt sein]]></item>
 		<item name="wcf.acp.bbcode.attribute.useText"><![CDATA[Inhalt übernehmen]]></item>
 		<item name="wcf.acp.bbcode.attribute.useText.description"><![CDATA[Soll der Inhalt des BBCodes als Wert für dieses Attribut übernommen werden, wenn es nicht gesetzt ist?]]></item>
@@ -58,12 +58,15 @@
 		<item name="wcf.acp.bbcode.bbcodeTag"><![CDATA[BBCode]]></item>
 		<item name="wcf.acp.bbcode.bbcodeTag.error.inUse"><![CDATA[Dieser BBCode ist bereits vorhanden.]]></item>
 		<item name="wcf.acp.bbcode.bbcodeTag.error.notValid"><![CDATA[Dieser BBCode ist ungültig.]]></item>
+		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button-Beschriftung]]></item>
 		<item name="wcf.acp.bbcode.className"><![CDATA[Klassen-Name]]></item>
 		<item name="wcf.acp.bbcode.className.error.notFound"><![CDATA[Diese Klasse wurde nicht gefunden.]]></item>
 		<item name="wcf.acp.bbcode.delete.sure"><![CDATA[Wollen Sie den BBCode „[{$bbcode->bbcodeTag}]“ wirklich löschen?]]></item>
 		<item name="wcf.acp.bbcode.edit"><![CDATA[BBCode bearbeiten]]></item>
 		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Schließendes HTML-Tag]]></item>
 		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Öffnendes HTML-Tag]]></item>
+		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Inhalt als Quelltext behandeln]]></item>
+		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Der Inhalt dieses BBCodes wird als Quelltext interpretiert, BBCodes und Smileys werden nicht umgewandelt.]]></item>
 		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>
 		
 		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Medienanbieter hinzufügen]]></item>
@@ -84,10 +87,7 @@
 		</ul>]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex.error.notValid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Medienanbieter]]></item>
-		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Inhalt als Quelltext behandeln]]></item>
-		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Der Inhalt dieses BBCodes wird als Quelltext interpretiert, BBCodes und Smileys werden nicht umgewandelt.]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Button im WYSIWYG-Editor anzeigen]]></item>
-		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button-Beschriftung]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button-Grafik]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis wcf/icon/ befinden.]]></item>
 	</category>
@@ -325,6 +325,7 @@
 		<item name="wcf.acp.index.credits.productManager"><![CDATA[Projektleitung]]></item>
 		<item name="wcf.acp.index.credits.trademarks"><![CDATA[„WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Gemeinschaftsmarken beim europäischen Harmonisierungsamt für den Binnenmarkt (OHIM) in Alicante, Spanien.]]></item>
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[Weitere]]></item>
+		<item name="wcf.acp.index.inRescueMode"><![CDATA[Sie rufen diese Installation über eine abweichende Domain auf, etwa auf Grund eines Umzuges. Bitte korrigieren Sie die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Anwendungen verwalten</a>.]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
@@ -340,20 +341,22 @@
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Label hinzufügen]]></item>
 		<item name="wcf.acp.label.cssClassName"><![CDATA[CSS-Klassen]]></item>
+		<item name="wcf.acp.label.cssClassName.error.notValid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
 		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
+		<item name="wcf.acp.label.delete.sure"><![CDATA[Wollen Sie das Label „{$label}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.label.edit"><![CDATA[Label bearbeiten]]></item>
 		<item name="wcf.acp.label.error.noGroups"><![CDATA[Bevor Sie ein Label hinzufügen können, müssen Sie eine <a href="{link controller='LabelGroupAdd'}{/link}">Labelgruppe hinzufügen</a>.]]></item>
 		<item name="wcf.acp.label.group"><![CDATA[Labelgruppe]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Labelgruppe hinzufügen]]></item>
+		<item name="wcf.acp.label.group.category.connect"><![CDATA[Verfügbarkeit]]></item>
+		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Wollen Sie die Labelgruppe „{$group->groupName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.label.group.edit"><![CDATA[Labelgruppe bearbeiten]]></item>
+		<item name="wcf.acp.label.group.error.notValid"><![CDATA[Die gewählte Labelgruppe ist ungültig.]]></item>
+		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Label aus dieser Gruppe muss zwingend ausgewählt werden]]></item>
 		<item name="wcf.acp.label.group.groupName"><![CDATA[Gruppenname]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Labelgruppen]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
-		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Label aus dieser Gruppe muss zwingend ausgewählt werden]]></item>
-		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Wollen Sie die Labelgruppe „{$group->groupName}“ wirklich löschen?]]></item>
-		<item name="wcf.acp.label.group.category.connect"><![CDATA[Verfügbarkeit]]></item>
-		<item name="wcf.acp.label.delete.sure"><![CDATA[Wollen Sie das Label „{$label}“ wirklich löschen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
@@ -399,9 +402,9 @@
 		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Hauptkennwort wiederholen]]></item>
 		<item name="wcf.acp.masterPassword.enter"><![CDATA[Hauptkennwort erforderlich]]></item>
 		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[Die aufgerufene Seite oder Aktion erfordert aus Sicherheitsgründen die Eingabe des Hauptkennwortes. Pro Sitzung ist die Eingabe des Hauptkennwortes nur einmal erforderlich. Falls Sie das Hauptkennwort vergessen haben sollten, können Sie es zurücksetzen, indem Sie die Datei <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em> löschen.]]></item>
-		<item name="wcf.acp.masterPassword.error.invalid"><![CDATA[Das Hauptkennwort ist nicht korrekt. Falls Sie das Hauptkennwort vergessen haben sollten, können Sie es zurücksetzen, indem Sie die Datei <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em> löschen.]]></item>
 		<item name="wcf.acp.masterPassword.error.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch.]]></item>
 		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Das Kennwort wurde als unsicher eingestuft. Das Kennwort sollte mindestens acht Zeichen lang sein, große und kleine lateinische Buchstaben, Zahlen und Sonderzeichen enthalten. Es darf nicht mit den Kennwörtern von anderen Administratoren übereinstimmen.]]></item>
+		<item name="wcf.acp.masterPassword.error.notValid"><![CDATA[Das Hauptkennwort ist nicht korrekt. Falls Sie das Hauptkennwort vergessen haben sollten, können Sie es zurücksetzen, indem Sie die Datei <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em> löschen.]]></item>
 		<item name="wcf.acp.masterPassword.example"><![CDATA[Vorschlag]]></item>
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Vorschlag übernehmen]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Hauptkennwort festlegen]]></item>
@@ -821,6 +824,11 @@
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[„{$packageName}“ wird aktualisiert …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Aktualisierung abgeschlossen]]></item>
 		<item name="wcf.acp.package.installedVersion"><![CDATA[Installierte Version]]></item>
+		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[Dieses Paket kann aufgrund der folgenden bereits installierten Pakete nicht installiert werden:]]></item>
+		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[„{$excludedPackage}“ ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (ausgeschlossene Version: {$excludedPackage->excludedPackageVersion}, installierte Version: {$excludedPackage->packageVersion}){/if}]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[Die folgenden bereits installierten Pakete schließen eine Installation dieses Pakets aus:]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[„{$excludingPackage}“ ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (ausgeschlossene Version: {$excludingPackage->excludedPackageVersion}){/if}]]></item>
+		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Die Abhängigkeiten dieses Paketes konnten nicht aufgelöst werden.]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Installation wird vorbereitet …]]></item>
 		<item name="wcf.acp.package.install.title"><![CDATA[Paket-Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Benötigte Version]]></item>
@@ -875,7 +883,6 @@
 		<item name="wcf.acp.package.optionalPackages"><![CDATA[Optionale Pakete]]></item>
 		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[Es stehen folgende optionale Pakete zur Auswahl:]]></item>
 		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[Es wurden keine Pakete gefunden.]]></item>
-		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Die Abhängigkeiten dieses Paketes konnten nicht aufgelöst werden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -955,7 +962,7 @@
 		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley-Kategorien]]></item>
 		<item name="wcf.acp.smiley.categoryID"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Standard-Kategorie]]></item>
-		<item name="wcf.acp.smiley.categoryID.error.notValid"><![CDATA[Die gewählte Kategorie ist nicht gültig]]></item>
+		<item name="wcf.acp.smiley.categoryID.error.notValid"><![CDATA[Die gewählte Kategorie ist ungültig.]]></item>
 		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primärer Smiley-Code]]></item>
 		<item name="wcf.acp.smiley.smileyCode.error.notUnique"><![CDATA[Dieser Smiley-Code wird bereits von einem anderen Smiley verwendet]]></item>
 		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley-Codes]]></item>
@@ -1306,7 +1313,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.category.list"><![CDATA[Kategorien]]></item>
 		<item name="wcf.category.noneAvailable"><![CDATA[Es wurde noch keine Kategorie hinzugefügt.]]></item>
 		<item name="wcf.category.parentCategoryID"><![CDATA[Übergeordnete Kategorie]]></item>
-		<item name="wcf.category.parentCategoryID.error.invalid"><![CDATA[Die ausgewählte Kategorie existiert nicht.]]></item>
+		<item name="wcf.category.parentCategoryID.error.notValid"><![CDATA[Die ausgewählte Kategorie existiert nicht.]]></item>
 		<item name="wcf.category.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.category.title"><![CDATA[Titel]]></item>
@@ -1612,6 +1619,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 	
 	<category name="wcf.label">
 		<item name="wcf.label.all"><![CDATA[Alle]]></item>
+		<item name="wcf.label.error.notValid"><![CDATA[Die Labelauswahl ist ungültig.]]></item>
 		<item name="wcf.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.label.labels"><![CDATA[Labels]]></item>
 		<item name="wcf.label.none"><![CDATA[Keine Auswahl]]></item>
@@ -1737,6 +1745,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Seite {#$pageNo} von {#$pages}]]></item>
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[Benutzerkonto]]></item>
+		<item name="wcf.page.javascriptDisabled"><![CDATA[In Ihrem Webbrowser ist JavaScript deaktiviert. Um alle Funktionen dieser Webseite nutzen zu können, muss JavaScript aktiviert sein.]]></item>
 	</category>
 	
 	<category name="wcf.poll">
@@ -1747,12 +1756,14 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.poll.button.showVote"><![CDATA[Zur Abstimmung]]></item>
 		<item name="wcf.poll.button.vote"><![CDATA[Abstimmen]]></item>
 		<item name="wcf.poll.endTime"><![CDATA[Umfrage endet (optional)]]></item>
+		<item name="wcf.poll.endTime.error.notValid"><![CDATA[Sie haben ein ungültiges Datum eingegeben.]]></item>
 		<item name="wcf.poll.isChangeable"><![CDATA[Abgegebene Stimmen dürfen verändert werden]]></item>
 		<item name="wcf.poll.isPublic"><![CDATA[Teilnehmer sind sichtbar]]></item>
 		<item name="wcf.poll.management"><![CDATA[Umfrage]]></item>
 		<item name="wcf.poll.maxVotes"><![CDATA[Anzahl erlaubter Antworten]]></item>
 		<item name="wcf.poll.maxVotes.error.notValid"><![CDATA[Die Anzahl der erlaubten Antworten liegt über den tatsächlich verfügbaren Antworten.]]></item>
 		<item name="wcf.poll.multipleVotes"><![CDATA[Sie können {#$poll->maxVotes} Antwortmöglichkeiten wählen.]]></item>
+		<item name="wcf.poll.noVotes"><![CDATA[Bisher keine Stimmen]]></item>
 		<item name="wcf.poll.options"><![CDATA[Antworten]]></item>
 		<item name="wcf.poll.options.description"><![CDATA[Sie können die Antworten mittels Drücken und Festhalten in ihrer Reihenfolge ändern. Sie können {@POLL_MAX_OPTIONS} Antwortmöglichkeiten vorgeben.]]></item>
 		<item name="wcf.poll.question"><![CDATA[Frage]]></item>
@@ -1761,8 +1772,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.poll.resultsRequireVote.description"><![CDATA[Das Ergebnis ist erst mit dem Ablauf der Umfrage oder der Abgabe einer Stimme sichtbar.]]></item>
 		<item name="wcf.poll.sortByVotes"><![CDATA[Ergebnis nach Stimmen sortieren]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[Insgesamt {#$poll->votes} Stimme{if $poll->votes != 1}n{/if}]]></item>
-		<item name="wcf.poll.noVotes"><![CDATA[Bisher keine Stimmen]]></item>
-		<item name="wcf.poll.endTime.error.notValid"><![CDATA[Sie haben ein ungültiges Datum eingegeben.]]></item>
 	</category>
 	
 	<category name="wcf.recaptcha">
@@ -1899,8 +1908,8 @@ Falls Sie Ihr Kennwort nicht vergessen haben, können Sie diese E-Mail ignoriere
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[Sie erhalten in Kürze eine E-Mail mit weiteren Informationen.]]></item>
 		<item name="wcf.user.newPassword"><![CDATA[Neues Kennwort anfordern]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Sicherheitsschlüssel]]></item>
-		<item name="wcf.user.lostPasswordKey.error.invalid"><![CDATA[Sie haben einen ungültigen Sicherheitsschlüssel angegeben.]]></item>
-		<item name="wcf.user.userID.error.invalid"><![CDATA[Sie haben eine ungültige Benutzer-ID angegeben.]]></item>
+		<item name="wcf.user.lostPasswordKey.error.notValid"><![CDATA[Sie haben einen ungültigen Sicherheitsschlüssel angegeben.]]></item>
+		<item name="wcf.user.userID.error.notValid"><![CDATA[Sie haben eine ungültige Benutzer-ID angegeben.]]></item>
 		<item name="wcf.user.newPassword.mail"><![CDATA[Hallo {@$username},
 
 Ihr neues Kennwort für die Website "{@PAGE_TITLE|language}" lautet:
