@@ -1107,7 +1107,8 @@ WCF.Message.InlineEditor = Class.extend({
 				this._container[$containerID] = $container;
 				
 				if ($container.data('canEditInline')) {
-					$container.find('.jsMessageEditButton:eq(0)').data('containerID', $containerID).click($.proxy(this._clickInline, this)).dblclick($.proxy(this._click, this));
+					var $button = $container.find('.jsMessageEditButton:eq(0)').data('containerID', $containerID).click($.proxy(this._clickInline, this));
+					if ($container.data('canEdit')) $button.dblclick($.proxy(this._click, this));
 				}
 				else if ($container.data('canEdit')) {
 					$container.find('.jsMessageEditButton:eq(0)').data('containerID', $containerID).click($.proxy(this._click, this));
