@@ -1826,7 +1826,7 @@ WCF.Message.Quote.Handler = Class.extend({
 	/**
 	 * Returns the left or right offset of the current text selection.
 	 * 
-	 * @param	objct		range
+	 * @param	object		range
 	 * @param	boolean		before
 	 * @return	object
 	 */
@@ -1980,16 +1980,16 @@ WCF.Message.Quote.Handler = Class.extend({
 			}
 			
 			var sel = window.getSelection();
-		        sel.removeAllRanges();
-		        sel.addRange(range);
+			sel.removeAllRanges();
+			sel.addRange(range);
 		}
 		else {
 			var textRange = document.body.createTextRange();
-		        textRange.moveToElementText(containerEl);
-		        textRange.collapse(true);
-		        textRange.moveEnd("character", savedSel.end);
-		        textRange.moveStart("character", savedSel.start);
-		        textRange.select();
+			textRange.moveToElementText(containerEl);
+			textRange.collapse(true);
+			textRange.moveEnd("character", savedSel.end);
+			textRange.moveStart("character", savedSel.start);
+			textRange.select();
 		}
 	},
 	
