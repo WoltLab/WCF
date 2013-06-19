@@ -238,7 +238,7 @@
 			
 		// [img]
 		data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
-		data = data.replace(/\[img='?([^"]*?)'?,(left|right)\]\[\/img\]/gi,'<img src="$1" style="float: $2" />');
+		data = data.replace(/\[img='?([^"]*?)'?,'?(left|right)'?\]\[\/img\]/gi,'<img src="$1" style="float: $2" />');
 		data = data.replace(/\[img='?([^"]*?)'?\]\[\/img\]/gi,'<img src="$1" />');
 		
 		// [quote]
