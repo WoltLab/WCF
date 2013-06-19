@@ -2429,6 +2429,7 @@ a > span.icon:not(.pointer) {
 .icon-signal:before {
   content: "\f012";
 }
+.icon-gear:before,
 .icon-cog:before {
   content: "\f013";
 }
@@ -2752,6 +2753,7 @@ a > span.icon:not(.pointer) {
 .icon-key:before {
   content: "\f084";
 }
+.icon-gears:before,
 .icon-cogs:before {
   content: "\f085";
 }
@@ -3430,7 +3432,7 @@ a > span.icon:not(.pointer) {
 .icon-linux:before {
   content: "\f17c";
 }
-.icon-dribble:before {
+.icon-dribbble:before {
   content: "\f17d";
 }
 .icon-skype:before {
