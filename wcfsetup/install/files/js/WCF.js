@@ -7685,7 +7685,7 @@ WCF.EditableItemList = Class.extend({
 			}
 		}
 		
-		var $listItem = $('<li class="badge">' + data.label + '</li>').data('objectID', data.objectID).data('label', data.label).appendTo(this._itemList);
+		var $listItem = $('<li class="badge">' + WCF.String.escapeHTML(data.label) + '</li>').data('objectID', data.objectID).data('label', data.label).appendTo(this._itemList);
 		$listItem.click($.proxy(this._click, this));
 		
 		if (this._search) {
