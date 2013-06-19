@@ -212,7 +212,8 @@
 		
 		// [url]
 		data = data.replace(/\[url\]([^"]+?)\[\/url]/gi, '<a href="$1">$1</a>');
-		data = data.replace(/\[url\='?([^'"\]]+)'?](.+?)\[\/url]/gi, '<a href="$1">$2</a>');
+		data = data.replace(/\[url\='([^'"]+)'](.+?)\[\/url]/gi, '<a href="$1">$2</a>');
+		data = data.replace(/\[url\=([^'"\]]+)](.+?)\[\/url]/gi, '<a href="$1">$2</a>');
 		
 		// [email]
 		data = data.replace(/\[email\]([^"]+?)\[\/email]/gi, '<a href="mailto:$1">$1</a>');
