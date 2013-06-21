@@ -1,4 +1,4 @@
-/* stylesheet for 'Blue Temptation', generated on Sun, 16 Jun 2013 14:02:34 +0000 -- DO NOT EDIT */
+/* stylesheet for 'Blue Temptation', generated on Fri, 21 Jun 2013 17:46:51 +0000 -- DO NOT EDIT */
 
 html,
 body,
@@ -1360,13 +1360,13 @@ button.small,
   width: 100%;
 }
 .dropdown.preInput input {
-  border-radius: 0   0;
+  border-radius: 0 3px 3px 0;
   display: table-cell;
   margin: 0;
   width: 99%;
 }
 .dropdown.preInput textarea {
-  border-radius: 0  ;
+  border-radius: 0 3px 3px;
   display: block;
   margin-top: 0;
 }
@@ -1380,7 +1380,7 @@ button.small,
 }
 .dropdown.preInput .dropdownCaption.button {
   border-right-width: 0;
-  border-radius:  0 0 ;
+  border-radius: 3px 0 0 3px;
 }
 .dropdown.preInput .dropdownCaption span {
   margin-right: -1px;
@@ -1400,7 +1400,7 @@ button.small,
   padding-right: 7px;
 }
 .dropdown.preInput .dropdownCaptionTextarea.button {
-  border-radius:   0 0;
+  border-radius: 3px 3px 0 0;
 }
 .dropdown.preInput .dropdownCaptionTextarea~ .dropdownMenu {
   top: 10%;
@@ -1696,7 +1696,7 @@ select[multiple] {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  border-radius: ;
+  border-radius: 3px;
   font-family: "Trebuchet MS", Arial, sans-serif;
   padding: 4px 3px;
   margin: 0;
@@ -3674,6 +3674,7 @@ a > span.icon:not(.pointer) {
     color: #666666;
     display: inline-block;
     padding: 9px 21px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.8);
   }
   .mainMenu > ul > li > a:hover {
     color: #336699;
@@ -3690,6 +3691,7 @@ a > span.icon:not(.pointer) {
     min-width: 80px;
     padding: 14px 21px 8px;
     text-align: center;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.8);
   }
   .mainMenu > ul > li:not(.active) {
     padding-top: 5px;
@@ -6764,6 +6766,7 @@ body,
     transition-duration: .3s;
     -webkit-transition-timing-function: ease;
     transition-timing-function: ease;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.8);
   }
   .mainMenu > ul > li > a:hover {
     color: #ffffff;
