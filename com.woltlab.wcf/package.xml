@@ -48,6 +48,7 @@
 		<instruction type="language">language/*.xml</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="script">acp/update_b4.php</instruction>
+		<instruction type="sql">update_b4.sql</instruction>
 		
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
 		<instruction type="option">option.xml</instruction>
