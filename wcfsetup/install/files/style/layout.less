@@ -329,7 +329,9 @@
 					color: @wcfMainMenuColor;
 					display: inline-block;
 					padding: 9px 21px;
-									
+					
+					.textShadow(@wcfMainMenuBackgroundColor);
+					
 					&:hover {
 						color: @wcfMainMenuActiveColor;
 						text-decoration: none;
@@ -347,6 +349,8 @@
 						min-width: 80px;
 						padding: 14px 21px 8px;
 						text-align: center;
+						
+						.textShadow(@wcfNavigationHeaderBackgroundColor);
 					}
 				}
 				

@@ -1652,6 +1652,8 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDeleted
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDeletedColor', 'rgba(204, 0, 0, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledBackgroundColor', 'rgba(238, 255, 238, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledColor', 'rgba(0, 153, 0, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextShadowLightColor', 'rgba(255, 255, 255, .8)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextShadowDarkColor', 'rgba(0, 0, 0, .8)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '');
