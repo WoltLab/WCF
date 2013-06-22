@@ -166,7 +166,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		// check if new parent category is no child category of the category
 		$childCategories = CategoryHandler::getInstance()->getChildCategories($this->categoryID, $this->objectType->objectTypeID);
 		if (isset($childCategories[$this->parentCategoryID])) {
-			throw new UserInputException('parentCategoryID', 'invalid');
+			throw new UserInputException('parentCategoryID', 'notValid');
 		}
 	}
 }

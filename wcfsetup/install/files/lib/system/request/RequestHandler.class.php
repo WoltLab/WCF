@@ -7,6 +7,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\menu\page\PageMenu;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
@@ -118,6 +119,27 @@ class RequestHandler extends SingletonFactory {
 						HeaderUtil::redirect($landingPage->getLink(), true);
 						exit;
 					}
+				}
+				
+				// check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
+				$applicationObject = ApplicationHandler::getInstance()->getApplication($application);
+				if ($applicationObject->domainName != $_SERVER['HTTP_HOST']) {
+					// build URL, e.g. http://example.net/forum/
+					$url = FileUtil::addTrailingSlash(RouteHandler::getProtocol() . $applicationObject->domainName . RouteHandler::getPath());
+					
+					// add path info, e.g. index.php/Board/2/
+					$pathInfo = RouteHandler::getPathInfo();
+					if (!empty($pathInfo)) {
+						$url .= 'index.php' . $pathInfo;
+					}
+					
+					// query string, e.g. ?foo=bar
+					if (!empty($_SERVER['QUERY_STRING'])) {
+						$url .= '?' . $_SERVER['QUERY_STRING'];
+					}
+					
+					HeaderUtil::redirect($url, true);
+					exit;
 				}
 			}
 			

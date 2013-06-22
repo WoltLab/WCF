@@ -53,6 +53,9 @@
 		});
 		
 		insertFakeSubmitButton(event);
+		
+		// remove stupid title tag
+		$(event.editor.container.$).find(".cke_wysiwyg_div").removeAttr('title');
 	});
 	
 	/**
@@ -209,7 +212,8 @@
 		
 		// [url]
 		data = data.replace(/\[url\]([^"]+?)\[\/url]/gi, '<a href="$1">$1</a>');
-		data = data.replace(/\[url\='?([^'"\]]+)'?](.+?)\[\/url]/gi, '<a href="$1">$2</a>');
+		data = data.replace(/\[url\='([^'"]+)'](.+?)\[\/url]/gi, '<a href="$1">$2</a>');
+		data = data.replace(/\[url\=([^'"\]]+)](.+?)\[\/url]/gi, '<a href="$1">$2</a>');
 		
 		// [email]
 		data = data.replace(/\[email\]([^"]+?)\[\/email]/gi, '<a href="mailto:$1">$1</a>');
@@ -235,7 +239,7 @@
 			
 		// [img]
 		data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
-		data = data.replace(/\[img='?([^"]*?)'?,(left|right)\]\[\/img\]/gi,'<img src="$1" style="float: $2" />');
+		data = data.replace(/\[img='?([^"]*?)'?,'?(left|right)'?\]\[\/img\]/gi,'<img src="$1" style="float: $2" />');
 		data = data.replace(/\[img='?([^"]*?)'?\]\[\/img\]/gi,'<img src="$1" />');
 		
 		// [quote]
@@ -385,6 +389,9 @@
 		// [tr]
 		html = html.replace(/<tr>/gi, '[tr]');
 		html = html.replace(/<\/tr>/gi, '[/tr]');
+		
+		// [td]+[align]
+		html = html.replace(/<td style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)<\/td>/gi, "[td][align=$1]$2[/align][/td]");
 		
 		// [td]
 		html = html.replace(/<td>/gi, '[td]');

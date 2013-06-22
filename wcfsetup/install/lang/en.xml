@@ -40,7 +40,6 @@
 	<category name="wcf.acp.attachment">
 		<item name="wcf.acp.attachment.list"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.attachment.stats"><![CDATA[{#$stats.count} Attachment{if $stats.count != 1}s{/if} - {@$stats.size|filesize} - {#$stats.downloads} Download{if $stats.downloads != 1}s{/if}]]></item>
-		<item name="wcf.acp.attachment.noItems"><![CDATA[There are no attachments.]]></item>
 	</category>
 	
 	<category name="wcf.acp.bbcode">
@@ -50,8 +49,8 @@
 		<item name="wcf.acp.bbcode.allowedChildren.error.notValid"><![CDATA[List of allowed children is invalid.]]></item>
 		<item name="wcf.acp.bbcode.attribute"><![CDATA[Attribute]]></item>
 		<item name="wcf.acp.bbcode.attribute.attributeHtml"><![CDATA[Attribute HTML code]]></item>
-		<item name="wcf.acp.bbcode.attribute.validationPattern.error.notValid"><![CDATA[Regular expression failed to validate.]]></item>
 		<item name="wcf.acp.bbcode.attribute.validationPattern"><![CDATA[Regular Expression for Validation]]></item>
+		<item name="wcf.acp.bbcode.attribute.validationPattern.error.notValid"><![CDATA[Regular expression failed to validate.]]></item>
 		<item name="wcf.acp.bbcode.attribute.required"><![CDATA[Required]]></item>
 		<item name="wcf.acp.bbcode.attribute.useText"><![CDATA[Use content]]></item>
 		<item name="wcf.acp.bbcode.attribute.useText.description"><![CDATA[Content between BBCode tags will be used as attribute value unless it was explicitly specified]]></item>
@@ -59,12 +58,15 @@
 		<item name="wcf.acp.bbcode.bbcodeTag"><![CDATA[BBCode]]></item>
 		<item name="wcf.acp.bbcode.bbcodeTag.error.inUse"><![CDATA[BBCode already exists.]]></item>
 		<item name="wcf.acp.bbcode.bbcodeTag.error.notValid"><![CDATA[BBCode is invalid.]]></item>
+		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button Label]]></item>
 		<item name="wcf.acp.bbcode.className"><![CDATA[PHP Class Name]]></item>
 		<item name="wcf.acp.bbcode.className.error.notFound"><![CDATA[Unable to find specified class.]]></item>
 		<item name="wcf.acp.bbcode.delete.sure"><![CDATA[Do you really want to delete the BBCode “[{$bbcode->bbcodeTag}]”?]]></item>
 		<item name="wcf.acp.bbcode.edit"><![CDATA[Edit BBCode]]></item>
 		<item name="wcf.acp.bbcode.htmlClose"><![CDATA[Closing HTML tag]]></item>
 		<item name="wcf.acp.bbcode.htmlOpen"><![CDATA[Opening HTML tag]]></item>
+		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Content represents source code]]></item>
+		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Disables conversion of bbcodes and smilies.]]></item>
 		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>
 		
 		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Add Media Provider]]></item>
@@ -84,12 +86,9 @@ Examples for medium ID detection:
 </ul>]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex.error.notValid"><![CDATA[Regular expression failed to validate.]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Media Providers]]></item>
-		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Content represents source code]]></item>
-		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Disables conversion of bbcodes and smilies.]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Show button in WYSIWYG editor]]></item>
-		<item name="wcf.acp.bbcode.buttonLabel"><![CDATA[Button Label]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button Image]]></item>
-		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[TODO: Die Grafik muss sich im Verzeichnis wcf/icon/ befinden.]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/.]]></item>
 	</category>
 	
 	<category name="wcf.acp.cache">
@@ -153,7 +152,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Error]]></item>
 		<item name="wcf.acp.cronjob.log.error.showDetails"><![CDATA[Show Details]]></item>
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Error Message]]></item>
-		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[TODO: Derzeit sind keine Einträge vorhanden.]]></item>
+		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[There are no entries yet.]]></item>
 	</category>
 	
 	<category name="wcf.acp.dashboard">
@@ -170,7 +169,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Copy error message]]></item>
 		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[No error with the ID “{$exceptionID}” was found.]]></item>
-		<item name="wcf.acp.exceptionLog.noneAvailable"><![CDATA[There are no logged errors.]]></item>
 		<item name="wcf.acp.exceptionLog.search"><![CDATA[Search]]></item>
 		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Error-ID]]></item>
 		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Logfile]]></item>
@@ -314,6 +312,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.admin.content.label"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Can manage tags]]></item>
+		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximum Signature Length]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -325,6 +324,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.index.credits.productManager"><![CDATA[Product Manager]]></item>
 		<item name="wcf.acp.index.credits.trademarks"><![CDATA[“WoltLab&reg;” and “Burning Board&reg;” are registered Community Trade Marks at The Office of Harmonization for the Internal Market (OHIM) in Alicante, Spain.]]></item>
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[More]]></item>
+		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Applications</a>.]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[News]]></item>
 		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
@@ -334,27 +334,28 @@ Examples for medium ID detection:
 		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
 		<item name="wcf.acp.index.system.php"><![CDATA[PHP Version]]></item>
 		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL Version]]></item>
+		<item name="wcf.acp.index.system.load"><![CDATA[Current UNIX Load]]></item>
 	</category>
 	
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Add Label]]></item>
 		<item name="wcf.acp.label.cssClassName"><![CDATA[CSS Class Name]]></item>
+		<item name="wcf.acp.label.cssClassName.error.notValid"><![CDATA[Chosen CSS class name is invalid.]]></item>
 		<item name="wcf.acp.label.defaultValue"><![CDATA[Label]]></item>
+		<item name="wcf.acp.label.delete.sure"><![CDATA[Do you really want to delete the label “{$label}”?]]></item>
 		<item name="wcf.acp.label.edit"><![CDATA[Edit Label]]></item>
 		<item name="wcf.acp.label.error.noGroups"><![CDATA[Please <a href="{link controller='LabelGroupAdd'}{/link}">add a label group</a> prior to creating labels.]]></item>
 		<item name="wcf.acp.label.group"><![CDATA[Label Group]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Add Label Group]]></item>
+		<item name="wcf.acp.label.group.category.connect"><![CDATA[Availability]]></item>
+		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group “{$group->groupName}”?]]></item>
 		<item name="wcf.acp.label.group.edit"><![CDATA[Edit Label Group]]></item>
+		<item name="wcf.acp.label.group.error.notValid"><![CDATA[Chosen label group is invalid.]]></item>
+		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
 		<item name="wcf.acp.label.group.groupName"><![CDATA[Title]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Label Groups]]></item>
-		<item name="wcf.acp.label.group.noneAvailable"><![CDATA[There are no label groups yet.]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
-		<item name="wcf.acp.label.noneAvailable"><![CDATA[There are no labels yet.]]></item>
-		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
-		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group “{$group->groupName}”?]]></item>
-		<item name="wcf.acp.label.group.category.connect"><![CDATA[Availability]]></item>
-		<item name="wcf.acp.label.delete.sure"><![CDATA[Do you really want to delete the label “{$label}”?]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">
@@ -393,7 +394,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.language.item.customValues"><![CDATA[Customized values]]></item>
 		<item name="wcf.acp.language.name.description"><![CDATA[Language Name]]></item>
 		<item name="wcf.acp.language.add.source.description"><![CDATA[The selected language will be used as origin, all phrases will be copied into the new language.]]></item>
-		<item name="wcf.acp.language.item.noItems"><![CDATA[TODO: Es wurden keine Texte gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -401,7 +401,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Confirm Master Password]]></item>
 		<item name="wcf.acp.masterPassword.enter"><![CDATA[Master Password Required]]></item>
 		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[The page or action requires the master password for security reasons, the password will be remembered for your current session. In case you forgot the password, please reset it by removing the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
-		<item name="wcf.acp.masterPassword.error.invalid"><![CDATA[Password is incorrect. In case you forgot the password, please reset it by removing the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
+		<item name="wcf.acp.masterPassword.error.notValid"><![CDATA[Password is incorrect. In case you forgot the password, please reset it by removing the file <em>{@RELATIVE_WCF_DIR}acp/masterPassword.inc.php</em>.]]></item>
 		<item name="wcf.acp.masterPassword.error.notEqual"><![CDATA[Passwords do not match.]]></item>
 		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Password is regarded unsafe. It should be at least 8 characters, containing upper and lower latin letters, as well as numbers and special symbols.]]></item>
 		<item name="wcf.acp.masterPassword.example"><![CDATA[Suggestion]]></item>
@@ -520,7 +520,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.cookie"><![CDATA[Cookies]]></item>
 		<item name="wcf.acp.option.category.general.system.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy-Server]]></item>
-		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Optionally provide a Proxy-Server for outgoing connections..]]></item>
+		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Optionally provide a Proxy-Server for outgoing connections.]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[Emails]]></item>
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Sending]]></item>
@@ -595,7 +595,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.meta_description"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.option.meta_keywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.option.module_master_password"><![CDATA[Enable master password]]></item>
-		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Enables an additional passwort to protect both critical actions and sensitive data.]]></item>
+		<item name="wcf.acp.option.module_master_password.description"><![CDATA[Enables an additional password to protect both critical actions and sensitive data.]]></item>
 		<item name="wcf.acp.option.page_description"><![CDATA[Page Description]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Page Title]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
@@ -777,11 +777,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum number of options]]></item>
-		<item name="wcf.acp.option.error.validationFailed"><![CDATA[TOOD: Sie haben einen ungültigen Inhalt eingegeben.]]></item>
+		<item name="wcf.acp.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Members List]]></item>
-		<item name="wcf.acp.option.footer_code"><![CDATA[TOOD: Footer-Code]]></item>
-		<item name="wcf.acp.option.footer_code.description"><![CDATA[TOOD: Der hier angegebene Code wird im Fußbereich jeder Seite ausgegeben. Der Footer-Code eignet sich z.B. sehr gut für die Einbindung von Diensten wie „Google Analytics“ oder „Piwik“.]]></item>
-		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[TODO: Profil-Besucher anzeigen]]></item>
+		<item name="wcf.acp.option.footer_code"><![CDATA[Footer Code]]></item>
+		<item name="wcf.acp.option.footer_code.description"><![CDATA[The entered code will be appended to the page footer of your site. You can use it to embed services like “Google Analytics” or “Piwik”.]]></item>
+		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Show profile visitors]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -806,6 +806,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.error.sql.dropTable"><![CDATA[Remove Existing Tables]]></item>
 		<item name="wcf.acp.package.error.sql.dropTable.description"><![CDATA[The tables above already exist and will be removed during the installation. Any contained data will be lost.]]></item>
 		<item name="wcf.acp.package.error.uniqueAlreadyInstalled"><![CDATA[This package is already installed.]]></item>
+		<item name="wcf.acp.package.error.noValidInstall"><![CDATA[The selected package does not support an installation.]]></item>
+		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[Package “{$package->packageName}” cannot be updated using the selected archive.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Identifier]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Properties]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Details]]></item>
@@ -821,6 +823,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[Updating “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Updated completed]]></item>
 		<item name="wcf.acp.package.installedVersion"><![CDATA[Installed Version]]></item>
+		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[This package can't be installed because of the following already installed packages:]]></item>
+		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[“{$excludedPackage}” ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (excluded version: {$excludedPackage->excludedPackageVersion}, installed version: {$excludedPackage->packageVersion}){/if}]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following, already installed packages prohibit installing this package:]]></item>
+		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[“{$excludingPackage}” ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (excluded version: {$excludingPackage->excludedPackageVersion}){/if}]]></item>
+		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Unable to resolve requirements of this package.]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Preparing Installation …]]></item>
 		<item name="wcf.acp.package.install.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required Version]]></item>
@@ -851,8 +858,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Plugin]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package “{@$package->getName()}”?]]></item>
 		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[Uninstallation completed]]></item>
+		<item name="wcf.acp.package.uninstallation.step.uninstall"><![CDATA[Package “{$queue->packageName}” is being uninstalled …]]></item>
 		<item name="wcf.acp.package.uninstallation.title"><![CDATA[Uninstallation]]></item>
-		<item name="wcf.acp.package.uninstallation.title.packageName"><![CDATA[Package “{$queue->packageName}” is being uninstalled …]]></item>
 		<item name="wcf.acp.package.uninstall.step.prepare"><![CDATA[Prepairing uninstallation …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Credentials]]></item>
@@ -868,11 +875,13 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.update.title"><![CDATA[Update]]></item>
 		<item name="wcf.acp.package.update.unauthorized"><![CDATA[Authorization Required]]></item>
 		<item name="wcf.acp.package.update.username"><![CDATA[Username]]></item>
+		<item name="wcf.acp.package.update.step.prepare"><![CDATA[Preparing Update …]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
 		<item name="wcf.acp.package.upload"><![CDATA[Upload package]]></item>
 		<item name="wcf.acp.package.optionalPackages"><![CDATA[Optional packages]]></item>
 		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[The following optional packages are available for installation:]]></item>
+		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[No packages matched your criteria.]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -943,18 +952,16 @@ Examples for medium ID detection:
 	
 	<category name="wcf.acp.smiley">
 		<item name="wcf.acp.smiley.list"><![CDATA[Smilies]]></item>
-		<item name="wcf.acp.smiley.noItems"><![CDATA[There are no smilies.]]></item>
 		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Do you really want to delete the smiley “{$smiley->smileyTitle|language}”?]]></item>
 		<item name="wcf.acp.smiley.add"><![CDATA[Add Smiley]]></item>
 		<item name="wcf.acp.smiley.edit"><![CDATA[Edit Smiley]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Title]]></item>
-		<item name="wcf.acp.smiley.category.noItems"><![CDATA[This category contains no smilies.]]></item>
 		<item name="wcf.acp.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
 		<item name="wcf.acp.smiley.category.edit"><![CDATA[Edit Smiley Category]]></item>
 		<item name="wcf.acp.smiley.category.list"><![CDATA[Smiley Categories]]></item>
 		<item name="wcf.acp.smiley.categoryID"><![CDATA[Category]]></item>
 		<item name="wcf.acp.smiley.categoryID.default"><![CDATA[Default Category]]></item>
-		<item name="wcf.acp.smiley.categoryID.error.notValid"><![CDATA[Chosen category is invalid]]></item>
+		<item name="wcf.acp.smiley.categoryID.error.notValid"><![CDATA[Chosen category is invalid.]]></item>
 		<item name="wcf.acp.smiley.smileyCode"><![CDATA[Primary Smiley Code]]></item>
 		<item name="wcf.acp.smiley.smileyCode.error.notUnique"><![CDATA[This smiley code is already in use by an other smiley]]></item>
 		<item name="wcf.acp.smiley.aliases"><![CDATA[Alternative Smiley Codes]]></item>
@@ -988,7 +995,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.colors.container"><![CDATA[Container]]></item>
 		<item name="wcf.acp.style.colors.content"><![CDATA[Content Area]]></item>
 		<item name="wcf.acp.style.colors.color"><![CDATA[Font Color]]></item>
-		<item name="wcf.acp.style.colors.dimmedColor"><![CDATA[Font Color (weakenend)]]></item>
+		<item name="wcf.acp.style.colors.dimmedColor"><![CDATA[Font Color (weakened)]]></item>
 		<item name="wcf.acp.style.colors.formInput"><![CDATA[Input Elements in Forms]]></item>
 		<item name="wcf.acp.style.colors.hoverBackgroundColor"><![CDATA[Background Color (hover)]]></item>
 		<item name="wcf.acp.style.colors.hoverBorderColor"><![CDATA[Border Color (hover)]]></item>
@@ -1050,8 +1057,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.imagePath.error.notValid"><![CDATA[You have provided an invalid path.]]></item>
 		<item name="wcf.acp.style.styleVersion.error.notValid"><![CDATA[You have provided an invalid version number.]]></item>
 		<item name="wcf.acp.style.styleDate.error.notValid"><![CDATA[You have provided an invalid date.]]></item>
-		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[TODO: Seitenlogo]]></item>
-		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[TODO: Name der Grafik-Datei für das Seitenlogo]]></item>
+		<item name="wcf.acp.style.globals.pageLogo"><![CDATA[Page Logo]]></item>
+		<item name="wcf.acp.style.globals.pageLogo.description"><![CDATA[Filename of the page logo image]]></item>
 	</category>
 	
 	<category name="wcf.acp.tag">
@@ -1060,15 +1067,14 @@ Examples for medium ID detection:
 		<item name="wcf.acp.tag.delete.sure"><![CDATA[Do you really want to delete the tag “{$tag}”?]]></item>
 		<item name="wcf.acp.tag.error.languageID.notFound"><![CDATA[Selected language is invalid]]></item>
 		<item name="wcf.acp.tag.languageID"><![CDATA[Language]]></item>
-		<item name="wcf.acp.tag.list"><![CDATA[List Tags]]></item>
+		<item name="wcf.acp.tag.list"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.tag.list.search"><![CDATA[Search Tags]]></item>
 		<item name="wcf.acp.tag.list.search.query"><![CDATA[Search Term]]></item>
-		<item name="wcf.acp.tag.noneAvailable"><![CDATA[No tag have been added yet.]]></item>
 		<item name="wcf.acp.tag.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.tag.synonyms"><![CDATA[Synonyms]]></item>
 		<item name="wcf.acp.tag.synonymFor"><![CDATA[Synonym for]]></item>
 		<item name="wcf.acp.tag.usageCount"><![CDATA[Usages]]></item>
-		<item name="wcf.acp.tag.error.name.duplicate"><![CDATA[TODO: Ein Tag mit diesem Namen existiert bereits.]]></item>
+		<item name="wcf.acp.tag.error.name.duplicate"><![CDATA[This tag name is already in use.]]></item>
 	</category>
 	
 	<category name="wcf.acp.template">
@@ -1076,7 +1082,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.template.group"><![CDATA[Template Group]]></item>
 		<item name="wcf.acp.template.group.default"><![CDATA[Default Templates]]></item>
 		<item name="wcf.acp.template.application"><![CDATA[Application]]></item>
-		<item name="wcf.acp.template.application.all"><![CDATA[TODO: Keine Filterung]]></item>
+		<item name="wcf.acp.template.application.all"><![CDATA[No Filter]]></item>
 		<item name="wcf.acp.template.add"><![CDATA[Add Template]]></item>
 		<item name="wcf.acp.template.edit"><![CDATA[Edit Template]]></item>
 		<item name="wcf.acp.template.copy"><![CDATA[Copy Template]]></item>
@@ -1086,14 +1092,12 @@ Examples for medium ID detection:
 		<item name="wcf.acp.template.group.edit"><![CDATA[Edit Template Group]]></item>
 		<item name="wcf.acp.template.group.templates"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.template.error.noGroups"><![CDATA[You must create a <a href="{link controller='TemplateGroupAdd'}{/link}">template group</a> first.]]></item>
-		<item name="wcf.acp.template.group.noItems"><![CDATA[There are no template groups.]]></item>
 		<item name="wcf.acp.template.group.folderName"><![CDATA[Directory]]></item>
 		<item name="wcf.acp.template.group.parentTemplateGroup"><![CDATA[Parent Template Group]]></item>
 		<item name="wcf.acp.template.group.name.error.notUnique"><![CDATA[This name is already taken by a different template group.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notValid"><![CDATA[The specified directory is invalid.]]></item>
 		<item name="wcf.acp.template.group.folderName.error.notUnique"><![CDATA[The specified directory is already in use by an other template group.]]></item>
 		<item name="wcf.acp.template.group.delete.sure"><![CDATA[Do you really want to remove the template group “{$templateGroup->templateGroupName}”?]]></item>
-		<item name="wcf.acp.template.noItems"><![CDATA[There are no templates.]]></item>
 		<item name="wcf.acp.template.source"><![CDATA[Template Source Code]]></item>
 		<item name="wcf.acp.template.name.error.notUnique"><![CDATA[This name is already taken by a different template]]></item>
 		<item name="wcf.acp.template.name.error.notValid"><![CDATA[The specified name is invalid]]></item>
@@ -1171,7 +1175,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Value will be used as preset on first time editing.]]></item>
-		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Dou you really want to delete the field “{lang}wcf.user.option.{$option->optionName}{/lang}”?]]></item>
+		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Do you really want to delete the field “{lang}wcf.user.option.{$option->optionName}{/lang}”?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Edit Custom User Field]]></item>
 		<item name="wcf.acp.user.option.editable"><![CDATA[Editable by]]></item>
@@ -1307,7 +1311,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.category.list"><![CDATA[Categories]]></item>
 		<item name="wcf.category.noneAvailable"><![CDATA[No category has been added yet.]]></item>
 		<item name="wcf.category.parentCategoryID"><![CDATA[Parent Category]]></item>
-		<item name="wcf.category.parentCategoryID.error.invalid"><![CDATA[The chosen category does not exist.]]></item>
+		<item name="wcf.category.parentCategoryID.error.notValid"><![CDATA[Chosen category does not exist.]]></item>
 		<item name="wcf.category.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.category.description"><![CDATA[Description]]></item>
 		<item name="wcf.category.title"><![CDATA[Title]]></item>
@@ -1611,6 +1615,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.global.acp.short"><![CDATA[Administration]]></item>
 		<item name="wcf.global.worker.executing"><![CDATA[Executing …]]></item>
 		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
+		<item name="wcf.global.noItems"><![CDATA[There are no items.]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">
@@ -1623,6 +1628,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 	
 	<category name="wcf.label">
 		<item name="wcf.label.all"><![CDATA[All]]></item>
+		<item name="wcf.label.error.notValid"><![CDATA[The label selection is invalid.]]></item>
 		<item name="wcf.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.label.labels"><![CDATA[Labels]]></item>
 		<item name="wcf.label.none"><![CDATA[No Selection]]></item>
@@ -1698,7 +1704,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.moderation.doneItems"><![CDATA[Done Items]]></item>
 		<item name="wcf.moderation.lastChangeTime"><![CDATA[Last Change]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
-		<item name="wcf.moderation.noItems"><![CDATA[No items matched your criteria.]]></item>
 		<item name="wcf.moderation.noMoreItems"><![CDATA[No more items]]></item>
 		<item name="wcf.moderation.status"><![CDATA[Status]]></item>
 		<item name="wcf.moderation.status.all"><![CDATA[All Items]]></item>
@@ -1709,11 +1714,16 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.moderation.type.all"><![CDATA[All Items]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.activation"><![CDATA[Approval]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report"><![CDATA[Report]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.comment.comment"><![CDATA[Comment]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
 		<item name="wcf.moderation.showAll"><![CDATA[Show All Items]]></item>
+		<item name="wcf.moderation.showDeletedContent"><![CDATA[Show deleted content]]></item>
+		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[Deleted Content]]></item>
 	</category>
 	
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Approval]]></item>
+		<item name="wcf.moderation.activation.details"><![CDATA[Information]]></item>
 		<item name="wcf.moderation.activation.content"><![CDATA[Content Awaiting Approval]]></item>
 		<item name="wcf.moderation.activation.enableContent"><![CDATA[Approve]]></item>
 		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[Do you really want to approve this content?]]></item>
@@ -1724,11 +1734,12 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 	<category name="wcf.moderation.report">
 		<item name="wcf.moderation.report"><![CDATA[Edit Report]]></item>
 		<item name="wcf.moderation.report.alreadyReported"><![CDATA[This content has already been reported.]]></item>
-		<item name="wcf.moderation.report.details"><![CDATA[Report]]></item>
+		<item name="wcf.moderation.report.details"><![CDATA[Information]]></item>
 		<item name="wcf.moderation.report.reason"><![CDATA[Reason]]></item>
 		<item name="wcf.moderation.report.reason.description"><![CDATA[This function is reserved for: Spam, Advertisement and other questionable (rassism, glorification of violence, offending or sexist) content]]></item>
 		<item name="wcf.moderation.report.removeContent"><![CDATA[Delete Reported Content]]></item>
 		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Do you really want to delete the reported content?]]></item>
+		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Reason (optional)]]></item>
 		<item name="wcf.moderation.report.removeReport"><![CDATA[Delete Report]]></item>
 		<item name="wcf.moderation.report.removeReport.confirmMessage"><![CDATA[Do you really want to delete this report?]]></item>
 		<item name="wcf.moderation.report.reportContent"><![CDATA[Report Content]]></item>
@@ -1744,6 +1755,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Page {#$pageNo} of {#$pages}]]></item>
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[User Account]]></item>
+		<item name="wcf.page.javascriptDisabled"><![CDATA[Your browser has JavaScript disabled. If you would like to use all features of this site, it is mandatory to enable JavaScript.]]></item>
 	</category>
 	
 	<category name="wcf.poll">
@@ -1754,12 +1766,14 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.poll.button.showVote"><![CDATA[Vote]]></item>
 		<item name="wcf.poll.button.vote"><![CDATA[Vote]]></item>
 		<item name="wcf.poll.endTime"><![CDATA[Poll Ends (optional)]]></item>
+		<item name="wcf.poll.endTime.error.notValid"><![CDATA[You have entered an invalid date.]]></item>
 		<item name="wcf.poll.isChangeable"><![CDATA[Votes can be changed]]></item>
 		<item name="wcf.poll.isPublic"><![CDATA[Publicize participants]]></item>
 		<item name="wcf.poll.management"><![CDATA[Poll]]></item>
 		<item name="wcf.poll.maxVotes"><![CDATA[Number of Allowed Votes]]></item>
 		<item name="wcf.poll.maxVotes.error.notValid"><![CDATA[Maximum number of allowed votes exceeds number of available options.]]></item>
 		<item name="wcf.poll.multipleVotes"><![CDATA[You may select up to {#$poll->maxVotes} options.]]></item>
+		<item name="wcf.poll.noVotes"><![CDATA[No votes yet]]></item>
 		<item name="wcf.poll.options"><![CDATA[Options]]></item>
 		<item name="wcf.poll.options.description"><![CDATA[You can sort the options with drag and drop to change their order. You can create up to {@POLL_MAX_OPTIONS} options.]]></item>
 		<item name="wcf.poll.question"><![CDATA[Question]]></item>
@@ -1768,7 +1782,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.poll.resultsRequireVote.description"><![CDATA[Results are invisible unless the poll ended or the user voted.]]></item>
 		<item name="wcf.poll.sortByVotes"><![CDATA[Sort result by votes]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[A total of {#$poll->votes} vote{if $poll->votes != 1}s{/if}]]></item>
-		<item name="wcf.poll.noVotes"><![CDATA[No votes yet]]></item>
 	</category>
 	
 	<category name="wcf.recaptcha">
@@ -1905,8 +1918,8 @@ If you have not lost your password, you can safely ignore this email.]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[You should receive an email shortly.]]></item>
 		<item name="wcf.user.newPassword"><![CDATA[Request New Password]]></item>
 		<item name="wcf.user.lostPasswordKey"><![CDATA[Security Key]]></item>
-		<item name="wcf.user.lostPasswordKey.error.invalid"><![CDATA[Security Key is invalid.]]></item>
-		<item name="wcf.user.userID.error.invalid"><![CDATA[User ID is invalid.]]></item>
+		<item name="wcf.user.lostPasswordKey.error.notValid"><![CDATA[Security Key is invalid.]]></item>
+		<item name="wcf.user.userID.error.notValid"><![CDATA[User ID is invalid.]]></item>
 		<item name="wcf.user.newPassword.mail"><![CDATA[Dear {@$username},
 
 your new password for "{@PAGE_TITLE|language}" is:
@@ -2007,6 +2020,8 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Last Activity]]></item>
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Likes Received]]></item>
+		<item name="wcf.user.register.honeyPot"><![CDATA[Please Ignore!]]></item>
+		<item name="wcf.user.register.honeyPot.description"><![CDATA[Heads up! If you can see this, you are strongly encouraged <strong>NOT</strong> to fill in the next two input fields!]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
@@ -2168,7 +2183,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Own Avatar]]></item>
 		<item name="wcf.user.avatar.type.custom.crop"><![CDATA[Crop Avatar]]></item>
 		<item name="wcf.user.avatar.type.custom.crop.description"><![CDATA[The scaled versions of your avatar are based on a square cutout. You may specify an individual cutout by holding down your mouse button and moving the highlighted area to the desired position.]]></item>
-		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The minimum dimensions are 48×48 pixel, it is recommend to provide a dimension of {@MAX_AVATAR_WIDTH}×{@MAX_AVATAR_HEIGHT} pixel. Any avatar that exceeds this limit will be scaled down if possible.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The minimum dimensions are 48×48 pixel, it is recommended to provide a dimension of {@MAX_AVATAR_WIDTH}×{@MAX_AVATAR_HEIGHT} pixel. Any avatar that exceeds this limit will be scaled down if possible.]]></item>
 		<item name="wcf.user.avatar.type.gravatar"><![CDATA[Use Gravatar]]></item>
 		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Gravatar (Global Recognized Avatar) provides a globally reusable avatar connected with your email address “{$__wcf->user->email}”. Visit <a href="http://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a> to set up or change your avatar.]]></item>
 		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Your email address is not connected with a gravatar.]]></item>

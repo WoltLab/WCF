@@ -396,6 +396,14 @@ pdf]]></defaultvalue>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="user.signature.maxLength">
+				<categoryname>user.signature</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>500</defaultvalue>
+				<admindefaultvalue>10000</admindefaultvalue>
+				<minvalue>100</minvalue>
+				<maxvalue>65535</maxvalue>
+			</option>
 			<option name="user.signature.allowedBBCodes">
 				<categoryname>user.signature</categoryname>
 				<optiontype>BBCodeSelect</optiontype>

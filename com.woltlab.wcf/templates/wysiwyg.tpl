@@ -36,7 +36,7 @@ $(function() {
 	
 	var $config = {
 		smiley_path: '{@$__wcf->getPath()|encodeJS}',
-		extraPlugins: 'wbbcode,wbutton',
+		extraPlugins: 'wbbcode,wbutton,divarea',
 		removePlugins: 'contextmenu,tabletools,liststyle,elementspath,menubutton,forms,scayt',
 		language: '{@$__wcf->language->getFixedLanguageCode()}',
 		fontSize_sizes: '8/8pt;10/10pt;12/12pt;14/14pt;18/18pt;24/24pt;36/36pt;',

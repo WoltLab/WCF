@@ -238,7 +238,7 @@ class WCFSetup extends WCF {
 	 */
 	protected function calcProgress($currentStep) {
 		// calculate progress
-		$progress = round((100 / 15) * ++$currentStep, 0);
+		$progress = round((100 / 18) * ++$currentStep, 0);
 		self::getTPL()->assign(array('progress' => $progress));
 	}
 	
@@ -304,22 +304,22 @@ class WCFSetup extends WCF {
 			break;
 			
 			case 'logFiles':
-				$this->calcProgress(11);
+				$this->calcProgress(14);
 				$this->logFiles();
 			break;
 			
 			case 'installLanguage':
-				$this->calcProgress(12);
+				$this->calcProgress(15);
 				$this->installLanguage();
 			break;
 			
 			case 'createUser':
-				$this->calcProgress(13);
+				$this->calcProgress(16);
 				$this->createUser();
 			break;
 			
 			case 'installPackages':
-				$this->calcProgress(14);
+				$this->calcProgress(17);
 				$this->installPackages();
 			break;
 		}
@@ -616,7 +616,7 @@ class WCFSetup extends WCF {
 				}
 				
 				// check connection data
-				$db = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
+				$db = new $dbClass($dbHost, $dbUser, $dbPassword, $dbName, $dbPort, true);
 				$db->connect();
 				
 				$start = microtime(true);
@@ -624,12 +624,19 @@ class WCFSetup extends WCF {
 				
 				// check sql version
 				if (!empty($availableDBClasses[$dbClass]['minversion'])) {
-					$sqlVersion = $db->getVersion();
-					if ($sqlVersion != 'unknown') {
-						$compareSQLVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
-						if (!(version_compare($compareSQLVersion, $availableDBClasses[$dbClass]['minversion']) >= 0)) {
-							throw new SystemException("Insufficient SQL version '".$compareSQLVersion."'. Version '".$availableDBClasses[$dbClass]['minversion']."' or greater is needed.");
-						}
+					$compareSQLVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $db->getVersion());
+					if (!(version_compare($compareSQLVersion, $availableDBClasses[$dbClass]['minversion']) >= 0)) {
+						throw new SystemException("Insufficient SQL version '".$compareSQLVersion."'. Version '".$availableDBClasses[$dbClass]['minversion']."' or greater is needed.");
+					}
+				}
+				// check innodb support
+				if ($dbClass == 'MySQLDatabase') {
+					$sql = "SHOW VARIABLES WHERE Variable_name = 'have_innodb'";
+					$statement = $db->prepareStatement($sql);
+					$statement->execute();
+					$row = $statement->fetchArray();
+					if ($row !== false || $row['Value'] != 'YES') {
+						throw new SystemException("Support for InnoDB is missing.");
 					}
 				}
 				

@@ -4,6 +4,7 @@ input[type='reset'],
 input[type='submit'],
 input[type='button'],
 .button {
+	border-radius: @wcfButtonBorderRadius;
 	border-style: solid;
 	border-width: 1px;
 	cursor: pointer;
@@ -11,8 +12,6 @@ input[type='button'],
 	margin: 0 2px;
 	padding: 5px 13px;
 	position: relative;
-	
-	.borderRadius(15px);
 }
 
 /* normal state */
@@ -133,22 +132,21 @@ button.active:hover {
 		display: inline-block;
 		
 		> .button {
+			border-radius: 0;
 			margin: 0 0 0 -1px;
-			
-			.borderRadius(0);
 		}
 		
 		&:first-child {
 			> .button {
-				border-top-left-radius: 15px;
-				border-bottom-left-radius: 15px;
+				border-top-left-radius: @wcfButtonBorderRadius;
+				border-bottom-left-radius: @wcfButtonBorderRadius;
 			}
 		}
 		
 		&:last-child {
 			> .button {
-				border-top-right-radius: 15px;
-				border-bottom-right-radius: 15px;
+				border-top-right-radius: @wcfButtonBorderRadius;
+				border-bottom-right-radius: @wcfButtonBorderRadius;
 			}
 		}
 	}
@@ -235,11 +233,10 @@ button.active:hover {
 /* small buttons */
 button.small,
 .button.small {
+	border-radius: @wcfSmallButtonBorderRadius;
 	font-size: @wcfSmallFontSize;
 	min-height: 13px;
 	padding: 5px 11px;
-	
-	.borderRadius(3px);
 }
 
 /* button icons */

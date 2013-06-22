@@ -76,10 +76,16 @@ class RegisterForm extends UserAddForm {
 	public $useCaptcha = true;
 	
 	/**
+	 * field names
+	 * @var array
+	 */
+	public $randomFieldNames = array();
+	
+	/**
 	 * min number of seconds between form request and submit
 	 * @var	integer
 	 */
-	public static $minRegistrationTime = 15;
+	public static $minRegistrationTime = 10;
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
@@ -113,22 +119,37 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
+	 * @see	wcf\form\IForm::readFormParameters()
+	 */
+	public function readFormParameters() {
+		parent::readFormParameters();
+	
+		if (!empty($this->username) || !empty($this->email)) {
+			throw new PermissionDeniedException();
+		}
+		
+		$this->randomFieldNames = WCF::getSession()->getVar('registrationRandomFieldNames');
+		if ($this->randomFieldNames === null) {
+			throw new PermissionDeniedException();
+		}
+		
+		if (isset($_POST[$this->randomFieldNames['username']])) $this->username = StringUtil::trim($_POST[$this->randomFieldNames['username']]);
+		if (isset($_POST[$this->randomFieldNames['email']])) $this->email = StringUtil::trim($_POST[$this->randomFieldNames['email']]);
+		if (isset($_POST[$this->randomFieldNames['confirmEmail']])) $this->confirmEmail = StringUtil::trim($_POST[$this->randomFieldNames['confirmEmail']]);
+		if (isset($_POST[$this->randomFieldNames['password']])) $this->password = $_POST[$this->randomFieldNames['password']];
+		if (isset($_POST[$this->randomFieldNames['confirmPassword']])) $this->confirmPassword = $_POST[$this->randomFieldNames['confirmPassword']];
+		
+		$this->groupIDs = array();
+		if (isset($_POST['recaptcha_challenge_field'])) $this->challenge = StringUtil::trim($_POST['recaptcha_challenge_field']);
+		if (isset($_POST['recaptcha_response_field'])) $this->response = StringUtil::trim($_POST['recaptcha_response_field']);
+	}
+	
+	/**
 	 * wcf\acp\form\AbstractOptionListForm::initOptionHandler()
 	 */
 	protected function initOptionHandler() {
 		$this->optionHandler->setInRegistration();
 		parent::initOptionHandler();
-	}
-	
-	/**
-	 * @see	wcf\form\IForm::readFormParameters()
-	 */
-	public function readFormParameters() {
-		parent::readFormParameters();
-		
-		$this->groupIDs = array();
-		if (isset($_POST['recaptcha_challenge_field'])) $this->challenge = StringUtil::trim($_POST['recaptcha_challenge_field']);
-		if (isset($_POST['recaptcha_response_field'])) $this->response = StringUtil::trim($_POST['recaptcha_response_field']);
 	}
 	
 	/**
@@ -167,6 +188,17 @@ class RegisterForm extends UserAddForm {
 			}
 			
 			WCF::getSession()->register('registrationStartTime', TIME_NOW);
+			
+			// generate random field names
+			$this->randomFieldNames = array(
+				'username' => UserRegistrationUtil::getRandomFieldName('username'),
+				'email' => UserRegistrationUtil::getRandomFieldName('email'),
+				'confirmEmail' => UserRegistrationUtil::getRandomFieldName('confirmEmail'),
+				'password' => UserRegistrationUtil::getRandomFieldName('password'),
+				'confirmPassword' => UserRegistrationUtil::getRandomFieldName('confirmPassword')
+			);
+			
+			WCF::getSession()->register('registrationRandomFieldNames', $this->randomFieldNames);
 		}
 	}
 	
@@ -186,7 +218,8 @@ class RegisterForm extends UserAddForm {
 		RecaptchaHandler::getInstance()->assignVariables();
 		WCF::getTPL()->assign(array(
 			'isExternalAuthentication' => $this->isExternalAuthentication,
-			'useCaptcha' => $this->useCaptcha
+			'useCaptcha' => $this->useCaptcha,
+			'randomFieldNames' => $this->randomFieldNames
 		));
 	}
 	
@@ -438,6 +471,8 @@ class RegisterForm extends UserAddForm {
 		// login user
 		UserAuthenticationFactory::getInstance()->getUserAuthentication()->storeAccessData($user, $this->username, $this->password);
 		WCF::getSession()->unregister('recaptchaDone');
+		WCF::getSession()->unregister('registrationRandomFieldNames');
+		WCF::getSession()->unregister('registrationStartTime');
 		$this->saved();
 		
 		// forward to index page

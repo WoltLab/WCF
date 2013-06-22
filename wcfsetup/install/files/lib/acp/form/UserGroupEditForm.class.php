@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * Shows the group edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -164,6 +164,9 @@ class UserGroupEditForm extends UserGroupAddForm {
 		$this->objectAction = new UserGroupAction(array($this->groupID), 'update', $data);
 		$this->objectAction->executeAction();
 		$this->saved();
+		
+		// reset user group cache
+		UserGroupEditor::resetCache();
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);

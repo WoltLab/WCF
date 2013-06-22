@@ -198,13 +198,13 @@ WCF.ACP.Cronjob.LogList = Class.extend({
 		var $errorBadge = $(event.currentTarget);
 		
 		if (this._dialog === null) {
-			this._dialog = $('<div>' + $errorBadge.next().html() + '</div>').hide().appendTo(document.body);
+			this._dialog = $('<div style="overflow: auto"><pre>' + $errorBadge.next().html() + '</pre></div>').hide().appendTo(document.body);
 			this._dialog.wcfDialog({
 				title: WCF.Language.get('wcf.acp.cronjob.log.error.details')
 			});
 		}
 		else {
-			this._dialog.html($errorBadge.next().html());
+			this._dialog.html('<pre>' + $errorBadge.next().html() + '</pre>');
 			this._dialog.wcfDialog('open');
 		}
 	}
@@ -441,8 +441,14 @@ WCF.ACP.Package.Installation = Class.extend({
 	
 	/**
 	 * Performs a rollback.
+	 * 
+	 * @param	object		event
 	 */
-	_rollback: function() {
+	_rollback: function(event) {
+		if (event) {
+			$(event.currentTarget).disable();
+		}
+		
 		this._executeStep('rollback');
 	},
 	
@@ -503,6 +509,12 @@ WCF.ACP.Package.Installation = Class.extend({
 			this._queueID = data.queueID;
 		}
 		
+		// update template
+		if (data.template && !data.ignoreTemplate) {
+			this._dialog.html(data.template);
+			this._shouldRender = true;
+		}
+		
 		// update progress
 		if (data.progress) {
 			$('#packageInstallationProgress').attr('value', data.progress).text(data.progress + '%');
@@ -518,7 +530,10 @@ WCF.ACP.Package.Installation = Class.extend({
 		if (data.step === 'success') {
 			this._purgeTemplateContent($.proxy(function() {
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() { window.location = data.redirectLocation; });
+				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() {
+					$(this).disable();
+					window.location = data.redirectLocation;
+				});
 				
 				$('#packageInstallationInnerContentContainer').show();
 				
@@ -526,12 +541,6 @@ WCF.ACP.Package.Installation = Class.extend({
 			}, this));
 			
 			return;
-		}
-		
-		// update template
-		if (data.template && !data.ignoreTemplate) {
-			this._dialog.html(data.template);
-			this._shouldRender = true;
 		}
 		
 		// handle inner template
@@ -546,7 +555,11 @@ WCF.ACP.Package.Installation = Class.extend({
 			// create button to handle next step
 			if (data.step && data.node) {
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function() { this._submit(data); }, this)); 
+				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function(event) {
+					$(event.currentTarget).disable();
+					
+					this._submit(data);
+				}, this)); 
 			}
 			
 			$('#packageInstallationInnerContentContainer').show();

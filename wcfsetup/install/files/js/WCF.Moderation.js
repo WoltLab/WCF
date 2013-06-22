@@ -27,6 +27,12 @@ WCF.Moderation.Management = Class.extend({
 	_className: '',
 	
 	/**
+	 * list of templates for confirmation message by action name
+	 * @var	object
+	 */
+	_confirmationTemplate: { },
+	
+	/**
 	 * language item pattern
 	 * @var	string
 	 */
@@ -85,19 +91,41 @@ WCF.Moderation.Management = Class.extend({
 	 */
 	_click: function(event) {
 		var $actionName = $(event.currentTarget).wcfIdentify();
+		var $innerTemplate = '';
+		if (this._confirmationTemplate[$actionName]) {
+			$innerTemplate = this._confirmationTemplate[$actionName];
+		}
 		
 		WCF.System.Confirmation.show(WCF.Language.get(this._languageItem.replace(/{actionName}/, $actionName)), $.proxy(function(action) {
 			if (action === 'confirm') {
-				this._proxy.setOption('data', {
+				var $parameters = {
 					actionName: $actionName,
 					className: this._className,
 					objectIDs: [ this._queueID ]
-				});
+				};
+				if (this._confirmationTemplate[$actionName]) {
+					$parameters.parameters = { };
+					$innerTemplate.find('input, textarea').each(function(index, element) {
+						var $element = $(element);
+						var $value = $element.val();
+						if ($element.getTagName() === 'input' && $element.attr('type') === 'checkbox') {
+							if (!$element.is(':checked')) {
+								$value = null;
+							}
+						}
+						
+						if ($value !== null) {
+							$parameters.parameters[$element.attr('name')] = $value;
+						}
+					});
+				}
+				
+				this._proxy.setOption('data', $parameters);
 				this._proxy.sendRequest();
 				
 				$(this._buttonSelector).disable();
 			}
-		}, this));
+		}, this), { }, $innerTemplate);
 	},
 	
 	/**
@@ -338,6 +366,8 @@ WCF.Moderation.Report.Management = WCF.Moderation.Management.extend({
 		this._className = 'wcf\\data\\moderation\\queue\\ModerationQueueReportAction';
 		
 		this._super(queueID, redirectURL, 'wcf.moderation.report.{actionName}.confirmMessage');
+		
+		this._confirmationTemplate.removeContent = $('<fieldset><dl><dt><label for="message">' + WCF.Language.get('wcf.moderation.report.removeContent.reason') + '</label></dt><dd><textarea name="message" id="message" cols="40" rows="3" /></dd></dl></fieldset>');
 	}
 });
 
@@ -354,11 +384,18 @@ WCF.Moderation.UserPanel = WCF.UserPanel.extend({
 	_showAllLink: '',
 	
 	/**
+	 * link to deleted content list
+	 * @var	string
+	 */
+	_deletedContentLink: '',
+	
+	/**
 	 * @see	WCF.UserPanel.init()
 	 */
-	init: function(showAllLink) {
+	init: function(showAllLink, deletedContentLink) {
 		this._noItems = 'wcf.moderation.noMoreItems';
 		this._showAllLink = showAllLink;
+		this._deletedContentLink = deletedContentLink;
 		
 		this._super('outstandingModeration');
 	},
@@ -369,6 +406,8 @@ WCF.Moderation.UserPanel = WCF.UserPanel.extend({
 	_addDefaultItems: function(dropdownMenu) {
 		this._addDivider(dropdownMenu);
 		$('<li><a href="' + this._showAllLink + '">' + WCF.Language.get('wcf.moderation.showAll') + '</a></li>').appendTo(dropdownMenu);
+		this._addDivider(dropdownMenu);
+		$('<li><a href="' + this._deletedContentLink + '">' + WCF.Language.get('wcf.moderation.showDeletedContent') + '</a></li>').appendTo(dropdownMenu);
 	},
 	
 	/**

@@ -289,7 +289,7 @@ final class CronjobUtil {
 		$addAnDay = false;
 		
 		// compare hour
-		$hour = intval(date('G', $timeBase));
+		$hour = intval(gmdate('G', $timeBase));
 		$index = self::findKey($hour, $values['hour'], false);
 		if ($index === false) {
 			$index = self::findKey($hour, $values['hour']);

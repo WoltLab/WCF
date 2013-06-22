@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\dashboard\box;
+use wcf\data\package\PackageCache;
 use wcf\data\DatabaseObject;
 
 /**
@@ -22,4 +23,13 @@ class DashboardBox extends DatabaseObject {
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'boxID';
+	
+	/**
+	 * Returns the owner of this dashboard box.
+	 * 
+	 * @return wcf\data\package\Package
+	 */
+	public function getPackage() {
+		return PackageCache::getInstance()->getPackage($this->packageID);
+	}
 }

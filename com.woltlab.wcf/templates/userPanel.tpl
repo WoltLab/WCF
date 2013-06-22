@@ -188,10 +188,11 @@
 				$(function() {
 					WCF.Language.addObject({
 						'wcf.moderation.noMoreItems': '{lang}wcf.moderation.noMoreItems{/lang}',
-						'wcf.moderation.showAll': '{lang}wcf.moderation.showAll{/lang}'
+						'wcf.moderation.showAll': '{lang}wcf.moderation.showAll{/lang}',
+						'wcf.moderation.showDeletedContent': '{lang}wcf.moderation.showDeletedContent{/lang}'
 					});
 					
-					new WCF.Moderation.UserPanel('{link controller='ModerationList'}{/link}');
+					new WCF.Moderation.UserPanel('{link controller='ModerationList'}{/link}', '{link controller='DeletedContentList'}{/link}');
 				});
 				//]]>
 			</script>

@@ -1649,6 +1649,12 @@ WCF.LoadingOverlayHandler = {
 	_loadingOverlay: null,
 	
 	/**
+	 * WCF.PeriodicalExecuter instance
+	 * @var	WCF.PeriodicalExecuter
+	 */
+	_pending: null,
+	
+	/**
 	 * Adds one loading-request and shows the loading overlay if nessercery
 	 */
 	show: function() {
@@ -1658,7 +1664,18 @@ WCF.LoadingOverlayHandler = {
 		
 		this._activeRequests++;
 		if (this._activeRequests == 1) {
-			this._loadingOverlay.stop(true, true).fadeIn(100);
+			if (this._pending === null) {
+				var self = this;
+				this._pending = new WCF.PeriodicalExecuter(function(pe) {
+					if (self._activeRequests) {
+						self._loadingOverlay.stop(true, true).fadeIn(100);
+					}
+					
+					pe.stop();
+					self._pending = null;
+				}, 250); 
+			}
+			
 		}
 	},
 	
@@ -1668,6 +1685,11 @@ WCF.LoadingOverlayHandler = {
 	hide: function() {
 		this._activeRequests--;
 		if (this._activeRequests == 0) {
+			if (this._pending !== null) {
+				this._pending.stop();
+				this._pending = null;
+			}
+			
 			this._loadingOverlay.stop(true, true).fadeOut(100);
 		}
 	},
@@ -1863,7 +1885,11 @@ WCF.Action.Proxy = Class.extend({
 			
 			if (!this._suppressErrors && $showError !== false) {
 				var $message = (textStatus === 'timeout') ? WCF.Language.get('wcf.global.error.timeout') : jqXHR.responseText;
-				$('<div class="ajaxDebugMessage"><p>' + $message + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+				
+				// validate if $message is neither empty nor 'undefined'
+				if ($message && $message != 'undefined') {
+					$('<div class="ajaxDebugMessage"><p>' + $message + '</p></div>').wcfDialog({ title: WCF.Language.get('wcf.global.error.title') });
+				}
 			}
 		}
 		
@@ -2707,7 +2733,7 @@ WCF.Date.Util = {
 	
 	/**
 	 * Returns a Date object with precise offset (including timezone and local timezone).
-	 * Parameter timestamp must be in miliseconds!
+	 * Parameters timestamp and offset must be in miliseconds!
 	 * 
 	 * @param	integer		timestamp
 	 * @param	integer		offset
@@ -2715,9 +2741,9 @@ WCF.Date.Util = {
 	 */
 	getTimezoneDate: function(timestamp, offset) {
 		var $date = new Date(timestamp);
-		var $localOffset = $date.getTimezoneOffset() * -1 * 60000;
+		var $localOffset = $date.getTimezoneOffset() * 60000;
 		
-		return new Date((timestamp - $localOffset - offset));
+		return new Date((timestamp + $localOffset + offset));
 	}
 };
 
@@ -2725,6 +2751,12 @@ WCF.Date.Util = {
  * Handles relative time designations.
  */
 WCF.Date.Time = Class.extend({
+	/**
+	 * Date of current timestamp
+	 * @var	Date
+	 */
+	_date: 0,
+	
 	/**
 	 * list of time elements
 	 * @var	jQuery
@@ -2773,8 +2805,8 @@ WCF.Date.Time = Class.extend({
 	 * Refreshes relative datetime for each element.
 	 */
 	_refresh: function() {
-		var $date = new Date();
-		this._timestamp = ($date.getTime() - $date.getMilliseconds()) / 1000;
+		this._date = new Date();
+		this._timestamp = (this._date.getTime() - this._date.getMilliseconds()) / 1000;
 		if (this._offset === null) {
 			this._offset = this._timestamp - TIME_NOW;
 		}
@@ -2817,12 +2849,13 @@ WCF.Date.Time = Class.extend({
 			var $hours = Math.round((this._timestamp - $timestamp) / 3600);
 			$element.text(WCF.Language.get('wcf.date.relative.hours', { hours: $hours }));
 		}
-		// timestamp is less than a week ago
-		else if (this._timestamp < ($timestamp + 604800)) {
-			var $days = Math.round((this._timestamp - $timestamp) / 86400);
+		// timestamp is less than 6 days ago
+		else if (this._timestamp < ($timestamp + 518400)) {
+			var $midnight = new Date(this._date.getFullYear(), this._date.getMonth(), this._date.getDate());
+			var $days = Math.ceil(($midnight / 1000 - $timestamp) / 86400);
 			
 			// get day of week
-			var $dateObj = WCF.Date.Util.getTimezoneDate(($timestamp * 1000), $offset);
+			var $dateObj = WCF.Date.Util.getTimezoneDate(($timestamp * 1000), $offset * 1000);
 			var $dow = $dateObj.getDay();
 			var $day = WCF.Language.get('__days')[$dow];
 			
@@ -3104,6 +3137,13 @@ WCF.MultipleLanguageInput = Class.extend({
 		this._values = values;
 		this._availableLanguages = availableLanguages;
 		
+		// unescape values
+		if ($.getLength(this._values)) {
+			for (var $key in this._values) {
+				this._values[$key] = WCF.String.unescapeHTML(this._values[$key]);
+			}
+		}
+		
 		// default to current user language
 		this._languageID = LANGUAGE_ID;
 		if (this._element.length == 0) {
@@ -3324,7 +3364,7 @@ WCF.MultipleLanguageInput = Class.extend({
 				this._values[$languageID] = '';
 			}
 			
-			$('<input type="hidden" name="' + $elementID + '_i18n[' + $languageID + ']" value="' + this._values[$languageID] + '" />').appendTo($form);
+			$('<input type="hidden" name="' + $elementID + '_i18n[' + $languageID + ']" value="' + WCF.String.escapeHTML(this._values[$languageID]) + '" />').appendTo($form);
 		}
 		
 		// remove name attribute to prevent conflict with i18n values
@@ -3420,6 +3460,16 @@ WCF.String = {
 	 */
 	ucfirst: function(string) {
 		return String(string).substring(0, 1).toUpperCase() + string.substring(1);
+	},
+	
+	/**
+	 * Unescapes special HTML-characters within a string
+	 * 
+	 * @param	string		string
+	 * @return	string
+	 */
+	unescapeHTML: function (string) {
+		return String(string).replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 	}
 };
 
@@ -7635,7 +7685,7 @@ WCF.EditableItemList = Class.extend({
 			}
 		}
 		
-		var $listItem = $('<li class="badge">' + data.label + '</li>').data('objectID', data.objectID).data('label', data.label).appendTo(this._itemList);
+		var $listItem = $('<li class="badge">' + WCF.String.escapeHTML(data.label) + '</li>').data('objectID', data.objectID).data('label', data.label).appendTo(this._itemList);
 		$listItem.click($.proxy(this._click, this));
 		
 		if (this._search) {

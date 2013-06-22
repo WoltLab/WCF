@@ -111,6 +111,15 @@ class LabelAddForm extends AbstractForm {
 	public function validate() {
 		parent::validate();
 		
+		// validate group
+		if (!$this->groupID) {
+			throw new UserInputException('groupID');
+		}
+		$groups = $this->labelGroupList->getObjects();
+		if (!isset($groups[$this->groupID])) {
+			throw new UserInputException('groupID', 'notValid');
+		}
+		
 		// validate label
 		if (!I18nHandler::getInstance()->validateValue('label')) {
 			if (I18nHandler::getInstance()->isPlainValue('label')) {
@@ -121,15 +130,7 @@ class LabelAddForm extends AbstractForm {
 			}
 		}
 		
-		// validate group
-		if (!$this->groupID) {
-			throw new UserInputException('groupID');
-		}
-		$groups = $this->labelGroupList->getObjects();
-		if (!isset($groups[$this->groupID])) {
-			throw new UserInputException('groupID', 'invalid');
-		}
-		
+		// validate class name
 		if (empty($this->cssClassName)) {
 			throw new UserInputException('cssClassName', 'empty');
 		}

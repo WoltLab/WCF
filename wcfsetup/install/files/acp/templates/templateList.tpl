@@ -12,7 +12,7 @@
 				options.updatePageNumber = -1;
 			{/if}
 		{else}
-			options.emptyMessage = '{lang}wcf.acp.template.noItems{/lang}';
+			options.emptyMessage = '{lang}wcf.global.noItems{/lang}';
 		{/if}
 		
 		new WCF.Table.EmptyTableHandler($('#templateTableContainer'), 'jsTemplateRow', options);
@@ -44,7 +44,7 @@
 			<dl>
 				<dt><label for="application">{lang}wcf.acp.template.application{/lang}</label></dt>
 				<dd>
-					<select name="application" id="templateGroupID">
+					<select name="application" id="application">
 						<option value="">{lang}wcf.acp.template.application.all{/lang}</option>
 						{foreach from=$availableApplications key=abbreviation item=availableApplication}
 							<option value="{$abbreviation}"{if $abbreviation == $application} selected="selected"{/if}>{$availableApplication}</option>
@@ -140,7 +140,7 @@
 		</nav>
 	</div>
 {else}
-	<p class="info">{lang}wcf.acp.template.noItems{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 {include file='footer'}

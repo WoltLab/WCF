@@ -15,19 +15,21 @@
 {if $items}
 	<form action="{link controller='TagList'}{/link}">
 		<div class="container containerPadding marginTop">
-			<fieldset><legend>{lang}wcf.acp.tag.list.search{/lang}</legend>
+			<fieldset>
+				<legend>{lang}wcf.acp.tag.list.search{/lang}</legend>
+				
 				<dl>
-					<dt><label for="search">{lang}wcf.acp.tag.list.search.query{/lang}</label></dt>
+					<dt><label for="tagSearch">{lang}wcf.acp.tag.list.search.query{/lang}</label></dt>
 					<dd>
-						<input type="search" id="search" name="search" value="{$search}" autofocus="autofocus" class="medium" />
+						<input type="text" id="tagSearch" name="search" value="{$search}" autofocus="autofocus" class="medium" />
 					</dd>
 				</dl>
 			</fieldset>
-			
-			<div class="formSubmit">
-				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-				{@SID_INPUT_TAG}
-			</div>
+		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			{@SID_INPUT_TAG}
 		</div>
 	</form>
 {/if}
@@ -55,8 +57,8 @@
 				<tr>
 					<th class="columnID columnTagID{if $sortField == 'tagID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='TagList'}pageNo={@$pageNo}&sortField=tagID&sortOrder={if $sortField == 'tagID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&search={@$search|rawurlencode}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnTitle columnName{if $sortField == 'name'} active {@$sortOrder}{/if}"><a href="{link controller='TagList'}pageNo={@$pageNo}&sortField=name&sortOrder={if $sortField == 'name' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&search={@$search|rawurlencode}{/link}">{lang}wcf.acp.tag.name{/lang}</a></th>
-					<th class="columnNumber columnUsageCount{if $sortField == 'usageCount'} active {@$sortOrder}{/if}"><a href="{link controller='TagList'}pageNo={@$pageNo}&sortField=usageCount&sortOrder={if $sortField == 'usageCount' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&search={@$search|rawurlencode}{/link}">{lang}wcf.acp.tag.usageCount{/lang}</a></th>
-					<th class="columnText columnLanguage{if $sortField == 'language'} active {@$sortOrder}{/if}"><a href="{link controller='TagList'}pageNo={@$pageNo}&sortField=language&sortOrder={if $sortField == 'language' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&search={@$search|rawurlencode}{/link}">{lang}wcf.acp.tag.languageID{/lang}</a></th>
+					<th class="columnDigits columnUsageCount{if $sortField == 'usageCount'} active {@$sortOrder}{/if}"><a href="{link controller='TagList'}pageNo={@$pageNo}&sortField=usageCount&sortOrder={if $sortField == 'usageCount' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&search={@$search|rawurlencode}{/link}">{lang}wcf.acp.tag.usageCount{/lang}</a></th>
+					<th class="columnText columnLanguage{if $sortField == 'languageID'} active {@$sortOrder}{/if}"><a href="{link controller='TagList'}pageNo={@$pageNo}&sortField=languageID&sortOrder={if $sortField == 'languageID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}&search={@$search|rawurlencode}{/link}">{lang}wcf.acp.tag.languageID{/lang}</a></th>
 					<th class="columnText columnSynonymFor">{lang}wcf.acp.tag.synonymFor{/lang}</th>
 					
 					{event name='columnHeads'}
@@ -73,10 +75,10 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{#$tag->tagID}</td>
-						<td class="columnTitle columnName"><a href="{link controller='TagEdit' object=$tag}{/link}" class="badge">{$tag->name}</a></td>
-						<td class="columnNumber columnUsageCount">{if $tag->synonymFor === null}{#$tag->usageCount}{/if}</td>
+						<td class="columnTitle columnName"><a href="{link controller='TagEdit' object=$tag}{/link}" class="badge tag">{$tag->name}</a></td>
+						<td class="columnDigits columnUsageCount">{if $tag->synonymFor === null}{#$tag->usageCount}{/if}</td>
 						<td class="columnText columnLanguage">{if $tag->languageName !== null}{$tag->languageName} ({$tag->languageCode}){/if}</td>
-						<td class="columnText columnSynonymFor">{if $tag->synonymFor !== null}<a href="{link controller='TagList'}search={@$tag->synonymName|rawurlencode}{/link}" class="badge">{$tag->synonymName}</a>{/if}</td>
+						<td class="columnText columnSynonymFor">{if $tag->synonymFor !== null}<a href="{link controller='TagList'}search={@$tag->synonymName|rawurlencode}{/link}" class="badge tag">{$tag->synonymName}</a>{/if}</td>
 						
 						{event name='columns'}
 					</tr>
@@ -98,7 +100,7 @@
 		</nav>
 	</div>
 {else}
-	<p class="info">{lang}wcf.acp.tag.noneAvailable{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 {include file='footer'}

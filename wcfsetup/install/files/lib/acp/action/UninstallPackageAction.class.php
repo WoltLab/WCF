@@ -90,7 +90,7 @@ class UninstallPackageAction extends InstallPackageAction {
 			'template' => WCF::getTPL()->fetch($this->templateName),
 			'step' => 'uninstall',
 			'node' => $this->installation->nodeBuilder->getNextNode(),
-			'currentAction' => WCF::getLanguage()->get('wcf.package.installation.step.uninstalling'),
+			'currentAction' => $this->getCurrentAction($queueID),
 			'progress' => 0,
 			'queueID' => $queueID
 		);
@@ -172,5 +172,23 @@ class UninstallPackageAction extends InstallPackageAction {
 				throw new IllegalLinkException();
 			break;
 		}
+	}
+	
+	/**
+	 * @see	wcf\acp\action\InstallPackageAction::getCurrentAction()
+	 */
+	protected function getCurrentAction($queueID) {
+		if ($queueID === null) {
+			// success message
+			$currentAction = WCF::getLanguage()->get('wcf.acp.package.uninstallation.step.' . $this->queue->action . '.success');
+		}
+		else {
+			// build package name
+			$packageName = $this->installation->nodeBuilder->getPackageNameByQueue($queueID);
+			$installationType = $this->installation->nodeBuilder->getInstallationTypeByQueue($queueID);
+			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.uninstallation.step.'.$installationType, array('packageName' => $packageName));
+		}
+	
+		return $currentAction;
 	}
 }

@@ -1,4 +1,4 @@
-/* stylesheet for 'Blue Temptation', generated on Sun, 02 Jun 2013 17:58:58 +0000 -- DO NOT EDIT */
+/* stylesheet for 'Blue Temptation', generated on Fri, 21 Jun 2013 17:46:51 +0000 -- DO NOT EDIT */
 
 html,
 body,
@@ -200,7 +200,6 @@ q:after {
   margin-top: 14px;
   padding: 11px 14px 11px 48px;
   position: relative;
-  border-radius: 7px 7px 7px 7px;
 }
 .info:after,
 .error:after,
@@ -302,7 +301,6 @@ q:after {
   margin-top: 7px;
   padding: 2px 10px;
   position: relative;
-  border-radius: 7px 7px 7px 7px;
 }
 .innerError:after {
   border: 7px solid transparent;
@@ -409,7 +407,6 @@ q:after {
   margin-right: 7px;
 }
 .box48 .attachmentTinyThumbnail {
-  border-radius: 6px;
   max-height: 48px;
   max-width: 48px;
 }
@@ -604,11 +601,11 @@ q:after {
 .inlineCode {
   background-color: #ffffff;
   border: 1px solid #cccccc;
+  border-radius: 3px;
   display: inline-block;
   font-family: Consolas, 'Courier New', monospace;
   margin: 0 2px;
   padding: 0 5px;
-  border-radius: 3px 3px 3px 3px;
 }
 ul.smileyList > li {
   display: inline;
@@ -624,6 +621,7 @@ input[type='reset'],
 input[type='submit'],
 input[type='button'],
 .button {
+  border-radius: 15px;
   border-style: solid;
   border-width: 1px;
   cursor: pointer;
@@ -631,7 +629,6 @@ input[type='button'],
   margin: 0 2px;
   padding: 5px 13px;
   position: relative;
-  border-radius: 15px 15px 15px 15px;
 }
 .button,
 input[type='reset']:not([disabled]),
@@ -736,8 +733,8 @@ button.active:hover .icon {
   display: inline-block;
 }
 .buttonGroup > li > .button {
+  border-radius: 0;
   margin: 0 0 0 -1px;
-  border-radius: 0 0 0 0;
 }
 .buttonGroup > li:first-child > .button {
   border-top-left-radius: 15px;
@@ -801,6 +798,7 @@ button.active:hover .icon {
     transition-duration: .1s;
     -webkit-transition-timing-function: linear;
     transition-timing-function: linear;
+    border-radius: 15px;
     border-style: solid;
     border-width: 1px;
     cursor: pointer;
@@ -808,7 +806,6 @@ button.active:hover .icon {
     margin: 0 2px;
     padding: 5px 13px;
     position: relative;
-    border-radius: 15px 15px 15px 15px;
     background-color: #e3e3e3;
     border-color: #bbbbbb;
     color: #999999;
@@ -842,10 +839,10 @@ button.active:hover .icon {
 }
 button.small,
 .button.small {
+  border-radius: 3px;
   font-size: 85%;
   min-height: 13px;
   padding: 5px 11px;
-  border-radius: 3px 3px 3px 3px;
 }
 .button > .icon {
   margin: -1px -5px;
@@ -1189,34 +1186,35 @@ button.small,
 .dialogContainer {
   background: rgba(0,0,0,0.4);
   border: 14px solid transparent;
+  border-radius: 15px;
   margin-left: auto;
   margin-right: auto;
   max-width: 90%;
   min-width: 500px;
   position: fixed;
-  border-radius: 15px 15px 15px 15px;
   box-shadow: 0 1px 23px 0 rgba(0,0,0,0.3);
 }
 @media only screen and (max-width: 800px) {
   .dialogContainer {
     border: 0;
+    border-radius: 0;
     left: 0 !important;
     max-width: none;
     min-width: 0;
     position: absolute;
     top: 0 !important;
     width: 100%;
-    border-radius: 0 0 0 0;
   }
 }
 .dialogTitlebar {
   background-color: #336699;
   border-bottom: 1px solid rgba(0,0,0,0.1);
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
   display: block;
   padding: 10px 20px;
   min-height: 27px;
   position: relative;
-  border-radius: 7px 7px 0 0;
 }
 .dialogTitlebar .dialogTitle {
   color: #ffffff;
@@ -1250,7 +1248,7 @@ button.small,
 }
 @media only screen and (max-width: 800px) {
   .dialogTitlebar {
-    border-radius: 0 0 0 0;
+    border-radius: 0;
   }
 }
 .dialogContent {
@@ -1259,7 +1257,8 @@ button.small,
   padding: 10px 20px 20px;
 }
 .dialogContent:not(.dialogForm) {
-  border-radius: 0 0 7px 7px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
 }
 .dialogContent > .icon-spinner {
   left: 50%;
@@ -1276,13 +1275,14 @@ button.small,
 }
 .dialogContent .formSubmit {
   background-color: #f1f5fa;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
   border-top: 1px solid #cccccc;
   bottom: 0;
   left: 0;
   padding: 10px 0;
   position: absolute;
   width: 100%;
-  border-radius: 0 0 7px 7px;
 }
 @media only screen and (max-width: 800px) {
   .dialogContent {
@@ -1290,10 +1290,10 @@ button.small,
     max-width: none !important;
   }
   .dialogContent:not(.dialogForm) {
-    border-radius: 0 0 0 0;
+    border-radius: 0;
   }
   .dialogContent .formSubmit {
-    border-radius: 0 0 0 0;
+    border-radius: 0;
   }
 }
 .dialogOverlay {
@@ -1309,6 +1309,7 @@ button.small,
 }
 .spinner {
   border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 6px;
   color: #fff;
   left: 46%;
   padding: 7px 0;
@@ -1318,7 +1319,6 @@ button.small,
   top: 200px;
   width: 70px;
   z-index: 401;
-  border-radius: 6px 6px 6px 6px;
   box-shadow: 0 1px 7px 0 rgba(0,0,0,0.5);
   background-color: rgba(0,0,0,0.5);
   background-image: -webkit-linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.7));
@@ -1359,16 +1359,14 @@ button.small,
   display: table;
   width: 100%;
 }
-.dropdown.preInput input,
-.dropdown.preInput textarea {
-  min-width: 300px;
-}
 .dropdown.preInput input {
+  border-radius: 0 3px 3px 0;
   display: table-cell;
   margin: 0;
   width: 99%;
 }
 .dropdown.preInput textarea {
+  border-radius: 0 3px 3px;
   display: block;
   margin-top: 0;
 }
@@ -1382,7 +1380,7 @@ button.small,
 }
 .dropdown.preInput .dropdownCaption.button {
   border-right-width: 0;
-  border-radius: 15px 0 0 15px;
+  border-radius: 3px 0 0 3px;
 }
 .dropdown.preInput .dropdownCaption span {
   margin-right: -1px;
@@ -1402,7 +1400,7 @@ button.small,
   padding-right: 7px;
 }
 .dropdown.preInput .dropdownCaptionTextarea.button {
-  border-radius: 15px 15px 0 0;
+  border-radius: 3px 3px 0 0;
 }
 .dropdown.preInput .dropdownCaptionTextarea~ .dropdownMenu {
   top: 10%;
@@ -1593,6 +1591,7 @@ dl:not(.plain) > dt.reversed {
   margin-top: 2px;
   position: absolute;
   text-align: left;
+  white-space: nowrap;
   width: auto;
 }
 dl:not(.plain) > dt.reversed ~ dd > input[type='checkbox'],
@@ -1642,7 +1641,7 @@ dl:not(.plain).disabled > dt,
 dl:not(.plain).disabled > dd > label {
   color: #808080;
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1024px) {
   dl:not(.plain) > dt {
     float: none;
     margin-bottom: 4px;
@@ -1697,6 +1696,7 @@ select[multiple] {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  border-radius: 3px;
   font-family: "Trebuchet MS", Arial, sans-serif;
   padding: 4px 3px;
   margin: 0;
@@ -1931,6 +1931,9 @@ textarea {
 select > option {
   display: block !important;
 }
+.reCaptcha input.marginTop {
+  margin-top: 14px;
+}
 body {
   background-color: #1f4060;
   color: #666666;
@@ -2069,13 +2072,13 @@ body > iframe[src="about:blank"] {
 }
 .balloonTooltip {
   background-color: rgba(0,0,0,0.8);
+  border-radius: 6px;
   color: #ffffff;
   font-size: .85em;
   max-width: 300px;
   padding: 5px 10px 7px;
   position: absolute;
   z-index: 800;
-  border-radius: 6px 6px 6px 6px;
   box-shadow: 0 3px 7px 0 rgba(0,0,0,0.3);
 }
 .balloonTooltip .pointer {
@@ -2091,12 +2094,12 @@ body > iframe[src="about:blank"] {
 }
 .popover {
   background-color: rgba(0,0,0,0.4);
+  border-radius: 6px;
   padding: 7px;
   position: absolute;
   vertical-align: middle;
   width: 400px !important;
   z-index: 500;
-  border-radius: 6px 6px 6px 6px;
   box-shadow: 0 1px 7px 0 rgba(0,0,0,0.3);
 }
 .popover > .icon-spinner {
@@ -2110,13 +2113,13 @@ body > iframe[src="about:blank"] {
 }
 .popover > .popoverContent {
   background-color: #fcfdfe;
+  border-radius: 6px;
   color: #666666;
   max-height: 300px;
   min-height: 32px;
   opacity: 0;
   overflow: hidden;
   padding: 7px 14px;
-  border-radius: 6px 6px 6px 6px;
 }
 .popover:after {
   border: 10px solid transparent;
@@ -2143,6 +2146,7 @@ body > iframe[src="about:blank"] {
 }
 .badge {
   background-color: #666666;
+  border-radius: 9px;
   color: #ffffff;
   display: inline-block;
   font-size: 11px;
@@ -2152,11 +2156,10 @@ body > iframe[src="about:blank"] {
   text-shadow: none !important;
   vertical-align: middle;
   white-space: nowrap;
-  border-radius: 9px 9px 9px 9px;
 }
 .badge.label {
+  border-radius: 4px;
   font-weight: normal;
-  border-radius: 4px 4px 4px 4px;
 }
 .badge.badgeUpdate {
   background-color: #336699;
@@ -2248,6 +2251,9 @@ a.badge:hover.pink {
   font-style: normal !important;
   line-height: 1em;
   text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   text-shadow: 0 1px 0 rgba(255,255,255,0.8);
 }
 .icon.disabled {
@@ -3312,17 +3318,17 @@ a > span.icon:not(.pointer) {
   left: 0;
 }
 #lbPrevLink > span {
+  border-radius: 0 30px 30px 0;
   left: 0;
   padding-right: 14px;
-  border-radius: 0 30px 30px 0;
 }
 #lbNextLink {
   right: 0;
 }
 #lbNextLink > span {
+  border-radius: 30px 0 0 30px;
   padding-left: 14px;
   right: 0;
-  border-radius: 30px 0 0 30px;
 }
 #lbEnlarge,
 #lbCloseLink {
@@ -3428,7 +3434,6 @@ a > span.icon:not(.pointer) {
   }
 }
 #pageHeader {
-  margin-top: 57px;
   z-index: 100;
 }
 @media only screen and (max-width: 800px) {
@@ -3596,6 +3601,7 @@ a > span.icon:not(.pointer) {
 }
 .logo {
   margin-bottom: 21px;
+  margin-top: 14px;
 }
 .logo a {
   display: block;
@@ -3609,6 +3615,9 @@ a > span.icon:not(.pointer) {
   font-size: 160%;
   padding-top: 21px;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.8);
+}
+.userPanel + .logo {
+  margin-top: 57px;
 }
 @media only screen and (max-width: 800px) {
   .logo {
@@ -3624,8 +3633,8 @@ a > span.icon:not(.pointer) {
   padding: 4px 14px;
 }
 .sitemapList li > a {
+  border-radius: 6px;
   display: block;
-  border-radius: 6px 6px 6px 6px;
   -webkit-transition-property: background-color;
   transition-property: background-color;
   -webkit-transition-duration: .1s;
@@ -3665,6 +3674,7 @@ a > span.icon:not(.pointer) {
     color: #666666;
     display: inline-block;
     padding: 9px 21px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.8);
   }
   .mainMenu > ul > li > a:hover {
     color: #336699;
@@ -3681,6 +3691,7 @@ a > span.icon:not(.pointer) {
     min-width: 80px;
     padding: 14px 21px 8px;
     text-align: center;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.8);
   }
   .mainMenu > ul > li:not(.active) {
     padding-top: 5px;
@@ -3708,6 +3719,7 @@ a > span.icon:not(.pointer) {
     transition-duration: .1s;
     -webkit-transition-timing-function: linear;
     transition-timing-function: linear;
+    border-radius: 15px;
     border-style: solid;
     border-width: 1px;
     cursor: pointer;
@@ -3715,7 +3727,6 @@ a > span.icon:not(.pointer) {
     margin: 0 2px;
     padding: 5px 13px;
     position: relative;
-    border-radius: 15px 15px 15px 15px;
     background-color: #e3e3e3;
     border-color: #bbbbbb;
     color: #999999;
@@ -4576,11 +4587,11 @@ a > span.icon:not(.pointer) {
   .content > .breadcrumbs {
     background-color: #ffffff;
     border: 1px solid #cccccc;
+    border-radius: 6px;
     display: inline-block;
     margin-left: 7px;
     margin-right: 7px;
     max-width: 90%;
-    border-radius: 6px 6px 6px 6px;
   }
   .content > .breadcrumbs > ul > li {
     float: none;
@@ -4709,13 +4720,13 @@ a > span.icon:not(.pointer) {
 .tabMenuContainer > .menu ul li a {
   background-color: #fcfdfe;
   border: 1px solid #cccccc;
+  border-radius: 15px;
   color: #999999;
   display: block;
   font-size: 85%;
   margin: 4px 0;
   outline: 0;
   padding: 4px 7px;
-  border-radius: 15px 15px 15px 15px;
 }
 .tabMenuContainer > .menu ul li a:hover {
   background-color: #ffe5c8;
@@ -5048,13 +5059,13 @@ ul.inlineDataList {
   margin: 0 2px;
 }
 .pageNavigation ul li {
+  border-radius: 3px;
   float: left;
   font-weight: bold;
   margin: 0 1px;
   min-width: 19px;
   padding: 0;
   text-align: center;
-  border-radius: 3px 3px 3px 3px;
 }
 .pageNavigation ul li:not(.active):not(.disabled) {
   cursor: pointer;
@@ -5245,12 +5256,6 @@ ul.inlineDataList {
   padding-right: 14px;
   text-align: right;
 }
-.likeButton.active .icon {
-  color: #009900;
-}
-.dislikeButton.active .icon {
-  color: #cc0000;
-}
 .messageGroupList .columnSubject > .labelList {
   float: right;
   padding-left: 7px;
@@ -5430,7 +5435,7 @@ ul.inlineDataList {
   transition-timing-function: linear;
 }
 .message .messageOptions nav ul.smallButtons > li a.button {
-  border-radius: 0 0 0 0;
+  border-radius: 0;
 }
 .message .messageHeader .messageQuickOptions {
   float: right;
@@ -5560,8 +5565,8 @@ ul.inlineDataList {
   top: -4px;
 }
 .message.messageSidebarOrientationLeft .newMessageBadge {
-  left: -219px;
   border-radius: 0 5px 5px 0;
+  left: -219px;
 }
 .message.messageSidebarOrientationLeft .newMessageBadge:before {
   border-left: 6px solid transparent;
@@ -5696,12 +5701,12 @@ ul.inlineDataList {
   text-align: left;
 }
 .message .messageSidebar .userAvatar > .badgeOnline {
+  border-radius: 0 5px 5px 0;
   color: #eeffee;
   bottom: 7px;
   left: -5px;
   position: absolute;
   text-transform: uppercase;
-  border-radius: 0 5px 5px 0;
   box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.2);
   background-color: #006600;
   background-image: -webkit-linear-gradient(#009900,#006600);
@@ -5726,10 +5731,11 @@ ul.inlineDataList {
   padding: 7px 0 0;
 }
 .message .messageSidebar .userCredits .dataList > dt {
-  width: 50%;
+  width: 46%;
 }
 .message .messageSidebar .userCredits .dataList > dd {
-  margin-left: 53%;
+  margin-left: 49%;
+  word-wrap: break-word;
 }
 .message:not(.messageReduced) .messageOptions:before,
 .message:not(.messageReduced) .messageOptions:after {
@@ -5871,12 +5877,12 @@ li:nth-child(2n+1) .message .messageContent {
 .messageShareButtons > ul > li > .badge {
   background-color: #fcfdfe;
   border: 1px solid #cccccc;
+  border-radius: 3px;
   color: #666666;
   line-height: 23px;
   padding: 0 7px;
   position: relative;
   vertical-align: 1px;
-  border-radius: 3px 3px 3px 3px;
 }
 .messageShareButtons > ul > li > .badge:before {
   border: 6px solid #cccccc;
@@ -5921,11 +5927,21 @@ li:nth-child(2n+1) .message .messageContent {
   margin-right: 14px;
   margin-top: 0;
 }
+.messageSearchResultList > li > .box48 > div > .containerHeadline > h3 {
+  padding-right: 100px;
+}
+.likeButton.active .icon {
+  color: #009900;
+}
+.dislikeButton.active .icon {
+  color: #cc0000;
+}
 .cke_editor_text {
   border-style: solid !important;
   padding: 0 !important;
 }
-.cke_source {
+.cke_source,
+.cke_wysiwyg_div {
   padding: 8px !important;
 }
 .cke_combo__fontsize .cke_combo_text {
@@ -5933,6 +5949,10 @@ li:nth-child(2n+1) .message .messageContent {
 }
 .cke_dialog_background_cover {
   background-color: #000 !important;
+}
+.cke_wysiwyg_div,
+.cke_inner {
+  background-color: transparent !important;
 }
 @media only screen and (max-width: 800px) {
   .message.messageSidebarOrientationLeft .messageContent,
@@ -6062,12 +6082,12 @@ li:nth-child(2n+1) .message .messageContent {
 }
 .pollResultList li .pollMeter {
   background-color: #d8e7f5;
+  border-radius: 0 5px 5px 0;
   height: 100%;
   left: 0;
   position: absolute;
   top: 0;
   z-index: -1;
-  border-radius: 0 5px 5px 0;
 }
 .pollResultList li .caption {
   color: #336699;
@@ -6081,12 +6101,6 @@ li:nth-child(2n+1) .message .messageContent {
   position: absolute;
   right: 7px;
   top: 3px;
-}
-.reCaptcha input.marginTop {
-  margin-top: 14px;
-}
-.messageSearchResultList > li > .box48 > div > .containerHeadline > h3 {
-  padding-right: 100px;
 }
 .sortableListContainer .sortablePlaceholder {
   background-color: #efcb50;
@@ -6171,12 +6185,12 @@ li:nth-child(2n+1) .message .messageContent {
   display: inline-block;
 }
 .tag {
+  border-radius: 0 4px 4px 0;
   font-weight: normal;
   height: 13px;
   margin-left: 6px;
   padding-bottom: 2px;
   padding-left: 10px;
-  border-radius: 0 4px 4px 0;
 }
 .tag:before {
   border-color: transparent #666666 transparent transparent;
@@ -6192,13 +6206,13 @@ li:nth-child(2n+1) .message .messageContent {
 }
 .tag:after {
   background: #ffffff;
+  border-radius: 2px;
   content: "";
   height: 4px;
   left: -2px;
   position: absolute;
   top: 6px;
   width: 4px;
-  border-radius: 2px 2px 2px 2px;
   box-shadow: 0 -1px 2px 0 rgba(0,0,0,0.2);
 }
 .tag:hover {
@@ -6407,16 +6421,16 @@ li:nth-child(2n+1) .message .messageContent {
 }
 .conversationUsageBar {
   background-color: #666666;
+  border-radius: 5px;
   height: 20px;
   padding: 4px;
-  border-radius: 5px 5px 5px 5px;
   box-shadow: inset 0 1px 5px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .5);
 }
 .conversationUsageBar > span {
+  border-radius: 3px;
   color: transparent;
   display: block;
   height: 100%;
-  border-radius: 3px 3px 3px 3px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5);
   background-color: #a5df41;
   background-image: -webkit-linear-gradient(#a5df41,#4ca916);
@@ -6752,6 +6766,7 @@ body,
     transition-duration: .3s;
     -webkit-transition-timing-function: ease;
     transition-timing-function: ease;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.8);
   }
   .mainMenu > ul > li > a:hover {
     color: #ffffff;
@@ -6954,7 +6969,7 @@ button.active:hover .icon {
   .breadcrumbs {
     background-color: #ffffff;
     border: 1px solid #cccccc;
-    border-radius: 6px 6px 6px 6px;
+    border-radius: 6px;
   }
   .breadcrumbs > ul > li {
     padding-right: 0;
@@ -7017,8 +7032,8 @@ button.active:hover .icon {
     transition-timing-function: linear;
   }
   .breadcrumbs > ul > li:first-child > a {
-    padding-left: 9px;
     border-radius: 4px 0 0 4px;
+    padding-left: 9px;
   }
 }
 .userPanel {
@@ -7043,8 +7058,9 @@ button.active:hover .icon {
   .dropdownMenu,
   .attachmentThumbnail,
   .attachmentThumbnail > img,
-  .attachmentThumbnail > a > img {
-    border-radius: 6px 6px 6px 6px;
+  .attachmentThumbnail > a > img,
+  .box48 .attachmentTinyThumbnail {
+    border-radius: 6px;
   }
   .containerList > li:first-child {
     border-top-left-radius: 5px;
@@ -7061,7 +7077,7 @@ button.active:hover .icon {
     border-radius: 5px 0 0 5px;
   }
   .message.messageReduced .messageContent {
-    border-radius: 5px 5px 5px 5px;
+    border-radius: 5px;
   }
   .messageOptions nav ul.smallButtons > li:first-child a.button {
     border-top-left-radius: 14px;
@@ -7071,7 +7087,7 @@ button.active:hover .icon {
     border-bottom-right-radius: 6px;
   }
   .tabularBox {
-    border-radius: 6px 6px 6px 6px;
+    border-radius: 6px;
   }
   .tabularBox:not(.tabularBoxTitle) .table thead tr:first-child th:first-child {
     border-top-left-radius: 4px;
@@ -7111,10 +7127,10 @@ button.active:hover .icon {
     border-radius: 0;
   }
   .wbbBoardList:not(.wbbBoardListReduced) .wbbBoardNodeTopEmpty div.wbbBoard {
-    border-radius: 4px 4px 4px 4px;
+    border-radius: 4px;
   }
   .wbbBoardListReduced .tabularBox {
-    border-radius: 0 0 0 0;
+    border-radius: 0;
   }
   .tabMenuContainer > .menu {
     border-radius: 5px 5px 0 0;
@@ -7192,7 +7208,6 @@ input[type='password'],
 textarea,
 select[multiple] {
   border-color: #999999 #cccccc #e6e6e6;
-  border-radius: 3px;
   box-shadow: inset 0 1px 5px 0 rgba(0,0,0,0.1);
   -webkit-transition-property: background-color, border, box-shadow;
   transition-property: background-color, border, box-shadow;
@@ -7200,12 +7215,6 @@ select[multiple] {
   transition-duration: .2s;
   -webkit-transition-timing-function: linear;
   transition-timing-function: linear;
-}
-.preInput > input[type='text'] {
-  border-radius: 0 3px 3px 0;
-}
-.preInput > textarea {
-  border-radius: 0 3px 3px;
 }
 input[type='text']:active,
 input[type='search']:active,
@@ -7287,6 +7296,7 @@ select[multiple]:focus {
 .error,
 .success,
 .warning {
+  border-radius: 7px;
   border-width: 0;
   font-weight: bold;
   box-shadow: 0 1px 2px rgba(0, 0, 0, .5), inset 0 0 1px rgba(0, 0, 0, .2);
@@ -7320,6 +7330,7 @@ select[multiple]:focus {
   background-image: linear-gradient(#efcb50,#e9bf2b);
 }
 .innerError {
+  border-radius: 7px;
   border-width: 0;
   box-shadow: 0 1px 2px rgba(0, 0, 0, .5), inset 0 0 1px rgba(0, 0, 0, .2);
   background-color: #c95145;
@@ -7348,14 +7359,15 @@ select[multiple]:focus {
   }
   .wbbBoardList .wbbLastPost > div {
     background-color: #ffffff;
+    border-radius: 6px;
     padding: 7px;
     margin-right: 7px;
-    border-radius: 6px 6px 6px 6px;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .1);
   }
 }
 @media only screen and (min-width: 801px) {
   .messageList .messageGroupStarter > .message.messageSidebarOrientationLeft:before {
+    border-top-left-radius: 6px;
     content: "";
     display: block;
     height: 128px;
@@ -7363,13 +7375,13 @@ select[multiple]:focus {
     position: absolute;
     top: 0;
     width: 128px;
-    border-radius: 6px 0 0 0;
     background-image: -webkit-linear-gradient(left top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%);
     background-image: -moz-linear-gradient(left top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%);
     background-image: -ms-linear-gradient(left top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%);
     background-image: linear-gradient(left top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%);
   }
   .messageList .messageGroupStarter > .message.messageSidebarOrientationRight:before {
+    border-top-right-radius: 6px;
     content: "";
     display: block;
     height: 128px;
@@ -7377,7 +7389,6 @@ select[multiple]:focus {
     position: absolute;
     top: 0;
     width: 128px;
-    border-radius: 0 6px 0 0;
     background-image: -webkit-linear-gradient(right top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%);
     background-image: -moz-linear-gradient(right top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%);
     background-image: -ms-linear-gradient(right top, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%);

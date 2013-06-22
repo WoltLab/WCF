@@ -164,5 +164,22 @@
 	});
 	//]]>
 </script>
+ <!--[IF IE 9]>
+ <script type="text/javascript">
+ 	$(function() {
+ 		function fixButtonTypeIE9() {
+ 			$('button').each(function(index, button) {
+ 				var $button = $(button);
+ 				if (!$button.attr('type')) {
+ 					$button.attr('type', 'button');
+ 				}
+ 			});
+ 		}
+ 		
+ 		WCF.DOMNodeInsertedHandler.addCallback('WCF.FixButtonTypeIE9', fixButtonTypeIE9);
+ 		fixButtonTypeIE9();
+ 	});
+ </script>
+ <![ENDIF]-->
 
 {include file='imageViewer'}

@@ -124,7 +124,7 @@ class UserOptionAddForm extends AbstractForm {
 	 * available option types
 	 * @var array<string>
 	 */
-	public static $availableOptionTypes = array('birthday', 'boolean', 'date', 'integer', 'float', 'password', 'multiSelect', 'radioButton', 'select', 'text', 'textarea', 'message');
+	public static $availableOptionTypes = array('birthday', 'boolean', 'date', 'integer', 'float', 'password', 'multiSelect', 'radioButton', 'select', 'text', 'textarea', 'message', 'URL');
 	
 	/**
 	 * list of option type that require select options
@@ -170,6 +170,13 @@ class UserOptionAddForm extends AbstractForm {
 		if (isset($_POST['searchable'])) $this->searchable = intval($_POST['searchable']);
 		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
 		if (isset($_POST['outputClass'])) $this->outputClass = StringUtil::trim($_POST['outputClass']);
+		
+		if ($this->optionType == 'boolean' || $this->optionType == 'integer') {
+			$this->defaultValue = intval($this->defaultValue);
+		}
+		if ($this->optionType == 'float') {
+			$this->defaultValue = floatval($this->defaultValue);
+		}
 	}
 	
 	/**

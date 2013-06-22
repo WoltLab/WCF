@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\package\PackageCache;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\rank\UserRankAction;
 use wcf\data\user\rank\UserRankEditor;
@@ -148,7 +147,7 @@ class UserRankAddForm extends AbstractForm {
 		}
 		$userGroup = UserGroup::getGroupByID($this->groupID);
 		if ($userGroup === null || $userGroup->groupType == UserGroup::GUESTS || $userGroup->groupType == UserGroup::EVERYONE) {
-			throw new UserInputException('groupID', 'invalid');
+			throw new UserInputException('groupID', 'notValid');
 		}
 		
 		// css class name
@@ -203,7 +202,8 @@ class UserRankAddForm extends AbstractForm {
 		
 		// reset values
 		$this->rankTitle = $this->cssClassName = $this->customCssClassName = $this->rankImage = '';
-		$this->groupID = $this->repeatImage = $this->requiredPoints = $this->requiredGender = 0;
+		$this->groupID = $this->requiredPoints = $this->requiredGender = 0;
+		$this->repeatImage = 1;
 		
 		I18nHandler::getInstance()->reset();
 		

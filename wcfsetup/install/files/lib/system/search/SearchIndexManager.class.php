@@ -83,7 +83,7 @@ class SearchIndexManager extends SingletonFactory {
 	 */
 	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
 		// delete existing entry
-		$this->delete($objectType, array($objectID), ($languageID === null ? 0 : $languageID));
+		$this->delete($objectType, array($objectID));
 		
 		// save new entry
 		$this->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);

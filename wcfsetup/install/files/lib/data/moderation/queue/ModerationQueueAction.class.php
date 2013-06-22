@@ -87,6 +87,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		$queueList = new ViewableModerationQueueList();
 		$queueList->getConditionBuilder()->add("moderation_queue.objectTypeID IN (?)", array($objectTypeIDs));
 		$queueList->getConditionBuilder()->add("moderation_queue.status <> ?", array(ModerationQueue::STATUS_DONE));
+		$queueList->sqlOrderBy = 'moderation_queue.lastChangeTime DESC';
 		$queueList->sqlLimit = 5;
 		$queueList->loadUserProfiles = true;
 		$queueList->readObjects();

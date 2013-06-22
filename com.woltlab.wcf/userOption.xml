@@ -124,7 +124,7 @@
 			</option>
 			<option name="homepage">
 				<categoryname>profile.contact</categoryname>
-				<optiontype>text</optiontype>
+				<optiontype>URL</optiontype>
 				<outputclass>wcf\system\option\user\URLUserOptionOutput</outputclass>
 				<searchable>1</searchable>
 				<validationpattern>^$|^https?://</validationpattern>

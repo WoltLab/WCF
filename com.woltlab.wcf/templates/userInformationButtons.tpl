@@ -3,7 +3,7 @@
 		<ul class="buttonList">
 			{content}
 				{if $user->homepage}
-					<li><a class="jsTooltip" href="{@$user->homepage}" title="{lang}wcf.user.option.homepage{/lang}"{if EXTERNAL_LINK_REL_NOFOLLOW} rel="nofollow"{/if}{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}><span class="icon icon16 icon-home"></span> <span class="invisible">{lang}wcf.user.option.homepage{/lang}</span></a></li>
+					<li><a class="jsTooltip" href="{$user->homepage}" title="{lang}wcf.user.option.homepage{/lang}"{if EXTERNAL_LINK_REL_NOFOLLOW} rel="nofollow"{/if}{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}><span class="icon icon16 icon-home"></span> <span class="invisible">{lang}wcf.user.option.homepage{/lang}</span></a></li>
 				{/if}
 				
 				{if $user->userID != $__wcf->user->userID}

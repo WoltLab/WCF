@@ -243,8 +243,16 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			throw new PermissionDeniedException();
 		}
 		
-		if (!isset($this->parameters['tmpHash']) || empty($this->parameters['tmpHash'])) {
-			throw new UserInputException('tmpHash');
+		$this->readString('tmpHash');
+		$this->readInteger('styleID', true);
+		
+		if ($this->parameters['styleID']) {
+			$styles = StyleHandler::getInstance()->getStyles();
+			if (!isset($styles[$this->parameters['styleID']])) {
+				throw new UserInputException('styleID');
+			}
+			
+			$this->style = $styles[$this->parameters['styleID']];
 		}
 		
 		if (count($this->parameters['__files']->getFiles()) != 1) {
@@ -291,9 +299,16 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 					// store extension within session variables
 					WCF::getSession()->register('stylePreview-'.$this->parameters['tmpHash'], $file->getFileExtension());
 					
+					if ($this->parameters['styleID']) {
+						$this->updateStylePreviewImage($this->style);
+						
+						return array(
+							'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['styleID'].'.'.$file->getFileExtension()
+						);
+					}
+					
 					// return result
 					return array(
-						'errorType' => '',
 						'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['tmpHash'].'.'.$file->getFileExtension()
 					);
 				}

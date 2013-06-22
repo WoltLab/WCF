@@ -278,9 +278,9 @@
 		}
 		
 		> a {
+			border-radius: 6px;
 			display: block;
 			
-			.borderRadius(6px);
 			.transition(background-color, .1s); 
 			
 			&:hover {
@@ -329,7 +329,9 @@
 					color: @wcfMainMenuColor;
 					display: inline-block;
 					padding: 9px 21px;
-									
+					
+					.textShadow(@wcfMainMenuBackgroundColor);
+					
 					&:hover {
 						color: @wcfMainMenuActiveColor;
 						text-decoration: none;
@@ -347,6 +349,8 @@
 						min-width: 80px;
 						padding: 14px 21px 8px;
 						text-align: center;
+						
+						.textShadow(@wcfNavigationHeaderBackgroundColor);
 					}
 				}
 				
@@ -1213,12 +1217,11 @@
 	.content > .breadcrumbs {
 		background-color: @wcfContentBackgroundColor;
 		border: 1px solid @wcfContainerBorderColor;
+		border-radius: 6px;
 		display: inline-block;
 		margin-left: @wcfGapSmall;
 		margin-right: @wcfGapSmall;
 		max-width: 90%;
-		
-		.borderRadius(6px);
 		
 		> ul {
 			> li {
@@ -1375,14 +1378,13 @@
 			a {
 				background-color: @wcfContainerBackgroundColor;
 				border: 1px solid @wcfContainerBorderColor;
+				border-radius: @wcfButtonBorderRadius;
 				color: @wcfButtonColor;
 				display: block;
 				font-size: @wcfSmallFontSize;
 				margin: @wcfGapTiny 0;
 				outline: 0;
 				padding: @wcfGapTiny @wcfGapSmall;
-				
-				.borderRadius(15px);
 				
 				&:hover {
 					background-color: @wcfButtonHoverBackgroundColor;
@@ -1814,14 +1816,13 @@ ul.inlineDataList {
 .pageNavigation {
 	ul {
 		li {
+			border-radius: @wcfSmallButtonBorderRadius;
 			float: left;
 			font-weight: bold;
 			margin: 0 1px;
 			min-width: 19px;
 			padding: 0;
 			text-align: center;
-			
-			.borderRadius(3px);
 			
 			&:not(.active):not(.disabled) {
 				cursor: pointer;

@@ -65,7 +65,7 @@
 							<small class="innerError">
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
-								{elseif $errorType == 'invalid'}
+								{elseif $errorType == 'notValid'}
 									{lang}wcf.user.email.error.notValid{/lang}
 								{else}
 									{lang}wcf.user.mail.senderEmail.error.{@$errorType}{/lang}

@@ -1,1 +1,0 @@
-UPDATE wcf1_bbcode_media_provider SET regex = 'http://(?:www\\.)?clipfish\\.de/(?:.*?/)?video/(?<ID>\\d+)/' WHERE title = 'Clipfish';

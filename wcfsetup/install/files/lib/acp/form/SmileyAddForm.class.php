@@ -164,7 +164,7 @@ class SmileyAddForm extends AbstractForm {
 			
 			// update title
 			$smileyEditor->update(array(
-				'title' => 'wcf.smiley.title'.$smileyID
+				'smileyTitle' => 'wcf.smiley.title'.$smileyID
 			));
 		}
 		

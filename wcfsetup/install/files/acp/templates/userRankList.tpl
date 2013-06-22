@@ -88,7 +88,7 @@
 		</nav>
 	</div>
 {hascontentelse}
-	<p class="info">{lang}wcf.acp.user.rank.noneAvailable{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/hascontent}
 
 {include file='footer'}

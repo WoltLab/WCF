@@ -15,9 +15,9 @@ use wcf\system\WCF;
  */
 final class StringUtil {
 	const HTML_PATTERN = '~</?[a-z]+[1-6]?
-			(?:\s*[a-z]+\s*=\s*(?:
+			(?:\s*[a-z]+\s*(=\s*(?:
 			"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^\s>]
-			))*\s*/?>~ix';
+			))?)*\s*/?>~ix';
 	const HTML_COMMENT_PATTERN = '~<!--(.*?)-->~';
 	
 	/**
