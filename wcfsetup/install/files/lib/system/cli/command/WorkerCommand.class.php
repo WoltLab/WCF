@@ -106,12 +106,12 @@ class WorkerCommand implements ICommand {
 			$worker->setLoopCount($i);
 			$worker->validate();
 			
+			// execute worker
+			$worker->execute();
+			
 			// update progress
 			$progress = $worker->getProgress();
 			$progressbar->update($progress);
-			
-			// execute worker
-			$worker->execute();
 		}
 		$progressbar->update($progress);
 	}
