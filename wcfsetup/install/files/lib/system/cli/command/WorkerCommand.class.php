@@ -96,7 +96,7 @@ class WorkerCommand implements ICommand {
 		
 		$worker = new $class($parameters);
 		$worker->validate();
-		$progress = $worker->getProgress();
+		$progress = 0;
 		
 		// initialize progressbar
 		$progressbar = new ProgressBar(new ConsoleProgressBar(array(
