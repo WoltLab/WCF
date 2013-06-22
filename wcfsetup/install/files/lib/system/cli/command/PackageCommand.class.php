@@ -180,8 +180,7 @@ class PackageCommand implements ICommand {
 		$statement->execute($conditions->getParameters());
 		$packageInstallation = $statement->fetchArray();
 		if (!isset($packageInstallation['queueID'])) {
-			// todo: what to output?
-			Log::error('internalOpenQueue');
+			$this->error('internalOpenQueue');
 			return;
 		}
 		else {
@@ -191,8 +190,7 @@ class PackageCommand implements ICommand {
 		// PackageInstallationConfirmPage::readParameters()
 		$queue = new PackageInstallationQueue($queueID);
 		if (!$queue->queueID || $queue->done) {
-			// todo: what to output?
-			Log::error('internalReadParameters');
+			$this->error('internalReadParameters');
 			return;
 		}
 		
@@ -303,7 +301,7 @@ class PackageCommand implements ICommand {
 							// InstallPackageAction::finalize()
 							CacheHandler::getInstance()->flushAll();
 							// /InstallPackageAction::finalize()
-								
+							
 							// show success
 							$progress = 100;
 							$currentAction = CLIWCF::getLanguage()->get('wcf.acp.package.installation.step.install.success');
@@ -399,7 +397,7 @@ class PackageCommand implements ICommand {
 						// UninstallPackageAction::finalize()
 						CacheHandler::getInstance()->flushAll();
 						// /UninstallPackageAction::finalize()
-							
+						
 						// show success
 						$currentAction = CLIWCF::getLanguage()->get('wcf.acp.package.uninstallation.step.success');
 						$progress = 100;

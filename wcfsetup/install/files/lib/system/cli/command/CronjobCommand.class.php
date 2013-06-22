@@ -29,7 +29,6 @@ class CronjobCommand implements ICommand {
 			throw new ArgvException('', $this->fixUsage($argv->getUsageMessage()));
 		}
 		
-		// TODO: As applications are not loaded application specific cronjobs cannot be executed
 		CronjobScheduler::getInstance()->executeCronjobs();
 	}
 	
