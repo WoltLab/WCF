@@ -8330,7 +8330,7 @@ $.widget('ui.wcfDialog', {
 		if (this.options.modal) {
 			this._overlay = $('#jsWcfDialogOverlay');
 			if (!this._overlay.length) {
-				this._overlay = $('<div id="jsWcfDialogOverlay" class="dialogOverlay" />').css({ height: '100%', zIndex: 399 }).appendTo(document.body);
+				this._overlay = $('<div id="jsWcfDialogOverlay" class="dialogOverlay" />').css({ height: '100%', zIndex: 399 }).hide().appendTo(document.body);
 			}
 			
 			if (this.options.closable) {
