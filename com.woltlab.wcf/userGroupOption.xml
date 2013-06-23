@@ -284,6 +284,7 @@ bmp
 zip
 txt
 pdf]]></defaultvalue>
+				<wildcard><![CDATA[*]]></wildcard>
 			</option>
 			<option name="user.attachment.maxCount">
 				<categoryname>user.message.attachment</categoryname>
