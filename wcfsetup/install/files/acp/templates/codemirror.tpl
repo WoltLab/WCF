@@ -1,12 +1,18 @@
 {if !$codemirrorLoaded|isset}
 	<script type="text/javascript" src="{$__wcf->getPath()}js/3rdParty/codemirror/codemirror.js"></script>
+	<script type="text/javascript" src="{$__wcf->getPath()}js/3rdParty/codemirror/addon/dialog/dialog.js"></script>
+	<script type="text/javascript" src="{$__wcf->getPath()}js/3rdParty/codemirror/addon/search/searchcursor.js"></script>
+	<script type="text/javascript" src="{$__wcf->getPath()}js/3rdParty/codemirror/addon/search/search.js"></script>
 {/if}
 {if $codemirrorMode|isset}<script type="text/javascript" src="{$__wcf->getPath()}js/3rdParty/codemirror/mode/{$codemirrorMode}/{$codemirrorMode}.js"></script>{/if}
 {event name='javascriptIncludes'}
 
 <script type="text/javascript">
 //<![CDATA[
-	{if !$codemirrorLoaded|isset}$('<link rel="stylesheet" href="{$__wcf->getPath()}js/3rdParty/codemirror/codemirror.css" />').appendTo('head');{/if}
+	{if !$codemirrorLoaded|isset}
+		$('<link rel="stylesheet" href="{$__wcf->getPath()}js/3rdParty/codemirror/codemirror.css" />').appendTo('head');
+		$('<link rel="stylesheet" href="{$__wcf->getPath()}js/3rdParty/codemirror/addon/dialog/dialog.css" />').appendTo('head');
+	{/if}
 	
 	$(function() {
 		var $elements = $('{$codemirrorSelector|encodeJS}');
