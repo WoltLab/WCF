@@ -93,9 +93,12 @@ class MemcachedCacheSource implements ICacheSource {
 	 */
 	public function flush($cacheName, $useWildcard) {
 		$cacheName = $this->prefix . $cacheName;
-		$this->memcached->delete($cacheName);
 		
-		$this->updateMaster(null, $cacheName);
+		$resources = ($useWildcard) ? $this->getResources('~^' .  $cacheName. '(-[a-f0-9]+)?$~') : array($cacheName);
+		foreach ($resources as $resource) {
+			$this->memcached->delete($resource);
+			$this->updateMaster(null, $resource);
+		}
 	}
 	
 	/**
@@ -237,5 +240,30 @@ class MemcachedCacheSource implements ICacheSource {
 		
 		// default TTL: 3 days
 		return (60 * 60 * 24 * 3);
+	}
+	
+	/**
+	 * Gets a list of resources matching given pattern.
+	 * 
+	 * @param	string		$pattern
+	 * @return	array<string>
+	 */
+	protected function getResources($pattern) {
+		$resources = array();
+		$master = $this->memcached->get($this->prefix . 'master');
+		
+		if ($master !== false) {
+			$master = @unserialize($master);
+			
+			if ($master !== false) {
+				foreach ($master as $index => $key) {
+					if (preg_match($pattern, $key)) {
+						$resources[] = $key;
+					}
+				}
+			}
+		}
+		
+		return $resources;
 	}
 }
