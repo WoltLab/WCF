@@ -56,6 +56,10 @@ $(function() {
 	
 	{event name='javascriptInit'}
 	
+	if ($config.extraPlugins.indexOf('divarea') != -1) {
+		CKEDITOR.dom.element.prototype.disableContextMenu = function() { };
+	}
+	
 	var $editor = CKEDITOR.instances['{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}'];
 	if ($editor) $editor.destroy(true);
 	
