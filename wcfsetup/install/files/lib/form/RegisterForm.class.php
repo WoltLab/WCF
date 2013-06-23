@@ -303,7 +303,9 @@ class RegisterForm extends UserAddForm {
 				WCF::getSession()->unregister('__githubData');
 				WCF::getSession()->unregister('__githubToken');
 				
-				$registerVia3rdParty = true;
+				if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
+					$registerVia3rdParty = true;
+				}
 				
 				if (isset($githubData['bio'])) $saveOptions[User::getUserOptionID('aboutMe')] = $githubData['bio'];
 				if (isset($githubData['location'])) $saveOptions[User::getUserOptionID('location')] = $githubData['location'];
@@ -316,8 +318,6 @@ class RegisterForm extends UserAddForm {
 				
 				WCF::getSession()->unregister('__twitterData');
 				
-				$registerVia3rdParty = true;
-				
 				if (isset($twitterData['description'])) $saveOptions[User::getUserOptionID('aboutMe')] = $twitterData['description'];
 				if (isset($twitterData['location'])) $saveOptions[User::getUserOptionID('location')] = $twitterData['location'];
 			}
@@ -329,7 +329,9 @@ class RegisterForm extends UserAddForm {
 				
 				WCF::getSession()->unregister('__facebookData');
 				
-				$registerVia3rdParty = true;
+				if ($facebookData['email'] == $this->email) {
+					$registerVia3rdParty = true;
+				}
 				
 				$saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
 				
@@ -360,7 +362,9 @@ class RegisterForm extends UserAddForm {
 				
 				WCF::getSession()->unregister('__googleData');
 				
-				$registerVia3rdParty = true;
+				if (isset($googleData['email']) && $googleData['email'] == $this->email) {
+					$registerVia3rdParty = true;
+				}
 				
 				switch ($googleData['gender']) {
 					case 'male':
