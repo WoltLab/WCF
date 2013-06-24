@@ -3903,7 +3903,7 @@ WCF.Template = Class.extend({
 		template = "$output += '" + template + "';";
 		
 		try {
-			this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
+			this.fetch = new Function("v", "if (typeof v != 'object') { v = {}; } v.__window = window; v.__wcf = window.WCF; var $output = ''; " + template + ' return $output;');
 		}
 		catch (e) {
 			console.debug("var $output = ''; " + template + ' return $output;');
