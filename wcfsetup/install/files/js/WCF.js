@@ -4562,10 +4562,10 @@ WCF.Collapsible.Sidebar = Class.extend({
 	 */
 	_renderSidebar: function() {
 		if (this._isOpen) {
-			this._mainContainer.removeClass('sidebarCollapsed');
+			$('.sidebarOrientationLeft, .sidebarOrientationRight').removeClass('sidebarCollapsed');
 		}
 		else {
-			this._mainContainer.addClass('sidebarCollapsed');
+			$('.sidebarOrientationLeft, .sidebarOrientationRight').addClass('sidebarCollapsed');
 		}
 		
 		// update button position
