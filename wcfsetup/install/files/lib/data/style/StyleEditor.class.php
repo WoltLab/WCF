@@ -89,6 +89,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if ($this->image) {
 			@unlink(WCF_DIR.'images/'.$this->image);
 		}
+		
+		// delete language items
+		$sql = "DELETE FROM	wcf".WCF_N."_language_item
+			WHERE		languageItem = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array('wcf.style.styleDescription'.$this->styleID));
 	}
 	
 	/**
