@@ -395,8 +395,16 @@ class SearchForm extends RecaptchaForm {
 		}
 		
 		// dates
-		if (($startDate = @strtotime($this->startDate)) && ($endDate = @strtotime($this->endDate))) {
+		$startDate = @strtotime($this->startDate);
+		$endDate = @strtotime($this->endDate);
+		if ($startDate && $endDate) {
 			$this->searchIndexCondition->add('time BETWEEN ? AND ?', array($startDate, $endDate));
+		}
+		else if ($startDate) {
+			$this->searchIndexCondition->add('time > ?', array($startDate));
+		}
+		else if ($endDate) {
+			$this->searchIndexCondition->add('time < ?', array($endDate));
 		}
 		
 		// language
