@@ -6,8 +6,8 @@ use wcf\util\StringUtil;
 /**
  * Highlights syntax of PHP sourcecode.
  * 
- * @author	Tim Düsterhus, Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Tim Duesterhus, Marcel Werk
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.bbcode
  * @subpackage	system.bbcode.highlighter
