@@ -9,6 +9,7 @@
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
+			'wcf.acp.package.install.title': '{lang}wcf.acp.package.install.title{/lang}',
 			'wcf.acp.package.update.unauthorized': '{lang}wcf.acp.package.update.unauthorized{/lang}'
 		});
 		
