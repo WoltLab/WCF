@@ -7,8 +7,8 @@ use wcf\system\option\FileSizeOptionType;
  * 
  * The merge of option values returns the highest value.
  * 
- * @author	Tim Düsterhus
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Tim Duesterhus
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user.group
