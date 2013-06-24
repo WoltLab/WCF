@@ -8,8 +8,8 @@ use wcf\util\StringUtil;
 /**
  * Option type implementation for file sizes.
  * 
- * @author	Tim Düsterhus
- * @copyright	2011 Tim Düsterhus
+ * @author	Tim Duesterhus
+ * @copyright	2011 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option

@@ -11,8 +11,8 @@ use wcf\util\StringUtil;
  * Automatically authes the user for the current request via an access-token.
  * A missing token will be ignored, an invalid token results in a throw of a IllegalLinkException.
  * 
- * @author	Tim Düsterhus
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Tim Duesterhus
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	page

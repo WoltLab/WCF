@@ -7,8 +7,8 @@ use wcf\system\Regex;
 /**
  * Contains directory-related functions
  * 
- * @author	Tim Düsterhus
- * @copyright	2011 Tim Düsterhus
+ * @author	Tim Duesterhus
+ * @copyright	2011 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util

@@ -7,7 +7,7 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  * Represents a following user as a notification object.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.user
  * @subpackage	system.user.notification.object
