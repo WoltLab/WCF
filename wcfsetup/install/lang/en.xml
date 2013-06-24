@@ -823,6 +823,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[Updating “{$packageName}” …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Updated completed]]></item>
 		<item name="wcf.acp.package.installedVersion"><![CDATA[Installed Version]]></item>
+		<item name="wcf.acp.package.install.confirmMessage"><![CDATA[Do you really want to install the package “{@$package->getName()}”?]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[This package can't be installed because of the following already installed packages:]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[“{$excludedPackage}” ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (excluded version: {$excludedPackage->excludedPackageVersion}, installed version: {$excludedPackage->packageVersion}){/if}]]></item>
 		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following, already installed packages prohibit installing this package:]]></item>

@@ -824,6 +824,7 @@
 		<item name="wcf.acp.package.installation.step.update"><![CDATA[„{$packageName}“ wird aktualisiert …]]></item>
 		<item name="wcf.acp.package.installation.step.update.success"><![CDATA[Aktualisierung abgeschlossen]]></item>
 		<item name="wcf.acp.package.installedVersion"><![CDATA[Installierte Version]]></item>
+		<item name="wcf.acp.package.install.confirmMessage"><![CDATA[Wollen Sie das Paket „{@$package->getName()}“ wirklich installieren?]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages"><![CDATA[Dieses Paket kann aufgrund der folgenden bereits installierten Pakete nicht installiert werden:]]></item>
 		<item name="wcf.acp.package.install.error.excludedPackages.excludedPackage"><![CDATA[„{$excludedPackage}“ ({$excludedPackage->package}){if $excludedPackage->excludedPackageVersion} (ausgeschlossene Version: {$excludedPackage->excludedPackageVersion}, installierte Version: {$excludedPackage->packageVersion}){/if}]]></item>
 		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[Die folgenden bereits installierten Pakete schließen eine Installation dieses Pakets aus:]]></item>
