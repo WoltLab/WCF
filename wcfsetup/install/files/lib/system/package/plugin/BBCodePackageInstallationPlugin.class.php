@@ -81,7 +81,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
-		return array(
+		$data = array(
 			'bbcodeTag' => $data['attributes']['name'],
 			'htmlOpen' => (!empty($data['elements']['htmlopen']) ? $data['elements']['htmlopen'] : ''),
 			'htmlClose' => (!empty($data['elements']['htmlclose']) ? $data['elements']['htmlclose'] : ''),
@@ -90,7 +90,12 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			'attributes' => (isset($data['elements']['attributes']) ? $data['elements']['attributes'] : array()),
 			'className' => (!empty($data['elements']['classname']) ? $data['elements']['classname'] : ''),
 			'isSourceCode' => (!empty($data['elements']['sourcecode']) ? 1 : 0),
+			'buttonLabel' => (!empty($data['elements']['buttonlabel']) ? $data['elements']['buttonlabel'] : '')
 		);
+		
+		if ($data['wysiwygIcon'] && $data['buttonLabel']) {
+			$data['showButton'] = 1;
+		}
 	}
 	
 	/**
