@@ -96,6 +96,8 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		if ($data['wysiwygIcon'] && $data['buttonLabel']) {
 			$data['showButton'] = 1;
 		}
+		
+		return $data;
 	}
 	
 	/**
