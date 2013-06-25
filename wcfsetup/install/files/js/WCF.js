@@ -6193,6 +6193,15 @@ WCF.InlineEditor = Class.extend({
 			return;
 		}
 		
+		this._setOptions();
+		var $quickOption = '';
+		for (var $i = 0, $length = this._options.length; $i < $length; $i++) {
+			if (this._options[$i].isQuickOption) {
+				$quickOption = this._options[$i].optionName;
+				break;
+			}
+		}
+		
 		var self = this;
 		$elements.each(function(index, element) {
 			var $element = $(element);
@@ -6205,6 +6214,10 @@ WCF.InlineEditor = Class.extend({
 			}
 			
 			$trigger.click($.proxy(self._show, self)).data('elementID', $elementID);
+			if ($quickOption) {
+				// simulate click on target action
+				$trigger.disableSelection().data('optionName', $quickOption).dblclick($.proxy(self._click, self));
+			}
 			
 			// store reference
 			self._elements[$elementID] = $element;
@@ -6213,8 +6226,6 @@ WCF.InlineEditor = Class.extend({
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
-		
-		this._setOptions();
 		
 		WCF.CloseOverlayHandler.addCallback('WCF.InlineEditor', $.proxy(this._closeAll, this));
 		
