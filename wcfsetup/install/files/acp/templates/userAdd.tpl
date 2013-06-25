@@ -163,7 +163,7 @@
 				</fieldset>
 			{/if}
 			
-			{if $action == 'edit' && $__wcf->session->getPermission('admin.user.canBanUser')}
+			{if $action == 'edit' && $__wcf->session->getPermission('admin.user.canBanUser') && $__wcf->user->userID != $userID}
 				<fieldset>
 					<legend>{lang}wcf.acp.user.banUser{/lang}</legend>
 					
