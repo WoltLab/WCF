@@ -89,6 +89,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if ($this->image) {
 			@unlink(WCF_DIR.'images/'.$this->image);
 		}
+		
+		// delete language items
+		$sql = "DELETE FROM	wcf".WCF_N."_language_item
+			WHERE		languageItem = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array('wcf.style.styleDescription'.$this->styleID));
 	}
 	
 	/**
@@ -487,7 +493,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 */
 	protected static function saveLocalizedDescriptions(StyleEditor $styleEditor, array $descriptions) {
 		// localize package information
-		$sql = "INSERT INTO	wcf".WCF_N."_language_item
+		$sql = "REPLACE INTO	wcf".WCF_N."_language_item
 					(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
 			VALUES		(?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);

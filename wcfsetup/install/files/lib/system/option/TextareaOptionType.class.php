@@ -8,7 +8,7 @@ use wcf\util\StringUtil;
  * Option type implementation for textareas.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -30,6 +30,16 @@ class TextareaOptionType extends TextOptionType {
 	 * @see	wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
-		return StringUtil::unifyNewlines(parent::getData($option, $newValue));
+		$newValue = StringUtil::unifyNewlines(parent::getData($option, $newValue));
+		
+		// check for wildcard
+		if ($option->wildcard) {
+			$values = explode("\n", $newValue);
+			if (in_array($option->wildcard, $values)) {
+				$newValue = $option->wildcard;
+			}
+		}
+		
+		return $newValue;
 	}
 }

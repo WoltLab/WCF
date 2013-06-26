@@ -1123,9 +1123,9 @@ WCF.ACP.Package.Search = Class.extend({
 	 */
 	_prepareInstallation: function(packageUpdateServerID) {
 		var $parameters = {
-			'package': { }
+			'packages': { }
 		};
-		$parameters['package'][this._selectedPackage] = this._selectedPackageVersion;
+		$parameters['packages'][this._selectedPackage] = this._selectedPackageVersion;
 		
 		if (packageUpdateServerID) {
 			$parameters.authData = {

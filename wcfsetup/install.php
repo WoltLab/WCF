@@ -272,7 +272,7 @@ class BasicFileUtil {
 			return $path . '/';
 		}
 	
-		$path = WCF_DIR.'tmp/';
+		$path = INSTALL_SCRIPT_DIR.'tmp/';
 		if (@file_exists($path) && @is_writable($path)) {
 			return $path;
 		}

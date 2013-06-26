@@ -2909,3 +2909,382 @@ WCF.Message.Share.Page = Class.extend({
 		}, this), 'jsonp');
 	}
 });
+
+/**
+ * Handles user mention suggestions in CKEditors.
+ * 
+ * Important: Objects of this class have to be created before the CKEditor
+ * is initialized!
+ */
+WCF.Message.UserMention = Class.extend({
+	/**
+	 * name of the class used to get the user suggestions
+	 * @var	string
+	 */
+	_className: 'wcf\\data\\user\\UserAction',
+	
+	/**
+	 * suggestion item index, -1 if none is selected
+	 * @var	integer
+	 */
+	_itemIndex: -1,
+	
+	/**
+	 * current beginning of the mentioning
+	 * @var	string
+	 */
+	_mentionStart: '',
+	
+	/**
+	 * list with user name suggestions
+	 * @var	jQuery
+	 */
+	_suggestionList: null,
+	
+	/**
+	 * Initalizes user suggestions for the CKEditor with the given textarea id.
+	 * 
+	 * @param	string		editorID
+	 */
+	init: function(editorID) {
+		this._textarea = $('#' + editorID);
+		
+		this._suggestionList = $('<ul class="dropdownMenu userSuggestionList" />').appendTo(this._textarea.parent());
+		WCF.Dropdown.initDropdownFragment(this._textarea.parent(), this._suggestionList);
+		
+		// get associated (ready) CKEditor object and add event listeners
+		CKEDITOR.on('instanceReady', $.proxy(function(event) {
+			if (event.editor.name === this._textarea.wcfIdentify()) {
+				this._ckEditor = event.editor;
+				this._ckEditor.document.on('keyup', $.proxy(this._keyup, this));
+				this._ckEditor.document.on('keydown', $.proxy(this._keydown, this));
+				this._ckEditor.on('key', $.proxy(this._key, this));
+			}
+		}, this));
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+	},
+	
+	/**
+	 * Clears the suggestion list.
+	 */
+	_clearList: function() {
+		this._hideList();
+		
+		this._suggestionList.empty();
+	},
+	
+	/**
+	 * Handles a click on a list item suggesting a username.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		this._setUsername($(event.currentTarget).data('username'));
+	},
+	
+	/**
+	 * Creates an item in the suggestion list with the given data.
+	 * 
+	 * @return	object
+	 */
+	_createListItem: function(listItemData) {
+		$('<li class="box16"><span><span class="icon icon16 icon-user" /> ' + listItemData.label + '</span></li>').data('username', listItemData.label).click($.proxy(this._click, this)).appendTo(this._suggestionList);
+	},
+	
+	/**
+	 * Returns the offsets used to set the position of the user suggestion
+	 * dropdown.
+	 * 
+	 * @return	object
+	 */
+	_getDropdownOffsets: function() {
+		var $range = this._ckEditor.getSelection().getRanges()[0];
+		var $startOffset = $range.startOffset;
+		
+		// move caret after the '@' sign
+		$range.setStart($range.startContainer, $startOffset - this._mentionStart.length);
+		$range.collapse(true);
+		
+		// create span with random id and add it in front of the '@' sign
+		var $element = document.createElement('span');
+		$node = new CKEDITOR.dom.node($element);
+		$range.insertNode($node);
+		
+		// get offsets of span and
+		$jElement = $($element);
+		var $offsets = $jElement.getOffsets('offset');
+		$offsets.top += $jElement.height(); // add line height to top offset
+		
+		// merge text nodes before and after the temporary span element
+		// to avoid split text nodes which were one node before inserting
+		// the span element since split nodes can cause problems working
+		// with ranges and remove merged text node
+		if (!$.browser.mozilla) { // firefox doesn't need this correction!
+			$element.previousSibling.nodeValue += $element.nextSibling.nodeValue;
+			$($element.nextSibling).remove();
+		}
+		
+		// reset caret position to original position the end
+		$range.setStart($range.startContainer, $startOffset);
+		
+		// remove span
+		$($element).remove();
+		
+		return $offsets;
+	},
+	
+	/**
+	 * Returns the parameters for the AJAX request.
+	 * 
+	 * @return	object
+	 */
+	_getParameters: function() {
+		return {
+			data: {
+				includeUserGroups: false,
+				searchString: this._mentionStart
+			}
+		};
+	},
+	
+	/**
+	 * Returns the text in front of the caret in the current line.
+	 * 
+	 * @return	string
+	 */
+	_getTextLineInFrontOfCaret: function() {
+		var $range = this._ckEditor.getSelection().getRanges()[0];
+		
+		// if text is marked, user suggestions are disabled,
+		// thus returning empty string
+		if (!$range.collapsed) {
+			return '';
+		}
+		
+		// bookmark current caret position
+		var $bookmark = $range.createBookmark(true);
+		
+		// move selection begin to text beginning
+		$range.setStart($range.startContainer, 0);
+		
+		// get selected text
+		var $text = "";
+		var $childNodes = $range.cloneContents().$.childNodes;
+		for (var $i = 0; $i < $childNodes.length; $i++) {
+			var $node = $childNodes[$i];
+			if ($node.nodeType === 3 && $node.nodeName === '#text') {
+				$text += $node.nodeValue;
+			}
+			else if ($node.nodeType === 1 && $node.nodeName === 'BR') {
+				// discard current text after line break
+				$text = "";
+			}
+		}
+		
+		// reset caret position
+		$range.moveToBookmark($bookmark);
+		
+		// remove unicode zero width space
+		var $textBackup = $text;
+		$text = '';
+		for (var $i = 0; $i < $textBackup.length; $i++) {
+			var $byte = $textBackup.charCodeAt($i).toString(16);
+			if ($byte != '200b') {
+				$text += $textBackup[$i];
+			}
+		}
+		
+		return $text;
+	},
+	
+	/**
+	 * Hides the suggestion list.
+	 */
+	_hideList: function() {
+		WCF.Dropdown.getDropdown(this._textarea.parent().wcfIdentify()).removeClass('dropdownOpen');
+		WCF.Dropdown.getDropdownMenu(this._textarea.parent().wcfIdentify()).removeClass('dropdownOpen');
+		
+		this._itemIndex = -1;
+	},
+	
+	/**
+	 * Handles the key event of the CKEditor to select user suggestion on enter.
+	 */
+	_key: function(event) {
+		if (this._suggestionList.is(':visible')) {
+			if (event.data.keyCode === 13) { // enter
+				var $range = this._ckEditor.getSelection().getRanges()[0];
+				var $bookmark = $range.createBookmark(true);
+				
+				var $username = this._suggestionList.children('li').eq(this._itemIndex).data('username');
+				this._setUsername($username);
+				
+				$range.moveToBookmark($bookmark);
+				
+				$range.select();
+				
+				event.cancel();
+			}
+		}
+	},
+	
+	/**
+	 * Handles the keydown event to check if the user starts mentioning someone.
+	 * 
+	 * @param	object		event
+	 */
+	_keydown: function(event) {
+		if (this._suggestionList.is(':visible')) {
+			switch (event.data.$.keyCode) {
+				case 38: // arrow up
+					event.data.$.preventDefault();
+					
+					this._selectItem(this._itemIndex - 1);
+				break;
+				
+				case 40: // arrow down
+					event.data.$.preventDefault();
+					
+					this._selectItem(this._itemIndex + 1);
+				break;
+			}
+		}
+	},
+	
+	/**
+	 * Handles the keyup event to check if the user starts mentioning someone.
+	 * 
+	 * @param	object		event
+	 */
+	_keyup: function(event) {
+		// ignore event if suggestion list and user pressed enter, arrow up or arrow down
+		if (this._suggestionList.is(':visible') && event.data.$.keyCode in { 13:1, 38:1, 40:1 }) {
+			return;
+		}
+		
+		var $currentText = this._getTextLineInFrontOfCaret();
+		if ($currentText) {
+			var $match = $currentText.match(/@([^',\s][^,\s]{2,}|'(?:''|[^'])*')$/);
+			if ($match) {
+				// if mentioning is at text begin or there's a whitespace character
+				// before the '@', everything is fine
+				if (!$match.index || $currentText[$match.index - 1].match(/\s/)) {
+					this._mentionStart = $match[1];
+					
+					this._proxy.setOption('data', {
+						actionName: 'getSearchResultList',
+						className: this._className,
+						interfaceName: 'wcf\\data\\ISearchAction',
+						parameters: this._getParameters()
+					});
+					this._proxy.sendRequest();
+				}
+			}
+			else {
+				this._hideList();
+			}
+		}
+		else {
+			this._hideList();
+		}
+	},
+	
+	/**
+	 * Replaces the started mentioning with a chosen username.
+	 */
+	_setUsername: function(username) {
+		// remove beginning of username
+		var $range = this._ckEditor.getSelection().getRanges()[0];
+		$range.setStart($range.startContainer, $range.endOffset - this._mentionStart.length);
+		$range.deleteContents();
+		
+		if (username.indexOf("'") !== -1) {
+			username = username.replace(/'/g, "''");
+			username = "'" + username + "'";
+		}
+		else if (username.indexOf(' ') !== -1) {
+			username = "'" + username + "'";
+		}
+		
+		// insert text into range
+		$range.insertNode(new CKEDITOR.dom.text(username));
+		
+		// collapse range to its end
+		$range.setStart($range.startContainer, $range.endOffset + username.length);
+		$range.collapse(true);
+		
+		// refocus editor
+		this._ckEditor.focus();
+		
+		this._hideList();
+	},
+	
+	/**
+	 * Selects the suggestion with the given item index.
+	 * 
+	 * @param	integer		itemIndex
+	 */
+	_selectItem: function(itemIndex) {
+		var $li = this._suggestionList.children('li');
+		
+		if (itemIndex < 0) {
+			return;
+		}
+		else if (itemIndex + 1 > $li.length) {
+			return;
+		}
+		
+		$li.removeClass('dropdownNavigationItem');
+		$li.eq(itemIndex).addClass('dropdownNavigationItem');
+		
+		this._itemIndex = itemIndex;
+	},
+	
+	/**
+	 * Shows the suggestion list.
+	 */
+	_showList: function() {
+		WCF.Dropdown.getDropdown(this._textarea.parent().wcfIdentify()).addClass('dropdownOpen');
+		WCF.Dropdown.getDropdownMenu(this._textarea.parent().wcfIdentify()).addClass('dropdownOpen');
+	},
+	
+	/**
+	 * Evalutes user suggestion-AJAX request results.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		this._clearList(false);
+		
+		if ($.getLength(data.returnValues)) {
+			// check if the only suggestion is the current value
+			if (data.returnValues.length === 1 && data.returnValues[0].label == this._mentionStart) {
+				return;
+			}
+			
+			for (var $i in data.returnValues) {
+				var $item = data.returnValues[$i];
+				this._createListItem($item);
+			}
+			
+			this._updateSuggestionListPosition();
+			this._showList();
+		}
+	},
+	
+	/**
+	 * Updates the position of the suggestion list.
+	 */
+	_updateSuggestionListPosition: function() {
+		var $caretPosition = this._getDropdownOffsets();
+		$caretPosition.top += 5; // add little vertical gap
+		$caretPosition.left -= 16; // make sure dropdown arrow is at correct position
+		this._suggestionList.css($caretPosition);
+		this._selectItem(0);
+	}
+});

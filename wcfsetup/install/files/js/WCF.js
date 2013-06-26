@@ -3903,7 +3903,7 @@ WCF.Template = Class.extend({
 		template = "$output += '" + template + "';";
 		
 		try {
-			this.fetch = new Function("v", "var $output = ''; " + template + ' return $output;');
+			this.fetch = new Function("v", "if (typeof v != 'object') { v = {}; } v.__window = window; v.__wcf = window.WCF; var $output = ''; " + template + ' return $output;');
 		}
 		catch (e) {
 			console.debug("var $output = ''; " + template + ' return $output;');
@@ -4562,10 +4562,10 @@ WCF.Collapsible.Sidebar = Class.extend({
 	 */
 	_renderSidebar: function() {
 		if (this._isOpen) {
-			this._mainContainer.removeClass('sidebarCollapsed');
+			$('.sidebarOrientationLeft, .sidebarOrientationRight').removeClass('sidebarCollapsed');
 		}
 		else {
-			this._mainContainer.addClass('sidebarCollapsed');
+			$('.sidebarOrientationLeft, .sidebarOrientationRight').addClass('sidebarCollapsed');
 		}
 		
 		// update button position
@@ -6193,6 +6193,15 @@ WCF.InlineEditor = Class.extend({
 			return;
 		}
 		
+		this._setOptions();
+		var $quickOption = '';
+		for (var $i = 0, $length = this._options.length; $i < $length; $i++) {
+			if (this._options[$i].isQuickOption) {
+				$quickOption = this._options[$i].optionName;
+				break;
+			}
+		}
+		
 		var self = this;
 		$elements.each(function(index, element) {
 			var $element = $(element);
@@ -6205,6 +6214,10 @@ WCF.InlineEditor = Class.extend({
 			}
 			
 			$trigger.click($.proxy(self._show, self)).data('elementID', $elementID);
+			if ($quickOption) {
+				// simulate click on target action
+				$trigger.disableSelection().data('optionName', $quickOption).dblclick($.proxy(self._click, self));
+			}
 			
 			// store reference
 			self._elements[$elementID] = $element;
@@ -6213,8 +6226,6 @@ WCF.InlineEditor = Class.extend({
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
-		
-		this._setOptions();
 		
 		WCF.CloseOverlayHandler.addCallback('WCF.InlineEditor', $.proxy(this._closeAll, this));
 		
@@ -7578,7 +7589,10 @@ WCF.EditableItemList = Class.extend({
 		this._form = this._itemList.parents('form').submit($.proxy(this._submit, this));
 		
 		if (this._allowCustomInput) {
-			this._searchInput.keydown($.proxy(this._keyDown, this));
+			var self = this;
+			this._searchInput.keydown($.proxy(this._keyDown, this)).on('paste', function() {
+				setTimeout(function() { self._onPaste(); }, 100);
+			});
 		}
 	},
 	
@@ -7622,6 +7636,29 @@ WCF.EditableItemList = Class.extend({
 		}
 		
 		return true;
+	},
+	
+	/**
+	 * Handle paste event.
+	 */
+	_onPaste: function() {
+		// split content by comma
+		var $value = $.trim(this._searchInput.val());
+		$value = $value.split(',');
+		
+		for (var $i = 0, $length = $value.length; $i < $length; $i++) {
+			var $label = $.trim($value[$i]);
+			if ($label === '') {
+				continue;
+			}
+			
+			this.addItem({
+				objectID: 0,
+				label: $label
+			});
+		}
+		
+		this._searchInput.val('');
 	},
 	
 	/**

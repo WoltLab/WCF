@@ -81,7 +81,7 @@ WCF.Tagging.TagList = WCF.EditableItemList.extend({
 		for (var $i = 0, $length = this._data.length; $i < $length; $i++) {
 			// deleting items leaves crappy indices
 			if (this._data[$i]) {
-				$('<input type="hidden" name="tags[]" value="' + this._data[$i] + '" />').appendTo(this._form);
+				$('<input type="hidden" name="tags[]" />').val(this._data[$i]).appendTo(this._form);
 			}
 		};
 	},

@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * Shows the search form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf.search
  * @subpackage	form
@@ -395,8 +395,16 @@ class SearchForm extends RecaptchaForm {
 		}
 		
 		// dates
-		if (($startDate = @strtotime($this->startDate)) && ($endDate = @strtotime($this->endDate))) {
+		$startDate = @strtotime($this->startDate);
+		$endDate = @strtotime($this->endDate);
+		if ($startDate && $endDate) {
 			$this->searchIndexCondition->add('time BETWEEN ? AND ?', array($startDate, $endDate));
+		}
+		else if ($startDate) {
+			$this->searchIndexCondition->add('time > ?', array($startDate));
+		}
+		else if ($endDate) {
+			$this->searchIndexCondition->add('time < ?', array($endDate));
 		}
 		
 		// language
