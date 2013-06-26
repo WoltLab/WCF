@@ -3010,7 +3010,6 @@ WCF.Message.UserMention = Class.extend({
 		
 		// create span with random id and add it in front of the '@' sign
 		var $element = document.createElement('span');
-		$element.innerText = 'as';
 		$node = new CKEDITOR.dom.node($element);
 		$range.insertNode($node);
 		
