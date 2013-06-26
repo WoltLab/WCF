@@ -1682,9 +1682,17 @@ WCF.ACP.Options.Group = Class.extend({
  * 
  * @param	string		dialogID
  * @param	string		className
- * @param	object		options
+ * @param	string		title
+ * @param	object		parameters
+ * @param	object		callback
  */
 WCF.ACP.Worker = Class.extend({
+	/**
+	 * callback invoked after worker completed
+	 * @var	object
+	 */
+	_callback: null,
+	
 	/**
 	 * dialog id
 	 * @var	string
@@ -1716,8 +1724,10 @@ WCF.ACP.Worker = Class.extend({
 	 * @param	string		className
 	 * @param	string		title
 	 * @param	object		parameters
+	 * @param	object		callback
 	 */
-	init: function(dialogID, className, title, parameters) {
+	init: function(dialogID, className, title, parameters, callback) {
+		this._callback = callback || null;
 		this._dialogID = dialogID + 'Worker';
 		this._dialog = null;
 		this._proxy = new WCF.Action.Proxy({
@@ -1766,6 +1776,9 @@ WCF.ACP.Worker = Class.extend({
 				parameters: data.parameters
 			});
 			this._proxy.sendRequest();
+		}
+		else if (this._callback !== null) {
+			this._callback(this, data);
 		}
 		else {
 			// display continue button
