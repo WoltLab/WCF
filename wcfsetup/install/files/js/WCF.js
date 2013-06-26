@@ -7589,7 +7589,10 @@ WCF.EditableItemList = Class.extend({
 		this._form = this._itemList.parents('form').submit($.proxy(this._submit, this));
 		
 		if (this._allowCustomInput) {
-			this._searchInput.keydown($.proxy(this._keyDown, this));
+			var self = this;
+			this._searchInput.keydown($.proxy(this._keyDown, this)).on('paste', function() {
+				setTimeout(function() { self._onPaste(); }, 100);
+			});
 		}
 	},
 	
@@ -7633,6 +7636,29 @@ WCF.EditableItemList = Class.extend({
 		}
 		
 		return true;
+	},
+	
+	/**
+	 * Handle paste event.
+	 */
+	_onPaste: function() {
+		// split content by comma
+		var $value = $.trim(this._searchInput.val());
+		$value = $value.split(',');
+		
+		for (var $i = 0, $length = $value.length; $i < $length; $i++) {
+			var $label = $.trim($value[$i]);
+			if ($label === '') {
+				continue;
+			}
+			
+			this.addItem({
+				objectID: 0,
+				label: $label
+			});
+		}
+		
+		this._searchInput.val('');
 	},
 	
 	/**
