@@ -3019,8 +3019,9 @@ WCF.Message.UserMention = Class.extend({
 		$offsets.top += $jElement.height(); // add line height to top offset
 		
 		// merge text nodes before and after the temporary span element
-		// to avoid split text nodes at where one before which causes
-		// problems working with ranges and remove merged text node
+		// to avoid split text nodes which were one node before inserting
+		// the span element since split nodes can cause problems working
+		// with ranges and remove merged text node
 		if (!$.browser.mozilla) { // firefox doesn't need this correction!
 			$element.previousSibling.nodeValue += $element.nextSibling.nodeValue;
 			$($element.nextSibling).remove();
