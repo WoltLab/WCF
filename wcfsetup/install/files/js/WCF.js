@@ -5294,7 +5294,7 @@ WCF.Search.Base = Class.extend({
 			}
 			
 			pe.stop();
-		}, 100);
+		}, 250);
 	},
 	
 	/**
