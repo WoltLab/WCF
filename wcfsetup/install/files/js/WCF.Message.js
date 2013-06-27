@@ -1820,7 +1820,7 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * @return	string
 	 */
 	_normalize: function(text) {
-		return text.replace(/\r?\n|\r/g, "\n").replace(/\s{2,}/g, ' ');
+		return text.replace(/\r?\n|\r/g, "\n").replace(/\s/g, ' ').replace(/\s{2,}/g, ' ');
 	},
 	
 	/**
