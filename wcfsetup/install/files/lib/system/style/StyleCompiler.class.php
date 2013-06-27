@@ -183,6 +183,28 @@ class StyleCompiler extends SingletonFactory {
 		
 		$content = $callback($content);
 		
+		// compress stylesheet
+		$lines = explode("\n", $content);
+		$content = $lines[0] . "\n" . $lines[1] . "\n";
+		for ($i = 2, $length = count($lines); $i < $length; $i++) {
+			$line = trim($lines[$i]);
+			$content .= $line;
+			
+			switch (substr($line, -1)) {
+				case ',':
+					$content .= ' ';
+				break;
+				
+				case '}':
+					$content .= "\n";
+				break;
+			}
+			
+			if (substr($line, 0, 6) == '@media') {
+				$content .= "\n";
+			}
+		}
+		
 		// write stylesheet
 		file_put_contents($filename.'.css', $content);
 		
