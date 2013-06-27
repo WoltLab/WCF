@@ -6578,8 +6578,23 @@ WCF.Upload = Class.extend({
 			var $fd = new FormData();
 			var $uploadID = this._createUploadMatrix($files);
 			
+			// no more files left, abort
+			if (!this._uploadMatrix[$uploadID].length) {
+				return;
+			}
+			
+			var $validFilenames = [ ];
+			for (var $i = 0, $length = this._uploadMatrix[$uploadID].length; $i < $length; $i++) {
+				var $li = this._uploadMatrix[$uploadID][$i];
+				if (!$li.hasClass('uploadFailed')) {
+					$validFilenames.push($li.data('filename'));
+				}
+			}
+			
 			for (var $i = 0, $length = $files.length; $i < $length; $i++) {
-				$fd.append('__files[]', $files[$i]);
+				if ($validFilenames.indexOf($files[$i].name) !== -1) {
+					$fd.append('__files[]', $files[$i]);
+				}
 			}
 			
 			$fd.append('actionName', this._options.action);
@@ -6629,8 +6644,10 @@ WCF.Upload = Class.extend({
 				var $file = files[$i];
 				var $li = this._initFile($file);
 				
-				$li.data('filename', $file.name);
-				this._uploadMatrix[$uploadID].push($li);
+				if (!$li.hasClass('uploadFailed')) {
+					$li.data('filename', $file.name);
+					this._uploadMatrix[$uploadID].push($li);
+				}
 			}
 			
 			return $uploadID;
