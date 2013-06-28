@@ -2956,8 +2956,8 @@ WCF.Message.UserMention = Class.extend({
 		CKEDITOR.on('instanceReady', $.proxy(function(event) {
 			if (event.editor.name === this._textarea.wcfIdentify()) {
 				this._ckEditor = event.editor;
-				this._ckEditor.document.on('keyup', $.proxy(this._keyup, this));
-				this._ckEditor.document.on('keydown', $.proxy(this._keydown, this));
+				this._ckEditor.container.on('keyup', $.proxy(this._keyup, this));
+				this._ckEditor.container.on('keydown', $.proxy(this._keydown, this));
 				this._ckEditor.on('key', $.proxy(this._key, this));
 			}
 		}, this));
