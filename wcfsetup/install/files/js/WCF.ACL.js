@@ -200,7 +200,7 @@ WCF.ACL.List = Class.extend({
 	 */
 	_createListItem: function(objectID, label, type) {
 		var $listItem = $('<li><span class="icon icon16 icon-' + (type === 'group' ? 'group' : 'user') + '" /> <span>' + label + '</span></li>').appendTo(this._containerElements.aclList);
-		$listItem.data('objectID', objectID).data('type', type).click($.proxy(this._click, this));
+		$listItem.data('objectID', objectID).data('type', type).data('label', label).click($.proxy(this._click, this));
 		$('<span class="icon icon16 icon-remove jsTooltip pointer" title="' + WCF.Language.get('wcf.global.button.delete') + '" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
 		
 		return $listItem;
@@ -216,7 +216,7 @@ WCF.ACL.List = Class.extend({
 		var $type = $listItem.data('type');
 		var $objectID = $listItem.data('objectID');
 		
-		this._search.removeExcludedSearchValue($listItem.children('span:eq(0)').text());
+		this._search.removeExcludedSearchValue($listItem.data('label'));
 		$listItem.remove();
 		
 		// remove stored data
