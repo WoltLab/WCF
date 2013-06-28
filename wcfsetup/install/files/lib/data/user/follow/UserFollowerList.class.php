@@ -8,7 +8,7 @@ use wcf\data\user\UserProfile;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	data.user.follow
  * @category	Community Framework
  */

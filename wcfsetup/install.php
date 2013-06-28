@@ -34,7 +34,7 @@ $neededFilesPattern = array(
 /**
  * WCF::handleException() calls the show method on exceptions that implement this interface.
  *
- * @package	com.woltlab.wcf.system.exception
+ * @package	com.woltlab.wcf
  * @author	Marcel Werk
  */
 interface IPrintableException {
@@ -47,7 +47,7 @@ interface IPrintableException {
 /**
  * A SystemException is thrown when an unexpected error occurs.
  *
- * @package	com.woltlab.wcf.system.exception
+ * @package	com.woltlab.wcf
  * @author	Marcel Werk
  */
 class SystemException extends \Exception implements IPrintableException {
@@ -218,7 +218,7 @@ function handleError($errorNo, $message, $filename, $lineNo) {
 /**
  * BasicFileUtil contains file-related functions.
  *
- * @package	com.woltlab.wcf.util
+ * @package	com.woltlab.wcf
  * @author	Marcel Werk
  */
 class BasicFileUtil {
