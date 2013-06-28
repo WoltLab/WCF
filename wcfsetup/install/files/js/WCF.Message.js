@@ -2991,7 +2991,11 @@ WCF.Message.UserMention = Class.extend({
 	 * @return	object
 	 */
 	_createListItem: function(listItemData) {
-		$('<li class="box16"><span><span class="icon icon16 icon-user" /> ' + listItemData.label + '</span></li>').data('username', listItemData.label).click($.proxy(this._click, this)).appendTo(this._suggestionList);
+		var $listItem = $('<li />').data('username', listItemData.label).click($.proxy(this._click, this)).appendTo(this._suggestionList);
+		
+		var $box16 = $('<div />').addClass('box16').appendTo($listItem);
+		$box16.append($(listItemData.icon).addClass('framed'));
+		$box16.append($('<div />').append($('<span />').text(listItemData.label)));
 	},
 	
 	/**
