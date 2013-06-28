@@ -3026,7 +3026,16 @@ WCF.Message.UserMention = Class.extend({
 		// to avoid split text nodes which were one node before inserting
 		// the span element since split nodes can cause problems working
 		// with ranges and remove merged text node
-		if (!$.browser.mozilla) { // firefox doesn't need this correction!
+		if ($.browser.msie) {
+			var $next = $($element).next();
+			var $prev = $($element).prev();
+			
+			if ($next.length && $prev.length) {
+				$prev.nodeValue += $next.nodeValue;
+				$next.remove();
+			}
+		}
+		else if (!$.browser.mozilla) { // firefox doesn't need this correction!
 			$element.previousSibling.nodeValue += $element.nextSibling.nodeValue;
 			$($element.nextSibling).remove();
 		}
