@@ -15,6 +15,12 @@ use wcf\system\SingletonFactory;
  */
 class BBCodeHandler extends SingletonFactory {
 	/**
+	 * list of BBCodes allowed for usage
+	 * @var	array<wcf\data\bbcode\BBCode>
+	 */
+	protected $allowedBBCodes = array();
+	
+	/**
 	 * list of BBCodes displayed as buttons
 	 * @var	array<wcf\data\bbcode\BBCode>
 	 */
