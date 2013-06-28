@@ -16,13 +16,20 @@
 			if (ev.data.type == 'html') {
 				var $value = ev.data.dataValue;
 				
+				console.debug("before:\n" + $value);
+				
 				// Convert <br> to line breaks.
 				$value = $value.replace(/<br><\/p>/gi,"\n\n");
 				$value = $value.replace(/<br>/gi, "\n");
 				$value = $value.replace(/<\/p>/gi,"\n\n");
 				$value = $value.replace(/&nbsp;/gi," ");
+				
+				// convert div-separated content into new lines
 				$value = $value.replace(/<div([^>])>/gi, '');
 				$value = $value.replace(/<\/div>/gi, "\n");
+				
+				// convert lists into new lines
+				$value = $value.replace(/<\/li>/gi, "\n");
 				
 				// remove html tags
 				$value = $value.replace(/<[^>]+>/g, '');
@@ -31,6 +38,8 @@
 				$value = $value.replace(/\n{3,}/gi,"\n\n");
 				
 				ev.data.dataValue = $value;
+				
+				console.debug("after:\n" + $value);
 				
 				$pasted = true;
 			}
