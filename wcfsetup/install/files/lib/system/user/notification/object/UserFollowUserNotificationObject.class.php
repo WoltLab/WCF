@@ -9,7 +9,7 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	system.user.notification.object
  * @category	Community Framework
  */

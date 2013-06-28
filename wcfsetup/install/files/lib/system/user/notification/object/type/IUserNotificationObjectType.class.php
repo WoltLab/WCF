@@ -8,7 +8,7 @@ use wcf\data\IDatabaseObjectProcessor;
  * @author	Marcel Werk, Oliver Kliebisch
  * @copyright	2001-2013 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	system.user.notification.object.type
  * @category	Community Framework
  */

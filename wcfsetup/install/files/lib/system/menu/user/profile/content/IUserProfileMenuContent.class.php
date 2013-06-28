@@ -7,7 +7,7 @@ namespace wcf\system\menu\user\profile\content;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	system.menu.user.profile.content
  * @category	Community Framework
  */
