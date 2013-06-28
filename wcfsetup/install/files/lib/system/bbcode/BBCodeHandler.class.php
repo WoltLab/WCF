@@ -65,6 +65,7 @@ class BBCodeHandler extends SingletonFactory {
 	 * @return	array<wcf\data\bbcode\BBCode>
 	 */
 	public function getButtonBBCodes() {
+		// todo: check if BBCodes are available
 		return $this->buttonBBCodes;
 	}
 	

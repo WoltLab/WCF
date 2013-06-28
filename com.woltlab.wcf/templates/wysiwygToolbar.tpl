@@ -60,7 +60,7 @@ var $other = [ ];
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('table')}
 	$other.push('Table');
 {/if}
-{if MODULE_SMILEY && $__wcf->getSession()->getPermission($permissionCanUseSmilies) && $defaultSmilies|count}
+{if MODULE_SMILEY && (!$permissionCanUseSmilies|isset || $__wcf->getSession()->getPermission($permissionCanUseSmilies)) && defaultSmilies|count}
 	$other.push('Smiley');
 {/if}
 
