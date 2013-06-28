@@ -21,10 +21,12 @@
 				$value = $value.replace(/<br>/gi, "\n");
 				$value = $value.replace(/<\/p>/gi,"\n\n");
 				$value = $value.replace(/&nbsp;/gi," ");
+				$value = $value.replace(/<div([^>])>/gi, '');
+				$value = $value.replace(/<\/div>/gi, "\n");
 				
 				// remove html tags
 				$value = $value.replace(/<[^>]+>/g, '');
-
+				
 				// fix multiple new lines
 				$value = $value.replace(/\n{3,}/gi,"\n\n");
 				
