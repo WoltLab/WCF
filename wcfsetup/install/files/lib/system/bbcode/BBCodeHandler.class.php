@@ -15,6 +15,12 @@ use wcf\system\SingletonFactory;
  */
 class BBCodeHandler extends SingletonFactory {
 	/**
+	 * list of allowed BBCode tags in WYSIWYG editor
+	 * @var	array
+	 */
+	protected $allowedBBCodes = array();
+	
+	/**
 	 * list of BBCodes displayed as buttons
 	 * @var	array<wcf\data\bbcode\BBCode>
 	 */
@@ -59,6 +65,7 @@ class BBCodeHandler extends SingletonFactory {
 	 * @return	array<wcf\data\bbcode\BBCode>
 	 */
 	public function getButtonBBCodes() {
+		// todo: check if BBCodes are available
 		return $this->buttonBBCodes;
 	}
 	
