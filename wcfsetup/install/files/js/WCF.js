@@ -5671,8 +5671,24 @@ WCF.Search.User = WCF.Search.Base.extend({
 	_createListItem: function(item) {
 		var $listItem = this._super(item);
 		
+		var $icon = null;
+		if (item.icon) {
+			$icon = $(item.icon);
+		}
+		else if (this._includeUserGroups && item.type === 'group') {
+			$icon = $('<span class="icon icon16 icon-group" />');
+		}
+		
+		if ($icon) {
+			var $label = $listItem.find('span').detach();
+			
+			var $box16 = $('<div />').addClass('box16').appendTo($listItem);
+			
+			$box16.append($icon.addClass('framed'));
+			$box16.append($('<div />').append($label));
+		}
+		
 		// insert item type
-		if (this._includeUserGroups) $('<span class="icon icon16 icon-' + (item.type === 'group' ? 'group' : 'user') + '" style="margin-right: 4px;" />').prependTo($listItem.children('span:eq(0)'));
 		$listItem.data('type', item.type);
 		
 		return $listItem;
