@@ -32,11 +32,42 @@ class BBCodeHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns true if the BBCode with the given tag is available in the WYSIWYG editor.
+	 * 
+	 * @param	string		$bbCodeTag
+	 * @return	boolean
+	 */
+	public function isAvailableBBCode($bbCodeTag) {
+		$bbCode = BBCodeCache::getInstance()->getBBCodeByTag($bbCodeTag);
+		if ($bbCode === null || $bbCode->isDisabled) {
+			return false;
+		}
+		
+		if (in_array('all', $this->allowedBBCodes)) {
+			return true;
+		}
+		else if (in_array('none', $this->allowedBBCodes)) {
+			return false;
+		}
+		
+		return in_array($bbCodeTag, $this->allowedBBCodes);
+	}
+	
+	/**
 	 * Returns a list of BBCodes displayed as buttons.
 	 * 
 	 * @return	array<wcf\data\bbcode\BBCode>
 	 */
 	public function getButtonBBCodes() {
 		return $this->buttonBBCodes;
+	}
+	
+	/**
+	 * Sets the allowed BBCodes.
+	 * 
+	 * @param	array<string>
+	 */
+	public function setAllowedBBCodes(array $bbCodes) {
+		$this->allowedBBCodes = $bbCodes;
 	}
 }
