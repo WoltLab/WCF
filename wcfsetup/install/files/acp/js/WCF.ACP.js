@@ -2182,3 +2182,93 @@ WCF.ACP.User.EnableHandler = {
 	}
 };
 
+/**
+ * Importer for ACP.
+ * 
+ * @param	object		callback
+ */
+WCF.ACP.Importer = Class.extend({
+	/**
+	 * success callback
+	 * @var	object
+	 */
+	_callback: null,
+	
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes the WCF.ACP.Importer object.
+	 * 
+	 * @param	object		callback
+	 */
+	init: function(callback) {
+		this._callback = callback;
+		this._proxy = new WCF.Action.Proxy({
+			showLoadingOverlay: false,
+			success: $.proxy(this._success, this),
+			url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+		});
+	},
+	
+	/**
+	 * Invokes importing of an object type.
+	 * 
+	 * @param	string		objectType
+	 */
+	run: function(objectType) {
+		this._proxy.setOption('data', {
+			className: 'wcf\\system\\worker\\ImportWorker',
+			parameters: {
+				objectType: objectType
+			}
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Handles response from server.
+	 * 
+	 * @param	object		data
+	 */
+	_success: function(data) {
+		// init binding
+		if (this._dialog === null) {
+			this._dialog = $('<div />').hide().appendTo(document.body);
+			this._dialog.wcfDialog({
+				closable: false,
+				title: WCF.Language.get('wcf.acp.dataImport')
+			});
+		}
+		
+		if (data.template) {
+			this._dialog.html(data.template);
+		}
+		
+		// update progress
+		this._dialog.find('progress').attr('value', data.progress).text(data.progress + '%').next('span').text(data.progress + '%');
+		
+		// worker is still busy with it's business, carry on
+		if (data.progress < 100) {
+			// send request for next loop
+			this._proxy.setOption('data', {
+				className: data.className,
+				loopCount: data.loopCount,
+				parameters: data.parameters
+			});
+			this._proxy.sendRequest();
+		}
+		else {
+			this._callback(this, data);
+		}
+	}
+});
