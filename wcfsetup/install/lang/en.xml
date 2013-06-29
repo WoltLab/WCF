@@ -849,12 +849,12 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.searchForUpdates"><![CDATA[Search for Updates]]></item>
 		<item name="wcf.acp.package.searchForUpdates.noResults"><![CDATA[Your system is up to date, there are no outstanding updates.]]></item>
 		<item name="wcf.acp.package.source"><![CDATA[Data Source]]></item>
-		<item name="wcf.acp.package.source.download"><![CDATA[Paket herunterladen]]></item>
-		<item name="wcf.acp.package.source.download.description"><![CDATA[Geben Sie den direkten Pfad zur Paketdatei an. Dabei kann es sich um die Internetadresse der Paketdatei oder alternativ den Pfad zur Paketdatei im Dateisystem handeln.]]></item>
+		<item name="wcf.acp.package.source.download"><![CDATA[Download Package]]></item>
+		<item name="wcf.acp.package.source.download.description"><![CDATA[TODO: Geben Sie den direkten Pfad zur Paketdatei an. Dabei kann es sich um die Internetadresse der Paketdatei oder alternativ den Pfad zur Paketdatei im Dateisystem handeln.]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Upload Package]]></item>
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[Upload package archive from your local machine.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Install Package]]></item>
-		<item name="wcf.acp.package.startUpdate"><![CDATA[Update Package „{@$package->getName()}“]]></item>
+		<item name="wcf.acp.package.startUpdate"><![CDATA[Update Package “{@$package->getName()}”]]></item>
 		<item name="wcf.acp.package.type.application"><![CDATA[Application]]></item>
 		<item name="wcf.acp.package.type.plugin"><![CDATA[Plugin]]></item>
 		<item name="wcf.acp.package.uninstallation.confirm"><![CDATA[Do you really want to uninstall the package “{@$package->getName()}”?]]></item>
