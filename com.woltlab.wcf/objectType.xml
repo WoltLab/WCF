@@ -210,5 +210,43 @@
 			<name>com.woltlab.wcf.label</name>
 			<definitionname>com.woltlab.wcf.acl</definitionname>
 		</type>
+		
+		<!-- importers -->
+		<type>
+			<name>com.woltlab.wcf.user</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.group</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserGroupImporter]]></classname>
+		</type>
+		<!-- <type>
+			<name>com.woltlab.wcf.user.option</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserOptionImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.avatar</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserAvatarImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.comment</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserCommentImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.comment.response</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserCommentResponseImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.follower</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserFollowerImporter]]></classname>
+		</type>-->
+		<!-- /importers -->
 	</import>
 </data>

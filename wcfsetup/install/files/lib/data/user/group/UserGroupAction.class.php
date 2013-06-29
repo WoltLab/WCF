@@ -39,8 +39,10 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 	public function create() {
 		$group = parent::create();
 		
-		$groupEditor = new UserGroupEditor($group);
-		$groupEditor->updateGroupOptions($this->parameters['options']);
+		if (isset($this->parameters['options'])) {
+			$groupEditor = new UserGroupEditor($group);
+			$groupEditor->updateGroupOptions($this->parameters['options']);
+		}
 		
 		return $group;
 	}
