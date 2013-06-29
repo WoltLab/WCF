@@ -423,6 +423,8 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * Handles erroneous AJAX requests.
 	 */
 	_failure: function() {
+		this._setIcon('remove');
+		
 		if (!this._allowRollback) {
 			return;
 		}
@@ -445,6 +447,8 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	object		event
 	 */
 	_rollback: function(event) {
+		this._setIcon('spinner');
+		
 		if (event) {
 			$(event.currentTarget).disable();
 		}
@@ -490,6 +494,8 @@ WCF.ACP.Package.Installation = Class.extend({
 			});
 		}
 		
+		this._setIcon('spinner');
+		
 		if (data.step == 'rollback') {
 			this._dialog.wcfDialog('close');
 			this._dialog.remove();
@@ -528,6 +534,8 @@ WCF.ACP.Package.Installation = Class.extend({
 		
 		// handle success
 		if (data.step === 'success') {
+			this._setIcon('ok');
+			
 			this._purgeTemplateContent($.proxy(function() {
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
 				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() {
@@ -554,6 +562,8 @@ WCF.ACP.Package.Installation = Class.extend({
 			
 			// create button to handle next step
 			if (data.step && data.node) {
+				this._setIcon('question');
+				
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
 				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function(event) {
 					$(event.currentTarget).disable();
@@ -588,6 +598,8 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	object		data
 	 */
 	_submit: function(data) {
+		this._setIcon('spinner');
+		
 		// collect form values
 		var $additionalData = {};
 		$('#packageInstallationInnerContent input').each(function(index, inputElement) {
@@ -665,6 +677,10 @@ WCF.ACP.Package.Installation = Class.extend({
 		
 		this._proxy.setOption('data', $data);
 		this._proxy.sendRequest();
+	},
+	
+	_setIcon: function(iconName) {
+		this._dialog.find('.jsPackageInstallationStatus').removeClass('icon-ok icon-question icon-remove icon-spinner').addClass('icon-' + iconName);
 	}
 });
 
