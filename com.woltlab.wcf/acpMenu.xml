@@ -92,6 +92,12 @@
 			<parent>wcf.acp.menu.link.maintenance</parent>
 			<permissions>admin.system.canManageApplication</permissions>
 		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.maintenance.import">
+			<controller><![CDATA[wcf\acp\form\DataImport]]></controller>
+			<parent>wcf.acp.menu.link.maintenance</parent>
+			<permissions>admin.system.canImportData</permissions>
+		</acpmenuitem>
 		<!-- /maintenance -->
 		
 		<!-- log -->

@@ -129,5 +129,15 @@
 			<name>com.woltlab.wcf.poll</name>
 			<interfacename><![CDATA[wcf\system\poll\IPollHandler]]></interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.importer</name>
+			<interfacename><![CDATA[wcf\system\importer\IImporter]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.exporter</name>
+			<interfacename><![CDATA[wcf\system\exporter\IExporter]]></interfacename>
+		</definition>
 	</import>
 </data>

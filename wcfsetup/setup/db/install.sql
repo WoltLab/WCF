@@ -326,6 +326,14 @@ CREATE TABLE wcf1_event_listener (
 	UNIQUE KEY packageID (packageID, environment, eventClassName, eventName, listenerClassName)
 );
 
+DROP TABLE IF EXISTS wcf1_import_mapping;
+CREATE TABLE wcf1_import_mapping (
+	objectTypeID INT(10) NOT NULL,
+	oldID VARCHAR(255) NOT NULL,
+	newID INT(10) NOT NULL,
+	UNIQUE KEY (objectTypeID, oldID)
+);
+
 DROP TABLE IF EXISTS wcf1_label;
 CREATE TABLE wcf1_label (
 	labelID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1432,6 +1440,8 @@ ALTER TABLE wcf1_dashboard_box ADD FOREIGN KEY (packageID) REFERENCES wcf1_packa
 
 ALTER TABLE wcf1_dashboard_option ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_dashboard_option ADD FOREIGN KEY (boxID) REFERENCES wcf1_dashboard_box (boxID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_import_mapping ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_tracked_visit ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_tracked_visit ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
