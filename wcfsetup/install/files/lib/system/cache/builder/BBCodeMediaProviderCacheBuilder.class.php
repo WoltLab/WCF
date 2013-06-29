@@ -8,7 +8,7 @@ use wcf\data\bbcode\media\provider\BBCodeMediaProviderList;
  * @author	Tim Duesterhus
  * @copyright	2011-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
  */

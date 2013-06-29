@@ -140,9 +140,22 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @see	WCF.Upload._initFile()
 	 */
 	_initFile: function(file) {
-		var $li = $('<li class="box48"><span class="icon icon48 icon-spinner" /><div><div><p>'+file.name+'</p><small><progress max="100"></progress></small></div><ul></ul></div></li>');
+		var $li = $('<li class="box48"><span class="icon icon48 icon-spinner" /><div><div><p>'+file.name+'</p><small><progress max="100"></progress></small></div><ul></ul></div></li>').data('filename', file.name);
 		this._fileListSelector.append($li);
 		this._fileListSelector.show();
+		
+		// validate file size
+		if (this._buttonSelector.data('maxSize') < file.size) {
+			// remove progress bar
+			$li.find('progress').remove();
+			
+			// upload icon
+			$li.children('.icon-spinner').removeClass('icon-spinner').addClass('icon-ban-circle');
+			
+			// error message
+			$li.find('div > div').append($('<small class="innerError">' + WCF.Language.get('wcf.attachment.upload.error.tooLarge') + '</small>'));
+			$li.addClass('uploadFailed');
+		}
 		
 		return $li;
 	},

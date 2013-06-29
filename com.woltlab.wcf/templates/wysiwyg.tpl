@@ -15,15 +15,8 @@ $(function() {
 		return;
 	}
 	
-	var __CKEDITOR_TOOLBAR = [
-		['Source', '-', 'Undo', 'Redo'],
-		['Bold', 'Italic', 'Underline', '-', 'Strike', 'Subscript','Superscript'],
-		['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-		'/',
-		['Font', 'FontSize', 'TextColor'],
-		['Link', 'Unlink', 'Image', 'Table', 'Smiley'],
-		['Maximize']
-	];
+	{include file='wysiwygToolbar'}
+	
 	if (__CKEDITOR_BUTTONS.length) {
 		var $buttons = [ ];
 		
