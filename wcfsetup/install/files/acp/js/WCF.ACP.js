@@ -423,7 +423,9 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * Handles erroneous AJAX requests.
 	 */
 	_failure: function() {
-		this._setIcon('remove');
+		if (this._dialog !== null) {
+			this._setIcon('remove');
+		}
 		
 		if (!this._allowRollback) {
 			return;
@@ -679,6 +681,11 @@ WCF.ACP.Package.Installation = Class.extend({
 		this._proxy.sendRequest();
 	},
 	
+	/**
+	 * Sets the icon with the given name as the current installation status icon.
+	 * 
+	 * @param	string		iconName
+	 */
 	_setIcon: function(iconName) {
 		this._dialog.find('.jsPackageInstallationStatus').removeClass('icon-ok icon-question icon-remove icon-spinner').addClass('icon-' + iconName);
 	}
