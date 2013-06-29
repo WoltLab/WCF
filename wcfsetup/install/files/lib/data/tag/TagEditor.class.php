@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * @author	Tim Duesterhus, Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.tagging
+ * @package	com.woltlab.wcf
  * @subpackage	data.tag
  * @category	Community Framework
  */

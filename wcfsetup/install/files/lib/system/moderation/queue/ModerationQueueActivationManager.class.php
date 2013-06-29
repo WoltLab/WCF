@@ -11,7 +11,7 @@ use wcf\system\request\LinkHandler;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.moderation
+ * @package	com.woltlab.wcf
  * @subpackage	system.moderation.queue
  * @category	Community Framework
  */

@@ -5294,7 +5294,7 @@ WCF.Search.Base = Class.extend({
 			}
 			
 			pe.stop();
-		}, 100);
+		}, 250);
 	},
 	
 	/**
@@ -5671,8 +5671,24 @@ WCF.Search.User = WCF.Search.Base.extend({
 	_createListItem: function(item) {
 		var $listItem = this._super(item);
 		
+		var $icon = null;
+		if (item.icon) {
+			$icon = $(item.icon);
+		}
+		else if (this._includeUserGroups && item.type === 'group') {
+			$icon = $('<span class="icon icon16 icon-group" />');
+		}
+		
+		if ($icon) {
+			var $label = $listItem.find('span').detach();
+			
+			var $box16 = $('<div />').addClass('box16').appendTo($listItem);
+			
+			$box16.append($icon.addClass('framed'));
+			$box16.append($('<div />').append($label));
+		}
+		
 		// insert item type
-		if (this._includeUserGroups) $('<span class="icon icon16 icon-' + (item.type === 'group' ? 'group' : 'user') + '" style="margin-right: 4px;" />').prependTo($listItem.children('span:eq(0)'));
 		$listItem.data('type', item.type);
 		
 		return $listItem;
@@ -6578,8 +6594,23 @@ WCF.Upload = Class.extend({
 			var $fd = new FormData();
 			var $uploadID = this._createUploadMatrix($files);
 			
+			// no more files left, abort
+			if (!this._uploadMatrix[$uploadID].length) {
+				return;
+			}
+			
+			var $validFilenames = [ ];
+			for (var $i = 0, $length = this._uploadMatrix[$uploadID].length; $i < $length; $i++) {
+				var $li = this._uploadMatrix[$uploadID][$i];
+				if (!$li.hasClass('uploadFailed')) {
+					$validFilenames.push($li.data('filename'));
+				}
+			}
+			
 			for (var $i = 0, $length = $files.length; $i < $length; $i++) {
-				$fd.append('__files[]', $files[$i]);
+				if ($validFilenames.indexOf($files[$i].name) !== -1) {
+					$fd.append('__files[]', $files[$i]);
+				}
 			}
 			
 			$fd.append('actionName', this._options.action);
@@ -6629,8 +6660,10 @@ WCF.Upload = Class.extend({
 				var $file = files[$i];
 				var $li = this._initFile($file);
 				
-				$li.data('filename', $file.name);
-				this._uploadMatrix[$uploadID].push($li);
+				if (!$li.hasClass('uploadFailed')) {
+					$li.data('filename', $file.name);
+					this._uploadMatrix[$uploadID].push($li);
+				}
 			}
 			
 			return $uploadID;

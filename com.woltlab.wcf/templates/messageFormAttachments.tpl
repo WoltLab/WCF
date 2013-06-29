@@ -25,7 +25,7 @@
 	
 	<dl class="wide">
 		<dd>
-			<div></div>
+			<div data-max-size="{@$attachmentHandler->getMaxSize()}"></div>
 			<small>{lang}wcf.attachment.upload.limits{/lang}</small>
 		</dd>
 	</dl>

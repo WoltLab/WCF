@@ -630,12 +630,19 @@ class WCFSetup extends WCF {
 					}
 				}
 				// check innodb support
-				if ($dbClass == 'MySQLDatabase') {
-					$sql = "SHOW VARIABLES WHERE Variable_name = 'have_innodb'";
+				if ($dbClass == 'wcf\system\database\MySQLDatabase') {
+					$sql = "SHOW ENGINES";
 					$statement = $db->prepareStatement($sql);
 					$statement->execute();
-					$row = $statement->fetchArray();
-					if ($row !== false || $row['Value'] != 'YES') {
+					$hasInnoDB = false;
+					while ($row = $statement->fetchArray()) {
+						if ($row['Engine'] == 'InnoDB' && in_array($row['Support'], array('DEFAULT', 'YES'))) {
+							$hasInnoDB = true;
+							break;
+						}
+					}
+					
+					if (!$hasInnoDB) {
 						throw new SystemException("Support for InnoDB is missing.");
 					}
 				}

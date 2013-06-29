@@ -1820,7 +1820,7 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * @return	string
 	 */
 	_normalize: function(text) {
-		return text.replace(/\r?\n|\r/g, "\n").replace(/\s{2,}/g, ' ');
+		return text.replace(/\r?\n|\r/g, "\n").replace(/\s/g, ' ').replace(/\s{2,}/g, ' ');
 	},
 	
 	/**
@@ -2956,8 +2956,8 @@ WCF.Message.UserMention = Class.extend({
 		CKEDITOR.on('instanceReady', $.proxy(function(event) {
 			if (event.editor.name === this._textarea.wcfIdentify()) {
 				this._ckEditor = event.editor;
-				this._ckEditor.document.on('keyup', $.proxy(this._keyup, this));
-				this._ckEditor.document.on('keydown', $.proxy(this._keydown, this));
+				this._ckEditor.container.on('keyup', $.proxy(this._keyup, this));
+				this._ckEditor.container.on('keydown', $.proxy(this._keydown, this));
 				this._ckEditor.on('key', $.proxy(this._key, this));
 			}
 		}, this));
@@ -2991,7 +2991,11 @@ WCF.Message.UserMention = Class.extend({
 	 * @return	object
 	 */
 	_createListItem: function(listItemData) {
-		$('<li class="box16"><span><span class="icon icon16 icon-user" /> ' + listItemData.label + '</span></li>').data('username', listItemData.label).click($.proxy(this._click, this)).appendTo(this._suggestionList);
+		var $listItem = $('<li />').data('username', listItemData.label).click($.proxy(this._click, this)).appendTo(this._suggestionList);
+		
+		var $box16 = $('<div />').addClass('box16').appendTo($listItem);
+		$box16.append($(listItemData.icon).addClass('framed'));
+		$box16.append($('<div />').append($('<span />').text(listItemData.label)));
 	},
 	
 	/**
@@ -3022,7 +3026,16 @@ WCF.Message.UserMention = Class.extend({
 		// to avoid split text nodes which were one node before inserting
 		// the span element since split nodes can cause problems working
 		// with ranges and remove merged text node
-		if (!$.browser.mozilla) { // firefox doesn't need this correction!
+		if ($.browser.msie) {
+			var $next = $($element).next();
+			var $prev = $($element).prev();
+			
+			if ($next.length && $prev.length) {
+				$prev.nodeValue += $next.nodeValue;
+				$next.remove();
+			}
+		}
+		else if (!$.browser.mozilla) { // firefox doesn't need this correction!
 			$element.previousSibling.nodeValue += $element.nextSibling.nodeValue;
 			$($element.nextSibling).remove();
 		}
