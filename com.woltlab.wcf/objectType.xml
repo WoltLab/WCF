@@ -246,6 +246,11 @@
 			<name>com.woltlab.wcf.user.follower</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname><![CDATA[wcf\system\importer\UserFollowerImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.rank</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserRankImporter]]></classname>
 		</type>-->
 		<!-- /importers -->
 	</import>
