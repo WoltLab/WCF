@@ -241,7 +241,7 @@
 			<name>com.woltlab.wcf.user.comment.response</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname><![CDATA[wcf\system\importer\UserCommentResponseImporter]]></classname>
-		</type>
+		</type>-->
 		<type>
 			<name>com.woltlab.wcf.user.follower</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
@@ -251,7 +251,7 @@
 			<name>com.woltlab.wcf.user.rank</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname><![CDATA[wcf\system\importer\UserRankImporter]]></classname>
-		</type>-->
+		</type>
 		<!-- /importers -->
 	</import>
 </data>
