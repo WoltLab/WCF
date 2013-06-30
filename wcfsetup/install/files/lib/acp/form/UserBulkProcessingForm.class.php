@@ -404,7 +404,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		
 		// select group ids
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID = ?", array(array_keys($users)));
+		$conditions->add("userID IN (?)", array(array_keys($users)));
 		
 		$sql = "SELECT	userID, groupID
 			FROM	wcf".WCF_N."_user_to_group
