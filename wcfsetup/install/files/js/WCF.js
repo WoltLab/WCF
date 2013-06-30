@@ -5353,6 +5353,7 @@ WCF.Search.Base = Class.extend({
 				}
 			};
 			
+			this._searchInput.parents('.searchBar').addClass('loading');
 			this._proxy.setOption('data', {
 				actionName: 'getSearchResultList',
 				className: this._className,
@@ -5488,6 +5489,7 @@ WCF.Search.Base = Class.extend({
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		this._clearList(false);
+		this._searchInput.parents('.searchBar').removeClass('loading');
 		
 		if ($.getLength(data.returnValues)) {
 			for (var $i in data.returnValues) {
