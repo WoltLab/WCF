@@ -8,22 +8,8 @@
 				{implode from=$importers item=importer}'wcf.acp.dataImport.import.{@$importer}': '{lang}wcf.acp.dataImport.import.{@$importer}{/lang}'{/implode}
 			});
 			
-			var $queue = [ {implode from=$queue item=item}'{@$item}'{/implode} ];
-			var $queueID = 0;
-			
-			function runProcess() {
-				new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\ImportWorker', WCF.Language.get('wcf.acp.dataImport.import.' + $queue[$queueID]), {
-					objectType: $queue[$queueID]
-				}, function(worker) {
-					$queueID++;
-					if ($queueID < $queue.length) {
-						worker._dialog.wcfDialog('close');
-						runProcess();
-					}
-				});
-			}
-			
-			runProcess();
+			var $queues = [ {implode from=$queue item=item}'{@$item}'{/implode} ];
+			new WCF.ACP.Import.Manager($queues);
 		{/if}
 		
 		$('.jsImportSection').change(function(event) {

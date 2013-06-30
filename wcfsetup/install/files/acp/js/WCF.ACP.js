@@ -2190,22 +2190,39 @@ WCF.ACP.User.EnableHandler = {
 };
 
 /**
+ * Namespace for import-related classes.
+ */
+WCF.ACP.Import = { };
+
+/**
  * Importer for ACP.
  * 
- * @param	object		callback
+ * @param	array<string>	objectTypes
  */
-WCF.ACP.Importer = Class.extend({
+WCF.ACP.Import.Manager = Class.extend({
 	/**
-	 * success callback
-	 * @var	object
+	 * current action
+	 * @var	string
 	 */
-	_callback: null,
+	_currentAction: '',
 	
 	/**
 	 * dialog overlay
 	 * @var	jQuery
 	 */
 	_dialog: null,
+	
+	/**
+	 * current object type index
+	 * @var	integer
+	 */
+	_index: -1,
+	
+	/**
+	 * list of object types
+	 * @var	array<string>
+	 */
+	_objectTypes: [ ],
 	
 	/**
 	 * action proxy
@@ -2216,23 +2233,47 @@ WCF.ACP.Importer = Class.extend({
 	/**
 	 * Initializes the WCF.ACP.Importer object.
 	 * 
-	 * @param	object		callback
+	 * @param	array<string>	objectTypes
 	 */
-	init: function(callback) {
-		this._callback = callback;
+	init: function(objectTypes) {
+		this._currentAction = '';
+		this._index = -1;
+		this._objectTypes = objectTypes;
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
 			success: $.proxy(this._success, this),
 			url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
+		
+		this._invoke();
 	},
 	
 	/**
 	 * Invokes importing of an object type.
+	 */
+	_invoke: function() {
+		this._index++;
+		if (this._index >= this._objectTypes.length) {
+			this._dialog.find('.icon-spinner').removeClass('icon-spinner').addClass('icon-ok');
+			
+			// TODO: invoke cleanup here
+		}
+		else {
+			this._run(
+				WCF.Language.get('wcf.acp.dataImport.import.' + this._objectTypes[this._index]),
+				this._objectTypes[this._index]
+			);
+		}
+	},
+	
+	/**
+	 * Executes import of given object type.
 	 * 
+	 * @param	string		currentAction
 	 * @param	string		objectType
 	 */
-	run: function(objectType) {
+	_run: function(currentAction, objectType) {
+		this._currentAction = currentAction;
 		this._proxy.setOption('data', {
 			className: 'wcf\\system\\worker\\ImportWorker',
 			parameters: {
@@ -2261,6 +2302,10 @@ WCF.ACP.Importer = Class.extend({
 			this._dialog.html(data.template);
 		}
 		
+		if (this._currentAction) {
+			this._dialog.find('h1').text(this._currentAction);
+		}
+		
 		// update progress
 		this._dialog.find('progress').attr('value', data.progress).text(data.progress + '%').next('span').text(data.progress + '%');
 		
@@ -2275,7 +2320,7 @@ WCF.ACP.Importer = Class.extend({
 			this._proxy.sendRequest();
 		}
 		else {
-			this._callback(this, data);
+			this._invoke();
 		}
 	}
 });
