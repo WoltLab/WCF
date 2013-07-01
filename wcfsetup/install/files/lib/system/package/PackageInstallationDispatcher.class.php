@@ -650,9 +650,8 @@ class PackageInstallationDispatcher {
 				
 				// determine domain path, in some environments (e.g. ISPConfig) the $_SERVER paths are
 				// faked and differ from the real filesystem path
-				$currentPath = RouteHandler::getPath();
-				$pathToDocumentRoot = str_replace(RouteHandler::getPath(array('acp')), '', FileUtil::unifyDirSeperator(WCF_DIR));
-				$domainPath = str_replace($pathToDocumentRoot, '', $packageDir);
+				$documentRoot = str_replace(ApplicationHandler::getInstance()->getWCF()->domainPath, '', FileUtil::unifyDirSeperator(WCF_DIR));
+				$domainPath = str_replace($documentRoot, '', $packageDir);
 				
 				// update application path
 				$application = new Application($this->getPackage()->packageID);
