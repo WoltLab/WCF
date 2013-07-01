@@ -161,6 +161,28 @@ Examples for medium ID detection:
 		<item name="wcf.acp.dashboard.box.sort"><![CDATA[Sort boxes to determine show order. You can enable or disable boxes by moving them between the boxes “Active Boxes” and “Disabled Boxes”.]]></item>
 	</category>
 	
+	<category name="wcf.acp.dataImport">
+		<item name="wcf.acp.dataImport"><![CDATA[TODO: Datenimport]]></item>
+		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[TODO: Datenquelle wählen]]></item>
+		<item name="wcf.acp.dataImport.exporter"><![CDATA[TODO: Datenquelle]]></item>
+		<item name="wcf.acp.dataImport.configure.data"><![CDATA[TODO: Daten]]></item>
+		<item name="wcf.acp.dataImport.configure.data.description"><![CDATA[TODO: Folgende Daten importieren:]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[TODO: Benutzer]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[TODO: Benutzergruppen]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[TODO: Benutzerprofilfelder]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[TODO: Wer wem folgt]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[TODO: Benutzeränge]]></item>
+		<item name="wcf.acp.dataImport.configure.database"><![CDATA[TODO: Datenbank-Zugang]]></item>
+		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[TODO: Hostname]]></item>
+		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[TODO: Benutzername]]></item>
+		<item name="wcf.acp.dataImport.configure.database.password"><![CDATA[TODO: Password]]></item>
+		<item name="wcf.acp.dataImport.configure.database.name"><![CDATA[TODO: Datenbankname]]></item>
+		<item name="wcf.acp.dataImport.configure.database.prefix"><![CDATA[TODO: Tabellen-Präfix]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[TODO: Datei-System-Zugang]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[TODO: Pfad zur Installation]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[TODO: Wird für den Import von Datei-basierten Inhalten (wie z.B. Avatare) benötigt.]]></item>
+	</category>
+	
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Logged errors]]></item>
 		<item name="wcf.acp.exceptionLog.exception.file"><![CDATA[File (Line)]]></item>
@@ -492,6 +514,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.menu.link.tag.add"><![CDATA[Add Tag]]></item>
 		<item name="wcf.acp.menu.link.tag.list"><![CDATA[List Tags]]></item>
+		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[TODO: Datenimport]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">

@@ -22,7 +22,7 @@ class PackageUpdateServerAddForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.package.server';
+	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
