@@ -17,7 +17,7 @@ use wcf\system\WCF;
  */
 class UserImporter implements IImporter {
 	/**
-	 * @see wcf\system\importer::import()
+	 * @see wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data) {
 		// check existing user id

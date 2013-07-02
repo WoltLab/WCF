@@ -241,21 +241,17 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		// insert visible languages
 		$languageIDs = (isset($this->parameters['languages'])) ? $this->parameters['languages'] : array();
-		$userEditor->addToLanguages($languageIDs);
+		$userEditor->addToLanguages($languageIDs, false);
 		
 		if (PACKAGE_ID) {
 			// set default notifications
 			$sql = "INSERT INTO	wcf".WCF_N."_user_notification_event_to_user
 						(userID, eventID)
-				VALUES		(?, ?)";
+				SELECT		?, eventID
+				FROM		wcf".WCF_N."_user_notification_event
+				WHERE		preset = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach (UserNotificationEventCacheBuilder::getInstance()->getData() as $events) {
-				foreach ($events as $event) {
-					if ($event->preset) {
-						$statement->execute(array($user->userID, $event->eventID));
-					}
-				}
-			}
+			$statement->execute(array($user->userID, 1));
 		}
 		
 		return $user;

@@ -222,7 +222,7 @@
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname><![CDATA[wcf\system\importer\UserGroupImporter]]></classname>
 		</type>
-		<!-- <type>
+		<type>
 			<name>com.woltlab.wcf.user.option</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname><![CDATA[wcf\system\importer\UserOptionImporter]]></classname>
@@ -241,7 +241,7 @@
 			<name>com.woltlab.wcf.user.comment.response</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname><![CDATA[wcf\system\importer\UserCommentResponseImporter]]></classname>
-		</type>-->
+		</type>
 		<type>
 			<name>com.woltlab.wcf.user.follower</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>

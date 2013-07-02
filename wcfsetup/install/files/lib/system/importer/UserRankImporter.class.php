@@ -15,7 +15,7 @@ use wcf\data\user\rank\UserRankAction;
  */
 class UserRankImporter implements IImporter {
 	/**
-	 * @see wcf\system\importer::import()
+	 * @see wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data) {
 		$data['groupID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user.group', $data['groupID']);

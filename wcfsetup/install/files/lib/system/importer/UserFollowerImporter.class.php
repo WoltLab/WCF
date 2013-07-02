@@ -14,7 +14,7 @@ use wcf\data\user\follow\UserFollowAction;
  */
 class UserFollowerImporter implements IImporter {
 	/**
-	 * @see wcf\system\importer::import()
+	 * @see wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
