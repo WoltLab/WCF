@@ -173,6 +173,8 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[Benutzerprofilfelder]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[TODO: Wer wem folgt]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Benutzeränge]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[Avatare]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Pinwand-Kommentare]]></item>
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[Datenbank-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[Benutzername]]></item>
@@ -182,6 +184,9 @@
 		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[Datei-System-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Pfad zur Installation]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Wird für den Import von Datei-basierten Inhalten (wie z.B. Avatare) benötigt.]]></item>
+		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
+		<br /><strong>{$exception->getMessage()}<br />{$exception->getErrorDesc()}</strong>]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Es wurde keine Installation unter dem angegeben Pfad gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.exceptionLog">

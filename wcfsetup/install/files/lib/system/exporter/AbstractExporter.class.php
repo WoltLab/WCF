@@ -99,14 +99,7 @@ abstract class AbstractExporter implements IExporter {
 	 * @see wcf\system\exporter\IExporter::validateDatabaseAccess()
 	 */
 	public function validateDatabaseAccess() {
-		try {
-			$this->init();
-		}
-		catch (DatabaseException $e) {
-			return false;
-		}
-		
-		return true;
+		$this->init();
 	}
 	
 	/**

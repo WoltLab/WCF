@@ -172,6 +172,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[TODO: Benutzerprofilfelder]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[TODO: Wer wem folgt]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[TODO: Benutzeränge]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[TODO: Avatare]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[TODO: Pinwand-Kommentare]]></item>
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[TODO: Datenbank-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[TODO: Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[TODO: Benutzername]]></item>
@@ -181,6 +183,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[TODO: Datei-System-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[TODO: Pfad zur Installation]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[TODO: Wird für den Import von Datei-basierten Inhalten (wie z.B. Avatare) benötigt.]]></item>
+		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[TODO: Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
+		<br /><strong>{$exception->getMessage()}<br />{$exception->getErrorDesc()}</strong>]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[TODO: Es wurde keine Installation unter dem angegeben Pfad gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.exceptionLog">

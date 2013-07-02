@@ -48,7 +48,7 @@
 </header>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang} ({$errorField})</p>
+	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 <div class="contentNavigation">
@@ -130,7 +130,7 @@
 				
 			</fieldset>*}
 			
-			<fieldset>
+			<fieldset{if $errorField == 'database'} class="formError"{/if}>
 				<legend>{lang}wcf.acp.dataImport.configure.database{/lang}</legend>
 				
 				<dl>
@@ -165,6 +165,9 @@
 					<dt><label for="dbPrefix">{lang}wcf.acp.dataImport.configure.database.prefix{/lang}</label></dt>
 					<dd>
 						<input type="text" id="dbPrefix" name="dbPrefix" value="{$dbPrefix}" class="short" />
+						{if $errorField == 'database'}
+							<small class="innerError">{lang}wcf.acp.dataImport.configure.database.error{/lang}</small>
+						{/if}
 					</dd>
 				</dl>
 			</fieldset>
@@ -172,10 +175,13 @@
 			<fieldset>
 				<legend>{lang}wcf.acp.dataImport.configure.fileSystem{/lang}</legend>
 				
-				<dl>
+				<dl{if $errorField == 'fileSystemPath'} class="formError"{/if}>
 					<dt><label for="fileSystemPath">{lang}wcf.acp.dataImport.configure.fileSystem.path{/lang}</label></dt>
 					<dd>
 						<input type="text" id="fileSystemPath" name="fileSystemPath" value="{$fileSystemPath}" class="long" />
+						{if $errorField == 'fileSystemPath'}
+							<small class="innerError">{lang}wcf.acp.dataImport.configure.fileSystem.path.error{/lang}</small>
+						{/if}
 						<small>{lang}wcf.acp.dataImport.configure.fileSystem.path.description{/lang}</small>
 					</dd>
 				</dl>
