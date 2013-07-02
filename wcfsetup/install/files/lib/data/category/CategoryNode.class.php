@@ -26,6 +26,12 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	protected $index = 0;
 	
 	/**
+	 * parent node object
+	 * @var	wcf\data\category\CategoryNode
+	 */
+	protected $parentNode = null;
+	
+	/**
 	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\category\Category';
@@ -36,7 +42,49 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	 * @param	wcf\data\category\CategoryNode		$categoryNode
 	 */
 	public function addChild(CategoryNode $categoryNode) {
+		$categoryNode->setParentNode($this);
+		
 		$this->children[] = $categoryNode;
+	}
+	
+	/**
+	 * Sets parent node object.
+	 * 
+	 * @param	wcf\data\category\CategoryNode		$parentNode
+	 */
+	public function setParentNode(CategoryNode $parentNode) {
+		$this->parentNode = $parentNode;
+	}
+	
+	/**
+	 * Returns true if this element is the last sibling.
+	 * 
+	 * @return	boolean
+	 */
+	public function isLastSibling() {
+		foreach ($this->parentNode as $key => $child) {
+			if ($child === $this) {
+				if ($key == count($this->parentNode) - 1) return true;
+				return false;
+			}
+		}
+	}
+	
+	/**
+	 * Returns the number of open parent nodes.
+	 * 
+	 * @return	integer
+	 */
+	public function getOpenParentNodes() {
+		$element = $this;
+		$i = 0;
+	
+		while ($element->parentNode->parentNode != null && $element->isLastSibling()) {
+			$i++;
+			$element = $element->parentNode;
+		}
+	
+		return $i;
 	}
 	
 	/**
