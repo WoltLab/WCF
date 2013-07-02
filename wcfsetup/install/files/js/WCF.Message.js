@@ -57,7 +57,7 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 				$content += "\n";
 			}
 			
-			// do *not* use $.trim here, as we want to preserve whitespaces whitespaces
+			// do *not* use $.trim here, as we want to preserve whitespaces
 			$content += $(listItem).text().replace(/\n+$/, '');
 		});
 		
@@ -1244,7 +1244,7 @@ WCF.Message.InlineEditor = Class.extend({
 	 * Cancels editing and reverts to original message.
 	 */
 	_cancel: function() {
-		var $container = this._container[this._activeElementID];
+		var $container = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget');
 		
 		// remove ckEditor
 		try {
@@ -1298,7 +1298,7 @@ WCF.Message.InlineEditor = Class.extend({
 	 * @param	object		data
 	 */
 	_showEditor: function(data) {
-		var $messageBody = this._container[this._activeElementID].find('.messageBody');
+		var $messageBody = this._container[this._activeElementID].addClass('jsInvalidQuoteTarget').find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
 		var $content = $messageBody.find('.messageText');
 		
@@ -1335,7 +1335,7 @@ WCF.Message.InlineEditor = Class.extend({
 	 * Reverts editor.
 	 */
 	_revertEditor: function() {
-		var $messageBody = this._container[this._activeElementID].find('.messageBody');
+		var $messageBody = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget').find('.messageBody');
 		$messageBody.children('span.icon-spinner').remove();
 		$messageBody.find('.messageText').children().show();
 		
@@ -1417,7 +1417,7 @@ WCF.Message.InlineEditor = Class.extend({
 	 * Hides WYSIWYG editor.
 	 */
 	_hideEditor: function() {
-		var $messageBody = this._container[this._activeElementID].find('.messageBody');
+		var $messageBody = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget').find('.messageBody');
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
 		$messageBody.find('.messageText').children().hide();
 		
@@ -1435,7 +1435,7 @@ WCF.Message.InlineEditor = Class.extend({
 	 * @param	object		data
 	 */
 	_showMessage: function(data) {
-		var $container = this._container[this._activeElementID];
+		var $container = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget');
 		var $messageBody = $container.find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
 		var $content = $messageBody.find('.messageText');
@@ -1696,9 +1696,17 @@ WCF.Message.Quote.Handler = Class.extend({
 		
 		// store container ID
 		var $container = $(event.currentTarget);
+		
 		if (this._messageBodySelector) {
 			$container = this._containers[$container.data('containerID')];
 		}
+		
+		if ($container.hasClass('jsInvalidQuoteTarget')) {
+			this._activeContainerID = '';
+			
+			return;
+		}
+		
 		this._activeContainerID = $container.wcfIdentify();
 		
 		// remove alt-tag from all images, fixes quoting in Firefox

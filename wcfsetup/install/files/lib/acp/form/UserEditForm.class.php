@@ -138,12 +138,12 @@ class UserEditForm extends UserAddForm {
 			$this->readDefaultValues();
 		}
 		
+		parent::readData();
+		
 		// get avatar object
 		if ($this->avatarType == 'custom') {
 			$this->userAvatar = new UserAvatar($this->user->avatarID);
 		}
-		
-		parent::readData();
 	}
 	
 	/**

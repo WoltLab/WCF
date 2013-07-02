@@ -218,18 +218,21 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * Saves the visible languages of a user.
 	 * 
 	 * @param	array		$languageIDs
+	 * @param	boolean		$deleteOldLanguages
 	 */
-	public function addToLanguages(array $languageIDs) {
+	public function addToLanguages(array $languageIDs, $deleteOldLanguages = true) {
 		// remove previous languages
-		$sql = "DELETE FROM	wcf".WCF_N."_user_to_language
-			WHERE		userID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->userID));
+		if ($deleteOldLanguages) {
+			$sql = "DELETE FROM	wcf".WCF_N."_user_to_language
+				WHERE		userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->userID));
+		}
 		
 		// insert language ids
-		$sql = "INSERT INTO	wcf".WCF_N."_user_to_language
-					(userID, languageID)
-			VALUES		(?, ?)";
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_to_language
+						(userID, languageID)
+			VALUES			(?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		if (!empty($languageIDs)) {

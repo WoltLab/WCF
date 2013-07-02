@@ -222,7 +222,7 @@
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname><![CDATA[wcf\system\importer\UserGroupImporter]]></classname>
 		</type>
-		<!-- <type>
+		<type>
 			<name>com.woltlab.wcf.user.option</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname><![CDATA[wcf\system\importer\UserOptionImporter]]></classname>
@@ -246,7 +246,12 @@
 			<name>com.woltlab.wcf.user.follower</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname><![CDATA[wcf\system\importer\UserFollowerImporter]]></classname>
-		</type>-->
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.rank</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserRankImporter]]></classname>
+		</type>
 		<!-- /importers -->
 	</import>
 </data>

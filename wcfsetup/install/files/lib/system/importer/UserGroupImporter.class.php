@@ -14,7 +14,7 @@ use wcf\data\user\group\UserGroupAction;
  */
 class UserGroupImporter implements IImporter {
 	/**
-	 * @see wcf\system\importer::import()
+	 * @see wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data) {
 		$action = new UserGroupAction(array(), 'create', array(

@@ -42,6 +42,9 @@
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.dataImport{/lang}</h1>
+	{if $exporterName}
+		<p>{lang}wcf.acp.dataImport.exporter.{@$exporterName}{/lang}</p>
+	{/if}
 </header>
 
 {if $errorField}
@@ -121,11 +124,11 @@
 				{/foreach}
 			</fieldset>
 			
-			<fieldset>
+			{*<fieldset>
 				<legend>{lang}wcf.acp.dataImport.configure.settings{/lang}</legend>
 				
 				
-			</fieldset>
+			</fieldset>*}
 			
 			<fieldset>
 				<legend>{lang}wcf.acp.dataImport.configure.database{/lang}</legend>
@@ -173,6 +176,7 @@
 					<dt><label for="fileSystemPath">{lang}wcf.acp.dataImport.configure.fileSystem.path{/lang}</label></dt>
 					<dd>
 						<input type="text" id="fileSystemPath" name="fileSystemPath" value="{$fileSystemPath}" class="long" />
+						<small>{lang}wcf.acp.dataImport.configure.fileSystem.path.description{/lang}</small>
 					</dd>
 				</dl>
 			</fieldset>

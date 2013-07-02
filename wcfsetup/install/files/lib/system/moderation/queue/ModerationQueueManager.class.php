@@ -248,10 +248,12 @@ class ModerationQueueManager extends SingletonFactory {
 				LEFT JOIN	wcf".WCF_N."_moderation_queue moderation_queue
 				ON		(moderation_queue.queueID = moderation_queue_to_user.queueID)
 				WHERE		moderation_queue_to_user.userID = ?
+						AND moderation_queue_to_user.isAffected = ?
 						AND moderation_queue.status <> ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(
 				WCF::getUser()->userID,
+				1,
 				ModerationQueue::STATUS_DONE
 			));
 			$row = $statement->fetchArray();

@@ -26,7 +26,7 @@ class ApplicationEditForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.application';
+	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
 	/**
 	 * viewable application object
