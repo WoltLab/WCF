@@ -121,5 +121,15 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		$statement->execute(array(
 			(TIME_NOW - 86400)
 		));
+		
+		// clean up old logfiles
+		$handle = opendir(WCF_DIR."log/");
+		
+		while (false !== ($file = readdir($handle))) {
+			// if the file is older than two weeks delete it
+			if (filectime($file) < TIME_NOW - 60*60*24*14) {
+				@unlink($file); 
+			}
+		}
 	}
 }
