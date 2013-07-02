@@ -52,8 +52,6 @@ class RecentActivityDashboardBox extends AbstractContentDashboardBox {
 		
 		// removes orphaned and non-accessable events
 		UserActivityEventHandler::validateEvents($this->eventList);
-		
-		$this->fetched(); 
 	}
 	
 	/**

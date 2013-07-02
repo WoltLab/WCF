@@ -1,8 +1,6 @@
 <?php
 namespace wcf\system\dashboard\box;
-use wcf\data\dashboard\box\DashboardBox; 
 use wcf\data\user\UserProfileList;
-use wcf\page\IPage; 
 use wcf\system\cache\builder\MostLikedMembersCacheBuilder;
 use wcf\system\WCF;
 
@@ -18,38 +16,21 @@ use wcf\system\WCF;
  */
 class MostLikedMembersDashboardBox extends AbstractSidebarDashboardBox {
 	/**
-	 * user profile list
-	 * @var wcf\data\user\UserProfileList 
-	 */
-	public $userProfileList = null; 
-	
-	/**
-	 * @see	wcf\system\dashboard\box\IDashboardBox::init()
-	 */
-	public function init(DashboardBox $box, IPage $page) {
-		parent::init($box, $page); 
-		
-		// get ids
-		$mostLikedMemberIDs = MostLikedMembersCacheBuilder::getInstance()->getData();
-		if (!empty($mostLikedMemberIDs)) {
-			// get profile data
-			$this->userProfileList = new UserProfileList();
-			$this->userProfileList->sqlOrderBy = 'user_table.likesReceived DESC';
-			$this->userProfileList->setObjectIDs($mostLikedMemberIDs);
-			$this->userProfileList->readObjects();
-		}
-		
-		$this->fetched(); 
-	}
-	
-	/**
 	 * @see	wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
-		if ($this->userProfileList == null) return ''; 
+		// get ids
+		$mostLikedMemberIDs = MostLikedMembersCacheBuilder::getInstance()->getData();
+		if (empty($mostLikedMemberIDs)) return '';
+		
+		// get profile data
+		$userProfileList = new UserProfileList();
+		$userProfileList->sqlOrderBy = 'user_table.likesReceived DESC';
+		$userProfileList->setObjectIDs($mostLikedMemberIDs);
+		$userProfileList->readObjects();
 		
 		WCF::getTPL()->assign(array(
-			'mostLikedMembers' => $this->userProfileList
+			'mostLikedMembers' => $userProfileList
 		));
 		return WCF::getTPL()->fetch('dashboardBoxMostLikedMembers');
 	}
