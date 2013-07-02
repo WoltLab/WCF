@@ -126,7 +126,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		$handle = opendir(WCF_DIR."log/");
 		
 		while (false !== ($file = readdir($handle))) {
-			if (!is_file($file)) continue; 
+			if (!is_file($file) || $file == ".htaccess") continue; 
 			
 			// if the file is older than two weeks delete it
 			if (filectime(WCF_DIR."log/".$file) < TIME_NOW - 1209600) {
