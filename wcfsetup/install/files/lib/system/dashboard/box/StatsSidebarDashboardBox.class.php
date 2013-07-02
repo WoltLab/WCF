@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\dashboard\box;
+use wcf\data\dashboard\box\DashboardBox; 
+use wcf\page\IPage; 
 use wcf\system\cache\builder\UserStatsCacheBuilder;
 use wcf\system\WCF;
 
@@ -15,11 +17,28 @@ use wcf\system\WCF;
  */
 class StatsSidebarDashboardBox extends AbstractSidebarDashboardBox {
 	/**
+	 * the stats 
+	 * @var wcf\system\cache\builder\UserStatsCacheBuilder 
+	 */
+	public $stats = null; 
+	
+	/**
+	 * @see	wcf\system\dashboard\box\IDashboardBox::init()
+	 */
+	public function init(DashboardBox $box, IPage $page) {
+		parent::init($box, $page);
+		
+		$this->stats = UserStatsCacheBuilder::getInstance()->getData(); 
+		
+		$this->fetched(); 
+	}
+	
+	/**
 	 * @see	wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
 		WCF::getTPL()->assign(array(
-			'dashboardStats' => UserStatsCacheBuilder::getInstance()->getData()
+			'dashboardStats' => $this->stats
 		));
 		
 		return WCF::getTPL()->fetch('dashboardBoxStatsSidebar');
