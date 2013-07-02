@@ -89,7 +89,7 @@ class StyleEditForm extends StyleAddForm {
 	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
-		AbstractForm::saved();
+		AbstractForm::save();
 		
 		$this->objectAction = new StyleAction(array($this->style), 'update', array(
 			'data' => array(
