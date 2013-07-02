@@ -126,9 +126,11 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		$handle = opendir(WCF_DIR."log/");
 		
 		while (false !== ($file = readdir($handle))) {
+			if (!is_file($file)) continue; 
+			
 			// if the file is older than two weeks delete it
-			if (filectime($file) < TIME_NOW - 60*60*24*14) {
-				@unlink($file); 
+			if (filectime(WCF_DIR."log/".$file) < TIME_NOW - 1209600) {
+				@unlink(WCF_DIR."log/".$file); 
 			}
 		}
 	}
