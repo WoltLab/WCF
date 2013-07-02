@@ -2,8 +2,9 @@
 namespace wcf\system\importer;
 use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\avatar\UserAvatarEditor;
-use wcf\util\FileUtil;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 
 /**
  * Imports user avatars.
@@ -23,13 +24,29 @@ class UserAvatarImporter implements IImporter {
 		$fileLocation = $data['fileLocation'];
 		unset($data['fileLocation']);
 		
-		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
-		if ($data['userID']) return 0;
+		// check file location
+		if (!@file_exists($fileLocation)) return 0;
 		
+		// get image size
+		$imageData = @getimagesize($fileLocation);
+		if ($imageData === false) return 0;
+		$data['width'] = $imageData[0];
+		$data['height'] = $imageData[1];
+		if ($data['width'] < 48 || $data['height'] < 48) return 0; // avatar too small
+		
+		// check image type
+		if ($imageData[2] != IMAGETYPE_GIF && $imageData[2] != IMAGETYPE_JPEG && $imageData[2] != IMAGETYPE_PNG) return 0;
+		
+		// get file hash
 		if (empty($data['fileHash'])) $data['fileHash'] = sha1_file($fileLocation);
 		
+		// get user id
+		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
+		if (!$data['userID']) return 0;
+		
+		
 		$action = new UserAvatarAction(array(), 'create', array(
-			'data' => $data		
+			'data' => $data
 		));
 		$returnValues = $action->executeAction();
 		$avatar = $returnValues['returnValues'];
@@ -42,7 +59,11 @@ class UserAvatarImporter implements IImporter {
 		}
 		
 		// copy file
-		if (@copy($fileLocation, $avatar->getLocation())) {
+		try {
+			if (!copy($fileLocation, $avatar->getLocation())) {
+				throw new SystemException();
+			}
+			
 			// create thumbnails
 			$action = new UserAvatarAction(array($avatar), 'generateThumbnails');
 			$action->executeAction();
@@ -56,7 +77,7 @@ class UserAvatarImporter implements IImporter {
 			
 			return $avatar->avatarID;
 		}
-		else {
+		catch (SystemException $e) {
 			// copy failed; delete avatar
 			$editor = new UserAvatarEditor($avatar);
 			$editor->delete();
