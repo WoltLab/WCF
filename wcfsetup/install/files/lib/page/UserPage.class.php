@@ -10,7 +10,6 @@ use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
 use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\menu\user\profile\UserProfileMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\MetaTagHandler;
@@ -104,7 +103,20 @@ class UserPage extends AbstractPage {
 		
 		// check is Accessible
 		if ($this->user->isProtected()) {
-			throw new PermissionDeniedException();
+			$dynVar = 'wcf.user.profile.access.'; 
+			if ($this->user->canViewProfile == UserProfile::ACCESS_REGISTERED) {
+				$dynVar .= "registered";
+			} else {
+				$dynVar .= "follower";
+			}
+			
+			WCF::getTPL()->assign(array(
+				'message' => WCF::getLanguage()->getDynamicVariable($dynVar, array('username' => $this->user->username)),
+				'user' => $this->user, 
+				'templateName' => 'profileAccessDenied'
+			));
+			WCF::getTPL()->display('profileAccessDenied');
+			exit; 
 		}
 		
 		if (isset($_REQUEST['editOnInit'])) $this->editOnInit = true;
