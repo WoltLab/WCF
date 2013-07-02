@@ -61,7 +61,16 @@ abstract class AbstractContentDashboardBox implements IDashboardBox {
 		
 		return WCF::getTPL()->fetch($this->templateName);
 	}
-	
+        
+	/**
+	 * Calls the 'fetched' event after the successful call of the init method.
+	 * This functions won't called automatically. You must do this manually, if you inherit AbstractContentDashboardBox.
+	 */
+	protected function fetched() {
+		// fire event
+		EventHandler::getInstance()->fireAction($this, 'fetched');
+	}
+        
 	/**
 	 * Renders box view.
 	 * 
