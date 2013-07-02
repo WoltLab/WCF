@@ -650,7 +650,21 @@ class PackageInstallationDispatcher {
 				
 				// determine domain path, in some environments (e.g. ISPConfig) the $_SERVER paths are
 				// faked and differ from the real filesystem path
-				$documentRoot = str_replace(ApplicationHandler::getInstance()->getWCF()->domainPath, '', FileUtil::unifyDirSeperator(WCF_DIR));
+				if (PACKAGE_ID) {
+					$wcfDomainPath = ApplicationHandler::getInstance()->getWCF()->domainPath;
+				}
+				else {
+					$sql = "SELECT	domainPath
+						FROM	wcf".WCF_N."_application
+						WHERE	packageID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute(array(1));
+					$row = $statement->fetchArray();
+					
+					$wcfDomainPath = $row['domainPath'];
+				}
+				
+				$documentRoot = str_replace($wcfDomainPath, '', FileUtil::unifyDirSeperator(WCF_DIR));
 				$domainPath = str_replace($documentRoot, '', $packageDir);
 				
 				// update application path
