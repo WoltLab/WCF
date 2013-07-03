@@ -95,7 +95,7 @@ else if (!extension_loaded('pcre')) {
 }
 
 // check safemode
-else if ((is_array($configArray) && !empty($configArray['safe_mode']['local_value'])) || @ini_get('safe_mode')) {
+else if ((is_array($configArray) && !empty($configArray['safe_mode']['local_value']) && $configArray['safe_mode']['local_value'] != 'off') || (@ini_get('safe_mode') && ini_get('safe_mode') != 'off')) {
 	?>
 	<p>PHP Safemode is enabled. You must disable it to install this software.<br />
 	Der PHP Safemode ist aktiviert. F&uuml;r den Betrieb der Software muss der Safemode deaktiviert sein.</p>

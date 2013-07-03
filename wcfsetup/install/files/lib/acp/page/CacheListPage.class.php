@@ -115,11 +115,11 @@ class CacheListPage extends AbstractPage {
 			break;
 		}
 		
-		$this->readCacheFiles('language', FileUtil::unifyDirSeperator(WCF_DIR.'language'));
-		$this->readCacheFiles('template', FileUtil::unifyDirSeperator(WCF_DIR.'templates/compiled'), new Regex('\.meta\.php$'));
-		$this->readCacheFiles('template', FileUtil::unifyDirSeperator(WCF_DIR.'acp/templates/compiled'), new Regex('\.meta\.php$'));
-		$this->readCacheFiles('style', FileUtil::unifyDirSeperator(WCF_DIR.'style'), null, 'css');
-		$this->readCacheFiles('style', FileUtil::unifyDirSeperator(WCF_DIR.'acp/style'), new Regex('WCFSetup.css$'), 'css');
+		$this->readCacheFiles('language', FileUtil::unifyDirSeparator(WCF_DIR.'language'));
+		$this->readCacheFiles('template', FileUtil::unifyDirSeparator(WCF_DIR.'templates/compiled'), new Regex('\.meta\.php$'));
+		$this->readCacheFiles('template', FileUtil::unifyDirSeparator(WCF_DIR.'acp/templates/compiled'), new Regex('\.meta\.php$'));
+		$this->readCacheFiles('style', FileUtil::unifyDirSeparator(WCF_DIR.'style'), null, 'css');
+		$this->readCacheFiles('style', FileUtil::unifyDirSeparator(WCF_DIR.'acp/style'), new Regex('WCFSetup.css$'), 'css');
 	}
 	
 	/**

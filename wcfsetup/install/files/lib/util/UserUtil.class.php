@@ -230,7 +230,7 @@ final class UserUtil {
 			$REQUEST_URI = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $REQUEST_URI);
 		}
 		
-		return StringUtil::substring(FileUtil::unifyDirSeperator($REQUEST_URI), 0, 255);
+		return StringUtil::substring(FileUtil::unifyDirSeparator($REQUEST_URI), 0, 255);
 	}
 	
 	private function __construct() { }

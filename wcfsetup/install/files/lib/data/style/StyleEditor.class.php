@@ -714,7 +714,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$packageTar = new TarWriter($packageTarName, true);
 			
 			// append style tar
-			$styleTarName = FileUtil::unifyDirSeperator($styleTarName);
+			$styleTarName = FileUtil::unifyDirSeparator($styleTarName);
 			$packageTar->add($styleTarName, '', FileUtil::addTrailingSlash(dirname($styleTarName)));
 			
 			// create package.xml

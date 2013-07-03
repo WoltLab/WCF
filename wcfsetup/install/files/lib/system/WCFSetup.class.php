@@ -162,7 +162,7 @@ class WCFSetup extends WCF {
 	 */
 	protected static function getWCFDir() {
 		if (isset($_REQUEST['wcfDir']) && $_REQUEST['wcfDir'] != '') {
-			self::$wcfDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator($_REQUEST['wcfDir']));
+			self::$wcfDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($_REQUEST['wcfDir']));
 			if (@file_exists(self::$wcfDir)) {
 				define('RELATIVE_WCF_DIR', FileUtil::getRelativePath(INSTALL_SCRIPT_DIR, self::$wcfDir));
 			}
@@ -455,7 +455,7 @@ class WCFSetup extends WCF {
 			$wcfDir = self::$wcfDir;
 		}
 		else {
-			$wcfDir = FileUtil::unifyDirSeperator(INSTALL_SCRIPT_DIR).'wcf/';
+			$wcfDir = FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR).'wcf/';
 		}
 		
 		$invalidDirectory = false;
@@ -470,7 +470,7 @@ class WCFSetup extends WCF {
 		if (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80) $domainName .= ':' . $_SERVER['SERVER_PORT'];
 		// script url
 		$installScriptUrl = '';
-		if (!empty($_SERVER['REQUEST_URI'])) $installScriptUrl = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash(FileUtil::unifyDirSeperator(dirname($_SERVER['REQUEST_URI']))));
+		if (!empty($_SERVER['REQUEST_URI'])) $installScriptUrl = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash(FileUtil::unifyDirSeparator(dirname($_SERVER['REQUEST_URI']))));
 		
 		WCF::getTPL()->assign(array(
 			'nextStep' => 'unzipFiles',
@@ -478,7 +478,7 @@ class WCFSetup extends WCF {
 			'wcfDir' => $wcfDir,
 			'domainName' => $domainName,
 			'installScriptUrl' => $installScriptUrl,
-			'installScriptDir' => FileUtil::unifyDirSeperator(INSTALL_SCRIPT_DIR)
+			'installScriptDir' => FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR)
 		));
 		
 		WCF::getTPL()->display('stepSearchWcfDir');
@@ -869,7 +869,7 @@ class WCFSetup extends WCF {
 					$this->getInstalledFiles(FileUtil::addTrailingSlash($file));
 				}
 				else {
-					self::$installedFiles[] = FileUtil::unifyDirSeperator($file);
+					self::$installedFiles[] = FileUtil::unifyDirSeparator($file);
 				}
 			}
 		}

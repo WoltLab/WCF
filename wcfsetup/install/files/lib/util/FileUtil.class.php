@@ -144,8 +144,8 @@ final class FileUtil {
 	 */
 	public static function getRelativePath($currentDir, $targetDir) {
 		// remove trailing slashes
-		$currentDir = self::removeTrailingSlash(self::unifyDirSeperator($currentDir));
-		$targetDir = self::removeTrailingSlash(self::unifyDirSeperator($targetDir));
+		$currentDir = self::removeTrailingSlash(self::unifyDirSeparator($currentDir));
+		$targetDir = self::removeTrailingSlash(self::unifyDirSeparator($targetDir));
 		
 		if ($currentDir == $targetDir) {
 			return './';
@@ -223,12 +223,12 @@ final class FileUtil {
 	}
 	
 	/**
-	 * Unifies windows and unix directory seperators.
+	 * Unifies windows and unix directory separators.
 	 * 
 	 * @param	string		$path
 	 * @return	string
 	 */
-	public static function unifyDirSeperator($path) {
+	public static function unifyDirSeparator($path) {
 		$path = str_replace('\\\\', '/', $path);
 		$path = str_replace('\\', '/', $path);
 		return $path;
@@ -289,7 +289,7 @@ final class FileUtil {
 	 * @return	string		path
 	 */
 	public static function getRealPath($path) {
-		$path = self::unifyDirSeperator($path);
+		$path = self::unifyDirSeparator($path);
 		
 		$result = array();
 		$pathA = explode('/', $path);

@@ -620,7 +620,7 @@ class PackageInstallationDispatcher {
 			$packageDir->setName('packageDir');
 			$packageDir->setLabel(WCF::getLanguage()->get('wcf.acp.package.packageDir.input'));
 			
-			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(StringUtil::substring(WCF_DIR, 0, -4)));
+			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(StringUtil::substring(WCF_DIR, 0, -4)));
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);
 			
@@ -633,7 +633,7 @@ class PackageInstallationDispatcher {
 		else {
 			$document = PackageInstallationFormManager::getForm($this->queue, 'packageDir');
 			$document->handleRequest();
-			$packageDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator($document->getValue('packageDir')));
+			$packageDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($document->getValue('packageDir')));
 			
 			if ($packageDir !== null) {
 				// validate package dir
@@ -664,7 +664,7 @@ class PackageInstallationDispatcher {
 					$wcfDomainPath = $row['domainPath'];
 				}
 				
-				$documentRoot = str_replace($wcfDomainPath, '', FileUtil::unifyDirSeperator(WCF_DIR));
+				$documentRoot = str_replace($wcfDomainPath, '', FileUtil::unifyDirSeparator(WCF_DIR));
 				$domainPath = str_replace($documentRoot, '', $packageDir);
 				
 				// update application path

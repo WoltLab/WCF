@@ -64,7 +64,7 @@ class TarWriter extends Tar {
 	public function addString($filename, $string) {
 		if (empty($filename)) return false;
 		
-		$filename = FileUtil::unifyDirSeperator($filename);
+		$filename = FileUtil::unifyDirSeparator($filename);
 		
 		if (!$this->writeHeaderBlock($filename, strlen($string), TIME_NOW, 33279)) {
 			return false;
@@ -92,9 +92,9 @@ class TarWriter extends Tar {
 		
 		$result = true;
 		
-		// unify dir seperator
-		$addDir = FileUtil::unifyDirSeperator($addDir);
-		$removeDir = FileUtil::unifyDirSeperator($removeDir);
+		// unify dir separator
+		$addDir = FileUtil::unifyDirSeparator($addDir);
+		$removeDir = FileUtil::unifyDirSeparator($removeDir);
 		
 		foreach ($files as $filename) {
 			if (!$result) {
@@ -141,7 +141,7 @@ class TarWriter extends Tar {
 	 * @return	boolean		result
 	 */
 	protected function addFile($filename, $addDir, $removeDir) {
-		$filename = FileUtil::unifyDirSeperator($filename);
+		$filename = FileUtil::unifyDirSeparator($filename);
 		$storedFilename = $filename;
 		if (!empty($removeDir)) $storedFilename = StringUtil::replaceIgnoreCase($removeDir, '', $filename);
 		if (!empty($addDir)) $storedFilename = $addDir . $storedFilename;
