@@ -105,7 +105,7 @@ final class HTTPRequest {
 		$this->addHeader('Accept', '*/*');
 		$this->addHeader('Accept-Language', WCF::getLanguage()->getFixedLanguageCode());
 		if ($this->options['method'] !== 'GET') {
-			$this->addHeader('Content-length', strlen(http_build_query($this->postParameters)));
+			$this->addHeader('Content-length', strlen(http_build_query($this->postParameters, '', '&')));
 			$this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
 		}
 		if (isset($this->options['auth'])) {
@@ -153,7 +153,7 @@ final class HTTPRequest {
 		}
 		$request .= "\r\n";
 		// add post parameters
-		if ($this->options['method'] !== 'GET') $request .= http_build_query($this->postParameters)."\r\n\r\n";
+		if ($this->options['method'] !== 'GET') $request .= http_build_query($this->postParameters, '', '&')."\r\n\r\n";
 		$remoteFile->puts($request);
 		
 		$inHeader = true;

@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
+use wcf\system\database\DatabaseException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -165,7 +166,11 @@ class DataImportForm extends AbstractForm {
 		$this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, $this->fileSystemPath);
 		
 		// validate database Access
-		if (!$this->exporter->validateDatabaseAccess()) {
+		try {
+			$this->exporter->validateDatabaseAccess();
+		}
+		catch (DatabaseException $e) {
+			WCF::getTPL()->assign('exception', $e);
 			throw new UserInputException('database');
 		}
 		

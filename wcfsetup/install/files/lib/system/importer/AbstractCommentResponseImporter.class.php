@@ -27,7 +27,7 @@ class AbstractCommentResponseImporter implements IImporter {
 		if (!$data['userID']) $data['userID'] = null;
 		
 		$data['commentID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['commentID']);
-		if ($data['commentID']) return 0;
+		if (!$data['commentID']) return 0;
 		
 		$action = new CommentResponseAction(array(), 'create', array(
 			'data' => array_merge($data, array('objectTypeID' => $this->objectTypeID))		

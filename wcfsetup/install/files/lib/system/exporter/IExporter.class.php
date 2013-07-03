@@ -46,9 +46,9 @@ interface IExporter {
 	public function exportData($objectType, $loopCount = 0);
 	
 	/**
-	 * Validates database access. Returns false on failure.
+	 * Validates database access.
 	 *
-	 * @return	boolean
+	 * @throws	wcf\system\database\DatabaseException
 	 */
 	public function validateDatabaseAccess();
 	
