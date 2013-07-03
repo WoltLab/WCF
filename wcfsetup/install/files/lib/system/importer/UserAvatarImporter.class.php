@@ -32,7 +32,8 @@ class UserAvatarImporter implements IImporter {
 		if ($imageData === false) return 0;
 		$data['width'] = $imageData[0];
 		$data['height'] = $imageData[1];
-		if ($data['width'] < 48 || $data['height'] < 48) return 0; // avatar too small
+		// check min size
+		if ($data['width'] < 48 || $data['height'] < 48) return 0;
 		
 		// check image type
 		if ($imageData[2] != IMAGETYPE_GIF && $imageData[2] != IMAGETYPE_JPEG && $imageData[2] != IMAGETYPE_PNG) return 0;
@@ -44,7 +45,7 @@ class UserAvatarImporter implements IImporter {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		if (!$data['userID']) return 0;
 		
-		
+		// save avatar
 		$action = new UserAvatarAction(array(), 'create', array(
 			'data' => $data
 		));
