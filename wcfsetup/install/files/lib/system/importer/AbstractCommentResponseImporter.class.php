@@ -24,7 +24,6 @@ class AbstractCommentResponseImporter implements IImporter {
 	 */
 	public function import($oldID, array $data) {
 		if ($data['userID']) $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
-		if (!$data['userID']) $data['userID'] = null;
 		
 		$data['commentID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['commentID']);
 		if (!$data['commentID']) return 0;

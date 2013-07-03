@@ -70,7 +70,7 @@ class ImportHandler extends SingletonFactory {
 		$objectTypeID = $this->objectTypes[$type]->objectTypeID;
 		
 		if (!isset($this->idMappingCache[$objectTypeID][$oldID])) {
-			$this->idMappingCache[$objectTypeID][$oldID] = 0;
+			$this->idMappingCache[$objectTypeID][$oldID] = null;
 			
 			$sql = "SELECT	newID
 				FROM	wcf".WCF_N."_import_mapping

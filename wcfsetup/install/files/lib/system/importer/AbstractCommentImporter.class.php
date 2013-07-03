@@ -30,7 +30,6 @@ class AbstractCommentImporter implements IImporter {
 	 */
 	public function import($oldID, array $data) {
 		if ($data['userID']) $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
-		if (!$data['userID']) $data['userID'] = null;
 		
 		$action = new CommentAction(array(), 'create', array(
 			'data' => array_merge($data, array('objectTypeID' => $this->objectTypeID))		
