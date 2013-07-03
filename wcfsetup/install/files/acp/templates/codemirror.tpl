@@ -48,7 +48,7 @@
 				
 				setTimeout(function () {
 					$element.codemirror.refresh();
-				}, 100);
+				}, 250);
 			})();
 		}
 	});
