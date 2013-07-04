@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.pageMenu.'|concat:$action}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		var $menuPosition = $('#menuPosition');

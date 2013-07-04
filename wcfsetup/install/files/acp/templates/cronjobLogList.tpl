@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.cronjob.log'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({

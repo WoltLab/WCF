@@ -5,7 +5,7 @@
 	
 	{include file='headInclude'}
 	
-	<script type="text/javascript">
+	<script>
 		//<![CDATA[
 		$(function() {
 			$('#notificationSettings > fieldset > dl > dd > label > input').each(function(index, value) {

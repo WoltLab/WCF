@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.user.'|concat:$action}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
@@ -185,7 +185,7 @@
 					{event name='banFields'}
 				</fieldset>
 				
-				<script type="text/javascript">
+				<script>
 					//<![CDATA[
 					$('#banned').change(function (event) {
 						if ($('#banned').is(':checked')) {
@@ -306,7 +306,7 @@
 					</dl>
 				</fieldset>
 				
-				<script type="text/javascript">
+				<script>
 					//<![CDATA[
 					$('#disableSignature').change(function (event) {
 						if ($('#disableSignature').is(':checked')) {
@@ -382,9 +382,9 @@
 					</dl>
 				</fieldset>
 				
-				<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-				<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-				<script type="text/javascript">
+				<script src="{@$__wcf->getPath()}js/WCF.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+				<script src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+				<script>
 					//<![CDATA[
 					$(function() {
 						$('#disableAvatar').change(function (event) {

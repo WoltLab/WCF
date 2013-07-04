@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.application.edit'}
 
 {if $application->packageID != 1 && !$application->isPrimary}
-	<script type="text/javascript">
+	<script>
 		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({

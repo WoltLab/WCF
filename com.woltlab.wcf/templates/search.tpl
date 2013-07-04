@@ -110,7 +110,7 @@
 					
 					{include file=$objectType->getFormTemplateName() application=$objectType->getApplication()}
 					
-					<script type="text/javascript">
+					<script>
 						//<![CDATA[
 						$(function() {
 							$('#{@$__jsID}').click(function() {
@@ -133,7 +133,7 @@
 
 {include file='footer'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		new WCF.Search.User($('#searchAuthor'), function(data) {

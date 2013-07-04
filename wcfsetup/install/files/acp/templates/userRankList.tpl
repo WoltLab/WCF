@@ -3,7 +3,7 @@
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.user.rank.list{/lang}</h1>
 	
-	<script type="text/javascript">
+	<script>
 		//<![CDATA[
 		$(function() {
 			new WCF.Action.Delete('wcf\\data\\user\\rank\\UserRankAction', '.jsUserRankRow');

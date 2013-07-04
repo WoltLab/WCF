@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		{if $aclValues[$objectTypeID]|isset}

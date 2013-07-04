@@ -1,8 +1,8 @@
 {include file='header' pageTitle='wcf.acp.style.'|concat:$action}
 
-<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.ColorPicker.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript">
+<script src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js?v={@$__wcfVersion}"></script>
+<script src="{@$__wcf->getPath()}js/WCF.ColorPicker.js?v={@$__wcfVersion}"></script>
+<script>
 	//<![CDATA[
 	$(function() {
 		new WCF.ColorPicker('.jsColorPicker');
