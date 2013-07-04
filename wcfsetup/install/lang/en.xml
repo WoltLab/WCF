@@ -1137,6 +1137,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.user.add"><![CDATA[Add User]]></item>
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Assign to user group]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Assigning the following users to user groups selected below]]></item>
+		<item name="wcf.acp.user.assignToGroup.success"><![CDATA[The user{if $users|count > 1}s have{else} has{/if} successfully been assigned to the selected user group{if $groupIDs|count > 1}s{/if}.]]></item>
 		<item name="wcf.acp.user.banUser"><![CDATA[Ban User]]></item>
 		<item name="wcf.acp.user.banUser.description"><![CDATA[The user is permanently banned from using any site functions and will be notified on site access.]]></item>
 		<item name="wcf.acp.user.banReason"><![CDATA[Reason]]></item>

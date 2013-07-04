@@ -1138,6 +1138,7 @@
 		<item name="wcf.acp.user.add"><![CDATA[Benutzer hinzufügen]]></item>
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Folgende Benutzer den unten ausgewählten Benutzergruppen zuweisen]]></item>
+		<item name="wcf.acp.user.assignToGroup.success"><![CDATA[{if $users|count > 1}Die{else}Der{/if} Benutzer wurde{if $users|count > 1}n{/if} erfolgreich {if $groupIDs|count > 1}den ausgewählten Benutzergruppen{else}der ausgewählten Benutzergruppe{/if} zugeordnet.]]></item>
 		<item name="wcf.acp.user.banUser"><![CDATA[Benutzer sperren]]></item>
 		<item name="wcf.acp.user.banUser.description"><![CDATA[Der Benutzer wird dauerhaft von der Nutzung aller Funktionen ausgeschlossen und erhält beim Aufruf der Seite eine entsprechende Fehlermeldung.]]></item>
 		<item name="wcf.acp.user.banReason"><![CDATA[Begründung]]></item>
