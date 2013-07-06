@@ -124,7 +124,7 @@
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
-							<h3>{if $user->getSpider()->spiderURL}<a href="{$user->getSpider()->spiderURL}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$user->getSpider()->spiderName}</a>{else}{$user->getSpider()->spiderName}{/if}</h3>
+							<h3>{if $user->getSpider()->spiderURL}<a href="{link controller='Dereferrer'}?url={$user->getSpider()->spiderURL|rawurlencode}{/link}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$user->getSpider()->spiderName}</a>{else}{$user->getSpider()->spiderName}{/if}</h3>
 							{@$locationData} 
 						</div>
 						

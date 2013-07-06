@@ -1,6 +1,7 @@
 <?php
 namespace wcf\util;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -709,7 +710,11 @@ final class StringUtil {
 			if (!$encodeTitle) $title = self::encodeHTML($title);
 		}
 		
-		return '<a href="'.self::encodeHTML($url).'"'.($external ? (' class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '')) : '').'>'.($encodeTitle ? self::encodeHTML($title) : $title).'</a>';
+		if($external) {
+			return '<a href="'.LinkHandler::getInstance()->getLink('Dereferrer').'?url='.rawurlencode(self::encodeHTML($url)).'" class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '').'>'.($encodeTitle ? self::encodeHTML($title) : $title).'</a>';
+		} else {
+			return '<a href="'.self::encodeHTML($url).'">'.($encodeTitle ? self::encodeHTML($title) : $title).'</a>';
+		}
 	}
 	
 	/**
