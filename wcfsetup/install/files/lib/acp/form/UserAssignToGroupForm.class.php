@@ -143,7 +143,7 @@ class UserAssignToGroupForm extends AbstractForm {
 			
 			$action = new UserAction(array(new UserEditor($user)), 'addToGroups', array(
 				'groups' => $groupsIDs,
-				'addDefaultGroups' => false		
+				'addDefaultGroups' => false
 			));
 			$action->executeAction();
 		}
@@ -153,7 +153,11 @@ class UserAssignToGroupForm extends AbstractForm {
 		
 		$this->saved();
 		
-		WCF::getTPL()->assign('message', 'wcf.acp.user.assignToGroup.success');
+		WCF::getTPL()->assign(array(
+			'groupIDs' => $this->groupIDs,
+			'message' => 'wcf.acp.user.assignToGroup.success',
+			'users' => $this->users
+		));
 		WCF::getTPL()->display('success');
 		exit;
 	}
