@@ -3,6 +3,7 @@ namespace wcf\system\importer;
 use wcf\data\attachment\AttachmentAction;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\SystemException;
+use wcf\util\StringUtil;
 
 /**
  * Imports attachments.
@@ -16,7 +17,7 @@ use wcf\system\exception\SystemException;
  */
 class AbstractAttachmentImporter implements IImporter {
 	/**
-	 * object type id for attachment
+	 * object type id for attachments
 	 * @var integer
 	 */
 	protected $objectTypeID = 0;
@@ -77,5 +78,16 @@ class AbstractAttachmentImporter implements IImporter {
 		}
 		
 		return 0;
+	}
+	
+	protected function fixEmbeddedAttachments($message, $oldID, $newID) {
+		if (StringUtil::indexOfIgnoreCase($message, '[attach]'.$oldID.'[/attach]') !== false || StringUtil::indexOfIgnoreCase($message, '[attach='.$oldID.']') !== false) {
+			$message = StringUtil::replaceIgnoreCase('[attach]'.$oldID.'[/attach]', '[attach]'.$newID.'[/attach]', $message);
+			$message = StringUtil::replaceIgnoreCase('[attach='.$oldID.']', '[attach='.$newID.']', $message);
+		
+			return $message;
+		}
+		
+		return false;
 	}
 }

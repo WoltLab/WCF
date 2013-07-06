@@ -15,7 +15,7 @@ use wcf\data\comment\response\CommentResponseAction;
 class AbstractCommentResponseImporter implements IImporter {
 	/**
 	 * object type name
-	 * @var integer
+	 * @var string
 	 */
 	protected $objectTypeName = '';
 	
