@@ -37,9 +37,7 @@ class DereferrerPage extends AbstractPage {
 		
 		if (isset($_REQUEST['url'])) $this->url = urldecode($_REQUEST['url']);
 		
-		$scheme = @parse_url($this->url, PHP_URL_SCHEME);
-		
-		if (empty($this->url) || !$scheme) {
+		if (empty($this->url) || !preg_match('/[a-z]:\/\//si', $this->url)) {
 			throw new IllegalLinkException();
 		}
 	}
