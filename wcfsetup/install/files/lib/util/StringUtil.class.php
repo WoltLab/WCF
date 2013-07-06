@@ -710,7 +710,7 @@ final class StringUtil {
 			if (!$encodeTitle) $title = self::encodeHTML($title);
 		}
 		
-		if($external) {
+		if ($external) {
 			return '<a href="'.LinkHandler::getInstance()->getLink('Dereferrer').'?url='.rawurlencode(self::encodeHTML($url)).'" class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '').'>'.($encodeTitle ? self::encodeHTML($title) : $title).'</a>';
 		} else {
 			return '<a href="'.self::encodeHTML($url).'">'.($encodeTitle ? self::encodeHTML($title) : $title).'</a>';
