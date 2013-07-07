@@ -2,6 +2,7 @@
 namespace wcf\system\option\user;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\User;
+use wcf\system\request\LinkHandler;
 use wcf\util\StringUtil;
 
 /**
@@ -24,6 +25,6 @@ class TwitterUserOptionOutput implements IUserOptionOutput {
 		$url = StringUtil::encodeHTML('http://twitter.com/'.$value);
 		$value = StringUtil::encodeHTML($value);
 		
-		return '<a href="'.$url.'" class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '').'>'.$value.'</a>';
+		return '<a href="'.LinkHandler::getInstance()->getLink('Dereferrer').'?url='.rawurlencode($url).'" class="externalURL"'.(EXTERNAL_LINK_REL_NOFOLLOW ? ' rel="nofollow"' : '').(EXTERNAL_LINK_TARGET_BLANK ? ' target="_blank"' : '').'>'.$value.'</a>';
 	}
 }
