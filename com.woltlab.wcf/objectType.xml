@@ -252,6 +252,16 @@
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname><![CDATA[wcf\system\importer\UserRankImporter]]></classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.label.group</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\LabelGroupImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.label</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\LabelImporter]]></classname>
+		</type>
 		<!-- /importers -->
 	</import>
 </data>
