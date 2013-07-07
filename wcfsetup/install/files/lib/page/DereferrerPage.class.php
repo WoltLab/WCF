@@ -1,6 +1,7 @@
 <?php
 namespace wcf\page;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -37,7 +38,7 @@ class DereferrerPage extends AbstractPage {
 		
 		if (isset($_REQUEST['url'])) $this->url = urldecode($_REQUEST['url']);
 		
-		if (empty($this->url) || !preg_match('/[a-z]:\/\//si', $this->url)) {
+		if (empty($this->url) || !Regex::compile('[a-z]://')->match($this->url)) {
 			throw new IllegalLinkException();
 		}
 	}
