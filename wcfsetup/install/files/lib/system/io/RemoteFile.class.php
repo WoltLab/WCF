@@ -49,7 +49,7 @@ class RemoteFile extends File {
 		$this->host = $host;
 		$this->port = $port;
 		
-		$this->resource = fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout);
+		$this->resource = @fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout);
 		if ($this->resource === false) {
 			throw new SystemException('Can not connect to ' . $host, 0, $this->errorDesc);
 		}
