@@ -1,1 +1,0 @@
-phpcs -p --extensions=php --standard="CodeSniff/WCF" .
