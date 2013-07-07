@@ -35,7 +35,7 @@ class AbstractPollOptionVoteImporter implements IImporter {
 		$data['pollID'] = ImportHandler::getInstance()->getNewID($this->pollObjectTypeName, $data['pollID']);
 		if (!$data['pollID']) return 0;
 		
-		$data['optionID'] = ImportHandler::getInstance()->getNewID($this->pollObjectTypeName, $data['optionID']);
+		$data['optionID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['optionID']);
 		if (!$data['optionID']) return 0;
 		
 		$sql = "INSERT INTO	wcf".WCF_N."_poll_option_vote
