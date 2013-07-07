@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.group.'|concat:$action}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();

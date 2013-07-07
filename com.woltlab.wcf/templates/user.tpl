@@ -7,9 +7,9 @@
 	
 	<link rel="canonical" href="{link controller='User' object=$user}{/link}" />
 	
-	<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+	<script src="{@$__wcf->getPath('wcf')}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 	{event name='javascriptInclude'}
-	<script type="text/javascript">
+	<script>
 		//<![CDATA[
 		$(function() {
 			{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}

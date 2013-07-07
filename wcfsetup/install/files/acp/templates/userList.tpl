@@ -7,7 +7,7 @@
 {include file='header'}
 
 {event name='javascriptInclude'}
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		var actionObjects = { };

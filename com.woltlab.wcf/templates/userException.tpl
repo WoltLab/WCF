@@ -12,7 +12,7 @@
 <p id="errorMessage" class="error">
 	{@$message}
 </p>
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	if (document.referrer) {
 		$('#errorMessage').append('<br /><a href="' + document.referrer + '">{lang}wcf.global.error.backward{/lang}</a>'); 

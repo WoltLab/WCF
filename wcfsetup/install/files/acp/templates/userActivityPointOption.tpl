@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.user.activityPoint.option'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		$('#updateCache').click(function () {

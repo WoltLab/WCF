@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.language.list'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\language\\LanguageAction', '.jsLanguageRow');

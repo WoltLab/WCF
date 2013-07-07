@@ -43,7 +43,7 @@
 					<dl>
 						<dt><label>{lang}wcf.user.language{/lang}</label></dt>
 						<dd id="languageIDContainer">
-							<script type="text/javascript">
+							<script>
 								//<![CDATA[
 								$(function() {
 									var $languages = {

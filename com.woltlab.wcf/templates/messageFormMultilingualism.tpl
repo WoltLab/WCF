@@ -12,7 +12,7 @@
 		</dd>
 	</dl>
 	
-	<script type="text/javascript">
+	<script>
 		//<![CDATA[
 		$(function() {
 			var $languages = {
