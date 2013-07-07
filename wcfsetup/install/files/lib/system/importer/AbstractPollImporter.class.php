@@ -28,7 +28,7 @@ class AbstractPollImporter implements IImporter {
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data) {
+	public function import($oldID, array $data, array $additionalData = array()) {
 		$poll = PollEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
 		
 		ImportHandler::getInstance()->saveNewID($this->objectTypeName, $oldID, $poll->pollID);

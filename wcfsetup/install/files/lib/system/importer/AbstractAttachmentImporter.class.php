@@ -25,15 +25,12 @@ class AbstractAttachmentImporter implements IImporter {
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data) {
-		$fileLocation = $data['fileLocation'];
-		unset($data['fileLocation']);
-		
+	public function import($oldID, array $data, array $additionalData = array()) {
 		// check file location
-		if (!@file_exists($fileLocation)) return 0;
+		if (!@file_exists($additionalData['fileLocation'])) return 0;
 		
 		// get file hash
-		if (empty($data['fileHash'])) $data['fileHash'] = sha1_file($fileLocation);
+		if (empty($data['fileHash'])) $data['fileHash'] = sha1_file($additionalData['fileLocation']);
 		
 		// get user id
 		if ($data['userID']) $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
@@ -54,7 +51,7 @@ class AbstractAttachmentImporter implements IImporter {
 		
 		// copy file
 		try {
-			if (!copy($fileLocation, $attachment->getLocation())) {
+			if (!copy($additionalData['fileLocation'], $attachment->getLocation())) {
 				throw new SystemException();
 			}
 				
