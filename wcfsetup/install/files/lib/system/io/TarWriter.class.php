@@ -43,7 +43,14 @@ class TarWriter extends Tar {
 	 * Writes the last 0 filled block for end of archive.
 	 */
 	protected function writeFooter() {
-		$this->file->write(pack('a512', ''));
+		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
+			$format = 'Z512';
+		}
+		else {
+			$format = 'a512';
+		}
+		
+		$this->file->write(pack($format, ''));
 	}
 	
 	/**
@@ -70,9 +77,17 @@ class TarWriter extends Tar {
 			return false;
 		}
 		
+		
+		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
+			$format = 'Z512';
+		}
+		else {
+			$format = 'a512';
+		}
+		
 		$i = 0;
 		while (($buffer = substr($string, (($i++) * 512), 512)) != '') {
-			$this->file->write(pack("a512", $buffer));
+			$this->file->write(pack($format, $buffer));
 		}
 		
 		return true;
@@ -156,8 +171,15 @@ class TarWriter extends Tar {
 			}
 			
 			// write file content
+			if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
+				$format = 'Z512';
+			}
+			else {
+				$format = 'a512';
+			}
+			
 			while (($buffer = $file->read(512)) != '') {
-				$this->file->write(pack('a512', $buffer));
+				$this->file->write(pack($format, $buffer));
 			}
 			
 			// close file
@@ -228,8 +250,23 @@ class TarWriter extends Tar {
 		$permissions = sprintf("%6s ", decOct($permissions));
 		$mtime = sprintf("%11s", decOct($mtime));
 		
-		$binaryDataFirst = pack('a100a8a8a8a12A12', $filename, $permissions, $uid, $gid, $size, $mtime);
-		$binaryDataLast = pack('a1a100a6a2a32a32a8a8a155a12', $typeFlag, '', '', '', '', '', '', '', '', '');
+		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
+			$format = 'Z100Z8Z8Z8Z12A12';
+		}
+		else {
+			$format = 'a100a8a8a8a12A12';
+		}
+		
+		$binaryDataFirst = pack($format, $filename, $permissions, $uid, $gid, $size, $mtime);
+		
+		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
+			$format = 'Z1Z100Z6Z2Z32Z32Z8Z8Z155Z12';
+		}
+		else {
+			$format = 'a1a100a6a2a32a32a8a8a155a12';
+		}
+		
+		$binaryDataLast = pack($format, $typeFlag, '', '', '', '', '', '', '', '', '');
 		
 		// calculate the checksum
 		$checksum = 0;
@@ -243,8 +280,15 @@ class TarWriter extends Tar {
 			$checksum += ord(substr($binaryDataLast, $j, 1));
 		}
 		
+		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
+			$format = 'Z8';
+		}
+		else {
+			$format = 'a8';
+		}
+		
 		$this->file->write($binaryDataFirst, 148);
-		$this->file->write(pack("a8", sprintf("%6s ", decOct($checksum))), 8); // write the checksum
+		$this->file->write(pack($format, sprintf("%6s ", decOct($checksum))), 8); // write the checksum
 		$this->file->write($binaryDataLast, 356);
 		
 		return true;
@@ -259,8 +303,24 @@ class TarWriter extends Tar {
 	protected function writeLongHeaderBlock($filename) {
 		$size = sprintf("%11s ", decOct(strlen($filename)));
 		$typeFlag = 'L';
-		$binaryDataFirst = pack("a100a8a8a8a12A12", '././@LongLink', 0, 0, 0, $size, 0);
-		$binaryDataLast = pack("a1a100a6a2a32a32a8a8a155a12", $typeFlag, '', '', '', '', '', '', '', '', '');
+		
+		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
+			$format = 'Z100Z8Z8Z8Z12A12';
+		}
+		else {
+			$format = 'a100a8a8a8a12A12';
+		}
+		
+		$binaryDataFirst = pack($format, '././@LongLink', 0, 0, 0, $size, 0);
+		
+		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
+			$format = 'Z1Z100Z6Z2Z32Z32Z8Z8Z155Z12';
+		}
+		else {
+			$format = 'a1a100a6a2a32a32a8a8a155a12';
+		}
+		
+		$binaryDataLast = pack($format, $typeFlag, '', '', '', '', '', '', '', '', '');
 		
 		// calculate the checksum
 		$checksum = 0;
@@ -275,12 +335,27 @@ class TarWriter extends Tar {
 		}
 		
 		$this->file->write($binaryDataFirst, 148);
-		$this->file->write(pack("a8", sprintf("%6s ", decOct($checksum))), 8); // write the checksum
+		
+		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
+			$format = 'Z8';
+		}
+		else {
+			$format = 'a8';
+		}
+		
+		$this->file->write(pack($format, sprintf("%6s ", decOct($checksum))), 8); // write the checksum
 		$this->file->write($binaryDataLast, 356);
+		
+		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
+			$format = 'Z512';
+		}
+		else {
+			$format = 'a512';
+		}
 		
 		$i = 0;
 		while (($buffer = substr($filename, (($i++) * 512), 512)) != '') {
-			$this->file->write(pack("a512", $buffer));
+			$this->file->write(pack($format, $buffer));
 		}
 		
 		return true;
