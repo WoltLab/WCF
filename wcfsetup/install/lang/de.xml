@@ -731,6 +731,7 @@
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signaturen]]></item>
 		<item name="wcf.acp.option.module_team_page"><![CDATA[Team-Seite]]></item>
 		<item name="wcf.acp.option.module_dashboard_page"><![CDATA[Dashboard]]></item>
+		<item name="wcf.acp.option.module_dashboard_page.description"><![CDATA[Hinweis: Falls das Dashboard als Startseite definiert ist, muss bei Deaktivierung dieser Option zusätzlich eine neue Startseite in der <a href="{link controller='PageMenuItemList'}{/link}">Hauptmenüverwaltung</a> ausgewählt werden.]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatare]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check"><![CDATA[Sicherheitsüberprüfung aktivieren]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check.description"><![CDATA[Kennwörter werden auf ihre Sicherheit geprüft. Unsichere Kennwörter werden abgelehnt.]]></item>
