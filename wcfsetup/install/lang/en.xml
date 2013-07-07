@@ -170,10 +170,12 @@ Examples for medium ID detection:
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[TODO: Benutzer]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[TODO: Benutzergruppen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[TODO: Benutzerprofilfelder]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[TODO: Wer wem folgt]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[TODO: Follower]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[TODO: Benutzeränge]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[TODO: Avatare]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[TODO: Pinwand-Kommentare]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[TODO: Pinwand-Kommentar-Antworten]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[TODO: Labels]]></item>
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[TODO: Datenbank-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[TODO: Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[TODO: Benutzername]]></item>
