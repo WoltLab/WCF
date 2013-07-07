@@ -19,7 +19,7 @@ class UserImporter implements IImporter {
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data) {
+	public function import($oldID, array $data, array $additionalData = array()) {
 		// check existing user id
 		$sql = "SELECT	COUNT(*) AS count
 			FROM	wcf".WCF_N."_user
@@ -31,19 +31,17 @@ class UserImporter implements IImporter {
 		
 		// get group ids
 		$groupIDs = array();
-		if (isset($data['groupIDs'])) {
-			foreach ($data['groupIDs'] as $oldGroupID) {
+		if (isset($additionalData['groupIDs'])) {
+			foreach ($additionalData['groupIDs'] as $oldGroupID) {
 				$newGroupID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user.group', $oldGroupID);
 				if ($newGroupID) $groupIDs[] = $newGroupID;
 			}
-			
-			unset($data['groupIDs']);
 		}
 		
 		// handle user options
 		$userOptions = array();
-		if (isset($data['options'])) {
-			foreach ($data['options'] as $optionName => $optionValue) {
+		if (isset($additionalData['options'])) {
+			foreach ($additionalData['options'] as $optionName => $optionValue) {
 				if (is_int($optionName)) $optionID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user.option', $optionName);
 				else $optionID = User::getUserOptionID($optionName);
 				
@@ -51,8 +49,6 @@ class UserImporter implements IImporter {
 					$userOptions[$optionID] = $optionValue;
 				}
 			}
-			
-			unset($data['options']);
 		}
 		
 		// create user

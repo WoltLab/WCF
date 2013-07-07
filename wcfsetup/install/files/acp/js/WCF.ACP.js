@@ -2262,7 +2262,7 @@ WCF.ACP.Import.Manager = Class.extend({
 		}
 		else {
 			this._run(
-				WCF.Language.get('wcf.acp.dataImport.import.' + this._objectTypes[this._index]),
+				WCF.Language.get('wcf.acp.dataImport.data.' + this._objectTypes[this._index]),
 				this._objectTypes[this._index]
 			);
 		}

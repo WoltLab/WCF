@@ -20,15 +20,12 @@ class UserAvatarImporter implements IImporter {
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data) {
-		$fileLocation = $data['fileLocation'];
-		unset($data['fileLocation']);
-		
+	public function import($oldID, array $data, array $additionalData = array()) {
 		// check file location
-		if (!@file_exists($fileLocation)) return 0;
+		if (!@file_exists($additionalData['fileLocation'])) return 0;
 		
 		// get image size
-		$imageData = @getimagesize($fileLocation);
+		$imageData = @getimagesize($additionalData['fileLocation']);
 		if ($imageData === false) return 0;
 		$data['width'] = $imageData[0];
 		$data['height'] = $imageData[1];
@@ -39,7 +36,7 @@ class UserAvatarImporter implements IImporter {
 		if ($imageData[2] != IMAGETYPE_GIF && $imageData[2] != IMAGETYPE_JPEG && $imageData[2] != IMAGETYPE_PNG) return 0;
 		
 		// get file hash
-		if (empty($data['fileHash'])) $data['fileHash'] = sha1_file($fileLocation);
+		if (empty($data['fileHash'])) $data['fileHash'] = sha1_file($additionalData['fileLocation']);
 		
 		// get user id
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
@@ -61,7 +58,7 @@ class UserAvatarImporter implements IImporter {
 		
 		// copy file
 		try {
-			if (!copy($fileLocation, $avatar->getLocation())) {
+			if (!copy($additionalData['fileLocation'], $avatar->getLocation())) {
 				throw new SystemException();
 			}
 			

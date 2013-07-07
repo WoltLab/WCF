@@ -170,10 +170,12 @@ Examples for medium ID detection:
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[TODO: Benutzer]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[TODO: Benutzergruppen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[TODO: Benutzerprofilfelder]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[TODO: Wer wem folgt]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[TODO: Follower]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[TODO: Benutzeränge]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[TODO: Avatare]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[TODO: Pinwand-Kommentare]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[TODO: Pinwand-Kommentar-Antworten]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[TODO: Labels]]></item>
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[TODO: Datenbank-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[TODO: Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[TODO: Benutzername]]></item>
@@ -728,6 +730,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signatures]]></item>
 		<item name="wcf.acp.option.module_team_page"><![CDATA[Staff List]]></item>
 		<item name="wcf.acp.option.module_dashboard_page"><![CDATA[Dashboard]]></item>
+		<item name="wcf.acp.option.module_dashboard_page.description"><![CDATA[TODO: Hinweis: Falls das Dashboard als Startseite definiert ist, muss bei Deaktivierung dieser Option zusätzlich eine neue Startseite in der <a href="{link controller='PageMenuItemList'}{/link}">Hauptmenüverwaltung</a> ausgewählt werden.]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check"><![CDATA[Enable password validation]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check.description"><![CDATA[Password complexity will be validated, unsafe passwords will be rejected.]]></item>

@@ -1,9 +1,10 @@
 <?php
 namespace wcf\system\importer;
-use wcf\data\user\group\UserGroupAction;
+use wcf\data\label\LabelEditor;
+use wcf\system\WCF;
 
 /**
- * Imports user groups.
+ * Imports labels.
  *
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
@@ -12,19 +13,15 @@ use wcf\data\user\group\UserGroupAction;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class UserGroupImporter implements IImporter {
+class LabelImporter implements IImporter {
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
-		$action = new UserGroupAction(array(), 'create', array(
-			'data' => $data		
-		));
-		$returnValues = $action->executeAction();
-		$newGroupID = $returnValues['returnValues']->groupID;
+		$label = LabelEditor::create($data);
 		
-		ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user.group', $oldID, $newGroupID);
+		ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.label', $oldID, $label->labelID);
 		
-		return $newGroupID;
+		return $label->labelID;
 	}
 }
