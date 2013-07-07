@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		var $availableLanguages = { {implode from=$availableLanguages key=languageID item=languageName}{@$languageID}: '{$languageName}'{/implode} };

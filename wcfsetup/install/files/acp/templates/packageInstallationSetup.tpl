@@ -1,6 +1,6 @@
 {include file='header' templateName='packageInstallationSetup'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		WCF.Language.add('wcf.acp.package.install.title', '{lang}wcf.acp.package.install.title{/lang}');

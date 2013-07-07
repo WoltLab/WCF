@@ -5,8 +5,8 @@
 	
 	{include file='headInclude'}
 	
-	<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-	<script type="text/javascript">
+	<script src="{@$__wcf->getPath('wcf')}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+	<script>
 		//<![CDATA[
 		$(function() {
 			new WCF.User.Login(false);
