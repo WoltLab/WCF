@@ -16,8 +16,6 @@
 			if (ev.data.type == 'html') {
 				var $value = ev.data.dataValue;
 				
-				console.debug("before:\n" + $value);
-				
 				// Convert <br> to line breaks.
 				$value = $value.replace(/<br><\/p>/gi,"\n\n");
 				$value = $value.replace(/<br>/gi, "\n");
@@ -38,8 +36,6 @@
 				$value = $value.replace(/\n{3,}/gi,"\n\n");
 				
 				ev.data.dataValue = $value;
-				
-				console.debug("after:\n" + $value);
 				
 				$pasted = true;
 			}
