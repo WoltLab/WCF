@@ -18,7 +18,7 @@
 			{/foreach}
 		</div>
 		
-		<script type="text/javascript">
+		<script>
 			//<![CDATA[
 			$(function() {
 				// fix anchor

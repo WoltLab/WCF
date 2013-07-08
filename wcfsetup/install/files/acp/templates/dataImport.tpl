@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.dataImport'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		{if $queue|isset}

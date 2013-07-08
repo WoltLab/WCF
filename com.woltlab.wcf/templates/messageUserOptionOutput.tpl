@@ -5,7 +5,7 @@
 		{/content}
 	</div>
 	
-	<script type="text/javascript">
+	<script>
 	//<![CDATA[
 	$(function() {
 		$('#{$option->optionName}').parents('dl:eq(0)').addClass('wide');

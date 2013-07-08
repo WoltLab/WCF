@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.package.update.title'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({

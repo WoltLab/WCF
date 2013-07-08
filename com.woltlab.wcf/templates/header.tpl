@@ -59,7 +59,7 @@
 					</aside>
 					
 					{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
-						<script type="text/javascript">
+						<script>
 							//<![CDATA[
 							$(function() {
 								new WCF.Collapsible.Sidebar();

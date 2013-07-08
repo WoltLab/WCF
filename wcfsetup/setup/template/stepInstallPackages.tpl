@@ -13,7 +13,7 @@
 	</div>
 </form>
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	window.onload = function() {
 		document.forms[0].submit();

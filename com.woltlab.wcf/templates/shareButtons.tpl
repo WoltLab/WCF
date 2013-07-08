@@ -32,7 +32,7 @@
 		{event name='buttons'}
 	</ul>
 	
-	<script type="text/javascript">
+	<script>
 		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({

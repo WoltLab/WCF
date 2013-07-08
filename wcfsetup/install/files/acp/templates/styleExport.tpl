@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.style.exportStyle'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		$('#exportAsPackage').change(function (event) {

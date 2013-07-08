@@ -5,7 +5,7 @@
 {/if}
 {include file='header'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({

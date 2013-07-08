@@ -82,7 +82,7 @@ final class HeaderUtil {
 		// 3rd party plugins may differ the actual output before it is sent to the browser
 		// please be aware, that $eventObj is not available here due to this being a static
 		// class. Use HeaderUtil::$output to modify it.
-		EventHandler::getInstance()->fireAction('wcf\util\HeaderUtil', 'parseOutput');
+		if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction('wcf\util\HeaderUtil', 'parseOutput');
 		
 		// enable gzip compression
 		if (HTTP_ENABLE_GZIP && HTTP_GZIP_LEVEL > 0 && HTTP_GZIP_LEVEL < 10 && !defined('HTTP_DISABLE_GZIP')) {

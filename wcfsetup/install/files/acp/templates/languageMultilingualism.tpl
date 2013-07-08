@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.language.multilingualism'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		var $languageIDs = $('#languageIDs');

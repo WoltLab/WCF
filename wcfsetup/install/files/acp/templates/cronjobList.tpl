@@ -5,7 +5,7 @@
 	<p>{lang}wcf.acp.cronjob.subtitle{/lang}</p>
 </header>
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\cronjob\\CronjobAction', '.jsCronjobRow');
