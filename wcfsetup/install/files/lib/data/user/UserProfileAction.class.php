@@ -95,14 +95,22 @@ class UserProfileAction extends UserAction {
 	public function getUserProfile() {
 		$userID = reset($this->objectIDs);
 		
-		$userProfileList = new UserProfileList();
-		$userProfileList->getConditionBuilder()->add("user_table.userID = ?", array($userID));
-		$userProfileList->readObjects();
-		$userProfiles = $userProfileList->getObjects();
-		
-		WCF::getTPL()->assign(array(
-			'user' => reset($userProfiles)
-		));
+		if ($userID) {
+			$userProfileList = new UserProfileList();
+			$userProfileList->getConditionBuilder()->add("user_table.userID = ?", array($userID));
+			$userProfileList->readObjects();
+			$userProfiles = $userProfileList->getObjects();
+			
+			if (empty($userProfiles)) {
+				WCF::getTPL()->assign('unknownUser', true);
+			}
+			else {
+				WCF::getTPL()->assign('user', reset($userProfiles));
+			}
+		}
+		else {
+			WCF::getTPL()->assign('unknownUser', true);
+		}
 		
 		return array(
 			'template' => WCF::getTPL()->fetch('userProfilePreview'),
