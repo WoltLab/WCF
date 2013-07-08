@@ -18,6 +18,9 @@ class LabelImporter implements IImporter {
 	 * @see wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
+		$data['groupID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.label.group', $data['groupID']);
+		if (!$data['groupID']) return 0;
+		
 		$label = LabelEditor::create($data);
 		
 		ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.label', $oldID, $label->labelID);
