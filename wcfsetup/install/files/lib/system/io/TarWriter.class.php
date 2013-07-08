@@ -77,7 +77,6 @@ class TarWriter extends Tar {
 			return false;
 		}
 		
-		
 		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
 			$format = 'Z512';
 		}
