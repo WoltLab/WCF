@@ -102,6 +102,12 @@ class DataImportForm extends AbstractForm {
 	public $fileSystemPath = '';
 	
 	/**
+	 * user merge mode
+	 * @var integer
+	 */
+	public $userMergeMode = 2;
+	
+	/**
 	 * @see wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -155,6 +161,7 @@ class DataImportForm extends AbstractForm {
 		if (isset($_POST['dbName'])) $this->dbName = StringUtil::trim($_POST['dbName']);
 		if (isset($_POST['dbPrefix'])) $this->dbPrefix = StringUtil::trim($_POST['dbPrefix']);
 		if (isset($_POST['fileSystemPath'])) $this->fileSystemPath = StringUtil::trim($_POST['fileSystemPath']);
+		if (isset($_POST['userMergeMode'])) $this->userMergeMode = intval($_POST['userMergeMode']);
 	}
 	
 	/**
@@ -183,6 +190,11 @@ class DataImportForm extends AbstractForm {
 		if (!$this->exporter->validateFileAccess()) {
 			throw new UserInputException('fileSystemPath');
 		}
+		
+		// validate user merge mode
+		if ($this->userMergeMode < 1 || $this->userMergeMode > 3) {
+			$this->userMergeMode = 2;
+		}
 	}
 	
 	/**
@@ -203,6 +215,7 @@ class DataImportForm extends AbstractForm {
 			'dbName' => $this->dbName,
 			'dbPrefix' => $this->dbPrefix,
 			'fileSystemPath' => $this->fileSystemPath,
+			'userMergeMode' => $this->userMergeMode
 		));
 		
 		WCF::getTPL()->assign('queue', $queue);
@@ -226,7 +239,8 @@ class DataImportForm extends AbstractForm {
 			'dbPassword' => $this->dbPassword,
 			'dbName' => $this->dbName,
 			'dbPrefix' => $this->dbPrefix,
-			'fileSystemPath' => $this->fileSystemPath
+			'fileSystemPath' => $this->fileSystemPath,
+			'userMergeMode' => $this->userMergeMode
 		));
 	}
 }

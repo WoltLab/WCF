@@ -2,6 +2,7 @@
 namespace wcf\system\worker;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\SystemException;
+use wcf\system\importer\ImportHandler;
 use wcf\system\WCF;
 
 /**
@@ -49,6 +50,9 @@ class ImportWorker extends AbstractWorker {
 		// set data
 		$this->exporter->setData($this->importData['dbHost'], $this->importData['dbUser'], $this->importData['dbPassword'], $this->importData['dbName'], $this->importData['dbPrefix'], $this->importData['fileSystemPath']);
 		$this->exporter->init();
+		
+		// set user merge mode
+		ImportHandler::getInstance()->setUserMergeMode($this->importData['userMergeMode']);
 	}
 	
 	/**
