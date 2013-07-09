@@ -24,6 +24,13 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	protected $everyoneGroupID = null;
 	
 	/**
+	 * group id of group 'Guests'
+	 * 
+	 * @var	integer
+	 */
+	protected $guestsGroupID = null;
+	
+	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'user_group_option';
@@ -32,7 +39,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 * list of names of tags which aren't considered as additional data
 	 * @var	array<string>
 	 */
-	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata');
+	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'guestdefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**
 	 * array with group IDs that are admin groups
@@ -45,7 +52,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values
-		$optionName = $optionType = $defaultValue = $adminDefaultValue = $validationPattern = $enableOptions = $permissions = $options = '';
+		$optionName = $optionType = $defaultValue = $adminDefaultValue = $guestDefaultValue = $validationPattern = $enableOptions = $permissions = $options = '';
 		$showOrder = null;
 		
 		// get values
@@ -53,6 +60,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if (isset($option['optiontype'])) $optionType = $option['optiontype'];
 		if (isset($option['defaultvalue'])) $defaultValue = $option['defaultvalue'];
 		if (isset($option['admindefaultvalue'])) $adminDefaultValue = $option['admindefaultvalue'];
+		if (isset($option['guestdefaultvalue'])) $guestDefaultValue = $option['guestdefaultvalue'];
 		if (isset($option['validationpattern'])) $validationPattern = $option['validationpattern'];
 		if (!empty($option['showorder'])) $showOrder = intval($option['showorder']);
 		$showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
@@ -83,6 +91,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			'optionType' => $optionType,
 			'defaultValue' => $defaultValue,
 			'adminDefaultValue' => $adminDefaultValue,
+			'guestDefaultValue' => $guestDefaultValue,
 			'validationPattern' => $validationPattern,
 			'showOrder' => $showOrder,
 			'enableOptions' => $enableOptions,
@@ -128,6 +137,14 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 				}
 				WCF::getDB()->commitTransaction();
 			}
+			
+			if (isset($option['guestdefaultvalue']) && $defaultValue != $guestDefaultValue) {
+				$statement->execute(array(
+					$this->getGuestsGroupID(),
+					$optionID,
+					$guestDefaultValue
+				));
+			}
 		}
 	}
 	
@@ -149,6 +166,26 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		}
 		
 		return $this->everyoneGroupID;
+	}
+	
+	/**
+	 * Returns group id of 'Guests' group.
+	 * 
+	 * @return	integer
+	 */
+	protected function getGuestsGroupID() {
+		if ($this->guestsGroupID === null) {
+			$sql = "SELECT	groupID
+				FROM	wcf".WCF_N."_user_group
+				WHERE	groupType = ?";
+			$statement = WCF::getDB()->prepareStatement($sql, 1);
+			$statement->execute(array(UserGroup::GUESTS));
+			$row = $statement->fetchArray();
+			
+			$this->guestsGroupID = $row['groupID'];
+		}
+		
+		return $this->guestsGroupID;
 	}
 	
 	/**
