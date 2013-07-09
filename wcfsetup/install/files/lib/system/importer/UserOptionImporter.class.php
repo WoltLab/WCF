@@ -61,7 +61,7 @@ class UserOptionImporter implements IImporter {
 		$statement->execute(array(
 			LanguageFactory::getInstance()->getDefaultLanguageID(),
 			'wcf.user.option.option'.$userOption->optionID,
-			$additionalData,
+			$additionalData['name'],
 			0,
 			$this->languageCategoryID,
 			1
