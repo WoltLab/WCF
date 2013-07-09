@@ -67,4 +67,17 @@ class Label extends DatabaseObject implements IRouteController {
 	public function getTitle() {
 		return WCF::getLanguage()->get($this->label);
 	}
+	
+	/**
+	 * Returns label CSS class names.
+	 * 
+	 * @return	string
+	 */
+	public function getClassNames() {
+		if ($this->cssClassName == 'none') {
+			return '';
+		}
+		
+		return $this->cssClassName;
+	}
 }
