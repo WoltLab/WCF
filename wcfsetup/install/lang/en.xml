@@ -346,6 +346,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Can manage tags]]></item>
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximum Signature Length]]></item>
+		<item name="wcf.acp.group.option.admin.system.canImportData"><![CDATA[TODO: Kann Daten importieren]]></item>
+		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[TODO: Kann Anzeigen aktualisieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -526,6 +528,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.tag.add"><![CDATA[Add Tag]]></item>
 		<item name="wcf.acp.menu.link.tag.list"><![CDATA[List Tags]]></item>
 		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[TODO: Datenimport]]></item>
+		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[TODO: Anzeigen aktualisieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -946,6 +949,12 @@ Examples for medium ID detection:
 		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Display Order]]></item>
 	</category>
 	
+	<category name="wcf.acp.rebuildData">
+		<item name="wcf.acp.rebuildData"><![CDATA[TODO: Anzeigen aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.description"><![CDATA[TODO: Für eine vollständige Aktualisierung aller Daten (z.B. nach einem Datenimport) führen Sie die Aktionen bitte in der hier angegebenen Reihenfolge durch.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user"><![CDATA[TODO: Benutzer aktualisieren]]></item>
+	</category>
+	
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.noResults"><![CDATA[No results]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[ACP Menu]]></item>
@@ -1248,7 +1257,6 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Banned]]></item>
 		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Not banned]]></item>
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Activity Points]]></item>
-		<item name="wcf.acp.user.activityPoint.updateCache"><![CDATA[Update Activity Point Cache]]></item>
 		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Update Points Per Activity]]></item>
 		<item name="wcf.acp.user.delete"><![CDATA[Delete user(s)]]></item>
 		<item name="wcf.acp.user.general"><![CDATA[User]]></item>
@@ -1269,7 +1277,6 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.rank.repeatImage.description"><![CDATA[Number of times the rank image will be repeated.]]></item>
 		<item name="wcf.acp.user.rank.title"><![CDATA[Title]]></item>
 		<item name="wcf.acp.user.rank.userGroup.description"><![CDATA[Rank is restricted to members of the selected user groups.]]></item>
-		<item name="wcf.acp.user.rank.updateRanks"><![CDATA[Update User Ranks]]></item>
 		<item name="wcf.acp.user.disableSignature"><![CDATA[Block signature]]></item>
 		<item name="wcf.acp.user.disableSignatureReason"><![CDATA[Reason]]></item>
 		<item name="wcf.acp.user.disableAvatar"><![CDATA[Block avatar]]></item>

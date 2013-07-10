@@ -139,5 +139,10 @@
 			<name>com.woltlab.wcf.exporter</name>
 			<interfacename><![CDATA[wcf\system\exporter\IExporter]]></interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.rebuildData</name>
+			<interfacename><![CDATA[wcf\system\worker\IRebuildDataWorker]]></interfacename>
+		</definition>
 	</import>
 </data>

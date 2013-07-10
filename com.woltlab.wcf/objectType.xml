@@ -263,5 +263,13 @@
 			<classname><![CDATA[wcf\system\importer\LabelImporter]]></classname>
 		</type>
 		<!-- /importers -->
+		
+		<!-- rebuild data workers -->
+		<type>
+			<name>com.woltlab.wcf.user</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname><![CDATA[wcf\system\worker\UserRebuildDataWorker]]></classname>
+		</type>
+		<!-- /rebuild data workers -->
 	</import>
 </data>

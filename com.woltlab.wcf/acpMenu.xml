@@ -93,8 +93,14 @@
 			<permissions>admin.system.canManageApplication</permissions>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.maintenance.rebuildData">
+			<controller><![CDATA[wcf\acp\page\RebuildDataPage]]></controller>
+			<parent>wcf.acp.menu.link.maintenance</parent>
+			<permissions>admin.system.canRebuildData</permissions>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.maintenance.import">
-			<controller><![CDATA[wcf\acp\form\DataImport]]></controller>
+			<controller><![CDATA[wcf\acp\form\DataImportForm]]></controller>
 			<parent>wcf.acp.menu.link.maintenance</parent>
 			<permissions>admin.system.canImportData</permissions>
 		</acpmenuitem>

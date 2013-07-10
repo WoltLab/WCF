@@ -347,6 +347,8 @@
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Kann Tags verwalten]]></item>
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximale Signaturlänge]]></item>
+		<item name="wcf.acp.group.option.admin.system.canImportData"><![CDATA[Kann Daten importieren]]></item>
+		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[Kann Anzeigen aktualisieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -527,6 +529,7 @@
 		<item name="wcf.acp.menu.link.tag.add"><![CDATA[Tag hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.tag.list"><![CDATA[Tags auflisten]]></item>
 		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[Datenimport]]></item>
+		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -947,6 +950,12 @@
 		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Reihenfolge]]></item>
 	</category>
 	
+	<category name="wcf.acp.rebuildData">
+		<item name="wcf.acp.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.description"><![CDATA[Für eine vollständige Aktualisierung aller Daten (z.B. nach einem Datenimport) führen Sie die Aktionen bitte in der hier angegebenen Reihenfolge durch.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user"><![CDATA[Benutzer aktualisieren]]></item>
+	</category>
+	
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.noResults"><![CDATA[Keine Treffer]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[Seiten]]></item>
@@ -1249,7 +1258,6 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Gesperrt]]></item>
 		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Nicht gesperrt]]></item>
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Aktivitätspunkte]]></item>
-		<item name="wcf.acp.user.activityPoint.updateCache"><![CDATA[Aktivitätspunkte neu vergeben]]></item>
 		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Punkte pro Aktivität aktualisieren]]></item>
 		<item name="wcf.acp.user.delete"><![CDATA[Benutzer löschen]]></item>
 		<item name="wcf.acp.user.general"><![CDATA[Benutzer]]></item>
@@ -1270,7 +1278,6 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.rank.repeatImage.description"><![CDATA[Bestimmt, wie oft die Grafik wiederholt wird.]]></item>
 		<item name="wcf.acp.user.rank.title"><![CDATA[Rangbezeichnung]]></item>
 		<item name="wcf.acp.user.rank.userGroup.description"><![CDATA[Dieser Benutzerrang steht ausschließlich den Mitgliedern der ausgewählten Benutzergruppe zur Verfügung.]]></item>
-		<item name="wcf.acp.user.rank.updateRanks"><![CDATA[Benutzerränge aktualisieren]]></item>
 		<item name="wcf.acp.user.disableSignature"><![CDATA[Signatur sperren]]></item>
 		<item name="wcf.acp.user.disableSignatureReason"><![CDATA[Begründung]]></item>
 		<item name="wcf.acp.user.disableAvatar"><![CDATA[Avatar sperren]]></item>

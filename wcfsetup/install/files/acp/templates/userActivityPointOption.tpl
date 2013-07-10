@@ -3,9 +3,6 @@
 <script>
 	//<![CDATA[
 	$(function() {
-		$('#updateCache').click(function () {
-			new WCF.ACP.Worker('cache', 'wcf\\system\\worker\\UserActivityPointUpdateCacheWorker', '{lang}wcf.acp.user.activityPoint.updateCache{/lang}');
-		});
 		$('#updateEvents').click(function () {
 			new WCF.ACP.Worker('events', 'wcf\\system\\worker\\UserActivityPointUpdateEventsWorker', '{lang}wcf.acp.user.activityPoint.updateEvents{/lang}');
 		});
@@ -28,7 +25,6 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li><a id="updateCache" class="button"><span class="icon icon16 icon-repeat"></span> <span>{lang}wcf.acp.user.activityPoint.updateCache{/lang}</span></a></li>
 			<li><a id="updateEvents" class="button"><span class="icon icon16 icon-repeat"></span> <span>{lang}wcf.acp.user.activityPoint.updateEvents{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
@@ -42,9 +38,9 @@
 			<legend>{lang}wcf.user.activityPoint.pointsPerObject{/lang}</legend>
 			{foreach from=$objectTypes item='objectType'}
 				<dl{if $errorField == $objectType->objectTypeID} class="formError"{/if}>
-					<dt><label for="{$objectType->objectType}">{lang}wcf.user.activityPoint.objectType.{$objectType->objectType}{/lang}</label></dt>
+					<dt><label for="{@$objectType->objectType}">{lang}wcf.user.activityPoint.objectType.{$objectType->objectType}{/lang}</label></dt>
 					<dd>
-						<input type="number" id="{$objectType->objectType}" name="points[{$objectType->objectTypeID}]" value="{$points[$objectType->objectTypeID]}" required="required" min="0" class="tiny" />
+						<input type="number" id="{@$objectType->objectType}" name="points[{@$objectType->objectTypeID}]" value="{$points[@$objectType->objectTypeID]}" required="required" min="0" class="tiny" />
 						{if $errorField == $objectType->objectTypeID}
 							<small class="innerError">
 								{lang}wcf.acp.user.activityPoint.option.notValid{/lang}
