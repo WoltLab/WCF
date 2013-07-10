@@ -123,13 +123,24 @@
 						</dd>
 					</dl>
 				{/foreach}
+				
+				{event name='dataFields'}
 			</fieldset>
 			
-			{*<fieldset>
+			<fieldset>
 				<legend>{lang}wcf.acp.dataImport.configure.settings{/lang}</legend>
 				
+				<dl>
+					<dt><label for="userMergeMode">{lang}wcf.acp.dataImport.configure.settings.userMergeMode{/lang}</label></dt>
+					<dd>
+						<label><input type="radio" id="userMergeMode" name="userMergeMode" value="1" {if $userMergeMode == 1}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.1{/lang}</label>
+						<label><input type="radio" name="userMergeMode" value="2" {if $userMergeMode == 2}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.2{/lang}</label>
+						<label><input type="radio" name="userMergeMode" value="3" {if $userMergeMode == 3}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.3{/lang}</label>
+					</dd>
+				</dl>
 				
-			</fieldset>*}
+				{event name='settingFields'}
+			</fieldset>
 			
 			<fieldset{if $errorField == 'database'} class="formError"{/if}>
 				<legend>{lang}wcf.acp.dataImport.configure.database{/lang}</legend>
@@ -171,6 +182,8 @@
 						{/if}
 					</dd>
 				</dl>
+				
+				{event name='databaseFields'}
 			</fieldset>
 			
 			<fieldset>
@@ -186,7 +199,11 @@
 						<small>{lang}wcf.acp.dataImport.configure.fileSystem.path.description{/lang}</small>
 					</dd>
 				</dl>
+				
+				{event name='fileSystemFields'}
 			</fieldset>
+			
+			{event name='fieldsets'}
 		</div>
 	
 		<div class="formSubmit">

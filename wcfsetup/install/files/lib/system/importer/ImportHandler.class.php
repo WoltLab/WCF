@@ -35,6 +35,12 @@ class ImportHandler extends SingletonFactory {
 	protected $importers = array();
 	
 	/**
+	 * user merge mode
+	 * @var integer
+	 */
+	protected $userMergeMode = 2;
+	
+	/**
 	 * @see wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
@@ -102,5 +108,23 @@ class ImportHandler extends SingletonFactory {
 		$statement->execute(array($objectTypeID, $oldID, $newID));
 		
 		unset($this->idMappingCache[$objectTypeID][$oldID]);
+	}
+	
+	/**
+	 * Sets the user merge mode.
+	 * 
+	 * @param	integer		$mode
+	 */
+	public function setUserMergeMode($mode) {
+		$this->userMergeMode = $mode;
+	}
+	
+	/**
+	 * Gets the user merge mode.
+	 * 
+	 * @return integer
+	 */
+	public function getUserMergeMode() {
+		return $this->userMergeMode;
 	}
 }
