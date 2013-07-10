@@ -5696,7 +5696,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 			
 			var $box16 = $('<div />').addClass('box16').appendTo($listItem);
 			
-			$box16.append($icon.addClass('framed'));
+			$box16.append($icon);
 			$box16.append($('<div />').append($label));
 		}
 		
