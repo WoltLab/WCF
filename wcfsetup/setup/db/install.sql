@@ -1073,7 +1073,6 @@ CREATE TABLE wcf1_user_group_option (
 	categoryName VARCHAR(255) NOT NULL DEFAULT '',
 	optionType VARCHAR(255) NOT NULL DEFAULT '',
 	defaultValue MEDIUMTEXT,
-	adminDefaultValue MEDIUMTEXT,
 	validationPattern TEXT,
 	enableOptions MEDIUMTEXT,
 	showOrder INT(10) NOT NULL DEFAULT 0,
