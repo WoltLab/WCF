@@ -154,7 +154,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 						$this->groupIDs['admin'][] = $group->groupID;
 					}
 					else {
-						$this->groupIDs['registered'][] = $group->registered;
+						$this->groupIDs['registered'][] = $group->groupID;
 					}
 				}
 			}
