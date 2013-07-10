@@ -3,7 +3,7 @@ namespace wcf\data\style;
 use wcf\data\language\LanguageList;
 use wcf\data\package\Package;
 use wcf\data\template\group\TemplateGroup;
-use wcf\data\template\group\TemplateGroupEditor;
+use wcf\data\template\group\TemplateGroupAction;
 use wcf\data\template\TemplateEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
@@ -346,11 +346,14 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$i++;
 			}
 			
-			$templateGroup = TemplateGroupEditor::create(array(
-				'templateGroupName' => $templateGroupName,
-				'templateGroupFolderName' => FileUtil::addTrailingSlash($templateGroupFolderName)
+			$templateGroupAction = new TemplateGroupAction(array(), 'create', array(
+				'data' => array(
+					'templateGroupName' => $templateGroupName,
+					'templateGroupFolderName' => FileUtil::addTrailingSlash($templateGroupFolderName)
+				)
 			));
-			$styleData['templateGroupID'] = $templateGroup->templateGroupID;
+			$returnValues = $templateGroupAction->executeAction();
+			$styleData['templateGroupID'] = $returnValues['returnValues']->templateGroupID;
 		}
 		
 		// import images
