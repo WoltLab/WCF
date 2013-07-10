@@ -715,6 +715,18 @@ WCF.Dropdown = {
 			WCF.CloseOverlayHandler.addCallback('WCF.Dropdown', $.proxy(this._closeAll, this));
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Dropdown', $.proxy(this.init, this));
 		}
+		
+		$(window).resize($.proxy(this._resize, this));
+	},
+	
+	/**
+	 * Handles resizing the window by making sure that the menu positions are
+	 * recalculated.
+	 */
+	_resize: function() {
+		for (var $containerID in this._dropdowns) {
+			this._menus[$containerID].removeData('orientationX');
+		}
 	},
 	
 	/**
@@ -4697,7 +4709,7 @@ WCF.Effect.BalloonTooltip = Class.extend({
 	 */
 	init: function() {
 		if (jQuery.browser.mobile) return;
-
+		
 		if (!this._didInit) {
 			// create empty div
 			this._tooltip = $('<div id="balloonTooltip" class="balloonTooltip"><span id="balloonTooltipText"></span><span class="pointer"><span></span></span></div>').appendTo($('body')).hide();

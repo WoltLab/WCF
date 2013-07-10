@@ -15,7 +15,7 @@
 		
 		$('.jsImportSection').change(function(event) {
 			var $section = $(event.currentTarget);
-			window.dtdesign = $section;
+			
 			if ($section.is(':checked')) {
 				$section.parent().next().find('input[type=checkbox]').prop('checked', 'checked');
 			}

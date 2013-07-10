@@ -124,25 +124,6 @@ class UserGroupEditForm extends UserGroupAddForm {
 		
 		// save group
 		$optionValues = $this->optionHandler->save();
-		$saveOptions = array();
-		if ($this->group->groupType == UserGroup::EVERYONE) {
-			$saveOptions = $optionValues;
-		}
-		else {
-			// get default group
-			$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
-			foreach ($this->optionHandler->getCategoryOptions() as $option) {
-				$option = $option['object'];
-				$defaultValue = $defaultGroup->getGroupOption($option->optionName);
-				$typeObject = $this->optionHandler->getTypeObject($option->optionType);
-					
-				$newValue = $typeObject->diff($defaultValue, $optionValues[$option->optionID]);
-				if ($newValue !== null) {
-					$saveOptions[$option->optionID] = $newValue;
-				}
-			}
-		}
-		
 		$this->groupName = 'wcf.acp.group.group'.$this->group->groupID;
 		if (I18nHandler::getInstance()->isPlainValue('groupName')) {
 			I18nHandler::getInstance()->remove($this->groupName, 1);
@@ -159,7 +140,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 				'userOnlineMarking' => $this->userOnlineMarking,
 				'showOnTeamPage' => $this->showOnTeamPage
 			), $this->additionalFields),
-			'options' => $saveOptions
+			'options' => $optionValues
 		);
 		$this->objectAction = new UserGroupAction(array($this->groupID), 'update', $data);
 		$this->objectAction->executeAction();
