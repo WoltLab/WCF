@@ -22,4 +22,13 @@ class PackageUpdate extends DatabaseObject {
 	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'packageUpdateID';
+	
+	/**
+	 * Returns the name of the package the update belongs to.
+	 *
+	 * @return	string
+	 */
+	public function getName() {
+		return $this->packageName;
+	}
 }
