@@ -76,8 +76,8 @@ class AdministrativeAttachmentList extends AttachmentList {
 	 */
 	public function getStats() {
 		$sql = "SELECT	COUNT(*) AS count,
-				IFNULL(SUM(attachment.filesize), 0) AS size,
-				IFNULL(SUM(downloads), 0) AS downloads
+				COALESCE(SUM(attachment.filesize), 0) AS size,
+				COALESCE(SUM(downloads), 0) AS downloads
 			FROM	wcf".WCF_N."_attachment attachment
 			".$this->getConditionBuilder();
 		$statement = WCF::getDB()->prepareStatement($sql);
