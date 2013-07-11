@@ -90,18 +90,16 @@ class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * Bulk import for user activity point events.
 	 * 
-	 * structure of $data:
+	 * structure of $itemsToUser:
 	 * array(
-	 * 	objectID => array(
-	 * 		userID => userID,
-	 * 		additionalData => mixed (optional)
-	 * 	)
+	 * 	userID => countOfItems
 	 * )
 	 * 
-	 * @param	string		$objectType
-	 * @param	array<array>	$data
+	 * @param	string			$objectType
+	 * @param	array<integer>		$itemsToUser
+	 * @param	boolean			$updateUsers
 	 */
-	public function fireEvents($objectType, array $data) {
+	public function fireEvents($objectType, array $itemsToUser, $updateUsers = true) {
 		$objectTypeObj = $this->getObjectTypeByName($objectType);
 		if ($objectTypeObj === null) {
 			throw new SystemException("Object type '".$objectType."' is not valid for object type definition 'com.woltlab.wcf.user.activityPointEvent'");
@@ -110,14 +108,15 @@ class UserActivityPointHandler extends SingletonFactory {
 		// update user_activity_point
 		$values = '';
 		$parameters = $userIDs = array();
-		foreach ($data as $event) {
+		foreach ($itemsToUser as $userID => $items) {
 			if (!empty($values)) $values .= ',';
-			$values .= '(?, ?, ?)';
-			$parameters[] = $event['userID'];
+			$values .= '(?, ?, ?, ?)';
+			$parameters[] = $userID;
 			$parameters[] = $objectTypeObj->objectTypeID;
-			$parameters[] = $objectTypeObj->points;
+			$parameters[] = $items * $objectTypeObj->points;
+			$parameters[] = $items;
 			
-			$userIDs[] = $event['userID'];
+			$userIDs[] = $userID;
 		}
 		
 		$sql = "INSERT INTO		wcf".WCF_N."_user_activity_point
@@ -125,28 +124,14 @@ class UserActivityPointHandler extends SingletonFactory {
 			VALUES			".$values."
 			ON DUPLICATE KEY
 			UPDATE			activityPoints = activityPoints + VALUES(activityPoints),
-						items = items + 1";
+						items = items + VALUES(items)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($parameters);
 		
 		// update activity points for given user ids
-		$userIDs = array_unique($userIDs);
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID IN (?)", array($userIDs));
-		
-		$sql = "UPDATE	wcf".WCF_N."_user user_table
-			SET	activityPoints = COALESCE((
-					SELECT		SUM(activityPoints) AS activityPoints
-					FROM		wcf".WCF_N."_user_activity_point
-					WHERE		userID = user_table.userID
-					GROUP BY	userID
-				), 0)
-			".$conditions;
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditions->getParameters());
-		
-		// update user ranks
-		$this->updateUserRanks($userIDs);
+		if ($updateUsers) {
+			$this->updateUsers($userIDs);
+		}
 	}
 	
 	/**
@@ -187,6 +172,16 @@ class UserActivityPointHandler extends SingletonFactory {
 		
 		// update total activity points per user
 		$userIDs = array_keys($userIDs);
+		$this->updateUsers($userIDs);
+	}
+	
+	/**
+	 * Updates total activity points and ranks for given user ids.
+	 *
+	 * @param	array<integer>		$userIDs
+	 */
+	public function updateUsers(array $userIDs) {
+		$userIDs = array_unique($userIDs);
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID IN (?)", array($userIDs));
 		
@@ -200,6 +195,29 @@ class UserActivityPointHandler extends SingletonFactory {
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
+		
+		// update user ranks
+		$this->updateUserRanks($userIDs);
+	}
+	
+	/**
+	 * Resets activity points and items for a given object type.
+	 * 
+	 * @param	string		$objectType
+	 */
+	public function reset($objectType) {
+		// get and validate object type
+		$objectTypeObj = $this->getObjectTypeByName($objectType);
+		if ($objectTypeObj === null) {
+			throw new SystemException("Object type '".$objectType."' is not valid for object type definition 'com.woltlab.wcf.user.activityPointEvent'");
+		}
+		
+		$sql = "UPDATE	wcf".WCF_N."_user_activity_point
+			SET	activityPoints = 0,
+				items = 0
+			WHERE	objectTypeID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($objectTypeObj->objectTypeID));
 	}
 	
 	/**
