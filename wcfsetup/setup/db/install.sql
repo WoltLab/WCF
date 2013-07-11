@@ -1011,18 +1011,9 @@ CREATE TABLE wcf1_user_activity_point (
 	userID INT(10) NOT NULL,
 	objectTypeID INT(10) NOT NULL,
 	activityPoints INT(10) NOT NULL DEFAULT 0,
+	items INT(10) NOT NULL DEFAULT 0,
 	PRIMARY KEY (userID, objectTypeID),
 	KEY (objectTypeID)
-);
-
-DROP TABLE IF EXISTS wcf1_user_activity_point_event;
-CREATE TABLE wcf1_user_activity_point_event (
-	eventID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	objectTypeID INT(10) NOT NULL,
-	objectID INT(10) NOT NULL,
-	userID INT(10) NOT NULL,
-	additionalData TEXT,
-	UNIQUE KEY (objectTypeID, userID, objectID)
 );
 
 DROP TABLE IF EXISTS wcf1_user_avatar;
@@ -1487,9 +1478,6 @@ ALTER TABLE wcf1_user_activity_event ADD FOREIGN KEY (languageID) REFERENCES wcf
 
 ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_user_activity_point_event ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
-ALTER TABLE wcf1_user_activity_point_event ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (ownerID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
