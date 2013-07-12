@@ -127,8 +127,6 @@ final class HTTPRequest {
 	 * @param	string		$url
 	 */
 	private function setURL($url) {
-		$this->url = $url;
-		
 		if (PROXY_SERVER_HTTP) {
 			$parsedUrl = parse_url(PROXY_SERVER_HTTP);
 			$this->path = $url;
@@ -137,11 +135,19 @@ final class HTTPRequest {
 			$parsedUrl = parse_url($url);
 			$this->path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '/';
 		}
+		
 		$this->useSSL = $parsedUrl['scheme'] === 'https';
 		$this->host = $parsedUrl['host'];
 		$this->port = isset($parsedUrl['port']) ? $parsedUrl['port'] : ($this->useSSL ? 443 : 80);
 		$this->path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '/';
 		$this->query = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
+		
+		// update the 'Host:' header if URL has changed
+		if (!empty($this->url) && $this->url != $url) {
+			$this->addHeader('Host', $this->host.($this->port != ($this->useSSL ? 443 : 80) ? ':'.$this->port : ''));
+		}
+		
+		$this->url = $url;
 	}
 	
 	/**
@@ -162,6 +168,7 @@ final class HTTPRequest {
 		$request .= "\r\n";
 		// add post parameters
 		if ($this->options['method'] !== 'GET') $request .= http_build_query($this->postParameters, '', '&')."\r\n\r\n";
+		
 		$remoteFile->puts($request);
 		
 		$inHeader = true;
@@ -247,6 +254,7 @@ final class HTTPRequest {
 				$newRequest->execute();
 				
 				// update data with data from the inner request
+				$this->url = $newRequest->url;
 				$this->statusCode = $newRequest->statusCode;
 				$this->replyHeaders = $newRequest->replyHeaders;
 				$this->replyBody = $newRequest->replyBody;

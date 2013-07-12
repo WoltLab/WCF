@@ -84,9 +84,9 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * all cached variables for usage after execution in sandbox
-	 * @var	array
+	 * @var	array<array>
 	 */
-	protected $sandboxVars = null;
+	protected $sandboxVars = array();
 	
 	/**
 	 * contains all templates with assigned template listeners.
@@ -504,25 +504,19 @@ class TemplateEngine extends SingletonFactory {
 	 * Enables execution in sandbox.
 	 */
 	public function enableSandbox() {
-		if ($this->sandboxVars === null) {
-			$this->sandboxVars = $this->v;
-		}
-		else {
-			throw new SystemException('TemplateEngine is already in sandbox mode. Disable the current sandbox mode before you enable a new one.');
-		}
+		$index = count($this->sandboxVars);
+		$this->sandboxVars[$index] = $this->v;
 	}
 	
 	/**
 	 * Disables execution in sandbox.
 	 */
 	public function disableSandbox() {
-		if ($this->sandboxVars !== null) {
-			$this->v = $this->sandboxVars;
-			$this->sandboxVars = null;
+		if (empty($this->sandboxVars)) {
+			throw new SystemException('TemplateEngine is currently not running in a sandbox.');
 		}
-		else {
-			throw new SystemException('TemplateEngine is not in sandbox mode at the moment.');
-		}
+		
+		$this->v = array_pop($this->sandboxVars);
 	}
 	
 	/**
