@@ -55,17 +55,6 @@ class AbstractAttachmentImporter implements IImporter {
 				throw new SystemException();
 			}
 				
-			// create thumbnails
-			if (ATTACHMENT_ENABLE_THUMBNAILS) {
-				if ($attachment->isImage) {
-					try {
-						$action = new AttachmentAction(array($attachment), 'generateThumbnails');
-						$action->executeAction();
-					}
-					catch (SystemException $e) {}	
-				}
-			}
-			
 			return $attachment->attachmentID;
 		}
 		catch (SystemException $e) {
