@@ -70,8 +70,8 @@ class UserActivityPointHandler extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			$userID,
-			$objectType->objectTypeID,
-			$objectType->points
+			$objectTypeObj->objectTypeID,
+			$objectTypeObj->points
 		));
 		
 		$sql = "UPDATE	wcf".WCF_N."_user
@@ -79,7 +79,7 @@ class UserActivityPointHandler extends SingletonFactory {
 			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			$objectType->points,
+			$objectTypeObj->points,
 			$userID
 		));
 		
