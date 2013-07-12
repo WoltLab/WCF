@@ -86,7 +86,7 @@ abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor 
 	/**
 	 * @see	wcf\system\search\ISearchableObjectType::getSpecialSQLQuery()
 	 */
-	public function getSpecialSQLQuery(PreparedStatementConditionBuilder $fulltextCondition = null, PreparedStatementConditionBuilder $searchIndexConditions = null, PreparedStatementConditionBuilder $additionalConditions = null, $orderBy = 'time DESC') {
+	public function getSpecialSQLQuery(PreparedStatementConditionBuilder &$fulltextCondition = null, PreparedStatementConditionBuilder &$searchIndexConditions = null, PreparedStatementConditionBuilder &$additionalConditions = null, $orderBy = 'time DESC') {
 		return '';
 	}
 }
