@@ -63,6 +63,12 @@ final class HTTPRequest {
 	private $query;
 	
 	/**
+	 * request URL
+	 * @var	string
+	 */
+	private $url = '';
+	
+	/**
 	 * request headers
 	 * @var	array<string>
 	 */
@@ -121,6 +127,8 @@ final class HTTPRequest {
 	 * @param	string		$url
 	 */
 	private function setURL($url) {
+		$this->url = $url;
+		
 		if (PROXY_SERVER_HTTP) {
 			$parsedUrl = parse_url(PROXY_SERVER_HTTP);
 			$this->path = $url;
@@ -278,7 +286,8 @@ final class HTTPRequest {
 		return array(
 			'statusCode' => $this->statusCode, 
 			'headers' => $this->replyHeaders, 
-			'body' => $this->replyBody
+			'body' => $this->replyBody,
+			'url' => $this->url
 		);
 	}
 	
