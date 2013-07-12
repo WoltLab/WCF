@@ -24,7 +24,7 @@ class UserImporter implements IImporter {
 		// resolve duplicates
 		$existingUser = User::getUserByUsername($data['username']);
 		if ($existingUser->userID) {
-			if ($this->userMergeMode == 1 || ($this->userMergeMode == 3 && StringUtil::toLowerCase($existingUser->email) != StringUtil::toLowerCase($data['email']))) {
+			if (ImportHandler::getInstance()->getUserMergeMode() == 1 || (ImportHandler::getInstance()->getUserMergeMode() == 3 && StringUtil::toLowerCase($existingUser->email) != StringUtil::toLowerCase($data['email']))) {
 				// rename user
 				$data['username'] = self::resolveDuplicate($data['username']);
 			}
