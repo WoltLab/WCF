@@ -149,7 +149,7 @@
 					{if PACKAGE_ID > 1}
 						{event name='headerLogo'}
 					{else}
-						<img src="{@$__wcf->getPath()}acp/images/wcfLogo2.svg" alt="" width="300" height="58" />
+						<img src="{@$__wcf->getPath()}acp/images/wcfLogo2.png" alt="" width="300" height="58" />
 					{/if}
 				</a>
 			</div>
