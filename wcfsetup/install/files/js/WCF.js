@@ -1128,7 +1128,7 @@ WCF.Clipboard = {
 		}, this));
 		
 		// loads marked items
-		if (this._hasMarkedItems) {
+		if (this._hasMarkedItems && this._containers.length) {
 			this._loadMarkedItems();
 		}
 		
@@ -1174,6 +1174,10 @@ WCF.Clipboard = {
 		this._resetMarkings();
 		
 		for (var $typeName in data.markedItems) {
+			if (!this._markedObjectIDs[$typeName]) {
+				this._markedObjectIDs[$typeName] = { };
+			}
+			
 			var $objectData = data.markedItems[$typeName];
 			for (var $i in $objectData) {
 				this._markedObjectIDs[$typeName].push($objectData[$i]);
