@@ -19,8 +19,12 @@ class InfiniteInverseIntegerUserGroupOptionType extends InverseIntegerUserGroupO
 	 * @see	wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */
 	public function merge($defaultValue, $groupValue) {
-		if (($defaultValue == -1 && $groupValue == -1) || ($defaultValue == $groupValue)) {
+		if ($groupValue == -1 || $defaultValue == $groupValue) {
 			return null;
+		}
+		
+		if ($defaultValue == -1) {
+			return $groupValue;
 		}
 		
 		return min($defaultValue, $groupValue);
