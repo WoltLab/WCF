@@ -323,7 +323,11 @@
 		html = html.replace(/<a .*?href=(["'])mailto:(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[email=$2]$3[/email]');
 		
 		// [url]
-		html = html.replace(/<a .*?href=(["'])(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[url=\'$2\']$3[/url]');
+		html = html.replace(/<a .*?href=(["'])(.+?)\1.*?>([\s\S]+?)<\/a>/gi, function(match, x, url, text) {
+			if (url == text) return '[url]' + url + '[/url]';
+			
+			return "[url='" + url + "']" + text + "[/url]";
+		});
 		
 		// [b]
 		html = html.replace(/<(?:b|strong)>/gi, '[b]');
