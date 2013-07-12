@@ -19,9 +19,30 @@
 	 * @see	jQuery.fn.data()
 	 */
 	jQuery.fn.data = function(key, value) {
-		if (key && key.match(/ID$/)) {
-			arguments[0] = key.replace(/ID$/, '-id');
+		if (key) {
+			switch (typeof key) {
+				case 'object':
+					for (var $key in key) {
+						if ($key.match(/ID$/)) {
+							var $value = key[$key];
+							delete key[$key];
+							
+							$key = $key.replace(/ID$/, '-id');
+							key[$key] = $value;
+						}
+					}
+					
+					arguments[0] = key;
+				break;
+				
+				case 'string':
+					if (key.match(/ID$/)) {
+						arguments[0] = key.replace(/ID$/, '-id');
+					}
+				break;
+			} 
 		}
+		
 		
 		// call jQuery's own data method
 		var $data = $jQueryData.apply(this, arguments);
