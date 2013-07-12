@@ -171,7 +171,7 @@ class UserActivityPointHandler extends SingletonFactory {
 		}
 		
 		// update total activity points per user
-		$userIDs = array_keys($userIDs);
+		$userIDs = array_keys($userToItems);
 		$this->updateUsers($userIDs);
 	}
 	
