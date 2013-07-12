@@ -40,7 +40,20 @@ class RebuildDataPage extends AbstractPage {
 		// get object types
 		$this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.rebuildData');
 		
-		// @todo: sort object types
+		// sort object types
+		uasort($this->objectTypes, function ($a, $b) {
+			$niceValueA = ($a->nicevalue ?: 0);
+			$niceValueB = ($b->nicevalue ?: 0);
+			
+			if ($niceValueA < $niceValueB) {
+				return -1;
+			}
+			else if ($niceValueA > $niceValueB) {
+				return 1;
+			}
+			
+			return 0;
+		});
 	}
 	
 	/**
