@@ -246,7 +246,6 @@ final class HTTPRequest {
 				}
 				
 				try {
-					echo "<pre>new location: ".$this->replyHeaders['Location']."</pre>";
 					$newRequest->setURL($this->replyHeaders['Location']);
 				}
 				catch (SystemException $e) {
