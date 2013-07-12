@@ -247,6 +247,7 @@ final class HTTPRequest {
 				$newRequest->execute();
 				
 				// update data with data from the inner request
+				$this->url = $newRequest->url;
 				$this->statusCode = $newRequest->statusCode;
 				$this->replyHeaders = $newRequest->replyHeaders;
 				$this->replyBody = $newRequest->replyBody;
