@@ -1128,7 +1128,7 @@ WCF.Clipboard = {
 		}, this));
 		
 		// loads marked items
-		if (this._hasMarkedItems) {
+		if (this._hasMarkedItems && this._containers.length) {
 			this._loadMarkedItems();
 		}
 		
