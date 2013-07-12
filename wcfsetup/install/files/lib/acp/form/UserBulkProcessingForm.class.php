@@ -373,7 +373,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 				
 				$userIDs = $this->fetchUsers();
 				
-				UserEditor::deleteUsers($userIDs);
+				UserEditor::deleteAll($userIDs);
 			break;
 		}
 		$this->saved();
