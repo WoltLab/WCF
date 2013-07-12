@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\worker;
 use wcf\data\attachment\AttachmentAction;
+use wcf\system\exception\SystemException;
 
 /**
  * Worker implementation for updating attachments.
@@ -21,7 +22,7 @@ class AttachmentRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
 	 * @see	wcf\system\worker\AbstractWorker::$limit
 	 */
-	protected $limit = 50;
+	protected $limit = 10;
 	
 	/**
 	 * @see	wcf\system\worker\AbstractRebuildDataWorker::initObjectList
@@ -39,7 +40,12 @@ class AttachmentRebuildDataWorker extends AbstractRebuildDataWorker {
 	public function execute() {
 		parent::execute();
 		
-		$action = new AttachmentAction($this->objectList->getObjects(), 'generateThumbnails');
-		$action->executeAction();
+		foreach ($this->objectList as $attachment) {
+			try {
+				$action = new AttachmentAction(array($attachment), 'generateThumbnails');
+				$action->executeAction();
+			}
+			catch (SystemException $e) {}
+		}
 	}
 }
