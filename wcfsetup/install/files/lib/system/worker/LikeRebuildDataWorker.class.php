@@ -46,6 +46,10 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		
 		$itemsToUser = array();
 		foreach ($this->objectList as $like) {
+			if (!$like->userID) {
+				continue;
+			}
+			
 			if (!isset($itemsToUser[$like->objectUserID])) {
 				$itemsToUser[$like->objectUserID] = 0;
 			}

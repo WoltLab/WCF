@@ -141,11 +141,6 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * @param	array<integer>		$userToItems
 	 */
 	public function removeEvents($objectType, array $userToItems) {
-		// ignore values for guests
-		if (isset($userToItems[0])) {
-			unset($userToItems[0]);
-		}
-		
 		if (empty($userToItems)) return;
 		
 		// get and validate object type
