@@ -1737,6 +1737,9 @@ WCF.Message.Quote.Handler = Class.extend({
 				if ($tagName === 'li') {
 					nodeText += "\r\n";
 				}
+				else if ($tagName === 'td' && !$.browser.msie) {
+					nodeText += "\r\n";
+				}
 				
 				nodeText += this._getNodeText(node.childNodes[i]);
 				
