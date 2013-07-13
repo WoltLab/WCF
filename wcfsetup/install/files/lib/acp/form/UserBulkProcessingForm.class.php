@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
+use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -373,7 +374,8 @@ class UserBulkProcessingForm extends UserOptionListForm {
 				
 				$userIDs = $this->fetchUsers();
 				
-				UserEditor::deleteUsers($userIDs);
+				$userAction = new UserAction($userIDs, 'delete');
+				$userAction->executeAction();
 			break;
 		}
 		$this->saved();
