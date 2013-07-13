@@ -238,14 +238,14 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		var $attachmentID = $(event.currentTarget).data('objectID');
 		var $bbcode = '[attach=' + $attachmentID + '][/attach]';
 		
-		var $ckEditor = $('#' + this._wysiwygContainerID).ckeditorGet();
-		if ($ckEditor.mode === 'wysiwyg') {
+		var $ckEditor = ($.browser.mobile) ? null : $('#' + this._wysiwygContainerID).ckeditorGet();
+		if ($ckEditor !== null && $ckEditor.mode === 'wysiwyg') {
 			// in design mode
 			$ckEditor.insertText($bbcode);
 		}
 		else {
 			// in source mode
-			var $textarea = $('#' + this._wysiwygContainerID).next('.cke_editor_text').find('textarea');
+			var $textarea = ($.browser.mobile) ? $('#' + this._wysiwygContainerID) : $('#' + this._wysiwygContainerID).next('.cke_editor_text').find('textarea');
 			var $value = $textarea.val();
 			if ($value.length == 0) {
 				$textarea.val($bbcode);
