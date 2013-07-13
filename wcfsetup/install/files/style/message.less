@@ -1020,3 +1020,17 @@ li:nth-child(2n+1) .message {
 	}
 }
 
+@media only screen and (max-width: 800px) {
+	.moderationList {
+		thead {
+			display: none;
+		}
+		
+		tbody {
+			.columnAssignedUserID,
+			.columnLastChangeTime {
+				display: none;
+			}
+		}
+	}
+}
