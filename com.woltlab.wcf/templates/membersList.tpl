@@ -46,6 +46,7 @@
 				<legend><label for="searchUsername">{lang}wcf.user.search{/lang}</label></legend>
 				
 				<dl>
+					<dt></dt>
 					<dd>
 						<input type="text" id="searchUsername" name="username" class="long" placeholder="{lang}wcf.user.username{/lang}" />
 					</dd>
@@ -71,6 +72,7 @@
 				<legend><label for="sortField">{lang}wcf.user.members.sort{/lang}</label></legend>
 				
 				<dl>
+					<dt></dt>
 					<dd>
 						<select id="sortField" name="sortField">
 							<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.user.username{/lang}</option>

@@ -207,6 +207,7 @@
 				</dl>
 				
 				<dl>
+					<dt></dt>
 					<dd>
 						<label><input type="checkbox" name="required" id="required" value="1" {if $required == 1}checked="checked" {/if}/> {lang}wcf.acp.user.option.required{/lang}</label>
 						<label><input type="checkbox" name="askDuringRegistration" id="askDuringRegistration" value="1" {if $askDuringRegistration == 1}checked="checked" {/if}/> {lang}wcf.acp.user.option.askDuringRegistration{/lang}</label>

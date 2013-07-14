@@ -68,7 +68,7 @@
 		</dl>
 		{if $queue->assignedUser}
 			<dl>
-				
+				<dt></dt>
 				<dd><a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-user-id="{@$assignedUserID}">{$queue->assignedUsername}</a></dd>
 			</dl>
 		{/if}

@@ -298,6 +298,7 @@
 				<legend>{lang}wcf.acp.style.globals.layout{/lang}</legend>
 				
 				<dl>
+					<dt></dt>
 					<dd><label>
 						<input type="checkbox" id="useFluidLayout" name="useFluidLayout" value="1"{if $variables[useFluidLayout]} checked="checked"{/if} />
 						<span>{lang}wcf.acp.style.globals.useFluidLayout{/lang}</span>

@@ -87,6 +87,7 @@
 			
 			{if $supportsPersistentLogins}
 				<dl>
+					<dt></dt>
 					<dd>
 						<label for="useCookies"><input type="checkbox" id="useCookies" name="useCookies" value="1" {if $useCookies}checked="checked" {/if}/> {lang}wcf.user.useCookies{/lang}</label>
 					</dd>
@@ -96,6 +97,7 @@
 			{event name='fields'}
 			
 			<dl>
+				<dt></dt>
 				<dd>
 					<ul class="buttonList">
 						<li><a class="button small" href="{link controller='LostPassword'}{/link}"><span>{lang}wcf.user.lostPassword{/lang}</span></a></li>
@@ -115,6 +117,7 @@
 				<legend>{lang}wcf.user.login.3rdParty{/lang}</legend>
 				
 				<dl>
+					<dt></dt>
 					<dd>
 						<ul class="buttonList">
 							{content}
