@@ -313,6 +313,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profile.canMail"><![CDATA[Can see email addresses]]></item>
 		<item name="wcf.acp.group.option.user.profile.canQuit"><![CDATA[Can quit own user account]]></item>
 		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Can rename own user]]></item>
+		<item name="wcf.acp.group.option.user.profile.canViewBannedInfo"><![CDATA[TODO: Kann eine Information über gesperrte Benutzer sehen]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Can see members list]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUserProfile"><![CDATA[Can see user profiles]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Can see users online list]]></item>
@@ -2301,6 +2302,7 @@ If you do not want to receive further email notifications for this event, you ca
 	
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile"><![CDATA[User Profile of “{$user->username}”]]></item>
+		<item name="wcf.user.profile.banned"><![CDATA[TODO: Der Benutzer „{$user->username}“ wurde gesperrt.]]></item>
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You did not provide any details yet.{else}There are no details visible to you.{/if}]]></item>
 		<item name="wcf.user.profile.content.recentActivity.noEntries"><![CDATA[There are no recent activities available yet.]]></item>
 		<item name="wcf.user.profile.followers"><![CDATA[{$user->username}’s Follower]]></item>
