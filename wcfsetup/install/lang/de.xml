@@ -949,6 +949,7 @@
 		<item name="wcf.acp.pageMenu.pageMenuItem"><![CDATA[Name]]></item>
 		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
 		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Reihenfolge]]></item>
+		<item name="wcf.acp.pageMenu.menuItemParameters"><![CDATA[Parameter]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">

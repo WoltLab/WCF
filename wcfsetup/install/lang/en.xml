@@ -948,6 +948,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.pageMenu.pageMenuItem"><![CDATA[Title]]></item>
 		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Parent Menu Item]]></item>
 		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Display Order]]></item>
+		<item name="wcf.acp.pageMenu.menuItemParameters"><![CDATA[TODO: Parameter]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
