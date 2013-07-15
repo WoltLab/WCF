@@ -956,8 +956,11 @@
 		<item name="wcf.acp.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.description"><![CDATA[Für eine vollständige Aktualisierung aller Daten (z.B. nach einem Datenimport) führen Sie die Aktionen bitte in der hier angegebenen Reihenfolge durch.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user"><![CDATA[Benutzer aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[Aktualisiert Zähler der Benutzer, aktualisiert Benutzerränge]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[Likes aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.description"><![CDATA[Berechnet Aktivitätspunkte neu]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Dateianhänge aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">

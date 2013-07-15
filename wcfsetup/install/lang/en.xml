@@ -955,8 +955,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.rebuildData"><![CDATA[TODO: Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.description"><![CDATA[TODO: Für eine vollständige Aktualisierung aller Daten (z.B. nach einem Datenimport) führen Sie die Aktionen bitte in der hier angegebenen Reihenfolge durch.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user"><![CDATA[TODO: Benutzer aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[TODO: Aktualisiert Zähler der Benutzer, aktualisiert Benutzerränge]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[TODO: Likes aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.description"><![CDATA[TODO: Berechnet Aktivitätspunkte neu]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[TODO: Dateianhänge aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[TODO: Erzeugt Vorschaubilder neu]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">
