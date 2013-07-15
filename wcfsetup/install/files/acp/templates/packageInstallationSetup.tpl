@@ -11,4 +11,10 @@
 	//]]>
 </script>
 
+<header class="boxHeadline">
+	<h1>{lang}wcf.acp.index.setup.title{/lang}</h1>
+</header>
+
+<p>{lang}wcf.acp.index.setup.notice{/lang}</p>
+
 {include file='footer'}
