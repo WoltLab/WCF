@@ -111,6 +111,17 @@ class ImportHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Resets the mapping.
+	 */
+	public function resetMapping() {
+		$sql = "DELETE FROM	wcf".WCF_N."_import_mapping";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		
+		$this->idMappingCache = array();
+	}
+	
+	/**
 	 * Sets the user merge mode.
 	 * 
 	 * @param	integer		$mode

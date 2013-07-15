@@ -262,6 +262,11 @@
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname><![CDATA[wcf\system\importer\LabelImporter]]></classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.smiley</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\SmileyImporter]]></classname>
+		</type>
 		<!-- /importers -->
 		
 		<!-- rebuild data workers -->
