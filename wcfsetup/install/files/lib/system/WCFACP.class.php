@@ -6,6 +6,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageCacheBuilder;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
@@ -65,6 +66,10 @@ class WCFACP extends WCF {
 			if (WCF::getUser()->userID == 0) {
 				// build redirect path
 				$application = ApplicationHandler::getInstance()->getActiveApplication();
+				
+				if ($application === null) {
+					throw new SystemException("You have aborted the installation, therefore this installation is unusable. You are required to reinstall the software.");
+				}
 				
 				// fallback for unknown host (rescue mode)
 				if ($application->domainName != $_SERVER['HTTP_HOST']) {
