@@ -31,7 +31,7 @@
 	{if !$__hideUserMenu|isset}
 		<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}">
 			<a href="{link controller='NotificationList'}{/link}"><span class="icon icon16 icon-bell-alt"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeInverse">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
-			<script type="text/javascript">
+			<script>
 				//<![CDATA[
 				$(function() {
 					WCF.Language.addObject({
@@ -110,6 +110,7 @@
 						
 						{if $__wcf->getUserAuthenticationFactory()->getUserAuthentication()->supportsPersistentLogins()}
 							<dl>
+								<dt></dt>
 								<dd><label><input type="checkbox" id="useCookies" name="useCookies" value="1" checked="checked" /> {lang}wcf.user.useCookies{/lang}</label></dd>
 							</dl>
 						{/if}
@@ -133,7 +134,7 @@
 				</form>
 			</div>
 			
-			<script type="text/javascript">
+			<script>
 				//<![CDATA[
 				$(function() {
 					WCF.Language.addObject({
@@ -149,7 +150,7 @@
 	{/if}
 	{if $__wcf->getLanguage()->getLanguages()|count > 1}
 		<li id="pageLanguageContainer">
-			<script type="text/javascript">
+			<script>
 				//<![CDATA[
 				$(function() {
 					var $languages = {
@@ -182,8 +183,8 @@
 				<span>{lang}wcf.moderation.moderation{/lang}</span>
 				{if $__wcf->getModerationQueueManager()->getOutstandingModerationCount()}<span class="badge badgeInverse">{#$__wcf->getModerationQueueManager()->getOutstandingModerationCount()}</span>{/if}
 			</a>
-			<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-			<script type="text/javascript">
+			<script src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+			<script>
 				//<![CDATA[
 				$(function() {
 					WCF.Language.addObject({

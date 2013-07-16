@@ -1,13 +1,13 @@
 {if !$codemirrorLoaded|isset}
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.js"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/dialog/dialog.js"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/searchcursor.js"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/search.js"></script>
+	<script src="{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.js"></script>
+	<script src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/dialog/dialog.js"></script>
+	<script src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/searchcursor.js"></script>
+	<script src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/search.js"></script>
 {/if}
-{if $codemirrorMode|isset}<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/{$codemirrorMode}/{$codemirrorMode}.js"></script>{/if}
+{if $codemirrorMode|isset}<script src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/{$codemirrorMode}/{$codemirrorMode}.js"></script>{/if}
 {event name='javascriptIncludes'}
 
-<script type="text/javascript">
+<script>
 //<![CDATA[
 	{if !$codemirrorLoaded|isset}
 		$('<link rel="stylesheet" href="{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.css" />').appendTo('head');
@@ -48,7 +48,7 @@
 				
 				setTimeout(function () {
 					$element.codemirror.refresh();
-				}, 100);
+				}, 250);
 			})();
 		}
 	});

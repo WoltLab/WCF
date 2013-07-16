@@ -1,6 +1,6 @@
 {include file='header'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\label\\LabelAction', '.jsLabelRow');

@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.user.'|concat:$action}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
@@ -168,6 +168,7 @@
 					<legend>{lang}wcf.acp.user.banUser{/lang}</legend>
 					
 					<dl>
+						<dt></dt>
 						<dd>
 							<label><input type="checkbox" id="banned" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.banUser{/lang}</label>
 							<small>{lang}wcf.acp.user.banUser.description{/lang}</small>	
@@ -185,7 +186,7 @@
 					{event name='banFields'}
 				</fieldset>
 				
-				<script type="text/javascript">
+				<script>
 					//<![CDATA[
 					$('#banned').change(function (event) {
 						if ($('#banned').is(':checked')) {
@@ -226,6 +227,7 @@
 										<fieldset>
 											<legend>{lang}wcf.user.visibleLanguages{/lang}</legend>
 											<dl>
+												<dt></dt>
 												<dd>
 													{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
 														<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked="checked"{/if} /> {@$availableLanguage}</label>
@@ -293,6 +295,7 @@
 					<legend>{lang}wcf.acp.user.disableSignature{/lang}</legend>
 					
 					<dl>
+						<dt></dt>
 						<dd>
 							<label><input type="checkbox" id="disableSignature" name="disableSignature" value="1" {if $disableSignature == 1}checked="checked" {/if}/> {lang}wcf.acp.user.disableSignature{/lang}</label>
 						</dd>
@@ -306,7 +309,7 @@
 					</dl>
 				</fieldset>
 				
-				<script type="text/javascript">
+				<script>
 					//<![CDATA[
 					$('#disableSignature').change(function (event) {
 						if ($('#disableSignature').is(':checked')) {
@@ -328,6 +331,7 @@
 					<legend>{lang}wcf.user.avatar{/lang}</legend>
 					
 					<dl>
+						<dt></dt>
 						<dd>
 							<label><input type="radio" name="avatarType" value="none" {if $avatarType == 'none'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.none{/lang}</label>
 						</dd>
@@ -369,6 +373,7 @@
 					<legend>{lang}wcf.acp.user.disableAvatar{/lang}</legend>
 					
 					<dl>
+						<dt></dt>
 						<dd>
 							<label><input type="checkbox" id="disableAvatar" name="disableAvatar" value="1" {if $disableAvatar == 1}checked="checked" {/if}/> {lang}wcf.acp.user.disableAvatar{/lang}</label>
 						</dd>
@@ -382,9 +387,9 @@
 					</dl>
 				</fieldset>
 				
-				<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-				<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-				<script type="text/javascript">
+				<script src="{@$__wcf->getPath()}js/WCF.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+				<script src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+				<script>
 					//<![CDATA[
 					$(function() {
 						$('#disableAvatar').change(function (event) {

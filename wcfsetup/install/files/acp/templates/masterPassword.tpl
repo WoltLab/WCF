@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.masterPassword.enter'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		$('#masterPassword').focus();

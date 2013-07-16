@@ -11,7 +11,7 @@
 </div>
 
 <!-- begin:parser_nonessential -->
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		var $spoilerBox = $('.jsSpoilerBox').removeClass('jsSpoilerBox');

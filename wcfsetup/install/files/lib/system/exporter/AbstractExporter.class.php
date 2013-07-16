@@ -77,6 +77,12 @@ abstract class AbstractExporter implements IExporter {
 	protected $defaultLimit = 1000;
 	
 	/**
+	 * selected import data
+	 * @var array
+	 */
+	protected $selectedData = array();
+	
+	/**
 	 * @see wcf\system\exporter\IExporter::setData()
 	 */
 	public function setData($databaseHost, $databaseUser, $databasePassword, $databaseName, $databasePrefix, $fileSystemPath) {
@@ -99,14 +105,7 @@ abstract class AbstractExporter implements IExporter {
 	 * @see wcf\system\exporter\IExporter::validateDatabaseAccess()
 	 */
 	public function validateDatabaseAccess() {
-		try {
-			$this->init();
-		}
-		catch (DatabaseException $e) {
-			return false;
-		}
-		
-		return true;
+		$this->init();
 	}
 	
 	/**
@@ -140,4 +139,33 @@ abstract class AbstractExporter implements IExporter {
 		$limit = (isset($this->limits[$objectType]) ? $this->limits[$objectType] : $this->defaultLimit);
 		call_user_func(array($this, 'export'.$this->methods[$objectType]), $loopCount * $limit, $limit);
 	}
+	
+	/**
+	 * @see wcf\system\exporter\IExporter::validateSelectedData()
+	 */
+	public function validateSelectedData(array $selectedData) {
+		$this->selectedData = $selectedData;
+	
+		if (!count($this->selectedData)) {
+			return false;
+		}
+		
+		$supportedData = $this->getSupportedData();
+		foreach ($this->selectedData as $name) {
+			if (isset($supportedData[$name])) break;
+			
+			foreach ($supportedData as $key => $data) {
+				if (in_array($name, $data)) {
+					if (!in_array($key, $selectedData)) return false;
+					
+					break 2;
+				}
+			}
+				
+			return false;
+		}
+		
+		return true;
+	}
+	
 }

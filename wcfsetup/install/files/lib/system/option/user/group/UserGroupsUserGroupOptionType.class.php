@@ -67,21 +67,6 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	}
 	
 	/**
-	 * @see	wcf\system\option\user\group\IUserGroupOptionType::diff()
-	 */
-	public function diff($defaultValue, $groupValue) {
-		$defaultValue = explode(',', $defaultValue);
-		$groupValue = explode(',', $groupValue);
-		
-		$result = array_diff($groupValue, $defaultValue);
-		if (empty($result)) {
-			return null;
-		}
-		
-		return implode(',', $result);
-	}
-	
-	/**
 	 * @see	wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */
 	public function merge($defaultValue, $groupValue) {

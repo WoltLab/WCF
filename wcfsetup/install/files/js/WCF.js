@@ -19,9 +19,30 @@
 	 * @see	jQuery.fn.data()
 	 */
 	jQuery.fn.data = function(key, value) {
-		if (key && key.match(/ID$/)) {
-			arguments[0] = key.replace(/ID$/, '-id');
+		if (key) {
+			switch (typeof key) {
+				case 'object':
+					for (var $key in key) {
+						if ($key.match(/ID$/)) {
+							var $value = key[$key];
+							delete key[$key];
+							
+							$key = $key.replace(/ID$/, '-id');
+							key[$key] = $value;
+						}
+					}
+					
+					arguments[0] = key;
+				break;
+				
+				case 'string':
+					if (key.match(/ID$/)) {
+						arguments[0] = key.replace(/ID$/, '-id');
+					}
+				break;
+			} 
 		}
+		
 		
 		// call jQuery's own data method
 		var $data = $jQueryData.apply(this, arguments);
@@ -715,6 +736,18 @@ WCF.Dropdown = {
 			WCF.CloseOverlayHandler.addCallback('WCF.Dropdown', $.proxy(this._closeAll, this));
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Dropdown', $.proxy(this.init, this));
 		}
+		
+		$(window).resize($.proxy(this._resize, this));
+	},
+	
+	/**
+	 * Handles resizing the window by making sure that the menu positions are
+	 * recalculated.
+	 */
+	_resize: function() {
+		for (var $containerID in this._dropdowns) {
+			this._menus[$containerID].removeData('orientationX');
+		}
 	},
 	
 	/**
@@ -1036,10 +1069,10 @@ WCF.Clipboard = {
 	_hasMarkedItems: false,
 	
 	/**
-	 * list of ids of marked objects
-	 * @var	array
+	 * list of ids of marked objects grouped by object type
+	 * @var	object
 	 */
-	_markedObjectIDs: [],
+	_markedObjectIDs: { },
 	
 	/**
 	 * current page
@@ -1095,7 +1128,7 @@ WCF.Clipboard = {
 		}, this));
 		
 		// loads marked items
-		if (this._hasMarkedItems) {
+		if (this._hasMarkedItems && this._containers.length) {
 			this._loadMarkedItems();
 		}
 		
@@ -1141,9 +1174,13 @@ WCF.Clipboard = {
 		this._resetMarkings();
 		
 		for (var $typeName in data.markedItems) {
+			if (!this._markedObjectIDs[$typeName]) {
+				this._markedObjectIDs[$typeName] = { };
+			}
+			
 			var $objectData = data.markedItems[$typeName];
 			for (var $i in $objectData) {
-				this._markedObjectIDs.push($objectData[$i]);
+				this._markedObjectIDs[$typeName].push($objectData[$i]);
 			}
 			
 			// loop through all containers
@@ -1158,7 +1195,7 @@ WCF.Clipboard = {
 				// mark items as marked
 				$container.find('input.jsClipboardItem').each($.proxy(function(innerIndex, item) {
 					var $item = $(item);
-					if (WCF.inArray($item.data('objectID'), this._markedObjectIDs)) {
+					if (WCF.inArray($item.data('objectID'), this._markedObjectIDs[$typeName])) {
 						$item.prop('checked', true);
 						
 						// add marked class for element container
@@ -1192,12 +1229,13 @@ WCF.Clipboard = {
 	 * Resets all checkboxes.
 	 */
 	_resetMarkings: function() {
-		this._containers.each(function(index, container) {
+		this._containers.each($.proxy(function(index, container) {
 			var $container = $(container);
 			
+			this._markedObjectIDs[$container.data('type')] = [ ];
 			$container.find('input.jsClipboardItem, input.jsClipboardMarkAll').prop('checked', false);
 			$container.find('.jsClipboardObject').removeClass('jsMarked');
-		});
+		}, this));
 	},
 	
 	/**
@@ -1212,6 +1250,7 @@ WCF.Clipboard = {
 		if (!this._trackedElements[$containerID]) {
 			$container.find('.jsClipboardMarkAll').data('hasContainer', $containerID).click($.proxy(this._markAll, this));
 			
+			this._markedObjectIDs[$container.data('type')] = [ ];
 			this._containerData[$container.data('type')] = {};
 			$.each($container.data(), $.proxy(function(index, element) {
 				if (index.match(/^type(.+)/)) {
@@ -1246,20 +1285,25 @@ WCF.Clipboard = {
 		var $isMarked = ($item.prop('checked')) ? true : false;
 		var $objectIDs = [ $objectID ];
 		
+		if ($item.data('hasContainer')) {
+			var $container = $('#' + $item.data('hasContainer'));
+			var $type = $container.data('type');
+		}
+		else {
+			var $type = $item.data('type');
+		}
+		
 		if ($isMarked) {
-			this._markedObjectIDs.push($objectID);
+			this._markedObjectIDs[$type].push($objectID);
 			$item.parents('.jsClipboardObject').addClass('jsMarked');
 		}
 		else {
-			this._markedObjectIDs = $.removeArrayValue(this._markedObjectIDs, $objectID);
+			this._markedObjectIDs[$type] = $.removeArrayValue(this._markedObjectIDs[$type], $objectID);
 			$item.parents('.jsClipboardObject').removeClass('jsMarked');
 		}
 		
 		// item is part of a container
 		if ($item.data('hasContainer')) {
-			var $container = $('#' + $item.data('hasContainer'));
-			var $type = $container.data('type');
-			
 			// check if all items are marked
 			var $markedAll = true;
 			$container.find('input.jsClipboardItem').each(function(index, containerItem) {
@@ -1278,10 +1322,6 @@ WCF.Clipboard = {
 					$(markAll).prop('checked', false);
 				}
 			});
-		}
-		else {
-			// standalone item
-			var $type = $item.data('type');
 		}
 		
 		this._saveState($type, $objectIDs, $isMarked);
@@ -1302,11 +1342,16 @@ WCF.Clipboard = {
 			$isMarked = $item.prop('checked');
 		}
 		
-		// handle item containers
 		if ($item.data('hasContainer')) {
 			var $container = $('#' + $item.data('hasContainer'));
 			var $type = $container.data('type');
-			
+		}
+		else {
+			var $type = $item.data('type');
+		}
+		
+		// handle item containers
+		if ($item.data('hasContainer')) {
 			// toggle state for all associated items
 			$container.find('input.jsClipboardItem').each($.proxy(function(index, containerItem) {
 				var $containerItem = $(containerItem);
@@ -1314,14 +1359,14 @@ WCF.Clipboard = {
 				if ($isMarked) {
 					if (!$containerItem.prop('checked')) {
 						$containerItem.prop('checked', true);
-						this._markedObjectIDs.push($objectID);
+						this._markedObjectIDs[$type].push($objectID);
 						$objectIDs.push($objectID);
 					}
 				}
 				else {
 					if ($containerItem.prop('checked')) {
 						$containerItem.prop('checked', false);
-						this._markedObjectIDs = $.removeArrayValue(this._markedObjectIDs, $objectID);
+						this._markedObjectIDs[$type] = $.removeArrayValue(this._markedObjectIDs[$type], $objectID);
 						$objectIDs.push($objectID);
 					}
 				}
@@ -4697,7 +4742,7 @@ WCF.Effect.BalloonTooltip = Class.extend({
 	 */
 	init: function() {
 		if (jQuery.browser.mobile) return;
-
+		
 		if (!this._didInit) {
 			// create empty div
 			this._tooltip = $('<div id="balloonTooltip" class="balloonTooltip"><span id="balloonTooltipText"></span><span class="pointer"><span></span></span></div>').appendTo($('body')).hide();
@@ -5684,7 +5729,7 @@ WCF.Search.User = WCF.Search.Base.extend({
 			
 			var $box16 = $('<div />').addClass('box16').appendTo($listItem);
 			
-			$box16.append($icon.addClass('framed'));
+			$box16.append($icon);
 			$box16.append($('<div />').append($label));
 		}
 		

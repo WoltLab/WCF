@@ -1,11 +1,12 @@
 {include file='header' pageTitle='wcf.acp.dataImport'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		{if $queue|isset}
 			WCF.Language.addObject({
-				{implode from=$importers item=importer}'wcf.acp.dataImport.import.{@$importer}': '{lang}wcf.acp.dataImport.import.{@$importer}{/lang}'{/implode}
+				'wcf.acp.dataImport': '{lang}wcf.acp.dataImport{/lang}',
+				{implode from=$importers item=importer}'wcf.acp.dataImport.data.{@$importer}': '{lang}wcf.acp.dataImport.data.{@$importer}{/lang}'{/implode}
 			});
 			
 			var $queues = [ {implode from=$queue item=item}'{@$item}'{/implode} ];
@@ -14,7 +15,7 @@
 		
 		$('.jsImportSection').change(function(event) {
 			var $section = $(event.currentTarget);
-			window.dtdesign = $section;
+			
 			if ($section.is(':checked')) {
 				$section.parent().next().find('input[type=checkbox]').prop('checked', 'checked');
 			}
@@ -48,7 +49,7 @@
 </header>
 
 {if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang} ({$errorField})</p>
+	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
 <div class="contentNavigation">
@@ -122,15 +123,26 @@
 						</dd>
 					</dl>
 				{/foreach}
+				
+				{event name='dataFields'}
 			</fieldset>
 			
-			{*<fieldset>
+			<fieldset>
 				<legend>{lang}wcf.acp.dataImport.configure.settings{/lang}</legend>
 				
+				<dl>
+					<dt><label for="userMergeMode">{lang}wcf.acp.dataImport.configure.settings.userMergeMode{/lang}</label></dt>
+					<dd>
+						<label><input type="radio" id="userMergeMode" name="userMergeMode" value="1" {if $userMergeMode == 1}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.1{/lang}</label>
+						<label><input type="radio" name="userMergeMode" value="2" {if $userMergeMode == 2}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.2{/lang}</label>
+						<label><input type="radio" name="userMergeMode" value="3" {if $userMergeMode == 3}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.3{/lang}</label>
+					</dd>
+				</dl>
 				
-			</fieldset>*}
+				{event name='settingFields'}
+			</fieldset>
 			
-			<fieldset>
+			<fieldset{if $errorField == 'database'} class="formError"{/if}>
 				<legend>{lang}wcf.acp.dataImport.configure.database{/lang}</legend>
 				
 				<dl>
@@ -165,21 +177,33 @@
 					<dt><label for="dbPrefix">{lang}wcf.acp.dataImport.configure.database.prefix{/lang}</label></dt>
 					<dd>
 						<input type="text" id="dbPrefix" name="dbPrefix" value="{$dbPrefix}" class="short" />
+						{if $errorField == 'database'}
+							<small class="innerError">{lang}wcf.acp.dataImport.configure.database.error{/lang}</small>
+						{/if}
 					</dd>
 				</dl>
+				
+				{event name='databaseFields'}
 			</fieldset>
 			
 			<fieldset>
 				<legend>{lang}wcf.acp.dataImport.configure.fileSystem{/lang}</legend>
 				
-				<dl>
+				<dl{if $errorField == 'fileSystemPath'} class="formError"{/if}>
 					<dt><label for="fileSystemPath">{lang}wcf.acp.dataImport.configure.fileSystem.path{/lang}</label></dt>
 					<dd>
 						<input type="text" id="fileSystemPath" name="fileSystemPath" value="{$fileSystemPath}" class="long" />
+						{if $errorField == 'fileSystemPath'}
+							<small class="innerError">{lang}wcf.acp.dataImport.configure.fileSystem.path.error{/lang}</small>
+						{/if}
 						<small>{lang}wcf.acp.dataImport.configure.fileSystem.path.description{/lang}</small>
 					</dd>
 				</dl>
+				
+				{event name='fileSystemFields'}
 			</fieldset>
+			
+			{event name='fieldsets'}
 		</div>
 	
 		<div class="formSubmit">

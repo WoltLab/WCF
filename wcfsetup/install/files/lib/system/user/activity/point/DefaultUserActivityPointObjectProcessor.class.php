@@ -11,7 +11,7 @@ namespace wcf\system\user\activity\point;
  * @subpackage	system.user.activity.point
  * @category	Community Framework
  */
-class DefaultUserActivityPointObjectProcessor implements IUserActivityPointObjectProcessor {
+class DefaultUserActivityPointObjectProcessor extends AbstractUserActivityPointObjectProcessor {
 	/**
 	 * @see	wcf\system\user\activity\point\IUserActivityPointObject::countRequests();
 	 */

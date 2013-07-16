@@ -16,8 +16,6 @@
 			if (ev.data.type == 'html') {
 				var $value = ev.data.dataValue;
 				
-				console.debug("before:\n" + $value);
-				
 				// Convert <br> to line breaks.
 				$value = $value.replace(/<br><\/p>/gi,"\n\n");
 				$value = $value.replace(/<br>/gi, "\n");
@@ -38,8 +36,6 @@
 				$value = $value.replace(/\n{3,}/gi,"\n\n");
 				
 				ev.data.dataValue = $value;
-				
-				console.debug("after:\n" + $value);
 				
 				$pasted = true;
 			}
@@ -327,7 +323,11 @@
 		html = html.replace(/<a .*?href=(["'])mailto:(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[email=$2]$3[/email]');
 		
 		// [url]
-		html = html.replace(/<a .*?href=(["'])(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[url=\'$2\']$3[/url]');
+		html = html.replace(/<a .*?href=(["'])(.+?)\1.*?>([\s\S]+?)<\/a>/gi, function(match, x, url, text) {
+			if (url == text) return '[url]' + url + '[/url]';
+			
+			return "[url='" + url + "']" + text + "[/url]";
+		});
 		
 		// [b]
 		html = html.replace(/<(?:b|strong)>/gi, '[b]');

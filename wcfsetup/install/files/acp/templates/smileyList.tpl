@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.smiley.list'}
 
 {if $objects|count}
-	<script type="text/javascript">
+	<script>
 		//<![CDATA[
 		$(function() {
 			new WCF.Action.Delete('wcf\\data\\smiley\\SmileyAction', $('.smileyRow'));

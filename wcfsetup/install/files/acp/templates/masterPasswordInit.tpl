@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.masterPassword.init'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		$('#setPassword').click(function() {

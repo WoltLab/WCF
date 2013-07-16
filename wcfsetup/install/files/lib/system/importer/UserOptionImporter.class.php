@@ -39,9 +39,7 @@ class UserOptionImporter implements IImporter {
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data) {
-		$name = $data['name'];
-		unset($data['name']);
+	public function import($oldID, array $data, array $additionalData = array()) {
 		$data['packageID'] = 1;
 		
 		// save option
@@ -63,7 +61,7 @@ class UserOptionImporter implements IImporter {
 		$statement->execute(array(
 			LanguageFactory::getInstance()->getDefaultLanguageID(),
 			'wcf.user.option.option'.$userOption->optionID,
-			$name,
+			$additionalData['name'],
 			0,
 			$this->languageCategoryID,
 			1

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user\activity\point;
+use wcf\data\IDatabaseObjectProcessor;
 
 /**
  * Every UserActivityPointObjectProcessor has to implement this interface.
@@ -11,7 +12,7 @@ namespace wcf\system\user\activity\point;
  * @subpackage	system.user.activity.point
  * @category	Community Framework
  */
-interface IUserActivityPointObjectProcessor {
+interface IUserActivityPointObjectProcessor extends IDatabaseObjectProcessor {
 	/**
 	 * This method has to return the amount of requests needed to completely
 	 * process this UserActivityPointObject.

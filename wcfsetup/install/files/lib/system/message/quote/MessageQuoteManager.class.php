@@ -120,22 +120,21 @@ class MessageQuoteManager extends SingletonFactory {
 			$this->quoteData[$quoteID] = $message;
 			
 			// save parent object id
-			if ($parentObjectID) {
-				if (!isset($this->quoteData['parents'])) {
-					$this->quoteData['parents'] = array();
-				}
-				
-				if (!isset($this->quoteData['parents'][$objectType])) {
-					$this->quoteData['parents'][$objectType] = array();
-				}
-				
-				if (!isset($this->quoteData['parents'][$objectType][$parentObjectID])) {
-					$this->quoteData['parents'][$objectType][$parentObjectID] = array();
-				}
-				
-				$this->quoteData['parents'][$objectType][$parentObjectID][] = $objectID;
-				$this->quoteData[$quoteID.'_pID'] = $parentObjectID;
+		
+			if (!isset($this->quoteData['parents'])) {
+				$this->quoteData['parents'] = array();
 			}
+			
+			if (!isset($this->quoteData['parents'][$objectType])) {
+				$this->quoteData['parents'][$objectType] = array();
+			}
+			
+			if (!isset($this->quoteData['parents'][$objectType][$parentObjectID])) {
+				$this->quoteData['parents'][$objectType][$parentObjectID] = array();
+			}
+			
+			$this->quoteData['parents'][$objectType][$parentObjectID][] = $objectID;
+			$this->quoteData[$quoteID.'_pID'] = $parentObjectID;
 			
 			if (!empty($fullQuote)) {
 				$this->quotes[$objectType][$objectID][$quoteID] = 1;

@@ -275,7 +275,7 @@ class StyleAddForm extends AbstractForm {
 		
 		// ensure image path is below WCF_DIR/images/
 		if ($this->imagePath) {
-			$relativePath = FileUtil::unifyDirSeperator(FileUtil::getRelativePath(WCF_DIR.'images/', WCF_DIR.$this->imagePath));
+			$relativePath = FileUtil::unifyDirSeparator(FileUtil::getRelativePath(WCF_DIR.'images/', WCF_DIR.$this->imagePath));
 			if (strpos($relativePath, '../') !== false) {
 				throw new UserInputException('imagePath', 'notValid');
 			}

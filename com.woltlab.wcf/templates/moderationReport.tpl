@@ -5,8 +5,8 @@
 	
 	{include file='headInclude'}
 	
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-	<script type="text/javascript">
+	<script src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+	<script>
 		//<![CDATA[
 		$(function() {
 			new WCF.Moderation.Report.Management({@$queue->queueID}, '{link controller='ModerationList'}{/link}');
@@ -73,7 +73,7 @@
 		</dl>
 		{if $queue->assignedUser}
 			<dl>
-				
+				<dt></dt>
 				<dd><a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-user-id="{@$assignedUserID}">{$queue->assignedUsername}</a></dd>
 			</dl>
 		{/if}

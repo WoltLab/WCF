@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.group.'|concat:$action}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
@@ -61,7 +61,7 @@
 			<dl{if $errorType.priority|isset} class="formError"{/if}>
 				<dt><label for="priority">{lang}wcf.acp.group.priority{/lang}</label></dt>
 				<dd>
-					<input type="number" id="priority" name="priority" value="{@$priority}" class="tiny" />
+					<input type="number" id="priority" name="priority" value="{@$priority}" class="tiny" max="8388607" />
 					{if $errorType.priority|isset}
 						<small class="innerError">
 							{lang}wcf.acp.group.priority.error.{@$errorType.priority}{/lang}
@@ -88,6 +88,7 @@
 			
 			{if MODULE_TEAM_PAGE && ($action == 'add' || $group->groupType > 3)}
 				<dl>
+					<dt></dt>
 					<dd>
 						<label><input type="checkbox" id="showOnTeamPage" name="showOnTeamPage" value="1" {if $showOnTeamPage}checked="checked" {/if}/> {lang}wcf.acp.group.showOnTeamPage{/lang}</label>
 					</dd>

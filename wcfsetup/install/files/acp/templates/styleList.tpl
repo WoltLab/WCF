@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.style.list'}
 
-<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript">
+<script src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js?v={@$__wcfVersion}"></script>
+<script>
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Toggle('wcf\\data\\style\\StyleAction', '.buttonList');

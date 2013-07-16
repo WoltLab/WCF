@@ -48,6 +48,7 @@
 			<legend>{lang}wcf.user.avatar{/lang}</legend>
 				
 			<dl>
+				<dt></dt>
 				<dd>
 					<label><input type="radio" name="avatarType" value="none" {if $avatarType == 'none'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.none{/lang}</label>
 					<small>{lang}wcf.user.avatar.type.none.description{/lang}</small>
@@ -113,7 +114,7 @@
 
 {include file='footer'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({

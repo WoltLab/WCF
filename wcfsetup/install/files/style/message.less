@@ -875,6 +875,13 @@ li:nth-child(2n+1) .message {
 	padding: 8px !important;
 }
 
+/* fixes textarea width */
+.cke_source {
+	box-sizing: border-box !important;
+	-moz-box-sizing: border-box !important;
+	-webkit-box-sizing: border-box !important; 
+}
+
 .cke_combo__fontsize .cke_combo_text {
 	width: auto !important;
 }
@@ -886,6 +893,22 @@ li:nth-child(2n+1) .message {
 .cke_wysiwyg_div,
 .cke_inner {
 	background-color: transparent !important;
+}
+
+/* fixes list styling */
+.cke_wysiwyg_div {
+	ul,
+	ol {
+		.nativeList;
+	}
+	
+	ul {
+		list-style-type: disc;
+	}
+	
+	ol {
+		list-style-type: decimal;
+	}
 }
 
 @media only screen and (max-width: 800px) {
@@ -997,3 +1020,17 @@ li:nth-child(2n+1) .message {
 	}
 }
 
+@media only screen and (max-width: 800px) {
+	.moderationList {
+		thead {
+			display: none;
+		}
+		
+		tbody {
+			.columnAssignedUserID,
+			.columnLastChangeTime {
+				display: none;
+			}
+		}
+	}
+}

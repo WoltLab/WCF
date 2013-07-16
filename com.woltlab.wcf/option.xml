@@ -285,7 +285,7 @@
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="module_dashboard_page">
-				<categoryname>module.user</categoryname>
+				<categoryname>module.community</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>

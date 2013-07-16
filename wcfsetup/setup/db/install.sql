@@ -339,7 +339,7 @@ CREATE TABLE wcf1_label (
 	labelID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	groupID INT(10) NOT NULL,
 	label VARCHAR(80) NOT NULL,
-	cssClassName VARCHAR(255) NOT NULL
+	cssClassName VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_label_group;
@@ -1011,18 +1011,9 @@ CREATE TABLE wcf1_user_activity_point (
 	userID INT(10) NOT NULL,
 	objectTypeID INT(10) NOT NULL,
 	activityPoints INT(10) NOT NULL DEFAULT 0,
+	items INT(10) NOT NULL DEFAULT 0,
 	PRIMARY KEY (userID, objectTypeID),
 	KEY (objectTypeID)
-);
-
-DROP TABLE IF EXISTS wcf1_user_activity_point_event;
-CREATE TABLE wcf1_user_activity_point_event (
-	eventID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	objectTypeID INT(10) NOT NULL,
-	objectID INT(10) NOT NULL,
-	userID INT(10) NOT NULL,
-	additionalData TEXT,
-	UNIQUE KEY (objectTypeID, userID, objectID)
 );
 
 DROP TABLE IF EXISTS wcf1_user_avatar;
@@ -1073,7 +1064,6 @@ CREATE TABLE wcf1_user_group_option (
 	categoryName VARCHAR(255) NOT NULL DEFAULT '',
 	optionType VARCHAR(255) NOT NULL DEFAULT '',
 	defaultValue MEDIUMTEXT,
-	adminDefaultValue MEDIUMTEXT,
 	validationPattern TEXT,
 	enableOptions MEDIUMTEXT,
 	showOrder INT(10) NOT NULL DEFAULT 0,
@@ -1489,9 +1479,6 @@ ALTER TABLE wcf1_user_activity_event ADD FOREIGN KEY (languageID) REFERENCES wcf
 ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_user_activity_point_event ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
-ALTER TABLE wcf1_user_activity_point_event ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
-
 ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (ownerID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
@@ -1555,9 +1542,9 @@ INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group5
 INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group6', 4);
 
 -- default user group options
-INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, adminDefaultValue, showOrder) VALUES ('admin.general.canUseAcp', 'admin.general', 'boolean', '0', '1', 1);
-INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, adminDefaultValue, showOrder) VALUES ('admin.system.package.canInstallPackage', 'admin.system.package', 'boolean', '0', '1', 1);
-INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, adminDefaultValue, showOrder) VALUES ('admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', '1', 1);
+INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, showOrder) VALUES ('admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1);
+INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, showOrder) VALUES ('admin.system.package.canInstallPackage', 'admin.system.package', 'boolean', '0', 1);
+INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, showOrder) VALUES ('admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', 1);
 
 -- default user group option values
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (1, 1, '0');	-- Everyone

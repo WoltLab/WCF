@@ -7,7 +7,7 @@
 	
 	<link rel="canonical" href="{link controller='RecentActivityList'}{/link}" />
 	
-	<script type="text/javascript">
+	<script>
 		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({

@@ -139,17 +139,6 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		// get default group
 		$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
 		$optionValues = $this->optionHandler->save();
-		$saveOptions = array();
-		foreach ($this->optionHandler->getCategoryOptions() as $option) {
-			$option = $option['object'];
-			$defaultValue = $defaultGroup->getGroupOption($option->optionName);
-			$typeObject = $this->optionHandler->getTypeObject($option->optionType);
-			
-			$newValue = $typeObject->diff($defaultValue, $optionValues[$option->optionID]);
-			if ($newValue !== null) {
-				$saveOptions[$option->optionID] = $newValue;
-			}
-		}
 		
 		$data = array(
 			'data' => array_merge($this->additionalFields, array(
@@ -158,7 +147,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 				'userOnlineMarking' => $this->userOnlineMarking,
 				'showOnTeamPage' => $this->showOnTeamPage
 			)),
-			'options' => $saveOptions
+			'options' => $optionValues
 		);
 		$this->objectAction = new UserGroupAction(array(), 'create', $data);
 		$this->objectAction->executeAction();

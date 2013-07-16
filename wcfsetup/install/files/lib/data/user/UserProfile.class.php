@@ -296,7 +296,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * @return	boolean
 	 */
 	public function isOnline() {
-		if ($this->lastActivityTime && $this->lastActivityTime > (TIME_NOW - USER_ONLINE_TIMEOUT) && $this->canViewOnlineStatus()) {
+		if ($this->getLastActivityTime() > (TIME_NOW - USER_ONLINE_TIMEOUT) && $this->canViewOnlineStatus()) {
 			return true;
 		}
 		return false;

@@ -171,8 +171,13 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[Benutzerprofilfelder]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[TODO: Wer wem folgt]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Follower]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Benutzeränge]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[Avatare]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Pinnwand-Kommentare]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Pinnwand-Kommentar-Antworten]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[Datenbank-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[Benutzername]]></item>
@@ -182,6 +187,14 @@
 		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[Datei-System-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Pfad zur Installation]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Wird für den Import von Datei-basierten Inhalten (wie z.B. Avatare) benötigt.]]></item>
+		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
+		<br /><strong>{$exception->getMessage()}<br />{$exception->getErrorDesc()}</strong>]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Es wurde keine Installation unter dem angegeben Pfad gefunden.]]></item>
+		<item name="wcf.acp.dataImport.configure.settings"><![CDATA[Einstellungen]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[Verhalten bei sich überschneidenden Benutzernamen]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"><![CDATA[Benutzeraccounts umbennen]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"><![CDATA[Benutzeraccounts zusammenlegen]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"><![CDATA[Benutzeraccounts zusammenlegen, wenn auch die E-Mail-Adresse identisch ist]]></item>
 	</category>
 	
 	<category name="wcf.acp.exceptionLog">
@@ -336,6 +349,8 @@
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Kann Tags verwalten]]></item>
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximale Signaturlänge]]></item>
+		<item name="wcf.acp.group.option.admin.system.canImportData"><![CDATA[Kann Daten importieren]]></item>
+		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[Kann Anzeigen aktualisieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -349,6 +364,8 @@
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[Weitere]]></item>
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[Sie rufen diese Installation über eine abweichende Domain auf, etwa auf Grund eines Umzuges. Bitte korrigieren Sie die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Anwendungen verwalten</a>.]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[Nachrichten]]></item>
+		<item name="wcf.acp.index.setup.notice"><![CDATA[Die Installation wird in wenigen Augenblicken automatisch gestartet, bitte laden Sie diese Seite nicht neu.]]></item>
+		<item name="wcf.acp.index.setup.title"><![CDATA[Bitte warten]]></item>
 		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
 		<item name="wcf.acp.index.system.software.wcfVersion"><![CDATA[Community Framework&trade;-Version]]></item>
@@ -516,6 +533,7 @@
 		<item name="wcf.acp.menu.link.tag.add"><![CDATA[Tag hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.tag.list"><![CDATA[Tags auflisten]]></item>
 		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[Datenimport]]></item>
+		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -724,6 +742,7 @@
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signaturen]]></item>
 		<item name="wcf.acp.option.module_team_page"><![CDATA[Team-Seite]]></item>
 		<item name="wcf.acp.option.module_dashboard_page"><![CDATA[Dashboard]]></item>
+		<item name="wcf.acp.option.module_dashboard_page.description"><![CDATA[Hinweis: Falls das Dashboard als Startseite definiert ist, muss bei Deaktivierung dieser Option zusätzlich eine neue Startseite in der <a href="{link controller='PageMenuItemList'}{/link}">Hauptmenüverwaltung</a> ausgewählt werden.]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatare]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check"><![CDATA[Sicherheitsüberprüfung aktivieren]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check.description"><![CDATA[Kennwörter werden auf ihre Sicherheit geprüft. Unsichere Kennwörter werden abgelehnt.]]></item>
@@ -831,7 +850,7 @@
 		<item name="wcf.acp.package.error.sql.dropTable.description"><![CDATA[Die oben genannten Tabellen existieren bereits und werden beim Fortfahren der Installation entfernt. Alle Daten dieser Tabellen gehen unwiderruflich verloren.]]></item>
 		<item name="wcf.acp.package.error.uniqueAlreadyInstalled"><![CDATA[Dieses Paket ist bereits installiert und kann nicht mehrfach installiert werden.]]></item>
 		<item name="wcf.acp.package.error.noValidInstall"><![CDATA[Das angegebene Paket lässt keine Neuinstallation zu.]]></item>
-		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[Paket „{$package->packageName}“ kann mit dem angegebenen Archiv nicht aktualisiert werden.]]></item>
+		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[Paket „{$package->packageName|language}“ kann mit dem angegebenen Archiv nicht aktualisiert werden.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Bezeichner]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Informationen]]></item>
@@ -933,6 +952,18 @@
 		<item name="wcf.acp.pageMenu.pageMenuItem"><![CDATA[Name]]></item>
 		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
 		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Reihenfolge]]></item>
+		<item name="wcf.acp.pageMenu.menuItemParameters"><![CDATA[Parameter]]></item>
+	</category>
+	
+	<category name="wcf.acp.rebuildData">
+		<item name="wcf.acp.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.description"><![CDATA[Für eine vollständige Aktualisierung aller Daten (z.B. nach einem Datenimport) führen Sie die Aktionen bitte in der hier angegebenen Reihenfolge durch.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user"><![CDATA[Benutzer aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[Aktualisiert Zähler der Benutzer, aktualisiert Benutzerränge]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[Likes aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.description"><![CDATA[Berechnet Aktivitätspunkte neu]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Dateianhänge aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">
@@ -1133,6 +1164,7 @@
 		<item name="wcf.acp.user.add"><![CDATA[Benutzer hinzufügen]]></item>
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
 		<item name="wcf.acp.user.assignToGroup.markedUsers"><![CDATA[Folgende Benutzer den unten ausgewählten Benutzergruppen zuweisen]]></item>
+		<item name="wcf.acp.user.assignToGroup.success"><![CDATA[{if $users|count > 1}Die{else}Der{/if} Benutzer wurde{if $users|count > 1}n{/if} erfolgreich {if $groupIDs|count > 1}den ausgewählten Benutzergruppen{else}der ausgewählten Benutzergruppe{/if} zugeordnet.]]></item>
 		<item name="wcf.acp.user.banUser"><![CDATA[Benutzer sperren]]></item>
 		<item name="wcf.acp.user.banUser.description"><![CDATA[Der Benutzer wird dauerhaft von der Nutzung aller Funktionen ausgeschlossen und erhält beim Aufruf der Seite eine entsprechende Fehlermeldung.]]></item>
 		<item name="wcf.acp.user.banReason"><![CDATA[Begründung]]></item>
@@ -1236,7 +1268,6 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Gesperrt]]></item>
 		<item name="wcf.acp.user.search.conditions.state.notBanned"><![CDATA[Nicht gesperrt]]></item>
 		<item name="wcf.acp.user.activityPoint.option"><![CDATA[Aktivitätspunkte]]></item>
-		<item name="wcf.acp.user.activityPoint.updateCache"><![CDATA[Aktivitätspunkte neu vergeben]]></item>
 		<item name="wcf.acp.user.activityPoint.updateEvents"><![CDATA[Punkte pro Aktivität aktualisieren]]></item>
 		<item name="wcf.acp.user.delete"><![CDATA[Benutzer löschen]]></item>
 		<item name="wcf.acp.user.general"><![CDATA[Benutzer]]></item>
@@ -1257,7 +1288,6 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.rank.repeatImage.description"><![CDATA[Bestimmt, wie oft die Grafik wiederholt wird.]]></item>
 		<item name="wcf.acp.user.rank.title"><![CDATA[Rangbezeichnung]]></item>
 		<item name="wcf.acp.user.rank.userGroup.description"><![CDATA[Dieser Benutzerrang steht ausschließlich den Mitgliedern der ausgewählten Benutzergruppe zur Verfügung.]]></item>
-		<item name="wcf.acp.user.rank.updateRanks"><![CDATA[Benutzerränge aktualisieren]]></item>
 		<item name="wcf.acp.user.disableSignature"><![CDATA[Signatur sperren]]></item>
 		<item name="wcf.acp.user.disableSignatureReason"><![CDATA[Begründung]]></item>
 		<item name="wcf.acp.user.disableAvatar"><![CDATA[Avatar sperren]]></item>
@@ -1867,6 +1897,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.user.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.user.visibleLanguages"><![CDATA[Inhaltssprachen]]></item>
 		<item name="wcf.user.visibleLanguages.description"><![CDATA[Zeigt Inhalte in den ausgewählten Sprachen an]]></item>
+		<item name="wcf.user.unknownUser"><![CDATA[Dieser Benutzer existiert nicht oder wurde gelöscht.]]></item>
 		<item name="wcf.user.userID"><![CDATA[Benutzer-ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.user.username.placeholder"><![CDATA[Geben Sie einen Benutzernamen ein]]></item>

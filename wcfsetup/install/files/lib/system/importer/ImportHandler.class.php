@@ -35,6 +35,12 @@ class ImportHandler extends SingletonFactory {
 	protected $importers = array();
 	
 	/**
+	 * user merge mode
+	 * @var integer
+	 */
+	protected $userMergeMode = 2;
+	
+	/**
 	 * @see wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
@@ -70,7 +76,7 @@ class ImportHandler extends SingletonFactory {
 		$objectTypeID = $this->objectTypes[$type]->objectTypeID;
 		
 		if (!isset($this->idMappingCache[$objectTypeID][$oldID])) {
-			$this->idMappingCache[$objectTypeID][$oldID] = 0;
+			$this->idMappingCache[$objectTypeID][$oldID] = null;
 			
 			$sql = "SELECT	newID
 				FROM	wcf".WCF_N."_import_mapping
@@ -102,5 +108,34 @@ class ImportHandler extends SingletonFactory {
 		$statement->execute(array($objectTypeID, $oldID, $newID));
 		
 		unset($this->idMappingCache[$objectTypeID][$oldID]);
+	}
+	
+	/**
+	 * Resets the mapping.
+	 */
+	public function resetMapping() {
+		$sql = "DELETE FROM	wcf".WCF_N."_import_mapping";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		
+		$this->idMappingCache = array();
+	}
+	
+	/**
+	 * Sets the user merge mode.
+	 * 
+	 * @param	integer		$mode
+	 */
+	public function setUserMergeMode($mode) {
+		$this->userMergeMode = $mode;
+	}
+	
+	/**
+	 * Gets the user merge mode.
+	 * 
+	 * @return integer
+	 */
+	public function getUserMergeMode() {
+		return $this->userMergeMode;
 	}
 }

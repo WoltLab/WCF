@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.pageMenu.'|concat:$action}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		var $menuPosition = $('#menuPosition');
@@ -8,6 +8,7 @@
 		var $isInternalLink = $('input[name=isInternalLink]').filter('[value=1]');
 		var $menuItemControllerContainer = $('#menuItemControllerContainer');
 		var $menuItemLinkContainer = $('#menuItemLinkContainer');
+		var $menuItemParametersContainer = $('#menuItemParametersContainer');
 		
 		function handleMenuPosition() {
 			if ($menuPosition.val() === 'header') {
@@ -21,10 +22,12 @@
 		function handleIsInternalLink() {
 			if ($isInternalLink.is(':checked')) {
 				$menuItemControllerContainer.show();
+				$menuItemParametersContainer.show();
 				$menuItemLinkContainer.hide();
 			}
 			else {
 				$menuItemControllerContainer.hide();
+				$menuItemParametersContainer.hide();
 				$menuItemLinkContainer.show();
 			}
 		}
@@ -130,6 +133,7 @@
 			<legend>{lang}wcf.acp.pageMenu.link{/lang}</legend>
 			
 			<dl>
+				<dt></dt>
 				<dd class="floated">
 					<label><input type="radio" name="isInternalLink" value="1"{if $isInternalLink} checked="checked"{/if} /> {lang}wcf.acp.pageMenu.link.internal{/lang}</label>
 					<label><input type="radio" name="isInternalLink" value="0"{if !$isInternalLink} checked="checked"{/if} /> {lang}wcf.acp.pageMenu.link.external{/lang}</label>
@@ -150,6 +154,22 @@
 						</small>
 					{/if}
 					<small>{lang}wcf.acp.pageMenu.menuItemController.description{/lang}</small>
+				</dd>
+			</dl>
+			
+			<dl id="menuItemParametersContainer"{if $errorField == 'menuItemParameters'} class="formError"{/if}>
+				<dt><label for="menuItemParameters">{lang}wcf.acp.pageMenu.menuItemParameters{/lang}</label></dt>
+				<dd>
+					<input type="text" name="menuItemParameters" id="menuItemParameters" value="{$menuItemParameters}" class="long" />
+					{if $errorField == 'menuItemParameters'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.pageMenu.menuItemParameters.error.{$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
 				</dd>
 			</dl>
 			
@@ -185,6 +205,7 @@
 			</dl>
 			
 			<dl>
+				<dt></dt>
 				<dd>
 					<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked="checked"{/if} /> <span>{lang}wcf.acp.pageMenu.isDisabled{/lang}</span></label>
 				</dd>

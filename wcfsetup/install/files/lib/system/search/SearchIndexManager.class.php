@@ -110,4 +110,16 @@ class SearchIndexManager extends SingletonFactory {
 		}
 		WCF::getDB()->commitTransaction();
 	}
+	
+	/**
+	 * Resets the search index.
+	 * 
+	 * @param	string		$objectType
+	 */
+	public function reset($objectType) {
+		$sql = "DELETE FROM	wcf".WCF_N."_search_index
+			WHERE		objectTypeID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->getObjectTypeID($objectType)));
+	}
 }

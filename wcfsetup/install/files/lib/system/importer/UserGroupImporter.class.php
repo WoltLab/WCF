@@ -16,7 +16,7 @@ class UserGroupImporter implements IImporter {
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data) {
+	public function import($oldID, array $data, array $additionalData = array()) {
 		$action = new UserGroupAction(array(), 'create', array(
 			'data' => $data		
 		));

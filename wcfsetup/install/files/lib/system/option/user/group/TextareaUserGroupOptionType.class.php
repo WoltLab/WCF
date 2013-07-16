@@ -17,21 +17,6 @@ use wcf\util\StringUtil;
  */
 class TextareaUserGroupOptionType extends TextareaOptionType implements IUserGroupOptionType {
 	/**
-	 * @see	wcf\system\option\user\group\IUserGroupOptionType::diff()
-	 */
-	public function diff($defaultValue, $groupValue) {
-		$defaultValue = explode("\n", StringUtil::unifyNewlines($defaultValue));
-		$groupValue = explode("\n", StringUtil::unifyNewlines($groupValue));
-		
-		$result = array_diff($groupValue, $defaultValue);
-		if (empty($result)) {
-			return null;
-		}
-		
-		return implode("\n", $result);
-	}
-	
-	/**
 	 * @see	wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */
 	public function merge($defaultValue, $groupValue) {

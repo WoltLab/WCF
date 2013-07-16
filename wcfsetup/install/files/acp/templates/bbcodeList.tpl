@@ -3,7 +3,7 @@
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.bbcode.list{/lang}</h1>
 	
-	<script type="text/javascript">
+	<script>
 		//<![CDATA[
 		$(function() {
 			new WCF.Action.Delete('wcf\\data\\bbcode\\BBCodeAction', '.jsBBCodeRow');

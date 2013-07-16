@@ -15,22 +15,21 @@ use wcf\data\comment\response\CommentResponseAction;
 class AbstractCommentResponseImporter implements IImporter {
 	/**
 	 * object type name
-	 * @var integer
+	 * @var string
 	 */
 	protected $objectTypeName = '';
 	
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */
-	public function import($oldID, array $data) {
+	public function import($oldID, array $data, array $additionalData = array()) {
 		if ($data['userID']) $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
-		if (!$data['userID']) $data['userID'] = null;
 		
 		$data['commentID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['commentID']);
-		if ($data['commentID']) return 0;
+		if (!$data['commentID']) return 0;
 		
 		$action = new CommentResponseAction(array(), 'create', array(
-			'data' => array_merge($data, array('objectTypeID' => $this->objectTypeID))		
+			'data' => $data		
 		));
 		$returnValues = $action->executeAction();
 		$newID = $returnValues['returnValues']->responseID;

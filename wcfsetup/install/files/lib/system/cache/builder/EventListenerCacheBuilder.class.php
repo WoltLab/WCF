@@ -69,6 +69,6 @@ class EventListenerCacheBuilder extends AbstractCacheBuilder {
 		}
 		else {
 			return strcmp($listenerA['listenerClassName'], $listenerB['listenerClassName']);
-		}	
+		}
 	}
 }

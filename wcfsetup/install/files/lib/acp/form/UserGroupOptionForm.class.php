@@ -195,17 +195,6 @@ class UserGroupOptionForm extends AbstractForm {
 			catch (UserInputException $e) {
 				$this->errorType[$e->getField()] = $e->getType();
 			}
-			
-			// check if not editing default value
-			if ($groupID != $this->groupEveryone->groupID) {
-				$newValue = $this->optionType->diff($this->defaultValue, $optionValue);
-				if ($newValue === null) {
-					unset($this->values[$groupID]);
-				}
-				else {
-					$this->values[$groupID] = $newValue;
-				}
-			}
 		}
 		
 		if (!empty($this->errorType)) {

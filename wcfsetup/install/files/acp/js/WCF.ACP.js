@@ -69,7 +69,9 @@ WCF.ACP.Application.SetAsPrimary = Class.extend({
 				$('#setAsPrimary').parent().remove();
 				
 				// insert icon
-				$('<span class="icon icon16 icon-home jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($('.boxHeadline > h1'));
+				$headline = $('.boxHeadline > h1');
+				$headline.html($headline.html() + ' ');
+				$('<span class="icon icon16 icon-ok-sign jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($headline);
 				
 				WCF.DOMNodeInsertedHandler.execute();
 			}, this)
@@ -2260,7 +2262,7 @@ WCF.ACP.Import.Manager = Class.extend({
 		}
 		else {
 			this._run(
-				WCF.Language.get('wcf.acp.dataImport.import.' + this._objectTypes[this._index]),
+				WCF.Language.get('wcf.acp.dataImport.data.' + this._objectTypes[this._index]),
 				this._objectTypes[this._index]
 			);
 		}

@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.style.exportStyle'}
 
-<script type="text/javascript">
+<script>
 	//<![CDATA[
 	$(function() {
 		$('#exportAsPackage').change(function (event) {
@@ -36,11 +36,13 @@
 			<small>{lang}wcf.acp.style.exportStyle.components.description{/lang}</small>
 			
 			<dl>
+				<dt></dt>
 				<dd>
 					<label><input type="checkbox" name="exportImages" value="1"{if $exportImages} checked="checked"{/if}{if !$canExportImages} disabled="disabled"{/if} /> <span>{lang}wcf.acp.style.exportImages{/lang}</span></label>
 				</dd>
 			</dl>
 			<dl>
+				<dt></dt>
 				<dd>
 					<label><input type="checkbox" name="exportTemplates" value="1"{if $exportTemplates} checked="checked"{/if}{if !$canExportTemplates} disabled="disabled"{/if} /> <span>{lang}wcf.acp.style.exportTemplates{/lang}</span></label>
 				</dd>
@@ -54,6 +56,7 @@
 			<small>{lang}wcf.acp.style.exportStyle.asPackage.description{/lang}</small>
 			
 			<dl>
+				<dt></dt>
 				<dd>
 					<label><input type="checkbox" id="exportAsPackage" name="exportAsPackage" value="1"{if $exportAsPackage} checked="checked"{/if} /> <span>{lang}wcf.acp.style.exportAsPackage{/lang}</span></label>
 				</dd>

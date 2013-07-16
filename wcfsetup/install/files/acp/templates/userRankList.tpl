@@ -2,19 +2,6 @@
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.user.rank.list{/lang}</h1>
-	
-	<script type="text/javascript">
-		//<![CDATA[
-		$(function() {
-			new WCF.Action.Delete('wcf\\data\\user\\rank\\UserRankAction', '.jsUserRankRow');
-			
-			$('#updateUserRanks').click(function () {
-				$('#updateUserRanks').unbind('click');
-				new WCF.ACP.Worker('updateUserRanks', 'wcf\\system\\worker\\UserRankUpdateWorker');
-			});
-		});
-		//]]>
-	</script>
 </header>
 
 <div class="contentNavigation">
@@ -22,7 +9,6 @@
 	
 	<nav>
 		<ul>
-			<li><a id="updateUserRanks" class="button"><span class="icon icon16 icon-repeat"></span> <span>{lang}wcf.acp.user.rank.updateRanks{/lang}</span></a></li>
 			<li><a href="{link controller='UserRankAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.user.rank.add{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsTop'}
