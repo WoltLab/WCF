@@ -17,6 +17,12 @@ use wcf\util\StringUtil;
  */
 class UserCollapsibleSidebarHandler extends SingletonFactory implements IAJAXInvokeAction {
 	/**
+	 * list of methods allowed for remote invoke
+	 * @var	array<string>
+	 */
+	public static $allowInvoke = array('toggle');
+	
+	/**
 	 * Toggles a sidebar.
 	 */
 	public function toggle() {

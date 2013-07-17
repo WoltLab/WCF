@@ -118,11 +118,23 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			throw new SystemException("'".$this->className."' does not extend 'wcf\system\SingletonFactory'");
 		}
 		
+		// validate action name
+		if (empty($this->actionName)) {
+			throw new UserInputException('actionName');
+		}
+		
+		// validate accessibility
+		$className = $this->className;
+		if (!property_exists($className, 'allowInvoke') || !in_array($this->actionName, $className::$allowInvoke)) {
+			throw new PermissionDeniedException();
+		}
+		
 		$this->actionObject = call_user_func(array($this->className, 'getInstance'));
 		
-		// validate action name
-		if (empty($this->actionName) || !method_exists($this->actionObject, $this->actionName)) {
-			throw new UserInputException('actionName');
+		// check for validate method
+		$validateMethod = 'validate'.ucfirst($this->actionName);
+		if (method_exists($this->actionObject, $this->actionName)) {
+			$this->actionObject->{$validateMethod}();
 		}
 		
 		$this->response = $this->actionObject->{$this->actionName}();
