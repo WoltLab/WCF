@@ -2,6 +2,7 @@
 namespace wcf\system\importer;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\SystemException;
+use wcf\system\IAJAXInvokeAction;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -15,7 +16,7 @@ use wcf\system\WCF;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class ImportHandler extends SingletonFactory {
+class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	/**
 	 * id map cache
 	 * @var	array 
@@ -39,6 +40,12 @@ class ImportHandler extends SingletonFactory {
 	 * @var integer
 	 */
 	protected $userMergeMode = 2;
+	
+	/**
+	 * list of methods allowed for remote invoke
+	 * @var	array<string>
+	 */
+	public static $allowInvoke = array('resetMapping');
 	
 	/**
 	 * @see wcf\system\SingletonFactory::init()
@@ -108,6 +115,13 @@ class ImportHandler extends SingletonFactory {
 		$statement->execute(array($objectTypeID, $oldID, $newID));
 		
 		unset($this->idMappingCache[$objectTypeID][$oldID]);
+	}
+	
+	/**
+	 * Validates accessibility of resetMapping().
+	 */
+	public function validateResetMapping() {
+		WCF::getSession()->checkPermissions(array('admin.system.canImportData'));
 	}
 	
 	/**
