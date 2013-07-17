@@ -81,4 +81,3 @@ if ($font.length) {
 if ($other.length) {
 	__CKEDITOR_TOOLBAR.push($other);
 }
-__CKEDITOR_TOOLBAR.push(['Maximize']);
