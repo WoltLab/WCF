@@ -750,7 +750,7 @@ class TemplateScriptingCompiler {
 			unset($args['once']);
 		}
 		
-		$application = '$this->v[\'__APPLICATION\']';
+		$application = "'wcf'";
 		if (isset($args['application'])) {
 			$application = $args['application'];
 			unset($args['application']);
