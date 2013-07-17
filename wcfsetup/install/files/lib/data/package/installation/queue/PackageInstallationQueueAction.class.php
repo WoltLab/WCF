@@ -87,10 +87,6 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 			throw new UserInputException('objectIDs');
 		}
 		
-		// todo: do confirmInstallation and packageType need validation?
-		// see https://github.com/WoltLab/WCF/issues/1329
-		// see https://github.com/WoltLab/WCF/issues/1330
-		
 		if ($this->queue->userID != WCF::getUser()->userID) {
 			throw new PermissionDeniedException();
 		}
