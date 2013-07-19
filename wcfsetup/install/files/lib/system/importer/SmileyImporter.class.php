@@ -21,6 +21,8 @@ class SmileyImporter implements IImporter {
 		$data['smileyPath'] = 'images/smilies/'.basename($additionalData['fileLocation']);
 		if (!@copy($additionalData['fileLocation'], WCF_DIR.$data['smileyPath'])) return 0;
 		
+		$data['packageID'] = 1;
+		
 		// save smiley
 		$smiley = SmileyEditor::create($data);
 		
