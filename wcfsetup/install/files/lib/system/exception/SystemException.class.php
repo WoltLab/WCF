@@ -150,7 +150,7 @@ class SystemException extends LoggedException implements IPrintableException {
 					
 					<?php if (WCF::debugModeIsEnabled()) { ?>
 						<div>
-							<p><?php echo $this->getDescription(); ?></p>
+							<?php if ($this->getDescription()) { ?><p><br /><?php echo $this->getDescription(); ?></p><?php } ?>
 							
 							<h2>Information:</h2>
 							<p>

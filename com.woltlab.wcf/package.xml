@@ -43,6 +43,8 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="2.0.0 Beta 4">
+		<instruction type="file" run="standalone">files_pre_update.tar</instruction>
+		
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
