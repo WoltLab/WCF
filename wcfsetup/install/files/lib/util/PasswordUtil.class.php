@@ -296,8 +296,7 @@ final class PasswordUtil {
 			$output = '*';
 			
 			// Check for correct hash
-			if (substr($setting, 0, 3) !== '$H$' && substr($setting, 0, 3) !== '$P$')
-			{
+			if (substr($setting, 0, 3) !== '$H$' && substr($setting, 0, 3) !== '$P$') {
 				return $output;
 			}
 			
@@ -315,8 +314,7 @@ final class PasswordUtil {
 			}
 			
 			$hash = md5($salt . $password, true);
-			do
-			{
+			do {
 				$hash = md5($hash . $password, true);
 			}
 			while (--$count);
