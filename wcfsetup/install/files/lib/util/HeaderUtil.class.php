@@ -90,8 +90,13 @@ final class HeaderUtil {
 		
 		// move script tags to the bottom of the page
 		$javascript = array();
-		self::$output = preg_replace_callback('~<script(.*?)</script>~s', function($matches) use (&$javascript) {
-			$javascript[] = $matches[0];
+		self::$output = preg_replace_callback('~(?P<conditionBefore><!--\[IF [^<]+\s*)?<script(?P<script>.*?)</script>(?P<conditionAfter>\s*<!\[ENDIF]-->)?~s', function($matches) use (&$javascript) {
+			$match = '';
+			if (isset($matches['conditionBefore'])) $match .= $matches['conditionBefore'];
+			$match .= '<script' . $matches['script'] . '</script>';
+			if (isset($matches['conditionAfter'])) $match .= $matches['conditionAfter'];
+			
+			$javascript[] = $match;
 			return '';
 		}, self::$output);
 		
