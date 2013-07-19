@@ -53,8 +53,8 @@
 		<instruction type="script">acp/update_b5.php</instruction>
 		
 		<instruction type="acpMenu">acpMenu.xml</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
+		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="option">option.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 	</instructions>
