@@ -80,6 +80,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	 * @return	integer		$newID
 	 */
 	public function getNewID($type, $oldID) {
+		if (!$oldID) return null;
 		$objectTypeID = $this->objectTypes[$type]->objectTypeID;
 		
 		if (!isset($this->idMappingCache[$objectTypeID][$oldID])) {
