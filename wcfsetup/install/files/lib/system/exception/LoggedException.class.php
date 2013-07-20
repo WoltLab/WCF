@@ -79,6 +79,9 @@ class LoggedException extends \Exception {
 		
 		$e = ($this->getPrevious() ?: $this);
 		
+		$trace = preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e->getTraceAsString());
+		$trace = preg_replace('/mysqli->mysqli\(.*\)/', 'mysqli->mysqli(...)', $trace);
+		
 		// don't forget to update ExceptionLogViewPage, when changing the log file format
 		$message = gmdate('r', TIME_NOW)."\n".
 			'Message: '.$e->getMessage()."\n".
@@ -88,7 +91,7 @@ class LoggedException extends \Exception {
 			'Request URI: '.(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '')."\n".
 			'Referrer: '.(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '')."\n".
 			'User-Agent: '.(isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '')."\n".
-			"Stacktrace: \n  ".implode("\n  ", explode("\n", $e->getTraceAsString()))."\n";
+			"Stacktrace: \n  ".implode("\n  ", explode("\n", $trace))."\n";
 		
 		// calculate Exception-ID
 		$this->exceptionID = StringUtil::getHash($message);
