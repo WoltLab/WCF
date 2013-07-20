@@ -429,18 +429,10 @@
 	}
 }
  
-.message .messageBody {
+.messageBody {
 	color: @wcfColor;
 	display: block;
 	line-height: 1.5;
-	padding: @wcfGapMedium @wcfGapLarge 1px;
-	/*position: relative;*/
-	
-	> div:not(.messageFooter) {
-		border-top: 1px dotted @wcfContainerBorderColor;
-		overflow: hidden;
-		padding: @wcfGapMedium 0;
-	}
 	
 	> footer {
 		padding-bottom: @wcfGapMedium;
@@ -465,6 +457,17 @@
 			.linearGradientNative(~"left top, @{messageFooterNoteGradientColor} 0%, transparent 40%");
 		}
 	}
+}
+
+.messageHeader + .messageBody > div,
+.messageBody > div:not(.messageFooter):not(:first-child) {
+	border-top: 1px dotted @wcfContainerBorderColor;
+	overflow: hidden;
+	padding: @wcfGapMedium 0;
+}
+
+.message .messageBody {
+	padding: @wcfGapMedium @wcfGapLarge 1px;
 }
 
 .message .messageContent {
