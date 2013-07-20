@@ -113,7 +113,7 @@
 			</ul>
 		</nav>
 	
-		<div id="conditions" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="conditions" class="container containerPadding tabMenuContent">
 			<fieldset>
 				<legend>{lang}wcf.acp.user.search.conditions{/lang}</legend>
 				
@@ -194,7 +194,7 @@
 		</div>
 		
 		{if $options|count}
-			<div id="profile" class="container containerPadding tabMenuContainer tabMenuContent">
+			<div id="profile" class="container containerPadding tabMenuContent">
 				<fieldset>
 					<legend>{lang}wcf.acp.user.search.conditions.profile{/lang}</legend>
 			
@@ -205,7 +205,7 @@
 			</div>
 		{/if}
 	
-		<div id="action" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="action" class="container containerPadding tabMenuContent">
 			<fieldset{if $errorField == 'action'} class="formError"{/if}>
 				<legend>{lang}wcf.acp.user.bulkProcessing.action{/lang}</legend>
 				
