@@ -2282,7 +2282,7 @@ WCF.ACP.Import.Manager = Class.extend({
 					
 					this._dialog.wcfDialog('render');
 				}, this),
-				url: 'index.php/AJAXInvokeAction/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+				url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 			});
 		}
 		else {
