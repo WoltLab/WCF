@@ -56,17 +56,6 @@ class SystemException extends LoggedException implements IPrintableException {
 	}
 	
 	/**
-	 * Removes database password from stack trace.
-	 * @see	\Exception::getTraceAsString()
-	 */
-	public function __getTraceAsString() {
-		$e = ($this->getPrevious() ?: $this);
-		$string = preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e->getTraceAsString());
-		$string = preg_replace('/mysqli->mysqli\(.*\)/', 'mysqli->mysqli(...)', $string);
-		return $string;
-	}
-	
-	/**
 	 * @see	wcf\system\exception\IPrintableException::show()
 	 */
 	public function show() {
