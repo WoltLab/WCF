@@ -178,6 +178,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Pinnwand-Kommentar-Antworten]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smileys]]></item>
+		<item name="wcf.acp.dataImport.completed"><![CDATA[Import abgeschlossen.]]></item>
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[Datenbank-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[Benutzername]]></item>
