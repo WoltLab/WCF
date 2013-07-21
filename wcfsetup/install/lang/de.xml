@@ -285,8 +285,6 @@
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
-		<item name="wcf.acp.group.option.user.attachment.quota"><![CDATA[Maximaler Speicherverbrauch]]></item>
-		<item name="wcf.acp.group.option.user.attachment.quota.description"><![CDATA[Dem Nutzer zur Verfügung stehenden Speicherplatz für alle Dateianhänge insgesamt.]]></item>
 		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.group.option.admin.attachment.canManageAttachment"><![CDATA[Kann Dateianhänge verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.bbcode"><![CDATA[BBCodes]]></item>
