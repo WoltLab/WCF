@@ -1952,7 +1952,7 @@ WCF.Action.Proxy = Class.extend({
 		// call child method if applicable
 		if ($.isFunction(this.options.success)) {
 			// trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
-			if (data.returnValues && data.returnValues.template !== undefined) {
+			if (data && data.returnValues && data.returnValues.template !== undefined) {
 				data.returnValues.template = $.trim(data.returnValues.template);
 			}
 			
