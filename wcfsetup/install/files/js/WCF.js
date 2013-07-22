@@ -5921,7 +5921,7 @@ WCF.System.Confirmation = {
 			template.appendTo(this._dialog.find('#wcfSystemConfirmationContent').show());
 		}
 		
-		this._dialog.find('p').html(message);
+		this._dialog.find('p').text(message);
 		this._dialog.wcfDialog({
 			onClose: $.proxy(this._close, this),
 			onShow: $.proxy(this._show, this),
