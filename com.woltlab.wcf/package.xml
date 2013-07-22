@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.0.0 Beta 4</version> <!-- codename: maelstrom -->
-		<date>2013-06-19</date>
+		<version>2.0.0 Beta 5</version> <!-- codename: maelstrom -->
+		<date>2013-07-18</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -42,18 +42,20 @@
 		<instruction type="script">acp/post_install.php</instruction> 
 	</instructions>
 	
-	<instructions type="update" fromversion="2.0.0 Beta 3">
+	<instructions type="update" fromversion="2.0.0 Beta 4">
+		<instruction type="file" run="standalone">files_pre_update.tar</instruction>
+		
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
 		<instruction type="template">templates_update.tar</instruction>
-		<instruction type="script">acp/update_b4.php</instruction>
-		<instruction type="sql">update_b4.sql</instruction>
+		<instruction type="sql">update_b5.sql</instruction>
+		<instruction type="script">acp/update_b5.php</instruction>
 		
+		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
+		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="option">option.xml</instruction>
-		<instruction type="pageMenu">pageMenu.xml</instruction>
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
-		<instruction type="userOption">userOption.xml</instruction>
 	</instructions>
 </package>

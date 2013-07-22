@@ -603,8 +603,7 @@ CREATE TABLE wcf1_package_installation_queue (
 	archive VARCHAR(255) NOT NULL DEFAULT '',
 	action ENUM('install', 'update', 'uninstall') NOT NULL DEFAULT 'install',
 	done TINYINT(1) NOT NULL DEFAULT 0,
-	confirmInstallation TINYINT(1) NOT NULL DEFAULT 0,
-	packageType ENUM('default', 'requirement', 'optional') NOT NULL DEFAULT 'default'
+	isApplication TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_package_installation_sql_log;

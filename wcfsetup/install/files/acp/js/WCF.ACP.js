@@ -1915,7 +1915,7 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 		for (var $i in resultList.items) {
 			var $item = resultList.items[$i];
 			
-			$('<li><a href="' + $item.link + '">' + $item.title + '</a></li>').appendTo(this._list);
+			$('<li><a href="' + $item.link + '">' + WCF.String.escapeHTML($item.title) + '</a></li>').appendTo(this._list);
 			
 			this._itemCount++;
 		}
@@ -2233,11 +2233,18 @@ WCF.ACP.Import.Manager = Class.extend({
 	_proxy: null,
 	
 	/**
+	 * redirect URL
+	 * @var	string
+	 */
+	_redirectURL: '',
+	
+	/**
 	 * Initializes the WCF.ACP.Importer object.
 	 * 
 	 * @param	array<string>	objectTypes
+	 * @param	string		redirectURL
 	 */
-	init: function(objectTypes) {
+	init: function(objectTypes, redirectURL) {
 		this._currentAction = '';
 		this._index = -1;
 		this._objectTypes = objectTypes;
@@ -2246,6 +2253,7 @@ WCF.ACP.Import.Manager = Class.extend({
 			success: $.proxy(this._success, this),
 			url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		});
+		this._redirectURL = redirectURL;
 		
 		this._invoke();
 	},
@@ -2256,9 +2264,26 @@ WCF.ACP.Import.Manager = Class.extend({
 	_invoke: function() {
 		this._index++;
 		if (this._index >= this._objectTypes.length) {
-			this._dialog.find('.icon-spinner').removeClass('icon-spinner').addClass('icon-ok');
-			
-			// TODO: invoke cleanup here
+			// cleanup
+			new WCF.Action.Proxy({
+				autoSend: true,
+				data: {
+					actionName: 'resetMapping',
+					className: 'wcf\\system\\importer\\ImportHandler'
+				},
+				success: $.proxy(function() {
+					this._dialog.find('.icon-spinner').removeClass('icon-spinner').addClass('icon-ok');
+					this._dialog.find('h1').text(WCF.Language.get('wcf.acp.dataImport.completed'));
+					
+					var $form = $('<div class="formSubmit" />').appendTo(this._dialog.find('#workerContainer'));
+					$('<button>' + WCF.Language.get('wcf.global.button.next') + '</button>').click($.proxy(function() {
+						window.location = this._redirectURL;
+					}, this)).appendTo($form);
+					
+					this._dialog.wcfDialog('render');
+				}, this),
+				url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+			});
 		}
 		else {
 			this._run(

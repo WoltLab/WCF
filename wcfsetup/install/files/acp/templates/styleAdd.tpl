@@ -96,7 +96,7 @@
 		</nav>
 		
 		{* general *}
-		<div id="general" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="general" class="container containerPadding tabMenuContent">
 			<fieldset>
 				<legend>{lang}wcf.acp.style.general.data{/lang}</legend>
 				
@@ -292,7 +292,7 @@
 		</div>
 		
 		{* globals *}
-		<div id="globals" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="globals" class="container containerPadding tabMenuContent">
 			{* layout *}
 			<fieldset>
 				<legend>{lang}wcf.acp.style.globals.layout{/lang}</legend>
@@ -370,7 +370,7 @@
 		</div>
 		
 		{* colors *}
-		<div id="colors" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="colors" class="container containerPadding tabMenuContent">
 			<fieldset>
 				<legend>{lang}wcf.acp.style.colors.page{/lang}</legend>
 				
@@ -505,7 +505,7 @@
 		</div>
 		
 		{* advanced *}
-		<div id="advanced" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="advanced" class="container containerPadding tabMenuContent">
 			<fieldset class="marginTop">
 				<legend>{lang}wcf.acp.style.advanced.individualLess{/lang}</legend>
 				

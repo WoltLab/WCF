@@ -1952,7 +1952,7 @@ WCF.Action.Proxy = Class.extend({
 		// call child method if applicable
 		if ($.isFunction(this.options.success)) {
 			// trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
-			if (data.returnValues && data.returnValues.template !== undefined) {
+			if (data && data.returnValues && data.returnValues.template !== undefined) {
 				data.returnValues.template = $.trim(data.returnValues.template);
 			}
 			
@@ -5575,7 +5575,7 @@ WCF.Search.Base = Class.extend({
 	 * @return	jQuery
 	 */
 	_createListItem: function(item) {
-		var $listItem = $('<li><span>' + item.label + '</span></li>').appendTo(this._list);
+		var $listItem = $('<li><span>' + WCF.String.escapeHTML(item.label) + '</span></li>').appendTo(this._list);
 		$listItem.data('objectID', item.objectID).data('label', item.label).click($.proxy(this._executeCallback, this));
 		
 		this._itemCount++;
@@ -5921,7 +5921,7 @@ WCF.System.Confirmation = {
 			template.appendTo(this._dialog.find('#wcfSystemConfirmationContent').show());
 		}
 		
-		this._dialog.find('p').html(message);
+		this._dialog.find('p').text(message);
 		this._dialog.wcfDialog({
 			onClose: $.proxy(this._close, this),
 			onShow: $.proxy(this._show, this),
@@ -9196,6 +9196,75 @@ $.widget('ui.wcfPages', {
 				if (event.which == 13 || event.which == 27) {
 					this._stopInput(event);
 					event.stopPropagation();
+				}
+			}
+		}
+	}
+});
+
+/**
+ * Namespace for category related classes.
+ */
+WCF.Category = { };
+
+/**
+ * Handles selection of categories.
+ */
+WCF.Category.NestedList = Class.extend({
+	/**
+	 * list of categories
+	 * @var	object
+	 */
+	_categories: { },
+	
+	/**
+	 * Initializes the WCF.Category.NestedList object.
+	 */
+	init: function() {
+		var self = this;
+		$('.jsCategory').each(function(index, category) {
+			var $category = $(category).data('parentCategoryID', null).change($.proxy(self._updateSelection, self));
+			self._categories[$category.val()] = $category;
+			
+			// find child categories
+			var $childCategoryIDs = [ ];
+			$category.parents('li').find('.jsChildCategory').each(function(innerIndex, childCategory) {
+				var $childCategory = $(childCategory).data('parentCategoryID', $category.val()).change($.proxy(self._updateSelection, self));
+				self._categories[$childCategory.val()] = $childCategory;
+				$childCategoryIDs.push($childCategory.val());
+				
+				if ($childCategory.is(':checked')) {
+					$category.prop('checked', 'checked');
+				}
+			});
+			
+			$category.data('childCategoryIDs', $childCategoryIDs);
+		});
+	},
+	
+	/**
+	 * Updates selection of categories.
+	 * 
+	 * @param	object		event
+	 */
+	_updateSelection: function(event) {
+		var $category = $(event.currentTarget);
+		var $parentCategoryID = $category.data('parentCategoryID');
+		
+		if ($category.is(':checked')) {
+			// child category
+			if ($parentCategoryID !== null) {
+				// mark parent category as checked
+				this._categories[$parentCategoryID].prop('checked', 'checked');
+			}
+		}
+		else {
+			// top-level category
+			if ($parentCategoryID === null) {
+				// unmark all child categories
+				var $childCategoryIDs = $category.data('childCategoryIDs');
+				for (var $i = 0, $length = $childCategoryIDs.length; $i < $length; $i++) {
+					this._categories[$childCategoryIDs[$i]].prop('checked', false);
 				}
 			}
 		}

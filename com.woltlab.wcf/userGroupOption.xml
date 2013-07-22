@@ -303,11 +303,6 @@ pdf]]></defaultvalue>
 				<optiontype>integer</optiontype>
 				<defaultvalue>10</defaultvalue>
 			</option>
-			<option name="user.attachment.quota">
-				<categoryname>user.message.attachment</categoryname>
-				<optiontype>fileSize</optiontype>
-				<defaultvalue>100000000</defaultvalue>
-			</option>
 			
 			<option name="admin.attachment.canManageAttachment">
 				<categoryname>admin.attachment</categoryname>

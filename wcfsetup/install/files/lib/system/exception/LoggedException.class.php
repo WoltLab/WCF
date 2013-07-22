@@ -54,6 +54,16 @@ class LoggedException extends \Exception {
 	}
 	
 	/**
+	 * Removes database password from stack trace.
+	 * @see	\Exception::getTraceAsString()
+	 */
+	public function __getTraceAsString() {
+		$e = ($this->getPrevious() ?: $this);
+		$string = preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e->getTraceAsString());
+		return $string;
+	}
+	
+	/**
 	 * Writes an error to log file.
 	 */
 	protected function logError() {
@@ -88,7 +98,7 @@ class LoggedException extends \Exception {
 			'Request URI: '.(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '')."\n".
 			'Referrer: '.(isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '')."\n".
 			'User-Agent: '.(isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '')."\n".
-			"Stacktrace: \n  ".implode("\n  ", explode("\n", $e->getTraceAsString()))."\n";
+			"Stacktrace: \n  ".implode("\n  ", explode("\n", $this->__getTraceAsString()))."\n";
 		
 		// calculate Exception-ID
 		$this->exceptionID = StringUtil::getHash($message);
