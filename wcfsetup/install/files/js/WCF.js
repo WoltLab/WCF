@@ -5575,7 +5575,7 @@ WCF.Search.Base = Class.extend({
 	 * @return	jQuery
 	 */
 	_createListItem: function(item) {
-		var $listItem = $('<li><span>' + item.label + '</span></li>').appendTo(this._list);
+		var $listItem = $('<li><span>' + WCF.String.escapeHTML(item.label) + '</span></li>').appendTo(this._list);
 		$listItem.data('objectID', item.objectID).data('label', item.label).click($.proxy(this._executeCallback, this));
 		
 		this._itemCount++;
