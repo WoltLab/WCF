@@ -5575,7 +5575,7 @@ WCF.Search.Base = Class.extend({
 	 * @return	jQuery
 	 */
 	_createListItem: function(item) {
-		var $listItem = $('<li><span>' + item.label + '</span></li>').appendTo(this._list);
+		var $listItem = $('<li><span>' + WCF.String.escapeHTML(item.label) + '</span></li>').appendTo(this._list);
 		$listItem.data('objectID', item.objectID).data('label', item.label).click($.proxy(this._executeCallback, this));
 		
 		this._itemCount++;
@@ -5921,7 +5921,7 @@ WCF.System.Confirmation = {
 			template.appendTo(this._dialog.find('#wcfSystemConfirmationContent').show());
 		}
 		
-		this._dialog.find('p').html(message);
+		this._dialog.find('p').text(message);
 		this._dialog.wcfDialog({
 			onClose: $.proxy(this._close, this),
 			onShow: $.proxy(this._show, this),
