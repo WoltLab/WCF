@@ -1915,7 +1915,7 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 		for (var $i in resultList.items) {
 			var $item = resultList.items[$i];
 			
-			$('<li><a href="' + $item.link + '">' + $item.title + '</a></li>').appendTo(this._list);
+			$('<li><a href="' + $item.link + '">' + WCF.String.escapeHTML($item.title) + '</a></li>').appendTo(this._list);
 			
 			this._itemCount++;
 		}
