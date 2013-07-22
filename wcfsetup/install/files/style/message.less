@@ -434,6 +434,11 @@
 	display: block;
 	line-height: 1.5;
 	
+	> div:not(.messageFooter) {
+		overflow: hidden;
+		padding-bottom: @wcfGapMedium;
+	}
+	
 	> footer {
 		padding-bottom: @wcfGapMedium;
 	}
@@ -462,7 +467,6 @@
 .messageHeader + .messageBody > div,
 .messageBody > div:not(.messageFooter):not(:first-child) {
 	border-top: 1px dotted @wcfContainerBorderColor;
-	overflow: hidden;
 	padding: @wcfGapMedium 0;
 }
 
