@@ -4,9 +4,8 @@ use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\io\File;
-use wcf\system\Regex;
 use wcf\system\WCF;
+use wcf\util\FileReader;
 
 /**
  * Shows an attachment.
@@ -49,10 +48,16 @@ class AttachmentPage extends AbstractPage {
 	public $thumbnail = 0;
 	
 	/**
+	 * file reader object
+	 * @var	wcf\util\FileReader
+	 */
+	public $fileReader = null;
+	
+	/**
 	 * list of mime types which belong to files that are displayed inline
 	 * @var	array<string>
 	 */
-	public static $inlineMimeTypes = array('image/gif', 'image/jpeg', 'image/png', 'application/pdf', 'image/pjpeg');
+	public static $inlineMimeTypes = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'application/pdf', 'image/pjpeg');
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
@@ -94,19 +99,10 @@ class AttachmentPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::readData()
 	 */
-	public function show() {
-		parent::show();
-		
-		// update download count
-		if (!$this->tiny && !$this->thumbnail) {
-			$editor = new AttachmentEditor($this->attachment);
-			$editor->update(array(
-				'downloads' => $this->attachment->downloads + 1,
-				'lastDownloadTime' => TIME_NOW
-			));
-		}
+	public function readData() {
+		parent::readData();
 		
 		// get file data
 		if ($this->tiny) {
@@ -125,81 +121,41 @@ class AttachmentPage extends AbstractPage {
 			$location = $this->attachment->getLocation();
 		}
 		
-		// range support
-		$startByte = 0;
-		$endByte = $filesize - 1;
+		// init file reader
+		$this->fileReader = new FileReader($location, array(
+			'filename' => $this->attachment->filename,
+			'mimeType' => $mimeType,
+			'filesize' => $filesize,
+			'showInline' => (in_array($mimeType, self::$inlineMimeTypes)),
+			'enableRangeSupport' => (!$this->tiny && !$this->thumbnail),
+			'lastModificationTime' => $this->attachment->uploadTime,
+			'expirationDate' => TIME_NOW + 31536000,
+			'maxAge' => 31536000
+		));
+		
+		// add etag for non-thumbnail
+		if (!$this->thumbnail && !$this->tiny) {
+			$this->fileReader->addHeader('ETag', '"'.$this->attachmentID."'");
+		}
+	}
+	
+	/**
+	 * @see	wcf\page\IPage::show()
+	 */
+	public function show() {
+		parent::show();
+		
 		if (!$this->tiny && !$this->thumbnail) {
-			if (!empty($_SERVER['HTTP_RANGE'])) {
-				$regex = new Regex('^bytes=(-?\d+)(?:-(\d+))?$');
-				if ($regex->match($_SERVER['HTTP_RANGE'])) {
-					$matches = $regex->getMatches();
-					$first = intval($matches[1]);
-					$last = (isset($matches[2]) ? intval($matches[2]) : 0);
-					
-					if ($first < 0) {
-						// negative value; subtract from filesize
-						$startByte = $filesize + $first;
-					}
-					else {
-						$startByte = $first;
-						if ($last > 0) {
-							$endByte = $last;
-						}
-					}
-					
-					// validate given range
-					if ($startByte < 0 || $startByte >= $filesize || $endByte >= $filesize) {
-						// invalid range given
-						@header('HTTP/1.1 416 Requested Range Not Satisfiable');
-						@header('Accept-Ranges: bytes');
-						@header('Content-Range: bytes */'.$filesize);
-						exit;
-					}
-				}
-			}
+			// update download count
+			$editor = new AttachmentEditor($this->attachment);
+			$editor->update(array(
+				'downloads' => $this->attachment->downloads + 1,
+				'lastDownloadTime' => TIME_NOW
+			));
 		}
 		
-		// send headers
-		// file type
-		if ($mimeType == 'image/x-png') $mimeType = 'image/png';
-		@header('Content-Type: '.$mimeType);
-		
-		// file name
-		@header('Content-disposition: '.(!in_array($mimeType, self::$inlineMimeTypes) ? 'attachment; ' : 'inline; ').'filename="'.$this->attachment->filename.'"');
-		
-		// range
-		if ($startByte > 0 || $endByte < $filesize - 1) {
-			@header('HTTP/1.1 206 Partial Content');
-			@header('Content-Range: bytes '.$startByte.'-'.$endByte.'/'.$filesize);
-		}
-		if (!$this->tiny && !$this->thumbnail) {
-			@header('ETag: "'.$this->attachmentID.'"');
-			@header('Accept-Ranges: bytes');
-		}
-		
-		// send file size
-		@header('Content-Length: '.($endByte + 1 - $startByte));
-		
-		// cache headers
-		@header('Cache-control: max-age=31536000, private');
-		@header('Expires: '.gmdate('D, d M Y H:i:s', TIME_NOW + 31536000).' GMT');
-		@header('Last-Modified: '.gmdate('D, d M Y H:i:s', $this->attachment->uploadTime).' GMT');
-		
-		// show attachment
-		if ($startByte > 0 || $endByte < $filesize - 1) {
-			$file = new File($location, 'rb');
-			if ($startByte > 0) $file->seek($startByte);
-			while ($startByte <= $endByte) {
-				$remainingBytes = $endByte - $startByte;
-				$readBytes = ($remainingBytes > 1048576) ? 1048576 : $remainingBytes + 1;
-				echo $file->read($readBytes);
-				$startByte += $readBytes;
-			}
-			$file->close();
-		}
-		else {
-			readfile($location);
-		}
+		// send file to client
+		$this->fileReader->send();
 		exit;
 	}
 }
