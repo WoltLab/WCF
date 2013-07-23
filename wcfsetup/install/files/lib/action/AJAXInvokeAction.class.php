@@ -133,7 +133,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		
 		// check for validate method
 		$validateMethod = 'validate'.ucfirst($this->actionName);
-		if (method_exists($this->actionObject, $this->actionName)) {
+		if (method_exists($this->actionObject, $validateMethod)) {
 			$this->actionObject->{$validateMethod}();
 		}
 		
