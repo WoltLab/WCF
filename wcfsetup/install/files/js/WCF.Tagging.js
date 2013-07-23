@@ -126,7 +126,7 @@ WCF.Tagging.TagList = WCF.EditableItemList.extend({
 	load: function(data) {
 		if (data && data.length) {
 			for (var $i = 0, $length = data.length; $i < $length; $i++) {
-				this.addItem({ objectID: 0, label: data[$i] });
+				this.addItem({ objectID: 0, label: WCF.String.unescapeHTML(data[$i]) });
 			}
 		}
 	}
