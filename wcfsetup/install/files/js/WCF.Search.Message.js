@@ -120,6 +120,7 @@ WCF.Search.Message.SearchArea = Class.extend({
 			var $form = this._searchArea.find('form').submit(function() {
 				var $dropdownMenu = WCF.Dropdown.getDropdownMenu($containerID);
 				
+				$dropdownMenu.find('input[type=hidden]').appendTo($form);
 				$dropdownMenu.find('input[type=checkbox]:checked').each(function(index, input) {
 					var $input = $(input);
 					
