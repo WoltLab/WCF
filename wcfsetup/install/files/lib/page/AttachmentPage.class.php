@@ -4,8 +4,6 @@ use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\io\File;
-use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**
@@ -18,12 +16,7 @@ use wcf\system\WCF;
  * @subpackage	page
  * @category	Community Framework
  */
-class AttachmentPage extends AbstractPage {
-	/**
-	 * @see	wcf\page\IPage::$useTemplate
-	 */
-	public $useTemplate = false;
-	
+class AttachmentPage extends AbstractFileDownloadPage {	
 	/**
 	 * attachment id
 	 * @var	integer
@@ -52,7 +45,7 @@ class AttachmentPage extends AbstractPage {
 	 * list of mime types which belong to files that are displayed inline
 	 * @var	array<string>
 	 */
-	public static $inlineMimeTypes = array('image/gif', 'image/jpeg', 'image/png', 'application/pdf', 'image/pjpeg');
+	public static $inlineMimeTypes = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'application/pdf', 'image/pjpeg');
 	
 	/**
 	 * @see	wcf\page\IPage::readParameters()
@@ -94,112 +87,49 @@ class AttachmentPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	wcf\page\IPage::readData()
 	 */
-	public function show() {
-		parent::show();
+	public function readData() {
+		parent::readData();
 		
-		// update download count
+		// get file data
+		if ($this->tiny) {
+			$this->mimeType = $this->attachment->tinyThumbnailType;
+			$this->filesize = $this->attachment->tinyThumbnailSize;
+			$this->location = $this->attachment->getTinyThumbnailLocation();
+		}
+		else if ($this->thumbnail) {
+			$this->mimeType = $this->attachment->thumbnailType;
+			$this->filesize = $this->attachment->thumbnailSize;
+			$this->location = $this->attachment->getThumbnailLocation();
+		}
+		else {
+			$this->mimeType = $this->attachment->fileType;
+			$this->filesize = $this->attachment->filesize;
+			$this->location = $this->attachment->getLocation();
+		}
+		
+		// set file data
+		$this->filename = $this->attachment->filename;
+		$this->fileIdentifier = $this->attachment->attachmentID;
+		$this->lastModificationTime = $this->attachment->uploadTime;
+		
+		// check if mime type is inline mime type
+		if (in_array($this->mimeType, self::$inlineMimeTypes)) {
+			$this->showInline = true;
+		}
+		
 		if (!$this->tiny && !$this->thumbnail) {
+			// update download count
 			$editor = new AttachmentEditor($this->attachment);
 			$editor->update(array(
 				'downloads' => $this->attachment->downloads + 1,
 				'lastDownloadTime' => TIME_NOW
 			));
 		}
-		
-		// get file data
-		if ($this->tiny) {
-			$mimeType = $this->attachment->tinyThumbnailType;
-			$filesize = $this->attachment->tinyThumbnailSize;
-			$location = $this->attachment->getTinyThumbnailLocation();
-		}
-		else if ($this->thumbnail) {
-			$mimeType = $this->attachment->thumbnailType;
-			$filesize = $this->attachment->thumbnailSize;
-			$location = $this->attachment->getThumbnailLocation();
-		}
 		else {
-			$mimeType = $this->attachment->fileType;
-			$filesize = $this->attachment->filesize;
-			$location = $this->attachment->getLocation();
+			// disable range support for thumbnails
+			$this->enableRangeSupport = false;
 		}
-		
-		// range support
-		$startByte = 0;
-		$endByte = $filesize - 1;
-		if (!$this->tiny && !$this->thumbnail) {
-			if (!empty($_SERVER['HTTP_RANGE'])) {
-				$regex = new Regex('^bytes=(-?\d+)(?:-(\d+))?$');
-				if ($regex->match($_SERVER['HTTP_RANGE'])) {
-					$matches = $regex->getMatches();
-					$first = intval($matches[1]);
-					$last = (isset($matches[2]) ? intval($matches[2]) : 0);
-					
-					if ($first < 0) {
-						// negative value; subtract from filesize
-						$startByte = $filesize + $first;
-					}
-					else {
-						$startByte = $first;
-						if ($last > 0) {
-							$endByte = $last;
-						}
-					}
-					
-					// validate given range
-					if ($startByte < 0 || $startByte >= $filesize || $endByte >= $filesize) {
-						// invalid range given
-						@header('HTTP/1.1 416 Requested Range Not Satisfiable');
-						@header('Accept-Ranges: bytes');
-						@header('Content-Range: bytes */'.$filesize);
-						exit;
-					}
-				}
-			}
-		}
-		
-		// send headers
-		// file type
-		if ($mimeType == 'image/x-png') $mimeType = 'image/png';
-		@header('Content-Type: '.$mimeType);
-		
-		// file name
-		@header('Content-disposition: '.(!in_array($mimeType, self::$inlineMimeTypes) ? 'attachment; ' : 'inline; ').'filename="'.$this->attachment->filename.'"');
-		
-		// range
-		if ($startByte > 0 || $endByte < $filesize - 1) {
-			@header('HTTP/1.1 206 Partial Content');
-			@header('Content-Range: bytes '.$startByte.'-'.$endByte.'/'.$filesize);
-		}
-		if (!$this->tiny && !$this->thumbnail) {
-			@header('ETag: "'.$this->attachmentID.'"');
-			@header('Accept-Ranges: bytes');
-		}
-		
-		// send file size
-		@header('Content-Length: '.($endByte + 1 - $startByte));
-		
-		// cache headers
-		@header('Cache-control: max-age=31536000, private');
-		@header('Expires: '.gmdate('D, d M Y H:i:s', TIME_NOW + 31536000).' GMT');
-		@header('Last-Modified: '.gmdate('D, d M Y H:i:s', $this->attachment->uploadTime).' GMT');
-		
-		// show attachment
-		if ($startByte > 0 || $endByte < $filesize - 1) {
-			$file = new File($location, 'rb');
-			if ($startByte > 0) $file->seek($startByte);
-			while ($startByte <= $endByte) {
-				$remainingBytes = $endByte - $startByte;
-				$readBytes = ($remainingBytes > 1048576) ? 1048576 : $remainingBytes + 1;
-				echo $file->read($readBytes);
-				$startByte += $readBytes;
-			}
-			$file->close();
-		}
-		else {
-			readfile($location);
-		}
-		exit;
 	}
 }
