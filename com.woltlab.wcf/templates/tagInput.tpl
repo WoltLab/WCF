@@ -13,7 +13,7 @@
 		var $tagList = new WCF.Tagging.TagList('#tagList{if $tagInputSuffix|isset}{@$tagInputSuffix}{/if}', '#tagSearchInput{if $tagInputSuffix|isset}{@$tagInputSuffix}{/if}', {@TAGGING_MAX_TAG_LENGTH});
 		
 		{if $tags|isset && $tags|count}
-			$tagList.load([ {implode from=$tags item=tag}'{$tag}'{/implode} ]);
+			$tagList.load([ {implode from=$tags item=tag}'{$tag|encodeJS}'{/implode} ]);
 		{/if}
 	});
 	//]]>
