@@ -1418,7 +1418,8 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 	<category name="wcf.date">
 		<item name="wcf.date.dateFormat"><![CDATA[j. F Y]]></item>
 		<item name="wcf.date.timeFormat"><![CDATA[H:i]]></item>
-		<item name="wcf.date.dateTimeFormat"><![CDATA[%date%]]></item>
+		<item name="wcf.date.dateTimeFormat"><![CDATA[%date%, %time%]]></item>
+		<item name="wcf.date.shortDateTimeFormat"><![CDATA[%date%]]></item>
 		
 		<item name="wcf.date.interval.days.past"><![CDATA[Vor {if $days > 1}{#$days} Tagen{else}einem Tag{/if}]]></item>
 		<item name="wcf.date.interval.full.past"><![CDATA[Vor {if $years}{if $years > 1}{#$years} Jahren{else}einem Jahr{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} und {else}, {/if}{/if}{if $months > 1}{#$months} Monaten{else}einem Monat{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} und {else}, {/if}{/if}{if $weeks > 1}{#$weeks} Wochen{else}einer Woche{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} und {else}, {/if}{/if}{if $days > 1}{#$days} Tagen{else}einem Tag{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} und {else}, {/if}{/if}{if $hours > 1}{#$hours} Stunden{else}einer Stunde{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} und {/if}{if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}{/if}]]></item>
