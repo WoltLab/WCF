@@ -894,7 +894,7 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<selectoptions><![CDATA[username:wcf.user.username
 registrationDate:wcf.user.registrationDate
 activityPoints:wcf.user.activityPoint
-likedReceived:wcf.like.likesReceived]]></selectoptions>
+likesReceived:wcf.like.likesReceived]]></selectoptions>
 			</option>
 			<option name="members_list_default_sort_order">
 				<categoryname>user.list.members</categoryname>
