@@ -1380,7 +1380,7 @@ WCF.Notification.List = Class.extend({
 			$container.find('.jsMarkAsConfirmed').data('notificationID', $container.data('notificationID')).click($.proxy(this._click, this));
 			$container.find('p').html(function(index, oldHTML) {
 				return '<a>' + oldHTML + '</a>';
-			}).children('a').click($.proxy(this._click, this));
+			}).children('a').data('notificationID', $container.data('notificationID')).click($.proxy(this._clickLink, this));
 		}, this));
 		
 		this._badge = $('.jsNotificationsBadge:eq(0)');
@@ -1393,18 +1393,26 @@ WCF.Notification.List = Class.extend({
 	},
 	
 	/**
+	 * Handles clicks on the text link.
+	 * 
+	 * @param	object		event
+	 */
+	_clickLink: function(event) {
+		this._items[$(event.currentTarget).data('notificationID')].data('redirect', true);
+		this._click(event);
+	},
+	
+	/**
 	 * Handles button actions.
 	 * 
 	 * @param	object		event
 	 */
 	_click: function(event) {
-		var $notificationID = $(event.currentTarget).data('notificationID');
-		
 		this._proxy.setOption('data', {
 			actionName: 'markAsConfirmed',
 			className: 'wcf\\data\\user\\notification\\UserNotificationAction',
 			parameters: {
-				notificationID: $notificationID
+				notificationID: $(event.currentTarget).data('notificationID')
 			}
 		});
 		this._proxy.sendRequest();
@@ -1439,6 +1447,12 @@ WCF.Notification.List = Class.extend({
 			break;
 			
 			case 'markAsConfirmed':
+				var $item = this._items[data.returnValues.notificationID];
+				if ($item.data('redirect')) {
+					window.location = $item.data('link');
+					return;
+				}
+				
 				this._items[data.returnValues.notificationID].remove();
 				delete this._items[data.returnValues.notificationID];
 				

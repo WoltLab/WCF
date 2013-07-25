@@ -426,6 +426,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	 */
 	_failure: function() {
 		if (this._dialog !== null) {
+			$('#packageInstallationProgress').removeAttr('value');
 			this._setIcon('remove');
 		}
 		
@@ -566,6 +567,7 @@ WCF.ACP.Package.Installation = Class.extend({
 			
 			// create button to handle next step
 			if (data.step && data.node) {
+				$('#packageInstallationProgress').removeAttr('value');
 				this._setIcon('question');
 				
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));

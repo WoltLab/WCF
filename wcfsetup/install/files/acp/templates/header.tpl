@@ -53,6 +53,7 @@
 				'wcf.date.relative.pastDays': '{capture assign=relativePastDays}{lang}wcf.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
 				'wcf.date.dateFormat': '{lang}wcf.date.dateFormat{/lang}',
 				'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
+				'wcf.date.shortDateTimeFormat': '{lang}wcf.date.shortDateTimeFormat{/lang}',
 				'wcf.date.hour': '{lang}wcf.date.hour{/lang}',
 				'wcf.date.minute': '{lang}wcf.date.minute{/lang}',
 				'wcf.date.timeFormat': '{lang}wcf.date.timeFormat{/lang}',

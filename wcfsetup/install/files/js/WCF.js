@@ -2908,7 +2908,7 @@ WCF.Date.Time = Class.extend({
 		}
 		// timestamp is between ~700 million years BC and last week
 		else {
-			var $string = WCF.Language.get('wcf.date.dateTimeFormat');
+			var $string = WCF.Language.get('wcf.date.shortDateTimeFormat');
 			$element.text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
 		}
 	}
