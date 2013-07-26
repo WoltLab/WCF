@@ -3225,17 +3225,8 @@ WCF.Message.UserMention = Class.extend({
 		
 		// the @-sign and the entered username are now in seperate text
 		// nodes which causes issues if the user changes the text
-		if ($.browser.msie) {
-			var $node = $($range.endContainer.$);
-			var $next = $($node).next();
-			
-			$node.nodeValue += $next.nodeValue;
-			$next.remove();
-		}
-		else {
-			$range.endContainer.$.nodeValue += $range.endContainer.$.nextSibling.nodeValue;
-			$($range.endContainer.$.nextSibling).remove();
-		}
+		$range.endContainer.$.nodeValue += $range.endContainer.$.nextSibling.nodeValue;
+		$($range.endContainer.$.nextSibling).remove();
 		
 		// make sure that the range in Firefox is that same as in the
 		// other browsers
@@ -3310,7 +3301,7 @@ WCF.Message.UserMention = Class.extend({
 			this._selectItem(0);
 		}
 		catch (e) {
-			// ignore errors that are causes by pressing enter to
+			// ignore errors that are caused by pressing enter to
 			// often in a short period of time
 		}
 	}
