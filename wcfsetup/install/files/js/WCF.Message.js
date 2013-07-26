@@ -646,6 +646,7 @@ WCF.Message.QuickReply = Class.extend({
 	 */
 	init: function(supportExtendedForm, quoteManager) {
 		this._container = $('#messageQuickReply');
+		this._container.children('.message').addClass('jsInvalidQuoteTarget');
 		this._messageField = $('#text');
 		this._pendingSave = false;
 		if (!this._container || !this._messageField) {
