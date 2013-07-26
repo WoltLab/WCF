@@ -645,8 +645,7 @@ WCF.Message.QuickReply = Class.extend({
 	 * @param	WCF.Message.Quote.Manager	quoteManager
 	 */
 	init: function(supportExtendedForm, quoteManager) {
-		this._container = $('#messageQuickReply')
-		this._container.children('.message').addClass('jsInvalidQuoteTarget');
+		this._container = $('#messageQuickReply');
 		this._messageField = $('#text');
 		this._pendingSave = false;
 		if (!this._container || !this._messageField) {
@@ -3018,45 +3017,45 @@ WCF.Message.UserMention = Class.extend({
 	 */
 	_getDropdownOffsets: function() {
 		var $range = this._ckEditor.getSelection().getRanges()[0];
+		var $orgRange = $range.clone();
 		var $startOffset = $range.startOffset;
 		
 		// move caret after the '@' sign
 		$range.setStart($range.startContainer, $startOffset - this._mentionStart.length);
 		$range.collapse(true);
+		$range.select();
 		
 		// create span with random id and add it in front of the '@' sign
 		var $element = document.createElement('span');
 		$node = new CKEDITOR.dom.node($element);
 		$range.insertNode($node);
 		
-		// get offsets of span and
+		// get offsets of span
 		$jElement = $($element);
-		var $offsets = $jElement.getOffsets('offset');
+		if ($.browser.opera) {
+			// in opera, the span's height is 0 if it has no content
+			$jElement.text(' ');
+		}
+		var $offsets = $jElement.offset();
 		$offsets.top += $jElement.height(); // add line height to top offset
 		
 		// merge text nodes before and after the temporary span element
 		// to avoid split text nodes which were one node before inserting
 		// the span element since split nodes can cause problems working
-		// with ranges and remove merged text node
-		if ($.browser.msie) {
-			var $next = $($element).next();
-			var $prev = $($element).prev();
-			
-			if ($next.length && $prev.length) {
-				$prev.nodeValue += $next.nodeValue;
-				$next.remove();
-			}
-		}
-		else if (!$.browser.mozilla) { // firefox doesn't need this correction!
+		// with ranges and then remove the merged text node
+		if (!$.browser.msie || $element.previousSibling && $element.nextSibling) {
 			$element.previousSibling.nodeValue += $element.nextSibling.nodeValue;
 			$($element.nextSibling).remove();
 		}
 		
-		// reset caret position to original position the end
-		$range.setStart($range.startContainer, $startOffset);
+		// reset caret position to original position at the end and make
+		// sure that the range is the same in all browsers
+		$range.setStart($orgRange.startContainer, $startOffset);
+		$range.setEnd($orgRange.startContainer, $startOffset);
+		$range.select();
 		
 		// remove span
-		$($element).remove();
+		$jElement.remove();
 		
 		return $offsets;
 	},
@@ -3076,48 +3075,30 @@ WCF.Message.UserMention = Class.extend({
 	},
 	
 	/**
-	 * Returns the text in front of the caret in the current line.
+	 * Returns the relevant text in front of the caret in the current line.
 	 * 
 	 * @return	string
 	 */
 	_getTextLineInFrontOfCaret: function() {
 		var $range = this._ckEditor.getSelection().getRanges()[0];
 		
-		// if text is marked, user suggestions are disabled,
-		// thus returning empty string
+		// if text is marked, user suggestions are disabled
 		if (!$range.collapsed) {
 			return '';
 		}
 		
-		// bookmark current caret position
-		var $bookmark = $range.createBookmark(true);
+		var $text = $range.startContainer.getText().substr(0, $range.startOffset);
 		
-		// move selection begin to text beginning
-		$range.setStart($range.startContainer, 0);
-		
-		// get selected text
-		var $text = "";
-		var $childNodes = $range.cloneContents().$.childNodes;
-		for (var $i = 0; $i < $childNodes.length; $i++) {
-			var $node = $childNodes[$i];
-			if ($node.nodeType === 3 && $node.nodeName === '#text') {
-				$text += $node.nodeValue;
-			}
-			else if ($node.nodeType === 1 && $node.nodeName === 'BR') {
-				// discard current text after line break
-				$text = "";
-			}
-		}
-		
-		// reset caret position
-		$range.moveToBookmark($bookmark);
-		
-		// remove unicode zero width space
+		// remove unicode zero width space and no-breaking space
 		var $textBackup = $text;
 		$text = '';
 		for (var $i = 0; $i < $textBackup.length; $i++) {
 			var $byte = $textBackup.charCodeAt($i).toString(16);
-			if ($byte != '200b') {
+			if ($byte != '200b' && $byte != 'a0') {
+				if ($textBackup[$i] === '@' && $i && $textBackup[$i - 1].match(/\s/)) {
+					$text = '';
+				}
+				
 				$text += $textBackup[$i];
 			}
 		}
@@ -3141,15 +3122,7 @@ WCF.Message.UserMention = Class.extend({
 	_key: function(event) {
 		if (this._suggestionList.is(':visible')) {
 			if (event.data.keyCode === 13) { // enter
-				var $range = this._ckEditor.getSelection().getRanges()[0];
-				var $bookmark = $range.createBookmark(true);
-				
-				var $username = this._suggestionList.children('li').eq(this._itemIndex).data('username');
-				this._setUsername($username);
-				
-				$range.moveToBookmark($bookmark);
-				
-				$range.select();
+				this._suggestionList.children('li').eq(this._itemIndex).trigger('click');
 				
 				event.cancel();
 			}
@@ -3185,6 +3158,11 @@ WCF.Message.UserMention = Class.extend({
 	 * @param	object		event
 	 */
 	_keyup: function(event) {
+		// ignore enter key up event
+		if (event.data.$.keyCode === 13) {
+			return;
+		}
+		
 		// ignore event if suggestion list and user pressed enter, arrow up or arrow down
 		if (this._suggestionList.is(':visible') && event.data.$.keyCode in { 13:1, 38:1, 40:1 }) {
 			return;
@@ -3192,7 +3170,7 @@ WCF.Message.UserMention = Class.extend({
 		
 		var $currentText = this._getTextLineInFrontOfCaret();
 		if ($currentText) {
-			var $match = $currentText.match(/@([^',\s][^,\s]{2,}|'(?:''|[^'])*')$/);
+			var $match = $currentText.match(/@([^,]{3,})$/);
 			if ($match) {
 				// if mentioning is at text begin or there's a whitespace character
 				// before the '@', everything is fine
@@ -3221,11 +3199,13 @@ WCF.Message.UserMention = Class.extend({
 	 * Replaces the started mentioning with a chosen username.
 	 */
 	_setUsername: function(username) {
-		// remove beginning of username
 		var $range = this._ckEditor.getSelection().getRanges()[0];
-		$range.setStart($range.startContainer, $range.endOffset - this._mentionStart.length);
+		
+		// remove the beginning of the username
+		$range.setStart($range.startContainer, $range.startOffset - this._mentionStart.length);
 		$range.deleteContents();
 		
+		// insert username
 		if (username.indexOf("'") !== -1) {
 			username = username.replace(/'/g, "''");
 			username = "'" + username + "'";
@@ -3233,16 +3213,36 @@ WCF.Message.UserMention = Class.extend({
 		else if (username.indexOf(' ') !== -1) {
 			username = "'" + username + "'";
 		}
+		this._ckEditor.insertText(username);
 		
-		// insert text into range
-		$range.insertNode(new CKEDITOR.dom.text(username));
+		// add whitespace after username
+		var $element = CKEDITOR.dom.element.createFromHtml('<span class="wcfUserMentionTemporary">&nbsp;</span>');
+		this._ckEditor.insertElement($element);
+		$(this._ckEditor.document.$).find('span.wcfUserMentionTemporary').replaceWith(function() {
+			return $(this).html();
+		});
 		
-		// collapse range to its end
-		$range.setStart($range.startContainer, $range.endOffset + username.length);
-		$range.collapse(true);
+		// the @-sign and the entered username are now in seperate text
+		// nodes which causes issues if the user changes the text
+		if ($.browser.msie) {
+			var $node = $($range.endContainer.$);
+			var $next = $($node).next();
+			
+			$node.nodeValue += $next.nodeValue;
+			$next.remove();
+		}
+		else {
+			$range.endContainer.$.nodeValue += $range.endContainer.$.nextSibling.nodeValue;
+			$($range.endContainer.$.nextSibling).remove();
+		}
 		
-		// refocus editor
-		this._ckEditor.focus();
+		// make sure that the range in Firefox is that same as in the
+		// other browsers
+		if ($.browser.mozilla) {
+			$range.selectNodeContents(new CKEDITOR.dom.text($range.endContainer.$.nextSibling));
+			$range.setStart($range.startContainer, 1);
+			$range.select();
+		}
 		
 		this._hideList();
 	},
@@ -3287,11 +3287,6 @@ WCF.Message.UserMention = Class.extend({
 		this._clearList(false);
 		
 		if ($.getLength(data.returnValues)) {
-			// check if the only suggestion is the current value
-			if (data.returnValues.length === 1 && data.returnValues[0].label == this._mentionStart) {
-				return;
-			}
-			
 			for (var $i in data.returnValues) {
 				var $item = data.returnValues[$i];
 				this._createListItem($item);
@@ -3306,10 +3301,16 @@ WCF.Message.UserMention = Class.extend({
 	 * Updates the position of the suggestion list.
 	 */
 	_updateSuggestionListPosition: function() {
-		var $caretPosition = this._getDropdownOffsets();
-		$caretPosition.top += 5; // add little vertical gap
-		$caretPosition.left -= 16; // make sure dropdown arrow is at correct position
-		this._suggestionList.css($caretPosition);
-		this._selectItem(0);
+		try {
+			var $caretPosition = this._getDropdownOffsets();
+			$caretPosition.top += 5; // add little vertical gap
+			$caretPosition.left -= 16; // make sure dropdown arrow is at correct position
+			this._suggestionList.css($caretPosition);
+			this._selectItem(0);
+		}
+		catch (e) {
+			// ignore errors that are causes by pressing enter to
+			// often in a short period of time
+		}
 	}
 });
