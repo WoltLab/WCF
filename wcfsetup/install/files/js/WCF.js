@@ -736,18 +736,6 @@ WCF.Dropdown = {
 			WCF.CloseOverlayHandler.addCallback('WCF.Dropdown', $.proxy(this._closeAll, this));
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Dropdown', $.proxy(this.init, this));
 		}
-		
-		$(window).resize($.proxy(this._resize, this));
-	},
-	
-	/**
-	 * Handles resizing the window by making sure that the menu positions are
-	 * recalculated.
-	 */
-	_resize: function() {
-		for (var $containerID in this._dropdowns) {
-			this._menus[$containerID].removeData('orientationX');
-		}
 	},
 	
 	/**
@@ -938,54 +926,31 @@ WCF.Dropdown = {
 			$dropdownDimensions = $button.getDimensions('outer');
 		}
 		
-		// validate if current alignment is still fine, prevents "jumping"
-		var $align = null;
-		switch (dropdownMenu.data('orientationX')) {
-			case 'left':
-				if (($dropdownOffsets.left + $menuDimensions.width) > $windowWidth) {
-					$align = 'right';
-				}
-			break;
-			
-			case 'right':
-				if (($dropdownOffsets.left + $dropdownDimensions.width - $menuDimensions.width) < 0) {
-					$align = 'left';
-				}
-			break;
-			
-			default:
-				$align = 'left';
-				
-				if (($dropdownOffsets.left + $menuDimensions.width) > $windowWidth) {
-					$align = 'right';
-				}
-			break;
+		// get alignment
+		var $align = 'left';
+		if (($dropdownOffsets.left + $menuDimensions.width) > $windowWidth) {
+			$align = 'right';
 		}
 		
-		// alignment has changed
-		if ($align !== null) {
-			dropdownMenu.data('orientationX', $align);
+		// calculate offsets
+		var $left = 'auto';
+		var $right = 'auto';
+		if ($align === 'left') {
+			dropdownMenu.removeClass('dropdownArrorRight');
 			
-			var $left = 'auto';
-			var $right = 'auto';
-			
-			if ($align === 'left') {
-				dropdownMenu.removeClass('dropdownArrorRight');
-				
-				$left = $dropdownOffsets.left + 'px';
-			}
-			else {
-				dropdownMenu.addClass('dropdownArrowRight');
-				
-				$right = ($windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width)) + 'px';
-			}
-			
-			dropdownMenu.css({
-				left: $left,
-				right: $right,
-				top: $dropdownOffsets.top + $dropdownDimensions.height + 7 + 'px'
-			});
+			$left = $dropdownOffsets.left + 'px';
 		}
+		else {
+			dropdownMenu.addClass('dropdownArrowRight');
+			
+			$right = ($windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width)) + 'px';
+		}
+		
+		dropdownMenu.css({
+			left: $left,
+			right: $right,
+			top: $dropdownOffsets.top + $dropdownDimensions.height + 7 + 'px'
+		});
 	},
 	
 	/**
