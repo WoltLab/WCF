@@ -105,6 +105,10 @@ class UserActivityPointHandler extends SingletonFactory {
 			throw new SystemException("Object type '".$objectType."' is not valid for object type definition 'com.woltlab.wcf.user.activityPointEvent'");
 		}
 		
+		if (empty($itemsToUser)) {
+			return;
+		}
+		
 		// update user_activity_point
 		$values = '';
 		$parameters = $userIDs = array();
