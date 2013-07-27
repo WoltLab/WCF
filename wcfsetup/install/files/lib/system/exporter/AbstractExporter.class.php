@@ -17,6 +17,12 @@ use wcf\util\FileUtil;
  */
 abstract class AbstractExporter implements IExporter {
 	/**
+	 * additional data
+	 * @var array
+	 */
+	public $additionalData = array();
+	
+	/**
 	 * database host name
 	 * @var string
 	 */
@@ -85,13 +91,14 @@ abstract class AbstractExporter implements IExporter {
 	/**
 	 * @see wcf\system\exporter\IExporter::setData()
 	 */
-	public function setData($databaseHost, $databaseUser, $databasePassword, $databaseName, $databasePrefix, $fileSystemPath) {
+	public function setData($databaseHost, $databaseUser, $databasePassword, $databaseName, $databasePrefix, $fileSystemPath, $additionalData) {
 		$this->databaseHost = $databaseHost;
 		$this->databaseUser = $databaseUser;
 		$this->databasePassword = $databasePassword;
 		$this->databaseName = $databaseName;
 		$this->databasePrefix = $databasePrefix;
 		$this->fileSystemPath = ($fileSystemPath ? FileUtil::addTrailingSlash($fileSystemPath) : '');
+		$this->additionalData = $additionalData;
 	}
 	
 	/**
