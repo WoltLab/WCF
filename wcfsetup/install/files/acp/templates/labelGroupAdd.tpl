@@ -44,7 +44,7 @@
 			</ul>
 		</nav>
 		
-		<div id="general" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="general" class="container containerPadding tabMenuContent">
 			<fieldset>
 				<legend>{lang}wcf.global.form.data{/lang}</legend>
 				
@@ -80,7 +80,7 @@
 			{event name='generalFieldsets'}
 		</div>
 		
-		<div id="connect" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="connect" class="container containerPadding tabMenuContent">
 			<fieldset>
 				<legend>{lang}wcf.acp.label.group.category.connect{/lang}</legend>
 				

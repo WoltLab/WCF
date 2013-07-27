@@ -39,6 +39,7 @@
 	</dl>
 	
 	<dl>
+		<dt></dt>
 		<dd><label><input type="checkbox" id="packageUpdateServerSaveCredentials" value="1" /> {lang}wcf.acp.package.update.saveCredentials{/lang}</label></dd>
 	</dl>
 </fieldset>

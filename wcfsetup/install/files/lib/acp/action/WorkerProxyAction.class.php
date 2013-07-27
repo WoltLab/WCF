@@ -36,6 +36,8 @@ class WorkerProxyAction extends AJAXInvokeAction {
 	 */
 	protected $worker = null;
 	
+	public static $allowInvoke = array();
+	
 	/**
 	 * @see	wcf\action\IAction::readParameters()
 	 */

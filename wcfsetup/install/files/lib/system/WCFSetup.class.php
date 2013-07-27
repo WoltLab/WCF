@@ -1093,7 +1093,8 @@ class WCFSetup extends WCF {
 				'userID' => $admin->userID,
 				'package' => 'com.woltlab.wcf',
 				'packageName' => 'WoltLab Community Framework',
-				'archive' => TMP_DIR.'install/packages/'.$wcfPackageFile
+				'archive' => TMP_DIR.'install/packages/'.$wcfPackageFile,
+				'isApplication' => 1
 			));
 		}
 		
@@ -1152,7 +1153,8 @@ class WCFSetup extends WCF {
 				'userID' => $admin->userID,
 				'package' => $packageName,
 				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
-				'archive' => TMP_DIR.'install/packages/'.$packageFile
+				'archive' => TMP_DIR.'install/packages/'.$packageFile,
+				'isApplication' => 1
 			));
 		}
 		

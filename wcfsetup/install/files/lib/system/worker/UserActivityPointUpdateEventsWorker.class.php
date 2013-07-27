@@ -7,7 +7,7 @@ use wcf\system\WCF;
 /**
  * Worker implementation for updating user activity point events.
  * 
- * @author	Tim Duesterhus
+ * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -16,7 +16,6 @@ use wcf\system\WCF;
  */
 class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	/**
-	 * Limiting is dependent on the actual processors.
 	 * @see	wcf\system\worker\AbstractWorker::$limit
 	 */
 	protected $limit = 1;
@@ -27,6 +26,9 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	 */
 	public $objectTypes = array();
 	
+	/**
+	 * @see	wcf\system\worker\IWorker
+	 */
 	public function __construct(array $parameters) {
 		parent::__construct($parameters);
 		
@@ -44,24 +46,27 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	 * @see	wcf\system\worker\IWorker::countObjects()
 	 */
 	public function countObjects() {
-		$this->count = 0;
-		foreach ($this->objectTypes as $objectType) {
-			$objectType->requests = $objectType->getProcessor()->countRequests();
-			$this->count += $objectType->requests;
-		}
+		$this->count = count($this->objectTypes);
 	}
 	
 	/**
 	 * @see	wcf\system\worker\IWorker::execute()
 	 */
 	public function execute() {
-		$loopCount = $this->loopCount;
+		$i = 0;
 		foreach ($this->objectTypes as $objectType) {
-			if ($loopCount < $objectType->requests) {
-				$objectType->getProcessor()->updateActivityPointEvents($loopCount);
-				return;
+			if ($i == $this->loopCount) {
+				$sql = "UPDATE		wcf".WCF_N."_user_activity_point
+					SET		activityPoints = items * ?
+					WHERE		objectTypeID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array(
+					$objectType->points,
+					$objectType->objectTypeID
+				));
 			}
-			$loopCount -= $objectType->requests;
+			
+			$i++;
 		}
 	}
 	

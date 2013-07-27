@@ -153,7 +153,8 @@ class SearchEngine extends SingletonFactory {
 		foreach ($objectTypes as $objectTypeName) {
 			$objectType = $this->getObjectType($objectTypeName);
 			if (!empty($sql)) $sql .= "\nUNION\n";
-			if (($specialSQL = $objectType->getSpecialSQLQuery($fulltextCondition, $searchIndexCondition, (isset($additionalConditions[$objectTypeName]) ? $additionalConditions[$objectTypeName] : null), $orderBy))) {
+			$additionalConditionsConditionBuilder = (isset($additionalConditions[$objectTypeName]) ? $additionalConditions[$objectTypeName] : null);
+			if (($specialSQL = $objectType->getSpecialSQLQuery($fulltextCondition, $searchIndexCondition, $additionalConditionsConditionBuilder, $orderBy))) {
 				$sql .= "(".$specialSQL.")";
 			}
 			else {

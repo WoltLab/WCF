@@ -37,13 +37,10 @@ class UserImporter implements IImporter {
 		}
 		
 		// check existing user id
-		$sql = "SELECT	COUNT(*) AS count
-			FROM	wcf".WCF_N."_user
-			WHERE	userID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($oldID));
-		$row = $statement->fetchArray();
-		if (!$row['count']) $data['userID'] = $oldID;
+		if (is_numeric($oldID)) {
+			$user = new User($oldID);
+			if (!$user->userID) $data['userID'] = $oldID;
+		}
 		
 		// get group ids
 		$groupIDs = array();

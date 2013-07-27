@@ -162,37 +162,39 @@ Examples for medium ID detection:
 	</category>
 	
 	<category name="wcf.acp.dataImport">
-		<item name="wcf.acp.dataImport"><![CDATA[TODO: Datenimport]]></item>
-		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[TODO: Datenquelle wählen]]></item>
-		<item name="wcf.acp.dataImport.exporter"><![CDATA[TODO: Datenquelle]]></item>
-		<item name="wcf.acp.dataImport.configure.data"><![CDATA[TODO: Daten]]></item>
-		<item name="wcf.acp.dataImport.configure.data.description"><![CDATA[TODO: Folgende Daten importieren:]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[TODO: Benutzer]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[TODO: Benutzergruppen]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[TODO: Benutzerprofilfelder]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[TODO: Follower]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[TODO: Benutzeränge]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[TODO: Avatare]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[TODO: Pinwand-Kommentare]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[TODO: Pinwand-Kommentar-Antworten]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[TODO: Labels]]></item>
-		<item name="wcf.acp.dataImport.configure.database"><![CDATA[TODO: Datenbank-Zugang]]></item>
-		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[TODO: Hostname]]></item>
-		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[TODO: Benutzername]]></item>
-		<item name="wcf.acp.dataImport.configure.database.password"><![CDATA[TODO: Password]]></item>
-		<item name="wcf.acp.dataImport.configure.database.name"><![CDATA[TODO: Datenbankname]]></item>
-		<item name="wcf.acp.dataImport.configure.database.prefix"><![CDATA[TODO: Tabellen-Präfix]]></item>
-		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[TODO: Datei-System-Zugang]]></item>
-		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[TODO: Pfad zur Installation]]></item>
-		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[TODO: Wird für den Import von Datei-basierten Inhalten (wie z.B. Avatare) benötigt.]]></item>
-		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[TODO: Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
+		<item name="wcf.acp.dataImport"><![CDATA[Data Import]]></item>
+		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Select Data Source]]></item>
+		<item name="wcf.acp.dataImport.exporter"><![CDATA[Data Source]]></item>
+		<item name="wcf.acp.dataImport.configure.data"><![CDATA[Data]]></item>
+		<item name="wcf.acp.dataImport.configure.data.description"><![CDATA[Import the data selected below:]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[User]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[User groups]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[User profile fields]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Follower]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Ranks]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[Avatars]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Wall comments]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Replies to wall comments]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smilies]]></item>
+		<item name="wcf.acp.dataImport.completed"><![CDATA[Import completed.]]></item>
+		<item name="wcf.acp.dataImport.configure.database"><![CDATA[Database Credentials]]></item>
+		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[Hostname]]></item>
+		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[Username]]></item>
+		<item name="wcf.acp.dataImport.configure.database.password"><![CDATA[Password]]></item>
+		<item name="wcf.acp.dataImport.configure.database.name"><![CDATA[Database Name]]></item>
+		<item name="wcf.acp.dataImport.configure.database.prefix"><![CDATA[Table Prefix]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[Filesystem]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Installation Path]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Required if file-based data (e.g. avatars or attachments) should be imported.]]></item>
+		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[An error occured while trying to access the database:
 		<br /><strong>{$exception->getMessage()}<br />{$exception->getErrorDesc()}</strong>]]></item>
-		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[TODO: Es wurde keine Installation unter dem angegeben Pfad gefunden.]]></item>
-		<item name="wcf.acp.dataImport.configure.settings"><![CDATA[TODO: Einstellungen]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[TODO: Verhalten bei sich überschneidenden Benutzernamen]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"><![CDATA[TODO: Benutzeraccounts umbennen]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"><![CDATA[TODO: Benutzeraccounts zusammenlegen]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"><![CDATA[TODO: Benutzeraccounts zusammenlegen, wenn auch die E-Mail-Adresse identisch ist]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Unable to find a valid installation with the given path.]]></item>
+		<item name="wcf.acp.dataImport.configure.settings"><![CDATA[Settings]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[Conflicting Usernames]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"><![CDATA[Rename users]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"><![CDATA[Merge users]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"><![CDATA[Merge users if email address is equal]]></item>
 	</category>
 	
 	<category name="wcf.acp.exceptionLog">
@@ -282,8 +284,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Allowed File Extensions]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions.description"><![CDATA[One extension per line]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
-		<item name="wcf.acp.group.option.user.attachment.quota"><![CDATA[Quota]]></item>
-		<item name="wcf.acp.group.option.user.attachment.quota.description"><![CDATA[Total quota for all attachments uploaded by a user]]></item>
 		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.group.option.admin.attachment.canManageAttachment"><![CDATA[Can manage attachments]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.bbcode"><![CDATA[BBCodes]]></item>
@@ -347,8 +347,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Can manage tags]]></item>
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximum Signature Length]]></item>
-		<item name="wcf.acp.group.option.admin.system.canImportData"><![CDATA[TODO: Kann Daten importieren]]></item>
-		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[TODO: Kann Anzeigen aktualisieren]]></item>
+		<item name="wcf.acp.group.option.admin.system.canImportData"><![CDATA[Can import data]]></item>
+		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[Can rebuild data]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -362,6 +362,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[More]]></item>
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Applications</a>.]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[News]]></item>
+		<item name="wcf.acp.index.setup.notice"><![CDATA[The installation will be continued within a few moments, please do not reload this page.]]></item>
+		<item name="wcf.acp.index.setup.title"><![CDATA[Please Wait]]></item>
 		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
 		<item name="wcf.acp.index.system.software.wcfVersion"><![CDATA[Community Framework&trade; Version]]></item>
@@ -528,8 +530,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.menu.link.tag.add"><![CDATA[Add Tag]]></item>
 		<item name="wcf.acp.menu.link.tag.list"><![CDATA[List Tags]]></item>
-		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[TODO: Datenimport]]></item>
-		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[TODO: Anzeigen aktualisieren]]></item>
+		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[Data Import]]></item>
+		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[Rebuild Data]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -738,7 +740,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signatures]]></item>
 		<item name="wcf.acp.option.module_team_page"><![CDATA[Staff List]]></item>
 		<item name="wcf.acp.option.module_dashboard_page"><![CDATA[Dashboard]]></item>
-		<item name="wcf.acp.option.module_dashboard_page.description"><![CDATA[TODO: Hinweis: Falls das Dashboard als Startseite definiert ist, muss bei Deaktivierung dieser Option zusätzlich eine neue Startseite in der <a href="{link controller='PageMenuItemList'}{/link}">Hauptmenüverwaltung</a> ausgewählt werden.]]></item>
+		<item name="wcf.acp.option.module_dashboard_page.description"><![CDATA[Notice: In case the Dashboard is currently defined as landing page, you must set a different landing page through the <a href="{link controller='PageMenuItemList'}{/link}">Page Menu</a> management afterwards.]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check"><![CDATA[Enable password validation]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check.description"><![CDATA[Password complexity will be validated, unsafe passwords will be rejected.]]></item>
@@ -889,7 +891,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.searchForUpdates.noResults"><![CDATA[Your system is up to date, there are no outstanding updates.]]></item>
 		<item name="wcf.acp.package.source"><![CDATA[Data Source]]></item>
 		<item name="wcf.acp.package.source.download"><![CDATA[Download Package]]></item>
-		<item name="wcf.acp.package.source.download.description"><![CDATA[TODO: Geben Sie den direkten Pfad zur Paketdatei an. Dabei kann es sich um die Internetadresse der Paketdatei oder alternativ den Pfad zur Paketdatei im Dateisystem handeln.]]></item>
+		<item name="wcf.acp.package.source.download.description"><![CDATA[Provide the direct path to the desired resource, it may be either an URL or a local filesystem path.]]></item>
 		<item name="wcf.acp.package.source.upload"><![CDATA[Upload Package]]></item>
 		<item name="wcf.acp.package.source.upload.description"><![CDATA[Upload package archive from your local machine.]]></item>
 		<item name="wcf.acp.package.startInstall"><![CDATA[Install Package]]></item>
@@ -948,14 +950,18 @@ Examples for medium ID detection:
 		<item name="wcf.acp.pageMenu.pageMenuItem"><![CDATA[Title]]></item>
 		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Parent Menu Item]]></item>
 		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Display Order]]></item>
+		<item name="wcf.acp.pageMenu.menuItemParameters"><![CDATA[Parameters]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
-		<item name="wcf.acp.rebuildData"><![CDATA[TODO: Anzeigen aktualisieren]]></item>
-		<item name="wcf.acp.rebuildData.description"><![CDATA[TODO: Für eine vollständige Aktualisierung aller Daten (z.B. nach einem Datenimport) führen Sie die Aktionen bitte in der hier angegebenen Reihenfolge durch.]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user"><![CDATA[TODO: Benutzer aktualisieren]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[TODO: Likes aktualisieren]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[TODO: Dateianhänge aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData"><![CDATA[Rebuild Data]]></item>
+		<item name="wcf.acp.rebuildData.description"><![CDATA[In order to ensure consistency, e.g. after a data import, it is highly recommended to perform all the actions below in their respective order, starting from top to bottom.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user"><![CDATA[Rebuild Users]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[Rebuilds user counters and ranks]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[Rebuild Likes]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.description"><![CDATA[Synchronizes activity points]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Rebuild Attachments]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Rebuilds attachment preview images]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">
@@ -1411,6 +1417,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.date.dateFormat"><![CDATA[M jS Y]]></item>
 		<item name="wcf.date.timeFormat"><![CDATA[g:ia]]></item>
 		<item name="wcf.date.dateTimeFormat"><![CDATA[%date%, %time%]]></item>
+		<item name="wcf.date.shortDateTimeFormat"><![CDATA[%date%]]></item>
 		
 		<item name="wcf.date.interval.days.past"><![CDATA[{if $days > 1}{#$days} days{else}A day{/if} ago]]></item>
 		<item name="wcf.date.interval.full.past"><![CDATA[{if $years}{if $years > 1}{#$years} years{else}A year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{#$months} months{else}{if $firstElement == 'months'}A{else}a{/if} month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}{if $firstElement == 'weeks'}A{else}a{/if} week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}{if $firstElement == 'days'}A{else}a{/if} day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}{if $firstElement == 'hours'}An{else}an{/if} hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}{if $firstElement == 'minutes'}A{else}a{/if} minute{/if}{/if} ago]]></item>
@@ -1985,7 +1992,7 @@ You can change your password any time at:
 		<item name="wcf.user.quit.cancel.success"><![CDATA[Account deletion has been aborted.]]></item>
 		<item name="wcf.user.emailActivation"><![CDATA[Verify New Email Address]]></item>
 		<item name="wcf.user.password.error.notSecure"><![CDATA[Due to security reasons every password must be at least {REGISTER_PASSWORD_MIN_LENGTH} characters long{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{*
-		*}and contain {*
+		*} and contain {*
 		*}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}lower-case letters{/if}{*
 		*}{if REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} and{/if} {/if}upper-case letters{/if}{*
 		*}{if REGISTER_PASSWORD_MUST_CONTAIN_DIGIT}{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE}{if REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR},{else} and{/if} {/if}digits{/if}{*

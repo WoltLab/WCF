@@ -37,6 +37,7 @@
 				<legend><label for="sortField">{lang}wcf.user.members.sort{/lang}</label></legend>
 				
 				<dl>
+					<dt></dt>
 					<dd>
 						<select id="sortField" name="sortField">
 							<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.user.username{/lang}</option>

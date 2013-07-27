@@ -152,7 +152,7 @@ class Installer {
 				$this->createDir($dir);
 			}
 			catch (SystemException $e) {
-				$errors[] = array('file' => $dir, 'code' => $e->getCode(), 'message' => $e->getMessage());
+				$errors[] = $e->getMessage();
 			}
 		}
 		
@@ -162,11 +162,11 @@ class Installer {
 				$this->createFile($file, $index, $tar);
 			}
 			catch (SystemException $e) {
-				$errors[] = array('file' => $file, 'code' => $e->getCode(), 'message' => $e->getMessage());
+				$errors[] = $e->getMessage();
 			}
 		}
 		if (!empty($errors)) {
-			throw new SystemException('error(s) during the installation of the files.', $errors);
+			throw new SystemException('error(s) during the installation of the files.', 0, implode("<br />", $errors));
 		}
 		
 		$this->logFiles($files);

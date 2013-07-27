@@ -28,6 +28,7 @@ final class PasswordUtil {
 		'ipb2',		// Invision Power Board 2.x
 		'ipb3',		// Invision Power Board 3.x
 		'mybb1',	// MyBB 1.x
+		'phpbb3',	// phpBB 3.x
 		'smf1',		// Simple Machines Forum 1.x
 		'smf2',		// Simple Machines Forum 2.x
 		'vb3',		// vBulletin 3.x
@@ -273,6 +274,93 @@ final class PasswordUtil {
 	 */
 	protected static function mybb1($username, $password, $salt, $dbHash) {
 		return self::secureCompare($dbHash, md5(md5($salt) . md5($password)));
+	}
+	
+	/**
+	 * Validates the password hash for phpBB 3.x (phpbb3).
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function phpbb3($username, $password, $salt, $dbHash) {
+		if (StringUtil::length($dbHash) !== 34) {
+			return self::secureCompare(md5($password), $dbHash);
+		}
+		
+		$hash_crypt_private = function ($password, $setting) {
+			static $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+			
+			$output = '*';
+			
+			// Check for correct hash
+			if (substr($setting, 0, 3) !== '$H$' && substr($setting, 0, 3) !== '$P$') {
+				return $output;
+			}
+			
+			$count_log2 = strpos($itoa64, $setting[3]);
+			
+			if ($count_log2 < 7 || $count_log2 > 30) {
+				return $output;
+			}
+			
+			$count = 1 << $count_log2;
+			$salt = substr($setting, 4, 8);
+			
+			if (strlen($salt) != 8) {
+				return $output;
+			}
+			
+			$hash = md5($salt . $password, true);
+			do {
+				$hash = md5($hash . $password, true);
+			}
+			while (--$count);
+			
+			$output = substr($setting, 0, 12);
+			$hash_encode64 = function ($input, $count, &$itoa64) {
+				$output = '';
+				$i = 0;
+				
+				do {
+					$value = ord($input[$i++]);
+					$output .= $itoa64[$value & 0x3f];
+					
+					if ($i < $count) {
+						$value |= ord($input[$i]) << 8;
+					}
+					
+					$output .= $itoa64[($value >> 6) & 0x3f];
+					
+					if ($i++ >= $count) {
+						break;
+					}
+					
+					if ($i < $count) {
+						$value |= ord($input[$i]) << 16;
+					}
+					
+					$output .= $itoa64[($value >> 12) & 0x3f];
+					
+					if ($i++ >= $count) {
+						break;
+					}
+					
+					$output .= $itoa64[($value >> 18) & 0x3f];
+				}
+				while ($i < $count);
+				
+				return $output;
+			};
+			
+			$output .= $hash_encode64($hash, 16, $itoa64);
+			
+			return $output;
+		};
+		
+		return self::secureCompare($hash_crypt_private($password, $dbHash), $dbHash);
 	}
 	
 	/**

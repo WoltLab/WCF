@@ -4,6 +4,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\activity\event\UserActivityEventAction;
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -77,6 +78,10 @@ class UserActivityEventHandler extends SingletonFactory {
 	 */
 	public function fireEvent($objectType, $objectID, $languageID = null, $userID = null, $time = TIME_NOW, $additonalData = array()) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
+		if ($objectTypeID === null) {
+			throw new SystemException("Unknown recent activity event '".$objectType."'");
+		}
+		
 		if ($userID === null) $userID = WCF::getUser()->userID;
 		
 		$eventAction = new UserActivityEventAction(array(), 'create', array(
@@ -102,6 +107,10 @@ class UserActivityEventHandler extends SingletonFactory {
 	 */
 	public function removeEvents($objectType, array $objectIDs) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
+		if ($objectTypeID === null) {
+			throw new SystemException("Unknown recent activity event '".$objectType."'");
+		}
+		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("objectTypeID = ?", array($objectTypeID));
 		$conditions->add("objectID IN (?)", array($objectIDs));

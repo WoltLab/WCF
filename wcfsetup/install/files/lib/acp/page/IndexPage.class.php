@@ -41,10 +41,9 @@ class IndexPage extends AbstractPage {
 		);
 		
 		// get load
-		if ($uptime = @exec("uptime")) {
-			if (preg_match("/averages?: ([0-9\.]+,?[\s]+[0-9\.]+,?[\s]+[0-9\.]+)/", $uptime, $match)) {
-				$this->server['load'] = $match[1];
-			}
+		if (function_exists('sys_getloadavg')) {
+			$load = sys_getloadavg();
+			$this->server['load'] = implode(', ', $load);
 		}
 	}
 	

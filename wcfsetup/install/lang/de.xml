@@ -177,6 +177,8 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Pinnwand-Kommentare]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Pinnwand-Kommentar-Antworten]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smileys]]></item>
+		<item name="wcf.acp.dataImport.completed"><![CDATA[Import abgeschlossen.]]></item>
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[Datenbank-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[Benutzername]]></item>
@@ -283,8 +285,6 @@
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
 		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
-		<item name="wcf.acp.group.option.user.attachment.quota"><![CDATA[Maximaler Speicherverbrauch]]></item>
-		<item name="wcf.acp.group.option.user.attachment.quota.description"><![CDATA[Dem Nutzer zur Verfügung stehenden Speicherplatz für alle Dateianhänge insgesamt.]]></item>
 		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.group.option.admin.attachment.canManageAttachment"><![CDATA[Kann Dateianhänge verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.bbcode"><![CDATA[BBCodes]]></item>
@@ -363,6 +363,8 @@
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[Weitere]]></item>
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[Sie rufen diese Installation über eine abweichende Domain auf, etwa auf Grund eines Umzuges. Bitte korrigieren Sie die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Anwendungen verwalten</a>.]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[Nachrichten]]></item>
+		<item name="wcf.acp.index.setup.notice"><![CDATA[Die Installation wird in wenigen Augenblicken automatisch gestartet, bitte laden Sie diese Seite nicht neu.]]></item>
+		<item name="wcf.acp.index.setup.title"><![CDATA[Bitte warten]]></item>
 		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
 		<item name="wcf.acp.index.system.software.wcfVersion"><![CDATA[Community Framework&trade;-Version]]></item>
@@ -949,14 +951,18 @@
 		<item name="wcf.acp.pageMenu.pageMenuItem"><![CDATA[Name]]></item>
 		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
 		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Reihenfolge]]></item>
+		<item name="wcf.acp.pageMenu.menuItemParameters"><![CDATA[Parameter]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.description"><![CDATA[Für eine vollständige Aktualisierung aller Daten (z.B. nach einem Datenimport) führen Sie die Aktionen bitte in der hier angegebenen Reihenfolge durch.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user"><![CDATA[Benutzer aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[Aktualisiert Zähler der Benutzer, aktualisiert Benutzerränge]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[Likes aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.description"><![CDATA[Berechnet Aktivitätspunkte neu]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Dateianhänge aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">
@@ -1413,6 +1419,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.date.dateFormat"><![CDATA[j. F Y]]></item>
 		<item name="wcf.date.timeFormat"><![CDATA[H:i]]></item>
 		<item name="wcf.date.dateTimeFormat"><![CDATA[%date%, %time%]]></item>
+		<item name="wcf.date.shortDateTimeFormat"><![CDATA[%date%]]></item>
 		
 		<item name="wcf.date.interval.days.past"><![CDATA[Vor {if $days > 1}{#$days} Tagen{else}einem Tag{/if}]]></item>
 		<item name="wcf.date.interval.full.past"><![CDATA[Vor {if $years}{if $years > 1}{#$years} Jahren{else}einem Jahr{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} und {else}, {/if}{/if}{if $months > 1}{#$months} Monaten{else}einem Monat{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} und {else}, {/if}{/if}{if $weeks > 1}{#$weeks} Wochen{else}einer Woche{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} und {else}, {/if}{/if}{if $days > 1}{#$days} Tagen{else}einem Tag{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} und {else}, {/if}{/if}{if $hours > 1}{#$hours} Stunden{else}einer Stunde{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} und {/if}{if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}{/if}]]></item>
@@ -1773,7 +1780,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.moderation.report.alreadyReported"><![CDATA[Dieser Inhalt wurde bereits gemeldet.]]></item>
 		<item name="wcf.moderation.report.details"><![CDATA[Informationen]]></item>
 		<item name="wcf.moderation.report.reason"><![CDATA[Grund der Meldung]]></item>
-		<item name="wcf.moderation.report.reason.description"><![CDATA[Diese Funktion ist ausschließlich zu verwenden bei: Spam, Werbung und anderen problematischen (rassistischen, gewaltverherrlichenden, agressiven, beleidigenden oder sexistischen) Inhalten.]]></item>
+		<item name="wcf.moderation.report.reason.description"><![CDATA[Diese Funktion ist ausschließlich zu verwenden bei: Spam, Werbung und anderen problematischen (rassistischen, gewaltverherrlichenden, aggressiven, beleidigenden oder sexistischen) Inhalten.]]></item>
 		<item name="wcf.moderation.report.removeContent"><![CDATA[Gemeldeten Inhalt löschen]]></item>
 		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Wollen Sie den gemeldeten Inhalt wirklich löschen?]]></item>
 		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Begründung (optional)]]></item>
@@ -1787,7 +1794,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		
 	<category name="wcf.page">
 		<item name="wcf.page.pageNo"><![CDATA[Seite {#$pageNo}]]></item>
-		<item name="wcf.page.offline"><![CDATA[Die Seite befindet sich zur Zeit {if OFFLINE_MESSAGE != ''}aus folgenden Gründen im Wartungsmodus:{else}im Wartungsmodus.{/if}]]></item>
+		<item name="wcf.page.offline"><![CDATA[Die Seite befindet sich zurzeit {if OFFLINE_MESSAGE != ''}aus folgenden Gründen im Wartungsmodus:{else}im Wartungsmodus.{/if}]]></item>
 		<item name="wcf.page.sitemap"><![CDATA[Schnellnavigation]]></item>
 		<item name="wcf.page.mainMenu"><![CDATA[Navigation]]></item>
 		<item name="wcf.page.pagePosition"><![CDATA[Seite {#$pageNo} von {#$pages}]]></item>

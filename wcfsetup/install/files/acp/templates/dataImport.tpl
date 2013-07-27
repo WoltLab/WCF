@@ -6,11 +6,12 @@
 		{if $queue|isset}
 			WCF.Language.addObject({
 				'wcf.acp.dataImport': '{lang}wcf.acp.dataImport{/lang}',
+				'wcf.acp.dataImport.completed': '{lang}wcf.acp.dataImport.completed{/lang}',
 				{implode from=$importers item=importer}'wcf.acp.dataImport.data.{@$importer}': '{lang}wcf.acp.dataImport.data.{@$importer}{/lang}'{/implode}
 			});
 			
 			var $queues = [ {implode from=$queue item=item}'{@$item}'{/implode} ];
-			new WCF.ACP.Import.Manager($queues);
+			new WCF.ACP.Import.Manager($queues, '{link controller='RebuildData'}{/link}');
 		{/if}
 		
 		$('.jsImportSection').change(function(event) {

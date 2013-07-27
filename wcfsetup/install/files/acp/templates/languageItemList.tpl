@@ -56,6 +56,7 @@
 			</dl>
 			
 			<dl>
+				<dt></dt>
 				<dd>
 					<label><input type="checkbox" name="hasCustomValue" value="1" {if $hasCustomValue == 1}checked="checked" {/if}/> {lang}wcf.acp.language.item.customValues{/lang}</label>
 				</dd>

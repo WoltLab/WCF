@@ -502,6 +502,10 @@
 		&.navigationMenuItems {
 			> li {
 				display: inline-block;
+				
+				> .badge {
+					top: -2px;
+				}
 			}
 		}
 	}
@@ -1065,6 +1069,8 @@
 			padding: 0 14px;
 			
 			> ol {
+				margin-top: 0;
+				
 				> li {
 					display: inline-block;
 					font-size: @wcfSmallFontSize;
@@ -1091,6 +1097,36 @@
 			content: "";
 			display: table;
 			clear: left;
+		}
+	}
+}
+
+.sidebarNestedCategoryList {
+	> li {
+		> ol {
+			margin-left: 14px;
+		}
+	}
+	
+	li {
+		margin: 6px 0;
+		position: relative;
+		
+		> span {
+			position: absolute;
+			right: 0;
+			top: 2px;
+		}
+		
+		> a {
+			display: block;
+			overflow: hidden;
+			padding-right: 45px;
+			text-overflow: ellipsis;
+		}
+		
+		&.active > a {
+			font-weight: bold;
 		}
 	}
 }
@@ -1327,6 +1363,10 @@
 				position: relative;
 				text-decoration: none;
 				z-index: 10;
+				
+				> .badge {
+					top: -1px;
+				}
 			}
 			
 			&:not(.ui-state-active) {
@@ -2005,6 +2045,7 @@ ul.inlineDataList {
 		
 		> div,
 		> ul,
+		> ol,
 		> dl {
 			width: 300px - @wcfGapMedium * 2;
 		}

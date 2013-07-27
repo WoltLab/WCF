@@ -33,7 +33,7 @@ class AbstractAttachmentImporter implements IImporter {
 		if (empty($data['fileHash'])) $data['fileHash'] = sha1_file($additionalData['fileLocation']);
 		
 		// get user id
-		if ($data['userID']) $data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
+		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		
 		// save attachment
 		$action = new AttachmentAction(array(), 'create', array(

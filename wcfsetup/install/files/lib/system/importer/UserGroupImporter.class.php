@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupAction;
 
 /**
@@ -17,11 +18,16 @@ class UserGroupImporter implements IImporter {
 	 * @see wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
-		$action = new UserGroupAction(array(), 'create', array(
-			'data' => $data		
-		));
-		$returnValues = $action->executeAction();
-		$newGroupID = $returnValues['returnValues']->groupID;
+		if ($data['groupType'] < 4) {
+			$newGroupID = UserGroup::getGroupByType($data['groupType'])->groupID;
+		}
+		else {
+			$action = new UserGroupAction(array(), 'create', array(
+				'data' => $data		
+			));
+			$returnValues = $action->executeAction();
+			$newGroupID = $returnValues['returnValues']->groupID;
+		}
 		
 		ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user.group', $oldID, $newGroupID);
 		

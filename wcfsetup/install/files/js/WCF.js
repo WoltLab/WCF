@@ -736,18 +736,6 @@ WCF.Dropdown = {
 			WCF.CloseOverlayHandler.addCallback('WCF.Dropdown', $.proxy(this._closeAll, this));
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Dropdown', $.proxy(this.init, this));
 		}
-		
-		$(window).resize($.proxy(this._resize, this));
-	},
-	
-	/**
-	 * Handles resizing the window by making sure that the menu positions are
-	 * recalculated.
-	 */
-	_resize: function() {
-		for (var $containerID in this._dropdowns) {
-			this._menus[$containerID].removeData('orientationX');
-		}
 	},
 	
 	/**
@@ -938,54 +926,31 @@ WCF.Dropdown = {
 			$dropdownDimensions = $button.getDimensions('outer');
 		}
 		
-		// validate if current alignment is still fine, prevents "jumping"
-		var $align = null;
-		switch (dropdownMenu.data('orientationX')) {
-			case 'left':
-				if (($dropdownOffsets.left + $menuDimensions.width) > $windowWidth) {
-					$align = 'right';
-				}
-			break;
-			
-			case 'right':
-				if (($dropdownOffsets.left + $dropdownDimensions.width - $menuDimensions.width) < 0) {
-					$align = 'left';
-				}
-			break;
-			
-			default:
-				$align = 'left';
-				
-				if (($dropdownOffsets.left + $menuDimensions.width) > $windowWidth) {
-					$align = 'right';
-				}
-			break;
+		// get alignment
+		var $align = 'left';
+		if (($dropdownOffsets.left + $menuDimensions.width) > $windowWidth) {
+			$align = 'right';
 		}
 		
-		// alignment has changed
-		if ($align !== null) {
-			dropdownMenu.data('orientationX', $align);
+		// calculate offsets
+		var $left = 'auto';
+		var $right = 'auto';
+		if ($align === 'left') {
+			dropdownMenu.removeClass('dropdownArrorRight');
 			
-			var $left = 'auto';
-			var $right = 'auto';
-			
-			if ($align === 'left') {
-				dropdownMenu.removeClass('dropdownArrorRight');
-				
-				$left = $dropdownOffsets.left + 'px';
-			}
-			else {
-				dropdownMenu.addClass('dropdownArrowRight');
-				
-				$right = ($windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width)) + 'px';
-			}
-			
-			dropdownMenu.css({
-				left: $left,
-				right: $right,
-				top: $dropdownOffsets.top + $dropdownDimensions.height + 7 + 'px'
-			});
+			$left = $dropdownOffsets.left + 'px';
 		}
+		else {
+			dropdownMenu.addClass('dropdownArrowRight');
+			
+			$right = ($windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width)) + 'px';
+		}
+		
+		dropdownMenu.css({
+			left: $left,
+			right: $right,
+			top: $dropdownOffsets.top + $dropdownDimensions.height + 7 + 'px'
+		});
 	},
 	
 	/**
@@ -1952,7 +1917,7 @@ WCF.Action.Proxy = Class.extend({
 		// call child method if applicable
 		if ($.isFunction(this.options.success)) {
 			// trim HTML before processing, see http://jquery.com/upgrade-guide/1.9/#jquery-htmlstring-versus-jquery-selectorstring
-			if (data.returnValues && data.returnValues.template !== undefined) {
+			if (data && data.returnValues && data.returnValues.template !== undefined) {
 				data.returnValues.template = $.trim(data.returnValues.template);
 			}
 			
@@ -2908,7 +2873,7 @@ WCF.Date.Time = Class.extend({
 		}
 		// timestamp is between ~700 million years BC and last week
 		else {
-			var $string = WCF.Language.get('wcf.date.dateTimeFormat');
+			var $string = WCF.Language.get('wcf.date.shortDateTimeFormat');
 			$element.text($string.replace(/\%date\%/, $date).replace(/\%time\%/, $time));
 		}
 	}
@@ -5575,7 +5540,7 @@ WCF.Search.Base = Class.extend({
 	 * @return	jQuery
 	 */
 	_createListItem: function(item) {
-		var $listItem = $('<li><span>' + item.label + '</span></li>').appendTo(this._list);
+		var $listItem = $('<li><span>' + WCF.String.escapeHTML(item.label) + '</span></li>').appendTo(this._list);
 		$listItem.data('objectID', item.objectID).data('label', item.label).click($.proxy(this._executeCallback, this));
 		
 		this._itemCount++;
@@ -5921,7 +5886,7 @@ WCF.System.Confirmation = {
 			template.appendTo(this._dialog.find('#wcfSystemConfirmationContent').show());
 		}
 		
-		this._dialog.find('p').html(message);
+		this._dialog.find('p').text(message);
 		this._dialog.wcfDialog({
 			onClose: $.proxy(this._close, this),
 			onShow: $.proxy(this._show, this),
@@ -9196,6 +9161,75 @@ $.widget('ui.wcfPages', {
 				if (event.which == 13 || event.which == 27) {
 					this._stopInput(event);
 					event.stopPropagation();
+				}
+			}
+		}
+	}
+});
+
+/**
+ * Namespace for category related classes.
+ */
+WCF.Category = { };
+
+/**
+ * Handles selection of categories.
+ */
+WCF.Category.NestedList = Class.extend({
+	/**
+	 * list of categories
+	 * @var	object
+	 */
+	_categories: { },
+	
+	/**
+	 * Initializes the WCF.Category.NestedList object.
+	 */
+	init: function() {
+		var self = this;
+		$('.jsCategory').each(function(index, category) {
+			var $category = $(category).data('parentCategoryID', null).change($.proxy(self._updateSelection, self));
+			self._categories[$category.val()] = $category;
+			
+			// find child categories
+			var $childCategoryIDs = [ ];
+			$category.parents('li').find('.jsChildCategory').each(function(innerIndex, childCategory) {
+				var $childCategory = $(childCategory).data('parentCategoryID', $category.val()).change($.proxy(self._updateSelection, self));
+				self._categories[$childCategory.val()] = $childCategory;
+				$childCategoryIDs.push($childCategory.val());
+				
+				if ($childCategory.is(':checked')) {
+					$category.prop('checked', 'checked');
+				}
+			});
+			
+			$category.data('childCategoryIDs', $childCategoryIDs);
+		});
+	},
+	
+	/**
+	 * Updates selection of categories.
+	 * 
+	 * @param	object		event
+	 */
+	_updateSelection: function(event) {
+		var $category = $(event.currentTarget);
+		var $parentCategoryID = $category.data('parentCategoryID');
+		
+		if ($category.is(':checked')) {
+			// child category
+			if ($parentCategoryID !== null) {
+				// mark parent category as checked
+				this._categories[$parentCategoryID].prop('checked', 'checked');
+			}
+		}
+		else {
+			// top-level category
+			if ($parentCategoryID === null) {
+				// unmark all child categories
+				var $childCategoryIDs = $category.data('childCategoryIDs');
+				for (var $i = 0, $length = $childCategoryIDs.length; $i < $length; $i++) {
+					this._categories[$childCategoryIDs[$i]].prop('checked', false);
 				}
 			}
 		}
