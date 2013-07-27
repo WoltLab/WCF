@@ -10,6 +10,9 @@ ALTER TABLE wcf1_package_installation_queue DROP COLUMN confirmInstallation;
 ALTER TABLE wcf1_package_installation_queue DROP COLUMN packageType;
 ALTER TABLE wcf1_package_installation_queue ADD isApplication TINYINT(1) NOT NULL DEFAULT '0';
 
+/* 221eee4 */
+ALTER TABLE wcf1_label CHANGE cssClassName cssClassName VARCHAR(255) NOT NULL DEFAULT '';
+
 DROP TABLE IF EXISTS wcf1_import_mapping;
 CREATE TABLE wcf1_import_mapping (
 	objectTypeID INT(10) NOT NULL,
