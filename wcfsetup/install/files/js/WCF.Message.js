@@ -2959,6 +2959,15 @@ WCF.Message.UserMention = Class.extend({
 	 * @param	string		editorID
 	 */
 	init: function(editorID) {
+		// temporary disable suggestions for Internet Explorer
+		//
+		// this issue is caused by misplacing the range within the parent element,
+		// while the typed chars are appended to the preceeding text node, without
+		// getting focused for some reason
+		if ($.browser.msie) {
+			return;
+		}
+		
 		this._textarea = $('#' + editorID);
 		
 		this._suggestionList = $('<ul class="dropdownMenu userSuggestionList" />').appendTo(this._textarea.parent());
