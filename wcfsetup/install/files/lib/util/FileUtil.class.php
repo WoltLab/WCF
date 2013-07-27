@@ -511,6 +511,8 @@ final class FileUtil {
 					self::$mode = '0777';
 				}
 				else {
+					clearstatcache();
+					
 					self::$mode = '0666';
 					
 					$tmpFilename = '__permissions_'.sha1(time()).'.txt';
