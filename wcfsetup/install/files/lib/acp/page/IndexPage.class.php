@@ -43,7 +43,9 @@ class IndexPage extends AbstractPage {
 		// get load
 		if (function_exists('sys_getloadavg')) {
 			$load = sys_getloadavg();
-			$this->server['load'] = implode(', ', $load);
+			if (is_array($load) && count($load) == 3) {
+				$this->server['load'] = implode(', ', $load);
+			}
 		}
 	}
 	
