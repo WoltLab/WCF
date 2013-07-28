@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\importer;
-use wcf\data\user\follow\UserFollowAction;
+use wcf\system\WCF;
 
 /**
  * Imports followers.
@@ -21,10 +21,16 @@ class UserFollowerImporter implements IImporter {
 		$data['followUserID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['followUserID']);
 		if (!$data['userID'] || !$data['followUserID']) return 0;
 		
-		$action = new UserFollowAction(array(), 'create', array(
-			'data' => $data		
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_follow
+						(userID, followUserID, time)
+			VALUES			(?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$data['userID'],
+			$data['followUserID'],
+			$data['time']
 		));
-		$returnValues = $action->executeAction();
-		return $returnValues['returnValues']->followID;
+		
+		return WCF::getDB()->getInsertID('wcf'.WCF_N.'_user_follow', 'followID');
 	}
 }
