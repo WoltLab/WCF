@@ -8647,6 +8647,18 @@ $.widget('ui.wcfDialog', {
 		
 		this._content.css('overflow', $overflow);
 		this._content.css('maxHeight', $maxHeight);
+		
+		if ($overflow === 'visible') {
+			// content may already overflow, even though the overall height is still below the threshold
+			var $contentHeight = 0;
+			this._content.children().each(function(index, child) {
+				$contentHeight += $(child).outerHeight();
+			});
+			
+			if (this._content.height() < $contentHeight) {
+				this._content.css('overflow', 'auto');
+			}
+		}
 	},
 	
 	/**
