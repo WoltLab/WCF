@@ -571,11 +571,17 @@ WCF.ACP.Package.Installation = Class.extend({
 				this._setIcon('question');
 				
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function(event) {
+				var $button = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function(event) {
 					$(event.currentTarget).disable();
 					
 					this._submit(data);
-				}, this)); 
+				}, this));
+				
+				$(document).keydown(function(event) {
+					if (event.which === $.ui.keyCode.ENTER) {
+						$button.trigger('click');
+					}
+				});
 			}
 			
 			$('#packageInstallationInnerContentContainer').show();
