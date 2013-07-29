@@ -13,7 +13,6 @@
 		 * Fixes issues with pasted html.
 		 */
 		event.editor.on('paste', function(ev) {
-			console.debug("currentValue = " + ev.data.dataValue);
 			if (ev.data.type == 'html') {
 				var $value = ev.data.dataValue;
 				
@@ -29,14 +28,11 @@
 				
 				// convert lists into new lines
 				$value = $value.replace(/<\/li>/gi, "\n");
-				console.debug($value);
 				// remove html tags
 				$value = $value.replace(/<[^>]+>/g, '');
 				
 				// fix multiple new lines
 				$value = $value.replace(/\n{3,}/gi,"\n\n");
-				
-				window.dtdesign = $value;
 				
 				ev.data.dataValue = $value;
 				
@@ -321,7 +317,6 @@
 	 * Converts html to bbcodes.
 	 */
 	var toDataFormat = function(html, fixForBody) {
-		console.debug("toDataFormat");
 		if (html == '<br>' || html == '<p><br></p>') {
 			return "";
 		}
@@ -438,5 +433,5 @@
 		html = html.replace(/%20/g, ' ');
 		
 		return html;
-	}
+	};
 })();
