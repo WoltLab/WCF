@@ -612,33 +612,31 @@ WCF.ACP.Package.Installation = Class.extend({
 			var $inputElement = $(inputElement);
 			var $type = $inputElement.attr('type');
 			
-			if (($type == 'checkbox' || $type == 'radio') && !$inputElement.prop('checked')) {
-				return false;
-			}
-			
-			var $name = $inputElement.attr('name');
-			if ($name.match(/(.*)\[([^[]*)\]$/)) {
-				$name = RegExp.$1;
-				$key = RegExp.$2;
-				
-				if ($additionalData[$name] === undefined) {
+			if (($type != 'checkbox' && $type != 'radio') || $inputElement.prop('checked')) {
+				var $name = $inputElement.attr('name');
+				if ($name.match(/(.*)\[([^[]*)\]$/)) {
+					$name = RegExp.$1;
+					$key = RegExp.$2;
+					
+					if ($additionalData[$name] === undefined) {
+						if ($key) {
+							$additionalData[$name] = { };
+						}
+						else {
+							$additionalData[$name] = [ ];
+						}
+					}
+					
 					if ($key) {
-						$additionalData[$name] = { };
+						$additionalData[$name][$key] = $inputElement.val();
 					}
 					else {
-						$additionalData[$name] = [ ];
+						$additionalData[$name].push($inputElement.val());
 					}
 				}
-				
-				if ($key) {
-					$additionalData[$name][$key] = $inputElement.val();
-				}
 				else {
-					$additionalData[$name].push($inputElement.val());
+					$additionalData[$name] = $inputElement.val();
 				}
-			}
-			else {
-				$additionalData[$name] = $inputElement.val();
 			}
 		});
 		

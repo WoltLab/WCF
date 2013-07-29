@@ -1792,7 +1792,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Gemeldeter Inhalt]]></item>
 		<item name="wcf.moderation.report.success"><![CDATA[Der Inhalt wurde den Moderatoren gemeldet.]]></item>
 	</category>
-		
+	
 	<category name="wcf.page">
 		<item name="wcf.page.pageNo"><![CDATA[Seite {#$pageNo}]]></item>
 		<item name="wcf.page.offline"><![CDATA[Die Seite befindet sich zurzeit {if OFFLINE_MESSAGE != ''}aus folgenden Gründen im Wartungsmodus:{else}im Wartungsmodus.{/if}]]></item>
