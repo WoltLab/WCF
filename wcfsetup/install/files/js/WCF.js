@@ -2634,8 +2634,8 @@ WCF.Date.Picker = {
 			var $hasTimePicker = (($input.attr('type') == 'datetime') || ($input.attr('type') == 'time'));
 
 			// get min- and maxdate
-			var $minDate = ($input.data('min-date') != null) ? new Date($input.data('min-date')) : null;
-			var $maxDate = ($input.data('max-date') != null) ? new Date($input.data('max-date')) : null;
+			var $minDate = ($input.prop('min') != '') ? new Date($input.prop('min')) : null;
+			var $maxDate = ($input.prop('max') != '') ? new Date($input.prop('max')) : null;
 			
 			// datepicker options
 			var $datePickerOptions = {
@@ -2678,7 +2678,8 @@ WCF.Date.Picker = {
 			$inputValue.replace(/\b([0-9]{2}:[0-9]{2}):[0-9]{2}\b/, function(match, timeMatch, offset, string) {
 				if ($hasTimePicker) {
 					return timeMatch;
-				} else {
+				}
+				else {
 					return '';
 				}
 			});
@@ -2694,7 +2695,8 @@ WCF.Date.Picker = {
 			// init date(time)picker
 			if (!$hasTimePicker) {
 				$input.datepicker($datePickerOptions);
-			} else {
+			}
+			else {
 				$input.datetimepicker($.extend({}, $datePickerOptions, {
 					altFieldTimeOnly: false,
 					altTimeFormat: 'HH:mm',
