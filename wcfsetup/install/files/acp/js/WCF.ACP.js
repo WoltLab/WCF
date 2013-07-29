@@ -543,12 +543,18 @@ WCF.ACP.Package.Installation = Class.extend({
 			
 			this._purgeTemplateContent($.proxy(function() {
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() {
+				var $button = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() {
 					$(this).disable();
 					window.location = data.redirectLocation;
 				});
 				
 				$('#packageInstallationInnerContentContainer').show();
+				
+				$(document).keydown(function(event) {
+					if (event.which === $.ui.keyCode.ENTER) {
+						$button.trigger('click');
+					}
+				});
 				
 				this._dialog.wcfDialog('render');
 			}, this));
@@ -560,7 +566,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		if (data.innerTemplate) {
 			var self = this;
 			$('#packageInstallationInnerContent').html(data.innerTemplate).find('input').keyup(function(event) {
-				if (event.keyCode === 13) { // Enter
+				if (event.keyCode === $.ui.keyCode.ENTER) {
 					self._submit(data);
 				}
 			});
@@ -571,17 +577,11 @@ WCF.ACP.Package.Installation = Class.extend({
 				this._setIcon('question');
 				
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-				var $button = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function(event) {
+				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function(event) {
 					$(event.currentTarget).disable();
 					
 					this._submit(data);
 				}, this));
-				
-				$(document).keydown(function(event) {
-					if (event.which === $.ui.keyCode.ENTER) {
-						$button.trigger('click');
-					}
-				});
 			}
 			
 			$('#packageInstallationInnerContentContainer').show();
