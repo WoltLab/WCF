@@ -67,7 +67,7 @@ class OptionImportForm extends AbstractForm {
 				$xml->load($this->optionImport['tmp_name']);
 				$xpath = $xml->xpath();
 				foreach ($xpath->query('/options/option') as $option) {
-					$this->options[ $xpath->query('name', $option)->item(0)->nodeValue ] = $xpath->query('value', $option)->item(0)->nodeValue;
+					$this->options[$xpath->query('name', $option)->item(0)->nodeValue] = $xpath->query('value', $option)->item(0)->nodeValue;
 				}
 			}
 			catch (SystemException $e) {
