@@ -736,6 +736,8 @@ WCF.Dropdown = {
 			WCF.CloseOverlayHandler.addCallback('WCF.Dropdown', $.proxy(this._closeAll, this));
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Dropdown', $.proxy(this.init, this));
 		}
+		
+		$(document).on('scroll', $.proxy(this._toggle, this));
 	},
 	
 	/**
