@@ -13,6 +13,7 @@
 		 * Fixes issues with pasted html.
 		 */
 		event.editor.on('paste', function(ev) {
+			console.debug("currentValue = " + ev.data.dataValue);
 			if (ev.data.type == 'html') {
 				var $value = ev.data.dataValue;
 				
@@ -28,18 +29,30 @@
 				
 				// convert lists into new lines
 				$value = $value.replace(/<\/li>/gi, "\n");
-				
+				console.debug($value);
 				// remove html tags
 				$value = $value.replace(/<[^>]+>/g, '');
 				
 				// fix multiple new lines
 				$value = $value.replace(/\n{3,}/gi,"\n\n");
 				
+				window.dtdesign = $value;
+				
 				ev.data.dataValue = $value;
 				
 				$pasted = true;
 			}
 		}, null, null, 9);
+		
+		// prevent drag and drop of images in Firefox
+		event.editor.document.on('drop', function(ev) {
+			if (ev.data.$.dataTransfer) {
+				var $html = ev.data.$.dataTransfer.getData('text/html');
+				if (/<img src="data:image\/[a-zA-Z0-9]+;base64/.exec($html)) {
+					ev.data.preventDefault(true);
+				}
+			}
+		});
 		
 		event.editor.on('insertText', function(ev) {
 			$insertedText = ev.data;
@@ -76,7 +89,7 @@
 		}
 		
 		// place button outside of <body> to prevent it being removed once deleting content
-		$('<button accesskey="s" />').hide().appendTo($(event.editor.document.$).find('html'));
+		$('<button accesskey="s" />').hide().appendTo($(event.editor.container.$).find('.cke_wysiwyg_div'));
 		
 	}
 	
@@ -308,6 +321,7 @@
 	 * Converts html to bbcodes.
 	 */
 	var toDataFormat = function(html, fixForBody) {
+		console.debug("toDataFormat");
 		if (html == '<br>' || html == '<p><br></p>') {
 			return "";
 		}
