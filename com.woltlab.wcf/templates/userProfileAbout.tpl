@@ -6,12 +6,12 @@
 					<fieldset>
 						<legend>{lang}wcf.user.option.category.{@$optionCategory[object]->categoryName}{/lang}</legend>
 						
-						<dl>
-							{foreach from=$optionCategory[options] item=userOption}
+						{foreach from=$optionCategory[options] item=userOption}
+							<dl>
 								<dt>{lang}wcf.user.option.{@$userOption[object]->optionName}{/lang}</dt>
 								<dd>{@$userOption[object]->optionValue}</dd>
-							{/foreach}
-						</dl>
+							</dl>
+						{/foreach}
 					</fieldset>
 				{/foreach}
 			{/foreach}

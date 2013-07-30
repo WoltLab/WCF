@@ -3,6 +3,7 @@ namespace wcf\system\importer;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\database\DatabaseException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -32,7 +33,7 @@ class UserImporter implements IImporter {
 				// merge user
 				ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user', $oldID, $existingUser->userID);
 				
-				return $existingUser->userID;
+				return 0;
 			}
 		}
 		
@@ -64,11 +65,21 @@ class UserImporter implements IImporter {
 			}
 		}
 		
+		// handle languages
+		$languageIDs = array();
+		if (isset($additionalData['languages'])) {
+			foreach ($additionalData['languages'] as $languageCode) {
+				$language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
+				if ($language !== null) $languageIDs[] = $language->languageID;
+			}
+		}
+		
 		// create user
 		$action = new UserAction(array(), 'create', array(
 			'data' => $data,
 			'groups' => $groupIDs,
-			'options' => $userOptions
+			'options' => $userOptions,
+			'languages' => $languageIDs
 		));
 		$returnValues = $action->executeAction();
 		
