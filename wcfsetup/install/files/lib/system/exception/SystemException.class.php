@@ -68,6 +68,16 @@ class SystemException extends LoggedException implements IPrintableException {
 			return;
 		}
 		
+		$innerMessage = '';
+		try {
+			$innerMessage = WCF::getLanguage()->get('wcf.global.error.exception', true);
+		}
+		catch (\Exception $e) { }
+		
+		if (empty($innerMessage)) {
+			$innerMessage = 'Please send the ID above to the site administrator.<br />The error message can be looked up at &ldquo;ACP &raquo; Logs &raquo; Errors&rdquo;.';
+		}
+		
 		// print report
 		echo '<?xml version="1.0" encoding="UTF-8"?>';
 		$e = ($this->getPrevious() ?: $this);
@@ -162,8 +172,8 @@ class SystemException extends LoggedException implements IPrintableException {
 						<div>
 							<h2>Information:</h2>
 							<p>
-								<b>id:</b> <code><?php echo $this->getExceptionID(); ?></code><br>
-								Send this ID to the administrator of this website to report this issue.
+								<b>ID:</b> <code><?php echo $this->getExceptionID(); ?></code><br>
+								<?php echo $innerMessage; ?>
 							</p>
 						</div>
 					<?php } ?>
