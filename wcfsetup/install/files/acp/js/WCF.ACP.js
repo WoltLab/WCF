@@ -543,12 +543,18 @@ WCF.ACP.Package.Installation = Class.extend({
 			
 			this._purgeTemplateContent($.proxy(function() {
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() {
+				var $button = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() {
 					$(this).disable();
 					window.location = data.redirectLocation;
 				});
 				
 				$('#packageInstallationInnerContentContainer').show();
+				
+				$(document).keydown(function(event) {
+					if (event.which === $.ui.keyCode.ENTER) {
+						$button.trigger('click');
+					}
+				});
 				
 				this._dialog.wcfDialog('render');
 			}, this));
@@ -560,7 +566,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		if (data.innerTemplate) {
 			var self = this;
 			$('#packageInstallationInnerContent').html(data.innerTemplate).find('input').keyup(function(event) {
-				if (event.keyCode === 13) { // Enter
+				if (event.keyCode === $.ui.keyCode.ENTER) {
 					self._submit(data);
 				}
 			});
@@ -575,7 +581,7 @@ WCF.ACP.Package.Installation = Class.extend({
 					$(event.currentTarget).disable();
 					
 					this._submit(data);
-				}, this)); 
+				}, this));
 			}
 			
 			$('#packageInstallationInnerContentContainer').show();
@@ -612,33 +618,31 @@ WCF.ACP.Package.Installation = Class.extend({
 			var $inputElement = $(inputElement);
 			var $type = $inputElement.attr('type');
 			
-			if (($type == 'checkbox' || $type == 'radio') && !$inputElement.prop('checked')) {
-				return false;
-			}
-			
-			var $name = $inputElement.attr('name');
-			if ($name.match(/(.*)\[([^[]*)\]$/)) {
-				$name = RegExp.$1;
-				$key = RegExp.$2;
-				
-				if ($additionalData[$name] === undefined) {
+			if (($type != 'checkbox' && $type != 'radio') || $inputElement.prop('checked')) {
+				var $name = $inputElement.attr('name');
+				if ($name.match(/(.*)\[([^[]*)\]$/)) {
+					$name = RegExp.$1;
+					$key = RegExp.$2;
+					
+					if ($additionalData[$name] === undefined) {
+						if ($key) {
+							$additionalData[$name] = { };
+						}
+						else {
+							$additionalData[$name] = [ ];
+						}
+					}
+					
 					if ($key) {
-						$additionalData[$name] = { };
+						$additionalData[$name][$key] = $inputElement.val();
 					}
 					else {
-						$additionalData[$name] = [ ];
+						$additionalData[$name].push($inputElement.val());
 					}
 				}
-				
-				if ($key) {
-					$additionalData[$name][$key] = $inputElement.val();
-				}
 				else {
-					$additionalData[$name].push($inputElement.val());
+					$additionalData[$name] = $inputElement.val();
 				}
-			}
-			else {
-				$additionalData[$name] = $inputElement.val();
 			}
 		});
 		

@@ -27,7 +27,7 @@
 			{/if}
 		{/foreach}
 		
-		<script>
+		<script data-relocate="true">
 			//<![CDATA[
 			$(function() {
 				new WCF.Message.SmileyCategories();
@@ -40,7 +40,7 @@
 	
 	{event name='fields'}
 	
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			new WCF.Message.Smilies('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');

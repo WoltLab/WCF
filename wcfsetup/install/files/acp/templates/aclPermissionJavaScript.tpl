@@ -1,4 +1,4 @@
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		{if $aclValues[$objectTypeID]|isset}

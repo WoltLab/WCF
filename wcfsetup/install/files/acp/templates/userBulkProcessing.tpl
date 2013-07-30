@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.user.bulkProcessing'}
 
 {if $mailID|isset}
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', '', {
@@ -12,7 +12,7 @@
 	</script>
 {/if}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		function toggleContainer(value) {

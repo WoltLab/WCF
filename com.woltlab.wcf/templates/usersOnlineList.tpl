@@ -7,7 +7,7 @@
 	
 	<link rel="canonical" href="{link controller='UsersOnlineList'}{/link}" />
 	
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 			$(function() {
 				WCF.Language.addObject({

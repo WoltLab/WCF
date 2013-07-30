@@ -1,13 +1,13 @@
 {if !$codemirrorLoaded|isset}
-	<script src="{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.js"></script>
-	<script src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/dialog/dialog.js"></script>
-	<script src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/searchcursor.js"></script>
-	<script src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/search.js"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.js"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/dialog/dialog.js"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/searchcursor.js"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/search.js"></script>
 {/if}
-{if $codemirrorMode|isset}<script src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/{$codemirrorMode}/{$codemirrorMode}.js"></script>{/if}
+{if $codemirrorMode|isset}<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/{$codemirrorMode}/{$codemirrorMode}.js"></script>{/if}
 {event name='javascriptIncludes'}
 
-<script>
+<script data-relocate="true">
 //<![CDATA[
 	{if !$codemirrorLoaded|isset}
 		$('<link rel="stylesheet" href="{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.css" />').appendTo('head');

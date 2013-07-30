@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.language.multilingualism'}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		var $languageIDs = $('#languageIDs');

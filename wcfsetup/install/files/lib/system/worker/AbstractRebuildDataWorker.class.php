@@ -56,7 +56,9 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	 * @see	wcf\system\worker\IWorker::countObjects()
 	 */
 	public function countObjects() {
-		$this->count = $this->objectList->countObjects();
+		if ($this->count === null) {
+			$this->count = $this->objectList->countObjects();
+		}
 	}
 	
 	/**

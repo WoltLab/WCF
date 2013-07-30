@@ -4,7 +4,7 @@
 	<title>{lang}wcf.user.following{/lang} - {lang}wcf.user.usercp{/lang} - {PAGE_TITLE|language}</title>
 	{include file='headInclude'}
 	
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			new WCF.Action.Delete('wcf\\data\\user\\follow\\UserFollowAction', '.jsFollowing');

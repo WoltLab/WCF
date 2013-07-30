@@ -1,5 +1,13 @@
 {include file='header' pageTitle='wcf.acp.user.rank.list'}
 
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		new WCF.Action.Delete('wcf\\data\\user\\rank\\UserRankAction', '.jsUserRankRow');
+	});
+	//]]>
+</script>
+
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.user.rank.list{/lang}</h1>
 </header>

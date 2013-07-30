@@ -1,5 +1,5 @@
-<script src="{@$__wcf->getPath()}js/WCF.ACL.js"></script>
-<script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ACL.js"></script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({

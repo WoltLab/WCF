@@ -1,5 +1,5 @@
 {if !$forceSelection|isset}{assign var=forceSelection value=false}{/if}
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		var $availableLanguages = { {implode from=$availableLanguages key=languageID item=languageName}{@$languageID}: '{$languageName}'{/implode} };

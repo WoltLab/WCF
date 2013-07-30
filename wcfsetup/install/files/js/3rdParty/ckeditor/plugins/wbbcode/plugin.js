@@ -28,7 +28,6 @@
 				
 				// convert lists into new lines
 				$value = $value.replace(/<\/li>/gi, "\n");
-				
 				// remove html tags
 				$value = $value.replace(/<[^>]+>/g, '');
 				
@@ -40,6 +39,16 @@
 				$pasted = true;
 			}
 		}, null, null, 9);
+		
+		// prevent drag and drop of images in Firefox
+		event.editor.document.on('drop', function(ev) {
+			if (ev.data.$.dataTransfer) {
+				var $html = ev.data.$.dataTransfer.getData('text/html');
+				if (/<img src="data:image\/[a-zA-Z0-9]+;base64/.exec($html)) {
+					ev.data.preventDefault(true);
+				}
+			}
+		});
 		
 		event.editor.on('insertText', function(ev) {
 			$insertedText = ev.data;
@@ -76,7 +85,7 @@
 		}
 		
 		// place button outside of <body> to prevent it being removed once deleting content
-		$('<button accesskey="s" />').hide().appendTo($(event.editor.document.$).find('html'));
+		$('<button accesskey="s" />').hide().appendTo($(event.editor.container.$).find('.cke_wysiwyg_div'));
 		
 	}
 	
@@ -424,5 +433,5 @@
 		html = html.replace(/%20/g, ' ');
 		
 		return html;
-	}
+	};
 })();

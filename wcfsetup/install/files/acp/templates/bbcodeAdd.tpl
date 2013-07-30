@@ -35,7 +35,7 @@
 		{event name='attributeFields'}
 	</fieldset>
 {/capture}
-<script>
+<script data-relocate="true">
 //<![CDATA[
 	$(function() {
 		$('.jsDeleteButton').click(function (event) {

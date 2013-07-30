@@ -16,7 +16,7 @@ abstract class AbstractWorker implements IWorker {
 	 * count of total actions (limited by $limit per loop)
 	 * @var	integer
 	 */
-	protected $count = 0;
+	protected $count = null;
 	
 	/**
 	 * limit of actions per loop

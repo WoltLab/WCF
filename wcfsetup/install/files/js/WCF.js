@@ -737,17 +737,7 @@ WCF.Dropdown = {
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Dropdown', $.proxy(this.init, this));
 		}
 		
-		$(window).resize($.proxy(this._resize, this));
-	},
-	
-	/**
-	 * Handles resizing the window by making sure that the menu positions are
-	 * recalculated.
-	 */
-	_resize: function() {
-		for (var $containerID in this._dropdowns) {
-			this._menus[$containerID].removeData('orientationX');
-		}
+		$(document).on('scroll', $.proxy(this._toggle, this));
 	},
 	
 	/**
@@ -938,54 +928,31 @@ WCF.Dropdown = {
 			$dropdownDimensions = $button.getDimensions('outer');
 		}
 		
-		// validate if current alignment is still fine, prevents "jumping"
-		var $align = null;
-		switch (dropdownMenu.data('orientationX')) {
-			case 'left':
-				if (($dropdownOffsets.left + $menuDimensions.width) > $windowWidth) {
-					$align = 'right';
-				}
-			break;
-			
-			case 'right':
-				if (($dropdownOffsets.left + $dropdownDimensions.width - $menuDimensions.width) < 0) {
-					$align = 'left';
-				}
-			break;
-			
-			default:
-				$align = 'left';
-				
-				if (($dropdownOffsets.left + $menuDimensions.width) > $windowWidth) {
-					$align = 'right';
-				}
-			break;
+		// get alignment
+		var $align = 'left';
+		if (($dropdownOffsets.left + $menuDimensions.width) > $windowWidth) {
+			$align = 'right';
 		}
 		
-		// alignment has changed
-		if ($align !== null) {
-			dropdownMenu.data('orientationX', $align);
+		// calculate offsets
+		var $left = 'auto';
+		var $right = 'auto';
+		if ($align === 'left') {
+			dropdownMenu.removeClass('dropdownArrorRight');
 			
-			var $left = 'auto';
-			var $right = 'auto';
-			
-			if ($align === 'left') {
-				dropdownMenu.removeClass('dropdownArrorRight');
-				
-				$left = $dropdownOffsets.left + 'px';
-			}
-			else {
-				dropdownMenu.addClass('dropdownArrowRight');
-				
-				$right = ($windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width)) + 'px';
-			}
-			
-			dropdownMenu.css({
-				left: $left,
-				right: $right,
-				top: $dropdownOffsets.top + $dropdownDimensions.height + 7 + 'px'
-			});
+			$left = $dropdownOffsets.left + 'px';
 		}
+		else {
+			dropdownMenu.addClass('dropdownArrowRight');
+			
+			$right = ($windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width)) + 'px';
+		}
+		
+		dropdownMenu.css({
+			left: $left,
+			right: $right,
+			top: $dropdownOffsets.top + $dropdownDimensions.height + 7 + 'px'
+		});
 	},
 	
 	/**
@@ -1175,7 +1142,7 @@ WCF.Clipboard = {
 		
 		for (var $typeName in data.markedItems) {
 			if (!this._markedObjectIDs[$typeName]) {
-				this._markedObjectIDs[$typeName] = { };
+				this._markedObjectIDs[$typeName] = [ ];
 			}
 			
 			var $objectData = data.markedItems[$typeName];
@@ -8682,6 +8649,18 @@ $.widget('ui.wcfDialog', {
 		
 		this._content.css('overflow', $overflow);
 		this._content.css('maxHeight', $maxHeight);
+		
+		if ($overflow === 'visible') {
+			// content may already overflow, even though the overall height is still below the threshold
+			var $contentHeight = 0;
+			this._content.children().each(function(index, child) {
+				$contentHeight += $(child).outerHeight();
+			});
+			
+			if (this._content.height() < $contentHeight) {
+				this._content.css('overflow', 'auto');
+			}
+		}
 	},
 	
 	/**

@@ -4,7 +4,7 @@
 	{@$message}
 </p>
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	if (document.referrer) {
 		$('#errorMessage').append('<br /><a href="' + document.referrer + '">{lang}wcf.global.error.backward{/lang}</a>'); 

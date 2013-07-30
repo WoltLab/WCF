@@ -1,5 +1,5 @@
 {if !$__messageSidebarJavascript|isset}
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({

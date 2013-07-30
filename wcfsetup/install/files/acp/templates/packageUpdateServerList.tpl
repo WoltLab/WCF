@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.updateServer.list'}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\package\\update\\server\\PackageUpdateServerAction', '.jsUpdateServerRow');

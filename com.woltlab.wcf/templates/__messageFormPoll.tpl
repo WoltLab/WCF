@@ -1,6 +1,6 @@
 {if $__showPoll|isset && $__showPoll}
-	<script src="{@$__wcf->getPath()}js/WCF.Poll{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-	<script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Poll{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({
@@ -8,7 +8,7 @@
 				'wcf.poll.button.removeOption': '{lang}wcf.poll.button.removeOption{/lang}'
 			});
 			
-			new WCF.Poll.Management('pollOptionContainer', [ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]}' }{/implode} ]);
+			new WCF.Poll.Management('pollOptionContainer', [ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]}' }{/implode} ], {@POLL_MAX_OPTIONS});
 		});
 		//]]>
 	</script>

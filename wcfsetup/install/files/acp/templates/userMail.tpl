@@ -9,7 +9,7 @@
 {include file='header'}
 
 {if $mailID|isset}
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', '', {

@@ -195,6 +195,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"><![CDATA[Rename users]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"><![CDATA[Merge users]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"><![CDATA[Merge users if email address is equal]]></item>
+		<item name="wcf.acp.dataImport.selectExporter.noExporters"><![CDATA[TODO: Es wurde keine Datenquelle für einen Datenimport gefunden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.exceptionLog">

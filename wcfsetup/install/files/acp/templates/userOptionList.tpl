@@ -3,7 +3,7 @@
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.user.option.list{/lang}</h1>
 	
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			new WCF.Action.Delete('wcf\\data\\user\\option\\UserOptionAction', '.jsOptionRow');
