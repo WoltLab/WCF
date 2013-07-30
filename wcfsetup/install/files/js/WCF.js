@@ -7656,7 +7656,7 @@ WCF.EditableItemList = Class.extend({
 	_keyDown: function(event) {
 		// 188 = [,]
 		if (event === null || event.which === 188 || event.which === $.ui.keyCode.ENTER) {
-			if (event.which === $.ui.keyCode.ENTER && this._search) {
+			if (event !== null && event.which === $.ui.keyCode.ENTER && this._search) {
 				if (this._search._itemIndex !== -1) {
 					return false;
 				}
