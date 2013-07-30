@@ -1,5 +1,5 @@
 {include file='header' pageTitle='wcf.acp.exceptionLog'}
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		{if $exceptionID}window.location.hash = '{$exceptionID|encodeJS}';{/if}

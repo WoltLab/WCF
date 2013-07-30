@@ -5,7 +5,7 @@
 	
 	{include file='headInclude'}
 	
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			new WCF.Search.User('#username', null, false, [ ], false);

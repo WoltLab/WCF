@@ -1,7 +1,7 @@
 {include file='header' pageTitle="wcf.acp.language.item.list"}
 
-<script src="{@$__wcf->getPath()}acp/js/WCF.ACP.Language.js?v={@$__wcfVersion}"></script>
-<script>
+<script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Language.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.ACP.Language.ItemList();

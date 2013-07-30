@@ -736,6 +736,8 @@ WCF.Dropdown = {
 			WCF.CloseOverlayHandler.addCallback('WCF.Dropdown', $.proxy(this._closeAll, this));
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Dropdown', $.proxy(this.init, this));
 		}
+		
+		$(document).on('scroll', $.proxy(this._toggle, this));
 	},
 	
 	/**
@@ -1140,7 +1142,7 @@ WCF.Clipboard = {
 		
 		for (var $typeName in data.markedItems) {
 			if (!this._markedObjectIDs[$typeName]) {
-				this._markedObjectIDs[$typeName] = { };
+				this._markedObjectIDs[$typeName] = [ ];
 			}
 			
 			var $objectData = data.markedItems[$typeName];

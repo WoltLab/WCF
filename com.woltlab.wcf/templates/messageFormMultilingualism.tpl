@@ -12,7 +12,7 @@
 		</dd>
 	</dl>
 	
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			var $languages = {

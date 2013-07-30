@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.user.activityPoint.option'}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		$('#updateEvents').click(function () {

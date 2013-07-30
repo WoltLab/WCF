@@ -18,7 +18,7 @@
 	{event name='tabMenuContents'}
 </div>
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		if (jQuery.browser.mobile) $('#smiliesTab, #smilies').remove();

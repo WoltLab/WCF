@@ -27,7 +27,7 @@
 					<a class="button small" id="rebuildData{@$objectType->objectTypeID}">{lang}wcf.acp.rebuildData.{@$objectType->objectType}{/lang}</a>
 					<small>{lang}wcf.acp.rebuildData.{@$objectType->objectType}.description{/lang}</small>
 					
-					<script>
+					<script data-relocate="true">
 						//<![CDATA[
 						$(function() {
 							$('#rebuildData{@$objectType->objectTypeID}').click(function () {

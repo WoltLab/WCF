@@ -1,7 +1,7 @@
 {if $__wcf->getUser()->userID && !$__pollLoadedJavaScript|isset}
 	{assign var=__pollLoadedJavaScript value=true}
-	<script src="{@$__wcf->getPath()}js/WCF.Poll{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-	<script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Poll{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			new WCF.Poll.Manager('.pollContainer');

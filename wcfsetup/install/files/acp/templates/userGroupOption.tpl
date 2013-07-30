@@ -1,6 +1,6 @@
 {include file='header'}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.ACP.Options.Group({if $canEditEveryone}true{else}false{/if});

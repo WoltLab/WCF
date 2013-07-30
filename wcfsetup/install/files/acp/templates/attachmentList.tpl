@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.attachment.list'}
 
 {include file='imageViewer'}
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', '.jsAttachmentRow');

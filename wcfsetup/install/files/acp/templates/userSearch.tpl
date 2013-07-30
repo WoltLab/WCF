@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.user.search'}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();

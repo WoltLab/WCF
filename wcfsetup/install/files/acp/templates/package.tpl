@@ -1,6 +1,6 @@
 {include file='header' pageTitle=$package->getName()}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init()

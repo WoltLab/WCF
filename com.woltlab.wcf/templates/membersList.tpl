@@ -14,7 +14,7 @@
 	{/if}
 	<link rel="canonical" href="{link controller='MembersList'}{if $pageNo > 1}pageNo={@$pageNo}&{/if}{@$canonicalURLParameters}{/link}" />
 	
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 			$(function() {
 				WCF.Language.addObject({

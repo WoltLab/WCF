@@ -1,6 +1,6 @@
 {include file='header'}
-<script src="{@$__wcf->getPath()}js/WCF.Label{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-<script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
