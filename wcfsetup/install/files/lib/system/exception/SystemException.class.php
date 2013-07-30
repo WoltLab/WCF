@@ -70,7 +70,9 @@ class SystemException extends LoggedException implements IPrintableException {
 		
 		$innerMessage = '';
 		try {
-			$innerMessage = WCF::getLanguage()->get('wcf.global.error.exception', true);
+			if (is_object(WCF::getLanguage())) {
+				$innerMessage = WCF::getLanguage()->get('wcf.global.error.exception', true);
+			}
 		}
 		catch (\Exception $e) { }
 		
