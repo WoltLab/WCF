@@ -907,6 +907,7 @@
 		<item name="wcf.acp.package.uninstall.step.prepare"><![CDATA[Deinstallation wird vorbereitet …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Aktualisierungsdatum]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Zugangsdaten]]></item>
+		<item name="wcf.acp.package.update.error.listNotFound"><![CDATA[Die Paketliste konnte nicht abgerufen werden]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Ihre Angaben sind ungültig, bitte überprüfen Sie {if $updateServer->requiresLicense()}Lizenz- und Seriennummer{else}Benutzername und Passwort{/if}.]]></item>
 		<item name="wcf.acp.package.update.errorCode.403"><![CDATA[Sie sind nicht berechtigt auf dieses Paket zuzugreifen.]]></item>
 		<item name="wcf.acp.package.update.licenseNo"><![CDATA[Lizenznummer]]></item>
@@ -982,7 +983,7 @@
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Server bearbeiten]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Fehlermeldungen]]></item>
 		<item name="wcf.acp.updateServer.list"><![CDATA[Update-Server]]></item>
-		<item name="wcf.acp.updateServer.lastErrorText"><![CDATA[Beim letzten Verbindungsversuch trat folgender Fehler auf:]]></item>
+		<item name="wcf.acp.updateServer.lastErrorMessage"><![CDATA[Beim letzten Verbindungsversuch trat folgender Fehler auf:]]></item>
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Kennwort für Authentifizierung (optional)]]></item>
 		<item name="wcf.acp.updateServer.loginUsername"><![CDATA[Benutzername]]></item>

@@ -86,7 +86,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		catch (SystemException $e) {
 			$reply = $request->getReply();
 			
-			throw new SystemException(WCF::getLanguage()->get('wcf.acp.packageUpdate.error.listNotFound') . ' ('.reset($reply['headers']).')');
+			throw new SystemException(WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' ('.reset($reply['statusCode']).')');
 		}
 		
 		// parse given package update xml
