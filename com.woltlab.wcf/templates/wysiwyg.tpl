@@ -1,14 +1,14 @@
-<script>
+<script data-relocate="true">
 //<![CDATA[
 	var CKEDITOR_BASEPATH = '{@$__wcf->getPath()}js/3rdParty/ckeditor/';
 	var __CKEDITOR_BUTTONS = [ {implode from=$__wcf->getBBCodeHandler()->getButtonBBCodes() item=__bbcode}{ icon: '../../../icon/{$__bbcode->wysiwygIcon}', label: '{$__bbcode->buttonLabel|language}', name: '{$__bbcode->bbcodeTag}' }{/implode} ];
 //]]>
 </script>
-<script src="{@$__wcf->getPath()}js/3rdParty/ckeditor/ckeditor.js"></script>
-<script src="{@$__wcf->getPath()}js/3rdParty/ckeditor/adapters/jquery.js"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/ckeditor/ckeditor.js"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/ckeditor/adapters/jquery.js"></script>
 {event name='javascriptIncludes'}
 
-<script>
+<script data-relocate="true">
 //<![CDATA[
 $(function() {
 	if ($.browser.mobile) {

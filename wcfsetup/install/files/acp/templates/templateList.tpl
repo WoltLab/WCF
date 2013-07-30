@@ -1,6 +1,6 @@
 {include file='header' pageTitle="wcf.acp.template.list"}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\template\\TemplateAction', '.jsTemplateRow');

@@ -18,7 +18,7 @@
 			{/foreach}
 		</div>
 		
-		<script>
+		<script data-relocate="true">
 			//<![CDATA[
 			$(function() {
 				// fix anchor

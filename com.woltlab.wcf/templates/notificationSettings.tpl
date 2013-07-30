@@ -5,7 +5,7 @@
 	
 	{include file='headInclude'}
 	
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			$('#notificationSettings > fieldset > dl > dd > label > input').each(function(index, value) {

@@ -1,6 +1,6 @@
 <button id="previewButton" class="jsOnly" accesskey="p">{lang}wcf.global.button.preview{/lang}</button>
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({

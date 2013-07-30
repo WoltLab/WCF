@@ -5,7 +5,7 @@
 {/if}
 {include file='header'}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({

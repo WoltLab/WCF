@@ -4,7 +4,7 @@
 	<base href="{$baseHref}" />
 	<meta charset="utf-8" />
 	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 		var SID_ARG_2ND = '{@SID_ARG_2ND_NOT_ENCODED}';
 		var WCF_PATH = '{@$__wcf->getPath()}';
@@ -13,13 +13,13 @@
 		var TIME_NOW = {@TIME_NOW};
 		//]]>
 	</script>
-	<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>
-	<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"></script>
-	<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js?v={@$__wcfVersion}"></script>
-	<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js?v={@$__wcfVersion}"></script>
-	<script src="{@$__wcf->getPath()}js/WCF.js?v={@$__wcfVersion}"></script>
-	<script src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?v={@$__wcfVersion}"></script>
-	<script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true">
 		//<![CDATA[
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 		//]]>
@@ -30,7 +30,7 @@
 	{@$__wcf->getStyleHandler()->getStylesheet()}
 	{event name='stylesheets'}
 	
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			{* work-around for unknown core-object during WCFSetup *}

@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.cache.list'}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.Collapsible.Simple.init();

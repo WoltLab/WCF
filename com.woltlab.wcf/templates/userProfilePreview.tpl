@@ -5,7 +5,7 @@
 		<a href="{link controller='User' object=$user}{/link}" title="{$user->username}">{@$user->getAvatar()->getImageTag(128)}</a>
 		
 		{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
-			<script>
+			<script data-relocate="true">
 				//<![CDATA[
 					$(function() {
 						WCF.Language.addObject({

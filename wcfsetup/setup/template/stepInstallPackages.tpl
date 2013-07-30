@@ -13,7 +13,7 @@
 	</div>
 </form>
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	window.onload = function() {
 		document.forms[0].submit();

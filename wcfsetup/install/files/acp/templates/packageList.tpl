@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.package.list'}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
@@ -94,7 +94,7 @@
 		{@$pagesLinks}
 		
 		{hascontent}
-			<script>
+			<script data-relocate="true">
 				//<![CDATA[
 				$(function() {
 					new WCF.ACP.Package.Uninstallation($('.jsPluginContainer .jsUninstallButton'));

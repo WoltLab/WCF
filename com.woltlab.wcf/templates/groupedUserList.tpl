@@ -20,7 +20,7 @@
 
 <div class="contentNavigation"><div class="jsPagination"></div></div>
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({

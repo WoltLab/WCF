@@ -1,7 +1,7 @@
 {capture assign='sidebar'}
 	{assign var=__userMenuActiveItems value=$__wcf->getUserMenu()->getActiveMenuItems()}
 	
-	<script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			// mobile safari hover workaround

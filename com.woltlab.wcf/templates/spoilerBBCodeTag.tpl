@@ -11,7 +11,7 @@
 </div>
 
 <!-- begin:parser_nonessential -->
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		var $spoilerBox = $('.jsSpoilerBox').removeClass('jsSpoilerBox');

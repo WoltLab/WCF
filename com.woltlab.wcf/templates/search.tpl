@@ -110,7 +110,7 @@
 					
 					{include file=$objectType->getFormTemplateName() application=$objectType->getApplication()}
 					
-					<script>
+					<script data-relocate="true">
 						//<![CDATA[
 						$(function() {
 							$('#{@$__jsID}').click(function() {
@@ -133,7 +133,7 @@
 
 {include file='footer'}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.Search.User($('#searchAuthor'), function(data) {

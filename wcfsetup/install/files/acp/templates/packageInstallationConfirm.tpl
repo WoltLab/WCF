@@ -1,7 +1,7 @@
 {capture assign='pageTitle'}{lang}wcf.acp.package.{@$queue->action}.title{/lang}: {$archive->getLocalizedPackageInfo('packageName')}{/capture}
 {include file='header'}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({

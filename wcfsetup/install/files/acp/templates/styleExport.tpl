@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.style.exportStyle'}
 
-<script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		$('#exportAsPackage').change(function (event) {
