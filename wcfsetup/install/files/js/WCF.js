@@ -6462,7 +6462,7 @@ WCF.InlineEditor = Class.extend({
 	 */
 	_hide: function(elementID) {
 		if (this._dropdowns[elementID]) {
-			this._dropdowns[elementID].empty().parent('span').removeClass('dropdownOpen');
+			this._dropdowns[elementID].empty().removeClass('dropdownOpen');
 		}
 	}
 });
