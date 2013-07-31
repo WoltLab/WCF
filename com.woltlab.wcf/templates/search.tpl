@@ -72,7 +72,7 @@
 				<dd>
 					<select id="sortField" name="sortField">
 						<option value="relevance"{if $sortField == 'relevance'} selected="selected"{/if}>{lang}wcf.search.sortBy.relevance{/lang}</option>
-						<option value="subject"{if $sortField == 'subject'} selected="selected"{/if}>{lang}wcf.search.sortBy.subject{/lang}</option>
+						<option value="subject"{if $sortField == 'subject'} selected="selected"{/if}>{lang}wcf.global.subject{/lang}</option>
 						<option value="time"{if $sortField == 'time'} selected="selected"{/if}>{lang}wcf.search.sortBy.time{/lang}</option>
 						<option value="username"{if $sortField == 'username'} selected="selected"{/if}>{lang}wcf.search.sortBy.username{/lang}</option>
 					</select>
