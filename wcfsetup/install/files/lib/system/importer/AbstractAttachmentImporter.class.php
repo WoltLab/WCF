@@ -32,6 +32,15 @@ class AbstractAttachmentImporter implements IImporter {
 		// get file hash
 		if (empty($data['fileHash'])) $data['fileHash'] = sha1_file($additionalData['fileLocation']);
 		
+		// get image size
+		if (!empty($data['isImage'])) {
+			$imageData = @getimagesize($additionalData['fileLocation']);
+			if ($imageData !== false) {
+				$data['width'] = $imageData[0];
+				$data['height'] = $imageData[1];
+			}
+		}
+		
 		// get user id
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		
