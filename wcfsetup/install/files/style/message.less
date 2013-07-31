@@ -167,7 +167,7 @@
 		}
 	}
 	
-	&.messageDisabled {
+	&.messageDisabled:not(.messageReduced) {
 		background-color: @wcfDisabledBackgroundColor;
 		
 		.messageSidebar {
@@ -179,7 +179,7 @@
 		}
 	}
 	
-	&.messageDeleted {
+	&.messageDeleted:not(.messageReduced) {
 		background-color: @wcfDeletedBackgroundColor;
 		
 		.messageSidebar {
@@ -191,7 +191,7 @@
 		}
 	}
 	
-	&.jsMarked {
+	&.jsMarked:not(.messageReduced) {
 		background-color: @wcfSelectedBackgroundColor;
 		
 		.messageSidebar {
@@ -649,6 +649,33 @@ li:nth-child(2n+1) .message {
 		left: 0;
 		opacity: 1;
 		position: relative;
+	}
+	
+	&.messageDisabled {
+		border-color: @wcfDisabledColor;
+		
+		.messageContent {
+			@wcfDisabledBackgroundGradientColor: fade(@wcfDisabledBackgroundColor, 0%);
+			.linearGradientNative(~"to bottom, @{wcfDisabledBackgroundColor}, @{wcfDisabledBackgroundGradientColor} 90px");
+		}
+	}
+	
+	&.messageDeleted {
+		border-color: @wcfDeletedColor;
+		
+		.messageContent {
+			@wcfDeletedBackgroundGradientColor: fade(@wcfDeletedBackgroundColor, 0%);
+			.linearGradientNative(~"to bottom, @{wcfDeletedBackgroundColor}, @{wcfDeletedBackgroundGradientColor} 90px");
+		}
+	}
+	
+	&.jsMarked {
+		border-color: @wcfSelectedColor;
+		
+		.messageContent {
+			@wcfSelectedBackgroundGradientColor: fade(@wcfSelectedBackgroundColor, 0%);
+			.linearGradientNative(~"to bottom, @{wcfSelectedBackgroundColor}, @{wcfSelectedBackgroundGradientColor} 90px");
+		}
 	}
 }
 
