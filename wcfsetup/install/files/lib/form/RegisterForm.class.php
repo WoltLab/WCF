@@ -366,15 +366,17 @@ class RegisterForm extends UserAddForm {
 					$registerVia3rdParty = true;
 				}
 				
-				switch ($googleData['gender']) {
-					case 'male':
-						$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_MALE;
-					break;
-					case 'female':
-						$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_FEMALE;
-					break;
+				if (isset($googleData['gender'])) {
+					switch ($googleData['gender']) {
+						case 'male':
+							$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_MALE;
+						break;
+						case 'female':
+							$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_FEMALE;
+						break;
+					}
 				}
-				if (isset($facebookData['birthday'])) $saveOptions[User::getUserOptionID('birthday')] = $googleData['birthday'];
+				if (isset($googleData['birthday'])) $saveOptions[User::getUserOptionID('birthday')] = $googleData['birthday'];
 			}
 			
 			// create fake password
