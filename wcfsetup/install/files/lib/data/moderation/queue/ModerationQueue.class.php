@@ -76,4 +76,13 @@ class ModerationQueue extends DatabaseObject {
 		
 		return ($row !== false && $row['isAffected']);
 	}
+	
+	/**
+	 * Returns true, if this queue is done.
+	 * 
+	 * @return	boolean
+	 */
+	public function isDone() {
+		return ($this->status == self::STATUS_DONE);
+	}
 }

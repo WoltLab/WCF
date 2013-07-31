@@ -98,8 +98,10 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li class="jsOnly"><button id="enableContent">{lang}wcf.moderation.activation.enableContent{/lang}</button></li>
-			<li class="jsOnly"><button id="removeContent">{lang}wcf.moderation.activation.removeContent{/lang}</button></li>
+			{if !$queue->isDone()}
+				<li class="jsOnly"><button id="enableContent">{lang}wcf.moderation.activation.enableContent{/lang}</button></li>
+				<li class="jsOnly"><button id="removeContent">{lang}wcf.moderation.activation.removeContent{/lang}</button></li>
+			{/if}
 			<li><a href="{link controller='ModerationList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.moderation.moderation{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtonsBottom'}
