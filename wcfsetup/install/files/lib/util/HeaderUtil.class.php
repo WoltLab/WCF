@@ -66,6 +66,11 @@ final class HeaderUtil {
 		// send Internet Explorer compatibility mode
 		@header('X-UA-Compatible: IE=edge');
 		
+		// send X-Frame-Options
+		if (HTTP_SEND_X_FRAME_OPTIONS) {
+			@header('X-Frame-Options: SAMEORIGIN');
+		}
+		
 		ob_start(array('wcf\util\HeaderUtil', 'parseOutput'));
 	}
 	
