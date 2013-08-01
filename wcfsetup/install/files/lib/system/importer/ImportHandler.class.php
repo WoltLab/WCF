@@ -1,11 +1,9 @@
 <?php
 namespace wcf\system\importer;
-use wcf\system\user\storage\UserStorageHandler;
-
-use wcf\system\cache\CacheHandler;
-
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\IAJAXInvokeAction;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
