@@ -231,7 +231,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 	 * Generates thumbnails.
 	 */
 	public function generateThumbnails() {
-		if (!empty($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		
@@ -254,7 +254,15 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 				continue; // image smaller than thumbnail size; skip
 			}
 			
+			
 			$adapter = ImageHandler::getInstance()->getAdapter();
+			
+			// check memory limit
+			$neededMemory = $attachment->width * $attachment->height * ($attachment->imageType == 'image/png' ? 4 : 3) * 2.1;
+			if (FileUtil::getMemoryLimit() != -1 && FileUtil::getMemoryLimit() < (memory_get_usage() + $neededMemory)) {
+				continue;
+			}
+			
 			$adapter->loadFile($attachment->getLocation());
 			$updateData = array();
 			

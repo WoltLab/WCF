@@ -22,6 +22,12 @@ final class FileUtil {
 	protected static $finfo = null;
 	
 	/**
+	 * memory limit in bytes
+	 * @var	integer
+	 */
+	protected static $memoryLimit = null;
+	
+	/**
 	 * chmod mode
 	 * @var	string
 	 */
@@ -559,6 +565,48 @@ final class FileUtil {
 			// does not work with 0777
 			throw new SystemException("Unable to make '".$filename."' writable. This is a misconfiguration of your server, please contact your system administrator or hosting provider.");
 		}
+	}
+	
+	/**
+	 * Returns memory limit in bytes.
+	 * 
+	 * @return	integer
+	 */
+	public static function getMemoryLimit() {
+		if (self::$memoryLimit === null) {
+			self::$memoryLimit = 0;
+			
+			$memoryLimit = ini_get('memory_limit');
+			
+			// no limit
+			if ($memoryLimit == -1) {
+				self::$memoryLimit = -1;
+			}
+			
+			// completely numeric, PHP assumes byte
+			if (is_numeric($memoryLimit)) {
+				self::$memoryLimit = $memoryLimit;
+			}
+			
+			// PHP supports 'K', 'M' and 'G' shorthand notation
+			if (preg_match('~^(\d+)([KMG])$~', $memoryLimit, $matches)) {
+				switch ($matches[2]) {
+					case 'K':
+						self::$memoryLimit = $matches[1] * 1024;
+					break;
+					
+					case 'M':
+						self::$memoryLimit = $matches[1] * 1024 * 1024;
+					break;
+					
+					case 'G':
+						self::$memoryLimit = $matches[1] * 1024 * 1024 * 1024;
+					break;
+				}
+			}
+		}
+		
+		return self::$memoryLimit;
 	}
 	
 	private function __construct() { }
