@@ -693,7 +693,7 @@ WCF.Message.QuickReply = Class.extend({
 					$empty = (!this._messageField.val().length);
 				}
 				else {
-					$empty = (!this._messageField.ckeditorGet().getData().length);
+					$empty = (!$.trim(this._messageField.ckeditorGet().getData()).length);
 				}
 				
 				if ($empty) {
