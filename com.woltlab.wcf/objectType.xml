@@ -270,15 +270,16 @@
 		
 		<!-- rebuild data workers -->
 		<type>
+			<name>com.woltlab.wcf.like</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname><![CDATA[wcf\system\worker\LikeRebuildDataWorker]]></classname>
+			<nicevalue>-100</nicevalue>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.user</name>
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname><![CDATA[wcf\system\worker\UserRebuildDataWorker]]></classname>
 			<nicevalue>70</nicevalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.like</name>
-			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname><![CDATA[wcf\system\worker\LikeRebuildDataWorker]]></classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.attachment</name>
