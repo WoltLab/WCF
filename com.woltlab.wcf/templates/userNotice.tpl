@@ -6,6 +6,10 @@
 		</div>
 	{/if}
 	
+	{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
+		<p class="info">{lang}wcf.global.availableUpdates{/lang}</p>
+	{/if}
+	
 	<noscript>
 		<p class="warning">{lang}wcf.page.javascriptDisabled{/lang}</p>
 	</noscript>
