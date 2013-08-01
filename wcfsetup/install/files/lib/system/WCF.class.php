@@ -1,7 +1,5 @@
 <?php
 namespace wcf\system;
-use wcf\system\cache\builder\PackageUpdateCacheBuilder;
-
 use wcf\data\application\Application;
 use wcf\data\option\OptionEditor;
 use wcf\data\package\Package;
@@ -9,6 +7,7 @@ use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
+use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IPrintableException;
