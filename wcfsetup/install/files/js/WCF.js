@@ -6359,8 +6359,7 @@ WCF.InlineEditor = Class.extend({
 					}
 				}
 			});
-			console.debug($quickOption);
-			console.debug($count);
+			
 			if (!$count) {
 				$quickOption.trigger('click');
 				
