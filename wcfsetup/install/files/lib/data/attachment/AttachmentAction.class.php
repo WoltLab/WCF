@@ -254,7 +254,6 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 				continue; // image smaller than thumbnail size; skip
 			}
 			
-			
 			$adapter = ImageHandler::getInstance()->getAdapter();
 			
 			// check memory limit
