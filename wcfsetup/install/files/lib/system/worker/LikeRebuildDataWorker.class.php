@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\worker;
+use wcf\data\like\Like;
 use wcf\system\user\activity\point\UserActivityPointHandler;
+use wcf\system\WCF;
 
 /**
  * Worker implementation for updating likes.
@@ -29,7 +31,7 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->sqlOrderBy = 'like_table.likeID';
+		$this->objectList->sqlOrderBy = 'like_table.objectID, like_table.likeID';
 		$this->objectList->getConditionBuilder()->add('like_table.objectUserID IS NOT NULL');
 	}
 	
@@ -42,22 +44,68 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		if (!$this->loopCount) {
 			// reset activity points
 			UserActivityPointHandler::getInstance()->reset('com.woltlab.wcf.like.activityPointEvent.receivedLikes');
+			
+			// reset like object data
+			$sql = "UPDATE	wcf".WCF_N."_like_object
+				SET	likes = 0,
+					dislikes = 0,
+					cumulativeLikes = 0";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute();
 		}
 		
 		$itemsToUser = array();
+		$likeObjectData = array();
 		foreach ($this->objectList as $like) {
-			if (!$like->userID) {
-				continue;
-			}
-			
 			if (!isset($itemsToUser[$like->objectUserID])) {
 				$itemsToUser[$like->objectUserID] = 0;
 			}
 			
 			$itemsToUser[$like->objectUserID]++;
+			
+			if (!isset($likeObjectData[$like->objectTypeID])) {
+				$likeObjectData[$like->objectTypeID] = array();
+			}
+			if (!isset($likeObjectData[$like->objectTypeID][$like->objectID])) {
+				$likeObjectData[$like->objectTypeID][$like->objectID] = array(
+					'likes' => 0,
+					'dislikes' => 0,
+					'cumulativeLikes' => 0
+				);
+			}
+			
+			if ($like->likeValue == Like::LIKE) {
+				$likeObjectData[$like->objectTypeID][$like->objectID]['likes']++;
+			}
+			else {
+				$likeObjectData[$like->objectTypeID][$like->objectID]['dislikes']++;
+			}
+			$likeObjectData[$like->objectTypeID][$like->objectID]['cumulativeLikes'] += $like->likeValue;
 		}
 		
 		// update activity points
 		UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $itemsToUser, false);
+		
+		$sql = "UPDATE	wcf".WCF_N."_like_object
+			SET	likes = ?,
+				dislikes = ?,
+				cumulativeLikes = ?
+			WHERE	objectTypeID = ?
+				AND objectID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($likeObjectData as $objectTypeID => $objects) {
+			foreach ($objects as $objectID => $data) {
+				$statement->execute(array(
+					$data['likes'],
+					$data['dislikes'],
+					$data['cumulativeLikes'],
+					$objectTypeID,
+					$objectID
+				));
+			}
+		}
+		WCF::getDB()->commitTransaction();
 	}
 }

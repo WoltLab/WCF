@@ -49,6 +49,9 @@
 				setTimeout(function () {
 					$element.codemirror.refresh();
 				}, 250);
+				setTimeout(function () {
+					$element.codemirror.refresh();
+				}, 1000);
 			})();
 		}
 	});
