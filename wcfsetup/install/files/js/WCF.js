@@ -6331,7 +6331,7 @@ WCF.InlineEditor = Class.extend({
 			}
 			else if (this._validate($elementID, $option.optionName) || this._validateCallbacks($elementID, $option.optionName)) {
 				var $listItem = $('<li><span>' + $option.label + '</span></li>').appendTo(this._dropdowns[$elementID]);
-				$listItem.data('elementID', $elementID).data('optionName', $option.optionName).click($.proxy(this._click, this));
+				$listItem.data('elementID', $elementID).data('optionName', $option.optionName).data('isQuickOption', ($option.isQuickOption ? true : false)).click($.proxy(this._click, this));
 				
 				$hasOptions = true;
 				$lastElementType = $option.optionName;
@@ -6343,6 +6343,31 @@ WCF.InlineEditor = Class.extend({
 			var $lastChild = this._dropdowns[$elementID].children().last();
 			if ($lastChild.hasClass('dropdownDivider')) {
 				$lastChild.remove();
+			}
+			
+			// check if only element is a quick option
+			var $quickOption = null;
+			var $count = 0;
+			this._dropdowns[$elementID].children().each(function(index, child) {
+				var $child = $(child);
+				if (!$child.hasClass('dropdownDivider')) {
+					if ($child.data('isQuickOption')) {
+						$quickOption = $child;
+					}
+					else {
+						$count++;
+					}
+				}
+			});
+			
+			if (!$count) {
+				$quickOption.trigger('click');
+				
+				if ($trigger === null) {
+					WCF.Dropdown.close($trigger.parents('.dropdown').wcfIdentify());
+				}
+				
+				return false;
 			}
 		}
 		

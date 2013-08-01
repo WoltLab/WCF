@@ -7,6 +7,7 @@ use wcf\data\package\update\version\PackageUpdateVersionList;
 use wcf\data\package\update\PackageUpdateEditor;
 use wcf\data\package\update\PackageUpdateList;
 use wcf\data\package\Package;
+use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
@@ -38,10 +39,12 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		$updateServers = PackageUpdateServer::getActiveUpdateServers($packageUpdateServerIDs);
 		
 		// loop servers
+		$refreshedPackageLists = false;
 		foreach ($updateServers as $updateServer) {
 			if ($updateServer->lastUpdateTime < TIME_NOW - 600) {
 				try {
 					$this->getPackageUpdateXML($updateServer);
+					$refreshedPackageLists = true;
 				}
 				catch (SystemException $e) {
 					// save error status
@@ -52,6 +55,10 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					));
 				}
 			}
+		}
+		
+		if ($refreshedPackageLists) {
+			PackageUpdateCacheBuilder::getInstance()->reset();
 		}
 	}
 	

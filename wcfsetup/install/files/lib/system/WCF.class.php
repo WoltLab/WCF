@@ -7,6 +7,7 @@ use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
+use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IPrintableException;
@@ -719,6 +720,16 @@ class WCF {
 	 */
 	public function getStyleHandler() {
 		return StyleHandler::getInstance();
+	}
+	
+	/**
+	 * Returns number of available updates.
+	 * 
+	 * @return	integer
+	 */
+	public function getAvailableUpdates() {
+		$data = PackageUpdateCacheBuilder::getInstance()->getData();
+		return $data['updates'];
 	}
 	
 	/**

@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\IAJAXInvokeAction;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -123,6 +125,10 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	 */
 	public function validateResetMapping() {
 		WCF::getSession()->checkPermissions(array('admin.system.canImportData'));
+		
+		// reset caches
+		CacheHandler::getInstance()->flushAll();
+		UserStorageHandler::getInstance()->clear();
 	}
 	
 	/**
