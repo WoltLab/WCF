@@ -132,6 +132,10 @@
 		<name>BlackWidow</name>
 		<url>http://www.robotstxt.org/wc/active/html/blackwidow.html</url>
 	</spider>
+	<spider ident="BLEXBot">
+		<name>BLEXBot</name>
+		<url>http://webmeup.com/crawler.html</url>
+	</spider>
 	<spider ident="BlogCrawler by Xango">
 		<name>BlogCrawler</name>
 	</spider>
