@@ -101,6 +101,11 @@ class MessageParser extends BBCodeParser {
 				$this->message = nl2br($this->message);
 			}
 		}
+		else {
+			if ($this->getOutputType() == 'text/simplified-html') {
+				$this->message = StringUtil::stripHTML($this->message);
+			}
+		}
 		
 		// parse bbcodes
 		if ($enableBBCodes) {

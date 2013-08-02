@@ -182,7 +182,7 @@
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[Datenbank-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[Benutzername]]></item>
-		<item name="wcf.acp.dataImport.configure.database.password"><![CDATA[Password]]></item>
+		<item name="wcf.acp.dataImport.configure.database.password"><![CDATA[Passwort]]></item>
 		<item name="wcf.acp.dataImport.configure.database.name"><![CDATA[Datenbankname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.prefix"><![CDATA[Tabellen-Präfix]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[Datei-System-Zugang]]></item>
@@ -601,6 +601,8 @@
 		<item name="wcf.acp.option.http_enable_no_cache_headers.description"><![CDATA[Verhindert zuverlässig das Cachen von einzelnen Seiten und sorgt somit dafür, dass beim Seitenaufruf immer die neueste Version der Seite geladen wird. Führt umgekehrt aber zu höherem Traffic und mehr Serverlast.]]></item>
 		<item name="wcf.acp.option.http_gzip_level"><![CDATA[Gzip-Komprimierungslevel]]></item>
 		<item name="wcf.acp.option.http_gzip_level.description"><![CDATA[Werte von 1-9 sind zulässig. Als Optimum zwischen Komprimierung und Serverlast empfiehlt sich Level 1.]]></item>
+		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Einbindung in einem Frame verhindern]]></item>
+		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sendet den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'http://de.wikipedia.org/wiki/Clickjacking'|rawurlencode}" class="externalURL">„X-Frame-Options“</a Header um die Einbettung dieser Seite in einem Frame zu verhindern (sendet „SAMEORIGIN“).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
@@ -705,16 +707,16 @@
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Buttons zum Teilen von Inhalten anzeigen]]></item>
 		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Anzahl der Teilungen anzeigen]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
-		<item name="wcf.acp.option.github_public_key.description"><![CDATA[Sie können Ihre Client ID und Ihr Client Secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a> anfordern.]]></item>
+		<item name="wcf.acp.option.github_public_key.description"><![CDATA[Sie können Ihre Client ID und Ihr Client Secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a> anfordern. Die Callback URL ist: {link controller="GithubAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
 		<item name="wcf.acp.option.twitter_public_key"><![CDATA[Twitter Consumer key]]></item>
-		<item name="wcf.acp.option.twitter_public_key.description"><![CDATA[Sie können Ihren Consumer key und Ihr Consumer secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://dev.twitter.com/apps'|rawurlencode}" class="externalURL">Twitter</a> anfordern.]]></item>
+		<item name="wcf.acp.option.twitter_public_key.description"><![CDATA[Sie können Ihren Consumer key und Ihr Consumer secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://dev.twitter.com/apps'|rawurlencode}" class="externalURL">Twitter</a> anfordern. Die Callback URL ist: {link controller="TwitterAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.twitter_private_key"><![CDATA[Twitter Consumer secret]]></item>
 		<item name="wcf.acp.option.facebook_public_key"><![CDATA[Facebook APP-ID]]></item>
-		<item name="wcf.acp.option.facebook_public_key.description"><![CDATA[Sie können Ihre APP-ID und Ihren Anwendungs-Geheimcode bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://developers.facebook.com/apps'|rawurlencode}" class="externalURL">Facebook</a> anfordern.]]></item>
+		<item name="wcf.acp.option.facebook_public_key.description"><![CDATA[Sie können Ihre APP-ID und Ihren Anwendungs-Geheimcode bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://developers.facebook.com/apps'|rawurlencode}" class="externalURL">Facebook</a> anfordern. Die OAuth redirect URI ist: {link controller="FacebookAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.facebook_private_key"><![CDATA[Facebook Anwendungs-Geheimcode]]></item>
 		<item name="wcf.acp.option.google_public_key"><![CDATA[Google Client ID]]></item>
-		<item name="wcf.acp.option.google_public_key.description"><![CDATA[Sie können Ihre Client ID und Ihr Client Secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://code.google.com/apis/console/'|rawurlencode}" class="externalURL">Google</a> anfordern.]]></item>
+		<item name="wcf.acp.option.google_public_key.description"><![CDATA[Sie können Ihre Client ID und Ihr Client Secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://code.google.com/apis/console/'|rawurlencode}" class="externalURL">Google</a> anfordern. Die Redirect-URI ist: {link controller="GoogleAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.google_private_key"><![CDATA[Google Client Secret]]></item>
 		<item name="wcf.acp.option.category.dashboard"><![CDATA[Dashboard]]></item>
 		<item name="wcf.acp.option.category.dashboard.content"><![CDATA[Inhaltsbereich]]></item>
@@ -1369,6 +1371,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 		<item name="wcf.category.noneAvailable"><![CDATA[Es wurde noch keine Kategorie hinzugefügt.]]></item>
 		<item name="wcf.category.parentCategoryID"><![CDATA[Übergeordnete Kategorie]]></item>
 		<item name="wcf.category.parentCategoryID.error.notValid"><![CDATA[Die ausgewählte Kategorie existiert nicht.]]></item>
+		<item name="wcf.category.position"><![CDATA[Position]]></item>
 		<item name="wcf.category.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.category.title"><![CDATA[Titel]]></item>
@@ -1593,6 +1596,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getAllowedExtensions()
 	</category>
 	
 	<category name="wcf.global">
+		<item name="wcf.global.availableUpdates"><![CDATA[Es sind <a href="{link controller='PackageUpdate' isACP=true}{/link}">Aktualisierungen für installierte Pakete</a> verfügbar.]]></item>
 		<item name="wcf.global.button.add"><![CDATA[Hinzufügen]]></item>
 		<item name="wcf.global.button.back"><![CDATA[&laquo; Zurück]]></item>
 		<item name="wcf.global.button.cancel"><![CDATA[Abbrechen]]></item>

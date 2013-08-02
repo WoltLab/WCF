@@ -737,7 +737,59 @@ WCF.Dropdown = {
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Dropdown', $.proxy(this.init, this));
 		}
 		
-		$(document).on('scroll', $.proxy(this._toggle, this));
+		$(document).on('scroll', $.proxy(this._scroll, this));
+	},
+	
+	/**
+	 * Handles dropdown positions in overlays when scrolling in the overlay.
+	 * 
+	 * @param	object		event
+	 */
+	_dialogScroll: function(event) {
+		var $dialogContent = $(event.currentTarget);
+		$dialogContent.find('.dropdown.dropdownOpen').each(function(index, element) {
+			var $dropdown = $(element);
+			var $dropdownID = $dropdown.wcfIdentify();
+			var $dropdownOffset = $dropdown.offset();
+			var $dialogContentOffset = $dialogContent.offset();
+			
+			var $verticalScrollTolerance = $(element).height() / 2;
+			
+			// check if dropdown toggle is still (partially) visible 
+			if ($dropdownOffset.top + $verticalScrollTolerance <= $dialogContentOffset.top) {
+				// top check
+				WCF.Dropdown.toggleDropdown($dropdownID);
+			}
+			else if ($dropdownOffset.top >= $dialogContentOffset.top + $dialogContent.height()) {
+				// bottom check
+				WCF.Dropdown.toggleDropdown($dropdownID);
+			}
+			else if ($dropdownOffset.left <= $dialogContentOffset.left) {
+				// left check
+				WCF.Dropdown.toggleDropdown($dropdownID);
+			}
+			else if ($dropdownOffset.left >= $dialogContentOffset.left + $dialogContent.width()) {
+				// right check
+				WCF.Dropdown.toggleDropdown($dropdownID);
+			}
+			else {
+				WCF.Dropdown.setAlignmentByID($dropdown.wcfIdentify());
+			}
+		});
+	},
+	
+	/**
+	 * Handles dropdown positions in overlays when scrolling in the document.
+	 * 
+	 * @param	object		event
+	 */
+	_scroll: function(event) {
+		for (var $containerID in this._dropdowns) {
+			var $dropdown = this._dropdowns[$containerID];
+			if ($dropdown.data('isOverlayDropdownButton') && $dropdown.hasClass('dropdownOpen')) {
+				this.setAlignmentByID($containerID);
+			}
+		}
 	},
 	
 	/**
@@ -824,6 +876,18 @@ WCF.Dropdown = {
 	 */
 	_toggle: function(event, targetID) {
 		var $targetID = (event === null) ? targetID : $(event.currentTarget).data('target');
+		
+		// check if 'isOverlayDropdownButton' is set which indicates if
+		// the dropdown toggle is in an overlay
+		var $target = this._dropdowns[$targetID];
+		if ($target && $target.data('isOverlayDropdownButton') === undefined) {
+			var $dialogContent = $target.parents('.dialogContent');
+			$target.data('isOverlayDropdownButton', $dialogContent.length > 0);
+			
+			if ($dialogContent.length) {
+				$dialogContent.on('scroll', this._dialogScroll);
+			}
+		}
 		
 		// close all dropdowns
 		for (var $containerID in this._dropdowns) {
@@ -6331,7 +6395,7 @@ WCF.InlineEditor = Class.extend({
 			}
 			else if (this._validate($elementID, $option.optionName) || this._validateCallbacks($elementID, $option.optionName)) {
 				var $listItem = $('<li><span>' + $option.label + '</span></li>').appendTo(this._dropdowns[$elementID]);
-				$listItem.data('elementID', $elementID).data('optionName', $option.optionName).click($.proxy(this._click, this));
+				$listItem.data('elementID', $elementID).data('optionName', $option.optionName).data('isQuickOption', ($option.isQuickOption ? true : false)).click($.proxy(this._click, this));
 				
 				$hasOptions = true;
 				$lastElementType = $option.optionName;
@@ -6343,6 +6407,31 @@ WCF.InlineEditor = Class.extend({
 			var $lastChild = this._dropdowns[$elementID].children().last();
 			if ($lastChild.hasClass('dropdownDivider')) {
 				$lastChild.remove();
+			}
+			
+			// check if only element is a quick option
+			var $quickOption = null;
+			var $count = 0;
+			this._dropdowns[$elementID].children().each(function(index, child) {
+				var $child = $(child);
+				if (!$child.hasClass('dropdownDivider')) {
+					if ($child.data('isQuickOption')) {
+						$quickOption = $child;
+					}
+					else {
+						$count++;
+					}
+				}
+			});
+			
+			if (!$count) {
+				$quickOption.trigger('click');
+				
+				if ($trigger === null) {
+					WCF.Dropdown.close($trigger.parents('.dropdown').wcfIdentify());
+				}
+				
+				return false;
 			}
 		}
 		
@@ -6462,7 +6551,7 @@ WCF.InlineEditor = Class.extend({
 	 */
 	_hide: function(elementID) {
 		if (this._dropdowns[elementID]) {
-			this._dropdowns[elementID].empty().parent('span').removeClass('dropdownOpen');
+			this._dropdowns[elementID].empty().removeClass('dropdownOpen');
 		}
 	}
 });

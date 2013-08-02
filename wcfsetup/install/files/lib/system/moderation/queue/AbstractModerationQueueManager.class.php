@@ -74,7 +74,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	 * @param	array		$additionalData
 	 */
 	protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = array()) {
-		$sql = "SELECT	COUNT(*) AS count
+		$sql = "SELECT	queueID
 			FROM	wcf".WCF_N."_moderation_queue
 			WHERE	objectTypeID = ?
 				AND objectID = ?";
@@ -85,7 +85,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 		));
 		$row = $statement->fetchArray();
 		
-		if ($row['count'] == 0) {
+		if ($row === false) {
 			$objectAction = new ModerationQueueAction(array(), 'create', array(
 				'data' => array(
 					'objectTypeID' => $objectTypeID,
@@ -97,9 +97,21 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 				)
 			));
 			$objectAction->executeAction();
-			
-			ModerationQueueManager::getInstance()->resetModerationCount();
 		}
+		else {
+			$objectAction = new ModerationQueueAction(array($row['queueID']), 'update', array(
+				'data' => array(
+					'status' => ModerationQueue::STATUS_OUTSTANDING,
+					'containerID' => $containerID,
+					'userID' => (WCF::getUser()->userID ?: null),
+					'time' => TIME_NOW,
+					'additionalData' => serialize($additionalData)
+				)
+			));
+			$objectAction->executeAction();
+		}
+		
+		ModerationQueueManager::getInstance()->resetModerationCount();
 	}
 	
 	/**

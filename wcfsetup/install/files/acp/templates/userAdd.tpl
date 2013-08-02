@@ -221,20 +221,12 @@
 							{if $availableContentLanguages|count > 1}
 								<dl>
 									<dt>
-										{lang}wcf.user.visibleLanguages{/lang}
+										<label>{lang}wcf.user.visibleLanguages{/lang}</label>
 									</dt>
 									<dd>
-										<fieldset>
-											<legend>{lang}wcf.user.visibleLanguages{/lang}</legend>
-											<dl>
-												<dt></dt>
-												<dd>
-													{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
-														<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked="checked"{/if} /> {@$availableLanguage}</label>
-													{/foreach}
-												</dd>
-											</dl>
-										</fieldset>
+										{foreach from=$availableContentLanguages key=availableLanguageID item=availableLanguage}
+											<label><input type="checkbox" name="visibleLanguages[]" value="{@$availableLanguageID}"{if $availableLanguageID|in_array:$visibleLanguages} checked="checked"{/if} /> {@$availableLanguage}</label>
+										{/foreach}
 									</dd>
 								</dl>
 							{/if}
