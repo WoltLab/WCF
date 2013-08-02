@@ -737,7 +737,45 @@ WCF.Dropdown = {
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Dropdown', $.proxy(this.init, this));
 		}
 		
-		$(document).on('scroll', $.proxy(this._toggle, this));
+		$(document).on('scroll', $.proxy(this._scroll, this));
+	},
+	
+	/**
+	 * Handles dropdown positions in overlays when scrolling in the overlay.
+	 * 
+	 * @param	object		event
+	 */
+	_dialogScroll: function(event) {
+		var $dialogContent = $(event.currentTarget);
+		$dialogContent.find('.dropdown.dropdownOpen').each(function(index, element) {
+			var $dropdown = $(element);
+			var $scrollTolerance = $(element).height() / 2;
+			
+			// check if dropdown toggle is still (partially) visible 
+			if ($dropdown.offset().top + $scrollTolerance <= $dialogContent.offset().top) { // top check
+				WCF.Dropdown.toggleDropdown($dropdown.wcfIdentify());
+			}
+			else if ($dropdown.offset().top >= $dialogContent.offset().top + $dialogContent.height()) { // bottom check
+				WCF.Dropdown.toggleDropdown($dropdown.wcfIdentify());
+			}
+			else {
+				WCF.Dropdown.setAlignmentByID($dropdown.wcfIdentify());
+			}
+		});
+	},
+	
+	/**
+	 * Handles dropdown positions in overlays when scrolling in the document.
+	 * 
+	 * @param	object		event
+	 */
+	_scroll: function(event) {
+		for (var $containerID in this._dropdowns) {
+			var $dropdown = this._dropdowns[$containerID];
+			if ($dropdown.data('isOverlayDropdownButton') && $dropdown.hasClass('dropdownOpen')) {
+				this.setAlignmentByID($containerID);
+			}
+		}
 	},
 	
 	/**
@@ -824,6 +862,18 @@ WCF.Dropdown = {
 	 */
 	_toggle: function(event, targetID) {
 		var $targetID = (event === null) ? targetID : $(event.currentTarget).data('target');
+		
+		// check if 'isOverlayDropdownButton' is set which indicates if
+		// the dropdown toggle is in an overlay
+		var $target = this._dropdowns[$targetID];
+		if ($target && $target.data('isOverlayDropdownButton') === undefined) {
+			var $dialogContent = $target.parents('.dialogContent');
+			$target.data('isOverlayDropdownButton', $dialogContent.length > 0);
+			
+			if ($dialogContent.length) {
+				$dialogContent.on('scroll', this._dialogScroll);
+			}
+		}
 		
 		// close all dropdowns
 		for (var $containerID in this._dropdowns) {

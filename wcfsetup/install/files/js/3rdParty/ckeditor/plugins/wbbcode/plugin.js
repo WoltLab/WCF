@@ -190,6 +190,8 @@
 	 * Converts bbcodes to html.
 	 */
 	var toHtml = function(data, fixForBody) {
+		if ($.trim(data) === "") return "<p></p>";
+		
 		// remove 0x200B (unicode zero width space)
 		data = removeCrap(data);
 		
