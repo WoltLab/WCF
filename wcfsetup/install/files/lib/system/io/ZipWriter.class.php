@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\io;
+use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
@@ -81,9 +82,14 @@ class ZipWriter {
 	 * 
 	 * @param	string		$data		content of the file
 	 * @param	string		$name		filename
-	 * @param	integer		$date		file creation time as unix timestamp
+	 * @param	integer		$date		file creation time as unix timestamp, must at least be 315532800 (1980-01-01 00:00 UTC)
 	 */
-	public function addFile($data, $name, $date = 0) {
+	public function addFile($data, $name, $date = TIME_NOW) {
+		// 315532800 is the same as strtotime('1980-01-01 00:00 UTC')
+		if ($date < 315532800) {
+			throw new SystemException('Unsupported date, must be at least 315532800 (1980-01-01 00:00 UTC)');
+		}
+		
 		// replace backward slashes with forward slashes in the filename
 		$name = StringUtil::replace("\\", "/", $name);
 		
