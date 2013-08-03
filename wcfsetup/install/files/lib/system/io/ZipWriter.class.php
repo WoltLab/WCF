@@ -18,6 +18,7 @@ class ZipWriter {
 	protected $data = array();
 	protected $endOfData = "\x50\x4b\x05\x06\x00\x00\x00\x00";
 	protected $lastOffset = 0;
+	protected $zipComment = '';
 	
 	/**
 	 * Adds a folder to the Zip archive.
@@ -152,6 +153,15 @@ class ZipWriter {
 	}
 	
 	/**
+	 * Set Zip archive comment
+	 * 
+	 * @param	string		$comment		zip archive comment
+	 */
+	public function setArchiveComment($comment) {
+		$this->zipComment = StringUtil::trim($comment);
+	}
+	
+	/**
 	 * Constructs the final Zip file structure and return it.
 	 * 
 	 * @return	string
@@ -172,7 +182,7 @@ class ZipWriter {
 			pack("v", count($this->data)).
 			pack("V", strlen($data)).
 			pack("V", strlen($headers)).
-			"\x00\x00";
+			(!empty($this->zipComment) ? pack("v", strlen($this->zipComment)) . $this->zipComment : "\x00\x00");
 	}
 	
 	/**
