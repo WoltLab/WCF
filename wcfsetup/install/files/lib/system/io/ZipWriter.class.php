@@ -83,7 +83,7 @@ class ZipWriter {
 	 * @param	string		$name		filename
 	 * @param	integer		$date		file creation time as unix timestamp
 	 */
-	public function addFile($data, $name, $date = 0) {
+	public function addFile($data, $name, $date = TIME_NOW) {
 		// replace backward slashes with forward slashes in the filename
 		$name = StringUtil::replace("\\", "/", $name);
 		
