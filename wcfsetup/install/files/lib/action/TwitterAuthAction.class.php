@@ -46,7 +46,7 @@ class TwitterAuthAction extends AbstractAction {
 			try {
 				// fetch access_token
 				$oauthHeader = array(
-					'oauth_consumer_key' => TWITTER_PUBLIC_KEY,
+					'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
 					'oauth_nonce' => StringUtil::getRandomID(),
 					'oauth_signature_method' => 'HMAC-SHA1',
 					'oauth_timestamp' => TIME_NOW,
@@ -147,7 +147,7 @@ class TwitterAuthAction extends AbstractAction {
 			));
 			$oauthHeader = array(
 				'oauth_callback' => $callbackURL,
-				'oauth_consumer_key' => TWITTER_PUBLIC_KEY,
+				'oauth_consumer_key' => StringUtil::trim(TWITTER_PUBLIC_KEY),
 				'oauth_nonce' => StringUtil::getRandomID(),
 				'oauth_signature_method' => 'HMAC-SHA1',
 				'oauth_timestamp' => TIME_NOW,
@@ -218,7 +218,7 @@ class TwitterAuthAction extends AbstractAction {
 		}
 		
 		$base = "POST&".rawurlencode($url)."&".rawurlencode($parameterString);
-		$key = rawurlencode(TWITTER_PRIVATE_KEY).'&'.rawurlencode($tokenSecret);
+		$key = rawurlencode(StringUtil::trim(TWITTER_PRIVATE_KEY)).'&'.rawurlencode($tokenSecret);
 		
 		return base64_encode(hash_hmac('sha1', $base, $key, true));
 	}
