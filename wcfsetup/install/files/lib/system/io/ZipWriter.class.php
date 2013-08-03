@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\io;
+use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
-use wcf\system\exception\SystemException;
 
 /**
  * Creates a Zip file archive.
