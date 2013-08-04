@@ -186,7 +186,7 @@ class ZipWriter {
 		// Ensure we have a numeric value
 		$date = intval($date);
 		
-		if($date < 315532800) {
+		if ($date < 315532800) {
 			return "\x00\x00\x00\x00";
 		}
 		
