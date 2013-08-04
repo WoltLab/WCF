@@ -24,7 +24,7 @@ class ZipWriter {
 	 * 
 	 * @param	string		$name		dirname
 	 */
-	public function addDir($name) {
+	public function addDir($name, $date = TIME_NOW) {
 		// replace backward slashes with forward slashes in the dirname
 		$name = StringUtil::replace("\\", "/", $name);
 		$name = FileUtil::addTrailingSlash($name);
@@ -56,7 +56,8 @@ class ZipWriter {
 		$record = "\x50\x4b\x01\x02";
 		$record .= "\x00\x00\x0a\x00";
 		$record .= "\x00\x00\x00\x00";
-		$record .= "\x00\x00\x00\x00";
+		//$record .= "\x00\x00\x00\x00";
+		$record .= (intval($date) < 315532800 ? "\x00\x00\x00\x00" : $this->getDosDatetime($date));
 		$record .= pack("V", 0);
 		$record .= pack("V", 0);
 		$record .= pack("V", 0);
