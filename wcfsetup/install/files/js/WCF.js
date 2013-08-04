@@ -8628,8 +8628,6 @@ $.widget('ui.wcfDialog', {
 		
 		if (event !== undefined) {
 			event.preventDefault();
-			event.stopPropagation();
-			return false;
 		}
 	},
 	
