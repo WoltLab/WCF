@@ -1635,6 +1635,10 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.global.form.data"><![CDATA[General Information]]></item>
 		<item name="wcf.global.form.error"><![CDATA[Please correct the erroneous fields marked below.]]></item>
 		<item name="wcf.global.form.error.empty"><![CDATA[Please fill in this field.]]></item>
+		<item name="wcf.global.form.error.greaterThan"><![CDATA[The entered value has to be greater than {#$greaterThan}.]]></item>
+		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}The entered value has to be greater than {#$greaterThan}.{/literal}]]></item>
+		<item name="wcf.global.form.error.lessThan"><![CDATA[The entered value has to be less than {#$lessThan}.]]></item>
+		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}The entered value has to be less than {#$lessThan}.{/literal}]]></item>
 		<item name="wcf.global.form.error.multilingual"><![CDATA[Please fill in this field for all languages.]]></item>
 		<item name="wcf.global.language.noSelection"><![CDATA[No Selection]]></item>
 		<item name="wcf.global.loading"><![CDATA[Loading …]]></item>
