@@ -57,7 +57,7 @@ class ZipWriter {
 		$record .= "\x00\x00\x0a\x00";
 		$record .= "\x00\x00\x00\x00";
 		//$record .= "\x00\x00\x00\x00";
-		$record .= (intval($date) < 315532800 ? "\x00\x00\x00\x00" : $this->getDosDatetime($date));
+		$record .= $this->getDosDatetime($date);
 		$record .= pack("V", 0);
 		$record .= pack("V", 0);
 		$record .= pack("V", 0);
@@ -131,7 +131,7 @@ class ZipWriter {
 		$record = "\x50\x4b\x01\x02";
 		$record .= "\x00\x00\x14\x00";
 		$record .= "\x00\x00\x08\x00";
-		$record .= (intval($date) < 315532800 ? "\x00\x00\x00\x00" : $this->getDosDatetime($date));
+		$record .= $this->getDosDatetime($date);
 		$record .= pack("V", $crc);
 		$record .= pack("V", $sizeCompressed);
 		$record .= pack("V", $sizeUncompressed);
@@ -185,6 +185,10 @@ class ZipWriter {
 	protected static function getDosDatetime($date) {
 		// Ensure we have a numeric value
 		$date = intval($date);
+		
+		if($date < 315532800) {
+			return "\x00\x00\x00\x00";
+		}
 		
 		$day = gmdate('d', $date);
 		$month = gmdate('m', $date);
