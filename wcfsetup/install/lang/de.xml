@@ -1191,6 +1191,10 @@
 		<item name="wcf.acp.user.list"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[Alle Benutzer]]></item>
 		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} Benutzer]]></item>
+		<item name="wcf.acp.user.merge"><![CDATA[Benutzer zusammenfügen]]></item>
+		<item name="wcf.acp.user.merge.destination"><![CDATA[Ziel]]></item>
+		<item name="wcf.acp.user.merge.destination.description"><![CDATA[Die ausgewählten Benutzer werden in dieses Benutzerkonto zusammengefügt.]]></item>
+		<item name="wcf.acp.user.merge.markedUsers"><![CDATA[Folgende Benutzer zusammenfügen]]></item>
 		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Aktion]]></item>
 		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Bedingungen]]></item>
