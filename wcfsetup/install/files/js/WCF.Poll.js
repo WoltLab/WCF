@@ -226,7 +226,7 @@ WCF.Poll.Management = Class.extend({
 			
 			for (var $i = 0, $length = $options.length; $i < $length; $i++) {
 				var $option = $options[$i];
-				$('<input type="hidden" name="pollOptions[' + $i + ']" value="' + $option.optionID + '_' + $option.optionValue + '" />').appendTo($formSubmit);
+				$('<input type="hidden" name="pollOptions[' + $i + ']" />').val($option.optionID + '_' + $option.optionValue).appendTo($formSubmit);
 			}
 		}
 	}

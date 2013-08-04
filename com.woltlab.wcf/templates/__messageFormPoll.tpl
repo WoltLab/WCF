@@ -8,7 +8,7 @@
 				'wcf.poll.button.removeOption': '{lang}wcf.poll.button.removeOption{/lang}'
 			});
 			
-			new WCF.Poll.Management('pollOptionContainer', [ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]}' }{/implode} ], {@POLL_MAX_OPTIONS});
+			new WCF.Poll.Management('pollOptionContainer', [ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ], {@POLL_MAX_OPTIONS});
 		});
 		//]]>
 	</script>
