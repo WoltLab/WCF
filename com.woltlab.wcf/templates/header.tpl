@@ -73,7 +73,7 @@
 			{if !$sidebarOrientation|isset || $sidebarOrientation == 'left'}
 				{@$__sidebar}
 			{/if} 
-					
+			
 			<section id="content" class="content">
 				
 				{event name='contents'}
