@@ -20,7 +20,7 @@
 					<label for="pollQuestion">{lang}wcf.poll.question{/lang}</label>
 				</dt>
 				<dd>
-					<input type="text" name="pollQuestion" id="pollQuestion" value="{$pollQuestion}" class="long" />
+					<input type="text" name="pollQuestion" id="pollQuestion" value="{$pollQuestion}" class="long" maxlength="255" />
 				</dd>
 				<dt>
 					<label>{lang}wcf.poll.options{/lang}</label>
