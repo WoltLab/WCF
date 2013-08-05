@@ -832,6 +832,19 @@ WCF.Dropdown = {
 	},
 	
 	/**
+	 * Removes the dropdown with the given container id.
+	 * 
+	 * @param	string		containerID
+	 */
+	removeDropdown: function(containerID) {
+		if (this._menus[containerID]) {
+			$(this._menus[containerID]).remove();
+			delete this._menus[containerID];
+			delete this._dropdowns[containerID];
+		}
+	},
+	
+	/**
 	 * Initializes a dropdown fragment which behaves like a usual dropdown
 	 * but is not controlled by a trigger element.
 	 * 
