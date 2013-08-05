@@ -41,7 +41,7 @@ class PackageUpdatePage extends AbstractPage {
 	public function readData() {
 		parent::readData();
 		
-		$this->availableUpdates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
+		$this->availableUpdates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates(true, true);
 	}
 	
 	/**
