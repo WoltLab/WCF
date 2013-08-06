@@ -749,14 +749,28 @@ WCF.Dropdown = {
 		var $dialogContent = $(event.currentTarget);
 		$dialogContent.find('.dropdown.dropdownOpen').each(function(index, element) {
 			var $dropdown = $(element);
-			var $scrollTolerance = $(element).height() / 2;
+			var $dropdownID = $dropdown.wcfIdentify();
+			var $dropdownOffset = $dropdown.offset();
+			var $dialogContentOffset = $dialogContent.offset();
+			
+			var $verticalScrollTolerance = $(element).height() / 2;
 			
 			// check if dropdown toggle is still (partially) visible 
-			if ($dropdown.offset().top + $scrollTolerance <= $dialogContent.offset().top) { // top check
-				WCF.Dropdown.toggleDropdown($dropdown.wcfIdentify());
+			if ($dropdownOffset.top + $verticalScrollTolerance <= $dialogContentOffset.top) {
+				// top check
+				WCF.Dropdown.toggleDropdown($dropdownID);
 			}
-			else if ($dropdown.offset().top >= $dialogContent.offset().top + $dialogContent.height()) { // bottom check
-				WCF.Dropdown.toggleDropdown($dropdown.wcfIdentify());
+			else if ($dropdownOffset.top >= $dialogContentOffset.top + $dialogContent.height()) {
+				// bottom check
+				WCF.Dropdown.toggleDropdown($dropdownID);
+			}
+			else if ($dropdownOffset.left <= $dialogContentOffset.left) {
+				// left check
+				WCF.Dropdown.toggleDropdown($dropdownID);
+			}
+			else if ($dropdownOffset.left >= $dialogContentOffset.left + $dialogContent.width()) {
+				// right check
+				WCF.Dropdown.toggleDropdown($dropdownID);
 			}
 			else {
 				WCF.Dropdown.setAlignmentByID($dropdown.wcfIdentify());
@@ -814,6 +828,19 @@ WCF.Dropdown = {
 		
 		if (isLazyInitialization) {
 			button.trigger('click');
+		}
+	},
+	
+	/**
+	 * Removes the dropdown with the given container id.
+	 * 
+	 * @param	string		containerID
+	 */
+	removeDropdown: function(containerID) {
+		if (this._menus[containerID]) {
+			$(this._menus[containerID]).remove();
+			delete this._menus[containerID];
+			delete this._dropdowns[containerID];
 		}
 	},
 	
@@ -8614,8 +8641,6 @@ $.widget('ui.wcfDialog', {
 		
 		if (event !== undefined) {
 			event.preventDefault();
-			event.stopPropagation();
-			return false;
 		}
 	},
 	

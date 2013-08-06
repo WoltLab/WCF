@@ -180,8 +180,10 @@ class UserProfileAction extends UserAction {
 			throw new UserInputException('objectIDs');
 		}
 		
-		if (!$this->userProfile->canEdit() && $this->userProfile->userID != WCF::getUser()->userID) {
-			throw new PermissionDeniedException();
+		if ($this->userProfile->userID != WCF::getUser()->userID) {
+			if (!$this->userProfile->canEdit()) {
+				throw new PermissionDeniedException();
+			}
 		}
 		else if (!$this->userProfile->canEditOwnProfile()) {
 			throw new PermissionDeniedException();

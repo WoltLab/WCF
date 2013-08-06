@@ -108,6 +108,8 @@
 			'wcf.global.error.timeout': '{lang}wcf.global.error.timeout{/lang}',
 			'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
 			'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
+			'wcf.global.form.error.greaterThan': '{lang}wcf.global.form.error.greaterThan.javaScript{/lang}',
+			'wcf.global.form.error.lessThan': '{lang}wcf.global.form.error.lessThan.javaScript{/lang}',
 			'wcf.global.language.noSelection': '{lang}wcf.global.language.noSelection{/lang}',
 			'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 			'wcf.global.page.jumpTo': '{lang}wcf.global.page.jumpTo{/lang}',

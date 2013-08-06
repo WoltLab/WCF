@@ -119,7 +119,7 @@ WCF.Poll.Management = Class.extend({
 		$('<span class="icon icon16 icon-remove jsTooltip jsDeleteOption pointer" title="' + WCF.Language.get('wcf.poll.button.removeOption') + '" />').click($.proxy(this._removeOption, this)).appendTo($buttonContainer);
 		
 		// insert input field
-		var $input = $('<input type="text" value="' + optionValue + '" />').css({ width: this._inputSize + "px" }).keydown($.proxy(this._keyDown, this)).appendTo($listItem);
+		var $input = $('<input type="text" value="' + optionValue + '" maxlength="255" />').css({ width: this._inputSize + "px" }).keydown($.proxy(this._keyDown, this)).appendTo($listItem);
 		
 		if (insertAfter !== null) {
 			$input.focus();
@@ -226,7 +226,7 @@ WCF.Poll.Management = Class.extend({
 			
 			for (var $i = 0, $length = $options.length; $i < $length; $i++) {
 				var $option = $options[$i];
-				$('<input type="hidden" name="pollOptions[' + $i + ']" value="' + $option.optionID + '_' + $option.optionValue + '" />').appendTo($formSubmit);
+				$('<input type="hidden" name="pollOptions[' + $i + ']" />').val($option.optionID + '_' + $option.optionValue).appendTo($formSubmit);
 			}
 		}
 	}

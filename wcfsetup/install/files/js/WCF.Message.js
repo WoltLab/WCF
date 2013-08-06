@@ -767,7 +767,7 @@ WCF.Message.QuickReply = Class.extend({
 		
 		// check if message is empty
 		var $innerError = this._messageField.parent().find('small.innerError');
-		if ($message === '') {
+		if ($message === '' || $message === '0') {
 			if (!$innerError.length) {
 				$innerError = $('<small class="innerError" />').appendTo(this._messageField.parent());
 			}

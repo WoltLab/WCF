@@ -108,10 +108,6 @@
 			</dl>
 		</fieldset>
 		
-		{capture assign='__3rdPartyButtons'}
-			
-		{/capture}
-		
 		{hascontent}
 			<fieldset>
 				<legend>{lang}wcf.user.login.3rdParty{/lang}</legend>
@@ -144,7 +140,7 @@
 										<a href="{link controller='GoogleAuth'}{/link}" class="button small"><span class="icon icon16 icon-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
 									</li>
 								{/if}
-							{/content}	
+							{/content}
 						</ul>
 					</dd>
 				</dl>

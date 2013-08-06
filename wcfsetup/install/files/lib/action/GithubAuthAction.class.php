@@ -40,8 +40,8 @@ class GithubAuthAction extends AbstractAction {
 			try {
 				// fetch access_token
 				$request = new HTTPRequest('https://github.com/login/oauth/access_token', array(), array(
-					'client_id' => GITHUB_PUBLIC_KEY,
-					'client_secret' => GITHUB_PRIVATE_KEY,
+					'client_id' => StringUtil::trim(GITHUB_PUBLIC_KEY),
+					'client_secret' => StringUtil::trim(GITHUB_PRIVATE_KEY),
 					'code' => $_GET['code']
 				));
 				$request->execute();
@@ -160,7 +160,7 @@ class GithubAuthAction extends AbstractAction {
 		// start auth by redirecting to github
 		$token = StringUtil::getRandomID();
 		WCF::getSession()->register('__githubInit', $token);
-		HeaderUtil::redirect("https://github.com/login/oauth/authorize?client_id=".rawurlencode(GITHUB_PUBLIC_KEY)."&scope=".rawurlencode('user:email')."&state=".$token);
+		HeaderUtil::redirect("https://github.com/login/oauth/authorize?client_id=".rawurlencode(StringUtil::trim(GITHUB_PUBLIC_KEY))."&scope=".rawurlencode('user:email')."&state=".$token);
 		$this->executed();
 		exit;
 	}

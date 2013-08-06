@@ -40,7 +40,7 @@ class FacebookAuthAction extends AbstractAction {
 		if (isset($_GET['code'])) {
 			try {
 				// fetch access_token
-				$request = new HTTPRequest('https://graph.facebook.com/oauth/access_token?client_id='.FACEBOOK_PUBLIC_KEY.'&redirect_uri='.rawurlencode($callbackURL).'&client_secret='.FACEBOOK_PRIVATE_KEY.'&code='.rawurlencode($_GET['code']));
+				$request = new HTTPRequest('https://graph.facebook.com/oauth/access_token?client_id='.StringUtil::trim(FACEBOOK_PUBLIC_KEY).'&redirect_uri='.rawurlencode($callbackURL).'&client_secret='.StringUtil::trim(FACEBOOK_PRIVATE_KEY).'&code='.rawurlencode($_GET['code']));
 				$request->execute();
 				$reply = $request->getReply();
 				
@@ -128,7 +128,7 @@ class FacebookAuthAction extends AbstractAction {
 		// start auth by redirecting to facebook
 		$token = StringUtil::getRandomID();
 		WCF::getSession()->register('__facebookInit', $token);
-		HeaderUtil::redirect("https://www.facebook.com/dialog/oauth?client_id=".FACEBOOK_PUBLIC_KEY. "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=email,user_about_me,user_birthday,user_interests,user_location,user_website");
+		HeaderUtil::redirect("https://www.facebook.com/dialog/oauth?client_id=".StringUtil::trim(FACEBOOK_PUBLIC_KEY). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=email,user_about_me,user_birthday,user_interests,user_location,user_website");
 		$this->executed();
 		exit;
 	}

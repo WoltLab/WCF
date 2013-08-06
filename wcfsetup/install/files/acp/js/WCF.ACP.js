@@ -1903,6 +1903,11 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 	init: function() {
 		this._className = 'wcf\\data\\acp\\search\\provider\\ACPSearchProviderAction';
 		this._super('#search input[name=q]');
+		
+		// disable form submitting
+		$('#search > form').on('submit', function(event) {
+			event.preventDefault();
+		});
 	},
 	
 	/**

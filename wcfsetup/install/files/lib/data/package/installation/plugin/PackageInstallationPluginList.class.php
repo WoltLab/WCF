@@ -16,5 +16,5 @@ class PackageInstallationPluginList extends DatabaseObjectList {
 	/**
 	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
-	public $className = 'wcf\data\package\installation\plugin\PackageInstallationPluginObj';
+	public $className = 'wcf\data\package\installation\plugin\PackageInstallationPlugin';
 }
