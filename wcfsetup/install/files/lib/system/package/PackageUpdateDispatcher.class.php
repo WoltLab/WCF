@@ -521,9 +521,10 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * Returns a list of available updates for installed packages.
 	 * 
 	 * @param	boolean		$removeRequirements
+	 * @param	boolean		$removeOlderMinorReleases
 	 * @return	array
 	 */
-	public function getAvailableUpdates($removeRequirements = true) {
+	public function getAvailableUpdates($removeRequirements = true, $removeOlderMinorReleases = false) {
 		$updates = array();
 		
 		// get update server data
@@ -603,6 +604,33 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					}
 				}
 			}
+		}
+		
+		// remove older minor releases from list, e.g. only display 1.0.2, even if 1.0.1 is available
+		if ($removeOlderMinorReleases) {
+			foreach ($updates as &$updateData) {
+				$highestVersions = array();
+				foreach ($updateData['versions'] as $versionNumber => $dummy) {
+					if (preg_match('~^(\d+\.\d+)\.~', $versionNumber, $matches)) {
+						$major = $matches[1];
+						if (isset($highestVersions[$major])) {
+							if (version_compare($highestVersions[$major], $versionNumber, '<')) {
+								// version is newer, discard current version
+								unset($updateData['versions'][$highestVersions[$major]]);
+								$highestVersions[$major] = $versionNumber;
+							}
+							else {
+								// version is lower, discard
+								unset($updateData['versions'][$versionNumber]);
+							}
+						}
+						else {
+							$highestVersions[$major] = $versionNumber;
+						}
+					}
+				}
+			}
+			unset($updateData);
 		}
 		
 		return $updates;
