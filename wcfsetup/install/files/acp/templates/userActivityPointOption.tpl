@@ -43,7 +43,7 @@
 						<input type="number" id="{@$objectType->objectType}" name="points[{@$objectType->objectTypeID}]" value="{$points[$objectType->objectTypeID]}" required="required" min="0" class="tiny" />
 						{if $errorField == $objectType->objectTypeID}
 							<small class="innerError">
-								{lang}wcf.acp.user.activityPoint.option.notValid{/lang}
+								{lang greaterThan=-1}wcf.global.form.error.greaterThan{/lang}
 							</small>
 						{/if}
 					</dd>
