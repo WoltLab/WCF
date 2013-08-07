@@ -20,6 +20,11 @@ use wcf\system\WCF;
  */
 class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 */
+	protected $allowGuestAccess = array('getGroupedUserList');
+	
+	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\poll\PollEditor';
@@ -245,7 +250,7 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		if (!$this->poll->pollID) {
 			throw new UserInputException('pollID');
 		}
-		else if (!$this->poll->isPublic || !$this->poll->canSeeResult()) {
+		else if (!$this->poll->canViewParticipants()) {
 			throw new PermissionDeniedException();
 		}
 	}
