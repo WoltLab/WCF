@@ -70,7 +70,8 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 				$likeObjectData[$like->objectTypeID][$like->objectID] = array(
 					'likes' => 0,
 					'dislikes' => 0,
-					'cumulativeLikes' => 0
+					'cumulativeLikes' => 0,
+					'objectUserID' => $like->objectUserID
 				);
 			}
 			
@@ -86,23 +87,24 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		// update activity points
 		UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $itemsToUser, false);
 		
-		$sql = "UPDATE	wcf".WCF_N."_like_object
-			SET	likes = ?,
-				dislikes = ?,
-				cumulativeLikes = ?
-			WHERE	objectTypeID = ?
-				AND objectID = ?";
+		$sql = "INSERT INTO			wcf".WCF_N."_like_object
+							(objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes)
+			VALUES				(?, ?, ?, ?, ?, ?)
+			ON DUPLICATE KEY UPDATE		likes = VALUES(likes),
+							dislikes = VALUES(dislikes),
+							cumulativeLikes = VALUES(cumulativeLikes)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($likeObjectData as $objectTypeID => $objects) {
 			foreach ($objects as $objectID => $data) {
 				$statement->execute(array(
+					$objectTypeID,
+					$objectID,
+					$data['objectUserID'],
 					$data['likes'],
 					$data['dislikes'],
-					$data['cumulativeLikes'],
-					$objectTypeID,
-					$objectID
+					$data['cumulativeLikes']
 				));
 			}
 		}
