@@ -900,6 +900,8 @@
 			font-weight: normal;
 			text-shadow: none;
 			font-size: 75%;
+			white-space: nowrap;
+			word-wrap: normal;
 		}
 		
 		> .badge {
@@ -1140,6 +1142,7 @@
 		> div {
 			overflow: hidden;
 			white-space: nowrap;
+			word-wrap: normal;
 		}
 	}
 }
@@ -1235,6 +1238,7 @@
 				text-decoration: none;
 				text-overflow: ellipsis;
 				white-space: nowrap;
+				word-wrap: normal;
 				
 				.textShadow(@wcfContentBackgroundColor);
 			}
@@ -1322,13 +1326,13 @@
 		padding: 0 5px 3px 5px;
 		position: relative;
 		white-space: nowrap;
+		word-wrap: normal;
 		
 		.textShadow(@wcfContainerBackgroundColor);
 		
 		> li {
 			display: inline-block;
 			outline: 0;
-			white-space: nowrap;
 			
 			&.ui-state-active {
 				> a {
@@ -1567,6 +1571,7 @@
 		font-size: @wcfSmallFontSize;
 		font-weight: bold;
 		white-space: nowrap;
+		word-wrap: normal;
 		
 		.textShadow(@wcfTabularBoxBackgroundColor);
 		.linearGradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0), rgba(0, 0, 0, .3));
@@ -1640,6 +1645,7 @@
 			text-align: center;
 			width: 1px !important;
 			white-space: nowrap;
+			word-wrap: normal;
 		}
 		
 		&.columnDigits,
@@ -1647,12 +1653,14 @@
 			text-align: right;
 			width: 1px !important;
 			white-space: nowrap;
+			word-wrap: normal;
 		}
 		
 		&.columnIcon {
 			text-align: left;
 			width: 1px !important;
 			white-space: nowrap;
+			word-wrap: normal;
 		}
 		
 		&.columnTitle {
@@ -1672,6 +1680,7 @@
 			text-align: right;
 			width: 1px !important;
 			white-space: nowrap;
+			word-wrap: normal;
 		}
 		
 		&.columnURL, &.columnSmallText {
@@ -1760,6 +1769,7 @@ dl.statsDataList {
 		text-align: left;
 		white-space: nowrap;
 		width: 62%;
+		word-wrap: normal;
 		
 		> a {
 			color: @wcfDimmedColor;
@@ -1777,6 +1787,7 @@ dl.statsDataList {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 35%;
+		word-wrap: normal;
 		
 		> a {
 			color: @wcfColor;
@@ -1822,6 +1833,7 @@ dl.dataList {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 35%;
+		word-wrap: normal;
 	}
 	
 	dd {
@@ -2043,13 +2055,6 @@ ul.inlineDataList {
 				}
 			}
 		}
-		
-		> div,
-		> ul,
-		> ol,
-		> dl {
-			width: 300px - @wcfGapMedium * 2;
-		}
 	}
 	
 	.sidebarBoxList > li:not(:last-child) {
@@ -2066,6 +2071,7 @@ ul.inlineDataList {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+			word-wrap: normal;
 			
 			.textShadow(@wcfSidebarBackgroundColor);
 			
