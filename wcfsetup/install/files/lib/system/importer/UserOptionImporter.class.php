@@ -4,6 +4,7 @@ use wcf\data\user\option\UserOptionAction;
 use wcf\data\user\option\UserOptionEditor;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Imports user options.
@@ -41,6 +42,8 @@ class UserOptionImporter implements IImporter {
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		$data['packageID'] = 1;
+		// set temporary option name
+		$data['optionName'] = StringUtil::getRandomID();
 		
 		// save option
 		$action = new UserOptionAction(array(), 'create', array('data' => $data));
