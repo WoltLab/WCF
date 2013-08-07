@@ -38,13 +38,15 @@ $(function() {
 		toolbarCanCollapse: false,
 		enterMode: CKEDITOR.ENTER_BR,
 		minHeight: 200,
-		toolbar: __CKEDITOR_TOOLBAR,
-		smiley_images: [
-			{implode from=$defaultSmilies item=smiley}'{@$smiley->smileyPath|encodeJS}'{/implode}
-		],
-		smiley_descriptions: [
-			{implode from=$defaultSmilies item=smiley}'{@$smiley->smileyCode|encodeJS}'{/implode}
-		]
+		toolbar: __CKEDITOR_TOOLBAR
+		{if $defaultSmilies|isset}
+			,smiley_images: [
+				{implode from=$defaultSmilies item=smiley}'{@$smiley->smileyPath|encodeJS}'{/implode}
+			],
+			smiley_descriptions: [
+				{implode from=$defaultSmilies item=smiley}'{@$smiley->smileyCode|encodeJS}'{/implode}
+			]
+		{/if}
 	};
 	
 	{event name='javascriptInit'}
