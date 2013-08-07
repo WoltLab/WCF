@@ -121,5 +121,12 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		$statement->execute(array(
 			(TIME_NOW - 86400)
 		));
+		
+		// clean up error logs
+		foreach (glob(WCF_DIR.'log/*.txt') as $filename) {
+			if (filectime($filename) < TIME_NOW - 86400 * 14) {
+				@unlink($filename);
+			}
+		}
 	}
 }
