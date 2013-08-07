@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\Regex;
 
