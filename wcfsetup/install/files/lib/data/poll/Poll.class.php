@@ -166,6 +166,19 @@ class Poll extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns true if current user can view the participant list.
+	 * 
+	 * @return	boolean
+	 */
+	public function canViewParticipants() {
+		if ($this->canSeeResult() && $this->isPublic) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Sets related object for this poll.
 	 * 
 	 * @param	wcf\data\IPollObject		$object
