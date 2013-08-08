@@ -1985,6 +1985,12 @@ ul.inlineDataList {
 		padding: @wcfGapSmall @wcfGapMedium @wcfGapMedium;
 		margin-top: 0;
 		
+		/* collapsed sidebar overflow fix */
+		box-sizing:border-box;
+		-moz-box-sizing:border-box; /* firefox */
+		min-width: 300px; /* webkit */
+		width: 300px; /* firefox */
+		
 		> legend {
 			border-width: 0;
 			color: @wcfColor;
