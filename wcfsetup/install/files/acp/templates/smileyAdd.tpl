@@ -9,7 +9,7 @@
 {/if}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.form.{$action}.success{/lang}</p>
+	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
 
 <div class="contentNavigation">
@@ -37,8 +37,8 @@
 					
 					{if $errorField == 'smileyTitle'}
 						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
+							{if $errorType == 'empty' || $errorType == 'multilingual'}
+								{lang}wcf.global.form.error.{$errorType}{/lang}
 							{else}
 								{lang}wcf.acp.smiley.smileyTitle.error.{@$errorType}{/lang}
 							{/if}
