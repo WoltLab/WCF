@@ -33,8 +33,8 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 						AND lastSearchTime < ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(
-					floor($row['searches'] / 4),
-					(TIME_NOW - 86400 * 30)
+				floor($row['searches'] / 4),
+				(TIME_NOW - 86400 * 30)
 			));
 		}
 		
@@ -43,7 +43,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			WHERE		time < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-				(TIME_NOW - 86400 * USER_CLEANUP_NOTIFICATION_LIFETIME)
+			(TIME_NOW - 86400 * USER_CLEANUP_NOTIFICATION_LIFETIME)
 		));
 		
 		// clean up user activity events
@@ -51,7 +51,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			WHERE		time < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-				(TIME_NOW - 86400 * USER_CLEANUP_ACTIVITY_EVENT_LIFETIME)
+			(TIME_NOW - 86400 * USER_CLEANUP_ACTIVITY_EVENT_LIFETIME)
 		));
 		
 		// clean up profile visitors
@@ -59,7 +59,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			WHERE		time < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-				(TIME_NOW - 86400 * USER_CLEANUP_PROFILE_VISITOR_LIFETIME)
+			(TIME_NOW - 86400 * USER_CLEANUP_PROFILE_VISITOR_LIFETIME)
 		));
 		
 		// tracked visits
@@ -77,12 +77,12 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 				
 			// delete data
 			$statement1->execute(array(
-					$objectType->objectTypeID,
-					$lifetime
+				$objectType->objectTypeID,
+				$lifetime
 			));
 			$statement2->execute(array(
-					$objectType->objectTypeID,
-					$lifetime
+				$objectType->objectTypeID,
+				$lifetime
 			));
 		}
 		

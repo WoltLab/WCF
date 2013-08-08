@@ -5,13 +5,18 @@
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
-		new WCF.ACL.List($('#groupPermissions'), {@$objectTypeID}{if $groupID|isset}, '', {@$groupID}{/if});
 		new WCF.Label.ACPList.Connect();
 		
 		WCF.TabMenu.init();
 	});
 	//]]>
 </script>
+
+{if !$groupID|isset}
+	{include file='aclPermissionJavaScript' containerID='groupPermissions'}
+{else}
+	{include file='aclPermissionJavaScript' containerID='groupPermissions' objectID=$groupID}
+{/if}
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.label.group.{$action}{/lang}</h1>
