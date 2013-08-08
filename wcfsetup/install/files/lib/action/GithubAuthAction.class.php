@@ -55,6 +55,7 @@ class GithubAuthAction extends AbstractAction {
 			
 			// validate state, validation of state is executed after fetching the access_token to invalidate 'code'
 			if (!isset($_GET['state']) || $_GET['state'] != WCF::getSession()->getVar('__githubInit')) throw new IllegalLinkException();
+			WCF::getSession()->unregister('__githubInit');
 			
 			parse_str($content, $data);
 			
@@ -99,6 +100,7 @@ class GithubAuthAction extends AbstractAction {
 					throw new IllegalLinkException();
 				}
 				
+				WCF::getSession()->register('__3rdPartyProvider', 'github');
 				// save data for connection
 				if (WCF::getUser()->userID) {
 					WCF::getSession()->register('__githubUsername', $userData['login']);

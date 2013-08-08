@@ -52,6 +52,7 @@ class FacebookAuthAction extends AbstractAction {
 			
 			// validate state, validation of state is executed after fetching the access_token to invalidate 'code'
 			if (!isset($_GET['state']) || $_GET['state'] != WCF::getSession()->getVar('__facebookInit')) throw new IllegalLinkException();
+			WCF::getSession()->unregister('__facebookInit');
 			
 			parse_str($content, $data);
 			
@@ -96,6 +97,7 @@ class FacebookAuthAction extends AbstractAction {
 				}
 			}
 			else {
+				WCF::getSession()->register('__3rdPartyProvider', 'facebook');
 				// save data for connection
 				if (WCF::getUser()->userID) {
 					WCF::getSession()->register('__facebookUsername', $userData['name']);

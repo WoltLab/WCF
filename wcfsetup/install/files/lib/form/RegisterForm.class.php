@@ -113,7 +113,7 @@ class RegisterForm extends UserAddForm {
 			$this->useCaptcha = false;
 		}
 		
-		if (WCF::getSession()->getVar('__githubToken') || WCF::getSession()->getVar('__twitterData') || WCF::getSession()->getVar('__facebookData') || WCF::getSession()->getVar('__googleData')) {
+		if (WCF::getSession()->getVar('__3rdPartyProvider')) {
 			$this->isExternalAuthentication = true;
 		}
 	}
@@ -294,89 +294,96 @@ class RegisterForm extends UserAddForm {
 		
 		$avatarURL = '';
 		if ($this->isExternalAuthentication) {
-			// GitHub
-			if (WCF::getSession()->getVar('__githubData')) {
-				$githubData = WCF::getSession()->getVar('__githubData');
-				
-				$this->additionalFields['authData'] = 'github:'.WCF::getSession()->getVar('__githubToken');
-				
-				WCF::getSession()->unregister('__githubData');
-				WCF::getSession()->unregister('__githubToken');
-				
-				if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
-					$registerVia3rdParty = true;
-				}
-				
-				if (isset($githubData['bio'])) $saveOptions[User::getUserOptionID('aboutMe')] = $githubData['bio'];
-				if (isset($githubData['location'])) $saveOptions[User::getUserOptionID('location')] = $githubData['location'];
-			}
-			
-			// Twitter
-			if (WCF::getSession()->getVar('__twitterData')) {
-				$twitterData = WCF::getSession()->getVar('__twitterData');
-				$this->additionalFields['authData'] = 'twitter:'.$twitterData['user_id'];
-				
-				WCF::getSession()->unregister('__twitterData');
-				
-				if (isset($twitterData['description'])) $saveOptions[User::getUserOptionID('aboutMe')] = $twitterData['description'];
-				if (isset($twitterData['location'])) $saveOptions[User::getUserOptionID('location')] = $twitterData['location'];
-			}
-			
-			// Facebook
-			if (WCF::getSession()->getVar('__facebookData')) {
-				$facebookData = WCF::getSession()->getVar('__facebookData');
-				$this->additionalFields['authData'] = 'facebook:'.$facebookData['id'];
-				
-				WCF::getSession()->unregister('__facebookData');
-				
-				if ($facebookData['email'] == $this->email) {
-					$registerVia3rdParty = true;
-				}
-				
-				$saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
-				
-				if (isset($facebookData['birthday'])) {
-					list($month, $day, $year) = explode('/', $facebookData['birthday']);
-					$saveOptions[User::getUserOptionID('birthday')] = $year.'-'.$month.'-'.$day;
-				}
-				if (isset($facebookData['bio'])) $saveOptions[User::getUserOptionID('aboutMe')] = $facebookData['bio'];
-				if (isset($facebookData['location'])) $saveOptions[User::getUserOptionID('location')] = $facebookData['location']['name'];
-				if (isset($facebookData['website'])) {
-					if (!Regex::compile('^https?://')->match($facebookData['website'])) {
-						$facebookData['website'] = 'http://' . $facebookData['website'];
+			switch (WCF::getSession()->getVar('__3rdPartyProvider')) {
+				case 'github':
+					// GitHub
+					if (WCF::getSession()->getVar('__githubData')) {
+						$githubData = WCF::getSession()->getVar('__githubData');
+						
+						$this->additionalFields['authData'] = 'github:'.WCF::getSession()->getVar('__githubToken');
+						
+						WCF::getSession()->unregister('__githubData');
+						WCF::getSession()->unregister('__githubToken');
+						
+						if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
+							$registerVia3rdParty = true;
+						}
+						
+						if (isset($githubData['bio'])) $saveOptions[User::getUserOptionID('aboutMe')] = $githubData['bio'];
+						if (isset($githubData['location'])) $saveOptions[User::getUserOptionID('location')] = $githubData['location'];
 					}
-					
-					$saveOptions[User::getUserOptionID('homepage')] = $facebookData['website'];
-				}
-				
-				// avatar
-				if (isset($facebookData['picture']) && !$facebookData['picture']['data']['is_silhouette']) {
-					$avatarURL = $facebookData['picture']['data']['url'];
-				}
-			}
-			
-			// Google Plus
-			if (WCF::getSession()->getVar('__googleData')) {
-				$googleData = WCF::getSession()->getVar('__googleData');
-				$this->additionalFields['authData'] = 'google:'.$googleData['id'];
-				
-				WCF::getSession()->unregister('__googleData');
-				
-				if (isset($googleData['email']) && $googleData['email'] == $this->email) {
-					$registerVia3rdParty = true;
-				}
-				
-				if (isset($googleData['gender'])) {
-					switch ($googleData['gender']) {
-						case 'male':
-							$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_MALE;
-						break;
-						case 'female':
-							$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_FEMALE;
-						break;
+				break;
+				case 'twitter':
+					// Twitter
+					if (WCF::getSession()->getVar('__twitterData')) {
+						$twitterData = WCF::getSession()->getVar('__twitterData');
+						$this->additionalFields['authData'] = 'twitter:'.$twitterData['user_id'];
+						
+						WCF::getSession()->unregister('__twitterData');
+						
+						if (isset($twitterData['description'])) $saveOptions[User::getUserOptionID('aboutMe')] = $twitterData['description'];
+						if (isset($twitterData['location'])) $saveOptions[User::getUserOptionID('location')] = $twitterData['location'];
 					}
-				}
-				if (isset($googleData['birthday'])) $saveOptions[User::getUserOptionID('birthday')] = $googleData['birthday'];
+				break;
+				case 'facebook':
+					// Facebook
+					if (WCF::getSession()->getVar('__facebookData')) {
+						$facebookData = WCF::getSession()->getVar('__facebookData');
+						$this->additionalFields['authData'] = 'facebook:'.$facebookData['id'];
+						
+						WCF::getSession()->unregister('__facebookData');
+						
+						if ($facebookData['email'] == $this->email) {
+							$registerVia3rdParty = true;
+						}
+						
+						$saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
+						
+						if (isset($facebookData['birthday'])) {
+							list($month, $day, $year) = explode('/', $facebookData['birthday']);
+							$saveOptions[User::getUserOptionID('birthday')] = $year.'-'.$month.'-'.$day;
+						}
+						if (isset($facebookData['bio'])) $saveOptions[User::getUserOptionID('aboutMe')] = $facebookData['bio'];
+						if (isset($facebookData['location'])) $saveOptions[User::getUserOptionID('location')] = $facebookData['location']['name'];
+						if (isset($facebookData['website'])) {
+							if (!Regex::compile('^https?://')->match($facebookData['website'])) {
+								$facebookData['website'] = 'http://' . $facebookData['website'];
+							}
+							
+							$saveOptions[User::getUserOptionID('homepage')] = $facebookData['website'];
+						}
+						
+						// avatar
+						if (isset($facebookData['picture']) && !$facebookData['picture']['data']['is_silhouette']) {
+							$avatarURL = $facebookData['picture']['data']['url'];
+						}
+					}
+				break;
+				case 'google':
+					// Google Plus
+					if (WCF::getSession()->getVar('__googleData')) {
+						$googleData = WCF::getSession()->getVar('__googleData');
+						$this->additionalFields['authData'] = 'google:'.$googleData['id'];
+						
+						WCF::getSession()->unregister('__googleData');
+						
+						if (isset($googleData['email']) && $googleData['email'] == $this->email) {
+							$registerVia3rdParty = true;
+						}
+						
+						if (isset($googleData['gender'])) {
+							switch ($googleData['gender']) {
+								case 'male':
+									$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_MALE;
+								break;
+								case 'female':
+									$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_FEMALE;
+								break;
+							}
+						}
+						if (isset($googleData['birthday'])) $saveOptions[User::getUserOptionID('birthday')] = $googleData['birthday'];
+					}
+				break;
 			}
 			
 			// create fake password
