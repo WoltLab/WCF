@@ -6,6 +6,7 @@ use wcf\system\database\DatabaseException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -28,6 +29,12 @@ class DataImportForm extends AbstractForm {
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canImportData');
+	
+	/**
+	 * additional data
+	 * @var array
+	 */
+	public $additionalData = array();
 	
 	/**
 	 * list of available exporters
@@ -162,6 +169,7 @@ class DataImportForm extends AbstractForm {
 		if (isset($_POST['dbPrefix'])) $this->dbPrefix = StringUtil::trim($_POST['dbPrefix']);
 		if (isset($_POST['fileSystemPath'])) $this->fileSystemPath = StringUtil::trim($_POST['fileSystemPath']);
 		if (isset($_POST['userMergeMode'])) $this->userMergeMode = intval($_POST['userMergeMode']);
+		if (isset($_POST['additionalData'])) $this->additionalData = ArrayUtil::trim($_POST['additionalData']);
 	}
 	
 	/**
@@ -170,7 +178,7 @@ class DataImportForm extends AbstractForm {
 	public function validate() {
 		parent::validate();
 	
-		$this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, $this->fileSystemPath);
+		$this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, $this->fileSystemPath, $this->additionalData);
 		
 		// validate database Access
 		try {
@@ -215,7 +223,8 @@ class DataImportForm extends AbstractForm {
 			'dbName' => $this->dbName,
 			'dbPrefix' => $this->dbPrefix,
 			'fileSystemPath' => $this->fileSystemPath,
-			'userMergeMode' => $this->userMergeMode
+			'userMergeMode' => $this->userMergeMode,
+			'additionalData' => $this->additionalData
 		));
 		
 		WCF::getTPL()->assign('queue', $queue);
@@ -251,7 +260,8 @@ class DataImportForm extends AbstractForm {
 			'dbName' => $this->dbName,
 			'dbPrefix' => $this->dbPrefix,
 			'fileSystemPath' => $this->fileSystemPath,
-			'userMergeMode' => $this->userMergeMode
+			'userMergeMode' => $this->userMergeMode,
+			'additionalData' => $this->additionalData
 		));
 	}
 }
