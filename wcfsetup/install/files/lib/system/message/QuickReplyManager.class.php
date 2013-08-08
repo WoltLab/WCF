@@ -11,6 +11,7 @@ use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
+use wcf\util\MessageUtil;
 
 /**
  * Manages quick replies and stored messages.
@@ -163,6 +164,7 @@ class QuickReplyManager extends SingletonFactory {
 		$parameters['data']['username'] = WCF::getUser()->username;
 		
 		// pre-parse message text
+		$parameters['data']['message'] = MessageUtil::stripCrap($parameters['data']['message']);
 		$parameters['data']['message'] = PreParser::getInstance()->parse($parameters['data']['message'], $this->allowedBBodes);
 		
 		$message = $object->create();
