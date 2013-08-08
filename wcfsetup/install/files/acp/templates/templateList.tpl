@@ -71,7 +71,7 @@
 	{assign var='linkParameters' value=''}
 	{if $templateGroupID}{capture append=linkParameters}&templateGroupID={@$templateGroupID}{/capture}{/if}
 	{if $searchTemplateName}{capture append=linkParameters}&searchTemplateName={@$searchTemplateName|rawurlencode}{/capture}{/if}
-	{if $application}{capture append=linkParameters}&application={@$application|rawurlencode}{/capture}{/if}
+	{if $application}{capture append=linkParameters}&application={$application}{/capture}{/if}
 	
 	{pages print=true assign=pagesLinks controller="TemplateList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 	
