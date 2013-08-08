@@ -38,6 +38,7 @@ class TwitterAuthAction extends AbstractAction {
 		if (isset($_GET['oauth_token']) && isset($_GET['oauth_verifier'])) {
 			// fetch data created in the first step
 			$initData = WCF::getSession()->getVar('__twitterInit');
+			WCF::getSession()->unregister('__twitterInit');
 			if (!$initData) throw new IllegalLinkException();
 			
 			// validate oauth_token
@@ -99,6 +100,7 @@ class TwitterAuthAction extends AbstractAction {
 				}
 			}
 			else {
+				WCF::getSession()->register('__3rdPartyProvider', 'twitter');
 				// save data for connection
 				if (WCF::getUser()->userID) {
 					WCF::getSession()->register('__twitterUsername', $data['screen_name']);

@@ -28,7 +28,7 @@
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.global.filter{/lang}</legend>
-		
+			
 			<dl>
 				<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
 				<dd>
@@ -71,7 +71,8 @@
 	{assign var='linkParameters' value=''}
 	{if $templateGroupID}{capture append=linkParameters}&templateGroupID={@$templateGroupID}{/capture}{/if}
 	{if $searchTemplateName}{capture append=linkParameters}&searchTemplateName={@$searchTemplateName|rawurlencode}{/capture}{/if}
-		
+	{if $application}{capture append=linkParameters}&application={$application}{/capture}{/if}
+	
 	{pages print=true assign=pagesLinks controller="TemplateList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 	
 	<nav>
@@ -125,7 +126,6 @@
 				{/foreach}
 			</tbody>
 		</table>
-		
 	</div>
 	
 	<div class="contentNavigation">
@@ -134,7 +134,7 @@
 		<nav>
 			<ul>
 				<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
-			
+				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>

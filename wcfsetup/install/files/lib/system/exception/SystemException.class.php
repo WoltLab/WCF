@@ -81,14 +81,12 @@ class SystemException extends LoggedException implements IPrintableException {
 		}
 		
 		// print report
-		echo '<?xml version="1.0" encoding="UTF-8"?>';
 		$e = ($this->getPrevious() ?: $this);
-		?>
-
-		<!DOCTYPE html>
+		?><!DOCTYPE html>
 		<html>
 			<head>
 				<title>Fatal error: <?php echo StringUtil::encodeHTML($this->_getMessage()); ?></title>
+				<meta charset="utf-8" />
 				<style>
 					.systemException {
 						font-family: 'Trebuchet MS', Arial, sans-serif !important;

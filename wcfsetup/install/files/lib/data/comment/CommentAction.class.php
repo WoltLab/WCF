@@ -17,6 +17,7 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
+use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -501,6 +502,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 */
 	protected function validateMessage() {
 		$this->readString('message', false, 'data');
+		$this->parameters['data']['message'] = MessageUtil::stripCrap($this->parameters['data']['message']);
 		
 		if (empty($this->parameters['data']['message'])) {
 			throw new UserInputException('message');

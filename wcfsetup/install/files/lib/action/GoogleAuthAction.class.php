@@ -60,6 +60,7 @@ class GoogleAuthAction extends AbstractAction {
 			
 			// validate state, validation of state is executed after fetching the access_token to invalidate 'code'
 			if (!isset($_GET['state']) || $_GET['state'] != WCF::getSession()->getVar('__googleInit')) throw new IllegalLinkException();
+			WCF::getSession()->unregister('__googleInit');
 			
 			$data = JSON::decode($content);
 			
@@ -105,6 +106,8 @@ class GoogleAuthAction extends AbstractAction {
 				}
 			}
 			else {
+				WCF::getSession()->register('__3rdPartyProvider', 'google');
+				
 				// save data for connection
 				if (WCF::getUser()->userID) {
 					WCF::getSession()->register('__googleUsername', $userData['name']);
