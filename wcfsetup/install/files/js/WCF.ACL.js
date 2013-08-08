@@ -1,7 +1,7 @@
 /**
  * Namespace for ACL
  */
-WCF.ACL = {};
+WCF.ACL = { };
 
 /**
  * ACL support for WCF
@@ -84,6 +84,10 @@ WCF.ACL.List = Class.extend({
 		if (includeUserGroups === undefined) {
 			includeUserGroups = true;
 		}
+		this._values = {
+			group: { },
+			user: { }
+		};
 		
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
@@ -422,13 +426,13 @@ WCF.ACL.List = Class.extend({
 		});
 		if ($type == 'deny') {
 			if (this._containerElements.denyAll !== null) {
-				if ($allChecked) this._containerElements.denyAll.prop('checked', true)
+				if ($allChecked) this._containerElements.denyAll.prop('checked', true);
 				else this._containerElements.denyAll.prop('checked', false);
 			}
 		}
 		else {
 			if (this._containerElements.grantAll !== null) {
-				if ($allChecked) this._containerElements.grantAll.prop('checked', true)
+				if ($allChecked) this._containerElements.grantAll.prop('checked', true);
 				else this._containerElements.grantAll.prop('checked', false);
 			}
 		}
@@ -525,8 +529,15 @@ WCF.ACL.List = Class.extend({
 	_savePermissions: function() {
 		// get active object
 		var $activeObject = this._containerElements.aclList.find('li.active');
+		if (!$activeObject.length) {
+			return;
+		}
+		
 		var $objectID = $activeObject.data('objectID');
 		var $type = $activeObject.data('type');
+		
+		// clear old values
+		this._values[$type][$objectID] = { };
 		
 		var self = this;
 		this._containerElements.permissionList.find("input[type='checkbox']").each(function(index, checkbox) {
@@ -536,10 +547,6 @@ WCF.ACL.List = Class.extend({
 				var $optionID = $checkbox.data('optionID');
 				
 				if ($checkbox.is(':checked')) {
-					if (!self._values[$type][$objectID]) {
-						self._values[$type][$objectID] = { };
-					}
-					
 					// store value
 					self._values[$type][$objectID][$optionID] = $optionValue;
 					
