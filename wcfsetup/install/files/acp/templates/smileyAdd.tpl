@@ -37,8 +37,8 @@
 					
 					{if $errorField == 'smileyTitle'}
 						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
+							{if $errorType == 'empty' || $errorType == 'multilingual'}
+								{lang}wcf.global.form.error.{$errorType}{/lang}
 							{else}
 								{lang}wcf.acp.smiley.smileyTitle.error.{@$errorType}{/lang}
 							{/if}
