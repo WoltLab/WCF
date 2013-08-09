@@ -111,7 +111,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		if ($this->objectType->getProcessor()->hasDescription()) {
 			$description = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.description.category'.$this->category->categoryID;
 			if (I18nHandler::getInstance()->isPlainValue('description')) {
-				I18nHandler::getInstance()->remove($description, $this->packageID);
+				I18nHandler::getInstance()->remove($description);
 				$description = I18nHandler::getInstance()->getValue('description');
 			}
 			else {
@@ -122,7 +122,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		// handle title
 		$title = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.title.category'.$this->category->categoryID;
 		if (I18nHandler::getInstance()->isPlainValue('title')) {
-			I18nHandler::getInstance()->remove($title, $this->packageID);
+			I18nHandler::getInstance()->remove($title);
 			$title = I18nHandler::getInstance()->getValue('title');
 		}
 		else {

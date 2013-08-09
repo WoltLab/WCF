@@ -126,7 +126,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 		$optionValues = $this->optionHandler->save();
 		$this->groupName = 'wcf.acp.group.group'.$this->group->groupID;
 		if (I18nHandler::getInstance()->isPlainValue('groupName')) {
-			I18nHandler::getInstance()->remove($this->groupName, 1);
+			I18nHandler::getInstance()->remove($this->groupName);
 			$this->groupName = I18nHandler::getInstance()->getValue('groupName');
 		}
 		else {

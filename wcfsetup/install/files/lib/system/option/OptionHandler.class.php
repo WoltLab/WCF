@@ -247,7 +247,7 @@ class OptionHandler implements IOptionHandler {
 			// handle i18n support
 			if ($this->supportI18n && $option->supportI18n) {
 				if (I18nHandler::getInstance()->isPlainValue($option->optionName)) {
-					I18nHandler::getInstance()->remove($optionPrefix . $option->optionID, $option->packageID);
+					I18nHandler::getInstance()->remove($optionPrefix . $option->optionID);
 					$saveOptions[$option->optionID] = I18nHandler::getInstance()->getValue($option->optionName);
 				}
 				else {

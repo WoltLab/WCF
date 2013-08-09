@@ -57,7 +57,7 @@ class UserRankEditForm extends UserRankAddForm {
 		
 		$this->rankTitle = 'wcf.user.rank.userRank'.$this->rank->rankID;
 		if (I18nHandler::getInstance()->isPlainValue('rankTitle')) {
-			I18nHandler::getInstance()->remove($this->rankTitle, 1);
+			I18nHandler::getInstance()->remove($this->rankTitle);
 			$this->rankTitle = I18nHandler::getInstance()->getValue('rankTitle');
 		}
 		else {
