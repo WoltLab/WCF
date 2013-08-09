@@ -1060,7 +1060,7 @@
 
 .nestedCategoryList {
 	> li {
-		margin-top: 21px;
+		margin-top: 14px;
 		overflow: hidden;
 		
 		&:first-child {
@@ -1080,8 +1080,10 @@
 			}
 		}
 	}
-	
-	&.doubleColumned {
+}
+
+@media all and (min-width: 801px) {
+	.nestedCategoryList.doubleColumned {
 		> li {
 			float: left;
 			width: 50%;
