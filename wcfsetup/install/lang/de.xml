@@ -2338,7 +2338,7 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[Hat einen Kommentar an die <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a> geschrieben.]]></item>
 		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a> geantwortet.]]></item>
 		<item name="wcf.user.profile.access.registered"><![CDATA[Die Details des Benutzerprofils von „{$username}“ sind nur für Registrierte Benutzer zugänglich.]]></item>
-		<item name="wcf.user.profile.access.follower"><![CDATA[Die Details dieses Benutzerprofils sind nur für Benutzer die „{$username}“ folgt zugänglich.]]></item>
+		<item name="wcf.user.profile.access.follower"><![CDATA[Die Details dieses Benutzerprofils sind nur für Benutzer denen „{$username}“ folgt zugänglich.]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">
