@@ -58,7 +58,7 @@ class CronjobEditForm extends CronjobAddForm {
 		
 		$this->description = 'wcf.acp.cronjob.description.cronjob'.$this->cronjob->cronjobID;
 		if (I18nHandler::getInstance()->isPlainValue('description')) {
-			I18nHandler::getInstance()->remove($this->description, 1);
+			I18nHandler::getInstance()->remove($this->description);
 			$this->description = I18nHandler::getInstance()->getValue('description');
 		}
 		else {

@@ -7,6 +7,7 @@ use wcf\system\Callback;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 use wcf\util\StyleUtil;
 
 /**
@@ -63,6 +64,17 @@ class StyleCompiler extends SingletonFactory {
 		if (isset($variables['individualLess'])) {
 			$individualLess = $variables['individualLess'];
 			unset($variables['individualLess']);
+		}
+		
+		// apply overrides
+		if (isset($variables['overrideLess'])) {
+			$lines = explode("\n", StringUtil::unifyNewlines($variables['overrideLess']));
+			foreach ($lines as $line) {
+				if (preg_match('~^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%\#-]+);$~', $line, $matches)) {
+					$variables[$matches[1]] = $matches[2];
+				}
+			}
+			unset($variables['overrideLess']);
 		}
 		
 		$this->compileStylesheet(
@@ -207,11 +219,13 @@ class StyleCompiler extends SingletonFactory {
 		
 		// write stylesheet
 		file_put_contents($filename.'.css', $content);
+		FileUtil::makeWritable($filename.'.css');
 		
 		// convert stylesheet to RTL
 		$content = StyleUtil::convertCSSToRTL($content);
 		
 		// write stylesheet for RTL
 		file_put_contents($filename.'-rtl.css', $content);
+		FileUtil::makeWritable($filename.'-rtl.css');
 	}
 }
