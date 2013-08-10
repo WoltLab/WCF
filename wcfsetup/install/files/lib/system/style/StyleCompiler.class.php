@@ -219,11 +219,13 @@ class StyleCompiler extends SingletonFactory {
 		
 		// write stylesheet
 		file_put_contents($filename.'.css', $content);
+		FileUtil::makeWritable($filename.'.css');
 		
 		// convert stylesheet to RTL
 		$content = StyleUtil::convertCSSToRTL($content);
 		
 		// write stylesheet for RTL
 		file_put_contents($filename.'-rtl.css', $content);
+		FileUtil::makeWritable($filename.'-rtl.css');
 	}
 }
