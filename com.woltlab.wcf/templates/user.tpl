@@ -106,7 +106,7 @@
 <header class="boxHeadline userHeadline">
 	<span class="framed invisible">{@$user->getAvatar()->getImageTag(48)}</span>
 	
-	<h1>{$user->username}{if MODULE_USER_RANK && $user->getUserTitle()} <span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>{/if}</h1>
+	<h1>{$user->username}{if $user->banned && $__wcf->session->getPermission('user.profile.canViewBannedInfo')} <span class="icon icon16 icon-lock jsTooltip" title="{lang}wcf.user.profile.banned{/lang}"></span>{/if}{if MODULE_USER_RANK && $user->getUserTitle()} <span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>{/if}</h1>
 	
 	<ul class="dataList">
 		{if $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}
