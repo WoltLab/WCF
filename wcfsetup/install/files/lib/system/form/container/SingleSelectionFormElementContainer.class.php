@@ -29,11 +29,9 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer 
 	}
 	
 	/**
-	 * Returns container value.
-	 * 
-	 * @return	string
+	 * @see	wcf\system\form\IFormElementContainer::getValue()
 	 */
-	public function getValue() {
+	public function getValue($key) {
 		return $this->value;
 	}
 	
