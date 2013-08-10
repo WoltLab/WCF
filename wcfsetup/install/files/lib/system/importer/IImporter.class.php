@@ -20,5 +20,5 @@ interface IImporter {
 	 * @param	array		$additionalData
 	 * @return	mixed		new id
 	 */
-	public function import($oldID, array $data, array $additionalData = array());
+	public function import($oldID, array $data, array $additionalData);
 }
