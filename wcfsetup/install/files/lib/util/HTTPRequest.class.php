@@ -33,6 +33,12 @@ final class HTTPRequest {
 	private $postParameters = array();
 	
 	/**
+	 * given files
+	 * @var array
+	 */
+	private $files = array();
+	
+	/**
 	 * indicates if request will be made via SSL
 	 * @var	boolean
 	 */
@@ -75,6 +81,12 @@ final class HTTPRequest {
 	private $headers = array();
 	
 	/**
+	 * request body
+	 * @var	string
+	 */
+	private $body = '';
+	
+	/**
 	 * reply headers
 	 * @var	array<string>
 	 */
@@ -98,11 +110,13 @@ final class HTTPRequest {
 	 * @param	string		$url		URL to connect to
 	 * @param	array<string>	$options
 	 * @param	array		$postParameters	Parameters to send via POST
+	 * @param	array		$files		Files to attach to the request
 	 */
-	public function __construct($url, array $options = array(), array $postParameters = array()) {
+	public function __construct($url, array $options = array(), array $postParameters = array(), array $files = array()) {
 		$this->setURL($url);
 		
 		$this->postParameters = $postParameters;
+		$this->files = $files;
 		
 		$this->setOptions($options);
 		
@@ -111,8 +125,51 @@ final class HTTPRequest {
 		$this->addHeader('Accept', '*/*');
 		$this->addHeader('Accept-Language', WCF::getLanguage()->getFixedLanguageCode());
 		if ($this->options['method'] !== 'GET') {
-			$this->addHeader('Content-length', strlen(http_build_query($this->postParameters, '', '&')));
-			$this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
+			if (empty($this->files)) {
+				$this->body = http_build_query($this->postParameters, '', '&');
+				$this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
+			}
+			else {
+				$boundary = StringUtil::getRandomID();
+				$this->addHeader('Content-Type', 'multipart/form-data; boundary='.$boundary);
+				
+				// source of the iterators: http://stackoverflow.com/a/7623716/782822
+				if (!empty($this->postParameters)) {
+					$iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this->postParameters), \RecursiveIteratorIterator::SELF_FIRST);
+					foreach ($iterator as $k => $v) {
+						if (!$iterator->hasChildren()) {
+							$key = '';
+							for ($i = 0, $max = $iterator->getDepth(); $i <= $max; $i++) {
+								if ($i === 0) $key .= $iterator->getSubIterator($i)->key();
+								else $key .= '['.$iterator->getSubIterator($i)->key().']';
+							}
+							
+							$this->body .= "--".$boundary."\r\n";
+							$this->body .= 'Content-Disposition: form-data; name="'.$key.'"'."\r\n\r\n";
+							$this->body .= $v."\r\n";
+						}
+					}
+				}
+				
+				$iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this->files), \RecursiveIteratorIterator::SELF_FIRST);
+				foreach ($iterator as $k => $v) {
+					if (!$iterator->hasChildren()) {
+						$key = '';
+						for ($i = 0, $max = $iterator->getDepth(); $i <= $max; $i++) {
+							if ($i === 0) $key .= $iterator->getSubIterator($i)->key();
+							else $key .= '['.$iterator->getSubIterator($i)->key().']';
+						}
+						
+						$this->body .= "--".$boundary."\r\n";
+						$this->body .= 'Content-Disposition: form-data; name="'.$k.'"; filename="'.basename($v).'"'."\r\n";
+						$this->body .= 'Content-Type: '.(FileUtil::getMimeType($v) ?: 'application/octet-stream.')."\r\n\r\n";
+						$this->body .= file_get_contents($v)."\r\n";
+					}
+				}
+				
+				$this->body .= "--".$boundary."--";
+			}
+			$this->addHeader('Content-length', strlen($this->body));
 		}
 		if (isset($this->options['auth'])) {
 			$this->addHeader('Authorization', "Basic ".base64_encode($options['auth']['username'].":".$options['auth']['password']));
@@ -167,7 +224,7 @@ final class HTTPRequest {
 		}
 		$request .= "\r\n";
 		// add post parameters
-		if ($this->options['method'] !== 'GET') $request .= http_build_query($this->postParameters, '', '&')."\r\n\r\n";
+		if ($this->options['method'] !== 'GET') $request .= $this->body."\r\n\r\n";
 		
 		$remoteFile->puts($request);
 		
@@ -310,7 +367,7 @@ final class HTTPRequest {
 		}
 		
 		if (!isset($options['method'])) {
-			$options['method'] = (!empty($this->postParameters) ? 'POST' : 'GET');
+			$options['method'] = (!empty($this->postParameters) || !empty($this->files) ? 'POST' : 'GET');
 		}
 		
 		if (!isset($options['maxDepth'])) {
