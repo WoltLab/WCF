@@ -505,6 +505,22 @@ class WCF {
 	}
 	
 	/**
+	 * Loads an application on runtime, do not use this outside the package installation.
+	 * 
+	 * @param	integer		$packageID
+	 */
+	public static function loadRuntimeApplication($packageID) {
+		$package = new Package($packageID);
+		$application = new Application($packageID);
+		
+		$abbreviation = Package::getAbbreviation($package->package);
+		$packageDir = FileUtil::getRealPath(WCF_DIR.$package->packageDir);
+		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
+		self::$applications[$abbreviation] = $application;
+		self::getTPL()->addApplication($abbreviation, $packageDir . 'acp/templates/');
+	}
+	
+	/**
 	 * Initializes core object cache.
 	 */
 	protected function initCoreObjects() {
