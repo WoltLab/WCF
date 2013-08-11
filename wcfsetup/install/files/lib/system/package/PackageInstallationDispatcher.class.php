@@ -1042,8 +1042,8 @@ class PackageInstallationDispatcher {
 			$baseTableColumns = WCF::getDB()->getEditor()->getColumns(call_user_func(array($objectType->className, 'getDatabaseTableName')));
 
 			// remove primary key from base table columns
-			foreach($baseTableColumns as $key => $column) {
-				if($column['data']['key'] == 'PRIMARY') {
+			foreach ($baseTableColumns as $key => $column) {
+				if ($column['data']['key'] == 'PRIMARY') {
 					$baseTableColumns[$key]['data']['key'] = '';
 				}
 				$baseTableColumns[$key]['data']['autoIncrement'] = false;
