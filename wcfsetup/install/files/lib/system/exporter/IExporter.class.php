@@ -22,7 +22,7 @@ interface IExporter {
 	 * @param	string		$databasePrefix
 	 * @param	string		$fileSystemPath
 	 */
-	public function setData($databaseHost, $databaseUser, $databasePassword, $databaseName, $databasePrefix, $fileSystemPath);
+	public function setData($databaseHost, $databaseUser, $databasePassword, $databaseName, $databasePrefix, $fileSystemPath, $additionalData);
 	
 	/**
 	 * Initializes this exporter.
