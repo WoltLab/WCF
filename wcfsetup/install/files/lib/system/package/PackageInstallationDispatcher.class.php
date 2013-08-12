@@ -1038,7 +1038,11 @@ class PackageInstallationDispatcher {
 		$versionTableBaseColumns[] = array('name' => 'versionTime', 'data' => array('type' => 'INT', 'length' => 10));
 		
 		foreach ($objectTypes as $objectType) {
-			// get structure of base table
+			if (!class_exists($objectType->className)) {
+				// versionable database object isn't available anymore
+				// the object type gets deleted later on during the uninstallation
+				continue;
+			}
 			$baseTableColumns = WCF::getDB()->getEditor()->getColumns(call_user_func(array($objectType->className, 'getDatabaseTableName')));
 
 			// remove primary key from base table columns
@@ -1059,6 +1063,16 @@ class PackageInstallationDispatcher {
 			if (empty($versionTableColumns)) {
 				$columns = array_merge($versionTableBaseColumns, $baseTableColumns);
 				WCF::getDB()->getEditor()->createTable(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')), $columns);
+
+				// add version table to plugin
+				$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log
+							(packageID, sqlTable)
+					VALUES		(?, ?)";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array(
+					$this->queue->packageID,
+					call_user_func(array($objectType->className, 'getDatabaseVersionTableName'))
+				));
 			}
 			else {
 				// check garbage columns in versioned table
