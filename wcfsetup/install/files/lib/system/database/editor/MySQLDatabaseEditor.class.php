@@ -34,18 +34,17 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	public function getColumns($tableName) {
 		$columns = array();
 		$regex = new Regex('([a-z]+)\(([0-9]+)\)', Regex::CASE_INSENSITIVE);
-
+		
 		$sql = "SHOW COLUMNS FROM ".$tableName;
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
 			$regex->match($row['Type']);
 			$typeMatches = $regex->getMatches();
-			if(empty($typeMatches)) continue;
-
+			
 			$columns[] = array('name' => $row['Field'], 'data' => array(
-				'type' => $typeMatches[1],
-				'length' => $typeMatches[2],
+				'type' => ((empty($typeMatches)) ? $row['Type'] : $typeMatches[1]),
+				'length' => ((empty($typeMatches)) ? '' : $typeMatches[2]),
 				'notNull' => (($row['Null'] == 'YES') ? false : true),
 				'key' => (($row['Key'] == 'PRI') ? 'PRIMARY' : (($row['Key'] == 'UNI') ? 'UNIQUE' : '')),
 				'default' => $row['Default'],
