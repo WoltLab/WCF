@@ -30,6 +30,10 @@
 	{@$__wcf->getStyleHandler()->getStylesheet()}
 	{event name='stylesheets'}
 	
+	<!-- Icons -->
+	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon.ico" />
+	<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png" />
+	
 	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
