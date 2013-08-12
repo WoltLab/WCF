@@ -76,10 +76,11 @@ class AbstractAttachmentImporter implements IImporter {
 	}
 	
 	protected function fixEmbeddedAttachments($message, $oldID, $newID) {
-		if (StringUtil::indexOfIgnoreCase($message, '[attach]'.$oldID.'[/attach]') !== false || StringUtil::indexOfIgnoreCase($message, '[attach='.$oldID.']') !== false) {
+		if (StringUtil::indexOfIgnoreCase($message, '[attach]'.$oldID.'[/attach]') !== false || StringUtil::indexOfIgnoreCase($message, '[attach='.$oldID.']') !== false || StringUtil::indexOfIgnoreCase($message, '[attach='.$oldID.',') !== false) {
 			$message = StringUtil::replaceIgnoreCase('[attach]'.$oldID.'[/attach]', '[attach]'.$newID.'[/attach]', $message);
 			$message = StringUtil::replaceIgnoreCase('[attach='.$oldID.']', '[attach='.$newID.']', $message);
-		
+			$message = StringUtil::replaceIgnoreCase('[attach='.$oldID.',', '[attach='.$newID.',', $message);
+			
 			return $message;
 		}
 		
