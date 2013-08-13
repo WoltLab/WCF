@@ -93,12 +93,20 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 		
 		if (!isset($this->idMappingCache[$objectTypeID]) || !array_key_exists($oldID, $this->idMappingCache[$objectTypeID])) {
 			$this->idMappingCache[$objectTypeID][$oldID] = null;
+			$importer = $this->getImporter($type);
+			$tableName = $indexName = '';
+			if ($importer->getClassName()) {
+				$tableName = call_user_func(array($importer->getClassName(), 'getDatabaseTableName'));
+				$indexName = call_user_func(array($importer->getClassName(), 'getDatabaseTableIndexName'));
+			}
 			
-			$sql = "SELECT	newID
-				FROM	wcf".WCF_N."_import_mapping
-				WHERE	importHash = ?
-					AND objectTypeID = ?
-					AND oldID = ?";
+			$sql = "SELECT		import_mapping.newID
+				FROM		wcf".WCF_N."_import_mapping import_mapping
+				".($tableName ? "LEFT JOIN ".$tableName." object_table ON (object_table.".$indexName." = import_mapping.newID)" : '')."
+				WHERE		import_mapping.importHash = ?
+						AND import_mapping.objectTypeID = ?
+						AND import_mapping.oldID = ?
+						".($tableName ? "AND object_table.".$indexName." IS NOT NULL" : '');
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($this->importHash, $objectTypeID, $oldID));
 			$row = $statement->fetchArray();

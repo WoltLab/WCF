@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\importer;
-use wcf\data\comment\response\CommentResponseAction;
+use wcf\data\comment\response\CommentResponseEditor;
 
 /**
  * Imports comment responses.
@@ -12,7 +12,12 @@ use wcf\data\comment\response\CommentResponseAction;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class AbstractCommentResponseImporter implements IImporter {
+class AbstractCommentResponseImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\comment\response\CommentResponse';
+	
 	/**
 	 * object type name
 	 * @var string
@@ -28,12 +33,8 @@ class AbstractCommentResponseImporter implements IImporter {
 		$data['commentID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['commentID']);
 		if (!$data['commentID']) return 0;
 		
-		$action = new CommentResponseAction(array(), 'create', array(
-			'data' => $data		
-		));
-		$returnValues = $action->executeAction();
-		$newID = $returnValues['returnValues']->responseID;
+		$response = CommentResponseEditor::create($data);
 		
-		return $newID;
+		return $response->responseID;
 	}
 }

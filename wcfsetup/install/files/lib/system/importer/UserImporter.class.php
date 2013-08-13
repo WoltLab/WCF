@@ -17,7 +17,12 @@ use wcf\util\StringUtil;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class UserImporter implements IImporter {
+class UserImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\user\User';
+	
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */

@@ -12,7 +12,12 @@ use wcf\data\like\LikeEditor;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class AbstractLikeImporter implements IImporter {
+class AbstractLikeImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\like\Like';
+	
 	/**
 	 * object type id for likes
 	 * @var integer

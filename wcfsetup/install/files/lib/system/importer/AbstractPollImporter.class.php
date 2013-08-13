@@ -12,7 +12,12 @@ use wcf\data\poll\PollEditor;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class AbstractPollImporter implements IImporter {
+class AbstractPollImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\poll\Poll';
+	
 	/**
 	 * object type id for poll
 	 * @var integer

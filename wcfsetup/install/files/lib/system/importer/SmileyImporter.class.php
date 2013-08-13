@@ -14,7 +14,12 @@ use wcf\util\StringUtil;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class SmileyImporter implements IImporter {
+class SmileyImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\smiley\Smiley';
+	
 	/**
 	 * known smiley codes
 	 * 
