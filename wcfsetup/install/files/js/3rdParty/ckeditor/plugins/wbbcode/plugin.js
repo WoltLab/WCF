@@ -1,9 +1,10 @@
-﻿/*
- * BBCode Plugin v1.0 for CKEditor - http://www.site-top.com/
- * Copyright (c) 2010, PitBult.
- * - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+﻿/**
+ * BBCode Plugin for CKEditor
+ * 
+ * @author	Marcel Werk
+ * @copyright 	2001-2013 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-
 (function() {
 	var $pasted = false;
 	var $insertedText = null;
