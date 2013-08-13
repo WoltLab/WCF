@@ -1075,9 +1075,20 @@ class PackageInstallationDispatcher {
 				));
 			}
 			else {
+				$baseTableColumnNames = $versionTableColumnNames = $versionTableBaseColumnNames = array();
+				foreach ($baseTableColumns as $column) {
+					$baseTableColumnNames[] = $column['name'];
+				}
+				foreach ($versionTableColumns as $column) {
+					$versionTableColumnNames[] = $column['name'];
+				}
+				foreach ($versionTableBaseColumns as $column) {
+					$versionTableBaseColumnNames[] = $column['name'];
+				}
+
 				// check garbage columns in versioned table
 				foreach ($versionTableColumns as $columnData) {
-					if (!array_search($columnData['name'], $baseTableColumns, true)) {
+					if (!in_array($columnData['name'], $baseTableColumnNames) && !in_array($columnData['name'], $versionTableBaseColumnNames)) {
 						// delete column
 						WCF::getDB()->getEditor()->dropColumn(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')), $columnData['name']);
 					}
@@ -1085,7 +1096,7 @@ class PackageInstallationDispatcher {
 				
 				// check new columns for versioned table
 				foreach ($baseTableColumns as $columnData) {
-					if (!array_search($columnData['name'], $versionTableColumns, true)) {
+					if (!in_array($columnData['name'], $versionTableColumnNames)) {
 						// add colum
 						WCF::getDB()->getEditor()->addColumn(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')), $columnData['name'], $columnData['data']);
 					}
