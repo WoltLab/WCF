@@ -1,7 +1,8 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\user\group\UserGroup;
+use wcf\data\user\UserEditor;
 use wcf\data\user\User;
-use wcf\data\user\UserAction;
 use wcf\system\database\DatabaseException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -22,6 +23,31 @@ class UserImporter extends AbstractImporter {
 	 * @see wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\user\User';
+	
+	/**
+	 * list of group memberships
+	 * @var array
+	 */
+	protected $userToGroups = array();
+	
+	/**
+	 * list of user languages
+	 * @var array
+	 */
+	protected $userToLanguages = array();
+	
+	/**
+	 * list of imported user ids
+	 * @var array<integer>
+	 */
+	protected $userIDs = array();
+	
+	/**
+	 * Creates a new UserImporter object.
+	 */
+	public function __construct() {
+		register_shutdown_function(array($this, 'finalizeImport'));
+	}
 	
 	/**
 	 * @see wcf\system\importer\IImporter::import()
@@ -80,18 +106,83 @@ class UserImporter extends AbstractImporter {
 		}
 		
 		// create user
-		$action = new UserAction(array(), 'create', array(
-			'data' => $data,
-			'groups' => $groupIDs,
-			'options' => $userOptions,
-			'languages' => $languageIDs
-		));
-		$returnValues = $action->executeAction();
+		$user = UserEditor::create($data);
+		$userEditor = new UserEditor($user);
 		
-		$newUserID = $returnValues['returnValues']->userID;
-		ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user', $oldID, $newUserID);
+		// updates user options
+		$userEditor->updateUserOptions($userOptions);
 		
-		return $newUserID;
+		// store data
+		$this->userIDs[] = $user->userID;
+		$this->userToGroups[$user->userID] = $groupIDs;
+		$this->userToLanguages[$user->userID] = $languageIDs;
+		
+		// save mapping
+		ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user', $oldID, $user->userID);
+		
+		return $user->userID;
+	}
+	
+	/**
+	 * Finalizes the user import.
+	 */
+	public function finalizeImport() {
+		if (empty($this->userIDs)) return;
+		
+		// save groups
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_to_group
+						(userID, groupID)
+			VALUES			(?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		WCF::getDB()->beginTransaction();
+		foreach ($this->userToGroups as $userID => $groupIDs) {
+			$groupIDs = array_merge($groupIDs, UserGroup::getGroupIDsByType(array(UserGroup::EVERYONE, UserGroup::USERS)));
+			
+			foreach ($groupIDs as $groupID) {
+				$statement->execute(array($userID, $groupID));
+			}
+		}
+		WCF::getDB()->commitTransaction();
+		
+		// save languages
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_to_language
+						(userID, languageID)
+			VALUES			(?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		WCF::getDB()->beginTransaction();
+		foreach ($this->userToLanguages as $userID => $languageIDs) {
+			if (empty($languageIDs)) $languageIDs = array(LanguageFactory::getInstance()->getDefaultLanguageID());
+			foreach ($languageIDs as $languageID) {
+				$statement->execute(array($userID, $languageID));
+			}
+		}
+		WCF::getDB()->commitTransaction();
+		
+		// get default notification events
+		$eventIDs = array();
+		$sql = "SELECT	eventID
+			FROM	wcf".WCF_N."_user_notification_event
+			WHERE	preset = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(1));
+		while ($row = $statement->fetchArray()) {
+			$eventIDs[] = $row['eventID'];
+		}
+		
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_notification_event_to_user
+						(userID, eventID)
+			VALUES			(?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		WCF::getDB()->beginTransaction();
+		foreach ($this->userIDs as $userID) {
+			foreach ($eventIDs as $eventID) {
+				$statement->execute(array($userID, $eventID));
+			}
+		}
+		WCF::getDB()->commitTransaction();
+		
+		// reset user ids
+		$this->userIDs = array();
 	}
 	
 	/**
