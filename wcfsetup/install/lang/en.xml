@@ -966,6 +966,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[Rebuilds user counters and ranks]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[Rebuild Likes]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.description"><![CDATA[Synchronizes activity points]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.user"><![CDATA[Rebuild Like-Users]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.user.description"><![CDATA[Rebuilds the list of like users]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Rebuild Attachments]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Rebuilds attachment preview images]]></item>
 	</category>
