@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\UserEditor;
 use wcf\data\user\User;
+use wcf\data\user\UserEditor;
 use wcf\system\database\DatabaseException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;

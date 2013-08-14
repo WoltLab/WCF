@@ -1,11 +1,10 @@
 <?php
 namespace wcf\system\moderation\queue;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
-
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ModerationQueueList;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
