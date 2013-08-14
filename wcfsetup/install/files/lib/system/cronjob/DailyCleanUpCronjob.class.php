@@ -71,6 +71,8 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			WHERE		objectTypeID = ?
 					AND visitTime < ?";
 		$statement2 = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
 		foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.visitTracker.objectType') as $objectType) {
 			// get lifetime
 			$lifetime = ($objectType->lifetime ?: VisitTracker::DEFAULT_LIFETIME);
@@ -85,6 +87,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 				$lifetime
 			));
 		}
+		WCF::getDB()->commitTransaction();
 		
 		// clean up cronjob log
 		$sql = "DELETE FROM	wcf".WCF_N."_cronjob_log

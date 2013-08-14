@@ -294,10 +294,12 @@ class ModerationQueueManager extends SingletonFactory {
 	 * @param	array<integer>		$queueIDs
 	 */
 	public function removeOrphans(array $queueIDs) {
-		$queueAction = new ModerationQueueAction($queueIDs, 'markAsDone');
-		$queueAction->executeAction();
-		
-		$this->resetModerationCount();
+		if (!empty($queueIDs)) {
+			$queueAction = new ModerationQueueAction($queueIDs, 'markAsDone');
+			$queueAction->executeAction();
+			
+			$this->resetModerationCount();
+		}
 	}
 	
 	/**

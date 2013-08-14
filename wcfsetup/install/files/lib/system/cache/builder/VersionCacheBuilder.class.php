@@ -27,17 +27,15 @@ class VersionCacheBuilder extends AbstractCacheBuilder {
 		);	
 		
 		foreach ($objectTypes as $objectTypeID => $objectType) {
-			$processorObject = $objectType->getProcessor();
-			
 			$sql = "SELECT	* 
-				FROM	".$processorObject::getDatabaseVersionTableName();
+				FROM	". call_user_func(array($objectType->className, 'getDatabaseVersionTableName'));
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array());
 			
 			while ($row = $statement->fetchArray()) {
 				$object = new $objectType->className(null, $row);
-				$data['versions'][$objectTypeID][$object->{$processorObject::getDatabaseIndexName()}] = $object;
-				$data['versionIDs'][$objectTypeID][$object->{$processorObject::getDatabaseIndexName()}][] = $object->{$processorObject::getDatabaseVersionTableIndexName()};
+				$data['versions'][$objectTypeID][$object->{call_user_func(array($objectType->className, 'getDatabaseIndexName'))}] = $object;
+				$data['versionIDs'][$objectTypeID][$object->{call_user_func(array($objectType->className, 'getDatabaseIndexName'))}][] = $object->{call_user_func(array($objectType->className, 'getDatabaseVersionTableIndexName'))};
 			}
 		}
 		

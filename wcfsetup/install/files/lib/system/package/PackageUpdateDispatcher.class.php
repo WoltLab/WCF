@@ -434,6 +434,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						(packageUpdateVersionID, package, minversion)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			WCF::getDB()->beginTransaction();
 			foreach ($requirementInserts as $requirement) {
 				$statement->execute(array(
 					$requirement['packageUpdateVersionID'],
@@ -441,6 +442,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					$requirement['minversion']
 				));
 			}
+			WCF::getDB()->commitTransaction();
 		}
 		
 		if (!empty($optionalInserts)) {
@@ -459,12 +461,14 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						(packageUpdateVersionID, package)
 				VALUES		(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			WCF::getDB()->beginTransaction();
 			foreach ($optionalInserts as $requirement) {
 				$statement->execute(array(
 					$requirement['packageUpdateVersionID'],
 					$requirement['package']
 				));
 			}
+			WCF::getDB()->commitTransaction();
 		}
 		
 		if (!empty($excludedPackagesParameters)) {
@@ -483,6 +487,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						(packageUpdateVersionID, excludedPackage, excludedPackageVersion)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			WCF::getDB()->beginTransaction();
 			foreach ($excludedPackagesParameters as $excludedPackage) {
 				$statement->execute(array(
 					$excludedPackage['packageUpdateVersionID'],
@@ -490,6 +495,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					$excludedPackage['excludedPackageVersion']
 				));
 			}
+			WCF::getDB()->commitTransaction();
 		}
 		
 		if (!empty($fromversionInserts)) {
@@ -508,12 +514,14 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						(packageUpdateVersionID, fromversion)
 				VALUES		(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			WCF::getDB()->beginTransaction();
 			foreach ($fromversionInserts as $fromversion) {
 				$statement->execute(array(
 					$fromversion['packageUpdateVersionID'],
 					$fromversion['fromversion']
 				));
 			}
+			WCF::getDB()->commitTransaction();
 		}
 	}
 	
