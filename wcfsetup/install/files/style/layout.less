@@ -321,7 +321,7 @@
 }
 
 /* main menu */
-@media all and (min-width: 801px) {
+@media screen and (min-width: 801px), print {
 	.mainMenu {
 		> ul {
 			background-color: @wcfMainMenuBackgroundColor;
@@ -2160,4 +2160,50 @@ ul.inlineDataList {
 			text-align: right;
 		}
 	}
+}
+
+/* print version */
+@media print {
+	* {
+		background-color: transparent !important;
+		background-image: none !important;
+		box-shadow: none !important;
+		color: #000 !important;
+		text-shadow: none !important;
+	}
+	
+	.badge {
+		&:before {
+			content: "[";
+		}
+		
+		&:after {
+			content: "]";
+		}
+	}
+	
+	.content {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+	
+	.logo {
+		margin-top: 14px !important;
+	}
+	
+	a.externalURL:after {
+		content: " (" attr(href) ")";
+		font-size: 85%;
+	}
+	
+	.sidebar,
+	.button,
+	.navigationIcons,
+	.navigationMenuItems,
+	.navigationHeader,
+	.userPanel,
+	.styleChooser {
+		display: none !important;
+	}
+
 }
