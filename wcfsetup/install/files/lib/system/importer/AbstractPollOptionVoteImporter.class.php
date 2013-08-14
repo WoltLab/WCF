@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class AbstractPollOptionVoteImporter implements IImporter {
+class AbstractPollOptionVoteImporter extends AbstractImporter {
 	/**
 	 * option object type name
 	 * @var string

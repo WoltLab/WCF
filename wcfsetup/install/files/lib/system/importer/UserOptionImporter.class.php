@@ -16,7 +16,12 @@ use wcf\util\StringUtil;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class UserOptionImporter implements IImporter {
+class UserOptionImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\user\option\UserOption';
+	
 	/**
 	 * language category id
 	 * @var integer

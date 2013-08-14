@@ -16,7 +16,12 @@ use wcf\util\FileUtil;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class UserAvatarImporter implements IImporter {
+class UserAvatarImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\user\avatar\UserAvatar';
+	
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */
@@ -43,11 +48,7 @@ class UserAvatarImporter implements IImporter {
 		if (!$data['userID']) return 0;
 		
 		// save avatar
-		$action = new UserAvatarAction(array(), 'create', array(
-			'data' => $data
-		));
-		$returnValues = $action->executeAction();
-		$avatar = $returnValues['returnValues'];
+		$avatar = UserAvatarEditor::create($data);
 		
 		// check avatar directory
 		// and create subdirectory if necessary

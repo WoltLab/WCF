@@ -2275,26 +2275,15 @@ WCF.ACP.Import.Manager = Class.extend({
 	_invoke: function() {
 		this._index++;
 		if (this._index >= this._objectTypes.length) {
-			// cleanup
-			new WCF.Action.Proxy({
-				autoSend: true,
-				data: {
-					actionName: 'resetMapping',
-					className: 'wcf\\system\\importer\\ImportHandler'
-				},
-				success: $.proxy(function() {
-					this._dialog.find('.icon-spinner').removeClass('icon-spinner').addClass('icon-ok');
-					this._dialog.find('h1').text(WCF.Language.get('wcf.acp.dataImport.completed'));
-					
-					var $form = $('<div class="formSubmit" />').appendTo(this._dialog.find('#workerContainer'));
-					$('<button>' + WCF.Language.get('wcf.global.button.next') + '</button>').click($.proxy(function() {
-						window.location = this._redirectURL;
-					}, this)).appendTo($form);
-					
-					this._dialog.wcfDialog('render');
-				}, this),
-				url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN + SID_ARG_2ND
-			});
+			this._dialog.find('.icon-spinner').removeClass('icon-spinner').addClass('icon-ok');
+			this._dialog.find('h1').text(WCF.Language.get('wcf.acp.dataImport.completed'));
+			
+			var $form = $('<div class="formSubmit" />').appendTo(this._dialog.find('#workerContainer'));
+			$('<button>' + WCF.Language.get('wcf.global.button.next') + '</button>').click($.proxy(function() {
+				window.location = this._redirectURL;
+			}, this)).appendTo($form);
+			
+			this._dialog.wcfDialog('render');
 		}
 		else {
 			this._run(

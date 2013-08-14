@@ -12,7 +12,12 @@ use wcf\system\WCF;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class UserFollowerImporter implements IImporter {
+class UserFollowerImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\user\follow\UserFollow';
+	
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */

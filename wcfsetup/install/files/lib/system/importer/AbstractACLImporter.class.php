@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class AbstractACLImporter implements IImporter {
+class AbstractACLImporter extends AbstractImporter {
 	/**
 	 * object type id for options
 	 * @var integer

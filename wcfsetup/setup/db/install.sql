@@ -328,10 +328,11 @@ CREATE TABLE wcf1_event_listener (
 
 DROP TABLE IF EXISTS wcf1_import_mapping;
 CREATE TABLE wcf1_import_mapping (
+	importHash CHAR(8) NOT NULL,
 	objectTypeID INT(10) NOT NULL,
 	oldID VARCHAR(255) NOT NULL,
 	newID INT(10) NOT NULL,
-	UNIQUE KEY (objectTypeID, oldID)
+	UNIQUE KEY (importHash, objectTypeID, oldID)
 );
 
 DROP TABLE IF EXISTS wcf1_label;

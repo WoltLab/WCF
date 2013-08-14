@@ -13,7 +13,12 @@ use wcf\system\WCF;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class LabelImporter implements IImporter {
+class LabelImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\label\Label';
+	
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */

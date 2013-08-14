@@ -44,6 +44,12 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	protected $userMergeMode = 2;
 	
 	/**
+	 * import hash
+	 * @var string
+	 */
+	protected $importHash = '';
+	
+	/**
 	 * list of methods allowed for remote invoke
 	 * @var	array<string>
 	 */
@@ -87,13 +93,22 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 		
 		if (!isset($this->idMappingCache[$objectTypeID]) || !array_key_exists($oldID, $this->idMappingCache[$objectTypeID])) {
 			$this->idMappingCache[$objectTypeID][$oldID] = null;
+			$importer = $this->getImporter($type);
+			$tableName = $indexName = '';
+			if ($importer->getClassName()) {
+				$tableName = call_user_func(array($importer->getClassName(), 'getDatabaseTableName'));
+				$indexName = call_user_func(array($importer->getClassName(), 'getDatabaseTableIndexName'));
+			}
 			
-			$sql = "SELECT	newID
-				FROM	wcf".WCF_N."_import_mapping
-				WHERE	objectTypeID = ?
-					AND oldID = ?";
+			$sql = "SELECT		import_mapping.newID
+				FROM		wcf".WCF_N."_import_mapping import_mapping
+				".($tableName ? "LEFT JOIN ".$tableName." object_table ON (object_table.".$indexName." = import_mapping.newID)" : '')."
+				WHERE		import_mapping.importHash = ?
+						AND import_mapping.objectTypeID = ?
+						AND import_mapping.oldID = ?
+						".($tableName ? "AND object_table.".$indexName." IS NOT NULL" : '');
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($objectTypeID, $oldID));
+			$statement->execute(array($this->importHash, $objectTypeID, $oldID));
 			$row = $statement->fetchArray();
 			if ($row !== false) $this->idMappingCache[$objectTypeID][$oldID] = $row['newID'];
 		}
@@ -112,10 +127,10 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 		$objectTypeID = $this->objectTypes[$type]->objectTypeID;
 		
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_import_mapping
-						(objectTypeID, oldID, newID)
-			VALUES			(?, ?, ?)";
+						(importHash, objectTypeID, oldID, newID)
+			VALUES			(?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($objectTypeID, $oldID, $newID));
+		$statement->execute(array($this->importHash, $objectTypeID, $oldID, $newID));
 		
 		unset($this->idMappingCache[$objectTypeID][$oldID]);
 	}
@@ -158,5 +173,14 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	 */
 	public function getUserMergeMode() {
 		return $this->userMergeMode;
+	}
+	
+	/**
+	 * Sets the import hash.
+	 *
+	 * @param	string		$hash
+	 */
+	public function setImportHash($hash) {
+		$this->importHash = $hash;
 	}
 }

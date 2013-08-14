@@ -166,6 +166,32 @@ class AttachmentHandler implements \Countable {
 	}
 	
 	/**
+	 * Returns a formatted list of the allowed file extensions.
+	 * 
+	 * @return array<string>
+	 */
+	public function getFormattedAllowedExtensions() {
+		$extensions = $this->getAllowedExtensions();
+		
+		// sort
+		sort($extensions);
+		
+		// check wildcards
+		for ($i = 0, $j = count($extensions); $i < $j; $i++) {
+			if (strpos($extensions[$i], '*') !== false) {
+				for ($k = $j - 1; $k > $i; $k--) {
+					if (preg_match('/^'.str_replace('\*', '.*', preg_quote($extensions[$i], '/')).'$/i', $extensions[$k])) {
+						array_splice($extensions, $k, 1);
+						$j--;
+					}
+				}
+			}
+		}
+		
+		return $extensions;
+	}
+	
+	/**
 	 * @see	wcf\system\attachment\IAttachmentObjectType::getMaxCount()
 	 */
 	public function getMaxCount() {

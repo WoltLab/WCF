@@ -21,4 +21,11 @@ interface IImporter {
 	 * @return	mixed		new id
 	 */
 	public function import($oldID, array $data, array $additionalData = array());
+	
+	/**
+	 * Returns database object class name.
+	 * 
+	 * @return	string
+	 */
+	public function getClassName();
 }

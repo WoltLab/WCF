@@ -4,6 +4,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\SystemException;
 use wcf\system\importer\ImportHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Worker implementation for data import.
@@ -53,6 +54,9 @@ class ImportWorker extends AbstractWorker {
 
 		// set user merge mode
 		ImportHandler::getInstance()->setUserMergeMode($this->importData['userMergeMode']);
+		
+		// set import hash
+		ImportHandler::getInstance()->setImportHash(substr(StringUtil::getHash($this->importData['dbHost'] . $this->importData['dbName'] . $this->importData['dbPrefix']), 0, 8));
 	}
 
 	/**
