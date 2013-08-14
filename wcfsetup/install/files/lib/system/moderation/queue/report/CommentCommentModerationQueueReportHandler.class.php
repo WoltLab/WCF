@@ -70,8 +70,14 @@ class CommentCommentModerationQueueReportHandler extends AbstractModerationQueue
 			$comments[$row['commentID']] = new Comment(null, $row);
 		}
 		
+		$orphanedQueueIDs = array();
 		foreach ($queues as $queue) {
 			$assignUser = false;
+			
+			if (!isset($comments[$queue->objectID])) {
+				$orphanedQueueIDs[] = $queue->queueID;
+				continue;
+			}
 			
 			$comment = $comments[$queue->objectID];
 			if ($this->getCommentManager($comment)->canModerate($comment->objectTypeID, $comment->objectID)) {
@@ -81,6 +87,7 @@ class CommentCommentModerationQueueReportHandler extends AbstractModerationQueue
 			$assignments[$queue->queueID] = $assignUser;
 		}
 		
+		ModerationQueueManager::getInstance()->removeOrphans($orphanedQueueIDs);
 		ModerationQueueManager::getInstance()->setAssignment($assignments);
 	}
 	
