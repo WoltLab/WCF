@@ -35,8 +35,8 @@
 					<small>{lang}wcf.poll.options.description{/lang}</small>
 				</dd>
 			</dl>
-			<dl>
-				<dt{if $errorField == 'pollEndTime'} class="formError"{/if}>
+			<dl{if $errorField == 'pollEndTime'} class="formError"{/if}>
+				<dt>
 					<label for="pollEndTime">{lang}wcf.poll.endTime{/lang}</label>
 				</dt>
 				<dd>
@@ -60,6 +60,9 @@
 						</small>
 					{/if}
 				</dd>
+			</dl>
+			<dl>
+				<dt></dt>
 				<dd>
 					<label><input type="checkbox" name="pollIsChangeable" value="1"{if $pollIsChangeable} checked="checked"{/if} /> {lang}wcf.poll.isChangeable{/lang}</label>
 				</dd>
