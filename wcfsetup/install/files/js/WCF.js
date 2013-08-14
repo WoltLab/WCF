@@ -2197,6 +2197,15 @@ WCF.Action.Delete = Class.extend({
 	},
 	
 	/**
+	 * Is called if the delete effect has been triggered on the given element.
+	 * 
+	 * @param	jQuery		element
+	 */
+	_didTriggerEffect: function(element) {
+		// does nothing
+	},
+	
+	/**
 	 * Executes deletion.
 	 * 
 	 * @param	string		action
@@ -2247,7 +2256,12 @@ WCF.Action.Delete = Class.extend({
 		for (var $index in this._containers) {
 			var $container = $('#' + this._containers[$index]);
 			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
-				$container.wcfBlindOut('up', function() { $(this).remove(); });
+				var self = this;
+				$container.wcfBlindOut('up',function() {
+					$(this).remove();
+					self._containers.splice(self._containers.indexOf($(this).wcfIdentify()), 1);
+					self._didTriggerEffect($(this));
+				});
 			}
 		}
 	}
@@ -2270,17 +2284,25 @@ WCF.Action.NestedDelete = WCF.Action.Delete.extend({
 		for (var $index in this._containers) {
 			var $container = $('#' + this._containers[$index]);
 			if (WCF.inArray($container.find(this._buttonSelector).data('objectID'), objectIDs)) {
-				// move child categories up
-				if ($container.has('ol').has('li')) {
+				// move children up
+				if ($container.has('ol').has('li').length) {
 					if ($container.is(':only-child')) {
 						$container.parent().replaceWith($container.find('> ol'));
 					}
 					else {
 						$container.replaceWith($container.find('> ol > li'));
 					}
+					
+					this._containers.splice(this._containers.indexOf($container.wcfIdentify()), 1);
+					this._didTriggerEffect($container);
 				}
 				else {
-					$container.wcfBlindOut('up', function() { $(this).remove(); });
+					var self = this;
+					$container.wcfBlindOut('up', function() {
+						$(this).remove();
+						self._containers.splice(self._containers.indexOf($(this).wcfIdentify()), 1);
+						self._didTriggerEffect($(this));
+					});
 				}
 			}
 		}

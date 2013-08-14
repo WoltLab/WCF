@@ -1332,7 +1332,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[An unknown error occured during upload.]]></item>
 		<item name="wcf.attachment.upload.limits"><![CDATA[Maximum number of attachments: {#$attachmentHandler->getMaxCount()}<br />
 Maximum file size: {@$attachmentHandler->getMaxSize()|filesize}<br />
-Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]></item>
+Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensions()}]]></item>
 		<item name="wcf.attachment.insert"><![CDATA[Insert into message]]></item>
 		<item name="wcf.attachment.filename"><![CDATA[Filename]]></item>
 		<item name="wcf.attachment.uploadTime"><![CDATA[Upload Time]]></item>
