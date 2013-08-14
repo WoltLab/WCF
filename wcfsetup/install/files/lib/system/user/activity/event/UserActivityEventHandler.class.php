@@ -106,6 +106,8 @@ class UserActivityEventHandler extends SingletonFactory {
 	 * @param	array<integer>	$objectIDs
 	 */
 	public function removeEvents($objectType, array $objectIDs) {
+		if (empty($objectIDs)) return;
+		
 		$objectTypeID = $this->getObjectTypeID($objectType);
 		if ($objectTypeID === null) {
 			throw new SystemException("Unknown recent activity event '".$objectType."'");
