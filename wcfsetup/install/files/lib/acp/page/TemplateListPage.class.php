@@ -119,7 +119,12 @@ class TemplateListPage extends SortablePage {
 		foreach ($applications as $application) {
 			$package = PackageCache::getInstance()->getPackage($application->packageID);
 			$this->availableApplications[ApplicationHandler::getInstance()->getAbbreviation($package->packageID)] = $package;
+			
+			// issues with the language cache would cause the uasort() below to throw a
+			// misleading error message, calling it here just reveals the real error
+			$package->getName();
 		}
+		
 		uasort($this->availableApplications, function ($a, $b) {
 			return $a->getName() > $b->getName();
 		});
