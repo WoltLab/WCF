@@ -70,6 +70,10 @@ class LikeUserRebuildDataWorker extends AbstractRebuildDataWorker {
 			}
 		}
 		
+		if (empty($userIDs)) {
+			return;
+		}
+		
 		// fetch usernames
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID IN (?)", array($userIDs));
