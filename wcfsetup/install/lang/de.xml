@@ -1892,6 +1892,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.style.colorPicker.new"><![CDATA[neu]]></item>
 		<item name="wcf.style.colorPicker.current"><![CDATA[aktuell]]></item>
 		<item name="wcf.style.currentStyle"><![CDATA[Aktiver Stil]]></item>
+		<item name="wcf.style.colorPicker.button.apply"><![CDATA[Übernehmen]]></item>
 	</category>
 	
 	<category name="wcf.tagging">
