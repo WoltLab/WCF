@@ -252,7 +252,7 @@ WCF.ColorPicker = Class.extend({
 		
 		// submit button
 		var $submitForm = $('<div class="formSubmit" />').appendTo(this._dialog);
-		$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.save') + '</button>').appendTo($submitForm).click($.proxy(this._submit, this));
+		$('<button class="buttonPrimary">' + WCF.Language.get('wcf.style.colorPicker.button.apply') + '</button>').appendTo($submitForm).click($.proxy(this._submit, this));
 		
 		// allow pasting of colors like '#888888'
 		var self = this;
