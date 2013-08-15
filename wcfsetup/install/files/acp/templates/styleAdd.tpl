@@ -36,7 +36,7 @@
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
 			
 			WCF.Language.addObject({
-				'wcf.acp.style.copyStyle.confirmMessage': '{lang}wcf.acp.style.copyStyle.confirmMessage{/lang}'
+				'wcf.acp.style.copyStyle.confirmMessage': '{@"wcf.acp.style.copyStyle.confirmMessage"|language|encodeJS}'
 			});
 		{/if}
 		
