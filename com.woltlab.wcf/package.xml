@@ -47,7 +47,7 @@
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
 		<instruction type="template">templates_update.tar</instruction>
-		<instruction type="sql">update_b6.sql</instruction>
+		<instruction type="sql">update_b7.sql</instruction>
 		
 		<instruction type="bbcode">bbcode.xml</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
