@@ -47,7 +47,9 @@
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
 		<instruction type="template">templates_update.tar</instruction>
-		<instruction type="sql">update_b6.sql</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf.b7.php</instruction>
+		<instruction type="sql">update_b7.sql</instruction>
+		<instruction type="sql" run="standalone">update_b7_ct.sql</instruction>
 		
 		<instruction type="bbcode">bbcode.xml</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
