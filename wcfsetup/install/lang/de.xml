@@ -28,6 +28,7 @@
 		<item name="wcf.acp.application.domainName.description"><![CDATA[Geben Sie die Domain an, über die diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, so geben Sie hier bitte „www.example.com“ ein.]]></item>
 		<item name="wcf.acp.application.domainName.error.containsPfad"><![CDATA[Die Domain darf keine Pfadangaben enthalten]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Pfad]]></item>
+		<item name="wcf.acp.application.domainPath.error.conflict"><![CDATA[Dieser Pfad ist bereits durch die Anwendung „{$conflictApplication->getName()}“ belegt]]></item>
 		<item name="wcf.acp.application.domainPath.description"><![CDATA[Geben Sie den Pfad an, über den diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, so geben Sie bitte „/community/forum/“ ein.]]></item>
 		<item name="wcf.acp.application.edit"><![CDATA[Anwendung bearbeiten]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[Anwendung bearbeiten: „<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>“]]></item>

@@ -28,6 +28,7 @@
 		<item name="wcf.acp.application.domainName.description"><![CDATA[If you’re accessing this application through “http://www.example.com/community/forum/”, please enter “www.example.com”.]]></item>
 		<item name="wcf.acp.application.domainName.error.containsPfad"><![CDATA[Domain may not contain path components]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Path]]></item>
+		<item name="wcf.acp.application.domainPath.error.conflict"><![CDATA[This path is already taken by application “{$conflictApplication->getName()}”]]></item>
 		<item name="wcf.acp.application.domainPath.description"><![CDATA[If you’re accessing this application through “http://www.example.com/community/forum/”, please enter “/community/forum/”.]]></item>
 		<item name="wcf.acp.application.edit"><![CDATA[Edit Application]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[Edit Application: “<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>”]]></item>
