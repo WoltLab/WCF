@@ -75,7 +75,7 @@ class TableBBCode extends AbstractBBCode {
 			// /tr
 			$parsedContent = Regex::compile('\[/tr\](?:\s|<br />)*', Regex::CASE_INSENSITIVE)->replace($parsedContent, '</tr>');
 			
-			return '<div class="container bbcodeTable"><table class="table"><tbody>'.$parsedContent.'</tbody></table></div>';
+			return '<div class="container bbcodeTable"><table class="table responsiveTable"><tbody>'.$parsedContent.'</tbody></table></div>';
 		}
 		else if ($parser->getOutputType() == 'text/simplified-html') {
 			// remove table tags
