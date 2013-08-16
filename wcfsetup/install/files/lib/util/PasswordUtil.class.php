@@ -104,13 +104,13 @@ final class PasswordUtil {
 		}
 		
 		// drop type from hash
-		$dbHash = substr($dbHash, strlen($type));
+		$dbHash = substr($dbHash, strlen($type) + 1);
 		
 		// check for salt
 		$salt = '';
 		if (($pos = strrpos($dbHash, ':')) !== false) {
 			$salt = substr(substr($dbHash, $pos), 1);
-			$dbHash = substr($dbHash, 1, ($pos - 1));
+			$dbHash = substr($dbHash, 0, $pos);
 		}
 		
 		// compare hash
