@@ -19,14 +19,14 @@
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie-Einstellungen]]></item>
 		<item name="wcf.acp.application.cookie.warning"><![CDATA[Die folgenden Einstellungen stellen sicher, dass der Login gespeichert wird und ein automatischer Login möglich ist. Sie müssen diese Einstellungen anpassen, sollten sich Domain und/oder Pfad geändert haben. Sollten Sie sich bei den korrekten Werten nicht sicher sein, übernehmen Sie bitte die exakten Angaben der beiden obigen Eingabefelder.]]></item>
 		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie-Domain]]></item>
-		<item name="wcf.acp.application.cookieDomain.error.containsPfad"><![CDATA[Die Cookie-Domain darf keine Pfadangaben enthalten]]></item>
+		<item name="wcf.acp.application.cookieDomain.error.containsPath"><![CDATA[Die Cookie-Domain darf keine Pfadangaben enthalten]]></item>
 		<item name="wcf.acp.application.cookieDomain.error.notValid"><![CDATA[Die Cookie-Domain stimmt nicht mit der oben angegebenen Domain überein (Subdomains wie zum Beispiel „www“ dürfen weggelassen werden).]]></item>
 		<item name="wcf.acp.application.cookiePath"><![CDATA[Cookie-Pfad]]></item>
 		<item name="wcf.acp.application.cookiePath.error.notValid"><![CDATA[Der Cookie-Pfad passt nicht zum oben angegebenen Domain-Pfad.]]></item>
 		<item name="wcf.acp.application.domain"><![CDATA[Domain-Einstellungen]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
 		<item name="wcf.acp.application.domainName.description"><![CDATA[Geben Sie die Domain an, über die diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, so geben Sie hier bitte „www.example.com“ ein.]]></item>
-		<item name="wcf.acp.application.domainName.error.containsPfad"><![CDATA[Die Domain darf keine Pfadangaben enthalten]]></item>
+		<item name="wcf.acp.application.domainName.error.containsPath"><![CDATA[Die Domain darf keine Pfadangaben enthalten]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Pfad]]></item>
 		<item name="wcf.acp.application.domainPath.error.conflict"><![CDATA[Dieser Pfad ist bereits durch die Anwendung „{$conflictApplication->getName()}“ belegt]]></item>
 		<item name="wcf.acp.application.domainPath.description"><![CDATA[Geben Sie den Pfad an, über den diese Anwendung erreichbar ist. Wenn Ihre Anwendung zum Beispiel unter „http://www.example.com/community/forum/“ erreichbar ist, so geben Sie bitte „/community/forum/“ ein.]]></item>
