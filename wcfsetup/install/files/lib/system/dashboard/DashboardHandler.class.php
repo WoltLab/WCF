@@ -42,7 +42,7 @@ class DashboardHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns active dashboard boxes for given object type id.
+	 * Loads the active dashboard boxes for the given object type and page.
 	 * 
 	 * @param	string		$objectType
 	 * @param	wcf\page\IPage	$page
