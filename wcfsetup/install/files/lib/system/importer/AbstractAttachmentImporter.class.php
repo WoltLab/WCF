@@ -76,10 +76,10 @@ class AbstractAttachmentImporter extends AbstractImporter {
 	}
 	
 	protected function fixEmbeddedAttachments($message, $oldID, $newID) {
-		if (StringUtil::indexOfIgnoreCase($message, '[attach]'.$oldID.'[/attach]') !== false || StringUtil::indexOfIgnoreCase($message, '[attach='.$oldID.']') !== false || StringUtil::indexOfIgnoreCase($message, '[attach='.$oldID.',') !== false) {
-			$message = StringUtil::replaceIgnoreCase('[attach]'.$oldID.'[/attach]', '[attach]'.$newID.'[/attach]', $message);
-			$message = StringUtil::replaceIgnoreCase('[attach='.$oldID.']', '[attach='.$newID.']', $message);
-			$message = StringUtil::replaceIgnoreCase('[attach='.$oldID.',', '[attach='.$newID.',', $message);
+		if (mb_strripos($message, '[attach]'.$oldID.'[/attach]') !== false || mb_strripos($message, '[attach='.$oldID.']') !== false || mb_strripos($message, '[attach='.$oldID.',') !== false) {
+			$message = str_ireplace('[attach]'.$oldID.'[/attach]', '[attach]'.$newID.'[/attach]', $message);
+			$message = str_ireplace('[attach='.$oldID.']', '[attach='.$newID.']', $message);
+			$message = str_ireplace('[attach='.$oldID.',', '[attach='.$newID.',', $message);
 			
 			return $message;
 		}
