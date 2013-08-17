@@ -16,10 +16,24 @@
 	 * @param	CKEDITOR	editor
 	 */
 	function transformBBCode(editor) {
-		$(editor.document.$).find('span.wcfBBCode').replaceWith(function() {
+		var $markerID = null;
+		$(editor.container.$).find('span.wcfBBCode').removeClass('wcfBBCode').html(function() {
 			var $bbcode = $(this).data('bbcode');
-			return '[' + $bbcode + ']' + $(this).html() + '[/' + $bbcode + ']';
+			$markerID = WCF.getRandomID();
+			return '[' + $bbcode + ']' + $(this).html() + '<span id="' + $markerID + '" />[/' + $bbcode + ']';
 		});
+		
+		if ($markerID !== null && typeof window.getSelection != "undefined") {
+			var $marker = $('#' + $markerID).get(0);
+			var $range = document.createRange();
+			$range.setStartAfter($marker);
+			$range.collapse(true);
+			var $selection = window.getSelection();
+			$selection.removeAllRanges();
+			$selection.addRange($range);
+			
+			$marker.remove();
+		}
 	}
 	
 	// listens for 'afterCommandExec' to transform BBCodes into plain text
