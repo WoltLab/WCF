@@ -68,4 +68,15 @@ abstract class VersionableDatabaseObjectEditor extends DatabaseObjectEditor {
 		
 		return $affectedCount;
 	}
+	
+	/**
+	 * @see	wcf\data\VersionableDatabaseObject::getDatabaseTableAlias()
+	 */
+	public static function getDatabaseVersionTableName() {
+		return call_user_func(array(static::$baseClass, 'getDatabaseVersionTableName'));
+	}
+	
+	public static function getDatabaseVersionTableIndexName() {
+		return call_user_func(array(static::$baseClass, 'getDatabaseVersionTableIndexName'));
+	}
 }
