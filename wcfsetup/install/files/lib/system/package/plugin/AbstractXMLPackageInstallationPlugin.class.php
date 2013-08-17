@@ -103,7 +103,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			// get child elements
 			$childNodes = $xpath->query('child::*', $element);
 			foreach ($childNodes as $childNode) {
-				$data['elements'][$childNode->name] = $childNode->value;
+				$data['elements'][$childNode->nodeName] = $childNode->nodeValue;
 			}
 			
 			$items[] = $data;
