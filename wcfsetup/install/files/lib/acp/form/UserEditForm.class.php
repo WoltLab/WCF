@@ -309,7 +309,7 @@ class UserEditForm extends UserAddForm {
 	 * @see	wcf\acp\form\UserAddForm::validateUsername()
 	 */
 	protected function validateUsername($username) {
-		if (StringUtil::toLowerCase($this->user->username) != StringUtil::toLowerCase($username)) {
+		if (mb_strtolower($this->user->username) != mb_strtolower($username)) {
 			parent::validateUsername($username);
 		}
 	}
@@ -318,7 +318,7 @@ class UserEditForm extends UserAddForm {
 	 * @see	wcf\acp\form\UserAddForm::validateEmail()
 	 */
 	protected function validateEmail($email, $confirmEmail) {
-		if (StringUtil::toLowerCase($this->user->email) != StringUtil::toLowerCase($email)) {
+		if (mb_strtolower($this->user->email) != mb_strtolower($email)) {
 			parent::validateEmail($email, $this->confirmEmail);
 		}
 	}

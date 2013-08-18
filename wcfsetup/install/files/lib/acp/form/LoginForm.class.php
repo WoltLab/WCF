@@ -136,7 +136,7 @@ class LoginForm extends AbstractForm {
 		
 		if (!empty($this->url)) {
 			// append session
-			if (StringUtil::indexOf($this->url, '?') !== false) $this->url .= SID_ARG_2ND_NOT_ENCODED;
+			if (mb_strpos($this->url, '?') !== false) $this->url .= SID_ARG_2ND_NOT_ENCODED;
 			else $this->url .= SID_ARG_1ST;
 			HeaderUtil::redirect($this->url);
 		}

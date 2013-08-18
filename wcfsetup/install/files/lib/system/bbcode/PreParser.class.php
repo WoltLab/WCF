@@ -96,7 +96,7 @@ class PreParser extends SingletonFactory {
 	 * Handles pre-parsing of email addresses.
 	 */
 	protected function parseEmails() {
-		if (StringUtil::indexOf($this->text, '@') === false) return;
+		if (mb_strpos($this->text, '@') === false) return;
 		
 		static $emailPattern = null;
 		if ($emailPattern === null) {

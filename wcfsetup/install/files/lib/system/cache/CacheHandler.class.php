@@ -102,7 +102,7 @@ class CacheHandler extends SingletonFactory {
 	protected function getCacheName(ICacheBuilder $cacheBuilder, array $parameters = array()) {
 		$className = explode('\\', get_class($cacheBuilder));
 		$application = array_shift($className);
-		$cacheName = StringUtil::replace('CacheBuilder', '', array_pop($className));
+		$cacheName = str_replace('CacheBuilder', '', array_pop($className));
 		if (!empty($parameters)) {
 			$cacheName .= '-' . $this->getCacheIndex($parameters);
 		}

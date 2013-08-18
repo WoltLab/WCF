@@ -42,7 +42,7 @@ class LanguageEditForm extends LanguageAddForm {
 	 * @see	wcf\acp\form\LanguageAddForm::validateLanguageCode()
 	 */
 	protected function validateLanguageCode() {
-		if ($this->language->languageCode != StringUtil::toLowerCase($this->languageCode)) {
+		if ($this->language->languageCode != mb_strtolower($this->languageCode)) {
 			parent::validateLanguageCode();
 		}
 	}
@@ -61,7 +61,7 @@ class LanguageEditForm extends LanguageAddForm {
 		$editor = new LanguageEditor($this->language);
 		$editor->update(array(
 			'languageName' => $this->languageName,
-			'languageCode' => StringUtil::toLowerCase($this->languageCode)		
+			'languageCode' => mb_strtolower($this->languageCode)		
 		));
 		LanguageFactory::getInstance()->clearCache();
 		$this->saved();
