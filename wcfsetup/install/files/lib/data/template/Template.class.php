@@ -126,7 +126,7 @@ class Template extends DatabaseObject {
 				if ($useRegex) $matches = (intval(preg_match('/'.$search.'/s'.(!$caseSensitive ? 'i' : ''), $template->getSource())) !== 0);
 				else {
 					if ($caseSensitive) $matches = (mb_strpos($template->getSource(), $search) !== false);
-					else $matches = (mb_strposIgnoreCase($template->getSource(), $search) !== false);
+					else $matches = (mb_strripos($template->getSource(), $search) !== false);
 				}
 				
 				if (($matches && !$invertSearch) || (!$matches && $invertSearch)) {
@@ -141,7 +141,7 @@ class Template extends DatabaseObject {
 				}
 				else {
 					if ($caseSensitive) $newSource = str_replace($search, $replace, $template->getSource(), $matches);
-					else $newSource = str_replaceIgnoreCase($search, $replace, $template->getSource(), $matches);
+					else $newSource = StringUtil::replaceIgnoreCase($search, $replace, $template->getSource(), $matches);
 				}
 				
 				if ($matches > 0) {

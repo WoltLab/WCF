@@ -74,7 +74,7 @@ class SearchResultTextParser extends SingletonFactory {
 			if ($this->searchQuery) {
 				// phrase search
 				if (!is_array($this->searchQuery)) {
-					$start = mb_strposIgnoreCase($text, $this->searchQuery);
+					$start = mb_strripos($text, $this->searchQuery);
 					if ($start !== false) {
 						$end = $start + mb_strlen($this->searchQuery);
 						$shiftStartBy = $shiftEndBy = round((static::MAX_LENGTH - mb_strlen($this->searchQuery)) / 2);
@@ -121,7 +121,7 @@ class SearchResultTextParser extends SingletonFactory {
 					$shiftLength = static::MAX_LENGTH;
 					// find first match of each keyword
 					foreach ($this->searchQuery as $keyword) {
-						$start = mb_strposIgnoreCase($text, $keyword);
+						$start = mb_strripos($text, $keyword);
 						if ($start !== false) {
 							$shiftLength -= mb_strlen($keyword);
 							$matches[$keyword] = array('start' => $start, 'end' => $start + mb_strlen($keyword));
