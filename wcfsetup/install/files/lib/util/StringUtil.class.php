@@ -241,6 +241,8 @@ final class StringUtil {
 	 * 
 	 * @param	array		$strings 
 	 * @return	boolean
+	 * 
+	 * @deprecated
 	 */
 	public static function sort(array &$strings) {
 		return asort($strings, SORT_LOCALE_STRING);
@@ -248,6 +250,8 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php mb_strlen() function.
+	 * 
+	 * @deprecated use mb_strlen() instead
 	 */
 	public static function length($string) {
 		return mb_strlen($string);
@@ -255,6 +259,8 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php mb_strpos() function.
+	 * 
+	 * @deprecated use mb_strpos() instead
 	 */
 	public static function indexOf($hayStack, $needle, $offset = 0) {
 		return mb_strpos($hayStack, $needle, $offset);
@@ -262,13 +268,17 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php stripos() function with multibyte support.
+	 * 
+	 * @deprecated use mb_strripos() instead
 	 */
 	public static function indexOfIgnoreCase($hayStack, $needle, $offset = 0) {
-		return mb_strpos(self::toLowerCase($hayStack), self::toLowerCase($needle), $offset);
+		return mb_strripos($hayStack, $needle, $offset);
 	}
 	
 	/**
 	 * Alias to php mb_strrpos() function.
+	 * 
+	 * @deprecated use mb_strrpos() instead
 	 */
 	public static function lastIndexOf($hayStack, $needle) {
 		return mb_strrpos($hayStack, $needle);
@@ -276,6 +286,8 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php mb_substr() function.
+	 * 
+	 * @deprecated use mb_substr() instead
 	 */
 	public static function substring($string, $start, $length = null) {
 		if ($length !== null) return mb_substr($string, $start, $length);
@@ -284,6 +296,8 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php mb_strtolower() function.
+	 * 
+	 * @deprecated use mb_strtolower() instead
 	 */
 	public static function toLowerCase($string) {
 		return mb_strtolower($string);
@@ -291,6 +305,8 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php mb_strtoupper() function.
+	 * 
+	 * @deprecated use mb_strtoupper() instead
 	 */
 	public static function toUpperCase($string) {
 		return mb_strtoupper($string);
@@ -298,6 +314,8 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php substr_count() function.
+	 * 
+	 * @deprecated use mb_substr_count() instead
 	 */
 	public static function countSubstring($hayStack, $needle) {
 		return mb_substr_count($hayStack, $needle);
@@ -326,13 +344,18 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php str_replace() function.
+	 * 
+	 * @deprecated please use str_replace() instead
 	 */
 	public static function replace($search, $replace, $subject, &$count = null) {
 		return str_replace($search, $replace, $subject, $count);
 	}
 	
 	/**
-	 * Alias to php str_ireplace() function with multibyte support.
+	 * Alias to php str_ireplace() function with UTF-8 support.
+	 * 
+	 * This function is considered to be slow, if $search contains
+	 * only ASCII characters, please use str_ireplace() instead.
 	 */
 	public static function replaceIgnoreCase($search, $replace, $subject, &$count = 0) {
 		$startPos = self::indexOf(self::toLowerCase($subject), self::toLowerCase($search));
