@@ -241,9 +241,9 @@ class TemplateScriptingCompiler {
 		// compile the template tags into php-code
 		$compiledTags = array();
 		for ($i = 0, $j = count($templateTags); $i < $j; $i++) {
-			$this->currentLineNo += StringUtil::countSubstring($textBlocks[$i], "\n");
+			$this->currentLineNo += mb_substr_count($textBlocks[$i], "\n");
 			$compiledTags[] = $this->compileTag($templateTags[$i], $identifier, $metaData);
-			$this->currentLineNo += StringUtil::countSubstring($templateTags[$i], "\n");
+			$this->currentLineNo += mb_substr_count($templateTags[$i], "\n");
 		}
 		
 		// throw error messages for unclosed tags
@@ -319,7 +319,7 @@ class TemplateScriptingCompiler {
 		if (preg_match('~^(/?\w+)~', $tag, $match)) {
 			// build in function or plugin
 			$tagCommand = $match[1];
-			$tagArgs = StringUtil::substring($tag, StringUtil::length($tagCommand));
+			$tagArgs = mb_substr($tag, mb_strlen($tagCommand));
 			
 			switch ($tagCommand) {
 				case 'if':
@@ -688,10 +688,10 @@ class TemplateScriptingCompiler {
 		$phpCode .= "if (count(".$args['from'].") > 0) {\n";
 		
 		if (isset($args['key'])) {
-			$phpCode .= "foreach (".$args['from']." as ".(StringUtil::substring($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'])." => ".(StringUtil::substring($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
+			$phpCode .= "foreach (".$args['from']." as ".(mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'])." => ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
 		}
 		else {
-			$phpCode .= "foreach (".$args['from']." as ".(StringUtil::substring($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
+			$phpCode .= "foreach (".$args['from']." as ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
 		}
 		
 		if (!empty($foreachProp)) {
@@ -853,13 +853,13 @@ class TemplateScriptingCompiler {
 			
 			// reinserts strings
 			foreach (StringStack::getStack('singleQuote') as $hash => $value) {
-				if (StringUtil::indexOf($string, $hash) !== false) {
-					$string = StringUtil::replace($hash, $value, $string);
+				if (mb_strpos($string, $hash) !== false) {
+					$string = str_replace($hash, $value, $string);
 				}
 			}
 			foreach (StringStack::getStack('doubleQuote') as $hash => $value) {
-				if (StringUtil::indexOf($string, $hash) !== false) {
-					$string = StringUtil::replace($hash, $value, $string);
+				if (mb_strpos($string, $hash) !== false) {
+					$string = str_replace($hash, $value, $string);
 				}
 			}
 			
@@ -934,22 +934,22 @@ class TemplateScriptingCompiler {
 				throw new SystemException($this->formatSyntaxError('syntax error in tag {'.($elseif ? 'elseif' : 'if').'}', $this->currentIdentifier, $this->currentLineNo));
 			}
 			
-			$leftParenthesis = StringUtil::countSubstring($values[$i], '(');
-			$rightParenthesis = StringUtil::countSubstring($values[$i], ')');
+			$leftParenthesis = mb_substr_count($values[$i], '(');
+			$rightParenthesis = mb_substr_count($values[$i], ')');
 			if ($leftParenthesis > $rightParenthesis) {
 				$leftParentheses += $leftParenthesis - $rightParenthesis;
-				$value = StringUtil::substring($values[$i], $leftParenthesis - $rightParenthesis);
+				$value = mb_substr($values[$i], $leftParenthesis - $rightParenthesis);
 				$result .= str_repeat('(', $leftParenthesis - $rightParenthesis);
 				
-				if (str_replace('(', '', StringUtil::substring($values[$i], 0, $leftParenthesis - $rightParenthesis)) != '') {
+				if (str_replace('(', '', mb_substr($values[$i], 0, $leftParenthesis - $rightParenthesis)) != '') {
 					throw new SystemException($this->formatSyntaxError('syntax error in tag {'.($elseif ? 'elseif' : 'if').'}', $this->currentIdentifier, $this->currentLineNo));
 				}
 			}
 			else if ($leftParenthesis < $rightParenthesis) {
 				$leftParentheses += $leftParenthesis - $rightParenthesis;
-				$value = StringUtil::substring($values[$i], 0, $leftParenthesis - $rightParenthesis);
+				$value = mb_substr($values[$i], 0, $leftParenthesis - $rightParenthesis);
 				
-				if ($leftParentheses < 0 || str_replace(')', '', StringUtil::substring($values[$i], $leftParenthesis - $rightParenthesis)) != '') {
+				if ($leftParentheses < 0 || str_replace(')', '', mb_substr($values[$i], $leftParenthesis - $rightParenthesis)) != '') {
 					throw new SystemException($this->formatSyntaxError('syntax error in tag {'.($elseif ? 'elseif' : 'if').'}', $this->currentIdentifier, $this->currentLineNo));
 				}
 			}
@@ -1013,10 +1013,10 @@ class TemplateScriptingCompiler {
 		$encodeHTML = false;
 		$formatNumeric = false;
 		if ($tag[0] == '@') {
-			$tag = StringUtil::substring($tag, 1);
+			$tag = mb_substr($tag, 1);
 		}
 		else if ($tag[0] == '#') {
-			$tag = StringUtil::substring($tag, 1);
+			$tag = mb_substr($tag, 1);
 			$formatNumeric = true;
 		}
 		else {
@@ -1570,13 +1570,13 @@ class TemplateScriptingCompiler {
 	 * @return	string
 	 */
 	public function replacePHPTags($string) {
-		if (StringUtil::indexOf($string, '<?') !== false) {
-			$string = StringUtil::replace('<?php', '@@PHP_START_TAG@@', $string);
-			$string = StringUtil::replace('<?', '@@PHP_SHORT_START_TAG@@', $string);
-			$string = StringUtil::replace('?>', '@@PHP_END_TAG@@', $string);
-			$string = StringUtil::replace('@@PHP_END_TAG@@', "<?php echo '?>'; ?>\n", $string);
-			$string = StringUtil::replace('@@PHP_SHORT_START_TAG@@', "<?php echo '<?'; ?>\n", $string);
-			$string = StringUtil::replace('@@PHP_START_TAG@@', "<?php echo '<?php'; ?>\n", $string);
+		if (mb_strpos($string, '<?') !== false) {
+			$string = str_replace('<?php', '@@PHP_START_TAG@@', $string);
+			$string = str_replace('<?', '@@PHP_SHORT_START_TAG@@', $string);
+			$string = str_replace('?>', '@@PHP_END_TAG@@', $string);
+			$string = str_replace('@@PHP_END_TAG@@', "<?php echo '?>'; ?>\n", $string);
+			$string = str_replace('@@PHP_SHORT_START_TAG@@', "<?php echo '<?'; ?>\n", $string);
+			$string = str_replace('@@PHP_START_TAG@@', "<?php echo '<?php'; ?>\n", $string);
 		}
 		
 		return $string;

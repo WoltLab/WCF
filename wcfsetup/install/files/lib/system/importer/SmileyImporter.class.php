@@ -44,7 +44,7 @@ class SmileyImporter extends AbstractImporter {
 			$known[] = $row['smileyCode'];
 				
 			foreach ($known as $smileyCode) {
-				$this->knownCodes[StringUtil::toLowerCase($smileyCode)] = $row['smileyID'];
+				$this->knownCodes[mb_strtolower($smileyCode)] = $row['smileyID'];
 			}
 		}
 	}
@@ -58,7 +58,7 @@ class SmileyImporter extends AbstractImporter {
 		if (!@copy($additionalData['fileLocation'], WCF_DIR.$data['smileyPath'])) return 0;
 		
 		// check smileycode
-		if (isset($this->knownCodes[StringUtil::toLowerCase($data['smileyCode'])])) return $this->knownCodes[StringUtil::toLowerCase($data['smileyCode'])];
+		if (isset($this->knownCodes[mb_strtolower($data['smileyCode'])])) return $this->knownCodes[mb_strtolower($data['smileyCode'])];
 		
 		$data['packageID'] = 1;
 		if (!isset($data['aliases'])) $data['aliases'] = '';
@@ -68,7 +68,7 @@ class SmileyImporter extends AbstractImporter {
 		if (!empty($data['aliases'])) {
 			$aliases = explode("\n", StringUtil::unifyNewlines($data['aliases']));
 			foreach ($aliases as $key => $alias) {
-				if (isset($this->knownCodes[StringUtil::toLowerCase($alias)])) unset($aliases[$key]);
+				if (isset($this->knownCodes[mb_strtolower($alias)])) unset($aliases[$key]);
 			}
 			$data['aliases'] = implode("\n", $aliases);
 		}
@@ -77,9 +77,9 @@ class SmileyImporter extends AbstractImporter {
 		$smiley = SmileyEditor::create($data);
 		
 		// add smileyCode + aliases to knownCodes
-		$this->knownCodes[StringUtil::toLowerCase($data['smileyCode'])] = $smiley->smileyID;
+		$this->knownCodes[mb_strtolower($data['smileyCode'])] = $smiley->smileyID;
 		foreach ($aliases as $alias) {
-			$this->knownCodes[StringUtil::toLowerCase($alias)] = $smiley->smileyID;
+			$this->knownCodes[mb_strtolower($alias)] = $smiley->smileyID;
 		}
 		
 		return $smiley->smileyID;

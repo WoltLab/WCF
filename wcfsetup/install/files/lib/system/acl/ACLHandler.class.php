@@ -371,7 +371,7 @@ class ACLHandler extends SingletonFactory {
 		$optionList = new ACLOptionList();
 		if (!empty($categoryName)) {
 			if (StringUtil::endsWith($categoryName, '.*')) {
-				$categoryName = StringUtil::substring($categoryName, 0, -1) . '%';
+				$categoryName = mb_substr($categoryName, 0, -1) . '%';
 				$optionList->getConditionBuilder()->add("acl_option.categoryName LIKE ?", array($categoryName));
 			}
 			else {

@@ -143,7 +143,7 @@ class TarWriter extends Tar {
 	protected function addFile($filename, $addDir, $removeDir) {
 		$filename = FileUtil::unifyDirSeparator($filename);
 		$storedFilename = $filename;
-		if (!empty($removeDir)) $storedFilename = StringUtil::replaceIgnoreCase($removeDir, '', $filename);
+		if (!empty($removeDir)) $storedFilename = str_replaceIgnoreCase($removeDir, '', $filename);
 		if (!empty($addDir)) $storedFilename = $addDir . $storedFilename;
 		
 		if (is_file($filename)) {

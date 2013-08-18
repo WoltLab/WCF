@@ -530,7 +530,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					$newValue = preg_replace('~'.$search.'~s', $replace, ($row['languageCustomItemValue'] ?: $row['languageItemValue']), -1, $matches);
 				}
 				else {
-					$newValue = StringUtil::replaceIgnoreCase($search, $replace, ($row['languageCustomItemValue'] ?: $row['languageItemValue']), $matches);
+					$newValue = str_replaceIgnoreCase($search, $replace, ($row['languageCustomItemValue'] ?: $row['languageItemValue']), $matches);
 				}
 				
 				if ($matches > 0) {

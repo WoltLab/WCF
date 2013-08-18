@@ -129,7 +129,7 @@ class LinkHandler extends SingletonFactory {
 		
 		// encode certain characters
 		if (!empty($url)) {
-			$url = StringUtil::replace(array('[', ']'), array('%5B', '%5D'), $url);
+			$url = str_replace(array('[', ']'), array('%5B', '%5D'), $url);
 		}
 		
 		$url = $routeURL . $url;

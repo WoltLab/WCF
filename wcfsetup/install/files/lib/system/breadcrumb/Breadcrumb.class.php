@@ -55,7 +55,7 @@ class Breadcrumb {
 	public function setURL($url, $appendSession = false) {
 		// append session id
 		if ($appendSession) {
-			if (StringUtil::indexOf($url, '?') === false) {
+			if (mb_strpos($url, '?') === false) {
 				$url .= SID_ARG_1ST;
 			}
 			else {
