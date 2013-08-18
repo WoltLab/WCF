@@ -32,7 +32,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			WHERE		packageID = ?
 					AND environment = ?
 					AND eventClassName = ?
-					AND eventName = ?,
+					AND eventName = ?
 					AND inherit = ?
 					AND listenerClassName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
