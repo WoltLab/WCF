@@ -267,12 +267,12 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Alias to php stripos() function with multibyte support.
+	 * Alias to php mb_stripos() function.
 	 * 
-	 * @deprecated use mb_strripos() instead
+	 * @deprecated use mb_stripos() instead
 	 */
 	public static function indexOfIgnoreCase($hayStack, $needle, $offset = 0) {
-		return mb_strripos($hayStack, $needle, $offset);
+		return mb_stripos($hayStack, $needle, $offset);
 	}
 	
 	/**
