@@ -53,6 +53,10 @@
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
+{if $showInnoDBWarning}
+	<p class="warning">{lang}wcf.acp.index.innoDBWarning{/lang}</p>
+{/if}
+
 <div class="contentNavigation">
 	{hascontent}
 		<nav>

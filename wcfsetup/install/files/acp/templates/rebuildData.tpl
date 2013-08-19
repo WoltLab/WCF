@@ -4,6 +4,10 @@
 	<h1>{lang}wcf.acp.rebuildData{/lang}</h1>
 </header>
 
+{if $showInnoDBWarning}
+	<p class="warning">{lang}wcf.acp.index.innoDBWarning{/lang}</p>
+{/if}
+
 <div class="contentNavigation">
 	{hascontent}
 		<nav>
