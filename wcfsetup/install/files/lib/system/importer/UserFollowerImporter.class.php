@@ -26,6 +26,8 @@ class UserFollowerImporter extends AbstractImporter {
 		$data['followUserID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['followUserID']);
 		if (!$data['userID'] || !$data['followUserID']) return 0;
 		
+		if (!isset($data['time'])) $data['time'] = 0;
+		
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_follow
 						(userID, followUserID, time)
 			VALUES			(?, ?, ?)";
