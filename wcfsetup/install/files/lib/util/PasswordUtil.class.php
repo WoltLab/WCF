@@ -232,7 +232,7 @@ final class PasswordUtil {
 	 * @return	string
 	 */
 	protected static function getSalt($salt) {
-		$salt = StringUtil::substring($salt, 0, 22);
+		$salt = mb_substr($salt, 0, 22);
 		
 		return '$' . self::BCRYPT_TYPE . '$' . self::BCRYPT_COST . '$' . $salt;
 	}
@@ -286,7 +286,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function phpbb3($username, $password, $salt, $dbHash) {
-		if (StringUtil::length($dbHash) !== 34) {
+		if (mb_strlen($dbHash) !== 34) {
 			return self::secureCompare(md5($password), $dbHash);
 		}
 		
@@ -373,7 +373,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function smf1($username, $password, $salt, $dbHash) {
-		return self::secureCompare($dbHash, sha1(StringUtil::toLowerCase($username) . $password));
+		return self::secureCompare($dbHash, sha1(mb_strtolower($username) . $password));
 	}
 	
 	/**

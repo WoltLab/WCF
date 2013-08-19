@@ -129,7 +129,7 @@ class LanguageAddForm extends AbstractForm {
 		
 		$this->language = LanguageEditor::create(array(
 			'languageName' => $this->languageName,
-			'languageCode' => StringUtil::toLowerCase($this->languageCode)
+			'languageCode' => mb_strtolower($this->languageCode)
 		));
 		$languageEditor = new LanguageEditor($this->sourceLanguage);
 		$languageEditor->copy($this->language);

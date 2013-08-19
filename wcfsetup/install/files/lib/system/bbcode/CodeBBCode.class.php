@@ -52,9 +52,9 @@ class CodeBBCode extends AbstractBBCode {
 		// fetch highlighter-classname
 		$className = '\wcf\system\bbcode\highlighter\PlainHighlighter';
 		if ($this->codeType) {
-			$className = '\wcf\system\bbcode\highlighter\\'.StringUtil::firstCharToUpperCase(StringUtil::toLowerCase($this->codeType)).'Highlighter';
+			$className = '\wcf\system\bbcode\highlighter\\'.StringUtil::firstCharToUpperCase(mb_strtolower($this->codeType)).'Highlighter';
 			
-			switch (StringUtil::substring($className, strlen('\wcf\system\bbcode\highlighter\\'))) {
+			switch (mb_substr($className, strlen('\wcf\system\bbcode\highlighter\\'))) {
 				case 'ShellHighlighter':
 					$className = '\wcf\system\bbcode\highlighter\BashHighlighter';
 				break;
@@ -74,41 +74,41 @@ class CodeBBCode extends AbstractBBCode {
 		}
 		else {
 			// try to guess highlighter
-			if (StringUtil::indexOf($content, '<?php') !== false) {
+			if (mb_strpos($content, '<?php') !== false) {
 				$className = '\wcf\system\bbcode\highlighter\PhpHighlighter';
 			}
-			else if (StringUtil::indexOf($content, '<html') !== false) {
+			else if (mb_strpos($content, '<html') !== false) {
 				$className = '\wcf\system\bbcode\highlighter\HtmlHighlighter';
 			}
-			else if (StringUtil::indexOf($content, '<?xml') === 0) {
+			else if (mb_strpos($content, '<?xml') === 0) {
 				$className = '\wcf\system\bbcode\highlighter\XmlHighlighter';
 			}
-			else if (	StringUtil::indexOf($content, 'SELECT') === 0
-					||	StringUtil::indexOf($content, 'UPDATE') === 0
-					||	StringUtil::indexOf($content, 'INSERT') === 0
-					||	StringUtil::indexOf($content, 'DELETE') === 0) {
+			else if (	mb_strpos($content, 'SELECT') === 0
+					||	mb_strpos($content, 'UPDATE') === 0
+					||	mb_strpos($content, 'INSERT') === 0
+					||	mb_strpos($content, 'DELETE') === 0) {
 				$className = '\wcf\system\bbcode\highlighter\SqlHighlighter';
 			}
-			else if (StringUtil::indexOf($content, 'import java.') !== false) {
+			else if (mb_strpos($content, 'import java.') !== false) {
 				$className = '\wcf\system\bbcode\highlighter\JavaHighlighter';
 			}
-			else if (	StringUtil::indexOf($content, "---") !== false
-					&&	StringUtil::indexOf($content, "\n+++") !== false) {
+			else if (	mb_strpos($content, "---") !== false
+					&&	mb_strpos($content, "\n+++") !== false) {
 				$className = '\wcf\system\bbcode\highlighter\DiffHighlighter';
 			}
-			else if (StringUtil::indexOf($content, "\n#include ") !== false) {
+			else if (mb_strpos($content, "\n#include ") !== false) {
 				$className = '\wcf\system\bbcode\highlighter\CHighlighter';
 			}
-			else if (StringUtil::indexOf($content, '#!/usr/bin/perl') === 0) {
+			else if (mb_strpos($content, '#!/usr/bin/perl') === 0) {
 				$className = '\wcf\system\bbcode\highlighter\PerlHighlighter';
 			}
-			else if (StringUtil::indexOf($content, 'def __init__(self') !== false) {
+			else if (mb_strpos($content, 'def __init__(self') !== false) {
 				$className = '\wcf\system\bbcode\highlighter\PythonHighlighter';
 			}
 			else if (Regex::compile('^#!/bin/(ba|z)?sh')->match($content)) {
 				$className = '\wcf\system\bbcode\highlighter\BashHighlighter';
 			}
-			else if (StringUtil::indexOf($content, '\\documentclass') !== false) {
+			else if (mb_strpos($content, '\\documentclass') !== false) {
 				$className = '\wcf\system\bbcode\highlighter\TexHighlighter';
 			}
 			else if (Regex::compile('[-\\+\\.,\\[\\]\\>\\<]{9}')->match($content)) {
@@ -163,7 +163,7 @@ class CodeBBCode extends AbstractBBCode {
 				if (is_numeric($attributes[0])) {
 					$this->startLineNumber = intval($attributes[0]);
 				}
-				else if (StringUtil::indexOf($attributes[0], '.') === false) {
+				else if (mb_strpos($attributes[0], '.') === false) {
 					$this->codeType = $attributes[0];
 				}
 				else {
@@ -174,7 +174,7 @@ class CodeBBCode extends AbstractBBCode {
 			case 2:
 				if (is_numeric($attributes[0])) {
 					$this->startLineNumber = intval($attributes[0]);
-					if (StringUtil::indexOf($attributes[1], '.') === false) {
+					if (mb_strpos($attributes[1], '.') === false) {
 						$this->codeType = $attributes[1];
 					}
 					else {
@@ -214,7 +214,7 @@ class CodeBBCode extends AbstractBBCode {
 		$i = -1;
 		// find an unused codeID
 		do {
-			$codeID = StringUtil::substring(StringUtil::getHash($code), 0, 6).(++$i ? '_'.$i : '');
+			$codeID = mb_substr(StringUtil::getHash($code), 0, 6).(++$i ? '_'.$i : '');
 		}
 		while (isset(self::$codeIDs[$codeID]));
 		

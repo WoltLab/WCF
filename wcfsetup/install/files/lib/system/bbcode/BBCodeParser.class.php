@@ -463,16 +463,16 @@ class BBCodeParser extends SingletonFactory {
 	protected function buildTag($string) {
 		$tag = array('name' => '', 'closing' => false, 'source' => $string);
 		
-		if (StringUtil::substring($string, 1, 1) == '/') {
+		if (mb_substr($string, 1, 1) == '/') {
 			// closing tag
-			$tag['name'] = StringUtil::toLowerCase(StringUtil::substring($string, 2, StringUtil::length($string) - 3));
+			$tag['name'] = mb_strtolower(mb_substr($string, 2, mb_strlen($string) - 3));
 			$tag['closing'] = true;
 		}
 		else {
 			// opening tag
 			// split tag and attributes
 			preg_match("!^\[([a-z0-9]+)=?(.*)]$!si", $string, $match);
-			$tag['name'] = StringUtil::toLowerCase($match[1]);
+			$tag['name'] = mb_strtolower($match[1]);
 			
 			// build attributes
 			if (!empty($match[2])) {
@@ -494,11 +494,11 @@ class BBCodeParser extends SingletonFactory {
 		
 		// remove quotes
 		for ($i = 0, $j = count($matches[1]); $i < $j; $i++) {
-			if (StringUtil::substring($matches[1][$i], 0, 1) == "'" && StringUtil::substring($matches[1][$i], -1) == "'") {
-				$matches[1][$i] = StringUtil::replace("\'", "'", $matches[1][$i]);
-				$matches[1][$i] = StringUtil::replace("\\\\", "\\", $matches[1][$i]);
+			if (mb_substr($matches[1][$i], 0, 1) == "'" && mb_substr($matches[1][$i], -1) == "'") {
+				$matches[1][$i] = str_replace("\'", "'", $matches[1][$i]);
+				$matches[1][$i] = str_replace("\\\\", "\\", $matches[1][$i]);
 				
-				$matches[1][$i] = StringUtil::substring($matches[1][$i], 1, -1);
+				$matches[1][$i] = mb_substr($matches[1][$i], 1, -1);
 			}
 		}
 		
