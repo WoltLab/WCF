@@ -2257,7 +2257,7 @@ WCF.Action.Delete = Class.extend({
 	triggerEffect: function(objectIDs) {
 		for (var $index in this._containers) {
 			var $container = $('#' + this._containers[$index]);
-			if (WCF.inArray($container.find('.jsDeleteButton').data('objectID'), objectIDs)) {
+			if (WCF.inArray($container.find(this._buttonSelector).data('objectID'), objectIDs)) {
 				var self = this;
 				$container.wcfBlindOut('up',function() {
 					$(this).remove();
