@@ -411,7 +411,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 					'packageName' => $package['packageName'],
 					'packageID' => ($package['packageID'] ?: null),
 					'archive' => $package['archive'],
-					'action' => $queueType
+					'action' => $package['action']
 				));
 				$parentQueueID = $queue->queueID;
 		
