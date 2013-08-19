@@ -73,7 +73,7 @@ class Gravatar extends DefaultAvatar {
 		
 		if (!isset($this->url[$size])) {
 			// try to use cached gravatar
-			$cachedFilename = sprintf(self::GRAVATAR_CACHE_LOCATION, md5(StringUtil::toLowerCase($this->gravatar)), $size);
+			$cachedFilename = sprintf(self::GRAVATAR_CACHE_LOCATION, md5(mb_strtolower($this->gravatar)), $size);
 			if (file_exists(WCF_DIR.$cachedFilename) && filemtime(WCF_DIR.$cachedFilename) > (TIME_NOW - (self::GRAVATAR_CACHE_EXPIRE * 86400))) {
 				$this->url[$size] = WCF::getPath().$cachedFilename;
 			}
@@ -94,7 +94,7 @@ class Gravatar extends DefaultAvatar {
 	 * @return	boolean
 	 */
 	public static function test($email) {
-		$gravatarURL = sprintf(self::GRAVATAR_BASE, md5(StringUtil::toLowerCase($email)), 80, '404');
+		$gravatarURL = sprintf(self::GRAVATAR_BASE, md5(mb_strtolower($email)), 80, '404');
 		try {
 			$tmpFile = FileUtil::downloadFileFromHttp($gravatarURL, 'gravatar');
 			@unlink($tmpFile);

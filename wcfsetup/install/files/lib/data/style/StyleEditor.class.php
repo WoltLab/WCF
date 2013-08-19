@@ -311,7 +311,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if (!empty($data['templates'])) {
 			$templateGroupName = $originalTemplateGroupName = $data['name'];
 			$templateGroupFolderName = preg_replace('/[^a-z0-9_-]/i', '', $templateGroupName);
-			if (empty($templateGroupFolderName)) $templateGroupFolderName = 'generic'.StringUtil::substring(StringUtil::getRandomID(), 0, 8);
+			if (empty($templateGroupFolderName)) $templateGroupFolderName = 'generic'.mb_substr(StringUtil::getRandomID(), 0, 8);
 			$originalTemplateGroupFolderName = $templateGroupFolderName;
 			
 			// get unique template pack name
@@ -436,7 +436,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							TemplateEditor::create(array(
 								'application' => Package::getAbbreviation($package),
 								'packageID' => $row['packageID'],
-								'templateName' => StringUtil::replace('.tpl', '', $template['filename']),
+								'templateName' => str_replace('.tpl', '', $template['filename']),
 								'templateGroupID' => $styleData['templateGroupID']
 							));
 						}
@@ -460,7 +460,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// import preview image
 		if (!empty($data['image'])) {
-			$fileExtension = StringUtil::substring($data['image'], StringUtil::lastIndexOf($data['image'], '.'));
+			$fileExtension = mb_substr($data['image'], mb_strrpos($data['image'], '.'));
 			$index = $tar->getIndexByFilename($data['image']);
 			if ($index !== false) {
 				$filename = WCF_DIR.'images/stylePreview-'.$style->styleID.$fileExtension;

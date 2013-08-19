@@ -53,8 +53,8 @@ final class StringStack {
 	public static function reinsertStrings($string, $type = 'default') {
 		if (isset(self::$stringStack[$type])) {
 			foreach (self::$stringStack[$type] as $hash => $value) {
-				if (StringUtil::indexOf($string, $hash) !== false) {
-					$string = StringUtil::replace($hash, $value, $string);
+				if (mb_strpos($string, $hash) !== false) {
+					$string = str_replace($hash, $value, $string);
 					unset(self::$stringStack[$type][$hash]);
 				}
 			}

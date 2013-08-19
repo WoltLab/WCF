@@ -36,7 +36,7 @@ class PhpHighlighter extends Highlighter {
 	public function highlight($code) {
 		// add starting php tag
 		$phpTagsAdded = false;
-		if (StringUtil::indexOf($code, '<?') === false) {
+		if (mb_strpos($code, '<?') === false) {
 			$phpTagsAdded = true;
 			$code = '<?php '.$code.' ?>';
 		}
