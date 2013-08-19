@@ -878,6 +878,7 @@
 		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[Die folgenden bereits installierten Pakete schließen eine Installation dieses Pakets aus:]]></item>
 		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[„{$excludingPackage}“ ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (ausgeschlossene Version: {$excludingPackage->excludedPackageVersion}){/if}]]></item>
 		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Die Abhängigkeiten dieses Paketes konnten nicht aufgelöst werden.]]></item>
+		<item name="wcf.acp.package.install.optionalPackage.missingRequirements"><![CDATA[Installation nicht möglich, nicht alle benötigten Pakete sind installiert.]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Installation wird vorbereitet …]]></item>
 		<item name="wcf.acp.package.install.title"><![CDATA[Paket-Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Benötigte Version]]></item>

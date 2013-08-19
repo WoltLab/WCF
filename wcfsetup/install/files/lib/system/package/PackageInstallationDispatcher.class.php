@@ -551,6 +551,11 @@ class PackageInstallationDispatcher {
 			
 			foreach ($nodeData as $package) {
 				if (in_array($package['package'], $document)) {
+					// ignore uninstallable packages
+					if (!$package['isInstallable']) {
+						continue;
+					}
+					
 					if (!$shiftNodes) {
 						$this->nodeBuilder->shiftNodes($currentNode, 'tempNode');
 						$shiftNodes = true;
@@ -702,6 +707,9 @@ class PackageInstallationDispatcher {
 				$optionalPackage->setLabel($package['packageName']);
 				$optionalPackage->setValue($package['package']);
 				$optionalPackage->setDescription($package['packageDescription']);
+				if ($package['isInstallable']) {
+					$optionalPackage->setDisabledMessage(WCF::getLanguage()->get('wcf.acp.package.install.optionalPackage.missingRequirements'));
+				}
 				
 				$container->appendChild($optionalPackage);
 			}
