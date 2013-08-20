@@ -147,8 +147,8 @@ class Package extends DatabaseObject {
 			return false;
 		}
 		
-		// disallow uninstallation of WCF and applications if not within WCF ACP
-		if ($this->package == 'com.woltlab.wcf' || ($this->isApplication && PACKAGE_ID != 1)) {
+		// disallow uninstallation of WCF
+		if ($this->package == 'com.woltlab.wcf') {
 			return false;
 		}
 		
