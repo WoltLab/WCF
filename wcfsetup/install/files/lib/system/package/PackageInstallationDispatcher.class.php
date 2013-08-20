@@ -707,7 +707,7 @@ class PackageInstallationDispatcher {
 				$optionalPackage->setLabel($package['packageName']);
 				$optionalPackage->setValue($package['package']);
 				$optionalPackage->setDescription($package['packageDescription']);
-				if ($package['isInstallable']) {
+				if (!$package['isInstallable']) {
 					$optionalPackage->setDisabledMessage(WCF::getLanguage()->get('wcf.acp.package.install.optionalPackage.missingRequirements'));
 				}
 				
