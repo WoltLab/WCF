@@ -551,6 +551,11 @@ class PackageInstallationDispatcher {
 			
 			foreach ($nodeData as $package) {
 				if (in_array($package['package'], $document)) {
+					// ignore uninstallable packages
+					if (!$package['isInstallable']) {
+						continue;
+					}
+					
 					if (!$shiftNodes) {
 						$this->nodeBuilder->shiftNodes($currentNode, 'tempNode');
 						$shiftNodes = true;
@@ -621,6 +626,18 @@ class PackageInstallationDispatcher {
 			$packageDir->setLabel(WCF::getLanguage()->get('wcf.acp.package.packageDir.input'));
 			
 			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(StringUtil::substring(WCF_DIR, 0, -4)));
+			// check if there is already an application
+			$sql = "SELECT	COUNT(*) AS count
+				FROM	wcf".WCF_N."_package
+				WHERE	packageDir = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array('../'));
+			$row = $statement->fetchArray();
+			if ($row['count']) {
+				// use abbreviation
+				$defaultPath .= strtolower(Package::getAbbreviation($this->getPackage()->package)) . '/';
+			}
+			
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);
 			
@@ -702,6 +719,9 @@ class PackageInstallationDispatcher {
 				$optionalPackage->setLabel($package['packageName']);
 				$optionalPackage->setValue($package['package']);
 				$optionalPackage->setDescription($package['packageDescription']);
+				if (!$package['isInstallable']) {
+					$optionalPackage->setDisabledMessage(WCF::getLanguage()->get('wcf.acp.package.install.optionalPackage.missingRequirements'));
+				}
 				
 				$container->appendChild($optionalPackage);
 			}

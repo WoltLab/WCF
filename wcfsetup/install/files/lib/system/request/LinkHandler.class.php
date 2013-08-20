@@ -44,9 +44,8 @@ class LinkHandler extends SingletonFactory {
 		$abbreviation = 'wcf';
 		$anchor = '';
 		$isACP = $originIsACP = RequestHandler::getInstance()->isACPRequest();
-		$isRaw = false;
+		$encodeTitle = $forceWCF = $isRaw = false;
 		$appendSession = true;
-		$encodeTitle = false;
 		if (isset($parameters['application'])) {
 			$abbreviation = $parameters['application'];
 			unset($parameters['application']);
@@ -74,6 +73,12 @@ class LinkHandler extends SingletonFactory {
 				$appendSession = false;
 			}
 			unset($parameters['forceFrontend']);
+		}
+		if (isset($parameters['forceWCF'])) {
+			if ($parameters['forceWCF'] && $isACP) {
+				$forceWCF = true;
+			}
+			unset($parameters['forceWCF']);
 		}
 		if (isset($parameters['encodeTitle'])) {
 			$encodeTitle = $parameters['encodeTitle'];
@@ -155,7 +160,10 @@ class LinkHandler extends SingletonFactory {
 				}
 				
 				// fallback to primary application if abbreviation is 'wcf' or unknown
-				if ($application === null) {
+				if ($forceWCF) {
+					$application = ApplicationHandler::getInstance()->getWCF();
+				}
+				else if ($application === null) {
 					$application = ApplicationHandler::getInstance()->getPrimaryApplication();
 				}
 				

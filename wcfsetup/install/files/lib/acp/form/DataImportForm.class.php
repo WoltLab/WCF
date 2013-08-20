@@ -109,6 +109,12 @@ class DataImportForm extends AbstractForm {
 	public $fileSystemPath = '';
 	
 	/**
+	 * display a warning if InnoDB uses a slow configuration
+	 * @var	boolean
+	 */
+	public $showInnoDBWarning = false;
+	
+	/**
 	 * display notice for existing import mappings
 	 * @var	boolean
 	 */
@@ -257,6 +263,14 @@ class DataImportForm extends AbstractForm {
 				}
 			}
 		}
+		
+		$sql = "SHOW VARIABLES LIKE ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array('innodb_flush_log_at_trx_commit'));
+		$row = $statement->fetchArray();
+		if ($row && $row['Value'] == 1) {
+			$this->showInnoDBWarning = true;
+		}
 	}
 	
 	/**
@@ -279,6 +293,7 @@ class DataImportForm extends AbstractForm {
 			'dbPrefix' => $this->dbPrefix,
 			'fileSystemPath' => $this->fileSystemPath,
 			'userMergeMode' => $this->userMergeMode,
+			'showInnoDBWarning' => $this->showInnoDBWarning,
 			'showMappingNotice' => $this->showMappingNotice,
 			'additionalData' => $this->additionalData
 		));
