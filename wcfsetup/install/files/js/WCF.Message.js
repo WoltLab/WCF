@@ -2520,6 +2520,13 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		if ($ckEditor !== null && $ckEditor.mode === 'wysiwyg') {
 			// in design mode
+			
+			// remove the link if the cursor is in a link element
+			$ckEditor.removeStyle(new CKEDITOR.style({
+				element: 'a',
+				type: CKEDITOR.STYLE_INLINE
+			}));
+			
 			$ckEditor.insertText($quote + "\n\n");
 		}
 		else {
