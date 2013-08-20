@@ -1653,7 +1653,7 @@
 		&.columnMark,
 		&.columnStatus {
 			text-align: center;
-			width: 1px !important;
+			width: 1px;
 			white-space: nowrap;
 			word-wrap: normal;
 		}
@@ -1661,14 +1661,14 @@
 		&.columnDigits,
 		&.columnID {
 			text-align: right;
-			width: 1px !important;
+			width: 1px;
 			white-space: nowrap;
 			word-wrap: normal;
 		}
 		
 		&.columnIcon {
 			text-align: left;
-			width: 1px !important;
+			width: 1px;
 			white-space: nowrap;
 			word-wrap: normal;
 		}
@@ -1688,7 +1688,7 @@
 		&.columnRegistrationDate {
 			font-size: @wcfSmallFontSize;
 			text-align: right;
-			width: 1px !important;
+			width: 1px;
 			white-space: nowrap;
 			word-wrap: normal;
 		}
@@ -1786,6 +1786,12 @@
 			&:last-child {
 				border-bottom-width: 0;
 			}
+		}
+		
+		td {
+			text-align: left !important;
+			max-width: none !important;
+			width: auto !important;
 		}
 	}
 }
