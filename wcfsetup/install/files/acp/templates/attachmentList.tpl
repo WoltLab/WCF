@@ -110,9 +110,9 @@
 								</a>
 								
 								<div>
-									<p><a href="{link controller='Attachment' id=$attachment->attachmentID}{/link}">{$attachment->filename}</a></p>
+									<p><a href="{link controller='Attachment' id=$attachment->attachmentID}{/link}">{$attachment->filename|tableWordwrap}</a></p>
 									<p><small>{if $attachment->userID}<a href="{link controller='UserEdit' id=$attachment->userID}{/link}">{$attachment->username}</a>{else}{lang}wcf.user.guest{/lang}{/if}</small></p>
-									{if $attachment->getContainerObject()}<p><small><a href="{$attachment->getContainerObject()->getLink()}">{$attachment->getContainerObject()->getTitle()}</a></small></p>{/if}
+									{if $attachment->getContainerObject()}<p><small><a href="{$attachment->getContainerObject()->getLink()}">{$attachment->getContainerObject()->getTitle()|tableWordwrap}</a></small></p>{/if}
 								</div>
 							</div>
 						</td>

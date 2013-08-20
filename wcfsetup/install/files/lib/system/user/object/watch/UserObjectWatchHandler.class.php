@@ -76,8 +76,9 @@ class UserObjectWatchHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	array<integer>	$objectIDs
+	 * @param	array<integer>	$userIDs
 	 */
-	public function deleteObjects($objectType, array $objectIDs) {
+	public function deleteObjects($objectType, array $objectIDs, array $userIDs = array()) {
 		// get object type id
 		$objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.objectWatch', $objectType);
 		
@@ -85,6 +86,7 @@ class UserObjectWatchHandler extends SingletonFactory {
 		$conditionsBuilder = new PreparedStatementConditionBuilder();
 		$conditionsBuilder->add('objectTypeID = ?', array($objectTypeObj->objectTypeID));
 		$conditionsBuilder->add('objectID IN (?)', array($objectIDs));
+		if (!empty($userIDs)) $conditionsBuilder->add('userID IN (?)', array($userIDs));
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_object_watch
 			".$conditionsBuilder;

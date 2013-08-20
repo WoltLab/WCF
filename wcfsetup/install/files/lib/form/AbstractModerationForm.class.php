@@ -139,16 +139,18 @@ abstract class AbstractModerationForm extends AbstractForm {
 			'assignedUserID' => ($this->assignedUserID ?: null),
 			'comment' => $this->comment
 		);
-		if ($this->assignedUserID) {
-			// queue item is being processed
-			if ($this->assignedUserID != $this->queue->assignedUserID) {
-				$this->data['status'] = ModerationQueue::STATUS_PROCESSING;
+		if ($this->queue->status != ModerationQueue::STATUS_DONE) {
+			if ($this->assignedUserID) {
+				// queue item is being processed
+				if ($this->assignedUserID != $this->queue->assignedUserID) {
+					$this->data['status'] = ModerationQueue::STATUS_PROCESSING;
+				}
 			}
-		}
-		else {
-			// queue is no longer processed, mark as outstanding
-			if ($this->queue->assignedUserID) {
-				$this->data['status'] = ModerationQueue::STATUS_OUTSTANDING;
+			else {
+				// queue is no longer processed, mark as outstanding
+				if ($this->queue->assignedUserID) {
+					$this->data['status'] = ModerationQueue::STATUS_OUTSTANDING;
+				}
 			}
 		}
 		

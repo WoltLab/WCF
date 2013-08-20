@@ -164,8 +164,8 @@ final class CronjobUtil {
 		$timeBase = self::$timeBase;
 		
 		if ($addAnDay) {
-			$date = getdate($timeBase);
-			$timeBase = gmmktime(0, 0, 1, $date['mon'], $date['mday'] + 1, $date['year']);
+			$date = explode('.', gmdate("d.m.Y", $timeBase));
+			$timeBase = gmmktime(0, 0, 1, $date[1], $date[0] + 1, $date[2]);
 		}
 		
 		$day = gmdate('j', $timeBase);
@@ -305,10 +305,9 @@ final class CronjobUtil {
 			$index = self::findKey($hour, $values['hour'], false);
 			
 			if ($index === false) {
-				if ($index === false) {
-					$index = self::findKey($hour, $values['hour']);
-					$addAnDay = true;
-				}
+				$index = self::findKey($hour, $values['hour']);
+				$addAnDay = true;
+				
 				$hour = $values['hour'][$index];
 			}
 		}

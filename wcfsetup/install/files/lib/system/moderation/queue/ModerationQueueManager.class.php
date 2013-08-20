@@ -4,6 +4,7 @@ use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ModerationQueueList;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
@@ -294,10 +295,15 @@ class ModerationQueueManager extends SingletonFactory {
 	 * @param	array<integer>		$queueIDs
 	 */
 	public function removeOrphans(array $queueIDs) {
-		$queueAction = new ModerationQueueAction($queueIDs, 'markAsDone');
-		$queueAction->executeAction();
-		
-		$this->resetModerationCount();
+		if (!empty($queueIDs)) {
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("queueID IN (?)", array($queueIDs));
+			$sql = "DELETE FROM	wcf".WCF_N."_moderation_queue
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			$this->resetModerationCount();
+		}
 	}
 	
 	/**

@@ -6,11 +6,12 @@ use wcf\system\database\DatabaseException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
  * Provides the data import form.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -19,6 +20,12 @@ use wcf\util\StringUtil;
  * @category	Community Framework
  */
 class DataImportForm extends AbstractForm {
+	/**
+	 * additional data
+	 * @var array
+	 */
+	public $additionalData = array();
+	
 	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
@@ -102,6 +109,18 @@ class DataImportForm extends AbstractForm {
 	public $fileSystemPath = '';
 	
 	/**
+	 * display a warning if InnoDB uses a slow configuration
+	 * @var	boolean
+	 */
+	public $showInnoDBWarning = false;
+	
+	/**
+	 * display notice for existing import mappings
+	 * @var	boolean
+	 */
+	public $showMappingNotice = false;
+	
+	/**
 	 * user merge mode
 	 * @var integer
 	 */
@@ -152,7 +171,7 @@ class DataImportForm extends AbstractForm {
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
-	
+		
 		if (isset($_POST['selectedData']) && is_array($_POST['selectedData'])) $this->selectedData = $_POST['selectedData'];
 		
 		if (isset($_POST['dbHost'])) $this->dbHost = StringUtil::trim($_POST['dbHost']);
@@ -162,6 +181,7 @@ class DataImportForm extends AbstractForm {
 		if (isset($_POST['dbPrefix'])) $this->dbPrefix = StringUtil::trim($_POST['dbPrefix']);
 		if (isset($_POST['fileSystemPath'])) $this->fileSystemPath = StringUtil::trim($_POST['fileSystemPath']);
 		if (isset($_POST['userMergeMode'])) $this->userMergeMode = intval($_POST['userMergeMode']);
+		if (isset($_POST['additionalData'])) $this->additionalData = ArrayUtil::trim($_POST['additionalData']);
 	}
 	
 	/**
@@ -169,8 +189,8 @@ class DataImportForm extends AbstractForm {
 	 */
 	public function validate() {
 		parent::validate();
-	
-		$this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, $this->fileSystemPath);
+		
+		$this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, $this->fileSystemPath, $this->additionalData);
 		
 		// validate database Access
 		try {
@@ -202,7 +222,7 @@ class DataImportForm extends AbstractForm {
 	 */
 	public function save() {
 		parent::save();
-	
+		
 		// get queue
 		$queue = $this->exporter->getQueue();
 		
@@ -215,7 +235,8 @@ class DataImportForm extends AbstractForm {
 			'dbName' => $this->dbName,
 			'dbPrefix' => $this->dbPrefix,
 			'fileSystemPath' => $this->fileSystemPath,
-			'userMergeMode' => $this->userMergeMode
+			'userMergeMode' => $this->userMergeMode,
+			'additionalData' => $this->additionalData
 		));
 		
 		WCF::getTPL()->assign('queue', $queue);
@@ -227,8 +248,28 @@ class DataImportForm extends AbstractForm {
 	public function readData() {
 		parent::readData();
 		
-		if (!count($_POST)) {
+		if (empty($_POST)) {
 			$this->fileSystemPath = (!empty($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : WCF_DIR);
+			
+			if (!$this->exporterName) {
+				$sql = "SELECT	COUNT(*) AS count
+					FROM	wcf".WCF_N."_import_mapping";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute();
+				$row = $statement->fetchArray();
+				
+				if ($row['count']) {
+					$this->showMappingNotice = true;
+				}
+			}
+		}
+		
+		$sql = "SHOW VARIABLES LIKE ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array('innodb_flush_log_at_trx_commit'));
+		$row = $statement->fetchArray();
+		if ($row && $row['Value'] == 1) {
+			$this->showInnoDBWarning = true;
 		}
 	}
 	
@@ -237,7 +278,7 @@ class DataImportForm extends AbstractForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		WCF::getTPL()->assign(array(
 			'exporter' => $this->exporter,
 			'importers' => $this->importers,
@@ -251,7 +292,10 @@ class DataImportForm extends AbstractForm {
 			'dbName' => $this->dbName,
 			'dbPrefix' => $this->dbPrefix,
 			'fileSystemPath' => $this->fileSystemPath,
-			'userMergeMode' => $this->userMergeMode
+			'userMergeMode' => $this->userMergeMode,
+			'showInnoDBWarning' => $this->showInnoDBWarning,
+			'showMappingNotice' => $this->showMappingNotice,
+			'additionalData' => $this->additionalData
 		));
 	}
 }

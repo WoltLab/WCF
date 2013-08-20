@@ -276,6 +276,12 @@
 			<nicevalue>-100</nicevalue>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.like.user</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname><![CDATA[wcf\system\worker\LikeUserRebuildDataWorker]]></classname>
+			<nicevalue>-90</nicevalue>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.user</name>
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname><![CDATA[wcf\system\worker\UserRebuildDataWorker]]></classname>

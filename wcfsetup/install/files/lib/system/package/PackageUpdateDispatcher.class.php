@@ -434,6 +434,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						(packageUpdateVersionID, package, minversion)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			WCF::getDB()->beginTransaction();
 			foreach ($requirementInserts as $requirement) {
 				$statement->execute(array(
 					$requirement['packageUpdateVersionID'],
@@ -441,6 +442,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					$requirement['minversion']
 				));
 			}
+			WCF::getDB()->commitTransaction();
 		}
 		
 		if (!empty($optionalInserts)) {
@@ -459,12 +461,14 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						(packageUpdateVersionID, package)
 				VALUES		(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			WCF::getDB()->beginTransaction();
 			foreach ($optionalInserts as $requirement) {
 				$statement->execute(array(
 					$requirement['packageUpdateVersionID'],
 					$requirement['package']
 				));
 			}
+			WCF::getDB()->commitTransaction();
 		}
 		
 		if (!empty($excludedPackagesParameters)) {
@@ -483,6 +487,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						(packageUpdateVersionID, excludedPackage, excludedPackageVersion)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			WCF::getDB()->beginTransaction();
 			foreach ($excludedPackagesParameters as $excludedPackage) {
 				$statement->execute(array(
 					$excludedPackage['packageUpdateVersionID'],
@@ -490,6 +495,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					$excludedPackage['excludedPackageVersion']
 				));
 			}
+			WCF::getDB()->commitTransaction();
 		}
 		
 		if (!empty($fromversionInserts)) {
@@ -508,12 +514,14 @@ class PackageUpdateDispatcher extends SingletonFactory {
 						(packageUpdateVersionID, fromversion)
 				VALUES		(?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
+			WCF::getDB()->beginTransaction();
 			foreach ($fromversionInserts as $fromversion) {
 				$statement->execute(array(
 					$fromversion['packageUpdateVersionID'],
 					$fromversion['fromversion']
 				));
 			}
+			WCF::getDB()->commitTransaction();
 		}
 	}
 	
@@ -521,9 +529,10 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * Returns a list of available updates for installed packages.
 	 * 
 	 * @param	boolean		$removeRequirements
+	 * @param	boolean		$removeOlderMinorReleases
 	 * @return	array
 	 */
-	public function getAvailableUpdates($removeRequirements = true) {
+	public function getAvailableUpdates($removeRequirements = true, $removeOlderMinorReleases = false) {
 		$updates = array();
 		
 		// get update server data
@@ -603,6 +612,33 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					}
 				}
 			}
+		}
+		
+		// remove older minor releases from list, e.g. only display 1.0.2, even if 1.0.1 is available
+		if ($removeOlderMinorReleases) {
+			foreach ($updates as &$updateData) {
+				$highestVersions = array();
+				foreach ($updateData['versions'] as $versionNumber => $dummy) {
+					if (preg_match('~^(\d+\.\d+)\.~', $versionNumber, $matches)) {
+						$major = $matches[1];
+						if (isset($highestVersions[$major])) {
+							if (version_compare($highestVersions[$major], $versionNumber, '<')) {
+								// version is newer, discard current version
+								unset($updateData['versions'][$highestVersions[$major]]);
+								$highestVersions[$major] = $versionNumber;
+							}
+							else {
+								// version is lower, discard
+								unset($updateData['versions'][$versionNumber]);
+							}
+						}
+						else {
+							$highestVersions[$major] = $versionNumber;
+						}
+					}
+				}
+			}
+			unset($updateData);
 		}
 		
 		return $updates;

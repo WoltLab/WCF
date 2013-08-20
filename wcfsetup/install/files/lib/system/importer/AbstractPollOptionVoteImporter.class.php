@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class AbstractPollOptionVoteImporter implements IImporter {
+class AbstractPollOptionVoteImporter extends AbstractImporter {
 	/**
 	 * option object type name
 	 * @var string
@@ -38,9 +38,9 @@ class AbstractPollOptionVoteImporter implements IImporter {
 		$data['optionID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['optionID']);
 		if (!$data['optionID']) return 0;
 		
-		$sql = "INSERT INTO	wcf".WCF_N."_poll_option_vote
-					(pollID, optionID, userID)
-			VALUES		(?, ?, ?)";
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_poll_option_vote
+						(pollID, optionID, userID)
+			VALUES			(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($data['pollID'], $data['optionID'], $data['userID']));
 		

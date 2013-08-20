@@ -61,7 +61,11 @@
 					
 					{if $errorField == 'cssClassName'}
 						<small class="innerError">
-							{lang}wcf.acp.user.rank.cssClassName.error.{@$errorType}{/lang}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.user.rank.cssClassName.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small>{lang}wcf.acp.user.rank.cssClassName.description{/lang}</small>

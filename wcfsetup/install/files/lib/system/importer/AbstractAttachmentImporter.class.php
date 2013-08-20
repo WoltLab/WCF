@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\importer;
-use wcf\data\attachment\AttachmentAction;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\SystemException;
 use wcf\util\StringUtil;
@@ -15,7 +14,12 @@ use wcf\util\StringUtil;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class AbstractAttachmentImporter implements IImporter {
+class AbstractAttachmentImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\attachment\Attachment';
+	
 	/**
 	 * object type id for attachments
 	 * @var integer
@@ -45,11 +49,7 @@ class AbstractAttachmentImporter implements IImporter {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		
 		// save attachment
-		$action = new AttachmentAction(array(), 'create', array(
-			'data' => array_merge($data, array('objectTypeID' => $this->objectTypeID))		
-		));
-		$returnValues = $action->executeAction();
-		$attachment = $returnValues['returnValues'];
+		$attachment = AttachmentEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
 		
 		// check attachment directory
 		// and create subdirectory if necessary
@@ -76,10 +76,11 @@ class AbstractAttachmentImporter implements IImporter {
 	}
 	
 	protected function fixEmbeddedAttachments($message, $oldID, $newID) {
-		if (StringUtil::indexOfIgnoreCase($message, '[attach]'.$oldID.'[/attach]') !== false || StringUtil::indexOfIgnoreCase($message, '[attach='.$oldID.']') !== false) {
-			$message = StringUtil::replaceIgnoreCase('[attach]'.$oldID.'[/attach]', '[attach]'.$newID.'[/attach]', $message);
-			$message = StringUtil::replaceIgnoreCase('[attach='.$oldID.']', '[attach='.$newID.']', $message);
-		
+		if (mb_strripos($message, '[attach]'.$oldID.'[/attach]') !== false || mb_strripos($message, '[attach='.$oldID.']') !== false || mb_strripos($message, '[attach='.$oldID.',') !== false) {
+			$message = str_ireplace('[attach]'.$oldID.'[/attach]', '[attach]'.$newID.'[/attach]', $message);
+			$message = str_ireplace('[attach='.$oldID.']', '[attach='.$newID.']', $message);
+			$message = str_ireplace('[attach='.$oldID.',', '[attach='.$newID.',', $message);
+			
 			return $message;
 		}
 		

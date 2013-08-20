@@ -36,7 +36,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current wcf version
-define('WCF_VERSION', '2.0.0 Beta 6 (Maelstrom)');
+define('WCF_VERSION', '2.0.0 Beta 7 (Maelstrom)');
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -502,6 +502,22 @@ class WCF {
 		self::$applications[$abbreviation] = $application;
 		
 		return $applicationObject;
+	}
+	
+	/**
+	 * Loads an application on runtime, do not use this outside the package installation.
+	 * 
+	 * @param	integer		$packageID
+	 */
+	public static function loadRuntimeApplication($packageID) {
+		$package = new Package($packageID);
+		$application = new Application($packageID);
+		
+		$abbreviation = Package::getAbbreviation($package->package);
+		$packageDir = FileUtil::getRealPath(WCF_DIR.$package->packageDir);
+		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
+		self::$applications[$abbreviation] = $application;
+		self::getTPL()->addApplication($abbreviation, $packageDir . 'acp/templates/');
 	}
 	
 	/**

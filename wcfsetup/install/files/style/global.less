@@ -5,6 +5,7 @@ body {
 	font-family: @wcfBaseFontFamily;
 	font-size: @wcfBaseFontSize;
 	line-height: @wcfBaseLineHeight;
+	word-wrap: break-word;
 }
 
 small {
@@ -136,7 +137,8 @@ body > iframe[src="about:blank"] {
 
 .framed {
 	> canvas,
-	> img {
+	> img,
+	> .icon {
 		background-color: @wcfContentBackgroundColor;
 		border: 1px solid @wcfContainerBorderColor;
 		padding: 1px;
@@ -151,6 +153,18 @@ body > iframe[src="about:blank"] {
 	filter: url(../images/grayscale-filter.svg#grayscale);
 	filter: gray;
 	-webkit-filter: grayscale(1);
+}
+
+/* fixes fieldset overflow issues */
+/* webkit */
+fieldset {
+	min-width: 0; 
+}
+/* firefox */
+@-moz-document url-prefix() {
+	fieldset {
+		display: table-column;
+	}
 }
 
 /* balloon tooltips */
@@ -260,6 +274,7 @@ body > iframe[src="about:blank"] {
 	text-shadow: none !important; /* necessary to avoid ugly text shadows in comment lists; @todo: better solution without "!important" */
 	vertical-align: middle;
 	white-space: nowrap;
+	word-wrap: normal;
 	
 	&.label	{
 		border-radius: 4px;

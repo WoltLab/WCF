@@ -332,9 +332,6 @@ class StyleAddForm extends AbstractForm {
 						'text' => $matches[1]
 					);
 				}
-				else {
-					$this->variables[$matches[1]] = $matches[2];
-				}
 			}
 			else {
 				// not valid

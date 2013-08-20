@@ -95,6 +95,8 @@
 				<attribute name="0"></attribute>
 				<attribute name="1"></attribute>
 			</attributes>
+			<wysiwygicon>quote.png</wysiwygicon>
+			<buttonlabel>wcf.bbcode.button.quote</buttonlabel>
 		</bbcode>
 		<bbcode name="code">
 			<classname><![CDATA[wcf\system\bbcode\CodeBBCode]]></classname>
@@ -105,6 +107,8 @@
 				</attribute>
 			</attributes>
 			<sourcecode>1</sourcecode>
+			<wysiwygicon>code.png</wysiwygicon>
+			<buttonlabel>wcf.bbcode.button.code</buttonlabel>
 		</bbcode>
 		<bbcode name="img">
 			<classname><![CDATA[wcf\system\bbcode\ImageBBCode]]></classname>
@@ -152,12 +156,16 @@
 			<attributes>
 				<attribute name="0"></attribute>
 			</attributes>
+			<wysiwygicon>spoiler.png</wysiwygicon>
+			<buttonlabel>wcf.bbcode.button.spoiler</buttonlabel>
 		</bbcode>
 		<bbcode name="tt">
 			<htmlopen>code class="inlineCode"</htmlopen>
 			<htmlclose>code</htmlclose>
 			<allowedchildren>none</allowedchildren>
 			<sourcecode>1</sourcecode>
+			<wysiwygicon>inlineCode.png</wysiwygicon>
+			<buttonlabel>wcf.bbcode.button.inlineCode</buttonlabel>
 		</bbcode>
 		
 		<bbcode name="attach">

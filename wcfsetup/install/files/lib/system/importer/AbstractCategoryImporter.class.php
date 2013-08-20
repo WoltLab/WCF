@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\importer;
-use wcf\data\category\CategoryAction;
+use wcf\data\category\CategoryEditor;
 
 /**
  * Imports categories.
@@ -12,7 +12,12 @@ use wcf\data\category\CategoryAction;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class AbstractCategoryImporter implements IImporter {
+class AbstractCategoryImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\category\Category';
+	
 	/**
 	 * object type id for categories
 	 * @var integer
@@ -31,14 +36,10 @@ class AbstractCategoryImporter implements IImporter {
 	public function import($oldID, array $data, array $additionalData = array()) {
 		if (!empty($data['parentCategoryID'])) $data['parentCategoryID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['parentCategoryID']);
 		
-		$action = new CategoryAction(array(), 'create', array(
-			'data' => array_merge($data, array('objectTypeID' => $this->objectTypeID))		
-		));
-		$returnValues = $action->executeAction();
-		$newID = $returnValues['returnValues']->categoryID;
+		$category = CategoryEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
 		
-		ImportHandler::getInstance()->saveNewID($this->objectTypeName, $oldID, $newID);
+		ImportHandler::getInstance()->saveNewID($this->objectTypeName, $oldID, $category->categoryID);
 		
-		return $newID;
+		return $category->categoryID;
 	}
 }

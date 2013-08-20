@@ -12,7 +12,12 @@ use wcf\system\WCF;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class UserFollowerImporter implements IImporter {
+class UserFollowerImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\user\follow\UserFollow';
+	
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */
@@ -20,6 +25,8 @@ class UserFollowerImporter implements IImporter {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		$data['followUserID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['followUserID']);
 		if (!$data['userID'] || !$data['followUserID']) return 0;
+		
+		if (!isset($data['time'])) $data['time'] = 0;
 		
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_follow
 						(userID, followUserID, time)

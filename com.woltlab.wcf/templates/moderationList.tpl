@@ -105,7 +105,7 @@
 						<td class="columnText columnSubject">
 							<h3>
 								<span class="badge label">{lang}wcf.moderation.type.{@$definitionNames[$entry->objectTypeID]}{/lang}</span>
-								<a href="{$entry->getLink()}" class="messageGroupLink">{$entry->getTitle()}</a>
+								<a href="{$entry->getLink()}" class="messageGroupLink">{$entry->getTitle()|tableWordwrap}</a>
 							</h3>
 							<small>{if $entry->getAffectedObject()->getUserID()}<a href="{link controller='User' id=$entry->getAffectedObject()->getUserID()}{/link}" class="userLink" data-user-id="{@$entry->userID}">{$entry->getAffectedObject()->getUsername()}</a>{else}{$entry->getAffectedObject()->getUsername()}{/if} - {@$entry->getAffectedObject()->getTime()|time} - {lang}wcf.moderation.type.{@$entry->getObjectTypeName()}{/lang}</small>	
 						</td>

@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\rank\UserRankAction;
+use wcf\data\user\rank\UserRankEditor;
 
 /**
  * Imports user ranks.
@@ -13,7 +13,12 @@ use wcf\data\user\rank\UserRankAction;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class UserRankImporter implements IImporter {
+class UserRankImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\user\rank\UserRank';
+	
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */
@@ -21,14 +26,10 @@ class UserRankImporter implements IImporter {
 		$data['groupID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user.group', $data['groupID']);
 		if (!$data['groupID']) $data['groupID'] = UserGroup::getGroupByType(UserGroup::USERS)->groupID;
 		
-		$action = new UserRankAction(array(), 'create', array(
-			'data' => $data		
-		));
-		$returnValues = $action->executeAction();
-		$newID = $returnValues['returnValues']->rankID;
+		$rank = UserRankEditor::create($data);
 		
-		ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user.rank', $oldID, $newID);
+		ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user.rank', $oldID, $rank->rankID);
 		
-		return $newID;
+		return $rank->rankID;
 	}
 }

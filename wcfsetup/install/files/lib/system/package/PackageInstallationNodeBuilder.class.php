@@ -51,6 +51,12 @@ class PackageInstallationNodeBuilder {
 	public $sequenceNo = 0;
 	
 	/**
+	 * list of packages about to be installed
+	 * @var	boolean
+	 */
+	protected static $pendingPackages = array();
+	
+	/**
 	 * Creates a new instance of PackageInstallationNodeBuilder
 	 * 
 	 * @param	PackageInstallationDispatcher	$installation
@@ -409,6 +415,8 @@ class PackageInstallationNodeBuilder {
 				'requirements' => $this->requirements
 			))
 		));
+		
+		self::$pendingPackages[] = $this->installation->getArchive()->getPackageInfo('name');
 	}
 	
 	/**
@@ -480,6 +488,8 @@ class PackageInstallationNodeBuilder {
 			$installation->nodeBuilder->setParentNode($this->node);
 			$installation->nodeBuilder->buildNodes();
 			$this->node = $installation->nodeBuilder->getCurrentNode();
+			
+			self::$pendingPackages[] = $archive->getPackageInfo('name');
 		}
 	}
 	
@@ -582,13 +592,28 @@ class PackageInstallationNodeBuilder {
 			$archive = new PackageArchive($fileName);
 			$archive->openArchive();
 			
+			// check if all requirements are met
+			$isInstallable = true;
+			foreach ($archive->getOpenRequirements() as $packageName => $package) {
+				if (!isset($package['file'])) {
+					// requirement is neither installed nor shipped, check if it is about to be installed
+					if (!in_array($packageName, self::$pendingPackages)) {
+						$isInstallable = false;
+						break;
+					}
+				}
+			}
+			
 			$packages[] = array(
 				'archive' => $fileName,
+				'isInstallable' => $isInstallable,
 				'package' => $archive->getPackageInfo('name'),
 				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
 				'packageDescription' => $archive->getLocalizedPackageInfo('packageDescription'),
 				'selected' => 0
 			);
+			
+			self::$pendingPackages[] = $archive->getPackageInfo('name');
 		}
 		
 		if (!empty($packages)) {

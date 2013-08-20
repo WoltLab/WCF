@@ -75,6 +75,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		$flushCache = false;
+		WCF::getDB()->beginTransaction();
 		foreach ($options as $id => $value) {
 			if ($id == $row['optionID'] && ($value != $row['optionValue'] || $value != CACHE_SOURCE_TYPE)) {
 				$flushCache = true;
@@ -85,6 +86,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 				$id
 			));
 		}
+		WCF::getDB()->commitTransaction();
 		
 		// force a cache reset if options were changed
 		self::resetCache();

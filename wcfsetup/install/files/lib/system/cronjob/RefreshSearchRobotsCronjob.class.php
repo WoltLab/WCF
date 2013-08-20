@@ -56,6 +56,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 					VALUES		(?, ?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				
+				WCF::getDB()->beginTransaction();
 				foreach ($statementParameters as $parameters) {
 					$statement->execute(array(
 						$parameters['spiderIdentifier'],
@@ -63,6 +64,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 						$parameters['spiderURL']
 					));
 				}
+				WCF::getDB()->commitTransaction();
 			}
 			
 			// clear spider cache

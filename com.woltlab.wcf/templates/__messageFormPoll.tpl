@@ -8,7 +8,7 @@
 				'wcf.poll.button.removeOption': '{lang}wcf.poll.button.removeOption{/lang}'
 			});
 			
-			new WCF.Poll.Management('pollOptionContainer', [ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]}' }{/implode} ], {@POLL_MAX_OPTIONS});
+			new WCF.Poll.Management('pollOptionContainer', [ {implode from=$pollOptions item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ], {@POLL_MAX_OPTIONS});
 		});
 		//]]>
 	</script>
@@ -20,7 +20,7 @@
 					<label for="pollQuestion">{lang}wcf.poll.question{/lang}</label>
 				</dt>
 				<dd>
-					<input type="text" name="pollQuestion" id="pollQuestion" value="{$pollQuestion}" class="long" />
+					<input type="text" name="pollQuestion" id="pollQuestion" value="{$pollQuestion}" class="long" maxlength="255" />
 				</dd>
 				<dt>
 					<label>{lang}wcf.poll.options{/lang}</label>
@@ -35,8 +35,8 @@
 					<small>{lang}wcf.poll.options.description{/lang}</small>
 				</dd>
 			</dl>
-			<dl>
-				<dt{if $errorField == 'pollEndTime'} class="formError"{/if}>
+			<dl{if $errorField == 'pollEndTime'} class="formError"{/if}>
+				<dt>
 					<label for="pollEndTime">{lang}wcf.poll.endTime{/lang}</label>
 				</dt>
 				<dd>
@@ -60,6 +60,9 @@
 						</small>
 					{/if}
 				</dd>
+			</dl>
+			<dl>
+				<dt></dt>
 				<dd>
 					<label><input type="checkbox" name="pollIsChangeable" value="1"{if $pollIsChangeable} checked="checked"{/if} /> {lang}wcf.poll.isChangeable{/lang}</label>
 				</dd>

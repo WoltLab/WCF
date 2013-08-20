@@ -767,7 +767,7 @@ WCF.Message.QuickReply = Class.extend({
 		
 		// check if message is empty
 		var $innerError = this._messageField.parent().find('small.innerError');
-		if ($message === '') {
+		if ($message === '' || $message === '0') {
 			if (!$innerError.length) {
 				$innerError = $('<small class="innerError" />').appendTo(this._messageField.parent());
 			}
@@ -2520,6 +2520,13 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		if ($ckEditor !== null && $ckEditor.mode === 'wysiwyg') {
 			// in design mode
+			
+			// remove the link if the cursor is in a link element
+			$ckEditor.removeStyle(new CKEDITOR.style({
+				element: 'a',
+				type: CKEDITOR.STYLE_INLINE
+			}));
+			
 			$ckEditor.insertText($quote + "\n\n");
 		}
 		else {

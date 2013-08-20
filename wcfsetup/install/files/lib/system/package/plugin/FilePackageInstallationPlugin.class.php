@@ -67,6 +67,9 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 				'config.inc.php',
 				Package::getAbbreviation($this->installation->getPackage()->package)
 			));
+			
+			// load application
+			WCF::loadRuntimeApplication($this->installation->getPackageID());
 		}
 		
 		// delete temporary sourceArchive

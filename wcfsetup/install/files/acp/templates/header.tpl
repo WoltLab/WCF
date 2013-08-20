@@ -30,6 +30,10 @@
 	{@$__wcf->getStyleHandler()->getStylesheet()}
 	{event name='stylesheets'}
 	
+	<!-- Icons -->
+	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon.ico" />
+	<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png" />
+	
 	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
@@ -79,6 +83,8 @@
 				'wcf.global.error.timeout': '{lang}wcf.global.error.timeout{/lang}',
 				'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
 				'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
+				'wcf.global.form.error.greaterThan': '{lang}wcf.global.form.error.greaterThan.javaScript{/lang}',
+				'wcf.global.form.error.lessThan': '{lang}wcf.global.form.error.lessThan.javaScript{/lang}',
 				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 				'wcf.global.page.jumpTo': '{lang}wcf.global.page.jumpTo{/lang}',
 				'wcf.global.page.jumpTo.description': '{lang}wcf.global.page.jumpTo.description{/lang}',
@@ -150,7 +156,7 @@
 					{if PACKAGE_ID > 1}
 						{event name='headerLogo'}
 					{else}
-						<img src="{@$__wcf->getPath()}acp/images/wcfLogo2.svg" alt="" width="300" height="58" />
+						<img src="{@$__wcf->getPath()}acp/images/wcfLogo.png" alt="" style="height: 80px; width: 502px;" />
 					{/if}
 				</a>
 			</div>

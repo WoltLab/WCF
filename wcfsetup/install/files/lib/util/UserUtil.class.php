@@ -143,6 +143,7 @@ final class UserUtil {
 		$ipArray = array_pad(explode('.', $ip), 4, 0);
 		$part7 = base_convert(($ipArray[0] * 256) + $ipArray[1], 10, 16);
 		$part8 = base_convert(($ipArray[2] * 256) + $ipArray[3], 10, 16);
+		
 		return '::ffff:'.$part7.':'.$part8;
 	}
 	
@@ -167,7 +168,7 @@ final class UserUtil {
 		// check if ip is a masked IPv4 address
 		if (substr($ip, 0, 7) == '::ffff:') {
 			$ip = substr($ip, 7);
-			if (preg_match('~^([a-f0-9]{4}):([a-f0-9]{4})$~', $ip, $matches)) {
+			if (preg_match('~^([a-f0-9]{1,4}):([a-f0-9]{1,4})$~', $ip, $matches)) {
 				$ip = array(
 					base_convert($matches[1], 16, 10),
 					base_convert($matches[2], 16, 10)

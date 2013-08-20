@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ViewableApplication;
+use wcf\data\package\PackageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
@@ -161,6 +162,22 @@ class ApplicationEditForm extends AbstractForm {
 		// add slashes
 		$this->domainPath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($this->domainPath));
 		$this->cookiePath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($this->cookiePath));
+		
+		// search for other applications with the same domain and path
+		$sql = "SELECT	packageID
+			FROM	wcf".WCF_N."_application
+			WHERE	domainName = ?
+				AND domainPath = ?";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute(array(
+			$this->domainName,
+			$this->domainPath
+		));
+		$row = $statement->fetchArray();
+		if ($row) {
+			WCF::getTPL()->assign('conflictApplication', PackageCache::getInstance()->getPackage($row['packageID']));
+			throw new UserInputException('domainPath', 'conflict');
+		}
 	}
 	
 	/**

@@ -12,7 +12,12 @@ use wcf\data\poll\option\PollOptionEditor;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class AbstractPollOptionImporter implements IImporter {
+class AbstractPollOptionImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\poll\option\PollOption';
+	
 	/**
 	 * option object type name
 	 * @var string

@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\importer;
-use wcf\data\comment\CommentAction;
+use wcf\data\comment\CommentEditor;
 
 /**
  * Imports comments.
@@ -12,7 +12,12 @@ use wcf\data\comment\CommentAction;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class AbstractCommentImporter implements IImporter {
+class AbstractCommentImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\comment\Comment';
+	
 	/**
 	 * object type id for comments
 	 * @var integer
@@ -31,14 +36,10 @@ class AbstractCommentImporter implements IImporter {
 	public function import($oldID, array $data, array $additionalData = array()) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		
-		$action = new CommentAction(array(), 'create', array(
-			'data' => array_merge($data, array('objectTypeID' => $this->objectTypeID))		
-		));
-		$returnValues = $action->executeAction();
-		$newID = $returnValues['returnValues']->commentID;
+		$comment = CommentEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
 		
-		ImportHandler::getInstance()->saveNewID($this->objectTypeName, $oldID, $newID);
+		ImportHandler::getInstance()->saveNewID($this->objectTypeName, $oldID, $comment->commentID);
 		
-		return $newID;
+		return $comment->commentID;
 	}
 }

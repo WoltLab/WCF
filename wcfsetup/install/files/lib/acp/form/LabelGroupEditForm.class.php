@@ -68,6 +68,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 		
 		// update acl
 		ACLHandler::getInstance()->save($this->groupID, $this->objectTypeID);
+		ACLHandler::getInstance()->disableAssignVariables();
 		
 		// update object type relations
 		$this->saveObjectTypeRelations($this->groupID);

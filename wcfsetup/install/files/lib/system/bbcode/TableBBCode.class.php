@@ -69,20 +69,20 @@ class TableBBCode extends AbstractBBCode {
 			// tr
 			$parsedContent = Regex::compile('\[tr\](?:\s|<br />)*', Regex::CASE_INSENSITIVE)->replace($parsedContent, '<tr>');
 			// td
-			$parsedContent = StringUtil::replaceIgnoreCase('[td]', '<td>', $parsedContent);
+			$parsedContent = str_ireplace('[td]', '<td>', $parsedContent);
 			// /td
 			$parsedContent = Regex::compile('\[/td\](?:\s|<br />)*', Regex::CASE_INSENSITIVE)->replace($parsedContent, '</td>');
 			// /tr
 			$parsedContent = Regex::compile('\[/tr\](?:\s|<br />)*', Regex::CASE_INSENSITIVE)->replace($parsedContent, '</tr>');
 			
-			return '<div class="container bbcodeTable"><table class="table"><tbody>'.$parsedContent.'</tbody></table></div>';
+			return '<div class="container bbcodeTable"><table class="table responsiveTable"><tbody>'.$parsedContent.'</tbody></table></div>';
 		}
 		else if ($parser->getOutputType() == 'text/simplified-html') {
 			// remove table tags
-			$content = StringUtil::replaceIgnoreCase('[td]', '* ', $content);
-			$content = StringUtil::replaceIgnoreCase('[/td]', ' ', $content);
-			$content = StringUtil::replaceIgnoreCase('[tr]', '', $content);
-			$content = StringUtil::replaceIgnoreCase('[/tr]', '', $content);
+			$content = str_ireplace('[td]', '* ', $content);
+			$content = str_ireplace('[/td]', ' ', $content);
+			$content = str_ireplace('[tr]', '', $content);
+			$content = str_ireplace('[/tr]', '', $content);
 			
 			return $content;
 		}

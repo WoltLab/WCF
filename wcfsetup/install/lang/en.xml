@@ -19,15 +19,16 @@
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie Settings]]></item>
 		<item name="wcf.acp.application.cookie.warning"><![CDATA[The settings below are used to establish a persistent login for your website; Keep in mind to update these values whenever the domain name or path changes. If you are unsure which values you need to provide, you can safely copy both values from above.]]></item>
 		<item name="wcf.acp.application.cookieDomain"><![CDATA[Cookie Domain]]></item>
-		<item name="wcf.acp.application.cookieDomain.error.containsPfad"><![CDATA[Cookie domain may not contain path components]]></item>
+		<item name="wcf.acp.application.cookieDomain.error.containsPath"><![CDATA[Cookie domain may not contain path components]]></item>
 		<item name="wcf.acp.application.cookieDomain.error.notValid"><![CDATA[Cookie domain does not match the domain entered above (sub-domains like “www” may be omitted).]]></item>
 		<item name="wcf.acp.application.cookiePath"><![CDATA[Cookie Path]]></item>
 		<item name="wcf.acp.application.cookiePath.error.notValid"><![CDATA[Cookie path does not match the domain path above.]]></item>
 		<item name="wcf.acp.application.domain"><![CDATA[Domain Settings]]></item>
 		<item name="wcf.acp.application.domainName"><![CDATA[Domain]]></item>
 		<item name="wcf.acp.application.domainName.description"><![CDATA[If you’re accessing this application through “http://www.example.com/community/forum/”, please enter “www.example.com”.]]></item>
-		<item name="wcf.acp.application.domainName.error.containsPfad"><![CDATA[Domain may not contain path components]]></item>
+		<item name="wcf.acp.application.domainName.error.containsPath"><![CDATA[Domain may not contain path components]]></item>
 		<item name="wcf.acp.application.domainPath"><![CDATA[Path]]></item>
+		<item name="wcf.acp.application.domainPath.error.conflict"><![CDATA[This path is already taken by application “{$conflictApplication->getName()}”]]></item>
 		<item name="wcf.acp.application.domainPath.description"><![CDATA[If you’re accessing this application through “http://www.example.com/community/forum/”, please enter “/community/forum/”.]]></item>
 		<item name="wcf.acp.application.edit"><![CDATA[Edit Application]]></item>
 		<item name="wcf.acp.application.edit.title"><![CDATA[Edit Application: “<a href="{link controller='Package' id=$application->packageID}{/link}">{$application->getPackage()->getName()}</a>”]]></item>
@@ -195,6 +196,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"><![CDATA[Rename users]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"><![CDATA[Merge users]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"><![CDATA[Merge users if email address is equal]]></item>
+		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[Do you really want to delete the existing import mappings?]]></item>
+		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[There are import mappings created by a previous import process, these mappings are used to properly handle connections between data from the imported forum and this one. In case you’ve imported all desired data, you can <a id="deleteMapping">delete</a> the mappings. It is strongly recommended to keep these mappings as long as there is still data to be imported now or in the future.]]></item>
 		<item name="wcf.acp.dataImport.selectExporter.noExporters"><![CDATA[There are no data importers installed.]]></item>
 	</category>
 	
@@ -362,6 +365,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.index.credits.trademarks"><![CDATA[“WoltLab&reg;” and “Burning Board&reg;” are registered Community Trade Marks at The Office of Harmonization for the Internal Market (OHIM) in Alicante, Spain.]]></item>
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[More]]></item>
 		<item name="wcf.acp.index.inRescueMode"><![CDATA[You are accessing this installation from an unknown domain, possibly caused by moving to a new host. Please update the settings on <a href="{link controller='ApplicationManagement'}{/link}">Manage Applications</a>.]]></item>
+		<item name="wcf.acp.index.innoDBWarning"><![CDATA[The MySQL configuration option “innodb_flush_log_at_trx_commit” is set to “1”, slowing down certain database queries. It is highly recommended to set it’s value to “2”.]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[News]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[The installation will be continued within a few moments, please do not reload this page.]]></item>
 		<item name="wcf.acp.index.setup.title"><![CDATA[Please Wait]]></item>
@@ -873,6 +877,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following, already installed packages prohibit installing this package:]]></item>
 		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[“{$excludingPackage}” ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (excluded version: {$excludingPackage->excludedPackageVersion}){/if}]]></item>
 		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Unable to resolve requirements of this package.]]></item>
+		<item name="wcf.acp.package.install.optionalPackage.missingRequirements"><![CDATA[Unable to install, some or all required packages are not installed.]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Preparing Installation …]]></item>
 		<item name="wcf.acp.package.install.title"><![CDATA[Installation]]></item>
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required Version]]></item>
@@ -964,6 +969,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[Rebuilds user counters and ranks]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[Rebuild Likes]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.description"><![CDATA[Synchronizes activity points]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.user"><![CDATA[Rebuild Like-Users]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.user.description"><![CDATA[Rebuilds the list of like users]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Rebuild Attachments]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Rebuilds attachment preview images]]></item>
 	</category>
@@ -1190,6 +1197,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.user.list"><![CDATA[Users]]></item>
 		<item name="wcf.acp.user.list.all"><![CDATA[All Users]]></item>
 		<item name="wcf.acp.user.list.count"><![CDATA[{#$items} Users]]></item>
+		<item name="wcf.acp.user.merge"><![CDATA[Merge Users]]></item>
+		<item name="wcf.acp.user.merge.destination"><![CDATA[Destination]]></item>
+		<item name="wcf.acp.user.merge.destination.description"><![CDATA[The selected users will be merged into this user account.]]></item>
+		<item name="wcf.acp.user.merge.markedUsers"><![CDATA[Merge the following users]]></item>
 		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Bulk Processing]]></item>
 		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Actions]]></item>
 		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Conditions]]></item>
@@ -1326,7 +1337,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[An unknown error occured during upload.]]></item>
 		<item name="wcf.attachment.upload.limits"><![CDATA[Maximum number of attachments: {#$attachmentHandler->getMaxCount()}<br />
 Maximum file size: {@$attachmentHandler->getMaxSize()|filesize}<br />
-Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]></item>
+Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensions()}]]></item>
 		<item name="wcf.attachment.insert"><![CDATA[Insert into message]]></item>
 		<item name="wcf.attachment.filename"><![CDATA[Filename]]></item>
 		<item name="wcf.attachment.uploadTime"><![CDATA[Upload Time]]></item>
@@ -1337,6 +1348,10 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 	</category>
 	
 	<category name="wcf.bbcode">
+		<item name="wcf.bbcode.button.code"><![CDATA[Code]]></item>
+		<item name="wcf.bbcode.button.inlineCode"><![CDATA[Inline-Code]]></item>
+		<item name="wcf.bbcode.button.quote"><![CDATA[Quote]]></item>
+		<item name="wcf.bbcode.button.spoiler"><![CDATA[Spoiler]]></item>
 		<item name="wcf.bbcode.code.text"><![CDATA[{@$highlighterTitle} ({#$lines} line{if $lines != 1}s{/if})]]></item>
 		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
 		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck Source Code]]></item>
@@ -1628,10 +1643,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.global.success"><![CDATA[The action has been successfully completed.]]></item>
 		<item name="wcf.global.success.add"><![CDATA[The entry has been saved.]]></item>
 		<item name="wcf.global.success.edit"><![CDATA[Your changes have been saved.]]></item>
-		<item name="wcf.global.form.data"><![CDATA[General Information]]></item>
-		<item name="wcf.global.form.error"><![CDATA[Please correct the erroneous fields marked below.]]></item>
-		<item name="wcf.global.form.error.empty"><![CDATA[Please fill in this field.]]></item>
-		<item name="wcf.global.form.error.multilingual"><![CDATA[Please fill in this field for all languages.]]></item>
 		<item name="wcf.global.language.noSelection"><![CDATA[No Selection]]></item>
 		<item name="wcf.global.loading"><![CDATA[Loading …]]></item>
 		<item name="wcf.global.name"><![CDATA[Name]]></item>
@@ -1666,6 +1677,17 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.global.worker.executing"><![CDATA[Executing …]]></item>
 		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.global.noItems"><![CDATA[There are no items.]]></item>
+	</category>
+	
+	<category name="wcf.global.form">
+		<item name="wcf.global.form.data"><![CDATA[General Information]]></item>
+		<item name="wcf.global.form.error"><![CDATA[Please correct the erroneous fields marked below.]]></item>
+		<item name="wcf.global.form.error.empty"><![CDATA[Please fill in this field.]]></item>
+		<item name="wcf.global.form.error.greaterThan"><![CDATA[The entered value has to be greater than {#$greaterThan}.]]></item>
+		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}The entered value has to be greater than {#$greaterThan}.{/literal}]]></item>
+		<item name="wcf.global.form.error.lessThan"><![CDATA[The entered value has to be less than {#$lessThan}.]]></item>
+		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}The entered value has to be less than {#$lessThan}.{/literal}]]></item>
+		<item name="wcf.global.form.error.multilingual"><![CDATA[Please fill in this field for all languages.]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">
@@ -1872,6 +1894,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getAllowedExtensions()}]]>
 		<item name="wcf.style.colorPicker.new"><![CDATA[new]]></item>
 		<item name="wcf.style.colorPicker.current"><![CDATA[current]]></item>
 		<item name="wcf.style.currentStyle"><![CDATA[Current Style]]></item>
+		<item name="wcf.style.colorPicker.button.apply"><![CDATA[Apply]]></item>
 	</category>
 	
 	<category name="wcf.tagging">

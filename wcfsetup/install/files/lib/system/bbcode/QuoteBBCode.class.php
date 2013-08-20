@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
 
 /**
@@ -21,7 +22,8 @@ class QuoteBBCode extends AbstractBBCode {
 			WCF::getTPL()->assign(array(
 				'content' => $content,
 				'quoteLink' => (!empty($openingTag['attributes'][1]) ? $openingTag['attributes'][1] : ''),
-				'quoteAuthor' => (!empty($openingTag['attributes'][0]) ? $openingTag['attributes'][0] : '')
+				'quoteAuthor' => (!empty($openingTag['attributes'][0]) ? $openingTag['attributes'][0] : ''),
+				'isExternalQuoteLink' => (!empty($openingTag['attributes'][1]) ? !ApplicationHandler::getInstance()->isInternalURL($openingTag['attributes'][1]) : false)
 			));
 			return WCF::getTPL()->fetch('quoteBBCodeTag');
 		}

@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\importer;
-use wcf\data\user\object\watch\UserObjectWatchAction;
+use wcf\data\user\object\watch\UserObjectWatchEditor;
 
 /**
  * Imports watched objects.
@@ -12,7 +12,12 @@ use wcf\data\user\object\watch\UserObjectWatchAction;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class AbstractWatchedObjectImporter implements IImporter {
+class AbstractWatchedObjectImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\user\object\watch';
+	
 	/**
 	 * object type id for watched objects
 	 * @var integer
@@ -26,10 +31,7 @@ class AbstractWatchedObjectImporter implements IImporter {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		if (!$data['userID']) return 0;
 		
-		$action = new UserObjectWatchAction(array(), 'create', array(
-			'data' => array_merge($data, array('objectTypeID' => $this->objectTypeID))		
-		));
-		$returnValues = $action->executeAction();
-		return $returnValues['returnValues']->watchID;
+		$watch = UserObjectWatchEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+		return $watch->watchID;
 	}
 }

@@ -53,6 +53,10 @@
 	<p class="error">{lang}wcf.global.form.error{/lang}</p>
 {/if}
 
+{if $showInnoDBWarning}
+	<p class="warning">{lang}wcf.acp.index.innoDBWarning{/lang}</p>
+{/if}
+
 <div class="contentNavigation">
 	{hascontent}
 		<nav>
@@ -69,6 +73,33 @@
 	{if !$availableExporters|count}
 		<p class="info">{lang}wcf.acp.dataImport.selectExporter.noExporters{/lang}</p>
 	{else}
+		{if $showMappingNotice}
+			<p class="warning">{lang}wcf.acp.dataImport.existingMapping.notice{/lang}</p>
+			<script data-relocate="true">
+				//<![CDATA[
+				$(function() {
+					$('#deleteMapping').click(function() {
+						WCF.System.Confirmation.show('{lang}wcf.acp.dataImport.existingMapping.confirmMessage{/lang}', function(action) {
+							if (action === 'confirm') {
+								new WCF.Action.Proxy({
+									autoSend: true,
+									data: {
+										actionName: 'resetMapping',
+										className: 'wcf\\system\\importer\\ImportHandler'
+									},
+									success: function() { window.location.reload(); },
+									url: 'index.php/AJAXInvoke/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+								});
+							}
+						});
+						
+						return false;
+					});
+				});
+				//]]>
+			</script>
+		{/if}
+		
 		<form method="get" action="{link controller='DataImport'}{/link}">
 			<div class="container containerPadding marginTop">
 				<fieldset>

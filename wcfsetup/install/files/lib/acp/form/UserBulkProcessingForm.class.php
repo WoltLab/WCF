@@ -389,7 +389,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	 * @param	mixed		$loopFunction
 	 * @return	array<integer>
 	 */
-	protected function fetchUsers($loopFunction = null) {
+	public function fetchUsers($loopFunction = null) {
 		// select users
 		$sql = "SELECT		user_table.*
 			FROM		wcf".WCF_N."_user user_table

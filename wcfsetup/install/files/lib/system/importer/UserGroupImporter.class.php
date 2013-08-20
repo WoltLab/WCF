@@ -13,7 +13,12 @@ use wcf\data\user\group\UserGroupAction;
  * @subpackage	system.importer
  * @category	Community Framework
  */
-class UserGroupImporter implements IImporter {
+class UserGroupImporter extends AbstractImporter {
+	/**
+	 * @see wcf\system\importer\AbstractImporter::$className
+	 */
+	protected $className = 'wcf\data\user\group\UserGroup';
+	
 	/**
 	 * @see wcf\system\importer\IImporter::import()
 	 */

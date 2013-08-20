@@ -64,6 +64,10 @@ WCF.ImageViewer = Class.extend({
 	 * Initializes the image size check.
 	 */
 	_initImageSizeCheck: function() {
+		$('.jsResizeImage').each($.proxy(function(index, image) {
+			if (image.complete) this._checkImageSize({ currentTarget: image });
+		}, this));
+		
 		$('.jsResizeImage').on('load', $.proxy(this._checkImageSize, this));
 	},
 	

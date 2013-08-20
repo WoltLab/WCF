@@ -50,15 +50,7 @@
 {include file='userNotice'}
 
 {if $isExternalAuthentication}
-	{if $__wcf->session->getVar('__githubToken')}
-		<p class="info">{lang}wcf.user.3rdparty.github.register{/lang}</p>
-	{elseif $__wcf->session->getVar('__twitterData')}
-		<p class="info">{lang}wcf.user.3rdparty.twitter.register{/lang}</p>
-	{elseif $__wcf->session->getVar('__facebookData')}
-		<p class="info">{lang}wcf.user.3rdparty.facebook.register{/lang}</p>
-	{elseif $__wcf->session->getVar('__googleData')}
-		<p class="info">{lang}wcf.user.3rdparty.google.register{/lang}</p>
-	{/if}
+	<p class="info">{lang}wcf.user.3rdparty.{$__wcf->session->getVar('__3rdPartyProvider')}.register{/lang}</p>
 {/if}
 
 {if $errorField}

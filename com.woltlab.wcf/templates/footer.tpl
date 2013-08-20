@@ -40,6 +40,9 @@
 </footer>
 
 {event name='footer'}
+
+<!-- JAVASCRIPT_RELOCATE_POSITION -->
+
 {@FOOTER_CODE}
 
 <a id="bottom"></a>
