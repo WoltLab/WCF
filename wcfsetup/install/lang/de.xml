@@ -173,7 +173,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[Benutzerprofilfelder]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Follower]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Benutzeränge]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[Avatare]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Pinnwand-Kommentare]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Pinnwand-Kommentar-Antworten]]></item>
