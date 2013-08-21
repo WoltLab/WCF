@@ -11,7 +11,13 @@
 		});
 		
 		{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage')}
-			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'));
+			new WCF.ACP.Package.Uninstallation($('.jsPackageRow .jsUninstallButton'), {if PACKAGE_ID > 1}'{link controller='PackageList' forceWCF=true}packageID={literal}{packageID}{/literal}{/link}'{else}null{/if});
+			{if $packageID}
+				new WCF.PeriodicalExecuter(function(pe) {
+					pe.stop();
+					$('.jsUninstallButton[data-object-id={@$packageID}]').trigger('click');
+				}, 250);
+			{/if}
 		{/if}
 		
 		{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
@@ -67,7 +73,7 @@
 					<tr class="jsPackageRow">
 						<td class="columnIcon">
 							{if $package->canUninstall()}
-								<span class="icon icon16 icon-remove pointer jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}"></span>
+								<span class="icon icon16 icon-remove pointer jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}"></span>
 							{else}
 								<span class="icon icon16 icon-remove disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
 							{/if}

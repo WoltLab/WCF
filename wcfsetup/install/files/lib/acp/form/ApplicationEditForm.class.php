@@ -167,11 +167,13 @@ class ApplicationEditForm extends AbstractForm {
 		$sql = "SELECT	packageID
 			FROM	wcf".WCF_N."_application
 			WHERE	domainName = ?
-				AND domainPath = ?";
+				AND domainPath = ?
+				AND packageID <> ?";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute(array(
 			$this->domainName,
-			$this->domainPath
+			$this->domainPath,
+			$this->application->packageID
 		));
 		$row = $statement->fetchArray();
 		if ($row) {
