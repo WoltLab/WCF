@@ -648,6 +648,15 @@ class PackageInstallationNodeBuilder {
 		
 		foreach ($queueList as $queue) {
 			$installation = new PackageInstallationDispatcher($queue);
+			
+			// work-around for iterative package updates
+			if ($this->installation->queue->action == 'update' && $queue->package == $this->installation->queue->package) {
+				$installation->setPreviousPackage(array(
+					'package' => $this->installation->getArchive()->getPackageInfo('name'),
+					'packageVersion' => $this->installation->getArchive()->getPackageInfo('version')
+				));
+			}
+			
 			$installation->nodeBuilder->setParentNode($this->node);
 			$installation->nodeBuilder->buildNodes();
 			$this->node = $installation->nodeBuilder->getCurrentNode();

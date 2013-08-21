@@ -89,7 +89,13 @@ class PackageInstallationDispatcher {
 	 * holds state of structuring version tables
 	 * @var boolean
 	 */
-	protected $requireRestructureVersionTables = false;	
+	protected $requireRestructureVersionTables = false;
+	
+	/**
+	 * data of previous package in queue
+	 * @var	array<string>
+	 */
+	protected $previousPackageData = null;
 	
 	/**
 	 * Creates a new instance of PackageInstallationDispatcher.
@@ -101,6 +107,15 @@ class PackageInstallationDispatcher {
 		$this->nodeBuilder = new PackageInstallationNodeBuilder($this);
 		
 		$this->action = $this->queue->action;
+	}
+	
+	/**
+	 * Sets data of previous package in queue.
+	 * 
+	 * @param	array<string>	$packageData
+	 */
+	public function setPreviousPackage(array $packageData) {
+		$this->previousPackageData = $packageData;
 	}
 	
 	/**
@@ -225,6 +240,15 @@ class PackageInstallationDispatcher {
 	 */
 	public function getArchive() {
 		if ($this->archive === null) {
+			$package = $this->getPackage();
+			// check if we're doing an iterative update of the same package
+			if ($this->previousPackageData !== null && $this->getPackage()->package == $this->previousPackageData['package']) {
+				if (version_compare($this->getPackage()->packageVersion, $this->previousPackageData['packageVersion'], '<')) {
+					// fake package to simulate the package version required by current archive
+					$this->getPackage()->setPackageVersion($this->previousPackageData['packageVersion']);
+				}
+			}
+			
 			$this->archive = new PackageArchive($this->queue->archive, $this->getPackage());
 			
 			if (FileUtil::isURL($this->archive->getArchive())) {

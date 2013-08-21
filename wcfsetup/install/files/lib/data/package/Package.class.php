@@ -181,6 +181,17 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
+	 * Overwrites current package version.
+	 * 
+	 * DO NOT call this method outside the package installation!
+	 * 
+	 * @param	string		$packageVersion
+	 */
+	public function setPackageVersion($packageVersion) {
+		$this->data['packageVersion'] = $packageVersion;
+	}
+	
+	/**
 	 * Loads package requirements.
 	 */
 	protected static function loadRequirements() {

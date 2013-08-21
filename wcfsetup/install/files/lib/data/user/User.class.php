@@ -172,7 +172,7 @@ final class User extends DatabaseObject implements IRouteController {
 					
 					// update storage data
 					if (!$skipCache) {
-						UserStorageHandler::getInstance()->update($this->userID, 'groupIDs', serialize($this->groupIDs), 1);
+						UserStorageHandler::getInstance()->update($this->userID, 'groupIDs', serialize($this->groupIDs));
 					}
 				}
 				else {
@@ -214,7 +214,7 @@ final class User extends DatabaseObject implements IRouteController {
 					}
 					
 					// update storage data
-					UserStorageHandler::getInstance()->update($this->userID, 'languageIDs', serialize($this->languageIDs), 1);
+					UserStorageHandler::getInstance()->update($this->userID, 'languageIDs', serialize($this->languageIDs));
 				}
 				else {
 					$this->languageIDs = unserialize($data[$this->userID]);
