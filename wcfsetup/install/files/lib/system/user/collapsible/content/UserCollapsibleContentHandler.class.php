@@ -109,7 +109,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 					}
 					
 					// update storage data
-					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'collapsedContent-'.$objectTypeID, serialize($this->collapsedContent[$objectTypeID]), 1);
+					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'collapsedContent-'.$objectTypeID, serialize($this->collapsedContent[$objectTypeID]));
 				}
 				else {
 					$this->collapsedContent[$objectTypeID] = @unserialize($data[WCF::getUser()->userID]);

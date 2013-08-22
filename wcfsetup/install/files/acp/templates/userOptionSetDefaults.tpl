@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.user.option.setDefaults'}
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.user.option.setDefaults{/lang}</h1>

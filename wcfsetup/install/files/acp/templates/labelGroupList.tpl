@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.label.group.list'}
 
 <script data-relocate="true">
 	//<![CDATA[
@@ -30,7 +30,7 @@
 	<nav>
 		<ul>
 			<li><a href="{link controller='LabelGroupAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.label.group.add{/lang}</span></a></li>
-				
+			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
 	</nav>
@@ -56,17 +56,13 @@
 				{foreach from=$objects item=group}
 					<tr class="jsLabelGroupRow">
 						<td class="columnIcon">
-							{if $group->isEditable()}
-								<a href="{link controller='LabelGroupEdit' object=$group}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-							{/if}
-							{if $group->isDeletable()}
-								<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$group->groupID}" data-confirm-message="{lang}wcf.acp.label.group.delete.sure{/lang}"></span>
-							{/if}
+							<a href="{link controller='LabelGroupEdit' object=$group}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
+							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$group->groupID}" data-confirm-message="{lang}wcf.acp.label.group.delete.sure{/lang}"></span>
 							
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$group->groupID}</td>
-						<td class="columnTitle columnGroupName">{if $group->isEditable()}<p class="labelGroup{if $group->cssClassName} {$group->cssClassName}{/if}"><a href="{link controller='LabelGroupEdit' object=$group}{/link}">{$group->groupName}</a>{else}{$group->groupName}</p>{/if}</td>
+						<td class="columnTitle columnGroupName"><a href="{link controller='LabelGroupEdit' object=$group}{/link}">{$group->groupName}</a></td>
 						
 						{event name='columns'}
 					</tr>
@@ -81,7 +77,7 @@
 		<nav>
 			<ul>
 				<li><a href="{link controller='LabelGroupAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.label.group.add{/lang}</span></a></li>
-					
+				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>
