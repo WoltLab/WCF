@@ -26,32 +26,6 @@ class LabelGroup extends DatabaseObject implements IRouteController {
 	protected static $databaseTableIndexName = 'groupID';
 	
 	/**
-	 * Returns true, if label is editable by current user.
-	 * 
-	 * @return	boolean
-	 */
-	public function isEditable() {
-		if (WCF::getSession()->getPermission('admin.content.label.canManageLabel')) {
-			return true;
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * Returns true, if label is deletable by current user.
-	 * 
-	 * @return	boolean
-	 */
-	public function isDeletable() {
-		if (WCF::getSession()->getPermission('admin.content.label.canManageLabel')) {
-			return true;
-		}
-		
-		return false;
-	}
-	
-	/**
 	 * @see	wcf\data\ITitledObject::getTitle()
 	 */
 	public function getTitle() {
