@@ -2,7 +2,6 @@
 namespace wcf\data\label\group;
 use wcf\data\DatabaseObject;
 use wcf\system\request\IRouteController;
-use wcf\system\WCF;
 
 /**
  * Represents a label group.
