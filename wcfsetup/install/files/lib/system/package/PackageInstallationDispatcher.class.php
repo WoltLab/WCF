@@ -843,14 +843,21 @@ class PackageInstallationDispatcher {
 	 * Executes post-setup actions.
 	 */
 	public function completeSetup() {
-		// mark queue as done
-		$queueEditor = new PackageInstallationQueueEditor($this->queue);
-		$queueEditor->update(array(
-			'done' => 1
-		));
+		// remove archives
+		$sql = "SELECT	archive
+			FROM	wcf".WCF_N."_package_installation_queue
+			WHERE	processNo = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->queue->processNo));
+		while ($row = $statement->fetchArray()) {
+			@unlink($row['archive']);
+		}
 		
-		// remove node data
-		$this->nodeBuilder->purgeNodes();
+		// delete queues
+		$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
+			WHERE		processNo = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->queue->processNo));
 		
 		// update package version
 		if ($this->action == 'update') {
