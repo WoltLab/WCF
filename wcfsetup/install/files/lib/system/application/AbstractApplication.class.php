@@ -55,6 +55,13 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	}
 	
 	/**
+	 * @see	wcf\system\application\IApplication::__run()
+	 */
+	public function __run() {
+		// does nothing
+	}
+	
+	/**
 	 * @see	wcf\system\application\IApplication::isActiveApplication()
 	 */
 	public function isActiveApplication() {

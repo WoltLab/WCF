@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.label.list'}
 
 <script data-relocate="true">
 	//<![CDATA[
@@ -30,7 +30,7 @@
 	<nav>
 		<ul>
 			<li><a href="{link controller='LabelAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.label.add{/lang}</span></a></li>
-				
+			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
 	</nav>
@@ -57,17 +57,13 @@
 				{foreach from=$objects item=label}
 					<tr class="jsLabelRow">
 						<td class="columnIcon">
-							{if $label->isEditable()}
-								<a href="{link controller='LabelEdit' object=$label}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
-							{/if}
-							{if $label->isDeletable()}
-								<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$label->labelID}" data-confirm-message="{lang}wcf.acp.label.delete.sure{/lang}"></span>
-							{/if}
+							<a href="{link controller='LabelEdit' object=$label}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
+							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$label->labelID}" data-confirm-message="{lang}wcf.acp.label.delete.sure{/lang}"></span>
 							
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$label->labelID}</td>
-						<td class="columnTitle columnLabel">{if $label->isEditable()}<a href="{link controller='LabelEdit' object=$label}{/link}" title="{$label}" class="badge label{if $label->cssClassName} {$label->cssClassName}{/if}">{$label}</a></p>{else}<p class="badge label{if $label->cssClassName} {$label->cssClassName}{/if}">{$label}{/if}</td>
+						<td class="columnTitle columnLabel"><a href="{link controller='LabelEdit' object=$label}{/link}" title="{$label}" class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if}">{$label}</a></td>
 						<td class="columnText columnGroup">{$label->groupName}</td>
 						
 						{event name='columns'}
@@ -83,7 +79,7 @@
 		<nav>
 			<ul>
 				<li><a href="{link controller='LabelAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.label.add{/lang}</span></a></li>
-					
+				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>

@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.user.rank.'|concat:$action}
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.user.rank.{$action}{/lang}</h1>
