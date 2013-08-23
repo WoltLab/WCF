@@ -51,7 +51,7 @@
 {else}
 	{if !$__disableLoginLink|isset}
 		<!-- login box -->
-		<li>
+		<li id="userLogin">
 			<a class="loginLink" href="{link controller='Login'}{/link}">{lang}wcf.user.loginOrRegister{/lang}</a>
 			<div id="loginForm" style="display: none;">
 				{capture assign='__3rdPartyButtons'}
