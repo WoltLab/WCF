@@ -3,6 +3,7 @@ namespace wcf\system\option;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\data\option\Option;
 use wcf\data\smiley\SmileyCache;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\BBCodeParser;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -30,9 +31,9 @@ class MessageOptionType extends TextareaOptionType {
 		else {
 			$allowedBBCodes = array_keys(BBCodeCache::getInstance()->getBBCodes());
 		}
+		BBCodeHandler::getInstance()->setAllowedBBCodes($allowedBBCodes);
 		
 		WCF::getTPL()->assign(array(
-			'allowedBBCodes' => $allowedBBCodes,
 			'defaultSmilies' => SmileyCache::getInstance()->getCategorySmilies(),
 			'option' => $option,
 			'value' => $value
