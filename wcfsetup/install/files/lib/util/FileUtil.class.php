@@ -98,6 +98,10 @@ final class FileUtil {
 		}
 		while (file_exists($tmpFile));
 		
+		if ($prefix == 'package_') {
+			file_put_contents(WCF_DIR.'__tmpFile.log', "Creating {$tmpFile}\n", FILE_APPEND);
+		}
+		
 		return $tmpFile;
 	}
 	
