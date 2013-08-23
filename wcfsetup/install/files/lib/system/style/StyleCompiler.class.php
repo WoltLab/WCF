@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\style;
+use wcf\data\option\Option;
 use wcf\data\style\Style;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -26,6 +27,12 @@ class StyleCompiler extends SingletonFactory {
 	 * @var	\lessc
 	 */
 	protected $compiler = null;
+	
+	/**
+	 * names of option types which are supported as additional variables
+	 * @var	array<string>
+	 */
+	public static $supportedOptionType = array('boolean', 'integer');
 	
 	/**
 	 * @see	wcf\system\SingletonFactory::init()
@@ -75,6 +82,13 @@ class StyleCompiler extends SingletonFactory {
 				}
 			}
 			unset($variables['overrideLess']);
+		}
+		
+		// add options as LESS variables
+		foreach (Option::getOptions() as $constantName => $option) {
+			if (in_array($option->optionType, static::$supportedOptionType)) {
+				$variables['wcf_option_'.mb_strtolower($constantName)] = '~"'.$option->optionValue.'"';
+			}
 		}
 		
 		$this->compileStylesheet(
