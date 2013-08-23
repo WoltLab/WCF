@@ -53,6 +53,7 @@
 {foreach from=$objects->getTeams() item=team}
 	<header class="boxHeadline boxSubHeadline">
 		<h2>{$team->groupName|language} <span class="badge">{#$team->getMembers()|count}</span></h2>
+		<p>{$team->groupDescription|language}</p>
 	</header>
 		
 	<div class="container marginTop">

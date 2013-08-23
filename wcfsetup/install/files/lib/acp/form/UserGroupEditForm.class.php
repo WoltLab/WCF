@@ -68,7 +68,9 @@ class UserGroupEditForm extends UserGroupAddForm {
 	public function readData() {
 		if (empty($_POST)) {
 			I18nHandler::getInstance()->setOptions('groupName', 1, $this->group->groupName, 'wcf.acp.group.group\d+');
+			I18nHandler::getInstance()->setOptions('groupDescription', 1, $this->group->groupDescription, 'wcf.acp.group.groupDescription\d+');
 			$this->groupName = $this->group->groupName;
+			$this->groupDescription = $this->group->groupDescription;
 			$this->priority = $this->group->priority;
 			$this->userOnlineMarking = $this->group->userOnlineMarking;
 			$this->showOnTeamPage = $this->group->showOnTeamPage;
@@ -132,10 +134,19 @@ class UserGroupEditForm extends UserGroupAddForm {
 		else {
 			I18nHandler::getInstance()->save('groupName', $this->groupName, 'wcf.acp.group', 1);
 		}
+		$this->groupDescription = 'wcf.acp.group.groupDescription'.$this->group->groupID;
+		if (I18nHandler::getInstance()->isPlainValue('groupDescription')) {
+			I18nHandler::getInstance()->remove($this->groupDescription);
+			$this->groupDescription = I18nHandler::getInstance()->getValue('groupDescription');
+		}
+		else {
+			I18nHandler::getInstance()->save('groupDescription', $this->groupDescription, 'wcf.acp.group', 1);
+		}
 		
 		$data = array(
 			'data' => array_merge(array(
 				'groupName' => $this->groupName,
+				'groupDescription' => $this->groupDescription,
 				'priority' => $this->priority,
 				'userOnlineMarking' => $this->userOnlineMarking,
 				'showOnTeamPage' => $this->showOnTeamPage

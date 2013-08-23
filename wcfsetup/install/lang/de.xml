@@ -354,6 +354,7 @@
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximale Signaturlänge]]></item>
 		<item name="wcf.acp.group.option.admin.system.canImportData"><![CDATA[Kann Daten importieren]]></item>
 		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[Kann Anzeigen aktualisieren]]></item>
+		<item name="wcf.acp.group.description"><![CDATA[Beschreibung der Benutzergruppe]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
