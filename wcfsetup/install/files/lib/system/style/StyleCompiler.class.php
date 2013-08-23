@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\style;
+use wcf\data\option\Option;
 use wcf\data\style\Style;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -26,6 +27,12 @@ class StyleCompiler extends SingletonFactory {
 	 * @var	\lessc
 	 */
 	protected $compiler = null;
+	
+	/**
+	 * names of option types which are supported as additional variables
+	 * @var	array<string>
+	 */
+	public static $supportedOptionType = array('boolean', 'integer');
 	
 	/**
 	 * @see	wcf\system\SingletonFactory::init()
@@ -175,6 +182,21 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	wcf\system\Callback	$callback
 	 */
 	protected function compileStylesheet($filename, array $files, array $variables, $individualLess, Callback $callback) {
+		// add options as LESS variables
+		if (PACKAGE_ID) {
+			foreach (Option::getOptions() as $constantName => $option) {
+				if (in_array($option->optionType, static::$supportedOptionType)) {
+					$variables['wcf_option_'.mb_strtolower($constantName)] = '~"'.$option->optionValue.'"';
+				}
+			}
+		}
+		else {
+			// workaround during setup
+			$variables['wcf_option_attachment_thumbnail_height'] = '~"210"';
+			$variables['wcf_option_attachment_thumbnail_width'] = '~"280"';
+			$variables['wcf_option_signature_max_image_height'] = '~"150"';
+		}
+		
 		// build LESS bootstrap
 		$less = $this->bootstrap($variables);
 		foreach ($files as $file) {
