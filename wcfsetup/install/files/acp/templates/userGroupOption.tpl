@@ -36,6 +36,8 @@
 		<fieldset id="optionValueContainer">
 			<legend>{lang}wcf.acp.group.option.{$userGroupOption->optionName}{/lang}</legend>
 			
+			<small>{implode from=$parentCategories item=parentCategory glue=' &raquo; '}{lang}wcf.acp.group.option.category.{@$parentCategory->categoryName}{/lang}{/implode}</small>
+			
 			{foreach from=$groups item=group}
 				<dl>
 					<dt><label for="userGroupOption{@$group->groupID}">{lang}{$group->groupName}{/lang}</label></dt>

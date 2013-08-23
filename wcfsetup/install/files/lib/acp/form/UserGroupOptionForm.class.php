@@ -53,6 +53,12 @@ class UserGroupOptionForm extends AbstractForm {
 	public $optionType = null;
 	
 	/**
+	 * list of parent categories
+	 * @var	array<wcf\data\user\group\option\category\UserGroupOptionCategory>
+	 */
+	public $parentCategories = array();
+	
+	/**
 	 * list of values per user group
 	 * @var	array
 	 */
@@ -100,6 +106,7 @@ class UserGroupOptionForm extends AbstractForm {
 					throw new PermissionDeniedException();
 				}
 				
+				array_unshift($this->parentCategories, $category);
 				$category = ($category->parentCategoryName != '') ? $categories[$category->parentCategoryName] : null;
 			}
 		}
@@ -217,6 +224,7 @@ class UserGroupOptionForm extends AbstractForm {
 		WCF::getTPL()->assign(array(
 			'formElements' => $this->formElements,
 			'groups' => $this->groups,
+			'parentCategories' => $this->parentCategories,
 			'userGroupOption' => $this->userGroupOption,
 			'values' => $this->values
 		));
