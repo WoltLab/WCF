@@ -84,13 +84,6 @@ class StyleCompiler extends SingletonFactory {
 			unset($variables['overrideLess']);
 		}
 		
-		// add options as LESS variables
-		foreach (Option::getOptions() as $constantName => $option) {
-			if (in_array($option->optionType, static::$supportedOptionType)) {
-				$variables['wcf_option_'.mb_strtolower($constantName)] = '~"'.$option->optionValue.'"';
-			}
-		}
-		
 		$this->compileStylesheet(
 			WCF_DIR.'style/style-'.$style->styleID,
 			$files,
@@ -189,6 +182,21 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	wcf\system\Callback	$callback
 	 */
 	protected function compileStylesheet($filename, array $files, array $variables, $individualLess, Callback $callback) {
+		// add options as LESS variables
+		if (PACKAGE_ID) {
+			foreach (Option::getOptions() as $constantName => $option) {
+				if (in_array($option->optionType, static::$supportedOptionType)) {
+					$variables['wcf_option_'.mb_strtolower($constantName)] = '~"'.$option->optionValue.'"';
+				}
+			}
+		}
+		else {
+			// workaround during setup
+			$variables['wcf_option_attachment_thumbnail_height'] = '~"210"';
+			$variables['wcf_option_attachment_thumbnail_width'] = '~"280"';
+			$variables['wcf_option_signature_max_image_height'] = '~"150"';
+		}
+		
 		// build LESS bootstrap
 		$less = $this->bootstrap($variables);
 		foreach ($files as $file) {
