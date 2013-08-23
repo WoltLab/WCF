@@ -219,7 +219,18 @@ class PackageInstallationDispatcher {
 			
 			EventHandler::getInstance()->fireAction($this, 'postInstall');
 			
-			// remove queues with the same process no
+			// remove archives
+			$sql = "SELECT	archive
+				FROM	wcf".WCF_N."_package_installation_queue
+				WHERE	processNo = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->queue->processNo));
+			while ($row = $statement->fetchArray()) {
+				@unlink($row['archive']);
+				file_put_contents(WCF_DIR.'__tmpFile.log', "Remove {$row['archive']}\n", FILE_APPEND);
+			}
+			
+			// delete queues
 			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
 				WHERE		processNo = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -855,12 +866,10 @@ class PackageInstallationDispatcher {
 		}
 		
 		// delete queues
-		/*
 		$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
 			WHERE		processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->queue->processNo));
-		*/
 		
 		// update package version
 		if ($this->action == 'update') {
