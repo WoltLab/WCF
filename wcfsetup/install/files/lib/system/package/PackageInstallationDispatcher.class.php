@@ -855,10 +855,12 @@ class PackageInstallationDispatcher {
 		}
 		
 		// delete queues
+		/*
 		$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
 			WHERE		processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->queue->processNo));
+		*/
 		
 		// update package version
 		if ($this->action == 'update') {
