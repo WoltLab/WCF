@@ -2840,7 +2840,7 @@ WCF.Message.Share.Page = Class.extend({
 	 * @param	string		url
 	 */
 	_share: function(objectName, url) {
-		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription), 'height=600,width=600');
+		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription + " " + this._pageURL), 'height=600,width=600');
 	},
 	
 	/**
