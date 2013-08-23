@@ -41,7 +41,11 @@
 			{foreach from=$groups item=group}
 				<dl>
 					<dt><label for="userGroupOption{@$group->groupID}">{lang}{$group->groupName}{/lang}</label></dt>
-					<dd>{@$formElements[$group->groupID]}</dd>
+					<dd>
+						{@$formElements[$group->groupID]}
+						
+						{hascontent}<small>{content}{lang __optional=true}wcf.acp.group.option.{@$userGroupOption->optionName}.description{/lang}{/content}</small>{/hascontent}
+					</dd>
 				</dl>
 			{/foreach}
 		</fieldset>
