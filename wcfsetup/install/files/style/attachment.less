@@ -87,15 +87,32 @@
 	padding-bottom: @wcfGapSmall;
 		
 	> li {
-		width: 33%;
 		float: left;
+		min-height: 60px;
+		width: 33%;
 		
 		> div {
-			padding-top: @wcfGapSmall;
-			
 			> div {
-				float: left;
 				margin-right: @wcfGapSmall;
+				
+				> p {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					
+					> a {
+						display: block;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					}
+				}
+			}
+			
+			> ul {
+				> li {
+					display: inline-block;
+				}
 			}
 		}
 	}
