@@ -227,7 +227,6 @@ class PackageInstallationDispatcher {
 			$statement->execute(array($this->queue->processNo));
 			while ($row = $statement->fetchArray()) {
 				@unlink($row['archive']);
-				file_put_contents(WCF_DIR.'__tmpFile.log', "Remove {$row['archive']}\n", FILE_APPEND);
 			}
 			
 			// delete queues
@@ -611,6 +610,10 @@ class PackageInstallationDispatcher {
 					$installation->nodeBuilder->buildNodes();
 					$node = $installation->nodeBuilder->getCurrentNode();
 				}
+				else {
+					// remove archive
+					@unlink($package['archive']);
+				}
 			}
 			
 			// shift nodes
@@ -862,7 +865,6 @@ class PackageInstallationDispatcher {
 		$statement->execute(array($this->queue->processNo));
 		while ($row = $statement->fetchArray()) {
 			@unlink($row['archive']);
-			file_put_contents(WCF_DIR.'__tmpFile.log', "Remove {$row['archive']}\n", FILE_APPEND);
 		}
 		
 		// delete queues
