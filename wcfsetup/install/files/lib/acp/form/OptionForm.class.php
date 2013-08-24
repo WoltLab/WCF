@@ -4,6 +4,7 @@ use wcf\data\option\category\OptionCategory;
 use wcf\data\option\OptionAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\menu\acp\ACPMenu;
+use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\StringUtil;
@@ -75,6 +76,9 @@ class OptionForm extends AbstractOptionListForm {
 		$this->objectAction = new OptionAction(array(), 'updateAll', array('data' => $saveOptions));
 		$this->objectAction->executeAction();
 		$this->saved();
+		
+		// reset styles to make sure the updated option values are used
+		StyleHandler::resetStylesheets();
 		
 		// show succes message
 		WCF::getTPL()->assign('success', true);

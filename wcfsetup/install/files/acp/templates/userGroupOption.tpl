@@ -1,18 +1,23 @@
 {include file='header'}
 
 <script data-relocate="true">
-	//<![CDATA[
 	$(function() {
-		new WCF.ACP.Options.Group({if $canEditEveryone}true{else}false{/if});
+		$('#optionValueContainer label').each(function(index, label) {
+			var $label = $(label);
+			var $id = $label.prop('for');
+			var $groupID = $id.replace(/^userGroupOption/, '');
+			$label.parents('dl').children('dd').find('input, select, textarea').attr('id', $id).attr('name', 'values[' + $groupID + ']');
+		});
 	});
-	//]]>
 </script>
 
 <header class="boxHeadline">
-	<h1>{lang}wcf.acp.group.option.editingOption{/lang}: {lang}wcf.acp.group.option.{$userGroupOption->optionName}{/lang}</h1>
+	<h1>{lang}wcf.acp.group.option.editingOption{/lang}</h1>
 </header>
 
-<p class="info">{lang}wcf.acp.group.option.hint{/lang}</p>
+{if $success|isset}
+	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
+{/if}
 
 <div class="contentNavigation">
 	{hascontent}
@@ -28,22 +33,19 @@
 
 <form method="post" action="{link controller='UserGroupOption' id=$userGroupOption->optionID}{/link}">
 	<div class="container containerPadding marginTop">
-		<fieldset id="defaultValueContainer">
-			<legend>{lang}wcf.acp.group.option.defaultValue{/lang}</legend>
+		<fieldset id="optionValueContainer">
+			<legend>{lang}wcf.acp.group.option.{$userGroupOption->optionName}{/lang}</legend>
 			
-			<dl data-group-id="{@$groupEveryone->groupID}">
-				<dt><label for="optionValue{@$groupEveryone->groupID}">{lang}{$groupEveryone->groupName}{/lang}</label></dt>
-				<dd>{@$defaultFormElement}</dd>
-			</dl>
-		</fieldset>
-		
-		<fieldset id="otherValueContainer">
-			<legend>{lang}wcf.acp.group.option.other{/lang}</legend>
+			<small>{implode from=$parentCategories item=parentCategory glue=' &raquo; '}{lang}wcf.acp.group.option.category.{@$parentCategory->categoryName}{/lang}{/implode}</small>
 			
 			{foreach from=$groups item=group}
-				<dl data-group-id="{@$group->groupID}">
-					<dt><label for="optionValue{@$group->groupID}">{lang}{$group->groupName}{/lang}</label></dt>
-					<dd>{@$formElements[$group->groupID]}</dd>
+				<dl>
+					<dt><label for="userGroupOption{@$group->groupID}">{lang}{$group->groupName}{/lang}</label></dt>
+					<dd>
+						{@$formElements[$group->groupID]}
+						
+						{hascontent}<small>{content}{lang __optional=true}wcf.acp.group.option.{@$userGroupOption->optionName}.description{/lang}{/content}</small>{/hascontent}
+					</dd>
 				</dl>
 			{/foreach}
 		</fieldset>
@@ -52,7 +54,7 @@
 	</div>
 	
 	<div class="formSubmit">
-		<input type="button" value="{lang}wcf.global.button.submit{/lang}" id="submitButton" />
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" />
 	</div>
 </form>
 

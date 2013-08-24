@@ -64,9 +64,13 @@ class WCFACP extends WCF {
 		$pathInfo = RouteHandler::getPathInfo();
 		if (empty($pathInfo) || !preg_match('~^/(ACPCaptcha|Login|Logout)/~', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
+				// work-around for AJAX-requests within ACP
+				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+					throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, '');
+				}
+				
 				// build redirect path
 				$application = ApplicationHandler::getInstance()->getActiveApplication();
-				
 				if ($application === null) {
 					throw new SystemException("You have aborted the installation, therefore this installation is unusable. You are required to reinstall the software.");
 				}

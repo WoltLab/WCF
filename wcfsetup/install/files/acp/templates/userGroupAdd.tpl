@@ -58,6 +58,20 @@
 				</dd>
 			</dl>
 			
+			<dl{if $errorType.groupDescription|isset} class="formError"{/if}>
+				<dt><label for="groupDescription">{lang}wcf.acp.group.description{/lang}</label></dt>
+				<dd>
+					<textarea id="groupDescription" name="groupDescription" cols="40" rows="3">{$i18nPlainValues['groupDescription']}</textarea>
+					{if $errorType.groupDescription|isset}
+						<small class="innerError">
+							{lang}wcf.acp.group.description.error.{@$errorType.groupDescription}{/lang}
+						</small>
+					{/if}
+					
+					{include file='multipleLanguageInputJavascript' elementIdentifier='groupDescription' forceSelection=false}
+				</dd>
+			</dl>
+			
 			<dl{if $errorType.priority|isset} class="formError"{/if}>
 				<dt><label for="priority">{lang}wcf.acp.group.priority{/lang}</label></dt>
 				<dd>

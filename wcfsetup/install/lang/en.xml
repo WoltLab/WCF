@@ -220,6 +220,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group “{$group->groupName|language}”?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit User Group]]></item>
+		<item name="wcf.acp.group.option.editingOption"><![CDATA[Edit Usergroup Option]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Heads up! You’re a member of this user group, changes may cause yourself being locked out from the Administration Control Panel.]]></item>
 		<item name="wcf.acp.group.group1"><![CDATA[Everyone]]></item>
 		<item name="wcf.acp.group.group2"><![CDATA[Guests]]></item>
@@ -353,6 +354,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximum Signature Length]]></item>
 		<item name="wcf.acp.group.option.admin.system.canImportData"><![CDATA[Can import data]]></item>
 		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[Can rebuild data]]></item>
+		<item name="wcf.acp.group.description"><![CDATA[Description]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
