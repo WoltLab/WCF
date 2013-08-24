@@ -84,9 +84,10 @@
 								{assign var='__sidebarUserOptions' value=','|explode:MESSAGE_SIDEBAR_USER_OPTIONS}
 								{foreach from=$__sidebarUserOptions item='__sidebarUserOption'}
 									{if $userProfile->getUserOption($__sidebarUserOption)}
-										{if $__sidebarUserOption != 'birthday' || $userProfile->getUserOption($__sidebarUserOption) != '0000-00-00'}
+										{assign var='__formattedUserOption' value=$userProfile->getFormattedUserOption($__sidebarUserOption)}
+										{if $__formattedUserOption}
 											<dt>{lang}wcf.user.option.{$__sidebarUserOption}{/lang}</dt>
-											<dd{if $__sidebarUserOption == 'location'} itemprop="locality"{/if}>{@$userProfile->getFormattedUserOption($__sidebarUserOption)}</dd>
+											<dd{if $__sidebarUserOption == 'location'} itemprop="locality"{/if}>{@$__formattedUserOption}</dd>
 										{/if}
 									{/if}
 								{/foreach}
