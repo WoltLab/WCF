@@ -1093,7 +1093,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.style.general.files"><![CDATA[Files]]></item>
 		<item name="wcf.acp.style.globals"><![CDATA[Global Settings]]></item>
 		<item name="wcf.acp.style.globals.fixedLayoutWidth"><![CDATA[Width]]></item>
-		<item name="wcf.acp.style.globals.fluidLayoutGap"><![CDATA[Page Horizontal Margin]]></item>
+		<item name="wcf.acp.style.globals.fluidLayoutMinWidth"><![CDATA[TODO: Mindestbreite]]></item>
+		<item name="wcf.acp.style.globals.fluidLayoutMaxWidth"><![CDATA[TODO: Höchstbreite]]></item>
 		<item name="wcf.acp.style.globals.font"><![CDATA[Type Face]]></item>
 		<item name="wcf.acp.style.globals.fontFamily"><![CDATA[Font]]></item>
 		<item name="wcf.acp.style.globals.fontSize"><![CDATA[Font Size]]></item>

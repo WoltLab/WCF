@@ -1094,7 +1094,8 @@
 		<item name="wcf.acp.style.general.files"><![CDATA[Dateien]]></item>
 		<item name="wcf.acp.style.globals"><![CDATA[Globale Einstellungen]]></item>
 		<item name="wcf.acp.style.globals.fixedLayoutWidth"><![CDATA[Breite]]></item>
-		<item name="wcf.acp.style.globals.fluidLayoutGap"><![CDATA[Abstand zum Seitenrand]]></item>
+		<item name="wcf.acp.style.globals.fluidLayoutMinWidth"><![CDATA[Mindestbreite]]></item>
+		<item name="wcf.acp.style.globals.fluidLayoutMaxWidth"><![CDATA[Höchstbreite]]></item>
 		<item name="wcf.acp.style.globals.font"><![CDATA[Schriftbild]]></item>
 		<item name="wcf.acp.style.globals.fontFamily"><![CDATA[Schriftart]]></item>
 		<item name="wcf.acp.style.globals.fontSize"><![CDATA[Schriftgröße]]></item>

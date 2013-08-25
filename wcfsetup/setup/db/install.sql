@@ -1597,7 +1597,8 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputHo
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputBorderRadius', '0');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfBaseFontSize', '13px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfBaseFontFamily', '"Trebuchet MS", Arial, sans-serif');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutFluidGap', '30px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutMinWidth', '980px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutMaxWidth', '88%');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutFixedWidth', '1200px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageBackgroundColor', 'rgba(224, 224, 224, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageColor', 'rgba(102, 102, 102, 1)');
@@ -1650,8 +1651,8 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDeleted
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDeletedColor', 'rgba(204, 0, 0, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledBackgroundColor', 'rgba(238, 255, 238, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledColor', 'rgba(0, 153, 0, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextShadowLightColor', 'rgba(255, 255, 255, .8)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextShadowDarkColor', 'rgba(0, 0, 0, .8)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextShadowLightColor', 'transparent');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextShadowDarkColor', 'transparent');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '');

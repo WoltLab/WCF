@@ -425,7 +425,8 @@ class StyleAddForm extends AbstractForm {
 		$this->globals = array(
 			'wcfBaseFontSize',
 			'wcfLayoutFixedWidth',
-			'wcfLayoutFluidGap'
+			'wcfLayoutMinWidth',
+			'wcfLayoutMaxWidth'
 		);
 		
 		// set specialized variables

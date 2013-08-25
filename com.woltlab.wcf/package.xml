@@ -28,6 +28,7 @@
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="acpSearchProvider">acpSearchProvider.xml</instruction>
+		<instruction type="style">blue-temptation-style.tgz</instruction>
 		<instruction type="style">woltlab-basic-style.tgz</instruction>
 		<instruction type="userOption">userOption.xml</instruction>
 		<instruction type="bbcode">bbcode.xml</instruction>
