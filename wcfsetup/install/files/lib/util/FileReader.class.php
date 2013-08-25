@@ -14,12 +14,12 @@ use wcf\system\Regex;
  * @subpackage	util
  * @category	Community Framework
  */
-final class FileReader {
+class FileReader {
 	/**
 	 * http options
 	 * @var	array
 	 */
-	private $options = array(
+	protected $options = array(
 		'filename' => '',
 		'mimeType' => 'application/octet-stream',
 		'filesize' => 0,
@@ -34,25 +34,25 @@ final class FileReader {
 	 * list of header items
 	 * @var	array
 	 */
-	private $headers = array();
+	protected $headers = array();
 	
 	/**
 	 * start byte
 	 * @var	integer
 	 */
-	private $startByte = 0;
+	protected $startByte = 0;
 	
 	/**
 	 * end byte
 	 * @var	integer
 	 */
-	private $endByte = 0;
+	protected $endByte = 0;
 	
 	/**
 	 * True if http range is invalid.
 	 * @var	boolean
 	 */
-	private $invalidRange = false;
+	protected $invalidRange = false;
 	
 	/**
 	 * Creates a new instance of the HTTPFileReader class.
@@ -85,46 +85,22 @@ final class FileReader {
 		if (empty($this->options['filesize'])) {
 			$this->options['filesize'] = @filesize($this->location);
 		}
-			
-		// handle range
-		$this->handleRange();
 		
-		// handle headers
+		// prepare range and headers
+		$this->handleRange();
 		$this->handleHeaders();
 		
-		// show headers
-		foreach ($this->headers as $name => $value) {
-			if (empty($name)) {
-				@header($value);
-			}
-			else {
-				@header($name.': '.$value);
-			}
-		}
-		
-		// show file
+		// send file to client
+		$this->sendHeaders();
 		if (!$this->invalidRange) {
-			if ($this->startByte > 0 || $this->endByte < $this->options['filesize'] - 1) {
-				$file = new File($this->location, 'rb');
-				if ($this->startByte > 0) $file->seek($this->startByte);
-				while ($this->startByte <= $this->endByte) {
-					$remainingBytes = $this->endByte - $this->startByte;
-					$readBytes = ($remainingBytes > 1048576 ? 1048576 : $remainingBytes + 1);
-					echo $file->read($readBytes);
-					$this->startByte += $readBytes;
-				}
-				$file->close();
-			}
-			else {
-				readfile($this->location);
-			}
+			$this->sendFile();
 		}
 	}
 	
 	/**
 	 * Handles the given range options.
 	 */
-	private function handleRange() {
+	protected function handleRange() {
 		$this->startByte = 0;
 		$this->endByte = $this->options['filesize'] - 1;
 		if ($this->options['enableRangeSupport']) {
@@ -153,7 +129,7 @@ final class FileReader {
 	/**
 	 * Handles the given header items.
 	 */
-	private function handleHeaders() {
+	protected function handleHeaders() {
 		if ($this->startByte < 0 || $this->startByte >= $this->options['filesize'] || $this->endByte >= $this->options['filesize']) {
 			// invalid range given
 			$this->addHeader('', 'HTTP/1.1 416 Requested Range Not Satisfiable');
@@ -190,6 +166,40 @@ final class FileReader {
 			if ($this->options['lastModificationTime']) {
 				$this->addHeader('Last-Modified', gmdate('D, d M Y H:i:s', $this->options['lastModificationTime']).' GMT');
 			}
+		}
+	}
+	
+	/**
+	 * Sends the headers of the file to the client.
+	 */
+	protected function sendHeaders() {
+		foreach ($this->headers as $name => $value) {
+			if (empty($name)) {
+				@header($value);
+			}
+			else {
+				@header($name.': '.$value);
+			}
+		}
+	}
+	
+	/**
+	 * Sends the actual file to the client.
+	 */
+	protected function sendFile() {
+		if ($this->startByte > 0 || $this->endByte < $this->options['filesize'] - 1) {
+			$file = new File($this->location, 'rb');
+			if ($this->startByte > 0) $file->seek($this->startByte);
+			while ($this->startByte <= $this->endByte) {
+				$remainingBytes = $this->endByte - $this->startByte;
+				$readBytes = ($remainingBytes > 1048576 ? 1048576 : $remainingBytes + 1);
+				echo $file->read($readBytes);
+				$this->startByte += $readBytes;
+			}
+			$file->close();
+		}
+		else {
+			readfile($this->location);
 		}
 	}
 	
