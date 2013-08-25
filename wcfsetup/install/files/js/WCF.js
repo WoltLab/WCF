@@ -5737,7 +5737,7 @@ WCF.Search.Base = Class.extend({
 	},
 	
 	/**
-	 * Adds an excluded search value.
+	 * Removes an excluded search value.
 	 * 
 	 * @param	string		value
 	 */
