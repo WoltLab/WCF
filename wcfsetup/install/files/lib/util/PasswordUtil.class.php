@@ -37,7 +37,10 @@ final class PasswordUtil {
 		'wbb2',		// WoltLab Burning Board 2.x
 		'wcf1',		// WoltLab Community Framework 1.x
 		'wcf2',		// WoltLab Community Framework 2.x
-		'xf1'		// XenForo 1.x
+		'xf1',		// XenForo 1.x
+		'joomla1',	// Joomla 1.x
+		'joomla2',	// Joomla 2.x
+		'joomla3',	// Joomla 3.x
 	);
 	
 	/**
@@ -525,6 +528,49 @@ final class PasswordUtil {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Validates the password hash for Joomla 1.x (kunea)
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function joomla1($username, $password, $salt, $dbHash) {
+		if (self::secureCompare($dbHash, md5($password . $salt))) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Validates the password hash for Joomla 2.x (kunea)
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function joomla2($username, $password, $salt, $dbHash) {
+		return self::joomla1($username, $password, $salt, $dbHash);
+	}
+	
+	/**
+	 * Validates the password hash for Joomla 3.x (kunea)
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function joomla3($username, $password, $salt, $dbHash) {
+		return self::joomla1($username, $password, $salt, $dbHash);
 	}
 	
 	private function __construct() { }
