@@ -173,7 +173,7 @@ final class PasswordUtil {
 		$salt = '';
 		
 		for ($i = 0, $maxIndex = (strlen(self::$blowfishCharacters) - 1); $i < 22; $i++) {
-			$salt .= self::$blowfishCharacters[mt_rand(0, $maxIndex)];
+			$salt .= self::$blowfishCharacters[self::secureRandomNumber(0, $maxIndex)];
 		}
 		
 		return self::getSalt($salt);
@@ -197,7 +197,7 @@ final class PasswordUtil {
 		$type = 0;
 		for ($i = 0; $i < $length; $i++) {
 			$type = ($i % 4 == 0) ? 0 : ($type + 1);
-			$password .= substr($availableCharacters[$type], MathUtil::getRandomValue(0, strlen($availableCharacters[$type]) - 1), 1);
+			$password .= substr($availableCharacters[$type], self::secureRandomNumber(0, strlen($availableCharacters[$type]) - 1), 1);
 		}
 		
 		return str_shuffle($password);
@@ -223,6 +223,39 @@ final class PasswordUtil {
 		}
 	
 		return ($result === 0);
+	}
+	
+	/**
+	 * Generates secure random numbers using OpenSSL.
+	 * 
+	 * @see		http://de1.php.net/manual/en/function.openssl-random-pseudo-bytes.php#104322
+	 * @param	integer		$min
+	 * @param	integer		$max
+	 * @return	integer
+	 */
+	public static function secureRandomNumber($min, $max) {
+		$range = $max - $min;
+		if ($range == 0) {
+			// not random
+			throw new SystemException("Cannot generate a secure random number, min and max are the same");
+		}
+		
+		// fallback to mt_rand() if OpenSSL is not available
+		if (!function_exists('openssl_random_pseudo_bytes')) {
+			return mt_rand($min, $max);
+		}
+		
+		$log = log($range, 2);
+		$bytes = (int) ($log / 8) + 1; // length in bytes
+		$bits = (int) $log + 1; // length in bits
+		$filter = (int) (1 << $bits) - 1; // set all lower bits to 1
+		do {
+			$rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes, $s)));
+			$rnd = $rnd & $filter; // discard irrelevant bits
+		}
+		while ($rnd >= $range);
+		
+		return $min + $rnd;
 	}
 	
 	/**
