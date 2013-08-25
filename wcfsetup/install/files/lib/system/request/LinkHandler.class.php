@@ -122,6 +122,10 @@ class LinkHandler extends SingletonFactory {
 		if (isset($parameters['title'])) {
 			// remove illegal characters
 			$parameters['title'] = trim($this->titleRegex->replace($parameters['title'], '-'), '-');
+			
+			// trim to 80 characters
+			$parameters['title'] = mb_substr($parameters['title'], 0, 80);
+			
 			// encode title
 			if ($encodeTitle) $parameters['title'] = rawurlencode($parameters['title']);
 		}
