@@ -6525,15 +6525,17 @@ WCF.InlineEditor = Class.extend({
 			return;
 		}
 		
-		this._updateState();
+		this._updateState(data);
 		
 		this._updateData = [ ];
 	},
 	
 	/**
 	 * Update element states based upon update data.
+	 * 
+	 * @param	object		data
 	 */
-	_updateState: function() { },
+	_updateState: function(data) { },
 	
 	/**
 	 * Handles clicks within dropdown.
