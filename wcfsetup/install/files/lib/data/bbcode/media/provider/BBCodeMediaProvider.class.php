@@ -93,7 +93,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 			
 			$output = $this->html;
 			foreach ($regex->getMatches() as $name => $value) {
-				$output = StringUtil::replace('{$'.$name.'}', $value, $output);
+				$output = str_replace('{$'.$name.'}', $value, $output);
 			}
 			return $output;
 		}

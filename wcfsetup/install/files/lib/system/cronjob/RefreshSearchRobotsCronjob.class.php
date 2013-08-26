@@ -39,7 +39,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 			
 			$statementParameters = array();
 			foreach ($spiders as $spider) {
-				$identifier = StringUtil::toLowerCase($spider->getAttribute('ident'));
+				$identifier = mb_strtolower($spider->getAttribute('ident'));
 				$name = $xpath->query('ns:name', $spider)->item(0);
 				$info = $xpath->query('ns:url', $spider)->item(0);
 				

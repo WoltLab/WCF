@@ -109,8 +109,8 @@ class FormDocument {
 		$variables = array();
 		
 		foreach ($_REQUEST as $key => $value) {
-			if (StringUtil::indexOf($key, $this->getName().'_') !== false) {
-				$key = StringUtil::replace($this->getName().'_', '', $key);
+			if (mb_strpos($key, $this->getName().'_') !== false) {
+				$key = str_replace($this->getName().'_', '', $key);
 				$variables[$key] = $value;
 			}
 		}

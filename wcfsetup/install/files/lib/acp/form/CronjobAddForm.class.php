@@ -98,11 +98,11 @@ class CronjobAddForm extends AbstractForm {
 		
 		if (isset($_POST['className'])) $this->className = StringUtil::trim($_POST['className']);
 		if (isset($_POST['description'])) $this->description = StringUtil::trim($_POST['description']);
-		if (isset($_POST['startMinute'])) $this->startMinute = StringUtil::replace(' ', '', $_POST['startMinute']);
-		if (isset($_POST['startHour'])) $this->startHour = StringUtil::replace(' ', '', $_POST['startHour']);
-		if (isset($_POST['startDom'])) $this->startDom = StringUtil::replace(' ', '', $_POST['startDom']);
-		if (isset($_POST['startMonth'])) $this->startMonth = StringUtil::replace(' ', '', $_POST['startMonth']);
-		if (isset($_POST['startDow'])) $this->startDow = StringUtil::replace(' ', '', $_POST['startDow']);
+		if (isset($_POST['startMinute'])) $this->startMinute = str_replace(' ', '', $_POST['startMinute']);
+		if (isset($_POST['startHour'])) $this->startHour = str_replace(' ', '', $_POST['startHour']);
+		if (isset($_POST['startDom'])) $this->startDom = str_replace(' ', '', $_POST['startDom']);
+		if (isset($_POST['startMonth'])) $this->startMonth = str_replace(' ', '', $_POST['startMonth']);
+		if (isset($_POST['startDow'])) $this->startDow = str_replace(' ', '', $_POST['startDow']);
 	}
 	
 	/**

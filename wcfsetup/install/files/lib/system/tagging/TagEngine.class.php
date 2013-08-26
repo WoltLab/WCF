@@ -53,8 +53,8 @@ class TagEngine extends SingletonFactory {
 			if (empty($tag)) continue;
 			
 			// enforce max length
-			if (StringUtil::length($tag) > TAGGING_MAX_TAG_LENGTH) {
-				$tag = StringUtil::substring($tag, 0, TAGGING_MAX_TAG_LENGTH);
+			if (mb_strlen($tag) > TAGGING_MAX_TAG_LENGTH) {
+				$tag = mb_substr($tag, 0, TAGGING_MAX_TAG_LENGTH);
 			}
 			
 			// find existing tag

@@ -27,7 +27,7 @@ class ZipWriter {
 	 */
 	public function addDir($name, $date = TIME_NOW) {
 		// replace backward slashes with forward slashes in the dirname
-		$name = StringUtil::replace("\\", "/", $name);
+		$name = str_replace("\\", "/", $name);
 		$name = FileUtil::addTrailingSlash($name);
 		
 		// construct the general header information for the directory
@@ -87,7 +87,7 @@ class ZipWriter {
 	 */
 	public function addFile($data, $name, $date = TIME_NOW) {		
 		// replace backward slashes with forward slashes in the filename
-		$name = StringUtil::replace("\\", "/", $name);
+		$name = str_replace("\\", "/", $name);
 		
 		// calculate the size of the file being uncompressed
 		$sizeUncompressed = strlen($data);

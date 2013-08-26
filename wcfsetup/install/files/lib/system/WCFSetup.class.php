@@ -664,12 +664,12 @@ class WCFSetup extends WCF {
 					// write configuration to config.inc.php
 					$file = new File(WCF_DIR.'config.inc.php');
 					$file->write("<?php\n");
-					$file->write("\$dbHost = '".StringUtil::replace("'", "\\'", $dbHost)."';\n");
+					$file->write("\$dbHost = '".str_replace("'", "\\'", $dbHost)."';\n");
 					$file->write("\$dbPort = ".$dbPort.";\n");
-					$file->write("\$dbUser = '".StringUtil::replace("'", "\\'", $dbUser)."';\n");
-					$file->write("\$dbPassword = '".StringUtil::replace("'", "\\'", $dbPassword)."';\n");
-					$file->write("\$dbName = '".StringUtil::replace("'", "\\'", $dbName)."';\n");
-					$file->write("\$dbClass = '".StringUtil::replace("'", "\\'", $dbClass)."';\n");
+					$file->write("\$dbUser = '".str_replace("'", "\\'", $dbUser)."';\n");
+					$file->write("\$dbPassword = '".str_replace("'", "\\'", $dbPassword)."';\n");
+					$file->write("\$dbName = '".str_replace("'", "\\'", $dbName)."';\n");
+					$file->write("\$dbClass = '".str_replace("'", "\\'", $dbClass)."';\n");
 					$file->write("if (!defined('WCF_N')) define('WCF_N', $dbNumber);\n?>");
 					$file->close();
 					
@@ -712,7 +712,7 @@ class WCFSetup extends WCF {
 		$sql = file_get_contents(TMP_DIR.'setup/db/install.sql');
 		
 		// installation number value 'n' (WCF_N) must be reflected in the executed sql queries
-		$sql = StringUtil::replace('wcf1_', 'wcf'.$dbNumber.'_', $sql);
+		$sql = str_replace('wcf1_', 'wcf'.$dbNumber.'_', $sql);
 		
 		// get all tablenames which should be created
 		preg_match_all("%CREATE\s+TABLE\s+(\w+)%", $sql, $matches);
@@ -753,7 +753,7 @@ class WCFSetup extends WCF {
 		$sql = $sqlData[$offset];
 		
 		// installation number value 'n' (WCF_N) must be reflected in the executed sql queries
-		$sql = StringUtil::replace('wcf1_', 'wcf'.WCF_N.'_', $sql);
+		$sql = str_replace('wcf1_', 'wcf'.WCF_N.'_', $sql);
 		
 		// execute sql queries
 		$parser = new SQLParser($sql);
@@ -821,7 +821,7 @@ class WCFSetup extends WCF {
 			}
 			else {
 				// regular file
-				$fileInserts[] = StringUtil::replace(WCF_DIR, '', $file);
+				$fileInserts[] = str_replace(WCF_DIR, '', $file);
 			}
 		}
 		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "\tRead files: " . round(microtime(true) - $start, 3) . "\n", FILE_APPEND);
@@ -1040,7 +1040,7 @@ class WCFSetup extends WCF {
 		$otherPackages = array();
 		$tar = new Tar(SETUP_FILE);
 		foreach ($tar->getContentList() as $file) {
-			if ($file['type'] != 'folder' && StringUtil::indexOf($file['filename'], 'install/packages/') === 0) {
+			if ($file['type'] != 'folder' && mb_strpos($file['filename'], 'install/packages/') === 0) {
 				$packageFile = basename($file['filename']);
 				
 				// ignore any files which aren't an archive
@@ -1207,7 +1207,7 @@ class WCFSetup extends WCF {
 		// get package name
 		$tar = new Tar(SETUP_FILE);
 		foreach ($tar->getContentList() as $file) {
-			if ($file['type'] != 'folder' && StringUtil::indexOf($file['filename'], 'install/packages/') === 0) {
+			if ($file['type'] != 'folder' && mb_strpos($file['filename'], 'install/packages/') === 0) {
 				$packageFile = basename($file['filename']);
 				$packageName = preg_replace('!\.(tar\.gz|tgz|tar)$!', '', $packageFile);
 				

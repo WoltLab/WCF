@@ -126,7 +126,7 @@ class MailWorker extends AbstractWorker {
 	 */
 	protected function sendMail(User $user) {
 		try {
-			$mail = new Mail(array($user->username => $user->email), $this->mailData['subject'], StringUtil::replace('{$username}', $user->username, $this->mailData['text']), $this->mailData['from']);
+			$mail = new Mail(array($user->username => $user->email), $this->mailData['subject'], str_replace('{$username}', $user->username, $this->mailData['text']), $this->mailData['from']);
 			if ($this->mailData['enableHTML']) $mail->setContentType('text/html');
 			$mail->setLanguage($user->getLanguage());
 			$mail->send();

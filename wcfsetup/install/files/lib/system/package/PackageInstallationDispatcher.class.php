@@ -353,7 +353,7 @@ class PackageInstallationDispatcher {
 			$this->package = null;
 			
 			if ($package->isApplication) {
-				$host = StringUtil::replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
+				$host = str_replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
 				$path = RouteHandler::getPath(array('acp'));
 				
 				// insert as application
@@ -663,7 +663,7 @@ class PackageInstallationDispatcher {
 			$packageDir->setName('packageDir');
 			$packageDir->setLabel(WCF::getLanguage()->get('wcf.acp.package.packageDir.input'));
 			
-			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(StringUtil::substring(WCF_DIR, 0, -4)));
+			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(mb_substr(WCF_DIR, 0, -4)));
 			// check if there is already an application
 			$sql = "SELECT	COUNT(*) AS count
 				FROM	wcf".WCF_N."_package
@@ -960,7 +960,7 @@ class PackageInstallationDispatcher {
 		// validate functions
 		if (isset($requirements['functions'])) {
 			foreach ($requirements['functions'] as $function) {
-				$function = StringUtil::toLowerCase($function);
+				$function = mb_strtolower($function);
 				
 				$passed = self::functionExists($function);
 				if (!$passed) {
@@ -1010,7 +1010,7 @@ class PackageInstallationDispatcher {
 			if (!empty($blacklist)) {
 				$blacklist = explode(',', $blacklist);
 				foreach ($blacklist as $disabledFunction) {
-					$disabledFunction = StringUtil::toLowerCase(StringUtil::trim($disabledFunction));
+					$disabledFunction = mb_strtolower(StringUtil::trim($disabledFunction));
 					
 					if ($function == $disabledFunction) {
 						return false;
@@ -1033,7 +1033,7 @@ class PackageInstallationDispatcher {
 	protected static function compareSetting($setting, $value, $compareValue) {
 		if ($compareValue === false) return false;
 		
-		$value = StringUtil::toLowerCase($value);
+		$value = mb_strtolower($value);
 		$trueValues = array('1', 'on', 'true');
 		$falseValues = array('0', 'off', 'false');
 		
@@ -1062,7 +1062,7 @@ class PackageInstallationDispatcher {
 	 */
 	protected static function convertShorthandByteValue($value) {
 		// convert into bytes
-		$lastCharacter = StringUtil::substring($value, -1);
+		$lastCharacter = mb_substr($value, -1);
 		switch ($lastCharacter) {
 			// gigabytes
 			case 'g':

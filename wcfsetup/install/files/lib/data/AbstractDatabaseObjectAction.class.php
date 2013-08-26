@@ -102,8 +102,8 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		if (empty($this->className)) {
 			$className = get_called_class();
 			
-			if (StringUtil::substring($className, -6) == 'Action') {
-				$this->className = StringUtil::substring($className, 0, -6).'Editor';
+			if (mb_substr($className, -6) == 'Action') {
+				$this->className = mb_substr($className, 0, -6).'Editor';
 			}
 		}
 		

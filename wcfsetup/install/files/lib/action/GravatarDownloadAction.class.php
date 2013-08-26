@@ -60,7 +60,7 @@ class GravatarDownloadAction extends AbstractAction {
 		
 		if ($this->user->enableGravatar) {
 			// try to use cached gravatar
-			$cachedFilename = sprintf(Gravatar::GRAVATAR_CACHE_LOCATION, md5(StringUtil::toLowerCase($this->user->email)), $this->size);
+			$cachedFilename = sprintf(Gravatar::GRAVATAR_CACHE_LOCATION, md5(mb_strtolower($this->user->email)), $this->size);
 			if (file_exists(WCF_DIR.$cachedFilename) && filemtime(WCF_DIR.$cachedFilename) > (TIME_NOW - (Gravatar::GRAVATAR_CACHE_EXPIRE * 86400))) {
 				@header('Content-Type: image/png');
 				@readfile(WCF_DIR.$cachedFilename);
@@ -68,7 +68,7 @@ class GravatarDownloadAction extends AbstractAction {
 			}
 			
 			// try to download new version
-			$gravatarURL = sprintf(Gravatar::GRAVATAR_BASE, md5(StringUtil::toLowerCase($this->user->email)), $this->size, '404');
+			$gravatarURL = sprintf(Gravatar::GRAVATAR_BASE, md5(mb_strtolower($this->user->email)), $this->size, '404');
 			try {
 				$tmpFile = FileUtil::downloadFileFromHttp($gravatarURL, 'gravatar');
 				copy($tmpFile, WCF_DIR.$cachedFilename);

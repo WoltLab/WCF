@@ -39,9 +39,9 @@ class SearchResultTextParser extends SingletonFactory {
 			// remove search operators
 			$keywordString = preg_replace('/[\+\-><()~\*]+/', '', $keywordString);
 			
-			if (StringUtil::substring($keywordString, 0, 1) == '"' && StringUtil::substring($keywordString, -1) == '"') {
+			if (mb_substr($keywordString, 0, 1) == '"' && mb_substr($keywordString, -1) == '"') {
 				// phrases search
-				$keywordString = StringUtil::trim(StringUtil::substring($keywordString, 1, -1));
+				$keywordString = StringUtil::trim(mb_substr($keywordString, 1, -1));
 				
 				if (!empty($keywordString)) {
 					$this->searchQuery = $keywordString;
@@ -70,14 +70,14 @@ class SearchResultTextParser extends SingletonFactory {
 		// replace newlines with spaces
 		$text = Regex::compile("\s+")->replace($text, ' ');
 		
-		if (StringUtil::length($text) > static::MAX_LENGTH) {
+		if (mb_strlen($text) > static::MAX_LENGTH) {
 			if ($this->searchQuery) {
 				// phrase search
 				if (!is_array($this->searchQuery)) {
-					$start = StringUtil::indexOfIgnoreCase($text, $this->searchQuery);
+					$start = mb_strripos($text, $this->searchQuery);
 					if ($start !== false) {
-						$end = $start + StringUtil::length($this->searchQuery);
-						$shiftStartBy = $shiftEndBy = round((static::MAX_LENGTH - StringUtil::length($this->searchQuery)) / 2);
+						$end = $start + mb_strlen($this->searchQuery);
+						$shiftStartBy = $shiftEndBy = round((static::MAX_LENGTH - mb_strlen($this->searchQuery)) / 2);
 						
 						// shiftStartBy is negative when search query length is over max length
 						if ($shiftStartBy < 0) {
@@ -95,8 +95,8 @@ class SearchResultTextParser extends SingletonFactory {
 						}
 						
 						// shift abstract end
-						if ($end + $shiftEndBy > StringUtil::length($text) - 1) {
-							$shiftStartBy = $end + $shiftEndBy - StringUtil::length($text) - 1;
+						if ($end + $shiftEndBy > mb_strlen($text) - 1) {
+							$shiftStartBy = $end + $shiftEndBy - mb_strlen($text) - 1;
 							$shiftEndBy = 0;
 							if ($shiftStartBy > $start) {
 								$start = 0;
@@ -111,8 +111,8 @@ class SearchResultTextParser extends SingletonFactory {
 						
 						$newText = '';
 						if ($start > 0) $newText .= StringUtil::HELLIP;
-						$newText .= StringUtil::substring($text, $start, $end - $start);
-						if ($end < StringUtil::length($text) - 1) $newText .= StringUtil::HELLIP;
+						$newText .= mb_substr($text, $start, $end - $start);
+						if ($end < mb_strlen($text) - 1) $newText .= StringUtil::HELLIP;
 						return $newText;
 					}
 				}
@@ -121,10 +121,10 @@ class SearchResultTextParser extends SingletonFactory {
 					$shiftLength = static::MAX_LENGTH;
 					// find first match of each keyword
 					foreach ($this->searchQuery as $keyword) {
-						$start = StringUtil::indexOfIgnoreCase($text, $keyword);
+						$start = mb_strripos($text, $keyword);
 						if ($start !== false) {
-							$shiftLength -= StringUtil::length($keyword);
-							$matches[$keyword] = array('start' => $start, 'end' => $start + StringUtil::length($keyword));
+							$shiftLength -= mb_strlen($keyword);
+							$matches[$keyword] = array('start' => $start, 'end' => $start + mb_strlen($keyword));
 						}
 					}
 					
@@ -137,7 +137,7 @@ class SearchResultTextParser extends SingletonFactory {
 					}
 					
 					$start = 0;
-					$end = StringUtil::length($text) - 1;
+					$end = mb_strlen($text) - 1;
 					$newText = '';
 					$i = 0;
 					$length = count($matches);
@@ -161,7 +161,7 @@ class SearchResultTextParser extends SingletonFactory {
 						}
 						
 						if ($position['start'] > $start) $newText .= StringUtil::HELLIP;
-						$newText .= StringUtil::substring($text, $position['start'], $position['end'] - $position['start']);
+						$newText .= mb_substr($text, $position['start'], $position['end'] - $position['start']);
 						if ($i == $length - 1 && $position['end'] < $end) $newText .= StringUtil::HELLIP;
 						
 						$start = $position['end'];
@@ -173,7 +173,7 @@ class SearchResultTextParser extends SingletonFactory {
 			}
 			
 			// no search query or no matches
-			return StringUtil::substring($text, 0, static::MAX_LENGTH) . StringUtil::HELLIP;
+			return mb_substr($text, 0, static::MAX_LENGTH) . StringUtil::HELLIP;
 		}
 		
 		return $text;

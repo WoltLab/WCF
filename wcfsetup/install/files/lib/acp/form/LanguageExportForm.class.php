@@ -146,7 +146,7 @@ class LanguageExportForm extends AbstractForm {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->languageID));
 		while ($row = $statement->fetchArray()) {
-			$row['packageNameLength'] = StringUtil::length(WCF::getLanguage()->get($row['packageName']));
+			$row['packageNameLength'] = mb_strlen(WCF::getLanguage()->get($row['packageName']));
 			$this->packages[] = new Package(null, $row);
 			if ($row['packageNameLength'] > $this->packageNameLength) {
 				$this->packageNameLength = $row['packageNameLength'];	
