@@ -2153,60 +2153,21 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 
 Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben, können Sie diese E-Mail ignorieren. ]]></item>
 <item name="wcf.user.register.needActivation"><![CDATA[Ihr Benutzerkonto ist noch nicht aktiviert. Sie müssen den <a href="{link controller='RegisterActivation'}{/link}">Aktivierungsvorgang abschließen</a>, um den vollen Funktionsumfang dieser Seite nutzen zu können.]]></item>
-
 <item name="wcf.user.register.disclaimer"><![CDATA[Disclaimer]]></item>
 		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Akzeptieren]]></item>
 		<item name="wcf.user.register.disclaimer.decline"><![CDATA[Ablehnen]]></item>
-		<item name="wcf.user.register.disclaimer.text"><![CDATA[<h1>Haftung für Inhalte</h1>
-    <p>Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. 
-      Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte 
-      können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für 
-      eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. 
-      Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht 
-      verpflichtet, übermittelte oder gespeicherte fremde Informationen zu 
-      überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige 
-      Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der 
-      Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon 
-      unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem 
-      Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei 
-      Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte 
-      umgehend entfernen.</p>
-    <h1>Haftung für Links</h1>
-    <p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren 
-      Inhalte wir keinen Einfluss haben. Deshalb können wir für diese 
-      fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte 
-      der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der 
-      Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung 
-      auf mögliche Rechtsverstöße überprüft. Rechtswidrige 
-      Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente 
-      inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte 
-      einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen 
-      werden wir derartige Links umgehend entfernen.</p>
+		<item name="wcf.user.register.disclaimer.text"><![CDATA[<h1>Haftungsbeschränkung für eigene Inhalte</h1>
+    <p>Alle Inhalte unseres Internetauftritts wurden mit Sorgfalt und nach bestem Gewissen erstellt. Eine Gewähr für die Aktualität, Vollständigkeit und Richtigkeit sämtlicher Seiten kann jedoch nicht übernommen werden.</p>
+	<p>Gemäß § 7 Abs. 1 TMG sind wir als Dienstanbieter für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich, nach den §§ 8 bis 10 TMG jedoch nicht verpflichtet, die übermittelten oder gespeicherten fremden Informationen zu überwachen. Eine umgehende Entfernung dieser Inhalte erfolgt ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung und wir haften nicht vor dem Zeitpunkt der Kenntniserlangung.</p>
+    <h1>Haftungsbeschränkung für externe Links</h1>
+    <p>Unsere Webseite enthält sog. „externe Links“ (Verknüpfungen zu Webseiten Dritter), auf deren Inhalt wir keinen Einfluss haben und für den wir aus diesem Grund keine Gewähr übernehmen. Für die Inhalte und Richtigkeit der Informationen ist der jeweilige Informationsanbieter der verlinkten Webseite verantwortlich. Als die Verlinkung vorgenommen wurde, waren für uns keine Rechtsverstöße erkennbar. Sollte uns eine Rechtsverletzung bekannt werden, wird der jeweilige Link umgehend von uns entfernt.</p>
     <h1>Urheberrecht</h1>
-    <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten 
-      unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und 
-      jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen 
-      der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads 
-      und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen 
-      Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, 
-      werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche 
-      gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. 
-      Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.</p>
+    <p>Die auf dieser Webseite veröffentlichten Inhalte und Werke unterliegen dem deutschen Urheberrecht. Jede Art der Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedarf der vorherigen schriftlichen Zustimmung des jeweiligen Urhebers bzw. Autors.</p>
     <h1>Datenschutz</h1>
-    <p>Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, 
-      Anschrift oder eMail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.   
-    </p>
-    <p>Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. 
-      bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. 
-      Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht 
-      möglich. </p>
-    <p>Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten 
-      durch Dritte zur Übersendung von nicht ausdrücklich angeforderter 
-      Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. 
-      Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte 
-      im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, 
-      vor.</p>
-<p><small><em>Quellen: <a href="http://www.e-recht24.de/muster-disclaimer.htm" class="externalURL">eRecht24 Disclaimer</a></small></em></p>]]></item>
+    <p>Durch den Besuch unseres Internetauftritts können Informationen über den Zugriff (Datum, Uhrzeit, aufgerufene Seite) auf dem Server gespeichert werden. Dies stellt keine Auswertung personenbezogener Daten (z.B. Name, Anschrift oder E-Mail Adresse) dar. Sofern personenbezogene Daten erhoben werden, erfolgt dies – sofern möglich – nur mit dem vorherigen Einverständnis des Nutzers der Webseite. Eine Weiterleitung der Daten an Dritte findet ohne ausdrückliche Zustimmung des Nutzers nicht statt.</p>
+    <p>Wir weisen ausdrücklich darauf hin, dass die Übertragung von Daten im Internet (z.B. per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff Dritter kann nicht gewährleistet werden. Wir können keine Haftung für die durch solche Sicherheitslücken entstehenden Schäden übernehmen.</p>
+    <p>Der Verwendung veröffentlichter Kontaktdaten durch Dritte zum Zwecke von Werbung wird ausdrücklich widersprochen. Wir behalten uns rechtliche Schritte für den Fall der unverlangten Zusendung von Werbeinformationen, z.B. durch Spam-Mails, vor.</p>
+<p><small><em>Quelle: <a href="http://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
 	</category>
 	
 	<category name="wcf.user.usersOnline">
