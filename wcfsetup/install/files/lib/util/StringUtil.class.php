@@ -227,7 +227,7 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Replaces the MINUS-HYPHEN with the MINUS SIGN
+	 * Replaces the MINUS-HYPHEN with the MINUS SIGN.
 	 * 
 	 * @param	mixed		$number
 	 * @return	string
@@ -239,7 +239,7 @@ final class StringUtil {
 	/**
 	 * Sorts an array of strings and maintain index association.
 	 * 
-	 * @param	array		$strings 
+	 * @param	array		$strings
 	 * @return	boolean
 	 * 
 	 * @deprecated
@@ -618,12 +618,12 @@ final class StringUtil {
 	
 	/**
 	 * Truncates a string containing HTML code and keeps the HTML syntax intact.
-	 *
-	 * @param 	string		$string			string which shall be truncated
-	 * @param 	integer		$length 		string length after truncating
-	 * @param 	string		$etc			ending string which will be appended after truncating
+	 * 
+	 * @param	string		$string			string which shall be truncated
+	 * @param	integer		$length			string length after truncating
+	 * @param	string		$etc			ending string which will be appended after truncating
 	 * @param	boolean		$breakWords		if false words will not be split and the return string might be shorter than $length
-	 * @return 	string					truncated string
+	 * @return	string					truncated string
 	 */
 	public static function truncateHTML($string, $length = 500, $etc = self::HELLIP, $breakWords = false) {
 		if (mb_strlen(self::stripHTML($string)) <= $length) {
@@ -631,12 +631,12 @@ final class StringUtil {
 		}
 		$openTags = array();
 		$truncatedString = '';
-	
+		
 		// initalize length counter with the ending length
 		$totalLength = mb_strlen($etc);
-	
+		
 		preg_match_all('/(<\/?([\w+]+)[^>]*>)?([^<>]*)/', $string, $tags, PREG_SET_ORDER);
-	
+		
 		foreach ($tags as $tag) {
 			// filter standalone html tags
 			if (!preg_match('/area|base|basefont|br|col|frame|hr|img|input|isindex|link|meta|param/s', $tag[2])) {
@@ -657,7 +657,7 @@ final class StringUtil {
 			}
 			// append tag
 			$truncatedString .= $tag[1];
-	
+			
 			// get length of the content without entities. If the content is too long, keep entities intact
 			$decodedContent = self::decodeHTML($tag[3]);
 			$contentLength = mb_strlen($decodedContent);
@@ -694,12 +694,12 @@ final class StringUtil {
 				break;
 			}
 		}
-	
+		
 		// close all open tags
 		foreach ($openTags as $tag) {
 			$truncatedString .= '</'.$tag.'>';
 		}
-	
+		
 		// add etc
 		$truncatedString .= $etc;
 		
