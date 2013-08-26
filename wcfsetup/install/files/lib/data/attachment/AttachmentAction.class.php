@@ -159,6 +159,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			$dir = dirname($attachment->getLocation());
 			if (!@file_exists($dir)) {
 				@mkdir($dir, 0777);
+				FileUtil::makeWritable($dir);
 			}
 			
 			// move uploaded file
