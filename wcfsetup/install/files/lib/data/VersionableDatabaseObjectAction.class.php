@@ -63,7 +63,7 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
 		
 		foreach ($this->objects as $object) {
-			call_user_func(array($this->className, 'createRevision'), array_merge($object->getData(), array($indexName => $object->getObjectID())));
+			call_user_func(array($this->className, 'createRevision'), array_merge($object->getDecoratedObject()->getData(), array($indexName => $object->getObjectID())));
 		}
 	}
 	
