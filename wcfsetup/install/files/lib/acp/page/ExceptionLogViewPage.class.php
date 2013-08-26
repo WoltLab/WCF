@@ -83,7 +83,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 			foreach ($this->logFiles as $logFile) {
 				$contents = file_get_contents($logFile);
 				
-				if (StringUtil::indexOf($contents, '<<<<<<<<'.$this->exceptionID.'<<<<') !== false) {
+				if (mb_strpos($contents, '<<<<<<<<'.$this->exceptionID.'<<<<') !== false) {
 					$fileNameRegex->match($logFile);
 					$matches = $fileNameRegex->getMatches();
 					$this->logFile = $matches[0];

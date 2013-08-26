@@ -285,10 +285,10 @@ class Package extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function checkFromversion($currentVersion, $fromversion) {
-		if (StringUtil::indexOf($fromversion, '*') !== false) {
+		if (mb_strpos($fromversion, '*') !== false) {
 			// from version with wildcard
 			// use regular expression
-			$fromversion = StringUtil::replace('\*', '.*', preg_quote($fromversion, '!'));
+			$fromversion = str_replace('\*', '.*', preg_quote($fromversion, '!'));
 			if (preg_match('!^'.$fromversion.'$!i', $currentVersion)) {
 				return true;
 			}

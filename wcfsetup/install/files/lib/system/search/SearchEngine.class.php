@@ -82,7 +82,7 @@ class SearchEngine extends SingletonFactory {
 			$tmp = '';
 			$controlCharacterOrSpace = false;
 			$chars = array('+', '-', '*');
-			for ($i = 0, $length = StringUtil::length($q); $i < $length; $i++) {
+			for ($i = 0, $length = mb_strlen($q); $i < $length; $i++) {
 				$char = $q[$i];
 				
 				if ($inQuotes) {
@@ -125,7 +125,7 @@ class SearchEngine extends SingletonFactory {
 				
 				case 'wcf\system\database\PostgreSQLDatabase':
 					// replace * with :*
-					$q = StringUtil::replace('*', ':*', $q);
+					$q = str_replace('*', ':*', $q);
 					
 					$fulltextCondition->add("fulltextIndex".($subjectOnly ? "SubjectOnly" : '')." @@ to_tsquery(?)", array($q));
 				break;

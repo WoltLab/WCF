@@ -414,7 +414,7 @@ class UserNotificationHandler extends SingletonFactory {
 		$token = $user->notificationMailToken;
 		if (!$token) {
 			// generate token if not present
-			$token = StringUtil::substring(StringUtil::getHash(serialize(array($user->userID, StringUtil::getRandomID()))), 0, 20);
+			$token = mb_substr(StringUtil::getHash(serialize(array($user->userID, StringUtil::getRandomID()))), 0, 20);
 			$editor = new UserEditor($user);
 			$editor->update(array('notificationMailToken' => $token));
 		}

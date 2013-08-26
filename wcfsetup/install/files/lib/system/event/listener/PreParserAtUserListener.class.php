@@ -85,7 +85,7 @@ class PreParserAtUserListener implements IEventListener {
 				$userList->readObjects();
 				$users = array();
 				foreach ($userList as $user) {
-					$users[StringUtil::toLowerCase($user->username)] = $user; 
+					$users[mb_strtolower($user->username)] = $user; 
 				}
 				
 				$text = $userRegex->replace($text, new Callback(function ($matches) use ($users) {
@@ -115,13 +115,13 @@ class PreParserAtUserListener implements IEventListener {
 	 */
 	public static function getUsername($match) {
 		// remove escaped single quotation mark
-		$match = StringUtil::replace("''", "'", $match);
+		$match = str_replace("''", "'", $match);
 		
 		// remove single quotation marks
 		if ($match{0} == "'") {
-			$match = StringUtil::substring($match, 1, -1);
+			$match = mb_substr($match, 1, -1);
 		}
 		
-		return StringUtil::toLowerCase($match);
+		return mb_strtolower($match);
 	}
 }

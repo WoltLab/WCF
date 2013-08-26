@@ -386,8 +386,8 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @return	string
 	 */
 	public function renderQuote(IMessage $message, $text) {
-		$escapedUsername = StringUtil::replace(array("\\", "'"), array("\\\\", "\'"), $message->getUsername());
-		$escapedLink = StringUtil::replace(array("\\", "'"), array("\\\\", "\'"), $message->getLink());
+		$escapedUsername = str_replace(array("\\", "'"), array("\\\\", "\'"), $message->getUsername());
+		$escapedLink = str_replace(array("\\", "'"), array("\\\\", "\'"), $message->getLink());
 		
 		return "[quote='".$escapedUsername."','".$escapedLink."']".$text."[/quote]";
 	}

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\io;
-use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
@@ -26,9 +25,9 @@ class ZipWriter {
 	 * 
 	 * @param	string		$name		dirname
 	 */
-	public function addDir($name) {
+	public function addDir($name, $date = TIME_NOW) {
 		// replace backward slashes with forward slashes in the dirname
-		$name = StringUtil::replace("\\", "/", $name);
+		$name = str_replace("\\", "/", $name);
 		$name = FileUtil::addTrailingSlash($name);
 		
 		// construct the general header information for the directory
@@ -58,7 +57,8 @@ class ZipWriter {
 		$record = "\x50\x4b\x01\x02";
 		$record .= "\x00\x00\x0a\x00";
 		$record .= "\x00\x00\x00\x00";
-		$record .= "\x00\x00\x00\x00";
+		//$record .= "\x00\x00\x00\x00";
+		$record .= $this->getDosDatetime($date);
 		$record .= pack("V", 0);
 		$record .= pack("V", 0);
 		$record .= pack("V", 0);
@@ -83,16 +83,11 @@ class ZipWriter {
 	 * 
 	 * @param	string		$data		content of the file
 	 * @param	string		$name		filename
-	 * @param	integer		$date		file creation time as unix timestamp, must at least be 315532800 (1980-01-01 00:00 UTC)
+	 * @param	integer		$date		file creation time as unix timestamp
 	 */
-	public function addFile($data, $name, $date = TIME_NOW) {
-		// 315532800 is the same as strtotime('1980-01-01 00:00 UTC')
-		if ($date < 315532800) {
-			throw new SystemException('Unsupported date, must be at least 315532800 (1980-01-01 00:00 UTC)');
-		}
-		
+	public function addFile($data, $name, $date = TIME_NOW) {		
 		// replace backward slashes with forward slashes in the filename
-		$name = StringUtil::replace("\\", "/", $name);
+		$name = str_replace("\\", "/", $name);
 		
 		// calculate the size of the file being uncompressed
 		$sizeUncompressed = strlen($data);
@@ -200,6 +195,10 @@ class ZipWriter {
 	protected static function getDosDatetime($date) {
 		// Ensure we have a numeric value
 		$date = intval($date);
+		
+		if ($date < 315532800) {
+			return "\x00\x00\x00\x00";
+		}
 		
 		$day = gmdate('d', $date);
 		$month = gmdate('m', $date);

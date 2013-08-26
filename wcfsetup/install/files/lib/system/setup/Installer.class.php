@@ -126,9 +126,9 @@ class Installer {
 		$directories = array();
 		$files = array();
 		foreach ($tar->getContentList() as $index => $file) {
-			if (empty($this->folder) || StringUtil::indexOf($file['filename'], $this->folder) === 0) {
+			if (empty($this->folder) || mb_strpos($file['filename'], $this->folder) === 0) {
 				if (!empty($this->folder)) {
-					$file['filename'] = StringUtil::replace($this->folder, '', $file['filename']);
+					$file['filename'] = str_replace($this->folder, '', $file['filename']);
 				}
 				
 				// remove leading slash

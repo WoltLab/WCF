@@ -1100,7 +1100,7 @@ WCF.Clipboard = {
 	 * list of clipboard containers
 	 * @var	jQuery
 	 */
-	_container: null,
+	_containers: null,
 	
 	/**
 	 * container meta data
@@ -1206,6 +1206,10 @@ WCF.Clipboard = {
 	 * Reloads the list of marked items.
 	 */
 	reload: function() {
+		if (this._containers === null) {
+			return;
+		}
+		
 		this._loadMarkedItems();
 	},
 	

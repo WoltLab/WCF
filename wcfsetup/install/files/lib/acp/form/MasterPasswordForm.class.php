@@ -97,7 +97,7 @@ class MasterPasswordForm extends AbstractForm {
 	public function readData() {
 		parent::readData();
 		
-		if (empty($_POST) && StringUtil::indexOf(WCF::getSession()->requestURI, 'MasterPassword') === false) {
+		if (empty($_POST) && mb_strpos(WCF::getSession()->requestURI, 'MasterPassword') === false) {
 			$this->url = WCF::getSession()->requestURI;
 		}
 	}
