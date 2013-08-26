@@ -241,14 +241,6 @@ final class FileUtil {
 	}
 	
 	/**
-	 * @todo	Work-around for update, remove this after 2.0.0 Beta 5
-	 * @deprecated
-	 */
-	public static function unifyDirSeperator($path) {
-		return self::unifyDirSeparator($path);
-	}
-	
-	/**
 	 * Scans a folder (and subfolder) for a specific file.
 	 * Returns the filename if found, otherwise false.
 	 * 
