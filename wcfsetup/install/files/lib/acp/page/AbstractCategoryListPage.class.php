@@ -83,10 +83,10 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 		
 		// autoset controllers
 		if (empty($this->addController)) {
-			$this->addController = StringUtil::replace('ListPage', 'Add', $className);
+			$this->addController = str_replace('ListPage', 'Add', $className);
 		}
 		if (empty($this->editController)) {
-			$this->editController = StringUtil::replace('ListPage', 'Edit', $className);
+			$this->editController = str_replace('ListPage', 'Edit', $className);
 		}
 		
 		parent::__run();

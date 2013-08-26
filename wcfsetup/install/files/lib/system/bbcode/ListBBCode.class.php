@@ -17,7 +17,7 @@ class ListBBCode extends AbstractBBCode {
 	 * @see	wcf\system\bbcode\IBBCode::getParsedTag()
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
-		if (StringUtil::indexOf($content, '[*]') !== false) {
+		if (mb_strpos($content, '[*]') !== false) {
 			// get list elements
 			$listElements = preg_split('/\[\*\]/', StringUtil::trim($content), -1, PREG_SPLIT_NO_EMPTY);
 			

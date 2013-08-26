@@ -243,7 +243,7 @@ class UserProfileAction extends UserAction {
 		// validate user title
 		if ($userTitle !== null) {
 			try {
-				if (StringUtil::length($userTitle) > USER_TITLE_MAX_LENGTH) {
+				if (mb_strlen($userTitle) > USER_TITLE_MAX_LENGTH) {
 					throw new UserInputException('__userTitle', 'tooLong');
 				}
 				if (!StringUtil::executeWordFilter($userTitle, USER_FORBIDDEN_TITLES)) {

@@ -137,7 +137,7 @@ class SimpleMessageParser extends SingletonFactory {
 		$text = preg_replace_callback($urlPattern, array($this, 'parseURLsCallback'), $text);
 		
 		// parse emails
-		if (StringUtil::indexOf($text, '@') !== false) {
+		if (mb_strpos($text, '@') !== false) {
 			$text = preg_replace($emailPattern, '<a href="mailto:\\0">\\0</a>', $text);
 		}
 		

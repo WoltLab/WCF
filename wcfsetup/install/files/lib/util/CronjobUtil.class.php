@@ -91,7 +91,7 @@ final class CronjobUtil {
 		// calculate values based upon each expression
 		$values = array();
 		foreach ($fields as $fieldName => $fieldValue) {
-			$fieldValue = StringUtil::toLowerCase($fieldValue);
+			$fieldValue = mb_strtolower($fieldValue);
 			
 			// Names can also be used for the "month" and "day of week" fields.
 			// Use the first three letters of the particular day or month (case
@@ -389,7 +389,7 @@ final class CronjobUtil {
 		$values = array();
 		
 		// examinate first char
-		$char = StringUtil::substring($fieldValue, 0, 1);
+		$char = mb_substr($fieldValue, 0, 1);
 		
 		// could be a single value, range or list
 		if (is_numeric($char)) {
@@ -403,7 +403,7 @@ final class CronjobUtil {
 		else if ($char == '*') {
 			$step = 1;
 			
-			if (StringUtil::indexOf($fieldValue, '/') !== false) {
+			if (mb_strpos($fieldValue, '/') !== false) {
 				$rangeData = explode('/', $fieldValue);
 				$step = $rangeData[1];
 			}
@@ -423,7 +423,7 @@ final class CronjobUtil {
 	 * @return	array
 	 */
 	protected static function getListItems($fieldValue) {
-		if (StringUtil::indexOf($fieldValue, ',') !== false) {
+		if (mb_strpos($fieldValue, ',') !== false) {
 			return explode(',', $fieldValue);
 		}
 		
@@ -438,12 +438,12 @@ final class CronjobUtil {
 	 */
 	protected static function getRanges($value) {
 		// this is a single value
-		if (StringUtil::indexOf($value, '-') === false) {
+		if (mb_strpos($value, '-') === false) {
 			return array($value);
 		}
 		
 		$step = 1;
-		if (StringUtil::indexOf($value, '/') !== false) {
+		if (mb_strpos($value, '/') !== false) {
 			$data = explode('/', $value);
 			$step = $data[1];
 			$value = $data[0];
@@ -559,8 +559,8 @@ final class CronjobUtil {
 					if (count($compareSlash) == 2) $compare['1'] = $compareSlash['0'];
 					
 					// see if digits or names are being given.
-					$left = array_search(StringUtil::toLowerCase($compare['0']), $namesArr);
-					$right = array_search(StringUtil::toLowerCase($compare['1']), $namesArr);
+					$left = array_search(mb_strtolower($compare['0']), $namesArr);
+					$right = array_search(mb_strtolower($compare['1']), $namesArr);
 					if (!$left) $left = $compare['0'];
 					if (!$right) $right = $compare['1'];
 					// now check the values.

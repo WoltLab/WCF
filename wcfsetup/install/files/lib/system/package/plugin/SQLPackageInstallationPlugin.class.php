@@ -45,7 +45,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			foreach ($packageList as $package) {
 				$abbreviation = Package::getAbbreviation($package->package);
 				
-				$queries = StringUtil::replace($abbreviation.'1_', $abbreviation.WCF_N.'_', $queries);
+				$queries = str_replace($abbreviation.'1_', $abbreviation.WCF_N.'_', $queries);
 			}
 			
 			// check queries

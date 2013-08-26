@@ -44,7 +44,7 @@ class Censorship extends SingletonFactory {
 	 */
 	protected function init() {
 		// get words which should be censored
-		$censoredWords = explode("\n", StringUtil::unifyNewlines(StringUtil::toLowerCase(CENSORED_WORDS)));
+		$censoredWords = explode("\n", StringUtil::unifyNewlines(mb_strtolower(CENSORED_WORDS)));
 		
 		// format censored words
 		$this->censoredWords = ArrayUtil::trim($censoredWords);
@@ -61,7 +61,7 @@ class Censorship extends SingletonFactory {
 		$this->matches = $this->words = array();
 		
 		// string to lower case
-		$text = StringUtil::toLowerCase($text);
+		$text = mb_strtolower($text);
 		
 		// ignore bbcode tags
 		$text = preg_replace('~\[/?[a-z]+[^\]]*\]~i', '', $text);
@@ -86,8 +86,8 @@ class Censorship extends SingletonFactory {
 					continue 2;
 				}
 				// check for asterisk matches ("*badword*" == "FooBadwordBar")
-				else if (StringUtil::indexOf($censoredWord, '*') !== false) {
-					$censoredWord = StringUtil::replace('\*', '.*', preg_quote($censoredWord));
+				else if (mb_strpos($censoredWord, '*') !== false) {
+					$censoredWord = str_replace('\*', '.*', preg_quote($censoredWord));
 					if (preg_match('!^'.$censoredWord.'$!', $word)) {
 						// store censored word
 						if (isset($this->matches[$word])) {
@@ -101,19 +101,19 @@ class Censorship extends SingletonFactory {
 					}
 				}
 				// check for partial matches ("~badword~" == "bad-word")
-				else if (StringUtil::indexOf($censoredWord, '~') !== false) {
-					$censoredWord = StringUtil::replace('~', '', $censoredWord);
-					if (($position = StringUtil::indexOf($censoredWord, $word)) !== false) {
+				else if (mb_strpos($censoredWord, '~') !== false) {
+					$censoredWord = str_replace('~', '', $censoredWord);
+					if (($position = mb_strpos($censoredWord, $word)) !== false) {
 						if ($position > 0) {
 							// look behind
-							if (!$this->lookBehind($i - 1, StringUtil::substring($censoredWord, 0, $position))) {
+							if (!$this->lookBehind($i - 1, mb_substr($censoredWord, 0, $position))) {
 								continue;
 							}
 						}
 						
-						if ($position + StringUtil::length($word) < StringUtil::length($censoredWord)) {
+						if ($position + mb_strlen($word) < mb_strlen($censoredWord)) {
 							// look ahead
-							if (($newIndex = $this->lookAhead($i + 1, StringUtil::substring($censoredWord, $position + StringUtil::length($word))))) {
+							if (($newIndex = $this->lookAhead($i + 1, mb_substr($censoredWord, $position + mb_strlen($word))))) {
 								$i = $newIndex;
 							}
 							else {
@@ -154,11 +154,11 @@ class Censorship extends SingletonFactory {
 	 */
 	protected function lookBehind($index, $search) {
 		if (isset($this->words[$index])) {
-			if (StringUtil::indexOf($this->words[$index], $search) === (StringUtil::length($this->words[$index]) - StringUtil::length($search))) {
+			if (mb_strpos($this->words[$index], $search) === (mb_strlen($this->words[$index]) - mb_strlen($search))) {
 				return true;
 			}
-			else if (StringUtil::indexOf($search, $this->words[$index]) === (StringUtil::length($search) - StringUtil::length($this->words[$index]))) {
-				return $this->lookBehind($index - 1, 0, (StringUtil::length($search) - StringUtil::length($this->words[$index])));
+			else if (mb_strpos($search, $this->words[$index]) === (mb_strlen($search) - mb_strlen($this->words[$index]))) {
+				return $this->lookBehind($index - 1, 0, (mb_strlen($search) - mb_strlen($this->words[$index])));
 			}
 		}
 		
@@ -174,11 +174,11 @@ class Censorship extends SingletonFactory {
 	 */
 	protected function lookAhead($index, $search) {
 		if (isset($this->words[$index])) {
-			if (StringUtil::indexOf($this->words[$index], $search) === 0) {
+			if (mb_strpos($this->words[$index], $search) === 0) {
 				return $index;
 			}
-			else if (StringUtil::indexOf($search, $this->words[$index]) === 0) {
-				return $this->lookAhead($index + 1, StringUtil::substring($search, StringUtil::length($this->words[$index])));
+			else if (mb_strpos($search, $this->words[$index]) === 0) {
+				return $this->lookAhead($index + 1, mb_substr($search, mb_strlen($this->words[$index])));
 			}
 		}
 		

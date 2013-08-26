@@ -497,7 +497,7 @@ class TemplateEngine extends SingletonFactory {
 	 * @return	string
 	 */
 	public function getPluginClassName($type, $tag) {
-		return $this->pluginNamespace.StringUtil::firstCharToUpperCase($tag).StringUtil::firstCharToUpperCase(StringUtil::toLowerCase($type)).'TemplatePlugin';
+		return $this->pluginNamespace.StringUtil::firstCharToUpperCase($tag).StringUtil::firstCharToUpperCase(mb_strtolower($type)).'TemplatePlugin';
 	}
 	
 	/**

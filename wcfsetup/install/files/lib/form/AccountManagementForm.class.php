@@ -190,7 +190,7 @@ class AccountManagementForm extends AbstractSecureForm {
 		
 		// user name
 		if (WCF::getSession()->getPermission('user.profile.canRename') && $this->username != WCF::getUser()->username) {
-			if (StringUtil::toLowerCase($this->username) != StringUtil::toLowerCase(WCF::getUser()->username)) {
+			if (mb_strtolower($this->username) != mb_strtolower(WCF::getUser()->username)) {
 				if (WCF::getUser()->lastUsernameChange + WCF::getSession()->getPermission('user.profile.renamePeriod') * 86400 > TIME_NOW) {
 					throw new UserInputException('username', 'alreadyRenamed');
 				}
@@ -235,7 +235,7 @@ class AccountManagementForm extends AbstractSecureForm {
 			}
 			
 			// checks if only letter case has changed
-			if (StringUtil::toLowerCase($this->email) != StringUtil::toLowerCase(WCF::getUser()->email)) {
+			if (mb_strtolower($this->email) != mb_strtolower(WCF::getUser()->email)) {
 				// check for valid email (one @ etc.)
 				if (!UserRegistrationUtil::isValidEmail($this->email)) {
 					throw new UserInputException('email', 'notValid');
@@ -248,7 +248,7 @@ class AccountManagementForm extends AbstractSecureForm {
 			}
 			
 			// checks confirm input
-			if (StringUtil::toLowerCase($this->email) != StringUtil::toLowerCase($this->confirmEmail)) {
+			if (mb_strtolower($this->email) != mb_strtolower($this->confirmEmail)) {
 				throw new UserInputException('confirmEmail', 'notEqual');
 			}
 		}
@@ -332,7 +332,7 @@ class AccountManagementForm extends AbstractSecureForm {
 		
 		// user name
 		if (WCF::getSession()->getPermission('user.profile.canRename') && $this->username != WCF::getUser()->username) {
-			if (StringUtil::toLowerCase($this->username) != StringUtil::toLowerCase(WCF::getUser()->username)) {
+			if (mb_strtolower($this->username) != mb_strtolower(WCF::getUser()->username)) {
 				$updateParameters['lastUsernameChange'] = TIME_NOW;
 				$updateParameters['oldUsername'] = $userEditor->username;
 			}
@@ -342,7 +342,7 @@ class AccountManagementForm extends AbstractSecureForm {
 		
 		// email
 		if (WCF::getSession()->getPermission('user.profile.canChangeEmail') && $this->email != WCF::getUser()->email && $this->email != WCF::getUser()->newEmail) {
-			if (REGISTER_ACTIVATION_METHOD == 0 || REGISTER_ACTIVATION_METHOD == 2 || StringUtil::toLowerCase($this->email) == StringUtil::toLowerCase(WCF::getUser()->email)) {
+			if (REGISTER_ACTIVATION_METHOD == 0 || REGISTER_ACTIVATION_METHOD == 2 || mb_strtolower($this->email) == mb_strtolower(WCF::getUser()->email)) {
 				// update email
 				$updateParameters['email'] = $this->email;
 				$success[] = 'wcf.user.changeEmail.success';

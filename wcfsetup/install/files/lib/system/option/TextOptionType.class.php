@@ -66,10 +66,10 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 	public function validate(Option $option, $newValue) {
 		$newValue = $this->getContent($option, $newValue);
 		
-		if ($option->minlength !== null && $option->minlength > StringUtil::length($newValue)) {
+		if ($option->minlength !== null && $option->minlength > mb_strlen($newValue)) {
 			throw new UserInputException($option->optionName, 'tooShort');
 		}
-		if ($option->maxlength !== null && $option->maxlength < StringUtil::length($newValue)) {
+		if ($option->maxlength !== null && $option->maxlength < mb_strlen($newValue)) {
 			throw new UserInputException($option->optionName, 'tooLong');
 		}
 	}

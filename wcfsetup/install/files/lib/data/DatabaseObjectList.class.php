@@ -115,8 +115,8 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		if (empty($this->className)) {
 			$className = get_called_class();
 			
-			if (StringUtil::substring($className, -4) == 'List') {
-				$this->className = StringUtil::substring($className, 0, -4);
+			if (mb_substr($className, -4) == 'List') {
+				$this->className = mb_substr($className, 0, -4);
 			}
 		}
 		
