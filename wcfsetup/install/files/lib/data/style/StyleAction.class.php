@@ -425,7 +425,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		// copy preview image
 		if ($this->styleEditor->image) {
 			// get extension
-			$fileExtension = StringUtil::substring($this->styleEditor->image, StringUtil::lastIndexOf($this->styleEditor->image, '.'));
+			$fileExtension = mb_substr($this->styleEditor->image, mb_strrpos($this->styleEditor->image, '.'));
 			
 			// copy existing preview image
 			if (@copy(WCF_DIR.'images/'.$this->styleEditor->image, WCF_DIR.'images/stylePreview-'.$newStyle->styleID.$fileExtension)) {

@@ -134,6 +134,6 @@ class PackageUpdateServer extends DatabaseObject {
 	 */
 	public function getHighlightedURL() {
 		$host = parse_url($this->serverURL, PHP_URL_HOST);
-		return StringUtil::replace($host, '<strong>'.$host.'</strong>', $this->serverURL);
+		return str_replace($host, '<strong>'.$host.'</strong>', $this->serverURL);
 	}
 }

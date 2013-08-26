@@ -37,8 +37,8 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * @return	string		final link
 	 */
 	protected static function insertPageNumber($link, $pageNo) {
-		$startPos = StringUtil::indexOf($link, '%d');
-		if ($startPos !== null) $link = StringUtil::substring($link, 0, $startPos) . $pageNo . StringUtil::substring($link, $startPos + 2);
+		$startPos = mb_strpos($link, '%d');
+		if ($startPos !== null) $link = mb_substr($link, 0, $startPos) . $pageNo . mb_substr($link, $startPos + 2);
 		return $link;
 	}
 	

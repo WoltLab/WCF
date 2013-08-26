@@ -223,7 +223,7 @@ class UserAddForm extends UserOptionListForm {
 		
 		// validate user title
 		try {
-			if (StringUtil::length($this->userTitle) > USER_TITLE_MAX_LENGTH) {
+			if (mb_strlen($this->userTitle) > USER_TITLE_MAX_LENGTH) {
 				throw new UserInputException('userTitle', 'tooLong');
 			}
 			if (!StringUtil::executeWordFilter($this->userTitle, USER_FORBIDDEN_TITLES)) {
@@ -335,7 +335,7 @@ class UserAddForm extends UserOptionListForm {
 		}
 		
 		// check confirm input
-		if (StringUtil::toLowerCase($email) != StringUtil::toLowerCase($confirmEmail)) {
+		if (mb_strtolower($email) != mb_strtolower($confirmEmail)) {
 			throw new UserInputException('confirmEmail', 'notEqual');
 		}
 	}

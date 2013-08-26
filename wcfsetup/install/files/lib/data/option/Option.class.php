@@ -86,7 +86,7 @@ class Option extends DatabaseObject {
 			foreach ($options as $item) {
 				if ($item{0} == '!') {
 					if (!empty($disableOptions)) $disableOptions .= ',';
-					$disableOptions .= "'".StringUtil::substring($item, 1)."' ";
+					$disableOptions .= "'".mb_substr($item, 1)."' ";
 				}
 				else {
 					if (!empty($enableOptions)) $enableOptions .= ',';
@@ -111,7 +111,7 @@ class Option extends DatabaseObject {
 		$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($this->selectOptions)));
 		foreach ($options as $option) {
 			$key = $value = $option;
-			if (StringUtil::indexOf($option, ':') !== false) {
+			if (mb_strpos($option, ':') !== false) {
 				$optionData = explode(':', $option);
 				$key = array_shift($optionData);
 				$value = implode(':', $optionData);
@@ -134,7 +134,7 @@ class Option extends DatabaseObject {
 			$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($this->enableOptions)));
 			$key = -1;
 			foreach ($options as $option) {
-				if (StringUtil::indexOf($option, ':') !== false) {
+				if (mb_strpos($option, ':') !== false) {
 					$optionData = explode(':', $option);
 					$key = array_shift($optionData);
 					$value = implode(':', $optionData);

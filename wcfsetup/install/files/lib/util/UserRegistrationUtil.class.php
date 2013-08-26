@@ -26,7 +26,7 @@ final class UserRegistrationUtil {
 	public static function isValidUsername($name) {
 		if (!UserUtil::isValidUsername($name)) return false;
 		
-		$length = StringUtil::length($name);
+		$length = mb_strlen($name);
 		if ($length < REGISTER_USERNAME_MIN_LENGTH || $length > REGISTER_USERNAME_MAX_LENGTH) return false;
 		
 		if (!self::checkForbiddenUsernames($name)) return false;
@@ -74,7 +74,7 @@ final class UserRegistrationUtil {
 	 */
 	public static function isSecurePassword($password) {
 		if (REGISTER_ENABLE_PASSWORD_SECURITY_CHECK) {
-			if (StringUtil::length($password) < REGISTER_PASSWORD_MIN_LENGTH) return false;
+			if (mb_strlen($password) < REGISTER_PASSWORD_MIN_LENGTH) return false;
 			
 			if (REGISTER_PASSWORD_MUST_CONTAIN_DIGIT && !preg_match('![0-9]+!', $password)) return false;
 			if (REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE && !preg_match('![a-z]+!', $password)) return false;

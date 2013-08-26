@@ -81,8 +81,8 @@ class UploadFile {
 	 * @return	string
 	 */
 	public function getFileExtension() {
-		if (($position = StringUtil::lastIndexOf($this->getFilename(), '.')) !== false) {
-			return StringUtil::toLowerCase(StringUtil::substring($this->getFilename(), $position + 1));
+		if (($position = mb_strrpos($this->getFilename(), '.')) !== false) {
+			return mb_strtolower(mb_substr($this->getFilename(), $position + 1));
 		}
 		
 		return '';
