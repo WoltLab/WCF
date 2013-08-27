@@ -156,7 +156,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		$variables = array();
 		while ($row = $statement->fetchArray()) {
 			$variableName = $row['variableName'];
-				
+			
 			// ignore variables with identical value
 			if (isset($this->parameters['variables'][$variableName])) {
 				if ($this->parameters['variables'][$variableName] == $row['defaultValue']) {
@@ -182,7 +182,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 						(styleID, variableID, variableValue)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-				
+			
 			WCF::getDB()->beginTransaction();
 			foreach ($variables as $variableID => $variableValue) {
 				$statement->execute(array(
