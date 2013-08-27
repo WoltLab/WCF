@@ -135,6 +135,13 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::setTransparentColor()
+	 */
+	public function setTransparentColor($red, $green, $blue) {
+		$this->adapter->setTransparentColor($red, $green, $blue);
+	}
+	
+	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::writeImage()
 	 */
 	public function writeImage($image, $filename = null) {

@@ -205,6 +205,16 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @see wcf\system\image\adapter\IImageAdapter::setTransparentColor()
+	 */
+	public function setTransparentColor($red, $green, $blue) {
+		if ($this->type == IMAGETYPE_PNG) {
+			$color = imagecolorallocate($this->image, $red, $green, $blue);
+			imageColorTransparent($this->image, $color);
+		}
+	}
+	
+	/**
 	 * @see	wcf\system\image\adapter\IImageAdapter::writeImage()
 	 */
 	public function writeImage($image, $filename) {
