@@ -167,7 +167,9 @@ class StyleAddForm extends AbstractForm {
 		I18nHandler::getInstance()->register('styleDescription');
 		
 		$this->setVariables();
-		$this->readStyleVariables();
+		if (empty($_POST)) {
+			$this->readStyleVariables();
+		}
 		
 		$templateGroupList = new TemplateGroupList();
 		$templateGroupList->sqlOrderBy = "template_group.templateGroupName ASC";
@@ -331,6 +333,9 @@ class StyleAddForm extends AbstractForm {
 						'error' => 'unknown',
 						'text' => $matches[1]
 					);
+				}
+				else {
+					$this->variables[$matches[1]] = $matches[2];
 				}
 			}
 			else {
