@@ -115,9 +115,8 @@ class LinkHandler extends SingletonFactory {
 				$parameters['id'] = $parameters['object']->getObjectID();
 				$parameters['title'] = $parameters['object']->getTitle();
 			}
-			
-			unset($parameters['object']);
 		}
+		unset($parameters['object']);
 		
 		if (isset($parameters['title'])) {
 			// remove illegal characters
