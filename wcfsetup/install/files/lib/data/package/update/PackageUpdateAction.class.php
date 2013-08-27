@@ -42,7 +42,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validateSearch() {
 		WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
-	
+		
 		$this->readString('package', true);
 		$this->readString('packageDescription', true);
 		$this->readString('packageName', true);
@@ -298,11 +298,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validatePrepareUpdate() {
 		WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
-	
+		
 		if (!isset($this->parameters['packages']) || !is_array($this->parameters['packages'])) {
 			throw new UserInputException('packages');
 		}
-	
+		
 		// validate packages for their existance
 		$availableUpdates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 		foreach ($this->parameters['packages'] as $packageName => $versionNumber) {
@@ -358,7 +358,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			if (!is_array($this->parameters['authData'])) {
 				throw new UserInputException('authData');
 			}
-				
+			
 			$this->readInteger('packageUpdateServerID', false, 'authData');
 			$this->readString('password', false, 'authData');
 			$this->readString('username', false, 'authData');
@@ -414,7 +414,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 					'action' => $package['action']
 				));
 				$parentQueueID = $queue->queueID;
-		
+				
 				if ($queueID === null) {
 					$queueID = $queue->queueID;
 				}
