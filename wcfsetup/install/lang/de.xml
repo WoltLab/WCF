@@ -356,6 +356,7 @@
 		<item name="wcf.acp.group.option.admin.system.canImportData"><![CDATA[Kann Daten importieren]]></item>
 		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[Kann Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.group.description"><![CDATA[Beschreibung der Benutzergruppe]]></item>
+		<item name="wcf.acp.group.button.choose"><![CDATA[Benutzergruppe wählen]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -1393,6 +1394,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.category.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.category.title"><![CDATA[Titel]]></item>
+		<item name="wcf.category.button.choose"><![CDATA[Kategorien wählen]]></item>
 	</category>
 	
 	<category name="wcf.clipboard">

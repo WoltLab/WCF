@@ -28,6 +28,19 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
+			{if $action == 'edit' && $availableUserGroups|count > 1}
+				<li class="dropdown">
+					<a class="button dropdownToggle"><span class="icon icon16 icon-sort"></span> <span>{lang}wcf.acp.group.button.choose{/lang}</span></a>
+					<div class="dropdownMenu">
+						<ul class="scrollableDropdownMenu">
+							{foreach from=$availableUserGroups item='availableUserGroup'}
+								<li{if $availableUserGroup->groupID == $groupID} class="active"{/if}><a href="{link controller='UserGroupEdit' id=$availableUserGroup->groupID}{/link}">{lang}{$availableUserGroup->groupName}{/lang}</a></li>
+							{/foreach}
+						</ul>
+					</div>
+				</li>
+			{/if}
+			
 			<li><a href="{link controller='UserGroupList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}

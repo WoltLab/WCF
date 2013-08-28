@@ -109,7 +109,8 @@ class UserGroupEditForm extends UserGroupAddForm {
 		WCF::getTPL()->assign(array(
 			'groupID' => $this->group->groupID,
 			'group' => $this->group,
-			'action' => 'edit'
+			'action' => 'edit',
+			'availableUserGroups' => UserGroup::getAccessibleGroups()
 		));
 		
 		// add warning when the initiator is in the group

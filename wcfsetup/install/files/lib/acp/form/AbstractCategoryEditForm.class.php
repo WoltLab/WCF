@@ -44,9 +44,11 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
+		$availableCategories = new CategoryNodeTree($this->objectType->objectType, 0, true);
 		WCF::getTPL()->assign(array(
 			'action' => 'edit',
-			'category' => $this->category
+			'category' => $this->category,
+			'availableCategories' => $availableCategories->getIterator()
 		));
 	}
 	
