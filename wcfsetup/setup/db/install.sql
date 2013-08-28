@@ -767,7 +767,7 @@ CREATE TABLE wcf1_search_index (
 	time INT(10) NOT NULL DEFAULT 0,
 	userID INT(10),
 	username VARCHAR(255) NOT NULL DEFAULT '',
-	languageID INT(10),
+	languageID INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY (objectTypeID, objectID, languageID),
 	FULLTEXT INDEX fulltextIndex (subject, message, metaData),
 	FULLTEXT INDEX fulltextIndexSubjectOnly (subject),
