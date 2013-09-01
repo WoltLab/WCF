@@ -135,7 +135,7 @@ class AttachmentPage extends AbstractPage {
 		
 		// add etag for non-thumbnail
 		if (!$this->thumbnail && !$this->tiny) {
-			$this->fileReader->addHeader('ETag', '"'.$this->attachmentID."'");
+			$this->fileReader->addHeader('ETag', '"'.$this->attachmentID.'"');
 		}
 	}
 	

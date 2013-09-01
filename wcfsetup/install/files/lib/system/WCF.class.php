@@ -539,7 +539,7 @@ class WCF {
 		self::getTPL()->registerPrefilter(array('event', 'hascontent', 'lang'));
 		self::getTPL()->assign(array(
 			'__wcf' => $this,
-			'__wcfVersion' => StringUtil::substring(sha1(WCF_VERSION), 0, 8)
+			'__wcfVersion' => mb_substr(sha1(WCF_VERSION), 0, 8)
 		));
 	}
 	
@@ -722,7 +722,7 @@ class WCF {
 		$path = FileUtil::removeLeadingSlash($path);
 		$baseHref = self::getTPL()->get('baseHref');
 		
-		if (!empty($path) && StringUtil::indexOf($path, '?') !== 0) {
+		if (!empty($path) && mb_strpos($path, '?') !== 0) {
 			$baseHref .= 'index.php/';
 		}
 		

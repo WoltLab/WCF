@@ -115,13 +115,16 @@ class LinkHandler extends SingletonFactory {
 				$parameters['id'] = $parameters['object']->getObjectID();
 				$parameters['title'] = $parameters['object']->getTitle();
 			}
-			
-			unset($parameters['object']);
 		}
+		unset($parameters['object']);
 		
 		if (isset($parameters['title'])) {
 			// remove illegal characters
 			$parameters['title'] = trim($this->titleRegex->replace($parameters['title'], '-'), '-');
+			
+			// trim to 80 characters
+			$parameters['title'] = mb_substr($parameters['title'], 0, 80);
+			
 			// encode title
 			if ($encodeTitle) $parameters['title'] = rawurlencode($parameters['title']);
 		}
@@ -134,7 +137,7 @@ class LinkHandler extends SingletonFactory {
 		
 		// encode certain characters
 		if (!empty($url)) {
-			$url = StringUtil::replace(array('[', ']'), array('%5B', '%5D'), $url);
+			$url = str_replace(array('[', ']'), array('%5B', '%5D'), $url);
 		}
 		
 		$url = $routeURL . $url;

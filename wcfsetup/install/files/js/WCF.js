@@ -1100,7 +1100,7 @@ WCF.Clipboard = {
 	 * list of clipboard containers
 	 * @var	jQuery
 	 */
-	_container: null,
+	_containers: null,
 	
 	/**
 	 * container meta data
@@ -1206,6 +1206,10 @@ WCF.Clipboard = {
 	 * Reloads the list of marked items.
 	 */
 	reload: function() {
+		if (this._containers === null) {
+			return;
+		}
+		
 		this._loadMarkedItems();
 	},
 	
@@ -5737,7 +5741,7 @@ WCF.Search.Base = Class.extend({
 	},
 	
 	/**
-	 * Adds an excluded search value.
+	 * Removes an excluded search value.
 	 * 
 	 * @param	string		value
 	 */
@@ -6525,15 +6529,17 @@ WCF.InlineEditor = Class.extend({
 			return;
 		}
 		
-		this._updateState();
+		this._updateState(data);
 		
 		this._updateData = [ ];
 	},
 	
 	/**
 	 * Update element states based upon update data.
+	 * 
+	 * @param	object		data
 	 */
-	_updateState: function() { },
+	_updateState: function(data) { },
 	
 	/**
 	 * Handles clicks within dropdown.
@@ -8817,6 +8823,191 @@ $.widget('ui.wcfDialog', {
 		}
 		
 		return $contentDimensions;
+	}
+});
+
+/**
+ * Provides a slideshow for lists.
+ */
+$.widget('ui.wcfSlideshow', {
+	/**
+	 * button list object
+	 * @var	jQuery
+	 */
+	_buttonList: null,
+	
+	/**
+	 * number of items
+	 * @var	integer
+	 */
+	_count: 0,
+	
+	/**
+	 * item index
+	 * @var	integer
+	 */
+	_index: 0,
+	
+	/**
+	 * item list object
+	 * @var	jQuery
+	 */
+	_itemList: null,
+	
+	/**
+	 * list of items
+	 * @var	jQuery
+	 */
+	_items: null,
+	
+	/**
+	 * timer object
+	 * @var	WCF.PeriodicalExecuter
+	 */
+	_timer: null,
+	
+	/**
+	 * list item width
+	 * @var	integer
+	 */
+	_width: 0,
+	
+	/**
+	 * list of options
+	 * @var	object
+	 */
+	options: {
+		/* enables automatic cycling of items */
+		cycle: true,
+		/* cycle interval in seconds */
+		cycleInterval: 5,
+		/* gap between items in pixels */
+		itemGap: 50,
+	},
+	
+	/**
+	 * Creates a new instance of ui.wcfSlideshow.
+	 */
+	_create: function() {
+		this._itemList = this.element.children('ul');
+		this._items = this._itemList.children('li');
+		this._count = this._items.length;
+		this._index = 0;
+		
+		this._initSlideshow();
+	},
+	
+	/**
+	 * Initializes the slideshow.
+	 */
+	_initSlideshow: function() {
+		// calculate item dimensions
+		var $itemHeight = $(this._items.get(0)).outerHeight();
+		this._items.addClass('slideshowItem');
+		this._width = this.element.css('height', $itemHeight).innerWidth();
+		this._itemList.addClass('slideshowItemList').css('left', 0);
+		
+		this._items.each($.proxy(function(index, item) {
+			$(item).show().css({
+				height: $itemHeight,
+				left: ((this._width + this.options.itemGap) * index),
+				width: this._width
+			});
+		}, this));
+		
+		this.element.css({
+			height: $itemHeight,
+			width: this._width
+		}).hover($.proxy(this._hoverIn, this), $.proxy(this._hoverOut, this));
+		
+		// create toggle buttons
+		this._buttonList = $('<ul class="slideshowButtonList" />').appendTo(this.element);
+		for (var $i = 0; $i < this._count; $i++) {
+			var $link = $('<li><a><span class="icon icon16 icon-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
+			if ($i == 0) {
+				$link.find('.icon').addClass('active');
+			}
+		}
+		
+		this._resetTimer();
+		
+		$(window).resize($.proxy(this._resize, this));
+	},
+	
+	/**
+	 * Handles browser resizing
+	 */
+	_resize: function() {
+		this._width = this.element.css('width', 'auto').innerWidth();
+		this._items.each($.proxy(function(index, item) {
+			$(item).css({
+				left: ((this._width + this.options.itemGap) * index),
+				width: this._width
+			});
+		}, this));
+		
+		this._index--;
+		this.moveTo(null);
+	},
+	
+	/**
+	 * Disables cycling while hovering.
+	 */
+	_hoverIn: function() {
+		if (this._timer !== null) {
+			this._timer.stop();
+		}
+	},
+	
+	/**
+	 * Enables cycling after mouse out.
+	 */
+	_hoverOut: function() {
+		this._resetTimer();
+	},
+	
+	/**
+	 * Resets cycle timer.
+	 */
+	_resetTimer: function() {
+		if (!this.options.cycle) {
+			return;
+		}
+		
+		if (this._timer !== null) {
+			this._timer.stop();
+		}
+		
+		var self = this;
+		this._timer = new WCF.PeriodicalExecuter(function() {
+			self.moveTo(null);
+		}, this.options.cycleInterval * 1000);
+	},
+	
+	/**
+	 * Handles clicks on the select buttons.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		this.moveTo($(event.currentTarget).data('index'));
+		
+		this._resetTimer();
+	},
+	
+	/**
+	 * Moves to a specified item index, NULL will move to the next item in list.
+	 * 
+	 * @param	integer		index
+	 */
+	moveTo: function(index) {
+		this._index = (index === null) ? this._index + 1 : index;
+		if (this._index == this._count) {
+			this._index = 0;
+		}
+		
+		$(this._buttonList.find('.icon').removeClass('active').get(this._index)).addClass('active');
+		this._itemList.css('left', this._index * (this._width + this.options.itemGap) * -1);
 	}
 });
 

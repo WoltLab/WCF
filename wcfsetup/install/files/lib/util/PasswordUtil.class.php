@@ -37,7 +37,10 @@ final class PasswordUtil {
 		'wbb2',		// WoltLab Burning Board 2.x
 		'wcf1',		// WoltLab Community Framework 1.x
 		'wcf2',		// WoltLab Community Framework 2.x
-		'xf1'		// XenForo 1.x
+		'xf1',		// XenForo 1.x
+		'joomla1',	// Joomla 1.x
+		'joomla2',	// Joomla 2.x
+		'joomla3',	// Joomla 3.x
 	);
 	
 	/**
@@ -173,7 +176,7 @@ final class PasswordUtil {
 		$salt = '';
 		
 		for ($i = 0, $maxIndex = (strlen(self::$blowfishCharacters) - 1); $i < 22; $i++) {
-			$salt .= self::$blowfishCharacters[mt_rand(0, $maxIndex)];
+			$salt .= self::$blowfishCharacters[self::secureRandomNumber(0, $maxIndex)];
 		}
 		
 		return self::getSalt($salt);
@@ -197,7 +200,7 @@ final class PasswordUtil {
 		$type = 0;
 		for ($i = 0; $i < $length; $i++) {
 			$type = ($i % 4 == 0) ? 0 : ($type + 1);
-			$password .= substr($availableCharacters[$type], MathUtil::getRandomValue(0, strlen($availableCharacters[$type]) - 1), 1);
+			$password .= substr($availableCharacters[$type], self::secureRandomNumber(0, strlen($availableCharacters[$type]) - 1), 1);
 		}
 		
 		return str_shuffle($password);
@@ -226,13 +229,46 @@ final class PasswordUtil {
 	}
 	
 	/**
+	 * Generates secure random numbers using OpenSSL.
+	 * 
+	 * @see		http://de1.php.net/manual/en/function.openssl-random-pseudo-bytes.php#104322
+	 * @param	integer		$min
+	 * @param	integer		$max
+	 * @return	integer
+	 */
+	public static function secureRandomNumber($min, $max) {
+		$range = $max - $min;
+		if ($range == 0) {
+			// not random
+			throw new SystemException("Cannot generate a secure random number, min and max are the same");
+		}
+		
+		// fallback to mt_rand() if OpenSSL is not available
+		if (!function_exists('openssl_random_pseudo_bytes')) {
+			return mt_rand($min, $max);
+		}
+		
+		$log = log($range, 2);
+		$bytes = (int) ($log / 8) + 1; // length in bytes
+		$bits = (int) $log + 1; // length in bits
+		$filter = (int) (1 << $bits) - 1; // set all lower bits to 1
+		do {
+			$rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes, $s)));
+			$rnd = $rnd & $filter; // discard irrelevant bits
+		}
+		while ($rnd >= $range);
+		
+		return $min + $rnd;
+	}
+	
+	/**
 	 * Returns a blowfish salt, e.g. $2a$07$usesomesillystringforsalt$
 	 * 
 	 * @param	string		$salt
 	 * @return	string
 	 */
 	protected static function getSalt($salt) {
-		$salt = StringUtil::substring($salt, 0, 22);
+		$salt = mb_substr($salt, 0, 22);
 		
 		return '$' . self::BCRYPT_TYPE . '$' . self::BCRYPT_COST . '$' . $salt;
 	}
@@ -286,7 +322,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function phpbb3($username, $password, $salt, $dbHash) {
-		if (StringUtil::length($dbHash) !== 34) {
+		if (mb_strlen($dbHash) !== 34) {
 			return self::secureCompare(md5($password), $dbHash);
 		}
 		
@@ -373,7 +409,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function smf1($username, $password, $salt, $dbHash) {
-		return self::secureCompare($dbHash, sha1(StringUtil::toLowerCase($username) . $password));
+		return self::secureCompare($dbHash, sha1(mb_strtolower($username) . $password));
 	}
 	
 	/**
@@ -492,6 +528,49 @@ final class PasswordUtil {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Validates the password hash for Joomla 1.x (kunea)
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function joomla1($username, $password, $salt, $dbHash) {
+		if (self::secureCompare($dbHash, md5($password . $salt))) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Validates the password hash for Joomla 2.x (kunea)
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function joomla2($username, $password, $salt, $dbHash) {
+		return self::joomla1($username, $password, $salt, $dbHash);
+	}
+	
+	/**
+	 * Validates the password hash for Joomla 3.x (kunea)
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function joomla3($username, $password, $salt, $dbHash) {
+		return self::joomla1($username, $password, $salt, $dbHash);
 	}
 	
 	private function __construct() { }

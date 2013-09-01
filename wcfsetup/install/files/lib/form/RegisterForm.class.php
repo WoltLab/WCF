@@ -333,11 +333,11 @@ class RegisterForm extends UserAddForm {
 						
 						WCF::getSession()->unregister('__facebookData');
 						
-						if ($facebookData['email'] == $this->email) {
+						if (isset($facebookData['email']) && $facebookData['email'] == $this->email) {
 							$registerVia3rdParty = true;
 						}
 						
-						$saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
+						if (isset($facebookData['gender'])) $saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
 						
 						if (isset($facebookData['birthday'])) {
 							list($month, $day, $year) = explode('/', $facebookData['birthday']);

@@ -167,7 +167,9 @@ class StyleAddForm extends AbstractForm {
 		I18nHandler::getInstance()->register('styleDescription');
 		
 		$this->setVariables();
-		$this->readStyleVariables();
+		if (empty($_POST)) {
+			$this->readStyleVariables();
+		}
 		
 		$templateGroupList = new TemplateGroupList();
 		$templateGroupList->sqlOrderBy = "template_group.templateGroupName ASC";
@@ -332,6 +334,9 @@ class StyleAddForm extends AbstractForm {
 						'text' => $matches[1]
 					);
 				}
+				else {
+					$this->variables[$matches[1]] = $matches[2];
+				}
 			}
 			else {
 				// not valid
@@ -425,7 +430,8 @@ class StyleAddForm extends AbstractForm {
 		$this->globals = array(
 			'wcfBaseFontSize',
 			'wcfLayoutFixedWidth',
-			'wcfLayoutFluidGap'
+			'wcfLayoutMinWidth',
+			'wcfLayoutMaxWidth'
 		);
 		
 		// set specialized variables

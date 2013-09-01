@@ -230,7 +230,7 @@ abstract class MessageForm extends RecaptchaForm {
 			throw new UserInputException('subject');
 		}
 		
-		if (StringUtil::length($this->subject) > 255) {
+		if (mb_strlen($this->subject) > 255) {
 			throw new UserInputException('subject', 'tooLong');
 		}
 		
@@ -253,7 +253,7 @@ abstract class MessageForm extends RecaptchaForm {
 		}
 		
 		// check text length
-		if ($this->maxTextLength != 0 && StringUtil::length($this->text) > $this->maxTextLength) {
+		if ($this->maxTextLength != 0 && mb_strlen($this->text) > $this->maxTextLength) {
 			throw new UserInputException('text', 'tooLong');
 		}
 		

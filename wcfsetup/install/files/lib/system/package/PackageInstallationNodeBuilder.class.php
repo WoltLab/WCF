@@ -669,7 +669,7 @@ class PackageInstallationNodeBuilder {
 	 * @return	string
 	 */
 	protected function getToken() {
-		return StringUtil::substring(StringUtil::getRandomID(), 0, 8);
+		return mb_substr(StringUtil::getRandomID(), 0, 8);
 	}
 	
 	/**

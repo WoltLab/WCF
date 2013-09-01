@@ -21,7 +21,7 @@ final class UserUtil {
 	 */
 	public static function isValidUsername($name) {
 		// minimum length is 3 characters, maximum length is 255 characters
-		if (StringUtil::length($name) < 3 || StringUtil::length($name) > 255) {
+		if (mb_strlen($name) < 3 || mb_strlen($name) > 255) {
 			return false;
 		}
 		
@@ -32,7 +32,7 @@ final class UserUtil {
 		// check long words
 		$words = preg_split('!\s+!', $name, -1, PREG_SPLIT_NO_EMPTY);
 		foreach ($words as $word) {
-			if (StringUtil::length($word) > 20) {
+			if (mb_strlen($word) > 20) {
 				return false;
 			}
 		}
@@ -231,7 +231,7 @@ final class UserUtil {
 			$REQUEST_URI = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $REQUEST_URI);
 		}
 		
-		return StringUtil::substring(FileUtil::unifyDirSeparator($REQUEST_URI), 0, 255);
+		return mb_substr(FileUtil::unifyDirSeparator($REQUEST_URI), 0, 255);
 	}
 	
 	private function __construct() { }

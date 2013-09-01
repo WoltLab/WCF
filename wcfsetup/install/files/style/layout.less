@@ -1,16 +1,21 @@
 /* ### layout globals ### */
 .layoutFluid {
-	padding: 0 @wcfLayoutFluidGap;
+	margin-left: auto;
+	margin-right: auto;
+	min-width: @wcfLayoutMinWidth;
+	max-width: @wcfLayoutMaxWidth;
 }
 
 @media only screen and (max-width: 800px) {
 	.layoutFluid {
-		padding: 0;
+		min-width: 0;
+		max-width: none;
 	}
 }
 
 .layoutFixed {
-	margin: 0 auto;
+	margin-left: auto;
+	margin-right: auto;
 	width: @wcfLayoutFixedWidth;
 }
 
@@ -63,8 +68,6 @@
 		position: relative;
 		
 		> ul.userPanelItems {
-			/*.clearfix();*/
-			
 			> li {
 				float: left;
 				
@@ -163,10 +166,6 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 			}
-		}
-		
-		&.layoutFluid > .searchBar {
-			right: @wcfLayoutFluidGap;
 		}
 	}
 }
@@ -589,8 +588,16 @@
 
 /* ### content ### */
 #main {
+	background-color: @wcfContentBackgroundColor;
+	border-right: 1px solid transparent; /* workaround for strange display: table issues in webkit */
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
 	z-index: 110;
 	
+	&.sidebarOrientationRight {
+		background-color: @wcfSidebarBackgroundColor;
+	}
+
 	> div {
 		display: table;
 		table-layout: fixed;
@@ -684,6 +691,7 @@
 @media only screen and (max-width: 800px) {
 	/* hide sidebar */
 	#main {
+		border-right-width: 0;
 		position: relative;
 		margin-top: 7px;
 		
@@ -1407,44 +1415,49 @@
 }
 
 /* sub tabs */
-.tabMenuContainer > .menu {
-	border-bottom: 1px solid @wcfContainerBorderColor;
-	margin: -@wcfGapMedium -@wcfGapLarge @wcfGapMedium -@wcfGapLarge; /* reverse paddings from .containerPadding */
-	padding: @wcfGapTiny @wcfGapSmall;
+.tabMenuContainer {
+	&.containerPadding > .menu {
+		margin: -@wcfGapMedium -@wcfGapLarge @wcfGapMedium -@wcfGapLarge; /* reverse paddings from .containerPadding */
+	}
 	
-	.linearGradient(@wcfContainerBackgroundColor, @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor);
-	
-	ul{
-		display: inline-block;
+	> .menu {
+		border-bottom: 1px solid @wcfContainerBorderColor;
+		padding: @wcfGapTiny @wcfGapSmall;
 		
-		li {
+		.linearGradient(@wcfContainerBackgroundColor, @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor);
+		
+		ul{
 			display: inline-block;
-			outline: 0;
 			
-			&.ui-state-active a,
-			&.ui-state-active a:hover {
-				background-color: @wcfButtonPrimaryBackgroundColor;
-				border-color: @wcfButtonPrimaryBorderColor;
-				color: @wcfButtonPrimaryColor;
-				cursor: default;
-			}
-			
-			a {
-				background-color: @wcfContainerBackgroundColor;
-				border: 1px solid @wcfContainerBorderColor;
-				border-radius: @wcfButtonBorderRadius;
-				color: @wcfButtonColor;
-				display: block;
-				font-size: @wcfSmallFontSize;
-				margin: @wcfGapTiny 0;
+			li {
+				display: inline-block;
 				outline: 0;
-				padding: @wcfGapTiny @wcfGapSmall;
 				
-				&:hover {
-					background-color: @wcfButtonHoverBackgroundColor;
-					border-color: @wcfButtonHoverBorderColor;
-					color: @wcfButtonHoverColor;
-					text-decoration: none;
+				&.ui-state-active a,
+				&.ui-state-active a:hover {
+					background-color: @wcfButtonPrimaryBackgroundColor;
+					border-color: @wcfButtonPrimaryBorderColor;
+					color: @wcfButtonPrimaryColor;
+					cursor: default;
+				}
+				
+				a {
+					background-color: @wcfContainerBackgroundColor;
+					border: 1px solid @wcfContainerBorderColor;
+					border-radius: @wcfButtonBorderRadius;
+					color: @wcfButtonColor;
+					display: block;
+					font-size: @wcfSmallFontSize;
+					margin: @wcfGapTiny 0;
+					outline: 0;
+					padding: @wcfGapTiny @wcfGapSmall;
+					
+					&:hover {
+						background-color: @wcfButtonHoverBackgroundColor;
+						border-color: @wcfButtonHoverBorderColor;
+						color: @wcfButtonHoverColor;
+						text-decoration: none;
+					}
 				}
 			}
 		}

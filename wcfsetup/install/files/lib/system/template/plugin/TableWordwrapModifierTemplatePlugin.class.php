@@ -32,14 +32,14 @@ class TableWordwrapModifierTemplatePlugin implements IModifierTemplatePlugin {
 		foreach ($substrings as $substring) {
 			if (!empty($result)) $result .= ' ';
 			
-			$length = StringUtil::length($substring);
+			$length = mb_strlen($substring);
 			if ($length > $width) {
 				$j = ceil($length / $width);
 		
 				for ($i = 0; $i < $j; $i++) {
 					if ($i) $result .= $break;
-					if ($width * ($i + 1) > $length) $result .= StringUtil::substring($substring, $width * $i);
-					else $result .= StringUtil::substring($substring, $width * $i, $width);
+					if ($width * ($i + 1) > $length) $result .= mb_substr($substring, $width * $i);
+					else $result .= mb_substr($substring, $width * $i, $width);
 				}
 			}
 			else {

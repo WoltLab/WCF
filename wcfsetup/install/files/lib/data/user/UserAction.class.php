@@ -365,7 +365,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			foreach ($accessibleGroups as $group) {
 				$groupName = $group->getName();
 				if (!in_array($groupName, $excludedSearchValues)) {
-					$pos = StringUtil::indexOfIgnoreCase($groupName, $searchString);
+					$pos = mb_strripos($groupName, $searchString);
 					if ($pos !== false && $pos == 0) {
 						$list[] = array(
 							'label' => $groupName,

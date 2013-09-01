@@ -35,7 +35,7 @@ abstract class VersionableDatabaseObject extends DatabaseObject {
 	 * @return	string
 	 */
 	public static function getDatabaseVersionTableIndexName() {
-		return 'version'.ucfirst(static::getDatabaseIndexTableName());
+		return 'versionID';
 	}
 	
 	/**

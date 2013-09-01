@@ -151,7 +151,8 @@
 		
 		&:hover:not(.dropdownDivider):not(.dropdownList):not(.dropdownText),
 		&.dropdownList > li:hover:not(.dropdownDivider),
-		&.dropdownNavigationItem {
+		&.dropdownNavigationItem,
+		&.active {
 			background-color: @wcfDropdownHoverBackgroundColor;
 		}
 		
@@ -224,6 +225,11 @@
 				white-space: normal;
 			}
 		}
+	}
+	
+	.scrollableDropdownMenu {
+		max-height: 300px;
+		overflow: auto;
 	}
 }
 

@@ -82,6 +82,30 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::isVisible()
 	 */
 	public function isVisible() {
+		if ($this->options) {
+			$hasEnabledOption = false;
+			$options = explode(',', strtoupper($this->options));
+			foreach ($options as $option) {
+				if (defined($option) && constant($option)) {
+					$hasEnabledOption = true;
+					break;
+				}
+			}
+			if (!$hasEnabledOption) return false;
+		}
+		
+		$hasPermission = true;
+		if ($this->permissions) {
+			$hasPermission = false;
+			$permissions = explode(',', $this->permissions);
+			foreach ($permissions as $permission) {
+				if (WCF::getSession()->getPermission($permission)) {
+					$hasPermission = true;
+				break;
+				}
+			}
+		}
+		if (!$hasPermission) return false;
 		return true;
 	}
 	

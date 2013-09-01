@@ -32,6 +32,19 @@
 		<nav>
 			<ul>
 				{content}
+					{if $action == 'edit' && $availableCategories->hasChildren()}
+						<li class="dropdown">
+							<a class="button dropdownToggle"><span class="icon icon16 icon-sort"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('button.choose')}</span></a>
+							<div class="dropdownMenu">
+								<ul class="scrollableDropdownMenu">
+									{foreach from=$availableCategories item='availableCategory'}
+										<li{if $availableCategory->categoryID == $category->categoryID} class="active"{/if}><a href="{link controller=$editController application=$objectType->getProcessor()->getApplication() object=$availableCategory}{/link}">{section name=i loop=$availableCategories->getDepth()}&nbsp;&nbsp;&nbsp;&nbsp;{/section}{$availableCategory->getTitle()}</a></li>
+									{/foreach}
+								</ul>
+							</div>
+						</li>
+					{/if}
+					
 					{if $objectType->getProcessor()->canDeleteCategory() || $objectType->getProcessor()->canEditCategory()}
 						<li><a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a></li>
 					{/if}
