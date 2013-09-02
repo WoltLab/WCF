@@ -1754,7 +1754,15 @@ WCF.LoadingOverlayHandler = {
 	 */
 	show: function() {
 		if (this._loadingOverlay === null) { // create loading overlay on first run
-			this._loadingOverlay = $('<div class="spinner"><span class="icon icon48 icon-spinner" /> <span>' + WCF.Language.get('wcf.global.loading') + '</span></div>').hide().appendTo($('body'));
+			this._loadingOverlay = $('<div class="spinner"><span class="icon icon48 icon-spinner" /> <span>' + WCF.Language.get('wcf.global.loading') + '</span></div>').appendTo($('body'));
+			
+			// fix position
+			var $width = this._loadingOverlay.outerWidth();
+			if ($width < 70) $width = 70;
+			this._loadingOverlay.css({
+				marginLeft: Math.ceil(-1 * $width / 2), 
+				width: $width
+			}).hide();
 		}
 		
 		this._activeRequests++;
