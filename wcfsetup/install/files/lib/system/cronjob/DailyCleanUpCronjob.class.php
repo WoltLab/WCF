@@ -126,9 +126,12 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		));
 		
 		// clean up error logs
-		foreach (glob(WCF_DIR.'log/*.txt') as $filename) {
-			if (filectime($filename) < TIME_NOW - 86400 * 14) {
-				@unlink($filename);
+		$files = @glob(WCF_DIR.'log/*.txt');
+		if (is_array($files)) {
+			foreach ($files as $filename) {
+				if (filectime($filename) < TIME_NOW - 86400 * 14) {
+					@unlink($filename);
+				}
 			}
 		}
 	}
