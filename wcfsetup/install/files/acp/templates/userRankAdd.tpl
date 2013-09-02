@@ -142,7 +142,7 @@
 				<dt><label for="requiredGender">{lang}wcf.user.option.gender{/lang}</label></dt>
 				<dd>
 					<select id="requiredGender" name="requiredGender">
-						<option value="0"></option>
+						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 						<option value="1"{if $requiredGender == 1} selected="selected"{/if}>{lang}wcf.user.gender.male{/lang}</option>
 						<option value="2"{if $requiredGender == 2} selected="selected"{/if}>{lang}wcf.user.gender.female{/lang}</option>
 					</select>

@@ -38,7 +38,7 @@
 				<dt><label for="fileType">{lang}wcf.attachment.fileType{/lang}</label></dt>
 				<dd>
 					<select name="fileType" id="fileType">
-						<option value=""></option>
+						<option value="">{lang}wcf.global.noSelection{/lang}</option>
 						{htmlOptions options=$availableFileTypes selected=$fileType}
 					</select>
 				</dd>

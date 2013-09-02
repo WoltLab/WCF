@@ -91,7 +91,7 @@
 				<dt><label for="parentMenuItem">{lang}wcf.acp.pageMenu.parentMenuItem{/lang}</label></dt>
 				<dd>
 					<select name="parentMenuItem" id="parentMenuItem">
-						<option value=""{if $parentMenuItem == ''} selected="selected"{/if}></option>
+						<option value=""{if $parentMenuItem == ''} selected="selected"{/if}>{lang}wcf.global.noSelection{/lang}</option>
 						{foreach from=$availableParentMenuItems item=availableParentMenuItem}
 							<option value="{$availableParentMenuItem->menuItem}"{if $parentMenuItem == $availableParentMenuItem->menuItem} selected="selected"{/if}>{$availableParentMenuItem}</option>
 						{/foreach}

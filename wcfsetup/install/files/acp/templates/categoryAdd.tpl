@@ -120,7 +120,7 @@
 					<dt><label for="parentCategoryID">{@$objectType->getProcessor()->getLanguageVariable('parentCategoryID')}</label></dt>
 					<dd>
 						<select id="parentCategoryID" name="parentCategoryID">
-							<option value="0"></option>
+							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 							{include file='categoryOptionList' categoryID=$parentCategoryID maximumNestingLevel=$objectType->getProcessor()->getMaximumNestingLevel()}
 						</select>
 						{if $errorField == 'parentCategoryID'}

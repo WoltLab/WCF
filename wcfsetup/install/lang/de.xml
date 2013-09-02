@@ -1679,6 +1679,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.global.error.backward"><![CDATA[Zurück zur vorherigen Seite]]></item>
 		<item name="wcf.global.noDeclaration"><![CDATA[Keine Angabe]]></item>
 		<item name="wcf.global.defaultValue"><![CDATA[Standard]]></item>
+		<item name="wcf.global.noSelection"><![CDATA[(Keine Auswahl)]]></item>
 		<item name="wcf.global.acp"><![CDATA[Administrationsoberfläche]]></item>
 		<item name="wcf.global.acp.short"><![CDATA[Administration]]></item>
 		<item name="wcf.global.worker.executing"><![CDATA[Aufgaben werden ausgeführt …]]></item>
