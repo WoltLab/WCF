@@ -3656,11 +3656,18 @@ WCF.TabMenu = {
 					
 					// set panel id as location hash
 					if (WCF.TabMenu._didInit) {
-						if (window.history) {
-							window.history.pushState(null, document.title, window.location.toString().replace(/#.+$/, '') + '#' + $panel.attr('id'));
+						// do not update history if within an overlay
+						if ($panel.data('inTabMenu') == undefined) {
+							$panel.data('inTabMenu', ($panel.parents('.dialogContainer').length));
 						}
-						else {
-							location.hash = '#' + $panel.attr('id');
+						
+						if (!$panel.data('inTabMenu')) {
+							if (window.history) {
+								window.history.pushState(null, document.title, window.location.toString().replace(/#.+$/, '') + '#' + $panel.attr('id'));
+							}
+							else {
+								location.hash = '#' + $panel.attr('id');
+							}
 						}
 					}
 					
