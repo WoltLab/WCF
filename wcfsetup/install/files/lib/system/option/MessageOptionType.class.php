@@ -8,6 +8,7 @@ use wcf\system\bbcode\BBCodeParser;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\StringUtil;
 
 /**
  * Option type implementation for message.
@@ -20,6 +21,15 @@ use wcf\util\ArrayUtil;
  * @category	Community Framework
  */
 class MessageOptionType extends TextareaOptionType {
+	/**
+	 * @see	wcf\system\option\IOptionType::getData()
+	 */
+	public function getData(Option $option, $newValue) {
+		$newValue = StringUtil::trim($newValue);
+		
+		return parent::getData($option, $newValue);
+	}
+	
 	/**
 	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
