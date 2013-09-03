@@ -33,7 +33,7 @@
 				<dt><label for="languageCategoryID">{lang}wcf.acp.language.category{/lang}</label></dt>
 				<dd>
 					<select name="languageCategoryID" id="languageCategoryID">
-						<option value="0"></option>
+						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 						{foreach from=$availableLanguageCategories item=availableLanguageCategory}
 							<option value="{@$availableLanguageCategory->languageCategoryID}"{if $availableLanguageCategory->languageCategoryID == $languageCategoryID} selected="selected"{/if}>{$availableLanguageCategory->languageCategory}</option>
 						{/foreach}

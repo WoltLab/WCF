@@ -3137,6 +3137,10 @@ WCF.Message.UserMention = Class.extend({
 	 * Handles the key event of the CKEditor to select user suggestion on enter.
 	 */
 	_key: function(event) {
+		if (this._ckEditor.mode !== 'wysiwyg') {
+			return true;
+		}
+		
 		if (this._suggestionList.is(':visible')) {
 			if (event.data.keyCode === 13) { // enter
 				this._suggestionList.children('li').eq(this._itemIndex).trigger('click');
@@ -3152,6 +3156,10 @@ WCF.Message.UserMention = Class.extend({
 	 * @param	object		event
 	 */
 	_keydown: function(event) {
+		if (this._ckEditor.mode !== 'wysiwyg') {
+			return true;
+		}
+		
 		if (this._suggestionList.is(':visible')) {
 			switch (event.data.$.keyCode) {
 				case 38: // arrow up
@@ -3175,6 +3183,10 @@ WCF.Message.UserMention = Class.extend({
 	 * @param	object		event
 	 */
 	_keyup: function(event) {
+		if (this._ckEditor.mode !== 'wysiwyg') {
+			return true;
+		}
+		
 		// ignore enter key up event
 		if (event.data.$.keyCode === 13) {
 			return;

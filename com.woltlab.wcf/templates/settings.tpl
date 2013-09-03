@@ -94,7 +94,7 @@
 						<dt><label for="styleID">{lang}wcf.user.style{/lang}</label></dt>
 						<dd>
 							<select id="styleID" name="styleID">
-								<option value="0"></option>
+								<option value="0">{lang}wcf.global.defaultValue{/lang}</option>
 								{foreach from=$availableStyles item=style}
 									<option value="{@$style->styleID}"{if $style->styleID == $styleID} selected="selected"{/if}>{$style->styleName}</option>
 								{/foreach}

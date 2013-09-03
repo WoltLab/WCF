@@ -283,6 +283,8 @@
 		// [list]
 		data = data.replace(/\[list\]/gi, '<ul>');
 		data = data.replace(/\[list=1\]/gi, '<ul style="list-style-type: decimal">');
+		data = data.replace(/\[list=a\]/gi, '<ul style="list-style-type: lower-latin">');
+		data = data.replace(/\[list=(none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)\]/gi, '<ul style="list-style-type: $1">');
 		data = data.replace(/\[\/list]/gi, '</ul>');
 		
 		// [table]
@@ -401,6 +403,7 @@
 		// [list]
 		html = html.replace(/<ul>/gi, '[list]');
 		html = html.replace(/<(ol|ul style="list-style-type: decimal")>/gi, '[list=1]');
+		html = html.replace(/<ul style="list-style-type: (none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)">/gi, '[list=$1]');
 		html = html.replace(/<\/(ul|ol)>/gi, '[/list]');
 		
 		// [table]

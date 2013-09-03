@@ -49,7 +49,7 @@
 					<dt><label for="groupID">{lang}wcf.acp.label.group{/lang}</label></dt>
 					<dd>
 						<select id="groupID" name="groupID">
-							<option value="0"></option>
+							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 							{foreach from=$labelGroupList item=group}
 								<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected="selected"{/if}>{$group->groupName}</option>
 							{/foreach}

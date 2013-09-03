@@ -379,3 +379,17 @@ a.badge:hover {
 		background-color: #c09;
 	}
 }
+
+@media only screen and (max-width: 800px) {
+	// Preserve HTML font-size when iPhone orientation changes from portrait to landscape
+	html {
+		-webkit-text-size-adjust: 100%;
+	}
+	
+	// Fixes zoom when iPhone orientation changes from portrait to landscape
+	html,
+	body {
+		width: 100%;
+		overflow: hidden;
+	}
+}
