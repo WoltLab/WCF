@@ -108,6 +108,10 @@ class LikeHandler extends SingletonFactory {
 	 * @return	integer
 	 */
 	public function loadLikeObjects(ObjectType $objectType, array $objectIDs) {
+		if (empty($objectIDs)) {
+			return 0;
+		}
+		
 		$i = 0;
 		
 		$conditions = new PreparedStatementConditionBuilder();
