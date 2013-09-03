@@ -3620,7 +3620,7 @@ WCF.TabMenu = {
 	 * Initializes all TabMenus
 	 */
 	init: function() {
-		var $containers = $('.tabMenuContainer');
+		var $containers = $('.tabMenuContainer:not(.staticTabMenuContainer)');
 		var self = this;
 		$containers.each(function(index, tabMenu) {
 			var $tabMenu = $(tabMenu);
