@@ -3,6 +3,7 @@ namespace wcf\data\moderation\queue;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -96,9 +97,14 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			'queues' => $queueList
 		));
 		
+		$totalCount = ModerationQueueManager::getInstance()->getOutstandingModerationCount();
+		if (count($queueList) < $totalCount) {
+			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'outstandingModerationCount');
+		}
+		
 		return array(
 			'template' => WCF::getTPL()->fetch('moderationQueueList'),
-			'totalCount' => ModerationQueueManager::getInstance()->getOutstandingModerationCount()
+			'totalCount' => $totalCount
 		);
 	}
 }
