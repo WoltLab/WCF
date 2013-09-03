@@ -50,6 +50,12 @@ class UserOptionImporter extends AbstractImporter {
 		// set temporary option name
 		$data['optionName'] = StringUtil::getRandomID();
 		
+		if ($data['optionType'] == 'boolean' || $data['optionType'] == 'integer') {
+			if (isset($data['defaultValue'])) {
+				$data['defaultValue'] = intval($data['defaultValue']);
+			}
+		}
+		
 		// save option
 		$action = new UserOptionAction(array(), 'create', array('data' => $data));
 		$returnValues = $action->executeAction();
