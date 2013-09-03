@@ -68,7 +68,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 							SELECT	COUNT(*)
 							FROM	wcf".WCF_N."_like
 							WHERE	objectUserID = user_table.userID
-								AND likeValue = ".Like::LIKE."		
+								AND likeValue = ".Like::LIKE."
 						)
 					".$conditionBuilder;
 				$statement = WCF::getDB()->prepareStatement($sql);
