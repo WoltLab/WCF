@@ -465,20 +465,19 @@ button.active:hover {
 	}
 
 	.wbbBoardList:not(.wbbBoardListReduced) {
-		> li.wbbBoardNodeTop:not(.wbbBoardNodeTopEmpty) > div {
-			border-radius: @wcfContainerBorderRadius - 2 @wcfContainerBorderRadius - 2 0 0;
+		> li.wbbDepth1 > div {
+			border-top-left-radius: @wcfContainerBorderRadius - 2;
+			border-top-right-radius: @wcfContainerBorderRadius - 2;
 		}
 		
-		> li > ul > li:last-child div.wbbBoard:last-child, > li > ul > li.tabularBox:last-child {
-			border-radius: 0 0 @wcfContainerBorderRadius - 2 @wcfContainerBorderRadius - 2;
+		li.wbbLastBoxElement > div {
+			border-bottom-left-radius: @wcfContainerBorderRadius - 2;
+			border-bottom-right-radius: @wcfContainerBorderRadius - 2;
 		}
 		
-		.tabularBox:not(.wbbBoardNodeTop) {
-			border-radius: 0;
-		}
-		
-		.wbbBoardNodeTopEmpty div.wbbBoard {
-			border-radius: @wcfContainerBorderRadius - 2;
+		.tabularBox:not(.wbbDepth1) {
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
 		}
 	}
 
