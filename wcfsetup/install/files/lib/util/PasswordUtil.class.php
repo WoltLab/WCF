@@ -231,6 +231,9 @@ final class PasswordUtil {
 	/**
 	 * Generates secure random numbers using OpenSSL.
 	 * 
+	 * This method forces mt_rand() if PHP versions below 5.4.0 are used due to a bug
+	 * causing up to 15 seconds delay until the bytes are returned.
+	 * 
 	 * @see		http://de1.php.net/manual/en/function.openssl-random-pseudo-bytes.php#104322
 	 * @param	integer		$min
 	 * @param	integer		$max
@@ -244,7 +247,7 @@ final class PasswordUtil {
 		}
 		
 		// fallback to mt_rand() if OpenSSL is not available
-		if (!function_exists('openssl_random_pseudo_bytes')) {
+		if (version_compare(PHP_VERSION, '5.4.0-dev', '<') || !function_exists('openssl_random_pseudo_bytes')) {
 			return mt_rand($min, $max);
 		}
 		
