@@ -39,7 +39,7 @@ class AbstractLikeImporter extends AbstractImporter {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			$data['objectID'],
-			$data['objectTypeID'],
+			$this->objectTypeID,
 			$data['objectUserID'],
 			$data['userID'],
 			$data['time'],
