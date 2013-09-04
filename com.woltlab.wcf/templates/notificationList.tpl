@@ -51,11 +51,21 @@
 			{foreach from=$notifications[notifications] item=$notification}
 				<li class="jsNotificationItem" data-notification-id="{@$notification[notificationID]}" data-link="{$notification[event]->getLink()}">
 					<div class="box48">
-						<a href="{link controller='User' object=$notification[event]->getAuthor()}{/link}" title="{$notification[event]->getAuthor()->username}" class="framed">{@$notification[event]->getAuthor()->getAvatar()->getImageTag(48)}</a>
+						{if $notification[event]->getAuthor()->userID}
+							<a href="{link controller='User' object=$notification[event]->getAuthor()}{/link}" title="{$notification[event]->getAuthor()->username}" class="framed">{@$notification[event]->getAuthor()->getAvatar()->getImageTag(48)}</a>
+						{else}
+							<span class="framed">{@$notification[event]->getAuthor()->getAvatar()->getImageTag(48)}</span>
+						{/if}	
 						
 						<div class="details">
 							<div class="containerHeadline">
-								<h3><a href="{link controller='User' object=$notification[event]->getAuthor()}{/link}" class="userLink" data-user-id="{@$notification[event]->getAuthor()->userID}">{$notification[event]->getAuthor()->username}</a></h3> 
+								<h3>
+									{if $notification[event]->getAuthor()->userID}
+										<a href="{link controller='User' object=$notification[event]->getAuthor()}{/link}" class="userLink" data-user-id="{@$notification[event]->getAuthor()->userID}">{$notification[event]->getAuthor()->username}</a>
+									{else}
+										{$notification[event]->getAuthor()->username}
+									{/if}
+								</h3> 
 								<small>{@$notification[time]|time}</small>
 							</div>
 							

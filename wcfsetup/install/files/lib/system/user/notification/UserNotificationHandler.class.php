@@ -255,6 +255,7 @@ class UserNotificationHandler extends SingletonFactory {
 		
 		// load authors
 		$authors = UserProfile::getUserProfiles($authorIDs);
+		$unknownAuthor = new UserProfile(new User(null, array('userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest'))));
 		
 		// load objects associated with each object type
 		foreach ($objectTypes as $objectType => $objectData) {
@@ -282,7 +283,7 @@ class UserNotificationHandler extends SingletonFactory {
 			$class->setObject(
 				$notificationObjects[$event['notificationID']],
 				$objectTypes[$event['objectType']]['objects'][$event['objectID']],
-				$authors[$event['authorID']],
+				(isset($authors[$event['authorID']]) ? $authors[$event['authorID']] : $unknownAuthor),
 				unserialize($event['additionalData'])
 			);
 			

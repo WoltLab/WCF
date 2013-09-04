@@ -118,7 +118,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$template->templateID}</td>
-						<td class="columnTitle columnTemplateName">{if $template->application != 'wcf'}[{$template->application}] {/if}{if $template->templateGroupID}<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}">{$template->templateName}</a>{else}{$template->templateName}{/if}</td>
+						<td class="columnTitle columnTemplateName">{if $template->application != 'wcf'}<span class="badge label">{$template->application}</span> {/if}{if $template->templateGroupID}<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}">{$template->templateName}</a>{else}{$template->templateName}{/if}</td>
 						<td class="columnDate columnLastModificationTime">{@$template->lastModificationTime|time}</td>
 						
 						{event name='columns'}
