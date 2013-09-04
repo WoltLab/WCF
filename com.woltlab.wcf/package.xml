@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.0.0 Beta 7</version> <!-- codename: maelstrom -->
-		<date>2013-08-18</date>
+		<version>2.0.0 Beta 8</version> <!-- codename: maelstrom -->
+		<date>2013-09-05</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -43,17 +43,14 @@
 		<instruction type="script">acp/post_install.php</instruction> 
 	</instructions>
 	
-	<instructions type="update" fromversion="2.0.0 Beta 6">
-		<instruction type="file">files_update.tar</instruction>
+	<instructions type="update" fromversion="2.0.0 Beta 7">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="language">language/*.xml</instruction>
+		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf.b7.php</instruction>
-		<instruction type="sql">update_b7.sql</instruction>
-		<instruction type="sql" run="standalone">update_b7_ct.sql</instruction>
 		
-		<instruction type="bbcode">bbcode.xml</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
-		<instruction type="option">option.xml</instruction>
+		<instruction type="language">language/*.xml</instruction>
+		<instruction type="sql">update_b8.sql</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf.b8.php</instruction>
+		
 	</instructions>
 </package>
