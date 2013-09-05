@@ -28,6 +28,7 @@ if ($row['count']) {
 		'wcf'.WCF_N.'_user_group',
 		'groupDescription'
 	));
-	
+}
+else {
 	WCF::getDB()->getEditor()->addColumn("wcf".WCF_N."_user_group", 'groupDescription', array('type' => 'TEXT'));
 }
