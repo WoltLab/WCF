@@ -52,5 +52,6 @@
 		<instruction type="sql">update_b8.sql</instruction>
 		<instruction type="script">acp/update_com.woltlab.wcf.b8.php</instruction>
 		
+		<instruction type="style">blue-temptation-style.tgz</instruction>
 	</instructions>
 </package>
