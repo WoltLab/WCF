@@ -4631,6 +4631,10 @@ WCF.Collapsible.Sidebar = Class.extend({
 		
 		this._renderSidebar();
 		this._scroll();
+		
+		// fake resize event once transition has completed
+		var $window = $(window);
+		this._sidebar.on('webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd', function() { $window.trigger('resize'); });
 	},
 	
 	/**
@@ -4702,6 +4706,11 @@ WCF.Collapsible.Sidebar = Class.extend({
 		
 		// update button position
 		this._scroll();
+		
+		// IE9 does not support transitions, fire resize event manually
+		if ($.browser.msie && $.browser.version.indexOf('9') === 0) {
+			$(window).trigger('resize');
+		}
 	}
 });
 
