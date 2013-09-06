@@ -8945,15 +8945,17 @@ $.widget('ui.wcfSlideshow', {
 		}).hover($.proxy(this._hoverIn, this), $.proxy(this._hoverOut, this));
 		
 		// create toggle buttons
-		this._buttonList = $('<ul class="slideshowButtonList" />').appendTo(this.element);
-		for (var $i = 0; $i < this._count; $i++) {
-			var $link = $('<li><a><span class="icon icon16 icon-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
-			if ($i == 0) {
-				$link.find('.icon').addClass('active');
+		if (this._items.length > 1) {
+			this._buttonList = $('<ul class="slideshowButtonList" />').appendTo(this.element);
+			for (var $i = 0; $i < this._count; $i++) {
+				var $link = $('<li><a><span class="icon icon16 icon-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
+				if ($i == 0) {
+					$link.find('.icon').addClass('active');
+				}
 			}
+			
+			this._resetTimer();
 		}
-		
-		this._resetTimer();
 		
 		$(window).resize($.proxy(this._resize, this));
 	},
