@@ -981,6 +981,10 @@ class WCFSetup extends WCF {
 				$row = $statement->fetchArray();
 				if (isset($row['languageID'])) $languageID = $row['languageID'];
 				
+				if (!$languageID) {
+					$languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+				}
+				
 				// create user
 				$data = array(
 					'data' => array(
