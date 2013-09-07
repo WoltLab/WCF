@@ -219,6 +219,64 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
 	}
+
+	/**
+	 * Validates the enable action.
+	 */
+	public function validateEnable() {
+		WCF::getSession()->checkPermissions(array('admin.user.canEnableUser'));
+
+		$this->__validateAccessibleGroups();
+	}
+
+	/**
+	 * Validates the disable action.
+	 */
+	public function validateDisable() {
+		$this->validateEnable();
+	}
+
+	/**
+	 * Enables users.
+	 */
+	public function enable() {
+		if (empty($this->objects)) $this->readObjects();
+
+		$action = new UserAction($this->objects, 'update', array(
+			'data' => array(
+				'activationCode' => 0
+			),
+			'removeGroups' => UserGroup::getGroupIDsByType(array(UserGroup::GUESTS))
+		));
+		$action->executeAction();
+		$action = new UserAction($this->objects, 'addToGroups', array(
+			'groups' => UserGroup::getGroupIDsByType(array(UserGroup::USERS)),
+			'deleteOldGroups' => false,
+			'addDefaultGroups' => false
+		));
+		$action->executeAction();
+	}
+
+	/**
+	 * Disables users.
+	 */
+	public function disable() {
+		if (empty($this->objects)) $this->readObjects();
+
+		$action = new UserAction($this->objects, 'update', array(
+			'data' => array(
+				'activationCode' => UserRegistrationUtil::getActivationCode()
+			),
+			'removeGroups' => UserGroup::getGroupIDsByType(array(UserGroup::USERS)),
+		));
+		$action->executeAction();
+		$action = new UserAction($this->objects, 'addToGroups', array(
+			'groups' => UserGroup::getGroupIDsByType(array(UserGroup::GUESTS)),
+			'deleteOldGroups' => false,
+			'addDefaultGroups' => false
+		));
+		$action->executeAction();
+	}
 	
 	/**
 	 * Creates a new user.
@@ -425,61 +483,5 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (!empty($userIDs)) {
 			ClipboardHandler::getInstance()->unmark($userIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
 		}
-	}
-	
-	/**
-	 * Validates the enable action.
-	 */
-	public function validateEnable() {
-		WCF::getSession()->checkPermissions(array('admin.user.canEnableUser'));
-	}
-	
-	/**
-	 * Validates the disable action.
-	 */
-	public function validateDisable() {
-		$this->validateEnable();
-	}
-	
-	/**
-	 * Enables users.
-	 */
-	public function enable() {
-		if (empty($this->objects)) $this->readObjects();
-	
-		$action = new UserAction($this->objects, 'update', array(
-			'data' => array(
-				'activationCode' => 0
-			),
-			'removeGroups' => UserGroup::getGroupIDsByType(array(UserGroup::GUESTS))
-		));
-		$action->executeAction();
-		$action = new UserAction($this->objects, 'addToGroups', array(
-			'groups' => UserGroup::getGroupIDsByType(array(UserGroup::USERS)),
-			'deleteOldGroups' => false,
-			'addDefaultGroups' => false	
-		));
-		$action->executeAction();
-	}
-	
-	/**
-	 * Disables users.
-	 */
-	public function disable() {
-		if (empty($this->objects)) $this->readObjects();
-	
-		$action = new UserAction($this->objects, 'update', array(
-			'data' => array(
-				'activationCode' => UserRegistrationUtil::getActivationCode()
-			),
-			'removeGroups' => UserGroup::getGroupIDsByType(array(UserGroup::USERS)),
-		));
-		$action->executeAction();
-		$action = new UserAction($this->objects, 'addToGroups', array(
-			'groups' => UserGroup::getGroupIDsByType(array(UserGroup::GUESTS)),
-			'deleteOldGroups' => false,
-			'addDefaultGroups' => false
-		));
-		$action->executeAction();
 	}
 }
