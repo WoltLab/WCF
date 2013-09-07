@@ -3620,7 +3620,7 @@ WCF.TabMenu = {
 	 * Initializes all TabMenus
 	 */
 	init: function() {
-		var $containers = $('.tabMenuContainer');
+		var $containers = $('.tabMenuContainer:not(.staticTabMenuContainer)');
 		var self = this;
 		$containers.each(function(index, tabMenu) {
 			var $tabMenu = $(tabMenu);
@@ -4631,6 +4631,10 @@ WCF.Collapsible.Sidebar = Class.extend({
 		
 		this._renderSidebar();
 		this._scroll();
+		
+		// fake resize event once transition has completed
+		var $window = $(window);
+		this._sidebar.on('webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd', function() { $window.trigger('resize'); });
 	},
 	
 	/**
@@ -4702,6 +4706,11 @@ WCF.Collapsible.Sidebar = Class.extend({
 		
 		// update button position
 		this._scroll();
+		
+		// IE9 does not support transitions, fire resize event manually
+		if ($.browser.msie && $.browser.version.indexOf('9') === 0) {
+			$(window).trigger('resize');
+		}
 	}
 });
 
@@ -8936,15 +8945,17 @@ $.widget('ui.wcfSlideshow', {
 		}).hover($.proxy(this._hoverIn, this), $.proxy(this._hoverOut, this));
 		
 		// create toggle buttons
-		this._buttonList = $('<ul class="slideshowButtonList" />').appendTo(this.element);
-		for (var $i = 0; $i < this._count; $i++) {
-			var $link = $('<li><a><span class="icon icon16 icon-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
-			if ($i == 0) {
-				$link.find('.icon').addClass('active');
+		if (this._items.length > 1) {
+			this._buttonList = $('<ul class="slideshowButtonList" />').appendTo(this.element);
+			for (var $i = 0; $i < this._count; $i++) {
+				var $link = $('<li><a><span class="icon icon16 icon-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
+				if ($i == 0) {
+					$link.find('.icon').addClass('active');
+				}
 			}
+			
+			this._resetTimer();
 		}
-		
-		this._resetTimer();
 		
 		$(window).resize($.proxy(this._resize, this));
 	},

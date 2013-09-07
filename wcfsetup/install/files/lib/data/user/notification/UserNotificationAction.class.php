@@ -65,13 +65,19 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	 * @return	array<array>
 	 */
 	public function getOutstandingNotifications() {
+		$notifications = UserNotificationHandler::getInstance()->getNotifications();
 		WCF::getTPL()->assign(array(
-			'notifications' => UserNotificationHandler::getInstance()->getNotifications()
+			'notifications' => $notifications
 		));
+		
+		$totalCount = UserNotificationHandler::getInstance()->getNotificationCount();
+		if (count($notifications) < $totalCount) {
+			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
+		}
 		
 		return array(
 			'template' => WCF::getTPL()->fetch('notificationListOustanding'),
-			'totalCount' => UserNotificationHandler::getInstance()->getNotificationCount()
+			'totalCount' => $totalCount
 		);
 	}
 	

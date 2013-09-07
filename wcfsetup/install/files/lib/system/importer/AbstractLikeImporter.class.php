@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\importer;
-use wcf\data\like\LikeEditor;
+use wcf\system\WCF;
 
 /**
  * Imports likes.
@@ -31,9 +31,21 @@ class AbstractLikeImporter extends AbstractImporter {
 		if ($data['objectUserID']) $data['objectUserID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['objectUserID']);
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		if (!$data['userID']) return 0;
+		if (empty($data['time'])) $data['time'] = 0;
 		
-		$like = LikeEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_like
+						(objectID, objectTypeID, objectUserID, userID, time, likeValue)
+			VALUES			(?, ?, ?, ?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$data['objectID'],
+			$this->objectTypeID,
+			$data['objectUserID'],
+			$data['userID'],
+			$data['time'],
+			$data['likeValue']
+		));
 		
-		return $like->likeID;
+		return 0;
 	}
 }

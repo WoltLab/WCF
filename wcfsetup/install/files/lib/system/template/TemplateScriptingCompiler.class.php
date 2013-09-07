@@ -1023,6 +1023,19 @@ class TemplateScriptingCompiler {
 			$encodeHTML = true;
 		}
 		
+		// check for forbidden constants
+		if (preg_match('~^(RELATIVE_)?([A-Z]+)_DIR$~', $tag, $matches)) {
+			$application = mb_strtolower($matches[2]);
+			if ($application == 'wcf') {
+				$application = '';
+			}
+			else {
+				$application = "'{$application}'";
+			}
+			
+			throw new SystemException("Accessing internal constant '".$tag."' is disallowed, please use '\$__wcf->getPath(".$application.")' instead");
+		}
+		
 		$parsedTag = $this->compileVariableTag($tag);
 		
 		// the @ operator at the beginning of an output avoids

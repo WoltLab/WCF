@@ -4,6 +4,7 @@ use wcf\data\user\option\UserOption;
 use wcf\data\user\User;
 use wcf\system\bbcode\MessageParser;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * User option output implementation for a formatted textarea value.
@@ -20,6 +21,11 @@ class MessageUserOptionOutput implements IUserOptionOutput {
 	 * @see	wcf\system\option\user\IUserOptionOutput::getOutput()
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
+		$value = StringUtil::trim($value);
+		if (empty($value)) {
+			return '';
+		}
+		
 		MessageParser::getInstance()->setOutputType('text/html');
 		
 		WCF::getTPL()->assign(array(

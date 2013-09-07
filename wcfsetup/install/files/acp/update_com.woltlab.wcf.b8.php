@@ -10,21 +10,25 @@ use wcf\system\WCF;
  */
 $sql = "SELECT	COUNT(*) AS count
 	FROM	wcf".WCF_N."_package_installation_sql_log
-	WHERE	packageID = ?
-		AND sqlTable = ?";
+	WHERE	sqlTable = ?
+		AND sqlColumn = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute(array(
-	1,
-	"wcf".WCF_N."_import_mapping"
+	'wcf'.WCF_N.'_user_group',
+	'groupDescription'
 ));
 $row = $statement->fetchArray();
-if (!$row['count']) {
-	$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log
-				(packageID, sqlTable)
-		VALUES		(?, ?)";
+
+if ($row['count']) {
+	$sql = "DELETE FROM	wcf".WCF_N."_package_installation_sql_log
+		WHERE		sqlTable = ?
+				AND sqlColumn = ?";
 	$statement = WCF::getDB()->prepareStatement($sql);
 	$statement->execute(array(
-		1,
-		"wcf".WCF_N."_import_mapping"
+		'wcf'.WCF_N.'_user_group',
+		'groupDescription'
 	));
+}
+else {
+	WCF::getDB()->getEditor()->addColumn("wcf".WCF_N."_user_group", 'groupDescription', array('type' => 'TEXT'));
 }
