@@ -87,9 +87,9 @@ class StructuredCommentList extends CommentList {
 		$userIDs = array();
 		foreach ($this->objects as &$comment) {
 			if (!$this->minCommentTime || $comment->time < $this->minCommentTime) $this->minCommentTime = $comment->time;
-			$lastResponseIDs = $comment->getLastResponseIDs();
-			if (!empty($lastResponseIDs)) {
-				foreach ($lastResponseIDs as $responseID) {
+			$responseIDs = $comment->getResponseIDs();
+			if (!empty($responseIDs)) {
+				foreach ($responseIDs as $responseID) {
 					$this->responseIDs[] = $responseID;
 					$responseIDs[$responseID] = $comment->commentID;
 				}
@@ -104,12 +104,8 @@ class StructuredCommentList extends CommentList {
 		
 		// fetch last responses
 		if (!empty($responseIDs)) {
-			// invert sort order (maintains order within StructuredComment's response array)
-			$sqlOrder = (strpos($this->sqlOrderBy, 'ASC') === false) ? 'DESC' : 'ASC';
-			
 			$responseList = new CommentResponseList();
 			$responseList->getConditionBuilder()->add("comment_response.responseID IN (?)", array(array_keys($responseIDs)));
-			$responseList->sqlOrderBy = "comment_response.time ".$sqlOrder;
 			$responseList->readObjects();
 			
 			foreach ($responseList as $response) {

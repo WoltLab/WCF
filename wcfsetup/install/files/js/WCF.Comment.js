@@ -173,16 +173,25 @@ WCF.Comment.Handler = Class.extend({
 	 * @param	object		event
 	 */
 	_loadResponses: function(event) {
-		var $button = $(event.currentTarget).disable();
-		var $commentID = $button.data('commentID');
+		this._loadResponsesExecute($(event.currentTarget).disable().data('commentID'), false);
 		
+	},
+	
+	/**
+	 * Executes loading of comments, optionally fetching all at once.
+	 * 
+	 * @param	integer		commentID
+	 * @param	boolean		loadAllResponses
+	 */
+	_loadResponsesExecute: function(commentID, loadAllResponses) {
 		this._proxy.setOption('data', {
 			actionName: 'loadResponses',
 			className: 'wcf\\data\\comment\\response\\CommentResponseAction',
 			parameters: {
 				data: {
-					commentID: $commentID,
-					lastResponseTime: this._comments[$commentID].data('lastResponseTime')
+					commentID: commentID,
+					lastResponseTime: this._comments[commentID].data('lastResponseTime'),
+					loadAllResponses: (loadAllResponses ? 1 : 0)
 				}
 			}
 		});
@@ -208,11 +217,11 @@ WCF.Comment.Handler = Class.extend({
 			var $commentID = $comment.data('commentID');
 			self._comments[$commentID] = $comment;
 			
+			self._handleLoadNextResponses($commentID);
 			self._initComment($commentID, $comment);
 			self._displayedComments++;
 			
 			$loadedComments = true;
-			self._handleLoadNextResponses($commentID);
 		});
 		
 		if ($loadedComments) {
@@ -298,16 +307,29 @@ WCF.Comment.Handler = Class.extend({
 	 * @param	jQuery		comment
 	 */
 	_initAddResponse: function(commentID, comment) {
-		var $placeholder = $('<div class="commentResponseAdd jsCommentResponseAddPlaceholder"><a class="button small">' + WCF.Language.get('wcf.comment.button.response.add') + '</a></div>').insertBefore(comment.find('ul.commentResponseList'));
-		$placeholder.data('commentID', commentID).click($.proxy(this._showAddResponse, this));
+		var $placeholder = null;
+		if (!comment.data('responses') || this._loadNextResponses[commentID]) {
+			$placeholder = $('<a class="button small">' + WCF.Language.get('wcf.comment.button.response.add') + '</a>').data('commentID', commentID).click($.proxy(this._showAddResponse, this));
+			if (this._loadNextResponses[commentID]) {
+				$placeholder.appendTo(this._loadNextResponses[commentID]);
+			}
+			else {
+				$placeholder.insertAfter(comment.find('ul.commentResponseList')).wrap('<div class="commentResponseAdd jsCommentResponseAddPlaceholder" />');
+			}
+		}
 		
-		var $listItem = $('<div class="box32 commentResponseAdd jsCommentResponseAdd"><span class="framed">' + this._userAvatar + '</span><div /></div>').hide().insertAfter($placeholder);
+		var $listItem = $('<div class="box32 commentResponseAdd jsCommentResponseAdd"><span class="framed">' + this._userAvatar + '</span><div /></div>');
+		if ($placeholder !== null) {
+			$listItem.hide();
+		}
+		$listItem.insertAfter(comment.find('ul.commentResponseList'));
+		
 		var $inputContainer = $listItem.children('div');
 		var $input = $('<input type="text" placeholder="' + WCF.Language.get('wcf.comment.response.add') + '" maxlength="65535" class="long" />').data('commentID', commentID).appendTo($inputContainer);
 		$('<small>' + WCF.Language.get('wcf.comment.description') + '</small>').appendTo($inputContainer);
 		
 		var self = this;
-		$input.keyup(function(event) { self._keyUp(event, true); }).blur($.proxy(this._hideAddResponse, this));
+		$input.keyup(function(event) { self._keyUp(event, true); });
 		
 		comment.data('responsePlaceholder', $placeholder).data('responseInput', $listItem);
 	},
@@ -349,33 +371,16 @@ WCF.Comment.Handler = Class.extend({
 	 */
 	_showAddResponse: function(event) {
 		var $commentID = $(event.currentTarget).data('commentID');
-		this._comments[$commentID].data('responsePlaceholder').hide();
+		var $placeholder = this._comments[$commentID].data('responsePlaceholder');
+		if ($placeholder.parent().hasClass('responseLoadNext')) {
+			this._loadResponsesExecute($commentID, true);
+			$placeholder.parent().children('.button').disable();
+		}
+		
+		$placeholder.remove();
 		
 		var $responseInput = this._comments[$commentID].data('responseInput').show();
 		$responseInput.find('input').focus();
-	},
-	
-	/**
-	 * Hides the UI elements to create a response.
-	 * 
-	 * @param	object		event
-	 */
-	_hideAddResponse: function(event) {
-		var $input = $(event.currentTarget);
-		if ($.trim($input.val()) !== '') {
-			return;
-		}
-		
-		// delay execution by 50ms
-		var self = this;
-		new WCF.PeriodicalExecuter(function(pe) {
-			pe.stop();
-			
-			self._comments[$input.data('commentID')].data('responsePlaceholder').show();
-			
-			var $responseInput = self._comments[$input.data('commentID')].data('responseInput');
-			$responseInput.hide().find('input').val('');
-		}, 50);
 	},
 	
 	/**
@@ -475,7 +480,7 @@ WCF.Comment.Handler = Class.extend({
 			break;
 			
 			case 'addResponse':
-				$(data.returnValues.template).prependTo(this._comments[data.returnValues.commentID].find('ul.commentResponseList')).wcfFadeIn();
+				$(data.returnValues.template).appendTo(this._comments[data.returnValues.commentID].find('ul.commentResponseList')).wcfFadeIn();
 			break;
 			
 			case 'edit':

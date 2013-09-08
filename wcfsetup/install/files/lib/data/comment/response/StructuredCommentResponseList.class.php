@@ -40,11 +40,6 @@ class StructuredCommentResponseList extends CommentResponseList {
 	public $sqlLimit = 50;
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$sqlOrderBy
-	 */
-	public $sqlOrderBy = 'comment_response.time DESC';
-	
-	/**
 	 * Creates a new structured comment response list.
 	 * 
 	 * @param	wcf\system\comment\manager\ICommentManager	$commentManager

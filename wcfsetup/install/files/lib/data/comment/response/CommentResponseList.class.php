@@ -17,4 +17,9 @@ class CommentResponseList extends DatabaseObjectList {
 	 * @see	wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\comment\response\CommentResponse';
+	
+	/**
+	 * @see	wcf\data\DatabaseObjectList::$sqlOrderBy
+	 */
+	public $sqlOrderBy = 'comment_response.time ASC';
 }
