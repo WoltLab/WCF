@@ -35,8 +35,8 @@
 		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[The graphics-library “GDLib” is needed for the dynamic image generation. Without this library, some features of this software will not be available.]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[Enabled]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[Not enabled]]></item>
-		<item name="wcf.global.systemRequirements.memoryLimit"><![CDATA[TODO: Zur Verfügung stehender Arbeitsspeicher]]></item>
-		<item name="wcf.global.systemRequirements.memoryLimit.description"><![CDATA[TODO: Der PHP-Skripten zur Verfügung stehende Arbeitsspeicher ist für einen einwandfreien Betrieb der Software zu gering.]]></item>
+		<item name="wcf.global.systemRequirements.memoryLimit"><![CDATA[PHP memory limit]]></item>
+		<item name="wcf.global.systemRequirements.memoryLimit.description"><![CDATA[The maximum available memory of PHP scripts is too low to properly run the software.]]></item>
 		<item name="wcf.global.wcfDir"><![CDATA[Choose the installation-folder]]></item>
 		<item name="wcf.global.wcfDir.description"><![CDATA[All files of <b>WoltLab Community Framework</b> will be extracted into the installation-folder.]]></item>
 		<item name="wcf.global.wcfDir.dir"><![CDATA[Installation Directory]]></item>
