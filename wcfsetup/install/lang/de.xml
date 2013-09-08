@@ -1416,7 +1416,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.comment.description"><![CDATA[Drücken Sie die Eingabetaste, um abzusenden oder Escape, um abzubrechen.]]></item>
 		<item name="wcf.comment.more"><![CDATA[Weitere Kommentare]]></item>
 		<item name="wcf.comment.response.add"><![CDATA[Antworten …]]></item>
-		<item name="wcf.comment.response.more"><![CDATA[Weitere Antworten]]></item>
+		<item name="wcf.comment.response.more"><![CDATA[{literal}{if $count == 1}Eine weitere Antwort{else}{#$count} weitere Antworten{/if}{/literal}]]></item>
 		<item name="wcf.comment.button.response.add"><![CDATA[Antworten]]></item>
 	</category>
 	

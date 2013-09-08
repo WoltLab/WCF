@@ -144,7 +144,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 	public function loadResponses() {
 		// get response list
 		$responseList = new StructuredCommentResponseList($this->commentManager, $this->comment);
-		$responseList->getConditionBuilder()->add("comment_response.time < ?", array($this->parameters['data']['lastResponseTime']));
+		$responseList->getConditionBuilder()->add("comment_response.time > ?", array($this->parameters['data']['lastResponseTime']));
 		if (!$this->parameters['data']['loadAllResponses']) $responseList->sqlLimit = 50;
 		$responseList->readObjects();
 		
@@ -154,7 +154,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 				$lastResponseTime = $response->time;
 			}
 			
-			$lastResponseTime = min($lastResponseTime, $response->time);
+			$lastResponseTime = max($lastResponseTime, $response->time);
 		}
 		
 		WCF::getTPL()->assign(array(

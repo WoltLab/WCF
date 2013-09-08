@@ -82,17 +82,14 @@ class StructuredCommentList extends CommentList {
 	public function readObjects() {
 		parent::readObjects();
 		
-		// fetch last response ids
-		$responseIDs = array();
-		$userIDs = array();
+		// fetch response ids
+		$responseIDs = $userIDs = array();
 		foreach ($this->objects as &$comment) {
 			if (!$this->minCommentTime || $comment->time < $this->minCommentTime) $this->minCommentTime = $comment->time;
-			$responseIDs = $comment->getResponseIDs();
-			if (!empty($responseIDs)) {
-				foreach ($responseIDs as $responseID) {
-					$this->responseIDs[] = $responseID;
-					$responseIDs[$responseID] = $comment->commentID;
-				}
+			$commentResponseIDs = $comment->getResponseIDs();
+			foreach ($commentResponseIDs as $responseID) {
+				$this->responseIDs[] = $responseID;
+				$responseIDs[$responseID] = $comment->commentID;
 			}
 			$userIDs[] = $comment->userID;
 			
