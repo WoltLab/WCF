@@ -2102,6 +2102,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Likes Received]]></item>
 		<item name="wcf.user.register.honeyPot"><![CDATA[Please Ignore!]]></item>
 		<item name="wcf.user.register.honeyPot.description"><![CDATA[Heads up! If you can see this, you are strongly encouraged <strong>NOT</strong> to fill in the next two input fields!]]></item>
+		<item name="wcf.user.searchUserContent"><![CDATA[TODO: Inhalte von „{$user->username}“ suchen]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
