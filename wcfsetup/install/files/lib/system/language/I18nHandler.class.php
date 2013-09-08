@@ -408,7 +408,12 @@ class I18nHandler extends SingletonFactory {
 						$this->elementOptions[$elementID]['value']
 					));
 					while ($row = $statement->fetchArray()) {
-						$i18nValues[$row['languageID']] = StringUtil::encodeJS(StringUtil::unifyNewlines($row['languageItemValue']));
+						$languageItemValue = StringUtil::unifyNewlines($row['languageItemValue']);
+						$i18nValues[$row['languageID']] = StringUtil::encodeJS($languageItemValue);
+						
+						if ($row['languageID'] == LanguageFactory::getInstance()->getDefaultLanguageID()) {
+							$value = $languageItemValue;
+						}
 					}
 				}
 				else {
