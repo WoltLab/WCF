@@ -83,7 +83,7 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 		
 		// validate queue
 		$this->queue = $this->getSingleObject();
-		if ($this->queue->parentQueueID || $this->queue->action != 'install' || $this->queue->done) {
+		if ($this->queue->parentQueueID || $this->queue->done) {
 			throw new UserInputException('objectIDs');
 		}
 		

@@ -1331,6 +1331,8 @@ WCF.ACP.Package.Update.Manager = Class.extend({
 		}, this));
 		
 		if ($.getLength($packages)) {
+			this._submitButton.disable();
+			
 			var $parameters = {
 				packages: $packages
 			};

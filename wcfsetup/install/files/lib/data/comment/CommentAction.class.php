@@ -184,7 +184,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			'username' => WCF::getUser()->username,
 			'message' => $this->parameters['data']['message'],
 			'responses' => 0,
-			'lastResponseIDs' => serialize(array())
+			'responseIDs' => serialize(array())
 		));
 		
 		// update counter
@@ -247,15 +247,16 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		));
 		
 		// update response data
-		$lastResponseIDs = $this->comment->getLastResponseIDs();
-		if (count($lastResponseIDs) == 3) array_shift($lastResponseIDs);
-		$lastResponseIDs[] = $response->responseID;
+		$responseIDs = $this->comment->getResponseIDs();
+		if (count($responseIDs) < 3) {
+			$responseIDs[] = $response->responseID;
+		}
 		$responses = $this->comment->responses + 1;
 		
 		// update comment
 		$commentEditor = new CommentEditor($this->comment);
 		$commentEditor->update(array(
-			'lastResponseIDs' => serialize($lastResponseIDs),
+			'responseIDs' => serialize($responseIDs),
 			'responses' => $responses
 		));
 		

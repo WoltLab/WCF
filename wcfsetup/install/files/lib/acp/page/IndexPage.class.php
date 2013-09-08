@@ -28,12 +28,6 @@ class IndexPage extends AbstractPage {
 	public $server = array();
 	
 	/**
-	 * display a warning if InnoDB uses a slow configuration
-	 * @var	boolean
-	 */
-	public $showInnoDBWarning = false;
-	
-	/**
 	 * @see wcf\page\IPage::readData()
 	 */
 	public function readData() {
@@ -52,14 +46,6 @@ class IndexPage extends AbstractPage {
 			if (is_array($load) && count($load) == 3) {
 				$this->server['load'] = implode(', ', $load);
 			}
-		}
-		
-		$sql = "SHOW VARIABLES LIKE ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('innodb_flush_log_at_trx_commit'));
-		$row = $statement->fetchArray();
-		if ($row && $row['Value'] == 1) {
-			$this->showInnoDBWarning = true;
 		}
 	}
 	
@@ -83,8 +69,7 @@ class IndexPage extends AbstractPage {
 		WCF::getTPL()->assign(array(
 			'inRescueMode' => RequestHandler::getInstance()->inRescueMode(),
 			'server' => $this->server,
-			'usersAwaitingApproval' => $usersAwaitingApproval,
-			'showInnoDBWarning' => $this->showInnoDBWarning
+			'usersAwaitingApproval' => $usersAwaitingApproval
 		));
 	}
 	

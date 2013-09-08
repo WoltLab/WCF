@@ -241,7 +241,7 @@ CREATE TABLE wcf1_comment (
 	username VARCHAR(255) NOT NULL,
 	message TEXT NOT NULL,
 	responses MEDIUMINT(7) NOT NULL DEFAULT '0',
-	lastResponseIDs VARCHAR(255) NOT NULL DEFAULT '',
+	responseIDs VARCHAR(255) NOT NULL DEFAULT '',
 	
 	KEY (objectTypeID, objectID, time)
 );

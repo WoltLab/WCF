@@ -26,10 +26,6 @@
 	<p class="info">{lang}wcf.global.availableUpdates{/lang}</p>
 {/if}
 
-{if $showInnoDBWarning}
-	<p class="warning">{lang}wcf.acp.index.innoDBWarning{/lang}</p>
-{/if}
-
 {if $usersAwaitingApproval}
 	<p class="info">{lang}wcf.acp.user.usersAwaitingApprovalInfo{/lang}</p>
 {/if}
