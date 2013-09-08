@@ -447,10 +447,10 @@
 		<item name="wcf.acp.masterPassword"><![CDATA[Hauptkennwort]]></item>
 		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Hauptkennwort wiederholen]]></item>
 		<item name="wcf.acp.masterPassword.enter"><![CDATA[Hauptkennwort erforderlich]]></item>
-		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[Die aufgerufene Seite oder Aktion erfordert aus Sicherheitsgründen die Eingabe des Hauptkennwortes. Pro Sitzung ist die Eingabe des Hauptkennwortes nur einmal erforderlich. Falls Sie das Hauptkennwort vergessen haben sollten, können Sie es zurücksetzen, indem Sie die Datei <em>{@$__wcf->getPath()}acp/masterPassword.inc.php</em> löschen.]]></item>
+		<item name="wcf.acp.masterPassword.enter.description"><![CDATA[Die aufgerufene Seite oder Aktion erfordert aus Sicherheitsgründen die Eingabe des Hauptkennwortes. Pro Sitzung ist die Eingabe des Hauptkennwortes nur einmal erforderlich. Falls Sie das Hauptkennwort vergessen haben sollten, können Sie es zurücksetzen, indem Sie die Datei <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em> löschen.]]></item>
 		<item name="wcf.acp.masterPassword.error.notEqual"><![CDATA[Die eingegebenen Kennwörter sind nicht identisch.]]></item>
 		<item name="wcf.acp.masterPassword.error.notSecure"><![CDATA[Das Kennwort wurde als unsicher eingestuft. Das Kennwort sollte mindestens acht Zeichen lang sein, große und kleine lateinische Buchstaben, Zahlen und Sonderzeichen enthalten. Es darf nicht mit den Kennwörtern von anderen Administratoren übereinstimmen.]]></item>
-		<item name="wcf.acp.masterPassword.error.notValid"><![CDATA[Das Hauptkennwort ist nicht korrekt. Falls Sie das Hauptkennwort vergessen haben sollten, können Sie es zurücksetzen, indem Sie die Datei <em>{@$__wcf->getPath()}acp/masterPassword.inc.php</em> löschen.]]></item>
+		<item name="wcf.acp.masterPassword.error.notValid"><![CDATA[Das Hauptkennwort ist nicht korrekt. Falls Sie das Hauptkennwort vergessen haben sollten, können Sie es zurücksetzen, indem Sie die Datei <em>{@$relativeWcfDir}acp/masterPassword.inc.php</em> löschen.]]></item>
 		<item name="wcf.acp.masterPassword.example"><![CDATA[Vorschlag]]></item>
 		<item name="wcf.acp.masterPassword.example.set"><![CDATA[Vorschlag übernehmen]]></item>
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Hauptkennwort festlegen]]></item>
