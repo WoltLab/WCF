@@ -19,6 +19,11 @@ use wcf\util\JSON;
  */
 class WorkerProxyAction extends AJAXInvokeAction {
 	/**
+	 * @see wcf\system\event\listener\SessionAccessLogListener::execute()
+	 */
+	const DO_NOT_LOG = true;
+	
+	/**
 	 * loop counter
 	 * @var	integer
 	 */
