@@ -160,6 +160,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 				$versions[$ek] = $packageUpdateID;
 			}
 			
+			// ignore packages without accessible versions
+			if (empty($accessible)) {
+				continue;
+			}
+			
 			uksort($accessible, array('wcf\data\package\Package', 'compareVersion'));
 			uksort($existing, array('wcf\data\package\Package', 'compareVersion'));
 			
