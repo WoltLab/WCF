@@ -55,6 +55,10 @@
 			$insertedText = ev.data;
 		}, null, null, 1);
 		event.editor.on('mode', function(ev) {
+			if ($.browser.mozilla && ev.editor.mode === 'wysiwyg') {
+				fixFirefox();
+			}
+			
 			ev.editor.focus();
 			
 			insertFakeSubmitButton(ev);
@@ -72,7 +76,11 @@
 		insertFakeSubmitButton(event);
 		
 		// remove stupid title tag
-		$(event.editor.container.$).find('.cke_wysiwyg_div').removeAttr('title');
+		$(event.editor.container.$).removeAttr('title');
+		
+		if ($.browser.mozilla) {
+			fixFirefox();
+		}
 	});
 	
 	/**
@@ -88,6 +96,16 @@
 		// place button outside of <body> to prevent it being removed once deleting content
 		$('<button accesskey="s" />').hide().appendTo($(event.editor.container.$).find('.cke_wysiwyg_div'));
 		
+	}
+	
+	/**
+	 * Disables object resizing and table handles in Firefox.
+	 */
+	function fixFirefox() {
+		document.designMode = 'on';
+		document.execCommand('enableObjectResizing', false, false);
+		document.execCommand('enableInlineTableEditing', false, false);
+		document.designMode = 'off';
 	}
 	
 	/**
