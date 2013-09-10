@@ -111,6 +111,15 @@ interface IImageAdapter {
 	public function hasColor();
 	
 	/**
+	 * Sets a color to be transparent with alpha 0.
+	 *
+	 * @param	integer		$red
+	 * @param	integer		$green
+	 * @param	integer		$blue
+	 */
+	public function setTransparentColor($red, $green, $blue);
+	
+	/**
 	 * Writes an image to disk.
 	 * 
 	 * @param	mixed		$image

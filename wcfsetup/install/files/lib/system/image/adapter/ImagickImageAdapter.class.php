@@ -134,7 +134,6 @@ class ImagickImageAdapter implements IImageAdapter {
 	public function setColor($red, $green, $blue) {
 		$this->color = new \ImagickPixel();
 		$this->color->setColor('rgb('.$red.','.$green.','.$blue.')');
-		
 	}
 	
 	/**
@@ -146,6 +145,14 @@ class ImagickImageAdapter implements IImageAdapter {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * @see wcf\system\image\adapter\IImageAdapter::setTransparentColor()
+	 */
+	public function setTransparentColor($red, $green, $blue) {
+		$color = 'rgb(' . $red . ',' . $green . ',' . $blue . ')';
+		$this->imagick->paintTransparentImage($color, 0.0, 0);
 	}
 	
 	/**
