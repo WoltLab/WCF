@@ -1017,7 +1017,7 @@ WCF.Dropdown = {
 		var $left = 'auto';
 		var $right = 'auto';
 		if ($align === 'left') {
-			dropdownMenu.removeClass('dropdownArrorRight');
+			dropdownMenu.removeClass('dropdownArrowRight');
 			
 			$left = $dropdownOffsets.left + 'px';
 		}
@@ -1027,10 +1027,35 @@ WCF.Dropdown = {
 			$right = ($windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width)) + 'px';
 		}
 		
+		// calculate vertical offset
+		var $wasHidden = true;
+		if (dropdownMenu.hasClass('dropdownOpen')) {
+			$wasHidden = false;
+			dropdownMenu.removeClass('dropdownOpen');
+		}
+		
+		var $bottom = 'auto';
+		var $top = $dropdownOffsets.top + $dropdownDimensions.height + 7;
+		var $documentHeight = $(document).height();
+		if ($top + $menuDimensions.height > $documentHeight) {
+			$bottom = $(window).height() - $dropdownOffsets.top + 10;
+			$top = 'auto';
+			
+			dropdownMenu.addClass('dropdownArrowBottom');
+		}
+		else {
+			dropdownMenu.removeClass('dropdownArrowBottom');
+		}
+		
+		if (!$wasHidden) {
+			dropdownMenu.addClass('dropdownOpen');
+		}
+		
 		dropdownMenu.css({
+			bottom: $bottom,
 			left: $left,
 			right: $right,
-			top: $dropdownOffsets.top + $dropdownDimensions.height + 7 + 'px'
+			top: $top
 		});
 	},
 	

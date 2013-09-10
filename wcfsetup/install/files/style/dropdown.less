@@ -142,6 +142,24 @@
 		}
 	}
 	
+	&.dropdownArrowBottom {
+		&:after {
+			border: 7px transparent solid;
+			border-top-color: @wcfDropdownBorderColor;
+			border-bottom-width: 0;
+			bottom: -7px;
+			top: auto;
+		}
+		
+		&:before {
+			border: 6px transparent solid;
+			border-top-color: @wcfDropdownBackgroundColor;
+			border-bottom-width: 0;
+			bottom: -6px;
+			top: auto;
+		}
+	}
+	
 	&.dropdownOpen {
 		display: block;
 	}
