@@ -128,7 +128,10 @@ button.active:hover {
 
 /* button group */
 .buttonGroup {
+	font-size: 0;
+	
 	> li {
+		font-size: 1rem;
 		display: inline-block;
 		
 		> .button {
@@ -149,6 +152,12 @@ button.active:hover {
 				border-bottom-right-radius: @wcfButtonBorderRadius;
 			}
 		}
+	}
+}
+
+.smallButtons {
+	> li {
+		font-size: @wcfSmallFontSize;
 	}
 }
 

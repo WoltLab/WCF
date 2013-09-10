@@ -1,9 +1,12 @@
 /* ### globals ### */
+html, body {
+	font-size: @wcfBaseFontSize;
+}
+
 body {
 	background-color: @wcfPageBackgroundColor;
 	color: @wcfColor;
 	font-family: @wcfBaseFontFamily;
-	font-size: @wcfBaseFontSize;
 	line-height: @wcfBaseLineHeight;
 	word-wrap: break-word;
 }
@@ -189,7 +192,7 @@ fieldset {
 	background-color: @wcfTooltipBackgroundColor;
 	border-radius: 6px;
 	color: @wcfTooltipColor;
-	font-size: .85em;
+	font-size: @wcfSmallFontSize;
 	max-width: 300px;
 	padding: 5px 10px 7px;
 	position: absolute;
@@ -284,7 +287,7 @@ fieldset {
 	border-radius: 9px;
 	color: @wcfContentBackgroundColor;
 	display: inline-block;
-	font-size: 11px;
+	font-size: @wcfSmallFontSize;
 	font-weight: bold;
 	padding: 1px 6px 1px;
 	position: relative;
