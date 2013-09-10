@@ -1141,6 +1141,7 @@ WCF.Message.InlineEditor = Class.extend({
 					objectID: this._container[$containerID].data('objectID')
 				}
 			});
+			this._proxy.setOption('failure', $.proxy(function() { this._cancel(); }, this));
 			this._proxy.sendRequest();
 		}
 		else {
@@ -1234,8 +1235,7 @@ WCF.Message.InlineEditor = Class.extend({
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
 		
 		var $content = $messageBody.find('.messageText');
-		this._cache = $content.html();
-		$content.empty();
+		this._cache = $content.children().detach();
 		
 		// hide unrelated content
 		$content.parent().children('.jsInlineEditorHideContent').hide();
@@ -1299,6 +1299,9 @@ WCF.Message.InlineEditor = Class.extend({
 	 * @param	object		data
 	 */
 	_showEditor: function(data) {
+		// revert failure function
+		this._proxy.setOption('failure', $.proxy(this._failure, this));
+		
 		var $messageBody = this._container[this._activeElementID].addClass('jsInvalidQuoteTarget').find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
 		var $content = $messageBody.find('.messageText');
