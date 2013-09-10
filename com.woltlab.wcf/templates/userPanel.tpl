@@ -31,21 +31,23 @@
 	{if !$__hideUserMenu|isset}
 		<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}">
 			<a href="{link controller='NotificationList'}{/link}"><span class="icon icon16 icon-bell-alt"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeInverse">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
-			<script data-relocate="true">
-				//<![CDATA[
-				$(function() {
-					WCF.Language.addObject({
-						'wcf.user.notification.count': '{lang}wcf.user.notification.count{/lang}',
-						'wcf.user.notification.markAllAsConfirmed': '{lang}wcf.user.notification.markAllAsConfirmed{/lang}',
-						'wcf.user.notification.markAllAsConfirmed.confirmMessage': '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}',
-						'wcf.user.notification.noMoreNotifications': '{lang}wcf.user.notification.noMoreNotifications{/lang}',
-						'wcf.user.notification.showAll': '{lang}wcf.user.notification.showAll{/lang}'
+			{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
+				<script data-relocate="true">
+					//<![CDATA[
+					$(function() {
+						WCF.Language.addObject({
+							'wcf.user.notification.count': '{lang}wcf.user.notification.count{/lang}',
+							'wcf.user.notification.markAllAsConfirmed': '{lang}wcf.user.notification.markAllAsConfirmed{/lang}',
+							'wcf.user.notification.markAllAsConfirmed.confirmMessage': '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}',
+							'wcf.user.notification.noMoreNotifications': '{lang}wcf.user.notification.noMoreNotifications{/lang}',
+							'wcf.user.notification.showAll': '{lang}wcf.user.notification.showAll{/lang}'
+						});
+						
+						new WCF.Notification.UserPanel('{link controller='NotificationList'}{/link}');
 					});
-					
-					new WCF.Notification.UserPanel('{link controller='NotificationList'}{/link}');
-				});
-				//]]>
-			</script>
+					//]]>
+				</script>
+			{/if}
 		</li>
 	{/if}
 {else}
@@ -183,20 +185,22 @@
 				<span>{lang}wcf.moderation.moderation{/lang}</span>
 				{if $__wcf->getModerationQueueManager()->getOutstandingModerationCount()}<span class="badge badgeInverse">{#$__wcf->getModerationQueueManager()->getOutstandingModerationCount()}</span>{/if}
 			</a>
-			<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-			<script data-relocate="true">
-				//<![CDATA[
-				$(function() {
-					WCF.Language.addObject({
-						'wcf.moderation.noMoreItems': '{lang}wcf.moderation.noMoreItems{/lang}',
-						'wcf.moderation.showAll': '{lang}wcf.moderation.showAll{/lang}',
-						'wcf.moderation.showDeletedContent': '{lang}wcf.moderation.showDeletedContent{/lang}'
+			{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
+				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+				<script data-relocate="true">
+					//<![CDATA[
+					$(function() {
+						WCF.Language.addObject({
+							'wcf.moderation.noMoreItems': '{lang}wcf.moderation.noMoreItems{/lang}',
+							'wcf.moderation.showAll': '{lang}wcf.moderation.showAll{/lang}',
+							'wcf.moderation.showDeletedContent': '{lang}wcf.moderation.showDeletedContent{/lang}'
+						});
+						
+						new WCF.Moderation.UserPanel('{link controller='ModerationList'}{/link}', '{link controller='DeletedContentList'}{/link}');
 					});
-					
-					new WCF.Moderation.UserPanel('{link controller='ModerationList'}{/link}', '{link controller='DeletedContentList'}{/link}');
-				});
-				//]]>
-			</script>
+					//]]>
+				</script>
+			{/if}
 		</li>
 	{/if}
 	

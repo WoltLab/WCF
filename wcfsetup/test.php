@@ -1,6 +1,40 @@
 <?php
-if (isset($_SERVER['PATH_INFO']) && !empty($_SERVER['PATH_INFO'])) {
-	die("PASSED");
+if (isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO'])) {
+	$pathInfo = null;
+	if (isset($_SERVER['PATH_INFO'])) {
+		$pathInfo = $_SERVER['PATH_INFO'];
+	}
+	else if (isset($_SERVER['ORIG_PATH_INFO'])) {
+		$pathInfo = $_SERVER['ORIG_PATH_INFO'];
+			
+		// in some configurations ORIG_PATH_INFO contains the path to the file
+		// if the intended PATH_INFO component is empty
+		if (!empty($pathInfo)) {
+			if (isset($_SERVER['SCRIPT_NAME']) && ($pathInfo == $_SERVER['SCRIPT_NAME'])) {
+				$pathInfo = '';
+			}
+				
+			if (isset($_SERVER['PHP_SELF']) && ($pathInfo == $_SERVER['PHP_SELF'])) {
+				$pathInfo = '';
+			}
+				
+			if (isset($_SERVER['SCRIPT_URL']) && ($pathInfo == $_SERVER['SCRIPT_URL'])) {
+				$pathInfo = '';
+			}
+		}
+	}
+	
+	if (!empty($pathInfo)) {
+		if ($pathInfo == '/test/') {
+			echo "PASSED";
+		}
+		else {
+			@header("HTTP/1.0 500 Internal Server Error");
+			echo "FAILED";
+		}
+		
+		exit;
+	}
 }
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -109,7 +143,7 @@ else {
 	if (isset($_SERVER['SERVER_SOFTWARE']) && stripos($_SERVER['SERVER_SOFTWARE'], 'nginx') !== false) {
 		$isNginx = true;
 	}
-	
+	$isNginx = true;
 	if ($isNginx) { ?>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
 		<script>
@@ -121,8 +155,14 @@ else {
 						$('#nginxFailure').show();
 					},
 					success: function() {
-						$('#worker').remove();
-						$('#nginx').show();
+						if (arguments[0] == 'PASSED') {
+							$('#worker').remove();
+							$('#nginx').show();
+						}
+						else {
+							$('#worker').remove();
+							$('#nginxFailure').show();
+						}
 					}
 				});
 			});

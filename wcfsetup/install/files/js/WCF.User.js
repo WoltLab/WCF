@@ -1652,6 +1652,15 @@ WCF.User.ProfilePreview = WCF.Popover.extend({
 				// show user profile
 				self._insertContent($elementID, data.returnValues.template, true);
 			});
+			this._proxy.setOption('failure', function(data, jqXHR, textStatus, errorThrown) {
+				// cache user profile
+				self._userProfiles[$userID] = data.message;
+				
+				// show user profile
+				self._insertContent($elementID, data.message, true);
+				
+				return false;
+			});
 			this._proxy.sendRequest();
 		}
 	}

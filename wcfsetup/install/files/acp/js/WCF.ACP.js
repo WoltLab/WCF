@@ -1410,7 +1410,7 @@ WCF.ACP.Package.Update.Manager = Class.extend({
 		}
 		
 		if ($continue) {
-			this._click(undefined, $(event.currentTarget).data('packageUpdateServerID'))
+			this._click(undefined, $(event.currentTarget).data('packageUpdateServerID'));
 		}
 	}
 });
@@ -1432,7 +1432,7 @@ WCF.ACP.Package.Update.Search = Class.extend({
 		this._dialog = null;
 		
 		var $button = $('<li><a class="button"><span class="icon icon16 icon-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
-		$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav > ul'));
+		$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav:not(.pageNavigation) > ul'));
 	},
 	
 	/**

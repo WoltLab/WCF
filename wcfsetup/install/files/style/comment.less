@@ -49,18 +49,24 @@
 	padding: @wcfGapSmall;
 }
 
-.commentResponseAdd {
+.commentOptionContainer {
 	border-top: 1px solid @wcfContainerBorderColor;
 	margin-top: @wcfGapMedium;
 	padding: 7px 7px 0;
+
+	> ul > li {
+		&:not(:last-child):after {
+			content: " - ";
+		}
+		
+		display: inline-block;
+		font-size: 85%;
+		padding-right: 3px;
+	}
 }
 
 .commentResponseList .commentResponse:first-child {
 	margin-top: @wcfGapMedium;
-}
-
-.commentResponseAdd + .commentResponseList .commentResponse:first-child {
-	margin-top: 7px;
 }
 
 .commentList > li:nth-child(2n) .commentResponseList .commentResponse:nth-child(2n+1) {

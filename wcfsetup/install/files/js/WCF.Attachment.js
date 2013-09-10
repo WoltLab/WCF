@@ -260,14 +260,14 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	/**
 	 * @see	WCF.Upload._error()
 	 */
-	_error: function() {
+	_error: function(data) {
 		// mark uploads as failed
 		this._fileListSelector.find('li').each(function(index, listItem) {
 			var $listItem = $(listItem);
 			if ($listItem.children('.icon-spinner').length) {
 				// upload icon
 				$listItem.addClass('uploadFailed').children('.icon-spinner').removeClass('icon-spinner').addClass('icon-ban-circle');
-				$listItem.find('div > div').append($('<small class="innerError">'+WCF.Language.get('wcf.attachment.upload.error.uploadFailed')+'</small>'));
+				$listItem.find('div > div').append($('<small class="innerError">' + (data.responseJSON && data.responseJSON.message ? data.responseJSON.message : WCF.Language.get('wcf.attachment.upload.error.uploadFailed')) + '</small>'));
 			}
 		});
 	}

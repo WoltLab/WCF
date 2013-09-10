@@ -111,7 +111,14 @@ class RequestHandler extends SingletonFactory {
 					$redirectURL = $landingPage->getLink();
 					$relativeRoute = str_replace(RouteHandler::getHost(), '', $redirectURL);
 					
-					if ($relativeRoute == preg_replace('~index.php$~i', '', $_SERVER['REQUEST_URI']) || $relativeRoute == preg_replace('~([?&]s=[a-f0-9]{40})~', '', $_SERVER['REQUEST_URI'])) {
+					// strip query string for comparison
+					$pos = mb_strpos($relativeRoute, '?');
+					if ($pos !== false) $relativeRoute = mb_substr($relativeRoute, 0, $pos);
+					$requestUri = $_SERVER['REQUEST_URI'];
+					$pos = mb_strpos($requestUri, '?');
+					if ($pos !== false) $requestUri = mb_substr($requestUri, 0, $pos);
+					
+					if ($relativeRoute == $requestUri) {
 						$routeData['controller'] = $landingPage->getController();
 					}
 					else {
