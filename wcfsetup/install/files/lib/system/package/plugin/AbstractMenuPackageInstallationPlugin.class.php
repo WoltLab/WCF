@@ -18,7 +18,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
+		$sql = "DELETE FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE		menuItem = ?
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -60,7 +60,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		}
 		
 		$sql = "SELECT	COUNT(menuItemID) AS count
-			FROM	wcf".WCF_N."_".$this->tableName."
+			FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE	menuItem = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($data['parentMenuItem']));
@@ -76,7 +76,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_".$this->tableName."
+			FROM	".$this->application.WCF_N."_".$this->tableName."
 			WHERE	menuItem = ?
 				AND packageID = ?";
 		$parameters = array(
