@@ -5,13 +5,11 @@
 	$(function() {
 		WCF.TabMenu.init()
 		
-		{if PACKAGE_ID != $package->packageID && $package->canUninstall()}
-			WCF.Language.addObject({
-				'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}'
-			});
-			
-			new WCF.ACP.Package.Uninstallation($('.jsUninstallButton'));
-		{/if}
+		WCF.Language.addObject({
+			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}'
+		});
+		
+		new WCF.ACP.Package.Uninstallation($('.jsUninstallButton'), {if PACKAGE_ID > 1}'{link controller='PackageList' forceWCF=true}packageID={literal}{packageID}{/literal}{/link}'{else}null{/if});
 	});
 	//]]>
 </script>
@@ -111,7 +109,7 @@
 						<li><a href="{@$__wcf->getAnchor('dependencies-dependent')}">{lang}wcf.acp.package.dependencies.dependent{/lang}</a></li>
 					{/if}
 					
-					{event name='DependenciesSubTabMenuTabs'}
+					{event name='dependenciesSubTabMenuTabs'}
 				</ul>
 			</nav>
 			
@@ -141,7 +139,7 @@
 									<tr class="jsPackageRow">
 										<td class="columnIcon">
 											{if $requiredPackage->canUninstall()}
-												<span class="icon icon16 icon-remove pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-objectID="{@$requiredPackage->packageID}" data-confirm-message="{lang package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}"></span>
+												<span class="icon icon16 icon-remove pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$requiredPackage->packageID}" data-confirm-message="{lang package=$requiredPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $requiredPackage->isRequired()}true{else}false{/if}" data-is-application="{if $requiredPackage->isApplication}true{else}false{/if}"></span>
 											{else}
 												<span class="icon icon16 icon-remove disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
 											{/if}
@@ -187,7 +185,7 @@
 									<tr class="jsPackageRow">
 										<td class="columnIcon">
 											{if $dependentPackage->canUninstall()}
-												<span class="icon icon16 icon-remove pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-objectID="{@$dependentPackage->packageID}" data-confirm-message="{lang package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}"></span>
+												<span class="icon icon16 icon-remove pointer jsTooltip jsUninstallButton" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$dependentPackage->packageID}" data-confirm-message="{lang package=$dependentPackage}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $dependentPackage->isRequired()}true{else}false{/if}" data-is-application="{if $dependentPackage->isApplication}true{else}false{/if}"></span>
 											{else}
 												<span class="icon icon16 icon-remove disabled" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span>
 											{/if}
@@ -207,7 +205,7 @@
 				</div>
 			{/hascontent}
 			
-			{event name='DependenciesSubTabMenuContents'}
+			{event name='dependenciesSubTabMenuContents'}
 		</div>
 	{/if}
 	
@@ -217,10 +215,6 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			{if PACKAGE_ID != $package->packageID && $package->canUninstall()}
-				<li><a class="button jsUninstallButton" data-object-id="{@$package->packageID}" data-confirm-message="{lang}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}"><span class="icon icon16 icon-remove pointer jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}"></span> <span>{lang}wcf.acp.package.button.uninstall{/lang}</span></a></li>
-			{/if}
-			
 			{event name='contentNavigationButtonsBottom'}
 			
 			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
