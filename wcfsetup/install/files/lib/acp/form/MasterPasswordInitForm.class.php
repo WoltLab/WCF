@@ -62,7 +62,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 		}
 		
 		// check password security
-		if (StringUtil::length($this->masterPassword) < 8) {
+		if (mb_strlen($this->masterPassword) < 8) {
 			throw new UserInputException('masterPassword', 'notSecure');
 		}
 		// digits
@@ -122,7 +122,8 @@ define('MASTER_PASSWORD', '".PasswordUtil::getDoubleSaltedHash($this->masterPass
 		
 		WCF::getTPL()->assign(array(
 			'confirmMasterPassword' => $this->confirmMasterPassword,
-			'exampleMasterPassword' => PasswordUtil::getRandomPassword(12)
+			'exampleMasterPassword' => PasswordUtil::getRandomPassword(12),
+			'relativeWcfDir' => RELATIVE_WCF_DIR
 		));
 	}
 }

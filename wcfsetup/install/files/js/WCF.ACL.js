@@ -1,7 +1,7 @@
 /**
  * Namespace for ACL
  */
-WCF.ACL = {};
+WCF.ACL = { };
 
 /**
  * ACL support for WCF
@@ -84,6 +84,10 @@ WCF.ACL.List = Class.extend({
 		if (includeUserGroups === undefined) {
 			includeUserGroups = true;
 		}
+		this._values = {
+			group: { },
+			user: { }
+		};
 		
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
@@ -200,7 +204,7 @@ WCF.ACL.List = Class.extend({
 	 */
 	_createListItem: function(objectID, label, type) {
 		var $listItem = $('<li><span class="icon icon16 icon-' + (type === 'group' ? 'group' : 'user') + '" /> <span>' + label + '</span></li>').appendTo(this._containerElements.aclList);
-		$listItem.data('objectID', objectID).data('type', type).click($.proxy(this._click, this));
+		$listItem.data('objectID', objectID).data('type', type).data('label', label).click($.proxy(this._click, this));
 		$('<span class="icon icon16 icon-remove jsTooltip pointer" title="' + WCF.Language.get('wcf.global.button.delete') + '" />').click($.proxy(this._removeItem, this)).appendTo($listItem);
 		
 		return $listItem;
@@ -216,7 +220,7 @@ WCF.ACL.List = Class.extend({
 		var $type = $listItem.data('type');
 		var $objectID = $listItem.data('objectID');
 		
-		this._search.removeExcludedSearchValue($listItem.children('span:eq(0)').text());
+		this._search.removeExcludedSearchValue($listItem.data('label'));
 		$listItem.remove();
 		
 		// remove stored data
@@ -422,13 +426,13 @@ WCF.ACL.List = Class.extend({
 		});
 		if ($type == 'deny') {
 			if (this._containerElements.denyAll !== null) {
-				if ($allChecked) this._containerElements.denyAll.prop('checked', true)
+				if ($allChecked) this._containerElements.denyAll.prop('checked', true);
 				else this._containerElements.denyAll.prop('checked', false);
 			}
 		}
 		else {
 			if (this._containerElements.grantAll !== null) {
-				if ($allChecked) this._containerElements.grantAll.prop('checked', true)
+				if ($allChecked) this._containerElements.grantAll.prop('checked', true);
 				else this._containerElements.grantAll.prop('checked', false);
 			}
 		}
@@ -525,8 +529,15 @@ WCF.ACL.List = Class.extend({
 	_savePermissions: function() {
 		// get active object
 		var $activeObject = this._containerElements.aclList.find('li.active');
+		if (!$activeObject.length) {
+			return;
+		}
+		
 		var $objectID = $activeObject.data('objectID');
 		var $type = $activeObject.data('type');
+		
+		// clear old values
+		this._values[$type][$objectID] = { };
 		
 		var self = this;
 		this._containerElements.permissionList.find("input[type='checkbox']").each(function(index, checkbox) {
@@ -536,10 +547,6 @@ WCF.ACL.List = Class.extend({
 				var $optionID = $checkbox.data('optionID');
 				
 				if ($checkbox.is(':checked')) {
-					if (!self._values[$type][$objectID]) {
-						self._values[$type][$objectID] = { };
-					}
-					
 					// store value
 					self._values[$type][$objectID][$optionID] = $optionValue;
 					

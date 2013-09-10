@@ -6,6 +6,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\PackageCacheBuilder;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\request\RouteHandler;
 use wcf\system\session\ACPSessionFactory;
 use wcf\system\session\SessionHandler;
@@ -17,7 +18,7 @@ use wcf\util\HeaderUtil;
  * Extends WCF class with functions for the ACP.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system
@@ -63,8 +64,16 @@ class WCFACP extends WCF {
 		$pathInfo = RouteHandler::getPathInfo();
 		if (empty($pathInfo) || !preg_match('~^/(ACPCaptcha|Login|Logout)/~', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
+				// work-around for AJAX-requests within ACP
+				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+					throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, '');
+				}
+				
 				// build redirect path
 				$application = ApplicationHandler::getInstance()->getActiveApplication();
+				if ($application === null) {
+					throw new SystemException("You have aborted the installation, therefore this installation is unusable. You are required to reinstall the software.");
+				}
 				
 				// fallback for unknown host (rescue mode)
 				if ($application->domainName != $_SERVER['HTTP_HOST']) {

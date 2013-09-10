@@ -11,7 +11,7 @@ use wcf\data\DatabaseObjectDecorator;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.comment
+ * @package	com.woltlab.wcf
  * @subpackage	data.comment
  * @category	Community Framework
  */
@@ -81,7 +81,7 @@ class StructuredComment extends DatabaseObjectDecorator implements \Countable, \
 				$lastResponseTime = $response->time;
 			}
 			
-			$lastResponseTime = min($lastResponseTime, $response->time);
+			$lastResponseTime = max($lastResponseTime, $response->time);
 		}
 		
 		return $lastResponseTime;

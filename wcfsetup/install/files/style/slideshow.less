@@ -1,0 +1,47 @@
+.slideshowContainer {
+	overflow: hidden;
+	position: relative;
+	
+	> ul:not(.slideshowButtonList) > li:not(:first-child) {
+		display: none;
+	}
+	
+	> .slideshowItemList {
+		position: absolute;
+		
+		.transition(left, .8s, ease-out);
+		
+		> li.slideshowItem {
+			display: block;
+			float: left;
+			overflow: hidden;
+			position: absolute;
+			top: 0;
+			
+			/* fixes font rendering bug */
+			-webkit-transform: translate3d(0, 0, 0);
+		}
+	}
+	
+	> .slideshowButtonList {
+		position: absolute;
+		right: 0;
+		top: 0;
+		
+		> li {
+			display: inline-block;
+			
+			> a > .icon {
+				color: @wcfContainerHoverBackgroundColor;
+				
+				&.active {
+					color: @wcfLinkColor;
+				}
+			}
+			
+			&:hover > a > .icon {
+				color: @wcfLinkHoverColor;
+			}
+		}
+	}
+}

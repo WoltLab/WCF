@@ -5,17 +5,17 @@
 	
 	{include file='headInclude'}
 	
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-	<script type="text/javascript">
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
-			new WCF.Moderation.Report.Management({@$queue->queueID}, '{link controller='ModerationList'}{/link}');
-			
 			WCF.Language.addObject({
 				'wcf.moderation.report.removeContent.confirmMessage': '{lang}wcf.moderation.report.removeContent.confirmMessage{/lang}',
 				'wcf.moderation.report.removeContent.reason': '{lang}wcf.moderation.report.removeContent.reason{/lang}',
 				'wcf.moderation.report.removeReport.confirmMessage': '{lang}wcf.moderation.report.removeReport.confirmMessage{/lang}'
 			});
+			
+			new WCF.Moderation.Report.Management({@$queue->queueID}, '{link controller='ModerationList'}{/link}');
 		});
 		//]]>
 	</script>
@@ -73,7 +73,7 @@
 		</dl>
 		{if $queue->assignedUser}
 			<dl>
-				
+				<dt></dt>
 				<dd><a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-user-id="{@$assignedUserID}">{$queue->assignedUsername}</a></dd>
 			</dl>
 		{/if}
@@ -107,8 +107,8 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			<li class="jsOnly"><button id="removeContent">{lang}wcf.moderation.report.removeContent{/lang}</button></li>
-			{if $queue->status != 2}
+			{if !$queue->isDone()}
+				<li class="jsOnly"><button id="removeContent">{lang}wcf.moderation.report.removeContent{/lang}</button></li>
 				<li class="jsOnly"><button id="removeReport">{lang}wcf.moderation.report.removeReport{/lang}</button></li>
 			{/if}
 			<li><a href="{link controller='ModerationList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.moderation.moderation{/lang}</span></a></li>

@@ -1,6 +1,7 @@
-{include file='header'}
-<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Label{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript">
+{include file='header' pageTitle='wcf.acp.label.'|concat:$action}
+
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
@@ -48,7 +49,7 @@
 					<dt><label for="groupID">{lang}wcf.acp.label.group{/lang}</label></dt>
 					<dd>
 						<select id="groupID" name="groupID">
-							<option value="0"></option>
+							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 							{foreach from=$labelGroupList item=group}
 								<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected="selected"{/if}>{$group->groupName}</option>
 							{/foreach}

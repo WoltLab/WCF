@@ -11,9 +11,9 @@ use wcf\util\StringUtil;
  * SearchEngine searches for given query in the selected object types.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.search
+ * @package	com.woltlab.wcf
  * @subpackage	system.search
  * @category	Community Framework
  */
@@ -82,7 +82,7 @@ class SearchEngine extends SingletonFactory {
 			$tmp = '';
 			$controlCharacterOrSpace = false;
 			$chars = array('+', '-', '*');
-			for ($i = 0, $length = StringUtil::length($q); $i < $length; $i++) {
+			for ($i = 0, $length = mb_strlen($q); $i < $length; $i++) {
 				$char = $q[$i];
 				
 				if ($inQuotes) {
@@ -125,7 +125,7 @@ class SearchEngine extends SingletonFactory {
 				
 				case 'wcf\system\database\PostgreSQLDatabase':
 					// replace * with :*
-					$q = StringUtil::replace('*', ':*', $q);
+					$q = str_replace('*', ':*', $q);
 					
 					$fulltextCondition->add("fulltextIndex".($subjectOnly ? "SubjectOnly" : '')." @@ to_tsquery(?)", array($q));
 				break;
@@ -153,7 +153,8 @@ class SearchEngine extends SingletonFactory {
 		foreach ($objectTypes as $objectTypeName) {
 			$objectType = $this->getObjectType($objectTypeName);
 			if (!empty($sql)) $sql .= "\nUNION\n";
-			if (($specialSQL = $objectType->getSpecialSQLQuery($fulltextCondition, $searchIndexCondition, (isset($additionalConditions[$objectTypeName]) ? $additionalConditions[$objectTypeName] : null), $orderBy))) {
+			$additionalConditionsConditionBuilder = (isset($additionalConditions[$objectTypeName]) ? $additionalConditions[$objectTypeName] : null);
+			if (($specialSQL = $objectType->getSpecialSQLQuery($fulltextCondition, $searchIndexCondition, $additionalConditionsConditionBuilder, $orderBy))) {
 				$sql .= "(".$specialSQL.")";
 			}
 			else {

@@ -32,6 +32,19 @@
 		<nav>
 			<ul>
 				{content}
+					{if $action == 'edit' && $availableCategories->hasChildren()}
+						<li class="dropdown">
+							<a class="button dropdownToggle"><span class="icon icon16 icon-sort"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('button.choose')}</span></a>
+							<div class="dropdownMenu">
+								<ul class="scrollableDropdownMenu">
+									{foreach from=$availableCategories item='availableCategory'}
+										<li{if $availableCategory->categoryID == $category->categoryID} class="active"{/if}><a href="{link controller=$editController application=$objectType->getProcessor()->getApplication() object=$availableCategory}{/link}">{section name=i loop=$availableCategories->getDepth()}&nbsp;&nbsp;&nbsp;&nbsp;{/section}{$availableCategory->getTitle()}</a></li>
+									{/foreach}
+								</ul>
+							</div>
+						</li>
+					{/if}
+					
 					{if $objectType->getProcessor()->canDeleteCategory() || $objectType->getProcessor()->canEditCategory()}
 						<li><a href="{link controller=$listController application=$objectType->getProcessor()->getApplication()}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{@$objectType->getProcessor()->getLanguageVariable('button.list')}</span></a></li>
 					{/if}
@@ -45,27 +58,10 @@
 
 <form method="post" action="{if $action == 'add'}{link controller=$addController application=$objectType->getProcessor()->getApplication()}{/link}{else}{link controller=$editController application=$objectType->getProcessor()->getApplication() object=$category}{/link}{/if}">
 	<div class="container containerPadding marginTop">
+		{event name='beforeFieldsets'}
+		
 		<fieldset>
 			<legend>{lang}wcf.global.form.data{/lang}</legend>
-			
-			{if $categoryNodeList->hasChildren() && $objectType->getProcessor()->getMaximumNestingLevel()}
-				<dl{if $errorField == 'parentCategoryID'} class="formError"{/if}>
-					<dt><label for="parentCategoryID">{@$objectType->getProcessor()->getLanguageVariable('parentCategoryID')}</label></dt>
-					<dd>
-						<select id="parentCategoryID" name="parentCategoryID">
-							<option value="0"></option>
-							{include file='categoryOptionList' categoryID=$parentCategoryID maximumNestingLevel=$objectType->getProcessor()->getMaximumNestingLevel()}
-						</select>
-						{if $errorField == 'parentCategoryID'}
-							<small class="innerError">
-								{assign var=__languageVariable value='parentCategoryID.error.'|concat:$errorType}
-								{@$objectType->getProcessor()->getLanguageVariable($__languageVariable)}
-							</small>
-						{/if}
-						{hascontent}<small>{content}{@$objectType->getProcessor()->getLanguageVariable('parentCategoryID.description', true)}{/content}</small>{/hascontent}
-					</dd>
-				</dl>
-			{/if}
 			
 			<dl{if $errorField == 'title'} class="formError"{/if}>
 				<dt><label for="title">{@$objectType->getProcessor()->getLanguageVariable('title')}</label></dt>
@@ -113,6 +109,31 @@
 				</dd>
 			</dl>
 			
+			{event name='dataFields'}
+		</fieldset>
+		
+		<fieldset>
+			<legend>{@$objectType->getProcessor()->getLanguageVariable('position')}</legend>
+			
+			{if $categoryNodeList->hasChildren() && $objectType->getProcessor()->getMaximumNestingLevel()}
+				<dl{if $errorField == 'parentCategoryID'} class="formError"{/if}>
+					<dt><label for="parentCategoryID">{@$objectType->getProcessor()->getLanguageVariable('parentCategoryID')}</label></dt>
+					<dd>
+						<select id="parentCategoryID" name="parentCategoryID">
+							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
+							{include file='categoryOptionList' categoryID=$parentCategoryID maximumNestingLevel=$objectType->getProcessor()->getMaximumNestingLevel()}
+						</select>
+						{if $errorField == 'parentCategoryID'}
+							<small class="innerError">
+								{assign var=__languageVariable value='parentCategoryID.error.'|concat:$errorType}
+								{@$objectType->getProcessor()->getLanguageVariable($__languageVariable)}
+							</small>
+						{/if}
+						{hascontent}<small>{content}{@$objectType->getProcessor()->getLanguageVariable('parentCategoryID.description', true)}{/content}</small>{/hascontent}
+					</dd>
+				</dl>
+			{/if}
+			
 			<dl{if $errorField == 'showOrder'} class="formError"{/if}>
 				<dt><label for="showOrder">{@$objectType->getProcessor()->getLanguageVariable('showOrder')}</label></dt>
 				<dd>
@@ -127,7 +148,7 @@
 				</dd>
 			</dl>
 			
-			{event name='dataFields'}
+			{event name='positionFields'}
 		</fieldset>
 		
 		{if $aclObjectTypeID}
@@ -143,7 +164,7 @@
 			</fieldset>
 		{/if}
 		
-		{event name='fieldsets'}
+		{event name='afterFieldsets'}
 	</div>
 	
 	<div class="formSubmit">

@@ -6,9 +6,9 @@ use wcf\util\StringUtil;
  * Parses the [list] bbcode tag.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @package	com.woltlab.wcf
  * @subpackage	system.bbcode
  * @category	Community Framework
  */
@@ -17,7 +17,7 @@ class ListBBCode extends AbstractBBCode {
 	 * @see	wcf\system\bbcode\IBBCode::getParsedTag()
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
-		if (StringUtil::indexOf($content, '[*]') !== false) {
+		if (mb_strpos($content, '[*]') !== false) {
 			// get list elements
 			$listElements = preg_split('/\[\*\]/', StringUtil::trim($content), -1, PREG_SPLIT_NO_EMPTY);
 			

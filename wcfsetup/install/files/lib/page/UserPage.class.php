@@ -22,7 +22,7 @@ use wcf\system\WCF;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	page
  * @category	Community Framework
  */
@@ -189,7 +189,7 @@ class UserPage extends AbstractPage {
 			$editor->updateCounters(array('profileHits' => 1));
 			
 			// save visitor
-			if (PROFILE_ENABLE_VISITORS && WCF::getUser()->userID && !WCF::getUser()->invisible) {
+			if (PROFILE_ENABLE_VISITORS && WCF::getUser()->userID && !WCF::getUser()->canViewOnlineStatus) {
 				if (($visitor = UserProfileVisitor::getObject($this->user->userID, WCF::getUser()->userID)) !== null) {
 					$editor = new UserProfileVisitorEditor($visitor);
 					$editor->update(array(

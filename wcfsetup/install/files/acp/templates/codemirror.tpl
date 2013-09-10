@@ -1,17 +1,23 @@
 {if !$codemirrorLoaded|isset}
-	<script type="text/javascript" src="{$__wcf->getPath()}js/3rdParty/codemirror/codemirror.js"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.js"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/dialog/dialog.js"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/searchcursor.js"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/search.js"></script>
 {/if}
-{if $codemirrorMode|isset}<script type="text/javascript" src="{$__wcf->getPath()}js/3rdParty/codemirror/mode/{$codemirrorMode}/{$codemirrorMode}.js"></script>{/if}
+{if $codemirrorMode|isset}<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/{$codemirrorMode}/{$codemirrorMode}.js"></script>{/if}
 {event name='javascriptIncludes'}
 
-<script type="text/javascript">
+<script data-relocate="true">
 //<![CDATA[
-	{if !$codemirrorLoaded|isset}$('<link rel="stylesheet" href="{$__wcf->getPath()}js/3rdParty/codemirror/codemirror.css" />').appendTo('head');{/if}
+	{if !$codemirrorLoaded|isset}
+		$('<link rel="stylesheet" href="{@$__wcf->getPath()}js/3rdParty/codemirror/codemirror.css" />').appendTo('head');
+		$('<link rel="stylesheet" href="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/dialog/dialog.css" />').appendTo('head');
+	{/if}
 	
 	$(function() {
-		var $elements = $('{$codemirrorSelector|encodeJS}');
+		var $elements = $('{@$codemirrorSelector|encodeJS}');
 		var $config = {
-			{if $codemirrorMode|isset}mode: '{$codemirrorMode|encodeJS}',{/if}
+			{if $codemirrorMode|isset}mode: '{@$codemirrorMode|encodeJS}',{/if}
 			lineWrapping: true,
 			indentWithTabs: true,
 			lineNumbers: true,
@@ -42,7 +48,10 @@
 				
 				setTimeout(function () {
 					$element.codemirror.refresh();
-				}, 100);
+				}, 250);
+				setTimeout(function () {
+					$element.codemirror.refresh();
+				}, 1000);
 			})();
 		}
 	});

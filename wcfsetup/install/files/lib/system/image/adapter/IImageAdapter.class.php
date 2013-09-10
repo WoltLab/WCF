@@ -5,7 +5,7 @@ namespace wcf\system\image\adapter;
  * Basic interface for all image adapters.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.image.adapter
@@ -109,6 +109,15 @@ interface IImageAdapter {
 	 * @return	boolean
 	 */
 	public function hasColor();
+	
+	/**
+	 * Sets a color to be transparent with alpha 0.
+	 *
+	 * @param	integer		$red
+	 * @param	integer		$green
+	 * @param	integer		$blue
+	 */
+	public function setTransparentColor($red, $green, $blue);
 	
 	/**
 	 * Writes an image to disk.

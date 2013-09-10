@@ -22,7 +22,7 @@
 	</div>
 </form>
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	window.onload = function() {
 		document.forms[0].submit();

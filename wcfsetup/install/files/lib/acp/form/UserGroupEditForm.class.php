@@ -68,7 +68,9 @@ class UserGroupEditForm extends UserGroupAddForm {
 	public function readData() {
 		if (empty($_POST)) {
 			I18nHandler::getInstance()->setOptions('groupName', 1, $this->group->groupName, 'wcf.acp.group.group\d+');
+			I18nHandler::getInstance()->setOptions('groupDescription', 1, $this->group->groupDescription, 'wcf.acp.group.groupDescription\d+');
 			$this->groupName = $this->group->groupName;
+			$this->groupDescription = $this->group->groupDescription;
 			$this->priority = $this->group->priority;
 			$this->userOnlineMarking = $this->group->userOnlineMarking;
 			$this->showOnTeamPage = $this->group->showOnTeamPage;
@@ -107,7 +109,8 @@ class UserGroupEditForm extends UserGroupAddForm {
 		WCF::getTPL()->assign(array(
 			'groupID' => $this->group->groupID,
 			'group' => $this->group,
-			'action' => 'edit'
+			'action' => 'edit',
+			'availableUserGroups' => UserGroup::getAccessibleGroups()
 		));
 		
 		// add warning when the initiator is in the group
@@ -124,42 +127,32 @@ class UserGroupEditForm extends UserGroupAddForm {
 		
 		// save group
 		$optionValues = $this->optionHandler->save();
-		$saveOptions = array();
-		if ($this->group->groupType == UserGroup::EVERYONE) {
-			$saveOptions = $optionValues;
-		}
-		else {
-			// get default group
-			$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
-			foreach ($this->optionHandler->getCategoryOptions() as $option) {
-				$option = $option['object'];
-				$defaultValue = $defaultGroup->getGroupOption($option->optionName);
-				$typeObject = $this->optionHandler->getTypeObject($option->optionType);
-					
-				$newValue = $typeObject->diff($defaultValue, $optionValues[$option->optionID]);
-				if ($newValue !== null) {
-					$saveOptions[$option->optionID] = $newValue;
-				}
-			}
-		}
-		
 		$this->groupName = 'wcf.acp.group.group'.$this->group->groupID;
 		if (I18nHandler::getInstance()->isPlainValue('groupName')) {
-			I18nHandler::getInstance()->remove($this->groupName, 1);
+			I18nHandler::getInstance()->remove($this->groupName);
 			$this->groupName = I18nHandler::getInstance()->getValue('groupName');
 		}
 		else {
 			I18nHandler::getInstance()->save('groupName', $this->groupName, 'wcf.acp.group', 1);
 		}
+		$this->groupDescription = 'wcf.acp.group.groupDescription'.$this->group->groupID;
+		if (I18nHandler::getInstance()->isPlainValue('groupDescription')) {
+			I18nHandler::getInstance()->remove($this->groupDescription);
+			$this->groupDescription = I18nHandler::getInstance()->getValue('groupDescription');
+		}
+		else {
+			I18nHandler::getInstance()->save('groupDescription', $this->groupDescription, 'wcf.acp.group', 1);
+		}
 		
 		$data = array(
 			'data' => array_merge(array(
 				'groupName' => $this->groupName,
+				'groupDescription' => $this->groupDescription,
 				'priority' => $this->priority,
 				'userOnlineMarking' => $this->userOnlineMarking,
 				'showOnTeamPage' => $this->showOnTeamPage
 			), $this->additionalFields),
-			'options' => $saveOptions
+			'options' => $optionValues
 		);
 		$this->objectAction = new UserGroupAction(array($this->groupID), 'update', $data);
 		$this->objectAction->executeAction();

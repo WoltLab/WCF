@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * Provides functions to edit users.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user
@@ -27,11 +27,19 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	protected static $baseClass = 'wcf\data\user\User';
 	
 	/**
+	 * list of user options default values
+	 * @var	array
+	 */
+	protected static $userOptionDefaultValues = null;
+	
+	/**
 	 * @see	wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		// create salt and password hash
-		$parameters['password'] = PasswordUtil::getDoubleSaltedHash($parameters['password']);
+		if ($parameters['password'] !== '') {
+			$parameters['password'] = PasswordUtil::getDoubleSaltedHash($parameters['password']);
+		}
 		
 		// create accessToken for AbstractAuthedPage
 		$parameters['accessToken'] = StringUtil::getRandomID();
@@ -82,23 +90,25 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * @param	integer		$userID
 	 */
 	protected static function createUserOptions($userID) {
-		$userOptions = array();
-		
 		// fetch default values
-		$sql = "SELECT	optionID, defaultValue
-			FROM	wcf".WCF_N."_user_option";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
-		while ($row = $statement->fetchArray()) {
-			if (!empty($row['defaultValue'])) {
-				$userOptions[$row['optionID']] = $row['defaultValue'];
+		if (self::$userOptionDefaultValues === null) {
+			self::$userOptionDefaultValues = array();
+			
+			$sql = "SELECT	optionID, defaultValue
+				FROM	wcf".WCF_N."_user_option";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute();
+			while ($row = $statement->fetchArray()) {
+				if (!empty($row['defaultValue'])) {
+					self::$userOptionDefaultValues[$row['optionID']] = $row['defaultValue'];
+				}
 			}
 		}
 		
 		// insert default values
 		$keys = $values = '';
 		$statementParameters = array($userID);
-		foreach ($userOptions as $optionID => $optionValue) {
+		foreach (self::$userOptionDefaultValues as $optionID => $optionValue) {
 			$keys .= ', userOption'.$optionID;
 			$values .= ', ?';
 			$statementParameters[] = $optionValue;
@@ -218,18 +228,21 @@ class UserEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * Saves the visible languages of a user.
 	 * 
 	 * @param	array		$languageIDs
+	 * @param	boolean		$deleteOldLanguages
 	 */
-	public function addToLanguages(array $languageIDs) {
+	public function addToLanguages(array $languageIDs, $deleteOldLanguages = true) {
 		// remove previous languages
-		$sql = "DELETE FROM	wcf".WCF_N."_user_to_language
-			WHERE		userID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->userID));
+		if ($deleteOldLanguages) {
+			$sql = "DELETE FROM	wcf".WCF_N."_user_to_language
+				WHERE		userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->userID));
+		}
 		
 		// insert language ids
-		$sql = "INSERT INTO	wcf".WCF_N."_user_to_language
-					(userID, languageID)
-			VALUES		(?, ?)";
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_to_language
+						(userID, languageID)
+			VALUES			(?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		if (!empty($languageIDs)) {

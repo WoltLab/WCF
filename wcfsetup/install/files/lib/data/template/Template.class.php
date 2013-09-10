@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Represents a template.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.template
@@ -125,8 +125,8 @@ class Template extends DatabaseObject {
 				// search
 				if ($useRegex) $matches = (intval(preg_match('/'.$search.'/s'.(!$caseSensitive ? 'i' : ''), $template->getSource())) !== 0);
 				else {
-					if ($caseSensitive) $matches = (StringUtil::indexOf($template->getSource(), $search) !== false);
-					else $matches = (StringUtil::indexOfIgnoreCase($template->getSource(), $search) !== false);
+					if ($caseSensitive) $matches = (mb_strpos($template->getSource(), $search) !== false);
+					else $matches = (mb_strripos($template->getSource(), $search) !== false);
 				}
 				
 				if (($matches && !$invertSearch) || (!$matches && $invertSearch)) {
@@ -140,7 +140,7 @@ class Template extends DatabaseObject {
 					$newSource = preg_replace('/'.$search.'/s'.(!$caseSensitive ? 'i' : ''), $replace, $template->getSource(), -1, $matches);
 				}
 				else {
-					if ($caseSensitive) $newSource = StringUtil::replace($search, $replace, $template->getSource(), $matches);
+					if ($caseSensitive) $newSource = str_replace($search, $replace, $template->getSource(), $matches);
 					else $newSource = StringUtil::replaceIgnoreCase($search, $replace, $template->getSource(), $matches);
 				}
 				

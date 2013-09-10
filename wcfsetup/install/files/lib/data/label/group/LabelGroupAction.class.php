@@ -1,14 +1,15 @@
 <?php
 namespace wcf\data\label\group;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
 
 /**
  * Executes label group-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.label
+ * @package	com.woltlab.wcf
  * @subpackage	data.label.group
  * @category	Community Framework
  */
@@ -32,4 +33,17 @@ class LabelGroupAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.content.label.canManageLabel');
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
+	 */
+	public function delete() {
+		$count = parent::delete();
+		
+		foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType') as $objectType) {
+			$objectType->getProcessor()->save();
+		}
+		
+		return $count;
+	}
 }

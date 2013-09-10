@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * @author	Tim Duesterhus
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
  */
@@ -70,7 +70,7 @@ class SmileyAddForm extends AbstractForm {
 	public $aliases = '';
 	
 	/**
-	 * smileyPath
+	 * path to the smiley file
 	 * @var	string
 	 */
 	public $smileyPath = '';
@@ -172,6 +172,7 @@ class SmileyAddForm extends AbstractForm {
 		$this->smileyCode = '';
 		$this->categoryID = 0;
 		$this->showOrder = 0;
+		$this->smileyPath = '';
 		
 		I18nHandler::getInstance()->reset();
 		
@@ -189,7 +190,12 @@ class SmileyAddForm extends AbstractForm {
 		
 		// validate title
 		if (!I18nHandler::getInstance()->validateValue('smileyTitle')) {
-			throw new UserInputException('smileyTitle');
+			if (I18nHandler::getInstance()->isPlainValue('smileyTitle')) {
+				throw new UserInputException('smileyTitle');
+			}
+			else {
+				throw new UserInputException('smileyTitle', 'multilingual');
+			}
 		}
 		
 		if ($this->categoryID) {

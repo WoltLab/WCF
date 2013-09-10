@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.label
+ * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
  */
@@ -137,13 +137,14 @@ class LabelGroupAddForm extends AbstractForm {
 			'groupName' => $this->groupName
 		)));
 		$returnValues = $this->objectAction->executeAction();
-				
+		
 		// save acl
 		ACLHandler::getInstance()->save($returnValues['returnValues']->groupID, $this->objectTypeID);
+		ACLHandler::getInstance()->disableAssignVariables();
 		
 		// save object type relations
 		$this->saveObjectTypeRelations($returnValues['returnValues']->groupID);
-
+		
 		foreach ($this->labelObjectTypes as $objectTypeID => $labelObjectType) {
 			$labelObjectType->save();
 		}
@@ -167,6 +168,8 @@ class LabelGroupAddForm extends AbstractForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+		
+		ACLHandler::getInstance()->assignVariables($this->objectTypeID);
 		
 		WCF::getTPL()->assign(array(
 			'action' => 'add',

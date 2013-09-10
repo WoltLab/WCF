@@ -8,9 +8,9 @@ use wcf\system\WCF;
  * Installs, updates and deletes bbcodes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
  * @category	Community Framework
  */
@@ -81,7 +81,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
-		return array(
+		$data = array(
 			'bbcodeTag' => $data['attributes']['name'],
 			'htmlOpen' => (!empty($data['elements']['htmlopen']) ? $data['elements']['htmlopen'] : ''),
 			'htmlClose' => (!empty($data['elements']['htmlclose']) ? $data['elements']['htmlclose'] : ''),
@@ -90,7 +90,14 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			'attributes' => (isset($data['elements']['attributes']) ? $data['elements']['attributes'] : array()),
 			'className' => (!empty($data['elements']['classname']) ? $data['elements']['classname'] : ''),
 			'isSourceCode' => (!empty($data['elements']['sourcecode']) ? 1 : 0),
+			'buttonLabel' => (isset($data['elements']['buttonlabel']) ? $data['elements']['buttonlabel'] : '')
 		);
+		
+		if ($data['wysiwygIcon'] && $data['buttonLabel']) {
+			$data['showButton'] = 1;
+		}
+		
+		return $data;
 	}
 	
 	/**

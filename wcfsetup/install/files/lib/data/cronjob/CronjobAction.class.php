@@ -108,12 +108,6 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 		$return = array();
 		
 		foreach ($this->objects as $key => $cronjob) {
-			// skip jobs that are already being processed
-			if ($cronjob->state == Cronjob::PENDING || $cronjob->state == Cronjob::EXECUTING) {
-				unset($this->objects[$key]);
-				continue;
-			}
-			
 			// mark them as pending
 			$cronjob->update(array('state' => Cronjob::PENDING));
 		}

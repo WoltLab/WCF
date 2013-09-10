@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.label
+ * @package	com.woltlab.wcf
  * @subpackage	data.label
  * @category	Community Framework
  */
@@ -36,35 +36,22 @@ class Label extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * Returns true, if label is editable by current user.
-	 * 
-	 * @return	boolean
-	 */
-	public function isEditable() {
-		if (WCF::getSession()->getPermission('admin.content.label.canManageLabel')) {
-			return true;
-		}
-		
-		return false;
-	}
-	
-	/**
-	 * Returns true, if label is deletable by current user.
-	 * 
-	 * @return	boolean
-	 */
-	public function isDeletable() {
-		if (WCF::getSession()->getPermission('admin.content.label.canManageLabel')) {
-			return true;
-		}
-		
-		return false;
-	}
-	
-	/**
 	 * @see	wcf\data\ITitledObject::getTitle()
 	 */
 	public function getTitle() {
 		return WCF::getLanguage()->get($this->label);
+	}
+	
+	/**
+	 * Returns label CSS class names.
+	 * 
+	 * @return	string
+	 */
+	public function getClassNames() {
+		if ($this->cssClassName == 'none') {
+			return '';
+		}
+		
+		return $this->cssClassName;
 	}
 }

@@ -3,7 +3,7 @@
 	<small>{lang}wcf.recaptcha.description{/lang}</small>
 	
 	<dl class="wide reCaptcha{if $errorField == 'recaptchaString'} formError{/if}">
-		<script type="text/javascript">
+		<script data-relocate="true">
 			//<![CDATA[
 			var RecaptchaOptions = {
 				lang: '{@$recaptchaLanguageCode}',
@@ -37,7 +37,7 @@
 			</ul>
 		</dd>
 		
-		<script type="text/javascript" src="http{if $recaptchaUseSSL}s{/if}://www.google.com/recaptcha/api/challenge?k={$recaptchaPublicKey}"></script>
+		<script data-relocate="true" src="http{if $recaptchaUseSSL}s{/if}://www.google.com/recaptcha/api/challenge?k={$recaptchaPublicKey}"></script>
 		<noscript>
 			<dd>
 				<iframe src="http{if $recaptchaUseSSL}s{/if}://www.google.com/recaptcha/api/noscript?k={$recaptchaPublicKey}" height="300" width="500" seamless="seamless"></iframe><br />

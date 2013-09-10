@@ -61,14 +61,19 @@ class FilesFileHandler extends PackageInstallationFileHandler {
 			return;
 		}
 		
-		// insert 50 files per loop
-		for ($i = 0, $steps = ceil(count($files) / 50); $i < $steps; $i++) {
-			$items = array_slice($files, $i * 50, 50);
-			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_package_installation_file_log
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_package_installation_file_log
 							(packageID, filename, application)
-				VALUES			".substr(str_repeat("(".$this->packageInstallation->getPackageID().", ?, '".$this->application."'), ", count($items)), 0, -2);
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($items);
+				VALUES			(?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($files as $file) {
+			$statement->execute(array(
+				$this->packageInstallation->getPackageID(),
+				$file,
+				$this->application
+			));
 		}
+		WCF::getDB()->commitTransaction();
 	}
 }

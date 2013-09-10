@@ -9,28 +9,13 @@ use wcf\util\StringUtil;
  * The merge of option values returns merge of all text values.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user.group
  * @category	Community Framework
  */
 class TextareaUserGroupOptionType extends TextareaOptionType implements IUserGroupOptionType {
-	/**
-	 * @see	wcf\system\option\user\group\IUserGroupOptionType::diff()
-	 */
-	public function diff($defaultValue, $groupValue) {
-		$defaultValue = explode("\n", StringUtil::unifyNewlines($defaultValue));
-		$groupValue = explode("\n", StringUtil::unifyNewlines($groupValue));
-		
-		$result = array_diff($groupValue, $defaultValue);
-		if (empty($result)) {
-			return null;
-		}
-		
-		return implode("\n", $result);
-	}
-	
 	/**
 	 * @see	wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */

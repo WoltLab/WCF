@@ -167,6 +167,16 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
+	 * Returns the description of this category.
+	 * 
+	 * @return	string
+	 */
+	public function getDescription() {
+		if ($this->description) return WCF::getLanguage()->get($this->description);
+		return '';
+	}
+	
+	/**
 	 * @see	wcf\data\DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {

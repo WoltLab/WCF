@@ -12,9 +12,9 @@ use wcf\util\StringUtil;
  * Shows members page.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	page
  * @category	Community Framework
  */
@@ -95,7 +95,7 @@ class MembersListPage extends SortablePage {
 		parent::readParameters();
 		
 		// letter
-		if (isset($_REQUEST['letter']) && StringUtil::length($_REQUEST['letter']) == 1 && StringUtil::indexOf(self::$availableLetters, $_REQUEST['letter']) !== false) {
+		if (isset($_REQUEST['letter']) && mb_strlen($_REQUEST['letter']) == 1 && mb_strpos(self::$availableLetters, $_REQUEST['letter']) !== false) {
 			$this->letter = $_REQUEST['letter'];
 		}
 		

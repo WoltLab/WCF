@@ -8,7 +8,7 @@ use wcf\system\SingletonFactory;
  * Abstract implementation of a community framework application.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.application
@@ -52,6 +52,13 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 		if ($application->packageID == ApplicationHandler::getInstance()->getActiveApplication()->packageID) {
 			$this->isActiveApplication = true;
 		}
+	}
+	
+	/**
+	 * @see	wcf\system\application\IApplication::__run()
+	 */
+	public function __run() {
+		// does nothing
 	}
 	
 	/**

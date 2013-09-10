@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * User group option type implementation for a user group select list.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user.group
@@ -64,21 +64,6 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 		$newValue = ArrayUtil::toIntegerArray($newValue);
 		sort($newValue, SORT_NUMERIC);
 		return implode(',', $newValue);
-	}
-	
-	/**
-	 * @see	wcf\system\option\user\group\IUserGroupOptionType::diff()
-	 */
-	public function diff($defaultValue, $groupValue) {
-		$defaultValue = explode(',', $defaultValue);
-		$groupValue = explode(',', $groupValue);
-		
-		$result = array_diff($groupValue, $defaultValue);
-		if (empty($result)) {
-			return null;
-		}
-		
-		return implode(',', $result);
 	}
 	
 	/**

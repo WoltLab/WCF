@@ -16,7 +16,7 @@ use wcf\util\ClassUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	system.dashboard
  * @category	Community Framework
  */
@@ -42,7 +42,7 @@ class DashboardHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns active dashboard boxes for given object type id.
+	 * Loads the active dashboard boxes for the given object type and page.
 	 * 
 	 * @param	string		$objectType
 	 * @param	wcf\page\IPage	$page

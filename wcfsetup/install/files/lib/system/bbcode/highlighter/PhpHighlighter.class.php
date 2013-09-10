@@ -6,10 +6,10 @@ use wcf\util\StringUtil;
 /**
  * Highlights syntax of PHP sourcecode.
  * 
- * @author	Tim Düsterhus, Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Tim Duesterhus, Marcel Werk
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @package	com.woltlab.wcf
  * @subpackage	system.bbcode.highlighter
  * @category	Community Framework
  */
@@ -36,7 +36,7 @@ class PhpHighlighter extends Highlighter {
 	public function highlight($code) {
 		// add starting php tag
 		$phpTagsAdded = false;
-		if (StringUtil::indexOf($code, '<?') === false) {
+		if (mb_strpos($code, '<?') === false) {
 			$phpTagsAdded = true;
 			$code = '<?php '.$code.' ?>';
 		}

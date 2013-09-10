@@ -9,7 +9,7 @@
 {include file='header'}
 
 {if $mailID|isset}
-	<script type="text/javascript">
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', '', {
@@ -129,6 +129,7 @@
 			</dl>
 			
 			<dl>
+				<dt></dt>
 				<dd>
 					<label><input type="checkbox" id="enableHTML" name="enableHTML" {if $enableHTML == 1}checked="checked" {/if}value="1" /> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
 				</dd>

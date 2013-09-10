@@ -9,11 +9,17 @@ use wcf\system\SingletonFactory;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @package	com.woltlab.wcf
  * @subpackage	system.bbcode
  * @category	Community Framework
  */
 class BBCodeHandler extends SingletonFactory {
+	/**
+	 * list of BBCodes allowed for usage
+	 * @var	array<wcf\data\bbcode\BBCode>
+	 */
+	protected $allowedBBCodes = array();
+	
 	/**
 	 * list of BBCodes displayed as buttons
 	 * @var	array<wcf\data\bbcode\BBCode>
@@ -32,11 +38,43 @@ class BBCodeHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns true if the BBCode with the given tag is available in the WYSIWYG editor.
+	 * 
+	 * @param	string		$bbCodeTag
+	 * @return	boolean
+	 */
+	public function isAvailableBBCode($bbCodeTag) {
+		$bbCode = BBCodeCache::getInstance()->getBBCodeByTag($bbCodeTag);
+		if ($bbCode === null || $bbCode->isDisabled) {
+			return false;
+		}
+		
+		if (in_array('all', $this->allowedBBCodes)) {
+			return true;
+		}
+		else if (in_array('none', $this->allowedBBCodes)) {
+			return false;
+		}
+		
+		return in_array($bbCodeTag, $this->allowedBBCodes);
+	}
+	
+	/**
 	 * Returns a list of BBCodes displayed as buttons.
 	 * 
 	 * @return	array<wcf\data\bbcode\BBCode>
 	 */
 	public function getButtonBBCodes() {
+		// todo: check if BBCodes are available
 		return $this->buttonBBCodes;
+	}
+	
+	/**
+	 * Sets the allowed BBCodes.
+	 * 
+	 * @param	array<string>
+	 */
+	public function setAllowedBBCodes(array $bbCodes) {
+		$this->allowedBBCodes = $bbCodes;
 	}
 }

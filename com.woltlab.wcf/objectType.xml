@@ -145,7 +145,6 @@
 			<name>com.woltlab.wcf.like.activityPointEvent.receivedLikes</name>
 			<definitionname>com.woltlab.wcf.user.activityPointEvent</definitionname>
 			<points>1</points>
-			<classname><![CDATA[wcf\system\user\activity\point\ReceivedLikesUserActivityPointObjectProcessor]]></classname>
 		</type>
 		<!-- /activity points -->
 		
@@ -210,5 +209,90 @@
 			<name>com.woltlab.wcf.label</name>
 			<definitionname>com.woltlab.wcf.acl</definitionname>
 		</type>
+		
+		<!-- importers -->
+		<type>
+			<name>com.woltlab.wcf.user</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.group</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserGroupImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.option</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserOptionImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.avatar</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserAvatarImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.comment</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserCommentImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.comment.response</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserCommentResponseImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.follower</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserFollowerImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.rank</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\UserRankImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.label.group</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\LabelGroupImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.label</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\LabelImporter]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.smiley</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname><![CDATA[wcf\system\importer\SmileyImporter]]></classname>
+		</type>
+		<!-- /importers -->
+		
+		<!-- rebuild data workers -->
+		<type>
+			<name>com.woltlab.wcf.like</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname><![CDATA[wcf\system\worker\LikeRebuildDataWorker]]></classname>
+			<nicevalue>-100</nicevalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.like.user</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname><![CDATA[wcf\system\worker\LikeUserRebuildDataWorker]]></classname>
+			<nicevalue>-90</nicevalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname><![CDATA[wcf\system\worker\UserRebuildDataWorker]]></classname>
+			<nicevalue>70</nicevalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.attachment</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname><![CDATA[wcf\system\worker\AttachmentRebuildDataWorker]]></classname>
+			<nicevalue>100</nicevalue>
+		</type>
+		<!-- /rebuild data workers -->
 	</import>
 </data>

@@ -5,9 +5,9 @@ namespace wcf\data\user;
  * Represents a list of user profiles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	data.user
  * @category	Community Framework
  */

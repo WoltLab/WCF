@@ -8,9 +8,9 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * This class provides default implementations for the ISearchableObjectType interface.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.search
+ * @package	com.woltlab.wcf
  * @subpackage	system.search
  * @category	Community Framework
  */
@@ -86,7 +86,7 @@ abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor 
 	/**
 	 * @see	wcf\system\search\ISearchableObjectType::getSpecialSQLQuery()
 	 */
-	public function getSpecialSQLQuery(PreparedStatementConditionBuilder $fulltextCondition = null, PreparedStatementConditionBuilder $searchIndexConditions = null, PreparedStatementConditionBuilder $additionalConditions = null, $orderBy = 'time DESC') {
+	public function getSpecialSQLQuery(PreparedStatementConditionBuilder &$fulltextCondition = null, PreparedStatementConditionBuilder &$searchIndexConditions = null, PreparedStatementConditionBuilder &$additionalConditions = null, $orderBy = 'time DESC') {
 		return '';
 	}
 }

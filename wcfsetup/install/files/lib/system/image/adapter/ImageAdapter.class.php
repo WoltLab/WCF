@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Wrapper for image adapters.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.image.adapter
@@ -132,6 +132,13 @@ class ImageAdapter implements IImageAdapter {
 	 */
 	public function hasColor() {
 		return $this->adapter->hasColor();
+	}
+	
+	/**
+	 * @see	wcf\system\image\adapter\IImageAdapter::setTransparentColor()
+	 */
+	public function setTransparentColor($red, $green, $blue) {
+		$this->adapter->setTransparentColor($red, $green, $blue);
 	}
 	
 	/**

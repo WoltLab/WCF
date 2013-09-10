@@ -30,7 +30,7 @@
 			<div id="logo" class="logo">
 				<a>
 					<h1>{lang}wcf.global.pageTitle{/lang}</h1>
-					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}wcfLogo2.svg" width="300" height="58" alt="" />
+					<img src="{if $lastStep|isset}{@RELATIVE_WCF_DIR}acp/images/{else}install.php?tmpFilePrefix={@TMP_FILE_PREFIX}&amp;showImage={/if}wcfLogo.png" alt="" style="height: 80px; width: 502px;" />
 				</a>
 			</div>
 			

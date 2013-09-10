@@ -20,6 +20,17 @@ class SetupTemplateEngine extends TemplateEngine {
 	}
 	
 	/**
+	 * @see	wcf\system\template\TemplateEngine::getCompiler()
+	 */
+	public function getCompiler() {
+		if ($this->compilerObj === null) {
+			$this->compilerObj = new SetupTemplateCompiler($this);
+		}
+	
+		return $this->compilerObj;
+	}
+	
+	/**
 	 * @see	wcf\system\template\TemplateEngine::getSourceFilename()
 	 */
 	public function getSourceFilename($templateName, $application) {

@@ -6,9 +6,9 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of labels.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.label
+ * @package	com.woltlab.wcf
  * @subpackage	data.label
  * @category	Community Framework
  */

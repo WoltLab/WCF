@@ -11,7 +11,7 @@ use wcf\system\like\LikeHandler;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.comment
+ * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
  * @category	Community Framework
  */
@@ -38,11 +38,6 @@ class StructuredCommentResponseList extends CommentResponseList {
 	 * @see	wcf\data\DatabaseObjectList::$sqlLimit
 	 */
 	public $sqlLimit = 50;
-	
-	/**
-	 * @see	wcf\data\DatabaseObjectList::$sqlOrderBy
-	 */
-	public $sqlOrderBy = 'comment_response.time DESC';
 	
 	/**
 	 * Creates a new structured comment response list.

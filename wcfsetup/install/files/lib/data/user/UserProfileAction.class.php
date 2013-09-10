@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	data.user
  * @category	Community Framework
  */
@@ -95,14 +95,22 @@ class UserProfileAction extends UserAction {
 	public function getUserProfile() {
 		$userID = reset($this->objectIDs);
 		
-		$userProfileList = new UserProfileList();
-		$userProfileList->getConditionBuilder()->add("user_table.userID = ?", array($userID));
-		$userProfileList->readObjects();
-		$userProfiles = $userProfileList->getObjects();
-		
-		WCF::getTPL()->assign(array(
-			'user' => reset($userProfiles)
-		));
+		if ($userID) {
+			$userProfileList = new UserProfileList();
+			$userProfileList->getConditionBuilder()->add("user_table.userID = ?", array($userID));
+			$userProfileList->readObjects();
+			$userProfiles = $userProfileList->getObjects();
+			
+			if (empty($userProfiles)) {
+				WCF::getTPL()->assign('unknownUser', true);
+			}
+			else {
+				WCF::getTPL()->assign('user', reset($userProfiles));
+			}
+		}
+		else {
+			WCF::getTPL()->assign('unknownUser', true);
+		}
 		
 		return array(
 			'template' => WCF::getTPL()->fetch('userProfilePreview'),
@@ -172,8 +180,10 @@ class UserProfileAction extends UserAction {
 			throw new UserInputException('objectIDs');
 		}
 		
-		if (!$this->userProfile->canEdit() && $this->userProfile->userID != WCF::getUser()->userID) {
-			throw new PermissionDeniedException();
+		if ($this->userProfile->userID != WCF::getUser()->userID) {
+			if (!$this->userProfile->canEdit()) {
+				throw new PermissionDeniedException();
+			}
 		}
 		else if (!$this->userProfile->canEditOwnProfile()) {
 			throw new PermissionDeniedException();
@@ -233,7 +243,7 @@ class UserProfileAction extends UserAction {
 		// validate user title
 		if ($userTitle !== null) {
 			try {
-				if (StringUtil::length($userTitle) > USER_TITLE_MAX_LENGTH) {
+				if (mb_strlen($userTitle) > USER_TITLE_MAX_LENGTH) {
 					throw new UserInputException('__userTitle', 'tooLong');
 				}
 				if (!StringUtil::executeWordFilter($userTitle, USER_FORBIDDEN_TITLES)) {
@@ -346,6 +356,7 @@ class UserProfileAction extends UserAction {
 			$this->readObjects();
 		}
 		
+		$userToGroup = array();
 		foreach ($this->objects as $user) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('groupID IN (?)', array($user->getGroupIDs()));
@@ -358,8 +369,24 @@ class UserProfileAction extends UserAction {
 			$statement->execute($conditionBuilder->getParameters());
 			$row = $statement->fetchArray();
 			if ($row['groupID'] != $user->userOnlineGroupID) {
-				$user->update(array('userOnlineGroupID' => $row['groupID']));
+				$userToGroup[$user->userID] = $row['groupID'];
 			}
+		}
+		
+		if (!empty($userToGroup)) {
+			$sql = "UPDATE	wcf".WCF_N."_user
+				SET	userOnlineGroupID = ?
+				WHERE	userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+			foreach ($userToGroup as $userID => $groupID) {
+				$statement->execute(array(
+					$groupID,
+					$userID
+				));
+			}
+			WCF::getDB()->commitTransaction();
 		}
 	}
 	

@@ -3,7 +3,7 @@ namespace wcf\data\style;
 use wcf\data\language\LanguageList;
 use wcf\data\package\Package;
 use wcf\data\template\group\TemplateGroup;
-use wcf\data\template\group\TemplateGroupEditor;
+use wcf\data\template\group\TemplateGroupAction;
 use wcf\data\template\TemplateEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
@@ -89,6 +89,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if ($this->image) {
 			@unlink(WCF_DIR.'images/'.$this->image);
 		}
+		
+		// delete language items
+		$sql = "DELETE FROM	wcf".WCF_N."_language_item
+			WHERE		languageItem = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array('wcf.style.styleDescription'.$this->styleID));
 	}
 	
 	/**
@@ -305,7 +311,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if (!empty($data['templates'])) {
 			$templateGroupName = $originalTemplateGroupName = $data['name'];
 			$templateGroupFolderName = preg_replace('/[^a-z0-9_-]/i', '', $templateGroupName);
-			if (empty($templateGroupFolderName)) $templateGroupFolderName = 'generic'.StringUtil::substring(StringUtil::getRandomID(), 0, 8);
+			if (empty($templateGroupFolderName)) $templateGroupFolderName = 'generic'.mb_substr(StringUtil::getRandomID(), 0, 8);
 			$originalTemplateGroupFolderName = $templateGroupFolderName;
 			
 			// get unique template pack name
@@ -340,11 +346,14 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$i++;
 			}
 			
-			$templateGroup = TemplateGroupEditor::create(array(
-				'templateGroupName' => $templateGroupName,
-				'templateGroupFolderName' => FileUtil::addTrailingSlash($templateGroupFolderName)
+			$templateGroupAction = new TemplateGroupAction(array(), 'create', array(
+				'data' => array(
+					'templateGroupName' => $templateGroupName,
+					'templateGroupFolderName' => FileUtil::addTrailingSlash($templateGroupFolderName)
+				)
 			));
-			$styleData['templateGroupID'] = $templateGroup->templateGroupID;
+			$returnValues = $templateGroupAction->executeAction();
+			$styleData['templateGroupID'] = $returnValues['returnValues']->templateGroupID;
 		}
 		
 		// import images
@@ -427,7 +436,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							TemplateEditor::create(array(
 								'application' => Package::getAbbreviation($package),
 								'packageID' => $row['packageID'],
-								'templateName' => StringUtil::replace('.tpl', '', $template['filename']),
+								'templateName' => str_replace('.tpl', '', $template['filename']),
 								'templateGroupID' => $styleData['templateGroupID']
 							));
 						}
@@ -451,7 +460,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// import preview image
 		if (!empty($data['image'])) {
-			$fileExtension = StringUtil::substring($data['image'], StringUtil::lastIndexOf($data['image'], '.'));
+			$fileExtension = mb_substr($data['image'], mb_strrpos($data['image'], '.'));
 			$index = $tar->getIndexByFilename($data['image']);
 			if ($index !== false) {
 				$filename = WCF_DIR.'images/stylePreview-'.$style->styleID.$fileExtension;
@@ -487,7 +496,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 */
 	protected static function saveLocalizedDescriptions(StyleEditor $styleEditor, array $descriptions) {
 		// localize package information
-		$sql = "INSERT INTO	wcf".WCF_N."_language_item
+		$sql = "REPLACE INTO	wcf".WCF_N."_language_item
 					(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
 			VALUES		(?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -708,7 +717,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$packageTar = new TarWriter($packageTarName, true);
 			
 			// append style tar
-			$styleTarName = FileUtil::unifyDirSeperator($styleTarName);
+			$styleTarName = FileUtil::unifyDirSeparator($styleTarName);
 			$packageTar->add($styleTarName, '', FileUtil::addTrailingSlash(dirname($styleTarName)));
 			
 			// create package.xml

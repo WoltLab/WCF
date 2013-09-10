@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.label
+ * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
  */
@@ -63,7 +63,7 @@ class LabelEditForm extends LabelAddForm {
 		
 		$this->label = 'wcf.acp.label.label'.$this->labelObj->labelID;
 		if (I18nHandler::getInstance()->isPlainValue('label')) {
-			I18nHandler::getInstance()->remove($this->label, 1);
+			I18nHandler::getInstance()->remove($this->label);
 			$this->label = I18nHandler::getInstance()->getValue('label');
 		}
 		else {

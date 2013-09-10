@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
+use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -373,7 +374,8 @@ class UserBulkProcessingForm extends UserOptionListForm {
 				
 				$userIDs = $this->fetchUsers();
 				
-				UserEditor::deleteUsers($userIDs);
+				$userAction = new UserAction($userIDs, 'delete');
+				$userAction->executeAction();
 			break;
 		}
 		$this->saved();
@@ -387,7 +389,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	 * @param	mixed		$loopFunction
 	 * @return	array<integer>
 	 */
-	protected function fetchUsers($loopFunction = null) {
+	public function fetchUsers($loopFunction = null) {
 		// select users
 		$sql = "SELECT		user_table.*
 			FROM		wcf".WCF_N."_user user_table
@@ -404,7 +406,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		
 		// select group ids
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("userID = ?", array(array_keys($users)));
+		$conditions->add("userID IN (?)", array(array_keys($users)));
 		
 		$sql = "SELECT	userID, groupID
 			FROM	wcf".WCF_N."_user_to_group

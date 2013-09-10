@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * Creates a logical node-based installation tree.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package
@@ -49,6 +49,12 @@ class PackageInstallationNodeBuilder {
 	 * @var	integer
 	 */
 	public $sequenceNo = 0;
+	
+	/**
+	 * list of packages about to be installed
+	 * @var	boolean
+	 */
+	protected static $pendingPackages = array();
 	
 	/**
 	 * Creates a new instance of PackageInstallationNodeBuilder
@@ -409,6 +415,8 @@ class PackageInstallationNodeBuilder {
 				'requirements' => $this->requirements
 			))
 		));
+		
+		self::$pendingPackages[] = $this->installation->getArchive()->getPackageInfo('name');
 	}
 	
 	/**
@@ -480,6 +488,8 @@ class PackageInstallationNodeBuilder {
 			$installation->nodeBuilder->setParentNode($this->node);
 			$installation->nodeBuilder->buildNodes();
 			$this->node = $installation->nodeBuilder->getCurrentNode();
+			
+			self::$pendingPackages[] = $archive->getPackageInfo('name');
 		}
 	}
 	
@@ -582,13 +592,28 @@ class PackageInstallationNodeBuilder {
 			$archive = new PackageArchive($fileName);
 			$archive->openArchive();
 			
+			// check if all requirements are met
+			$isInstallable = true;
+			foreach ($archive->getOpenRequirements() as $packageName => $package) {
+				if (!isset($package['file'])) {
+					// requirement is neither installed nor shipped, check if it is about to be installed
+					if (!in_array($packageName, self::$pendingPackages)) {
+						$isInstallable = false;
+						break;
+					}
+				}
+			}
+			
 			$packages[] = array(
 				'archive' => $fileName,
+				'isInstallable' => $isInstallable,
 				'package' => $archive->getPackageInfo('name'),
 				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
 				'packageDescription' => $archive->getLocalizedPackageInfo('packageDescription'),
 				'selected' => 0
 			);
+			
+			self::$pendingPackages[] = $archive->getPackageInfo('name');
 		}
 		
 		if (!empty($packages)) {
@@ -623,6 +648,15 @@ class PackageInstallationNodeBuilder {
 		
 		foreach ($queueList as $queue) {
 			$installation = new PackageInstallationDispatcher($queue);
+			
+			// work-around for iterative package updates
+			if ($this->installation->queue->action == 'update' && $queue->package == $this->installation->queue->package) {
+				$installation->setPreviousPackage(array(
+					'package' => $this->installation->getArchive()->getPackageInfo('name'),
+					'packageVersion' => $this->installation->getArchive()->getPackageInfo('version')
+				));
+			}
+			
 			$installation->nodeBuilder->setParentNode($this->node);
 			$installation->nodeBuilder->buildNodes();
 			$this->node = $installation->nodeBuilder->getCurrentNode();
@@ -635,7 +669,7 @@ class PackageInstallationNodeBuilder {
 	 * @return	string
 	 */
 	protected function getToken() {
-		return StringUtil::substring(StringUtil::getRandomID(), 0, 8);
+		return mb_substr(StringUtil::getRandomID(), 0, 8);
 	}
 	
 	/**

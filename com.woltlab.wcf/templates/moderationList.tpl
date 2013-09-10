@@ -80,7 +80,7 @@
 </div>
 
 {if $objects|count}
-	<div class="marginTop tabularBox tabularBoxTitle messageGroupList">
+	<div class="marginTop tabularBox tabularBoxTitle messageGroupList moderationList">
 		<header>
 			<h2>{if $status == 2}{lang}wcf.moderation.doneItems{/lang}{else}{lang}wcf.moderation.outstandingItems{/lang}{/if} <span class="badge badgeInverse">{#$items}</span></h2>
 		</header>
@@ -88,8 +88,8 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID{if $sortField == 'queueID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=queueID&sortOrder={if $sortField == 'queueID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnText columnTitle">{lang}wcf.moderation.title{/lang}</th>
+					<th class="columnID{if $sortField == 'queueID'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=queueID&sortOrder={if $sortField == 'queueID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnText columnTitle" colspan="2">{lang}wcf.moderation.title{/lang}</th>
 					<th class="columnText columnAssignedUserID{if $sortField == 'assignedUsername'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=assignedUsername&sortOrder={if $sortField == 'assignedUsername' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.moderation.assignedUser{/lang}</a></th>
 					<th class="columnDate columnLastChangeTime{if $sortField == 'lastChangeTime'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=lastChangeTime&sortOrder={if $sortField == 'lastChangeTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.moderation.lastChangeTime{/lang}</a></th>
 					
@@ -100,12 +100,12 @@
 			<tbody>
 				{foreach from=$objects item=entry}
 					<tr>
-						<td class="columnIcon"><p class="framed">{@$entry->getUserProfile()->getAvatar()->getImageTag(32)}</p></td>
 						<td class="columnID">{#$entry->queueID}</td>
+						<td class="columnIcon"><p class="framed">{@$entry->getUserProfile()->getAvatar()->getImageTag(32)}</p></td>
 						<td class="columnText columnSubject">
 							<h3>
 								<span class="badge label">{lang}wcf.moderation.type.{@$definitionNames[$entry->objectTypeID]}{/lang}</span>
-								<a href="{$entry->getLink()}" class="messageGroupLink">{$entry->getTitle()}</a>
+								<a href="{$entry->getLink()}" class="messageGroupLink">{$entry->getTitle()|tableWordwrap}</a>
 							</h3>
 							<small>{if $entry->getAffectedObject()->getUserID()}<a href="{link controller='User' id=$entry->getAffectedObject()->getUserID()}{/link}" class="userLink" data-user-id="{@$entry->userID}">{$entry->getAffectedObject()->getUsername()}</a>{else}{$entry->getAffectedObject()->getUsername()}{/if} - {@$entry->getAffectedObject()->getTime()|time} - {lang}wcf.moderation.type.{@$entry->getObjectTypeName()}{/lang}</small>	
 						</td>

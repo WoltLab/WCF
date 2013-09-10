@@ -1,9 +1,9 @@
 /**
  * ImageViewer for WCF.
- * Based upon "Slimbox 2" by Christophe Beyls 2007-20120, http://www.digitalia.be/software/slimbox2, MIT-style license.
+ * Based upon "Slimbox 2" by Christophe Beyls 2007-2012, http://www.digitalia.be/software/slimbox2, MIT-style license.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.ImageViewer = Class.extend({
@@ -64,6 +64,10 @@ WCF.ImageViewer = Class.extend({
 	 * Initializes the image size check.
 	 */
 	_initImageSizeCheck: function() {
+		$('.jsResizeImage').each($.proxy(function(index, image) {
+			if (image.complete) this._checkImageSize({ currentTarget: image });
+		}, this));
+		
 		$('.jsResizeImage').on('load', $.proxy(this._checkImageSize, this));
 	},
 	

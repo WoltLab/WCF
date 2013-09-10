@@ -11,9 +11,9 @@ use wcf\system\WCF;
  * Shows page which lists all users who are online.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	page
  * @category	Community Framework
  */
@@ -77,10 +77,16 @@ class UsersOnlineListPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		if (!USERS_ONLINE_SHOW_ROBOTS) $this->objectList->getConditionBuilder()->add('session.spiderID = 0');
+		if (!USERS_ONLINE_SHOW_ROBOTS) {
+			$this->objectList->getConditionBuilder()->add('session.spiderID IS NULL');
+		}
 		if (!USERS_ONLINE_SHOW_GUESTS) {
-			if (USERS_ONLINE_SHOW_ROBOTS) $this->objectList->getConditionBuilder()->add('(session.userID IS NOT NULL OR session.spiderID <> 0)');
-			else $this->objectList->getConditionBuilder()->add('session.userID IS NOT NULL');
+			if (USERS_ONLINE_SHOW_ROBOTS) {
+				$this->objectList->getConditionBuilder()->add('(session.userID IS NOT NULL OR session.spiderID IS NOT NULL)');
+			}
+			else {
+				$this->objectList->getConditionBuilder()->add('session.userID IS NOT NULL');
+			}
 		}
 	}
 	

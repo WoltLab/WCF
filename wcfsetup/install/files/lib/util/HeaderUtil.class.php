@@ -1,6 +1,7 @@
 <?php
 namespace wcf\util;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 
@@ -8,7 +9,7 @@ use wcf\system\WCF;
  * Contains header-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -16,11 +17,23 @@ use wcf\system\WCF;
  */
 final class HeaderUtil {
 	/**
+	 * gzip compression
+	 * @var	boolean
+	 */
+	protected static $enableGzipCompression = false;
+	
+	/**
+	 * output HTML
+	 * @var	string
+	 */
+	public static $output = '';
+	
+	/**
 	 * Alias to php setcookie() function.
 	 */
 	public static function setCookie($name, $value = '', $expire = 0) {
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
-		$addDomain = (StringUtil::indexOf($application->cookieDomain, '.') === false || StringUtil::endsWith($application->cookieDomain, '.lan') || StringUtil::endsWith($application->cookieDomain, '.local')) ? false : true;
+		$addDomain = (mb_strpos($application->cookieDomain, '.') === false || StringUtil::endsWith($application->cookieDomain, '.lan') || StringUtil::endsWith($application->cookieDomain, '.local')) ? false : true;
 		
 		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT; max-age='.($expire - TIME_NOW) : '').'; path='.$application->cookiePath.($addDomain ? '; domain='.$application->cookieDomain : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly', false);
 	}
@@ -37,13 +50,28 @@ final class HeaderUtil {
 			self::sendNoCacheHeaders();
 		}
 		
-		// enable gzip compression
 		if (HTTP_ENABLE_GZIP && HTTP_GZIP_LEVEL > 0 && HTTP_GZIP_LEVEL < 10 && !defined('HTTP_DISABLE_GZIP')) {
-			self::compressOutput();
+			if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
+				self::$enableGzipCompression = true;
+				
+				if (strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip')) {
+					@header('Content-Encoding: x-gzip');
+				}
+				else {
+					@header('Content-Encoding: gzip');
+				}
+			}
 		}
 		
 		// send Internet Explorer compatibility mode
 		@header('X-UA-Compatible: IE=edge');
+		
+		// send X-Frame-Options
+		if (HTTP_SEND_X_FRAME_OPTIONS) {
+			@header('X-Frame-Options: SAMEORIGIN');
+		}
+		
+		ob_start(array('wcf\util\HeaderUtil', 'parseOutput'));
 	}
 	
 	/**
@@ -57,34 +85,47 @@ final class HeaderUtil {
 	}
 	
 	/**
-	 * Enables the gzip compression of the page output.
+	 * Parses the rendered output.
+	 * 
+	 * @param	string		$output
+	 * @return	string
 	 */
-	public static function compressOutput() {
-		if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
-			if (strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip')) {
-				@header('Content-Encoding: x-gzip');
-			}
-			else {
-				@header('Content-Encoding: gzip');
-			}
-			ob_start(array('wcf\util\HeaderUtil', 'getCompressedOutput'));
+	public static function parseOutput($output) {
+		self::$output = $output;
+		
+		// move script tags to the bottom of the page
+		$javascript = array();
+		self::$output = preg_replace_callback('~(?P<conditionBefore><!--\[IF [^<]+\s*)?<script data-relocate="true"(?P<script>.*?)</script>(?P<conditionAfter>\s*<!\[ENDIF]-->)?~s', function($matches) use (&$javascript) {
+			$match = '';
+			if (isset($matches['conditionBefore'])) $match .= $matches['conditionBefore'];
+			$match .= '<script' . $matches['script'] . '</script>';
+			if (isset($matches['conditionAfter'])) $match .= $matches['conditionAfter'];
+			
+			$javascript[] = $match;
+			return '';
+		}, self::$output);
+		
+		self::$output = str_replace('<!-- JAVASCRIPT_RELOCATE_POSITION -->', implode("\n", $javascript), self::$output);
+		
+		// 3rd party plugins may differ the actual output before it is sent to the browser
+		// please be aware, that $eventObj is not available here due to this being a static
+		// class. Use HeaderUtil::$output to modify it.
+		if (!defined('NO_IMPORTS')) EventHandler::getInstance()->fireAction('wcf\util\HeaderUtil', 'parseOutput');
+		
+		// gzip compression
+		if (self::$enableGzipCompression) {
+			$size = strlen(self::$output);
+			$crc = crc32(self::$output);
+			
+			$newOutput = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff";
+			$newOutput .= substr(gzcompress(self::$output, HTTP_GZIP_LEVEL), 2, -4);
+			$newOutput .= pack('V', $crc);
+			$newOutput .= pack('V', $size);
+			
+			self::$output = $newOutput;
 		}
-	}
-	
-	/**
-	 * Outputs the compressed page content.
-	 */
-	public static function getCompressedOutput($output) {
-		$size = strlen($output);
-		$crc = crc32($output);
 		
-		$newOutput = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff";
-		$newOutput .= substr(gzcompress($output, HTTP_GZIP_LEVEL), 2, -4);
-		unset($output);
-		$newOutput .= pack('V', $crc);
-		$newOutput .= pack('V', $size);
-		
-		return $newOutput;
+		return self::$output;
 	}
 	
 	/**

@@ -79,8 +79,8 @@
 					</dd>
 				</dl>
 				
-				<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Tagging{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-				<script type="text/javascript">
+				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Tagging{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+				<script data-relocate="true">
 					//<![CDATA[
 					$(function() {
 						var $tagList = new WCF.Tagging.TagList('#synonymList', '#synonyms');

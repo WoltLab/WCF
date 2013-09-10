@@ -57,6 +57,7 @@ dl:not(.plain) {
 			text-align: left;
 			white-space: nowrap;
 			width: auto;
+			word-wrap: normal;
 			
 			~ dd > input[type='checkbox'], ~ dd > input[type='radio'] {
 				margin-left: 0;
@@ -106,6 +107,10 @@ dl:not(.plain) {
 			+ label {
 				margin-top: 2px;
 			}
+		}
+		
+		> .innerError + label {
+			margin-top: 2px;
 		}
 	}
 	
@@ -466,5 +471,27 @@ select > option {
 .reCaptcha {
 	input.marginTop {
 		margin-top: 14px;
+	}
+}
+
+/* disable auto zoom in mobile safari */
+@media only screen and (max-width: 800px) {
+	select,
+	textarea,
+	input[type="text"],
+	input[type="password"],
+	input[type="datetime"],
+	input[type="datetime-local"],
+	input[type="date"],
+	input[type="month"],
+	input[type="time"],
+	input[type="week"],
+	input[type="number"],
+	input[type="email"],
+	input[type="url"],
+	input[type="search"],
+	input[type="tel"],
+	input[type="color"] {
+		font-size: 16px;
 	}
 }

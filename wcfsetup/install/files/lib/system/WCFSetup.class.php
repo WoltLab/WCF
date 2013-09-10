@@ -30,6 +30,7 @@ define('PACKAGE_ID', '0');
 define('HTTP_ENABLE_NO_CACHE_HEADERS', 0);
 define('HTTP_ENABLE_GZIP', 0);
 define('HTTP_GZIP_LEVEL', 0);
+define('HTTP_SEND_X_FRAME_OPTIONS', 0);
 define('CACHE_SOURCE_TYPE', 'disk');
 define('MODULE_MASTER_PASSWORD', 1);
 define('ENABLE_DEBUG_MODE', 1);
@@ -162,7 +163,7 @@ class WCFSetup extends WCF {
 	 */
 	protected static function getWCFDir() {
 		if (isset($_REQUEST['wcfDir']) && $_REQUEST['wcfDir'] != '') {
-			self::$wcfDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator($_REQUEST['wcfDir']));
+			self::$wcfDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($_REQUEST['wcfDir']));
 			if (@file_exists(self::$wcfDir)) {
 				define('RELATIVE_WCF_DIR', FileUtil::getRelativePath(INSTALL_SCRIPT_DIR, self::$wcfDir));
 			}
@@ -455,7 +456,7 @@ class WCFSetup extends WCF {
 			$wcfDir = self::$wcfDir;
 		}
 		else {
-			$wcfDir = FileUtil::unifyDirSeperator(INSTALL_SCRIPT_DIR).'wcf/';
+			$wcfDir = FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR).'wcf/';
 		}
 		
 		$invalidDirectory = false;
@@ -470,7 +471,7 @@ class WCFSetup extends WCF {
 		if (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80) $domainName .= ':' . $_SERVER['SERVER_PORT'];
 		// script url
 		$installScriptUrl = '';
-		if (!empty($_SERVER['REQUEST_URI'])) $installScriptUrl = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash(FileUtil::unifyDirSeperator(dirname($_SERVER['REQUEST_URI']))));
+		if (!empty($_SERVER['REQUEST_URI'])) $installScriptUrl = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash(FileUtil::unifyDirSeparator(dirname($_SERVER['REQUEST_URI']))));
 		
 		WCF::getTPL()->assign(array(
 			'nextStep' => 'unzipFiles',
@@ -478,7 +479,7 @@ class WCFSetup extends WCF {
 			'wcfDir' => $wcfDir,
 			'domainName' => $domainName,
 			'installScriptUrl' => $installScriptUrl,
-			'installScriptDir' => FileUtil::unifyDirSeperator(INSTALL_SCRIPT_DIR)
+			'installScriptDir' => FileUtil::unifyDirSeparator(INSTALL_SCRIPT_DIR)
 		));
 		
 		WCF::getTPL()->display('stepSearchWcfDir');
@@ -630,12 +631,19 @@ class WCFSetup extends WCF {
 					}
 				}
 				// check innodb support
-				if ($dbClass == 'MySQLDatabase') {
-					$sql = "SHOW VARIABLES WHERE Variable_name = 'have_innodb'";
+				if ($dbClass == 'wcf\system\database\MySQLDatabase') {
+					$sql = "SHOW ENGINES";
 					$statement = $db->prepareStatement($sql);
 					$statement->execute();
-					$row = $statement->fetchArray();
-					if ($row !== false || $row['Value'] != 'YES') {
+					$hasInnoDB = false;
+					while ($row = $statement->fetchArray()) {
+						if ($row['Engine'] == 'InnoDB' && in_array($row['Support'], array('DEFAULT', 'YES'))) {
+							$hasInnoDB = true;
+							break;
+						}
+					}
+					
+					if (!$hasInnoDB) {
 						throw new SystemException("Support for InnoDB is missing.");
 					}
 				}
@@ -656,12 +664,12 @@ class WCFSetup extends WCF {
 					// write configuration to config.inc.php
 					$file = new File(WCF_DIR.'config.inc.php');
 					$file->write("<?php\n");
-					$file->write("\$dbHost = '".StringUtil::replace("'", "\\'", $dbHost)."';\n");
+					$file->write("\$dbHost = '".str_replace("'", "\\'", $dbHost)."';\n");
 					$file->write("\$dbPort = ".$dbPort.";\n");
-					$file->write("\$dbUser = '".StringUtil::replace("'", "\\'", $dbUser)."';\n");
-					$file->write("\$dbPassword = '".StringUtil::replace("'", "\\'", $dbPassword)."';\n");
-					$file->write("\$dbName = '".StringUtil::replace("'", "\\'", $dbName)."';\n");
-					$file->write("\$dbClass = '".StringUtil::replace("'", "\\'", $dbClass)."';\n");
+					$file->write("\$dbUser = '".str_replace("'", "\\'", $dbUser)."';\n");
+					$file->write("\$dbPassword = '".str_replace("'", "\\'", $dbPassword)."';\n");
+					$file->write("\$dbName = '".str_replace("'", "\\'", $dbName)."';\n");
+					$file->write("\$dbClass = '".str_replace("'", "\\'", $dbClass)."';\n");
 					$file->write("if (!defined('WCF_N')) define('WCF_N', $dbNumber);\n?>");
 					$file->close();
 					
@@ -704,7 +712,7 @@ class WCFSetup extends WCF {
 		$sql = file_get_contents(TMP_DIR.'setup/db/install.sql');
 		
 		// installation number value 'n' (WCF_N) must be reflected in the executed sql queries
-		$sql = StringUtil::replace('wcf1_', 'wcf'.$dbNumber.'_', $sql);
+		$sql = str_replace('wcf1_', 'wcf'.$dbNumber.'_', $sql);
 		
 		// get all tablenames which should be created
 		preg_match_all("%CREATE\s+TABLE\s+(\w+)%", $sql, $matches);
@@ -745,7 +753,7 @@ class WCFSetup extends WCF {
 		$sql = $sqlData[$offset];
 		
 		// installation number value 'n' (WCF_N) must be reflected in the executed sql queries
-		$sql = StringUtil::replace('wcf1_', 'wcf'.WCF_N.'_', $sql);
+		$sql = str_replace('wcf1_', 'wcf'.WCF_N.'_', $sql);
 		
 		// execute sql queries
 		$parser = new SQLParser($sql);
@@ -813,7 +821,7 @@ class WCFSetup extends WCF {
 			}
 			else {
 				// regular file
-				$fileInserts[] = StringUtil::replace(WCF_DIR, '', $file);
+				$fileInserts[] = str_replace(WCF_DIR, '', $file);
 			}
 		}
 		file_put_contents(WCF_DIR.'__wcfSetupPerformance.log', "\tRead files: " . round(microtime(true) - $start, 3) . "\n", FILE_APPEND);
@@ -862,7 +870,7 @@ class WCFSetup extends WCF {
 					$this->getInstalledFiles(FileUtil::addTrailingSlash($file));
 				}
 				else {
-					self::$installedFiles[] = FileUtil::unifyDirSeperator($file);
+					self::$installedFiles[] = FileUtil::unifyDirSeparator($file);
 				}
 			}
 		}
@@ -973,6 +981,10 @@ class WCFSetup extends WCF {
 				$row = $statement->fetchArray();
 				if (isset($row['languageID'])) $languageID = $row['languageID'];
 				
+				if (!$languageID) {
+					$languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+				}
+				
 				// create user
 				$data = array(
 					'data' => array(
@@ -1032,7 +1044,7 @@ class WCFSetup extends WCF {
 		$otherPackages = array();
 		$tar = new Tar(SETUP_FILE);
 		foreach ($tar->getContentList() as $file) {
-			if ($file['type'] != 'folder' && StringUtil::indexOf($file['filename'], 'install/packages/') === 0) {
+			if ($file['type'] != 'folder' && mb_strpos($file['filename'], 'install/packages/') === 0) {
 				$packageFile = basename($file['filename']);
 				
 				// ignore any files which aren't an archive
@@ -1086,7 +1098,8 @@ class WCFSetup extends WCF {
 				'userID' => $admin->userID,
 				'package' => 'com.woltlab.wcf',
 				'packageName' => 'WoltLab Community Framework',
-				'archive' => TMP_DIR.'install/packages/'.$wcfPackageFile
+				'archive' => TMP_DIR.'install/packages/'.$wcfPackageFile,
+				'isApplication' => 1
 			));
 		}
 		
@@ -1145,7 +1158,8 @@ class WCFSetup extends WCF {
 				'userID' => $admin->userID,
 				'package' => $packageName,
 				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
-				'archive' => TMP_DIR.'install/packages/'.$packageFile
+				'archive' => TMP_DIR.'install/packages/'.$packageFile,
+				'isApplication' => 1
 			));
 		}
 		
@@ -1197,7 +1211,7 @@ class WCFSetup extends WCF {
 		// get package name
 		$tar = new Tar(SETUP_FILE);
 		foreach ($tar->getContentList() as $file) {
-			if ($file['type'] != 'folder' && StringUtil::indexOf($file['filename'], 'install/packages/') === 0) {
+			if ($file['type'] != 'folder' && mb_strpos($file['filename'], 'install/packages/') === 0) {
 				$packageFile = basename($file['filename']);
 				$packageName = preg_replace('!\.(tar\.gz|tgz|tar)$!', '', $packageFile);
 				

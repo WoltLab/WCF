@@ -18,12 +18,14 @@
 		</dl>
 		
 		<dl>
+			<dt></dt>
 			<dd>
 				<label for="attributes[{ldelim}@$attributeNo}][required]"><input type="checkbox" id="attributes[{ldelim}@$attributeNo}][required]" name="attributes[{ldelim}@$attributeNo}][required]" value="1" /> {lang}{lang}wcf.acp.bbcode.attribute.required{/lang}{/lang}</label>
 			</dd>
 		</dl>
 		
 		<dl>
+			<dt></dt>
 			<dd>
 				<label for="attributes[{ldelim}@$attributeNo}][useText]"><input type="checkbox" id="attributes[{ldelim}@$attributeNo}][useText]" name="attributes[{ldelim}@$attributeNo}][useText]" value="1" /> {lang}{lang}wcf.acp.bbcode.attribute.useText{/lang}{/lang}</label>
 				<small>{lang}wcf.acp.bbcode.attribute.useText.description{/lang}</small>
@@ -33,7 +35,7 @@
 		{event name='attributeFields'}
 	</fieldset>
 {/capture}
-<script type="text/javascript">
+<script data-relocate="true">
 //<![CDATA[
 	$(function() {
 		$('.jsDeleteButton').click(function (event) {
@@ -152,6 +154,7 @@
 			</dl>
 			
 			<dl>
+				<dt></dt>
 				<dd>
 					<label for="isSourceCode"><input type="checkbox" id="isSourceCode" name="isSourceCode" value="1"{if $isSourceCode} checked="checked"{/if} /> {lang}wcf.acp.bbcode.isSourceCode{/lang}</label>
 					<small>{lang}wcf.acp.bbcode.isSourceCode.description{/lang}</small>
@@ -170,6 +173,7 @@
 			
 			{if $nativeBBCode|empty}
 				<dl>
+					<dt></dt>
 					<dd>
 						<label><input type="checkbox" id="showButton" name="showButton" value="1"{if $showButton} checked="checked"{/if} /> {lang}wcf.acp.bbcode.showButton{/lang}</label>
 					</dd>

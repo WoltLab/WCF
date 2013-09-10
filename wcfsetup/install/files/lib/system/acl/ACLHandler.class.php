@@ -5,6 +5,7 @@ use wcf\data\acl\option\category\ACLOptionCategoryList;
 use wcf\data\acl\option\ACLOption;
 use wcf\data\acl\option\ACLOptionList;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\system\cache\builder\ACLOptionCategoryCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -15,7 +16,7 @@ use wcf\util\StringUtil;
 
 /**
  * Handles ACL permissions.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -81,7 +82,7 @@ class ACLHandler extends SingletonFactory {
 					$values[$type]['option'][$typeID] = $optionValues;
 					
 					if ($type === 'group') {
-						$values[$type]['label'][$typeID] = WCF::getLanguage()->get('wcf.acp.group.group'.$typeID);
+						$values[$type]['label'][$typeID] = UserGroup::getGroupByID($typeID)->getName();
 					}
 					else {
 						$values[$type]['label'][$typeID] = $users[$typeID]->username;
@@ -370,7 +371,7 @@ class ACLHandler extends SingletonFactory {
 		$optionList = new ACLOptionList();
 		if (!empty($categoryName)) {
 			if (StringUtil::endsWith($categoryName, '.*')) {
-				$categoryName = StringUtil::substring($categoryName, 0, -1) . '%';
+				$categoryName = mb_substr($categoryName, 0, -1) . '%';
 				$optionList->getConditionBuilder()->add("acl_option.categoryName LIKE ?", array($categoryName));
 			}
 			else {

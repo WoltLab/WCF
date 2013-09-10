@@ -124,15 +124,17 @@ class CronjobScheduler extends SingletonFactory {
 			);
 			
 			// reset cronjob if it got stuck before and afterNextExec is in the past
-			if ($cronjobEditor->afterNextExec <= TIME_NOW && $cronjobEditor->state == Cronjob::EXECUTING) {
-				$failCount = $cronjobEditor->failCount + 1;
-				$data['failCount'] = $failCount;
-				
-				// disable cronjob
-				if ($failCount == Cronjob::MAX_FAIL_COUNT) {
-					$data['isDisabled'] = 1;
-					$data['state'] = 0;
-					$executeCronjob = false;
+			if ($cronjobEditor->afterNextExec <= TIME_NOW) {
+				if ($cronjobEditor->state == Cronjob::EXECUTING) {
+					$failCount = $cronjobEditor->failCount + 1;
+					$data['failCount'] = $failCount;
+					
+					// disable cronjob
+					if ($failCount == Cronjob::MAX_FAIL_COUNT) {
+						$data['isDisabled'] = 1;
+						$data['state'] = 0;
+						$executeCronjob = false;
+					}
 				}
 			}
 			// ignore cronjobs which seem to be running

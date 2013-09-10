@@ -6,7 +6,7 @@ use wcf\util\FileUtil;
  * Handles file uploads.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.upload
@@ -34,11 +34,11 @@ class UploadHandler {
 		if (is_array($rawFileData['name'])) {
 			// multiple uploads
 			for ($i = 0, $l = count($rawFileData['name']); $i < $l; $i++) {
-				$this->files[] = new UploadFile($rawFileData['name'][$i], $rawFileData['tmp_name'][$i], $rawFileData['size'][$i], $rawFileData['error'][$i], (FileUtil::getMimeType($rawFileData['tmp_name'][$i]) ?: $rawFileData['type'][$i]));
+				$this->files[] = new UploadFile($rawFileData['name'][$i], $rawFileData['tmp_name'][$i], $rawFileData['size'][$i], $rawFileData['error'][$i], ($rawFileData['tmp_name'][$i] ? (FileUtil::getMimeType($rawFileData['tmp_name'][$i]) ?: $rawFileData['type'][$i]) : ''));
 			}
 		}
 		else {
-			$this->files[] = new UploadFile($rawFileData['name'], $rawFileData['tmp_name'], $rawFileData['size'], $rawFileData['error'], (FileUtil::getMimeType($rawFileData['tmp_name']) ?: $rawFileData['type']));
+			$this->files[] = new UploadFile($rawFileData['name'], $rawFileData['tmp_name'], $rawFileData['size'], $rawFileData['error'], ($rawFileData['tmp_name'] ? (FileUtil::getMimeType($rawFileData['tmp_name']) ?: $rawFileData['type']) : ''));
 		}
 	}
 	

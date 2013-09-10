@@ -26,7 +26,7 @@ use wcf\util\StringUtil;
  * @author	Marcel Werk, Oliver Kliebisch
  * @copyright	2001-2013 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	system.user.notification
  * @category	Community Framework
  */
@@ -255,6 +255,7 @@ class UserNotificationHandler extends SingletonFactory {
 		
 		// load authors
 		$authors = UserProfile::getUserProfiles($authorIDs);
+		$unknownAuthor = new UserProfile(new User(null, array('userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest'))));
 		
 		// load objects associated with each object type
 		foreach ($objectTypes as $objectType => $objectData) {
@@ -282,7 +283,7 @@ class UserNotificationHandler extends SingletonFactory {
 			$class->setObject(
 				$notificationObjects[$event['notificationID']],
 				$objectTypes[$event['objectType']]['objects'][$event['objectID']],
-				$authors[$event['authorID']],
+				(isset($authors[$event['authorID']]) ? $authors[$event['authorID']] : $unknownAuthor),
 				unserialize($event['additionalData'])
 			);
 			
@@ -414,7 +415,7 @@ class UserNotificationHandler extends SingletonFactory {
 		$token = $user->notificationMailToken;
 		if (!$token) {
 			// generate token if not present
-			$token = StringUtil::substring(StringUtil::getHash(serialize(array($user->userID, StringUtil::getRandomID()))), 0, 20);
+			$token = mb_substr(StringUtil::getHash(serialize(array($user->userID, StringUtil::getRandomID()))), 0, 20);
 			$editor = new UserEditor($user);
 			$editor->update(array('notificationMailToken' => $token));
 		}

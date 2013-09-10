@@ -49,6 +49,7 @@
 			</dl>
 			
 			<dl>
+				<dt></dt>
 				<dd>
 					<label for="exportCustomValues"><input type="checkbox" name="exportCustomValues" id="exportCustomValues" value="1" /> {lang}wcf.acp.language.export.customValues{/lang}</label>
 				</dd>

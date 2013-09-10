@@ -6,9 +6,9 @@ use wcf\data\tag\Tag;
  * Any object type that is taggable, can implement this interface.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.tagging
+ * @package	com.woltlab.wcf
  * @subpackage	system.tagging
  * @category	Community Framework
  */

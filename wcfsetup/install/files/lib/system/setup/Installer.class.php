@@ -126,9 +126,9 @@ class Installer {
 		$directories = array();
 		$files = array();
 		foreach ($tar->getContentList() as $index => $file) {
-			if (empty($this->folder) || StringUtil::indexOf($file['filename'], $this->folder) === 0) {
+			if (empty($this->folder) || mb_strpos($file['filename'], $this->folder) === 0) {
 				if (!empty($this->folder)) {
-					$file['filename'] = StringUtil::replace($this->folder, '', $file['filename']);
+					$file['filename'] = str_replace($this->folder, '', $file['filename']);
 				}
 				
 				// remove leading slash
@@ -152,7 +152,7 @@ class Installer {
 				$this->createDir($dir);
 			}
 			catch (SystemException $e) {
-				$errors[] = array('file' => $dir, 'code' => $e->getCode(), 'message' => $e->getMessage());
+				$errors[] = $e->getMessage();
 			}
 		}
 		
@@ -162,11 +162,11 @@ class Installer {
 				$this->createFile($file, $index, $tar);
 			}
 			catch (SystemException $e) {
-				$errors[] = array('file' => $file, 'code' => $e->getCode(), 'message' => $e->getMessage());
+				$errors[] = $e->getMessage();
 			}
 		}
 		if (!empty($errors)) {
-			throw new SystemException('error(s) during the installation of the files.', $errors);
+			throw new SystemException('error(s) during the installation of the files.', 0, implode("<br />", $errors));
 		}
 		
 		$this->logFiles($files);

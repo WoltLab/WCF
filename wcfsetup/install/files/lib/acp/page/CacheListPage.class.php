@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * Shows a list of all cache resources.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -115,11 +115,11 @@ class CacheListPage extends AbstractPage {
 			break;
 		}
 		
-		$this->readCacheFiles('language', FileUtil::unifyDirSeperator(WCF_DIR.'language'));
-		$this->readCacheFiles('template', FileUtil::unifyDirSeperator(WCF_DIR.'templates/compiled'), new Regex('\.meta\.php$'));
-		$this->readCacheFiles('template', FileUtil::unifyDirSeperator(WCF_DIR.'acp/templates/compiled'), new Regex('\.meta\.php$'));
-		$this->readCacheFiles('style', FileUtil::unifyDirSeperator(WCF_DIR.'style'), null, 'css');
-		$this->readCacheFiles('style', FileUtil::unifyDirSeperator(WCF_DIR.'acp/style'), new Regex('WCFSetup.css$'), 'css');
+		$this->readCacheFiles('language', FileUtil::unifyDirSeparator(WCF_DIR.'language'));
+		$this->readCacheFiles('template', FileUtil::unifyDirSeparator(WCF_DIR.'templates/compiled'), new Regex('\.meta\.php$'));
+		$this->readCacheFiles('template', FileUtil::unifyDirSeparator(WCF_DIR.'acp/templates/compiled'), new Regex('\.meta\.php$'));
+		$this->readCacheFiles('style', FileUtil::unifyDirSeparator(WCF_DIR.'style'), null, 'css');
+		$this->readCacheFiles('style', FileUtil::unifyDirSeparator(WCF_DIR.'acp/style'), new Regex('WCFSetup.css$'), 'css');
 	}
 	
 	/**

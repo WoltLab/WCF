@@ -9,20 +9,13 @@ namespace wcf\system\option\user\group;
  * it returns the highest value.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option.user.group
  * @category	Community Framework
  */
 class InfiniteIntegerUserGroupOptionType extends IntegerUserGroupOptionType {
-	/**
-	 * @see	wcf\system\option\user\group\IUserGroupOptionType::diff()
-	 */
-	public function diff($defaultValue, $groupValue) {
-		return $this->merge($defaultValue, $groupValue);
-	}
-	
 	/**
 	 * @see	wcf\system\option\user\group\IUserGroupOptionType::merge()
 	 */

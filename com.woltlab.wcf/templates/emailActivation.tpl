@@ -64,6 +64,7 @@
 			{event name='fields'}
 			
 			<dl>
+				<dt></dt>
 				<dd>
 					<ul class="buttonList">
 						<li><a class="button small" href="{link controller='EmailNewActivationCode'}{/link}"><span>{lang}wcf.user.newActivationCode{/lang}</span></a></li>

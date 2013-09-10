@@ -21,7 +21,7 @@ final class UserUtil {
 	 */
 	public static function isValidUsername($name) {
 		// minimum length is 3 characters, maximum length is 255 characters
-		if (StringUtil::length($name) < 3 || StringUtil::length($name) > 255) {
+		if (mb_strlen($name) < 3 || mb_strlen($name) > 255) {
 			return false;
 		}
 		
@@ -32,7 +32,7 @@ final class UserUtil {
 		// check long words
 		$words = preg_split('!\s+!', $name, -1, PREG_SPLIT_NO_EMPTY);
 		foreach ($words as $word) {
-			if (StringUtil::length($word) > 20) {
+			if (mb_strlen($word) > 20) {
 				return false;
 			}
 		}
@@ -143,6 +143,7 @@ final class UserUtil {
 		$ipArray = array_pad(explode('.', $ip), 4, 0);
 		$part7 = base_convert(($ipArray[0] * 256) + $ipArray[1], 10, 16);
 		$part8 = base_convert(($ipArray[2] * 256) + $ipArray[3], 10, 16);
+		
 		return '::ffff:'.$part7.':'.$part8;
 	}
 	
@@ -167,7 +168,7 @@ final class UserUtil {
 		// check if ip is a masked IPv4 address
 		if (substr($ip, 0, 7) == '::ffff:') {
 			$ip = substr($ip, 7);
-			if (preg_match('~^([a-f0-9]{4}):([a-f0-9]{4})$~', $ip, $matches)) {
+			if (preg_match('~^([a-f0-9]{1,4}):([a-f0-9]{1,4})$~', $ip, $matches)) {
 				$ip = array(
 					base_convert($matches[1], 16, 10),
 					base_convert($matches[2], 16, 10)
@@ -230,7 +231,7 @@ final class UserUtil {
 			$REQUEST_URI = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $REQUEST_URI);
 		}
 		
-		return StringUtil::substring(FileUtil::unifyDirSeperator($REQUEST_URI), 0, 255);
+		return mb_substr(FileUtil::unifyDirSeparator($REQUEST_URI), 0, 255);
 	}
 	
 	private function __construct() { }

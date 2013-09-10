@@ -55,6 +55,12 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $groupName = '';
 	
 	/**
+	 * group description
+	 * @var	string
+	 */
+	protected $groupDescription = '';
+	
+	/**
 	 * additional fields
 	 * @var	array
 	 */
@@ -91,6 +97,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		parent::readParameters();
 		
 		I18nHandler::getInstance()->register('groupName');
+		I18nHandler::getInstance()->register('groupDescription');
 	}
 	
 	/**
@@ -102,6 +109,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		I18nHandler::getInstance()->readValues();
 		
 		if (I18nHandler::getInstance()->isPlainValue('groupName')) $this->groupName = I18nHandler::getInstance()->getValue('groupName');
+		if (I18nHandler::getInstance()->isPlainValue('groupDescription')) $this->groupDescription = I18nHandler::getInstance()->getValue('groupDescription');
 		
 		if (isset($_POST['priority'])) $this->priority = intval($_POST['priority']);
 		if (isset($_POST['userOnlineMarking'])) $this->userOnlineMarking = StringUtil::trim($_POST['userOnlineMarking']);
@@ -139,39 +147,38 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		// get default group
 		$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);
 		$optionValues = $this->optionHandler->save();
-		$saveOptions = array();
-		foreach ($this->optionHandler->getCategoryOptions() as $option) {
-			$option = $option['object'];
-			$defaultValue = $defaultGroup->getGroupOption($option->optionName);
-			$typeObject = $this->optionHandler->getTypeObject($option->optionType);
-			
-			$newValue = $typeObject->diff($defaultValue, $optionValues[$option->optionID]);
-			if ($newValue !== null) {
-				$saveOptions[$option->optionID] = $newValue;
-			}
-		}
 		
 		$data = array(
 			'data' => array_merge($this->additionalFields, array(
 				'groupName' => $this->groupName,
+				'groupDescription' => $this->groupDescription,
 				'priority' => $this->priority,
 				'userOnlineMarking' => $this->userOnlineMarking,
 				'showOnTeamPage' => $this->showOnTeamPage
 			)),
-			'options' => $saveOptions
+			'options' => $optionValues
 		);
 		$this->objectAction = new UserGroupAction(array(), 'create', $data);
 		$this->objectAction->executeAction();
+		$returnValues = $this->objectAction->getReturnValues();
+		$groupID = $returnValues['returnValues']->groupID;
 		
 		if (!I18nHandler::getInstance()->isPlainValue('groupName')) {
-			$returnValues = $this->objectAction->getReturnValues();
-			$groupID = $returnValues['returnValues']->groupID;
 			I18nHandler::getInstance()->save('groupName', 'wcf.acp.group.group'.$groupID, 'wcf.acp.group', 1);
 			
 			// update group name
 			$groupEditor = new UserGroupEditor($returnValues['returnValues']);
 			$groupEditor->update(array(
 				'groupName' => 'wcf.acp.group.group'.$groupID
+			));
+		}
+		if (!I18nHandler::getInstance()->isPlainValue('groupDescription')) {
+			I18nHandler::getInstance()->save('groupDescription', 'wcf.acp.group.groupDescription'.$groupID, 'wcf.acp.group', 1);
+				
+			// update group name
+			$groupEditor = new UserGroupEditor($returnValues['returnValues']);
+			$groupEditor->update(array(
+				'groupDescription' => 'wcf.acp.group.groupDescription'.$groupID
 			));
 		}
 		
@@ -211,6 +218,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		WCF::getTPL()->assign(array(
 			'groupName' => $this->groupName,
+			'groupDescription' => $this->groupDescription,
 			'optionTree' => $this->optionTree,
 			'action' => 'add',
 			'priority' => $this->priority,

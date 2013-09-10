@@ -6,6 +6,7 @@ use wcf\system\event\IEventListener;
 use wcf\system\request\LinkHandler;
 use wcf\system\Callback;
 use wcf\system\Regex;
+use wcf\util\StringStack;
 use wcf\util\StringUtil;
 
 /**
@@ -14,7 +15,7 @@ use wcf\util\StringUtil;
  * @author	Tim Duesterhus
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	system.event.listener
  * @category	Community Framework
  */
@@ -35,7 +36,39 @@ class PreParserAtUserListener implements IEventListener {
 			$userRegex = new Regex("(?<=^|\s)@([^',\s][^,\s]{2,}|'(?:''|[^'])*')");
 		}
 		
-		$userRegex->match($eventObj->text, true);
+		// cache quotes
+		// @see	wcf\system\bbcode\BBCodeParser::buildTagArray()
+		$pattern = '~\[(?:/(?:quote)|(?:quote)
+			(?:=
+				(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*)
+				(?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
+			)?)\]~ix';
+		preg_match_all($pattern, $eventObj->text, $quoteMatches);
+		$textArray = preg_split($pattern, $eventObj->text);
+		$text = $textArray[0];
+		
+		$openQuotes = 0;
+		$quote = '';
+		foreach ($quoteMatches[0] as $i => $quoteTag) {
+			if (mb_substr($quoteTag, 1, 1) == '/') {
+				$openQuotes--;
+				
+				$quote .= $quoteTag;
+				if ($openQuotes) {
+					$quote .= $textArray[$i + 1];
+				}
+				else {
+					$text .= StringStack::pushToStringStack($quote, 'preParserUserMentions', '@@@').$textArray[$i + 1];
+					$quote = '';
+				}
+			}
+			else {
+				$openQuotes++;
+				$quote .= $quoteTag.$textArray[$i + 1];
+			}
+		}
+		
+		$userRegex->match($text, true);
 		$matches = $userRegex->getMatches();
 		
 		if (!empty($matches[1])) {
@@ -52,10 +85,10 @@ class PreParserAtUserListener implements IEventListener {
 				$userList->readObjects();
 				$users = array();
 				foreach ($userList as $user) {
-					$users[StringUtil::toLowerCase($user->username)] = $user; 
+					$users[mb_strtolower($user->username)] = $user; 
 				}
 				
-				$eventObj->text = $userRegex->replace($eventObj->text, new Callback(function ($matches) use ($users) {
+				$text = $userRegex->replace($text, new Callback(function ($matches) use ($users) {
 					$username = PreParserAtUserListener::getUsername($matches[1]);
 					
 					if (isset($users[$username])) {
@@ -69,6 +102,9 @@ class PreParserAtUserListener implements IEventListener {
 				}));
 			}
 		}
+		
+		// reinsert cached quotes
+		$eventObj->text = StringStack::reinsertStrings($text, 'preParserUserMentions');
 	}
 	
 	/**
@@ -79,13 +115,13 @@ class PreParserAtUserListener implements IEventListener {
 	 */
 	public static function getUsername($match) {
 		// remove escaped single quotation mark
-		$match = StringUtil::replace("''", "'", $match);
+		$match = str_replace("''", "'", $match);
 		
 		// remove single quotation marks
 		if ($match{0} == "'") {
-			$match = StringUtil::substring($match, 1, -1);
+			$match = mb_substr($match, 1, -1);
 		}
 		
-		return StringUtil::toLowerCase($match);
+		return mb_strtolower($match);
 	}
 }

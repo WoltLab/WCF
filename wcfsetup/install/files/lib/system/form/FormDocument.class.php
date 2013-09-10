@@ -6,7 +6,7 @@ use wcf\util\StringUtil;
  * FormDocument holds the page structure based upon form element containers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.form
@@ -109,8 +109,8 @@ class FormDocument {
 		$variables = array();
 		
 		foreach ($_REQUEST as $key => $value) {
-			if (StringUtil::indexOf($key, $this->getName().'_') !== false) {
-				$key = StringUtil::replace($this->getName().'_', '', $key);
+			if (mb_strpos($key, $this->getName().'_') !== false) {
+				$key = str_replace($this->getName().'_', '', $key);
 				$variables[$key] = $value;
 			}
 		}

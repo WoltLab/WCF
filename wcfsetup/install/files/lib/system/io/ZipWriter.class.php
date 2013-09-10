@@ -7,7 +7,7 @@ use wcf\util\StringUtil;
  * Creates a Zip file archive.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
@@ -18,15 +18,16 @@ class ZipWriter {
 	protected $data = array();
 	protected $endOfData = "\x50\x4b\x05\x06\x00\x00\x00\x00";
 	protected $lastOffset = 0;
+	protected $zipComment = '';
 	
 	/**
 	 * Adds a folder to the Zip archive.
 	 * 
 	 * @param	string		$name		dirname
 	 */
-	public function addDir($name) {
+	public function addDir($name, $date = TIME_NOW) {
 		// replace backward slashes with forward slashes in the dirname
-		$name = StringUtil::replace("\\", "/", $name);
+		$name = str_replace("\\", "/", $name);
 		$name = FileUtil::addTrailingSlash($name);
 		
 		// construct the general header information for the directory
@@ -56,7 +57,8 @@ class ZipWriter {
 		$record = "\x50\x4b\x01\x02";
 		$record .= "\x00\x00\x0a\x00";
 		$record .= "\x00\x00\x00\x00";
-		$record .= "\x00\x00\x00\x00";
+		//$record .= "\x00\x00\x00\x00";
+		$record .= $this->getDosDatetime($date);
 		$record .= pack("V", 0);
 		$record .= pack("V", 0);
 		$record .= pack("V", 0);
@@ -83,9 +85,9 @@ class ZipWriter {
 	 * @param	string		$name		filename
 	 * @param	integer		$date		file creation time as unix timestamp
 	 */
-	public function addFile($data, $name, $date = 0) {
+	public function addFile($data, $name, $date = TIME_NOW) {		
 		// replace backward slashes with forward slashes in the filename
-		$name = StringUtil::replace("\\", "/", $name);
+		$name = str_replace("\\", "/", $name);
 		
 		// calculate the size of the file being uncompressed
 		$sizeUncompressed = strlen($data);
@@ -152,6 +154,15 @@ class ZipWriter {
 	}
 	
 	/**
+	 * Set Zip archive comment
+	 * 
+	 * @param	string		$comment		zip archive comment
+	 */
+	public function setArchiveComment($comment) {
+		$this->zipComment = StringUtil::trim($comment);
+	}
+	
+	/**
 	 * Constructs the final Zip file structure and return it.
 	 * 
 	 * @return	string
@@ -172,7 +183,7 @@ class ZipWriter {
 			pack("v", count($this->data)).
 			pack("V", strlen($data)).
 			pack("V", strlen($headers)).
-			"\x00\x00";
+			(!empty($this->zipComment) ? pack("v", strlen($this->zipComment)) . $this->zipComment : "\x00\x00");
 	}
 	
 	/**
@@ -184,6 +195,10 @@ class ZipWriter {
 	protected static function getDosDatetime($date) {
 		// Ensure we have a numeric value
 		$date = intval($date);
+		
+		if ($date < 315532800) {
+			return "\x00\x00\x00\x00";
+		}
 		
 		$day = gmdate('d', $date);
 		$month = gmdate('m', $date);

@@ -31,50 +31,52 @@
 	{if !$__hideUserMenu|isset}
 		<li id="userNotifications" data-count="{#$__wcf->getUserNotificationHandler()->getNotificationCount()}">
 			<a href="{link controller='NotificationList'}{/link}"><span class="icon icon16 icon-bell-alt"></span> <span>{lang}wcf.user.notification.notifications{/lang}</span>{if $__wcf->getUserNotificationHandler()->getNotificationCount()} <span class="badge badgeInverse">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span>{/if}</a>
-			<script type="text/javascript">
-				//<![CDATA[
-				$(function() {
-					WCF.Language.addObject({
-						'wcf.user.notification.count': '{lang}wcf.user.notification.count{/lang}',
-						'wcf.user.notification.markAllAsConfirmed': '{lang}wcf.user.notification.markAllAsConfirmed{/lang}',
-						'wcf.user.notification.markAllAsConfirmed.confirmMessage': '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}',
-						'wcf.user.notification.noMoreNotifications': '{lang}wcf.user.notification.noMoreNotifications{/lang}',
-						'wcf.user.notification.showAll': '{lang}wcf.user.notification.showAll{/lang}'
+			{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
+				<script data-relocate="true">
+					//<![CDATA[
+					$(function() {
+						WCF.Language.addObject({
+							'wcf.user.notification.count': '{lang}wcf.user.notification.count{/lang}',
+							'wcf.user.notification.markAllAsConfirmed': '{lang}wcf.user.notification.markAllAsConfirmed{/lang}',
+							'wcf.user.notification.markAllAsConfirmed.confirmMessage': '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}',
+							'wcf.user.notification.noMoreNotifications': '{lang}wcf.user.notification.noMoreNotifications{/lang}',
+							'wcf.user.notification.showAll': '{lang}wcf.user.notification.showAll{/lang}'
+						});
+						
+						new WCF.Notification.UserPanel('{link controller='NotificationList'}{/link}');
 					});
-					
-					new WCF.Notification.UserPanel('{link controller='NotificationList'}{/link}');
-				});
-				//]]>
-			</script>
+					//]]>
+				</script>
+			{/if}
 		</li>
 	{/if}
 {else}
 	{if !$__disableLoginLink|isset}
 		<!-- login box -->
-		<li>
+		<li id="userLogin">
 			<a class="loginLink" href="{link controller='Login'}{/link}">{lang}wcf.user.loginOrRegister{/lang}</a>
 			<div id="loginForm" style="display: none;">
 				{capture assign='__3rdPartyButtons'}
 					{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
 						<li id="githubAuth" class="3rdPartyAuth">
 							<a href="{link controller='GithubAuth'}{/link}" class="button"><span class="icon icon16 icon-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
-						</li>{*
-					*}{/if}{*
+						</li>
+					{/if}
 					
-					*}{if TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== ''}{*
-						*}<li id="twitterAuth" class="3rdPartyAuth">
+					{if TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== ''}
+						<li id="twitterAuth" class="3rdPartyAuth">
 							<a href="{link controller='TwitterAuth'}{/link}" class="button"><span class="icon icon16 icon-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
-						</li>{*
-					*}{/if}{*
+						</li>
+					{/if}
 					
-					*}{if FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== ''}{*
-						*}<li id="facebookAuth" class="3rdPartyAuth">
+					{if FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== ''}
+						<li id="facebookAuth" class="3rdPartyAuth">
 							<a href="{link controller='FacebookAuth'}{/link}" class="button"><span class="icon icon16 icon-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.login{/lang}</span></a>
-						</li>{*
-					*}{/if}{*
+						</li>
+					{/if}
 					
-					*}{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}{*
-						*}<li id="googleAuth" class="3rdPartyAuth">
+					{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
+						<li id="googleAuth" class="3rdPartyAuth">
 							<a href="{link controller='GoogleAuth'}{/link}" class="button"><span class="icon icon16 icon-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
 						</li>
 					{/if}
@@ -110,6 +112,7 @@
 						
 						{if $__wcf->getUserAuthenticationFactory()->getUserAuthentication()->supportsPersistentLogins()}
 							<dl>
+								<dt></dt>
 								<dd><label><input type="checkbox" id="useCookies" name="useCookies" value="1" checked="checked" /> {lang}wcf.user.useCookies{/lang}</label></dd>
 							</dl>
 						{/if}
@@ -133,7 +136,7 @@
 				</form>
 			</div>
 			
-			<script type="text/javascript">
+			<script data-relocate="true">
 				//<![CDATA[
 				$(function() {
 					WCF.Language.addObject({
@@ -149,7 +152,7 @@
 	{/if}
 	{if $__wcf->getLanguage()->getLanguages()|count > 1}
 		<li id="pageLanguageContainer">
-			<script type="text/javascript">
+			<script data-relocate="true">
 				//<![CDATA[
 				$(function() {
 					var $languages = {
@@ -182,20 +185,22 @@
 				<span>{lang}wcf.moderation.moderation{/lang}</span>
 				{if $__wcf->getModerationQueueManager()->getOutstandingModerationCount()}<span class="badge badgeInverse">{#$__wcf->getModerationQueueManager()->getOutstandingModerationCount()}</span>{/if}
 			</a>
-			<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-			<script type="text/javascript">
-				//<![CDATA[
-				$(function() {
-					WCF.Language.addObject({
-						'wcf.moderation.noMoreItems': '{lang}wcf.moderation.noMoreItems{/lang}',
-						'wcf.moderation.showAll': '{lang}wcf.moderation.showAll{/lang}',
-						'wcf.moderation.showDeletedContent': '{lang}wcf.moderation.showDeletedContent{/lang}'
+			{if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
+				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+				<script data-relocate="true">
+					//<![CDATA[
+					$(function() {
+						WCF.Language.addObject({
+							'wcf.moderation.noMoreItems': '{lang}wcf.moderation.noMoreItems{/lang}',
+							'wcf.moderation.showAll': '{lang}wcf.moderation.showAll{/lang}',
+							'wcf.moderation.showDeletedContent': '{lang}wcf.moderation.showDeletedContent{/lang}'
+						});
+						
+						new WCF.Moderation.UserPanel('{link controller='ModerationList'}{/link}', '{link controller='DeletedContentList'}{/link}');
 					});
-					
-					new WCF.Moderation.UserPanel('{link controller='ModerationList'}{/link}', '{link controller='DeletedContentList'}{/link}');
-				});
-				//]]>
-			</script>
+					//]]>
+				</script>
+			{/if}
 		</li>
 	{/if}
 	

@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.0.0 Beta 4</version> <!-- codename: maelstrom -->
-		<date>2013-06-19</date>
+		<version>2.0.0 Beta 8</version> <!-- codename: maelstrom -->
+		<date>2013-09-05</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -28,6 +28,7 @@
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="acpSearchProvider">acpSearchProvider.xml</instruction>
+		<instruction type="style">blue-temptation-style.tgz</instruction>
 		<instruction type="style">woltlab-basic-style.tgz</instruction>
 		<instruction type="userOption">userOption.xml</instruction>
 		<instruction type="bbcode">bbcode.xml</instruction>
@@ -42,18 +43,15 @@
 		<instruction type="script">acp/post_install.php</instruction> 
 	</instructions>
 	
-	<instructions type="update" fromversion="2.0.0 Beta 3">
-		<instruction type="file">files_update.tar</instruction>
+	<instructions type="update" fromversion="2.0.0 Beta 7">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="language">language/*.xml</instruction>
+		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
-		<instruction type="script">acp/update_b4.php</instruction>
-		<instruction type="sql">update_b4.sql</instruction>
 		
-		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
-		<instruction type="option">option.xml</instruction>
-		<instruction type="pageMenu">pageMenu.xml</instruction>
-		<instruction type="userGroupOption">userGroupOption.xml</instruction>
-		<instruction type="userOption">userOption.xml</instruction>
+		<instruction type="language">language/*.xml</instruction>
+		<instruction type="sql">update_b8.sql</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf.b8.php</instruction>
+		
+		<instruction type="style">blue-temptation-style.tgz</instruction>
 	</instructions>
 </package>

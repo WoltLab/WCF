@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.style.list'}
 
-<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript">
+<script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Toggle('wcf\\data\\style\\StyleAction', '.buttonList');
@@ -38,6 +38,18 @@
 							<h3><a href="{link controller='StyleEdit' id=$style->styleID}{/link}">{$style->styleName}</a></h3>
 							{if $style->styleDescription}<small>{lang}{@$style->styleDescription}{/lang}</small>{/if}
 						</div>
+						<dl class="plain inlineDataList">
+							<dt>{lang}wcf.acp.style.users{/lang}</dt>
+							<dd>{#$style->users}</dd>
+						</dl>
+						<dl class="plain inlineDataList">
+							<dt>{lang}wcf.acp.style.styleVersion{/lang}</dt>
+							<dd>{$style->styleVersion} ({$style->styleDate})</dd>
+						</dl>
+						<dl class="plain inlineDataList">
+							<dt>{lang}wcf.acp.style.authorName{/lang}</dt>
+							<dd>{if $style->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$style->authorURL}">{$style->authorName}</a>{else}{$style->authorName}{/if}</dd>
+						</dl>
 						<nav class="jsMobileNavigation buttonGroupNavigation">
 							<ul class="buttonList" data-style-id="{@$style->styleID}">
 								<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a></li>
@@ -52,18 +64,6 @@
 								{event name='itemButtons'}
 							</ul>
 						</nav>
-						<dl class="plain inlineDataList">
-							<dt>{lang}wcf.acp.style.users{/lang}</dt>
-							<dd>{#$style->users}</dd>
-						</dl>
-						<dl class="plain inlineDataList">
-							<dt>{lang}wcf.acp.style.styleVersion{/lang}</dt>
-							<dd>{$style->styleVersion} ({$style->styleDate})</dd>
-						</dl>
-						<dl class="plain inlineDataList">
-							<dt>{lang}wcf.acp.style.authorName{/lang}</dt>
-							<dd>{if $style->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$style->authorURL}">{$style->authorName}</a>{else}{$style->authorName}{/if}</dd>
-						</dl>
 					</div>
 				</div>
 			</li>

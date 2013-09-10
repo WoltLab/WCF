@@ -24,7 +24,6 @@
 }
 
 .commentResponseList .buttonGroupNavigation {
-	top: @wcfGapSmall;
 	right: @wcfGapSmall;
 }
 
@@ -50,18 +49,24 @@
 	padding: @wcfGapSmall;
 }
 
-.commentResponseAdd {
+.commentOptionContainer {
 	border-top: 1px solid @wcfContainerBorderColor;
 	margin-top: @wcfGapMedium;
 	padding: 7px 7px 0;
+
+	> ul > li {
+		&:not(:last-child):after {
+			content: " - ";
+		}
+		
+		display: inline-block;
+		font-size: 85%;
+		padding-right: 3px;
+	}
 }
 
 .commentResponseList .commentResponse:first-child {
 	margin-top: @wcfGapMedium;
-}
-
-.commentResponseAdd + .commentResponseList .commentResponse:first-child {
-	margin-top: 7px;
 }
 
 .commentList > li:nth-child(2n) .commentResponseList .commentResponse:nth-child(2n+1) {
@@ -107,8 +112,31 @@
 	margin-top: 0;
 }
 
+.commentResponseContent {
+	position: relative;
+}
+
 /* like display */
 .commentList .likesBadge {
 	display: inline-block;
 	margin: -2px 0 -2px @wcfGapTiny;
+}
+
+@media only screen and (max-width: 800px) {
+	.commentList .buttonGroupNavigation {
+		top: 1px;
+		right: 7px;
+	}
+	
+	.commentResponseList .buttonGroupNavigation {
+		right: 0;
+	}
+	
+	.commentList .containerHeadline > h3 {
+		padding-right: 35px;
+	}
+	
+	.commentResponseContent > .containerHeadline > h3 {
+		padding-right: 28px;
+	}
 }

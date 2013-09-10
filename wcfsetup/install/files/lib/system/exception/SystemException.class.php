@@ -7,7 +7,7 @@ use wcf\util\StringUtil;
  * A SystemException is thrown when an unexpected error occurs.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
@@ -56,17 +56,6 @@ class SystemException extends LoggedException implements IPrintableException {
 	}
 	
 	/**
-	 * Removes database password from stack trace.
-	 * @see	\Exception::getTraceAsString()
-	 */
-	public function __getTraceAsString() {
-		$e = ($this->getPrevious() ?: $this);
-		$string = preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e->getTraceAsString());
-		$string = preg_replace('/mysqli->mysqli\(.*\)/', 'mysqli->mysqli(...)', $string);
-		return $string;
-	}
-	
-	/**
 	 * @see	wcf\system\exception\IPrintableException::show()
 	 */
 	public function show() {
@@ -79,15 +68,25 @@ class SystemException extends LoggedException implements IPrintableException {
 			return;
 		}
 		
+		$innerMessage = '';
+		try {
+			if (is_object(WCF::getLanguage())) {
+				$innerMessage = WCF::getLanguage()->get('wcf.global.error.exception', true);
+			}
+		}
+		catch (\Exception $e) { }
+		
+		if (empty($innerMessage)) {
+			$innerMessage = 'Please send the ID above to the site administrator.<br />The error message can be looked up at &ldquo;ACP &raquo; Logs &raquo; Errors&rdquo;.';
+		}
+		
 		// print report
-		echo '<?xml version="1.0" encoding="UTF-8"?>';
 		$e = ($this->getPrevious() ?: $this);
-		?>
-
-		<!DOCTYPE html>
+		?><!DOCTYPE html>
 		<html>
 			<head>
 				<title>Fatal error: <?php echo StringUtil::encodeHTML($this->_getMessage()); ?></title>
+				<meta charset="utf-8" />
 				<style>
 					.systemException {
 						font-family: 'Trebuchet MS', Arial, sans-serif !important;
@@ -150,7 +149,7 @@ class SystemException extends LoggedException implements IPrintableException {
 					
 					<?php if (WCF::debugModeIsEnabled()) { ?>
 						<div>
-							<p><?php echo $this->getDescription(); ?></p>
+							<?php if ($this->getDescription()) { ?><p><br /><?php echo $this->getDescription(); ?></p><?php } ?>
 							
 							<h2>Information:</h2>
 							<p>
@@ -173,8 +172,8 @@ class SystemException extends LoggedException implements IPrintableException {
 						<div>
 							<h2>Information:</h2>
 							<p>
-								<b>id:</b> <code><?php echo $this->getExceptionID(); ?></code><br>
-								Send this ID to the administrator of this website to report this issue.
+								<b>ID:</b> <code><?php echo $this->getExceptionID(); ?></code><br>
+								<?php echo $innerMessage; ?>
 							</p>
 						</div>
 					<?php } ?>

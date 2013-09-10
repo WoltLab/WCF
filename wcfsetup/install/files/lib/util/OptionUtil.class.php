@@ -5,7 +5,7 @@ namespace wcf\util;
  * Contains option-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -23,7 +23,7 @@ final class OptionUtil {
 		$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($selectOptions)));
 		foreach ($options as $option) {
 			$key = $value = $option;
-			if (StringUtil::indexOf($option, ':') !== false) {
+			if (mb_strpos($option, ':') !== false) {
 				$optionData = explode(':', $option);
 				$key = array_shift($optionData);
 				$value = implode(':', $optionData);
@@ -47,7 +47,7 @@ final class OptionUtil {
 			$options = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($enableOptions)));
 			$key = -1;
 			foreach ($options as $option) {
-				if (StringUtil::indexOf($option, ':') !== false) {
+				if (mb_strpos($option, ':') !== false) {
 					$optionData = explode(':', $option);
 					$key = array_shift($optionData);
 					$value = implode(':', $optionData);

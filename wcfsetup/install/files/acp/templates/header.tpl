@@ -4,7 +4,7 @@
 	<base href="{$baseHref}" />
 	<meta charset="utf-8" />
 	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
-	<script type="text/javascript">
+	<script data-relocate="true">
 		//<![CDATA[
 		var SID_ARG_2ND = '{@SID_ARG_2ND_NOT_ENCODED}';
 		var WCF_PATH = '{@$__wcf->getPath()}';
@@ -13,13 +13,13 @@
 		var TIME_NOW = {@TIME_NOW};
 		//]]>
 	</script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js?v={@$__wcfVersion}"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js?v={@$__wcfVersion}"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.js?v={@$__wcfVersion}"></script>
-	<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?v={@$__wcfVersion}"></script>
-	<script type="text/javascript">
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.min.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true">
 		//<![CDATA[
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 		//]]>
@@ -30,7 +30,11 @@
 	{@$__wcf->getStyleHandler()->getStylesheet()}
 	{event name='stylesheets'}
 	
-	<script type="text/javascript">
+	<!-- Icons -->
+	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon.ico" />
+	<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png" />
+	
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			{* work-around for unknown core-object during WCFSetup *}
@@ -53,6 +57,7 @@
 				'wcf.date.relative.pastDays': '{capture assign=relativePastDays}{lang}wcf.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
 				'wcf.date.dateFormat': '{lang}wcf.date.dateFormat{/lang}',
 				'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
+				'wcf.date.shortDateTimeFormat': '{lang}wcf.date.shortDateTimeFormat{/lang}',
 				'wcf.date.hour': '{lang}wcf.date.hour{/lang}',
 				'wcf.date.minute': '{lang}wcf.date.minute{/lang}',
 				'wcf.date.timeFormat': '{lang}wcf.date.timeFormat{/lang}',
@@ -78,6 +83,8 @@
 				'wcf.global.error.timeout': '{lang}wcf.global.error.timeout{/lang}',
 				'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
 				'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
+				'wcf.global.form.error.greaterThan': '{lang}wcf.global.form.error.greaterThan.javaScript{/lang}',
+				'wcf.global.form.error.lessThan': '{lang}wcf.global.form.error.lessThan.javaScript{/lang}',
 				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 				'wcf.global.page.jumpTo': '{lang}wcf.global.page.jumpTo{/lang}',
 				'wcf.global.page.jumpTo.description': '{lang}wcf.global.page.jumpTo.description{/lang}',
@@ -149,7 +156,7 @@
 					{if PACKAGE_ID > 1}
 						{event name='headerLogo'}
 					{else}
-						<img src="{@$__wcf->getPath()}acp/images/wcfLogo2.svg" alt="" width="300" height="58" />
+						<img src="{@$__wcf->getPath()}acp/images/wcfLogo.png" alt="" style="height: 80px; width: 502px;" />
 					{/if}
 				</a>
 			</div>

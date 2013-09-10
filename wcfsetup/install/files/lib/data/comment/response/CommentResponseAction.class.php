@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.comment
+ * @package	com.woltlab.wcf
  * @subpackage	data.comment.response
  * @category	Community Framework
  */
@@ -94,7 +94,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 		// update comment responses and cached response ids
 		foreach ($comments as $comment) {
 			$commentEditor = new CommentEditor($comment);
-			$commentEditor->updateLastResponseIDs();
+			$commentEditor->updateResponseIDs();
 			$commentEditor->updateCounters(array(
 				'responses' => -1 * $updateComments[$comment->commentID]
 			));
@@ -123,6 +123,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 	public function validateLoadResponses() {
 		$this->readInteger('commentID', false, 'data');
 		$this->readInteger('lastResponseTime', false, 'data');
+		$this->readBoolean('loadAllResponses', true, 'data');
 		
 		$this->comment = new Comment($this->parameters['data']['commentID']);
 		if (!$this->comment->commentID) {
@@ -143,8 +144,8 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 	public function loadResponses() {
 		// get response list
 		$responseList = new StructuredCommentResponseList($this->commentManager, $this->comment);
-		$responseList->getConditionBuilder()->add("comment_response.time < ?", array($this->parameters['data']['lastResponseTime']));
-		$responseList->sqlLimit = 50;
+		$responseList->getConditionBuilder()->add("comment_response.time > ?", array($this->parameters['data']['lastResponseTime']));
+		if (!$this->parameters['data']['loadAllResponses']) $responseList->sqlLimit = 50;
 		$responseList->readObjects();
 		
 		$lastResponseTime = 0;
@@ -153,7 +154,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 				$lastResponseTime = $response->time;
 			}
 			
-			$lastResponseTime = min($lastResponseTime, $response->time);
+			$lastResponseTime = max($lastResponseTime, $response->time);
 		}
 		
 		WCF::getTPL()->assign(array(

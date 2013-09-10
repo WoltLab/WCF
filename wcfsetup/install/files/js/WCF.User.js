@@ -1209,7 +1209,7 @@ WCF.User.Registration.LostPassword = Class.extend({
  * Notification system for WCF.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Notification = {};
@@ -1380,7 +1380,7 @@ WCF.Notification.List = Class.extend({
 			$container.find('.jsMarkAsConfirmed').data('notificationID', $container.data('notificationID')).click($.proxy(this._click, this));
 			$container.find('p').html(function(index, oldHTML) {
 				return '<a>' + oldHTML + '</a>';
-			}).children('a').click($.proxy(this._click, this));
+			}).children('a').data('notificationID', $container.data('notificationID')).click($.proxy(this._clickLink, this));
 		}, this));
 		
 		this._badge = $('.jsNotificationsBadge:eq(0)');
@@ -1393,18 +1393,26 @@ WCF.Notification.List = Class.extend({
 	},
 	
 	/**
+	 * Handles clicks on the text link.
+	 * 
+	 * @param	object		event
+	 */
+	_clickLink: function(event) {
+		this._items[$(event.currentTarget).data('notificationID')].data('redirect', true);
+		this._click(event);
+	},
+	
+	/**
 	 * Handles button actions.
 	 * 
 	 * @param	object		event
 	 */
 	_click: function(event) {
-		var $notificationID = $(event.currentTarget).data('notificationID');
-		
 		this._proxy.setOption('data', {
 			actionName: 'markAsConfirmed',
 			className: 'wcf\\data\\user\\notification\\UserNotificationAction',
 			parameters: {
-				notificationID: $notificationID
+				notificationID: $(event.currentTarget).data('notificationID')
 			}
 		});
 		this._proxy.sendRequest();
@@ -1439,6 +1447,12 @@ WCF.Notification.List = Class.extend({
 			break;
 			
 			case 'markAsConfirmed':
+				var $item = this._items[data.returnValues.notificationID];
+				if ($item.data('redirect')) {
+					window.location = $item.data('link');
+					return;
+				}
+				
 				this._items[data.returnValues.notificationID].remove();
 				delete this._items[data.returnValues.notificationID];
 				
@@ -1637,6 +1651,15 @@ WCF.User.ProfilePreview = WCF.Popover.extend({
 				
 				// show user profile
 				self._insertContent($elementID, data.returnValues.template, true);
+			});
+			this._proxy.setOption('failure', function(data, jqXHR, textStatus, errorThrown) {
+				// cache user profile
+				self._userProfiles[$userID] = data.message;
+				
+				// show user profile
+				self._insertContent($elementID, data.message, true);
+				
+				return false;
 			});
 			this._proxy.sendRequest();
 		}
@@ -2284,7 +2307,8 @@ WCF.User.List = Class.extend({
 		if (this._cache[this._pageNo]) {
 			var $dialogCreated = false;
 			if (this._dialog === null) {
-				this._dialog = $('<div id="userList' + this._className.hashCode() + '" style="min-width: 600px;" />').hide().appendTo(document.body);
+				//this._dialog = $('<div id="userList' + this._className.hashCode() + '" style="min-width: 600px;" />').hide().appendTo(document.body);
+				this._dialog = $('<div id="userList' + this._className.hashCode() + '" />').hide().appendTo(document.body);
 				$dialogCreated = true;
 			}
 			

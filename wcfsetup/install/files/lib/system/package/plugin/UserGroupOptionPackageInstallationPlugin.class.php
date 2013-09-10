@@ -18,10 +18,10 @@ use wcf\system\WCF;
  */
 class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
-	 * group id of group 'Everyone'
-	 * @var	integer
+	 * list of group ids by type
+	 * @var	array<array>
 	 */
-	protected $everyoneGroupID = null;
+	protected $groupIDs = null;
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
@@ -32,20 +32,14 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 * list of names of tags which aren't considered as additional data
 	 * @var	array<string>
 	 */
-	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata');
-	
-	/**
-	 * array with group IDs that are admin groups
-	 * @var	array<integer>
-	 */
-	protected static $adminGroupIDs = array();
+	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'userdefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**
 	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values
-		$optionName = $optionType = $defaultValue = $adminDefaultValue = $validationPattern = $enableOptions = $permissions = $options = '';
+		$optionName = $optionType = $defaultValue = $adminDefaultValue = $userDefaultValue = $validationPattern = $enableOptions = $permissions = $options = '';
 		$showOrder = null;
 		
 		// get values
@@ -53,6 +47,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if (isset($option['optiontype'])) $optionType = $option['optiontype'];
 		if (isset($option['defaultvalue'])) $defaultValue = $option['defaultvalue'];
 		if (isset($option['admindefaultvalue'])) $adminDefaultValue = $option['admindefaultvalue'];
+		if (isset($option['userdefaultvalue'])) $userDefaultValue = $option['userdefaultvalue'];
 		if (isset($option['validationpattern'])) $validationPattern = $option['validationpattern'];
 		if (!empty($option['showorder'])) $showOrder = intval($option['showorder']);
 		$showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
@@ -81,8 +76,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		$data = array(
 			'categoryName' => $categoryName,
 			'optionType' => $optionType,
-			'defaultValue' => $defaultValue,
-			'adminDefaultValue' => $adminDefaultValue,
+			'defaultValue' => (isset($option['userdefaultvalue']) ? $userDefaultValue : $defaultValue),
 			'validationPattern' => $validationPattern,
 			'showOrder' => $showOrder,
 			'enableOptions' => $enableOptions,
@@ -104,70 +98,68 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			$groupOptionEditor = UserGroupOptionEditor::create($data);
 			$optionID = $groupOptionEditor->optionID;
 			
-			// save default value
+			$groupIDs = $this->getGroupIDs();
+			$values = array();
+			foreach ($this->groupIDs['admin'] as $groupID) {
+				$values[$groupID] = ((isset($option['admindefaultvalue']) && $defaultValue != $adminDefaultValue) ? $adminDefaultValue : $defaultValue);
+			}
+			foreach ($this->groupIDs['registered'] as $groupID) {
+				$values[$groupID] = ((isset($option['userdefaultvalue']) && $defaultValue != $userDefaultValue) ? $userDefaultValue : $defaultValue);
+			}
+			foreach ($this->groupIDs['other'] as $groupID) {
+				$values[$groupID] = $defaultValue;
+			}
+			
+			// save values
 			$sql = "INSERT INTO	wcf".WCF_N."_user_group_option_value
 						(groupID, optionID, optionValue)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
-				$this->getEveryoneGroupID(),
-				$optionID,
-				$defaultValue
-			));
-			
-			if (isset($option['admindefaultvalue']) && $defaultValue != $adminDefaultValue) {
-				$adminGroupIDs = self::getAdminGroupIDs();
-				
-				WCF::getDB()->beginTransaction();
-				foreach ($adminGroupIDs as $groupID) {
-					$statement->execute(array(
-						$groupID,
-						$optionID,
-						$adminDefaultValue
-					));
-				}
-				WCF::getDB()->commitTransaction();
+			WCF::getDB()->beginTransaction();
+			foreach ($values as $groupID => $value) {
+				$statement->execute(array(
+					$groupID,
+					$optionID,
+					$value
+				));
 			}
+			WCF::getDB()->commitTransaction();
 		}
 	}
 	
 	/**
-	 * Returns group id of 'Everyone' group.
+	 * Returns a list of group ids by type.
 	 * 
-	 * @return	integer
+	 * @return	array<array>
 	 */
-	protected function getEveryoneGroupID() {
-		if ($this->everyoneGroupID === null) {
-			$sql = "SELECT	groupID
-				FROM	wcf".WCF_N."_user_group
-				WHERE	groupType = ?";
-			$statement = WCF::getDB()->prepareStatement($sql, 1);
-			$statement->execute(array(UserGroup::EVERYONE));
-			$row = $statement->fetchArray();
+	protected function getGroupIDs() {
+		if ($this->groupIDs === null) {
+			$this->groupIDs = array(
+				'admin' => array(),
+				'other' => array(),
+				'registered' => array()
+			);
 			
-			$this->everyoneGroupID = $row['groupID'];
-		}
-		
-		return $this->everyoneGroupID;
-	}
-	
-	/**
-	 * Returns an array of ids of admin groups.
-	 * 
-	 * @return	array<integer>
-	 */
-	protected static function getAdminGroupIDs() {
-		if (empty(self::$adminGroupIDs)) {
-			$userGroupList = new UserGroupList();
-			$userGroupList->readObjects();
-			
-			foreach ($userGroupList as $userGroup) {
-				if ($userGroup->isAdminGroup()) {
-					self::$adminGroupIDs[] = $userGroup->groupID;
+			$sql = "SELECT	groupID, groupType
+				FROM	wcf".WCF_N."_user_group";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute();
+			while ($row = $statement->fetchArray()) {
+				$group = new UserGroup(null, $row);
+				if ($group->groupType == UserGroup::EVERYONE || $group->groupType == UserGroup::GUESTS) {
+					$this->groupIDs['other'][] = $group->groupID;
+				}
+				else {
+					if ($group->isAdminGroup()) {
+						$this->groupIDs['admin'][] = $group->groupID;
+					}
+					else {
+						$this->groupIDs['registered'][] = $group->groupID;
+					}
 				}
 			}
 		}
 		
-		return self::$adminGroupIDs;
+		return $this->groupIDs;
 	}
 }

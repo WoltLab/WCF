@@ -260,7 +260,12 @@ class I18nHandler extends SingletonFactory {
 		$row = $statement->fetchArray();
 		$languageCategoryID = $row['languageCategoryID'];
 		
-		$languageIDs = array_keys($this->i18nValues[$elementID]);
+		if (count($this->availableLanguages) == 1) {
+			$languageIDs = array_keys($this->availableLanguages);
+		}
+		else {
+			$languageIDs = array_keys($this->i18nValues[$elementID]);
+		}
 		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("languageID IN (?)", array($languageIDs));
@@ -297,7 +302,7 @@ class I18nHandler extends SingletonFactory {
 				$statement->execute(array(
 					$languageID,
 					$languageVariable,
-					$this->i18nValues[$elementID][$languageID],
+					(isset($this->i18nValues[$elementID]) ? $this->i18nValues[$elementID][$languageID] : $this->plainValues[$elementID]),
 					0,
 					$languageCategoryID,
 					$packageID
@@ -314,7 +319,7 @@ class I18nHandler extends SingletonFactory {
 			
 			foreach ($updateLanguageIDs as $languageID) {
 				$statement->execute(array(
-					$this->i18nValues[$elementID][$languageID],
+					(isset($this->i18nValues[$elementID]) ? $this->i18nValues[$elementID][$languageID] : $this->plainValues[$elementID]),
 					$languageItemIDs[$languageID]
 				));
 			}
@@ -403,7 +408,12 @@ class I18nHandler extends SingletonFactory {
 						$this->elementOptions[$elementID]['value']
 					));
 					while ($row = $statement->fetchArray()) {
-						$i18nValues[$row['languageID']] = StringUtil::encodeJS(StringUtil::unifyNewlines($row['languageItemValue']));
+						$languageItemValue = StringUtil::unifyNewlines($row['languageItemValue']);
+						$i18nValues[$row['languageID']] = StringUtil::encodeJS($languageItemValue);
+						
+						if ($row['languageID'] == LanguageFactory::getInstance()->getDefaultLanguageID()) {
+							$value = $languageItemValue;
+						}
 					}
 				}
 				else {

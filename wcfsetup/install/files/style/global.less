@@ -1,10 +1,14 @@
 /* ### globals ### */
+html, body {
+	font-size: @wcfBaseFontSize;
+}
+
 body {
 	background-color: @wcfPageBackgroundColor;
 	color: @wcfColor;
 	font-family: @wcfBaseFontFamily;
-	font-size: @wcfBaseFontSize;
 	line-height: @wcfBaseLineHeight;
+	word-wrap: break-word;
 }
 
 small {
@@ -117,8 +121,25 @@ body > iframe[src="about:blank"] {
 	display: none;
 }
 
-.marginTop {
+.marginTopLarge {
+	margin-top: @wcfGapLarge;
+}
+
+.marginTop,
+.marginMedium {
 	margin-top: @wcfGapMedium;
+}
+
+.marginTopSmall {
+	margin-top: @wcfGapSmall;
+}
+
+.marginTopTiny {
+	margin-top: @wcfGapTiny;
+}
+
+.center {
+	text-align: center;
 }
 
 .pointer {
@@ -136,7 +157,8 @@ body > iframe[src="about:blank"] {
 
 .framed {
 	> canvas,
-	> img {
+	> img,
+	> .icon {
 		background-color: @wcfContentBackgroundColor;
 		border: 1px solid @wcfContainerBorderColor;
 		padding: 1px;
@@ -153,12 +175,24 @@ body > iframe[src="about:blank"] {
 	-webkit-filter: grayscale(1);
 }
 
+/* fixes fieldset overflow issues */
+/* webkit */
+fieldset {
+	min-width: 0; 
+}
+/* firefox */
+@-moz-document url-prefix() {
+	fieldset {
+		display: table-column;
+	}
+}
+
 /* balloon tooltips */
 .balloonTooltip {
 	background-color: @wcfTooltipBackgroundColor;
 	border-radius: 6px;
 	color: @wcfTooltipColor;
-	font-size: .85em;
+	font-size: @wcfSmallFontSize;
 	max-width: 300px;
 	padding: 5px 10px 7px;
 	position: absolute;
@@ -253,13 +287,14 @@ body > iframe[src="about:blank"] {
 	border-radius: 9px;
 	color: @wcfContentBackgroundColor;
 	display: inline-block;
-	font-size: 11px;
+	font-size: @wcfSmallFontSize;
 	font-weight: bold;
 	padding: 1px 6px 1px;
 	position: relative;
 	text-shadow: none !important; /* necessary to avoid ugly text shadows in comment lists; @todo: better solution without "!important" */
 	vertical-align: middle;
 	white-space: nowrap;
+	word-wrap: normal;
 	
 	&.label	{
 		border-radius: 4px;
@@ -362,5 +397,19 @@ a.badge:hover {
 	
 	&.pink {
 		background-color: #c09;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	// Preserve HTML font-size when iPhone orientation changes from portrait to landscape
+	html {
+		-webkit-text-size-adjust: 100%;
+	}
+	
+	// Fixes zoom when iPhone orientation changes from portrait to landscape
+	html,
+	body {
+		width: 100%;
+		overflow: hidden;
 	}
 }

@@ -7,9 +7,9 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * All searchable object types should implement this interface. 
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.search
+ * @package	com.woltlab.wcf
  * @subpackage	system.search
  * @category	Community Framework
  */
@@ -124,5 +124,5 @@ interface ISearchableObjectType {
 	 * @param	string								$orderBy
 	 * @return	string
 	 */
-	public function getSpecialSQLQuery(PreparedStatementConditionBuilder $fulltextCondition = null, PreparedStatementConditionBuilder $searchIndexConditions = null, PreparedStatementConditionBuilder $additionalConditions = null, $orderBy = 'time DESC');
+	public function getSpecialSQLQuery(PreparedStatementConditionBuilder &$fulltextCondition = null, PreparedStatementConditionBuilder &$searchIndexConditions = null, PreparedStatementConditionBuilder &$additionalConditions = null, $orderBy = 'time DESC');
 }

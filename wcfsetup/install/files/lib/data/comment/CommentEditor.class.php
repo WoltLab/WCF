@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.comment
+ * @package	com.woltlab.wcf
  * @subpackage	data.comment
  * @category	Community Framework
  */
@@ -20,13 +20,13 @@ class CommentEditor extends DatabaseObjectEditor {
 	protected static $baseClass = 'wcf\data\comment\Comment';
 	
 	/**
-	 * Updates last response ids.
+	 * Updates response ids.
 	 */
-	public function updateLastResponseIDs() {
+	public function updateResponseIDs() {
 		$sql = "SELECT		responseID
 			FROM		wcf".WCF_N."_comment_response
 			WHERE		commentID = ?
-			ORDER BY	time DESC";
+			ORDER BY	time ASC";
 		$statement = WCF::getDB()->prepareStatement($sql, 3);
 		$statement->execute(array($this->commentID));
 		$responseIDs = array();
@@ -35,7 +35,7 @@ class CommentEditor extends DatabaseObjectEditor {
 		}
 		
 		$this->update(array(
-			'lastResponseIDs' => serialize($responseIDs)
+			'responseIDs' => serialize($responseIDs)
 		));
 	}
 }

@@ -37,8 +37,8 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * @return	string		final link
 	 */
 	protected static function insertPageNumber($link, $pageNo) {
-		$startPos = StringUtil::indexOf($link, '%d');
-		if ($startPos !== null) $link = StringUtil::substring($link, 0, $startPos) . $pageNo . StringUtil::substring($link, $startPos + 2);
+		$startPos = mb_strpos($link, '%d');
+		if ($startPos !== null) $link = mb_substr($link, 0, $startPos) . $pageNo . mb_substr($link, $startPos + 2);
 		return $link;
 	}
 	
@@ -117,7 +117,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			if (isset($tagArgs['application'])) $parameters['application'] = $tagArgs['application'];
 			
 			$link = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink($tagArgs['controller'], $parameters, $tagArgs['link']));
-					
+			
 			if (!isset($tagArgs['page'])) {
 				if (($tagArgs['page'] = $tplObj->get('pageNo')) === null) {
 					$tagArgs['page'] = 0;

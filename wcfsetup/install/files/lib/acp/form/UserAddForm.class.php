@@ -18,7 +18,7 @@ use wcf\util\UserUtil;
  * Shows the user add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -223,7 +223,7 @@ class UserAddForm extends UserOptionListForm {
 		
 		// validate user title
 		try {
-			if (StringUtil::length($this->userTitle) > USER_TITLE_MAX_LENGTH) {
+			if (mb_strlen($this->userTitle) > USER_TITLE_MAX_LENGTH) {
 				throw new UserInputException('userTitle', 'tooLong');
 			}
 			if (!StringUtil::executeWordFilter($this->userTitle, USER_FORBIDDEN_TITLES)) {
@@ -335,7 +335,7 @@ class UserAddForm extends UserOptionListForm {
 		}
 		
 		// check confirm input
-		if (StringUtil::toLowerCase($email) != StringUtil::toLowerCase($confirmEmail)) {
+		if (mb_strtolower($email) != mb_strtolower($confirmEmail)) {
 			throw new UserInputException('confirmEmail', 'notEqual');
 		}
 	}

@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * $tar->create();
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
@@ -64,7 +64,7 @@ class TarWriter extends Tar {
 	public function addString($filename, $string) {
 		if (empty($filename)) return false;
 		
-		$filename = FileUtil::unifyDirSeperator($filename);
+		$filename = FileUtil::unifyDirSeparator($filename);
 		
 		if (!$this->writeHeaderBlock($filename, strlen($string), TIME_NOW, 33279)) {
 			return false;
@@ -72,7 +72,7 @@ class TarWriter extends Tar {
 		
 		$i = 0;
 		while (($buffer = substr($string, (($i++) * 512), 512)) != '') {
-			$this->file->write(pack("a512", $buffer));
+			$this->file->write(pack('a512', $buffer));
 		}
 		
 		return true;
@@ -92,9 +92,9 @@ class TarWriter extends Tar {
 		
 		$result = true;
 		
-		// unify dir seperator
-		$addDir = FileUtil::unifyDirSeperator($addDir);
-		$removeDir = FileUtil::unifyDirSeperator($removeDir);
+		// unify dir separator
+		$addDir = FileUtil::unifyDirSeparator($addDir);
+		$removeDir = FileUtil::unifyDirSeparator($removeDir);
 		
 		foreach ($files as $filename) {
 			if (!$result) {
@@ -141,7 +141,7 @@ class TarWriter extends Tar {
 	 * @return	boolean		result
 	 */
 	protected function addFile($filename, $addDir, $removeDir) {
-		$filename = FileUtil::unifyDirSeperator($filename);
+		$filename = FileUtil::unifyDirSeparator($filename);
 		$storedFilename = $filename;
 		if (!empty($removeDir)) $storedFilename = StringUtil::replaceIgnoreCase($removeDir, '', $filename);
 		if (!empty($addDir)) $storedFilename = $addDir . $storedFilename;
@@ -244,7 +244,7 @@ class TarWriter extends Tar {
 		}
 		
 		$this->file->write($binaryDataFirst, 148);
-		$this->file->write(pack("a8", sprintf("%6s ", decOct($checksum))), 8); // write the checksum
+		$this->file->write(pack('a8', sprintf("%6s ", decOct($checksum))), 8); // write the checksum
 		$this->file->write($binaryDataLast, 356);
 		
 		return true;
@@ -259,8 +259,9 @@ class TarWriter extends Tar {
 	protected function writeLongHeaderBlock($filename) {
 		$size = sprintf("%11s ", decOct(strlen($filename)));
 		$typeFlag = 'L';
-		$binaryDataFirst = pack("a100a8a8a8a12A12", '././@LongLink', 0, 0, 0, $size, 0);
-		$binaryDataLast = pack("a1a100a6a2a32a32a8a8a155a12", $typeFlag, '', '', '', '', '', '', '', '', '');
+		
+		$binaryDataFirst = pack('a100a8a8a8a12A12', '././@LongLink', 0, 0, 0, $size, 0);
+		$binaryDataLast = pack('a1a100a6a2a32a32a8a8a155a12', $typeFlag, '', '', '', '', '', '', '', '', '');
 		
 		// calculate the checksum
 		$checksum = 0;
@@ -275,12 +276,12 @@ class TarWriter extends Tar {
 		}
 		
 		$this->file->write($binaryDataFirst, 148);
-		$this->file->write(pack("a8", sprintf("%6s ", decOct($checksum))), 8); // write the checksum
+		$this->file->write(pack('a8', sprintf("%6s ", decOct($checksum))), 8); // write the checksum
 		$this->file->write($binaryDataLast, 356);
 		
 		$i = 0;
 		while (($buffer = substr($filename, (($i++) * 512), 512)) != '') {
-			$this->file->write(pack("a512", $buffer));
+			$this->file->write(pack('a512', $buffer));
 		}
 		
 		return true;

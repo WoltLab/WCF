@@ -91,7 +91,7 @@ class DiskCacheSource implements ICacheSource {
 	 * @param	string		$pattern
 	 */
 	protected function removeFiles($pattern) {
-		$directory = FileUtil::unifyDirSeperator(WCF_DIR.'cache/');
+		$directory = FileUtil::unifyDirSeparator(WCF_DIR.'cache/');
 		$pattern = str_replace('*', '.*', str_replace('.', '\.', $pattern));
 		
 		$this->getDirectoryUtil()->executeCallback(new Callback(function ($filename) {

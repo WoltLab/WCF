@@ -137,6 +137,18 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
+			<option name="admin.system.canImportData">
+				<categoryname>admin.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.system.canRebuildData">
+				<categoryname>admin.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
 			<option name="admin.system.canManageCronjob">
 				<categoryname>admin.system</categoryname>
 				<optiontype>boolean</optiontype>
@@ -284,16 +296,12 @@ bmp
 zip
 txt
 pdf]]></defaultvalue>
+				<wildcard><![CDATA[*]]></wildcard>
 			</option>
 			<option name="user.attachment.maxCount">
 				<categoryname>user.message.attachment</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>10</defaultvalue>
-			</option>
-			<option name="user.attachment.quota">
-				<categoryname>user.message.attachment</categoryname>
-				<optiontype>fileSize</optiontype>
-				<defaultvalue>100000000</defaultvalue>
 			</option>
 			
 			<option name="admin.attachment.canManageAttachment">
@@ -415,7 +423,8 @@ pdf]]></defaultvalue>
 			<option name="user.profile.canMail">
 				<categoryname>user.profile</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
+				<userdefaultvalue>1</userdefaultvalue>
 			</option>
 			<option name="user.profile.canChangeEmail">
 				<categoryname>user.profile</categoryname>

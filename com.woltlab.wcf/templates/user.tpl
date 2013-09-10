@@ -7,9 +7,9 @@
 	
 	<link rel="canonical" href="{link controller='User' object=$user}{/link}" />
 	
-	<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath('wcf')}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 	{event name='javascriptInclude'}
-	<script type="text/javascript">
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			{if $__wcf->getUser()->userID && $__wcf->getUser()->userID != $user->userID}
@@ -124,10 +124,20 @@
 		</dl>
 	{/if}
 	<nav class="jsMobileNavigation buttonGroupNavigation">
-		<ul id="profileButtonContainer" class="buttonGroup">{*
-			*}{if $user->userID != $__wcf->user->userID}{if $user->isAccessible('canViewEmailAddress')}<li><a class="button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}<li><a class="button jsTooltip" href="{link controller='Mail' object=$user}{/link}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>{/if}{/if}{*
-			*}{event name='buttons'}{*
-		*}</ul>
+		<ul id="profileButtonContainer" class="buttonGroup">
+			{hascontent}
+				<li class="dropdown">
+					<a class="button dropdownToggle jsTooltip" title="{lang}wcf.user.searchUserContent{/lang}"><span class="icon icon16 icon-search"></span> <span class="invisible">{lang}wcf.user.searchUserContent{/lang}</span></a>
+					<ul class="dropdownMenu">
+						{content}
+							{event name='quickSearchItems'}
+						{/content}
+					</ul>
+				</li>
+			{/hascontent}
+			{if $user->userID != $__wcf->user->userID}{if $user->isAccessible('canViewEmailAddress')}<li><a class="button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}<li><a class="button jsTooltip" href="{link controller='Mail' object=$user}{/link}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>{/if}{/if}
+			{event name='buttons'}
+		</ul>
 	</nav>
 </header>
 

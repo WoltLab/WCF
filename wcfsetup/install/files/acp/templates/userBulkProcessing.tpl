@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.user.bulkProcessing'}
 
 {if $mailID|isset}
-	<script type="text/javascript">
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', '', {
@@ -12,7 +12,7 @@
 	</script>
 {/if}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		function toggleContainer(value) {
@@ -113,7 +113,7 @@
 			</ul>
 		</nav>
 	
-		<div id="conditions" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="conditions" class="container containerPadding tabMenuContent">
 			<fieldset>
 				<legend>{lang}wcf.acp.user.search.conditions{/lang}</legend>
 				
@@ -176,6 +176,7 @@
 				<legend>{lang}wcf.acp.user.search.conditions.states{/lang}</legend>
 				
 				<dl>
+					<dt></dt>
 					<dd>
 						<label><input type="checkbox" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.banned{/lang}</label>
 						<label><input type="checkbox" name="notBanned" value="1" {if $notBanned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.notBanned{/lang}</label>
@@ -193,7 +194,7 @@
 		</div>
 		
 		{if $options|count}
-			<div id="profile" class="container containerPadding tabMenuContainer tabMenuContent">
+			<div id="profile" class="container containerPadding tabMenuContent">
 				<fieldset>
 					<legend>{lang}wcf.acp.user.search.conditions.profile{/lang}</legend>
 			
@@ -204,11 +205,12 @@
 			</div>
 		{/if}
 	
-		<div id="action" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="action" class="container containerPadding tabMenuContent">
 			<fieldset{if $errorField == 'action'} class="formError"{/if}>
 				<legend>{lang}wcf.acp.user.bulkProcessing.action{/lang}</legend>
 				
 				<dl>
+					<dt></dt>
 					<dd>
 						{if $__wcf->session->getPermission('admin.user.canMailUser')}
 							<label><input type="radio" name="action" value="sendMail" {if $action == 'sendMail'}checked="checked" {/if}/> {lang}wcf.acp.user.sendMail{/lang}</label>
@@ -274,6 +276,7 @@
 					</dl>
 					
 					<dl>
+						<dt></dt>
 						<dd>
 							<label for="enableHTML"><input type="checkbox" id="enableHTML" name="enableHTML" value="1"{if $enableHTML == 1} checked="checked"{/if}/> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
 						</dd>
@@ -314,6 +317,7 @@
 					<legend>{lang}wcf.acp.user.groups{/lang}</legend>
 					
 					<dl>
+						<dt></dt>
 						<dd{if $errorField == 'assignToGroupIDs'} class="formError"{/if}>
 							{htmlCheckboxes options=$availableGroups name=assignToGroupIDs selected=$assignToGroupIDs}
 							{if $errorField == 'assignToGroupIDs'}

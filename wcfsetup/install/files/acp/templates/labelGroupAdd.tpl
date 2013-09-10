@@ -1,17 +1,22 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.label.group.'|concat:$action}
 
 {include file='aclPermissions'}
-<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Label{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript">
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
-		new WCF.ACL.List($('#groupPermissions'), {@$objectTypeID}{if $groupID|isset}, '', {@$groupID}{/if});
 		new WCF.Label.ACPList.Connect();
 		
 		WCF.TabMenu.init();
 	});
 	//]]>
 </script>
+
+{if !$groupID|isset}
+	{include file='aclPermissionJavaScript' containerID='groupPermissions'}
+{else}
+	{include file='aclPermissionJavaScript' containerID='groupPermissions' objectID=$groupID}
+{/if}
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.label.group.{$action}{/lang}</h1>
@@ -44,7 +49,7 @@
 			</ul>
 		</nav>
 		
-		<div id="general" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="general" class="container containerPadding tabMenuContent">
 			<fieldset>
 				<legend>{lang}wcf.global.form.data{/lang}</legend>
 				
@@ -80,7 +85,7 @@
 			{event name='generalFieldsets'}
 		</div>
 		
-		<div id="connect" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="connect" class="container containerPadding tabMenuContent">
 			<fieldset>
 				<legend>{lang}wcf.acp.label.group.category.connect{/lang}</legend>
 				

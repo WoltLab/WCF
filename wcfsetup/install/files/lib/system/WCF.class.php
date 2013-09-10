@@ -7,6 +7,7 @@ use wcf\data\package\PackageCache;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
+use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IPrintableException;
@@ -35,7 +36,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current wcf version
-define('WCF_VERSION', '2.0.0 Beta 4 (Maelstrom)');
+define('WCF_VERSION', '2.0.0 Beta 8 (Maelstrom)');
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -504,6 +505,22 @@ class WCF {
 	}
 	
 	/**
+	 * Loads an application on runtime, do not use this outside the package installation.
+	 * 
+	 * @param	integer		$packageID
+	 */
+	public static function loadRuntimeApplication($packageID) {
+		$package = new Package($packageID);
+		$application = new Application($packageID);
+		
+		$abbreviation = Package::getAbbreviation($package->package);
+		$packageDir = FileUtil::getRealPath(WCF_DIR.$package->packageDir);
+		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
+		self::$applications[$abbreviation] = $application;
+		self::getTPL()->addApplication($abbreviation, $packageDir . 'acp/templates/');
+	}
+	
+	/**
 	 * Initializes core object cache.
 	 */
 	protected function initCoreObjects() {
@@ -522,7 +539,7 @@ class WCF {
 		self::getTPL()->registerPrefilter(array('event', 'hascontent', 'lang'));
 		self::getTPL()->assign(array(
 			'__wcf' => $this,
-			'__wcfVersion' => StringUtil::substring(sha1(WCF_VERSION), 0, 8)
+			'__wcfVersion' => mb_substr(sha1(WCF_VERSION), 0, 8)
 		));
 	}
 	
@@ -705,7 +722,7 @@ class WCF {
 		$path = FileUtil::removeLeadingSlash($path);
 		$baseHref = self::getTPL()->get('baseHref');
 		
-		if (!empty($path) && StringUtil::indexOf($path, '?') !== 0) {
+		if (!empty($path) && mb_strpos($path, '?') !== 0) {
 			$baseHref .= 'index.php/';
 		}
 		
@@ -719,6 +736,16 @@ class WCF {
 	 */
 	public function getStyleHandler() {
 		return StyleHandler::getInstance();
+	}
+	
+	/**
+	 * Returns number of available updates.
+	 * 
+	 * @return	integer
+	 */
+	public function getAvailableUpdates() {
+		$data = PackageUpdateCacheBuilder::getInstance()->getData();
+		return $data['updates'];
 	}
 	
 	/**

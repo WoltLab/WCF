@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Reads and validates xml documents.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -119,7 +119,7 @@ class XML {
 		
 		// build file path upon namespace and filename
 		$tmp = explode(' ', $this->schema);
-		$this->schema = WCF_DIR.'xsd/'.StringUtil::substring(sha1($tmp[0]), 0, 8) . '_' . basename($tmp[1]);
+		$this->schema = WCF_DIR.'xsd/'.mb_substr(sha1($tmp[0]), 0, 8) . '_' . basename($tmp[1]);
 		
 		if (!file_exists($this->schema) || !is_readable($this->schema)) {
 			throw new SystemException("Could not read XML schema definition located at '".$this->schema."'.");

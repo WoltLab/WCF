@@ -1,9 +1,10 @@
-﻿/*
- * BBCode Plugin v1.0 for CKEditor - http://www.site-top.com/
- * Copyright (c) 2010, PitBult.
- * - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+﻿/**
+ * BBCode Plugin for CKEditor
+ * 
+ * @author	Marcel Werk
+ * @copyright 	2001-2013 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-
 (function() {
 	var $pasted = false;
 	var $insertedText = null;
@@ -22,9 +23,15 @@
 				$value = $value.replace(/<\/p>/gi,"\n\n");
 				$value = $value.replace(/&nbsp;/gi," ");
 				
+				// convert div-separated content into new lines
+				$value = $value.replace(/<div([^>])>/gi, '');
+				$value = $value.replace(/<\/div>/gi, "\n");
+				
+				// convert lists into new lines
+				$value = $value.replace(/<\/li>/gi, "\n");
 				// remove html tags
 				$value = $value.replace(/<[^>]+>/g, '');
-
+				
 				// fix multiple new lines
 				$value = $value.replace(/\n{3,}/gi,"\n\n");
 				
@@ -34,10 +41,24 @@
 			}
 		}, null, null, 9);
 		
+		// prevent drag and drop of images in Firefox
+		event.editor.document.on('drop', function(ev) {
+			if (ev.data.$.dataTransfer) {
+				var $html = ev.data.$.dataTransfer.getData('text/html');
+				if (/<img src="data:image\/[a-zA-Z0-9]+;base64/.exec($html)) {
+					ev.data.preventDefault(true);
+				}
+			}
+		});
+		
 		event.editor.on('insertText', function(ev) {
 			$insertedText = ev.data;
 		}, null, null, 1);
 		event.editor.on('mode', function(ev) {
+			if ($.browser.mozilla && ev.editor.mode === 'wysiwyg') {
+				fixFirefox();
+			}
+			
 			ev.editor.focus();
 			
 			insertFakeSubmitButton(ev);
@@ -55,7 +76,11 @@
 		insertFakeSubmitButton(event);
 		
 		// remove stupid title tag
-		$(event.editor.container.$).find(".cke_wysiwyg_div").removeAttr('title');
+		$(event.editor.container.$).removeAttr('title');
+		
+		if ($.browser.mozilla) {
+			fixFirefox();
+		}
 	});
 	
 	/**
@@ -69,8 +94,18 @@
 		}
 		
 		// place button outside of <body> to prevent it being removed once deleting content
-		$('<button accesskey="s" />').hide().appendTo($(event.editor.document.$).find('html'));
+		$('<button accesskey="s" />').hide().appendTo($(event.editor.container.$).find('.cke_wysiwyg_div'));
 		
+	}
+	
+	/**
+	 * Disables object resizing and table handles in Firefox.
+	 */
+	function fixFirefox() {
+		document.designMode = 'on';
+		document.execCommand('enableObjectResizing', false, false);
+		document.execCommand('enableInlineTableEditing', false, false);
+		document.designMode = 'off';
 	}
 	
 	/**
@@ -174,6 +209,8 @@
 	 * Converts bbcodes to html.
 	 */
 	var toHtml = function(data, fixForBody) {
+		if ($.trim(data) === "") return "<p></p>";
+		
 		// remove 0x200B (unicode zero width space)
 		data = removeCrap(data);
 		
@@ -264,6 +301,8 @@
 		// [list]
 		data = data.replace(/\[list\]/gi, '<ul>');
 		data = data.replace(/\[list=1\]/gi, '<ul style="list-style-type: decimal">');
+		data = data.replace(/\[list=a\]/gi, '<ul style="list-style-type: lower-latin">');
+		data = data.replace(/\[list=(none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)\]/gi, '<ul style="list-style-type: $1">');
 		data = data.replace(/\[\/list]/gi, '</ul>');
 		
 		// [table]
@@ -316,7 +355,11 @@
 		html = html.replace(/<a .*?href=(["'])mailto:(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[email=$2]$3[/email]');
 		
 		// [url]
-		html = html.replace(/<a .*?href=(["'])(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[url=\'$2\']$3[/url]');
+		html = html.replace(/<a .*?href=(["'])(.+?)\1.*?>([\s\S]+?)<\/a>/gi, function(match, x, url, text) {
+			if (url == text) return '[url]' + url + '[/url]';
+			
+			return "[url='" + url + "']" + text + "[/url]";
+		});
 		
 		// [b]
 		html = html.replace(/<(?:b|strong)>/gi, '[b]');
@@ -378,6 +421,7 @@
 		// [list]
 		html = html.replace(/<ul>/gi, '[list]');
 		html = html.replace(/<(ol|ul style="list-style-type: decimal")>/gi, '[list=1]');
+		html = html.replace(/<ul style="list-style-type: (none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)">/gi, '[list=$1]');
 		html = html.replace(/<\/(ul|ol)>/gi, '[/list]');
 		
 		// [table]
@@ -413,5 +457,5 @@
 		html = html.replace(/%20/g, ' ');
 		
 		return html;
-	}
+	};
 })();

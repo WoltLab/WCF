@@ -1,9 +1,10 @@
 {include file='header' pageTitle='wcf.acp.package.update.title'}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
+			'wcf.acp.package.update.title': '{lang}wcf.acp.package.update.title{/lang}',
 			'wcf.acp.package.update.unauthorized': '{lang}wcf.acp.package.update.unauthorized{/lang}'
 		})
 		

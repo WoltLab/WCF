@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.tag.list'}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\tag\\TagAction', '.jsTagRow');
@@ -75,7 +75,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{#$tag->tagID}</td>
-						<td class="columnTitle columnName"><a href="{link controller='TagEdit' object=$tag}{/link}" class="badge tag">{$tag->name}</a></td>
+						<td class="columnTitle columnName"><a href="{link controller='TagEdit' object=$tag}{/link}" class="badge tag">{$tag->name|tableWordwrap}</a></td>
 						<td class="columnDigits columnUsageCount">{if $tag->synonymFor === null}{#$tag->usageCount}{/if}</td>
 						<td class="columnText columnLanguage">{if $tag->languageName !== null}{$tag->languageName} ({$tag->languageCode}){/if}</td>
 						<td class="columnText columnSynonymFor">{if $tag->synonymFor !== null}<a href="{link controller='TagList'}search={@$tag->synonymName|rawurlencode}{/link}" class="badge tag">{$tag->synonymName}</a>{/if}</td>

@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.comment
+ * @package	com.woltlab.wcf
  * @subpackage	data.comment
  * @category	Community Framework
  */
@@ -28,21 +28,21 @@ class Comment extends DatabaseObject implements IMessage {
 	protected static $databaseTableIndexName = 'commentID';
 	
 	/**
-	 * Returns a list of last response ids.
+	 * Returns a list of response ids.
 	 * 
 	 * @return	array<integer>
 	 */
-	public function getLastResponseIDs() {
-		if ($this->lastResponseIDs === null || $this->lastResponseIDs == '') {
+	public function getResponseIDs() {
+		if ($this->responseIDs === null || $this->responseIDs == '') {
 			return array();
 		}
 		
-		$lastResponseIDs = @unserialize($this->lastResponseIDs);
-		if ($lastResponseIDs === false) {
+		$responseIDs = @unserialize($this->responseIDs);
+		if ($responseIDs === false) {
 			return array();
 		}
 		
-		return $lastResponseIDs;
+		return $responseIDs;
 	}
 	
 	/**

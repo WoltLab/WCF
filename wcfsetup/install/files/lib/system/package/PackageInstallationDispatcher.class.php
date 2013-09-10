@@ -11,6 +11,7 @@ use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\builder\TemplateListenerCacheBuilder;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
@@ -32,7 +33,6 @@ use wcf\system\request\RouteHandler;
 use wcf\system\setup\Installer;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
-use wcf\system\version\VersionHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
@@ -89,7 +89,13 @@ class PackageInstallationDispatcher {
 	 * holds state of structuring version tables
 	 * @var boolean
 	 */
-	protected $requireRestructureVersionTables = false;	
+	protected $requireRestructureVersionTables = false;
+	
+	/**
+	 * data of previous package in queue
+	 * @var	array<string>
+	 */
+	protected $previousPackageData = null;
 	
 	/**
 	 * Creates a new instance of PackageInstallationDispatcher.
@@ -101,6 +107,15 @@ class PackageInstallationDispatcher {
 		$this->nodeBuilder = new PackageInstallationNodeBuilder($this);
 		
 		$this->action = $this->queue->action;
+	}
+	
+	/**
+	 * Sets data of previous package in queue.
+	 * 
+	 * @param	array<string>	$packageData
+	 */
+	public function setPreviousPackage(array $packageData) {
+		$this->previousPackageData = $packageData;
 	}
 	
 	/**
@@ -204,7 +219,17 @@ class PackageInstallationDispatcher {
 			
 			EventHandler::getInstance()->fireAction($this, 'postInstall');
 			
-			// remove queues with the same process no
+			// remove archives
+			$sql = "SELECT	archive
+				FROM	wcf".WCF_N."_package_installation_queue
+				WHERE	processNo = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->queue->processNo));
+			while ($row = $statement->fetchArray()) {
+				@unlink($row['archive']);
+			}
+			
+			// delete queues
 			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
 				WHERE		processNo = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -225,6 +250,15 @@ class PackageInstallationDispatcher {
 	 */
 	public function getArchive() {
 		if ($this->archive === null) {
+			$package = $this->getPackage();
+			// check if we're doing an iterative update of the same package
+			if ($this->previousPackageData !== null && $this->getPackage()->package == $this->previousPackageData['package']) {
+				if (version_compare($this->getPackage()->packageVersion, $this->previousPackageData['packageVersion'], '<')) {
+					// fake package to simulate the package version required by current archive
+					$this->getPackage()->setPackageVersion($this->previousPackageData['packageVersion']);
+				}
+			}
+			
 			$this->archive = new PackageArchive($this->queue->archive, $this->getPackage());
 			
 			if (FileUtil::isURL($this->archive->getArchive())) {
@@ -319,7 +353,7 @@ class PackageInstallationDispatcher {
 			$this->package = null;
 			
 			if ($package->isApplication) {
-				$host = StringUtil::replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
+				$host = str_replace(RouteHandler::getProtocol(), '', RouteHandler::getHost());
 				$path = RouteHandler::getPath(array('acp'));
 				
 				// insert as application
@@ -551,6 +585,11 @@ class PackageInstallationDispatcher {
 			
 			foreach ($nodeData as $package) {
 				if (in_array($package['package'], $document)) {
+					// ignore uninstallable packages
+					if (!$package['isInstallable']) {
+						continue;
+					}
+					
 					if (!$shiftNodes) {
 						$this->nodeBuilder->shiftNodes($currentNode, 'tempNode');
 						$shiftNodes = true;
@@ -570,6 +609,10 @@ class PackageInstallationDispatcher {
 					$installation->nodeBuilder->setParentNode($node);
 					$installation->nodeBuilder->buildNodes();
 					$node = $installation->nodeBuilder->getCurrentNode();
+				}
+				else {
+					// remove archive
+					@unlink($package['archive']);
 				}
 			}
 			
@@ -620,7 +663,19 @@ class PackageInstallationDispatcher {
 			$packageDir->setName('packageDir');
 			$packageDir->setLabel(WCF::getLanguage()->get('wcf.acp.package.packageDir.input'));
 			
-			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator(StringUtil::substring(WCF_DIR, 0, -4)));
+			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(mb_substr(WCF_DIR, 0, -4)));
+			// check if there is already an application
+			$sql = "SELECT	COUNT(*) AS count
+				FROM	wcf".WCF_N."_package
+				WHERE	packageDir = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array('../'));
+			$row = $statement->fetchArray();
+			if ($row['count']) {
+				// use abbreviation
+				$defaultPath .= strtolower(Package::getAbbreviation($this->getPackage()->package)) . '/';
+			}
+			
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);
 			
@@ -633,7 +688,7 @@ class PackageInstallationDispatcher {
 		else {
 			$document = PackageInstallationFormManager::getForm($this->queue, 'packageDir');
 			$document->handleRequest();
-			$packageDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeperator($document->getValue('packageDir')));
+			$packageDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($document->getValue('packageDir')));
 			
 			if ($packageDir !== null) {
 				// validate package dir
@@ -650,9 +705,22 @@ class PackageInstallationDispatcher {
 				
 				// determine domain path, in some environments (e.g. ISPConfig) the $_SERVER paths are
 				// faked and differ from the real filesystem path
-				$currentPath = RouteHandler::getPath();
-				$pathToDocumentRoot = str_replace(RouteHandler::getPath(array('acp')), '', FileUtil::unifyDirSeperator(WCF_DIR));
-				$domainPath = str_replace($pathToDocumentRoot, '', $packageDir);
+				if (PACKAGE_ID) {
+					$wcfDomainPath = ApplicationHandler::getInstance()->getWCF()->domainPath;
+				}
+				else {
+					$sql = "SELECT	domainPath
+						FROM	wcf".WCF_N."_application
+						WHERE	packageID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute(array(1));
+					$row = $statement->fetchArray();
+					
+					$wcfDomainPath = $row['domainPath'];
+				}
+				
+				$documentRoot = str_replace($wcfDomainPath, '', FileUtil::unifyDirSeparator(WCF_DIR));
+				$domainPath = str_replace($documentRoot, '', $packageDir);
 				
 				// update application path
 				$application = new Application($this->getPackage()->packageID);
@@ -689,6 +757,9 @@ class PackageInstallationDispatcher {
 				$optionalPackage->setLabel($package['packageName']);
 				$optionalPackage->setValue($package['package']);
 				$optionalPackage->setDescription($package['packageDescription']);
+				if (!$package['isInstallable']) {
+					$optionalPackage->setDisabledMessage(WCF::getLanguage()->get('wcf.acp.package.install.optionalPackage.missingRequirements'));
+				}
 				
 				$container->appendChild($optionalPackage);
 			}
@@ -786,14 +857,21 @@ class PackageInstallationDispatcher {
 	 * Executes post-setup actions.
 	 */
 	public function completeSetup() {
-		// mark queue as done
-		$queueEditor = new PackageInstallationQueueEditor($this->queue);
-		$queueEditor->update(array(
-			'done' => 1
-		));
+		// remove archives
+		$sql = "SELECT	archive
+			FROM	wcf".WCF_N."_package_installation_queue
+			WHERE	processNo = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->queue->processNo));
+		while ($row = $statement->fetchArray()) {
+			@unlink($row['archive']);
+		}
 		
-		// remove node data
-		$this->nodeBuilder->purgeNodes();
+		// delete queues
+		$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
+			WHERE		processNo = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->queue->processNo));
 		
 		// update package version
 		if ($this->action == 'update') {
@@ -882,7 +960,7 @@ class PackageInstallationDispatcher {
 		// validate functions
 		if (isset($requirements['functions'])) {
 			foreach ($requirements['functions'] as $function) {
-				$function = StringUtil::toLowerCase($function);
+				$function = mb_strtolower($function);
 				
 				$passed = self::functionExists($function);
 				if (!$passed) {
@@ -932,7 +1010,7 @@ class PackageInstallationDispatcher {
 			if (!empty($blacklist)) {
 				$blacklist = explode(',', $blacklist);
 				foreach ($blacklist as $disabledFunction) {
-					$disabledFunction = StringUtil::toLowerCase(StringUtil::trim($disabledFunction));
+					$disabledFunction = mb_strtolower(StringUtil::trim($disabledFunction));
 					
 					if ($function == $disabledFunction) {
 						return false;
@@ -955,7 +1033,7 @@ class PackageInstallationDispatcher {
 	protected static function compareSetting($setting, $value, $compareValue) {
 		if ($compareValue === false) return false;
 		
-		$value = StringUtil::toLowerCase($value);
+		$value = mb_strtolower($value);
 		$trueValues = array('1', 'on', 'true');
 		$falseValues = array('0', 'off', 'false');
 		
@@ -984,7 +1062,7 @@ class PackageInstallationDispatcher {
 	 */
 	protected static function convertShorthandByteValue($value) {
 		// convert into bytes
-		$lastCharacter = StringUtil::substring($value, -1);
+		$lastCharacter = mb_substr($value, -1);
 		switch ($lastCharacter) {
 			// gigabytes
 			case 'g':
@@ -1011,7 +1089,7 @@ class PackageInstallationDispatcher {
 	 * Restructure version tables.
 	 */
 	protected function restructureVersionTables() {
-		$objectTypes = VersionHandler::getInstance()->getObjectTypes();
+		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.versionableObject');
 		
 		if (empty($objectTypes)) {
 			return;
@@ -1019,36 +1097,73 @@ class PackageInstallationDispatcher {
 		
 		// base structure of version tables
 		$versionTableBaseColumns = array();
-		$versionTableBaseColumns[] = array('name' => 'versionID', 'data' => array('type' => 'INT', 'key' => 'PRIMARY', 'autoIncrement' => 'AUTO_INCREMENT'));
-		$versionTableBaseColumns[] = array('name' => 'versionUserID', 'data' => array('type' => 'INT'));
+		$versionTableBaseColumns[] = array('name' => 'versionID', 'data' => array('type' => 'INT', 'length' => 10, 'key' => 'PRIMARY', 'autoIncrement' => 'AUTO_INCREMENT'));
+		$versionTableBaseColumns[] = array('name' => 'versionUserID', 'data' => array('type' => 'INT', 'length' => 10));
 		$versionTableBaseColumns[] = array('name' => 'versionUsername', 'data' => array('type' => 'VARCHAR', 'length' => 255));
-		$versionTableBaseColumns[] = array('name' => 'versionTime', 'data' => array('type' => 'INT'));
+		$versionTableBaseColumns[] = array('name' => 'versionTime', 'data' => array('type' => 'INT', 'length' => 10));
 		
 		foreach ($objectTypes as $objectType) {
-			// get structure of base table
-			$baseTableColumns = WCF::getDB()->getEditor()->getColumns($objectType::getDatabaseTableName());
+			if (!class_exists($objectType->className)) {
+				// versionable database object isn't available anymore
+				// the object type gets deleted later on during the uninstallation
+				continue;
+			}
+			$baseTableColumns = WCF::getDB()->getEditor()->getColumns(call_user_func(array($objectType->className, 'getDatabaseTableName')));
+
+			// remove primary key from base table columns
+			foreach ($baseTableColumns as $key => $column) {
+				if ($column['data']['key'] == 'PRIMARY') {
+					$baseTableColumns[$key]['data']['key'] = '';
+				}
+				$baseTableColumns[$key]['data']['autoIncrement'] = false;
+			}
+			
 			// get structure of version table
-			$versionTableColumns = WCF::getDB()->getEditor()->getColumns($objectType::getDatabaseVersionTableName());
+			$versionTableColumns = array();
+			try {
+				$versionTableColumns = WCF::getDB()->getEditor()->getColumns(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')));
+			}
+			catch (\Exception $e) { }
 			
 			if (empty($versionTableColumns)) {
 				$columns = array_merge($versionTableBaseColumns, $baseTableColumns);
-				
-				WCF::getDB()->getEditor()->createTable($objectType::getDatabaseVersionTableName(), $columns);
+				WCF::getDB()->getEditor()->createTable(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')), $columns);
+
+				// add version table to plugin
+				$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log
+							(packageID, sqlTable)
+					VALUES		(?, ?)";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array(
+					$this->queue->packageID,
+					call_user_func(array($objectType->className, 'getDatabaseVersionTableName'))
+				));
 			}
 			else {
+				$baseTableColumnNames = $versionTableColumnNames = $versionTableBaseColumnNames = array();
+				foreach ($baseTableColumns as $column) {
+					$baseTableColumnNames[] = $column['name'];
+				}
+				foreach ($versionTableColumns as $column) {
+					$versionTableColumnNames[] = $column['name'];
+				}
+				foreach ($versionTableBaseColumns as $column) {
+					$versionTableBaseColumnNames[] = $column['name'];
+				}
+
 				// check garbage columns in versioned table
 				foreach ($versionTableColumns as $columnData) {
-					if (!array_search($columnData['name'], $baseTableColumns, true)) {
+					if (!in_array($columnData['name'], $baseTableColumnNames) && !in_array($columnData['name'], $versionTableBaseColumnNames)) {
 						// delete column
-						WCF::getDB()->getEditor()->dropColumn($objectType::getDatabaseVersionTableName(), $columnData['name']);
+						WCF::getDB()->getEditor()->dropColumn(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')), $columnData['name']);
 					}
 				}
 				
 				// check new columns for versioned table
 				foreach ($baseTableColumns as $columnData) {
-					if (!array_search($columnData['name'], $versionTableColumns, true)) {
+					if (!in_array($columnData['name'], $versionTableColumnNames)) {
 						// add colum
-						WCF::getDB()->getEditor()->addColumn($objectType::getDatabaseVersionTableName(), $columnData['name'], $columnData['data']);
+						WCF::getDB()->getEditor()->addColumn(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')), $columnData['name'], $columnData['data']);
 					}
 				}
 			}

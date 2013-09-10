@@ -5,9 +5,9 @@ namespace wcf\system\bbcode\highlighter;
  * Highlights syntax of java source code.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @package	com.woltlab.wcf
  * @subpackage	system.bbcode.highlighter
  * @category	Community Framework
  */

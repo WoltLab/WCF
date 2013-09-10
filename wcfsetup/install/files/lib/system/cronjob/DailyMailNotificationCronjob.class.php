@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	system.cronjob
  * @category	Community Framework
  */
@@ -152,7 +152,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			$token = $user->notificationMailToken;
 			if (!$token) {
 				// generate token if not present
-				$token = StringUtil::substring(StringUtil::getHash(serialize(array($user->userID, StringUtil::getRandomID()))), 0, 20);
+				$token = mb_substr(StringUtil::getHash(serialize(array($user->userID, StringUtil::getRandomID()))), 0, 20);
 				$editor = new UserEditor($user);
 				$editor->update(array('notificationMailToken' => $token));
 			}

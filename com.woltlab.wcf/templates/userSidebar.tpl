@@ -16,13 +16,13 @@
 	<dl class="plain statsDataList">
 		{event name='statistics'}
 		
+		<dt>{if $user->activityPoints}<a class="activityPointsDisplay jsTooltip" title="{lang}wcf.user.activityPoint.showDetails{/lang}" data-user-id="{@$user->userID}">{lang}wcf.user.activityPoint{/lang}</a>{else}{lang}wcf.user.activityPoint{/lang}{/if}</dt>
+		<dd>{#$user->activityPoints}</dd>
+		
 		{if MODULE_LIKE}
 			<dt>{lang}wcf.like.likesReceived{/lang}</dt>
 			<dd>{#$user->likesReceived}</dd>
 		{/if}
-		
-		<dt>{if $user->activityPoints}<a class="activityPointsDisplay jsTooltip" title="{lang}wcf.user.activityPoint.showDetails{/lang}" data-user-id="{@$user->userID}">{lang}wcf.user.activityPoint{/lang}</a>{else}{lang}wcf.user.activityPoint{/lang}{/if}</dt>
-		<dd>{#$user->activityPoints}</dd>
 		
 		<dt>{lang}wcf.user.profileHits{/lang}</dt>
 		<dd{if $user->getProfileAge() > 1} title="{lang}wcf.user.profileHits.hitsPerDay{/lang}"{/if}>{#$user->profileHits}</dd>

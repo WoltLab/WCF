@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\dashboard\box;
+use wcf\data\dashboard\box\DashboardBox; 
 use wcf\data\user\UserProfileList;
+use wcf\page\IPage; 
 use wcf\system\cache\builder\NewestMembersCacheBuilder;
 use wcf\system\WCF;
 
@@ -10,27 +12,44 @@ use wcf\system\WCF;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	system.dashboard.box
  * @category	Community Framework
  */
 class NewestMembersDashboardBox extends AbstractSidebarDashboardBox {
 	/**
+	 * user profile list
+	 * @var wcf\data\user\UserProfileList 
+	 */
+	public $userProfileList = null; 
+	
+	/**
+	 * @see	wcf\system\dashboard\box\IDashboardBox::init()
+	 */
+	public function init(DashboardBox $box, IPage $page) {
+		parent::init($box, $page); 
+		
+		// get ids
+		$newestMemberIDs = NewestMembersCacheBuilder::getInstance()->getData();
+		if (!empty($newestMemberIDs)) {
+			// get profile data
+			$this->userProfileList = new UserProfileList();
+			$this->userProfileList->sqlOrderBy = 'user_table.registrationDate DESC';
+			$this->userProfileList->setObjectIDs($newestMemberIDs);
+			$this->userProfileList->readObjects();
+		}
+		
+		$this->fetched(); 
+	}
+	
+	/**
 	 * @see	wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
-		// get ids
-		$newestMemberIDs = NewestMembersCacheBuilder::getInstance()->getData();
-		if (empty($newestMemberIDs)) return '';
-		
-		// get profile data
-		$userProfileList = new UserProfileList();
-		$userProfileList->sqlOrderBy = 'user_table.registrationDate DESC';
-		$userProfileList->setObjectIDs($newestMemberIDs);
-		$userProfileList->readObjects();
+		if ($this->userProfileList == null) return ''; 
 		
 		WCF::getTPL()->assign(array(
-			'newestMembers' => $userProfileList
+			'newestMembers' => $this->userProfileList
 		));
 		return WCF::getTPL()->fetch('dashboardBoxNewestMembers');
 	}

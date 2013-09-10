@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\style;
+use wcf\data\option\Option;
 use wcf\data\style\Style;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -7,6 +8,7 @@ use wcf\system\Callback;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 use wcf\util\StyleUtil;
 
 /**
@@ -25,6 +27,12 @@ class StyleCompiler extends SingletonFactory {
 	 * @var	\lessc
 	 */
 	protected $compiler = null;
+	
+	/**
+	 * names of option types which are supported as additional variables
+	 * @var	array<string>
+	 */
+	public static $supportedOptionType = array('boolean', 'integer');
 	
 	/**
 	 * @see	wcf\system\SingletonFactory::init()
@@ -63,6 +71,17 @@ class StyleCompiler extends SingletonFactory {
 		if (isset($variables['individualLess'])) {
 			$individualLess = $variables['individualLess'];
 			unset($variables['individualLess']);
+		}
+		
+		// apply overrides
+		if (isset($variables['overrideLess'])) {
+			$lines = explode("\n", StringUtil::unifyNewlines($variables['overrideLess']));
+			foreach ($lines as $line) {
+				if (preg_match('~^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%\#-]+);$~', $line, $matches)) {
+					$variables[$matches[1]] = $matches[2];
+				}
+			}
+			unset($variables['overrideLess']);
 		}
 		
 		$this->compileStylesheet(
@@ -163,6 +182,21 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	wcf\system\Callback	$callback
 	 */
 	protected function compileStylesheet($filename, array $files, array $variables, $individualLess, Callback $callback) {
+		// add options as LESS variables
+		if (PACKAGE_ID) {
+			foreach (Option::getOptions() as $constantName => $option) {
+				if (in_array($option->optionType, static::$supportedOptionType)) {
+					$variables['wcf_option_'.mb_strtolower($constantName)] = '~"'.$option->optionValue.'"';
+				}
+			}
+		}
+		else {
+			// workaround during setup
+			$variables['wcf_option_attachment_thumbnail_height'] = '~"210"';
+			$variables['wcf_option_attachment_thumbnail_width'] = '~"280"';
+			$variables['wcf_option_signature_max_image_height'] = '~"150"';
+		}
+		
 		// build LESS bootstrap
 		$less = $this->bootstrap($variables);
 		foreach ($files as $file) {
@@ -183,13 +217,37 @@ class StyleCompiler extends SingletonFactory {
 		
 		$content = $callback($content);
 		
+		// compress stylesheet
+		$lines = explode("\n", $content);
+		$content = $lines[0] . "\n" . $lines[1] . "\n";
+		for ($i = 2, $length = count($lines); $i < $length; $i++) {
+			$line = trim($lines[$i]);
+			$content .= $line;
+			
+			switch (substr($line, -1)) {
+				case ',':
+					$content .= ' ';
+				break;
+				
+				case '}':
+					$content .= "\n";
+				break;
+			}
+			
+			if (substr($line, 0, 6) == '@media') {
+				$content .= "\n";
+			}
+		}
+		
 		// write stylesheet
 		file_put_contents($filename.'.css', $content);
+		FileUtil::makeWritable($filename.'.css');
 		
 		// convert stylesheet to RTL
 		$content = StyleUtil::convertCSSToRTL($content);
 		
 		// write stylesheet for RTL
 		file_put_contents($filename.'-rtl.css', $content);
+		FileUtil::makeWritable($filename.'-rtl.css');
 	}
 }

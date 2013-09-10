@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * Worker implementation for sending mails.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.worker
@@ -126,7 +126,7 @@ class MailWorker extends AbstractWorker {
 	 */
 	protected function sendMail(User $user) {
 		try {
-			$mail = new Mail(array($user->username => $user->email), $this->mailData['subject'], StringUtil::replace('{$username}', $user->username, $this->mailData['text']), $this->mailData['from']);
+			$mail = new Mail(array($user->username => $user->email), $this->mailData['subject'], str_replace('{$username}', $user->username, $this->mailData['text']), $this->mailData['from']);
 			if ($this->mailData['enableHTML']) $mail->setContentType('text/html');
 			$mail->setLanguage($user->getLanguage());
 			$mail->send();

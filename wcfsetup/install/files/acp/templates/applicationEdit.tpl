@@ -1,7 +1,7 @@
 {include file='header' pageTitle='wcf.acp.application.edit'}
 
 {if $application->packageID != 1 && !$application->isPrimary}
-	<script type="text/javascript">
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({
@@ -62,11 +62,20 @@
 				</dd>
 			</dl>
 			
-			<dl>
+			<dl{if $errorField == 'domainPath'} class="formError"{/if}>
 				<dt><label for="domainPath">{lang}wcf.acp.application.domainPath{/lang}</label></dt>
 				<dd>
 					<input type="text" name="domainPath" id="domainPath" value="{$domainPath}" class="long" />
 					<small>{lang}wcf.acp.application.domainPath.description{/lang}</small>
+					{if $errorField == 'domainPath'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.application.domainPath.error.{$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
 				</dd>
 			</dl>
 			

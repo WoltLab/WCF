@@ -118,6 +118,7 @@
 	
 	.columnLastPost {
 		white-space: nowrap;
+		word-wrap: normal;
 		
 		> div > div > small {
 			color: @wcfDimmedColor;
@@ -167,7 +168,7 @@
 		}
 	}
 	
-	&.messageDisabled {
+	&.messageDisabled:not(.messageReduced) {
 		background-color: @wcfDisabledBackgroundColor;
 		
 		.messageSidebar {
@@ -179,7 +180,7 @@
 		}
 	}
 	
-	&.messageDeleted {
+	&.messageDeleted:not(.messageReduced) {
 		background-color: @wcfDeletedBackgroundColor;
 		
 		.messageSidebar {
@@ -191,7 +192,7 @@
 		}
 	}
 	
-	&.jsMarked {
+	&.jsMarked:not(.messageReduced) {
 		background-color: @wcfSelectedBackgroundColor;
 		
 		.messageSidebar {
@@ -429,17 +430,14 @@
 	}
 }
  
-.message .messageBody {
+.messageBody {
 	color: @wcfColor;
 	display: block;
 	line-height: 1.5;
-	padding: @wcfGapMedium @wcfGapLarge 1px;
-	/*position: relative;*/
 	
 	> div:not(.messageFooter) {
-		border-top: 1px dotted @wcfContainerBorderColor;
 		overflow: hidden;
-		padding: @wcfGapMedium 0;
+		padding-bottom: @wcfGapMedium;
 	}
 	
 	> footer {
@@ -448,6 +446,10 @@
 	
 	> .messageSignature {
 		color: @wcfDimmedColor;
+		
+		img {
+			max-height: ~"@{wcf_option_signature_max_image_height}px";
+		}
 	}
 	
 	.messageFooter {
@@ -465,6 +467,16 @@
 			.linearGradientNative(~"left top, @{messageFooterNoteGradientColor} 0%, transparent 40%");
 		}
 	}
+}
+
+.messageHeader + .messageBody > div:first-child,
+.messageBody > div:not(.messageFooter):not(:first-child) {
+	border-top: 1px dotted @wcfContainerBorderColor;
+	padding: @wcfGapMedium 0;
+}
+
+.message .messageBody {
+	padding: @wcfGapMedium @wcfGapLarge 1px;
 }
 
 .message .messageContent {
@@ -494,7 +506,6 @@
 				font-size: @wcfSmallFontSize;
 				
 				> .likesBadge {
-					font-size: 100%;
 					margin: -2px 0 -1px 4px;
 				}
 				
@@ -505,7 +516,7 @@
 		}
 		
 		.box32 > .messageHeadline > p:first-child {
-			font-size: 100%;
+			font-size: 1rem;
 			
 			> .username {
 				font-size: @wcfTitleFontSize;
@@ -642,6 +653,33 @@ li:nth-child(2n+1) .message {
 		left: 0;
 		opacity: 1;
 		position: relative;
+	}
+	
+	&.messageDisabled {
+		border-color: @wcfDisabledColor;
+		
+		.messageContent {
+			@wcfDisabledBackgroundGradientColor: fade(@wcfDisabledBackgroundColor, 0%);
+			.linearGradientNative(~"to bottom, @{wcfDisabledBackgroundColor}, @{wcfDisabledBackgroundGradientColor} 90px");
+		}
+	}
+	
+	&.messageDeleted {
+		border-color: @wcfDeletedColor;
+		
+		.messageContent {
+			@wcfDeletedBackgroundGradientColor: fade(@wcfDeletedBackgroundColor, 0%);
+			.linearGradientNative(~"to bottom, @{wcfDeletedBackgroundColor}, @{wcfDeletedBackgroundGradientColor} 90px");
+		}
+	}
+	
+	&.jsMarked {
+		border-color: @wcfSelectedColor;
+		
+		.messageContent {
+			@wcfSelectedBackgroundGradientColor: fade(@wcfSelectedBackgroundColor, 0%);
+			.linearGradientNative(~"to bottom, @{wcfSelectedBackgroundColor}, @{wcfSelectedBackgroundGradientColor} 90px");
+		}
 	}
 }
 
@@ -875,6 +913,13 @@ li:nth-child(2n+1) .message {
 	padding: 8px !important;
 }
 
+/* fixes textarea width */
+.cke_source {
+	box-sizing: border-box !important;
+	-moz-box-sizing: border-box !important;
+	-webkit-box-sizing: border-box !important; 
+}
+
 .cke_combo__fontsize .cke_combo_text {
 	width: auto !important;
 }
@@ -888,7 +933,28 @@ li:nth-child(2n+1) .message {
 	background-color: transparent !important;
 }
 
-@media only screen and (max-width: 800px) {
+/* fixes list styling */
+.cke_wysiwyg_div {
+	ul,
+	ol {
+		.nativeList;
+	}
+	
+	ul {
+		list-style-type: disc;
+	}
+	
+	ol {
+		list-style-type: decimal;
+	}
+}
+
+/* fixes table styling */
+.cke_wysiwyg_div td {
+	border: 1px solid rgba(0, 0, 0, .2);
+}
+
+@media screen and (max-width: 800px), print {
 	.message.messageSidebarOrientationLeft,
 	.message.messageSidebarOrientationRight {
 		.messageContent {
@@ -898,6 +964,7 @@ li:nth-child(2n+1) .message {
 		
 		.messageSidebar {
 			float: none;
+			min-height: 37px;
 		}
 		
 		.messageHeader {
@@ -969,16 +1036,12 @@ li:nth-child(2n+1) .message {
 		text-align: left;
 	}
 	
-	.message.messageReduced .messageOptions {
-		display: none;
-	}
-	
 	.message .newMessageBadge {
 		display: none;
 	}
 }
 
-@media only screen and (min-width: 641px) and (max-width: 800px) {
+@media screen and (min-width: 641px) and (max-width: 800px), print {
 	.message .messageSidebar,
 	.message .messageContent .messageHeader,
 	.message .messageBody {
@@ -997,3 +1060,17 @@ li:nth-child(2n+1) .message {
 	}
 }
 
+@media only screen and (max-width: 800px) {
+	.moderationList {
+		thead {
+			display: none;
+		}
+		
+		tbody {
+			.columnAssignedUserID,
+			.columnLastChangeTime {
+				display: none;
+			}
+		}
+	}
+}

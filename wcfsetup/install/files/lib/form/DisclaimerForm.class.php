@@ -11,9 +11,9 @@ use wcf\util\HeaderUtil;
  * Shows the disclaimer.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	form
  * @category	Community Framework
  */
@@ -30,13 +30,8 @@ class DisclaimerForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		// user is already registered
-		if (WCF::getUser()->userID) {
-			throw new PermissionDeniedException();
-		}
-		
 		// registration disabled
-		if (REGISTER_DISABLED) {
+		if (!WCF::getUser()->userID && REGISTER_DISABLED) {
 			throw new NamedUserException(WCF::getLanguage()->get('wcf.user.register.error.disabled'));
 		}
 	}
@@ -47,7 +42,7 @@ class DisclaimerForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['accept'])) $this->accept = true;
+		if (!WCF::getUser()->userID && isset($_POST['accept'])) $this->accept = true;
 	}
 	
 	/**

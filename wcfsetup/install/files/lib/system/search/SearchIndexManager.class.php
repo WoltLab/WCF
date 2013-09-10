@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.search
+ * @package	com.woltlab.wcf
  * @subpackage	system.search
  * @category	Community Framework
  */
@@ -109,5 +109,17 @@ class SearchIndexManager extends SingletonFactory {
 			$statement->execute($parameters);
 		}
 		WCF::getDB()->commitTransaction();
+	}
+	
+	/**
+	 * Resets the search index.
+	 * 
+	 * @param	string		$objectType
+	 */
+	public function reset($objectType) {
+		$sql = "DELETE FROM	wcf".WCF_N."_search_index
+			WHERE		objectTypeID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->getObjectTypeID($objectType)));
 	}
 }

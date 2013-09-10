@@ -1,23 +1,26 @@
 {include file='header' pageTitle='wcf.acp.style.'|concat:$action}
 
-<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.ColorPicker.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript">
+<script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Style.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ColorPicker.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.ColorPicker('.jsColorPicker');
 		WCF.TabMenu.init();
 		
 		var $useFluidLayout = $('#useFluidLayout');
-		var $fluidLayoutVariables = $('#fluidLayoutVariables');
+		var $fluidLayoutMinWidth = $('#fluidLayoutMinWidth');
+		var $fluidLayoutMaxWidth = $('#fluidLayoutMaxWidth');
 		var $fixedLayoutVariables = $('#fixedLayoutVariables');
 		function useFluidLayout() {
 			if ($useFluidLayout.is(':checked')) {
-				$fluidLayoutVariables.show();
+				$fluidLayoutMinWidth.show();
+				$fluidLayoutMaxWidth.show();
 				$fixedLayoutVariables.hide();
 			}
 			else {
-				$fluidLayoutVariables.hide();
+				$fluidLayoutMinWidth.hide();
+				$fluidLayoutMaxWidth.hide();
 				$fixedLayoutVariables.show();
 			}
 		}
@@ -28,7 +31,8 @@
 			'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}',
 			'wcf.style.colorPicker': '{lang}wcf.style.colorPicker{/lang}',
 			'wcf.style.colorPicker.new': '{lang}wcf.style.colorPicker.new{/lang}',
-			'wcf.style.colorPicker.current': '{lang}wcf.style.colorPicker.current{/lang}'
+			'wcf.style.colorPicker.current': '{lang}wcf.style.colorPicker.current{/lang}',
+			'wcf.style.colorPicker.button.apply': '{lang}wcf.style.colorPicker.button.apply{/lang}'
 		});
 		new WCF.ACP.Style.ImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}');
 		
@@ -36,7 +40,7 @@
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
 			
 			WCF.Language.addObject({
-				'wcf.acp.style.copyStyle.confirmMessage': '{lang}wcf.acp.style.copyStyle.confirmMessage{/lang}'
+				'wcf.acp.style.copyStyle.confirmMessage': '{@"wcf.acp.style.copyStyle.confirmMessage"|language|encodeJS}'
 			});
 		{/if}
 		
@@ -96,7 +100,7 @@
 		</nav>
 		
 		{* general *}
-		<div id="general" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="general" class="container containerPadding tabMenuContent">
 			<fieldset>
 				<legend>{lang}wcf.acp.style.general.data{/lang}</legend>
 				
@@ -292,28 +296,42 @@
 		</div>
 		
 		{* globals *}
-		<div id="globals" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="globals" class="container containerPadding tabMenuContent">
 			{* layout *}
 			<fieldset>
 				<legend>{lang}wcf.acp.style.globals.layout{/lang}</legend>
 				
 				<dl>
+					<dt></dt>
 					<dd><label>
 						<input type="checkbox" id="useFluidLayout" name="useFluidLayout" value="1"{if $variables[useFluidLayout]} checked="checked"{/if} />
 						<span>{lang}wcf.acp.style.globals.useFluidLayout{/lang}</span>
 					</label></dd>
 				</dl>
-				<dl id="fluidLayoutVariables">
-					<dt><label for="wcfLayoutFluidGap">{lang}wcf.acp.style.globals.fluidLayoutGap{/lang}</label></dt>
+				
+				<dl id="fluidLayoutMinWidth">
+					<dt><label for="wcfLayoutMinWidth">{lang}wcf.acp.style.globals.fluidLayoutMinWidth{/lang}</label></dt>
 					<dd>
-						<input type="number" id="wcfLayoutFluidGap" name="wcfLayoutFluidGap" value="{@$variables[wcfLayoutFluidGap]}" class="tiny" />
-						<select name="wcfLayoutFluidGap_unit" class="jsUnitSelect">
+						<input type="number" id="wcfLayoutMinWidth" name="wcfLayoutMinWidth" value="{@$variables[wcfLayoutMinWidth]}" class="tiny" />
+						<select name="wcfLayoutMinWidth_unit" class="jsUnitSelect">
 							{foreach from=$availableUnits item=unit}
-								<option value="{@$unit}"{if $variables[wcfLayoutFluidGap_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+								<option value="{@$unit}"{if $variables[wcfLayoutMinWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
 							{/foreach}
 						</select>
 					</dd>
 				</dl>
+				<dl id="fluidLayoutMaxWidth">
+					<dt><label for="wcfLayoutMaxWidth">{lang}wcf.acp.style.globals.fluidLayoutMaxWidth{/lang}</label></dt>
+					<dd>
+						<input type="number" id="wcfLayoutMaxWidth" name="wcfLayoutMaxWidth" value="{@$variables[wcfLayoutMaxWidth]}" class="tiny" />
+						<select name="wcfLayoutMaxWidth_unit" class="jsUnitSelect">
+							{foreach from=$availableUnits item=unit}
+								<option value="{@$unit}"{if $variables[wcfLayoutMaxWidth_unit] == $unit} selected="selected"{/if}>{@$unit}</option>
+							{/foreach}
+						</select>
+					</dd>
+				</dl>
+				
 				<dl id="fixedLayoutVariables">
 					<dt><label for="wcfLayoutFixedWidth">{lang}wcf.acp.style.globals.fixedLayoutWidth{/lang}</label></dt>
 					<dd>
@@ -325,6 +343,14 @@
 						</select>
 					</dd>
 				</dl>
+				
+				{event name='layoutFields'}
+			</fieldset>
+			
+			{* logo *}
+			<fieldset>
+				<legend>{lang}wcf.acp.style.globals.pageLogo{/lang}</legend>
+				
 				<dl>
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
 					<dd>
@@ -333,7 +359,7 @@
 					</dd>
 				</dl>
 				
-				{event name='layoutFields'}
+				{event name='logoFields'}
 			</fieldset>
 			
 			{* font *}
@@ -369,7 +395,7 @@
 		</div>
 		
 		{* colors *}
-		<div id="colors" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="colors" class="container containerPadding tabMenuContent">
 			<fieldset>
 				<legend>{lang}wcf.acp.style.colors.page{/lang}</legend>
 				
@@ -504,7 +530,7 @@
 		</div>
 		
 		{* advanced *}
-		<div id="advanced" class="container containerPadding tabMenuContainer tabMenuContent">
+		<div id="advanced" class="container containerPadding tabMenuContent">
 			<fieldset class="marginTop">
 				<legend>{lang}wcf.acp.style.advanced.individualLess{/lang}</legend>
 				

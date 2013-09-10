@@ -7,9 +7,9 @@ use wcf\system\WCF;
  * Represents a moderation queue entry.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.moderation
+ * @package	com.woltlab.wcf
  * @subpackage	data.moderation.queue
  * @category	Community Framework
  */
@@ -75,5 +75,14 @@ class ModerationQueue extends DatabaseObject {
 		$row = $statement->fetchArray();
 		
 		return ($row !== false && $row['isAffected']);
+	}
+	
+	/**
+	 * Returns true, if this queue is done.
+	 * 
+	 * @return	boolean
+	 */
+	public function isDone() {
+		return ($this->status == self::STATUS_DONE);
 	}
 }

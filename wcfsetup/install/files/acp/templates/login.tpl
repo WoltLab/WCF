@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.user.login'}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		if (!$('#username').val() || '{$errorField}' == 'username') {

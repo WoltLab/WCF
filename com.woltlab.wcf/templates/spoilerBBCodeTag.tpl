@@ -5,17 +5,16 @@
 	</header>
 	<!-- end:parser_nonessential -->
 	
-	<div>
+	<div style="display: none">
 		{@$content}
 	</div>
 </div>
 
 <!-- begin:parser_nonessential -->
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		var $spoilerBox = $('.jsSpoilerBox').removeClass('jsSpoilerBox');
-		$spoilerBox.children('div').hide();
 		$spoilerBox.find('> header > .jsSpoilerToggle').click(function() {
 			$(this).toggleClass('active').parent().next().slideToggle();
 		});

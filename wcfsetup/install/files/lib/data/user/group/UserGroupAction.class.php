@@ -6,7 +6,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes user group-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.user.group
@@ -39,8 +39,10 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 	public function create() {
 		$group = parent::create();
 		
-		$groupEditor = new UserGroupEditor($group);
-		$groupEditor->updateGroupOptions($this->parameters['options']);
+		if (isset($this->parameters['options'])) {
+			$groupEditor = new UserGroupEditor($group);
+			$groupEditor->updateGroupOptions($this->parameters['options']);
+		}
 		
 		return $group;
 	}

@@ -140,9 +140,22 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @see	WCF.Upload._initFile()
 	 */
 	_initFile: function(file) {
-		var $li = $('<li class="box48"><span class="icon icon48 icon-spinner" /><div><div><p>'+file.name+'</p><small><progress max="100"></progress></small></div><ul></ul></div></li>');
+		var $li = $('<li class="box48"><span class="icon icon48 icon-spinner" /><div><div><p>'+file.name+'</p><small><progress max="100"></progress></small></div><ul></ul></div></li>').data('filename', file.name);
 		this._fileListSelector.append($li);
 		this._fileListSelector.show();
+		
+		// validate file size
+		if (this._buttonSelector.data('maxSize') < file.size) {
+			// remove progress bar
+			$li.find('progress').remove();
+			
+			// upload icon
+			$li.children('.icon-spinner').removeClass('icon-spinner').addClass('icon-ban-circle');
+			
+			// error message
+			$li.find('div > div').append($('<small class="innerError">' + WCF.Language.get('wcf.attachment.upload.error.tooLarge') + '</small>'));
+			$li.addClass('uploadFailed');
+		}
 		
 		return $li;
 	},
@@ -225,14 +238,14 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		var $attachmentID = $(event.currentTarget).data('objectID');
 		var $bbcode = '[attach=' + $attachmentID + '][/attach]';
 		
-		var $ckEditor = $('#' + this._wysiwygContainerID).ckeditorGet();
-		if ($ckEditor.mode === 'wysiwyg') {
+		var $ckEditor = ($.browser.mobile) ? null : $('#' + this._wysiwygContainerID).ckeditorGet();
+		if ($ckEditor !== null && $ckEditor.mode === 'wysiwyg') {
 			// in design mode
 			$ckEditor.insertText($bbcode);
 		}
 		else {
 			// in source mode
-			var $textarea = $('#' + this._wysiwygContainerID).next('.cke_editor_text').find('textarea');
+			var $textarea = ($.browser.mobile) ? $('#' + this._wysiwygContainerID) : $('#' + this._wysiwygContainerID).next('.cke_editor_text').find('textarea');
 			var $value = $textarea.val();
 			if ($value.length == 0) {
 				$textarea.val($bbcode);
@@ -247,14 +260,14 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	/**
 	 * @see	WCF.Upload._error()
 	 */
-	_error: function() {
+	_error: function(data) {
 		// mark uploads as failed
 		this._fileListSelector.find('li').each(function(index, listItem) {
 			var $listItem = $(listItem);
 			if ($listItem.children('.icon-spinner').length) {
 				// upload icon
 				$listItem.addClass('uploadFailed').children('.icon-spinner').removeClass('icon-spinner').addClass('icon-ban-circle');
-				$listItem.find('div > div').append($('<small class="innerError">'+WCF.Language.get('wcf.attachment.upload.error.uploadFailed')+'</small>'));
+				$listItem.find('div > div').append($('<small class="innerError">' + (data.responseJSON && data.responseJSON.message ? data.responseJSON.message : WCF.Language.get('wcf.attachment.upload.error.uploadFailed')) + '</small>'));
 			}
 		});
 	}

@@ -7,7 +7,7 @@ namespace wcf\system\attachment;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.attachment
+ * @package	com.woltlab.wcf
  * @subpackage	system.attachment
  * @category	Community Framework
  */

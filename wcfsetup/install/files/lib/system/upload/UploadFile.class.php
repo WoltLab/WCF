@@ -6,7 +6,7 @@ use wcf\util\StringUtil;
  * Represents a file upload.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.upload
@@ -81,8 +81,8 @@ class UploadFile {
 	 * @return	string
 	 */
 	public function getFileExtension() {
-		if (($position = StringUtil::lastIndexOf($this->getFilename(), '.')) !== false) {
-			return StringUtil::toLowerCase(StringUtil::substring($this->getFilename(), $position + 1));
+		if (($position = mb_strrpos($this->getFilename(), '.')) !== false) {
+			return mb_strtolower(mb_substr($this->getFilename(), $position + 1));
 		}
 		
 		return '';
