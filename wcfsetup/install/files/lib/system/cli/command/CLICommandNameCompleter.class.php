@@ -12,7 +12,7 @@ use phpline\console\completer\Completer;
  * @subpackage	system.cli.command
  * @category	Community Framework
  */
-class CommandNameCompleter implements Completer {
+class CLICommandNameCompleter implements Completer {
 	/**
 	 * names of all available commands
 	 * @var	array<string>
@@ -20,10 +20,10 @@ class CommandNameCompleter implements Completer {
 	private $commands = array();
 	
 	/**
-	 * Creates a new instance of CommandNameCompleter.
+	 * Creates a new instance of CLICommandNameCompleter.
 	 */
 	public function __construct() {
-		$this->commands = array_keys(CommandHandler::getCommands());
+		$this->commands = array_keys(CLICommandHandler::getCommands());
 	}
 	
 	/**

@@ -2,7 +2,7 @@
 namespace wcf\system\cli\command;
 
 /**
- * Exits WCF.
+ * Every command has to implement this interface.
  * 
  * @author	Tim Duesterhus
  * @copyright	2001-2013 WoltLab GmbH
@@ -11,19 +11,16 @@ namespace wcf\system\cli\command;
  * @subpackage	system.cli.command
  * @category	Community Framework
  */
-class ExitCommand implements ICommand {
+interface ICLICommand {
 	/**
-	 * @see	wcf\system\cli\command\ICommand::execute()
+	 * Executes the command.
 	 */
-	public function execute(array $parameters) {
-		exit;
-	}
+	public function execute(array $parameters);
 	
 	/**
-	 * @see	wcf\system\cli\command\ICommand::canAccess()
+	 * Returns true if the user is allowed to use this command.
+	 * 
+	 * @return	boolean
 	 */
-	public function canAccess() {
-		// everyone may access this command
-		return true;
-	}
+	public function canAccess();
 }

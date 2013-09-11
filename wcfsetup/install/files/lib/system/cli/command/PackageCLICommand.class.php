@@ -32,7 +32,7 @@ use Zend\ProgressBar\ProgressBar;
  * @subpackage	system.cli.command
  * @category	Community Framework
  */
-class PackageCommand implements ICommand {
+class PackageCLICommand implements ICLICommand {
 	/**
 	 * arguments parser
 	 * @var	Zend\Console\Getopt
@@ -40,7 +40,7 @@ class PackageCommand implements ICommand {
 	private $argv = null;
 	
 	/**
-	 * @see	wcf\system\cli\command\ICommand::execute()
+	 * @see	wcf\system\cli\command\ICLICommand::execute()
 	 */
 	public function execute(array $parameters) {
 		$this->argv = new ArgvParser(array());
@@ -447,7 +447,7 @@ class PackageCommand implements ICommand {
 	}
 	
 	/**
-	 * @see	wcf\system\cli\command\ICommand::canAccess()
+	 * @see	wcf\system\cli\command\ICLICommand::canAccess()
 	 */
 	public function canAccess() {
 		return CLIWCF::getSession()->getPermission('admin.system.package.canInstallPackage') || CLIWCF::getSession()->getPermission('admin.system.package.canUpdatePackage');

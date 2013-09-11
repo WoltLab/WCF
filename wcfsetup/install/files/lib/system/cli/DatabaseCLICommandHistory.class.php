@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @subpackage	system
  * @category	Community Framework
  */
-class DatabaseCommandHistory extends MemoryHistory {
+class DatabaseCLICommandHistory extends MemoryHistory {
 	/**
 	 * should the history automatically be saved
 	 * @var	boolean

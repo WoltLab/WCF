@@ -22,9 +22,9 @@ use Zend\ProgressBar\ProgressBar;
  * @subpackage	system.cli.command
  * @category	Community Framework
  */
-class WorkerCommand implements ICommand {
+class WorkerCLICommand implements ICLICommand {
 	/**
-	 * @see	wcf\system\cli\command\ICommand::execute()
+	 * @see	wcf\system\cli\command\ICLICommand::execute()
 	 */
 	public function execute(array $parameters) {
 		$argv = new ArgvParser(array(
@@ -163,7 +163,7 @@ class WorkerCommand implements ICommand {
 	}
 	
 	/**
-	 * @see	wcf\system\cli\command\ICommand::canAccess()
+	 * @see	wcf\system\cli\command\ICLICommand::canAccess()
 	 */
 	public function canAccess() {
 		// TODO: Check access

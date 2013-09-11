@@ -15,9 +15,9 @@ use Zend\Console\Getopt as ArgvParser;
  * @subpackage	system.cli.command
  * @category	Community Framework
  */
-class CronjobCommand implements ICommand {
+class CronjobCLICommand implements ICLICommand {
 	/**
-	 * @see	wcf\system\cli\command\ICommand::execute()
+	 * @see	wcf\system\cli\command\ICLICommand::execute()
 	 */
 	public function execute(array $parameters) {
 		$argv = new ArgvParser(array());
@@ -43,7 +43,7 @@ class CronjobCommand implements ICommand {
 	}
 	
 	/**
-	 * @see	wcf\system\cli\command\ICommand::canAccess()
+	 * @see	wcf\system\cli\command\ICLICommand::canAccess()
 	 */
 	public function canAccess() {
 		return true;

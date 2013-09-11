@@ -16,17 +16,17 @@ use wcf\util\StringUtil;
  * @subpackage	system.cli.command
  * @category	Community Framework
  */
-class CommandHandler {
+class CLICommandHandler {
 	/**
 	 * list of all available commands
-	 * @var	array<wcf\system\cli\command\ICommand>
+	 * @var	array<wcf\system\cli\command\ICLICommand>
 	 */
 	private static $commands = array();
 	
 	/**
 	 * Returns all available commands.
 	 * 
-	 * @return	array<wcf\system\cli\command\ICommand>
+	 * @return	array<wcf\system\cli\command\ICLICommand>
 	 */
 	public static function getCommands() {
 		if (empty(self::$commands)) {
@@ -40,13 +40,13 @@ class CommandHandler {
 				}
 				if (!class_exists($class)) continue;
 				$object = new $class();
-				if (!($object instanceof ICommand)) {
+				if (!($object instanceof ICLICommand)) {
 					Log::info('Invalid command file: ', $command);
 					continue;
 				}
 				
 				if (!$object->canAccess()) continue;
-				self::$commands[strtolower(basename($command, 'Command.class.php'))] = $object;
+				self::$commands[strtolower(basename($command, 'CLICommand.class.php'))] = $object;
 			}
 		}
 		
@@ -57,7 +57,7 @@ class CommandHandler {
 	 * Returns a command by the given line.
 	 * 
 	 * @param	string		$line
-	 * @return	wcf\system\cli\command\ICommand
+	 * @return	wcf\system\cli\command\ICLICommand
 	 */
 	public static function getCommand($line) {
 		list($command, $parameters) = explode(' ', $line.' ', 2);

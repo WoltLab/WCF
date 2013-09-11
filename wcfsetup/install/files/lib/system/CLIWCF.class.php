@@ -3,9 +3,9 @@ namespace wcf\system;
 use phpline\console\ConsoleReader;
 use phpline\internal\Log;
 use phpline\TerminalFactory;
-use wcf\system\cli\command\CommandHandler;
-use wcf\system\cli\command\CommandNameCompleter;
-use wcf\system\cli\DatabaseCommandHistory;
+use wcf\system\cli\command\CLICommandHandler;
+use wcf\system\cli\command\CLICommandNameCompleter;
+use wcf\system\cli\DatabaseCLICommandHistory;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -78,7 +78,7 @@ class CLIWCF extends WCF {
 	 * @see wcf\system\WCF::destruct()
 	 */
 	public static function destruct() {
-		if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCommandHistory) {
+		if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCLICommandHistory) {
 			self::getReader()->getHistory()->save();
 			self::getReader()->getHistory()->autoSave = false;
 		}
@@ -227,7 +227,7 @@ class CLIWCF extends WCF {
 		}
 		
 		// initialize history
-		$history = new DatabaseCommandHistory();
+		$history = new DatabaseCLICommandHistory();
 		$history->load();
 		self::getReader()->setHistory($history);
 		
@@ -240,7 +240,7 @@ class CLIWCF extends WCF {
 	 */
 	protected function initCommands() {
 		// add command name completer
-		self::getReader()->addCompleter(new CommandNameCompleter());
+		self::getReader()->addCompleter(new CLICommandNameCompleter());
 		
 		while (true) {
 			// roll back open transactions of the previous command, as they are dangerous in a long living script
@@ -252,8 +252,8 @@ class CLIWCF extends WCF {
 			if ($line === null) exit;
 			$line = StringUtil::trim($line);
 			try {
-				$command = CommandHandler::getCommand($line);
-				$command->execute(CommandHandler::getParameters($line));
+				$command = CLICommandHandler::getCommand($line);
+				$command->execute(CLICommandHandler::getParameters($line));
 			}
 			catch (IllegalLinkException $e) {
 				Log::error('notFound:'.JSON::encode(array('command' => $line)));
@@ -276,7 +276,7 @@ class CLIWCF extends WCF {
 			catch (ArgvException $e) {
 				// show error message and usage
 				if ($e->getMessage()) echo $e->getMessage().PHP_EOL;
-				echo str_replace($_SERVER['argv'][0], CommandHandler::getCommandName($line), $e->getUsageMessage());
+				echo str_replace($_SERVER['argv'][0], CLICommandHandler::getCommandName($line), $e->getUsageMessage());
 				
 				if (self::getArgvParser()->exitOnFail) {
 					exit(1);
