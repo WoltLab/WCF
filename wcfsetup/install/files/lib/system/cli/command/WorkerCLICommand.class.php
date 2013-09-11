@@ -96,12 +96,13 @@ class WorkerCLICommand implements ICLICommand {
 		
 		$worker = new $class($parameters);
 		$worker->validate();
-		$progress = 0;
+		$worker->getProgress(); // make sure objects are counted
 		
 		// initialize progressbar
 		$progressbar = new ProgressBar(new ConsoleProgressBar(array(
 			'width' => CLIWCF::getTerminal()->getWidth()
 		)));
+		$progress = 0;
 		for ($i = 0; $progress < 100; $i++) {
 			$worker->setLoopCount($i);
 			$worker->validate();
