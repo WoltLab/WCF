@@ -7,9 +7,9 @@ use Zend\Console\Getopt as ArgvParser;
 
 /**
  * Executes cronjobs.
- *
- * @author	Tim Düsterhus
- * @copyright	2001-2012 WoltLab GmbH
+ * 
+ * @author	Tim Duesterhus
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cli.command
@@ -17,7 +17,7 @@ use Zend\Console\Getopt as ArgvParser;
  */
 class CronjobCommand implements ICommand {
 	/**
-	 * @see \wcf\system\cli\command\ICommand::execute()
+	 * @see	wcf\system\cli\command\ICommand::execute()
 	 */
 	public function execute(array $parameters) {
 		$argv = new ArgvParser(array());
@@ -32,12 +32,18 @@ class CronjobCommand implements ICommand {
 		CronjobScheduler::getInstance()->executeCronjobs();
 	}
 	
+	/**
+	 * Returns fixed usage message of ArgvParser.
+	 * 
+	 * @param	string		$usage
+	 * @return	string
+	 */
 	public function fixUsage($usage) {
 		return str_replace($_SERVER['argv'][0].' [ options ]', $_SERVER['argv'][0].' [ options ] execute', $usage);
 	}
 	
 	/**
-	 * @see \wcf\system\cli\command\ICommand::canAccess()
+	 * @see	wcf\system\cli\command\ICommand::canAccess()
 	 */
 	public function canAccess() {
 		return true;

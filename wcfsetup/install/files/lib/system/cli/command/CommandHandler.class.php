@@ -8,8 +8,8 @@ use wcf\util\StringUtil;
 
 /**
  * Handles commands.
- *
- * @author	Tim Düsterhus
+ * 
+ * @author	Tim Duesterhus
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -57,7 +57,7 @@ class CommandHandler {
 	/**
 	 * Returns a command by the given line.
 	 * 
-	 * @param	string	$line
+	 * @param	string		$line
 	 * @return	wcf\system\cli\command\ICommand
 	 */
 	public static function getCommand($line) {
@@ -70,15 +70,15 @@ class CommandHandler {
 	
 	/**
 	 * Returns a command by the given line.
-	 *
-	 * @param	string	$line
+	 * 
+	 * @param	string		$line
 	 * @return	string
 	 */
 	public static function getCommandName($line) {
 		list($command, $parameters) = explode(' ', $line.' ', 2);
-	
+		
 		if (!isset(self::$commands[strtolower($command)])) throw new IllegalLinkException();
-	
+		
 		return strtolower($command);
 	}
 	

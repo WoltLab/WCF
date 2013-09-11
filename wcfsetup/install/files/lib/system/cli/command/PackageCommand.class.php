@@ -24,9 +24,9 @@ use Zend\ProgressBar\ProgressBar;
 
 /**
  * Executes package installation.
- *
- * @author	Tim Düsterhus
- * @copyright	2001-2012 WoltLab GmbH
+ * 
+ * @author	Tim Duesterhus
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cli.command
@@ -35,12 +35,12 @@ use Zend\ProgressBar\ProgressBar;
 class PackageCommand implements ICommand {
 	/**
 	 * arguments parser
-	 * @var Zend\Console\Getopt
+	 * @var	Zend\Console\Getopt
 	 */
 	private $argv = null;
 	
 	/**
-	 * @see \wcf\system\cli\command\ICommand::execute()
+	 * @see	wcf\system\cli\command\ICommand::execute()
 	 */
 	public function execute(array $parameters) {
 		$this->argv = new ArgvParser(array());
@@ -77,7 +77,7 @@ class PackageCommand implements ICommand {
 		if (FileUtil::isURL($file)) {
 			// download package
 			$archive = new PackageArchive($file, null);
-				
+			
 			try {
 				if (VERBOSITY >= 1) Log::info("Downloading '".$file."'");
 				$file = $archive->downloadArchive();
@@ -91,7 +91,7 @@ class PackageCommand implements ICommand {
 			if (!file_exists($file)) {
 				$this->error('notFound', array('file' => $file));
 			}
-				
+			
 			$archive = new PackageArchive($file, null);
 		}
 		
@@ -134,11 +134,12 @@ class PackageCommand implements ICommand {
 		}
 		else {
 			CLIWCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
-				
+			
 			if (!$archive->isValidInstall()) {
 				$this->error('noValidInstall');
 			}
 			else if ($archive->getPackageInfo('isApplication')) {
+				// applications cannot be installed via CLI
 				$this->error('installIsApplication');
 			}
 			else if ($archive->isAlreadyInstalled()) {
@@ -206,7 +207,7 @@ class PackageCommand implements ICommand {
 			if (isset($openRequirements[$requirement['name']])) {
 				$requirement['status'] = 'missing';
 				$requirement['action'] = $openRequirements[$requirement['name']]['action'];
-		
+				
 				if (!isset($requirement['file'])) {
 					if ($openRequirements[$requirement['name']]['action'] === 'update') {
 						$requirement['status'] = 'missingVersion';
@@ -435,9 +436,9 @@ class PackageCommand implements ICommand {
 	}
 	
 	/**
-	 * Fixed the usage message of the ArgvParser
+	 * Returns fixed usage message of ArgvParser.
 	 * 
-	 * @param	string	$usage
+	 * @param	string		$usage
 	 * @return	string
 	 */
 	public function fixUsage($usage) {
@@ -445,7 +446,7 @@ class PackageCommand implements ICommand {
 	}
 	
 	/**
-	 * @see \wcf\system\cli\command\ICommand::canAccess()
+	 * @see	wcf\system\cli\command\ICommand::canAccess()
 	 */
 	public function canAccess() {
 		return CLIWCF::getSession()->getPermission('admin.system.package.canInstallPackage') || CLIWCF::getSession()->getPermission('admin.system.package.canUpdatePackage');

@@ -3,8 +3,8 @@ namespace wcf\system\cli\command;
 
 /**
  * Exits WCF.
- *
- * @author	Tim Düsterhus
+ * 
+ * @author	Tim Duesterhus
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -13,17 +13,17 @@ namespace wcf\system\cli\command;
  */
 class ExitCommand implements ICommand {
 	/**
-	 * @see \wcf\system\cli\command\ICommand::execute()
+	 * @see	wcf\system\cli\command\ICommand::execute()
 	 */
 	public function execute(array $parameters) {
 		exit;
 	}
 	
 	/**
-	 * Everyone may access this command.
-	 * @see \wcf\system\cli\command\ICommand::canAccess()
+	 * @see	wcf\system\cli\command\ICommand::canAccess()
 	 */
 	public function canAccess() {
+		// everyone may access this command
 		return true;
 	}
 }

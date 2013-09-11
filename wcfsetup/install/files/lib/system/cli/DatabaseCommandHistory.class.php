@@ -5,8 +5,8 @@ use wcf\system\WCF;
 
 /**
  * A phpline history that saves the items in database.
- *
- * @author	Tim Düsterhus
+ * 
+ * @author	Tim Duesterhus
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -16,14 +16,14 @@ use wcf\system\WCF;
 class DatabaseCommandHistory extends MemoryHistory {
 	/**
 	 * should the history automatically be saved
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $autoSave = true;
 	
 	/**
 	 * Saves the history.
 	 * 
-	 * @param boolean $append
+	 * @param	boolean		$append
 	 */
 	public function save($append = false) {
 		if (!$append) {

@@ -2,8 +2,8 @@
 <?php
 // @codingStandardsIgnoreFile
 /**
- * @author	Tim Düsterhus
- * @copyright	2001-2011 WoltLab GmbH
+ * @author	Tim Duesterhus
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @category	Community Framework

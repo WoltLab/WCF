@@ -14,9 +14,9 @@ use Zend\ProgressBar\ProgressBar;
 
 /**
  * Executes cronjobs.
- *
- * @author	Tim Düsterhus
- * @copyright	2001-2012 WoltLab GmbH
+ * 
+ * @author	Tim Duesterhus
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cli.command
@@ -24,7 +24,7 @@ use Zend\ProgressBar\ProgressBar;
  */
 class WorkerCommand implements ICommand {
 	/**
-	 * @see \wcf\system\cli\command\ICommand::execute()
+	 * @see	wcf\system\cli\command\ICommand::execute()
 	 */
 	public function execute(array $parameters) {
 		$argv = new ArgvParser(array(
@@ -117,9 +117,9 @@ class WorkerCommand implements ICommand {
 	}
 	
 	/**
-	 * Returns an array with a list of workers.
+	 * Returns an array with the list of available workers.
 	 * 
-	 * @return array
+	 * @return	array
 	 */
 	public function generateList() {
 		$directory = DirectoryUtil::getInstance(WCF_DIR.'lib/system/worker/');
@@ -139,12 +139,12 @@ class WorkerCommand implements ICommand {
 			}
 			$reflection = new \ReflectionClass($class);
 			if (!$reflection->isInstantiable()) continue;
-		
+			
 			if (!ClassUtil::isInstanceOf($class, 'wcf\system\worker\IWorker')) {
 				Log::info('Invalid worker file: ', $worker);
 				continue;
 			}
-		
+			
 			$docComment = explode("\n", StringUtil::unifyNewlines($reflection->getDocComment()));
 			foreach ($docComment as $commentLine) {
 				if (Regex::compile('[a-z]', Regex::CASE_INSENSITIVE)->match($commentLine)) {
@@ -152,7 +152,7 @@ class WorkerCommand implements ICommand {
 					break;
 				}
 			}
-		
+			
 			$table[] = array(
 				basename($worker, '.class.php'),
 				$comment
@@ -163,7 +163,7 @@ class WorkerCommand implements ICommand {
 	}
 	
 	/**
-	 * @see \wcf\system\cli\command\ICommand::canAccess()
+	 * @see	wcf\system\cli\command\ICommand::canAccess()
 	 */
 	public function canAccess() {
 		// TODO: Check access

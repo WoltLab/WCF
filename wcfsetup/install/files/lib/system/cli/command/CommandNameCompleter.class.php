@@ -4,9 +4,9 @@ use phpline\console\completer\Completer;
 
 /**
  * Completes commands.
- *
- * @author	Tim Düsterhus
- * @copyright	2001-2012 WoltLab GmbH
+ * 
+ * @author	Tim Duesterhus
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.cli.command
@@ -15,7 +15,7 @@ use phpline\console\completer\Completer;
 class CommandNameCompleter implements Completer {
 	/**
 	 * list of available commands
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	private $commands = array();
 	
@@ -27,7 +27,7 @@ class CommandNameCompleter implements Completer {
 	}
 	
 	/**
-	 * @see \phpline\console\completer\Completer::complete()
+	 * @see	phpline\console\completer\Completer::complete()
 	 */
 	public function complete($buffer, $cursor, array &$candidates) {
 		if ($buffer === null) {
