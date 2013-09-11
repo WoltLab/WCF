@@ -126,7 +126,7 @@ class PackageCommand implements ICommand {
 		// check update or install support
 		if ($package !== null) {
 			CLIWCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
-				
+			
 			$archive->setPackage($package);
 			if (!$archive->isValidUpdate()) {
 				$this->error('noValidUpdate');
@@ -155,14 +155,13 @@ class PackageCommand implements ICommand {
 		
 		// insert queue
 		$queue = PackageInstallationQueueEditor::create(array(
-				'processNo' => $processNo,
-				'userID' => CLIWCF::getUser()->userID,
-				'package' => $archive->getPackageInfo('name'),
-				'packageName' => $archive->getLocalizedPackageInfo('packageName'),
-				'packageID' => ($package !== null) ? $package->packageID : null,
-				'archive' => $file,
-				'action' => ($package !== null ? 'update' : 'install'),
-				'confirmInstallation' => 1
+			'processNo' => $processNo,
+			'userID' => CLIWCF::getUser()->userID,
+			'package' => $archive->getPackageInfo('name'),
+			'packageName' => $archive->getLocalizedPackageInfo('packageName'),
+			'packageID' => ($package !== null) ? $package->packageID : null,
+			'archive' => $file,
+			'action' => ($package !== null ? 'update' : 'install')
 		));
 		
 		// PackageInstallationDispatcher::openQueue()
