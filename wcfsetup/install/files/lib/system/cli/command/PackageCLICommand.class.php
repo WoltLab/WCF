@@ -322,6 +322,8 @@ class PackageCLICommand implements ICLICommand {
 			
 			$progressbar->update($progress, $currentAction);
 		}
+		
+		$progressbar->getAdapter()->finish();
 	}
 	
 	/**
@@ -417,6 +419,8 @@ class PackageCLICommand implements ICLICommand {
 			
 			$progressbar->update($progress, $currentAction);
 		}
+		
+		$progressbar->getAdapter()->finish();
 	}
 	
 	/**
