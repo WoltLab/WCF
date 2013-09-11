@@ -101,16 +101,16 @@ final class StringUtil {
 		$string = self::unifyNewlines($string);
 		
 		// escape backslash
-		$string = self::replace("\\", "\\\\", $string);
+		$string = str_replace("\\", "\\\\", $string);
 		
 		// escape singe quote
-		$string = self::replace("'", "\'", $string);
+		$string = str_replace("'", "\'", $string);
 		
 		// escape new lines
-		$string = self::replace("\n", '\n', $string);
+		$string = str_replace("\n", '\n', $string);
 		
 		// escape slashes
-		$string = self::replace("/", '\/', $string);
+		$string = str_replace("/", '\/', $string);
 		
 		return $string;
 	}
@@ -127,7 +127,7 @@ final class StringUtil {
 		$string = self::encodeHTML($string);
 		
 		// single quotes must be encoded as HTML entity
-		$string = self::replace("\'", "&#39;", $string);
+		$string = str_replace("\'", "&#39;", $string);
 		
 		return $string;
 	}
@@ -227,20 +227,22 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Replaces the MINUS-HYPHEN with the MINUS SIGN
+	 * Replaces the MINUS-HYPHEN with the MINUS SIGN.
 	 * 
 	 * @param	mixed		$number
 	 * @return	string
 	 */
 	public static function formatNegative($number) {
-		return self::replace('-', self::MINUS, $number);
+		return str_replace('-', self::MINUS, $number);
 	}
 	
 	/**
 	 * Sorts an array of strings and maintain index association.
 	 * 
-	 * @param	array		$strings 
+	 * @param	array		$strings
 	 * @return	boolean
+	 * 
+	 * @deprecated
 	 */
 	public static function sort(array &$strings) {
 		return asort($strings, SORT_LOCALE_STRING);
@@ -248,6 +250,8 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php mb_strlen() function.
+	 * 
+	 * @deprecated use mb_strlen() instead
 	 */
 	public static function length($string) {
 		return mb_strlen($string);
@@ -255,20 +259,26 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php mb_strpos() function.
+	 * 
+	 * @deprecated use mb_strpos() instead
 	 */
 	public static function indexOf($hayStack, $needle, $offset = 0) {
 		return mb_strpos($hayStack, $needle, $offset);
 	}
 	
 	/**
-	 * Alias to php stripos() function with multibyte support.
+	 * Alias to php mb_stripos() function.
+	 * 
+	 * @deprecated use mb_stripos() instead
 	 */
 	public static function indexOfIgnoreCase($hayStack, $needle, $offset = 0) {
-		return mb_strpos(self::toLowerCase($hayStack), self::toLowerCase($needle), $offset);
+		return mb_stripos($hayStack, $needle, $offset);
 	}
 	
 	/**
 	 * Alias to php mb_strrpos() function.
+	 * 
+	 * @deprecated use mb_strrpos() instead
 	 */
 	public static function lastIndexOf($hayStack, $needle) {
 		return mb_strrpos($hayStack, $needle);
@@ -276,6 +286,8 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php mb_substr() function.
+	 * 
+	 * @deprecated use mb_substr() instead
 	 */
 	public static function substring($string, $start, $length = null) {
 		if ($length !== null) return mb_substr($string, $start, $length);
@@ -284,6 +296,8 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php mb_strtolower() function.
+	 * 
+	 * @deprecated use mb_strtolower() instead
 	 */
 	public static function toLowerCase($string) {
 		return mb_strtolower($string);
@@ -291,6 +305,8 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php mb_strtoupper() function.
+	 * 
+	 * @deprecated use mb_strtoupper() instead
 	 */
 	public static function toUpperCase($string) {
 		return mb_strtoupper($string);
@@ -298,6 +314,8 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php substr_count() function.
+	 * 
+	 * @deprecated use mb_substr_count() instead
 	 */
 	public static function countSubstring($hayStack, $needle) {
 		return mb_substr_count($hayStack, $needle);
@@ -307,14 +325,14 @@ final class StringUtil {
 	 * Alias to php ucfirst() function with multibyte support.
 	 */
 	public static function firstCharToUpperCase($string) {
-		return self::toUpperCase(self::substring($string, 0, 1)).self::substring($string, 1);
+		return mb_strtoupper(mb_substr($string, 0, 1)).mb_substr($string, 1);
 	}
 	
 	/**
 	 * Alias to php lcfirst() function with multibyte support.
 	 */
 	public static function firstCharToLowerCase($string) {
-		return self::toLowerCase(self::substring($string, 0, 1)).self::substring($string, 1);
+		return mb_strtolower(mb_substr($string, 0, 1)).mb_substr($string, 1);
 	}
 	
 	/**
@@ -326,21 +344,26 @@ final class StringUtil {
 	
 	/**
 	 * Alias to php str_replace() function.
+	 * 
+	 * @deprecated please use str_replace() instead
 	 */
 	public static function replace($search, $replace, $subject, &$count = null) {
 		return str_replace($search, $replace, $subject, $count);
 	}
 	
 	/**
-	 * Alias to php str_ireplace() function with multibyte support.
+	 * Alias to php str_ireplace() function with UTF-8 support.
+	 * 
+	 * This function is considered to be slow, if $search contains
+	 * only ASCII characters, please use str_ireplace() instead.
 	 */
 	public static function replaceIgnoreCase($search, $replace, $subject, &$count = 0) {
-		$startPos = self::indexOf(self::toLowerCase($subject), self::toLowerCase($search));
+		$startPos = mb_strpos(mb_strtolower($subject), mb_strtolower($search));
 		if ($startPos === false) return $subject;
 		else {
-			$endPos = $startPos + self::length($search);
+			$endPos = $startPos + mb_strlen($search);
 			$count++;
-			return self::substring($subject, 0, $startPos) . $replace . self::replaceIgnoreCase($search, $replace, self::substring($subject, $endPos), $count);
+			return mb_substr($subject, 0, $startPos) . $replace . self::replaceIgnoreCase($search, $replace, mb_substr($subject, $endPos), $count);
 		}
 	}
 	
@@ -370,11 +393,11 @@ final class StringUtil {
 	 */
 	public static function startsWith($haystack, $needle, $ci = false) {
 		if ($ci) {
-			$haystack = self::toLowerCase($haystack);
-			$needle = self::toLowerCase($needle);
+			$haystack = mb_strtolower($haystack);
+			$needle = mb_strtolower($needle);
 		}
 		// using substring and === is MUCH faster for long strings then using indexOf.
-		return self::substring($haystack, 0, self::length($needle)) === $needle;
+		return mb_substr($haystack, 0, mb_strlen($needle)) === $needle;
 	}
 	
 	/**
@@ -387,12 +410,12 @@ final class StringUtil {
 	 */
 	public static function endsWith($haystack, $needle, $ci = false) {
 		if ($ci) {
-			$haystack = self::toLowerCase($haystack);
-			$needle = self::toLowerCase($needle);
+			$haystack = mb_strtolower($haystack);
+			$needle = mb_strtolower($needle);
 		}
-		$length = self::length($needle);
+		$length = mb_strlen($needle);
 		if ($length === 0) return true;
-		return (self::substring($haystack, $length * -1) === $needle);
+		return (mb_substr($haystack, $length * -1) === $needle);
 	}
 	
 	/**
@@ -412,7 +435,7 @@ final class StringUtil {
 	 */
 	public static function unescape($string, $chars = '"') {
 		for ($i = 0, $j = strlen($chars); $i < $j; $i++) {
-			$string = self::replace('\\'.$chars[$i], $chars[$i], $string);
+			$string = str_replace('\\'.$chars[$i], $chars[$i], $string);
 		}
 		
 		return $string;
@@ -474,8 +497,8 @@ final class StringUtil {
 	 */
 	public static function encodeAllChars($string) {
 		$result = '';
-		for ($i = 0, $j = self::length($string); $i < $j; $i++) {
-			$char = self::substring($string, $i, 1);
+		for ($i = 0, $j = mb_strlen($string); $i < $j; $i++) {
+			$char = mb_substr($string, $i, 1);
 			$result .= '&#'.self::getCharValue($char).';';
 		}
 		
@@ -566,13 +589,13 @@ final class StringUtil {
 	 * @return	boolean
 	 */
 	public static function executeWordFilter($word, $filter) {
-		$word = self::toLowerCase($word);
+		$word = mb_strtolower($word);
 		
 		if ($filter != '') {
-			$forbiddenNames = explode("\n", self::toLowerCase(self::unifyNewlines($filter)));
+			$forbiddenNames = explode("\n", mb_strtolower(self::unifyNewlines($filter)));
 			foreach ($forbiddenNames as $forbiddenName) {
-				if (self::indexOf($forbiddenName, '*') !== false) {
-					$forbiddenName = self::replace('\*', '.*', preg_quote($forbiddenName, '/'));
+				if (mb_strpos($forbiddenName, '*') !== false) {
+					$forbiddenName = str_replace('\*', '.*', preg_quote($forbiddenName, '/'));
 					if (preg_match('/^'.$forbiddenName.'$/s', $word)) {
 						return false;
 					}
@@ -602,14 +625,14 @@ final class StringUtil {
 			return '';
 		}
 		
-		if (self::length($string) > $length) {
-			$length -= self::length($etc);
+		if (mb_strlen($string) > $length) {
+			$length -= mb_strlen($etc);
 			
 			if (!$breakWords) {
-				$string = preg_replace('/\\s+?(\\S+)?$/', '', self::substring($string, 0, $length + 1));
+				$string = preg_replace('/\\s+?(\\S+)?$/', '', mb_substr($string, 0, $length + 1));
 			}
 			
-			return self::substring($string, 0, $length).$etc;
+			return mb_substr($string, 0, $length).$etc;
 		}
 		else {
 			return $string;
@@ -618,25 +641,25 @@ final class StringUtil {
 	
 	/**
 	 * Truncates a string containing HTML code and keeps the HTML syntax intact.
-	 *
-	 * @param 	string		$string			string which shall be truncated
-	 * @param 	integer		$length 		string length after truncating
-	 * @param 	string		$etc			ending string which will be appended after truncating
+	 * 
+	 * @param	string		$string			string which shall be truncated
+	 * @param	integer		$length			string length after truncating
+	 * @param	string		$etc			ending string which will be appended after truncating
 	 * @param	boolean		$breakWords		if false words will not be split and the return string might be shorter than $length
-	 * @return 	string					truncated string
+	 * @return	string					truncated string
 	 */
 	public static function truncateHTML($string, $length = 500, $etc = self::HELLIP, $breakWords = false) {
-		if (self::length(self::stripHTML($string)) <= $length) {
+		if (mb_strlen(self::stripHTML($string)) <= $length) {
 			return $string;
 		}
 		$openTags = array();
 		$truncatedString = '';
-	
+		
 		// initalize length counter with the ending length
-		$totalLength = self::length($etc);
-	
+		$totalLength = mb_strlen($etc);
+		
 		preg_match_all('/(<\/?([\w+]+)[^>]*>)?([^<>]*)/', $string, $tags, PREG_SET_ORDER);
-	
+		
 		foreach ($tags as $tag) {
 			// filter standalone html tags
 			if (!preg_match('/area|base|basefont|br|col|frame|hr|img|input|isindex|link|meta|param/s', $tag[2])) {
@@ -657,10 +680,10 @@ final class StringUtil {
 			}
 			// append tag
 			$truncatedString .= $tag[1];
-	
+			
 			// get length of the content without entities. If the content is too long, keep entities intact
 			$decodedContent = self::decodeHTML($tag[3]);
-			$contentLength = self::length($decodedContent);
+			$contentLength = mb_strlen($decodedContent);
 			if ($contentLength + $totalLength > $length) {
 				if (!$breakWords) {
 					if (preg_match('/^(.{1,'.($length - $totalLength).'}) /s', $decodedContent, $match)) {
@@ -676,14 +699,14 @@ final class StringUtil {
 					foreach ($entities[0] as $entity) {
 						if ($entity[1] + 1 - $entitiesLength <= $left) {
 							$left--;
-							$entitiesLength += self::length($entity[0]);
+							$entitiesLength += mb_strlen($entity[0]);
 						}
 						else {
 							break;
 						}
 					}
 				}
-				$truncatedString .= self::substring($tag[3], 0, $left + $entitiesLength);
+				$truncatedString .= mb_substr($tag[3], 0, $left + $entitiesLength);
 				break;
 			}
 			else {
@@ -694,12 +717,12 @@ final class StringUtil {
 				break;
 			}
 		}
-	
+		
 		// close all open tags
 		foreach ($openTags as $tag) {
 			$truncatedString .= '</'.$tag.'>';
 		}
-	
+		
 		// add etc
 		$truncatedString .= $etc;
 		
@@ -725,8 +748,8 @@ final class StringUtil {
 			// use URL and remove protocol and www subdomain 
 			$title = preg_replace('~^(?:https?|ftps?)://(?:www\.)?~i', '', $url);
 			
-			if (self::length($title) > 60) {
-				$title = self::substring($title, 0, 30) . self::HELLIP . self::substring($title, -25);
+			if (mb_strlen($title) > 60) {
+				$title = mb_substr($title, 0, 30) . self::HELLIP . mb_substr($title, -25);
 			}
 			
 			if (!$encodeTitle) $title = self::encodeHTML($title);
@@ -760,14 +783,14 @@ final class StringUtil {
 		$substrings = explode($break, $string);
 		
 		foreach ($substrings as $substring) {
-			$length = self::length($substring);
+			$length = mb_strlen($substring);
 			if ($length > $width) {
 				$j = ceil($length / $width);
 				
 				for ($i = 0; $i < $j; $i++) {
 					if (!empty($result)) $result .= $break;
-					if ($width * ($i + 1) > $length) $result .= self::substring($substring, $width * $i);
-					else $result .= self::substring($substring, $width * $i, $width);
+					if ($width * ($i + 1) > $length) $result .= mb_substr($substring, $width * $i);
+					else $result .= mb_substr($substring, $width * $i, $width);
 				}
 			}
 			else {

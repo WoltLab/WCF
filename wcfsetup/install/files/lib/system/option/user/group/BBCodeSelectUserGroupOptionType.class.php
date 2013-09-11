@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * @author	Matthias Schmidt
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @package	com.woltlab.wcf
  * @subpackage	system.option
  * @category	Community Framework
  */
@@ -68,35 +68,6 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	protected function loadBBCodeSelection() {
 		$this->bbCodes = array_keys(BBCodeCache::getInstance()->getBBCodes());
 		asort($this->bbCodes);
-	}
-	
-	/**
-	 * @see	wcf\system\option\user\group\IUserGroupOptionType::merge()
-	 */
-	public function diff($defaultValue, $groupValue) {
-		if ($this->bbCodes === null) {
-			$this->loadBBCodeSelection();
-		}
-		
-		if ($defaultValue == 'all') {
-			$defaultValue = $this->bbCodes;
-		}
-		else {
-			$defaultValue = explode(',', StringUtil::unifyNewlines($defaultValue));
-		}
-		if ($groupValue == 'all') {
-			$groupValue = $this->bbCodes;
-		}
-		else {
-			$groupValue = explode(',', StringUtil::unifyNewlines($groupValue));
-		}
-		
-		$result = array_diff($groupValue, $defaultValue);
-		if (empty($result)) {
-			return null;
-		}
-		
-		return implode(',', $result);
 	}
 	
 	/**

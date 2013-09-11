@@ -39,7 +39,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 			
 			$statementParameters = array();
 			foreach ($spiders as $spider) {
-				$identifier = StringUtil::toLowerCase($spider->getAttribute('ident'));
+				$identifier = mb_strtolower($spider->getAttribute('ident'));
 				$name = $xpath->query('ns:name', $spider)->item(0);
 				$info = $xpath->query('ns:url', $spider)->item(0);
 				
@@ -56,6 +56,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 					VALUES		(?, ?, ?)";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				
+				WCF::getDB()->beginTransaction();
 				foreach ($statementParameters as $parameters) {
 					$statement->execute(array(
 						$parameters['spiderIdentifier'],
@@ -63,6 +64,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 						$parameters['spiderURL']
 					));
 				}
+				WCF::getDB()->commitTransaction();
 			}
 			
 			// clear spider cache

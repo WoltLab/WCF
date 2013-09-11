@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * Shows the user edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -138,12 +138,12 @@ class UserEditForm extends UserAddForm {
 			$this->readDefaultValues();
 		}
 		
+		parent::readData();
+		
 		// get avatar object
 		if ($this->avatarType == 'custom') {
 			$this->userAvatar = new UserAvatar($this->user->avatarID);
 		}
-		
-		parent::readData();
 	}
 	
 	/**
@@ -309,7 +309,7 @@ class UserEditForm extends UserAddForm {
 	 * @see	wcf\acp\form\UserAddForm::validateUsername()
 	 */
 	protected function validateUsername($username) {
-		if (StringUtil::toLowerCase($this->user->username) != StringUtil::toLowerCase($username)) {
+		if (mb_strtolower($this->user->username) != mb_strtolower($username)) {
 			parent::validateUsername($username);
 		}
 	}
@@ -318,7 +318,7 @@ class UserEditForm extends UserAddForm {
 	 * @see	wcf\acp\form\UserAddForm::validateEmail()
 	 */
 	protected function validateEmail($email, $confirmEmail) {
-		if (StringUtil::toLowerCase($this->user->email) != StringUtil::toLowerCase($email)) {
+		if (mb_strtolower($this->user->email) != mb_strtolower($email)) {
 			parent::validateEmail($email, $this->confirmEmail);
 		}
 	}

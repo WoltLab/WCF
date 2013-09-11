@@ -75,22 +75,24 @@
 			_images = [[_images, startImage]];
 			startImage = 0;
 		}
-
-		middle = win.scrollTop() + (win.height() / 2);
-		centerWidth = options.initialWidth;
-		centerHeight = options.initialHeight;
-		$(center).css({top: Math.max(0, middle - (centerHeight / 2)), width: centerWidth, height: centerHeight, marginLeft: -centerWidth/2}).show();
-		compatibleOverlay = ie6 || (overlay.currentStyle && (overlay.currentStyle.position != "fixed"));
-		if (compatibleOverlay) overlay.style.position = "absolute";
-		$(overlay).css("opacity", options.overlayOpacity).fadeIn(options.overlayFadeDuration);
+		
 		// WoltLab modifications	BEGIN
+		if (activeImage == -1) {
+			middle = win.scrollTop() + (win.height() / 2);
+			centerWidth = options.initialWidth;
+			centerHeight = options.initialHeight;
+			$(center).css({top: Math.max(0, middle - (centerHeight / 2)), width: centerWidth, height: centerHeight, marginLeft: -centerWidth/2}).show();
+			compatibleOverlay = ie6 || (overlay.currentStyle && (overlay.currentStyle.position != "fixed"));
+			if (compatibleOverlay) overlay.style.position = "absolute";
+			$(overlay).css("opacity", options.overlayOpacity).fadeIn(options.overlayFadeDuration);
 		
-		WCF.System.DisableScrolling.disable();
+			WCF.System.DisableScrolling.disable();
 		
+			position();
+			setup(1);
+		}
 		// WoltLab modifications	END
-		position();
-		setup(1);
-
+		
 		images = _images;
 		options.loop = options.loop && (images.length > 1);
 		return changeImage(startImage);

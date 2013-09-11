@@ -109,9 +109,16 @@ class RequestHandler extends SingletonFactory {
 				if ($landingPage !== null && RouteHandler::getInstance()->isDefaultController()) {
 					// check if redirect URL matches current URL
 					$redirectURL = $landingPage->getLink();
-					$relativeRoute = StringUtil::replace(RouteHandler::getHost(), '', $redirectURL);
+					$relativeRoute = str_replace(RouteHandler::getHost(), '', $redirectURL);
 					
-					if ($relativeRoute == $_SERVER['REQUEST_URI'] || $relativeRoute == preg_replace('~([?&]s=[a-f0-9]{40})~', '', $_SERVER['REQUEST_URI'])) {
+					// strip query string for comparison
+					$pos = mb_strpos($relativeRoute, '?');
+					if ($pos !== false) $relativeRoute = mb_substr($relativeRoute, 0, $pos);
+					$requestUri = $_SERVER['REQUEST_URI'];
+					$pos = mb_strpos($requestUri, '?');
+					if ($pos !== false) $requestUri = mb_substr($requestUri, 0, $pos);
+					
+					if ($relativeRoute == $requestUri) {
 						$routeData['controller'] = $landingPage->getController();
 					}
 					else {
@@ -122,24 +129,26 @@ class RequestHandler extends SingletonFactory {
 				}
 				
 				// check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
-				$applicationObject = ApplicationHandler::getInstance()->getApplication($application);
-				if ($applicationObject->domainName != $_SERVER['HTTP_HOST']) {
-					// build URL, e.g. http://example.net/forum/
-					$url = FileUtil::addTrailingSlash(RouteHandler::getProtocol() . $applicationObject->domainName . RouteHandler::getPath());
-					
-					// add path info, e.g. index.php/Board/2/
-					$pathInfo = RouteHandler::getPathInfo();
-					if (!empty($pathInfo)) {
-						$url .= 'index.php' . $pathInfo;
+				if (!defined('WCF_RUN_MODE') || WCF_RUN_MODE != 'embedded') {
+					$applicationObject = ApplicationHandler::getInstance()->getApplication($application);
+					if ($applicationObject->domainName != $_SERVER['HTTP_HOST']) {
+						// build URL, e.g. http://example.net/forum/
+						$url = FileUtil::addTrailingSlash(RouteHandler::getProtocol() . $applicationObject->domainName . RouteHandler::getPath());
+						
+						// add path info, e.g. index.php/Board/2/
+						$pathInfo = RouteHandler::getPathInfo();
+						if (!empty($pathInfo)) {
+							$url .= 'index.php' . $pathInfo;
+						}
+						
+						// query string, e.g. ?foo=bar
+						if (!empty($_SERVER['QUERY_STRING'])) {
+							$url .= '?' . $_SERVER['QUERY_STRING'];
+						}
+						
+						HeaderUtil::redirect($url, true);
+						exit;
 					}
-					
-					// query string, e.g. ?foo=bar
-					if (!empty($_SERVER['QUERY_STRING'])) {
-						$url .= '?' . $_SERVER['QUERY_STRING'];
-					}
-					
-					HeaderUtil::redirect($url, true);
-					exit;
 				}
 			}
 			

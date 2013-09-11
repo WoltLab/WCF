@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.user.option.setDefaults'}
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.user.option.setDefaults{/lang}</h1>
@@ -29,6 +29,7 @@
 		<div class="container containerPadding marginTop">
 			<fieldset>
 				<dl>
+					<dt></dt>
 					<dd>
 						<label><input type="checkbox" name="applyChangesToExistingUsers" value="1" {if $applyChangesToExistingUsers}checked="checked" {/if}/> {lang}wcf.acp.user.option.setDefaults.applyChangesToExistingUsers{/lang}</label>
 						<small>{lang}wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description{/lang}</small>	

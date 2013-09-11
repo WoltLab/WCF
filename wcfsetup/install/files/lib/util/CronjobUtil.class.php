@@ -8,7 +8,7 @@ use wcf\system\exception\SystemException;
  * does not support using nicknames (prefixed by the '@' character).
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -91,7 +91,7 @@ final class CronjobUtil {
 		// calculate values based upon each expression
 		$values = array();
 		foreach ($fields as $fieldName => $fieldValue) {
-			$fieldValue = StringUtil::toLowerCase($fieldValue);
+			$fieldValue = mb_strtolower($fieldValue);
 			
 			// Names can also be used for the "month" and "day of week" fields.
 			// Use the first three letters of the particular day or month (case
@@ -164,8 +164,8 @@ final class CronjobUtil {
 		$timeBase = self::$timeBase;
 		
 		if ($addAnDay) {
-			$date = getdate($timeBase);
-			$timeBase = gmmktime(0, 0, 1, $date['mon'], $date['mday'] + 1, $date['year']);
+			$date = explode('.', gmdate("d.m.Y", $timeBase));
+			$timeBase = gmmktime(0, 0, 1, $date[1], $date[0] + 1, $date[2]);
 		}
 		
 		$day = gmdate('j', $timeBase);
@@ -305,10 +305,9 @@ final class CronjobUtil {
 			$index = self::findKey($hour, $values['hour'], false);
 			
 			if ($index === false) {
-				if ($index === false) {
-					$index = self::findKey($hour, $values['hour']);
-					$addAnDay = true;
-				}
+				$index = self::findKey($hour, $values['hour']);
+				$addAnDay = true;
+				
 				$hour = $values['hour'][$index];
 			}
 		}
@@ -390,7 +389,7 @@ final class CronjobUtil {
 		$values = array();
 		
 		// examinate first char
-		$char = StringUtil::substring($fieldValue, 0, 1);
+		$char = mb_substr($fieldValue, 0, 1);
 		
 		// could be a single value, range or list
 		if (is_numeric($char)) {
@@ -404,7 +403,7 @@ final class CronjobUtil {
 		else if ($char == '*') {
 			$step = 1;
 			
-			if (StringUtil::indexOf($fieldValue, '/') !== false) {
+			if (mb_strpos($fieldValue, '/') !== false) {
 				$rangeData = explode('/', $fieldValue);
 				$step = $rangeData[1];
 			}
@@ -424,7 +423,7 @@ final class CronjobUtil {
 	 * @return	array
 	 */
 	protected static function getListItems($fieldValue) {
-		if (StringUtil::indexOf($fieldValue, ',') !== false) {
+		if (mb_strpos($fieldValue, ',') !== false) {
 			return explode(',', $fieldValue);
 		}
 		
@@ -439,12 +438,12 @@ final class CronjobUtil {
 	 */
 	protected static function getRanges($value) {
 		// this is a single value
-		if (StringUtil::indexOf($value, '-') === false) {
+		if (mb_strpos($value, '-') === false) {
 			return array($value);
 		}
 		
 		$step = 1;
-		if (StringUtil::indexOf($value, '/') !== false) {
+		if (mb_strpos($value, '/') !== false) {
 			$data = explode('/', $value);
 			$step = $data[1];
 			$value = $data[0];
@@ -560,8 +559,8 @@ final class CronjobUtil {
 					if (count($compareSlash) == 2) $compare['1'] = $compareSlash['0'];
 					
 					// see if digits or names are being given.
-					$left = array_search(StringUtil::toLowerCase($compare['0']), $namesArr);
-					$right = array_search(StringUtil::toLowerCase($compare['1']), $namesArr);
+					$left = array_search(mb_strtolower($compare['0']), $namesArr);
+					$right = array_search(mb_strtolower($compare['1']), $namesArr);
 					if (!$left) $left = $compare['0'];
 					if (!$right) $right = $compare['1'];
 					// now check the values.

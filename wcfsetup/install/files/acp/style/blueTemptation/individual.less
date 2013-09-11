@@ -129,8 +129,6 @@ body, .tabularBox, .dialogTitlebar {
 		> div {
 			> div {
 				> .sidebar {
-					.boxShadowInset(0, 0, rgba(0, 0, 0, .1), 2px);
-					
 					> span > .collapsibleButton {
 						border-width: 1px 0 1px 1px;
 						border-style: solid;
@@ -148,7 +146,11 @@ body, .tabularBox, .dialogTitlebar {
 				border-right: 1px solid darken(@wcfSidebarBackgroundColor, 8%);
 				
 				> div {
-					width: 301px
+					width: 301px;
+					
+					fieldset {
+						width: 301px;
+					}
 				}
 			}
 		}
@@ -463,20 +465,19 @@ button.active:hover {
 	}
 
 	.wbbBoardList:not(.wbbBoardListReduced) {
-		> li.wbbBoardNodeTop:not(.wbbBoardNodeTopEmpty) > div {
-			border-radius: @wcfContainerBorderRadius - 2 @wcfContainerBorderRadius - 2 0 0;
+		> li.wbbDepth1 > div {
+			border-top-left-radius: @wcfContainerBorderRadius - 2;
+			border-top-right-radius: @wcfContainerBorderRadius - 2;
 		}
 		
-		> li > ul > li:last-child div.wbbBoard:last-child, > li > ul > li.tabularBox:last-child {
-			border-radius: 0 0 @wcfContainerBorderRadius - 2 @wcfContainerBorderRadius - 2;
+		li.wbbLastBoxElement > div {
+			border-bottom-left-radius: @wcfContainerBorderRadius - 2;
+			border-bottom-right-radius: @wcfContainerBorderRadius - 2;
 		}
 		
-		.tabularBox:not(.wbbBoardNodeTop) {
-			border-radius: 0;
-		}
-		
-		.wbbBoardNodeTopEmpty div.wbbBoard {
-			border-radius: @wcfContainerBorderRadius - 2;
+		.tabularBox:not(.wbbDepth1) {
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
 		}
 	}
 
@@ -668,8 +669,6 @@ select[multiple]:focus {
 	border-radius: 7px;
 	border-width: 0;
 	
-	font-weight: bold;
-	
 	.boxShadowNative(~"0 1px 2px rgba(0, 0, 0, .5), inset 0 0 1px rgba(0, 0, 0, .2)");
 }
 
@@ -820,7 +819,7 @@ div.tabularBox,
 }
 
 /* dashboard boxes */
-.dashboardBoxRegisterButton {
+.dashboardBoxSidebarButton {
 	> div {
 		> .button {
 			-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(.5, transparent), to(rgba(0, 0, 0, .4)));

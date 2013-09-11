@@ -57,7 +57,7 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 				$content += "\n";
 			}
 			
-			// do *not* use $.trim here, as we want to preserve whitespaces whitespaces
+			// do *not* use $.trim here, as we want to preserve whitespaces
 			$content += $(listItem).text().replace(/\n+$/, '');
 		});
 		
@@ -646,6 +646,7 @@ WCF.Message.QuickReply = Class.extend({
 	 */
 	init: function(supportExtendedForm, quoteManager) {
 		this._container = $('#messageQuickReply');
+		this._container.children('.message').addClass('jsInvalidQuoteTarget');
 		this._messageField = $('#text');
 		this._pendingSave = false;
 		if (!this._container || !this._messageField) {
@@ -692,7 +693,7 @@ WCF.Message.QuickReply = Class.extend({
 					$empty = (!this._messageField.val().length);
 				}
 				else {
-					$empty = (!this._messageField.ckeditorGet().getData().length);
+					$empty = (!$.trim(this._messageField.ckeditorGet().getData()).length);
 				}
 				
 				if ($empty) {
@@ -766,7 +767,7 @@ WCF.Message.QuickReply = Class.extend({
 		
 		// check if message is empty
 		var $innerError = this._messageField.parent().find('small.innerError');
-		if ($message === '') {
+		if ($message === '' || $message === '0') {
 			if (!$innerError.length) {
 				$innerError = $('<small class="innerError" />').appendTo(this._messageField.parent());
 			}
@@ -1140,6 +1141,7 @@ WCF.Message.InlineEditor = Class.extend({
 					objectID: this._container[$containerID].data('objectID')
 				}
 			});
+			this._proxy.setOption('failure', $.proxy(function() { this._cancel(); }, this));
 			this._proxy.sendRequest();
 		}
 		else {
@@ -1233,8 +1235,7 @@ WCF.Message.InlineEditor = Class.extend({
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
 		
 		var $content = $messageBody.find('.messageText');
-		this._cache = $content.html();
-		$content.empty();
+		this._cache = $content.children().detach();
 		
 		// hide unrelated content
 		$content.parent().children('.jsInlineEditorHideContent').hide();
@@ -1244,7 +1245,7 @@ WCF.Message.InlineEditor = Class.extend({
 	 * Cancels editing and reverts to original message.
 	 */
 	_cancel: function() {
-		var $container = this._container[this._activeElementID];
+		var $container = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget');
 		
 		// remove ckEditor
 		try {
@@ -1298,7 +1299,10 @@ WCF.Message.InlineEditor = Class.extend({
 	 * @param	object		data
 	 */
 	_showEditor: function(data) {
-		var $messageBody = this._container[this._activeElementID].find('.messageBody');
+		// revert failure function
+		this._proxy.setOption('failure', $.proxy(this._failure, this));
+		
+		var $messageBody = this._container[this._activeElementID].addClass('jsInvalidQuoteTarget').find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
 		var $content = $messageBody.find('.messageText');
 		
@@ -1335,7 +1339,7 @@ WCF.Message.InlineEditor = Class.extend({
 	 * Reverts editor.
 	 */
 	_revertEditor: function() {
-		var $messageBody = this._container[this._activeElementID].find('.messageBody');
+		var $messageBody = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget').find('.messageBody');
 		$messageBody.children('span.icon-spinner').remove();
 		$messageBody.find('.messageText').children().show();
 		
@@ -1417,7 +1421,7 @@ WCF.Message.InlineEditor = Class.extend({
 	 * Hides WYSIWYG editor.
 	 */
 	_hideEditor: function() {
-		var $messageBody = this._container[this._activeElementID].find('.messageBody');
+		var $messageBody = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget').find('.messageBody');
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
 		$messageBody.find('.messageText').children().hide();
 		
@@ -1435,7 +1439,7 @@ WCF.Message.InlineEditor = Class.extend({
 	 * @param	object		data
 	 */
 	_showMessage: function(data) {
-		var $container = this._container[this._activeElementID];
+		var $container = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget');
 		var $messageBody = $container.find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
 		var $content = $messageBody.find('.messageText');
@@ -1696,9 +1700,17 @@ WCF.Message.Quote.Handler = Class.extend({
 		
 		// store container ID
 		var $container = $(event.currentTarget);
+		
 		if (this._messageBodySelector) {
 			$container = this._containers[$container.data('containerID')];
 		}
+		
+		if ($container.hasClass('jsInvalidQuoteTarget')) {
+			this._activeContainerID = '';
+			
+			return;
+		}
+		
 		this._activeContainerID = $container.wcfIdentify();
 		
 		// remove alt-tag from all images, fixes quoting in Firefox
@@ -1727,6 +1739,9 @@ WCF.Message.Quote.Handler = Class.extend({
 			else {
 				var $tagName = node.childNodes[i].tagName.toLowerCase();
 				if ($tagName === 'li') {
+					nodeText += "\r\n";
+				}
+				else if ($tagName === 'td' && !$.browser.msie) {
 					nodeText += "\r\n";
 				}
 				
@@ -1820,7 +1835,7 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * @return	string
 	 */
 	_normalize: function(text) {
-		return text.replace(/\r?\n|\r/g, "\n").replace(/\s{2,}/g, ' ');
+		return text.replace(/\r?\n|\r/g, "\n").replace(/\s/g, ' ').replace(/\s{2,}/g, ' ');
 	},
 	
 	/**
@@ -2508,6 +2523,13 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		if ($ckEditor !== null && $ckEditor.mode === 'wysiwyg') {
 			// in design mode
+			
+			// remove the link if the cursor is in a link element
+			$ckEditor.removeStyle(new CKEDITOR.style({
+				element: 'a',
+				type: CKEDITOR.STYLE_INLINE
+			}));
+			
 			$ckEditor.insertText($quote + "\n\n");
 		}
 		else {
@@ -2791,7 +2813,7 @@ WCF.Message.Share.Page = Class.extend({
 	 * @param	boolean		fetchObjectCount
 	 */
 	init: function(fetchObjectCount) {
-		this._pageDescription = encodeURIComponent($('meta[property="og:description"]').prop('content'));
+		this._pageDescription = encodeURIComponent($('meta[property="og:title"]').prop('content'));
 		this._pageURL = encodeURIComponent($('meta[property="og:url"]').prop('content'));
 		
 		var $container = $('.messageShareButtons');
@@ -2821,7 +2843,7 @@ WCF.Message.Share.Page = Class.extend({
 	 * @param	string		url
 	 */
 	_share: function(objectName, url) {
-		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription), 'height=600,width=600');
+		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription + " " + this._pageURL), 'height=600,width=600');
 	},
 	
 	/**
@@ -2907,5 +2929,411 @@ WCF.Message.Share.Page = Class.extend({
 				this._ui.reddit.children('span.badge').show().text(data.data.children[0].data.score);
 			}
 		}, this), 'jsonp');
+	}
+});
+
+/**
+ * Handles user mention suggestions in CKEditors.
+ * 
+ * Important: Objects of this class have to be created before the CKEditor
+ * is initialized!
+ */
+WCF.Message.UserMention = Class.extend({
+	/**
+	 * name of the class used to get the user suggestions
+	 * @var	string
+	 */
+	_className: 'wcf\\data\\user\\UserAction',
+	
+	/**
+	 * suggestion item index, -1 if none is selected
+	 * @var	integer
+	 */
+	_itemIndex: -1,
+	
+	/**
+	 * current beginning of the mentioning
+	 * @var	string
+	 */
+	_mentionStart: '',
+	
+	/**
+	 * list with user name suggestions
+	 * @var	jQuery
+	 */
+	_suggestionList: null,
+	
+	/**
+	 * Initalizes user suggestions for the CKEditor with the given textarea id.
+	 * 
+	 * @param	string		editorID
+	 */
+	init: function(editorID) {
+		// temporary disable suggestions for Internet Explorer
+		//
+		// this issue is caused by misplacing the range within the parent element,
+		// while the typed chars are appended to the preceeding text node, without
+		// getting focused for some reason
+		if ($.browser.msie) {
+			return;
+		}
+		
+		this._textarea = $('#' + editorID);
+		
+		this._suggestionList = $('<ul class="dropdownMenu userSuggestionList" />').appendTo(this._textarea.parent());
+		WCF.Dropdown.initDropdownFragment(this._textarea.parent(), this._suggestionList);
+		
+		// get associated (ready) CKEditor object and add event listeners
+		CKEDITOR.on('instanceReady', $.proxy(function(event) {
+			if (event.editor.name === this._textarea.wcfIdentify()) {
+				this._ckEditor = event.editor;
+				this._ckEditor.container.on('keyup', $.proxy(this._keyup, this));
+				this._ckEditor.container.on('keydown', $.proxy(this._keydown, this));
+				this._ckEditor.on('key', $.proxy(this._key, this));
+			}
+		}, this));
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+	},
+	
+	/**
+	 * Clears the suggestion list.
+	 */
+	_clearList: function() {
+		this._hideList();
+		
+		this._suggestionList.empty();
+	},
+	
+	/**
+	 * Handles a click on a list item suggesting a username.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		this._setUsername($(event.currentTarget).data('username'));
+	},
+	
+	/**
+	 * Creates an item in the suggestion list with the given data.
+	 * 
+	 * @return	object
+	 */
+	_createListItem: function(listItemData) {
+		var $listItem = $('<li />').data('username', listItemData.label).click($.proxy(this._click, this)).appendTo(this._suggestionList);
+		
+		var $box16 = $('<div />').addClass('box16').appendTo($listItem);
+		$box16.append($(listItemData.icon).addClass('framed'));
+		$box16.append($('<div />').append($('<span />').text(listItemData.label)));
+	},
+	
+	/**
+	 * Returns the offsets used to set the position of the user suggestion
+	 * dropdown.
+	 * 
+	 * @return	object
+	 */
+	_getDropdownOffsets: function() {
+		var $range = this._ckEditor.getSelection().getRanges()[0];
+		var $orgRange = $range.clone();
+		var $startOffset = $range.startOffset;
+		
+		// move caret after the '@' sign
+		$range.setStart($range.startContainer, $startOffset - this._mentionStart.length);
+		$range.collapse(true);
+		$range.select();
+		
+		// create span with random id and add it in front of the '@' sign
+		var $element = document.createElement('span');
+		$node = new CKEDITOR.dom.node($element);
+		$range.insertNode($node);
+		
+		// get offsets of span
+		$jElement = $($element);
+		if ($.browser.opera) {
+			// in opera, the span's height is 0 if it has no content
+			$jElement.text(' ');
+		}
+		var $offsets = $jElement.offset();
+		$offsets.top += $jElement.height(); // add line height to top offset
+		
+		// merge text nodes before and after the temporary span element
+		// to avoid split text nodes which were one node before inserting
+		// the span element since split nodes can cause problems working
+		// with ranges and then remove the merged text node
+		if (!$.browser.msie || $element.previousSibling && $element.nextSibling) {
+			$element.previousSibling.nodeValue += $element.nextSibling.nodeValue;
+			$($element.nextSibling).remove();
+		}
+		
+		// reset caret position to original position at the end and make
+		// sure that the range is the same in all browsers
+		$range.setStart($orgRange.startContainer, $startOffset);
+		$range.setEnd($orgRange.startContainer, $startOffset);
+		$range.select();
+		
+		// remove span
+		$jElement.remove();
+		
+		return $offsets;
+	},
+	
+	/**
+	 * Returns the parameters for the AJAX request.
+	 * 
+	 * @return	object
+	 */
+	_getParameters: function() {
+		return {
+			data: {
+				includeUserGroups: false,
+				searchString: this._mentionStart
+			}
+		};
+	},
+	
+	/**
+	 * Returns the relevant text in front of the caret in the current line.
+	 * 
+	 * @return	string
+	 */
+	_getTextLineInFrontOfCaret: function() {
+		var $range = this._ckEditor.getSelection().getRanges()[0];
+		
+		// if text is marked, user suggestions are disabled
+		if (!$range.collapsed) {
+			return '';
+		}
+		
+		var $text = $range.startContainer.getText().substr(0, $range.startOffset);
+		
+		// remove unicode zero width space and no-breaking space
+		var $textBackup = $text;
+		$text = '';
+		for (var $i = 0; $i < $textBackup.length; $i++) {
+			var $byte = $textBackup.charCodeAt($i).toString(16);
+			if ($byte != '200b' && $byte != 'a0') {
+				if ($textBackup[$i] === '@' && $i && $textBackup[$i - 1].match(/\s/)) {
+					$text = '';
+				}
+				
+				$text += $textBackup[$i];
+			}
+		}
+		
+		return $text;
+	},
+	
+	/**
+	 * Hides the suggestion list.
+	 */
+	_hideList: function() {
+		WCF.Dropdown.getDropdown(this._textarea.parent().wcfIdentify()).removeClass('dropdownOpen');
+		WCF.Dropdown.getDropdownMenu(this._textarea.parent().wcfIdentify()).removeClass('dropdownOpen');
+		
+		this._itemIndex = -1;
+	},
+	
+	/**
+	 * Handles the key event of the CKEditor to select user suggestion on enter.
+	 */
+	_key: function(event) {
+		if (this._ckEditor.mode !== 'wysiwyg') {
+			return true;
+		}
+		
+		if (this._suggestionList.is(':visible')) {
+			if (event.data.keyCode === 13) { // enter
+				this._suggestionList.children('li').eq(this._itemIndex).trigger('click');
+				
+				event.cancel();
+			}
+		}
+	},
+	
+	/**
+	 * Handles the keydown event to check if the user starts mentioning someone.
+	 * 
+	 * @param	object		event
+	 */
+	_keydown: function(event) {
+		if (this._ckEditor.mode !== 'wysiwyg') {
+			return true;
+		}
+		
+		if (this._suggestionList.is(':visible')) {
+			switch (event.data.$.keyCode) {
+				case 38: // arrow up
+					event.data.$.preventDefault();
+					
+					this._selectItem(this._itemIndex - 1);
+				break;
+				
+				case 40: // arrow down
+					event.data.$.preventDefault();
+					
+					this._selectItem(this._itemIndex + 1);
+				break;
+			}
+		}
+	},
+	
+	/**
+	 * Handles the keyup event to check if the user starts mentioning someone.
+	 * 
+	 * @param	object		event
+	 */
+	_keyup: function(event) {
+		if (this._ckEditor.mode !== 'wysiwyg') {
+			return true;
+		}
+		
+		// ignore enter key up event
+		if (event.data.$.keyCode === 13) {
+			return;
+		}
+		
+		// ignore event if suggestion list and user pressed enter, arrow up or arrow down
+		if (this._suggestionList.is(':visible') && event.data.$.keyCode in { 13:1, 38:1, 40:1 }) {
+			return;
+		}
+		
+		var $currentText = this._getTextLineInFrontOfCaret();
+		if ($currentText) {
+			var $match = $currentText.match(/@([^,]{3,})$/);
+			if ($match) {
+				// if mentioning is at text begin or there's a whitespace character
+				// before the '@', everything is fine
+				if (!$match.index || $currentText[$match.index - 1].match(/\s/)) {
+					this._mentionStart = $match[1];
+					
+					this._proxy.setOption('data', {
+						actionName: 'getSearchResultList',
+						className: this._className,
+						interfaceName: 'wcf\\data\\ISearchAction',
+						parameters: this._getParameters()
+					});
+					this._proxy.sendRequest();
+				}
+			}
+			else {
+				this._hideList();
+			}
+		}
+		else {
+			this._hideList();
+		}
+	},
+	
+	/**
+	 * Replaces the started mentioning with a chosen username.
+	 */
+	_setUsername: function(username) {
+		var $range = this._ckEditor.getSelection().getRanges()[0];
+		
+		// remove the beginning of the username
+		$range.setStart($range.startContainer, $range.startOffset - this._mentionStart.length);
+		$range.deleteContents();
+		
+		// insert username
+		if (username.indexOf("'") !== -1) {
+			username = username.replace(/'/g, "''");
+			username = "'" + username + "'";
+		}
+		else if (username.indexOf(' ') !== -1) {
+			username = "'" + username + "'";
+		}
+		this._ckEditor.insertText(username);
+		
+		// add whitespace after username
+		var $element = CKEDITOR.dom.element.createFromHtml('<span class="wcfUserMentionTemporary">&nbsp;</span>');
+		this._ckEditor.insertElement($element);
+		$(this._ckEditor.document.$).find('span.wcfUserMentionTemporary').replaceWith(function() {
+			return $(this).html();
+		});
+		
+		// the @-sign and the entered username are now in seperate text
+		// nodes which causes issues if the user changes the text
+		$range.endContainer.$.nodeValue += $range.endContainer.$.nextSibling.nodeValue;
+		$($range.endContainer.$.nextSibling).remove();
+		
+		// make sure that the range in Firefox is that same as in the
+		// other browsers
+		if ($.browser.mozilla) {
+			$range.selectNodeContents(new CKEDITOR.dom.text($range.endContainer.$.nextSibling));
+			$range.setStart($range.startContainer, 1);
+			$range.select();
+		}
+		
+		this._hideList();
+	},
+	
+	/**
+	 * Selects the suggestion with the given item index.
+	 * 
+	 * @param	integer		itemIndex
+	 */
+	_selectItem: function(itemIndex) {
+		var $li = this._suggestionList.children('li');
+		
+		if (itemIndex < 0) {
+			return;
+		}
+		else if (itemIndex + 1 > $li.length) {
+			return;
+		}
+		
+		$li.removeClass('dropdownNavigationItem');
+		$li.eq(itemIndex).addClass('dropdownNavigationItem');
+		
+		this._itemIndex = itemIndex;
+	},
+	
+	/**
+	 * Shows the suggestion list.
+	 */
+	_showList: function() {
+		WCF.Dropdown.getDropdown(this._textarea.parent().wcfIdentify()).addClass('dropdownOpen');
+		WCF.Dropdown.getDropdownMenu(this._textarea.parent().wcfIdentify()).addClass('dropdownOpen');
+	},
+	
+	/**
+	 * Evalutes user suggestion-AJAX request results.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		this._clearList(false);
+		
+		if ($.getLength(data.returnValues)) {
+			for (var $i in data.returnValues) {
+				var $item = data.returnValues[$i];
+				this._createListItem($item);
+			}
+			
+			this._updateSuggestionListPosition();
+			this._showList();
+		}
+	},
+	
+	/**
+	 * Updates the position of the suggestion list.
+	 */
+	_updateSuggestionListPosition: function() {
+		try {
+			var $caretPosition = this._getDropdownOffsets();
+			$caretPosition.top += 5; // add little vertical gap
+			$caretPosition.left -= 16; // make sure dropdown arrow is at correct position
+			this._suggestionList.css($caretPosition);
+			this._selectItem(0);
+		}
+		catch (e) {
+			// ignore errors that are caused by pressing enter to
+			// often in a short period of time
+		}
 	}
 });

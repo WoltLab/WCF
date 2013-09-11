@@ -18,7 +18,7 @@ use wcf\util\FileUtil;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.attachment
+ * @package	com.woltlab.wcf
  * @subpackage	data.attachment
  * @category	Community Framework
  */
@@ -158,7 +158,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			// and create subdirectory if necessary
 			$dir = dirname($attachment->getLocation());
 			if (!@file_exists($dir)) {
-				@mkdir($dir, 0777);
+				FileUtil::makePath($dir, 0777);
 			}
 			
 			// move uploaded file
@@ -231,7 +231,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 	 * Generates thumbnails.
 	 */
 	public function generateThumbnails() {
-		if (!empty($this->objects)) {
+		if (empty($this->objects)) {
 			$this->readObjects();
 		}
 		
@@ -255,6 +255,13 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			}
 			
 			$adapter = ImageHandler::getInstance()->getAdapter();
+			
+			// check memory limit
+			$neededMemory = $attachment->width * $attachment->height * ($attachment->imageType == 'image/png' ? 4 : 3) * 2.1;
+			if (FileUtil::getMemoryLimit() != -1 && FileUtil::getMemoryLimit() < (memory_get_usage() + $neededMemory)) {
+				continue;
+			}
+			
 			$adapter->loadFile($attachment->getLocation());
 			$updateData = array();
 			

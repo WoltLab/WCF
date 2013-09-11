@@ -1,16 +1,21 @@
 /* ### layout globals ### */
 .layoutFluid {
-	padding: 0 @wcfLayoutFluidGap;
+	margin-left: auto;
+	margin-right: auto;
+	min-width: @wcfLayoutMinWidth;
+	max-width: @wcfLayoutMaxWidth;
 }
 
 @media only screen and (max-width: 800px) {
 	.layoutFluid {
-		padding: 0;
+		min-width: 0;
+		max-width: none;
 	}
 }
 
 .layoutFixed {
-	margin: 0 auto;
+	margin-left: auto;
+	margin-right: auto;
 	width: @wcfLayoutFixedWidth;
 }
 
@@ -63,8 +68,6 @@
 		position: relative;
 		
 		> ul.userPanelItems {
-			/*.clearfix();*/
-			
 			> li {
 				float: left;
 				
@@ -119,6 +122,14 @@
 				position: absolute;
 				top: 12px;
 			}
+			&.loading:before {
+				content: "\f110";
+				
+				-moz-animation: spin 2s infinite linear;
+				-o-animation: spin 2s infinite linear;
+				-webkit-animation: spin 2s infinite linear;
+				animation: spin 2s infinite linear;
+			}
 			
 			> form {
 				display: inline-block;
@@ -155,10 +166,6 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 			}
-		}
-		
-		&.layoutFluid > .searchBar {
-			right: @wcfLayoutFluidGap;
 		}
 	}
 }
@@ -248,7 +255,7 @@
 		h1 {
 			color: @wcfPageLinkHoverColor;
 			float: right;
-			font-size: 160%;
+			font-size: @wcfHeadlineFontSize;
 			padding-top: @wcfGapLarge;
 			
 			.textShadow(@wcfPageBackgroundColor);
@@ -313,7 +320,7 @@
 }
 
 /* main menu */
-@media all and (min-width: 801px) {
+@media screen and (min-width: 801px), print {
 	.mainMenu {
 		> ul {
 			background-color: @wcfMainMenuBackgroundColor;
@@ -397,7 +404,7 @@
 		
 		> ul {
 			.dropdownMenu;
-			font-size: 120%;
+			font-size: @wcfTitleFontSize;
 			left: @wcfGapSmall;
 			
 			&:hover {
@@ -407,7 +414,7 @@
 			> li.active {
 				> ul.invisible {
 					display: block;
-					font-size: 85%;
+					font-size: @wcfSmallFontSize;
 					padding-left: 14px;
 					
 					> li > span.badge {
@@ -502,6 +509,10 @@
 		&.navigationMenuItems {
 			> li {
 				display: inline-block;
+				
+				> .badge {
+					top: -2px;
+				}
 			}
 		}
 	}
@@ -577,8 +588,16 @@
 
 /* ### content ### */
 #main {
+	background-color: @wcfContentBackgroundColor;
+	border-right: 1px solid transparent; /* workaround for strange display: table issues in webkit */
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
 	z-index: 110;
 	
+	&.sidebarOrientationRight {
+		background-color: @wcfSidebarBackgroundColor;
+	}
+
 	> div {
 		display: table;
 		table-layout: fixed;
@@ -672,6 +691,7 @@
 @media only screen and (max-width: 800px) {
 	/* hide sidebar */
 	#main {
+		border-right-width: 0;
 		position: relative;
 		margin-top: 7px;
 		
@@ -895,7 +915,8 @@
 			color: @wcfDimmedColor;
 			font-weight: normal;
 			text-shadow: none;
-			font-size: 75%;
+			white-space: nowrap;
+			word-wrap: normal;
 		}
 		
 		> .badge {
@@ -1054,7 +1075,7 @@
 
 .nestedCategoryList {
 	> li {
-		margin-top: 21px;
+		margin-top: 14px;
 		overflow: hidden;
 		
 		&:first-child {
@@ -1065,6 +1086,8 @@
 			padding: 0 14px;
 			
 			> ol {
+				margin-top: 0;
+				
 				> li {
 					display: inline-block;
 					font-size: @wcfSmallFontSize;
@@ -1072,8 +1095,10 @@
 			}
 		}
 	}
-	
-	&.doubleColumned {
+}
+
+@media all and (min-width: 801px) {
+	.nestedCategoryList.doubleColumned {
 		> li {
 			float: left;
 			width: 50%;
@@ -1095,6 +1120,36 @@
 	}
 }
 
+.sidebarNestedCategoryList {
+	> li {
+		> ol {
+			margin-left: 14px;
+		}
+	}
+	
+	li {
+		margin: 6px 0;
+		position: relative;
+		
+		> span {
+			position: absolute;
+			right: 0;
+			top: 2px;
+		}
+		
+		> a {
+			display: block;
+			overflow: hidden;
+			padding-right: 45px;
+			text-overflow: ellipsis;
+		}
+		
+		&.active > a {
+			font-weight: bold;
+		}
+	}
+}
+
 .containerBoxList {
 	margin-bottom: -@wcfGapSmall;
 	
@@ -1104,6 +1159,7 @@
 		> div {
 			overflow: hidden;
 			white-space: nowrap;
+			word-wrap: normal;
 		}
 	}
 }
@@ -1199,6 +1255,7 @@
 				text-decoration: none;
 				text-overflow: ellipsis;
 				white-space: nowrap;
+				word-wrap: normal;
 				
 				.textShadow(@wcfContentBackgroundColor);
 			}
@@ -1286,13 +1343,13 @@
 		padding: 0 5px 3px 5px;
 		position: relative;
 		white-space: nowrap;
+		word-wrap: normal;
 		
 		.textShadow(@wcfContainerBackgroundColor);
 		
 		> li {
 			display: inline-block;
 			outline: 0;
-			white-space: nowrap;
 			
 			&.ui-state-active {
 				> a {
@@ -1302,7 +1359,7 @@
 					border-width: 1px;
 					color: @wcfLinkColor;
 					font-weight: bold;
-					font-size: 130%;
+					font-size: 1.3rem;
 					margin-top: -10px;
 					padding: 10px 15px 5px;
 					z-index: 30;
@@ -1321,12 +1378,16 @@
 				bottom: -3px;
 				color: @wcfDimmedColor;
 				display: inline-block;
-				font-size: 110%;
+				font-size: 1.1rem;
 				outline: 0;
 				padding: 1px 10px 3px;
 				position: relative;
 				text-decoration: none;
 				z-index: 10;
+				
+				> .badge {
+					top: -1px;
+				}
 			}
 			
 			&:not(.ui-state-active) {
@@ -1353,44 +1414,49 @@
 }
 
 /* sub tabs */
-.tabMenuContainer > .menu {
-	border-bottom: 1px solid @wcfContainerBorderColor;
-	margin: -@wcfGapMedium -@wcfGapLarge @wcfGapMedium -@wcfGapLarge; /* reverse paddings from .containerPadding */
-	padding: @wcfGapTiny @wcfGapSmall;
+.tabMenuContainer {
+	&.containerPadding > .menu {
+		margin: -@wcfGapMedium -@wcfGapLarge @wcfGapMedium -@wcfGapLarge; /* reverse paddings from .containerPadding */
+	}
 	
-	.linearGradient(@wcfContainerBackgroundColor, @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor);
-	
-	ul{
-		display: inline-block;
+	> .menu {
+		border-bottom: 1px solid @wcfContainerBorderColor;
+		padding: @wcfGapTiny @wcfGapSmall;
 		
-		li {
+		.linearGradient(@wcfContainerBackgroundColor, @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor);
+		
+		ul{
 			display: inline-block;
-			outline: 0;
 			
-			&.ui-state-active a,
-			&.ui-state-active a:hover {
-				background-color: @wcfButtonPrimaryBackgroundColor;
-				border-color: @wcfButtonPrimaryBorderColor;
-				color: @wcfButtonPrimaryColor;
-				cursor: default;
-			}
-			
-			a {
-				background-color: @wcfContainerBackgroundColor;
-				border: 1px solid @wcfContainerBorderColor;
-				border-radius: @wcfButtonBorderRadius;
-				color: @wcfButtonColor;
-				display: block;
-				font-size: @wcfSmallFontSize;
-				margin: @wcfGapTiny 0;
+			li {
+				display: inline-block;
 				outline: 0;
-				padding: @wcfGapTiny @wcfGapSmall;
 				
-				&:hover {
-					background-color: @wcfButtonHoverBackgroundColor;
-					border-color: @wcfButtonHoverBorderColor;
-					color: @wcfButtonHoverColor;
-					text-decoration: none;
+				&.ui-state-active a,
+				&.ui-state-active a:hover {
+					background-color: @wcfButtonPrimaryBackgroundColor;
+					border-color: @wcfButtonPrimaryBorderColor;
+					color: @wcfButtonPrimaryColor;
+					cursor: default;
+				}
+				
+				a {
+					background-color: @wcfContainerBackgroundColor;
+					border: 1px solid @wcfContainerBorderColor;
+					border-radius: @wcfButtonBorderRadius;
+					color: @wcfButtonColor;
+					display: block;
+					font-size: @wcfSmallFontSize;
+					margin: @wcfGapTiny 0;
+					outline: 0;
+					padding: @wcfGapTiny @wcfGapSmall;
+					
+					&:hover {
+						background-color: @wcfButtonHoverBackgroundColor;
+						border-color: @wcfButtonHoverBorderColor;
+						color: @wcfButtonHoverColor;
+						text-decoration: none;
+					}
 				}
 			}
 		}
@@ -1410,14 +1476,14 @@
 			> li {
 				&.ui-state-active {
 					> a {
-						font-size: 100%;
+						font-size: 1rem;
 						padding-left: 10px;
 						padding-right: 10px;
 					}
 				}
 				
 				> a {
-					font-size: 100%;
+					font-size: 1rem;
 					padding-left: 5px;
 					padding-right: 5px;
 				}
@@ -1496,7 +1562,8 @@
 	}
 }
 
-.table {
+.table,
+.cke_wysiwyg_div table {
 	border-spacing: 0;
 	width: 100%;
 	
@@ -1526,6 +1593,7 @@
 		font-size: @wcfSmallFontSize;
 		font-weight: bold;
 		white-space: nowrap;
+		word-wrap: normal;
 		
 		.textShadow(@wcfTabularBoxBackgroundColor);
 		.linearGradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, 0), rgba(0, 0, 0, .3));
@@ -1597,21 +1665,24 @@
 		&.columnMark,
 		&.columnStatus {
 			text-align: center;
-			width: 1px !important;
+			width: 1px;
 			white-space: nowrap;
+			word-wrap: normal;
 		}
 		
 		&.columnDigits,
 		&.columnID {
 			text-align: right;
-			width: 1px !important;
+			width: 1px;
 			white-space: nowrap;
+			word-wrap: normal;
 		}
 		
 		&.columnIcon {
 			text-align: left;
-			width: 1px !important;
+			width: 1px;
 			white-space: nowrap;
+			word-wrap: normal;
 		}
 		
 		&.columnTitle {
@@ -1629,8 +1700,9 @@
 		&.columnRegistrationDate {
 			font-size: @wcfSmallFontSize;
 			text-align: right;
-			width: 1px !important;
+			width: 1px;
 			white-space: nowrap;
+			word-wrap: normal;
 		}
 		
 		&.columnURL, &.columnSmallText {
@@ -1707,6 +1779,35 @@
 	}
 }
 
+@media screen and (max-width: 800px) {
+	.responsiveTable {
+		display: block;
+		
+		thead, tbody, th, td, tr {
+			display: block;
+		}
+		
+		thead tr {
+			display: none;
+		}
+		
+		tr {
+			border: 1px solid @wcfContainerBorderColor;
+			border-top-width: 0;
+			
+			&:last-child {
+				border-bottom-width: 0;
+			}
+		}
+		
+		td {
+			text-align: left !important;
+			max-width: none !important;
+			width: auto !important;
+		}
+	}
+}
+
 /* ### definition lists ### */
 dl.statsDataList {
 	> dt {
@@ -1719,9 +1820,9 @@ dl.statsDataList {
 		text-align: left;
 		white-space: nowrap;
 		width: 62%;
+		word-wrap: normal;
 		
 		> a {
-			color: @wcfDimmedColor;
 			text-decoration: none;
 		}
 	}
@@ -1736,9 +1837,9 @@ dl.statsDataList {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 35%;
+		word-wrap: normal;
 		
 		> a {
-			color: @wcfColor;
 			text-decoration: none;
 		}
 	}
@@ -1781,6 +1882,7 @@ dl.dataList {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 35%;
+		word-wrap: normal;
 	}
 	
 	dd {
@@ -1880,6 +1982,10 @@ ul.inlineDataList {
 				display: none;
 			}
 			
+			&:nth-last-child(2):not(.active) {
+				display: block;
+			}
+			
 			&.active {
 				> span {
 					&.invisible {
@@ -1928,12 +2034,18 @@ ul.inlineDataList {
 		padding: @wcfGapSmall @wcfGapMedium @wcfGapMedium;
 		margin-top: 0;
 		
+		/* collapsed sidebar overflow fix */
+		box-sizing:border-box;
+		-moz-box-sizing:border-box; /* firefox */
+		min-width: 300px; /* webkit */
+		width: 300px; /* firefox */
+		
 		> legend {
 			border-width: 0;
 			color: @wcfColor;
 			font-family: @wcfBaseFontFamily;
 			font-weight: normal;
-			font-size: 100%;
+			font-size: 1rem;
 			padding: 0;
 			text-transform: uppercase;
 				
@@ -1998,12 +2110,6 @@ ul.inlineDataList {
 				}
 			}
 		}
-		
-		> div,
-		> ul,
-		> dl {
-			width: 300px - @wcfGapMedium * 2;
-		}
 	}
 	
 	.sidebarBoxList > li:not(:last-child) {
@@ -2020,6 +2126,7 @@ ul.inlineDataList {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
+			word-wrap: normal;
 			
 			.textShadow(@wcfSidebarBackgroundColor);
 			
@@ -2044,7 +2151,7 @@ ul.inlineDataList {
 			color: @wcfLinkColor;
 			cursor: pointer;
 			font-weight: bold;
-			font-size: 130%;
+			font-size: 1.3rem;
 			padding-left: (@wcfGapLarge + 16px + @wcfGapTiny);
 			position: relative;
 			margin-left: -@wcfGapMedium;
@@ -2092,4 +2199,54 @@ ul.inlineDataList {
 			text-align: right;
 		}
 	}
+}
+
+/* print version */
+@media print {
+	* {
+		background-color: transparent !important;
+		background-image: none !important;
+		box-shadow: none !important;
+		color: #000 !important;
+		text-shadow: none !important;
+	}
+	
+	html, body {
+		font-size: 12pt !important;
+	}
+	
+	.badge {
+		&:before {
+			content: "[";
+		}
+		
+		&:after {
+			content: "]";
+		}
+	}
+	
+	.content {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+	
+	.logo {
+		margin-top: 14px !important;
+	}
+	
+	a.externalURL:after {
+		content: " (" attr(href) ")";
+		font-size: .85rem;
+	}
+	
+	.sidebar,
+	.button,
+	.navigationIcons,
+	.navigationMenuItems,
+	.navigationHeader,
+	.userPanel,
+	.styleChooser {
+		display: none !important;
+	}
+
 }

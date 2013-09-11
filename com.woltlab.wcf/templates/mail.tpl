@@ -54,6 +54,7 @@
 			
 			{if $__wcf->user->userID}
 				<dl>
+					<dt></dt>
 					<dd><label><input type="checkbox" name="showAddress" value="1" {if $showAddress == 1} checked="checked"{/if}/> {lang}wcf.user.mail.showAddress{/lang}</label></dd>
 				</dl>
 			{else}

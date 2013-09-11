@@ -11,7 +11,7 @@
 	</div>
 </div>
 
-<footer id="pageFooter" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if} footer">
+<footer id="pageFooter" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if} footer{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst}{if $sidebarOrientation == 'right' && $sidebarCollapsed} sidebarCollapsed{/if}{/if}">
 	<div>
 		<nav id="footerNavigation" class="navigation navigationFooter">
 			{include file='footerMenu'}
@@ -40,6 +40,9 @@
 </footer>
 
 {event name='footer'}
+
+<!-- JAVASCRIPT_RELOCATE_POSITION -->
+
 {@FOOTER_CODE}
 
 <a id="bottom"></a>

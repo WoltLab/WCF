@@ -4,6 +4,7 @@ use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ModerationQueueList;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
@@ -15,7 +16,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.moderation
+ * @package	com.woltlab.wcf
  * @subpackage	system.moderation.queue
  * @category	Community Framework
  */
@@ -248,10 +249,12 @@ class ModerationQueueManager extends SingletonFactory {
 				LEFT JOIN	wcf".WCF_N."_moderation_queue moderation_queue
 				ON		(moderation_queue.queueID = moderation_queue_to_user.queueID)
 				WHERE		moderation_queue_to_user.userID = ?
+						AND moderation_queue_to_user.isAffected = ?
 						AND moderation_queue.status <> ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(
 				WCF::getUser()->userID,
+				1,
 				ModerationQueue::STATUS_DONE
 			));
 			$row = $statement->fetchArray();
@@ -292,10 +295,15 @@ class ModerationQueueManager extends SingletonFactory {
 	 * @param	array<integer>		$queueIDs
 	 */
 	public function removeOrphans(array $queueIDs) {
-		$queueAction = new ModerationQueueAction($queueIDs, 'markAsDone');
-		$queueAction->executeAction();
-		
-		$this->resetModerationCount();
+		if (!empty($queueIDs)) {
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("queueID IN (?)", array($queueIDs));
+			$sql = "DELETE FROM	wcf".WCF_N."_moderation_queue
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			$this->resetModerationCount();
+		}
 	}
 	
 	/**

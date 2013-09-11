@@ -7,8 +7,8 @@ use wcf\system\Regex;
 /**
  * Contains directory-related functions
  * 
- * @author	Tim Düsterhus
- * @copyright	2011 Tim Düsterhus
+ * @author	Tim Duesterhus
+ * @copyright	2011 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util
@@ -93,7 +93,7 @@ final class DirectoryUtil {
 	 * @return	wcf\util\DirectoryUtil
 	 */
 	public static function getInstance($tmpDirectory, $recursive = true) {
-		$directory = realpath(FileUtil::unifyDirSeperator($tmpDirectory));
+		$directory = realpath(FileUtil::unifyDirSeparator($tmpDirectory));
 		// realpath returns false if the directory does not exist
 		if ($directory === false) {
 			throw new SystemException("Unknown directory '".$tmpDirectory."'");
@@ -200,7 +200,7 @@ final class DirectoryUtil {
 				// ignore . and ..
 				if ($it->isDot()) continue;
 				
-				$this->files[FileUtil::unifyDirSeperator($filename)] = FileUtil::unifyDirSeperator($filename);
+				$this->files[FileUtil::unifyDirSeparator($filename)] = FileUtil::unifyDirSeparator($filename);
 			}
 		}
 		else {
@@ -208,7 +208,7 @@ final class DirectoryUtil {
 				// ignore . and ..
 				if ($this->obj->isDot()) continue;
 				
-				$this->files[FileUtil::unifyDirSeperator($obj->getFilename())] = FileUtil::unifyDirSeperator($obj->getFilename());
+				$this->files[FileUtil::unifyDirSeparator($obj->getFilename())] = FileUtil::unifyDirSeparator($obj->getFilename());
 			}
 		}
 		
@@ -230,7 +230,7 @@ final class DirectoryUtil {
 				// ignore . and ..
 				if ($it->isDot()) continue;
 				
-				$this->fileObjects[FileUtil::unifyDirSeperator($filename)] = $obj;
+				$this->fileObjects[FileUtil::unifyDirSeparator($filename)] = $obj;
 			}
 		}
 		else {
@@ -238,7 +238,7 @@ final class DirectoryUtil {
 				// ignore . and ..
 				if ($this->obj->isDot()) continue;
 				
-				$this->fileObjects[FileUtil::unifyDirSeperator($obj->getFilename())] = $obj;
+				$this->fileObjects[FileUtil::unifyDirSeparator($obj->getFilename())] = $obj;
 			}
 		}
 		

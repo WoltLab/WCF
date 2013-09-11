@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.group.'|concat:$action}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
@@ -28,6 +28,19 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
+			{if $action == 'edit' && $availableUserGroups|count > 1}
+				<li class="dropdown">
+					<a class="button dropdownToggle"><span class="icon icon16 icon-sort"></span> <span>{lang}wcf.acp.group.button.choose{/lang}</span></a>
+					<div class="dropdownMenu">
+						<ul class="scrollableDropdownMenu">
+							{foreach from=$availableUserGroups item='availableUserGroup'}
+								<li{if $availableUserGroup->groupID == $groupID} class="active"{/if}><a href="{link controller='UserGroupEdit' id=$availableUserGroup->groupID}{/link}">{lang}{$availableUserGroup->groupName}{/lang}</a></li>
+							{/foreach}
+						</ul>
+					</div>
+				</li>
+			{/if}
+			
 			<li><a href="{link controller='UserGroupList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
@@ -58,10 +71,24 @@
 				</dd>
 			</dl>
 			
+			<dl{if $errorType.groupDescription|isset} class="formError"{/if}>
+				<dt><label for="groupDescription">{lang}wcf.acp.group.description{/lang}</label></dt>
+				<dd>
+					<textarea id="groupDescription" name="groupDescription" cols="40" rows="3">{$i18nPlainValues['groupDescription']}</textarea>
+					{if $errorType.groupDescription|isset}
+						<small class="innerError">
+							{lang}wcf.acp.group.description.error.{@$errorType.groupDescription}{/lang}
+						</small>
+					{/if}
+					
+					{include file='multipleLanguageInputJavascript' elementIdentifier='groupDescription' forceSelection=false}
+				</dd>
+			</dl>
+			
 			<dl{if $errorType.priority|isset} class="formError"{/if}>
 				<dt><label for="priority">{lang}wcf.acp.group.priority{/lang}</label></dt>
 				<dd>
-					<input type="number" id="priority" name="priority" value="{@$priority}" class="tiny" />
+					<input type="number" id="priority" name="priority" value="{@$priority}" class="tiny" max="8388607" />
 					{if $errorType.priority|isset}
 						<small class="innerError">
 							{lang}wcf.acp.group.priority.error.{@$errorType.priority}{/lang}
@@ -88,6 +115,7 @@
 			
 			{if MODULE_TEAM_PAGE && ($action == 'add' || $group->groupType > 3)}
 				<dl>
+					<dt></dt>
 					<dd>
 						<label><input type="checkbox" id="showOnTeamPage" name="showOnTeamPage" value="1" {if $showOnTeamPage}checked="checked" {/if}/> {lang}wcf.acp.group.showOnTeamPage{/lang}</label>
 					</dd>

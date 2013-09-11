@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.poll
+ * @package	com.woltlab.wcf
  * @subpackage	system.poll
  * @category	Community Framework
  */
@@ -205,7 +205,7 @@ class PollManager extends SingletonFactory {
 		}
 		
 		// end time is in the past
-		if ($this->pollData['endTime'] != 0 && $this->pollData['endTime'] <= TIME_NOW) {
+		if ($this->pollData['endTime'] != 0 && $this->pollData['endTime'] <= TIME_NOW && ($this->poll === null || $this->poll->endTime != $this->pollData['endTime'])) {
 			throw new UserInputException('pollEndTime', 'notValid');
 		}
 		
@@ -213,6 +213,11 @@ class PollManager extends SingletonFactory {
 		$count = count($this->pollOptions);
 		if (!$count) {
 			throw new UserInputException('pollOptions');
+		}
+		
+		// too many options provided, discard superfluous options
+		if ($count > POLL_MAX_OPTIONS) {
+			$this->pollOptions = array_slice($this->pollOptions, 0, POLL_MAX_OPTIONS);
 		}
 		
 		// less options available than allowed

@@ -17,6 +17,7 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
+use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -25,7 +26,7 @@ use wcf\util\StringUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.comment
+ * @package	com.woltlab.wcf
  * @subpackage	data.comment
  * @category	Community Framework
  */
@@ -183,7 +184,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			'username' => WCF::getUser()->username,
 			'message' => $this->parameters['data']['message'],
 			'responses' => 0,
-			'lastResponseIDs' => serialize(array())
+			'responseIDs' => serialize(array())
 		));
 		
 		// update counter
@@ -246,15 +247,16 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		));
 		
 		// update response data
-		$lastResponseIDs = $this->comment->getLastResponseIDs();
-		if (count($lastResponseIDs) == 3) array_shift($lastResponseIDs);
-		$lastResponseIDs[] = $response->responseID;
+		$responseIDs = $this->comment->getResponseIDs();
+		if (count($responseIDs) < 3) {
+			$responseIDs[] = $response->responseID;
+		}
 		$responses = $this->comment->responses + 1;
 		
 		// update comment
 		$commentEditor = new CommentEditor($this->comment);
 		$commentEditor->update(array(
-			'lastResponseIDs' => serialize($lastResponseIDs),
+			'responseIDs' => serialize($responseIDs),
 			'responses' => $responses
 		));
 		
@@ -501,6 +503,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 */
 	protected function validateMessage() {
 		$this->readString('message', false, 'data');
+		$this->parameters['data']['message'] = MessageUtil::stripCrap($this->parameters['data']['message']);
 		
 		if (empty($this->parameters['data']['message'])) {
 			throw new UserInputException('message');

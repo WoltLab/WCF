@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.template.group.'|concat:$action}
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.template.group.{$action}{/lang}</h1>
@@ -32,7 +32,7 @@
 					<dt><label for="parentTemplateGroupID">{lang}wcf.acp.template.group.parentTemplateGroup{/lang}</label></dt>
 					<dd>
 						<select name="parentTemplateGroupID" id="parentTemplateGroupID">
-							<option value="0"></option>
+							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 							{foreach from=$availableTemplateGroups item=availableTemplateGroup}
 								<option value="{@$availableTemplateGroup->templateGroupID}"{if $availableTemplateGroup->templateGroupID == $parentTemplateGroupID} selected="selected"{/if}>{$availableTemplateGroup->templateGroupName}</option>
 							{/foreach}

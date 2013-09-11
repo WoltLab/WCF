@@ -1,6 +1,6 @@
 <a id="top"></a>
 
-<header id="pageHeader" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}">
+<header id="pageHeader" class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}{if $sidebarOrientation|isset && $sidebar|isset} sidebarOrientation{@$sidebarOrientation|ucfirst}{if $sidebarOrientation == 'right' && $sidebarCollapsed} sidebarCollapsed{/if}{/if}">
 	<div>
 		<nav id="topMenu" class="userPanel">
 			<div class="{if $__wcf->getStyleHandler()->getStyle()->getVariable('useFluidLayout')}layoutFluid{else}layoutFixed{/if}">
@@ -59,7 +59,7 @@
 					</aside>
 					
 					{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
-						<script type="text/javascript">
+						<script data-relocate="true">
 							//<![CDATA[
 							$(function() {
 								new WCF.Collapsible.Sidebar();
@@ -73,7 +73,7 @@
 			{if !$sidebarOrientation|isset || $sidebarOrientation == 'left'}
 				{@$__sidebar}
 			{/if} 
-					
+			
 			<section id="content" class="content">
 				
 				{event name='contents'}

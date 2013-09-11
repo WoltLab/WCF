@@ -1,7 +1,7 @@
 {include file='header'}
 
 {if $categoryNodeList->hasChildren()}
-	<script type="text/javascript">
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			{if $collapsibleObjectTypeID}

@@ -7,7 +7,7 @@ use wcf\system\Regex;
  * Database editor implementation for MySQL4.1 or higher.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.database.editor
@@ -33,16 +33,19 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 */
 	public function getColumns($tableName) {
 		$columns = array();
+		$regex = new Regex('([a-z]+)\(([0-9]+)\)', Regex::CASE_INSENSITIVE);
+		
 		$sql = "SHOW COLUMNS FROM ".$tableName;
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
 		while ($row = $statement->fetchArray()) {
-			$typeMatches = Regex::compile('([a-z]+)\(([0-9]+)\)', Regex::CASE_INSENSITIVE)->match($row['Type']);
-
+			$regex->match($row['Type']);
+			$typeMatches = $regex->getMatches();
+			
 			$columns[] = array('name' => $row['Field'], 'data' => array(
-				'type' => $typeMatches[1],
-				'length' => $typeMatches[2],
-				'notNull' => (($row['Null'] == 'YES') ? true : false),
+				'type' => ((empty($typeMatches)) ? $row['Type'] : $typeMatches[1]),
+				'length' => ((empty($typeMatches)) ? '' : $typeMatches[2]),
+				'notNull' => (($row['Null'] == 'YES') ? false : true),
 				'key' => (($row['Key'] == 'PRI') ? 'PRIMARY' : (($row['Key'] == 'UNI') ? 'UNIQUE' : '')),
 				'default' => $row['Default'],
 				'autoIncrement' => ($row['Extra'] == 'auto_increment' ? true : false)

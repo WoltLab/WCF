@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * @author	Tim Duesterhus
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	action
  * @category	Community Framework
  */
@@ -40,7 +40,7 @@ class FacebookAuthAction extends AbstractAction {
 		if (isset($_GET['code'])) {
 			try {
 				// fetch access_token
-				$request = new HTTPRequest('https://graph.facebook.com/oauth/access_token?client_id='.FACEBOOK_PUBLIC_KEY.'&redirect_uri='.rawurlencode($callbackURL).'&client_secret='.FACEBOOK_PRIVATE_KEY.'&code='.rawurlencode($_GET['code']));
+				$request = new HTTPRequest('https://graph.facebook.com/oauth/access_token?client_id='.StringUtil::trim(FACEBOOK_PUBLIC_KEY).'&redirect_uri='.rawurlencode($callbackURL).'&client_secret='.StringUtil::trim(FACEBOOK_PRIVATE_KEY).'&code='.rawurlencode($_GET['code']));
 				$request->execute();
 				$reply = $request->getReply();
 				
@@ -52,6 +52,7 @@ class FacebookAuthAction extends AbstractAction {
 			
 			// validate state, validation of state is executed after fetching the access_token to invalidate 'code'
 			if (!isset($_GET['state']) || $_GET['state'] != WCF::getSession()->getVar('__facebookInit')) throw new IllegalLinkException();
+			WCF::getSession()->unregister('__facebookInit');
 			
 			parse_str($content, $data);
 			
@@ -96,6 +97,7 @@ class FacebookAuthAction extends AbstractAction {
 				}
 			}
 			else {
+				WCF::getSession()->register('__3rdPartyProvider', 'facebook');
 				// save data for connection
 				if (WCF::getUser()->userID) {
 					WCF::getSession()->register('__facebookUsername', $userData['name']);
@@ -106,7 +108,7 @@ class FacebookAuthAction extends AbstractAction {
 				// save data and redirect to registration
 				else {
 					WCF::getSession()->register('__username', $userData['name']);
-					WCF::getSession()->register('__email', $userData['email']);
+					if (isset($userData['email'])) WCF::getSession()->register('__email', $userData['email']);
 					WCF::getSession()->register('__facebookData', $userData);
 					
 					// we assume that bots won't register on facebook first
@@ -128,7 +130,7 @@ class FacebookAuthAction extends AbstractAction {
 		// start auth by redirecting to facebook
 		$token = StringUtil::getRandomID();
 		WCF::getSession()->register('__facebookInit', $token);
-		HeaderUtil::redirect("https://www.facebook.com/dialog/oauth?client_id=".FACEBOOK_PUBLIC_KEY. "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=email,user_about_me,user_birthday,user_interests,user_location,user_website");
+		HeaderUtil::redirect("https://www.facebook.com/dialog/oauth?client_id=".StringUtil::trim(FACEBOOK_PUBLIC_KEY). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=email,user_about_me,user_birthday,user_interests,user_location,user_website");
 		$this->executed();
 		exit;
 	}

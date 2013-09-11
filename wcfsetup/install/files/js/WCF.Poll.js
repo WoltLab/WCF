@@ -21,18 +21,33 @@ WCF.Poll.Management = Class.extend({
 	_container: null,
 	
 	/**
+	 * number of options
+	 * @var	integer
+	 */
+	_count: 0,
+	
+	/**
 	 * width for input-elements
 	 * @var	integer
 	 */
 	_inputSize: 0,
 	
 	/**
+	 * maximum allowed number of options
+	 * @var	integer
+	 */
+	_maxOptions: 0,
+	
+	/**
 	 * Initializes the WCF.Poll.Management class.
 	 * 
 	 * @param	string		containerID
 	 * @param	array<object>	optionList
+	 * @param	integer		maxOptions
 	 */
-	init: function(containerID, optionList) {
+	init: function(containerID, optionList, maxOptions) {
+		this._count = 0;
+		this._maxOptions = maxOptions || -1;
 		this._container = $('#' + containerID).children('ol:eq(0)');
 		if (!this._container.length) {
 			console.debug("[WCF.Poll.Management] Invalid container id given, aborting.");
@@ -104,13 +119,18 @@ WCF.Poll.Management = Class.extend({
 		$('<span class="icon icon16 icon-remove jsTooltip jsDeleteOption pointer" title="' + WCF.Language.get('wcf.poll.button.removeOption') + '" />').click($.proxy(this._removeOption, this)).appendTo($buttonContainer);
 		
 		// insert input field
-		var $input = $('<input type="text" value="' + optionValue + '" />').css({ width: this._inputSize + "px" }).keydown($.proxy(this._keyDown, this)).appendTo($listItem);
+		var $input = $('<input type="text" value="' + optionValue + '" maxlength="255" />').css({ width: this._inputSize + "px" }).keydown($.proxy(this._keyDown, this)).appendTo($listItem);
 		
 		if (insertAfter !== null) {
 			$input.focus();
 		}
 		
 		WCF.DOMNodeInsertedHandler.execute();
+		
+		this._count++;
+		if (this._count === this._maxOptions) {
+			this._container.find('span.jsAddOption').removeClass('pointer').addClass('disabled');
+		}
 	},
 	
 	/**
@@ -138,6 +158,10 @@ WCF.Poll.Management = Class.extend({
 	 * @param	object		event
 	 */
 	_addOption: function(event) {
+		if (this._count === this._maxOptions) {
+			return false;
+		}
+		
 		var $listItem = $(event.currentTarget).parents('li');
 		
 		this._createOption(undefined, undefined, $listItem);
@@ -150,6 +174,9 @@ WCF.Poll.Management = Class.extend({
 	 */
 	_removeOption: function(event) {
 		$(event.currentTarget).parents('li').remove();
+		
+		this._count--;
+		this._container.find('span.jsAddOption').addClass('pointer').removeClass('disabled');
 		
 		if (this._container.children('li').length == 0) {
 			this._createOption();
@@ -199,7 +226,7 @@ WCF.Poll.Management = Class.extend({
 			
 			for (var $i = 0, $length = $options.length; $i < $length; $i++) {
 				var $option = $options[$i];
-				$('<input type="hidden" name="pollOptions[' + $i + ']" value="' + $option.optionID + '_' + $option.optionValue + '" />').appendTo($formSubmit);
+				$('<input type="hidden" name="pollOptions[' + $i + ']" />').val($option.optionID + '_' + $option.optionValue).appendTo($formSubmit);
 			}
 		}
 	}

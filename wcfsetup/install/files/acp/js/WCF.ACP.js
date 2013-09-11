@@ -69,7 +69,9 @@ WCF.ACP.Application.SetAsPrimary = Class.extend({
 				$('#setAsPrimary').parent().remove();
 				
 				// insert icon
-				$('<span class="icon icon16 icon-home jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($('.boxHeadline > h1'));
+				$headline = $('.boxHeadline > h1');
+				$headline.html($headline.html() + ' ');
+				$('<span class="icon icon16 icon-ok-sign jsTooltip" title="' + WCF.Language.get('wcf.acp.application.primaryApplication') + '" />').appendTo($headline);
 				
 				WCF.DOMNodeInsertedHandler.execute();
 			}, this)
@@ -423,6 +425,11 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * Handles erroneous AJAX requests.
 	 */
 	_failure: function() {
+		if (this._dialog !== null) {
+			$('#packageInstallationProgress').removeAttr('value');
+			this._setIcon('remove');
+		}
+		
 		if (!this._allowRollback) {
 			return;
 		}
@@ -445,6 +452,8 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	object		event
 	 */
 	_rollback: function(event) {
+		this._setIcon('spinner');
+		
 		if (event) {
 			$(event.currentTarget).disable();
 		}
@@ -490,6 +499,8 @@ WCF.ACP.Package.Installation = Class.extend({
 			});
 		}
 		
+		this._setIcon('spinner');
+		
 		if (data.step == 'rollback') {
 			this._dialog.wcfDialog('close');
 			this._dialog.remove();
@@ -528,14 +539,22 @@ WCF.ACP.Package.Installation = Class.extend({
 		
 		// handle success
 		if (data.step === 'success') {
+			this._setIcon('ok');
+			
 			this._purgeTemplateContent($.proxy(function() {
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
-				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() {
+				var $button = $('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click(function() {
 					$(this).disable();
 					window.location = data.redirectLocation;
 				});
 				
 				$('#packageInstallationInnerContentContainer').show();
+				
+				$(document).keydown(function(event) {
+					if (event.which === $.ui.keyCode.ENTER) {
+						$button.trigger('click');
+					}
+				});
 				
 				this._dialog.wcfDialog('render');
 			}, this));
@@ -547,19 +566,22 @@ WCF.ACP.Package.Installation = Class.extend({
 		if (data.innerTemplate) {
 			var self = this;
 			$('#packageInstallationInnerContent').html(data.innerTemplate).find('input').keyup(function(event) {
-				if (event.keyCode === 13) { // Enter
+				if (event.keyCode === $.ui.keyCode.ENTER) {
 					self._submit(data);
 				}
 			});
 			
 			// create button to handle next step
 			if (data.step && data.node) {
+				$('#packageInstallationProgress').removeAttr('value');
+				this._setIcon('question');
+				
 				var $form = $('<div class="formSubmit" />').appendTo($('#packageInstallationInnerContent'));
 				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($form).click($.proxy(function(event) {
 					$(event.currentTarget).disable();
 					
 					this._submit(data);
-				}, this)); 
+				}, this));
 			}
 			
 			$('#packageInstallationInnerContentContainer').show();
@@ -588,39 +610,39 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	object		data
 	 */
 	_submit: function(data) {
+		this._setIcon('spinner');
+		
 		// collect form values
 		var $additionalData = {};
 		$('#packageInstallationInnerContent input').each(function(index, inputElement) {
 			var $inputElement = $(inputElement);
 			var $type = $inputElement.attr('type');
 			
-			if (($type == 'checkbox' || $type == 'radio') && !$inputElement.prop('checked')) {
-				return false;
-			}
-			
-			var $name = $inputElement.attr('name');
-			if ($name.match(/(.*)\[([^[]*)\]$/)) {
-				$name = RegExp.$1;
-				$key = RegExp.$2;
-				
-				if ($additionalData[$name] === undefined) {
+			if (($type != 'checkbox' && $type != 'radio') || $inputElement.prop('checked')) {
+				var $name = $inputElement.attr('name');
+				if ($name.match(/(.*)\[([^[]*)\]$/)) {
+					$name = RegExp.$1;
+					$key = RegExp.$2;
+					
+					if ($additionalData[$name] === undefined) {
+						if ($key) {
+							$additionalData[$name] = { };
+						}
+						else {
+							$additionalData[$name] = [ ];
+						}
+					}
+					
 					if ($key) {
-						$additionalData[$name] = { };
+						$additionalData[$name][$key] = $inputElement.val();
 					}
 					else {
-						$additionalData[$name] = [ ];
+						$additionalData[$name].push($inputElement.val());
 					}
 				}
-				
-				if ($key) {
-					$additionalData[$name][$key] = $inputElement.val();
-				}
 				else {
-					$additionalData[$name].push($inputElement.val());
+					$additionalData[$name] = $inputElement.val();
 				}
-			}
-			else {
-				$additionalData[$name] = $inputElement.val();
 			}
 		});
 		
@@ -665,6 +687,15 @@ WCF.ACP.Package.Installation = Class.extend({
 		
 		this._proxy.setOption('data', $data);
 		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Sets the icon with the given name as the current installation status icon.
+	 * 
+	 * @param	string		iconName
+	 */
+	_setIcon: function(iconName) {
+		this._dialog.find('.jsPackageInstallationStatus').removeClass('icon-ok icon-question icon-remove icon-spinner').addClass('icon-' + iconName);
 	}
 });
 
@@ -699,6 +730,7 @@ WCF.ACP.Package.Installation.Cancel = Class.extend({
  * Provides the package uninstallation.
  * 
  * @param	jQuery		elements
+ * @param	string		wcfPackageListURL
  */
 WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	/**
@@ -714,13 +746,21 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	_packageID: 0,
 	
 	/**
+	 * URL of WCF package list
+	 * @var	string
+	 */
+	_wcfPackageListURL: '',
+	
+	/**
 	 * Initializes the WCF.ACP.Package.Uninstallation class.
 	 * 
 	 * @param	jQuery		elements
+	 * @param	string		wcfPackageListURL
 	 */
-	init: function(elements) {
+	init: function(elements, wcfPackageListURL) {
 		this._elements = elements;
 		this._packageID = 0;
+		this._wcfPackageListURL = wcfPackageListURL;
 		
 		if (this._elements !== undefined && this._elements.length) {
 			this._super(0, 'UninstallPackage');
@@ -788,6 +828,11 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	 * @param	jQuery		element
 	 */
 	_showConfirmationDialog: function(element) {
+		if (element.data('isApplication') && this._wcfPackageListURL) {
+			window.location = WCF.String.unescapeHTML(this._wcfPackageListURL.replace(/{packageID}/, element.data('objectID')));
+			return;
+		}
+		
 		var self = this;
 		WCF.System.Confirmation.show(element.data('confirmMessage'), function(action) {
 			if (action === 'confirm') {
@@ -1123,9 +1168,9 @@ WCF.ACP.Package.Search = Class.extend({
 	 */
 	_prepareInstallation: function(packageUpdateServerID) {
 		var $parameters = {
-			'package': { }
+			'packages': { }
 		};
-		$parameters['package'][this._selectedPackage] = this._selectedPackageVersion;
+		$parameters['packages'][this._selectedPackage] = this._selectedPackageVersion;
 		
 		if (packageUpdateServerID) {
 			$parameters.authData = {
@@ -1286,6 +1331,8 @@ WCF.ACP.Package.Update.Manager = Class.extend({
 		}, this));
 		
 		if ($.getLength($packages)) {
+			this._submitButton.disable();
+			
 			var $parameters = {
 				packages: $packages
 			};
@@ -1363,7 +1410,7 @@ WCF.ACP.Package.Update.Manager = Class.extend({
 		}
 		
 		if ($continue) {
-			this._click(undefined, $(event.currentTarget).data('packageUpdateServerID'))
+			this._click(undefined, $(event.currentTarget).data('packageUpdateServerID'));
 		}
 	}
 });
@@ -1385,7 +1432,7 @@ WCF.ACP.Package.Update.Search = Class.extend({
 		this._dialog = null;
 		
 		var $button = $('<li><a class="button"><span class="icon icon16 icon-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
-		$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav > ul'));
+		$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav:not(.pageNavigation) > ul'));
 	},
 	
 	/**
@@ -1573,118 +1620,21 @@ WCF.ACP.Options = Class.extend({
 });
 
 /**
- * Single-option handling for user group options.
- * 
- * @param	boolean		canEditEveryone
- */
-WCF.ACP.Options.Group = Class.extend({
-	/**
-	 * true, if user can edit the 'Everyone' group
-	 * @var	boolean
-	 */
-	_canEditEveryone: false,
-	
-	/**
-	 * Initializes the WCF.ACP.Options.Group class.
-	 * 
-	 * @param	boolean		canEditEveryone
-	 */
-	init: function(canEditEveryone) {
-		// disable 'Everyone' input
-		this._canEditEveryone = (canEditEveryone === true) ? true : false;
-		var $defaultContainer = $('#defaultValueContainer');
-		var $defaultValue = $defaultContainer.find('input, textarea').attr('id', 'optionValue' + $defaultContainer.children('dl').data('groupID')).removeAttr('name');
-		if (!this._canEditEveryone) {
-			$defaultValue.attr('disabled', 'disabled');
-		}
-		
-		// fix id and remove name-attribute from input elements
-		$('#otherValueContainer > dl').each(function(index, container) {
-			var $container = $(container);
-			$container.find('input, textarea').removeAttr('name').attr('id', 'optionValue' + $container.data('groupID'));
-		});
-		
-		// bind event listener
-		$('#submitButton').click($.proxy(this._click, this));
-	},
-	
-	/**
-	 * Handles clicks on the submit button.
-	 */
-	_click: function() {
-		var $values = { };
-		
-		// collect default value
-		if (this._canEditEveryone) {
-			var $container = $('#defaultValueContainer > dl');
-			
-			var $value = this._getValue($container);
-			if ($value !== null) {
-				$values[$container.data('groupID')] = $value;
-			}
-		}
-		
-		// collect values from other groups
-		var self = this;
-		$('#otherValueContainer > dl').each(function(index, container) {
-			var $container = $(container);
-			
-			var $value = self._getValue($container);
-			if ($value !== null) {
-				$values[$container.data('groupID')] = $value;
-			}
-		});
-		
-		var $form = $('#defaultValueContainer').parent('form');
-		var $formSubmit = $form.children('.formSubmit');
-		for (var $groupID in $values) {
-			$('<input type="hidden" name="values[' + $groupID + ']" value="' + $values[$groupID] + '" />').appendTo($formSubmit);
-		}
-		
-		// disable submit button
-		$('#submitButton').attr('disable', 'disable');
-		
-		$form.submit();
-	},
-	
-	/**
-	 * Returns the value of an input or textarea.
-	 * 
-	 * @param	jQuery		container
-	 * @return	string
-	 */
-	_getValue: function(container) {
-		var $textarea = container.find('textarea');
-		if ($textarea.length) {
-			return $textarea.val();
-		}
-		else {
-			var $input = container.find('input');
-			if (!$input.length) {
-				return null;
-			}
-			
-			if ($input.attr('type') == 'checkbox') {
-				if ($input.is(':checked')) {
-					return 1;
-				}
-				
-				return 0;
-			}
-			
-			return $input.val();
-		}
-	}
-});
-
-/**
  * Worker support for ACP.
  * 
  * @param	string		dialogID
  * @param	string		className
- * @param	object		options
+ * @param	string		title
+ * @param	object		parameters
+ * @param	object		callback
  */
 WCF.ACP.Worker = Class.extend({
+	/**
+	 * callback invoked after worker completed
+	 * @var	object
+	 */
+	_callback: null,
+	
 	/**
 	 * dialog id
 	 * @var	string
@@ -1716,8 +1666,10 @@ WCF.ACP.Worker = Class.extend({
 	 * @param	string		className
 	 * @param	string		title
 	 * @param	object		parameters
+	 * @param	object		callback
 	 */
-	init: function(dialogID, className, title, parameters) {
+	init: function(dialogID, className, title, parameters, callback) {
+		this._callback = callback || null;
 		this._dialogID = dialogID + 'Worker';
 		this._dialog = null;
 		this._proxy = new WCF.Action.Proxy({
@@ -1766,6 +1718,9 @@ WCF.ACP.Worker = Class.extend({
 				parameters: data.parameters
 			});
 			this._proxy.sendRequest();
+		}
+		else if (this._callback !== null) {
+			this._callback(this, data);
 		}
 		else {
 			// display continue button
@@ -1859,6 +1814,11 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 	init: function() {
 		this._className = 'wcf\\data\\acp\\search\\provider\\ACPSearchProviderAction';
 		this._super('#search input[name=q]');
+		
+		// disable form submitting
+		$('#search > form').on('submit', function(event) {
+			event.preventDefault();
+		});
 	},
 	
 	/**
@@ -1877,7 +1837,7 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 		for (var $i in resultList.items) {
 			var $item = resultList.items[$i];
 			
-			$('<li><a href="' + $item.link + '">' + $item.title + '</a></li>').appendTo(this._list);
+			$('<li><a href="' + $item.link + '">' + WCF.String.escapeHTML($item.title) + '</a></li>').appendTo(this._list);
 			
 			this._itemCount++;
 		}
@@ -2153,3 +2113,152 @@ WCF.ACP.User.EnableHandler = {
 	}
 };
 
+/**
+ * Namespace for import-related classes.
+ */
+WCF.ACP.Import = { };
+
+/**
+ * Importer for ACP.
+ * 
+ * @param	array<string>	objectTypes
+ */
+WCF.ACP.Import.Manager = Class.extend({
+	/**
+	 * current action
+	 * @var	string
+	 */
+	_currentAction: '',
+	
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * current object type index
+	 * @var	integer
+	 */
+	_index: -1,
+	
+	/**
+	 * list of object types
+	 * @var	array<string>
+	 */
+	_objectTypes: [ ],
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * redirect URL
+	 * @var	string
+	 */
+	_redirectURL: '',
+	
+	/**
+	 * Initializes the WCF.ACP.Importer object.
+	 * 
+	 * @param	array<string>	objectTypes
+	 * @param	string		redirectURL
+	 */
+	init: function(objectTypes, redirectURL) {
+		this._currentAction = '';
+		this._index = -1;
+		this._objectTypes = objectTypes;
+		this._proxy = new WCF.Action.Proxy({
+			showLoadingOverlay: false,
+			success: $.proxy(this._success, this),
+			url: 'index.php/WorkerProxy/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+		});
+		this._redirectURL = redirectURL;
+		
+		this._invoke();
+	},
+	
+	/**
+	 * Invokes importing of an object type.
+	 */
+	_invoke: function() {
+		this._index++;
+		if (this._index >= this._objectTypes.length) {
+			this._dialog.find('.icon-spinner').removeClass('icon-spinner').addClass('icon-ok');
+			this._dialog.find('h1').text(WCF.Language.get('wcf.acp.dataImport.completed'));
+			
+			var $form = $('<div class="formSubmit" />').appendTo(this._dialog.find('#workerContainer'));
+			$('<button>' + WCF.Language.get('wcf.global.button.next') + '</button>').click($.proxy(function() {
+				window.location = this._redirectURL;
+			}, this)).appendTo($form);
+			
+			this._dialog.wcfDialog('render');
+		}
+		else {
+			this._run(
+				WCF.Language.get('wcf.acp.dataImport.data.' + this._objectTypes[this._index]),
+				this._objectTypes[this._index]
+			);
+		}
+	},
+	
+	/**
+	 * Executes import of given object type.
+	 * 
+	 * @param	string		currentAction
+	 * @param	string		objectType
+	 */
+	_run: function(currentAction, objectType) {
+		this._currentAction = currentAction;
+		this._proxy.setOption('data', {
+			className: 'wcf\\system\\worker\\ImportWorker',
+			parameters: {
+				objectType: objectType
+			}
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Handles response from server.
+	 * 
+	 * @param	object		data
+	 */
+	_success: function(data) {
+		// init binding
+		if (this._dialog === null) {
+			this._dialog = $('<div />').hide().appendTo(document.body);
+			this._dialog.wcfDialog({
+				closable: false,
+				title: WCF.Language.get('wcf.acp.dataImport')
+			});
+		}
+		
+		if (data.template) {
+			this._dialog.html(data.template);
+		}
+		
+		if (this._currentAction) {
+			this._dialog.find('h1').text(this._currentAction);
+		}
+		
+		// update progress
+		this._dialog.find('progress').attr('value', data.progress).text(data.progress + '%').next('span').text(data.progress + '%');
+		
+		// worker is still busy with it's business, carry on
+		if (data.progress < 100) {
+			// send request for next loop
+			this._proxy.setOption('data', {
+				className: data.className,
+				loopCount: data.loopCount,
+				parameters: data.parameters
+			});
+			this._proxy.sendRequest();
+		}
+		else {
+			this._invoke();
+		}
+	}
+});

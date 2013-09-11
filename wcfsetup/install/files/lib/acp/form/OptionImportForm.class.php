@@ -12,7 +12,7 @@ use wcf\util\XML;
  * Shows the option import form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -63,24 +63,11 @@ class OptionImportForm extends AbstractForm {
 			}
 			
 			try {
-				$xml = new XML($this->optionImport['tmp_name']);
-				$optionsXML = $xml->getElementTree('options');
-				foreach ($optionsXML['children'] as $option) {
-					$name = $value = '';
-					foreach ($option['children'] as $optionData) {
-						switch ($optionData['name']) {
-							case 'name':
-								$name = $optionData['cdata'];
-								break;
-							case 'value':
-								$value = $optionData['cdata'];
-								break;
-						}
-					}
-					
-					if (!empty($name)) {
-						$this->options[$name] = $value;
-					}
+				$xml = new XML();
+				$xml->load($this->optionImport['tmp_name']);
+				$xpath = $xml->xpath();
+				foreach ($xpath->query('/options/option') as $option) {
+					$this->options[$xpath->query('name', $option)->item(0)->nodeValue] = $xpath->query('value', $option)->item(0)->nodeValue;
 				}
 			}
 			catch (SystemException $e) {

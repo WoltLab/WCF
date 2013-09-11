@@ -62,7 +62,7 @@ class TemplateAddForm extends AbstractForm {
 	 * template's package id
 	 * @var integer
 	 */
-	public $packageID = PACKAGE_ID;
+	public $packageID = 1;
 	
 	/**
 	 * id of copied template

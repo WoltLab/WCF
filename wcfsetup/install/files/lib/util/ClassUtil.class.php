@@ -5,8 +5,8 @@ use wcf\system\exception\SystemException;
 /**
  * Provides methods for class interactions.
  * 
- * @author	Tim Düsterhus, Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @author	Tim Duesterhus, Alexander Ebert
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	util

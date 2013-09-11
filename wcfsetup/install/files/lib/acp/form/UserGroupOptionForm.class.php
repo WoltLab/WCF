@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * Shows the user group option form to edit a single option.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -28,24 +28,6 @@ class UserGroupOptionForm extends AbstractForm {
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.group';
-	
-	/**
-	 * true, if user can edit the 'everyone' group
-	 * @var	boolean
-	 */
-	public $canEditEveryone = false;
-	
-	/**
-	 * form element for default value
-	 * @var	string
-	 */
-	public $defaultFormElement = '';
-	
-	/**
-	 * default value for every group
-	 * @var	mixed
-	 */
-	public $defaultValue = null;
 	
 	/**
 	 * list of parsed form elements per group
@@ -60,12 +42,6 @@ class UserGroupOptionForm extends AbstractForm {
 	public $groups = array();
 	
 	/**
-	 * 'Everyone' user group object
-	 * @var	wcf\data\user\group\UserGroup
-	 */
-	public $groupEveryone = null;
-	
-	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditGroup');
@@ -75,6 +51,12 @@ class UserGroupOptionForm extends AbstractForm {
 	 * @var	wcf\system\option\user\group\IUserGroupOptionType
 	 */
 	public $optionType = null;
+	
+	/**
+	 * list of parent categories
+	 * @var	array<wcf\data\user\group\option\category\UserGroupOptionCategory>
+	 */
+	public $parentCategories = array();
 	
 	/**
 	 * list of values per user group
@@ -124,6 +106,7 @@ class UserGroupOptionForm extends AbstractForm {
 					throw new PermissionDeniedException();
 				}
 				
+				array_unshift($this->parentCategories, $category);
 				$category = ($category->parentCategoryName != '') ? $categories[$category->parentCategoryName] : null;
 			}
 		}
@@ -131,8 +114,8 @@ class UserGroupOptionForm extends AbstractForm {
 			throw new PermissionDeniedException();
 		}
 		
-		// validate accessible groups
-		$this->readAccessibleGroups();
+		// read accessible groups
+		$this->groups = UserGroup::getAccessibleGroups();
 		if (empty($this->groups)) {
 			throw new PermissionDeniedException();
 		}
@@ -146,47 +129,24 @@ class UserGroupOptionForm extends AbstractForm {
 	}
 	
 	/**
+	 * @see	wcf\form\IForm::readFormParameters()
+	 */
+	public function readFormParameters() {
+		parent::readFormParameters();
+		
+		if (isset($_POST['values']) && is_array($_POST['values'])) $this->values = $_POST['values'];
+	}
+	
+	/**
 	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
 		
-		if (isset($_POST['values']) && is_array($_POST['values'])) $this->values = $_POST['values'];
-		if (empty($this->values)) {
-			throw new IllegalLinkException();
-		}
-		
-		if (!$this->canEditEveryone) {
-			$sql = "SELECT	optionValue
-				FROM	wcf".WCF_N."_user_group_option_value
-				WHERE	optionID = ?
-					AND groupID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
-				$this->userGroupOption->optionID,
-				$this->groupEveryone->groupID
-			));
-			$row = $statement->fetchArray();
-			$this->defaultValue = $row['optionValue'];
-		}
-		else {
-			if (!isset($this->values[$this->groupEveryone->groupID])) {
-				throw new IllegalLinkException();
-			}
-			
-			$this->defaultValue = $this->values[$this->groupEveryone->groupID];
-		}
-		
+		// validate option values
 		foreach ($this->values as $groupID => $optionValue) {
 			if (!isset($this->groups[$groupID])) {
-				if ($groupID == $this->groupEveryone->groupID) {
-					if (!$this->canEditEveryone) {
-						throw new PermissionDeniedException();
-					}
-				}
-				else {
-					throw new PermissionDeniedException();
-				}
+				throw new PermissionDeniedException();
 			}
 			
 			try {
@@ -195,15 +155,13 @@ class UserGroupOptionForm extends AbstractForm {
 			catch (UserInputException $e) {
 				$this->errorType[$e->getField()] = $e->getType();
 			}
-			
-			// check if not editing default value
-			if ($groupID != $this->groupEveryone->groupID) {
-				$newValue = $this->optionType->diff($this->defaultValue, $optionValue);
-				if ($newValue === null) {
-					unset($this->values[$groupID]);
-				}
-				else {
-					$this->values[$groupID] = $newValue;
+		}
+		
+		// add missing values for option type 'boolean'
+		if ($this->userGroupOption->optionType == 'boolean') {
+			foreach ($this->groups as $groupID => $group) {
+				if (!isset($this->values[$groupID])) {
+					$this->values[$groupID] = 0;
 				}
 			}
 		}
@@ -220,11 +178,9 @@ class UserGroupOptionForm extends AbstractForm {
 		parent::readData();
 		
 		if (empty($_POST)) {
-			// read values for accessible user groups
-			$groupIDs = array_merge(array_keys($this->groups), array($this->groupEveryone->groupID));
-			
+			// read values of accessible user groups
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("groupID IN (?)", array($groupIDs));
+			$conditions->add("groupID IN (?)", array(array_keys($this->groups)));
 			$conditions->add("optionID = ?", array($this->userGroupOption->optionID));
 			
 			$sql = "SELECT	groupID, optionValue
@@ -233,22 +189,13 @@ class UserGroupOptionForm extends AbstractForm {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
-				// exclude default value from $values
-				if ($row['groupID'] == $this->groupEveryone->groupID) {
-					$this->defaultValue = $row['optionValue'];
-					continue;
-				}
-				
 				$this->values[$row['groupID']] = $row['optionValue'];
 			}
 		}
 		
-		// create form element for default group
-		$this->defaultFormElement = $this->optionType->getFormElement($this->userGroupOption, $this->defaultValue);
-		
 		// create form elements for each group
 		foreach ($this->groups as $group) {
-			$optionValue = (isset($this->values[$group->groupID])) ? $this->values[$group->groupID] : $this->defaultValue;
+			$optionValue = (isset($this->values[$group->groupID])) ? $this->values[$group->groupID] : $this->userGroupOption->defaultValue;
 			$this->formElements[$group->groupID] = $this->optionType->getFormElement($this->userGroupOption, $optionValue);
 		}
 	}
@@ -275,37 +222,12 @@ class UserGroupOptionForm extends AbstractForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'canEditEveryone' => $this->canEditEveryone,
-			'defaultFormElement' => $this->defaultFormElement,
-			'defaultValue' => $this->defaultValue,
 			'formElements' => $this->formElements,
-			'groupEveryone' => $this->groupEveryone,
 			'groups' => $this->groups,
+			'parentCategories' => $this->parentCategories,
 			'userGroupOption' => $this->userGroupOption,
 			'values' => $this->values
 		));
-	}
-	
-	/**
-	 * Reads accessible user groups.
-	 */
-	protected function readAccessibleGroups() {
-		$this->groups = UserGroup::getAccessibleGroups();
-		$this->canEditEveryone = false;
-		foreach ($this->groups as $groupID => $group) {
-			if ($group->groupType == UserGroup::EVERYONE) {
-				$this->canEditEveryone = true;
-				
-				// remove 'Everyone' from groups
-				$this->groupEveryone = $group;
-				unset($this->groups[$groupID]);
-			}
-		}
-		
-		// add 'Everyone' group
-		if (!$this->canEditEveryone) {
-			$this->groupEveryone = UserGroup::getGroupByType(UserGroup::EVERYONE);
-		}
 	}
 	
 	/**

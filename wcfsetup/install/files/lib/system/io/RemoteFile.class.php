@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * The RemoteFile class opens a connection to a remote host as a file.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io
@@ -49,7 +49,7 @@ class RemoteFile extends File {
 		$this->host = $host;
 		$this->port = $port;
 		
-		$this->resource = fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout);
+		$this->resource = @fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout);
 		if ($this->resource === false) {
 			throw new SystemException('Can not connect to ' . $host, 0, $this->errorDesc);
 		}

@@ -3,7 +3,7 @@
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.template.group.list{/lang}</h1>
 	
-	<script type="text/javascript">
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			new WCF.Action.Delete('wcf\\data\\template\\group\\TemplateGroupAction', '.jsTemplateGroupRow');

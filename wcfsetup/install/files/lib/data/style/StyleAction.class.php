@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * Executes style-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.style
@@ -156,7 +156,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		$variables = array();
 		while ($row = $statement->fetchArray()) {
 			$variableName = $row['variableName'];
-				
+			
 			// ignore variables with identical value
 			if (isset($this->parameters['variables'][$variableName])) {
 				if ($this->parameters['variables'][$variableName] == $row['defaultValue']) {
@@ -182,7 +182,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 						(styleID, variableID, variableValue)
 				VALUES		(?, ?, ?)";
 			$statement = WCF::getDB()->prepareStatement($sql);
-				
+			
 			WCF::getDB()->beginTransaction();
 			foreach ($variables as $variableID => $variableValue) {
 				$statement->execute(array(
@@ -425,7 +425,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		// copy preview image
 		if ($this->styleEditor->image) {
 			// get extension
-			$fileExtension = StringUtil::substring($this->styleEditor->image, StringUtil::lastIndexOf($this->styleEditor->image, '.'));
+			$fileExtension = mb_substr($this->styleEditor->image, mb_strrpos($this->styleEditor->image, '.'));
 			
 			// copy existing preview image
 			if (@copy(WCF_DIR.'images/'.$this->styleEditor->image, WCF_DIR.'images/stylePreview-'.$newStyle->styleID.$fileExtension)) {

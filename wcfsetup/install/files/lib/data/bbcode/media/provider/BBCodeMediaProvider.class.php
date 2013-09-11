@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * @author	Tim Duesterhus
  * @copyright	2011-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @package	com.woltlab.wcf
  * @subpackage	data.bbcode.media.provider
  * @category	Community Framework
  */
@@ -93,7 +93,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 			
 			$output = $this->html;
 			foreach ($regex->getMatches() as $name => $value) {
-				$output = StringUtil::replace('{$'.$name.'}', $value, $output);
+				$output = str_replace('{$'.$name.'}', $value, $output);
 			}
 			return $output;
 		}

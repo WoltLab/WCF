@@ -2,6 +2,7 @@
 namespace wcf\form;
 use wcf\data\smiley\SmileyCache;
 use wcf\system\attachment\AttachmentHandler;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\BBCodeParser;
 use wcf\system\bbcode\PreParser;
 use wcf\system\exception\UserInputException;
@@ -16,9 +17,9 @@ use wcf\util\StringUtil;
  * MessageForm is an abstract form implementation for a message with optional captcha suppport.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.message
+ * @package	com.woltlab.wcf
  * @subpackage	form
  * @category	Community Framework
  */
@@ -229,7 +230,7 @@ abstract class MessageForm extends RecaptchaForm {
 			throw new UserInputException('subject');
 		}
 		
-		if (StringUtil::length($this->subject) > 255) {
+		if (mb_strlen($this->subject) > 255) {
 			throw new UserInputException('subject', 'tooLong');
 		}
 		
@@ -252,7 +253,7 @@ abstract class MessageForm extends RecaptchaForm {
 		}
 		
 		// check text length
-		if ($this->maxTextLength != 0 && StringUtil::length($this->text) > $this->maxTextLength) {
+		if ($this->maxTextLength != 0 && mb_strlen($this->text) > $this->maxTextLength) {
 			throw new UserInputException('text', 'tooLong');
 		}
 		
@@ -348,6 +349,10 @@ abstract class MessageForm extends RecaptchaForm {
 			if ($firstCategory) {
 				$this->defaultSmilies = SmileyCache::getInstance()->getCategorySmilies($firstCategory->categoryID ?: null);
 			}
+		}
+		
+		if ($this->enableBBCodes && $this->allowedBBCodesPermission) {
+			BBCodeHandler::getInstance()->setAllowedBBCodes(explode(',', WCF::getSession()->getPermission($this->allowedBBCodesPermission)));
 		}
 	}
 	

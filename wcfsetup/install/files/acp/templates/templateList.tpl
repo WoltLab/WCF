@@ -1,6 +1,6 @@
 {include file='header' pageTitle="wcf.acp.template.list"}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\template\\TemplateAction', '.jsTemplateRow');
@@ -28,7 +28,7 @@
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.global.filter{/lang}</legend>
-		
+			
 			<dl>
 				<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
 				<dd>
@@ -71,7 +71,8 @@
 	{assign var='linkParameters' value=''}
 	{if $templateGroupID}{capture append=linkParameters}&templateGroupID={@$templateGroupID}{/capture}{/if}
 	{if $searchTemplateName}{capture append=linkParameters}&searchTemplateName={@$searchTemplateName|rawurlencode}{/capture}{/if}
-		
+	{if $application}{capture append=linkParameters}&application={$application}{/capture}{/if}
+	
 	{pages print=true assign=pagesLinks controller="TemplateList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 	
 	<nav>
@@ -117,7 +118,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$template->templateID}</td>
-						<td class="columnTitle columnTemplateName">{if $template->application != 'wcf'}[{$template->application}] {/if}{if $template->templateGroupID}<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}">{$template->templateName}</a>{else}{$template->templateName}{/if}</td>
+						<td class="columnTitle columnTemplateName">{if $template->application != 'wcf'}<span class="badge label">{$template->application}</span> {/if}{if $template->templateGroupID}<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}">{$template->templateName}</a>{else}{$template->templateName}{/if}</td>
 						<td class="columnDate columnLastModificationTime">{@$template->lastModificationTime|time}</td>
 						
 						{event name='columns'}
@@ -125,7 +126,6 @@
 				{/foreach}
 			</tbody>
 		</table>
-		
 	</div>
 	
 	<div class="contentNavigation">
@@ -134,7 +134,7 @@
 		<nav>
 			<ul>
 				<li><a href="{link controller='TemplateAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.template.add{/lang}</span></a></li>
-			
+				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>

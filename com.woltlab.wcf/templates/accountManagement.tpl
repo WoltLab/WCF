@@ -67,6 +67,7 @@
 				</dl>
 				
 				<dl>
+					<dt></dt>
 					<dd>
 						<ul class="buttonList">
 							<li><a class="button small" href="{link controller='LostPassword'}{/link}"><span>{lang}wcf.user.lostPassword{/lang}</span></a></li>
@@ -177,6 +178,7 @@
 				
 				{if REGISTER_ACTIVATION_METHOD == 1 && $__wcf->getUser()->reactivationCode != 0}
 					<dl>
+						<dt></dt>
 						<dd>
 							<ul class="buttonList">
 								<li><a class="button small" href="{link controller='EmailActivation'}{/link}"><span>{lang}wcf.user.emailActivation{/lang}</span></a></li>
@@ -193,12 +195,14 @@
 				
 				{if $quitStarted}
 					<dl>
+						<dt></dt>
 						<dd>
 							<label><input type="checkbox" name="cancelQuit" value="1" {if $cancelQuit == 1}checked="checked" {/if}/> {lang}wcf.user.quit.cancel{/lang}</label>
 						</dd>
 					</dl>
 				{else}
 					<dl>
+						<dt></dt>
 						<dd>
 							<label><input type="checkbox" name="quit" value="1" {if $quit == 1}checked="checked" {/if}/> {lang}wcf.user.quit.sure{/lang}</label>
 							<small>{lang}wcf.user.quit.description{/lang}</small>
@@ -222,7 +226,7 @@
 								<label><input type="checkbox" name="{@$__authProvider}Disconnect" value="1" /> {lang}wcf.user.3rdparty.{@$__authProvider}.disconnect{/lang}</label>
 							</dd>
 						</dl>
-					{else if !$__wcf->getUser()->hasAdministrativeAccess()}
+					{elseif !$__wcf->getUser()->hasAdministrativeAccess()}
 						{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
 							<dl>
 								<dt>{lang}wcf.user.3rdparty.github{/lang}</dt>

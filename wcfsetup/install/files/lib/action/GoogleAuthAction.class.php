@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * @author	Tim Duesterhus
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	action
  * @category	Community Framework
  */
@@ -44,8 +44,8 @@ class GoogleAuthAction extends AbstractAction {
 				// fetch access_token
 				$request = new HTTPRequest('https://accounts.google.com/o/oauth2/token', array(), array(
 					'code' => $_GET['code'],
-					'client_id' => GOOGLE_PUBLIC_KEY,
-					'client_secret' => GOOGLE_PRIVATE_KEY,
+					'client_id' => StringUtil::trim(GOOGLE_PUBLIC_KEY),
+					'client_secret' => StringUtil::trim(GOOGLE_PRIVATE_KEY),
 					'redirect_uri' => $callbackURL,
 					'grant_type' => 'authorization_code'
 				));
@@ -60,6 +60,7 @@ class GoogleAuthAction extends AbstractAction {
 			
 			// validate state, validation of state is executed after fetching the access_token to invalidate 'code'
 			if (!isset($_GET['state']) || $_GET['state'] != WCF::getSession()->getVar('__googleInit')) throw new IllegalLinkException();
+			WCF::getSession()->unregister('__googleInit');
 			
 			$data = JSON::decode($content);
 			
@@ -105,6 +106,8 @@ class GoogleAuthAction extends AbstractAction {
 				}
 			}
 			else {
+				WCF::getSession()->register('__3rdPartyProvider', 'google');
+				
 				// save data for connection
 				if (WCF::getUser()->userID) {
 					WCF::getSession()->register('__googleUsername', $userData['name']);
@@ -138,7 +141,7 @@ class GoogleAuthAction extends AbstractAction {
 		// start auth by redirecting to google
 		$token = StringUtil::getRandomID();
 		WCF::getSession()->register('__googleInit', $token);
-		HeaderUtil::redirect("https://accounts.google.com/o/oauth2/auth?client_id=".rawurlencode(GOOGLE_PUBLIC_KEY). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email&response_type=code");
+		HeaderUtil::redirect("https://accounts.google.com/o/oauth2/auth?client_id=".rawurlencode(StringUtil::trim(GOOGLE_PUBLIC_KEY)). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email&response_type=code");
 		$this->executed();
 		exit;
 	}

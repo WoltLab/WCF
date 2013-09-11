@@ -1,12 +1,12 @@
 <base href="{$baseHref}" />
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="format-detection" content="telephone=no" />
 {if $allowSpidersToIndexThisPage|empty}<meta name="robots" content="noindex,nofollow" />{/if} 
 {implode from=$__wcf->getMetaTagHandler() item=__metaTag glue="\n"}{@$__metaTag}{/implode}
 {event name='metaTags'}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	var SID_ARG_2ND	= '{@SID_ARG_2ND_NOT_ENCODED}';
 	var WCF_PATH = '{@$__wcf->getPath()}';
@@ -16,44 +16,48 @@
 	//]]>
 </script>
 {if JQUERY_SOURCE == 'google'}
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script data-relocate="true" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
+<script data-relocate="true" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 {elseif JQUERY_SOURCE == 'microsoft'}
-<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
-<script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+<script data-relocate="true" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.1.min.js"></script>
+<script data-relocate="true" src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
 {elseif JQUERY_SOURCE == 'cloudflare'}
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
+<script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 {else}
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"></script>
 {/if}
 {if JQUERY_SOURCE != 'local'}
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	if (!window.jQuery) {
-		document.write('<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"><\/script>');
-		document.write('<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"><\/script>');
+		document.write('<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"><\/script>');
+		document.write('<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"><\/script>');
 	}
 	//]]>
 </script>
 {/if}
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript">
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true">
 	//<![CDATA[
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 	//]]>
 </script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.Like{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath('wcf')}js/WCF.Like{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 {event name='javascriptInclude'}
 
 <!-- Stylesheets -->
 {@$__wcf->getStyleHandler()->getStylesheet()}
 {event name='stylesheets'}
+
+<!-- Icons -->
+<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon.ico" />
+<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png" />
 
 <noscript>
 	<style type="text/css">
@@ -67,7 +71,7 @@
 	</style>
 </noscript>
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
@@ -82,6 +86,7 @@
 			'wcf.date.relative.pastDays': '{capture assign=relativePastDays}{lang}wcf.date.relative.pastDays{/lang}{/capture}{@$relativePastDays|encodeJS}',
 			'wcf.date.dateFormat': '{lang}wcf.date.dateFormat{/lang}',
 			'wcf.date.dateTimeFormat': '{lang}wcf.date.dateTimeFormat{/lang}',
+			'wcf.date.shortDateTimeFormat': '{lang}wcf.date.shortDateTimeFormat{/lang}',
 			'wcf.date.hour': '{lang}wcf.date.hour{/lang}',
 			'wcf.date.minute': '{lang}wcf.date.minute{/lang}',
 			'wcf.date.timeFormat': '{lang}wcf.date.timeFormat{/lang}',
@@ -107,6 +112,8 @@
 			'wcf.global.error.timeout': '{lang}wcf.global.error.timeout{/lang}',
 			'wcf.global.error.title': '{lang}wcf.global.error.title{/lang}',
 			'wcf.global.form.error.empty': '{lang}wcf.global.form.error.empty{/lang}',
+			'wcf.global.form.error.greaterThan': '{lang}wcf.global.form.error.greaterThan.javaScript{/lang}',
+			'wcf.global.form.error.lessThan': '{lang}wcf.global.form.error.lessThan.javaScript{/lang}',
 			'wcf.global.language.noSelection': '{lang}wcf.global.language.noSelection{/lang}',
 			'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 			'wcf.global.page.jumpTo': '{lang}wcf.global.page.jumpTo{/lang}',
@@ -165,7 +172,7 @@
 	//]]>
 </script>
  <!--[IF IE 9]>
- <script type="text/javascript">
+ <script data-relocate="true">
  	$(function() {
  		function fixButtonTypeIE9() {
  			$('button').each(function(index, button) {

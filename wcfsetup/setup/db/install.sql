@@ -197,11 +197,11 @@ DROP TABLE IF EXISTS wcf1_category;
 CREATE TABLE wcf1_category (
 	categoryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	objectTypeID INT(10) NOT NULL,
-	parentCategoryID INT(10) NOT NULL,
+	parentCategoryID INT(10) NOT NULL DEFAULT 0,
 	title VARCHAR(255) NOT NULL,
 	description TEXT,
-	showOrder INT(10) NOT NULL,
-	time INT(10) NOT NULL,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	time INT(10) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	additionalData TEXT
 );
@@ -249,7 +249,7 @@ CREATE TABLE wcf1_comment (
 	username VARCHAR(255) NOT NULL,
 	message TEXT NOT NULL,
 	responses MEDIUMINT(7) NOT NULL DEFAULT '0',
-	lastResponseIDs VARCHAR(255) NOT NULL DEFAULT '',
+	responseIDs VARCHAR(255) NOT NULL DEFAULT '',
 	
 	KEY (objectTypeID, objectID, time)
 );
@@ -334,12 +334,21 @@ CREATE TABLE wcf1_event_listener (
 	UNIQUE KEY packageID (packageID, environment, eventClassName, eventName, listenerClassName)
 );
 
+DROP TABLE IF EXISTS wcf1_import_mapping;
+CREATE TABLE wcf1_import_mapping (
+	importHash CHAR(8) NOT NULL,
+	objectTypeID INT(10) NOT NULL,
+	oldID VARCHAR(255) NOT NULL,
+	newID INT(10) NOT NULL,
+	UNIQUE KEY (importHash, objectTypeID, oldID)
+);
+
 DROP TABLE IF EXISTS wcf1_label;
 CREATE TABLE wcf1_label (
 	labelID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	groupID INT(10) NOT NULL,
 	label VARCHAR(80) NOT NULL,
-	cssClassName VARCHAR(255) NOT NULL
+	cssClassName VARCHAR(255) NOT NULL DEFAULT ''
 );
 
 DROP TABLE IF EXISTS wcf1_label_group;
@@ -603,8 +612,7 @@ CREATE TABLE wcf1_package_installation_queue (
 	archive VARCHAR(255) NOT NULL DEFAULT '',
 	action ENUM('install', 'update', 'uninstall') NOT NULL DEFAULT 'install',
 	done TINYINT(1) NOT NULL DEFAULT 0,
-	confirmInstallation TINYINT(1) NOT NULL DEFAULT 0,
-	packageType ENUM('default', 'requirement', 'optional') NOT NULL DEFAULT 'default'
+	isApplication TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_package_installation_sql_log;
@@ -767,7 +775,7 @@ CREATE TABLE wcf1_search_index (
 	time INT(10) NOT NULL DEFAULT 0,
 	userID INT(10),
 	username VARCHAR(255) NOT NULL DEFAULT '',
-	languageID INT(10),
+	languageID INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY (objectTypeID, objectID, languageID),
 	FULLTEXT INDEX fulltextIndex (subject, message, metaData),
 	FULLTEXT INDEX fulltextIndexSubjectOnly (subject),
@@ -1011,18 +1019,9 @@ CREATE TABLE wcf1_user_activity_point (
 	userID INT(10) NOT NULL,
 	objectTypeID INT(10) NOT NULL,
 	activityPoints INT(10) NOT NULL DEFAULT 0,
+	items INT(10) NOT NULL DEFAULT 0,
 	PRIMARY KEY (userID, objectTypeID),
 	KEY (objectTypeID)
-);
-
-DROP TABLE IF EXISTS wcf1_user_activity_point_event;
-CREATE TABLE wcf1_user_activity_point_event (
-	eventID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	objectTypeID INT(10) NOT NULL,
-	objectID INT(10) NOT NULL,
-	userID INT(10) NOT NULL,
-	additionalData TEXT,
-	UNIQUE KEY (objectTypeID, userID, objectID)
 );
 
 DROP TABLE IF EXISTS wcf1_user_avatar;
@@ -1059,6 +1058,7 @@ DROP TABLE IF EXISTS wcf1_user_group;
 CREATE TABLE wcf1_user_group (
 	groupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	groupName VARCHAR(255) NOT NULL DEFAULT '',
+	groupDescription TEXT,
 	groupType TINYINT(1) NOT NULL DEFAULT 4,
 	priority MEDIUMINT(8) NOT NULL DEFAULT 0,
 	userOnlineMarking VARCHAR(255) NOT NULL DEFAULT '%s',
@@ -1073,7 +1073,6 @@ CREATE TABLE wcf1_user_group_option (
 	categoryName VARCHAR(255) NOT NULL DEFAULT '',
 	optionType VARCHAR(255) NOT NULL DEFAULT '',
 	defaultValue MEDIUMTEXT,
-	adminDefaultValue MEDIUMTEXT,
 	validationPattern TEXT,
 	enableOptions MEDIUMTEXT,
 	showOrder INT(10) NOT NULL DEFAULT 0,
@@ -1443,6 +1442,8 @@ ALTER TABLE wcf1_dashboard_box ADD FOREIGN KEY (packageID) REFERENCES wcf1_packa
 ALTER TABLE wcf1_dashboard_option ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_dashboard_option ADD FOREIGN KEY (boxID) REFERENCES wcf1_dashboard_box (boxID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_import_mapping ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_tracked_visit ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_tracked_visit ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
@@ -1488,9 +1489,6 @@ ALTER TABLE wcf1_user_activity_event ADD FOREIGN KEY (languageID) REFERENCES wcf
 
 ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
-
-ALTER TABLE wcf1_user_activity_point_event ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
-ALTER TABLE wcf1_user_activity_point_event ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (ownerID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
@@ -1555,9 +1553,9 @@ INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group5
 INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group6', 4);
 
 -- default user group options
-INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, adminDefaultValue, showOrder) VALUES ('admin.general.canUseAcp', 'admin.general', 'boolean', '0', '1', 1);
-INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, adminDefaultValue, showOrder) VALUES ('admin.system.package.canInstallPackage', 'admin.system.package', 'boolean', '0', '1', 1);
-INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, adminDefaultValue, showOrder) VALUES ('admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', '1', 1);
+INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, showOrder) VALUES ('admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1);
+INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, showOrder) VALUES ('admin.system.package.canInstallPackage', 'admin.system.package', 'boolean', '0', 1);
+INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, showOrder) VALUES ('admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', 1);
 
 -- default user group option values
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (1, 1, '0');	-- Everyone
@@ -1609,7 +1607,8 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputHo
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfInputBorderRadius', '0');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfBaseFontSize', '13px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfBaseFontFamily', '"Trebuchet MS", Arial, sans-serif');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutFluidGap', '30px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutMinWidth', '980px');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutMaxWidth', '90%');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfLayoutFixedWidth', '1200px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageBackgroundColor', 'rgba(224, 224, 224, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageColor', 'rgba(102, 102, 102, 1)');
@@ -1626,10 +1625,10 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdow
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownBorderColor', '@wcfContainerBorderColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownHoverBackgroundColor', '@wcfContainerHoverBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfBaseLineHeight', '1.28');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeadlineFontSize', '170%');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSubHeadlineFontSize', '140%');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTitleFontSize', '120%');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSmallFontSize', '85%');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfHeadlineFontSize', '1.7rem');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSubHeadlineFontSize', '1.4rem');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTitleFontSize', '1.2rem');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSmallFontSize', '.85rem');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfWarningColor', 'rgba(153, 153, 0, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfWarningBackgroundColor', 'rgba(255, 255, 221, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfWarningBorderColor', 'rgba(204, 204, 0, 1)');
@@ -1662,8 +1661,8 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDeleted
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDeletedColor', 'rgba(204, 0, 0, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledBackgroundColor', 'rgba(238, 255, 238, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDisabledColor', 'rgba(0, 153, 0, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextShadowLightColor', 'rgba(255, 255, 255, .8)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextShadowDarkColor', 'rgba(0, 0, 0, .8)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextShadowLightColor', 'transparent');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTextShadowDarkColor', 'transparent');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('useFluidLayout', '1');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('pageLogo', '');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualLess', '');

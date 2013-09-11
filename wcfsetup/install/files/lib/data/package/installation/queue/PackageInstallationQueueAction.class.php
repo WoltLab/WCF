@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Executes package installation queue-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.package.installation.queue
@@ -83,13 +83,9 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 		
 		// validate queue
 		$this->queue = $this->getSingleObject();
-		if ($this->queue->parentQueueID || $this->queue->action != 'install' || $this->queue->done) {
+		if ($this->queue->parentQueueID || $this->queue->done) {
 			throw new UserInputException('objectIDs');
 		}
-		
-		// todo: do confirmInstallation and packageType need validation?
-		// see https://github.com/WoltLab/WCF/issues/1329
-		// see https://github.com/WoltLab/WCF/issues/1330
 		
 		if ($this->queue->userID != WCF::getUser()->userID) {
 			throw new PermissionDeniedException();

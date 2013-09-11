@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Image adapter for ImageMagick imaging library.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.image.adapter
@@ -134,7 +134,6 @@ class ImagickImageAdapter implements IImageAdapter {
 	public function setColor($red, $green, $blue) {
 		$this->color = new \ImagickPixel();
 		$this->color->setColor('rgb('.$red.','.$green.','.$blue.')');
-		
 	}
 	
 	/**
@@ -146,6 +145,14 @@ class ImagickImageAdapter implements IImageAdapter {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * @see wcf\system\image\adapter\IImageAdapter::setTransparentColor()
+	 */
+	public function setTransparentColor($red, $green, $blue) {
+		$color = 'rgb(' . $red . ',' . $green . ',' . $blue . ')';
+		$this->imagick->paintTransparentImage($color, 0.0, 0);
 	}
 	
 	/**

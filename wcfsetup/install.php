@@ -35,7 +35,7 @@ $neededFilesPattern = array(
 /**
  * WCF::handleException() calls the show method on exceptions that implement this interface.
  *
- * @package	com.woltlab.wcf.system.exception
+ * @package	com.woltlab.wcf
  * @author	Marcel Werk
  */
 interface IPrintableException {
@@ -48,7 +48,7 @@ interface IPrintableException {
 /**
  * A SystemException is thrown when an unexpected error occurs.
  *
- * @package	com.woltlab.wcf.system.exception
+ * @package	com.woltlab.wcf
  * @author	Marcel Werk
  */
 class SystemException extends \Exception implements IPrintableException {
@@ -219,7 +219,7 @@ function handleError($errorNo, $message, $filename, $lineNo) {
 /**
  * BasicFileUtil contains file-related functions.
  *
- * @package	com.woltlab.wcf.util
+ * @package	com.woltlab.wcf
  * @author	Marcel Werk
  */
 class BasicFileUtil {
@@ -273,7 +273,7 @@ class BasicFileUtil {
 			return $path . '/';
 		}
 	
-		$path = WCF_DIR.'tmp/';
+		$path = INSTALL_SCRIPT_DIR.'tmp/';
 		if (@file_exists($path) && @is_writable($path)) {
 			return $path;
 		}
@@ -313,6 +313,8 @@ class BasicFileUtil {
 				self::$mode = 0777;
 			}
 			else {
+				clearstatcache();
+				
 				self::$mode = 0666;
 				
 				$tmpFilename = '__permissions_'.sha1(time()).'.txt';
@@ -616,7 +618,14 @@ class Tar {
 
 		// Extract the values
 		//$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor", $binaryData);
-		$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix", $binaryData);
+		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
+			$format = 'Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/Z32uname/Z32gname/Z8devmajor/Z8devminor/Z155prefix';
+		}
+		else {
+			$format = 'a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix';
+		}
+		
+		$data = unpack($format, $binaryData);
 		
 		// Extract the properties
 		$header['checksum'] = octDec(trim($data['checksum']));

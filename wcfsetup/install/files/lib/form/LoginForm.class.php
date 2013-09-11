@@ -13,7 +13,7 @@ use wcf\util\UserUtil;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	form
  * @category	Community Framework
  */
@@ -94,12 +94,12 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	 * Gets the redirect url.
 	 */
 	protected function checkURL() {
-		if (empty($this->url) || StringUtil::indexOf($this->url, 'index.php/Login/') !== false) {
+		if (empty($this->url) || mb_strpos($this->url, 'index.php/Login/') !== false) {
 			$this->url = LinkHandler::getInstance()->getLink();
 		}
 		// append missing session id
 		else if (SID_ARG_1ST != '' && !preg_match('/(?:&|\?)s=[a-z0-9]{40}/', $this->url)) {
-			if (StringUtil::indexOf($this->url, '?') !== false) $this->url .= SID_ARG_2ND_NOT_ENCODED;
+			if (mb_strpos($this->url, '?') !== false) $this->url .= SID_ARG_2ND_NOT_ENCODED;
 			else $this->url .= SID_ARG_1ST;
 		}
 	}

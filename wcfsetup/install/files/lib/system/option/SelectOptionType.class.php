@@ -8,7 +8,7 @@ use wcf\util\StringUtil;
  * Option type implementation for select lists.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -57,7 +57,7 @@ class SelectOptionType extends RadioButtonOptionType {
 				foreach ($optionData as $item) {
 					if ($item{0} == '!') {
 						if (!empty($disableOptions)) $disableOptions .= ',';
-						$disableOptions .= "{ value: '".$key."', option: '".StringUtil::substring($item, 1)."' }";
+						$disableOptions .= "{ value: '".$key."', option: '".mb_substr($item, 1)."' }";
 					}
 					else {
 						if (!empty($enableOptions)) $enableOptions .= ',';

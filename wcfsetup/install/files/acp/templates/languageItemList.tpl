@@ -1,7 +1,7 @@
 {include file='header' pageTitle="wcf.acp.language.item.list"}
 
-<script type="text/javascript" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Language.js?v={@$__wcfVersion}"></script>
-<script type="text/javascript">
+<script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Language.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.ACP.Language.ItemList();
@@ -33,7 +33,7 @@
 				<dt><label for="languageCategoryID">{lang}wcf.acp.language.category{/lang}</label></dt>
 				<dd>
 					<select name="languageCategoryID" id="languageCategoryID">
-						<option value="0"></option>
+						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 						{foreach from=$availableLanguageCategories item=availableLanguageCategory}
 							<option value="{@$availableLanguageCategory->languageCategoryID}"{if $availableLanguageCategory->languageCategoryID == $languageCategoryID} selected="selected"{/if}>{$availableLanguageCategory->languageCategory}</option>
 						{/foreach}
@@ -56,6 +56,7 @@
 			</dl>
 			
 			<dl>
+				<dt></dt>
 				<dd>
 					<label><input type="checkbox" name="hasCustomValue" value="1" {if $hasCustomValue == 1}checked="checked" {/if}/> {lang}wcf.acp.language.item.customValues{/lang}</label>
 				</dd>

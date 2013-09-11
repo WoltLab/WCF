@@ -43,7 +43,7 @@
 					<dl>
 						<dt><label>{lang}wcf.user.language{/lang}</label></dt>
 						<dd id="languageIDContainer">
-							<script type="text/javascript">
+							<script data-relocate="true">
 								//<![CDATA[
 								$(function() {
 									var $languages = {
@@ -94,7 +94,7 @@
 						<dt><label for="styleID">{lang}wcf.user.style{/lang}</label></dt>
 						<dd>
 							<select id="styleID" name="styleID">
-								<option value="0"></option>
+								<option value="0">{lang}wcf.global.defaultValue{/lang}</option>
 								{foreach from=$availableStyles item=style}
 									<option value="{@$style->styleID}"{if $style->styleID == $styleID} selected="selected"{/if}>{$style->styleName}</option>
 								{/foreach}

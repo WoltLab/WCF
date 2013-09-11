@@ -9,7 +9,7 @@
 	</ul>
 </div>
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({

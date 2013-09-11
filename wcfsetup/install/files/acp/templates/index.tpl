@@ -1,6 +1,6 @@
 {include file='header'}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
@@ -20,6 +20,10 @@
 
 {if $inRescueMode}
 	<p style="background-color: rgb(255, 153, 153); border: 2px solid rgb(255, 0, 0); padding: 1em;">{lang}wcf.acp.index.inRescueMode{/lang}</p>
+{/if}
+
+{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
+	<p class="info">{lang}wcf.global.availableUpdates{/lang}</p>
 {/if}
 
 {if $usersAwaitingApproval}
@@ -47,7 +51,7 @@
 				<a class="twitter-timeline" href="https://twitter.com/woltlab" data-chrome="nofooter transparent" data-widget-id="335166618281865217">Tweets by @woltlab</a>
 			{/if}
 			{literal}
-				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+				<script data-relocate="true">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			{/literal}
 		</div>
 	{/if}
@@ -155,10 +159,12 @@
 			</dl>
 			
 			<dl>
+				<dt></dt>
 				<dd>Copyright &copy; 2001-2013 WoltLab&reg; GmbH. All rights reserved.</dd>
 			</dl>
 			
 			<dl>
+				<dt></dt>
 				<dd>{lang}wcf.acp.index.credits.trademarks{/lang}</dd>
 			</dl>
 		</fieldset>

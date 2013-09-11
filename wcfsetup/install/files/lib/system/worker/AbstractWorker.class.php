@@ -5,7 +5,7 @@ namespace wcf\system\worker;
  * Abstract implementation of a worker.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.worker
@@ -16,7 +16,7 @@ abstract class AbstractWorker implements IWorker {
 	 * count of total actions (limited by $limit per loop)
 	 * @var	integer
 	 */
-	protected $count = 0;
+	protected $count = null;
 	
 	/**
 	 * limit of actions per loop
@@ -67,7 +67,7 @@ abstract class AbstractWorker implements IWorker {
 		
 		$progress = (($this->limit * ($this->loopCount + 1)) / $this->count) * 100;
 		if ($progress > 100) $progress = 100;
-		return round($progress, 0);
+		return floor($progress);
 	}
 	
 	/**

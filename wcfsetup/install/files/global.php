@@ -6,6 +6,12 @@
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
+// ignore direct access
+if (!defined('PACKAGE_ID')) {
+	@header("HTTP/1.0 404 Not Found");
+	exit;
+}
+
 // define the wcf-root-dir
 define('WCF_DIR', dirname(__FILE__).'/');
 

@@ -44,9 +44,8 @@ class LinkHandler extends SingletonFactory {
 		$abbreviation = 'wcf';
 		$anchor = '';
 		$isACP = $originIsACP = RequestHandler::getInstance()->isACPRequest();
-		$isRaw = false;
+		$encodeTitle = $forceWCF = $isRaw = false;
 		$appendSession = true;
-		$encodeTitle = false;
 		if (isset($parameters['application'])) {
 			$abbreviation = $parameters['application'];
 			unset($parameters['application']);
@@ -74,6 +73,12 @@ class LinkHandler extends SingletonFactory {
 				$appendSession = false;
 			}
 			unset($parameters['forceFrontend']);
+		}
+		if (isset($parameters['forceWCF'])) {
+			if ($parameters['forceWCF'] && $isACP) {
+				$forceWCF = true;
+			}
+			unset($parameters['forceWCF']);
 		}
 		if (isset($parameters['encodeTitle'])) {
 			$encodeTitle = $parameters['encodeTitle'];
@@ -110,13 +115,16 @@ class LinkHandler extends SingletonFactory {
 				$parameters['id'] = $parameters['object']->getObjectID();
 				$parameters['title'] = $parameters['object']->getTitle();
 			}
-			
-			unset($parameters['object']);
 		}
+		unset($parameters['object']);
 		
 		if (isset($parameters['title'])) {
 			// remove illegal characters
 			$parameters['title'] = trim($this->titleRegex->replace($parameters['title'], '-'), '-');
+			
+			// trim to 80 characters
+			$parameters['title'] = mb_substr($parameters['title'], 0, 80);
+			
 			// encode title
 			if ($encodeTitle) $parameters['title'] = rawurlencode($parameters['title']);
 		}
@@ -129,7 +137,7 @@ class LinkHandler extends SingletonFactory {
 		
 		// encode certain characters
 		if (!empty($url)) {
-			$url = StringUtil::replace(array('[', ']'), array('%5B', '%5D'), $url);
+			$url = str_replace(array('[', ']'), array('%5B', '%5D'), $url);
 		}
 		
 		$url = $routeURL . $url;
@@ -155,7 +163,10 @@ class LinkHandler extends SingletonFactory {
 				}
 				
 				// fallback to primary application if abbreviation is 'wcf' or unknown
-				if ($application === null) {
+				if ($forceWCF) {
+					$application = ApplicationHandler::getInstance()->getWCF();
+				}
+				else if ($application === null) {
 					$application = ApplicationHandler::getInstance()->getPrimaryApplication();
 				}
 				

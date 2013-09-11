@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the page menu item edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -71,7 +71,12 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 			$this->isDisabled = ($this->menuItem->isDisabled) ? true : false;
 			$this->isInternalLink = ($this->menuItem->menuItemController) ? true : false;
 			$this->menuItemController = $this->menuItem->menuItemController;
-			$this->menuItemLink = $this->menuItem->menuItemLink;
+			if ($this->isInternalLink) {
+				$this->menuItemParameters = $this->menuItem->menuItemLink;
+			}
+			else {
+				$this->menuItemLink = $this->menuItem->menuItemLink;
+			}
 			$this->menuPosition = $this->menuItem->menuPosition;
 			$this->pageMenuItem = $this->menuItem->menuItem;
 			$this->parentMenuItem = $this->menuItem->parentMenuItem;
@@ -102,7 +107,7 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 		$this->objectAction = new PageMenuItemAction(array($this->menuItem), 'update', array('data' => array(
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'menuItemController' => $this->menuItemController,
-			'menuItemLink' => $this->menuItemLink,
+			'menuItemLink' => ($this->menuItemController ? $this->menuItemParameters : $this->menuItemLink),
 			'parentMenuItem' => ($this->menuPosition == 'header' ? $this->parentMenuItem : ''),
 			'menuPosition' => $this->menuPosition,
 			'showOrder' => $this->showOrder

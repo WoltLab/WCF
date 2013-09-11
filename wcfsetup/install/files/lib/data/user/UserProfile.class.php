@@ -24,7 +24,7 @@ use wcf\util\StringUtil;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	data.user
  * @category	Community Framework
  */
@@ -296,7 +296,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * @return	boolean
 	 */
 	public function isOnline() {
-		if ($this->lastActivityTime && $this->lastActivityTime > (TIME_NOW - USER_ONLINE_TIMEOUT) && $this->canViewOnlineStatus()) {
+		if ($this->getLastActivityTime() > (TIME_NOW - USER_ONLINE_TIMEOUT) && $this->canViewOnlineStatus()) {
 			return true;
 		}
 		return false;
@@ -404,7 +404,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		// save case sensitive usernames
 		$caseSensitiveUsernames = array();
 		foreach ($usernames as &$username) {
-			$tmp = StringUtil::toLowerCase($username);
+			$tmp = mb_strtolower($username);
 			$caseSensitiveUsernames[$tmp] = $username;
 			$username = $tmp;
 		}
@@ -413,7 +413,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		// check cache
 		foreach ($usernames as $index => $username) {
 			foreach (self::$userProfiles as $user) {
-				if (StringUtil::toLowerCase($user->username) === $username) {
+				if (mb_strtolower($user->username) === $username) {
 					$users[$username] = $user;
 					unset($usernames[$index]);
 				}
@@ -426,7 +426,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 			$userList->readObjects();
 			
 			foreach ($userList as $user) {
-				$users[StringUtil::toLowerCase($user->username)] = $user;
+				$users[mb_strtolower($user->username)] = $user;
 				self::$userProfiles[$user->userID] = $user;
 			}
 			
@@ -671,7 +671,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 			return '';
 		}
 		
-		return StringUtil::substring($this->authData, 0, StringUtil::indexOf($this->authData, ':'));
+		return mb_substr($this->authData, 0, mb_strpos($this->authData, ':'));
 	}
 	
 	/**

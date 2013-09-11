@@ -5,13 +5,19 @@ namespace wcf\system\form\element;
  * Provides a checkbox form element.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.form.element
  * @category	Community Framework
  */
 class MultipleSelectionFormElement extends AbstractNamedFormElement {
+	/**
+	 * message displayed if the input is disabled
+	 * @var	string
+	 */
+	protected $disabledMessage = '';
+	
 	/**
 	 * @see	wcf\system\form\element\AbstractNamedFormElement::setValue()
 	 */
@@ -25,11 +31,36 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 	}
 	
 	/**
+	 * Sets message displayed if input should be disabled.
+	 * 
+	 * @param	string		$message
+	 */
+	public function setDisabledMessage($message) {
+		$this->disabledMessage = $message;
+	}
+	
+	/**
+	 * @see	wcf\system\form\element\AbstractNamedFormElement::getDescription()
+	 */
+	public function getDescription() {
+		if ($this->disabledMessage) {
+			return $this->disabledMessage;
+		}
+		
+		return parent::getDescription();
+	}
+	
+	/**
 	 * @see	wcf\system\form\IFormElement::getHTML()
 	 */
 	public function getHTML($formName) {
+		$disabled = '';
+		if ($this->disabledMessage) {
+			$disabled = ' disabled="disabled"';
+		}
+		
 		return <<<HTML
-<label><input type="checkbox" name="{$formName}{$this->getParent()->getName()}[]" value="{$this->getValue()}" /> {$this->getLabel()}</label>
+<label><input type="checkbox" name="{$formName}{$this->getParent()->getName()}[]" value="{$this->getValue()}"{$disabled} /> {$this->getLabel()}</label>
 <small>{$this->getDescription()}</small>
 HTML;
 	}

@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.dashboard.option'}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
@@ -77,7 +77,7 @@
 				<button data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 			</div>
 			
-			<script type="text/javascript">
+			<script data-relocate="true">
 				//<![CDATA[
 				$(function() {
 					new WCF.Sortable.List('dashboard-content', 'wcf\\data\\dashboard\\box\\DashboardBoxAction', 0, { }, true, { boxType: 'content', objectTypeID: {@$objectTypeID} });
@@ -125,7 +125,7 @@
 				<button data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 			</div>
 			
-			<script type="text/javascript">
+			<script data-relocate="true">
 				//<![CDATA[
 				$(function() {
 					new WCF.Sortable.List('dashboard-sidebar', 'wcf\\data\\dashboard\\box\\DashboardBoxAction', 0, { }, true, { boxType: 'sidebar', objectTypeID: {@$objectTypeID} });

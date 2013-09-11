@@ -147,8 +147,8 @@ class Package extends DatabaseObject {
 			return false;
 		}
 		
-		// disallow uninstallation of WCF and applications if not within WCF ACP
-		if ($this->package == 'com.woltlab.wcf' || ($this->isApplication && PACKAGE_ID != 1)) {
+		// disallow uninstallation of WCF
+		if ($this->package == 'com.woltlab.wcf') {
 			return false;
 		}
 		
@@ -178,6 +178,17 @@ class Package extends DatabaseObject {
 		}
 		
 		return $this->dependentPackages;
+	}
+	
+	/**
+	 * Overwrites current package version.
+	 * 
+	 * DO NOT call this method outside the package installation!
+	 * 
+	 * @param	string		$packageVersion
+	 */
+	public function setPackageVersion($packageVersion) {
+		$this->data['packageVersion'] = $packageVersion;
 	}
 	
 	/**
@@ -274,10 +285,10 @@ class Package extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function checkFromversion($currentVersion, $fromversion) {
-		if (StringUtil::indexOf($fromversion, '*') !== false) {
+		if (mb_strpos($fromversion, '*') !== false) {
 			// from version with wildcard
 			// use regular expression
-			$fromversion = StringUtil::replace('\*', '.*', preg_quote($fromversion, '!'));
+			$fromversion = str_replace('\*', '.*', preg_quote($fromversion, '!'));
 			if (preg_match('!^'.$fromversion.'$!i', $currentVersion)) {
 				return true;
 			}

@@ -22,6 +22,12 @@ final class FileUtil {
 	protected static $finfo = null;
 	
 	/**
+	 * memory limit in bytes
+	 * @var	integer
+	 */
+	protected static $memoryLimit = null;
+	
+	/**
 	 * chmod mode
 	 * @var	string
 	 */
@@ -144,8 +150,8 @@ final class FileUtil {
 	 */
 	public static function getRelativePath($currentDir, $targetDir) {
 		// remove trailing slashes
-		$currentDir = self::removeTrailingSlash(self::unifyDirSeperator($currentDir));
-		$targetDir = self::removeTrailingSlash(self::unifyDirSeperator($targetDir));
+		$currentDir = self::removeTrailingSlash(self::unifyDirSeparator($currentDir));
+		$targetDir = self::removeTrailingSlash(self::unifyDirSeparator($targetDir));
 		
 		if ($currentDir == $targetDir) {
 			return './';
@@ -223,12 +229,12 @@ final class FileUtil {
 	}
 	
 	/**
-	 * Unifies windows and unix directory seperators.
+	 * Unifies windows and unix directory separators.
 	 * 
 	 * @param	string		$path
 	 * @return	string
 	 */
-	public static function unifyDirSeperator($path) {
+	public static function unifyDirSeparator($path) {
 		$path = str_replace('\\\\', '/', $path);
 		$path = str_replace('\\', '/', $path);
 		return $path;
@@ -289,7 +295,7 @@ final class FileUtil {
 	 * @return	string		path
 	 */
 	public static function getRealPath($path) {
-		$path = self::unifyDirSeperator($path);
+		$path = self::unifyDirSeparator($path);
 		
 		$result = array();
 		$pathA = explode('/', $path);
@@ -503,6 +509,8 @@ final class FileUtil {
 					self::$mode = '0777';
 				}
 				else {
+					clearstatcache();
+					
 					self::$mode = '0666';
 					
 					$tmpFilename = '__permissions_'.sha1(time()).'.txt';
@@ -549,6 +557,48 @@ final class FileUtil {
 			// does not work with 0777
 			throw new SystemException("Unable to make '".$filename."' writable. This is a misconfiguration of your server, please contact your system administrator or hosting provider.");
 		}
+	}
+	
+	/**
+	 * Returns memory limit in bytes.
+	 * 
+	 * @return	integer
+	 */
+	public static function getMemoryLimit() {
+		if (self::$memoryLimit === null) {
+			self::$memoryLimit = 0;
+			
+			$memoryLimit = ini_get('memory_limit');
+			
+			// no limit
+			if ($memoryLimit == -1) {
+				self::$memoryLimit = -1;
+			}
+			
+			// completely numeric, PHP assumes byte
+			if (is_numeric($memoryLimit)) {
+				self::$memoryLimit = $memoryLimit;
+			}
+			
+			// PHP supports 'K', 'M' and 'G' shorthand notation
+			if (preg_match('~^(\d+)([KMG])$~', $memoryLimit, $matches)) {
+				switch ($matches[2]) {
+					case 'K':
+						self::$memoryLimit = $matches[1] * 1024;
+					break;
+					
+					case 'M':
+						self::$memoryLimit = $matches[1] * 1024 * 1024;
+					break;
+					
+					case 'G':
+						self::$memoryLimit = $matches[1] * 1024 * 1024 * 1024;
+					break;
+				}
+			}
+		}
+		
+		return self::$memoryLimit;
 	}
 	
 	private function __construct() { }

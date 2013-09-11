@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	system.option.user
  * @category	Community Framework
  */
@@ -50,7 +50,7 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput {
 		$options = OptionUtil::parseSelectOptions($option->selectOptions);
 		
 		// multiselect
-		if (StringUtil::indexOf($value, "\n") !== false) {
+		if (mb_strpos($value, "\n") !== false) {
 			$values = explode("\n", $value);
 			$result = array();
 			foreach ($values as $value) {

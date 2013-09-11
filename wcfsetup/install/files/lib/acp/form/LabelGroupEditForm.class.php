@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.label
+ * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
  */
@@ -68,6 +68,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 		
 		// update acl
 		ACLHandler::getInstance()->save($this->groupID, $this->objectTypeID);
+		ACLHandler::getInstance()->disableAssignVariables();
 		
 		// update object type relations
 		$this->saveObjectTypeRelations($this->groupID);

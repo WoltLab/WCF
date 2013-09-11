@@ -207,6 +207,7 @@ class PackageStartInstallForm extends AbstractForm {
 		$packageID = ($this->package) ? $this->package->packageID : null;
 		
 		// insert queue
+		$isApplication = $this->archive->getPackageInfo('isApplication');
 		$this->queue = PackageInstallationQueueEditor::create(array(
 			'processNo' => $processNo,
 			'userID' => WCF::getUser()->userID,
@@ -215,7 +216,7 @@ class PackageStartInstallForm extends AbstractForm {
 			'packageID' => $packageID,
 			'archive' => (!empty($this->uploadPackage['tmp_name']) ? $this->uploadPackage['name'] : $this->downloadPackage),
 			'action' => ($this->package != null ? 'update' : 'install'),
-			'confirmInstallation' => 1
+			'isApplication' => (!$isApplication ? '0' : '1')
 		));
 		
 		$this->saved();

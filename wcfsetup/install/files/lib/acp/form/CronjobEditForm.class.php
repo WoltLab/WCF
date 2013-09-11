@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the cronjob edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -58,7 +58,7 @@ class CronjobEditForm extends CronjobAddForm {
 		
 		$this->description = 'wcf.acp.cronjob.description.cronjob'.$this->cronjob->cronjobID;
 		if (I18nHandler::getInstance()->isPlainValue('description')) {
-			I18nHandler::getInstance()->remove($this->description, 1);
+			I18nHandler::getInstance()->remove($this->description);
 			$this->description = I18nHandler::getInstance()->getValue('description');
 		}
 		else {

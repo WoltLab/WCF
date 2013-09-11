@@ -126,10 +126,10 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * @see	wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
-		// handle time
-		if (!isset($parameters['time'])) {
-			$parameters['time'] = TIME_NOW;
-		}
+		// default values
+		$parameters['time'] = (isset($parameters['time'])) ? $parameters['time'] : TIME_NOW;
+		$parameters['parentCategoryID'] = (isset($parameters['parentCategoryID'])) ? $parameters['parentCategoryID'] : 0;
+		$parameters['showOrder'] = (isset($parameters['showOrder'])) ? $parameters['showOrder'] : null;
 		
 		// handle show order
 		$parameters['showOrder'] = static::getShowOrder($parameters['objectTypeID'], $parameters['parentCategoryID'], $parameters['showOrder']);

@@ -1,29 +1,22 @@
-<script type="text/javascript">
+<script data-relocate="true">
 //<![CDATA[
 	var CKEDITOR_BASEPATH = '{@$__wcf->getPath()}js/3rdParty/ckeditor/';
 	var __CKEDITOR_BUTTONS = [ {implode from=$__wcf->getBBCodeHandler()->getButtonBBCodes() item=__bbcode}{ icon: '../../../icon/{$__bbcode->wysiwygIcon}', label: '{$__bbcode->buttonLabel|language}', name: '{$__bbcode->bbcodeTag}' }{/implode} ];
 //]]>
 </script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="{@$__wcf->getPath()}js/3rdParty/ckeditor/adapters/jquery.js"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/ckeditor/ckeditor.js"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/ckeditor/adapters/jquery.js"></script>
 {event name='javascriptIncludes'}
 
-<script type="text/javascript">
+<script data-relocate="true">
 //<![CDATA[
 $(function() {
 	if ($.browser.mobile) {
 		return;
 	}
 	
-	var __CKEDITOR_TOOLBAR = [
-		['Source', '-', 'Undo', 'Redo'],
-		['Bold', 'Italic', 'Underline', '-', 'Strike', 'Subscript','Superscript'],
-		['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-		'/',
-		['Font', 'FontSize', 'TextColor'],
-		['Link', 'Unlink', 'Image', 'Table', 'Smiley'],
-		['Maximize']
-	];
+	{include file='wysiwygToolbar'}
+	
 	if (__CKEDITOR_BUTTONS.length) {
 		var $buttons = [ ];
 		
@@ -45,16 +38,22 @@ $(function() {
 		toolbarCanCollapse: false,
 		enterMode: CKEDITOR.ENTER_BR,
 		minHeight: 200,
-		toolbar: __CKEDITOR_TOOLBAR,
-		smiley_images: [
-			{implode from=$defaultSmilies item=smiley}'{@$smiley->smileyPath|encodeJS}'{/implode}
-		],
-		smiley_descriptions: [
-			{implode from=$defaultSmilies item=smiley}'{@$smiley->smileyCode|encodeJS}'{/implode}
-		]
+		toolbar: __CKEDITOR_TOOLBAR
+		{if $defaultSmilies|isset}
+			,smiley_images: [
+				{implode from=$defaultSmilies item=smiley}'{@$smiley->smileyPath|encodeJS}'{/implode}
+			],
+			smiley_descriptions: [
+				{implode from=$defaultSmilies item=smiley}'{@$smiley->smileyCode|encodeJS}'{/implode}
+			]
+		{/if}
 	};
 	
 	{event name='javascriptInit'}
+	
+	if ($config.extraPlugins.indexOf('divarea') != -1) {
+		CKEDITOR.dom.element.prototype.disableContextMenu = function() { };
+	}
 	
 	var $editor = CKEDITOR.instances['{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}'];
 	if ($editor) $editor.destroy(true);

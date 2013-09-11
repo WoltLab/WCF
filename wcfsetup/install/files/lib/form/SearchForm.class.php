@@ -20,9 +20,9 @@ use wcf\util\StringUtil;
  * Shows the search form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.search
+ * @package	com.woltlab.wcf
  * @subpackage	form
  * @category	Community Framework
  */
@@ -395,13 +395,21 @@ class SearchForm extends RecaptchaForm {
 		}
 		
 		// dates
-		if (($startDate = @strtotime($this->startDate)) && ($endDate = @strtotime($this->endDate))) {
+		$startDate = @strtotime($this->startDate);
+		$endDate = @strtotime($this->endDate);
+		if ($startDate && $endDate) {
 			$this->searchIndexCondition->add('time BETWEEN ? AND ?', array($startDate, $endDate));
+		}
+		else if ($startDate) {
+			$this->searchIndexCondition->add('time > ?', array($startDate));
+		}
+		else if ($endDate) {
+			$this->searchIndexCondition->add('time < ?', array($endDate));
 		}
 		
 		// language
 		if (!empty($this->query) && LanguageFactory::getInstance()->multilingualismEnabled() && count(WCF::getUser()->getLanguageIDs())) {
-			$this->searchIndexCondition->add('(languageID IN (?) OR languageID IS NULL)', array(WCF::getUser()->getLanguageIDs()));
+			$this->searchIndexCondition->add('(languageID IN (?) OR languageID = 0)', array(WCF::getUser()->getLanguageIDs()));
 		}
 		
 		foreach ($this->selectedObjectTypes as $key => $objectTypeName) {

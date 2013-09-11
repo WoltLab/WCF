@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.tagging
+ * @package	com.woltlab.wcf
  * @subpackage	system.tagging
  * @category	Community Framework
  */
@@ -52,14 +52,14 @@ class TagEngine extends SingletonFactory {
 		foreach ($tags as $tag) {
 			if (empty($tag)) continue;
 			
+			// enforce max length
+			if (mb_strlen($tag) > TAGGING_MAX_TAG_LENGTH) {
+				$tag = mb_substr($tag, 0, TAGGING_MAX_TAG_LENGTH);
+			}
+			
 			// find existing tag
 			$tagObj = Tag::getTag($tag, $languageID);
 			if ($tagObj === null) {
-				// enforce max length
-				if (StringUtil::length($tag) > TAGGING_MAX_TAG_LENGTH) {
-					$tag = StringUtil::substring($tag, 0, TAGGING_MAX_TAG_LENGTH);
-				}
-				
 				// create new tag
 				$tagAction = new TagAction(array(), 'create', array('data' => array(
 					'name' => $tag,

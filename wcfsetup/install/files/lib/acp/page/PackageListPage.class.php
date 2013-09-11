@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
+use wcf\system\WCF;
 
 /**
  * Shows a list of all installed packages.
@@ -39,6 +40,12 @@ class PackageListPage extends SortablePage {
 	public $defaultSortOrder = 'DESC';
 	
 	/**
+	 * package id for uninstallation
+	 * @var	integer
+	 */
+	public $packageID = 0;
+	
+	/**
 	 * @see	wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('packageID', 'package', 'packageDir', 'packageName', 'packageDescription', 'packageDate', 'packageURL', 'isApplication', 'author', 'authorURL', 'installDate', 'updateDate');
@@ -47,6 +54,26 @@ class PackageListPage extends SortablePage {
 	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\package\PackageList';
+	
+	/**
+	 * @see	wcf\page\IPage::readParameters()
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		if (isset($_GET['packageID'])) $this->packageID = intval($_GET['packageID']);
+	}
+	
+	/**
+	 * @see	wcf\page\IPage::assignVariables()
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign(array(
+			'packageID' => $this->packageID
+		));
+	}
 	
 	/**
 	 * @see	wcf\page\MultipleLinkPage::readObjects()

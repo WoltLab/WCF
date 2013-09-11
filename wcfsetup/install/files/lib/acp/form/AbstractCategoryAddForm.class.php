@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * Abstract implementation of a form to create categories.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -118,13 +118,13 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		
 		// autoset controllers
 		if (empty($this->addController)) {
-			$this->addController = StringUtil::replace(array('AddForm', 'EditForm'), 'Add', $className);
+			$this->addController = str_replace(array('AddForm', 'EditForm'), 'Add', $className);
 		}
 		if (empty($this->editController)) {
-			$this->editController = StringUtil::replace(array('AddForm', 'EditForm'), 'Edit', $className);
+			$this->editController = str_replace(array('AddForm', 'EditForm'), 'Edit', $className);
 		}
 		if (empty($this->listController)) {
-			$this->listController = StringUtil::replace(array('AddForm', 'EditForm'), 'List', $className);
+			$this->listController = str_replace(array('AddForm', 'EditForm'), 'List', $className);
 		}
 		
 		parent::__run();

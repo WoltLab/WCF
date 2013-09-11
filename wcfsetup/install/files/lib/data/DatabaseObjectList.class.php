@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Abstract class for a list of database objects.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data
@@ -115,8 +115,8 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		if (empty($this->className)) {
 			$className = get_called_class();
 			
-			if (StringUtil::substring($className, -4) == 'List') {
-				$this->className = StringUtil::substring($className, 0, -4);
+			if (mb_substr($className, -4) == 'List') {
+				$this->className = mb_substr($className, 0, -4);
 			}
 		}
 		

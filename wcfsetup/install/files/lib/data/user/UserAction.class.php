@@ -241,21 +241,17 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		// insert visible languages
 		$languageIDs = (isset($this->parameters['languages'])) ? $this->parameters['languages'] : array();
-		$userEditor->addToLanguages($languageIDs);
+		$userEditor->addToLanguages($languageIDs, false);
 		
 		if (PACKAGE_ID) {
 			// set default notifications
 			$sql = "INSERT INTO	wcf".WCF_N."_user_notification_event_to_user
 						(userID, eventID)
-				VALUES		(?, ?)";
+				SELECT		?, eventID
+				FROM		wcf".WCF_N."_user_notification_event
+				WHERE		preset = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach (UserNotificationEventCacheBuilder::getInstance()->getData() as $events) {
-				foreach ($events as $event) {
-					if ($event->preset) {
-						$statement->execute(array($user->userID, $event->eventID));
-					}
-				}
-			}
+			$statement->execute(array($user->userID, 1));
 		}
 		
 		return $user;
@@ -369,7 +365,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			foreach ($accessibleGroups as $group) {
 				$groupName = $group->getName();
 				if (!in_array($groupName, $excludedSearchValues)) {
-					$pos = StringUtil::indexOfIgnoreCase($groupName, $searchString);
+					$pos = mb_strripos($groupName, $searchString);
 					if ($pos !== false && $pos == 0) {
 						$list[] = array(
 							'label' => $groupName,
@@ -381,22 +377,20 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			}
 		}
 		
-		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add("username LIKE ?", array($searchString.'%'));
-		if (!empty($excludedSearchValues)) {
-			$conditionBuilder->add("username NOT IN (?)", array($excludedSearchValues));
-		}
-		
 		// find users
-		$sql = "SELECT	userID, username
-			FROM	wcf".WCF_N."_user
-			".$conditionBuilder;
-		$statement = WCF::getDB()->prepareStatement($sql, 10);
-		$statement->execute($conditionBuilder->getParameters());
-		while ($row = $statement->fetchArray()) {
+		$userProfileList = new UserProfileList();
+		$userProfileList->getConditionBuilder()->add("username LIKE ?", array($searchString.'%'));
+		if (!empty($excludedSearchValues)) {
+			$userProfileList->getConditionBuilder()->add("username NOT IN (?)", array($excludedSearchValues));
+		}
+		$userProfileList->sqlLimit = 10;
+		$userProfileList->readObjects();
+		
+		foreach ($userProfileList as $userProfile) {
 			$list[] = array(
-				'label' => $row['username'],
-				'objectID' => $row['userID'],
+				'icon' => $userProfile->getAvatar()->getImageTag(16),
+				'label' => $userProfile->username,
+				'objectID' => $userProfile->userID,
 				'type' => 'user'
 			);
 		}

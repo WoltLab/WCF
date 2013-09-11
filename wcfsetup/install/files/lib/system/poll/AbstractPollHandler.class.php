@@ -8,7 +8,7 @@ use wcf\system\SingletonFactory;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.poll
+ * @package	com.woltlab.wcf
  * @subpackage	system.poll
  * @category	Community Framework
  */

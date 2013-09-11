@@ -9,9 +9,9 @@ use wcf\system\WCF;
  * Default implementation for dashboard boxes displayed within content container.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	system.dashboard.box
  * @category	Community Framework
  */
@@ -60,6 +60,15 @@ abstract class AbstractContentDashboardBox implements IDashboardBox {
 		));
 		
 		return WCF::getTPL()->fetch($this->templateName);
+	}
+	
+	/**
+	 * Calls the 'fetched' event after the successful call of the init method.
+	 * This functions won't called automatically. You must do this manually, if you inherit AbstractContentDashboardBox.
+	 */
+	protected function fetched() {
+		// fire event
+		EventHandler::getInstance()->fireAction($this, 'fetched');
 	}
 	
 	/**

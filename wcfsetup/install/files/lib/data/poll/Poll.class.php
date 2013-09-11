@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.poll
+ * @package	com.woltlab.wcf
  * @subpackage	data.poll
  * @category	Community Framework
  */
@@ -159,6 +159,19 @@ class Poll extends DatabaseObject {
 	 */
 	public function canSeeResult() {
 		if ($this->isFinished() || $this->isParticipant() || !$this->resultsRequireVote) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Returns true if current user can view the participant list.
+	 * 
+	 * @return	boolean
+	 */
+	public function canViewParticipants() {
+		if ($this->canSeeResult() && $this->isPublic) {
 			return true;
 		}
 		

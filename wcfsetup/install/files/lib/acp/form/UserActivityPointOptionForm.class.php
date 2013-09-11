@@ -13,7 +13,7 @@ use wcf\util\ArrayUtil;
  * @author	Tim Duesterhus
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
  */
@@ -56,7 +56,7 @@ class UserActivityPointOptionForm extends AbstractForm {
 		parent::validate();
 		
 		foreach ($this->points as $objectTypeID => $points) {
-			if ($points < 0) throw new UserInputException($objectTypeID, 'notValid');
+			if ($points < 0) throw new UserInputException($objectTypeID, 'greaterThan');
 		}
 	}
 	

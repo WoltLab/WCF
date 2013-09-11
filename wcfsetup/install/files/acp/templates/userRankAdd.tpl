@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.user.rank.'|concat:$action}
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.user.rank.{$action}{/lang}</h1>
@@ -61,7 +61,11 @@
 					
 					{if $errorField == 'cssClassName'}
 						<small class="innerError">
-							{lang}wcf.acp.user.rank.cssClassName.error.{@$errorType}{/lang}
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.user.rank.cssClassName.error.{@$errorType}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small>{lang}wcf.acp.user.rank.cssClassName.description{/lang}</small>
@@ -138,7 +142,7 @@
 				<dt><label for="requiredGender">{lang}wcf.user.option.gender{/lang}</label></dt>
 				<dd>
 					<select id="requiredGender" name="requiredGender">
-						<option value="0"></option>
+						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 						<option value="1"{if $requiredGender == 1} selected="selected"{/if}>{lang}wcf.user.gender.male{/lang}</option>
 						<option value="2"{if $requiredGender == 2} selected="selected"{/if}>{lang}wcf.user.gender.female{/lang}</option>
 					</select>

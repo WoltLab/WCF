@@ -32,7 +32,7 @@ use wcf\system\WCF;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.like
+ * @package	com.woltlab.wcf
  * @subpackage	system.like
  * @category	Community Framework
  */
@@ -108,6 +108,10 @@ class LikeHandler extends SingletonFactory {
 	 * @return	integer
 	 */
 	public function loadLikeObjects(ObjectType $objectType, array $objectIDs) {
+		if (empty($objectIDs)) {
+			return 0;
+		}
+		
 		$i = 0;
 		
 		$conditions = new PreparedStatementConditionBuilder();
@@ -290,7 +294,7 @@ class LikeHandler extends SingletonFactory {
 					'likeValue' => $likeValue
 				));
 				
-				if ($likeValue == Like::DISLIKE) UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($like->likeID));
+				if ($likeValue == Like::DISLIKE) UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($user->userID => 1));
 			}
 			
 			// update object's like counter
@@ -379,7 +383,7 @@ class LikeHandler extends SingletonFactory {
 					));
 				}
 				
-				UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($like->likeID));
+				UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($likeable->getUserID() => 1));
 			}
 			
 			// update object's like counter
@@ -435,15 +439,19 @@ class LikeHandler extends SingletonFactory {
 		$likeList = new LikeList();
 		$likeList->getConditionBuilder()->add('like_table.objectTypeID = ?', array($objectTypeObj->objectTypeID));
 		$likeList->getConditionBuilder()->add('like_table.objectID IN (?)', array($objectIDs));
-		$likeList->readObjectIDs();
-		$likeIDs = $likeList->getObjectIDs();
+		$likeList->readObjects();
 		
-		if (!empty($likeIDs)) {
+		if (count($likeList)) {
+			$likeData = array();
+			foreach ($likeList as $like) {
+				$likeData[$like->likeID] = $like->userID;
+			}
+			
 			// revoke activity points
-			UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $likeIDs);
+			UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $likeData);
 			
 			// delete likes
-			LikeEditor::deleteAll($likeIDs);
+			LikeEditor::deleteAll(array_keys($likeData));
 		}
 		
 		// delete like objects

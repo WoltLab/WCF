@@ -24,9 +24,11 @@
 			<address class="copyright marginTop"><a href="http://www.woltlab.com">Copyright &copy; 2001-2013 WoltLab&reg; GmbH</a>{event name='copyright'}</address>
 		</div>
 	</footer>
-
+	
 	{event name='footer'}
-
+	
+	<!-- JAVASCRIPT_RELOCATE_POSITION -->
+	
 	<a id="bottom"></a>
 </body>
 </html>

@@ -6,9 +6,9 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of BBCode media providers.
  * 
  * @author	Tim Duesterhus
- * @copyright	2011-2012 Tim Duesterhus
+ * @copyright	2011-2013 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @package	com.woltlab.wcf
  * @subpackage	data.bbcode.media.provider
  * @category	Community Framework
  */

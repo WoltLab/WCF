@@ -9,7 +9,7 @@ use wcf\system\Regex;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.message
+ * @package	com.woltlab.wcf
  * @subpackage	util
  * @category	Community Framework
  */
@@ -31,6 +31,9 @@ class MessageUtil {
 		
 		// unify new lines
 		$text = StringUtil::unifyNewlines($text);
+		
+		// remove emoji (MySQL 5.1 does not support them)
+		$text = preg_replace('~\xF0\x9F[\x80-\xBF][\x80-\xBF]~', '', $text);
 		
 		return $text;
 	}

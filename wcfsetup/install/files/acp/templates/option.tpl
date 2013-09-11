@@ -2,7 +2,7 @@
 
 {event name='javascriptInclude'}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();

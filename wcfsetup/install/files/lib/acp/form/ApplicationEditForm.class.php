@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ViewableApplication;
+use wcf\data\package\PackageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
@@ -16,7 +17,7 @@ use wcf\util\StringUtil;
  * Shows the application edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -26,7 +27,7 @@ class ApplicationEditForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.application';
+	public $activeMenuItem = 'wcf.acp.menu.link.package';
 	
 	/**
 	 * viewable application object
@@ -161,6 +162,24 @@ class ApplicationEditForm extends AbstractForm {
 		// add slashes
 		$this->domainPath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($this->domainPath));
 		$this->cookiePath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($this->cookiePath));
+		
+		// search for other applications with the same domain and path
+		$sql = "SELECT	packageID
+			FROM	wcf".WCF_N."_application
+			WHERE	domainName = ?
+				AND domainPath = ?
+				AND packageID <> ?";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute(array(
+			$this->domainName,
+			$this->domainPath,
+			$this->application->packageID
+		));
+		$row = $statement->fetchArray();
+		if ($row) {
+			WCF::getTPL()->assign('conflictApplication', PackageCache::getInstance()->getPackage($row['packageID']));
+			throw new UserInputException('domainPath', 'conflict');
+		}
 	}
 	
 	/**

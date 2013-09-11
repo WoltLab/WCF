@@ -6,7 +6,7 @@ use wcf\util\StringUtil;
  * Provides a single selection form element container.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.form.container
@@ -29,11 +29,9 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer 
 	}
 	
 	/**
-	 * Returns container value.
-	 * 
-	 * @return	string
+	 * @see	wcf\system\form\IFormElementContainer::getValue()
 	 */
-	public function getValue() {
+	public function getValue($key) {
 		return $this->value;
 	}
 	

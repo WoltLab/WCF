@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.message
+ * @package	com.woltlab.wcf
  * @subpackage	system.message.quote
  * @category	Community Framework
  */
@@ -120,22 +120,21 @@ class MessageQuoteManager extends SingletonFactory {
 			$this->quoteData[$quoteID] = $message;
 			
 			// save parent object id
-			if ($parentObjectID) {
-				if (!isset($this->quoteData['parents'])) {
-					$this->quoteData['parents'] = array();
-				}
-				
-				if (!isset($this->quoteData['parents'][$objectType])) {
-					$this->quoteData['parents'][$objectType] = array();
-				}
-				
-				if (!isset($this->quoteData['parents'][$objectType][$parentObjectID])) {
-					$this->quoteData['parents'][$objectType][$parentObjectID] = array();
-				}
-				
-				$this->quoteData['parents'][$objectType][$parentObjectID][] = $objectID;
-				$this->quoteData[$quoteID.'_pID'] = $parentObjectID;
+		
+			if (!isset($this->quoteData['parents'])) {
+				$this->quoteData['parents'] = array();
 			}
+			
+			if (!isset($this->quoteData['parents'][$objectType])) {
+				$this->quoteData['parents'][$objectType] = array();
+			}
+			
+			if (!isset($this->quoteData['parents'][$objectType][$parentObjectID])) {
+				$this->quoteData['parents'][$objectType][$parentObjectID] = array();
+			}
+			
+			$this->quoteData['parents'][$objectType][$parentObjectID][] = $objectID;
+			$this->quoteData[$quoteID.'_pID'] = $parentObjectID;
 			
 			if (!empty($fullQuote)) {
 				$this->quotes[$objectType][$objectID][$quoteID] = 1;
@@ -387,8 +386,8 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @return	string
 	 */
 	public function renderQuote(IMessage $message, $text) {
-		$escapedUsername = StringUtil::replace(array("\\", "'"), array("\\\\", "\'"), $message->getUsername());
-		$escapedLink = StringUtil::replace(array("\\", "'"), array("\\\\", "\'"), $message->getLink());
+		$escapedUsername = str_replace(array("\\", "'"), array("\\\\", "\'"), $message->getUsername());
+		$escapedLink = str_replace(array("\\", "'"), array("\\\\", "\'"), $message->getLink());
 		
 		return "[quote='".$escapedUsername."','".$escapedLink."']".$text."[/quote]";
 	}

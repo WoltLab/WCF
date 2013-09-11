@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.user.exportEmailAddress'}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		new WCF.ACP.Options();

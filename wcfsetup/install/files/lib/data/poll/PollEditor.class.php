@@ -7,9 +7,9 @@ use wcf\system\WCF;
  * Extends the poll object with functions to create, update and delete polls.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.poll
+ * @package	com.woltlab.wcf
  * @subpackage	data.poll
  * @category	Community Framework
  */

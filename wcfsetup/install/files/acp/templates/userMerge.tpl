@@ -39,7 +39,7 @@
 				<dt><label for="destinationUserID">{lang}wcf.acp.user.merge.destination{/lang}</label></dt>
 				<dd>
 					<select name="destinationUserID" id="destinationUserID">
-						<option value="0"></option>
+						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 						{foreach from=$users item=user}
 							<option value="{@$user->userID}">{$user->username}</option>
 						{/foreach}

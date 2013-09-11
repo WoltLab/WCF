@@ -7,7 +7,7 @@ use wcf\util\StringUtil;
  * Simple exception for AJAX-driven requests.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
@@ -31,7 +31,7 @@ class ValidateActionException extends \Exception {
 	 */
 	public function __construct($fieldName, $errorMessage = 'empty', array $variables = array()) {
 		$this->errorMessage = $errorMessage;
-		if (StringUtil::indexOf($this->errorMessage, '.') === false) {
+		if (mb_strpos($this->errorMessage, '.') === false) {
 			$this->errorMessage = WCF::getLanguage()->get('wcf.global.form.error.'.$this->errorMessage);
 		}
 		else {

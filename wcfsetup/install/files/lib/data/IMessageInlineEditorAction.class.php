@@ -5,9 +5,9 @@ namespace wcf\data;
  * Default interface for actions implementing message inline editing.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.message
+ * @package	com.woltlab.wcf
  * @subpackage	data
  * @category	Community Framework
  */

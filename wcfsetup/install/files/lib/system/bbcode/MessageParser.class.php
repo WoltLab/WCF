@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @package	com.woltlab.wcf
  * @subpackage	system.bbcode
  * @category	Community Framework
  */
@@ -99,6 +99,11 @@ class MessageParser extends BBCodeParser {
 			// converts newlines to <br />'s
 			if ($this->getOutputType() == 'text/html') {
 				$this->message = nl2br($this->message);
+			}
+		}
+		else {
+			if ($this->getOutputType() == 'text/simplified-html') {
+				$this->message = StringUtil::stripHTML($this->message);
 			}
 		}
 		

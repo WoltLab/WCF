@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.bbcode
+ * @package	com.woltlab.wcf
  * @subpackage	system.bbcode
  * @category	Community Framework
  */
@@ -105,9 +105,9 @@ class KeywordHighlighter extends SingletonFactory {
 		// remove search operators
 		$keywordString = preg_replace('/[\+\-><()~]+/', '', $keywordString);
 		
-		if (StringUtil::substring($keywordString, 0, 1) == '"' && StringUtil::substring($keywordString, -1) == '"') {
+		if (mb_substr($keywordString, 0, 1) == '"' && mb_substr($keywordString, -1) == '"') {
 			// phrases search
-			$keywordString = StringUtil::trim(StringUtil::substring($keywordString, 1, -1));
+			$keywordString = StringUtil::trim(mb_substr($keywordString, 1, -1));
 			
 			if (!empty($keywordString)) {
 				$this->keywords = array_merge($this->keywords, array(StringUtil::encodeHTML($keywordString)));
@@ -134,7 +134,7 @@ class KeywordHighlighter extends SingletonFactory {
 		if (empty($this->keywords)) return $text;
 		
 		$keywordPattern = '('.implode('|', $this->keywords).')';
-		$keywordPattern = StringUtil::replace('\*', '\w*', $keywordPattern);
+		$keywordPattern = str_replace('\*', '\w*', $keywordPattern);
 		return preg_replace('+(?<!&|&\w{1}|&\w{2}|&\w{3}|&\w{4}|&\w{5}|&\w{6})'.$keywordPattern.'(?![^<]*>)+i', '<span class="highlight">\\1</span>', $text);
 	}
 }

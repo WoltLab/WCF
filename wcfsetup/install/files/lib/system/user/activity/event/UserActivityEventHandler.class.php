@@ -4,6 +4,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\activity\event\UserActivityEventAction;
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -13,7 +14,7 @@ use wcf\system\WCF;
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.user
+ * @package	com.woltlab.wcf
  * @subpackage	system.user.activity.event
  * @category	Community Framework
  */
@@ -77,6 +78,10 @@ class UserActivityEventHandler extends SingletonFactory {
 	 */
 	public function fireEvent($objectType, $objectID, $languageID = null, $userID = null, $time = TIME_NOW, $additonalData = array()) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
+		if ($objectTypeID === null) {
+			throw new SystemException("Unknown recent activity event '".$objectType."'");
+		}
+		
 		if ($userID === null) $userID = WCF::getUser()->userID;
 		
 		$eventAction = new UserActivityEventAction(array(), 'create', array(
@@ -101,7 +106,13 @@ class UserActivityEventHandler extends SingletonFactory {
 	 * @param	array<integer>	$objectIDs
 	 */
 	public function removeEvents($objectType, array $objectIDs) {
+		if (empty($objectIDs)) return;
+		
 		$objectTypeID = $this->getObjectTypeID($objectType);
+		if ($objectTypeID === null) {
+			throw new SystemException("Unknown recent activity event '".$objectType."'");
+		}
+		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("objectTypeID = ?", array($objectTypeID));
 		$conditions->add("objectID IN (?)", array($objectIDs));

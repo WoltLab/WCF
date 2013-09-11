@@ -5,9 +5,9 @@ namespace wcf\system\label\object;
  * Every label object handler has to implement this interface.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.label
+ * @package	com.woltlab.wcf
  * @subpackage	system.label.object
  * @category	Community Framework
  */

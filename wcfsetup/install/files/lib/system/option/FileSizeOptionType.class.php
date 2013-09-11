@@ -8,8 +8,8 @@ use wcf\util\StringUtil;
 /**
  * Option type implementation for file sizes.
  * 
- * @author	Tim Düsterhus
- * @copyright	2011 Tim Düsterhus
+ * @author	Tim Duesterhus
+ * @copyright	2011 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.option
@@ -25,14 +25,14 @@ class FileSizeOptionType extends TextOptionType {
 	 * @see	wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
-		$number = StringUtil::replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
-		$number = StringUtil::replace(WCF::getLanguage()->get('wcf.global.decimalPoint'), '.', $number);
+		$number = str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
+		$number = str_replace(WCF::getLanguage()->get('wcf.global.decimalPoint'), '.', $number);
 		
 		if (!preg_match('~^(?:\d*)\.?\d+~', $number, $matches)) return 0;
 		
 		$number = $matches[0];
 		if (preg_match('/[kmgt]i?b$/i', $newValue, $multiplier)) {
-			switch (StringUtil::toLowerCase($multiplier[0])) {
+			switch (mb_strtolower($multiplier[0])) {
 				case 'tb':
 					$number *= 1000;
 				case 'gb':

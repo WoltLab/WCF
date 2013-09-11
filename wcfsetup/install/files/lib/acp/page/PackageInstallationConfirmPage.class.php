@@ -114,6 +114,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 			
 			$requirement['package'] = PackageCache::getInstance()->getPackageByIdentifier($requirement['name']);
 		}
+		
 		unset($requirement);
 	}
 	

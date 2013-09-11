@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * Shows the page menu item add form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -48,6 +48,12 @@ class PageMenuItemAddForm extends AbstractForm {
 	 * @var	string
 	 */
 	public $menuItemController = '';
+	
+	/**
+	 * menu item parameters
+	 * @var	string
+	 */
+	public $menuItemParameters = '';
 	
 	/**
 	 * menu item link
@@ -127,6 +133,7 @@ class PageMenuItemAddForm extends AbstractForm {
 		if (isset($_POST['isDisabled'])) $this->isDisabled = true;
 		if (isset($_POST['isInternalLink'])) $this->isInternalLink = (bool) $_POST['isInternalLink'];
 		if (isset($_POST['menuItemController'])) $this->menuItemController = StringUtil::trim($_POST['menuItemController']);
+		if (isset($_POST['menuItemParameters'])) $this->menuItemParameters = StringUtil::trim($_POST['menuItemParameters']);
 		if (isset($_POST['menuPosition'])) $this->menuPosition = StringUtil::trim($_POST['menuPosition']);
 		if (isset($_POST['parentMenuItem'])) $this->parentMenuItem = StringUtil::trim($_POST['parentMenuItem']);
 		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
@@ -204,7 +211,7 @@ class PageMenuItemAddForm extends AbstractForm {
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'menuItem' => $this->pageMenuItem,
 			'menuItemController' => $this->menuItemController,
-			'menuItemLink' => $this->menuItemLink,
+			'menuItemLink' => ($this->menuItemController ? $this->menuItemParameters : $this->menuItemLink),
 			'menuPosition' => $this->menuPosition,
 			'parentMenuItem' => $this->parentMenuItem,
 			'showOrder' => $this->showOrder
@@ -236,7 +243,7 @@ class PageMenuItemAddForm extends AbstractForm {
 		// reset variables
 		$this->isDisabled = $this->isInternalLink = false;
 		$this->menuPosition = 'header';
-		$this->menuItemController = $this->menuItemLink = $this->pageMenuItem = $this->parentMenuItem = '';
+		$this->menuItemController = $this->menuItemLink = $this->pageMenuItem = $this->parentMenuItem = $this->menuItemParameters = '';
 		$this->showOrder = 0;
 		
 		I18nHandler::getInstance()->reset();
@@ -261,6 +268,7 @@ class PageMenuItemAddForm extends AbstractForm {
 			'isDisabled' => $this->isDisabled,
 			'isInternalLink' => $this->isInternalLink,
 			'menuItemController' => $this->menuItemController,
+			'menuItemParameters' => $this->menuItemParameters,
 			'menuItemLink' => $this->menuItemLink,
 			'menuPosition' => $this->menuPosition,
 			'pageMenuItem' => $this->pageMenuItem,

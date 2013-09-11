@@ -5,8 +5,8 @@
 	
 	{include file='headInclude'}
 	
-	<script type="text/javascript" src="{@$__wcf->getPath('wcf')}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-	<script type="text/javascript">
+	<script data-relocate="true" src="{@$__wcf->getPath('wcf')}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
 			new WCF.User.Login(false);
@@ -87,6 +87,7 @@
 			
 			{if $supportsPersistentLogins}
 				<dl>
+					<dt></dt>
 					<dd>
 						<label for="useCookies"><input type="checkbox" id="useCookies" name="useCookies" value="1" {if $useCookies}checked="checked" {/if}/> {lang}wcf.user.useCookies{/lang}</label>
 					</dd>
@@ -96,6 +97,7 @@
 			{event name='fields'}
 			
 			<dl>
+				<dt></dt>
 				<dd>
 					<ul class="buttonList">
 						<li><a class="button small" href="{link controller='LostPassword'}{/link}"><span>{lang}wcf.user.lostPassword{/lang}</span></a></li>
@@ -106,15 +108,12 @@
 			</dl>
 		</fieldset>
 		
-		{capture assign='__3rdPartyButtons'}
-			
-		{/capture}
-		
 		{hascontent}
 			<fieldset>
 				<legend>{lang}wcf.user.login.3rdParty{/lang}</legend>
 				
 				<dl>
+					<dt></dt>
 					<dd>
 						<ul class="buttonList">
 							{content}
@@ -141,7 +140,7 @@
 										<a href="{link controller='GoogleAuth'}{/link}" class="button small"><span class="icon icon16 icon-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
 									</li>
 								{/if}
-							{/content}	
+							{/content}
 						</ul>
 					</dd>
 				</dl>

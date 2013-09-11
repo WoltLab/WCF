@@ -42,7 +42,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validateSearch() {
 		WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
-	
+		
 		$this->readString('package', true);
 		$this->readString('packageDescription', true);
 		$this->readString('packageName', true);
@@ -59,6 +59,8 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function search() {
+		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
+		
 		$conditions = new PreparedStatementConditionBuilder();
 		if (!empty($this->parameters['package'])) {
 			$conditions->add("package_update.package LIKE ?", array('%'.$this->parameters['package'].'%'));
@@ -156,6 +158,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 				$existing[$ev] = $ek;
 				$versions[$ak] = $packageUpdateID;
 				$versions[$ek] = $packageUpdateID;
+			}
+			
+			// ignore packages without accessible versions
+			if (empty($accessible)) {
+				continue;
 			}
 			
 			uksort($accessible, array('wcf\data\package\Package', 'compareVersion'));
@@ -296,11 +303,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validatePrepareUpdate() {
 		WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
-	
+		
 		if (!isset($this->parameters['packages']) || !is_array($this->parameters['packages'])) {
 			throw new UserInputException('packages');
 		}
-	
+		
 		// validate packages for their existance
 		$availableUpdates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 		foreach ($this->parameters['packages'] as $packageName => $versionNumber) {
@@ -348,13 +355,15 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	public function validatePrepareInstallation() {
 		WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
 		
-		$this->readString('package');
+		if (!isset($this->parameters['packages']) || !is_array($this->parameters['packages']) || count($this->parameters['packages']) != 1) {
+			throw new UserInputException('packages');
+		}
 		
 		if (isset($this->parameters['authData'])) {
 			if (!is_array($this->parameters['authData'])) {
 				throw new UserInputException('authData');
 			}
-				
+			
 			$this->readInteger('packageUpdateServerID', false, 'authData');
 			$this->readString('password', false, 'authData');
 			$this->readString('username', false, 'authData');
@@ -407,10 +416,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 					'packageName' => $package['packageName'],
 					'packageID' => ($package['packageID'] ?: null),
 					'archive' => $package['archive'],
-					'action' => $queueType
+					'action' => $package['action']
 				));
 				$parentQueueID = $queue->queueID;
-		
+				
 				if ($queueID === null) {
 					$queueID = $queue->queueID;
 				}

@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.user.search'}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
@@ -128,6 +128,7 @@
 				<legend>{lang}wcf.acp.user.search.conditions.states{/lang}</legend>
 				
 				<dl>
+					<dt></dt>
 					<dd>
 						<label><input type="checkbox" name="banned" value="1" {if $banned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.banned{/lang}</label>
 						<label><input type="checkbox" name="notBanned" value="1" {if $notBanned == 1}checked="checked" {/if}/> {lang}wcf.acp.user.search.conditions.state.notBanned{/lang}</label>

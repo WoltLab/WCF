@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * Abstract implementation of a form to edit a category.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.form
@@ -44,9 +44,11 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
+		$availableCategories = new CategoryNodeTree($this->objectType->objectType, 0, true);
 		WCF::getTPL()->assign(array(
 			'action' => 'edit',
-			'category' => $this->category
+			'category' => $this->category,
+			'availableCategories' => $availableCategories->getIterator()
 		));
 	}
 	
@@ -111,7 +113,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		if ($this->objectType->getProcessor()->hasDescription()) {
 			$description = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.description.category'.$this->category->categoryID;
 			if (I18nHandler::getInstance()->isPlainValue('description')) {
-				I18nHandler::getInstance()->remove($description, $this->packageID);
+				I18nHandler::getInstance()->remove($description);
 				$description = I18nHandler::getInstance()->getValue('description');
 			}
 			else {
@@ -122,7 +124,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		// handle title
 		$title = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.title.category'.$this->category->categoryID;
 		if (I18nHandler::getInstance()->isPlainValue('title')) {
-			I18nHandler::getInstance()->remove($title, $this->packageID);
+			I18nHandler::getInstance()->remove($title);
 			$title = I18nHandler::getInstance()->getValue('title');
 		}
 		else {

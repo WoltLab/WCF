@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Provides methods for handling collapsible containers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2012 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.collapsible.content
@@ -109,7 +109,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 					}
 					
 					// update storage data
-					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'collapsedContent-'.$objectTypeID, serialize($this->collapsedContent[$objectTypeID]), 1);
+					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'collapsedContent-'.$objectTypeID, serialize($this->collapsedContent[$objectTypeID]));
 				}
 				else {
 					$this->collapsedContent[$objectTypeID] = @unserialize($data[WCF::getUser()->userID]);

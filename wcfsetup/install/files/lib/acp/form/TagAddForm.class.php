@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * @author	Tim Duesterhus
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf.tagging
+ * @package	com.woltlab.wcf
  * @subpackage	acp.form
  * @category	Community Framework
  */
@@ -106,7 +106,7 @@ class TagAddForm extends AbstractForm {
 		
 		// validate synonyms
 		foreach ($this->synonyms as $key => $synonym) {
-			if (StringUtil::toLowerCase($synonym) == StringUtil::toLowerCase($this->name)) {
+			if (mb_strtolower($synonym) == mb_strtolower($this->name)) {
 				unset($this->synonyms[$key]);
 			}
 		}

@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * 	{implode from=$array key=bar item=foo glue=";"}{$foo}{/implode}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2011 WoltLab GmbH
+ * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.template.plugin
@@ -44,7 +44,7 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 		$phpCode = "<?php\n";
 		$phpCode .= "\$_length".$hash." = count(".$tagArgs['from'].");\n";
 		$phpCode .= "\$_i".$hash." = 0;\n";
-		$phpCode .= "foreach (".$tagArgs['from']." as ".(isset($tagArgs['key']) ? (StringUtil::substring($tagArgs['key'], 0, 1) != '$' ? "\$this->v[".$tagArgs['key']."]" : $tagArgs['key'])." => " : '').(StringUtil::substring($tagArgs['item'], 0, 1) != '$' ? "\$this->v[".$tagArgs['item']."]" : $tagArgs['item']).") { ?>";
+		$phpCode .= "foreach (".$tagArgs['from']." as ".(isset($tagArgs['key']) ? (mb_substr($tagArgs['key'], 0, 1) != '$' ? "\$this->v[".$tagArgs['key']."]" : $tagArgs['key'])." => " : '').(mb_substr($tagArgs['item'], 0, 1) != '$' ? "\$this->v[".$tagArgs['item']."]" : $tagArgs['item']).") { ?>";
 		return $phpCode;
 	}
 	

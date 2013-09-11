@@ -1,7 +1,7 @@
 {capture assign='pageTitle'}{lang}wcf.acp.package.{@$queue->action}.title{/lang}: {$archive->getLocalizedPackageInfo('packageName')}{/capture}
 {include file='header'}
 
-<script type="text/javascript">
+<script data-relocate="true">
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
@@ -11,7 +11,7 @@
 			'wcf.acp.package.update.title': '{lang}wcf.acp.package.update.title{/lang}'
 		});
 		
-		new WCF.ACP.Package.Installation({@$queue->queueID}, undefined, {if $queue->action == 'install'}true, false{else}false, true{/if});
+		new WCF.ACP.Package.Installation({@$queue->queueID}, undefined, {if $queue->action == 'install'}{if $queue->isApplication}false{else}true{/if}, false{else}false, true{/if});
 		
 		new WCF.ACP.Package.Installation.Cancel({@$queue->queueID});
 	});
