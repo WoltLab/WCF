@@ -52,7 +52,7 @@ class WorkerCommand implements ICommand {
 		
 		$class = $args[0];
 		
-		// assume wcf\system\worker when no FQN ist given
+		// assume wcf\system\worker when no FQN is given
 		if (strpos($class, '\\') === false) {
 			$class = 'wcf\system\worker\\'.$class;
 		}
@@ -117,14 +117,14 @@ class WorkerCommand implements ICommand {
 	}
 	
 	/**
-	 * Returns an array with the list of available workers.
+	 * Returns an array with the list of all available workers.
 	 * 
 	 * @return	array
 	 */
 	public function generateList() {
 		$directory = DirectoryUtil::getInstance(WCF_DIR.'lib/system/worker/');
 		$workerList = $directory->getFiles(SORT_ASC, new Regex('Worker\.class\.php$'));
-			
+		
 		$table = array(
 			array(
 				'Class',

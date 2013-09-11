@@ -58,9 +58,11 @@ class PackageCommand implements ICommand {
 			case 'install':
 				$this->install($package);
 			break;
+			
 			case 'uninstall':
 				$this->uninstall($package);
 			break;
+			
 			default:
 				throw new ArgvException('', $this->fixUsage($this->argv->getUsageMessage()));
 			break;

@@ -17,8 +17,8 @@ use Zend\Console\Adapter\Posix;
 final class CLIUtil {
 	/**
 	 * Generates a table.
-	 *
-	 * @param	array	$table
+	 * 
+	 * @param	array		$table
 	 * @return	string
 	 */
 	public static function generateTable(array $table) {
@@ -61,7 +61,7 @@ final class CLIUtil {
 	/**
 	 * Generates a list.
 	 * 
-	 * @param	array	$list
+	 * @param	array		$list
 	 * @return	string
 	 */
 	public static function generateList(array $list) {

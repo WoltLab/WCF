@@ -18,16 +18,15 @@ use wcf\util\StringUtil;
  */
 class CommandHandler {
 	/**
-	 * all available commands
-	 * 
-	 * @var array<wcf\system\cli\command\ICommand>
+	 * list of all available commands
+	 * @var	array<wcf\system\cli\command\ICommand>
 	 */
 	private static $commands = array();
 	
 	/**
-	 * Retuns all available commands.
+	 * Returns all available commands.
 	 * 
-	 * @return array<wcf\system\cli\command\ICommand>
+	 * @return	array<wcf\system\cli\command\ICommand>
 	 */
 	public static function getCommands() {
 		if (empty(self::$commands)) {

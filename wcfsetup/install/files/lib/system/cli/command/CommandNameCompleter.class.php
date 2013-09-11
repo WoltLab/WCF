@@ -14,13 +14,13 @@ use phpline\console\completer\Completer;
  */
 class CommandNameCompleter implements Completer {
 	/**
-	 * list of available commands
+	 * names of all available commands
 	 * @var	array<string>
 	 */
 	private $commands = array();
 	
 	/**
-	 * Reads available commands.
+	 * Creates a new instance of CommandNameCompleter.
 	 */
 	public function __construct() {
 		$this->commands = array_keys(CommandHandler::getCommands());
