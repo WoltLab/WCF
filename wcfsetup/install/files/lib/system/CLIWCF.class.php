@@ -303,7 +303,7 @@ class CLIWCF extends WCF {
 		if (VERBOSITY >= -1 && !self::getArgvParser()->disableUpdateCheck) {
 			$updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 			if (!empty($updates)) {
-				$return = self::getReader()->println(count($updates) . ' updates are available');
+				$return = self::getReader()->println(count($updates) . ' update' . (count($updates) > 1 ? 's  are' : ' is') . ' available');
 				
 				if (VERBOSITY >= 1) {
 					$table = array(
