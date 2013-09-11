@@ -117,7 +117,6 @@ class PackageStartInstallForm extends AbstractForm {
 			
 			try {
 				$this->downloadPackage = $this->archive->downloadArchive();
-				//$this->archive->downloadArchive();
 			}
 			catch (SystemException $e) {
 				throw new UserInputException('downloadPackage', 'notFound');
