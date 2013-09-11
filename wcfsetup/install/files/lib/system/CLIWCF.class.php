@@ -69,7 +69,6 @@ class CLIWCF extends WCF {
 		$this->initArgv();
 		$this->initPHPLine();
 		$this->initAuth();
-		// TODO: Show whether there are updates available (similar to TTYs at Ubuntu Linux)
 		$this->checkForUpdates();
 		$this->initCommands();
 	}
