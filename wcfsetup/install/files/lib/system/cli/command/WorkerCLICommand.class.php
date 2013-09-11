@@ -114,6 +114,8 @@ class WorkerCLICommand implements ICLICommand {
 			$progressbar->update($progress);
 		}
 		$progressbar->update($progress);
+		
+		$progressbar->getAdapter()->finish();
 	}
 	
 	/**
