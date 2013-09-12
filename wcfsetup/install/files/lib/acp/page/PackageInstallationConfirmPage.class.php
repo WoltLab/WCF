@@ -108,11 +108,17 @@ class PackageInstallationConfirmPage extends AbstractPage {
 				}
 				else {
 					$requirement['status'] = 'delivered';
+					$packageArchive = new PackageArchive($this->packageInstallationDispatcher->getArchive()->extractTar($requirement['file']));
+					$packageArchive->openArchive();
 					
-					if (isset($requirement['minversion'])) {
+					// make sure that the delivered package is correct
+					if ($requirement['name'] != $packageArchive->getPackageInfo('name')) {
+						$requirement['status'] = 'invalidDeliveredPackage';
+						$requirement['deliveredPackage'] = $packageArchive->getPackageInfo('name');
+						$this->missingPackages++;
+					}
+					else if (isset($requirement['minversion'])) {
 						// make sure that the delivered version is sufficient
-						$packageArchive = new PackageArchive($this->packageInstallationDispatcher->getArchive()->extractTar($requirement['file']));
-						$packageArchive->openArchive();
 						if (Package::compareVersion($requirement['minversion'], $packageArchive->getPackageInfo('version')) > 0) {
 							$requirement['deliveredVersion'] = $packageArchive->getPackageInfo('version');
 							$requirement['status'] = 'missingVersion';

@@ -866,6 +866,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.package.installation.packageStatus"><![CDATA[Status]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.delivered"><![CDATA[Provided]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.installed"><![CDATA[Already Installed]]></item>
+		<item name="wcf.acp.package.installation.packageStatus.invalidDeliveredPackage"><![CDATA[Wrong package delivered ({$package.deliveredPackage})]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missing"><![CDATA[Missing]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[Insufficient Version ({if $package.existingVersion|isset}installed version: {$package.existingVersion}{else}delivered version: {$package.deliveredVersion}{/if})]]></item>
 		<item name="wcf.acp.package.installation.rollback"><![CDATA[Rollback Installation]]></item>

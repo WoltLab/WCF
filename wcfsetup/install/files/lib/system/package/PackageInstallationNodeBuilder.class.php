@@ -462,6 +462,11 @@ class PackageInstallationNodeBuilder {
 			$archive = new PackageArchive($fileName);
 			$archive->openArchive();
 			
+			// check if delivered package has correct identifier
+			if ($archive->getPackageInfo('name') != $packageName) {
+				throw new SystemException("Invalid package file delivered for '".$packageName."' requirement of package '".$this->installation->getArchive()->getPackageInfo('name')."' (delivered package: '".$archive->getPackageInfo('name')."').");
+			}
+			
 			// check if delivered version satisfies minversion
 			if (isset($package['minversion']) && Package::compareVersion($package['minversion'], $archive->getPackageInfo('version')) > 0) {
 				throw new SystemException("Package '".$this->installation->getArchive()->getPackageInfo('name')."' requires package '".$packageName."' at least in version ".$package['minversion'].", but only delivers version ".$archive->getPackageInfo('version').".");
