@@ -278,7 +278,7 @@ class ImportCLICommand implements ICLICommand {
 						if ($minSupportedDataIndex == $supportedDataIndex) {
 							$minSupportedDataIndex++;
 						}
-						$supportedDataIndex++;;
+						$supportedDataIndex++;
 					}
 				}
 				CLIWCF::getReader()->println('Selection? ['.$minSupportedDataIndex.'-'.($supportedDataIndex - 1).']'); // todo
