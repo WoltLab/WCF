@@ -868,7 +868,7 @@
 		<item name="wcf.acp.package.installation.packageStatus.delivered"><![CDATA[vom Paket bereitgestellt]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.installed"><![CDATA[bereits installiert]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missing"><![CDATA[fehlt]]></item>
-		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[fehlende Paket-Version (installierte Version: {$package.existingVersion})]]></item>
+		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[fehlende Paket-Version ({if $package.existingVersion|isset}installierte Version: {$package.existingVersion}{else}bereitgestellte Version: {$package.deliveredVersion}{/if})]]></item>
 		<item name="wcf.acp.package.installation.rollback"><![CDATA[Installation rückgängig machen]]></item>
 		<item name="wcf.acp.package.installation.step.install"><![CDATA[„{$packageName}“ wird installiert …]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation abgeschlossen]]></item>
