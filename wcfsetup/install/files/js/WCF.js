@@ -43,7 +43,6 @@
 			} 
 		}
 		
-		
 		// call jQuery's own data method
 		var $data = $jQueryData.apply(this, arguments);
 		
@@ -65,7 +64,7 @@
 	var consoleProperties = [ "log",/* "debug",*/ "info", "warn", "exception", "assert", "dir", "dirxml", "trace", "group", "groupEnd", "groupCollapsed", "profile", "profileEnd", "count", "clear", "time", "timeEnd", "timeStamp", "table", "error" ];
 	for (var i = 0; i < consoleProperties.length; i++) {
 		if (typeof (console[consoleProperties[i]]) === 'undefined') {
-			console[consoleProperties[i]] = function () { }
+			console[consoleProperties[i]] = function () { };
 		}
 	}
 	
@@ -3888,7 +3887,7 @@ WCF.Template = Class.extend({
 			
 			for (var $i = 0, $max = $chars.length; $i < $max; $i++) {
 				var $char = $chars[$i];
-				if ($inName && $char != '=' && $char != ' ') $name += $char
+				if ($inName && $char != '=' && $char != ' ') $name += $char;
 				else if ($inName && $char == '=') {
 					$inName = false;
 					$singleQuoted = false;
