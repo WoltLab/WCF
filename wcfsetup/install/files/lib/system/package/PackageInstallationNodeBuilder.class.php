@@ -462,6 +462,11 @@ class PackageInstallationNodeBuilder {
 			$archive = new PackageArchive($fileName);
 			$archive->openArchive();
 			
+			// check if delivered version satisfies minversion
+			if (isset($package['minversion']) && Package::compareVersion($package['minversion'], $archive->getPackageInfo('version')) > 0) {
+				throw new SystemException("Package '".$this->installation->getArchive()->getPackageInfo('name')."' requires package '".$packageName."' at least in version ".$package['minversion'].", but only delivers version ".$archive->getPackageInfo('version').".");
+			}
+			
 			// get package id
 			$sql = "SELECT	packageID
 				FROM	wcf".WCF_N."_package
@@ -665,7 +670,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * Returns a short SHA1-hash.
-	 *
+	 * 
 	 * @return	string
 	 */
 	protected function getToken() {
