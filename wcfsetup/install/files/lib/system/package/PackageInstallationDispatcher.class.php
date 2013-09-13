@@ -388,12 +388,7 @@ class PackageInstallationDispatcher {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($requirements as $identifier => $possibleRequirements) {
-				if (count($possibleRequirements) == 1) {
-					$requirement = array_shift($possibleRequirements);
-				}
-				else {
-					$requirement = $possibleRequirements[$this->selectedRequirements[$identifier]];
-				}
+				$requirement = array_shift($possibleRequirements);
 				
 				$statement->execute(array($this->queue->packageID, $requirement['packageID']));
 			}
