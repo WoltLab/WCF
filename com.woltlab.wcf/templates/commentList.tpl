@@ -34,11 +34,11 @@
 					</nav>
 				</div>
 				
-				<ul data-responses="{@$comment->responses}" class="commentResponseList">
-					{if $comment|count}
+				{if $comment|count}
+					<ul data-responses="{@$comment->responses}" class="commentResponseList">
 						{include file='commentResponseList' responseList=$comment}
-					{/if}
-				</ul>
+					</ul>
+				{/if}
 			</div>
 		</div>
 	</li>
