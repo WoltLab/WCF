@@ -1952,7 +1952,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.user.button.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.button.register"><![CDATA[Register]]></item>
 		<item name="wcf.user.button.registerNow"><![CDATA[Register Now]]></item>
-		<item name="wcf.user.error.username.3rdParty"><![CDATA[Account is connected with a 3rd party website, password cannot be requested.]]></item>
+		<item name="wcf.user.username.error.3rdParty"><![CDATA[Account is connected with a 3rd party website, password cannot be requested.]]></item>
 		<item name="wcf.user.login.action"><![CDATA[Are you already registered?]]></item>
 		<item name="wcf.user.login.action.login"><![CDATA[Yes, my password is:]]></item>
 		<item name="wcf.user.login.action.register"><![CDATA[No, register now.]]></item>

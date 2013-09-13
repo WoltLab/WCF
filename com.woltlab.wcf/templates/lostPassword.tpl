@@ -56,8 +56,8 @@
 					{if $errorField == 'username'}
 						<small class="innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'notFound'}{lang}wcf.user.error.username.notFound{/lang}{/if}
-							{if $errorType == '3rdParty'}{lang}wcf.user.error.username.3rdParty{/lang}{/if}
+							{if $errorType == 'notFound'}{lang}wcf.user.username.error.notFound{/lang}{/if}
+							{if $errorType == '3rdParty'}{lang}wcf.user.username.error.3rdParty{/lang}{/if}
 						</small>
 					{/if}
 				</dd>
@@ -72,7 +72,7 @@
 					{if $errorField == 'email'}
 						<small class="innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType == 'notFound'}{lang}wcf.user.lostPassword.error.email.notFound{/lang}{/if}
+							{if $errorType == 'notFound'}{lang}wcf.user.lostPassword.email.error.notFound{/lang}{/if}
 						</small>
 					{/if}
 				</dd>
