@@ -121,6 +121,7 @@
 			'wcf.global.page.pageNavigation': '{lang}wcf.global.page.pageNavigation{/lang}',
 			'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
 			'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
+			'wcf.global.pageDirection': '{lang}wcf.global.pageDirection{/lang}',
 			'wcf.global.success': '{lang}wcf.global.success{/lang}',
 			'wcf.global.success.add': '{lang}wcf.global.success.add{/lang}',
 			'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
