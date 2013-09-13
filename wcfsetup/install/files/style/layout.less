@@ -322,6 +322,8 @@
 /* main menu */
 @media screen and (min-width: 801px), print {
 	.mainMenu {
+		font-size: 0;
+		
 		> ul {
 			background-color: @wcfMainMenuBackgroundColor;
 			display: inline-block;
@@ -452,6 +454,7 @@
 	
 	> ul {
 		display: inline-block;
+		font-size: 0;
 		
 		&.navigationItems, &.navigationIcons {
 			float: right;
@@ -467,7 +470,7 @@
 				
 				> a {
 					display: inline-block;
-					padding: 3px;
+					padding: 4px 3px 3px;
 				}
 			}
 		}
@@ -484,11 +487,11 @@
 		
 		&.navigationItems, &.navigationMenuItems {
 			> li {
-				margin: 4px 7px 1px;
+				font-size: 1rem;
+				margin: 4px 7px 2px;
 				
 				> a {
 					color: @wcfLinkColor;
-					padding: 2px 0;
 					
 					&:hover {
 						color: @wcfLinkHoverColor;
@@ -845,21 +848,14 @@
 		margin-top: @wcfGapMedium;
 	}
 	
-	nav ul {
-		text-align: left;
+	> nav.pageNavigation > ul {
+		float: left;
 	}
 	
-	nav > ul {
-		float: left;
-		
-		&:not(.pageNavigation) {
-			float: right;
-			text-align: right;
-		}
-		
-		li {
-			display: inline;
-		}
+	> nav:not(.pageNavigation) > ul {
+		margin-right: 2px;
+		float: right;
+		.buttonList;
 	}
 }
 

@@ -99,7 +99,7 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<ul class="buttonList">
+					<ul class="buttonList smallButtons">
 						<li><a class="button small" href="{link controller='LostPassword'}{/link}"><span>{lang}wcf.user.lostPassword{/lang}</span></a></li>
 						{if !REGISTER_DISABLED && REGISTER_ACTIVATION_METHOD == 1}<li><a class="button small" href="{link controller='RegisterActivation'}{/link}"><span>{lang}wcf.user.registerActivation{/lang}</span></a></li>{/if}
 						{event name='buttons'}
@@ -115,7 +115,7 @@
 				<dl>
 					<dt></dt>
 					<dd>
-						<ul class="buttonList">
+						<ul class="buttonList smallButtons">
 							{content}
 								{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
 									<li id="githubAuth" class="3rdPartyAuth">

@@ -69,7 +69,7 @@
 				<dl>
 					<dt></dt>
 					<dd>
-						<ul class="buttonList">
+						<ul class="buttonList smallButtons">
 							<li><a class="button small" href="{link controller='LostPassword'}{/link}"><span>{lang}wcf.user.lostPassword{/lang}</span></a></li>
 						</ul>
 					</dd>
@@ -180,7 +180,7 @@
 					<dl>
 						<dt></dt>
 						<dd>
-							<ul class="buttonList">
+							<ul class="buttonList smallButtons">
 								<li><a class="button small" href="{link controller='EmailActivation'}{/link}"><span>{lang}wcf.user.emailActivation{/lang}</span></a></li>
 							</ul>
 						</dd>
