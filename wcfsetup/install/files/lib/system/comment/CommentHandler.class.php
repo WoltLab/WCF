@@ -6,11 +6,13 @@ use wcf\data\comment\CommentList;
 use wcf\data\comment\StructuredCommentList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\comment\manager\ICommentManager;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\like\LikeHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Provides methods for comment object handling.
@@ -159,5 +161,45 @@ class CommentHandler extends SingletonFactory {
 		
 		// delete comments / responses
 		CommentEditor::deleteAll($commentIDs);
+	}
+	
+	/**
+	 * Enforces the flood control.
+	 */
+	public static function enforceFloodControl() {
+		if (!WCF::getSession()->getPermission('user.comment.floodControlTime')) {
+			return;
+		}
+		
+		// check for comments
+		$sql = "SELECT		time
+			FROM		wcf".WCF_N."_comment
+			WHERE		userID = ?
+					AND time > ?
+			ORDER BY	time DESC";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute(array(
+			WCF::getUser()->userID,
+			(TIME_NOW - WCF::getSession()->getPermission('user.comment.floodControlTime'))
+		));
+		if (($row = $statement->fetchArray()) !== false) {
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', array('lastCommentTime' => $row['time'])));
+		}
+		else {
+			// check for comment response
+			$sql = "SELECT		time
+				FROM		wcf".WCF_N."_comment_response
+				WHERE		userID = ?
+						AND time > ?
+				ORDER BY	time DESC";
+			$statement = WCF::getDB()->prepareStatement($sql, 1);
+			$statement->execute(array(
+				WCF::getUser()->userID,
+				(TIME_NOW - WCF::getSession()->getPermission('user.comment.floodControlTime'))
+			));
+			if (($row = $statement->fetchArray()) !== false) {
+				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', array('lastCommentTime' => $row['time'])));
+			}
+		}
 	}
 }

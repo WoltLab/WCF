@@ -158,6 +158,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters to add a comment.
 	 */
 	public function validateAddComment() {
+		CommentHandler::enforceFloodControl();
+		
 		$this->readInteger('objectID', false, 'data');
 		$this->validateMessage();
 		$objectType = $this->validateObjectType();
@@ -216,6 +218,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters to add a response.
 	 */
 	public function validateAddResponse() {
+		CommentHandler::enforceFloodControl();
+		
 		$this->readInteger('objectID', false, 'data');
 		
 		// validate comment id
