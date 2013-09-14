@@ -993,6 +993,13 @@ WCF.Dropdown = {
 	 * @param	jQuery		dropdownMenu
 	 */
 	setAlignment: function(dropdown, dropdownMenu) {
+		// force dropdown menu to be placed in the upper left corner, otherwise
+		// it might cause the calculations to be a bit off if the page exceeds
+		// the window boundaries during getDimensions() making it visible
+		if (!dropdownMenu.data('isInitialized')) {
+			dropdownMenu.data('isInitialized', true).css({ left: 0, top: 0 });
+		}
+		
 		// get dropdown position
 		var $dropdownDimensions = dropdown.getDimensions('outer');
 		var $dropdownOffsets = dropdown.getOffsets('offset');
