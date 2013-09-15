@@ -447,7 +447,7 @@ WCF.Comment.Handler = Class.extend({
 		this._proxy.sendRequest();
 		
 		// reset input
-		$input.val('').blur();
+		//$input.val('').blur();
 	},
 	
 	/**
@@ -492,11 +492,14 @@ WCF.Comment.Handler = Class.extend({
 	_success: function(data, textStatus, jqXHR) {
 		switch (data.actionName) {
 			case 'addComment':
+				this._commentAdd.find('input').val('').blur();
 				$(data.returnValues.template).insertAfter(this._commentAdd).wcfFadeIn();
 			break;
 			
 			case 'addResponse':
 				var $comment = this._comments[data.returnValues.commentID];
+				$comment.find('.jsCommentResponseAdd input').val('').blur();
+				
 				var $responseList = $comment.find('ul.commentResponseList');
 				if (!$responseList.length) $responseList = $('<ul class="commentResponseList" />').insertBefore($comment.find('.commentOptionContainer'));
 				$(data.returnValues.template).appendTo($responseList).wcfFadeIn();
