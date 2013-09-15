@@ -43,7 +43,7 @@
 		<instruction type="script">acp/post_install.php</instruction> 
 	</instructions>
 	
-	<instruction type="update" fromversion="2.0.0 Beta 8">
+	<instructions type="update" fromversion="2.0.0 Beta 8">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
@@ -54,5 +54,5 @@
 		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf.b9.php</instruction>
 		
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
-	</instruction>
+	</instructions>
 </package>
