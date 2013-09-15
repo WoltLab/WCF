@@ -208,8 +208,8 @@ WCF.Like = Class.extend({
 	 * @param	integer		containerID
 	 */
 	_createWidget: function(containerID) {
-		var $likeButton = $('<li class="likeButton"><a title="'+WCF.Language.get('wcf.like.button.like')+'" class="jsTooltip"><span class="icon icon16 icon-thumbs-up" /> <span class="invisible">'+WCF.Language.get('wcf.like.button.like')+'</span></a></li>');
-		var $dislikeButton = $('<li class="dislikeButton"><a title="'+WCF.Language.get('wcf.like.button.dislike')+'" class="jsTooltip"><span class="icon icon16 icon-thumbs-down" /> <span class="invisible">'+WCF.Language.get('wcf.like.button.dislike')+'</span></a></li>');
+		var $likeButton = $('<li class="likeButton"><a title="'+WCF.Language.get('wcf.like.button.like')+'" class="jsTooltip"><span class="icon icon16 icon-thumbs-up-alt" /> <span class="invisible">'+WCF.Language.get('wcf.like.button.like')+'</span></a></li>');
+		var $dislikeButton = $('<li class="dislikeButton"><a title="'+WCF.Language.get('wcf.like.button.dislike')+'" class="jsTooltip"><span class="icon icon16 icon-thumbs-down-alt" /> <span class="invisible">'+WCF.Language.get('wcf.like.button.dislike')+'</span></a></li>');
 		if (!this._enableDislikes) $dislikeButton.hide();
 		
 		if (!this._allowForOwnContent && (WCF.User.userID == this._containers[containerID].data('userID'))) {
