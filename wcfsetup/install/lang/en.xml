@@ -168,7 +168,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.dataImport.cli.configure.data.error.noSelection"><![CDATA[TODO: Sie haben keine Daten zum Import ausgewählt. Der Import wird beendet.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.error.notValid"><![CDATA[The selected data type is invalid.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.selectAll"><![CDATA[All data]]></item>
-		<item name="wcf.acp.dataImport.cli.selection"><![CDATA[Selection? [{if $minSelection == $maxSelection}{$minSelection}{else}{$minSelection}-{$maxSelection}{/if}]]></item>
+		<item name="wcf.acp.dataImport.cli.selection"><![CDATA[Selection? [{if $minSelection == $maxSelection}{$minSelection}{else}{$minSelection}-{$maxSelection}{/if}]]]></item>
 		<item name="wcf.acp.dataImport.completed"><![CDATA[Import completed.]]></item>
 		<item name="wcf.acp.dataImport.configure.data"><![CDATA[Data]]></item>
 		<item name="wcf.acp.dataImport.configure.data.description"><![CDATA[Import the data selected below:]]></item>

@@ -169,7 +169,7 @@
 		<item name="wcf.acp.dataImport.cli.configure.data.error.noSelection"><![CDATA[Sie haben keine Daten zum Import ausgewählt. Der Import wird beendet.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.error.notValid"><![CDATA[Der ausgewählte Datentyp ist ungültig.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.selectAll"><![CDATA[Alle Daten]]></item>
-		<item name="wcf.acp.dataImport.cli.selection"><![CDATA[Auswahl? [{if $minSelection == $maxSelection}{$minSelection}{else}{$minSelection}-{$maxSelection}{/if}]]></item>
+		<item name="wcf.acp.dataImport.cli.selection"><![CDATA[Auswahl? [{if $minSelection == $maxSelection}{$minSelection}{else}{$minSelection}-{$maxSelection}{/if}]]]></item>
 		<item name="wcf.acp.dataImport.completed"><![CDATA[Import abgeschlossen.]]></item>
 		<item name="wcf.acp.dataImport.configure.data"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.dataImport.configure.data.description"><![CDATA[Folgende Daten importieren:]]></item>
