@@ -210,14 +210,31 @@ class PackageCLICommand implements ICLICommand {
 				$requirement['action'] = $openRequirements[$requirement['name']]['action'];
 				
 				if (!isset($requirement['file'])) {
-					if ($openRequirements[$requirement['name']]['action'] === 'update') {
+					if ($requirement['action'] === 'update') {
 						$requirement['status'] = 'missingVersion';
 						$requirement['existingVersion'] = $openRequirements[$requirement['name']]['existingVersion'];
 					}
 					$missingPackages++;
 				}
 				else {
-					$requirement['status'] = 'delivered';
+				$requirement['status'] = 'delivered';
+					$packageArchive = new PackageArchive($packageInstallationDispatcher->getArchive()->extractTar($requirement['file']));
+					$packageArchive->openArchive();
+					
+					// make sure that the delivered package is correct
+					if ($requirement['name'] != $packageArchive->getPackageInfo('name')) {
+						$requirement['status'] = 'invalidDeliveredPackage';
+						$requirement['deliveredPackage'] = $packageArchive->getPackageInfo('name');
+						$missingPackages++;
+					}
+					else if (isset($requirement['minversion'])) {
+						// make sure that the delivered version is sufficient
+						if (Package::compareVersion($requirement['minversion'], $packageArchive->getPackageInfo('version')) > 0) {
+							$requirement['deliveredVersion'] = $packageArchive->getPackageInfo('version');
+							$requirement['status'] = 'missingVersion';
+							$missingPackages++;
+						}
+					}
 				}
 			}
 			else {
