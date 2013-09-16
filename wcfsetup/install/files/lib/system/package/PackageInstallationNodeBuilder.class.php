@@ -21,6 +21,12 @@ use wcf\util\StringUtil;
  */
 class PackageInstallationNodeBuilder {
 	/**
+	 * true if current node is empty
+	 * @var	boolean
+	 */
+	public $emptyNode = true;
+	
+	/**
 	 * active package installation dispatcher
 	 * @var	wcf\system\package\PackageInstallationDispatcher
 	 */
@@ -544,14 +550,16 @@ class PackageInstallationNodeBuilder {
 	protected function buildPluginNodes() {
 		$pluginNodes = array();
 		
+		$this->emptyNode = true;
 		$instructions = ($this->installation->getAction() == 'install') ? $this->installation->getArchive()->getInstallInstructions() : $this->installation->getArchive()->getUpdateInstructions();
 		foreach ($instructions as $pip) {
 			if (isset($pip['attributes']['run']) && ($pip['attributes']['run'] == 'standalone')) {
-				// move into a new node
-				$this->parentNode = $this->node;
-				$this->node = $this->getToken();
-				$this->sequenceNo = 0;
-				
+				// move into a new node unless current one is empty
+				if (!$this->emptyNode) {
+					$this->parentNode = $this->node;
+					$this->node = $this->getToken();
+					$this->sequenceNo = 0;
+				}
 				$pluginNodes[] = array(
 					'data' => $pip,
 					'node' => $this->node,
@@ -563,6 +571,8 @@ class PackageInstallationNodeBuilder {
 				$this->parentNode = $this->node;
 				$this->node = $this->getToken();
 				$this->sequenceNo = 0;
+				
+				$this->emptyNode = true;
 			}
 			else {
 				$this->sequenceNo++;
@@ -573,6 +583,8 @@ class PackageInstallationNodeBuilder {
 					'parentNode' => $this->parentNode,
 					'sequenceNo' => $this->sequenceNo
 				);
+				
+				$this->emptyNode = false;
 			}
 		}
 		
