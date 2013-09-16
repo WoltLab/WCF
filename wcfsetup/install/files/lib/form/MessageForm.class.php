@@ -231,7 +231,7 @@ abstract class MessageForm extends RecaptchaForm {
 		}
 		
 		if (mb_strlen($this->subject) > 255) {
-			throw new UserInputException('subject', 'tooLong');
+			$this->subject = mb_substr($this->subject, 0, 255);
 		}
 		
 		// search for censored words
