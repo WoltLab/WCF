@@ -66,6 +66,7 @@ class CLIWCF extends WCF {
 		// the destructor registered in core.functions.php will only call the destructor of the parent class
 		register_shutdown_function(array('wcf\system\CLIWCF', 'destruct'));
 		
+		$this->initApplications();
 		$this->initArgv();
 		$this->initPHPLine();
 		$this->initAuth();
