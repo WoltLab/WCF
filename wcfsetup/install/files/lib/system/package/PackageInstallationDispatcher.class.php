@@ -230,10 +230,13 @@ class PackageInstallationDispatcher {
 			}
 			
 			// delete queues
+			/*
+			 * DEBUG ONLY
+			 * 
 			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
 				WHERE		processNo = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->queue->processNo));
+			$statement->execute(array($this->queue->processNo));*/
 		}
 		
 		if ($this->requireRestructureVersionTables) {
@@ -863,10 +866,13 @@ class PackageInstallationDispatcher {
 		}
 		
 		// delete queues
+		/*
+		 * DEBUG ONLY
+		 * 
 		$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
 			WHERE		processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->queue->processNo));
+		$statement->execute(array($this->queue->processNo));*/
 		
 		// update package version
 		if ($this->action == 'update') {
