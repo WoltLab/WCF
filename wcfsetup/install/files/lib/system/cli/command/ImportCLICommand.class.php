@@ -116,6 +116,11 @@ class ImportCLICommand implements ICLICommand {
 		$this->exporters = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.exporter');
 		$this->importers = array_keys(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.importer'));
 		
+		if (empty($this->exporters)) {
+			CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.selectExporter.noExporters'));
+			return;
+		}
+		
 		// step 1) previous import
 		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_import_mapping";
@@ -183,8 +188,8 @@ class ImportCLICommand implements ICLICommand {
 	 * Reads the database connection.
 	 */
 	protected function readDatabaseConnection() {
-		CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database'));
 		while (true) {
+			CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database'));
 			$this->dbHost = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.host').'> ');
 			$this->dbUser = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.user').'> ');
 			$this->dbPassword = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.password').'> ');
@@ -287,6 +292,12 @@ class ImportCLICommand implements ICLICommand {
 		$supportedDataSelection = array(
 			'' => array()
 		);
+		
+		$i = 1;
+		$availablePrimaryDataTypes = array();
+		foreach ($this->supportedData as $objectType => $subData) {
+			$availablePrimaryDataTypes[$i++] = $objectType;
+		}
 		while (true) {
 			if ($printPrimaryTypes) {
 				// print primary import data types
@@ -332,7 +343,7 @@ class ImportCLICommand implements ICLICommand {
 				$selectedData[$selectedObjectType] = array();
 				unset($supportedDataSelection[''][$selectedObjectTypeIndex]);
 			}
-			else if (isset($selectedData[$selectedObjectTypeIndex])) {
+			else if (isset($availablePrimaryDataTypes[$selectedObjectTypeIndex])) {
 				CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.cli.configure.data.alreadySelected'));
 				continue;
 			}
@@ -375,15 +386,15 @@ class ImportCLICommand implements ICLICommand {
 					}
 					else if (isset($supportedDataSelection[$selectedObjectType][$selectedSecondaryObjectTypeIndex])) {
 						$selectedSecondaryObjectType = $supportedDataSelection[$selectedObjectType][$selectedSecondaryObjectTypeIndex];
-						$selectedData[$selectedObjectType][] = $selectedSecondaryObjectType;
+						$selectedData[$selectedObjectType][$selectedSecondaryObjectTypeIndex] = $selectedSecondaryObjectType;
 						unset($supportedDataSelection[$selectedObjectType][$selectedSecondaryObjectTypeIndex]);
 					}
-					else if (in_array($selectedSecondaryObjectType, $selectedData[$selectedObjectType])) {
-						CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.cli.configure.data.alreadySelected'));
+					else if (isset($selectedData[$selectedObjectType][$selectedSecondaryObjectTypeIndex])) {
+						CLIWCF::getReader()->println('  '.WCF::getLanguage()->get('wcf.acp.dataImport.cli.configure.data.alreadySelected'));
 						continue;
 					}
 					else {
-						CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.cli.configure.data.error.notValid'));
+						CLIWCF::getReader()->println('  '.WCF::getLanguage()->get('wcf.acp.dataImport.cli.configure.data.error.notValid'));
 						continue;
 					}
 					
@@ -423,7 +434,7 @@ class ImportCLICommand implements ICLICommand {
 		CLIWCF::getReader()->println('1) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.1'));
 		CLIWCF::getReader()->println('2) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.2').' (*)');
 		CLIWCF::getReader()->println('3) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.3'));
-		CLIWCF::getReader()->println('  '.WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', array(
+		CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', array(
 			'minSelection' => 1,
 			'maxSelection' => 3
 		)));
