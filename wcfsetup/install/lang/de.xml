@@ -165,21 +165,14 @@
 	
 	<category name="wcf.acp.dataImport">
 		<item name="wcf.acp.dataImport"><![CDATA[Datenimport]]></item>
-		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Datenquelle wählen]]></item>
-		<item name="wcf.acp.dataImport.exporter"><![CDATA[Datenquelle]]></item>
+		<item name="wcf.acp.dataImport.cli.configure.data.alreadySelected"><![CDATA[Diese Daten werden bereits importiert.]]></item>
+		<item name="wcf.acp.dataImport.cli.configure.data.error.noSelection"><![CDATA[Sie haben keine Daten zum Import ausgewählt. Der Import wird beendet.]]></item>
+		<item name="wcf.acp.dataImport.cli.configure.data.error.notValid"><![CDATA[Der ausgewählte Datentyp ist ungültig.]]></item>
+		<item name="wcf.acp.dataImport.cli.configure.data.selectAll"><![CDATA[Alle Daten]]></item>
+		<item name="wcf.acp.dataImport.cli.selection"><![CDATA[Auswahl? [{if $minSelection == $maxSelection}{$minSelection}{else}{$minSelection}-{$maxSelection}{/if}]]></item>
+		<item name="wcf.acp.dataImport.completed"><![CDATA[Import abgeschlossen.]]></item>
 		<item name="wcf.acp.dataImport.configure.data"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.dataImport.configure.data.description"><![CDATA[Folgende Daten importieren:]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[Benutzergruppen]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[Benutzerprofilfelder]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Follower]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Benutzerränge]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[Avatare]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Pinnwand-Kommentare]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Pinnwand-Kommentar-Antworten]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smileys]]></item>
-		<item name="wcf.acp.dataImport.completed"><![CDATA[Import abgeschlossen.]]></item>
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[Datenbank-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[Benutzername]]></item>
@@ -197,9 +190,23 @@
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"><![CDATA[Benutzeraccounts umbennen]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"><![CDATA[Benutzeraccounts zusammenlegen]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"><![CDATA[Benutzeraccounts zusammenlegen, wenn auch die E-Mail-Adresse identisch ist]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[Benutzergruppen]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[Benutzerprofilfelder]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Follower]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Benutzerränge]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[Avatare]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Pinnwand-Kommentare]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Pinnwand-Kommentar-Antworten]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[Wollen Sie die bestehenden Zuordnungen wirklich löschen?]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet um Inhalte aus dem importierten Forum einwandfrei zu zuordnen. Wenn Sie den Import-Vorgang vollständig abgeschlossen haben, können Sie diese Zuordnungen <a id="deleteMapping">löschen</a>. Sie sollten die Zuordnungen nicht löschen, wenn Sie jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernommen wollen.]]></item>
+		<item name="wcf.acp.dataImport.exporter"><![CDATA[Datenquelle]]></item>
+		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Datenquelle wählen]]></item>
+		<item name="wcf.acp.dataImport.selectExporter.error.notValid"><![CDATA[Die ausgewählte Datenquelle ist ungültig.]]></item>
 		<item name="wcf.acp.dataImport.selectExporter.noExporters"><![CDATA[Es wurde keine Datenquelle für einen Datenimport gefunden.]]></item>
+		<item name="wcf.acp.dataImport.started"><![CDATA[Import begonnen.]]></item>
 	</category>
 	
 	<category name="wcf.acp.exceptionLog">
