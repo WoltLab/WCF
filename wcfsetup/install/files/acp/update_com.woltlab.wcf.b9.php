@@ -66,9 +66,8 @@ if ($commentUpdateData['count']) {
 }
 
 WCF::getSession()->register('__commentUpdateData', serialize($commentUpdateData));
-file_put_contents(WCF_DIR.'node.log', "SCRIPT executed, count is {$commentUpdateData['count']} and offset is {$commentUpdateData['offset']}\n", FILE_APPEND);
+
 // force new execution of current node
-if ($commentUpdateData['count'] <= $commentUpdateData['offset']) {
-	file_put_contents(WCF_DIR.'node.log', "\tSPLIT NODE\n", FILE_APPEND);
+if ($commentUpdateData['count'] >= $commentUpdateData['offset']) {
 	throw new SplitNodeException();
 }
