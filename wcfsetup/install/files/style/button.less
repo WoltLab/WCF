@@ -9,7 +9,7 @@ input[type='button'],
 	border-width: 1px;
 	cursor: pointer;
 	display: inline-block;
-	margin: 0 2px;
+	margin: 0 4px;
 	padding: 5px 13px;
 	position: relative;
 }
@@ -115,13 +115,42 @@ button.active:hover {
 	}
 }
 
+/* small buttons */
+button.small,
+.button.small {
+	border-radius: @wcfSmallButtonBorderRadius;
+	font-size: @wcfSmallFontSize;
+	min-height: 13px;
+	padding: 5px 11px;
+	margin: 0 2px;
+}
+
 /* button list */
 .buttonList {
+	font-size: 0;
+	
 	> li {
 		display: inline-block;
+		font-size: 1rem;
 		
-		> .button {
+		&:not(:last-child) {
+			margin-right: 8px;
+		}
+		
+		.button {
 			margin: 0;
+		}
+	}
+	
+	&.smallButtons {
+		> li:not(:last-child) {
+			margin-right: 4px;
+		}
+	}
+	
+	&.iconList {
+		> li:not(:last-child) {
+			margin-right: 2px;
 		}
 	}
 }
@@ -238,15 +267,6 @@ button.active:hover {
 		font-size: @wcfSmallFontSize;
 		padding: 5px 11px;
 	}
-}
-
-/* small buttons */
-button.small,
-.button.small {
-	border-radius: @wcfSmallButtonBorderRadius;
-	font-size: @wcfSmallFontSize;
-	min-height: 13px;
-	padding: 5px 11px;
 }
 
 /* button icons */

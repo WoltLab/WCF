@@ -72,7 +72,7 @@
 							<p>{@$notification[event]->getMessage()}</p>
 							
 							<nav class="jsMobileNavigation buttonGroupNavigation">
-								<ul class="buttonList jsOnly">
+								<ul class="buttonList iconList jsOnly">
 									<li><a class="jsMarkAsConfirmed jsTooltip" title="{lang}wcf.user.notification.markAsConfirmed{/lang}"><span class="icon icon16 icon-remove"></span></a></li>
 								</ul>
 							</nav>

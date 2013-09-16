@@ -1235,10 +1235,11 @@ WCF.Message.InlineEditor = Class.extend({
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
 		
 		var $content = $messageBody.find('.messageText');
-		this._cache = $content.children().detach();
 		
 		// hide unrelated content
 		$content.parent().children('.jsInlineEditorHideContent').hide();
+		
+		this._cache = $content.detach();
 	},
 	
 	/**
@@ -1259,7 +1260,7 @@ WCF.Message.InlineEditor = Class.extend({
 		// restore message
 		var $messageBody = $container.find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
-		$messageBody.find('.messageText').html(this._cache);
+		$messageBody.children('div:eq(0)').html(this._cache);
 		
 		// show unrelated content
 		$messageBody.find('.jsInlineEditorHideContent').show();
@@ -1304,7 +1305,7 @@ WCF.Message.InlineEditor = Class.extend({
 		
 		var $messageBody = this._container[this._activeElementID].addClass('jsInvalidQuoteTarget').find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
-		var $content = $messageBody.find('.messageText');
+		var $content = $messageBody.children('div:eq(0)');
 		
 		// insert wysiwyg
 		$('' + data.returnValues.template).appendTo($content);
@@ -1341,7 +1342,7 @@ WCF.Message.InlineEditor = Class.extend({
 	_revertEditor: function() {
 		var $messageBody = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget').find('.messageBody');
 		$messageBody.children('span.icon-spinner').remove();
-		$messageBody.find('.messageText').children().show();
+		$messageBody.children('div:eq(0)').children().show();
 		
 		// show unrelated content
 		$messageBody.find('.jsInlineEditorHideContent').show();
@@ -1423,7 +1424,7 @@ WCF.Message.InlineEditor = Class.extend({
 	_hideEditor: function() {
 		var $messageBody = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget').find('.messageBody');
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
-		$messageBody.find('.messageText').children().hide();
+		$messageBody.children('div:eq(0)').children().hide();
 		
 		// show unrelated content
 		$messageBody.find('.jsInlineEditorHideContent').show();
@@ -1442,7 +1443,7 @@ WCF.Message.InlineEditor = Class.extend({
 		var $container = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget');
 		var $messageBody = $container.find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
-		var $content = $messageBody.find('.messageText');
+		var $content = $messageBody.children('div:eq(0)');
 		
 		// show unrelated content
 		$content.parent().children('.jsInlineEditorHideContent').show();
@@ -1459,7 +1460,7 @@ WCF.Message.InlineEditor = Class.extend({
 		$content.empty();
 		
 		// insert new message
-		$content.html(data.returnValues.message);
+		$content.html('<div class="messageText">' + data.returnValues.message + '</div>');
 		
 		this._activeElementID = '';
 		

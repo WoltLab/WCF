@@ -43,7 +43,6 @@
 			} 
 		}
 		
-		
 		// call jQuery's own data method
 		var $data = $jQueryData.apply(this, arguments);
 		
@@ -65,7 +64,7 @@
 	var consoleProperties = [ "log",/* "debug",*/ "info", "warn", "exception", "assert", "dir", "dirxml", "trace", "group", "groupEnd", "groupCollapsed", "profile", "profileEnd", "count", "clear", "time", "timeEnd", "timeStamp", "table", "error" ];
 	for (var i = 0; i < consoleProperties.length; i++) {
 		if (typeof (console[consoleProperties[i]]) === 'undefined') {
-			console[consoleProperties[i]] = function () { }
+			console[consoleProperties[i]] = function () { };
 		}
 	}
 	
@@ -994,6 +993,13 @@ WCF.Dropdown = {
 	 * @param	jQuery		dropdownMenu
 	 */
 	setAlignment: function(dropdown, dropdownMenu) {
+		// force dropdown menu to be placed in the upper left corner, otherwise
+		// it might cause the calculations to be a bit off if the page exceeds
+		// the window boundaries during getDimensions() making it visible
+		if (!dropdownMenu.data('isInitialized')) {
+			dropdownMenu.data('isInitialized', true).css({ left: 0, top: 0 });
+		}
+		
 		// get dropdown position
 		var $dropdownDimensions = dropdown.getDimensions('outer');
 		var $dropdownOffsets = dropdown.getOffsets('offset');
@@ -3888,7 +3894,7 @@ WCF.Template = Class.extend({
 			
 			for (var $i = 0, $max = $chars.length; $i < $max; $i++) {
 				var $char = $chars[$i];
-				if ($inName && $char != '=' && $char != ' ') $name += $char
+				if ($inName && $char != '=' && $char != ' ') $name += $char;
 				else if ($inName && $char == '=') {
 					$inName = false;
 					$singleQuoted = false;
@@ -3952,6 +3958,10 @@ WCF.Template = Class.extend({
 			content = unescape(content.replace(/\$([^.\[\s]+)/g, "(v['$1'])"));
 			
 			return "' + " + content + " + '";
+		})
+		// {lang}foo{/lang}
+		.replace(/{lang}(.+?){\/lang}/, function(_, content) {
+			return "' + WCF.Language.get('" + unescape(content) + "') + '";
 		})
 		// {if}
 		.replace(/\{if (.+?)\}/g, function(_, content) {

@@ -25,6 +25,9 @@
 			<category name="user.message.attachment">
 				<parent>user.message</parent>
 			</category>
+			<category name="user.message.comment">
+				<parent>user.message</parent>
+			</category>
 			
 			<category name="mod"></category>
 			<category name="mod.general">
@@ -348,6 +351,16 @@ pdf]]></defaultvalue>
 				<defaultvalue>all</defaultvalue>
 			</option>
 			<!-- /user.message -->
+			
+			<!-- user.message.comment -->
+			<option name="user.comment.floodControlTime">
+				<categoryname>user.message.comment</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>15</defaultvalue>
+				<admindefaultvalue>0</admindefaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<!-- /user.message.comment -->
 			
 			<option name="admin.user.canViewInvisible">
 				<categoryname>admin.general</categoryname>

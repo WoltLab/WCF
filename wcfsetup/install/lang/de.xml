@@ -868,8 +868,9 @@
 		<item name="wcf.acp.package.installation.packageStatus"><![CDATA[Status]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.delivered"><![CDATA[vom Paket bereitgestellt]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.installed"><![CDATA[bereits installiert]]></item>
+		<item name="wcf.acp.package.installation.packageStatus.invalidDeliveredPackage"><![CDATA[falsches Paket bereitgestellt ({$package.deliveredPackage})]]></item>
 		<item name="wcf.acp.package.installation.packageStatus.missing"><![CDATA[fehlt]]></item>
-		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[fehlende Paket-Version (installierte Version: {$package.existingVersion})]]></item>
+		<item name="wcf.acp.package.installation.packageStatus.missingVersion"><![CDATA[fehlende Paket-Version ({if $package.existingVersion|isset}installierte Version: {$package.existingVersion}{else}bereitgestellte Version: {$package.deliveredVersion}{/if})]]></item>
 		<item name="wcf.acp.package.installation.rollback"><![CDATA[Installation rückgängig machen]]></item>
 		<item name="wcf.acp.package.installation.step.install"><![CDATA[„{$packageName}“ wird installiert …]]></item>
 		<item name="wcf.acp.package.installation.step.install.success"><![CDATA[Installation abgeschlossen]]></item>
@@ -1434,6 +1435,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.comment.add"><![CDATA[Kommentar schreiben …]]></item>
 		<item name="wcf.comment.delete.confirmMessage"><![CDATA[Wollen Sie diesen Kommentar wirklich löschen?]]></item>
 		<item name="wcf.comment.description"><![CDATA[Drücken Sie die Eingabetaste, um abzusenden oder Escape, um abzubrechen.]]></item>
+		<item name="wcf.comment.error.floodControl"><![CDATA[Sie haben bereits einen Kommentar innerhalb der letzten {#$__wcf->getSession()->getPermission('user.comment.floodControlTime')} Sekunden geschrieben. Sie können erst in {#$lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW} Sekunden einen neuen Kommentar erstellen.]]></item>
 		<item name="wcf.comment.more"><![CDATA[Weitere Kommentare]]></item>
 		<item name="wcf.comment.response.add"><![CDATA[Antworten …]]></item>
 		<item name="wcf.comment.response.more"><![CDATA[{literal}{if $count == 1}Eine weitere Antwort{else}{#$count} weitere Antworten{/if}{/literal}]]></item>
@@ -1973,7 +1975,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.button.login"><![CDATA[Anmelden]]></item>
 		<item name="wcf.user.button.register"><![CDATA[Registrieren]]></item>
 		<item name="wcf.user.button.registerNow"><![CDATA[Jetzt registrieren]]></item>
-		<item name="wcf.user.error.username.3rdParty"><![CDATA[Das Benutzerkonto ist mit einem Drittanbieter-Konto verbunden, ein Passwort kann nicht angefordert werden.]]></item>
+		<item name="wcf.user.username.error.3rdParty"><![CDATA[Das Benutzerkonto ist mit einem Drittanbieter-Konto verbunden, ein Passwort kann nicht angefordert werden.]]></item>
 		<item name="wcf.user.login.action"><![CDATA[Sind Sie bereits registriert?]]></item>
 		<item name="wcf.user.login.action.login"><![CDATA[Ja, mein Kennwort lautet:]]></item>
 		<item name="wcf.user.login.action.register"><![CDATA[Nein, ich möchte mich jetzt registrieren.]]></item>

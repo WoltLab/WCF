@@ -66,7 +66,7 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<ul class="buttonList">
+					<ul class="buttonList smallButtons">
 						<li><a class="button small" href="{link controller='EmailNewActivationCode'}{/link}"><span>{lang}wcf.user.newActivationCode{/lang}</span></a></li>
 						{event name='buttons'}
 					</ul>

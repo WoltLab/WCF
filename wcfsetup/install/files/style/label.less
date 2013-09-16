@@ -1,7 +1,15 @@
 /* #### Labels #### */
 /* label list */
+.labelList {
+	font-size: 0;
+}
+
 .labelList, .labelList > li {
-	display: inline-block; 
+	display: inline-block;
+}
+
+.labelList > li:not(:last-child) {
+	margin-right: 4px;
 }
 
 /* ACP label list */

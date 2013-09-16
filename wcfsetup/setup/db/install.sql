@@ -251,7 +251,8 @@ CREATE TABLE wcf1_comment (
 	responses MEDIUMINT(7) NOT NULL DEFAULT '0',
 	responseIDs VARCHAR(255) NOT NULL DEFAULT '',
 	
-	KEY (objectTypeID, objectID, time)
+	KEY (objectTypeID, objectID, time),
+	KEY lastCommentTime (userID, time)
 );
 
 DROP TABLE IF EXISTS wcf1_comment_response;
@@ -263,7 +264,8 @@ CREATE TABLE wcf1_comment_response (
 	username VARCHAR(255) NOT NULL,
 	message TEXT NOT NULL,
 	
-	KEY (commentID, time)
+	KEY (commentID, time),
+	KEY lastResponseTime (userID, time)
 );
 
 DROP TABLE IF EXISTS wcf1_core_object;

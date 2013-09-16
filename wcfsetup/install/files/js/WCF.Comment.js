@@ -228,7 +228,10 @@ WCF.Comment.Handler = Class.extend({
 			var $commentID = $comment.data('commentID');
 			self._comments[$commentID] = $comment;
 			
-			var $container = $('<div class="commentOptionContainer" />').hide().insertAfter($comment.find('ul.commentResponseList'));
+			var $insertAfter = $comment.find('ul.commentResponseList');
+			if (!$insertAfter.length) $insertAfter = $comment.find('.commentContent');
+			
+			$container = $('<div class="commentOptionContainer" />').hide().insertAfter($insertAfter);
 			self._commentButtonList[$commentID] = $('<ul />').appendTo($container);
 			
 			self._handleLoadNextResponses($commentID);
@@ -330,6 +333,9 @@ WCF.Comment.Handler = Class.extend({
 		if ($placeholder !== null) {
 			$listItem.hide();
 		}
+		else {
+			this._commentButtonList[commentID].parent().addClass('jsAddResponseActive');
+		}
 		$listItem.appendTo(this._commentButtonList[commentID].parent().show());
 		
 		var $inputContainer = $listItem.children('div');
@@ -389,6 +395,8 @@ WCF.Comment.Handler = Class.extend({
 		
 		var $responseInput = this._comments[$commentID].data('responseInput').show();
 		$responseInput.find('input').focus();
+		
+		$responseInput.parents('.commentOptionContainer').addClass('jsAddResponseActive');
 	},
 	
 	/**
@@ -439,7 +447,7 @@ WCF.Comment.Handler = Class.extend({
 		this._proxy.sendRequest();
 		
 		// reset input
-		$input.val('').blur();
+		//$input.val('').blur();
 	},
 	
 	/**
@@ -484,11 +492,17 @@ WCF.Comment.Handler = Class.extend({
 	_success: function(data, textStatus, jqXHR) {
 		switch (data.actionName) {
 			case 'addComment':
+				this._commentAdd.find('input').val('').blur();
 				$(data.returnValues.template).insertAfter(this._commentAdd).wcfFadeIn();
 			break;
 			
 			case 'addResponse':
-				$(data.returnValues.template).appendTo(this._comments[data.returnValues.commentID].find('ul.commentResponseList')).wcfFadeIn();
+				var $comment = this._comments[data.returnValues.commentID];
+				$comment.find('.jsCommentResponseAdd input').val('').blur();
+				
+				var $responseList = $comment.find('ul.commentResponseList');
+				if (!$responseList.length) $responseList = $('<ul class="commentResponseList" />').insertBefore($comment.find('.commentOptionContainer'));
+				$(data.returnValues.template).appendTo($responseList).wcfFadeIn();
 			break;
 			
 			case 'edit':

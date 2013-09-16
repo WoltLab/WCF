@@ -52,7 +52,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * list of packages about to be installed
-	 * @var	boolean
+	 * @var	array<string>
 	 */
 	protected static $pendingPackages = array();
 	
@@ -387,7 +387,7 @@ class PackageInstallationNodeBuilder {
 		}
 		
 		$this->node = $this->getToken();
-					
+		
 		// calculate the number of instances of this package
 		$sql = "INSERT INTO	wcf".WCF_N."_package_installation_node
 					(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
@@ -416,7 +416,7 @@ class PackageInstallationNodeBuilder {
 			))
 		));
 		
-		self::$pendingPackages[] = $this->installation->getArchive()->getPackageInfo('name');
+		self::$pendingPackages[$this->installation->getArchive()->getPackageInfo('name')] = $this->installation->getArchive()->getPackageInfo('version');
 	}
 	
 	/**
@@ -431,6 +431,14 @@ class PackageInstallationNodeBuilder {
 		$requiredPackages = $this->installation->getArchive()->getOpenRequirements();
 		foreach ($requiredPackages as $packageName => $package) {
 			if (!isset($package['file'])) {
+				if (isset(self::$pendingPackages[$packageName]) && (!isset($package['minversion']) || Package::compareVersion(self::$pendingPackages[$packageName], $package['minversion']) >= 0)) {
+					// the package will already be installed and no
+					// minversion is given or the package which will be
+					// installed satisfies the minversion, thus we can
+					// ignore this requirement
+					continue;
+				}
+				
 				// requirements will be checked once package is about to be installed
 				$this->requirements[$packageName] = array(
 					'minVersion' => (isset($package['minversion'])) ? $package['minversion'] : '',
@@ -462,6 +470,16 @@ class PackageInstallationNodeBuilder {
 			$archive = new PackageArchive($fileName);
 			$archive->openArchive();
 			
+			// check if delivered package has correct identifier
+			if ($archive->getPackageInfo('name') != $packageName) {
+				throw new SystemException("Invalid package file delivered for '".$packageName."' requirement of package '".$this->installation->getArchive()->getPackageInfo('name')."' (delivered package: '".$archive->getPackageInfo('name')."').");
+			}
+			
+			// check if delivered version satisfies minversion
+			if (isset($package['minversion']) && Package::compareVersion($package['minversion'], $archive->getPackageInfo('version')) > 0) {
+				throw new SystemException("Package '".$this->installation->getArchive()->getPackageInfo('name')."' requires package '".$packageName."' at least in version ".$package['minversion'].", but only delivers version ".$archive->getPackageInfo('version').".");
+			}
+			
 			// get package id
 			$sql = "SELECT	packageID
 				FROM	wcf".WCF_N."_package
@@ -470,6 +488,21 @@ class PackageInstallationNodeBuilder {
 			$statement->execute(array($archive->getPackageInfo('name')));
 			$row = $statement->fetchArray();
 			$packageID = ($row === false) ? null : $row['packageID'];
+			
+			// check if package will already be installed
+			if (isset(self::$pendingPackages[$packageName])) {
+				if (Package::compareVersion(self::$pendingPackages[$packageName], $archive->getPackageInfo('version')) >= 0) {
+					// the version to be installed satisfies the required version
+					continue;
+				}
+				else {
+					// the new delivered required version of the package has a
+					// higher version number, thus update/replace the existing
+					// package installation queue
+					
+					// todo
+				}
+			}
 			
 			// create new queue
 			$queue = PackageInstallationQueueEditor::create(array(
@@ -483,13 +516,13 @@ class PackageInstallationNodeBuilder {
 				'action' => ($packageID ? 'update' : 'install')
 			));
 			
+			self::$pendingPackages[$archive->getPackageInfo('name')] = $archive->getPackageInfo('version');
+			
 			// spawn nodes
 			$installation = new PackageInstallationDispatcher($queue);
 			$installation->nodeBuilder->setParentNode($this->node);
 			$installation->nodeBuilder->buildNodes();
 			$this->node = $installation->nodeBuilder->getCurrentNode();
-			
-			self::$pendingPackages[] = $archive->getPackageInfo('name');
 		}
 	}
 	
@@ -597,7 +630,7 @@ class PackageInstallationNodeBuilder {
 			foreach ($archive->getOpenRequirements() as $packageName => $package) {
 				if (!isset($package['file'])) {
 					// requirement is neither installed nor shipped, check if it is about to be installed
-					if (!in_array($packageName, self::$pendingPackages)) {
+					if (!isset(self::$pendingPackages[$packageName])) {
 						$isInstallable = false;
 						break;
 					}
@@ -613,7 +646,7 @@ class PackageInstallationNodeBuilder {
 				'selected' => 0
 			);
 			
-			self::$pendingPackages[] = $archive->getPackageInfo('name');
+			self::$pendingPackages[$archive->getPackageInfo('name')] = $archive->getPackageInfo('version');
 		}
 		
 		if (!empty($packages)) {
@@ -665,7 +698,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * Returns a short SHA1-hash.
-	 *
+	 * 
 	 * @return	string
 	 */
 	protected function getToken() {

@@ -180,8 +180,17 @@ dl:not(.plain) {
 
 /* submit buttons */
 .formSubmit {
+	font-size: 0;
 	margin-top: @wcfGapMedium;
 	text-align: center;
+	
+	button,
+	input[type='reset'],
+	input[type='submit'],
+	input[type='button'],
+	.button {
+		font-size: 1rem;
+	}
 }
 
 

@@ -51,7 +51,7 @@
 							{include file='userInformationHeadline'}
 							
 							<nav class="jsMobileNavigation buttonGroupNavigation">
-								<ul class="buttonList jsOnly">
+								<ul class="buttonList iconList jsOnly">
 									<li><span class="icon icon16 icon-remove pointer jsTooltip jsDeleteButton" title="{lang}wcf.user.button.unignore{/lang}" data-object-id="{@$user->ignoreID}"></span></li>
 									{event name='userButtons'}
 								</ul>

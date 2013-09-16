@@ -58,7 +58,7 @@
 	<fieldset>
 		<legend>{lang}wcf.user.members.sort.letters{/lang}</legend>
 				
-		<ul class="buttonList letters">
+		<ul class="buttonList smallButtons letters">
 			{foreach from=$letters item=__letter}
 				<li><a href="{if $searchID}{link controller='MembersList' id=$searchID}sortField={$sortField}&sortOrder={$sortOrder}&letter={$__letter|rawurlencode}{/link}{else}{link controller='MembersList'}sortField={$sortField}&sortOrder={$sortOrder}&letter={$__letter|rawurlencode}{/link}{/if}" class="button small{if $letter == $__letter} active{/if}">{$__letter}</a></li>
 			{/foreach}

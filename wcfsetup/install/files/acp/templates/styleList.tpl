@@ -51,7 +51,7 @@
 							<dd>{if $style->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$style->authorURL}">{$style->authorName}</a>{else}{$style->authorName}{/if}</dd>
 						</dl>
 						<nav class="jsMobileNavigation buttonGroupNavigation">
-							<ul class="buttonList" data-style-id="{@$style->styleID}">
+							<ul class="buttonList iconList" data-style-id="{@$style->styleID}">
 								<li><a href="{link controller='StyleEdit' id=$style->styleID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a></li>
 								<li><a href="{link controller='StyleExport' id=$style->styleID}{/link}" title="{lang}wcf.acp.style.exportStyle{/lang}" class="jsTooltip"><span class="icon icon16 icon-download-alt"></span></a></li>
 								

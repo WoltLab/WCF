@@ -50,19 +50,33 @@
 }
 
 .commentOptionContainer {
-	border-top: 1px solid @wcfContainerBorderColor;
-	margin-top: @wcfGapMedium;
-	padding: 7px 7px 0;
-
-	> ul > li {
-		&:not(:last-child):after {
-			content: " - ";
-		}
+	> ul {
+		font-size: 0;
 		
-		display: inline-block;
-		font-size: 85%;
-		padding-right: 3px;
+		> li {
+			&:not(:last-child):after {
+				content: " - ";
+			}
+
+			display: inline-block;
+			font-size: @wcfSmallFontSize;
+			padding-right: 3px;
+		}
 	}
+}
+
+.commentOptionContainer.jsAddResponseActive,
+.commentResponseList + .commentOptionContainer {
+	border-top: 1px solid @wcfContainerBorderColor;
+	padding: @wcfGapSmall @wcfGapSmall 0;
+}
+
+.commentContent + .commentOptionContainer:not(.jsAddResponseActive) {
+	margin-top: @wcfGapTiny;
+}
+
+.commentContent + .commentOptionContainer.jsAddResponseActive {
+	margin-top: @wcfGapMedium;
 }
 
 .commentResponseList .commentResponse:first-child {
@@ -94,18 +108,13 @@
 }
 
 /* buttons to load comments/responses */
-.commentList > .commentLoadNext,
-.comment .responseLoadNext {
+.commentList > .commentLoadNext {
 	text-align: center;
 	
 	> button {
 		padding-left: 30px;
 		padding-right: 30px;
 	}
-}
-
-.comment .responseLoadNext {
-	padding-top: @wcfGapMedium;
 }
 
 .commentList .userMessage {
