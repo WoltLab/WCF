@@ -43,7 +43,7 @@ if ($commentUpdateData['count']) {
 		
 		$responseStatement->execute(array($commentID));
 		while ($innerRow = $responseStatement->fetchArray()) {
-			$responseIDs[] = $row['responseID'];
+			$responseIDs[] = $innerRow['responseID'];
 		}
 		$commentData[$commentID] = serialize($responseIDs);
 	}
