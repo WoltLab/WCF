@@ -142,7 +142,7 @@ class PackageCLICommand implements ICLICommand {
 			}
 			else if ($archive->getPackageInfo('isApplication')) {
 				// applications cannot be installed via CLI
-				$this->error('installIsApplication');
+				$this->error('cli.installIsApplication');
 			}
 			else if ($archive->isAlreadyInstalled()) {
 				$this->error('uniqueAlreadyInstalled');
