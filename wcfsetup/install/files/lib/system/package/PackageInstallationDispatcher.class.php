@@ -127,6 +127,8 @@ class PackageInstallationDispatcher {
 	public function install($node) {
 		$nodes = $this->nodeBuilder->getNodeData($node);
 		
+		file_put_contents(WCF_DIR.'node.log', "INSTALLING node {$node}\n", FILE_APPEND);
+		
 		// invoke node-specific actions
 		foreach ($nodes as $data) {
 			$nodeData = unserialize($data['nodeData']);
@@ -142,6 +144,8 @@ class PackageInstallationDispatcher {
 					$step = $this->executePIP($nodeData);
 					$end = round(microtime(true) - $start, 4);
 					file_put_contents(WCF_DIR.'__installPerformance.log', "Executing PIP ".$nodeData['pip']."... {$end}\n", FILE_APPEND);
+					
+					file_put_contents(WCF_DIR.'node.log', "EXECUTING pip {$nodeData['pip']}\n", FILE_APPEND);
 				break;
 				
 				case 'optionalPackages':
@@ -154,6 +158,7 @@ class PackageInstallationDispatcher {
 			}
 			
 			if ($step->splitNode()) {
+				file_put_contents(WCF_DIR.'node.log', "CLONING node {$node} with sequence no {$data['sequenceNo']}\n", FILE_APPEND);
 				$this->nodeBuilder->cloneNode($node, $data['sequenceNo']);
 				break;
 			}
@@ -163,8 +168,10 @@ class PackageInstallationDispatcher {
 		$this->nodeBuilder->completeNode($node);
 		
 		// assign next node
+		$tmp = $node;
 		$node = $this->nodeBuilder->getNextNode($node);
 		$step->setNode($node);
+		file_put_contents(WCF_DIR.'node.log', "ASSIGNED new node {$node}, previous was {$tmp}\n", FILE_APPEND);
 		
 		// perform post-install/update actions
 		if ($node == '') {
