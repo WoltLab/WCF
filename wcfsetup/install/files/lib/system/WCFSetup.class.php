@@ -670,7 +670,7 @@ class WCFSetup extends WCF {
 					$file->write("\$dbPassword = '".str_replace("'", "\\'", $dbPassword)."';\n");
 					$file->write("\$dbName = '".str_replace("'", "\\'", $dbName)."';\n");
 					$file->write("\$dbClass = '".str_replace("'", "\\'", $dbClass)."';\n");
-					$file->write("if (!defined('WCF_N')) define('WCF_N', $dbNumber);\n?>");
+					$file->write("if (!defined('WCF_N')) define('WCF_N', $dbNumber);\n");
 					$file->close();
 					
 					// go to next step

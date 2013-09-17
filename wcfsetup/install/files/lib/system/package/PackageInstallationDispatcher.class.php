@@ -163,6 +163,7 @@ class PackageInstallationDispatcher {
 		$this->nodeBuilder->completeNode($node);
 		
 		// assign next node
+		$tmp = $node;
 		$node = $this->nodeBuilder->getNextNode($node);
 		$step->setNode($node);
 		
@@ -230,13 +231,10 @@ class PackageInstallationDispatcher {
 			}
 			
 			// delete queues
-			/*
-			 * DEBUG ONLY
-			 *
 			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
 				WHERE		processNo = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->queue->processNo));*/
+			$statement->execute(array($this->queue->processNo));
 		}
 		
 		if ($this->requireRestructureVersionTables) {
@@ -544,6 +542,7 @@ class PackageInstallationDispatcher {
 		}
 		
 		// execute PIP
+		$document = null;
 		try {
 			$document = $plugin->{$this->action}();
 		}
@@ -855,15 +854,6 @@ class PackageInstallationDispatcher {
 	 * Executes post-setup actions.
 	 */
 	public function completeSetup() {
-		// update package version
-		if ($this->action == 'update') {
-			$packageEditor = new PackageEditor($this->getPackage());
-			$packageEditor->update(array(
-				'updateDate' => TIME_NOW,
-				'packageVersion' => $this->getArchive()->getPackageInfo('version')
-			));
-		}
-		
 		// remove archives
 		$sql = "SELECT	archive
 			FROM	wcf".WCF_N."_package_installation_queue
@@ -875,13 +865,10 @@ class PackageInstallationDispatcher {
 		}
 		
 		// delete queues
-		/*
-		 * DEBUG ONLY
-		 *
 		$sql = "DELETE FROM	wcf".WCF_N."_package_installation_queue
 			WHERE		processNo = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->queue->processNo));*/
+		$statement->execute(array($this->queue->processNo));
 		
 		// clear language files once whole installation is completed
 		LanguageEditor::deleteLanguageFiles();

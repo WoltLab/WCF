@@ -65,9 +65,9 @@ if ($commentUpdateData['count']) {
 	$commentUpdateData['offset'] += 25;
 }
 
-WCF::getSession()->register('__commentUpdateData', serialize($commentUpdateData));
+WCF::getSession()->register('__commentUpdateData', $commentUpdateData);
 
 // force new execution of current node
-if ($commentUpdateData['count'] <= $commentUpdateData['offset']) {
+if ($commentUpdateData['count'] >= $commentUpdateData['offset']) {
 	throw new SplitNodeException();
 }
