@@ -50,12 +50,12 @@
 		
 		<instruction type="language">language/*.xml</instruction>
 		
-		<!-- do NOT move this anywhere else, placing it here fixes an issue with consecutive run="standalone" -->
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf.b9.php</instruction>
+		<instruction type="sql" run="standalone">update_b9_indices.sql</instruction>
 		
+		<!-- do NOT move this anywhere else, placing it here fixes an issue with consecutive run="standalone" -->
 		<instruction type="sql">update_b9.sql</instruction>
 		
-		<instruction type="sql" run="standalone">update_b9_indices.sql</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf.b9.php</instruction>
 		
 		<!-- do NOT move this anywhere else, placing it here fixes an issue with consecutive run="standalone" -->
 		<instruction type="userGroupOption">userGroupOption.xml</instruction>
