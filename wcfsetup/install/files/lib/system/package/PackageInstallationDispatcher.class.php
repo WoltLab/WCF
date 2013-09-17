@@ -854,22 +854,6 @@ class PackageInstallationDispatcher {
 	 * Executes post-setup actions.
 	 */
 	public function completeSetup() {
-		// DEBUG
-		$backtrace = '';
-		foreach (debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) as $data) {
-			$backtrace .= "{$data['class']}{$data['type']}{$data['function']} (line {$data['line']})\n";
-		}
-		file_put_contents(WCF_DIR.'install.log', "\n\ncompleteSetup()\n\n".$backtrace, FILE_APPEND);
-		
-		// update package version
-		if ($this->action == 'update') {
-			$packageEditor = new PackageEditor($this->getPackage());
-			$packageEditor->update(array(
-				'updateDate' => TIME_NOW,
-				'packageVersion' => $this->getArchive()->getPackageInfo('version')
-			));
-		}
-		
 		// remove archives
 		$sql = "SELECT	archive
 			FROM	wcf".WCF_N."_package_installation_queue
