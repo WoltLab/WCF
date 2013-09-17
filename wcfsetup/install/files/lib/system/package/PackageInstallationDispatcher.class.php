@@ -542,6 +542,7 @@ class PackageInstallationDispatcher {
 		}
 		
 		// execute PIP
+		$document = null;
 		try {
 			$document = $plugin->{$this->action}();
 		}
