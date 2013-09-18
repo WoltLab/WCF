@@ -415,8 +415,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.language.add"><![CDATA[Add Language]]></item>
 		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[Language code is already in use by an installed language.]]></item>
 		<item name="wcf.acp.language.add.source"><![CDATA[Origin]]></item>
-		<item name="wcf.acp.language.code"><![CDATA[ISO Code]]></item>
+		<item name="wcf.acp.language.code"><![CDATA[ISO Language-Code]]></item>
 		<item name="wcf.acp.language.code.description"><![CDATA[Please enter the <strong>ISO 639-1</strong> language code, you can lookup the language code at <a href="http://en.wikipedia.org/wiki/ISO_639-1" class="externalURL">http://en.wikipedia.org/wiki/ISO_639-1</a>.]]></item>
+		<item name="wcf.acp.language.countryCode"><![CDATA[ISO Country-Code]]></item>
+		<item name="wcf.acp.language.countryCode.description"><![CDATA[Please enter the <strong>ISO 3166-1</strong> country code, you can lookup the country code at <a href="http://en.wikipedia.org/wiki/ISO_3166-1" class="externalURL">http://en.wikipedia.org/wiki/ISO_3166-1</a>.]]></item>
 		<item name="wcf.acp.language.customVariables"><![CDATA[Custom Phrases]]></item>
 		<item name="wcf.acp.language.delete.sure"><![CDATA[Do you really want to delete the language “{$language->languageName}”?]]></item>
 		<item name="wcf.acp.language.edit"><![CDATA[Edit Language]]></item>

@@ -25,6 +25,12 @@ class LanguageAddForm extends AbstractForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.language';
 	
 	/**
+	 * country code
+	 * @var	string
+	 */
+	public $countryCode = '';
+	
+	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.language.canManageLanguage');
@@ -71,6 +77,7 @@ class LanguageAddForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
+		if (isset($_POST['countryCode'])) $this->countryCode = StringUtil::trim($_POST['countryCode']);
 		if (isset($_POST['languageName'])) $this->languageName = StringUtil::trim($_POST['languageName']);
 		if (isset($_POST['languageCode'])) $this->languageCode = StringUtil::trim($_POST['languageCode']);
 		if (isset($_POST['sourceLanguageID'])) $this->sourceLanguageID = intval($_POST['sourceLanguageID']);
@@ -85,6 +92,11 @@ class LanguageAddForm extends AbstractForm {
 		// language name
 		if (empty($this->languageName)) {
 			throw new UserInputException('languageName');
+		}
+		
+		// country code
+		if (empty($this->countryCode)) {
+			throw new UserInputException('countryCode');
 		}
 		
 		// language code
@@ -128,13 +140,16 @@ class LanguageAddForm extends AbstractForm {
 		parent::save();
 		
 		$this->language = LanguageEditor::create(array(
+			'countryCode' => mb_strtolower($this->countryCode),
 			'languageName' => $this->languageName,
 			'languageCode' => mb_strtolower($this->languageCode)
 		));
 		$languageEditor = new LanguageEditor($this->sourceLanguage);
 		$languageEditor->copy($this->language);
+		
 		LanguageFactory::getInstance()->clearCache();
 		LanguageFactory::getInstance()->deleteLanguageCache();
+		
 		$this->saved();
 		
 		// show success message
@@ -157,6 +172,7 @@ class LanguageAddForm extends AbstractForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
+			'countryCode' => $this->countryCode,
 			'languageName' => $this->languageName,
 			'languageCode' => $this->languageCode,
 			'sourceLanguageID' => $this->sourceLanguageID,

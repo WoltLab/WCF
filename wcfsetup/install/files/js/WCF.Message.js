@@ -3280,10 +3280,10 @@ WCF.Message.UserMention = Class.extend({
 		var $li = this._suggestionList.children('li');
 		
 		if (itemIndex < 0) {
-			return;
+			itemIndex = $li.length - 1;
 		}
 		else if (itemIndex + 1 > $li.length) {
-			return;
+			itemIndex = 0;
 		}
 		
 		$li.removeClass('dropdownNavigationItem');

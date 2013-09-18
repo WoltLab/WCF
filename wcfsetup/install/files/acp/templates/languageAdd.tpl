@@ -61,6 +61,23 @@
 				</dd>
 			</dl>
 			
+			<dl{if $errorField == 'countryCode'} class="formError"{/if}>
+				<dt><label for="countryCode">{lang}wcf.acp.language.countryCode{/lang}</label></dt>
+				<dd>
+					<input type="text" id="countryCode" name="countryCode" value="{$countryCode}" class="medium" required="required" />
+					{if $errorField == 'countryCode'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.language.add.countryCode.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.language.countryCode.description{/lang}</small>
+				</dd>
+			</dl>
+			
 			{if $action == 'add'}
 				<dl{if $errorField == 'sourceLanguageID'} class="formError"{/if}>
 					<dt><label for="sourceLanguageID">{lang}wcf.acp.language.add.source{/lang}</label></dt>
