@@ -38,6 +38,11 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	protected $permissionsUpdate = array('admin.content.tag.canManageTag');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('delete', 'update');
+	
+	/**
 	 * @see	wcf\data\ISearchAction::validateGetSearchResultList()
 	 */
 	public function validateGetSearchResultList() {

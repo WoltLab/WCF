@@ -33,6 +33,11 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 	protected $permissionsUpdate = array('admin.content.smiley.canManageSmiley');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('delete', 'update', 'updatePosition');
+	
+	/**
 	 * @see	wcf\data\ISortableAction::validateUpdatePosition()
 	 */
 	public function validateUpdatePosition() {

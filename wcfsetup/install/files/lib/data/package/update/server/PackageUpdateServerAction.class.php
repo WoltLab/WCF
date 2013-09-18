@@ -35,6 +35,11 @@ class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements 
 	protected $permissionsUpdate = array('admin.system.package.canEditServer');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'delete', 'toggle', 'update');
+	
+	/**
 	 * @see	wcf\data\IToggleAction::validateToggle()
 	 */
 	public function validateToggle() {

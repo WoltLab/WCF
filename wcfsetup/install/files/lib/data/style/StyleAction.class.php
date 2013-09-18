@@ -47,6 +47,11 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	protected $permissionsUpdate = array('admin.style.canManageStyle');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('copy', 'delete', 'setAsDefault', 'toggle', 'update', 'upload');
+	
+	/**
 	 * style object
 	 * @var	wcf\data\style\Style
 	 */

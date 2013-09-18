@@ -46,6 +46,11 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	protected $permissionsUpdate = array('admin.display.canManagePageMenu');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('delete', 'toggle', 'update', 'updatePosition');
+	
+	/**
 	 * @see wcf\data\IDatabaseObjectAction::create()
 	 */
 	public function create() {

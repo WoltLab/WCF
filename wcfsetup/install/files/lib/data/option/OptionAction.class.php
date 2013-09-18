@@ -34,6 +34,11 @@ class OptionAction extends AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.system.canEditOption');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'delete', 'import', 'update', 'updateAll');
+	
+	/**
 	 * Validates permissions and parameters.
 	 */
 	public function validateImport() {

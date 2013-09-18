@@ -30,6 +30,11 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 	public $applicationEditor = null;
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('setAsPrimary');
+	
+	/**
 	 * Assigns a list of applications to a group and computes cookie domain and path.
 	 */
 	public function rebuild() {

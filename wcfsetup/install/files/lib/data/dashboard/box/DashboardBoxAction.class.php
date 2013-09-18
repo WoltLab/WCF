@@ -39,6 +39,11 @@ class DashboardBoxAction extends AbstractDatabaseObjectAction implements ISortab
 	public $objectType = null;
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('updatePosition');
+	
+	/**
 	 * @see	wcf\data\ISortableAction::validateUpdatePosition()
 	 */
 	public function validateUpdatePosition() {

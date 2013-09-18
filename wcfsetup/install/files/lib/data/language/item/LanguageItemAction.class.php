@@ -38,6 +38,11 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.language.canManageLanguage');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'delete', 'edit', 'prepareEdit', 'update');
+	
+	/**
 	 * Validates parameters to prepare edit.
 	 */
 	public function validatePrepareEdit() {

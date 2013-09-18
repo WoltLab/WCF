@@ -45,6 +45,11 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 	protected $allowGuestAccess = array('executeCronjobs');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'delete', 'update', 'toggle', 'execute');
+	
+	/**
 	 * @see	wcf\data\IDeleteAction::validateDelete()
 	 */
 	public function validateDelete() {

@@ -34,6 +34,11 @@ class TemplateAction extends AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.template.canManageTemplate');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'delete', 'update');
+	
+	/**
 	 * @see wcf\data\AbstractDatabaseObjectAction::create()
 	 */
 	public function create() {
