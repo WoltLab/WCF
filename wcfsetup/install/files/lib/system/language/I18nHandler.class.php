@@ -415,6 +415,11 @@ class I18nHandler extends SingletonFactory {
 							$value = $languageItemValue;
 						}
 					}
+					
+					// item appeared to be a language item but either is not or does not exist
+					if (empty($i18nValues) && empty($value)) {
+						$value = $this->elementOptions[$elementID]['value'];
+					}
 				}
 				else {
 					// use data provided by setOptions()

@@ -60,6 +60,7 @@ class LanguageEditForm extends LanguageAddForm {
 		
 		$editor = new LanguageEditor($this->language);
 		$editor->update(array(
+			'countryCode' => mb_strtolower($this->countryCode),
 			'languageName' => $this->languageName,
 			'languageCode' => mb_strtolower($this->languageCode)		
 		));
@@ -77,6 +78,7 @@ class LanguageEditForm extends LanguageAddForm {
 		parent::readData();
 	
 		if (!count($_POST)) {
+			$this->countryCode = $this->language->countryCode;
 			$this->languageName = $this->language->languageName;
 			$this->languageCode = $this->language->languageCode;
 		}
