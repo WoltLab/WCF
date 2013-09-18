@@ -85,8 +85,13 @@ class UserOnline extends UserProfile {
 	 * @return	string
 	 */
 	public function getBrowser() {
-		// opera
+		// opera 12
 		if (preg_match('~opera.*version/([\d\.]+)~i', $this->userAgent, $match)) {
+			return 'Opera '.$match[1];
+		}
+		
+		// opera 15+
+		if (preg_match('~opr/([\d\.]+)~i', $this->userAgent, $match)) {
 			return 'Opera '.$match[1];
 		}
 		
