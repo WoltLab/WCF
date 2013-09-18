@@ -400,6 +400,7 @@ class ImportCLICommand implements ICLICommand {
 					
 					// check if all possible secondary import data types are selected
 					if (count($selectedData[$selectedObjectType]) == count($this->supportedData[$selectedObjectType])) {
+						$printPrimaryTypes = true;
 						break;
 					}
 				}

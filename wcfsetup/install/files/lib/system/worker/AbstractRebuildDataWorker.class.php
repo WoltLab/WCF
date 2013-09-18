@@ -57,6 +57,10 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	 */
 	public function countObjects() {
 		if ($this->count === null) {
+			if ($this->objectList === null) {
+				$this->initObjectList();
+			}
+			
 			$this->count = $this->objectList->countObjects();
 		}
 	}
