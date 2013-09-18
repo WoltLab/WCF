@@ -1,11 +1,10 @@
 <?php
 namespace wcf\data;
-use wcf\system\request\RequestHandler;
-
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
