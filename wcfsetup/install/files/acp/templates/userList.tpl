@@ -97,12 +97,10 @@
 							{else}
 								<span class="icon icon16 icon-{if $user->banned}lock{else}unlock{/if} disabled" title="{lang}wcf.acp.user.{if $user->banned}unban{else}ban{/if}{/lang}"></span>
 							{/if}
-							{if $__wcf->session->getPermission('admin.user.canEnableUser')}
-								{if $user->userID != $__wcf->user->userID}
-									<span class="icon icon16 icon-{if !$user->activationCode}check{else}check-empty{/if} jsEnableButton jsTooltip pointer" title="{lang}wcf.acp.user.{if !$user->activationCode}disable{else}enable{/if}{/lang}" data-object-id="{@$user->userID}" data-enable-message="{lang}wcf.acp.user.enable{/lang}" data-disable-message="{lang}wcf.acp.user.disable{/lang}" data-enabled="{if !$user->activationCode}true{else}false{/if}"></span>
-								{else}
-									<span class="icon icon16 icon-{if !$user->activationCode}check{else}check-empty{/if} disabled" title="{lang}wcf.acp.user.{if !$user->activationCode}disable{else}enable{/if}{/lang}"></span>
-								{/if}
+							{if $user->canEnable}
+								<span class="icon icon16 icon-{if !$user->activationCode}check{else}check-empty{/if} jsEnableButton jsTooltip pointer" title="{lang}wcf.acp.user.{if !$user->activationCode}disable{else}enable{/if}{/lang}" data-object-id="{@$user->userID}" data-enable-message="{lang}wcf.acp.user.enable{/lang}" data-disable-message="{lang}wcf.acp.user.disable{/lang}" data-enabled="{if !$user->activationCode}true{else}false{/if}"></span>
+							{else}
+								<span class="icon icon16 icon-{if !$user->activationCode}check{else}check-empty{/if} disabled" title="{lang}wcf.acp.user.{if !$user->activationCode}disable{else}enable{/if}{/lang}"></span>
 							{/if}
 							
 							{event name='rowButtons'}

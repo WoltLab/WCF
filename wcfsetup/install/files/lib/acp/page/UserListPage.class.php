@@ -249,6 +249,7 @@ class UserListPage extends SortablePage {
 				$row['deletable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canDeleteUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
 				$row['editable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canEditUser')) ? 1 : 0;
 				$row['bannable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canBanUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
+				$row['canEnable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canEnableUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
 				$row['isMarked'] = intval(in_array($row['userID'], $this->markedUsers));
 				
 				$this->users[] = new UserProfile(new User(null, $row));
