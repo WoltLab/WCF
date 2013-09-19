@@ -1,8 +1,10 @@
 <?php
 namespace wcf\page;
+use wcf\data\search\ISearchResultObject;
 use wcf\data\search\Search;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\SystemException;
 use wcf\system\search\SearchEngine;
 use wcf\system\WCF;
 
@@ -124,7 +126,7 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * Gets the data of the messages.
+	 * Reads the data of the search result messages.
 	 */
 	protected function readMessages() {
 		for ($i = $this->startIndex - 1; $i < $this->endIndex; $i++) {
@@ -133,6 +135,10 @@ class SearchResultPage extends MultipleLinkPage {
 			
 			$objectType = SearchEngine::getInstance()->getObjectType($type);
 			if (($message = $objectType->getObject($objectID)) !== null) {
+				if (!($message instanceof ISearchResultObject)) {
+					throw new SystemException("'".get_class($message)."' does not implement 'wcf\data\search\ISearchResultObject'");
+				}
+				
 				$this->messages[] = $message;
 			}
 		}
