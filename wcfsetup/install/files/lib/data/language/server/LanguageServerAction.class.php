@@ -35,6 +35,11 @@ class LanguageServerAction extends AbstractDatabaseObjectAction implements ITogg
 	protected $permissionsUpdate = array('admin.language.canManageLanguage');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'delete', 'toggle', 'update');
+	
+	/**
 	 * @see	wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {

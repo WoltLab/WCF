@@ -68,6 +68,6 @@ if ($commentUpdateData['count']) {
 WCF::getSession()->register('__commentUpdateData', $commentUpdateData);
 
 // force new execution of current node
-if ($commentUpdateData['count'] >= $commentUpdateData['offset']) {
+if ($commentUpdateData['count'] && $commentUpdateData['count'] >= $commentUpdateData['offset']) {
 	throw new SplitNodeException();
 }

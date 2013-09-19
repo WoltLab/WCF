@@ -37,6 +37,11 @@ class LabelAction extends AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.content.label.canManageLabel');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'delete', 'update');
+	
+	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
 	 */
 	public function delete() {

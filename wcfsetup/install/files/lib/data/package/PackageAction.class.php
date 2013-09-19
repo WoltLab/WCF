@@ -34,36 +34,4 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.system.package.canUpdatePackage');
-	
-	/**
-	 * package editor object
-	 * @var	wcf\data\package\PackageEditor
-	 */
-	public $packageEditor = null;
-	
-	/**
-	 * Validates parameters to return the confirm message for package uninstallation.
-	 */
-	public function validateGetConfirmMessage() {
-		WCF::getSession()->checkPermissions($this->permissionsUpdate);
-		
-		$this->packageEditor = $this->getSingleObject();
-		if (!$this->packageEditor->canUninstall()) {
-			throw new PermissionDeniedException();
-		}
-	}
-	
-	/**
-	 * Returns the confirm message for package uninstallation.
-	 * 
-	 * @return	array<string>
-	 */
-	public function getConfirmMessage() {
-		return array(
-			'confirmMessage' => WCF::getLanguage()->getDynamicVariable('wcf.acp.package.uninstallation.confirmDependentPackages', array(
-				'package' => $this->packageEditor->getDecoratedObject(),
-				'showDependentPackages' => true
-			))
-		);
-	}
 }

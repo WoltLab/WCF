@@ -35,6 +35,12 @@ class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAc
 	protected $permissionsUpdate = array('admin.user.canManageUserOption');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'delete', 'toggle', 'update');
+	
+	
+	/**
 	 * @see	wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {

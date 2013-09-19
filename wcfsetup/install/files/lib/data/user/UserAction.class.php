@@ -11,6 +11,7 @@ use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
@@ -50,6 +51,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.user.canEditUser');
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'ban', 'delete', 'disable', 'enable', 'unban');
 	
 	/**
 	 * Validates permissions and parameters.
@@ -155,6 +161,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			if (empty($this->objects)) {
 				throw new UserInputException('objectIDs');
 			}
+		}
+		
+		// disallow updating of anything except for options outside of ACP
+		if (RequestHandler::getInstance()->isACPRequest() && (count($this->parameters) != 1 || !isset($this->parameters['options']))) {
+			throw new PermissionDeniedException();
 		}
 		
 		try {
@@ -432,6 +443,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function validateEnable() {
 		WCF::getSession()->checkPermissions(array('admin.user.canEnableUser'));
+		
+		$this->__validateAccessibleGroups();
 	}
 	
 	/**
@@ -446,7 +459,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function enable() {
 		if (empty($this->objects)) $this->readObjects();
-	
+		
 		$action = new UserAction($this->objects, 'update', array(
 			'data' => array(
 				'activationCode' => 0
@@ -457,7 +470,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$action = new UserAction($this->objects, 'addToGroups', array(
 			'groups' => UserGroup::getGroupIDsByType(array(UserGroup::USERS)),
 			'deleteOldGroups' => false,
-			'addDefaultGroups' => false	
+			'addDefaultGroups' => false
 		));
 		$action->executeAction();
 	}
@@ -467,7 +480,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function disable() {
 		if (empty($this->objects)) $this->readObjects();
-	
+		
 		$action = new UserAction($this->objects, 'update', array(
 			'data' => array(
 				'activationCode' => UserRegistrationUtil::getActivationCode()

@@ -32,4 +32,9 @@ class LanguageCategoryAction extends AbstractDatabaseObjectAction {
 	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.language.canManageLanguage');
+	
+	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'delete', 'update');
 }

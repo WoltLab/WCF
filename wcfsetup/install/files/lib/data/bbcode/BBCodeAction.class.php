@@ -34,6 +34,11 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 	protected $permissionsUpdate = array('admin.content.bbcode.canManageBBCode');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('delete', 'toggle', 'update');
+	
+	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::create()
 	 */
 	public function create() {

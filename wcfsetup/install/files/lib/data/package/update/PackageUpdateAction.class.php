@@ -32,6 +32,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\package\update\PackageUpdateEditor';
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('getResultList', 'prepareInstallation', 'prepareUpdate', 'search', 'searchForUpdates');
+	
+	/**
 	 * search object
 	 * @var	wcf\data\search\Search
 	 */

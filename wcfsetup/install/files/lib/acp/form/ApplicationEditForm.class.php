@@ -8,6 +8,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -201,6 +202,9 @@ class ApplicationEditForm extends AbstractForm {
 		
 		// re-calculate cookie settings
 		ApplicationHandler::rebuild();
+		
+		// rebuild templates
+		LanguageFactory::getInstance()->deleteLanguageCache();
 		
 		// show success.
 		WCF::getTPL()->assign(array(

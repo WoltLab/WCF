@@ -4,6 +4,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
@@ -66,6 +67,12 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 * @var	array<string>
 	 */
 	protected $permissionsUpdate = array();
+	
+	/**
+	 * disallow requests for specified methods if the origin is not the ACP
+	 * @var	array<string>
+	 */
+	protected $requireACP = array();
 	
 	/**
 	 * Resets cache if any of the listed actions is invoked
@@ -142,6 +149,10 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	public function validateAction() {
 		// validate if user is logged in
 		if (!WCF::getUser()->userID && !in_array($this->getActionName(), $this->allowGuestAccess)) {
+			throw new PermissionDeniedException();
+		}
+		else if (!RequestHandler::getInstance()->isACPRequest() && in_array($this->getActionName(), $this->requireACP)) {
+			// attempt to invoke method, but origin is not the ACP
 			throw new PermissionDeniedException();
 		}
 		

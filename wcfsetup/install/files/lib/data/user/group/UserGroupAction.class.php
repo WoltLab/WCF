@@ -34,6 +34,11 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 	protected $permissionsUpdate = array('admin.user.canEditGroup');
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'delete', 'update');
+	
+	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::create()
 	 */
 	public function create() {

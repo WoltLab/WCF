@@ -20,6 +20,11 @@ class CronjobLogAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\cronjob\log\CronjobLogEditor';
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('clearAll');
+	
+	/**
 	 * Validates the clear all action.
 	 */
 	public function validateClearAll() {

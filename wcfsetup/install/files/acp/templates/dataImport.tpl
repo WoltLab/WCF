@@ -24,18 +24,11 @@
 				$section.parent().next().find('input[type=checkbox]').prop('checked', false);
 			}
 		});
-
+		
 		$('.jsImportItem').change(function(event) {
 			var $item = $(event.currentTarget);
 			if ($item.is(':checked')) {
 				$item.parents('.jsImportCollection').find('.jsImportSection').prop('checked', 'checked');
-			}
-			else {
-				var $collection = $item.parents('.jsImportCollection');
-				var $checkedItems = $collection.find('.jsImportItem:checked');
-				if (!$checkedItems.length) {
-					$collection.find('.jsImportSection').prop('checked', false);
-				}
 			}
 		});
 	});

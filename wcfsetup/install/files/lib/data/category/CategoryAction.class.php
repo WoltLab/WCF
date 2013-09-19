@@ -29,6 +29,11 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	protected $objectType = null;
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'delete', 'toggle', 'update', 'updatePosition');
+	
+	/**
 	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
 	 */
 	public function delete() {

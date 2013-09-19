@@ -50,6 +50,13 @@ class RequestHandler extends SingletonFactory {
 				break;
 			}
 		}
+		
+		// check if WCF is running as standalone
+		if ($this->inRescueMode() && PACKAGE_ID == 1) {
+			if (ApplicationHandler::getInstance()->getWCF()->domainName == $_SERVER['HTTP_HOST']) {
+				$this->inRescueMode = false;
+			}
+		}
 	}
 	
 	/**

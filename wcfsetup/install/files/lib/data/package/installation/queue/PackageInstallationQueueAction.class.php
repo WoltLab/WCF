@@ -36,6 +36,11 @@ class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	protected $package = null;
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('cancelInstallation', 'prepareQueue');
+	
+	/**
 	 * Validates the 'prepareQueue' action:
 	 */
 	public function validatePrepareQueue() {

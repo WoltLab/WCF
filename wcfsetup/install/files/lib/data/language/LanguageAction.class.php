@@ -42,6 +42,11 @@ class LanguageAction extends AbstractDatabaseObjectAction {
 	protected $languageEditor = null;
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('create', 'delete', 'setAsDefault', 'update');
+	
+	/**
 	 * Validates permission to set a language as default.
 	 */
 	public function validateSetAsDefault() {

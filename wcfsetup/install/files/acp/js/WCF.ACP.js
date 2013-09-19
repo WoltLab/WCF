@@ -786,40 +786,7 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	 * @see	WCF.ACP.Package.Installation.init()
 	 */
 	_init: function() {
-		this._elements.click($.proxy(this._prepareQueue, this));
-	},
-	
-	/**
-	 * Prepares a new package uninstallation queue.
-	 * 
-	 * @param	object		event
-	 */
-	_prepareQueue: function(event) {
-		var $element = $(event.currentTarget);
-		
-		if ($element.data('isRequired')) {
-			new WCF.Action.Proxy({
-				autoSend: true,
-				data: {
-					actionName: 'getConfirmMessage',
-					className: 'wcf\\data\\package\\PackageAction',
-					objectIDs: [ $element.data('objectID') ]
-				},
-				success: $.proxy(function(data, textStatus, jqXHR) {
-					// remove isRequired flag to prevent loading the same content again
-					$element.data('isRequired', false);
-					
-					// update confirmation message
-					$element.data('confirmMessage', data.returnValues.confirmMessage);
-					
-					// display confirmation dialog
-					this._showConfirmationDialog($element);
-				}, this)
-			});
-		}
-		else {
-			this._showConfirmationDialog($element);
-		}
+		this._elements.click($.proxy(this._showConfirmationDialog, this));
 	},
 	
 	/**
@@ -828,15 +795,17 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	 * @param	jQuery		element
 	 */
 	_showConfirmationDialog: function(element) {
-		if (element.data('isApplication') && this._wcfPackageListURL) {
-			window.location = WCF.String.unescapeHTML(this._wcfPackageListURL.replace(/{packageID}/, element.data('objectID')));
+		var $element = $(event.currentTarget);
+		
+		if ($element.data('isApplication') && this._wcfPackageListURL) {
+			window.location = WCF.String.unescapeHTML(this._wcfPackageListURL.replace(/{packageID}/, $element.data('objectID')));
 			return;
 		}
 		
 		var self = this;
-		WCF.System.Confirmation.show(element.data('confirmMessage'), function(action) {
+		WCF.System.Confirmation.show($element.data('confirmMessage'), function(action) {
 			if (action === 'confirm') {
-				self._packageID = element.data('objectID');
+				self._packageID = $element.data('objectID');
 				self.prepareInstallation();
 			}
 		});

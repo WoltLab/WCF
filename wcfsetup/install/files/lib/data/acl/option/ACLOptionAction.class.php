@@ -20,6 +20,11 @@ class ACLOptionAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\acl\option\ACLOptionEditor';
 	
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('loadAll');
+	
+	/**
 	 * Validates parameters for ACL options.
 	 */
 	public function validateLoadAll() {

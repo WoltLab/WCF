@@ -18,6 +18,11 @@ use wcf\util\StringUtil;
  */
 class ACPSearchProviderAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
+	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('getSearchResultList');
+	
+	/**
 	 * @see	wcf\data\ISearchAction::validateGetSearchResultList()
 	 */
 	public function validateGetSearchResultList() {
