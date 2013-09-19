@@ -443,6 +443,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function validateEnable() {
 		WCF::getSession()->checkPermissions(array('admin.user.canEnableUser'));
+		
+		$this->__validateAccessibleGroups();
 	}
 	
 	/**
@@ -457,7 +459,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function enable() {
 		if (empty($this->objects)) $this->readObjects();
-	
+		
 		$action = new UserAction($this->objects, 'update', array(
 			'data' => array(
 				'activationCode' => 0
@@ -468,7 +470,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$action = new UserAction($this->objects, 'addToGroups', array(
 			'groups' => UserGroup::getGroupIDsByType(array(UserGroup::USERS)),
 			'deleteOldGroups' => false,
-			'addDefaultGroups' => false	
+			'addDefaultGroups' => false
 		));
 		$action->executeAction();
 	}
@@ -478,7 +480,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function disable() {
 		if (empty($this->objects)) $this->readObjects();
-	
+		
 		$action = new UserAction($this->objects, 'update', array(
 			'data' => array(
 				'activationCode' => UserRegistrationUtil::getActivationCode()
