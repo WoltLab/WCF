@@ -456,17 +456,17 @@
 		> *:not(:first-child) {
 			margin-top: @wcfGapSmall;
 		}
-		
-		> .messageFooterNote {
-			border-left: 2px solid @wcfContainerBorderColor;
-			color: @wcfDimmedColor;
-			font-size: @wcfSmallFontSize;
-			padding: @wcfGapTiny @wcfGapSmall;
-				
-			@messageFooterNoteGradientColor: fade(@wcfContainerBorderColor, 20%);
-			.linearGradientNative(~"left top, @{messageFooterNoteGradientColor} 0%, transparent 40%");
-		}
 	}
+}
+
+.messageFooterNote {
+	border-left: 2px solid @wcfContainerBorderColor;
+	color: @wcfDimmedColor;
+	font-size: @wcfSmallFontSize;
+	padding: @wcfGapTiny @wcfGapSmall;
+		
+	@messageFooterNoteGradientColor: fade(@wcfContainerBorderColor, 20%);
+	.linearGradientNative(~"left top, @{messageFooterNoteGradientColor} 0%, transparent 40%");
 }
 
 .messageHeader + .messageBody > div:first-child,
