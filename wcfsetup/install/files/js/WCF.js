@@ -1042,14 +1042,15 @@ WCF.Dropdown = {
 		
 		var $bottom = 'auto';
 		var $top = $dropdownOffsets.top + $dropdownDimensions.height + 7;
-		var $documentHeight = $(document).height();
-		if ($top + $menuDimensions.height > $documentHeight) {
+		if ($top + $menuDimensions.height > $(window).height() + $(document).scrollTop()) {
+			console.debug("RECALCULATE");
 			$bottom = $(window).height() - $dropdownOffsets.top + 10;
 			$top = 'auto';
 			
 			dropdownMenu.addClass('dropdownArrowBottom');
 		}
 		else {
+			console.debug("FINE");
 			dropdownMenu.removeClass('dropdownArrowBottom');
 		}
 		
