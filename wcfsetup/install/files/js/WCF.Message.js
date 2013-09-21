@@ -3352,7 +3352,7 @@ WCF.Message.UserMention = Class.extend({
 				
 				this._dropdownMenu.css({
 					top: $dropdownMenuPosition.top - this._dropdownMenu.outerHeight() - 2 * this._lineHeight + 5
-				})
+				});
 			}
 			else {
 				this._dropdownMenu.removeClass('dropdownArrowBottom');
