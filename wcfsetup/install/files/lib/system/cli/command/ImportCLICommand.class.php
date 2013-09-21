@@ -181,7 +181,6 @@ class ImportCLICommand implements ICLICommand {
 		}
 		
 		CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.completed'));
-		exit(1);
 	}
 	
 	/**
