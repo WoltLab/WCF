@@ -2947,22 +2947,34 @@ WCF.Message.UserMention = Class.extend({
 	_className: 'wcf\\data\\user\\UserAction',
 	
 	/**
+	 * dropdown object
+	 * @var	jQuery
+	 */
+	_dropdown: null,
+	
+	/**
+	 * dropdown menu object
+	 * @var	jQuery
+	 */
+	_dropdownMenu: null,
+	
+	/**
 	 * suggestion item index, -1 if none is selected
 	 * @var	integer
 	 */
 	_itemIndex: -1,
 	
 	/**
+	 * line height
+	 * @var	integer
+	 */
+	_lineHeight: null,
+	
+	/**
 	 * current beginning of the mentioning
 	 * @var	string
 	 */
 	_mentionStart: '',
-	
-	/**
-	 * list with user name suggestions
-	 * @var	jQuery
-	 */
-	_suggestionList: null,
 	
 	/**
 	 * Initalizes user suggestions for the CKEditor with the given textarea id.
@@ -2981,9 +2993,6 @@ WCF.Message.UserMention = Class.extend({
 		
 		this._textarea = $('#' + editorID);
 		
-		this._suggestionList = $('<ul class="dropdownMenu userSuggestionList" />').appendTo(this._textarea.parent());
-		WCF.Dropdown.initDropdownFragment(this._textarea.parent(), this._suggestionList);
-		
 		// get associated (ready) CKEditor object and add event listeners
 		CKEDITOR.on('instanceReady', $.proxy(function(event) {
 			if (event.editor.name === this._textarea.wcfIdentify()) {
@@ -2991,6 +3000,10 @@ WCF.Message.UserMention = Class.extend({
 				this._ckEditor.container.on('keyup', $.proxy(this._keyup, this));
 				this._ckEditor.container.on('keydown', $.proxy(this._keydown, this));
 				this._ckEditor.on('key', $.proxy(this._key, this));
+				
+				this._dropdown = $(this._ckEditor.editable().$);
+				this._dropdownMenu = $('<ul class="dropdownMenu userSuggestionList" />').appendTo(this._textarea.parent());
+				WCF.Dropdown.initDropdownFragment(this._dropdown, this._dropdownMenu);
 			}
 		}, this));
 		
@@ -3005,7 +3018,7 @@ WCF.Message.UserMention = Class.extend({
 	_clearList: function() {
 		this._hideList();
 		
-		this._suggestionList.empty();
+		this._dropdownMenu.empty();
 	},
 	
 	/**
@@ -3023,7 +3036,7 @@ WCF.Message.UserMention = Class.extend({
 	 * @return	object
 	 */
 	_createListItem: function(listItemData) {
-		var $listItem = $('<li />').data('username', listItemData.label).click($.proxy(this._click, this)).appendTo(this._suggestionList);
+		var $listItem = $('<li />').data('username', listItemData.label).click($.proxy(this._click, this)).appendTo(this._dropdownMenu);
 		
 		var $box16 = $('<div />').addClass('box16').appendTo($listItem);
 		$box16.append($(listItemData.icon).addClass('framed'));
@@ -3036,7 +3049,7 @@ WCF.Message.UserMention = Class.extend({
 	 * 
 	 * @return	object
 	 */
-	_getDropdownOffsets: function() {
+	_getDropdownMenuPosition: function() {
 		var $range = this._ckEditor.getSelection().getRanges()[0];
 		var $orgRange = $range.clone();
 		var $startOffset = $range.startOffset;
@@ -3058,7 +3071,9 @@ WCF.Message.UserMention = Class.extend({
 			$jElement.text(' ');
 		}
 		var $offsets = $jElement.offset();
-		$offsets.top += $jElement.height(); // add line height to top offset
+		if (this._lineHeight === null) {
+			this._lineHeight = $jElement.height();
+		}
 		
 		// merge text nodes before and after the temporary span element
 		// to avoid split text nodes which were one node before inserting
@@ -3131,8 +3146,8 @@ WCF.Message.UserMention = Class.extend({
 	 * Hides the suggestion list.
 	 */
 	_hideList: function() {
-		WCF.Dropdown.getDropdown(this._textarea.parent().wcfIdentify()).removeClass('dropdownOpen');
-		WCF.Dropdown.getDropdownMenu(this._textarea.parent().wcfIdentify()).removeClass('dropdownOpen');
+		this._dropdown.removeClass('dropdownOpen');
+		this._dropdownMenu.removeClass('dropdownOpen');
 		
 		this._itemIndex = -1;
 	},
@@ -3145,9 +3160,9 @@ WCF.Message.UserMention = Class.extend({
 			return true;
 		}
 		
-		if (this._suggestionList.is(':visible')) {
+		if (this._dropdownMenu.is(':visible')) {
 			if (event.data.keyCode === 13) { // enter
-				this._suggestionList.children('li').eq(this._itemIndex).trigger('click');
+				this._dropdownMenu.children('li').eq(this._itemIndex).trigger('click');
 				
 				event.cancel();
 			}
@@ -3164,7 +3179,7 @@ WCF.Message.UserMention = Class.extend({
 			return true;
 		}
 		
-		if (this._suggestionList.is(':visible')) {
+		if (this._dropdownMenu.is(':visible')) {
 			switch (event.data.$.keyCode) {
 				case 38: // arrow up
 					event.data.$.preventDefault();
@@ -3197,7 +3212,7 @@ WCF.Message.UserMention = Class.extend({
 		}
 		
 		// ignore event if suggestion list and user pressed enter, arrow up or arrow down
-		if (this._suggestionList.is(':visible') && event.data.$.keyCode in { 13:1, 38:1, 40:1 }) {
+		if (this._dropdownMenu.is(':visible') && event.data.$.keyCode in { 13:1, 38:1, 40:1 }) {
 			return;
 		}
 		
@@ -3277,7 +3292,7 @@ WCF.Message.UserMention = Class.extend({
 	 * @param	integer		itemIndex
 	 */
 	_selectItem: function(itemIndex) {
-		var $li = this._suggestionList.children('li');
+		var $li = this._dropdownMenu.children('li');
 		
 		if (itemIndex < 0) {
 			itemIndex = $li.length - 1;
@@ -3296,8 +3311,8 @@ WCF.Message.UserMention = Class.extend({
 	 * Shows the suggestion list.
 	 */
 	_showList: function() {
-		WCF.Dropdown.getDropdown(this._textarea.parent().wcfIdentify()).addClass('dropdownOpen');
-		WCF.Dropdown.getDropdownMenu(this._textarea.parent().wcfIdentify()).addClass('dropdownOpen');
+		this._dropdown.addClass('dropdownOpen');
+		this._dropdownMenu.addClass('dropdownOpen');
 	},
 	
 	/**
@@ -3326,11 +3341,22 @@ WCF.Message.UserMention = Class.extend({
 	 */
 	_updateSuggestionListPosition: function() {
 		try {
-			var $caretPosition = this._getDropdownOffsets();
-			$caretPosition.top += 5; // add little vertical gap
-			$caretPosition.left -= 16; // make sure dropdown arrow is at correct position
-			this._suggestionList.css($caretPosition);
+			var $dropdownMenuPosition = this._getDropdownMenuPosition();
+			$dropdownMenuPosition.top += 5 + this._lineHeight; // add little vertical gap
+			$dropdownMenuPosition.left -= 16; // make sure dropdown arrow is at correct position
+			this._dropdownMenu.css($dropdownMenuPosition);
 			this._selectItem(0);
+			
+			if ($dropdownMenuPosition.top + this._dropdownMenu.outerHeight() + 10 > $(window).height() + $(document).scrollTop()) {
+				this._dropdownMenu.addClass('dropdownArrowBottom');
+				
+				this._dropdownMenu.css({
+					top: $dropdownMenuPosition.top - this._dropdownMenu.outerHeight() - 2 * this._lineHeight + 5
+				})
+			}
+			else {
+				this._dropdownMenu.removeClass('dropdownArrowBottom');
+			}
 		}
 		catch (e) {
 			// ignore errors that are caused by pressing enter to
