@@ -25,6 +25,12 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	protected $fileExtensions = array();
 	
 	/**
+	 * regex for validation of allowed file extension
+	 * @var string
+	 */
+	protected $fileExtensionRegex = '';
+	
+	/**
 	 * Creates a new DefaultUploadFileValidationStrategy object.
 	 * 
 	 * @param	integer		$maxFilesize
@@ -33,6 +39,7 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	public function __construct($maxFilesize, array $fileExtensions) {
 		$this->maxFilesize = $maxFilesize;
 		$this->fileExtensions = $fileExtensions;
+		$this->fileExtensionRegex = '/^('.str_replace("\n", "|", str_replace('\*', '.*', preg_quote(implode("\n", $fileExtensions), '/'))).')$/i';
 	}
 	
 	/**
@@ -49,7 +56,7 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 			return false;
 		}
 		
-		if (!in_array($uploadFile->getFileExtension(), $this->fileExtensions)) {
+		if (!preg_match($this->fileExtensionRegex, $uploadFile->getFileExtension())) {
 			$uploadFile->setValidationErrorType('invalidExtension');
 			return false;
 		}
