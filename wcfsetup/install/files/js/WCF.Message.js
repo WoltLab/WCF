@@ -3130,12 +3130,15 @@ WCF.Message.UserMention = Class.extend({
 		$text = '';
 		for (var $i = 0; $i < $textBackup.length; $i++) {
 			var $byte = $textBackup.charCodeAt($i).toString(16);
-			if ($byte != '200b' && $byte != 'a0') {
+			if ($byte != '200b' && !$textBackup.charAt($i).match(/\s/)) {
 				if ($textBackup[$i] === '@' && $i && $textBackup[$i - 1].match(/\s/)) {
 					$text = '';
 				}
 				
 				$text += $textBackup[$i];
+			}
+			else {
+				$text = '';
 			}
 		}
 		
