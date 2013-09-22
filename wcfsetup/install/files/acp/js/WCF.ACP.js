@@ -792,9 +792,9 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 	/**
 	 * Displays a confirmation dialog prior to package uninstallation.
 	 * 
-	 * @param	jQuery		element
+	 * @param	object		event
 	 */
-	_showConfirmationDialog: function(element) {
+	_showConfirmationDialog: function(event) {
 		var $element = $(event.currentTarget);
 		
 		if ($element.data('isApplication') && this._wcfPackageListURL) {
