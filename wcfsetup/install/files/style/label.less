@@ -2,14 +2,22 @@
 /* label list */
 .labelList {
 	font-size: 0;
+	margin-bottom: -@wcfGapTiny;
+	
+	> li {
+		display: inline-block;
+		margin-bottom: @wcfGapTiny;
+		
+		&:not(:last-child) {
+			margin-right: 4px;
+		}
+	}
 }
 
-.labelList, .labelList > li {
-	display: inline-block;
-}
-
-.labelList > li:not(:last-child) {
-	margin-right: 4px;
+.boxHeadline {
+	.labelList {
+		display: inline-block;
+	}
 }
 
 /* ACP label list */
