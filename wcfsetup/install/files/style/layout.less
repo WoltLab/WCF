@@ -857,6 +857,10 @@
 		float: right;
 		.buttonList;
 	}
+	
+	> nav:not(.pageNavigation) + nav.jsClipboardEditor > ul {
+		margin-right: 8px;
+	}
 }
 
 @media only screen and (max-width: 800px) {
@@ -1820,6 +1824,10 @@ dl.statsDataList {
 		
 		> a {
 			text-decoration: none;
+		}
+		
+		&:not(:first-child) {
+			clear: both;
 		}
 	}
 	
