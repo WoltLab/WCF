@@ -76,7 +76,8 @@
 		insertFakeSubmitButton(event);
 		
 		// remove stupid title tag
-		$(event.editor.container.$).removeAttr('title');
+		// @todo: obsolete in ckeditor 4.2
+		$(event.editor.container.$).find('.cke_wysiwyg_div').removeAttr('title');
 		
 		if ($.browser.mozilla) {
 			fixFirefox();
