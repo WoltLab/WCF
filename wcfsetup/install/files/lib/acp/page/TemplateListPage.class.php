@@ -110,6 +110,7 @@ class TemplateListPage extends SortablePage {
 		
 		// get template groups
 		$templateGroupList = new TemplateGroupList();
+		$templateGroupList->sqlOrderBy = "templateGroupName";
 		$templateGroupList->readObjects();
 		$this->availableTemplateGroups = $templateGroupList->getObjects();
 		

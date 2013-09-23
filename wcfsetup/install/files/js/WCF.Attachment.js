@@ -200,9 +200,11 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				var $deleteButton = $('<li><span class="icon icon16 icon-remove pointer jsTooltip jsDeleteButton" title="'+WCF.Language.get('wcf.global.button.delete')+'" data-object-id="'+data.returnValues['attachments'][$filename]['attachmentID']+'" data-confirm-message="'+WCF.Language.get('wcf.attachment.delete.sure')+'" /></li>');
 				$li.find('ul').append($deleteButton);
 				
-				var $insertButton = $('<li><span class="icon icon16 icon-paste pointer jsTooltip jsButtonInsertAttachment" title="' + WCF.Language.get('wcf.attachment.insert') + '" data-object-id="' + data.returnValues['attachments'][$filename]['attachmentID'] + '" /></li>');
-				$insertButton.children('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
-				$li.find('ul').append($insertButton);
+				if (this._wysiwygContainerID) {
+					var $insertButton = $('<li><span class="icon icon16 icon-paste pointer jsTooltip jsButtonInsertAttachment" title="' + WCF.Language.get('wcf.attachment.insert') + '" data-object-id="' + data.returnValues['attachments'][$filename]['attachmentID'] + '" /></li>');
+					$insertButton.children('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
+					$li.find('ul').append($insertButton);
+				}
 			}
 			else {
 				// upload icon
