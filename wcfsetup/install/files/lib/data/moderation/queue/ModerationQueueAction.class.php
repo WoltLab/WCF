@@ -97,9 +97,16 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			'queues' => $queueList
 		));
 		
+		// check if user storage is outdated
 		$totalCount = ModerationQueueManager::getInstance()->getOutstandingModerationCount();
 		if (count($queueList) < $totalCount) {
 			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'outstandingModerationCount');
+			
+			// check for orphaned queues
+			$queueCount = ModerationQueueManager::getInstance()->getOutstandingModerationCount();
+			if (count($queueList) < $queueCount) {
+				ModerationQueueManager::getInstance()->identifyOrphans();
+			}
 		}
 		
 		return array(

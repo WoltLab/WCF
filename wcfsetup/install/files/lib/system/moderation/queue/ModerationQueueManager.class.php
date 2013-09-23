@@ -290,6 +290,44 @@ class ModerationQueueManager extends SingletonFactory {
 	}
 	
 	/**
+	 * Identifies and removes orphaned queues.
+	 */
+	public function identifyOrphans() {
+		$sql = "SELECT		moderation_queue.queueID, moderation_queue.objectTypeID, moderation_queue.objectID
+			FROM		wcf".WCF_N."_moderation_queue_to_user moderation_queue_to_user
+			LEFT JOIN	wcf".WCF_N."_moderation_queue moderation_queue
+			ON		(moderation_queue.queueID = moderation_queue_to_user.queueID)
+			WHERE		moderation_queue_to_user.userID = ?
+					AND moderation_queue_to_user.isAffected = ?
+					AND moderation_queue.status <> ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			WCF::getUser()->userID,
+			1,
+			ModerationQueue::STATUS_DONE
+		));
+		
+		$queues = array();
+		while ($row = $statement->fetchArray()) {
+			$objectTypeID = $row['objectTypeID'];
+			if (!isset($queues[$objectTypeID])) {
+				$queues[$objectTypeID] = array();
+			}
+			
+			$queues[$objectTypeID][$row['queueID']] = $row['objectID'];
+		}
+		
+		if (!empty($queues)) {
+			$queueIDs = array();
+			foreach ($queues as $objectTypeID => $objectQueues) {
+				$queueID = array_merge($queueIDs, $this->getProcessor($this->definitions[$this->objectTypes[$objectTypeID]->definitionID], null, $objectTypeID)->identifyOrphans());
+			}
+			
+			$this->removeOrphans($queueIDs);
+		}
+	}
+	
+	/**
 	 * Removes a list of orphaned queue ids.
 	 * 
 	 * @param	array<integer>		$queueIDs

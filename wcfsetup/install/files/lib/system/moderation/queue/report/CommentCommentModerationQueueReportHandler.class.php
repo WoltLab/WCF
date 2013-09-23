@@ -24,6 +24,11 @@ use wcf\system\WCF;
  */
 class CommentCommentModerationQueueReportHandler extends AbstractModerationQueueHandler implements IModerationQueueReportHandler {
 	/**
+	 * @see	wcf\system\moderation\queue\AbstractModerationQueueHandler::$className
+	 */
+	protected $className = 'wcf\data\comment\Comment';
+	
+	/**
 	 * @see	wcf\system\moderation\queue\AbstractModerationQueueHandler::$definitionName
 	 */
 	protected $definitionName = 'com.woltlab.wcf.moderation.report';

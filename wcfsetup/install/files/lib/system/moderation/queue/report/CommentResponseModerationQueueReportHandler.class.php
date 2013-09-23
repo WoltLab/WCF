@@ -24,6 +24,11 @@ use wcf\system\WCF;
  */
 class CommentResponseModerationQueueReportHandler extends CommentCommentModerationQueueReportHandler {
 	/**
+	 * @see	wcf\system\moderation\queue\AbstractModerationQueueHandler::$className
+	 */
+	protected $className = 'wcf\data\comment\response\CommentResponse';
+	
+	/**
 	 * @see	wcf\system\moderation\queue\AbstractModerationQueueHandler::$objectType
 	 */
 	protected $objectType = 'com.woltlab.wcf.comment.response';

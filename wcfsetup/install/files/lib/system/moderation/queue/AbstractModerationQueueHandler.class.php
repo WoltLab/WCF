@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\moderation\queue;
 use wcf\data\moderation\queue\ModerationQueueAction;
+use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
@@ -17,6 +18,12 @@ use wcf\system\WCF;
  */
 abstract class AbstractModerationQueueHandler implements IModerationQueueHandler {
 	/**
+	 * database object class name
+	 * @var	string
+	 */
+	protected $className = '';
+	
+	/**
 	 * definition name
 	 * @var	string
 	 */
@@ -27,6 +34,32 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	 * @var	string
 	 */
 	protected $objectType = '';
+	
+	/**
+	 * @see	wcf\system\moderation\queue\IModerationQueueHandler::identifyOrphans()
+	 */
+	public function identifyOrphans(array $queues) {
+		if (empty($this->className) || !class_exists($this->className) || !($this->className instanceof DatabaseObject)) {
+			throw new SystemException("DatabaseObject class name '" . $this->className . "' is missing or invalid");
+		}
+		
+		$indexName = call_user_func(array($this->className, 'getDatabaseTableIndexName'));
+		$tableName = call_user_func(array($this->className, 'getDatabaseTableName'));
+		
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add($indexName . " IN (?)", array(array_keys($queues)));
+		
+		$sql = "SELECT	" . $indexName . "
+			FROM	" . $tableName . "
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		while ($row = $statement->fetchArray()) {
+			unset($queues[$row[$indexName]]);
+		}
+		
+		return array_values($queues);
+	}
 	
 	/**
 	 * @see	wcf\system\moderation\queue\IModerationQueueHandler::removeQueues()
