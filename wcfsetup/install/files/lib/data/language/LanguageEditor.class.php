@@ -231,7 +231,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 								(languageID, languageItem, languageItemValue, languageCategoryID". ($packageID ? ", packageID" : "") . ")
 					VALUES			".substr(str_repeat('(?, ?, ?, ?'. ($packageID ? ', ?' : '') .'), ', $repeat), 0, -2)."
 					ON DUPLICATE KEY
-					UPDATE			languageItemValue = VALUES(languageItemValue),
+					UPDATE			languageItemValue = IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)),
 								languageCategoryID = VALUES(languageCategoryID),
 								languageUseCustomValue = 0";
 				$statement = WCF::getDB()->prepareStatement($sql);

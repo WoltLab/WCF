@@ -313,13 +313,15 @@ class I18nHandler extends SingletonFactory {
 		// update language items
 		if (!empty($updateLanguageIDs)) {
 			$sql = "UPDATE	wcf".WCF_N."_language_item
-				SET	languageItemValue = ?
+				SET	languageItemValue = ?,
+					languageItemOriginIsSystem = ?
 				WHERE	languageItemID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			foreach ($updateLanguageIDs as $languageID) {
 				$statement->execute(array(
 					(isset($this->i18nValues[$elementID]) ? $this->i18nValues[$elementID][$languageID] : $this->plainValues[$elementID]),
+					0,
 					$languageItemIDs[$languageID]
 				));
 			}
