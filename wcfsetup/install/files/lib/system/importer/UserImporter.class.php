@@ -138,7 +138,6 @@ class UserImporter extends AbstractImporter {
 						(userID, eventID)
 			VALUES			(?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		WCF::getDB()->beginTransaction();
 		foreach ($this->eventIDs as $eventID) {
 			$statement->execute(array(
 				$user->userID,
