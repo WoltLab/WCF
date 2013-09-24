@@ -320,7 +320,7 @@ class ModerationQueueManager extends SingletonFactory {
 		if (!empty($queues)) {
 			$queueIDs = array();
 			foreach ($queues as $objectTypeID => $objectQueues) {
-				$queueID = array_merge($queueIDs, $this->getProcessor($this->definitions[$this->objectTypes[$objectTypeID]->definitionID], null, $objectTypeID)->identifyOrphans());
+				$queueIDs = array_merge($queueIDs, $this->getProcessor($this->definitions[$this->objectTypes[$objectTypeID]->definitionID], null, $objectTypeID)->identifyOrphans($objectQueues));
 			}
 			
 			$this->removeOrphans($queueIDs);
@@ -339,6 +339,7 @@ class ModerationQueueManager extends SingletonFactory {
 			$sql = "DELETE FROM	wcf".WCF_N."_moderation_queue
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
 			
 			$this->resetModerationCount();
 		}

@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\moderation\queue;
 use wcf\data\moderation\queue\ModerationQueueAction;
-use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\ClassUtil;
 
 /**
  * Default implementation for moderation queue handlers.
@@ -39,7 +39,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	 * @see	wcf\system\moderation\queue\IModerationQueueHandler::identifyOrphans()
 	 */
 	public function identifyOrphans(array $queues) {
-		if (empty($this->className) || !class_exists($this->className) || !($this->className instanceof DatabaseObject)) {
+		if (empty($this->className) || !class_exists($this->className) || !ClassUtil::isInstanceOf($this->className, 'wcf\data\DatabaseObject')) {
 			throw new SystemException("DatabaseObject class name '" . $this->className . "' is missing or invalid");
 		}
 		
