@@ -43,7 +43,7 @@
 		<instruction type="script">acp/post_install.php</instruction> 
 	</instructions>
 	
-	<instructions type="update" fromversion="2.0.0 Beta 10">
+	<instructions type="update" fromversion="2.0.0 Beta 9">
 		<!-- deploy files first to prevent an issue with languages being overwritten during update -->
 		<instruction type="file" run="standalone">files_update.tar</instruction>
 		
