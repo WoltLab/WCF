@@ -26,10 +26,32 @@ class LinkHandler extends SingletonFactory {
 	protected $titleRegex = null;
 	
 	/**
+	 * title search strings
+	 * @var array<string>
+	 */
+	protected $titleSearch = array();
+	
+	/**
+	 * title replacement strings
+	 * @var array<string>
+	 */
+	protected $titleReplace = array();
+	
+	/**
 	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->titleRegex = new Regex('[\x0-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+');
+		
+		if (defined('URL_TITLE_COMPONENT_REPLACEMENT') && URL_TITLE_COMPONENT_REPLACEMENT) {
+			$replacements = explode("\n", StringUtil::unifyNewlines(StringUtil::trim(URL_TITLE_COMPONENT_REPLACEMENT)));
+			foreach ($replacements as $replacement) {
+				if (strpos($replacement, '=') === false) continue;
+				$components = explode('=', $replacement);
+				$this->titleSearch[] = $components[0];
+				$this->titleReplace[] = $components[1];
+			}
+		}
 	}
 	
 	/**
@@ -119,6 +141,11 @@ class LinkHandler extends SingletonFactory {
 		unset($parameters['object']);
 		
 		if (isset($parameters['title'])) {
+			// component replacement
+			if (!empty($this->titleSearch)) {
+				$parameters['title'] = str_replace($this->titleSearch, $this->titleReplace, $parameters['title']);
+			}
+			
 			// remove illegal characters
 			$parameters['title'] = trim($this->titleRegex->replace($parameters['title'], '-'), '-');
 			

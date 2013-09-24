@@ -357,6 +357,10 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
+			<option name="url_title_component_replacement">
+				<categoryname>general.page</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
 			<!-- /general.page -->
 			
 			<!-- offline -->
