@@ -164,8 +164,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * @param	wcf\util\XML	$xml
 	 * @param	integer		$packageID
 	 * @param	boolean		$updateFiles
+	 * @param	boolean		$updateExistingItems
 	 */
-	public function updateFromXML(XML $xml, $packageID, $updateFiles = true) {
+	public function updateFromXML(XML $xml, $packageID, $updateFiles = true, $updateExistingItems = true) {
 		$xpath = $xml->xpath();
 		$usedCategories = array();
 		
@@ -223,20 +224,26 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		if (!empty($itemData)) {
 			// insert/update a maximum of 50 items per run (prevents issues with max_allowed_packet)
 			$step = ($packageID) ? 5 : 4;
+			WCF::getDB()->beginTransaction();
 			for ($i = 0, $length = count($itemData); $i < $length; $i += 50 * $step) {
 				$parameters = array_slice($itemData, $i, 50 * $step);
 				$repeat = count($parameters) / $step;
 				
-				$sql = "INSERT INTO		wcf".WCF_N."_language_item
+				$sql = "INSERT".(!$updateExistingItems ? " IGNORE" : "")." INTO		wcf".WCF_N."_language_item
 								(languageID, languageItem, languageItemValue, languageCategoryID". ($packageID ? ", packageID" : "") . ")
-					VALUES			".substr(str_repeat('(?, ?, ?, ?'. ($packageID ? ', ?' : '') .'), ', $repeat), 0, -2)."
-					ON DUPLICATE KEY
+					VALUES			".substr(str_repeat('(?, ?, ?, ?'. ($packageID ? ', ?' : '') .'), ', $repeat), 0, -2);
+				
+				if ($updateExistingItems) {
+					" ON DUPLICATE KEY
 					UPDATE			languageItemValue = IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)),
 								languageCategoryID = VALUES(languageCategoryID),
 								languageUseCustomValue = 0";
+				}
+				
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($parameters);
 			}
+			WCF::getDB()->commitTransaction();
 		}
 		
 		// update the relevant language files

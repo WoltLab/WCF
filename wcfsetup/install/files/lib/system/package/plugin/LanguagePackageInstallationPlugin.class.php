@@ -81,10 +81,14 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		// install language
 		foreach ($installedLanguages as $installedLanguage) {
 			$languageFile = null;
+			$updateExistingItems = true;
 			if (isset($languageFiles[$installedLanguage['languageCode']])) {
 				$languageFile = $languageFiles[$installedLanguage['languageCode']];
 			}
 			else if ($multipleFiles) {
+				// do not update existing items, only add new ones
+				$updateExistingItems = false;
+				
 				// use default language
 				if (isset($languageFiles[$installedLanguages[0]['languageCode']])) {
 					$languageFile = $languageFiles[$installedLanguages[0]['languageCode']];
@@ -125,7 +129,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 					
 					// import xml
 					// don't update language files if package is an application
-					$languageEditor->updateFromXML($xml, $this->installation->getPackageID(), !$this->installation->getPackage()->isApplication);
+					$languageEditor->updateFromXML($xml, $this->installation->getPackageID(), !$this->installation->getPackage()->isApplication, $updateExistingItems);
 				}
 			}
 		}
