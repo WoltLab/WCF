@@ -234,7 +234,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					VALUES			".substr(str_repeat('(?, ?, ?, ?'. ($packageID ? ', ?' : '') .'), ', $repeat), 0, -2);
 				
 				if ($updateExistingItems) {
-					" ON DUPLICATE KEY
+					$sql .= " ON DUPLICATE KEY
 					UPDATE			languageItemValue = IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)),
 								languageCategoryID = VALUES(languageCategoryID),
 								languageUseCustomValue = 0";
