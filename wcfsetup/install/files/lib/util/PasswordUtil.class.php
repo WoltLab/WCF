@@ -66,7 +66,7 @@ final class PasswordUtil {
 			return true;
 		}
 		
-		if (preg_match('~^wcf1e[ms3][01][ab][01]$~', $type)) {
+		if (preg_match('~^wcf1e[cms][01][ab][01]$~', $type)) {
 			return true;
 		}
 		
@@ -526,23 +526,23 @@ final class PasswordUtil {
 	 * @param	string		$dbHash
 	 */
 	protected static function wcf1e($type, $password, $salt, $dbHash) {
-		preg_match('~^wcf1e([ms3])([01])([ab])([01])$~', $type, $matches);
+		preg_match('~^wcf1e([cms])([01])([ab])([01])$~', $type, $matches);
 		$enableSalting = $matches[2];
 		$saltPosition = $matches[3];
 		$encryptBeforeSalting = $matches[4];
 		
 		$encryptionMethod = '';
 		switch ($matches[1]) {
+			case 'c':
+				$encryptionMethod = 'crc32';
+			break;
+			
 			case 'm':
 				$encryptionMethod = 'md5';
 			break;
 			
 			case 's':
 				$encryptionMethod = 'sha1';
-			break;
-			
-			case '3':
-				$encryptionMethod = 'crc32';
 			break;
 		}
 		
