@@ -14,9 +14,32 @@
 	}
 }
 
-.boxHeadline {
-	.labelList {
+.boxHeadline.labeledHeadline {
+	font-size: 0;
+	
+	> h1 {
 		display: inline-block;
+		margin-right: @wcfGapSmall;
+	}
+	
+	> ul {
+		display: inline-block;
+		font-size: 1rem;
+		
+		&:not(:empty) {
+			margin-right: @wcfGapSmall;
+		}
+	}
+	
+	> ul.statusIcons {
+		> li {
+			display: inline-block;
+		}
+	}
+	
+	> ul.labelList {
+		position: relative;
+		top: -6px;
 	}
 }
 
