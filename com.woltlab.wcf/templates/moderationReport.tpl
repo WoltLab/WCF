@@ -108,8 +108,8 @@
 	<nav>
 		<ul>
 			{if !$queue->isDone()}
-				<li class="jsOnly"><button id="removeContent">{lang}wcf.moderation.report.removeContent{/lang}</button></li>
-				<li class="jsOnly"><button id="removeReport">{lang}wcf.moderation.report.removeReport{/lang}</button></li>
+				<li class="jsOnly"><a id="removeContent" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.moderation.report.removeContent{/lang}</span></a></li>
+				<li class="jsOnly"><a id="removeReport" class="button"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.moderation.report.removeReport{/lang}</span></a></li>
 			{/if}
 			<li><a href="{link controller='ModerationList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.moderation.moderation{/lang}</span></a></li>
 			
