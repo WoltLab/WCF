@@ -1599,6 +1599,12 @@ WCF.ACP.Options = Class.extend({
  */
 WCF.ACP.Worker = Class.extend({
 	/**
+	 * worker aborted
+	 * @var	boolean
+	 */
+	_aborted: false,
+	
+	/**
 	 * callback invoked after worker completed
 	 * @var	object
 	 */
@@ -1636,8 +1642,10 @@ WCF.ACP.Worker = Class.extend({
 	 * @param	string		title
 	 * @param	object		parameters
 	 * @param	object		callback
+	 * @param	object		confirmMessage
 	 */
 	init: function(dialogID, className, title, parameters, callback) {
+		this._aborted = false;
 		this._callback = callback || null;
 		this._dialogID = dialogID + 'Worker';
 		this._dialog = null;
@@ -1664,11 +1672,20 @@ WCF.ACP.Worker = Class.extend({
 		if (this._dialog === null) {
 			this._dialog = $('<div id="' + this._dialogID + '" />').hide().appendTo(document.body);
 			this._dialog.wcfDialog({
+				closeConfirmMessage: WCF.Language.get('wcf.acp.worker.abort.confirmMessage'),
+				closeViaModal: false,
 				onClose:  $.proxy(function() {
+					this._aborted = true;
 					this._proxy.abortPrevious();
+					
+					window.location.reload();
 				}, this),
 				title: this._title
 			});
+		}
+		
+		if (this._aborted) {
+			return;
 		}
 		
 		if (data.template) {

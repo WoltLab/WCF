@@ -214,6 +214,11 @@ class I18nHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function validateValue($elementID, $requireI18n = false, $permitEmptyValue = false) {
+		// do not force i18n if only one language is available
+		if ($requireI18n && count($this->availableLanguages) == 1) {
+			$requireI18n = false;
+		}
+		
 		if ($this->isPlainValue($elementID)) {
 			// plain values may be left empty
 			if ($permitEmptyValue) {
