@@ -66,14 +66,14 @@
 	<fieldset>
 		<legend>{lang}wcf.user.usersOnline{/lang}</legend>
 		
-		<p><small>{lang}wcf.user.usersOnline.detail{/lang}</small></p>
-		<p><small>{lang}wcf.index.usersOnline.record{/lang}</small></p>
+		<p><small>{lang usersOnlineList=$objects}wcf.user.usersOnline.detail{/lang}</small></p>
+		<p><small>{lang}wcf.user.usersOnline.record{/lang}</small></p>
 		
 		{if USERS_ONLINE_ENABLE_LEGEND && $objects->getUsersOnlineMarkings()|count}
 			<div class="marginTopSmall">
-				<p><small>{lang}wcf.user.usersOnline.marking.legend{/lang}</small></p>
+				<p><small>{lang}wcf.user.usersOnline.marking.legend{/lang}:</small></p>
 				<ul class="dataList">
-					{foreach from=$usersOnlineList->getUsersOnlineMarkings() item=usersOnlineMarking}
+					{foreach from=$objects->getUsersOnlineMarkings() item=usersOnlineMarking}
 						<li><small>{@$usersOnlineMarking}</small></li>
 					{/foreach}
 				</ul>
