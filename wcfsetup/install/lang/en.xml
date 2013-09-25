@@ -271,6 +271,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderative Permissions]]></item>
 		<item name="wcf.acp.group.option.category.user"><![CDATA[General Permissions]]></item>
 		<item name="wcf.acp.group.option.category.user.message"><![CDATA[Messages]]></item>
+		<item name="wcf.acp.group.option.category.user.message.comment"><![CDATA[Comments]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[The given value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[The given value is too low.{if $option->minvalue !== null} The minimum value is {#$option->minvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.showMembers"><![CDATA[Show Members]]></item>
@@ -295,6 +296,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.content.bbcode.canManageBBCode"><![CDATA[Can manage BBCodes]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Can manage smilies]]></item>
+		<item name="wcf.acp.group.option.user.comment.floodControlTime"><![CDATA[Delay for Comments]]></item>
+		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Minimum delay between creation of two comments or replies. [time in seconds, 0 to disable]]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseSmilies"><![CDATA[Can use smilies]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseHtml"><![CDATA[Can use HTML]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Can use BBCodes]]></item>
