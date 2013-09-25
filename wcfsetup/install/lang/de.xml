@@ -843,6 +843,8 @@
 Beispiele:<br />
 WBB=WoltLab Burning Board<br />
 GmbH=Gesellschaft mit beschränkter Haftung]]></item>
+		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Nur registrierte Benutzer im Benutzer-Online-Rekord zählen]]></item>
+		<item name="wcf.acp.option.users_online_enable_legend"><![CDATA[Legende der Benutzergruppen unter der Benutzer-Online-Liste anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -2219,6 +2221,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.usersOnline.lastActivity"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.user.usersOnline.location.unknown"><![CDATA[Unbekannter Ort]]></item>
 		<item name="wcf.user.usersOnline.robots"><![CDATA[Suchmaschinen-Roboter]]></item>
+		<item name="wcf.user.usersOnline.record"><![CDATA[{if USERS_ONLINE_RECORD > 0}Rekord: {#USERS_ONLINE_RECORD} Benutzer ({@USERS_ONLINE_RECORD_TIME|time}){/if}]]></item>
 	</category>
 	
 	<category name="wcf.user.recentActivity">
