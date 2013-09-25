@@ -6,7 +6,7 @@
 		<div>
 			<div class="containerHeadline">
 				<h3><a href="{link controller='UsersOnlineList'}{/link}">{lang}wcf.user.usersOnline{/lang}</a> <span class="badge">{#$usersOnlineList->stats[total]}</span></h3>
-				<p>{lang}wcf.user.usersOnline.detail{/lang}{if $usersOnlineShowRecord} - {lang}wcf.user.usersOnline.record{/lang}{/if}</p>
+				<p>{lang}wcf.user.usersOnline.detail{/lang}{if $usersOnlineShowRecord && USERS_ONLINE_RECORD} - {lang}wcf.user.usersOnline.record{/lang}{/if}</p>
 			</div>
 			
 			<ul class="dataList">
