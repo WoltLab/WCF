@@ -88,8 +88,11 @@
 			<dl class="plain inlineDataList">
 				<dt>{lang}wcf.user.usersOnline.ipAddress{/lang}</dt>
 				<dd title="{$user->getFormattedIPAddress()}">{$user->getFormattedIPAddress()|truncate:30}</dd>
-				<dt>{lang}wcf.user.usersOnline.userAgent{/lang}</dt>
-				<dd title="{$user->userAgent}">{$user->getBrowser()|truncate:30}</dd>
+				
+				{if !$user->spiderID}
+					<dt>{lang}wcf.user.usersOnline.userAgent{/lang}</dt>
+					<dd title="{$user->userAgent}">{$user->getBrowser()|truncate:30}</dd>
+				{/if}
 			</dl>
 		{/if}
 	{/capture}
