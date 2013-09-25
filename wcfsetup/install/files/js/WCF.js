@@ -8555,6 +8555,8 @@ $.widget('ui.wcfDialog', {
 		autoOpen: true,
 		closable: true,
 		closeButtonLabel: null,
+		closeConfirmMessage: null,
+		closeViaModal: true,
 		hideTitle: false,
 		modal: true,
 		title: '',
@@ -8620,7 +8622,7 @@ $.widget('ui.wcfDialog', {
 				this._overlay = $('<div id="jsWcfDialogOverlay" class="dialogOverlay" />').css({ height: '100%', zIndex: 399 }).hide().appendTo(document.body);
 			}
 			
-			if (this.options.closable) {
+			if (this.options.closable && this.options.closeViaModal) {
 				this._overlay.click($.proxy(this.close, this));
 				
 				$(document).keyup($.proxy(function(event) {
@@ -8714,6 +8716,28 @@ $.widget('ui.wcfDialog', {
 			return;
 		}
 		
+		if (this.options.closeConfirmMessage) {
+			WCF.System.Confirmation.show(this.options.closeConfirmMessage, $.proxy(function(action) {
+				if (action === 'confirm') {
+					this._close();
+				}
+			}, this));
+		}
+		else {
+			this._close();
+		}
+		
+		if (event !== undefined) {
+			event.preventDefault();
+		}
+	},
+	
+	/**
+	 * Handles dialog closing, should never be called directly.
+	 * 
+	 * @see	$.ui.wcfDialog.close()
+	 */
+	_close: function() {
 		this._isOpen = false;
 		this._container.wcfFadeOut();
 		
@@ -8727,10 +8751,6 @@ $.widget('ui.wcfDialog', {
 		
 		if (this.options.onClose !== null) {
 			this.options.onClose();
-		}
-		
-		if (event !== undefined) {
-			event.preventDefault();
 		}
 	},
 	
