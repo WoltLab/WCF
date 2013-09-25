@@ -16,6 +16,8 @@
 	 * @param	CKEDITOR	editor
 	 */
 	function transformBBCode(editor) {
+		editor.fire('lockSnapshot');
+		
 		var $markerID = null;
 		$(editor.container.$).find('span.wcfBBCode').removeClass('wcfBBCode').html(function() {
 			var $bbcode = $(this).data('bbcode');
@@ -34,6 +36,8 @@
 			
 			$marker.remove();
 		}
+		
+		editor.fire('unlockSnapshot');
 	}
 	
 	// listens for 'afterCommandExec' to transform BBCodes into plain text
