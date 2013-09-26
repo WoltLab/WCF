@@ -63,6 +63,24 @@
 		</form>
 	</div>
 	
+	<fieldset>
+		<legend>{lang}wcf.user.usersOnline{/lang}</legend>
+		
+		<p><small>{lang usersOnlineList=$objects}wcf.user.usersOnline.detail{/lang}</small></p>
+		{if USERS_ONLINE_RECORD}<p><small>{lang}wcf.user.usersOnline.record{/lang}</small></p>{/if}
+		
+		{if USERS_ONLINE_ENABLE_LEGEND && $objects->getUsersOnlineMarkings()|count}
+			<div class="marginTopSmall">
+				<p><small>{lang}wcf.user.usersOnline.marking.legend{/lang}:</small></p>
+				<ul class="dataList">
+					{foreach from=$objects->getUsersOnlineMarkings() item=usersOnlineMarking}
+						<li><small>{@$usersOnlineMarking}</small></li>
+					{/foreach}
+				</ul>
+			</div>
+		{/if}
+	</fieldset>
+	
 	{@$__boxSidebar}
 {/capture}
 
@@ -88,8 +106,11 @@
 			<dl class="plain inlineDataList">
 				<dt>{lang}wcf.user.usersOnline.ipAddress{/lang}</dt>
 				<dd title="{$user->getFormattedIPAddress()}">{$user->getFormattedIPAddress()|truncate:30}</dd>
-				<dt>{lang}wcf.user.usersOnline.userAgent{/lang}</dt>
-				<dd title="{$user->userAgent}">{$user->getBrowser()|truncate:30}</dd>
+				
+				{if !$user->spiderID}
+					<dt>{lang}wcf.user.usersOnline.userAgent{/lang}</dt>
+					<dd title="{$user->userAgent}">{$user->getBrowser()|truncate:30}</dd>
+				{/if}
 			</dl>
 		{/if}
 	{/capture}

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user\online;
+use wcf\data\option\OptionAction;
 use wcf\data\session\SessionList;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
@@ -123,6 +124,21 @@ class UsersOnlineList extends SessionList {
 		}
 		
 		return $this->usersOnlineMarkings;
+	}
+	
+	/**
+	 * Checks the users online record.
+	 */
+	public function checkRecord() {
+		$usersOnlineTotal = (USERS_ONLINE_RECORD_NO_GUESTS ? $this->stats['members'] : $this->stats['total']);
+		if ($usersOnlineTotal > USERS_ONLINE_RECORD) {
+			// save new record
+			$optionAction = new OptionAction(array(), 'import', array('data' => array(
+				'users_online_record' => $usersOnlineTotal,
+				'users_online_record_time' => TIME_NOW
+			)));
+			$optionAction->executeAction();
+		}
 	}
 	
 	/**

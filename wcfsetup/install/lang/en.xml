@@ -842,6 +842,8 @@ Examples for medium ID detection:
 Beispiele:<br />
 WBB=WoltLab Burning Board<br />
 GmbH=Gesellschaft mit beschränkter Haftung]]></item>
+		<item name="wcf.acp.option.users_online_enable_legendusers_online_record_no_guests"><![CDATA[Exclude guests from user online record]]></item>
+		<item name="wcf.acp.option.users_online_enable_legend"><![CDATA[Display legend for “Users Online” list]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -2216,6 +2218,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.usersOnline.lastActivity"><![CDATA[Last Activity]]></item>
 		<item name="wcf.user.usersOnline.location.unknown"><![CDATA[Unknown location]]></item>
 		<item name="wcf.user.usersOnline.robots"><![CDATA[Search Engine Robots]]></item>
+		<item name="wcf.user.usersOnline.record"><![CDATA[Record: {#USERS_ONLINE_RECORD} User{if USERS_ONLINE_RECORD != 1}s{/if} ({@USERS_ONLINE_RECORD_TIME|time})]]></item>
 	</category>
 	
 	<category name="wcf.user.recentActivity">
