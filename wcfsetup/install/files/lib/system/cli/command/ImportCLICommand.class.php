@@ -127,6 +127,7 @@ class ImportCLICommand implements ICLICommand {
 			CLIWCF::getReader()->println(StringUtil::stripHTML(WCF::getLanguage()->get('wcf.acp.dataImport.cli.info.wcf')));
 			
 			$answer = CLIWCF::getReader()->readLine('> ');
+			if ($answer === null) exit;
 			if (mb_strtolower($answer) != 'y') {
 				CLIWCF::getReader()->setHistoryEnabled(true);
 				return;
@@ -143,6 +144,7 @@ class ImportCLICommand implements ICLICommand {
 			CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.existingMapping.confirmMessage') . ' [YN]');
 			
 			$answer = CLIWCF::getReader()->readLine('> ');
+			if ($answer === null) exit;
 			if (mb_strtolower($answer) == 'y') {
 				ImportHandler::getInstance()->resetMapping();
 			}
@@ -205,10 +207,15 @@ class ImportCLICommand implements ICLICommand {
 		while (true) {
 			CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database'));
 			$this->dbHost = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.host').'> ');
+			if ($this->dbHost === null) exit;
 			$this->dbUser = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.user').'> ');
+			if ($this->dbUser === null) exit;
 			$this->dbPassword = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.password').'> ');
+			if ($this->dbPassword === null) exit;
 			$this->dbName = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.name').'> ');
+			if ($this->dbName === null) exit;
 			$this->dbPrefix = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.prefix').'> ');
+			if ($this->dbPrefix === null) exit;
 			
 			$this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, '', array());
 			
@@ -253,6 +260,8 @@ class ImportCLICommand implements ICLICommand {
 		
 		while (true) {
 			$exporterIndex = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.exporter').'> ');
+			if ($exporterIndex === null) exit;
+			
 			if (isset($exporterSelection[$exporterIndex])) {
 				$this->exporterName = $exporterSelection[$exporterIndex];
 				break;
@@ -286,6 +295,7 @@ class ImportCLICommand implements ICLICommand {
 		CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.fileSystem.path'));
 		while (true) {
 			$this->fileSystemPath = CLIWCF::getReader()->readLine('> ');
+			if ($this->fileSystemPath === null) exit;
 			$this->exporter->setData($this->dbHost, $this->dbUser, $this->dbPassword, $this->dbName, $this->dbPrefix, $this->fileSystemPath, array());
 			
 			if (!$this->exporter->validateFileAccess()) {
@@ -339,6 +349,7 @@ class ImportCLICommand implements ICLICommand {
 			
 			// read index of selected primary import data type
 			$selectedObjectTypeIndex = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.data').'> ');
+			if ($selectedObjectTypeIndex === null) exit;
 			
 			// if no primary import data type is selected, finish data selection
 			if ($selectedObjectTypeIndex == '') {
@@ -386,6 +397,7 @@ class ImportCLICommand implements ICLICommand {
 				while (true) {
 					// read index of selected secondary import data type
 					$selectedSecondaryObjectTypeIndex = CLIWCF::getReader()->readLine('  '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.data').'> ');
+					if ($selectedSecondaryObjectTypeIndex === null) exit;
 					
 					// continue with primary import data type selection
 					if ($selectedSecondaryObjectTypeIndex == '') {
@@ -456,6 +468,7 @@ class ImportCLICommand implements ICLICommand {
 		
 		while (true) {
 			$this->userMergeMode = CLIWCF::getReader()->readLine('> ');
+			if ($this->userMergeMode === null) exit;
 			if ($this->userMergeMode != intval($this->userMergeMode) || $this->userMergeMode < 1 || $this->userMergeMode > 3) {
 				$this->userMergeMode = 2;
 			}
