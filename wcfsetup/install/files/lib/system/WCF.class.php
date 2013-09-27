@@ -27,8 +27,8 @@ use wcf\util\ClassUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
-// try to disable execution time limit
-@set_time_limit(0);
+// try to set a time-limit of 5 minutes
+@set_time_limit(300);
 
 // fix timezone warning issue
 if (!@ini_get('date.timezone')) {

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\comment\response\CommentResponseEditor;
+use wcf\system\WCF;
 
 /**
  * Imports comment responses.
@@ -34,6 +35,16 @@ class AbstractCommentResponseImporter extends AbstractImporter {
 		if (!$data['commentID']) return 0;
 		
 		$response = CommentResponseEditor::create($data);
+		
+		// update parent comment
+		$sql = "UPDATE	wcf".WCF_N."_comment
+			SET	responseIDs = ?
+			WHERE	commentID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			serialize(array($response->responseID)),
+			$response->commentID
+		));
 		
 		return $response->responseID;
 	}
