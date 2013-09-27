@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\page\AbstractPage;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
@@ -15,9 +16,16 @@ use wcf\system\exception\PermissionDeniedException;
  */
 class AttachmentPage extends \wcf\page\AttachmentPage {
 	/**
+	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 */
+	public $neededPermissions = array('admin.attachment.canManageAttachment');
+	
+	/**
 	 * @see	wcf\page\IPage::checkPermissions()
 	 */
 	public function checkPermissions() {
+		AbstractPage::checkPermissions();
+		
 		if ($this->attachment->tmpHash) {
 			throw new PermissionDeniedException();
 		}
