@@ -113,6 +113,8 @@ class ImportCLICommand implements ICLICommand {
 	 * @see	wcf\system\cli\command\ICLICommand::execute()
 	 */
 	public function execute(array $parameters) {
+		CLIWCF::getReader()->setHistoryEnabled(false);
+		
 		$this->exporters = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.exporter');
 		$this->importers = array_keys(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.importer'));
 		
@@ -142,6 +144,7 @@ class ImportCLICommand implements ICLICommand {
 		// step 3) selected data
 		$this->readSelectedData();
 		if ($this->quitImport) {
+			CLIWCF::getReader()->setHistoryEnabled(true);
 			return;
 		}
 		
@@ -181,6 +184,8 @@ class ImportCLICommand implements ICLICommand {
 		}
 		
 		CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.completed'));
+		
+		CLIWCF::getReader()->setHistoryEnabled(true);
 	}
 	
 	/**
