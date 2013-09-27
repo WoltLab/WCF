@@ -756,6 +756,9 @@
 		<name>NaverBot</name>
 		<url>http://www.spidermatic.com/en/robot-spider/20</url>
 	</spider>
+		<spider ident="NDSpider">
+		<name>NDSpider</name>
+	</spider>
 	<spider ident="NEC-MeshExplorer">
 		<name>NEC-MeshExplorer</name>
 	</spider>
@@ -1260,8 +1263,15 @@
 	<spider ident="WebWatch">
 		<name>WebWatch</name>
 	</spider>
+		<spider ident="WebZinger">
+		<name>WebZinger</name>
+	</spider>
 	<spider ident="whatUseek_winona">
 		<name>whatUseek Winona</name>
+	</spider>
+		<spider ident="WhoWhere Robot">
+		<name>WebWatch</name>
+		<url>http://www.whowhere.com</url>
 	</spider>
 	<spider ident="SurveyBot">
 		<name>Whois Source</name>
