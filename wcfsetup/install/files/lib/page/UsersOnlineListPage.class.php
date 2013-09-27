@@ -76,6 +76,8 @@ class UsersOnlineListPage extends SortablePage {
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
+		$this->objectList->readStats();
+		$this->objectList->checkRecord();
 		
 		if (!USERS_ONLINE_SHOW_ROBOTS) {
 			$this->objectList->getConditionBuilder()->add('session.spiderID IS NULL');

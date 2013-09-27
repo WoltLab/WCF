@@ -2,14 +2,45 @@
 /* label list */
 .labelList {
 	font-size: 0;
+	margin-bottom: -@wcfGapTiny;
+	
+	> li {
+		display: inline-block;
+		margin-bottom: @wcfGapTiny;
+		
+		&:not(:last-child) {
+			margin-right: 4px;
+		}
+	}
 }
 
-.labelList, .labelList > li {
-	display: inline-block;
-}
-
-.labelList > li:not(:last-child) {
-	margin-right: 4px;
+.boxHeadline.labeledHeadline {
+	font-size: 0;
+	
+	> h1 {
+		display: inline-block;
+		margin-right: @wcfGapSmall;
+	}
+	
+	> ul {
+		display: inline-block;
+		font-size: 1rem;
+		
+		&:not(:empty) {
+			margin-right: @wcfGapSmall;
+		}
+	}
+	
+	> ul.statusIcons {
+		> li {
+			display: inline-block;
+		}
+	}
+	
+	> ul.labelList {
+		position: relative;
+		top: -6px;
+	}
 }
 
 /* ACP label list */

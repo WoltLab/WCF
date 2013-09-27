@@ -279,6 +279,7 @@
 		<item name="wcf.acp.group.option.category.mod"><![CDATA[Moderative Rechte]]></item>
 		<item name="wcf.acp.group.option.category.user"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.user.message"><![CDATA[Nachrichten]]></item>
+		<item name="wcf.acp.group.option.category.user.message.comment"><![CDATA[Kommentare]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.showMembers"><![CDATA[Zeige die Mitglieder dieser Benutzergruppe]]></item>
@@ -303,6 +304,8 @@
 		<item name="wcf.acp.group.option.admin.content.bbcode.canManageBBCode"><![CDATA[Kann BBCodes verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.group.option.admin.content.smiley.canManageSmiley"><![CDATA[Kann Smileys verwalten]]></item>
+		<item name="wcf.acp.group.option.user.comment.floodControlTime"><![CDATA[Mindestzeit zwischen zwei Kommentaren]]></item>
+		<item name="wcf.acp.group.option.user.comment.floodControlTime.description"><![CDATA[Mindestzeit, die zwischen zwei hintereinander folgenden Kommentare oder Antworten vergehen muss. [Zeit in Sekunden, 0 für unbeschränkt]]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseSmilies"><![CDATA[Kann Smileys benutzen]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseHtml"><![CDATA[Kann HTML benutzen]]></item>
 		<item name="wcf.acp.group.option.user.message.canUseBBCodes"><![CDATA[Kann BBCodes benutzen]]></item>
@@ -761,7 +764,6 @@
 		<item name="wcf.acp.option.module_team_page"><![CDATA[Team-Seite]]></item>
 		<item name="wcf.acp.option.module_dashboard_page"><![CDATA[Dashboard]]></item>
 		<item name="wcf.acp.option.module_dashboard_page.description"><![CDATA[Hinweis: Falls das Dashboard als Startseite definiert ist, muss bei Deaktivierung dieser Option zusätzlich eine neue Startseite in der <a href="{link controller='PageMenuItemList'}{/link}">Hauptmenüverwaltung</a> ausgewählt werden.]]></item>
-		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatare]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check"><![CDATA[Sicherheitsüberprüfung aktivieren]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check.description"><![CDATA[Kennwörter werden auf ihre Sicherheit geprüft. Unsichere Kennwörter werden abgelehnt.]]></item>
 		<item name="wcf.acp.option.register_password_min_length"><![CDATA[Minimale Kennwortlänge]]></item>
@@ -843,6 +845,13 @@
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer-Code]]></item>
 		<item name="wcf.acp.option.footer_code.description"><![CDATA[Der hier angegebene Code wird im Fußbereich jeder Seite ausgegeben. Der Footer-Code eignet sich z.B. sehr gut für die Einbindung von Diensten wie „Google Analytics“ oder „Piwik“.]]></item>
 		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Profil-Besucher anzeigen]]></item>
+		<item name="wcf.acp.option.url_title_component_replacement"><![CDATA[URL-Ersetzungen]]></item>
+		<item name="wcf.acp.option.url_title_component_replacement.description"><![CDATA[Sie können den in URLs enthaltenen Titel durch eigene Ersetzungen verändern. Dies kann z.B. zum Ersetzen von Umlauten oder zum Expandieren von Abkürzungen genutzt werden. (Eine Ersetzung pro Zeile)<br />
+Beispiele:<br />
+WBB=WoltLab Burning Board<br />
+GmbH=Gesellschaft mit beschränkter Haftung]]></item>
+		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Nur registrierte Benutzer im Benutzer-Online-Rekord zählen]]></item>
+		<item name="wcf.acp.option.users_online_enable_legend"><![CDATA[Legende der Benutzergruppen anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -2239,6 +2248,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.usersOnline.lastActivity"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.user.usersOnline.location.unknown"><![CDATA[Unbekannter Ort]]></item>
 		<item name="wcf.user.usersOnline.robots"><![CDATA[Suchmaschinen-Roboter]]></item>
+		<item name="wcf.user.usersOnline.record"><![CDATA[Rekord: {#USERS_ONLINE_RECORD} Benutzer ({@USERS_ONLINE_RECORD_TIME|time})]]></item>
 	</category>
 	
 	<category name="wcf.user.recentActivity">

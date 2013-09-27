@@ -1268,7 +1268,7 @@ DROP TABLE IF EXISTS wcf1_user_storage;
 CREATE TABLE wcf1_user_storage (
 	userID INT(10) NOT NULL,
 	field VARCHAR(80) NOT NULL DEFAULT '',
-	fieldValue TEXT,
+	fieldValue MEDIUMTEXT,
 	UNIQUE KEY userStorageData (userID, field)
 );
 

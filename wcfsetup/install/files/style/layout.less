@@ -324,6 +324,11 @@
 	.mainMenu {
 		font-size: 0;
 		
+		-webkit-user-select: none;  
+		-moz-user-select: none;    
+		-ms-user-select: none;      
+		user-select: none;
+		
 		> ul {
 			background-color: @wcfMainMenuBackgroundColor;
 			display: inline-block;
@@ -856,6 +861,10 @@
 		margin-right: 2px;
 		float: right;
 		.buttonList;
+	}
+	
+	> nav:not(.pageNavigation) + nav.jsClipboardEditor > ul {
+		margin-right: 8px;
 	}
 }
 
@@ -1820,6 +1829,10 @@ dl.statsDataList {
 		
 		> a {
 			text-decoration: none;
+		}
+		
+		&:not(:first-child) {
+			clear: both;
 		}
 	}
 	

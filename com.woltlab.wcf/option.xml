@@ -357,6 +357,10 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
+			<option name="url_title_component_replacement">
+				<categoryname>general.page</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
 			<!-- /general.page -->
 			
 			<!-- offline -->
@@ -941,6 +945,28 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<minvalue>0</minvalue>
+			</option>
+			<option name="users_online_record_no_guests">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_users_online</options>
+			</option>
+			<option name="users_online_enable_legend">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_users_online</options>
+			</option>
+			<option name="users_online_record">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>integer</optiontype>
+				<hidden>1</hidden>
+			</option>
+			<option name="users_online_record_time">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>integer</optiontype>
+				<hidden>1</hidden>
 			</option>
 			<!-- /user.list.online -->
 			

@@ -159,7 +159,7 @@
 	position: relative;
 	
 	&:hover {
-		.messageHeader .messageQuickOptions > li > a {
+		.messageHeader .messageQuickOptions > li {
 			opacity: 1;
 		}
 		
@@ -241,23 +241,18 @@
 			
 			> li {
 				display: inline-block;
+				opacity: .6;
 				
-				> a {
-					opacity: .6;
+				.transition(opacity, .2s);
+				
+				span.icon {
+					color: @wcfDimmedColor;
 					
-					.transition(opacity, .2s);
-					
-					> span.icon {
-						color: @wcfDimmedColor;
-						
-						.transition(color, .2s);
-					}
-					
-					&:hover {
-						> span.icon {
-							color: @wcfLinkColor;
-						}
-					}
+					.transition(color, .2s);
+				}
+				
+				> a:hover > span.icon {
+					color: @wcfLinkColor;
 				}
 			}
 			

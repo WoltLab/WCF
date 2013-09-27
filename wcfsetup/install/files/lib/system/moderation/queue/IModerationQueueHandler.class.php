@@ -29,6 +29,14 @@ interface IModerationQueueHandler {
 	public function getContainerID($objectID);
 	
 	/**
+	 * Validates object ids and returns orphaned queue ids.
+	 * 
+	 * @param	array<integer>		$queues
+	 * @return	array<integer>
+	 */
+	public function identifyOrphans(array $queues);
+	
+	/**
 	 * Returns true if given object id is valid.
 	 * 
 	 * @param	integer		$objectID

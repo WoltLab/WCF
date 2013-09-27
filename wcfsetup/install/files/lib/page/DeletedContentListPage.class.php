@@ -40,14 +40,15 @@ class DeletedContentListPage extends MultipleLinkPage {
 		// get object type
 		if (isset($_REQUEST['objectType'])) {
 			$this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.deletedContent', $_REQUEST['objectType']);
-			if ($this->objectType === null) {
-				throw new IllegalLinkException();
-			}
 		}
 		else {
 			// use first object type
 			$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.deletedContent');
-			$this->objectType = reset($objectTypes);
+			if (!empty($objectTypes)) $this->objectType = reset($objectTypes);
+		}
+		
+		if ($this->objectType === null) {
+			throw new IllegalLinkException();
 		}
 	}
 	
