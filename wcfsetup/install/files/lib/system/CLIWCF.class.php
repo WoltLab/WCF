@@ -61,6 +61,9 @@ class CLIWCF extends WCF {
 		$argv->parse();
 		define('PACKAGE_ID', $argv->packageID ?: 1);
 		
+		// disable benchmark
+		define('ENABLE_BENCHMARK', 0);
+		
 		parent::__construct();
 		
 		// the destructor registered in core.functions.php will only call the destructor of the parent class
