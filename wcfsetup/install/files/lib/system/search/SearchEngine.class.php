@@ -83,7 +83,7 @@ class SearchEngine extends SingletonFactory {
 			$controlCharacterOrSpace = false;
 			$chars = array('+', '-', '*');
 			for ($i = 0, $length = mb_strlen($q); $i < $length; $i++) {
-				$char = $q[$i];
+				$char = mb_substr($q, $i, 1);
 				
 				if ($inQuotes) {
 					if ($char == '"') {

@@ -6,6 +6,7 @@
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
+// @codingStandardsIgnoreFile
 // define constants
 define('INSTALL_SCRIPT', __FILE__);
 define('INSTALL_SCRIPT_DIR', dirname(__FILE__).'/');

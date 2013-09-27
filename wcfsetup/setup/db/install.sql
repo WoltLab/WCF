@@ -206,6 +206,14 @@ CREATE TABLE wcf1_category (
 	additionalData TEXT
 );
 
+DROP TABLE IF EXISTS wcf1_cli_history;
+CREATE TABLE wcf1_cli_history (
+	historyItem INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	userID INT(10) NOT NULL,
+	command VARCHAR(255) NOT NULL,
+	KEY (userID)
+);
+
 DROP TABLE IF EXISTS wcf1_clipboard_action;
 CREATE TABLE wcf1_clipboard_action (
 	actionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1315,6 +1323,8 @@ ALTER TABLE wcf1_bbcode ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pac
 ALTER TABLE wcf1_bbcode_attribute ADD FOREIGN KEY (bbcodeID) REFERENCES wcf1_bbcode (bbcodeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_category ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_cli_history ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_clipboard_action ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 

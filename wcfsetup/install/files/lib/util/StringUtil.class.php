@@ -368,6 +368,21 @@ final class StringUtil {
 	}
 	
 	/**
+	 * Alias to php str_split() function with multibyte support.
+	 * 
+	 * @param	string		$string
+	 * @param	integer		$length
+	 * @return	array<string>
+	 */
+	public static function split($string, $length = 1) {
+		$result = array();
+		for ($i = 0, $max = self::length($string); $i < $max; $i += $length) {
+			$result[] = self::substring($string, $i, $length);
+		}
+		return $result;
+	}
+	
+	/**
 	 * Checks wether $haystack starts with $needle, or not.
 	 * 
 	 * @param	string		$haystack	The string to be checked for starting with $needle
@@ -401,6 +416,14 @@ final class StringUtil {
 		$length = mb_strlen($needle);
 		if ($length === 0) return true;
 		return (mb_substr($haystack, $length * -1) === $needle);
+	}
+	
+	/**
+	 * Alias to php str_pad function with multibyte support.
+	 */
+	public static function pad($input, $padLength, $padString=' ', $padType=STR_PAD_RIGHT) {
+		$additionalPadding = strlen($input) - self::length($input);
+		return str_pad($input, $padLength + $additionalPadding, $padString, $padType);
 	}
 	
 	/**

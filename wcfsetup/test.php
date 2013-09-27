@@ -51,6 +51,7 @@ if (isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO'])) {
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
+// @codingStandardsIgnoreFile
 // check php version
 // php version
 $phpVersion = phpversion();
