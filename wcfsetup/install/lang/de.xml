@@ -165,21 +165,15 @@
 	
 	<category name="wcf.acp.dataImport">
 		<item name="wcf.acp.dataImport"><![CDATA[Datenimport]]></item>
-		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Datenquelle wählen]]></item>
-		<item name="wcf.acp.dataImport.exporter"><![CDATA[Datenquelle]]></item>
+		<item name="wcf.acp.dataImport.cli.configure.data.alreadySelected"><![CDATA[Diese Daten werden bereits importiert.]]></item>
+		<item name="wcf.acp.dataImport.cli.configure.data.error.noSelection"><![CDATA[Sie haben keine Daten zum Import ausgewählt. Der Import wird beendet.]]></item>
+		<item name="wcf.acp.dataImport.cli.configure.data.error.notValid"><![CDATA[Der ausgewählte Datentyp ist ungültig.]]></item>
+		<item name="wcf.acp.dataImport.cli.configure.data.selectAll"><![CDATA[Alle Daten]]></item>
+		<item name="wcf.acp.dataImport.cli.info.wcf"><![CDATA[Sie haben keine Anwendung beim Skript-Aufruf mittels --packageID={PACKAGE_ID} geladen. Wenn Sie Daten für eine Anwendung importieren möchten, müssen Sie das Skript mit der ID des entsprechenden Pakets starten. Möchten Sie mit dem Import fortfahren? [YN]]]></item>
+		<item name="wcf.acp.dataImport.cli.selection"><![CDATA[Auswahl? [{if $minSelection == $maxSelection}{$minSelection}{else}{$minSelection}-{$maxSelection}{/if}]]]></item>
+		<item name="wcf.acp.dataImport.completed"><![CDATA[Import abgeschlossen.]]></item>
 		<item name="wcf.acp.dataImport.configure.data"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.dataImport.configure.data.description"><![CDATA[Folgende Daten importieren:]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[Benutzergruppen]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[Benutzerprofilfelder]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Follower]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Benutzerränge]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[Avatare]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Pinnwand-Kommentare]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Pinnwand-Kommentar-Antworten]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smileys]]></item>
-		<item name="wcf.acp.dataImport.completed"><![CDATA[Import abgeschlossen.]]></item>
 		<item name="wcf.acp.dataImport.configure.database"><![CDATA[Datenbank-Zugang]]></item>
 		<item name="wcf.acp.dataImport.configure.database.host"><![CDATA[Hostname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.user"><![CDATA[Benutzername]]></item>
@@ -197,9 +191,23 @@
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"><![CDATA[Benutzeraccounts umbennen]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"><![CDATA[Benutzeraccounts zusammenlegen]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"><![CDATA[Benutzeraccounts zusammenlegen, wenn auch die E-Mail-Adresse identisch ist]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[Benutzergruppen]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[Benutzerprofilfelder]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Follower]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Benutzerränge]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[Avatare]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Pinnwand-Kommentare]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Pinnwand-Kommentar-Antworten]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[Wollen Sie die bestehenden Zuordnungen wirklich löschen?]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet um Inhalte aus dem importierten Forum einwandfrei zu zuordnen. Wenn Sie den Import-Vorgang vollständig abgeschlossen haben, können Sie diese Zuordnungen <a id="deleteMapping">löschen</a>. Sie sollten die Zuordnungen nicht löschen, wenn Sie jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernommen wollen.]]></item>
+		<item name="wcf.acp.dataImport.exporter"><![CDATA[Datenquelle]]></item>
+		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Datenquelle wählen]]></item>
+		<item name="wcf.acp.dataImport.selectExporter.error.notValid"><![CDATA[Die ausgewählte Datenquelle ist ungültig.]]></item>
 		<item name="wcf.acp.dataImport.selectExporter.noExporters"><![CDATA[Es wurde keine Datenquelle für einen Datenimport gefunden.]]></item>
+		<item name="wcf.acp.dataImport.started"><![CDATA[Import begonnen.]]></item>
 	</category>
 	
 	<category name="wcf.acp.exceptionLog">
@@ -862,6 +870,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.dependencies.required.description"><![CDATA[Pakete, die zwingend für den Betrieb dieses Paketes benötigt werden]]></item>
 		<item name="wcf.acp.package.dependencies.title"><![CDATA[Abhängigkeiten]]></item>
 		<item name="wcf.acp.package.description"><![CDATA[Beschreibung]]></item>
+		<item name="wcf.acp.package.error.cli.installIsApplication"><![CDATA[Anwendungen können per CLI nicht installiert werden.]]></item>
 		<item name="wcf.acp.package.error.noUniqueAbbrevation"><![CDATA[Es ist bereits eine Anwendung installiert, die die gleiche Abkürzung besitzt.]]></item>
 		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[Das angegebene Archiv ist kein gültiges Paket.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Existierende Tabellen überschreiben]]></item>
@@ -1407,6 +1416,25 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.category.title"><![CDATA[Titel]]></item>
 		<item name="wcf.category.button.choose"><![CDATA[Kategorien wählen]]></item>
+	</category>
+	
+	<category name="wcf.cli">
+		<item name="wcf.cli.help.noLongHelp"><![CDATA[Zu dem Parameter "{$topic}" ist keine ausführliche Erklärung verfügbar.]]></item>
+		<item name="wcf.cli.help.language"><![CDATA[Erzwingt die Sprache mit dem angegebenen Sprachcode.]]></item>
+		<item name="wcf.cli.help.version"><![CDATA[Zeigt die Versionsnummer an und beendet das Script.]]></item>
+		<item name="wcf.cli.help.help"><![CDATA[Zeigt diese Hilfe an und beendet das Script.]]></item>
+		<item name="wcf.cli.help.q"><![CDATA[Quiet: Zeigt weniger Informationen an.]]></item>
+		<item name="wcf.cli.help.v"><![CDATA[Verbose: Zeigt mehr Informationen an.]]></item>
+		<item name="wcf.cli.help.disableUpdateCheck"><![CDATA[Nach dem Einloggen wird nicht nach Updates gesucht.]]></item>
+		<item name="wcf.cli.help.exitOnFail"><![CDATA[Das Script wird beendet, sobald ein Fehler aufgetreten ist.]]></item>
+		<item name="wcf.cli.help.exitOnFail.description"><![CDATA[Wenn dieser Parameter gesetzt ist, dann wird die Ausführung des Scriptes abgebrochen, sobald ein Fehler aufgetreten ist.
+Fehler sind beispielsweise:
+- Nicht gefundene Befehle
+- Befehle, welche ihre Aktion nicht erfolgreich ausführen konnten
+- Systemfehler]]></item>
+		<item name="wcf.cli.help.packageID"><![CDATA[Die Anwendung mit der angegebenen Paket-ID wird als Standard für diese Sitzung verwendet.]]></item>
+		<item name="wcf.cli.error.language.notFound"><![CDATA[Die Sprache mit dem Sprachcode "{$languageCode}" konnte nicht gefunden werden.]]></item>
+		<item name="wcf.cli.error.command.notFound"><![CDATA[Der Befehl "{$command}" konnte nicht gefunden werden.]]></item>
 	</category>
 	
 	<category name="wcf.clipboard">

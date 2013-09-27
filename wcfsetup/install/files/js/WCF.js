@@ -2854,7 +2854,7 @@ WCF.Date.Picker = {
 			
 			// format default date
 			if ($inputValue) {
-				$input.removeClass('hasDatepicker').datetimepicker('setDate', new Date($inputValue));
+				$input.removeClass('hasDatepicker').datetimepicker('setDate', new Date($inputValue.replace(' ', 'T')));
 			}
 			
 			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
