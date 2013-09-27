@@ -756,7 +756,7 @@
 		<name>NaverBot</name>
 		<url>http://www.spidermatic.com/en/robot-spider/20</url>
 	</spider>
-		<spider ident="NDSpider">
+	<spider ident="NDSpider">
 		<name>NDSpider</name>
 	</spider>
 	<spider ident="NEC-MeshExplorer">
@@ -1263,13 +1263,13 @@
 	<spider ident="WebWatch">
 		<name>WebWatch</name>
 	</spider>
-		<spider ident="WebZinger">
+	<spider ident="WebZinger">
 		<name>WebZinger</name>
 	</spider>
 	<spider ident="whatUseek_winona">
 		<name>whatUseek Winona</name>
 	</spider>
-		<spider ident="WhoWhere Robot">
+	<spider ident="WhoWhere Robot">
 		<name>WebWatch</name>
 		<url>http://www.whowhere.com</url>
 	</spider>
