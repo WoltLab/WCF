@@ -210,7 +210,7 @@ class ImportCLICommand implements ICLICommand {
 			if ($this->dbHost === null) exit;
 			$this->dbUser = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.user').'> ');
 			if ($this->dbUser === null) exit;
-			$this->dbPassword = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.password').'> ');
+			$this->dbPassword = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.password').'> ', '*');
 			if ($this->dbPassword === null) exit;
 			$this->dbName = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.dataImport.configure.database.name').'> ');
 			if ($this->dbName === null) exit;
