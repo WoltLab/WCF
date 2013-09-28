@@ -2730,8 +2730,6 @@ WCF.Date.Picker = {
 			
 			return part1 + part2;
 		});
-		
-		console.debug(this._dateFormat + " " + this._timeFormat);
 	},
 	
 	/**
