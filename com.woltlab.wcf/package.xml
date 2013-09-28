@@ -6,7 +6,7 @@
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
 		<version>2.0.0 Beta 10</version> <!-- codename: maelstrom -->
-		<date>2013-09-24</date>
+		<date>2013-09-28</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -47,8 +47,10 @@
 		<!-- deploy files first to prevent an issue with languages being overwritten during update -->
 		<instruction type="file" run="standalone">files_update.tar</instruction>
 		
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
+		<instruction type="option">option.xml</instruction>
 		
 		<instruction type="sql" run="standalone">update_b10.sql</instruction>
 	</instructions>

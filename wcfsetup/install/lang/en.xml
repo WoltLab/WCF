@@ -165,10 +165,10 @@ Examples for medium ID detection:
 	<category name="wcf.acp.dataImport">
 		<item name="wcf.acp.dataImport"><![CDATA[Data Import]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.alreadySelected"><![CDATA[This data will already be imported.]]></item>
-		<item name="wcf.acp.dataImport.cli.configure.data.error.noSelection"><![CDATA[TODO: Sie haben keine Daten zum Import ausgewählt. Der Import wird beendet.]]></item>
+		<item name="wcf.acp.dataImport.cli.configure.data.error.noSelection"><![CDATA[You did not specify any data for importing, import has been aborted.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.error.notValid"><![CDATA[The selected data type is invalid.]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.selectAll"><![CDATA[All data]]></item>
-		<item name="wcf.acp.dataImport.cli.info.wcf"><![CDATA[TODO: Sie haben keine Anwendung beim Skript-Aufruf mittels --packageID={PACKAGE_ID} geladen. Wenn Sie Daten für eine Anwendung importieren möchten, müssen Sie das Skript mit der ID des entsprechenden Pakets starten. Möchten Sie mit dem Import fortfahren? [YN]]]></item>
+		<item name="wcf.acp.dataImport.cli.info.wcf"><![CDATA[You did not load any application through --packageID={PACKAGE_ID}. If you wish to import application-specific data, you must call this script along with the desired package id. Do you wish to continue the import? [YN]]]></item>
 		<item name="wcf.acp.dataImport.cli.selection"><![CDATA[Selection? [{if $minSelection == $maxSelection}{$minSelection}{else}{$minSelection}-{$maxSelection}{/if}]]]></item>
 		<item name="wcf.acp.dataImport.completed"><![CDATA[Import completed.]]></item>
 		<item name="wcf.acp.dataImport.configure.data"><![CDATA[Data]]></item>
@@ -845,9 +845,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer Code]]></item>
 		<item name="wcf.acp.option.footer_code.description"><![CDATA[The entered code will be appended to the page footer of your site. You can use it to embed services like “Google Analytics” or “Piwik”.]]></item>
 		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Show profile visitors]]></item>
-		<item name="wcf.acp.option.url_title_component_replacement"><![CDATA[TODO: URL-Ersetzungen]]></item>
-		<item name="wcf.acp.option.url_title_component_replacement.description"><![CDATA[TODO: Sie können den in URLs enthaltenen Titel durch eigene Ersetzungen verändern. Dies kann z.B. zum Ersetzen von Umlauten oder zum Expandieren von Abkürzungen genutzt werden. (Eine Ersetzung pro Zeile)<br />
-Beispiele:<br />
+		<item name="wcf.acp.option.url_title_component_replacement"><![CDATA[URL Replacements]]></item>
+		<item name="wcf.acp.option.url_title_component_replacement.description"><![CDATA[You may replace parts of the title within the URL. You could use it to replace special characters or to expand abbreviations. (One replacement per line)<br />
+Examples:<br />
 WBB=WoltLab Burning Board<br />
 GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.users_online_enable_legendusers_online_record_no_guests"><![CDATA[Exclude guests from user online record]]></item>
