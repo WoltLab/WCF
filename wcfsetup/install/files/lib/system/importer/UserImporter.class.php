@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\option\UserOptionList;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\system\database\DatabaseException;
@@ -31,6 +32,12 @@ class UserImporter extends AbstractImporter {
 	protected $eventIDs = array();
 	
 	/**
+	 * list of user options
+	 * @var array<wcf\data\user\option\UserOption>
+	 */
+	protected $userOptions = array();
+	
+	/**
 	 * Creates a new UserImporter object.
 	 */
 	public function __construct() {
@@ -43,6 +50,10 @@ class UserImporter extends AbstractImporter {
 		while ($row = $statement->fetchArray()) {
 			$this->eventIDs[] = $row['eventID'];
 		}
+		
+		$userOptionList = new UserOptionList();
+		$userOptionList->readObjects();
+		$this->userOptions = $userOptionList->getObjects();
 	}
 	
 	/**
@@ -79,6 +90,37 @@ class UserImporter extends AbstractImporter {
 				
 				if ($optionID) {
 					$userOptions[$optionID] = $optionValue;
+				}
+			}
+			
+			// fix option values
+			foreach ($userOptions as $optionID => &$optionValue) {
+				switch ($this->userOptions[$optionID]->optionType) {
+					case 'boolean':
+						if ($optionValue) $optionValue = 1;
+						else $optionValue = 0;
+						break;
+							
+					case 'integer':
+						$optionValue = intval($optionValue);
+						if ($optionValue > 2147483647) $optionValue = 2147483647;
+						break;
+							
+					case 'float':
+						$optionValue = floatval($optionValue);
+						break;
+							
+					case 'textarea':
+						if (strlen($optionValue) > 16777215) $optionValue = substr($optionValue, 0, 16777215);
+						break;
+							
+					case 'birthday':
+					case 'date':
+						if (!preg_match('/^\d{4}\-\d{2}\-\d{2}$/', $optionValue)) $optionValue = '0000-00-00';
+						break;
+						
+					default:
+						if (strlen($optionValue) > 65535) $optionValue = substr($optionValue, 0, 65535);
 				}
 			}
 		}
