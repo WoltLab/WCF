@@ -31,7 +31,7 @@
 				<dl{if $errorField == 'optionName'} class="formError"{/if}>
 					<dt><label for="optionName">{lang}wcf.global.name{/lang}</label></dt>
 					<dd>
-						<input type="text" id="optionName" name="optionName" value="{$optionName}" required="required" autofocus="autofocus" class="long" />
+						<input type="text" id="optionName" name="optionName" value="{$i18nPlainValues['optionName']}" required="required" autofocus="autofocus" class="long" />
 						{if $errorField == 'optionName'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -48,7 +48,7 @@
 				<dl{if $errorField == 'optionDescription'} class="formError"{/if}>
 					<dt><label for="optionDescription">{lang}wcf.acp.user.option.description{/lang}</label></dt>
 					<dd>
-						<textarea name="optionDescription" id="optionDescription" cols="40" rows="10">{$optionDescription}</textarea>
+						<textarea name="optionDescription" id="optionDescription" cols="40" rows="10">{lang __optional=true}{$i18nPlainValues['optionDescription']}{/lang}</textarea>
 						{if $errorField == 'optionDescription'}
 							<small class="innerError">
 								{if $errorType == 'empty'}

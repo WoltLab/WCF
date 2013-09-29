@@ -30,7 +30,7 @@
 			<dl{if $errorField == 'rankTitle'} class="formError"{/if}>
 				<dt><label for="rankTitle">{lang}wcf.acp.user.rank.title{/lang}</label></dt>
 				<dd>
-					<input type="text" id="rankTitle" name="rankTitle" value="{$rankTitle}" required="required" autofocus="autofocus" class="long" />
+					<input type="text" id="rankTitle" name="rankTitle" value="{$i18nPlainValues['rankTitle']}" required="required" autofocus="autofocus" class="long" />
 					{if $errorField == 'rankTitle'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
