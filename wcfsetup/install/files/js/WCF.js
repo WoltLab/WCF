@@ -2647,7 +2647,7 @@ WCF.Date.Picker = {
 		// simply continue :)	- Alex
 		var $__log = $.timepicker.log;
 		$.timepicker.log = function(error) {
-			if (error.indexOf('Error parsing the date/time string: Unexpected literal at position') == -1) {
+			if (error.indexOf('Error parsing the date/time string: Unexpected literal at position') == -1 && error.indexOf('Error parsing the date/time string: Unknown name at position') == -1) {
 				$__log(error);
 			}
 		};
@@ -2676,8 +2676,8 @@ WCF.Date.Picker = {
 		// L	Whether it's a leap year
 		var $replacementTable = {
 			// time
-			'a': ' tt',
-			'A': ' TT',
+			'a': 'tt',
+			'A': 'TT',
 			'g': 'h',
 			'G': 'H',
 			'h': 'hh',
@@ -2786,7 +2786,7 @@ WCF.Date.Picker = {
 			
 			// format default date
 			if ($inputValue) {
-				$input.datepicker('setDate', new Date($inputValue));
+				$input.datepicker('setDate', $inputValue);
 			}
 			
 			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...

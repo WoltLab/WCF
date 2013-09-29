@@ -1879,6 +1879,9 @@ WCF.Message.Quote.Handler = Class.extend({
 				// the coordinates returned by getBoundingClientRect() is relative to the window, not the document!
 				//var $rect = selection.getRangeAt(0).getBoundingClientRect();
 				var $rects = selection.getRangeAt(0).getClientRects();
+				var $rect = selection.getRangeAt(0).getBoundingClientRect();
+				
+				/*
 				var $rect = { };
 				if (!$.browser.mozilla && $rects.length > 1) {
 					// save current selection to restore it later
@@ -1890,9 +1893,9 @@ WCF.Message.Quote.Handler = Class.extend({
 					var $position2 = this._getOffset($range, false);
 					
 					$rect = {
-						left: ($position1.left > $position2.left) ? $position2.left : $position1.left,
-						right: ($position1.left > $position2.left) ? $position1.left : $position2.left,
-						top: ($position1.top > $position2.top) ? $position2.top : $position1.top
+						left: Math.min($position1.left, $position2.left),
+						right: Math.max($position1.left, $position2.left),
+						top: Math.max($position1.top, $position2.top)
 					};
 					
 					// restore selection
@@ -1901,6 +1904,7 @@ WCF.Message.Quote.Handler = Class.extend({
 				else {
 					$rect = selection.getRangeAt(0).getBoundingClientRect();
 				}
+				*/
 				
 				var $document = $(document);
 				var $offsetTop = $document.scrollTop();
