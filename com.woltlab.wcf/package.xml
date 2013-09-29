@@ -50,8 +50,8 @@
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
-		<instruction type="option">option.xml</instruction>
 		
 		<instruction type="sql" run="standalone">update_b10.sql</instruction>
+		<instruction type="option">option.xml</instruction>
 	</instructions>
 </package>

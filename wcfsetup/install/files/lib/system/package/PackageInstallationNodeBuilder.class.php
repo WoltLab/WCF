@@ -552,7 +552,11 @@ class PackageInstallationNodeBuilder {
 		
 		$this->emptyNode = true;
 		$instructions = ($this->installation->getAction() == 'install') ? $this->installation->getArchive()->getInstallInstructions() : $this->installation->getArchive()->getUpdateInstructions();
+		$count = count($instructions);
+		$i = 0;
 		foreach ($instructions as $pip) {
+			$i++;
+			
 			if (isset($pip['attributes']['run']) && ($pip['attributes']['run'] == 'standalone')) {
 				// move into a new node unless current one is empty
 				if (!$this->emptyNode) {
@@ -567,12 +571,14 @@ class PackageInstallationNodeBuilder {
 					'sequenceNo' => $this->sequenceNo
 				);
 				
-				// create a new node for following PIPs
-				$this->parentNode = $this->node;
-				$this->node = $this->getToken();
-				$this->sequenceNo = 0;
-				
-				$this->emptyNode = true;
+				// create a new node for following PIPs, unless it is the last one
+				if ($i < $count) {
+					$this->parentNode = $this->node;
+					$this->node = $this->getToken();
+					$this->sequenceNo = 0;
+					
+					$this->emptyNode = true;
+				}
 			}
 			else {
 				$this->sequenceNo++;
