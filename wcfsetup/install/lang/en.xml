@@ -807,6 +807,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.users_online_default_sort_order"><![CDATA[Default Sort Order]]></item>
 		<item name="wcf.acp.option.users_online_page_refresh"><![CDATA[Refresh Page Every]]></item>
 		<item name="wcf.acp.option.users_online_page_refresh.description"><![CDATA[Page will be periodically refreshed. [time in seconds, 0 to disable]]]></item>
+		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Exclude guests from the most-online record]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime"><![CDATA[Notification]]></item>
 		<item name="wcf.acp.option.user_cleanup_notification_lifetime.description"><![CDATA[Notifications will be discarded if they are older than the given period. [time in days]]]></item>
 		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime"><![CDATA[Recent Activity]]></item>
