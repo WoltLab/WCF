@@ -11,3 +11,5 @@ CREATE TABLE wcf1_cli_history (
 	command VARCHAR(255) NOT NULL,
 	KEY (userID)
 );
+
+ALTER TABLE wcf1_cli_history ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
