@@ -34,6 +34,10 @@
 		<name>Alkaline</name>
 		<url>http://www.robotstxt.org/wc/active/html/Alkaline.html</url>
 	</spider>
+	<spider ident="AlexaBOT">
+		<name>Alexa</name>
+		<url>http://www.alexa.com/help/webmasters</url>
+	</spider>
 	<spider ident="http://www.almaden.ibm.com/cs/crawler">
 		<name>Almaden Crawler</name>
 		<url>http://www.almaden.ibm.com/cs/crawler/</url>
@@ -338,6 +342,10 @@
 	<spider ident="ExaBot">
 		<name>ExaLead Beta</name>
 		<url>http://beta.exalead.com/search/C=0/2p=Help.7</url>
+	</spider>
+	<spider ident="ExaLead">
+		<name>ExaLead</name>
+		<url>http://www.exalead.com/search</url>
 	</spider>
 	<spider ident="facebookexternalhit">
 		<name>Facebook</name>
@@ -665,6 +673,10 @@
 	<spider ident="LinkWalker">
 		<name>LinkWalker</name>
 	</spider>
+	<spider ident="Linguee Bot">
+		<name>Linguee</name>
+		<url>http://www.linguee.com/bot</url>
+	</spider>
 	<spider ident="livedoorCheckers/">
 		<name>livedoorCheckers</name>
 	</spider>
@@ -895,6 +907,10 @@
 	<spider ident="PortalBSpider">
 		<name>PortalB Spider</name>
 	</spider>
+	<spider ident="Qualidator">
+		<name>Qualidator</name>
+		<url>www.qualidator.com/Web/de/Support/FAQ_OnlineTestStatistiken.htm</url>
+	</spider>
 	<spider ident="www.kolinka.com">
 		<name>Project Kolinka Forum Search</name>
 		<url>http://www.kolinka.com/</url>
@@ -905,6 +921,10 @@
 	<spider ident="Qango.com Web Directory">
 		<name>Qango</name>
 		<url>http://www.qango.com</url>
+	</spider>
+	<spider ident="SBSearch">
+		<name>SecretSearchEngineLabs.com</name>
+		<url>http://www.secretsearchenginelabs.com/secret-web-crawler.php</url>
 	</spider>
 	<spider ident="StackRambler">
 		<name>Rambler</name>
@@ -1076,6 +1096,10 @@
 	<spider ident="T-H-U-N-D-E-R-S-T-O-N-E">
 		<name>T-H-U-N-D-E-R-S-T-O-N-E</name>
 	</spider>
+	<spider ident="TinEye Crawler">
+		<name>TinEye</name>
+		<url>http://tineye.com/crawler.html</url>
+	</spider>
 	<spider ident="Black Widow">
 		<name>TACH Black Widow</name>
 	</spider>
@@ -1207,6 +1231,10 @@
 	</spider>
 	<spider ident="root">
 		<name>Web Core / Roots</name>
+	</spider>
+	<spider ident="WBSearchBot">
+		<name>Ware Bay</name>
+		<url>http://www.warebay.com/bot.html</url>
 	</spider>
 	<spider ident="WebMoose">
 		<name>Web Moose</name>
@@ -1351,5 +1379,9 @@
 	<spider ident="http://www.zorkk.com">
 		<name>Zork</name>
 		<url>http://www.zorkk.com</url>
+	</spider>
+	<spider ident="Zookabot">
+		<name>Zookabotk</name>
+		<url>http://zookabot.com/</url>
 	</spider>
 </data>
