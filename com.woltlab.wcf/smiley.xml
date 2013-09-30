@@ -28,7 +28,8 @@
 			<title>grin</title>
 			<path>images/smilies/grin.png</path>
 			<aliases><![CDATA[^.^
-^_^]]></aliases>
+^_^
+^-^]]></aliases>
 		</smiley>
 		<smiley name=":D">
 			<title>biggrin</title>
@@ -38,7 +39,9 @@
 		<smiley name=";(">
 			<title>crying</title>
 			<path>images/smilies/crying.png</path>
-			<aliases><![CDATA[;-(]]></aliases>
+			<aliases><![CDATA[;-(
+:'(
+;_;]]></aliases>
 		</smiley>
 		<smiley name="X(">
 			<title>angry</title>
@@ -105,6 +108,7 @@
 		<smiley name="8|">
 			<title>blink</title>
 			<path>images/smilies/blink.png</path>
+			<aliases><![CDATA[o.O]]></aliases>
 		</smiley>
 		<smiley name=":cursing:">
 			<title>cursing</title>
@@ -141,6 +145,8 @@
 		<smiley name="&lt;3">
 			<title>heart</title>
 			<path>images/smilies/heart.png</path>
+			<aliases><![CDATA[<3
+x3]]></aliases>
 		</smiley>
 		<smiley name=":!:">
 			<title>attention</title>
