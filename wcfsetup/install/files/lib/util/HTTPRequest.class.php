@@ -109,10 +109,10 @@ final class HTTPRequest {
 	 * 
 	 * @param	string		$url		URL to connect to
 	 * @param	array<string>	$options
-	 * @param	array		$postParameters	Parameters to send via POST
+	 * @param	mixed		$postParameters	Parameters to send via POST
 	 * @param	array		$files		Files to attach to the request
 	 */
-	public function __construct($url, array $options = array(), array $postParameters = array(), array $files = array()) {
+	public function __construct($url, array $options = array(), $postParameters = array(), array $files = array()) {
 		$this->setURL($url);
 		
 		$this->postParameters = $postParameters;
@@ -126,7 +126,13 @@ final class HTTPRequest {
 		$this->addHeader('Accept-Language', WCF::getLanguage()->getFixedLanguageCode());
 		if ($this->options['method'] !== 'GET') {
 			if (empty($this->files)) {
-				$this->body = http_build_query($this->postParameters, '', '&');
+				if (is_array($postParameters)) {
+					$this->body = http_build_query($this->postParameters, '', '&');
+				}
+				else if (is_string($postParameters) && !empty($postParameters)) {
+					$this->body = $postParameters;
+				}
+				
 				$this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
 			}
 			else {
