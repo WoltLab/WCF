@@ -111,7 +111,7 @@
 			<dl{if $errorField == 'pageMenuItem'} class="formError"{/if}>
 				<dt><label for="pageMenuItem">{lang}wcf.acp.pageMenu.pageMenuItem{/lang}</label></dt>
 				<dd>
-					<input type="text" name="pageMenuItem" id="pageMenuItem" value="{$pageMenuItem}" class="long" required="required" />
+					<input type="text" name="pageMenuItem" id="pageMenuItem" value="{$i18nPlainValues['pageMenuItem']}" class="long" required="required" />
 					{if $errorField == 'pageMenuItem'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

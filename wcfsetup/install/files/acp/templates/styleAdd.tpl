@@ -212,7 +212,7 @@
 				<dl{if $errorField == 'styleDescription'} class="formError"{/if}>
 					<dt><label for="styleDescription">{lang}wcf.acp.style.styleDescription{/lang}</label></dt>
 					<dd>
-						<textarea name="styleDescription" id="styleDescription">{$styleDescription}</textarea>
+						<textarea name="styleDescription" id="styleDescription">{$i18nPlainValues['styleDescription']}</textarea>
 						{if $errorField == 'styleDescription'}
 							<small class="innerError">
 								{if $errorType == 'empty'}

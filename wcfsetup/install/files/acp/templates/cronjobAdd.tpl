@@ -48,7 +48,7 @@
 			<dl{if $errorField == 'description'} class="formError"{/if}>
 				<dt><label for="description">{lang}wcf.acp.cronjob.description{/lang}</label></dt>
 				<dd>
-					<input type="text" id="description" name="description" value="{$description}" class="long" />
+					<input type="text" id="description" name="description" value="{$i18nPlainValues['description']}" class="long" />
 					{if $errorField == 'description'}
 						<small class="innerError">
 							{if $errorType == 'empty' || $errorType == 'multilingual'}

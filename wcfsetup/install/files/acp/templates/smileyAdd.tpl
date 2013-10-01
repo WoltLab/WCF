@@ -33,7 +33,7 @@
 			<dl{if $errorField == 'smileyTitle'} class="formError"{/if}>
 				<dt><label for="smileyTitle">{lang}wcf.acp.smiley.title{/lang}</label></dt>
 				<dd>
-					<input type="text" id="smileyTitle" name="smileyTitle" value="{$smileyTitle}" autofocus="autofocus" class="long" />
+					<input type="text" id="smileyTitle" name="smileyTitle" value="{$i18nPlainValues['smileyTitle']}" autofocus="autofocus" class="long" />
 					
 					{if $errorField == 'smileyTitle'}
 						<small class="innerError">
@@ -46,7 +46,6 @@
 					{/if}
 				</dd>
 			</dl>
-			
 			{include file='multipleLanguageInputJavascript' elementIdentifier='smileyTitle' forceSelection=false}
 			
 			<dl{if $errorField == 'categoryID'} class="formError"{/if}>
