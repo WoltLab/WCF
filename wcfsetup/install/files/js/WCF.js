@@ -3491,7 +3491,7 @@ WCF.MultipleLanguageInput = Class.extend({
 			this._element.val();
 		}
 		
-		this._element.blur();
+		this._element.blur().focus();
 		this._insertedDataAfterInit = false;
 		this._isEnabled = false;
 		this._values = { };
