@@ -4833,8 +4833,10 @@ WCF.Effect.Scroll = Class.extend({
 WCF.Effect.SmoothScroll = WCF.Effect.Scroll.extend({
 	/**
 	 * Initializes effect.
+	 * 
+	 * @param	string	$selector
 	 */
-	init: function() {
+	init: function($selector) {
 		$($selector).click($.proxy(function(event) {
 			var $target = $(this.hash);
 			self.scrollTo($target, true);
