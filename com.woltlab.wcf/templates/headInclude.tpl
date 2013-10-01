@@ -140,7 +140,7 @@
 		
 		if (jQuery.browser.touch) $('html').addClass('touch');
 		new WCF.Date.Time();
-		new WCF.Effect.SmoothScroll();
+		new WCF.Effect.SmoothScroll('a[href$=#top],a[href$=#bottom]');
 		new WCF.Effect.BalloonTooltip();
 		new WCF.Sitemap();
 		{if $__wcf->getStyleHandler()->countStyles() > 1}new WCF.Style.Chooser();{/if}
