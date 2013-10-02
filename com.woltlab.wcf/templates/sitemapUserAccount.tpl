@@ -1,6 +1,5 @@
 <ul class="sitemapList">
 	{if $__wcf->getUser()->userID}
-		{assign var=__userMenuActiveItems value=$__wcf->getUserMenu()->getActiveMenuItems()}
 		{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
 			<li>
 				<h3>{lang}{$menuCategory->menuItem}{/lang}</h3>
