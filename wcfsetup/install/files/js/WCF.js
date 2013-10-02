@@ -3491,6 +3491,11 @@ WCF.MultipleLanguageInput = Class.extend({
 			this._element.val();
 		}
 		
+		if (event) {
+			this._list.children('li').removeClass('active');
+			$(event.currentTarget).addClass('active');
+		}
+		
 		this._element.blur().focus();
 		this._insertedDataAfterInit = false;
 		this._isEnabled = false;
