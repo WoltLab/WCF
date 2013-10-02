@@ -2736,10 +2736,12 @@ WCF.Date.Picker = {
 	 * Initializes the date picker for valid fields.
 	 */
 	_initDatePicker: function() {
-		$('input[type=date]:not(.jsDatePicker)').each($.proxy(function(index, input) {
+		$('input[type=date]:not(.jsDatePicker), input[type=datetime]:not(.jsDatePicker)').each($.proxy(function(index, input) {
 			var $input = $(input);
 			var $inputName = $input.prop('name');
-			var $inputValue = $input.val(); // should be Y-m-d, must be interpretable by Date
+			var $inputValue = $input.val(); // should be Y-m-d (H:i:s), must be interpretable by Date
+			
+			var $hasTime = $input.attr('type') == 'datetime';
 			
 			// update $input
 			$input.prop('type', 'text').addClass('jsDatePicker');
@@ -2751,8 +2753,12 @@ WCF.Date.Picker = {
 			$input.removeAttr('name');
 			$input.before('<input type="hidden" id="' + $input.wcfIdentify() + 'DatePicker" name="' + $inputName + '" value="' + $inputValue + '" />');
 			
+			// max- and mindate
+			var $maxDate = $input.attr('max') ? new Date($input.attr('max').replace(' ', 'T')) : null;
+			var $minDate = $input.attr('min') ? new Date($input.attr('min').replace(' ', 'T')) : null;
+			
 			// init date picker
-			$input.datepicker({
+			$options = {
 				altField: '#' + $input.wcfIdentify() + 'DatePicker',
 				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
 				beforeShow: function(input, instance) {
@@ -2772,89 +2778,52 @@ WCF.Date.Picker = {
 				dayNames: WCF.Language.get('__days'),
 				dayNamesMin: WCF.Language.get('__daysShort'),
 				dayNamesShort: WCF.Language.get('__daysShort'),
+				isRTL: WCF.Language.get('wcf.global.pageDirection') == 'rtl',
+				maxDate: $maxDate,
+				minDate: $minDate,
 				monthNames: WCF.Language.get('__months'),
 				monthNamesShort: WCF.Language.get('__monthsShort'),
-				showOtherMonths: true,
-				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038'),
+				showButtonPanel: false,
 				onClose: function(dateText, datePicker) {
 					// clear altField when datepicker is cleared
 					if (dateText == '') {
 						$(datePicker.settings["altField"]).val(dateText);
 					}
+				},
+				showOtherMonths: true,
+				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038')
+			};
+			
+			if ($hasTime) {
+				// drop the seconds
+				if (/[0-9]{2}:[0-9]{2}:[0-9]{2}$/.test($inputValue)) {
+					$inputValue = $inputValue.replace(/:[0-9]{2}$/, '');
+					$input.val($inputValue);
 				}
-			});
+				$inputValue = $inputValue.replace(' ', 'T');
+				
+				$options = $.extend($options, {
+					altFieldTimeOnly: false,
+					altTimeFormat: 'HH:mm',
+					controlType: 'select',
+					hourText: WCF.Language.get('wcf.date.hour'),
+					minuteText: WCF.Language.get('wcf.date.minute'),
+					showTime: false,
+					timeFormat: this._timeFormat,
+					yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038')
+				});
+			}
+			
+			if ($hasTime) {
+				$input.datetimepicker($options);
+			}
+			else {
+				$input.datepicker($options);
+			}
 			
 			// format default date
 			if ($inputValue) {
 				$input.datepicker('setDate', $inputValue);
-			}
-			
-			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
-			$input.datepicker('widget').hide();
-		}, this));
-		
-		$('input[type=datetime]:not(.jsDatePicker)').each($.proxy(function(index, input) {
-			var $input = $(input);
-			var $inputName = $input.prop('name');
-			var $inputValue = $input.val(); // should be Y-m-d H:i:s, must be interpretable by Date
-			
-			// drop the seconds
-			if (/[0-9]{2}:[0-9]{2}:[0-9]{2}$/.test($inputValue)) {
-				$inputValue = $inputValue.replace(/:[0-9]{2}$/, '');
-				$input.val($inputValue);
-			}
-			
-			// update $input
-			$input.prop('type', 'text').addClass('jsDatePicker');
-			
-			// insert a hidden element representing the actual date
-			$input.removeAttr('name');
-			$input.before('<input type="hidden" id="' + $input.wcfIdentify() + 'DatePicker" name="' + $inputName + '" value="' + $inputValue + '" />');
-			
-			// init date picker
-			$input.datetimepicker({
-				altField: '#' + $input.wcfIdentify() + 'DatePicker',
-				altFieldTimeOnly: false,
-				altFormat: 'yy-mm-dd', // PHPs strtotime() understands this best
-				altTimeFormat: 'HH:mm',
-				beforeShow: function(input, instance) {
-					// dirty hack to force opening below the input
-					setTimeout(function() {
-						instance.dpDiv.position({
-							my: 'left top',
-							at: 'left bottom',
-							collision: 'none',
-							of: input
-						});
-					}, 1);
-				},
-				changeMonth: true,
-				changeYear: true,
-				controlType: 'select',
-				dateFormat: this._dateFormat,
-				dayNames: WCF.Language.get('__days'),
-				dayNamesMin: WCF.Language.get('__daysShort'),
-				dayNamesShort: WCF.Language.get('__daysShort'),
-				hourText: WCF.Language.get('wcf.date.hour'),
-				minuteText: WCF.Language.get('wcf.date.minute'),
-				monthNames: WCF.Language.get('__months'),
-				monthNamesShort: WCF.Language.get('__monthsShort'),
-				showButtonPanel: false,
-				showTime: false,
-				showOtherMonths: true,
-				timeFormat: this._timeFormat,
-				yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038'),
-				onClose: function(dateText, datePicker) {
-					// clear altField when datepicker is cleared
-					if (dateText == '') {
-						$(datePicker.settings.altField).val('');
-					}
-				}
-			});
-			
-			// format default date
-			if ($inputValue) {
-				$input.removeClass('hasDatepicker').datetimepicker('setDate', new Date($inputValue.replace(' ', 'T')));
 			}
 			
 			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
