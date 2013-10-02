@@ -1,11 +1,11 @@
 <?php
 namespace wcf\form;
-use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
  * Extends AbstractForm by a function to validate a given security token.
- * A missing or invalid token will be result in a throw of a IllegalLinkException.
+ * A missing or invalid token will be result in a throw of a UserInputException.
  * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
@@ -16,12 +16,11 @@ use wcf\system\WCF;
  */
 abstract class AbstractSecureForm extends AbstractForm {
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::validate()
 	 */
-	public function readFormParameters() {
-		parent::readFormParameters();
+	public function validate() {
+		parent::validate();
 		
-		// check security token
 		$this->checkSecurityToken();
 	}
 	
@@ -30,7 +29,7 @@ abstract class AbstractSecureForm extends AbstractForm {
 	 */
 	protected function checkSecurityToken() {
 		if (!isset($_POST['t']) || !WCF::getSession()->checkSecurityToken($_POST['t'])) {
-			throw new IllegalLinkException();
+			throw new UserInputException('__securityToken');
 		}
 	}
 }

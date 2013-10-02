@@ -18,6 +18,8 @@
 
 {include file='userNotice'}
 
+{include file='formErrorSecurityToken'}
+
 {if $__wcf->user->disableAvatar}
 	<p class="error">{lang}wcf.user.avatar.error.disabled{/lang}</p>
 {/if}
@@ -108,6 +110,7 @@
 	{if !$__wcf->user->disableAvatar}
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	{/if}
 </form>
