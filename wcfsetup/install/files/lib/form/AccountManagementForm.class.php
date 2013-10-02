@@ -22,7 +22,7 @@ use wcf\util\UserUtil;
  * @subpackage	form
  * @category	Community Framework
  */
-class AccountManagementForm extends AbstractSecureForm {
+class AccountManagementForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$enableTracking
 	 */

@@ -17,6 +17,8 @@
 
 {include file='userNotice'}
 
+{include file='formError'}
+
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
@@ -122,6 +124,7 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{if $category != 'general'}<input type="hidden" name="category" value="{$category}" />{/if}
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 

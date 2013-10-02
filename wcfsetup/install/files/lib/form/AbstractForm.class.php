@@ -78,6 +78,10 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	public function validate() {
 		// call validate event
 		EventHandler::getInstance()->fireAction($this, 'validate');
+		
+		if (!isset($_POST['t']) || !WCF::getSession()->checkSecurityToken($_POST['t'])) {
+			throw new UserInputException('__securityToken');
+		}
 	}
 	
 	/**

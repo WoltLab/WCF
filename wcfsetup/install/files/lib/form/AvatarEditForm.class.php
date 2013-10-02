@@ -18,7 +18,7 @@ use wcf\system\WCF;
  * @subpackage	form
  * @category	Community Framework
  */
-class AvatarEditForm extends AbstractSecureForm {
+class AvatarEditForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$enableTracking
 	 */
