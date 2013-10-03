@@ -84,9 +84,9 @@ abstract class AbstractOptionListForm extends AbstractForm {
 	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
-		parent::validate();
-		
 		$this->errorType = array_merge($this->optionHandler->validate(), $this->errorType);
+		
+		parent::validate();
 		
 		if (!empty($this->errorType)) {
 			throw new UserInputException('options', $this->errorType);
