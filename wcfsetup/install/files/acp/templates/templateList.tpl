@@ -24,6 +24,8 @@
 	<h1>{lang}wcf.acp.template.list{/lang}</h1>
 </header>
 
+{include file='formError'}
+
 <form method="post" action="{link controller='TemplateList'}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
@@ -64,6 +66,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 

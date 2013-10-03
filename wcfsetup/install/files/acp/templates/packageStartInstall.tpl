@@ -24,9 +24,7 @@
 	<h1>{lang}{@$pageTitle}{/lang}</h1>
 </header>
 
-{if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
-{/if}
+{include file='formError'}
 
 <div class="contentNavigation">
 	<nav>
@@ -126,6 +124,7 @@
 			<div class="formSubmit">
 				<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 				<input type="hidden" name="action" value="{$action}" />
+				{@SECURITY_TOKEN_INPUT_TAG}
 			</div>
 		</form>
 	</div>

@@ -16,9 +16,7 @@
 
 {include file='userNotice'}
 
-{if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
-{/if}
+{include file='formError'}
 
 {if $errorMessage|isset}
 	<p class="error">{@$errorMessage}</p>
@@ -128,6 +126,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 

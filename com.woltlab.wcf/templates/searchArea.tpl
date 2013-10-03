@@ -22,6 +22,7 @@
 		</ul>
 		
 		{@$__searchHiddenInputFields}
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</form>
 </aside>
 

@@ -13,6 +13,8 @@
 	<h1>{lang}wcf.acp.user.search{/lang}</h1>
 </header>
 
+{include file='formError'}
+
 {if $errorField == 'search'}
 	<p class="error">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
 {/if}
@@ -230,6 +232,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 

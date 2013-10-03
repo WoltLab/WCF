@@ -4,9 +4,7 @@
 	<h1>{lang}wcf.acp.cronjob.{$action}{/lang}</h1>
 </header>
 
-{if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
-{/if}
+{include file='formError'}
 
 <p class="info">{lang}wcf.acp.cronjob.intro{/lang}</p>
 
@@ -141,6 +139,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 

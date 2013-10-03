@@ -12,6 +12,8 @@
 	<h1>{lang}wcf.acp.tag.list{/lang}</h1>
 </header>
 
+{include file='formError'}
+
 {if $items}
 	<form action="{link controller='TagList'}{/link}">
 		<div class="container containerPadding marginTop">
@@ -30,6 +32,7 @@
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 			{@SID_INPUT_TAG}
+			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</form>
 {/if}

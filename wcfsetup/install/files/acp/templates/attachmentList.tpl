@@ -15,6 +15,8 @@
 	<p>{lang}wcf.acp.attachment.stats{/lang}</p>
 </header>
 
+{include file='formError'}
+
 <form method="post" action="{link controller='AttachmentList'}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
@@ -48,6 +50,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 

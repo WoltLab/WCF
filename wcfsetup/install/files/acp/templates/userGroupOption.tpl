@@ -15,6 +15,8 @@
 	<h1>{lang}wcf.acp.group.option.editingOption{/lang}</h1>
 </header>
 
+{include file='formError'}
+
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
@@ -55,6 +57,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 

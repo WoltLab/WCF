@@ -13,9 +13,7 @@
 	<h1>{lang}wcf.acp.group.{@$action}{/lang}</h1>
 </header>
 
-{if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
-{/if}
+{include file='formError'}
 
 {if $warningSelfEdit|isset}
 	<p class="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>
@@ -178,6 +176,7 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="action" value="{@$action}" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 
