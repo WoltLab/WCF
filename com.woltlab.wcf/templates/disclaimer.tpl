@@ -16,9 +16,7 @@
 
 {include file='userNotice'}
 
-{if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
-{/if}
+{include file='formError'}
 
 <div class="contentNavigation">
 	{hascontent}
@@ -43,6 +41,7 @@
 	<div class="formSubmit">
 		<input type="submit" name="accept" value="{lang}wcf.user.register.disclaimer.accept{/lang}" accesskey="s" />
 		<a class="button" href="{link}{/link}">{lang}wcf.user.register.disclaimer.decline{/lang}</a>
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 	{/if}
 </form>

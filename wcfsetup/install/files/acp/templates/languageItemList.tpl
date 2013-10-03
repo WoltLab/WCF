@@ -13,6 +13,8 @@
 	<h1>{lang}wcf.acp.language.item.list{/lang}</h1>
 </header>
 
+{include file='formError'}
+
 <form method="post" action="{link controller='LanguageItemList'}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
@@ -66,6 +68,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 

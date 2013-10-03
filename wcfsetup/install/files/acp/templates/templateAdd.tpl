@@ -5,9 +5,7 @@
 	{if $action == 'edit'}<p>{$template->getPath()}</p>{/if}
 </header>
 
-{if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
-{/if}
+{include file='formError'}
 
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
@@ -79,6 +77,7 @@
 		<div class="formSubmit">
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 			{if $copy}<input type="hidden" name="copy" value="{@$copy}" />{/if}
+			{@SECURITY_TOKEN_INPUT_TAG}
 		</div>
 	</form>
 {else}

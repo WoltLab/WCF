@@ -26,9 +26,7 @@
 
 <p class="info">{lang}wcf.user.lostPassword.description{/lang}</p>
 
-{if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
-{/if}
+{include file='formError'}
 
 <div class="contentNavigation">
 	{hascontent}
@@ -88,6 +86,7 @@
 		
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 

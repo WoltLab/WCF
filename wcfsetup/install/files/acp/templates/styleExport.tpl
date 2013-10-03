@@ -19,6 +19,8 @@
 	<h1>{lang}wcf.acp.style.exportStyle{/lang}</h1>
 </header>
 
+{include file='formError'}
+
 <div class="contentNavigation">
 	<nav>
 		<ul>
@@ -88,6 +90,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.acp.style.button.exportStyle{/lang}" accesskey="s" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 

@@ -12,6 +12,8 @@
 	<h1>{lang}wcf.acp.user.exportEmailAddress{/lang}</h1>
 </header>
 
+{include file='formError'}
+
 <div class="contentNavigation">
 	{hascontent}
 		<nav>
@@ -69,6 +71,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 

@@ -19,9 +19,7 @@
 	<h1>{lang}wcf.acp.application.edit.title{/lang}{if $application->isPrimary} <span class="icon icon16 icon-ok-sign jsTooltip" title="{lang}wcf.acp.application.primaryApplication{/lang}"></span>{/if}</h1>
 </header>
 
-{if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
-{/if}
+{include file='formError'}
 
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
@@ -127,6 +125,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 

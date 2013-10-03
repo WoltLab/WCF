@@ -4,9 +4,7 @@
 	<h1>{lang}wcf.acp.option.import{/lang}</h1>
 </header>
 
-{if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
-{/if}
+{include file='formError'}
 
 {if $success|isset}
 	<p class="success">{lang}wcf.acp.option.import.success{/lang}</p>
@@ -54,6 +52,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 
