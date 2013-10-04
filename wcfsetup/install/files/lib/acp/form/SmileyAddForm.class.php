@@ -173,7 +173,7 @@ class SmileyAddForm extends AbstractForm {
 		$this->categoryID = 0;
 		$this->showOrder = 0;
 		$this->smileyPath = '';
-		$this->alises = '';
+		$this->aliases = '';
 		
 		I18nHandler::getInstance()->reset();
 		
