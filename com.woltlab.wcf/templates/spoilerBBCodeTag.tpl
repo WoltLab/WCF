@@ -14,7 +14,13 @@
 	$(function() {
 		var $spoilerBox = $('.jsSpoilerBox').removeClass('jsSpoilerBox');
 		$spoilerBox.find('> header > .jsSpoilerToggle').click(function() {
-			$(this).toggleClass('active').parent().next().slideToggle();
+			$(this).toggleClass('active').parent().next().slideToggle({
+				complete: function() {
+					if ($(this).is(':visible')) {
+						WCF.DOMNodeInsertedHandler.execute();
+					}
+				}
+			});
 		});
 	});
 	//]]>

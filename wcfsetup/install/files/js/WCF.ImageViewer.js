@@ -76,6 +76,12 @@ WCF.ImageViewer = Class.extend({
 	 */
 	_checkImageSize: function(event) {
 		var $image = $(event.currentTarget);
+		if (!$image.is(':visible')) {
+			$image.off('load');
+			
+			return;
+		}
+		
 		$image.removeClass('jsResizeImage');
 		var $dimensions = $image.getDimensions();
 		var $maxWidth = $image.parents('div').innerWidth();

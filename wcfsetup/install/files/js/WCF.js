@@ -6679,6 +6679,12 @@ WCF.Upload = Class.extend({
 	_iframe: null,
 	
 	/**
+	 * internal file id
+	 * @var	integer
+	 */
+	_internalFileID: 0,
+	
+	/**
 	 * additional options
 	 * @var	jQuery
 	 */
@@ -6714,6 +6720,7 @@ WCF.Upload = Class.extend({
 		this._buttonSelector = buttonSelector;
 		this._fileListSelector = fileListSelector;
 		this._className = className;
+		this._internalFileID = 0;
 		this._options = $.extend(true, {
 			action: 'upload',
 			multiple: false,
@@ -6781,17 +6788,10 @@ WCF.Upload = Class.extend({
 				return;
 			}
 			
-			var $validFilenames = [ ];
-			for (var $i = 0, $length = this._uploadMatrix[$uploadID].length; $i < $length; $i++) {
-				var $li = this._uploadMatrix[$uploadID][$i];
-				if (!$li.hasClass('uploadFailed')) {
-					$validFilenames.push($li.data('filename'));
-				}
-			}
-			
 			for (var $i = 0, $length = $files.length; $i < $length; $i++) {
-				if ($validFilenames.indexOf($files[$i].name) !== -1) {
-					$fd.append('__files[]', $files[$i]);
+				if (this._uploadMatrix[$uploadID][$i]) {
+					var $internalFileID = this._uploadMatrix[$uploadID][$i].data('internalFileID');
+					$fd.append('__files[' + $internalFileID + ']', $files[$i]);
 				}
 			}
 			
@@ -6799,7 +6799,7 @@ WCF.Upload = Class.extend({
 			$fd.append('className', this._className);
 			var $additionalParameters = this._getParameters();
 			for (var $name in $additionalParameters) {
-				$fd.append('parameters['+$name+']', $additionalParameters[$name]);
+				$fd.append('parameters[' + $name + ']', $additionalParameters[$name]);
 			}
 			
 			var self = this;
@@ -6843,8 +6843,8 @@ WCF.Upload = Class.extend({
 				var $li = this._initFile($file);
 				
 				if (!$li.hasClass('uploadFailed')) {
-					$li.data('filename', $file.name);
-					this._uploadMatrix[$uploadID].push($li);
+					$li.data('filename', $file.name).data('internalFileID', this._internalFileID++);
+					this._uploadMatrix[$uploadID][$i] = $li;
 				}
 			}
 			
@@ -6880,7 +6880,7 @@ WCF.Upload = Class.extend({
 	_progress: function(uploadID, event) {
 		var $percentComplete = Math.round(event.loaded * 100 / event.total);
 		
-		for (var $i = 0; $i < this._uploadMatrix[uploadID].length; $i++) {
+		for (var $i in this._uploadMatrix[uploadID]) {
 			this._uploadMatrix[uploadID][$i].find('progress').attr('value', $percentComplete);
 		}
 	},

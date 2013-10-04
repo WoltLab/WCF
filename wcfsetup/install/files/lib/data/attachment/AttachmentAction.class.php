@@ -173,7 +173,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 					EventHandler::getInstance()->fireAction($this, 'checkThumbnail');
 					if ($this->eventData['hasThumbnail']) $thumbnails[] = $attachment;
 				}
-				$attachments[] = $attachment;
+				$attachments[$file->getInternalFileID()] = $attachment;
 			}
 			else {
 				// moving failed; delete attachment
@@ -194,8 +194,11 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 		$result = array('attachments' => array(), 'errors' => array());
 		if (!empty($attachments)) {
 			// get attachment ids
-			$attachmentIDs = array();
-			foreach ($attachments as $attachment) $attachmentIDs[] = $attachment->attachmentID;
+			$attachmentIDs = $attachmentToFileID = array();
+			foreach ($attachments as $internalFileID => $attachment) {
+				$attachmentIDs[] = $attachment->attachmentID;
+				$attachmentToFileID[$attachment->attachmentID] = $internalFileID;
+			}
 			
 			// get attachments from database (check thumbnail status)
 			$attachmentList = new AttachmentList();
@@ -203,7 +206,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			$attachmentList->readObjects();
 			
 			foreach ($attachmentList as $attachment) {
-				$result['attachments'][$attachment->filename] = array(
+				$result['attachments'][$attachmentToFileID[$attachment->attachmentID]] = array(
 					'filename' => $attachment->filename,
 					'filesize' => $attachment->filesize,
 					'formattedFilesize' => FileUtil::formatFilesize($attachment->filesize),
@@ -217,7 +220,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($failedUploads as $failedUpload) {
-			$result['errors'][$failedUpload->getFilename()] = array(
+			$result['errors'][$failedUpload->getInternalFileID()] = array(
 				'filename' => $failedUpload->getFilename(),
 				'filesize' => $failedUpload->getFilesize(),
 				'errorType' => $failedUpload->getValidationErrorType()
