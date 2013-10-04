@@ -32,6 +32,26 @@ class UploadHandler {
 	 */
 	protected function __construct(array $rawFileData) {
 		if (is_array($rawFileData['name'])) {
+			// iOS work-around
+			$newRawFileData = array(
+				'name' => array(),
+				'type' => array(),
+				'tmp_name' => array(),
+				'error' => array(),
+				'size' => array()
+			);
+			$i = 0;
+			foreach (array_keys($rawFileData['name']) as $internalFileID) {
+				$newRawFileData['name'][$i] = '__wcf_' . $internalFileID . '_' . $rawFileData['name'][$internalFileID]; // __wcf_X_filename.ext
+				$newRawFileData['type'][$i] = $rawFileData['type'][$internalFileID];
+				$newRawFileData['tmp_name'][$i] = $rawFileData['tmp_name'][$internalFileID];
+				$newRawFileData['error'][$i] = $rawFileData['error'][$internalFileID];
+				$newRawFileData['size'][$i] = $rawFileData['size'][$internalFileID];
+				
+				$i++;
+			}
+			$rawFileData = $newRawFileData;
+			
 			// multiple uploads
 			for ($i = 0, $l = count($rawFileData['name']); $i < $l; $i++) {
 				$this->files[] = new UploadFile($rawFileData['name'][$i], $rawFileData['tmp_name'][$i], $rawFileData['size'][$i], $rawFileData['error'][$i], ($rawFileData['tmp_name'][$i] ? (FileUtil::getMimeType($rawFileData['tmp_name'][$i]) ?: $rawFileData['type'][$i]) : ''));

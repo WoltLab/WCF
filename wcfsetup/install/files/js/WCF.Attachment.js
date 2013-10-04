@@ -164,7 +164,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @see	WCF.Upload._success()
 	 */
 	_success: function(uploadID, data) {
-		for (var $i = 0; $i < this._uploadMatrix[uploadID].length; $i++) {
+		for (var $i in this._uploadMatrix[uploadID]) {
 			// get li
 			var $li = this._uploadMatrix[uploadID][$i];
 			
@@ -173,10 +173,11 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			
 			// get filename and check result
 			var $filename = $li.data('filename');
-			if (data.returnValues && data.returnValues['attachments'][$filename]) {
+			var $internalFileID = $li.data('internalFileID');
+			if (data.returnValues && data.returnValues.attachments[$internalFileID]) {
 				// show thumbnail
-				if (data.returnValues['attachments'][$filename]['tinyURL']) {
-					$li.children('.icon-spinner').replaceWith($('<img src="' + data.returnValues['attachments'][$filename]['tinyURL'] + '" alt="" class="attachmentTinyThumbnail" />'));
+				if (data.returnValues.attachments[$internalFileID]['tinyURL']) {
+					$li.children('.icon-spinner').replaceWith($('<img src="' + data.returnValues.attachments[$internalFileID]['tinyURL'] + '" alt="" class="attachmentTinyThumbnail" />'));
 				}
 				// show file icon
 				else {
@@ -185,23 +186,22 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				// update attachment link
 				var $link = $('<a href=""></a>');
-				$link.text($filename).attr('href', data.returnValues['attachments'][$filename]['url']);
+				$link.text($filename).attr('href', data.returnValues.attachments[$internalFileID]['url']);
 				
-				if (data.returnValues['attachments'][$filename]['isImage'] != 0) {
-					console.debug(data.returnValues['attachments'][$filename]['isImage']);
+				if (data.returnValues.attachments[$internalFileID]['isImage'] != 0) {
 					$link.addClass('jsImageViewer').attr('title', $filename);
 				}
 				$li.find('p').empty().append($link);
 				
 				// update file size
-				$li.find('small').append(data.returnValues['attachments'][$filename]['formattedFilesize']);
+				$li.find('small').append(data.returnValues.attachments[$internalFileID]['formattedFilesize']);
 				
 				// init buttons
-				var $deleteButton = $('<li><span class="icon icon16 icon-remove pointer jsTooltip jsDeleteButton" title="'+WCF.Language.get('wcf.global.button.delete')+'" data-object-id="'+data.returnValues['attachments'][$filename]['attachmentID']+'" data-confirm-message="'+WCF.Language.get('wcf.attachment.delete.sure')+'" /></li>');
+				var $deleteButton = $('<li><span class="icon icon16 icon-remove pointer jsTooltip jsDeleteButton" title="'+WCF.Language.get('wcf.global.button.delete')+'" data-object-id="'+data.returnValues.attachments[$internalFileID]['attachmentID']+'" data-confirm-message="'+WCF.Language.get('wcf.attachment.delete.sure')+'" /></li>');
 				$li.find('ul').append($deleteButton);
 				
 				if (this._wysiwygContainerID) {
-					var $insertButton = $('<li><span class="icon icon16 icon-paste pointer jsTooltip jsButtonInsertAttachment" title="' + WCF.Language.get('wcf.attachment.insert') + '" data-object-id="' + data.returnValues['attachments'][$filename]['attachmentID'] + '" /></li>');
+					var $insertButton = $('<li><span class="icon icon16 icon-paste pointer jsTooltip jsButtonInsertAttachment" title="' + WCF.Language.get('wcf.attachment.insert') + '" data-object-id="' + data.returnValues.attachments[$internalFileID]['attachmentID'] + '" /></li>');
 					$insertButton.children('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
 					$li.find('ul').append($insertButton);
 				}
@@ -212,8 +212,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				var $errorMessage = '';
 				
 				// error handling
-				if (data.returnValues && data.returnValues['errors'][$filename]) {
-					$errorMessage = data.returnValues['errors'][$filename]['errorType'];
+				if (data.returnValues && data.returnValues.errors[$internalFileID]) {
+					$errorMessage = data.returnValues.errors[$internalFileID]['errorType'];
 				}
 				else {
 					// unknown error
