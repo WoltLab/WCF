@@ -258,26 +258,28 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	public function getAvatar() {
 		if ($this->avatar === null) {
 			if (!$this->disableAvatar) {
-				if ($this->avatarID) {
-					if (!$this->fileHash) {
-						// load storage data
-						UserStorageHandler::getInstance()->loadStorage(array($this->userID));
-						$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'avatar');
-						
-						if ($data[$this->userID] === null) {
-							$this->avatar = new UserAvatar($this->avatarID);
-							UserStorageHandler::getInstance()->update($this->userID, 'avatar', serialize($this->avatar));
+				if ($this->canSeeAvatar()) {
+					if ($this->avatarID) {
+						if (!$this->fileHash) {
+							// load storage data
+							UserStorageHandler::getInstance()->loadStorage(array($this->userID));
+							$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'avatar');
+							
+							if ($data[$this->userID] === null) {
+								$this->avatar = new UserAvatar($this->avatarID);
+								UserStorageHandler::getInstance()->update($this->userID, 'avatar', serialize($this->avatar));
+							}
+							else {
+								$this->avatar = unserialize($data[$this->userID]);
+							}
 						}
 						else {
-							$this->avatar = unserialize($data[$this->userID]);
+							$this->avatar = new UserAvatar(null, $this->getDecoratedObject()->data);
 						}
 					}
-					else {
-						$this->avatar = new UserAvatar(null, $this->getDecoratedObject()->data);
+					else if (MODULE_GRAVATAR && $this->enableGravatar) {
+						$this->avatar = new Gravatar($this->userID, $this->email);
 					}
-				}
-				else if (MODULE_GRAVATAR && $this->enableGravatar) {
-					$this->avatar = new Gravatar($this->userID, $this->email);
 				}
 			}
 			
@@ -288,6 +290,15 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		}
 		
 		return $this->avatar;
+	}
+	
+	/**
+	 * Returns true if the active user can view the avatar of this user.
+	 * 
+	 * @return	boolean
+	 */
+	public function canSeeAvatar() {
+		return (WCF::getUser()->userID == $this->userID || WCF::getSession()->getPermission('user.profile.avatar.canSeeAvatars'));
 	}
 	
 	/**
