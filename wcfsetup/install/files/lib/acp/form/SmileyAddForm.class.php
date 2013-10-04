@@ -173,6 +173,7 @@ class SmileyAddForm extends AbstractForm {
 		$this->categoryID = 0;
 		$this->showOrder = 0;
 		$this->smileyPath = '';
+		$this->aliases = '';
 		
 		I18nHandler::getInstance()->reset();
 		
@@ -213,7 +214,7 @@ class SmileyAddForm extends AbstractForm {
 			throw new UserInputException('smileyPath');
 		}
 		
-		if (!file_exists(WCF_DIR.$this->smileyPath)) {
+		if (!is_file(WCF_DIR.$this->smileyPath)) {
 			throw new UserInputException('smileyPath', 'notFound');
 		}
 		

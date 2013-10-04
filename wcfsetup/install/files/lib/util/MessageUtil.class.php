@@ -102,4 +102,16 @@ class MessageUtil {
 		
 		return $usernames;
 	}
+	
+	/**
+	 * Truncates a formatted message and keeps the HTML syntax intact.
+	 *
+	 * @param	string		$message		string which shall be truncated
+	 * @param	integer		$maxLength		string length after truncating
+	 * @return	string					truncated string
+	 */
+	public static function truncateFormattedMessage($message, $maxLength = 1000) {
+		$message = Regex::compile('<!-- begin:parser_nonessential -->.*?<!-- end:parser_nonessential -->', Regex::DOT_ALL)->replace($message, '');
+		return StringUtil::truncateHTML($message, $maxLength);
+	}
 }
