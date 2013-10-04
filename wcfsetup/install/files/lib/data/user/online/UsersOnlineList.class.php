@@ -80,13 +80,16 @@ class UsersOnlineList extends SessionList {
 	 * Gets users online stats.
 	 */
 	public function readStats() {
+		$conditionBuilder = clone $this->getConditionBuilder();
+		$conditionBuilder->add('session.spiderID IS NULL');
+		
 		$sql = "SELECT		user_option_value.userOption".User::getUserOptionID('canViewOnlineStatus')." AS canViewOnlineStatus, session.userID
 			FROM		wcf".WCF_N."_session session
 			LEFT JOIN	wcf".WCF_N."_user_option_value user_option_value
 			ON		(user_option_value.userID = session.userID)
-			".$this->getConditionBuilder();
+			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($this->getConditionBuilder()->getParameters());
+		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
 			$this->stats['total']++;
 			if ($row['userID']) {
