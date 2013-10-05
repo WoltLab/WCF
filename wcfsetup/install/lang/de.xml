@@ -1912,7 +1912,7 @@ Fehler sind beispielsweise:
 	<category name="wcf.recaptcha">
 		<item name="wcf.recaptcha.title"><![CDATA[Sicherheitsabfrage („reCAPTCHA“)]]></item>
 		<item name="wcf.recaptcha.description"><![CDATA[Bitte geben Sie die untenstehenden Zeichen in das leere Feld ein. Groß- und Kleinschreibung müssen nicht beachtet werden. Sollten Sie das Bild trotz Neuladen nicht identifizieren können, wenden Sie sich an den Administrator.]]></item>
-		<item name="wcf.recaptcha.reload"><![CDATA[Neuladen]]></item>
+		<item name="wcf.recaptcha.reload"><![CDATA[Neu laden]]></item>
 		<item name="wcf.recaptcha.audio"><![CDATA[Audio-Version]]></item>
 		<item name="wcf.recaptcha.image"><![CDATA[Bild-Version]]></item>
 		<item name="wcf.recaptcha.help"><![CDATA[Hilfe]]></item>
