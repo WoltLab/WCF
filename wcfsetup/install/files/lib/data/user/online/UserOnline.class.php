@@ -25,7 +25,7 @@ class UserOnline extends UserProfile {
 	
 	/**
 	 * spider object
-	 * @var wcf\data\spider\Spider
+	 * @var	wcf\data\spider\Spider
 	 */
 	protected $spider = null;
 	

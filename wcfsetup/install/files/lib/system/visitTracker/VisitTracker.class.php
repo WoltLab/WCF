@@ -44,9 +44,9 @@ class VisitTracker extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the object type id.
+	 * Returns the object type id of the given visit tracker object type.
 	 * 
-	 * @param	string 		$objectType
+	 * @param	string		$objectType
 	 * @return	integer
 	 */
 	public function getObjectTypeID($objectType) {
@@ -70,15 +70,15 @@ class VisitTracker extends SingletonFactory {
 			if (WCF::getUser()->userID) {
 				// get data from storage
 				UserStorageHandler::getInstance()->loadStorage(array(WCF::getUser()->userID));
-						
+				
 				// get ids
 				$data = UserStorageHandler::getInstance()->getStorage(array(WCF::getUser()->userID), 'trackedUserVisits');
-					
+				
 				// cache does not exist or is outdated
 				if ($data[WCF::getUser()->userID] === null) {
 					$this->userVisits = array();
-					$sql = "SELECT 	objectTypeID, visitTime
-						FROM 	wcf".WCF_N."_tracked_visit_type
+					$sql = "SELECT	objectTypeID, visitTime
+						FROM	wcf".WCF_N."_tracked_visit_type
 						WHERE	userID = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute(array(WCF::getUser()->userID));

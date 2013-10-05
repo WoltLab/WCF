@@ -18,67 +18,67 @@ use wcf\util\StringUtil;
 class Mail {
 	/**
 	 * line ending string
-	 * @var string
+	 * @var	string
 	 */
 	public static $lineEnding = "\n";
 	
 	/**
 	 * mail header
-	 * @var string
+	 * @var	string
 	 */
 	protected $header = '';
 	
 	/**
 	 * boundary for multipart/mixed mail
-	 * @var string
+	 * @var	string
 	 */
 	protected $boundary = '';
 	
 	/**
 	 * mail content mime type
-	 * @var string
+	 * @var	string
 	 */
 	protected $contentType = "text/plain";
 	
 	/**
 	 * mail recipients
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $to = array();
 	
 	/**
 	 * mail subject
-	 * @var string
+	 * @var	string
 	 */
 	protected $subject = '';
 	
 	/**
 	 * mail message
-	 * @var string
+	 * @var	string
 	 */
 	protected $message = '';
 	
 	/**
 	 * mail sender
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $from = array();
 	
 	/**
 	 * mail carbon copy
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $cc = array();
 	
 	/**
 	 * mail blind carbon copy
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $bcc = array();
 	
 	/**
 	 * mail attachments
-	 * @var array
+	 * @var	array
 	 */
 	protected $attachments = array();
 	
@@ -96,7 +96,7 @@ class Mail {
 	
 	/**
 	 * mail language
-	 * @var wcf\data\language\Language
+	 * @var	wcf\data\language\Language
 	 */
 	protected $language = null;
 	

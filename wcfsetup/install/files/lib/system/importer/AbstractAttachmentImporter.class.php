@@ -16,18 +16,18 @@ use wcf\util\StringUtil;
  */
 class AbstractAttachmentImporter extends AbstractImporter {
 	/**
-	 * @see wcf\system\importer\AbstractImporter::$className
+	 * @see	wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\attachment\Attachment';
 	
 	/**
 	 * object type id for attachments
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see wcf\system\importer\IImporter::import()
+	 * @see	wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		// check file location

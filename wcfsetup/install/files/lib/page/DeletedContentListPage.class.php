@@ -32,7 +32,7 @@ class DeletedContentListPage extends MultipleLinkPage {
 	public $objectType = null;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -53,14 +53,14 @@ class DeletedContentListPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see wcf\page\MultipleLinkPage::readParameters()
+	 * @see	wcf\page\MultipleLinkPage::readParameters()
 	 */
 	protected function initObjectList() {
 		$this->objectList = $this->objectType->getProcessor()->getObjectList();
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

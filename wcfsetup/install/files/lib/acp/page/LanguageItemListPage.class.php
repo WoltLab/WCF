@@ -30,49 +30,49 @@ class LanguageItemListPage extends AbstractPage {
 	
 	/**
 	 * language item list
-	 * @var wcf\data\language\item\LanguageItemList
+	 * @var	wcf\data\language\item\LanguageItemList
 	 */
 	public $languageItemList = null;
 	
 	/**
 	 * language id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $languageID = 0;
 	
 	/**
 	 * language category id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $languageCategoryID = 0;
 	
 	/**
 	 * language item name
-	 * @var string
+	 * @var	string
 	 */
 	public $languageItem = '';
 	
 	/**
 	 * language item value
-	 * @var string
+	 * @var	string
 	 */
 	public $languageItemValue = '';
 	
 	/**
 	 * search for custom values
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $hasCustomValue = 0;
 	
 	/**
 	 * available languages
-	 * @var array
+	 * @var	array
 	 */
 	public $availableLanguages = array();
 	
 	/**
 	 * available language categories
-	 * @var array
+	 * @var	array
 	 */
 	public $availableLanguageCategories = array();
 	

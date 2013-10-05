@@ -1937,7 +1937,7 @@ WCF.User.Avatar.Crop = Class.extend({
 		
 		// check if object already had been initialized
 		if (!this._proxy) {
-			this._proxy  = new WCF.Action.Proxy({
+			this._proxy = new WCF.Action.Proxy({
 				success: $.proxy(this._success, this)
 			});
 		}

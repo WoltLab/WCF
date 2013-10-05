@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
 class Censorship extends SingletonFactory {
 	/**
 	 * censored words
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $censoredWords = array();
 	
@@ -40,7 +40,7 @@ class Censorship extends SingletonFactory {
 	protected $matches = array();
 	
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get words which should be censored

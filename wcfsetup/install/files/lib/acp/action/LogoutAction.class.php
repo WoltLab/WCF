@@ -17,7 +17,7 @@ use wcf\util\HeaderUtil;
  */
 class LogoutAction extends AbstractSecureAction {
 	/**
-	 * @see wcf\action\AbstractAction::$loginRequired
+	 * @see	wcf\action\AbstractAction::$loginRequired
 	 */
 	public $loginRequired = true;
 	

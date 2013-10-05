@@ -29,13 +29,13 @@ class TemplateEditForm extends TemplateAddForm {
 	
 	/**
 	 * template id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $templateID = 0;
 	
 	/**
 	 * template object
-	 * @var wcf\data\template\Template
+	 * @var	wcf\data\template\Template
 	 */
 	public $template = null;
 	
@@ -54,7 +54,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see wcf\acp\form\TemplateAddForm::validateName()
+	 * @see	wcf\acp\form\TemplateAddForm::validateName()
 	 */
 	protected function validateName() {
 		if ($this->tplName != $this->template->templateName) {
@@ -63,7 +63,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see wcf\acp\form\TemplateAddForm::validateName()
+	 * @see	wcf\acp\form\TemplateAddForm::validateName()
 	 */
 	protected function validateGroup() {
 		if ($this->templateGroupID != $this->template->templateGroupID) {

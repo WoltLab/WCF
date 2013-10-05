@@ -632,7 +632,7 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Returns the spider id for given user agent.
 	 *
-	 * @param 	string		$userAgent
+	 * @param	string		$userAgent
 	 * @return	mixed
 	 */
 	protected function getSpiderID($userAgent) {
@@ -651,13 +651,13 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Searches for existing session of a search spider.
 	 *
-	 * @param 	integer		$spiderID
+	 * @param	integer		$spiderID
 	 * @return	wcf\data\session\Session
 	 */
 	protected function getExistingSpiderSession($spiderID) {
-		$sql = "SELECT 	*
-			FROM 	wcf".WCF_N."_session
-			WHERE 	spiderID = ?
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_session
+			WHERE	spiderID = ?
 				AND userID IS NULL";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($spiderID));
@@ -666,7 +666,7 @@ class SessionHandler extends SingletonFactory {
 			// fix session validation
 			$row['ipAddress'] = UserUtil::getIpAddress();
 			$row['userAgent'] = UserUtil::getUserAgent();
-				
+			
 			// return session object
 			return new $this->sessionClassName(null, $row);
 		}

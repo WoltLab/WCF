@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
 class DataImportForm extends AbstractForm {
 	/**
 	 * additional data
-	 * @var array
+	 * @var	array
 	 */
 	public $additionalData = array();
 	
@@ -38,73 +38,73 @@ class DataImportForm extends AbstractForm {
 	
 	/**
 	 * list of available exporters
-	 * @var array
+	 * @var	array
 	 */
 	public $exporters = array();
 	
 	/**
 	 * exporter name
-	 * @var string
+	 * @var	string
 	 */
 	public $exporterName = '';
 	
 	/**
 	 * exporter object
-	 * @var wcf\system\exporter\IExporter
+	 * @var	wcf\system\exporter\IExporter
 	 */
 	public $exporter = null;
 	
 	/**
 	 * list of available importers
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	public $importers = array();
 	
 	/**
 	 * list of supported data types
-	 * @var array
+	 * @var	array
 	 */
 	public $supportedData = array();
 	
 	/**
 	 * selected data types
-	 * @var array
+	 * @var	array
 	 */
 	public $selectedData = array();
 	
 	/**
 	 * database host name
-	 * @var string
+	 * @var	string
 	 */
 	public $dbHost = '';
 	
 	/**
 	 * database user name
-	 * @var string
+	 * @var	string
 	 */
 	public $dbUser = '';
 	
 	/**
 	 * database password
-	 * @var string
+	 * @var	string
 	 */
 	public $dbPassword = '';
 	
 	/**
 	 * database name
-	 * @var string
+	 * @var	string
 	 */
 	public $dbName = '';
 	
 	/**
 	 * database table prefix
-	 * @var string
+	 * @var	string
 	 */
 	public $dbPrefix = '';
 	
 	/**
 	 * file system path
-	 * @var string
+	 * @var	string
 	 */
 	public $fileSystemPath = '';
 	
@@ -122,12 +122,12 @@ class DataImportForm extends AbstractForm {
 	
 	/**
 	 * user merge mode
-	 * @var integer
+	 * @var	integer
 	 */
 	public $userMergeMode = 2;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -167,7 +167,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -185,7 +185,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -218,7 +218,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::save()
+	 * @see	wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -243,7 +243,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -274,7 +274,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

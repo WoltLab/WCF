@@ -14,12 +14,12 @@ namespace wcf\system\importer;
 abstract class AbstractImporter implements IImporter {
 	/**
 	 * database object class name
-	 * @var string
+	 * @var	string
 	 */
 	protected $className = '';
 	
 	/**
-	 * @see wcf\system\importer\IImporter::getClassName()
+	 * @see	wcf\system\importer\IImporter::getClassName()
 	 */
 	public function getClassName() {
 		return $this->className;

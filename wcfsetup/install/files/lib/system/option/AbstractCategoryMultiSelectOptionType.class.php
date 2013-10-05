@@ -20,13 +20,13 @@ use wcf\util\ArrayUtil;
 class AbstractCategoryMultiSelectOptionType extends AbstractOptionType {
 	/**
 	 * object type name
-	 * @var string
+	 * @var	string
 	 */
 	public $objectType = '';
 	
 	/**
 	 * node tree class
-	 * @var string
+	 * @var	string
 	 */
 	public $nodeTreeClassname = 'wcf\data\category\CategoryNodeTree';
 	

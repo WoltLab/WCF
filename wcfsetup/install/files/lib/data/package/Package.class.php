@@ -277,7 +277,7 @@ class Package extends DatabaseObject {
 	 * that the update covers the whole range of release numbers where the asterisk
 	 * wildcards digits from 0 to 9.
 	 * For example, if "fromversion" is "1.1.*" and this package updates to
-	 * version 1.2.0, all releases from 1.1.0 to  1.1.9 may be updated using
+	 * version 1.2.0, all releases from 1.1.0 to 1.1.9 may be updated using
 	 * this package.
 	 * 
 	 * @param	string		$currentVersion

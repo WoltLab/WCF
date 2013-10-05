@@ -25,13 +25,13 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	
 	/**
 	 * template group id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $templateGroupID = 0;
 	
 	/**
 	 * template group object
-	 * @var wcf\data\template\group\TemplateGroup
+	 * @var	wcf\data\template\group\TemplateGroup
 	 */
 	public $templateGroup = null;
 	
@@ -49,7 +49,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	}
 	
 	/**
-	 * @see wcf\acp\form\TemplateGroupAddForm::validateName()
+	 * @see	wcf\acp\form\TemplateGroupAddForm::validateName()
 	 */
 	protected function validateName() {
 		if ($this->templateGroupName != $this->templateGroup->templateGroupName) {
@@ -58,7 +58,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	}
 	
 	/**
-	 * @see wcf\acp\form\TemplateGroupAddForm::validateFolderName()
+	 * @see	wcf\acp\form\TemplateGroupAddForm::validateFolderName()
 	 */
 	protected function validateFolderName() {
 		if ($this->templateGroupFolderName != $this->templateGroup->templateGroupFolderName) {

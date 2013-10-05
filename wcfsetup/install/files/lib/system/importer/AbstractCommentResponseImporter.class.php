@@ -15,18 +15,18 @@ use wcf\system\WCF;
  */
 class AbstractCommentResponseImporter extends AbstractImporter {
 	/**
-	 * @see wcf\system\importer\AbstractImporter::$className
+	 * @see	wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\comment\response\CommentResponse';
 	
 	/**
 	 * object type name
-	 * @var string
+	 * @var	string
 	 */
 	protected $objectTypeName = '';
 	
 	/**
-	 * @see wcf\system\importer\IImporter::import()
+	 * @see	wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);

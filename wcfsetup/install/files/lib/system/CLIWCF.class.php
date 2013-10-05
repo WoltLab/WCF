@@ -78,7 +78,7 @@ class CLIWCF extends WCF {
 	}
 	
 	/**
-	 * @see wcf\system\WCF::destruct()
+	 * @see	wcf\system\WCF::destruct()
 	 */
 	public static function destruct() {
 		if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCLICommandHistory) {
@@ -306,7 +306,7 @@ class CLIWCF extends WCF {
 		if (WCF::getSession()->getPermission('admin.system.package.canUpdatePackage') && VERBOSITY >= -1 && !self::getArgvParser()->disableUpdateCheck) {
 			$updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 			if (!empty($updates)) {
-				$return = self::getReader()->println(count($updates) . ' update' . (count($updates) > 1 ? 's  are' : ' is') . ' available');
+				$return = self::getReader()->println(count($updates) . ' update' . (count($updates) > 1 ? 's are' : ' is') . ' available');
 				
 				if (VERBOSITY >= 1) {
 					$table = array(

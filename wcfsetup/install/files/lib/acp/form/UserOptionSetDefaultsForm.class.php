@@ -34,7 +34,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	
 	/**
 	 * true to apply change to existing users
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $applyChangesToExistingUsers = 0;
 	
@@ -49,7 +49,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();

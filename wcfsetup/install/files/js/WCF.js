@@ -346,7 +346,7 @@ $.fn.extend({
 	/**
 	 * Disables a form element.
 	 * 
-	 * @return jQuery
+	 * @return	jQuery
 	 */
 	disable: function() {
 		return this.attr('disabled', 'disabled');

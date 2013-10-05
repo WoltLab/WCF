@@ -168,7 +168,7 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Returns a formatted list of the allowed file extensions.
 	 * 
-	 * @return array<string>
+	 * @return	array<string>
 	 */
 	public function getFormattedAllowedExtensions() {
 		$extensions = $this->getAllowedExtensions();
@@ -210,7 +210,7 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Returns the object type processor.
 	 * 
-	 * @return wcf\system\attachment\IAttachmentObjectType
+	 * @return	wcf\system\attachment\IAttachmentObjectType
 	 */
 	public function getProcessor() {
 		return $this->processor;

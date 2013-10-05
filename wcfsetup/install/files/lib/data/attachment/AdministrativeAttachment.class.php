@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectDecorator;
  */
 class AdministrativeAttachment extends DatabaseObjectDecorator {
 	/**
-	 * @see wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\attachment\Attachment';
 	
@@ -34,7 +34,7 @@ class AdministrativeAttachment extends DatabaseObjectDecorator {
 	/**
 	 * Gets the container object of this attachment.
 	 * 
-	 * @return \wcf\data\IUserContent
+	 * @return	wcf\data\IUserContent
 	 */
 	public function getContainerObject() {
 		if (!$this->containerObjectLoaded) {

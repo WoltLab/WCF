@@ -26,14 +26,14 @@ $action = new UserProfileAction(array($editor), 'updateUserOnlineMarking');
 $action->executeAction();
 
 // set default mod permissions
-$sql = "INSERT IGNORE INTO 	wcf".WCF_N."_user_group_option_value
+$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_group_option_value
 				(groupID, optionID, optionValue)
 	SELECT			5, optionID, 1
 	FROM			wcf".WCF_N."_user_group_option
 	WHERE			optionName LIKE 'mod.%'";
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute();
-$sql = "INSERT IGNORE INTO 	wcf".WCF_N."_user_group_option_value
+$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_group_option_value
 				(groupID, optionID, optionValue)
 	SELECT			6, optionID, 1
 	FROM			wcf".WCF_N."_user_group_option

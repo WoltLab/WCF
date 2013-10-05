@@ -25,13 +25,13 @@ class UserOptionEditForm extends UserOptionAddForm {
 	
 	/**
 	 * user option id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $optionID = 0;
 	
 	/**
 	 * user option object
-	 * @var wcf\data\user\option\UserOption
+	 * @var	wcf\data\user\option\UserOption
 	 */
 	public $userOption = null;
 	
@@ -78,7 +78,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -103,7 +103,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

@@ -27,7 +27,7 @@ class DashboardBox extends DatabaseObject {
 	/**
 	 * Returns the owner of this dashboard box.
 	 * 
-	 * @return wcf\data\package\Package
+	 * @return	wcf\data\package\Package
 	 */
 	public function getPackage() {
 		return PackageCache::getInstance()->getPackage($this->packageID);

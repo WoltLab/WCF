@@ -67,49 +67,49 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	
 	/**
 	 * registration start date
-	 * @var string
+	 * @var	string
 	 */
 	public $registrationDateStart = '';
 	
 	/**
 	 * registration start date
-	 * @var string
+	 * @var	string
 	 */
 	public $registrationDateEnd = '';
 	
 	/**
 	 * banned state
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $banned = 0;
 	
 	/**
 	 * not banned state
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $notBanned = 0;
 	
 	/**
 	 * last activity start time
-	 * @var string
+	 * @var	string
 	 */
 	public $lastActivityTimeStart = '';
 	
 	/**
 	 * last activity end time
-	 * @var string
+	 * @var	string
 	 */
 	public $lastActivityTimeEnd = '';
 	
 	/**
 	 * enabled state
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $enabled = 0;
 	
 	/**
 	 * disabled state
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $disabled = 0;
 	

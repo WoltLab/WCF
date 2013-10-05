@@ -148,7 +148,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see wcf\system\image\adapter\IImageAdapter::setTransparentColor()
+	 * @see	wcf\system\image\adapter\IImageAdapter::setTransparentColor()
 	 */
 	public function setTransparentColor($red, $green, $blue) {
 		$color = 'rgb(' . $red . ',' . $green . ',' . $blue . ')';

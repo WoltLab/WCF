@@ -39,7 +39,7 @@ class TemplateAction extends AbstractDatabaseObjectAction {
 	protected $requireACP = array('create', 'delete', 'update');
 	
 	/**
-	 * @see wcf\data\AbstractDatabaseObjectAction::create()
+	 * @see	wcf\data\AbstractDatabaseObjectAction::create()
 	 */
 	public function create() {
 		$template = parent::create();

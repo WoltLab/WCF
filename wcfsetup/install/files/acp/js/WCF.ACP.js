@@ -1674,7 +1674,7 @@ WCF.ACP.Worker = Class.extend({
 			this._dialog.wcfDialog({
 				closeConfirmMessage: WCF.Language.get('wcf.acp.worker.abort.confirmMessage'),
 				closeViaModal: false,
-				onClose:  $.proxy(function() {
+				onClose: $.proxy(function() {
 					this._aborted = true;
 					this._proxy.abortPrevious();
 					

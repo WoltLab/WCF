@@ -16,25 +16,25 @@ use wcf\system\io\RemoteFile;
 class SMTPMailSender extends MailSender {
 	/**
 	 * smtp connection
-	 * @var wcf\system\io\RemoteFile
+	 * @var	wcf\system\io\RemoteFile
 	 */
 	protected $connection = null;
 	
 	/**
 	 * last received status code
-	 * @var string
+	 * @var	string
 	 */
 	protected $statusCode = '';
 	
 	/**
 	 * last received status message
-	 * @var string
+	 * @var	string
 	 */
 	protected $statusMsg = '';
 	
 	/**
 	 * mail recipients
-	 * @var array
+	 * @var	array
 	 */
 	protected $recipients = array();
 	

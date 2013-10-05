@@ -14,24 +14,24 @@ use wcf\data\comment\CommentEditor;
  */
 class AbstractCommentImporter extends AbstractImporter {
 	/**
-	 * @see wcf\system\importer\AbstractImporter::$className
+	 * @see	wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\comment\Comment';
 	
 	/**
 	 * object type id for comments
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $objectTypeID = 0;
 	
 	/**
 	 * object type name
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $objectTypeName = '';
 	
 	/**
-	 * @see wcf\system\importer\IImporter::import()
+	 * @see	wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);

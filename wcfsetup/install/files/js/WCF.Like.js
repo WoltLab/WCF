@@ -415,8 +415,8 @@ WCF.Like = Class.extend({
 	/**
 	 * Sets button active state.
 	 * 
-	 * @param 	jquery		likeButton
-	 * @param 	jquery		dislikeButton
+	 * @param	jquery		likeButton
+	 * @param	jquery		dislikeButton
 	 * @param	integer		likeStatus
 	 */
 	_setActiveState: function(likeButton, dislikeButton, likeStatus) {

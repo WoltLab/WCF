@@ -183,7 +183,7 @@ class PollManager extends SingletonFactory {
 			$this->pollData['isPublic'] = $this->poll->isPublic;
 		}
 		
-		//  poll options
+		// poll options
 		if (isset($_POST['pollOptions']) && is_array($_POST['pollOptions'])) {
 			foreach ($_POST['pollOptions'] as $showOrder => $value) {
 				list($optionID, $optionValue) = explode('_', $value, 2);

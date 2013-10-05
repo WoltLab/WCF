@@ -26,13 +26,13 @@ class Like extends DatabaseObject {
 	
 	/**
 	 * like value
-	 * @var integer
+	 * @var	integer
 	 */
 	const LIKE = 1;
 	
 	/**
 	 * dislike value
-	 * @var integer
+	 * @var	integer
 	 */
 	const DISLIKE = -1;
 	

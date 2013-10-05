@@ -51,19 +51,19 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * ban status
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $banned = 0;
 	
 	/**
 	 * ban reason
-	 * @var string
+	 * @var	string
 	 */
 	public $banReason = '';
 	
 	/**
 	 * user avatar object
-	 * @var wcf\data\user\avatar\UserAvatar
+	 * @var	wcf\data\user\avatar\UserAvatar
 	 */
 	public $userAvatar = null;
 	
@@ -75,13 +75,13 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * true to disable this avatar
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $disableAvatar = 0;
 	
 	/**
 	 * reason
-	 * @var string
+	 * @var	string
 	 */
 	public $disableAvatarReason = '';
 	

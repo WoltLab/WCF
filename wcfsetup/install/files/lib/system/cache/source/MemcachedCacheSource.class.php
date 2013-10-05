@@ -94,7 +94,7 @@ class MemcachedCacheSource implements ICacheSource {
 	public function flush($cacheName, $useWildcard) {
 		$cacheName = $this->prefix . $cacheName;
 		
-		$resources = ($useWildcard) ? $this->getResources('~^' .  $cacheName. '(-[a-f0-9]+)?$~') : array($cacheName);
+		$resources = ($useWildcard) ? $this->getResources('~^' . $cacheName. '(-[a-f0-9]+)?$~') : array($cacheName);
 		foreach ($resources as $resource) {
 			$this->memcached->delete($resource);
 			$this->updateMaster(null, $resource);

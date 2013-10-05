@@ -155,7 +155,7 @@ WCF.ACL.List = Class.extend({
 	 * Loads current ACL configuration.
 	 */
 	_loadACL: function() {
-		this._proxy.setOption('data',  {
+		this._proxy.setOption('data', {
 			actionName: 'loadAll',
 			className: 'wcf\\data\\acl\\option\\ACLOptionAction',
 			parameters: {
@@ -263,7 +263,7 @@ WCF.ACL.List = Class.extend({
 		for (var $optionID in data.returnValues.options) {
 			var $option = data.returnValues.options[$optionID];
 			
-			var $listItem = $('<li><span>' + $option.label +  '</span></li>').data('optionID', $optionID).data('optionName', $option.optionName);
+			var $listItem = $('<li><span>' + $option.label + '</span></li>').data('optionID', $optionID).data('optionName', $option.optionName);
 			var $grantPermission = $('<input type="checkbox" id="grant' + $optionID + '" />').appendTo($listItem).wrap('<label for="grant' + $optionID + '" class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.grant') + '" />');
 			var $denyPermission = $('<input type="checkbox" id="deny' + $optionID + '" />').appendTo($listItem).wrap('<label for="deny' + $optionID + '" class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.deny') + '" />');
 			
@@ -350,7 +350,7 @@ WCF.ACL.List = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
-		var $listItem  = $(event.currentTarget);
+		var $listItem = $(event.currentTarget);
 		if ($listItem.hasClass('active')) {
 			return;
 		}

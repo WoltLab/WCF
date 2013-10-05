@@ -31,25 +31,25 @@ class TemplateGroupAddForm extends AbstractForm {
 	
 	/**
 	 * template group name
-	 * @var string
+	 * @var	string
 	 */
 	public $templateGroupName = '';
 	
 	/**
 	 * template group folder
-	 * @var integer
+	 * @var	integer
 	 */
 	public $templateGroupFolderName = '';
 	
 	/**
 	 * parent template group id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $parentTemplateGroupID = 0;
 	
 	/**
 	 * available template groups
-	 * @var array
+	 * @var	array
 	 */
 	public $availableTemplateGroups = array();
 	

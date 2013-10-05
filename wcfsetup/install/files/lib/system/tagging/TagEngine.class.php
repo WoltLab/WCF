@@ -78,7 +78,7 @@ class TagEngine extends SingletonFactory {
 		// save tags
 		$sql = "INSERT INTO	wcf".WCF_N."_tag_to_object
 					(objectID, tagID, objectTypeID, languageID)
-			VALUES 		(?, ?, ?, ?)";
+			VALUES		(?, ?, ?, ?)";
 		WCF::getDB()->beginTransaction();
 		$statement = WCF::getDB()->prepareStatement($sql);
 		foreach ($tagIDs as $tagID) {

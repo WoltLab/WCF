@@ -27,13 +27,13 @@ class LinkHandler extends SingletonFactory {
 	
 	/**
 	 * title search strings
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $titleSearch = array();
 	
 	/**
 	 * title replacement strings
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $titleReplace = array();
 	

@@ -51,7 +51,7 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	protected $requireACP = array('delete', 'toggle', 'update', 'updatePosition');
 	
 	/**
-	 * @see wcf\data\IDatabaseObjectAction::create()
+	 * @see	wcf\data\IDatabaseObjectAction::create()
 	 */
 	public function create() {
 		if (!isset($this->parameters['data']['packageID'])) {

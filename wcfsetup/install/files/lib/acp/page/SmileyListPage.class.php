@@ -61,7 +61,7 @@ class SmileyListPage extends MultipleLinkPage {
 	public $categories = array();
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -76,7 +76,7 @@ class SmileyListPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -89,7 +89,7 @@ class SmileyListPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see wcf\page\MultipleLinkPage::initObjectList()
+	 * @see	wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -103,7 +103,7 @@ class SmileyListPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();

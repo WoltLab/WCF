@@ -14,18 +14,18 @@ use wcf\system\WCF;
  */
 class AbstractLikeImporter extends AbstractImporter {
 	/**
-	 * @see wcf\system\importer\AbstractImporter::$className
+	 * @see	wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\like\Like';
 	
 	/**
 	 * object type id for likes
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see wcf\system\importer\IImporter::import()
+	 * @see	wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		if ($data['objectUserID']) $data['objectUserID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['objectUserID']);

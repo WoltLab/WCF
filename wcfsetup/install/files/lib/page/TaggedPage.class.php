@@ -42,7 +42,7 @@ class TaggedPage extends MultipleLinkPage {
 	public $tagCloud = null;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -69,14 +69,14 @@ class TaggedPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see wcf\page\MultipleLinkPage::readParameters()
+	 * @see	wcf\page\MultipleLinkPage::readParameters()
 	 */
 	protected function initObjectList() {
 		$this->objectList = $this->objectType->getProcessor()->getObjectList($this->tag);
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -85,7 +85,7 @@ class TaggedPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

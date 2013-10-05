@@ -31,7 +31,7 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	
 	/**
 	 * cached user options
-	 * @var array<wcf\data\user\option\ViewableUserOption>
+	 * @var	array<wcf\data\user\option\ViewableUserOption>
 	 */
 	public static $userOptions = array();
 	
@@ -84,9 +84,9 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	}
 	
 	/**
-	 * Gets user option by name
+	 * Returns the user option with the given name
 	 * 
-	 * @param 	string		$name
+	 * @param	string		$name
 	 * @return	wcf\data\user\option\ViewableUserOption
 	 */
 	public static function getUserOption($name) {

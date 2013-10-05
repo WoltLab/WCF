@@ -50,7 +50,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	
 	/**
 	 * language object
-	 * @var wcf\data\language\Language
+	 * @var	wcf\data\language\Language
 	 */
 	protected $language = null;
 	

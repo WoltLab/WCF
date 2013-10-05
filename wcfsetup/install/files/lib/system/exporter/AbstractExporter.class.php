@@ -18,78 +18,78 @@ use wcf\util\FileUtil;
 abstract class AbstractExporter implements IExporter {
 	/**
 	 * additional data
-	 * @var array
+	 * @var	array
 	 */
 	public $additionalData = array();
-
+	
 	/**
 	 * database host name
-	 * @var string
+	 * @var	string
 	 */
 	protected $databaseHost = '';
-
+	
 	/**
 	 * database username
-	 * @var string
+	 * @var	string
 	 */
 	protected $databaseUser = '';
-
+	
 	/**
 	 * database password
-	 * @var string
+	 * @var	string
 	 */
 	protected $databasePassword = '';
-
+	
 	/**
 	 * database name
-	 * @var string
+	 * @var	string
 	 */
 	protected $databaseName = '';
-
+	
 	/**
 	 * table prefix
-	 * @var string
+	 * @var	string
 	 */
 	protected $databasePrefix = '';
-
+	
 	/**
 	 * file system path
-	 * @var string
+	 * @var	string
 	 */
 	protected $fileSystemPath = '';
-
+	
 	/**
 	 * database connection
-	 * @var wcf\system\database\Database
+	 * @var	wcf\system\database\Database
 	 */
 	protected $database = null;
-
+	
 	/**
 	 * object type => method names
-	 * @var array
+	 * @var	array
 	 */
 	protected $methods = array();
-
+	
 	/**
 	 * limits for items per run
-	 * @var array<integer>
+	 * @var	array<integer>
 	 */
 	protected $limits = array();
-
+	
 	/**
 	 * default limit for items per run
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $defaultLimit = 1000;
-
+	
 	/**
 	 * selected import data
-	 * @var array
+	 * @var	array
 	 */
 	protected $selectedData = array();
 	
 	/**
-	 * @see wcf\system\exporter\IExporter::setData()
+	 * @see	wcf\system\exporter\IExporter::setData()
 	 */
 	public function setData($databaseHost, $databaseUser, $databasePassword, $databaseName, $databasePrefix, $fileSystemPath, $additionalData) {
 		$this->databaseHost = $databaseHost;
@@ -100,59 +100,59 @@ abstract class AbstractExporter implements IExporter {
 		$this->fileSystemPath = ($fileSystemPath ? FileUtil::addTrailingSlash($fileSystemPath) : '');
 		$this->additionalData = $additionalData;
 	}
-
+	
 	/**
-	 * @see wcf\system\exporter\IExporter::init()
+	 * @see	wcf\system\exporter\IExporter::init()
 	 */
 	public function init() {
 		$this->database = new MySQLDatabase($this->databaseHost, $this->databaseUser, $this->databasePassword, $this->databaseName, 0);
 	}
-
+	
 	/**
-	 * @see wcf\system\exporter\IExporter::validateDatabaseAccess()
+	 * @see	wcf\system\exporter\IExporter::validateDatabaseAccess()
 	 */
 	public function validateDatabaseAccess() {
 		$this->init();
 	}
-
+	
 	/**
-	 * @see wcf\system\exporter\IExporter::getDefaultDatabasePrefix()
+	 * @see	wcf\system\exporter\IExporter::getDefaultDatabasePrefix()
 	 */
 	public function getDefaultDatabasePrefix() {
 		return '';
 	}
-
+	
 	/**
-	 * @see wcf\system\exporter\IExporter::countLoops()
+	 * @see	wcf\system\exporter\IExporter::countLoops()
 	 */
 	public function countLoops($objectType) {
 		if (!isset($this->methods[$objectType]) || !method_exists($this, 'count'.$this->methods[$objectType])) {
 			throw new SystemException("unknown object type '".$objectType."' given");
 		}
-
+		
 		$count = call_user_func(array($this, 'count'.$this->methods[$objectType]));
 		$limit = (isset($this->limits[$objectType]) ? $this->limits[$objectType] : $this->defaultLimit);
 		return ceil($count / $limit);
 	}
-
+	
 	/**
-	 * @see wcf\system\exporter\IExporter::exportData()
+	 * @see	wcf\system\exporter\IExporter::exportData()
 	 */
 	public function exportData($objectType, $loopCount = 0) {
 		if (!isset($this->methods[$objectType]) || !method_exists($this, 'export'.$this->methods[$objectType])) {
 			throw new SystemException("unknown object type '".$objectType."' given");
 		}
-
+		
 		$limit = (isset($this->limits[$objectType]) ? $this->limits[$objectType] : $this->defaultLimit);
 		call_user_func(array($this, 'export'.$this->methods[$objectType]), $loopCount * $limit, $limit);
 	}
 	
 	/**
-	 * @see wcf\system\exporter\IExporter::validateSelectedData()
+	 * @see	wcf\system\exporter\IExporter::validateSelectedData()
 	 */
 	public function validateSelectedData(array $selectedData) {
 		$this->selectedData = $selectedData;
-	
+		
 		if (!count($this->selectedData)) {
 			return false;
 		}
@@ -174,5 +174,4 @@ abstract class AbstractExporter implements IExporter {
 		
 		return true;
 	}
-	
 }

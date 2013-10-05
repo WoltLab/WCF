@@ -150,7 +150,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		// clear attributes
 		$sql = "DELETE FROM	wcf".WCF_N."_bbcode_attribute
 			WHERE		bbcodeID IN (
-						SELECT 	bbcodeID
+						SELECT	bbcodeID
 						FROM	wcf".WCF_N."_bbcode
 						WHERE	packageID = ?
 					)";
