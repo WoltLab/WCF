@@ -153,6 +153,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		$packageInfo = array(
 			'author' => '',
 			'authorURL' => '',
+			'license' => '',
+			'licenseURL' => '',
 			'isApplication' => 0,
 			'packageDescription' => '',
 			'versions' => array()
@@ -186,6 +188,20 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				
 				case 'authorurl':
 					$packageInfo['authorURL'] = $element->nodeValue;
+				break;
+			}
+		}
+		
+		// parse license information
+		$elements = $xpath->query('./ns:licenseinformation/*', $package);
+		foreach ($elements as $element) {
+			switch ($element->tagName) {
+				case 'license':
+					$packageInfo['license'] = $element->nodeValue;
+				break;
+				
+				case 'licenseurl':
+					$packageInfo['licenseURL'] = $element->nodeValue;
 				break;
 			}
 		}
@@ -251,13 +267,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 							}
 						}
 					break;
-					
-					case 'license':
-						$packageInfo['versions'][$versionNo]['license'] = array(
-							'license' => $child->nodeValue,
-							'licenseURL' => ($child->hasAttribute('url') ? $child->getAttribute('url') : '')
-						);
-					break;
 				}
 			}
 		}
@@ -318,6 +327,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					'packageDescription' => $packageData['packageDescription'],
 					'author' => $packageData['author'],
 					'authorURL' => $packageData['authorURL'],
+					'license' => $packageData['license'],
+					'licenseURL' => $packageData['licenseURL'],
 					'isApplication' => $packageData['isApplication']
 				));
 			}
@@ -330,6 +341,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					'packageDescription' => $packageData['packageDescription'],
 					'author' => $packageData['author'],
 					'authorURL' => $packageData['authorURL'],
+					'license' => $packageData['license'],
+					'licenseURL' => $packageData['licenseURL'],
 					'isApplication' => $packageData['isApplication']
 				));
 				
@@ -544,7 +557,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		// get existing packages and their versions
 		$existingPackages = array();
 		$sql = "SELECT	packageID, package, packageDescription, packageName,
-				packageVersion, packageDate, author, authorURL, isApplication
+				packageVersion, packageDate, author, authorURL, license, licenseURL, isApplication
 			FROM	wcf".WCF_N."_package";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();

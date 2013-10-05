@@ -51,6 +51,12 @@ class PackageArchive {
 	protected $authorInfo = array();
 	
 	/**
+	 * license information
+	 * @var	array
+	 */
+	protected $licenseInfo = array();
+	
+	/**
 	 * list of requirements
 	 * @var	array
 	 */
@@ -183,7 +189,6 @@ class PackageArchive {
 				case 'packagename':
 				case 'packagedescription':
 				case 'readme':
-				case 'license':
 					if (!isset($this->packageInfo[$element->tagName])) $this->packageInfo[$element->tagName] = array();
 					
 					$languageCode = 'default';
@@ -229,6 +234,14 @@ class PackageArchive {
 		foreach ($elements as $element) {
 			$tagName = ($element->tagName == 'authorurl') ? 'authorURL' : $element->tagName;
 			$this->authorInfo[$tagName] = $element->nodeValue;
+		}
+		
+		// get license information
+		$licenseInformation = $xpath->query('./ns:licenseinformation', $package)->item(0);
+		$elements = $xpath->query('child::*', $licenseInformation);
+		foreach ($elements as $element) {
+			$tagName = ($element->tagName == 'licenseurl') ? 'licenseURL' : $element->tagName;
+			$this->licenseInfo[$tagName] = $element->nodeValue;
 		}
 		
 		// get required packages
@@ -477,6 +490,17 @@ class PackageArchive {
 	 */
 	public function getAuthorInfo($name) {
 		if (isset($this->authorInfo[$name])) return $this->authorInfo[$name];
+		return null;
+	}
+	
+	/**
+	 * Returns information about the license of this package archive.
+	 * 
+	 * @param	string		$name		name of the requested information
+	 * @return	string
+	 */
+	public function getLicenseInfo($name) {
+		if (isset($this->licenseInfo[$name])) return $this->licenseInfo[$name];
 		return null;
 	}
 	

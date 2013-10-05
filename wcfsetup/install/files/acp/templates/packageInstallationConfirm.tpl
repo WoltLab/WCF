@@ -78,6 +78,13 @@
 			<dd>{if $archive->getAuthorInfo('authorURL')}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getAuthorInfo('authorURL')|rawurlencode}" class="externalURL">{$archive->getAuthorInfo('author')}</a>{else}{$archive->getAuthorInfo('author')}{/if}</dd>
 		</dl>
 		
+		{if $archive->getPackageInfo('license')}
+			<dl>
+				<dt>{lang}wcf.acp.package.license{/lang}</dt>
+				<dd>{if $archive->getLicenseInfo('licenseURL')}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getLicenseInfo('licenseURL')|rawurlencode}" class="externalURL">{$archive->getLicenseInfo('license')}</a>{else}{$archive->getLicenseInfo('license')}{/if}</dd>
+			</dl>
+		{/if}
+		
 		{event name='propertyFields'}
 	</fieldset>
 </div>
