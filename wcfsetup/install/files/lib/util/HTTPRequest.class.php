@@ -34,7 +34,7 @@ final class HTTPRequest {
 	
 	/**
 	 * given files
-	 * @var array
+	 * @var	array
 	 */
 	private $files = array();
 	

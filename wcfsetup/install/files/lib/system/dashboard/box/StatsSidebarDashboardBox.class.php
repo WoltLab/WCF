@@ -18,7 +18,7 @@ use wcf\system\WCF;
 class StatsSidebarDashboardBox extends AbstractSidebarDashboardBox {
 	/**
 	 * the stats 
-	 * @var wcf\system\cache\builder\UserStatsCacheBuilder 
+	 * @var	wcf\system\cache\builder\UserStatsCacheBuilder 
 	 */
 	public $stats = null; 
 	

@@ -25,13 +25,13 @@ class RecentActivityDashboardBox extends AbstractContentDashboardBox {
 	
 	/**
 	 * true, if results were filtered by followed users
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $filteredByFollowedUsers = false;
 	
 	/**
 	 * latest event time
-	 * @var integer
+	 * @var	integer
 	 */
 	public $lastEventTime = 0;
 	

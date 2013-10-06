@@ -14,24 +14,24 @@ use wcf\data\poll\PollEditor;
  */
 class AbstractPollImporter extends AbstractImporter {
 	/**
-	 * @see wcf\system\importer\AbstractImporter::$className
+	 * @see	wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\poll\Poll';
 	
 	/**
 	 * object type id for poll
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $objectTypeID = 0;
 	
 	/**
 	 * object type name
-	 * @var string
+	 * @var	string
 	 */
 	protected $objectTypeName = '';
 	
 	/**
-	 * @see wcf\system\importer\IImporter::import()
+	 * @see	wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		$poll = PollEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));

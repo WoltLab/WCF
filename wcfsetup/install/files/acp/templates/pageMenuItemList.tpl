@@ -69,7 +69,7 @@
 													<span class="statusDisplay sortableButtonContainer">
 														<span class="icon icon16 icon-check{if $childMenuItem->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $childMenuItem->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$childMenuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
 														<a href="{link controller='PageMenuItemEdit' id=$childMenuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 icon-pencil"></span></a>
-														<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer"  title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$childMenuItem->menuItemID}" data-confirm-message="{lang __menuItem=$childMenuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
+														<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$childMenuItem->menuItemID}" data-confirm-message="{lang __menuItem=$childMenuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
 														
 														{event name='subHeaderItemButtons'}
 													</span>
@@ -106,7 +106,7 @@
 									<span class="statusDisplay sortableButtonContainer">
 										<span class="icon icon16 icon-check{if $menuItem->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $menuItem->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$menuItem->menuItemID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
 										<a href="{link controller='PageMenuItemEdit' id=$menuItem->menuItemID}{/link}" class="jsTooltip" title="{lang}wcf.global.button.edit{/lang}"><span class="icon icon16 icon-pencil"></span></a>
-										<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer"  title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
+										<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menuItem->menuItemID}" data-confirm-message="{lang __menuItem=$menuItem}wcf.acp.pageMenu.delete.sure{/lang}"></span>
 										
 										{event name='footerItemButtons'}
 									</span>

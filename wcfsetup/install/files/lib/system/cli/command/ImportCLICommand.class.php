@@ -56,7 +56,7 @@ class ImportCLICommand implements ICLICommand {
 	
 	/**
 	 * name of the selected
-	 * @var string
+	 * @var	string
 	 */
 	public $exporterName = '';
 	

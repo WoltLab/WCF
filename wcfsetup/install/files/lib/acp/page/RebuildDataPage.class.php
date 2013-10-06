@@ -27,7 +27,7 @@ class RebuildDataPage extends AbstractPage {
 	
 	/**
 	 * object types
-	 * @var array
+	 * @var	array
 	 */
 	public $objectTypes = array();
 	

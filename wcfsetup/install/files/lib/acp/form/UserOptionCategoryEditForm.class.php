@@ -25,7 +25,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	
 	/**
 	 * category id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $categoryID = 0;
 	
@@ -36,7 +36,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	public $category = null;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -66,7 +66,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -79,7 +79,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

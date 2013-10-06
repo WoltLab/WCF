@@ -79,43 +79,43 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * registration start date
-	 * @var string
+	 * @var	string
 	 */
 	public $registrationDateEnd = '';
 	
 	/**
 	 * banned state
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $banned = 0;
 	
 	/**
 	 * not banned state
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $notBanned = 0;
 	
 	/**
 	 * last activity start time
-	 * @var string
+	 * @var	string
 	 */
 	public $lastActivityTimeStart = '';
 	
 	/**
 	 * last activity end time
-	 * @var string
+	 * @var	string
 	 */
 	public $lastActivityTimeEnd = '';
 	
 	/**
 	 * enabled state
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $enabled = 0;
 	
 	/**
 	 * disabled state
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $disabled = 0;
 	
@@ -168,15 +168,15 @@ class UserSearchForm extends UserOptionListForm {
 	public $maxResults = 0;
 	
 	/**
-	 * @see wcf\page\IPage::readParameters()
+	 * @see	wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		// search user from passed groupID by group-view
 		if (isset($_GET['groupID'])) {
 			$this->groupIDs[] = intval($_GET['groupID']);
-				
+			
 			// do search
 			try {
 				$this->validate();

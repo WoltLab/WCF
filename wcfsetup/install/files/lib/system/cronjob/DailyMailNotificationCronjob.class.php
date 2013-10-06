@@ -31,7 +31,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		
 		// get user ids
 		$userIDs = array();
-		$sql = "SELECT 	DISTINCT notification_to_user.userID
+		$sql = "SELECT	DISTINCT notification_to_user.userID
 			FROM	wcf".WCF_N."_user_notification_to_user notification_to_user,
 				wcf".WCF_N."_user_notification notification
 			WHERE	notification.notificationID = notification_to_user.notificationID

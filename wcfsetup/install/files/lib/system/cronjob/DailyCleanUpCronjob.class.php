@@ -23,7 +23,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		parent::execute($cronjob);
 		
 		// clean up search keywords
-		$sql = "SELECT 	AVG(searches) AS searches
+		$sql = "SELECT	AVG(searches) AS searches
 			FROM	wcf".WCF_N."_search_keyword";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();

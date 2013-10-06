@@ -479,7 +479,7 @@ class PackageInstallationScheduler {
 			WHERE		puf.packageUpdateVersionID IN (
 						SELECT	packageUpdateVersionID
 						FROM	wcf".WCF_N."_package_update_version
-						WHERE 	packageUpdateID IN (
+						WHERE	packageUpdateID IN (
 							SELECT	packageUpdateID
 							FROM	wcf".WCF_N."_package_update
 							WHERE	package = ?

@@ -87,7 +87,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * holds state of structuring version tables
-	 * @var boolean
+	 * @var	boolean
 	 */
 	protected $requireRestructureVersionTables = false;
 	

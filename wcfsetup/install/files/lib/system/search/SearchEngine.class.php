@@ -166,7 +166,7 @@ class SearchEngine extends SingletonFactory {
 							'".$objectTypeName."' AS objectType
 							".($relevanceCalc ? ',search_index.relevance' : '')."
 					FROM		".$objectType->getTableName()."
-					INNER JOIN 	(
+					INNER JOIN	(
 								SELECT		objectID
 										".($relevanceCalc ? ','.$relevanceCalc : '')."
 								FROM		wcf".WCF_N."_search_index
@@ -176,7 +176,7 @@ class SearchEngine extends SingletonFactory {
 								".(!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY '.$orderBy : '')."
 								LIMIT		1000
 							) search_index
-					ON 		(".$objectType->getIDFieldName()." = search_index.objectID)
+					ON		(".$objectType->getIDFieldName()." = search_index.objectID)
 					".$objectType->getJoins()."
 					".(isset($additionalConditions[$objectTypeName]) ? $additionalConditions[$objectTypeName] : '')."
 				)";

@@ -731,7 +731,7 @@ final class StringUtil {
 	
 	/**
 	 * Generates an anchor tag from given URL.
-	 *  
+	 * 
 	 * @param	string		$url
 	 * @param	string		$title
 	 * @param	boolean		$encodeTitle
@@ -773,7 +773,7 @@ final class StringUtil {
 	/**
 	 * Simple multi-byte safe wordwrap() function.
 	 * 
-	 * @param 	string		$string
+	 * @param	string		$string
 	 * @param	integer		$width
 	 * @param	string		$break
 	 * @return	string

@@ -23,19 +23,19 @@ use wcf\system\WCF;
 class IndexPage extends AbstractPage {
 	/**
 	 * server information
-	 * @var array
+	 * @var	array
 	 */
 	public $server = array();
 	
 	/**
-	 * @see wcf\page\IPage::readData()
+	 * @see	wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		$this->server = array(
 			'os' => PHP_OS,
-			'webserver' => (isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : ''),		
+			'webserver' => (isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : ''),
 			'mySQLVersion' => WCF::getDB()->getVersion(),
 			'load' => ''
 		);
@@ -50,7 +50,7 @@ class IndexPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

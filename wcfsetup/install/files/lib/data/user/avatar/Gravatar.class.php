@@ -38,7 +38,7 @@ class Gravatar extends DefaultAvatar {
 	
 	/**
 	 * user id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $userID = 0;
 	

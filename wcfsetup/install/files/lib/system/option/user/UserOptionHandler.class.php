@@ -31,13 +31,13 @@ class UserOptionHandler extends OptionHandler {
 	
 	/**
 	 * true, if within edit mode
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $editMode = true;
 	
 	/**
 	 * true, if within search mode
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $searchMode = false;
 	

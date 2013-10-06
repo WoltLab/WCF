@@ -21,19 +21,19 @@ use wcf\util\StringUtil;
 class GravatarDownloadAction extends AbstractAction {
 	/**
 	 * user id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $userID = 0;
 	
 	/**
 	 * user object
-	 * @var wcf\data\user\User
+	 * @var	wcf\data\user\User
 	 */
 	public $user = null;
 	
 	/**
 	 * avatar size
-	 * @var integer
+	 * @var	integer
 	 */
 	public $size = 150;
 	

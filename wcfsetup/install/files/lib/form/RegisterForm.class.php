@@ -77,7 +77,7 @@ class RegisterForm extends UserAddForm {
 	
 	/**
 	 * field names
-	 * @var array
+	 * @var	array
 	 */
 	public $randomFieldNames = array();
 	

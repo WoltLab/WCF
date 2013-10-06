@@ -24,22 +24,22 @@ class TemplateGroupListPage extends SortablePage {
 	public $neededPermissions = array('admin.template.canManageTemplate');
 	
 	/**
-	 * @see wcf\page\SortablePage::$defaultSortField
+	 * @see	wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'templateGroupName';
 	
 	/**
-	 * @see wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\template\group\TemplateGroupList';
 	
 	/**
-	 * @see wcf\page\SortablePage::$defaultSortField
+	 * @see	wcf\page\SortablePage::$defaultSortField
 	 */
 	public $validSortFields = array('templateGroupID', 'templateGroupName', 'templateGroupFolderName', 'templates');
 	
 	/**
-	 * @see wcf\page\MultipleLinkPage::initObjectList
+	 * @see	wcf\page\MultipleLinkPage::initObjectList
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();

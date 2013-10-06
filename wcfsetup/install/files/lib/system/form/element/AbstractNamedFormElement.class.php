@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
 abstract class AbstractNamedFormElement extends AbstractFormElement {
 	/**
 	 * element description
-	 * @var string
+	 * @var	string
 	 */
 	protected $description = '';
 	

@@ -27,25 +27,25 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	
 	/**
 	 * list of available importers
-	 * @var array
+	 * @var	array
 	 */
 	protected $objectTypes = array();
 	
 	/**
 	 * list of available importer processors
-	 * @var array
+	 * @var	array
 	 */
 	protected $importers = array();
 	
 	/**
 	 * user merge mode
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $userMergeMode = 2;
 	
 	/**
 	 * import hash
-	 * @var string
+	 * @var	string
 	 */
 	protected $importHash = '';
 	
@@ -56,7 +56,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	public static $allowInvoke = array('resetMapping');
 	
 	/**
-	 * @see wcf\system\SingletonFactory::init()
+	 * @see	wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.importer');
@@ -167,9 +167,9 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	}
 	
 	/**
-	 * Gets the user merge mode.
+	 * Returns the user merge mode.
 	 * 
-	 * @return integer
+	 * @return	integer
 	 */
 	public function getUserMergeMode() {
 		return $this->userMergeMode;
@@ -177,7 +177,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	
 	/**
 	 * Sets the import hash.
-	 *
+	 * 
 	 * @param	string		$hash
 	 */
 	public function setImportHash($hash) {

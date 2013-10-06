@@ -55,14 +55,14 @@ class SearchResultPage extends MultipleLinkPage {
 	public $searchData = null;
 	
 	/**
-	 *  result list template
-	 * @var string
+	 * result list template
+	 * @var	string
 	 */
 	public $resultListTemplateName = 'searchResultList';
 	
 	/**
 	 * result list template's application
-	 * @var string
+	 * @var	string
 	 */
 	public $resultListApplication = 'wcf';
 	

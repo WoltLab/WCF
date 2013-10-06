@@ -85,10 +85,10 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 			$conditionBuilder->add('object.objectTypeID IN (?)', array($this->objectTypeIDs));
 			$conditionBuilder->add('object.languageID IN (?)', array($this->languageIDs));
 			$sql = "SELECT		COUNT(*) AS counter, object.tagID
-				FROM 		wcf".WCF_N."_tag_to_object object
+				FROM		wcf".WCF_N."_tag_to_object object
 				".$conditionBuilder->__toString()."
-				GROUP BY 	object.tagID
-				ORDER BY 	counter DESC";
+				GROUP BY	object.tagID
+				ORDER BY	counter DESC";
 			$statement = WCF::getDB()->prepareStatement($sql, 500);
 			$statement->execute($conditionBuilder->getParameters());
 			while ($row = $statement->fetchArray()) {

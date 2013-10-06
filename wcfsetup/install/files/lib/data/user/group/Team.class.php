@@ -15,13 +15,13 @@ use wcf\data\DatabaseObjectDecorator;
  */
 class Team extends DatabaseObjectDecorator {
 	/**
-	 * @see wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\group\UserGroup';
 	
 	/**
 	 * list of user group members
-	 * @var array<wcf\data\user\UserProfile>
+	 * @var	array<wcf\data\user\UserProfile>
 	 */
 	protected $members = array();
 	

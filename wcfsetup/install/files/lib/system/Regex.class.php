@@ -70,7 +70,7 @@ final class Regex {
 	
 	/**
 	 * indicates that pattern string is treated as UTF-8.
-	 * @var integer
+	 * @var	integer
 	 */
 	const UTF_8 = 128;
 	

@@ -58,7 +58,7 @@ abstract class Database {
 	
 	/**
 	 * enables failsafe connection
-	 * @var boolean
+	 * @var	boolean
 	 */
 	protected $failsafeTest = false;
 	

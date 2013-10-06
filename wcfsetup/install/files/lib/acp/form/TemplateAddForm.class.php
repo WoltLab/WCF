@@ -36,43 +36,43 @@ class TemplateAddForm extends AbstractForm {
 	
 	/**
 	 * template name
-	 * @var string
+	 * @var	string
 	 */
 	public $tplName = '';
 	
 	/**
 	 * template group id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $templateGroupID = 0;
 	
 	/**
 	 * template source code
-	 * @var string
+	 * @var	string
 	 */
 	public $templateSource = '';
 	
 	/**
 	 * available template groups
-	 * @var array
+	 * @var	array
 	 */
 	public $availableTemplateGroups = array();
 	
 	/**
 	 * template's package id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $packageID = 1;
 	
 	/**
 	 * id of copied template
-	 * @var integer
+	 * @var	integer
 	 */
 	public $copy = 0;
 	
 	/**
 	 * copied template object
-	 * @var wcf\data\template\Template
+	 * @var	wcf\data\template\Template
 	 */
 	public $copiedTemplate = null;
 	

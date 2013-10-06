@@ -50,31 +50,31 @@ class TemplateListPage extends SortablePage {
 	
 	/**
 	 * template group id
-	 * @var integer
+	 * @var	integer
 	 */
 	public $templateGroupID = 0;
 	
 	/**
 	 * template name
-	 * @var string
+	 * @var	string
 	 */
 	public $searchTemplateName = '';
 	
 	/**
 	 * application
-	 * @var string
+	 * @var	string
 	 */
 	public $application = '';
 	
 	/**
 	 * available template groups
-	 * @var array
+	 * @var	array
 	 */
 	public $availableTemplateGroups = array();
 	
 	/**
 	 * available applications
-	 * @var array
+	 * @var	array
 	 */
 	public $availableApplications = array();
 	
@@ -83,7 +83,7 @@ class TemplateListPage extends SortablePage {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		if (isset($_REQUEST['templateGroupID'])) $this->templateGroupID = intval($_REQUEST['templateGroupID']);
 		if (isset($_REQUEST['searchTemplateName'])) $this->searchTemplateName = StringUtil::trim($_REQUEST['searchTemplateName']);
 		if (isset($_REQUEST['application'])) $this->application = StringUtil::trim($_REQUEST['application']);

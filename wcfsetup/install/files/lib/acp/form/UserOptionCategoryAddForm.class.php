@@ -30,13 +30,13 @@ class UserOptionCategoryAddForm extends AbstractForm {
 	
 	/**
 	 * category name
-	 * @var string
+	 * @var	string
 	 */
 	public $categoryName = '';
 	
 	/**
 	 * show order
-	 * @var integer
+	 * @var	integer
 	 */
 	public $showOrder = 0;
 	

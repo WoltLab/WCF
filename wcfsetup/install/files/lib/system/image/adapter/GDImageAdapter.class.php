@@ -205,7 +205,7 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see wcf\system\image\adapter\IImageAdapter::setTransparentColor()
+	 * @see	wcf\system\image\adapter\IImageAdapter::setTransparentColor()
 	 */
 	public function setTransparentColor($red, $green, $blue) {
 		if ($this->type == IMAGETYPE_PNG) {

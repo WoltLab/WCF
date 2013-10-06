@@ -98,37 +98,37 @@ class UserAddForm extends UserOptionListForm {
 	
 	/**
 	 * signature text
-	 * @var string
+	 * @var	string
 	 */
 	public $signature = '';
 	
 	/**
 	 * enables smilies
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $signatureEnableSmilies = 1;
 	
 	/**
 	 * enables bbcodes
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $signatureEnableBBCodes = 1;
 	
 	/**
 	 * enables html
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $signatureEnableHtml = 0;
 	
 	/**
 	 * true to disable this signature
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $disableSignature = 0;
 	
 	/**
 	 * reason
-	 * @var string
+	 * @var	string
 	 */
 	public $disableSignatureReason = '';
 	

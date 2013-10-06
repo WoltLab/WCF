@@ -32,103 +32,103 @@ class UserOptionAddForm extends AbstractForm {
 	
 	/**
 	 * option name
-	 * @var string
+	 * @var	string
 	 */
 	public $optionName = '';
 	
 	/**
 	 * option description
-	 * @var string
+	 * @var	string
 	 */
 	public $optionDescription = '';
 	
 	/**
 	 * category name
-	 * @var string
+	 * @var	string
 	 */
 	public $categoryName = '';
 	
 	/**
 	 * option type
-	 * @var string
+	 * @var	string
 	 */
 	public $optionType = 'text';
 	
 	/**
 	 * option default value
-	 * @var string
+	 * @var	string
 	 */
 	public $defaultValue = '';
 	
 	/**
 	 * validation pattern
-	 * @var string
+	 * @var	string
 	 */
 	public $validationPattern = '';
 	
 	/**
 	 * select options
-	 * @var string
+	 * @var	string
 	 */
 	public $selectOptions = '';
 	
 	/**
 	 * field is required
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $required = 0;
 	
 	/**
 	 * shows this field in the registration process 
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $askDuringRegistration = 0;
 	
 	/**
 	 * edit permission bitmask
-	 * @var integer
+	 * @var	integer
 	 */
 	public $editable = 3;
 	
 	/**
 	 * view permission bitmask
-	 * @var integer
+	 * @var	integer
 	 */
 	public $visible = 15;
 	
 	/**
 	 * field is searchable
-	 * @var boolean
+	 * @var	boolean
 	 */
 	public $searchable = 0;
 	
 	/**
 	 * show order
-	 * @var integer
+	 * @var	integer
 	 */
 	public $showOrder = 0;
 	
 	/**
 	 * output class
-	 * @var string
+	 * @var	string
 	 */
 	public $outputClass = '';
 	
 	/**
 	 * available option categories
-	 * @var array<wcf\data\user\option\UserOptionCategory>
+	 * @var	array<wcf\data\user\option\UserOptionCategory>
 	 */
 	public $availableCategories = array();
 	
 	/**
 	 * available option types
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	public static $availableOptionTypes = array('birthday', 'boolean', 'date', 'integer', 'float', 'password', 'multiSelect', 'radioButton', 'select', 'text', 'textarea', 'message', 'URL');
 	
 	/**
 	 * list of option type that require select options
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	public static $optionTypesUsingSelectOptions = array('multiSelect', 'radioButton', 'select');
 	
@@ -149,7 +149,7 @@ class UserOptionAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::readFormParameters()
+	 * @see	wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -180,7 +180,7 @@ class UserOptionAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\form\IForm::validate()
+	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -272,7 +272,7 @@ class UserOptionAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see wcf\page\IPage::assignVariables()
+	 * @see	wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

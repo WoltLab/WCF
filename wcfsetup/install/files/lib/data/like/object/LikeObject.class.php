@@ -28,7 +28,7 @@ class LikeObject extends DatabaseObject {
 	
 	/**
 	 * liked object
-	 * @var wcf\data\like\object\ILikeObject
+	 * @var	wcf\data\like\object\ILikeObject
 	 */
 	protected $likedObject = null;
 	

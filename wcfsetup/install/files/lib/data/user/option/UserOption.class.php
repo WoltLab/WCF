@@ -17,61 +17,61 @@ use wcf\system\WCF;
 class UserOption extends Option {
 	/**
 	 * visible for no one (no valid bit)
-	 * @var integer
+	 * @var	integer
 	 */
 	const VISIBILITY_NONE = 0;
 	
 	/**
 	 * visible for the owner
-	 * @var integer
+	 * @var	integer
 	 */
 	const VISIBILITY_OWNER = 1;
 	
 	/**
 	 * visible for admins
-	 * @var integer
+	 * @var	integer
 	 */
 	const VISIBILITY_ADMINISTRATOR = 2;
 	
 	/**
 	 * visible for users
-	 * @var integer
+	 * @var	integer
 	 */
 	const VISIBILITY_REGISTERED = 4;
 	
 	/**
 	 * visible for guests
-	 * @var integer
+	 * @var	integer
 	 */
 	const VISIBILITY_GUEST = 8;
 	
 	/**
 	 * visible for all (no valid bit)
-	 * @var integer
+	 * @var	integer
 	 */
 	const VISIBILITY_ALL = 15;
 	
 	/**
 	 * editable for no one (no valid bit)
-	 * @var integer
+	 * @var	integer
 	 */
 	const EDITABILITY_NONE = 0;
 	
 	/**
 	 * editable for the owner
-	 * @var integer
+	 * @var	integer
 	 */
 	const EDITABILITY_OWNER = 1;
 	
 	/**
 	 * editable for admins
-	 * @var integer
+	 * @var	integer
 	 */
 	const EDITABILITY_ADMINISTRATOR = 2;
 	
 	/**
 	 * editable for all (no valid bit)
-	 * @var integer
+	 * @var	integer
 	 */
 	const EDITABILITY_ALL = 3;
 	

@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  */
 class PreParserAtUserListener implements IEventListener {
 	/**
-	 * @see wcf\system\event\IEventListener::execute()
+	 * @see	wcf\system\event\IEventListener::execute()
 	 */
 	public function execute($eventObj, $className, $eventName) {
 		if (!$eventObj->text) return;

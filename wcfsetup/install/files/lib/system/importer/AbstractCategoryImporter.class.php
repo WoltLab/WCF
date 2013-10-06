@@ -14,24 +14,24 @@ use wcf\data\category\CategoryEditor;
  */
 class AbstractCategoryImporter extends AbstractImporter {
 	/**
-	 * @see wcf\system\importer\AbstractImporter::$className
+	 * @see	wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\category\Category';
 	
 	/**
 	 * object type id for categories
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $objectTypeID = 0;
 	
 	/**
 	 * object type name
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $objectTypeName = '';
 	
 	/**
-	 * @see wcf\system\importer\IImporter::import()
+	 * @see	wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		if (!empty($data['parentCategoryID'])) $data['parentCategoryID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['parentCategoryID']);
