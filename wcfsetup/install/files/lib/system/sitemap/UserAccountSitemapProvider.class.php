@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\sitemap;
-use wcf\system\sitemap\ISitemapProvider;
 use wcf\system\WCF;
 
 /**
