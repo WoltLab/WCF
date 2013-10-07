@@ -38,7 +38,7 @@
 	{/hascontent}
 </div>
 
-<form method="post" action="{link controller='Login'}{/link}" id="loginForm">
+<form method="post" action="{@$loginController}" id="loginForm">
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.user.login.data{/lang}</legend>

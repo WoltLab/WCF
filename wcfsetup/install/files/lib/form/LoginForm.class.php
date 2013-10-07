@@ -86,7 +86,8 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 		
 		WCF::getTPL()->assign(array(
 			'useCookies' => $this->useCookies,
-			'supportsPersistentLogins' => UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins()
+			'supportsPersistentLogins' => UserAuthenticationFactory::getInstance()->getUserAuthentication()->supportsPersistentLogins(),
+			'loginController' => LinkHandler::getInstance()->getLink('Login')
 		));
 	}
 	
