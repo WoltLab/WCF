@@ -38,13 +38,15 @@
 			{hascontent}
 				<dl class="plain inlineDataList userFields">
 					{content}
-						{if $user->occupation}
-							<dt>{lang}wcf.user.option.occupation{/lang}</dt>
-							<dd>{$user->occupation}</dd>
-						{/if}
-						{if $user->hobbies}
-							<dt>{lang}wcf.user.option.hobbies{/lang}</dt>
-							<dd>{$user->hobbies}</dd>
+						{if $user->isAccessible('canViewProfile')}
+							{if $user->occupation}
+								<dt>{lang}wcf.user.option.occupation{/lang}</dt>
+								<dd>{$user->occupation}</dd>
+							{/if}
+							{if $user->hobbies}
+								<dt>{lang}wcf.user.option.hobbies{/lang}</dt>
+								<dd>{$user->hobbies}</dd>
+							{/if}
 						{/if}
 						{event name='userFields'}
 					{/content}
