@@ -1187,12 +1187,20 @@
 		&.doubleColumned {
 			> li {
 				width: 50%;
+				
+				&:nth-child(odd):not(:first-child) {
+					clear: left;
+				}
 			}
 		}
 		
 		&.tripleColumned {
 			> li {
 				width: 33%;
+				
+				&:nth-child(3n+1):not(:first-child) {
+					clear: left;
+				}
 			}
 		}
 	}
