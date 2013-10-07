@@ -35,6 +35,9 @@ class MessageUtil {
 		// remove emoji (MySQL 5.1 does not support them)
 		$text = preg_replace('~\xF0\x9F[\x80-\xBF][\x80-\xBF]~', '', $text);
 		
+		// remove control characters
+		$text = preg_replace('~[\x00-\x08\x0B-\x1F\x7F]~', '', $text);
+		
 		return $text;
 	}
 	
