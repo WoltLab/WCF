@@ -87,9 +87,7 @@
 	padding-bottom: @wcfGapSmall;
 		
 	> li {
-		float: left;
 		min-height: 60px;
-		width: 33%;
 		
 		> div {
 			> div {
@@ -114,6 +112,15 @@
 					display: inline-block;
 				}
 			}
+		}
+	}
+}
+
+@media only screen and (min-width: 801px) {
+	.formAttachmentList {
+		> li {
+			float: left;
+			width: 33%;
 		}
 	}
 }
