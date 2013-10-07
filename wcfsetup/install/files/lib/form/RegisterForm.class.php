@@ -73,7 +73,7 @@ class RegisterForm extends UserAddForm {
 	 * enable recaptcha
 	 * @var	boolean
 	 */
-	public $useCaptcha = true;
+	public $useCaptcha = REGISTER_USE_CAPTCHA;
 	
 	/**
 	 * field names
@@ -109,7 +109,7 @@ class RegisterForm extends UserAddForm {
 			exit;
 		}
 		
-		if (!REGISTER_USE_CAPTCHA || WCF::getSession()->getVar('recaptchaDone')) {
+		if (!MODULE_SYSTEM_RECAPTCHA || WCF::getSession()->getVar('recaptchaDone')) {
 			$this->useCaptcha = false;
 		}
 		
