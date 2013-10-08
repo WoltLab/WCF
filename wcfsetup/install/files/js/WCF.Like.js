@@ -213,8 +213,8 @@ WCF.Like = Class.extend({
 		if (!this._enableDislikes) $dislikeButton.hide();
 		
 		if (!this._allowForOwnContent && (WCF.User.userID == this._containers[containerID].data('userID'))) {
-			$likeButton.hide();
-			$dislikeButton.hide();
+			$likeButton = $('');
+			$dislikeButton = $('');
 		}
 		
 		var $badge = $('<a class="badge jsTooltip likesBadge" />').data('containerID', containerID).click($.proxy(this._showLikeDetails, this));
