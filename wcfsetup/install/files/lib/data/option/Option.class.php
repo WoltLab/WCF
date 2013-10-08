@@ -175,4 +175,13 @@ class Option extends DatabaseObject {
 	public function getConstantName() {
 		return strtoupper($this->optionName);
 	}
+	
+	/**
+	 * Allows modifications of select options.
+	 * 
+	 * @param	string		$selectOptions
+	 */
+	public function modifySelectOptions($selectOptions) {
+		$this->data['selectOptions'] = $selectOptions;
+	}
 }

@@ -5,6 +5,7 @@ use wcf\data\option\Option;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\event\EventHandler;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
@@ -393,6 +394,9 @@ class OptionHandler implements IOptionHandler {
 		$this->cachedOptions = $cache->getData(array(), 'options');
 		$this->cachedCategoryStructure = $cache->getData(array(), 'categoryStructure');
 		$this->cachedOptionToCategories = $cache->getData(array(), 'optionToCategories');
+		
+		// allow option manipulation
+		EventHandler::getInstance()->fireAction($this, 'afterReadCache');
 	}
 	
 	/**
