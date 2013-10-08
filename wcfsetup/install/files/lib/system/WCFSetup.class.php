@@ -1169,6 +1169,7 @@ class WCFSetup extends WCF {
 		
 		SessionHandler::getInstance()->changeUser($admin);
 		SessionHandler::getInstance()->register('masterPassword', 1);
+		SessionHandler::getInstance()->register('__wcfSetup_developerMode', (self::debugModeIsEnabled() ? 1 : 0));
 		SessionHandler::getInstance()->update();
 		
 		$installPhpDeleted = @unlink('./install.php');
