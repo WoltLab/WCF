@@ -705,6 +705,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private API Key]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Create thumbnails for uploaded images]]></item>
+		<item name="wcf.acp.option.attachment_obtain_dimensions"><![CDATA[Obtain thumbnail dimensions]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Thumbnail Height in Pixel]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Thumbnail Width in Pixel]]></item>
 		<item name="wcf.acp.option.attachment_storage"><![CDATA[Storage Location]]></item>
