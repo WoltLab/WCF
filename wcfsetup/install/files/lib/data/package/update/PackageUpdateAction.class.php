@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\package\update;
+use wcf\data\package\Package;
+
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\update\server\PackageUpdateServer;
@@ -106,6 +108,24 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			);
 		}
 		
+		// get excluded packages
+		$sql = "SELECT	excludedPackage, excludedPackageVersion
+			FROM	wcf".WCF_N."_package_exclusion";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		$excludedPackages = array();
+		while ($row = $statement->fetchArray()) {
+			$package = $row['excludedPackage'];
+			$packageVersion = $row['excludedPackageVersion'];
+			
+			if (!isset($excludedPackages[$package])) {
+				$excludedPackages[$package] = $packageVersion;
+			}
+			else if (Package::compareVersion($excludedPackages[$package], $packageVersion) == 1) {
+				$excludedPackages[$package] = $packageVersion;
+			}
+		}
+		
 		// filter by version
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("puv.packageUpdateID IN (?)", array($packageUpdateIDs));
@@ -119,6 +139,14 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		$packageVersions = array();
 		while ($row = $statement->fetchArray()) {
 			$package = $row['package'];
+			$packageVersion = $row['packageVersion'];
+			
+			// check excluded packages
+			if (isset($excludedPackages[$package]) && Package::compareVersion($excludedPackages[$package], $packageVersion) <= 0) {
+				// excluded, ignore
+				continue;
+			}
+			
 			if (!isset($packageVersions[$package])) {
 				$packageVersions[$package] = array();
 			}
@@ -132,9 +160,23 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			}
 			
 			if ($row['isAccessible']) {
-				$packageVersions[$package][$packageUpdateID]['accessible'][$row['packageUpdateVersionID']] = $row['packageVersion'];
+				$packageVersions[$package][$packageUpdateID]['accessible'][$row['packageUpdateVersionID']] = $packageVersion;
 			}
-			$packageVersions[$package][$packageUpdateID]['existing'][$row['packageUpdateVersionID']] = $row['packageVersion'];
+			$packageVersions[$package][$packageUpdateID]['existing'][$row['packageUpdateVersionID']] = $packageVersion;
+		}
+		
+		// all found versions are excluded
+		if (empty($packageVersions)) {
+			WCF::getTPL()->assign(array(
+				'packageUpdates' => array()
+			));
+			
+			return array(
+				'count' => 0,
+				'pageCount' => 0,
+				'searchID' => 0,
+				'template' => WCF::getTPL()->fetch('packageSearchResultList')
+			);
 		}
 		
 		// determine highest versions
