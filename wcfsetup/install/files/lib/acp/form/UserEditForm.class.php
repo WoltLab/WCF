@@ -28,9 +28,9 @@ use wcf\util\StringUtil;
  */
 class UserEditForm extends UserAddForm {
 	/**
-	 * @see	wcf\acp\form\UserAddForm::$menuItemName
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $menuItemName = 'wcf.acp.menu.link.user.management';
+	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions

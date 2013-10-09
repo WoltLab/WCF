@@ -6,7 +6,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
 use wcf\system\wcf;
 use wcf\util\ArrayUtil;
@@ -25,10 +24,9 @@ use wcf\util\StringUtil;
  */
 class UserSearchForm extends UserOptionListForm {
 	/**
-	 * active menu item name
-	 * @var	string
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $menuItemName = 'wcf.acp.menu.link.user.search';
+	public $activeMenuItem = 'wcf.acp.menu.link.user.search';
 	
 	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
@@ -270,17 +268,6 @@ class UserSearchForm extends UserOptionListForm {
 			'disabled' => $this->disabled,
 			'columnOptions' => $this->optionHandler->getCategoryOptions('profile')
 		));
-	}
-	
-	/**
-	 * @see	wcf\form\IForm::show()
-	 */
-	public function show() {
-		// set active menu item
-		ACPMenu::getInstance()->setActiveMenuItem($this->menuItemName);
-		
-		// show form
-		parent::show();
 	}
 	
 	/**
