@@ -48,6 +48,9 @@
 					<category name="general.system.proxy">
 						<parent>general.system</parent>
 					</category>
+					<category name="general.system.networkInterface">
+						<parent>general.system</parent>
+					</category>
 					<category name="general.system.image">
 						<parent>general.system</parent>
 					</category>
@@ -437,6 +440,13 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			<!-- general.system.proxy -->
 			<option name="proxy_server_http">
 				<categoryname>general.system.proxy</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<!-- /general.system.proxy -->
+			
+			<!-- general.system.proxy -->
+			<option name="network_interface">
+				<categoryname>general.system.networkInterface</categoryname>
 				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.system.proxy -->

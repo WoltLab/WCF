@@ -49,9 +49,22 @@ class RemoteFile extends File {
 		$this->host = $host;
 		$this->port = $port;
 		
-		$this->resource = @fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout);
+		if (NETWORK_INTERFACE != '' && function_exists('stream_context_create') && function_exists('stream_socket_client')) {
+			$options = array(
+				'socket' => array(
+					'bindto' => NETWORK_INTERFACE
+				)
+			);
+			
+			$context = @stream_context_create($options);
+			$this->resource = @stream_socket_client($this->host . ':' . $this->port, $this->errorNumber,
+				$this->errorDesc, $timeout, STREAM_CLIENT_CONNECT, $context);
+		} else {
+			$this->resource = @fsockopen($this->host, $this->port, $this->errorNumber, $this->errorDesc, $timeout);
+		}
+
 		if ($this->resource === false) {
-			throw new SystemException('Can not connect to ' . $host, 0, $this->errorDesc);
+			throw new SystemException('Can not connect to ' . $this->host . ':' . $this->port, 0, $this->errorDesc);
 		}
 	}
 	

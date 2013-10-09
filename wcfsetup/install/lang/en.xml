@@ -583,6 +583,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy-Server]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Optionally provide a Proxy-Server for outgoing connections.]]></item>
+		<item name="wcf.acp.option.category.general.system.networkInterface"><![CDATA[Interface address]]></item>
+		<item name="wcf.acp.option.category.general.system.networkInterface.description"><![CDATA[Here you may configure the network-interface which is used to connect to external servers. Enter the IP-address (IPv4 or IP v6) and/or the port of the interface which shall be used. If you enter port 0, the system will set the port automatically.]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[Emails]]></item>
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Sending]]></item>
@@ -663,6 +665,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.page_description"><![CDATA[Page Description]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Page Title]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
+		<item name="wcf.acp.option.network_interface"><![CDATA[Network interface]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Session Timeout]]></item>
 		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Timeout in seconds]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[Validate IP address]]></item>
