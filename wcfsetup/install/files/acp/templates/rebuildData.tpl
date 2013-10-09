@@ -1,5 +1,13 @@
 {include file='header' pageTitle='wcf.acp.rebuildData'}
 
+<script data-relocate="true">
+	//<![CDATA[
+		$(function() {
+			WCF.Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
+		});
+	//]]>
+</script>
+
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.rebuildData{/lang}</h1>
 </header>
