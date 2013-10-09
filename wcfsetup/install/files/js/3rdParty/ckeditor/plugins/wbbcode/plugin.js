@@ -244,7 +244,7 @@
 		var $cachedCodes = { };
 		data = data.replace(/\[code(.+?)\[\/code]/gi, function(match) {
 			var $key = match.hashCode();
-			$cachedCodes[$key] = match;
+			$cachedCodes[$key] = match.replace(/\$/g, '$$$$');
 			return '@@' + $key + '@@';
 		});
 		
