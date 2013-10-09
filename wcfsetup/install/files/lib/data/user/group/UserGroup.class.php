@@ -251,7 +251,7 @@ class UserGroup extends DatabaseObject {
 	/**
 	 * Sets the name of this user group.
 	 * 
-	 * This method is only needed to set the current name of it has been changed
+	 * This method is only needed to set the current name if it has been changed
 	 * in the same request.
 	 * 
 	 * @param	string		$name
