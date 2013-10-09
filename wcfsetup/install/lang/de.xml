@@ -706,6 +706,7 @@
 		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private-API-Key]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Vorschaugrafiken von hochgeladenen Bilder erzeugen]]></item>
+		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von Vorschaugrafiken beibehalten]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Höhe der Vorschaugrafiken]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Breite der Vorschaugrafiken]]></item>
 		<item name="wcf.acp.option.attachment_storage"><![CDATA[Speicherort der Dateianhänge]]></item>
