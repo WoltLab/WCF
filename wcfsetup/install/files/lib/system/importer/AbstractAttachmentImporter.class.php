@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\SystemException;
 use wcf\util\StringUtil;
@@ -47,6 +48,12 @@ class AbstractAttachmentImporter extends AbstractImporter {
 		
 		// get user id
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
+		
+		// check existing attachment id
+		if (is_numeric($oldID)) {
+			$attachment = new Attachment($oldID);
+			if (!$attachment->attachmentID) $data['attachmentID'] = $oldID;
+		}
 		
 		// save attachment
 		$attachment = AttachmentEditor::create(array_merge($data, array('objectTypeID' => $this->objectTypeID)));
