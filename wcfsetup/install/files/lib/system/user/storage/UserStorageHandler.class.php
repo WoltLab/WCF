@@ -102,9 +102,6 @@ class UserStorageHandler extends SingletonFactory {
 		}
 		
 		$this->cache[$userID][$field] = $fieldValue;
-		
-		// flag key as outdated
-		self::reset(array($userID), $field);
 	}
 	
 	/**
@@ -165,18 +162,35 @@ class UserStorageHandler extends SingletonFactory {
 		
 		// insert data
 		if (!empty($this->updateFields)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_user_storage
-						(userID, field, fieldValue)
-				VALUES		(?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			
+			// exclude values which should be resetted
 			foreach ($this->updateFields as $userID => $fieldValues) {
-				foreach ($fieldValues as $field => $fieldValue) {
-					$statement->execute(array(
-						$userID,
-						$field,
-						$fieldValue
-					));
+				if (isset($this->resetFields[$userID])) {
+					foreach ($fieldValues as $field => $fieldValue) {
+						if (in_array($field, $this->resetFields[$userID])) {
+							unset($this->updateFields[$userID][$field]);
+						}
+					}
+					
+					if (empty($this->updateFields[$userID])) {
+						unset($this->updateFields[$userID]);
+					}
+				}
+			}
+			
+			if (!empty($this->updateFields)) {
+				$sql = "REPLACE INTO	wcf".WCF_N."_user_storage
+							(userID, field, fieldValue)
+					VALUES		(?, ?, ?)";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				
+				foreach ($this->updateFields as $userID => $fieldValues) {
+					foreach ($fieldValues as $field => $fieldValue) {
+						$statement->execute(array(
+							$userID,
+							$field,
+							$fieldValue
+						));
+					}
 				}
 			}
 		}
