@@ -70,7 +70,14 @@ class LoginForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (!empty($_REQUEST['url'])) $this->url = $_REQUEST['url'];
+		if (!empty($_REQUEST['url'])) {
+			$this->url = StringUtil::trim($_REQUEST['url']);
+				
+			// discard URL if it is not an absolute URL of local content
+			if (!ApplicationHandler::getInstance()->isInternalURL($this->url)) {
+				$this->url = '';
+			}
+		}
 	}
 	
 	/**

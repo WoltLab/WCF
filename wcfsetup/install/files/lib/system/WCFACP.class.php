@@ -83,7 +83,7 @@ class WCFACP extends WCF {
 					$pageURL = $application->getPageURL();
 				}
 				
-				$path = $pageURL . 'acp/index.php/Login/' . SID_ARG_1ST . '&url=' . rawurlencode(WCF::getSession()->requestURI);
+				$path = $pageURL . 'acp/index.php/Login/' . SID_ARG_1ST . '&url=' . rawurlencode(RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . WCF::getSession()->requestURI);
 				
 				HeaderUtil::redirect($path);
 				exit;

@@ -51,7 +51,6 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 		
 		$this->useCookies = 0;
 		if (isset($_POST['useCookies'])) $this->useCookies = intval($_POST['useCookies']);
-		if (isset($_POST['url'])) $this->url = StringUtil::trim($_POST['url']);
 	}
 	
 	/**

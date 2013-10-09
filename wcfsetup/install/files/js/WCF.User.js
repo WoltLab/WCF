@@ -121,6 +121,11 @@ WCF.User.QuickLogin = {
 	 */
 	init: function() {
 		$('.loginLink').click($.proxy(this._render, this));
+		
+		// prepend protocol and hostname
+		$('#loginForm input[name=url]').val(function(index, value) {
+			return window.location.protocol + '//' + window.location.host + value;
+		});
 	},
 	
 	/**
