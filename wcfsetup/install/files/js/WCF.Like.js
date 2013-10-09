@@ -301,6 +301,8 @@ WCF.Like = Class.extend({
 			return;
 		}
 		
+		this._isBusy = true;
+		
 		this._proxy.setOption('data', {
 			actionName: type,
 			className: 'wcf\\data\\like\\LikeAction',
