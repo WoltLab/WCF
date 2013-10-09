@@ -39,7 +39,11 @@ class CacheClearAction extends AbstractAction {
 		CacheHandler::getInstance()->flushAll();
 		
 		$this->executed();
-		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('CacheList'));
+		
+		if (!isset($_POST['noRedirect'])) {
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('CacheList'));
+		}
+		
 		exit;
 	}
 }

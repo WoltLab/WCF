@@ -2177,7 +2177,16 @@ WCF.ACP.Import.Manager = Class.extend({
 			
 			var $form = $('<div class="formSubmit" />').appendTo(this._dialog.find('#workerContainer'));
 			$('<button>' + WCF.Language.get('wcf.global.button.next') + '</button>').click($.proxy(function() {
-				window.location = this._redirectURL;
+				new WCF.Action.Proxy({
+					autoSend: true,
+					data: {
+						noRedirect: 1
+					},
+					success: $.proxy(function() {
+						window.location = this._redirectURL;
+					}, this),
+					url: 'index.php/CacheClear/?t=' + SECURITY_TOKEN + SID_ARG_2ND
+				});
 			}, this)).appendTo($form);
 			
 			this._dialog.wcfDialog('render');
