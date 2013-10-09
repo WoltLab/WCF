@@ -10,7 +10,7 @@
 							{if $attachment->showAsImage() && !$attachment->isEmbedded()}
 								<li class="attachmentThumbnail">
 									{if $attachment->hasThumbnail()}
-										<a href="{link controller='Attachment' object=$attachment}{/link}"{if $attachment->canDownload()} class="jsImageViewer" title="{$attachment->filename}"{/if}><img src="{link controller='Attachment' object=$attachment}thumbnail=1{/link}" alt="" /></a>
+										<a href="{link controller='Attachment' object=$attachment}{/link}"{if $attachment->canDownload()} class="jsImageViewer" title="{$attachment->filename}"{/if}><img src="{link controller='Attachment' object=$attachment}thumbnail=1{/link}" alt="" style="{if $attachment->thumbnailHeight < ATTACHMENT_THUMBNAIL_HEIGHT}margin-top: {@ATTACHMENT_THUMBNAIL_HEIGHT/2-$attachment->thumbnailHeight/2}px; {/if}{if $attachment->thumbnailWidth < ATTACHMENT_THUMBNAIL_WIDTH}margin-left: {@ATTACHMENT_THUMBNAIL_WIDTH/2-$attachment->thumbnailWidth/2}px{/if}" /></a>
 									{else}
 										<img src="{link controller='Attachment' object=$attachment}{/link}" alt="" style="margin-top: {@ATTACHMENT_THUMBNAIL_HEIGHT/2-$attachment->height/2}px; margin-left: {@ATTACHMENT_THUMBNAIL_WIDTH/2-$attachment->width/2}px" />
 									{/if}
