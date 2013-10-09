@@ -49,17 +49,24 @@ class RemoteFile extends File {
 		$this->host = $host;
 		$this->port = $port;
 		
-		if (NETWORK_INTERFACE != '' && function_exists('stream_context_create') && function_exists('stream_socket_client')) {
+		if (NETWORK_INTERFACE_IP != '' && function_exists('stream_context_create') && function_exists('stream_socket_client')) {
+			if (filter_var(NETWORK_INTERFACE_IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
+				$bindTo = '[' . NETWORK_INTERFACE_IP . ']:' . NETWORK_INTERFACE_PORT;
+			}
+			else if (filter_var(NETWORK_INTERFACE_IP, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
+				$bindTo = NETWORK_INTERFACE_IP . ':' . NETWORK_INTERFACE_PORT;
+			}
+			
 			$options = array(
 				'socket' => array(
-					'bindto' => NETWORK_INTERFACE
+					'bindto' => $bindTo
 				)
 			);
 			
 			$context = @stream_context_create($options);
-			$this->resource = @stream_socket_client($this->host . ':' . $this->port, $this->errorNumber,
-				$this->errorDesc, $timeout, STREAM_CLIENT_CONNECT, $context);
-		} else {
+			$this->resource = @stream_socket_client($this->host . ':' . $this->port, $this->errorNumber, $this->errorDesc, $timeout, STREAM_CLIENT_CONNECT, $context);
+		}
+		else {
 			$this->resource = @fsockopen($this->host, $this->port, $this->errorNumber, $this->errorDesc, $timeout);
 		}
 

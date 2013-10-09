@@ -444,12 +444,18 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			</option>
 			<!-- /general.system.proxy -->
 			
-			<!-- general.system.proxy -->
-			<option name="network_interface">
+			<!-- general.system.networkInterface -->
+			<option name="network_interface_ip">
 				<categoryname>general.system.networkInterface</categoryname>
 				<optiontype>text</optiontype>
 			</option>
-			<!-- /general.system.proxy -->
+			<option name="network_interface_port">
+				<categoryname>general.system.networkInterface</categoryname>
+				<optiontype>integer</optiontype>
+				<minvalue>0</minvalue>
+				<maxvalue>65535</maxvalue>
+			</option>
+			<!-- /general.system.networkInterface -->
 			
 			<!-- general.session -->
 			<option name="session_timeout">
