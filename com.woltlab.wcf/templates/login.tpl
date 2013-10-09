@@ -150,7 +150,7 @@
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-		<input type="hidden" name="url" value="{@$url}" />
+		<input type="hidden" name="url" value="{$url}" />
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
