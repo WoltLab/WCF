@@ -418,6 +418,26 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			'imagePath' => $this->styleEditor->imagePath
 		));
 		
+		// check if style description uses i18n
+		if (preg_match('~^wcf.style.styleDescription\d+$~', $newStyle->styleDescription)) {
+			$styleDescription = 'wcf.style.styleDescription'.$newStyle->styleID;
+			
+			// copy language items
+			$sql = "INSERT INTO	wcf".WCF_N."_language_item
+						(languageID, languageItem, languageItemValue, languageItemOriginIsSystem, languageCategoryID, packageID)
+				SELECT		languageID, '".$styleDescription."', languageItemValue, 0, languageCategoryID, packageID
+				FROM		wcf".WCF_N."_language_item
+				WHERE		languageItem = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($newStyle->styleDescription));
+			
+			// update style description
+			$styleEditor = new StyleEditor($newStyle);
+			$styleEditor->update(array(
+				'styleDescription' => $styleDescription
+			));
+		}
+		
 		// copy style variables
 		$sql = "INSERT INTO	wcf".WCF_N."_style_variable_value
 					(styleID, variableID, variableValue)
