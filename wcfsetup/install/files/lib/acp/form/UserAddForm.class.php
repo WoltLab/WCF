@@ -8,7 +8,6 @@ use wcf\form\AbstractForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
@@ -26,15 +25,14 @@ use wcf\util\UserUtil;
  */
 class UserAddForm extends UserOptionListForm {
 	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.user.add';
+	
+	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canAddUser');
-	
-	/**
-	 * name of the active menu item
-	 * @var	string
-	 */
-	public $menuItemName = 'wcf.acp.menu.link.user.add';
 	
 	/**
 	 * username
@@ -407,9 +405,6 @@ class UserAddForm extends UserOptionListForm {
 	 * @see	wcf\page\IPage::show()
 	 */
 	public function show() {
-		// set active menu item
-		ACPMenu::getInstance()->setActiveMenuItem($this->menuItemName);
-		
 		// get the default language id
 		$this->languageID = $this->getDefaultFormLanguageID();
 		

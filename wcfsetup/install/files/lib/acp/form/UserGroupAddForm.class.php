@@ -5,7 +5,6 @@ use wcf\data\user\group\UserGroupAction;
 use wcf\data\user\group\UserGroupEditor;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
-use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\StringUtil;
@@ -22,15 +21,14 @@ use wcf\util\StringUtil;
  */
 class UserGroupAddForm extends AbstractOptionListForm {
 	/**
+	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.group.add';
+	
+	/**
 	 * @see	wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canAddGroup');
-	
-	/**
-	 * name of the active acp menu item
-	 * @var	string
-	 */
-	public $menuItemName = 'wcf.acp.menu.link.group.add';
 	
 	/**
 	 * option tree
@@ -231,9 +229,6 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	 * @see	wcf\form\IForm::show()
 	 */
 	public function show() {
-		// set active menu item
-		ACPMenu::getInstance()->setActiveMenuItem($this->menuItemName);
-		
 		// check master password
 		WCFACP::checkMasterPassword();
 		
