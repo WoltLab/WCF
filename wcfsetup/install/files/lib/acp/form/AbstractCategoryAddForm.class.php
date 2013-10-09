@@ -336,7 +336,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 			}
 			
 			if ($this->objectType->getProcessor()->getMaximumNestingLevel() != -1) {
-				if (count($category->getParentCategories()) > $this->objectType->getProcessor()->getMaximumNestingLevel()) {
+				if (count($category->getParentCategories()) + 1 > $this->objectType->getProcessor()->getMaximumNestingLevel()) {
 					throw new UserInputException('parentCategoryID', 'notValid');
 				}
 			}
