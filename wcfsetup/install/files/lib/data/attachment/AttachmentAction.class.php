@@ -282,7 +282,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			// create standard thumbnail
 			if ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT) {
 				$thumbnailLocation = $attachment->getThumbnailLocation();
-				$thumbnail = $adapter->createThumbnail(ATTACHMENT_THUMBNAIL_WIDTH, ATTACHMENT_THUMBNAIL_HEIGHT, ATTACHMENT_OBTAIN_DIMENSIONS);
+				$thumbnail = $adapter->createThumbnail(ATTACHMENT_THUMBNAIL_WIDTH, ATTACHMENT_THUMBNAIL_HEIGHT, ATTACHMENT_RETAIN_DIMENSIONS);
 				$adapter->writeImage($thumbnail, $thumbnailLocation);
 				if (file_exists($thumbnailLocation) && ($imageData = @getImageSize($thumbnailLocation)) !== false) {
 					$updateData['thumbnailType'] = $imageData['mime'];

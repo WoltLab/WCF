@@ -615,9 +615,9 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<categoryname>message.attachment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue><![CDATA[1]]></defaultvalue>
-				<enableoptions>attachment_obtain_dimensions,attachment_thumbnail_height,attachment_thumbnail_width</enableoptions>
+				<enableoptions>attachment_retain_dimensions,attachment_thumbnail_height,attachment_thumbnail_width</enableoptions>
 			</option>
-			<option name="attachment_obtain_dimensions">
+			<option name="attachment_retain_dimensions">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue><![CDATA[0]]></defaultvalue>
