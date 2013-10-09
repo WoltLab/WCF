@@ -325,6 +325,8 @@ WCF.Message.DefaultPreview = WCF.Message.Preview.extend({
 		}
 		
 		$preview.find('div:eq(0)').html(data.returnValues.message);
+		
+		new WCF.Effect.Scroll().scrollTo($preview);
 	},
 	
 	/**

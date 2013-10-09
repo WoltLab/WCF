@@ -179,6 +179,17 @@ class PackageInstallationDispatcher {
 				// remove all cache files after WCFSetup
 				if (!PACKAGE_ID) {
 					CacheHandler::getInstance()->flushAll();
+					
+					if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
+						$sql = "UPDATE	wcf".WCF_N."_option
+							SET	optionValue = ?
+							WHERE	optionName = ?";
+						$statement = WCF::getDB()->prepareStatement($sql);
+						$statement->execute(array(
+							1,
+							'enable_debug_mode'
+						));
+					}
 				}
 				
 				// rebuild application paths
