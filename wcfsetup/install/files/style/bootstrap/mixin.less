@@ -30,23 +30,18 @@
 .linearGradient(@backgroundColor, @gradientColor1, @gradientColor2) {
 	background-color: @backgroundColor;
 	background-image: -webkit-linear-gradient(@gradientColor1, @gradientColor2);
-	background-image: -moz-linear-gradient(@gradientColor1, @gradientColor2);
-	background-image: -ms-linear-gradient(@gradientColor1, @gradientColor2);
 	background-image: linear-gradient(@gradientColor1, @gradientColor2);
 }
 
-.linearGradient(@backgroundColor, @gradientColor1, @gradientColor2, @gradientColor3, @direction: top) {
+.linearGradient(@backgroundColor, @gradientColor1, @gradientColor2, @gradientColor3, @direction: 180deg) {
+	@oldDirection: @direction - 90deg;
 	background-color: @backgroundColor;
-	background-image: -webkit-linear-gradient(@direction, @gradientColor1, @gradientColor2, @gradientColor3);
-	background-image: -moz-linear-gradient(@direction, @gradientColor1, @gradientColor2, @gradientColor3);
-	background-image: -ms-linear-gradient(@direction, @gradientColor1, @gradientColor2, @gradientColor3);
+	background-image: -webkit-linear-gradient(@oldDirection, @gradientColor1, @gradientColor2, @gradientColor3);
 	background-image: linear-gradient(@direction, @gradientColor1, @gradientColor2, @gradientColor3);
 }
 
 .linearGradientNative(@parameters) {
 	background-image: -webkit-linear-gradient(@parameters);
-	background-image: -moz-linear-gradient(@parameters);
-	background-image: -ms-linear-gradient(@parameters);
 	background-image: linear-gradient(@parameters);
 }
 
@@ -61,12 +56,12 @@
 	transition-timing-function: @type;
 }
 
-.boxShadow(@topOffset, @leftOffset, @color, @blurriness: 5px, @shadowHeight: 0) {
-	box-shadow: @topOffset @leftOffset @blurriness @shadowHeight @color;
+.boxShadow(@leftOffset, @topOffset, @color, @blurriness: 5px, @shadowHeight: 0) {
+	box-shadow: @leftOffset @topOffset @blurriness @shadowHeight @color;
 }
 
-.boxShadowInset(@topOffset, @leftOffset, @color, @blurriness: 5px, @shadowHeight: 0) {
-	box-shadow: inset @topOffset @leftOffset @blurriness @shadowHeight @color;
+.boxShadowInset(@leftOffset, @topOffset, @color, @blurriness: 5px, @shadowHeight: 0) {
+	box-shadow: inset @leftOffset @topOffset @blurriness @shadowHeight @color;
 }
 
 .boxShadowNative(@parameters) {

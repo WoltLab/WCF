@@ -108,6 +108,7 @@ class PageMenuItemAddForm extends AbstractForm {
 	protected function initAvailableParentMenuItems() {
 		$this->availableParentMenuItems = new PageMenuItemList();
 		$this->availableParentMenuItems->getConditionBuilder()->add("page_menu_item.parentMenuItem = ''");
+		$this->availableParentMenuItems->getConditionBuilder()->add('page_menu_item.menuPosition = ?', array('header'));
 		$this->availableParentMenuItems->sqlOrderBy = "page_menu_item.showOrder ASC";
 	}
 	
@@ -170,7 +171,7 @@ class PageMenuItemAddForm extends AbstractForm {
 		}
 		else {
 			$this->menuItemController = '';
-				
+			
 			// validate menu item link
 			if (!I18nHandler::getInstance()->validateValue('menuItemLink')) {
 				throw new UserInputException('menuItemLink');

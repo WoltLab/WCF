@@ -32,7 +32,7 @@
 					<div class="dropdownMenu">
 						<ul class="scrollableDropdownMenu">
 							{foreach from=$availableUserGroups item='availableUserGroup'}
-								<li{if $availableUserGroup->groupID == $groupID} class="active"{/if}><a href="{link controller='UserGroupEdit' id=$availableUserGroup->groupID}{/link}">{lang}{$availableUserGroup->groupName}{/lang}</a></li>
+								<li{if $availableUserGroup->groupID == $groupID} class="active"{/if}><a href="{link controller='UserGroupEdit' id=$availableUserGroup->groupID}{/link}">{$availableUserGroup->getName()}</a></li>
 							{/foreach}
 						</ul>
 					</div>
