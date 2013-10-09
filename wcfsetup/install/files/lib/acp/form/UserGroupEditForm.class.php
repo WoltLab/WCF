@@ -131,9 +131,14 @@ class UserGroupEditForm extends UserGroupAddForm {
 		if (I18nHandler::getInstance()->isPlainValue('groupName')) {
 			I18nHandler::getInstance()->remove($this->groupName);
 			$this->groupName = I18nHandler::getInstance()->getValue('groupName');
+			
+			UserGroup::getGroupByID($this->groupID)->setName($this->groupName);
 		}
 		else {
 			I18nHandler::getInstance()->save('groupName', $this->groupName, 'wcf.acp.group', 1);
+			
+			$groupNames = I18nHandler::getInstance()->getValues('groupName');
+			UserGroup::getGroupByID($this->groupID)->setName($groupNames[WCF::getLanguage()->languageID]);
 		}
 		$this->groupDescription = 'wcf.acp.group.groupDescription'.$this->group->groupID;
 		if (I18nHandler::getInstance()->isPlainValue('groupDescription')) {

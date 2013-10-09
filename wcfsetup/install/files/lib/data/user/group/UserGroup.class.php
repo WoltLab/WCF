@@ -249,6 +249,18 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
+	 * Sets the name of this user group.
+	 * 
+	 * This method is only needed to set the current name of it has been changed
+	 * in the same request.
+	 * 
+	 * @param	string		$name
+	 */
+	public function setName($name) {
+		$this->data['groupName'] = $name;
+	}
+	
+	/**
 	 * Returns true if current user may delete this group.
 	 * 
 	 * @return	boolean
