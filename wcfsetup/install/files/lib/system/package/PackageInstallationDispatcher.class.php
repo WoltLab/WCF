@@ -189,6 +189,9 @@ class PackageInstallationDispatcher {
 							1,
 							'enable_debug_mode'
 						));
+						
+						// update options.inc.php
+						OptionEditor::resetCache();
 					}
 				}
 				
