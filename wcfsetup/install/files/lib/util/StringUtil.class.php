@@ -377,7 +377,7 @@ final class StringUtil {
 	public static function split($string, $length = 1) {
 		$result = array();
 		for ($i = 0, $max = self::length($string); $i < $max; $i += $length) {
-			$result[] = self::substring($string, $i, $length);
+			$result[] = mb_substr($string, $i, $length);
 		}
 		return $result;
 	}
@@ -396,7 +396,7 @@ final class StringUtil {
 			$haystack = mb_strtolower($haystack);
 			$needle = mb_strtolower($needle);
 		}
-		// using substring and === is MUCH faster for long strings then using indexOf.
+		// using mb_substr and === is MUCH faster for long strings then using indexOf.
 		return mb_substr($haystack, 0, mb_strlen($needle)) === $needle;
 	}
 	
