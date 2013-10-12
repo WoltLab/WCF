@@ -665,8 +665,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.page_description"><![CDATA[Page Description]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Page Title]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
-		<item name="wcf.acp.option.network_interface_ip"><![CDATA[Network interface]]></item>
-		<item name="wcf.acp.option.network_interface_port"><![CDATA[Network interface]]></item>
+		<item name="wcf.acp.option.network_interface_ip"><![CDATA[Network interface ip]]></item>
+		<item name="wcf.acp.option.network_interface_port"><![CDATA[Network interface port]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Session Timeout]]></item>
 		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Timeout in seconds]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[Validate IP address]]></item>
