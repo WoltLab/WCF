@@ -190,7 +190,7 @@ class Mail {
 	public function getBody() {
 		$counter = 1;
 		$this->body = '';
-
+		
 		if (count($this->getAttachments())) {
 			// add message
 			$this->body .= '--'.$this->getBoundary().self::$lineEnding;
