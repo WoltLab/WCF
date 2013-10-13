@@ -33,7 +33,7 @@ class Attachment extends DatabaseObject implements IRouteController {
 	protected $embedded = false;
 	
 	/**
-	 * user permissions for attachment access 
+	 * user permissions for attachment access
 	 * @var	array<boolean>
 	 */
 	protected $permissions = array();

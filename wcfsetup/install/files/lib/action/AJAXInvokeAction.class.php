@@ -158,7 +158,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		if ($this->inDebugMode) {
 			throw $e;
 		}
-	
+		
 		if ($e instanceof IllegalLinkException) {
 			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
 		}

@@ -117,7 +117,7 @@ abstract class Database {
 	 * 
 	 * @param	string		$table
 	 * @param	string		$field
-	 * @return	integer	
+	 * @return	integer
 	 */
 	public function getInsertID($table, $field) {
 		try {

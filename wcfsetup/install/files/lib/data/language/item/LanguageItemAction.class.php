@@ -64,7 +64,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 		WCF::getTPL()->assign(array(
 			'item' => $item
 		));
-	
+		
 		return array(
 			'languageItem' => $item->languageItem,
 			'template' => WCF::getTPL()->fetch('languageItemEditDialog')

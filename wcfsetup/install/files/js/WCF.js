@@ -201,7 +201,7 @@ $.extend(true, {
 				$length++;
 			}
 		}
-
+		
 		return $length;
 	}
 });
@@ -756,7 +756,7 @@ WCF.Dropdown = {
 			
 			var $verticalScrollTolerance = $(element).height() / 2;
 			
-			// check if dropdown toggle is still (partially) visible 
+			// check if dropdown toggle is still (partially) visible
 			if ($dropdownOffset.top + $verticalScrollTolerance <= $dialogContentOffset.top) {
 				// top check
 				WCF.Dropdown.toggleDropdown($dropdownID);
@@ -9176,18 +9176,18 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 	 */
 	_processTabs: function() {
 		var that = this;
-
+		
 		this.tablist = this._getList()
 			.addClass( "ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" )
 			.attr( "role", "tablist" );
-
+		
 		this.tabs = this.tablist.find( "> li:has(a[href])" )
 			.addClass( "ui-state-default ui-corner-top" )
 			.attr({
 				role: "tab",
 				tabIndex: -1
 			});
-
+		
 		this.anchors = this.tabs.map(function() {
 				return $( "a", this )[ 0 ];
 			})
@@ -9196,15 +9196,15 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 				role: "presentation",
 				tabIndex: -1
 			});
-
+		
 		this.panels = $();
-
+		
 		this.anchors.each(function( i, anchor ) {
 			var selector, panel,
 				anchorId = $( anchor ).uniqueId().attr( "id" ),
 				tab = $( anchor ).closest( "li" ),
 				originalAriaControls = tab.attr( "aria-controls" );
-
+			
 			// inline tab
 			selector = anchor.hash;
 			panel = that.element.find( that._sanitizeSelector( selector ) );
@@ -9221,7 +9221,7 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 			});
 			panel.attr( "aria-labelledby", anchorId );
 		});
-
+		
 		this.panels
 			.addClass( "ui-tabs-panel ui-widget-content ui-corner-bottom" )
 			.attr( "role", "tabpanel" );

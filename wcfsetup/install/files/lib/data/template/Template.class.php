@@ -84,7 +84,7 @@ class Template extends DatabaseObject {
 	 * @param	boolean		$useRegex
 	 * @param	boolean		$caseSensitive
 	 * @param	boolean		$invertSearch
-	 * @return	array		results 
+	 * @return	array
 	 */
 	public static function search($search, $replace = null, $templateIDs = null, $invertTemplates = 0, $useRegex = 0, $caseSensitive = 0, $invertSearch = 0) {
 		// get available template ids

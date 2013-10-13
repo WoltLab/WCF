@@ -26,7 +26,7 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	public $enableTracking = true;
 	
 	/**
-	 * true enables the usage of cookies 
+	 * true enables the usage of cookies
 	 * @var	boolean
 	 */
 	public $useCookies = 1;

@@ -432,7 +432,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (empty($userIDs)) {
 			$userIDs = $this->objectIDs;
 		}
-	
+		
 		if (!empty($userIDs)) {
 			ClipboardHandler::getInstance()->unmark($userIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
 		}

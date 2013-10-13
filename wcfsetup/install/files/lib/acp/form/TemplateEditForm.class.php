@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the form for adding new templates.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -44,7 +44,7 @@ class TemplateEditForm extends TemplateAddForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		if (isset($_REQUEST['id'])) $this->templateID = intval($_REQUEST['id']);
 		$this->template = new Template($this->templateID);
 		if (!$this->template->templateID || !$this->template->templateGroupID) {
@@ -96,7 +96,7 @@ class TemplateEditForm extends TemplateAddForm {
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		if (!count($_POST)) {
 			$this->tplName = $this->template->templateName;
 			$this->templateSource = $this->template->getSource();

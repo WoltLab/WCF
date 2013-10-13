@@ -337,7 +337,7 @@ class UserEditForm extends UserAddForm {
 	 */
 	protected function validateAvatar() {
 		if ($this->avatarType != 'custom' && $this->avatarType != 'gravatar') $this->avatarType = 'none';
-	
+		
 		try {
 			switch ($this->avatarType) {
 				case 'custom':
@@ -345,13 +345,13 @@ class UserEditForm extends UserAddForm {
 						throw new UserInputException('customAvatar');
 					}
 					break;
-						
+					
 				case 'gravatar':
 					if (!MODULE_GRAVATAR) {
 						$this->avatarType = 'none';
 						break;
 					}
-						
+					
 					// test gravatar
 					if (!Gravatar::test($this->user->email)) {
 						throw new UserInputException('gravatar', 'notFound');

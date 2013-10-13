@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
 
 /**
  * Shows a list of templates.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -136,7 +136,7 @@ class TemplateListPage extends SortablePage {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		WCF::getTPL()->assign(array(
 			'templateGroupID' => $this->templateGroupID,
 			'searchTemplateName' => $this->searchTemplateName,

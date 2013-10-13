@@ -264,7 +264,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	public static function deleteLanguageFiles($languageID = '.*', $category = '.*') {
 		if ($category != '.*') $category = preg_quote($category, '~');
 		if ($languageID != '.*') $languageID = intval($languageID);
-
+		
 		DirectoryUtil::getInstance(WCF_DIR.'language/')->removePattern(new Regex($languageID.'_'.$category.'\.php$'));
 	}
 	
@@ -482,7 +482,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * @param	boolean		$useRegex
 	 * @param	boolean		$caseSensitive
 	 * @param	boolean		$searchVariableName
-	 * @return	array		results 
+	 * @return	array
 	 */
 	public static function search($search, $replace = null, $languageID = null, $useRegex = 0, $searchVariableName = 0) {
 		$results = array();

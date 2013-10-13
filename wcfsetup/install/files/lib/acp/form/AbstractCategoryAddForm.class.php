@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a form to create categories.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

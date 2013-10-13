@@ -115,7 +115,7 @@ class DatabaseException extends SystemException {
 	/**
 	 * Returns the sql type of the active database.
 	 * 
-	 * @return	string 
+	 * @return	string
 	 */
 	public function getDBType() {
 		return $this->DBType;

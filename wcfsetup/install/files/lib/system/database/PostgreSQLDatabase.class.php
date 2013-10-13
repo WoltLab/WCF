@@ -96,7 +96,7 @@ class PostgreSQLDatabase extends Database {
 		
 		// reinsert quotes
 		$query = StringStack::reinsertStrings($query, 'postgresQuotes');
-
+		
 		return $query;
 	}
 	

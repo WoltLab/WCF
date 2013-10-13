@@ -15,7 +15,7 @@ use wcf\system\WCF;
 
 /**
  * Abstract implementation of a form to edit a category.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

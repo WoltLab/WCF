@@ -79,7 +79,7 @@ class Gravatar extends DefaultAvatar {
 			}
 			else {
 				$this->url[$size] = LinkHandler::getInstance()->getLink('GravatarDownload', array(
-					'forceFrontend' => true		
+					'forceFrontend' => true
 				), 'userID='.$this->userID.'&size='.$size);
 			}
 		}

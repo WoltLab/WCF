@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
 /**
  * Abstract implementation of a page with lists all categories of a certain object
  * type.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

@@ -79,7 +79,7 @@ class UserOptionAddForm extends AbstractForm {
 	public $required = 0;
 	
 	/**
-	 * shows this field in the registration process 
+	 * shows this field in the registration process
 	 * @var	boolean
 	 */
 	public $askDuringRegistration = 0;

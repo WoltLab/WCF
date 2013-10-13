@@ -52,10 +52,10 @@ class AttachmentBBCode extends AbstractBBCode {
 			if ($attachment->showAsImage() && $parser->getOutputType() == 'text/html') {
 				// image
 				$linkParameters = array(
-					'object' => $attachment	
+					'object' => $attachment
 				);
 				if ($attachment->hasThumbnail()) {
-					$linkParameters['thumbnail'] = 1; 
+					$linkParameters['thumbnail'] = 1;
 				}
 				
 				// get alignment

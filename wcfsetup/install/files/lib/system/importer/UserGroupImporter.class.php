@@ -5,7 +5,7 @@ use wcf\data\user\group\UserGroupAction;
 
 /**
  * Imports user groups.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -28,7 +28,7 @@ class UserGroupImporter extends AbstractImporter {
 		}
 		else {
 			$action = new UserGroupAction(array(), 'create', array(
-				'data' => $data		
+				'data' => $data
 			));
 			$returnValues = $action->executeAction();
 			$newGroupID = $returnValues['returnValues']->groupID;

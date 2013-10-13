@@ -390,7 +390,7 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Checks if the active user has the given permissions and throws a 
+	 * Checks if the active user has the given permissions and throws a
 	 * PermissionDeniedException if that isn't the case.
 	 */
 	public function checkPermissions(array $permissions) {

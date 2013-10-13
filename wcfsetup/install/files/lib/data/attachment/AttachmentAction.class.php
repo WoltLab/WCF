@@ -140,7 +140,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 				'filesize' => $file->getFilesize(),
 				'fileType' => $file->getMimeType(),
 				'fileHash' => sha1_file($file->getLocation()),
-				'uploadTime' => TIME_NOW	
+				'uploadTime' => TIME_NOW
 			);
 			
 			// get image data

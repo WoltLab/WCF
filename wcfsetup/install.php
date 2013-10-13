@@ -1,7 +1,7 @@
 <?php
 /**
  * This script tries to find the temp folder and unzip all setup files into.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -252,7 +252,7 @@ class BasicFileUtil {
 				return $_SERVER['DOCUMENT_ROOT'].'/tmp/';
 			}
 		}
-	
+		
 		if (isset($_ENV['TMP']) && @is_writable($_ENV['TMP'])) {
 			return $_ENV['TMP'] . '/';
 		}
@@ -262,7 +262,7 @@ class BasicFileUtil {
 		if (isset($_ENV['TMPDIR']) && @is_writable($_ENV['TMPDIR'])) {
 			return $_ENV['TMPDIR'] . '/';
 		}
-	
+		
 		if (($path = ini_get('upload_tmp_dir')) && @is_writable($path)) {
 			return $path . '/';
 		}

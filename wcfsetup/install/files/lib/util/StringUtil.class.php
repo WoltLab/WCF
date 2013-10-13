@@ -6,7 +6,7 @@ use wcf\system\WCF;
 /**
  * Contains string-related functions.
  * 
- * @author	Oliver Kliebisch, Marcel Werk 
+ * @author	Oliver Kliebisch, Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -404,7 +404,7 @@ final class StringUtil {
 	 * Returns true if $haystack ends with $needle or if the length of $needle is 0.
 	 * 
 	 * @param	string		$haystack
-	 * @param	string		$needle	
+	 * @param	string		$needle
 	 * @param	boolean		$ci		case insensitive
 	 * @return	boolean
 	 */
@@ -745,7 +745,7 @@ final class StringUtil {
 		
 		// cut visible url
 		if (empty($title)) {
-			// use URL and remove protocol and www subdomain 
+			// use URL and remove protocol and www subdomain
 			$title = preg_replace('~^(?:https?|ftps?)://(?:www\.)?~i', '', $url);
 			
 			if (mb_strlen($title) > 60) {

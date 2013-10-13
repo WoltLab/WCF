@@ -144,7 +144,7 @@ class Mail {
 		
 		$this->header .=
 			'X-Priority: 3'.self::$lineEnding
-			.'X-Mailer: WoltLab Community Framework Mail Package'.self::$lineEnding									
+			.'X-Mailer: WoltLab Community Framework Mail Package'.self::$lineEnding
 			.'From: '.$this->getFrom().self::$lineEnding
 			.($this->getCCString() != '' ? 'CC:'.$this->getCCString().self::$lineEnding : '')
 			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$lineEnding : '');

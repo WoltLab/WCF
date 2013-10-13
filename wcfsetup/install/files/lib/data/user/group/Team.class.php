@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace wcf\data\user\group;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;

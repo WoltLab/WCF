@@ -66,7 +66,7 @@ interface ICategoryType {
 	public function getObjectTypeName($definitionName);
 	
 	/**
-	 * Returns the language variable category for the description language 
+	 * Returns the language variable category for the description language
 	 * variables of categories of this type.
 	 * 
 	 * @return	string

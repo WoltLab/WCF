@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the form for adding new templates.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -87,7 +87,7 @@ class TemplateAddForm extends AbstractForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		if (!empty($_REQUEST['copy'])) {
 			$this->copy = intval($_REQUEST['copy']);
 			$this->copiedTemplate = new Template($this->copy);
@@ -140,7 +140,7 @@ class TemplateAddForm extends AbstractForm {
 		if (empty($this->tplName)) {
 			throw new UserInputException('tplName');
 		}
-	
+		
 		if (!preg_match('/^[a-z0-9_\-]+$/i', $this->tplName)) {
 			throw new UserInputException('tplName', 'notValid');
 		}

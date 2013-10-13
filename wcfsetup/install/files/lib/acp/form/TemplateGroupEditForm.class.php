@@ -9,7 +9,7 @@ use wcf\system\WCF;
 
 /**
  * Shows the form for editing template groups.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -40,7 +40,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		if (isset($_REQUEST['id'])) $this->templateGroupID = intval($_REQUEST['id']);
 		$this->templateGroup = new TemplateGroup($this->templateGroupID);
 		if (!$this->templateGroup->templateGroupID) {

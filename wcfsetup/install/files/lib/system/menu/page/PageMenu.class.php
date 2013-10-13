@@ -98,7 +98,7 @@ class PageMenu extends TreeMenu {
 			// ignore footer items
 			return;
 		}
-	
+		
 		parent::setActiveMenuItem($menuItem);
 	}
 }

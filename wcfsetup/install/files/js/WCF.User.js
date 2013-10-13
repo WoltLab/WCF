@@ -285,7 +285,7 @@ WCF.User.Profile.ActivityPointList = {
 
 /**
  * Provides methods to follow an user.
- *
+ * 
  * @param	integer		userID
  * @param	boolean		following
  */
@@ -1020,7 +1020,7 @@ WCF.User.Registration.Validation = Class.extend({
 
 /**
  * Username validation for registration.
- *
+ * 
  * @see	WCF.User.Registration.Validation
  */
 WCF.User.Registration.Validation.Username = WCF.User.Registration.Validation.extend({

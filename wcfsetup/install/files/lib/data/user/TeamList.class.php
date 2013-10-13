@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace wcf\data\user;
 use wcf\data\user\group\Team;
 use wcf\data\user\group\UserGroup;

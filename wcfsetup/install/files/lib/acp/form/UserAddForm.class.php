@@ -160,7 +160,7 @@ class UserAddForm extends UserOptionListForm {
 	 * @see	wcf\form\IForm::validate()
 	 */
 	public function validate() {
-		// validate static user options 
+		// validate static user options
 		try {
 			$this->validateUsername($this->username);
 		}
