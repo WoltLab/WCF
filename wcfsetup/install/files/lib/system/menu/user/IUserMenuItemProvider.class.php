@@ -22,7 +22,7 @@ interface IUserMenuItemProvider extends IDatabaseObjectProcessor {
 	
 	/**
 	 * Returns the href of the associated menu item.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getLink();

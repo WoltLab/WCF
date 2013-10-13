@@ -570,7 +570,7 @@ class WCF {
 	
 	/**
 	 * Includes the required util or exception classes automatically.
-	 *
+	 * 
 	 * @param	string		$className
 	 * @see		spl_autoload_register()
 	 */
@@ -703,7 +703,7 @@ class WCF {
 	
 	/**
 	 * Returns the URI of the current page.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public static function getRequestURI() {

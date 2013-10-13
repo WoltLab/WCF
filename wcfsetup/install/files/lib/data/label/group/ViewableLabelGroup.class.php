@@ -70,7 +70,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	
 	/**
 	 * Sets user permissions.
-	 *
+	 * 
 	 * @param	array		$permissions
 	 */
 	public function setUserPermissions(array $permissions) {

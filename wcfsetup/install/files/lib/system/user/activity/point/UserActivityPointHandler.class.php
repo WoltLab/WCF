@@ -176,7 +176,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	
 	/**
 	 * Updates total activity points and ranks for given user ids.
-	 *
+	 * 
 	 * @param	array<integer>		$userIDs
 	 */
 	public function updateUsers(array $userIDs) {

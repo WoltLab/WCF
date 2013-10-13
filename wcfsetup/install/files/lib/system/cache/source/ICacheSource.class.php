@@ -14,7 +14,7 @@ namespace wcf\system\cache\source;
 interface ICacheSource {
 	/**
 	 * Flushes a specific cache, optionally removing caches which share the same name.
-	 *
+	 * 
 	 * @param	string		$cacheName
 	 * @param	boolean		$useWildcard
 	 */

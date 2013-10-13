@@ -88,7 +88,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * Imports options.
-	 *
+	 * 
 	 * @param	\DOMXPath	$xpath
 	 */
 	protected function importOptions(\DOMXPath $xpath) {

@@ -432,7 +432,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Returns language ids for active user.
-	 *
+	 * 
 	 * @return	array<integer>
 	 */
 	public function getLanguageIDs() {
@@ -631,7 +631,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the spider id for given user agent.
-	 *
+	 * 
 	 * @param	string		$userAgent
 	 * @return	mixed
 	 */
@@ -650,7 +650,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * Searches for existing session of a search spider.
-	 *
+	 * 
 	 * @param	integer		$spiderID
 	 * @return	wcf\data\session\Session
 	 */

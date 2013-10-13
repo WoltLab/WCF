@@ -111,7 +111,7 @@ class CommentHandler extends SingletonFactory {
 	
 	/**
 	 * Removes all comments for given objects.
-	 *
+	 * 
 	 * @param	string		$objectType
 	 * @param	array<integer>	$objectIDs
 	 */

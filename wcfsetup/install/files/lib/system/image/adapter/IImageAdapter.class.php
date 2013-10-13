@@ -112,7 +112,7 @@ interface IImageAdapter {
 	
 	/**
 	 * Sets a color to be transparent with alpha 0.
-	 *
+	 * 
 	 * @param	integer		$red
 	 * @param	integer		$green
 	 * @param	integer		$blue

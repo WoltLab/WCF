@@ -521,8 +521,8 @@ class Mail {
 	}
 	
 	/**
-	 * Gets the mail language.
-	 *
+	 * Returns the mail language.
+	 * 
 	 * @return	wcf\data\language\Language
 	 */
 	public function getLanguage() {

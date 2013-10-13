@@ -41,7 +41,7 @@ class MessagePreviewAction extends BBCodeAction {
 	
 	/**
 	 * Returns a rendered message preview.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function getMessagePreview() {

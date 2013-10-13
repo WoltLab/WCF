@@ -52,7 +52,7 @@ class TagCloud {
 	
 	/**
 	 * Contructs a new TagCloud object.
-	 *
+	 * 
 	 * @param	array<integer>	$languageIDs
 	 */
 	public function __construct(array $languageIDs = array()) {

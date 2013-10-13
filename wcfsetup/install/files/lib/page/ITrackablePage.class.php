@@ -21,35 +21,35 @@ interface ITrackablePage {
 	
 	/**
 	 * Returns the controller name.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getController();
 	
 	/**
 	 * Returns the parent object type.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getParentObjectType();
 	
 	/**
 	 * Returns the parent object id.
-	 *
+	 * 
 	 * @return	integer
 	 */
 	public function getParentObjectID();
 	
 	/**
 	 * Returns the object type.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getObjectType();
 	
 	/**
 	 * Returns the object id.
-	 *
+	 * 
 	 * @return	integer
 	 */
 	public function getObjectID();

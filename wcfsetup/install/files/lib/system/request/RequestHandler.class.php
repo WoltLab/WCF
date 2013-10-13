@@ -61,7 +61,7 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Handles a http request.
-	 *
+	 * 
 	 * @param	string		$application
 	 * @param	boolean		$isACPRequest
 	 */

@@ -168,7 +168,7 @@ $.extend(true, {
 	
 	/**
 	 * Escapes an ID to work with jQuery selectors.
-	 *
+	 * 
 	 * @see		http://docs.jquery.com/Frequently_Asked_Questions#How_do_I_select_an_element_by_an_ID_that_has_characters_used_in_CSS_notation.3F
 	 * @param	string		id
 	 * @return	string
@@ -555,7 +555,7 @@ $.extend(WCF, {
 	
 	/**
 	 * Counter for dynamic element ids
-	 *
+	 * 
 	 * @var	integer
 	 */
 	_idCounter: 0,
@@ -3546,7 +3546,7 @@ WCF.String = {
 	
 	/**
 	 * Escapes a String to work with RegExp.
-	 *
+	 * 
 	 * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/regexp.js#L25
 	 * @param	string	string
 	 * @return	string
@@ -4053,7 +4053,7 @@ WCF.Template = Class.extend({
 	
 	/**
 	 * Fetches the template with the given variables.
-	 *
+	 * 
 	 * @param	v	variables to insert
 	 * @return		parsed template
 	 */

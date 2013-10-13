@@ -321,7 +321,7 @@ final class PasswordUtil {
 	
 	/**
 	 * Validates the password hash for MyBB 1.x (mybb1).
-	 *
+	 * 
 	 * @param	string		$username
 	 * @param	string		$password
 	 * @param	string		$salt

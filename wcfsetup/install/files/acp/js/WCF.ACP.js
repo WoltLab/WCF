@@ -1562,7 +1562,7 @@ WCF.ACP.Options = Class.extend({
 	
 	/**
 	 * Enables an option.
-	 *
+	 * 
 	 * @param	string		target
 	 * @param	boolean		enable
 	 */

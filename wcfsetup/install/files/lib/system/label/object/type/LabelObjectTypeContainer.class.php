@@ -76,7 +76,7 @@ class LabelObjectTypeContainer implements \Countable, \Iterator {
 	
 	/**
 	 * Returns the object type name.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getObjectTypeName() {

@@ -119,8 +119,8 @@ class PackageUpdateServer extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if update server requires license data instead of username/password.
-	 *
+	 * Returns true if update server requires license data instead of username/password.
+	 * 
 	 * @return	integer
 	 */
 	public final function requiresLicense() {

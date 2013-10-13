@@ -85,7 +85,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	
 	/**
 	 * Returns the full quote by quote id.
-	 *
+	 * 
 	 * @param	string		$quoteID
 	 * @return	string
 	 */
@@ -115,7 +115,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	/**
 	 * CAUTION: This methods does not return the current iterator index,
 	 * rather than the object key which maps to that index.
-	 *
+	 * 
 	 * @see	\Iterator::key()
 	 */
 	public function key() {

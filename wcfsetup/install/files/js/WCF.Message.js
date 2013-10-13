@@ -724,7 +724,7 @@ WCF.Message.QuickReply = Class.extend({
 	
 	/**
 	 * Returns container element.
-	 *
+	 * 
 	 * @return	jQuery
 	 */
 	getContainer: function() {

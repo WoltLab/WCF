@@ -42,7 +42,7 @@ class MessageUtil {
 	}
 	
 	/**
-	 * Gets mentioned users.
+	 * Returns the mentioned users in the given text.
 	 * 
 	 * @param	string		$text
 	 * @return	array<string>
@@ -80,8 +80,8 @@ class MessageUtil {
 	}
 	
 	/**
-	 * Gets quoted users.
-	 *
+	 * Returns the quoted users in the given text.
+	 * 
 	 * @param	string		$text
 	 * @return	array<string>
 	 */
@@ -108,7 +108,7 @@ class MessageUtil {
 	
 	/**
 	 * Truncates a formatted message and keeps the HTML syntax intact.
-	 *
+	 * 
 	 * @param	string		$message		string which shall be truncated
 	 * @param	integer		$maxLength		string length after truncating
 	 * @return	string					truncated string

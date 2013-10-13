@@ -91,7 +91,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	
 	/**
 	 * Returns the ids of the users which can be banned.
-	 *
+	 * 
 	 * @return	array<integer>
 	 */
 	protected function validateBan() {
@@ -105,7 +105,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	
 	/**
 	 * Validates accessible groups.
-	 *
+	 * 
 	 * @return	array<integer>
 	 */
 	protected function __validateAccessibleGroups(array $userIDs, $ignoreOwnUser = true) {

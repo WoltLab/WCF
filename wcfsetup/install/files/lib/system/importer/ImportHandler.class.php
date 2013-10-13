@@ -81,8 +81,8 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	}
 	
 	/**
-	 * Gets a new id from id mapping.
-	 *
+	 * Returns a new id from id mapping.
+	 * 
 	 * @param	string		$type
 	 * @param	mixed		$oldID
 	 * @return	integer		$newID

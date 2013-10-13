@@ -138,7 +138,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Returns parsed responses for given comment id.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function loadResponses() {

@@ -33,7 +33,7 @@ class ViewablePackageUpdate extends DatabaseObjectDecorator {
 	
 	/**
 	 * Sets latest accessible package update version object.
-	 *
+	 * 
 	 * @param	wcf\data\package\update\version\PackageUpdateVersion	$latestVersion
 	 */
 	public function setAccessibleVersion(PackageUpdateVersion $latestVersion) {
@@ -51,7 +51,7 @@ class ViewablePackageUpdate extends DatabaseObjectDecorator {
 	
 	/**
 	 * Returns latest accessible package update version object.
-	 *
+	 * 
 	 * @return	wcf\data\package\update\version\PackageUpdateVersion
 	 */
 	public function getAccessibleVersion() {
@@ -60,7 +60,7 @@ class ViewablePackageUpdate extends DatabaseObjectDecorator {
 	
 	/**
 	 * Returns latest package update version object.
-	 *
+	 * 
 	 * @return	wcf\data\package\update\version\PackageUpdateVersion
 	 */
 	public function getLatestVersion() {

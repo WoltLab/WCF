@@ -200,7 +200,7 @@ class AttachmentHandler implements \Countable {
 	
 	/**
 	 * Returns true if the active user has the permission to upload attachments.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function canUpload() {

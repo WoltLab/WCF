@@ -99,7 +99,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Creates a new instance of PackageInstallationDispatcher.
-	 *
+	 * 
 	 * @param	wcf\data\package\installation\queue\PackageInstallationQueue	$queue
 	 */
 	public function __construct(PackageInstallationQueue $queue) {

@@ -346,7 +346,7 @@ abstract class Database {
 	
 	/**
 	 * Returns a database editor object.
-	 *
+	 * 
 	 * @return	wcf\system\database\editor\DatabaseEditor
 	 */
 	public function getEditor() {
@@ -359,7 +359,7 @@ abstract class Database {
 	
 	/**
 	 * Returns true if this database type is supported.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public static function isSupported() {

@@ -43,7 +43,7 @@ class PackageCache extends SingletonFactory {
 	
 	/**
 	 * Returns the id of a specific package or 'null' if not found.
-	 *
+	 * 
 	 * @param	string		$package
 	 * @return	string
 	 */

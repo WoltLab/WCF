@@ -103,7 +103,7 @@ final class FileUtil {
 	
 	/**
 	 * Removes a leading slash from the given path.
-	 *
+	 * 
 	 * @param	string		$path
 	 * @return	string
 	 */
