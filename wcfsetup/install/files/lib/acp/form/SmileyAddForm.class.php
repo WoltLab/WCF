@@ -119,7 +119,6 @@ class SmileyAddForm extends AbstractForm {
 		I18nHandler::getInstance()->register('smileyTitle');
 	}
 	
-	
 	/**
 	 * @see	wcf\page\IForm::readFormParameters()
 	 */

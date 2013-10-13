@@ -120,7 +120,7 @@ class MessageQuoteManager extends SingletonFactory {
 			$this->quoteData[$quoteID] = $message;
 			
 			// save parent object id
-		
+			
 			if (!isset($this->quoteData['parents'])) {
 				$this->quoteData['parents'] = array();
 			}

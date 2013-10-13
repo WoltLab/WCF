@@ -46,7 +46,6 @@ class PackageInstallationSQLParser extends SQLParser {
 	 */
 	protected $knownTables = array();
 	
-	
 	/**
 	 * list of conflicted database tables
 	 * @var	array

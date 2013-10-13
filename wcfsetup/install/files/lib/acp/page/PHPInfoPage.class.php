@@ -24,13 +24,13 @@ class PHPInfoPage extends AbstractPage {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		// get phpinfo() output
 		ob_start();
 		phpinfo();
 		$info = ob_get_contents();
 		ob_end_clean();
-	
+		
 		// parse output
 		$info = preg_replace('%^.*<body>(.*)</body>.*$%s', '$1', $info);
 		

@@ -219,20 +219,20 @@ class UserEditForm extends UserAddForm {
 					'avatarID' => null,
 					'enableGravatar' => 0
 				);
-				break;
-		
+			break;
+			
 			case 'custom':
 				$avatarData = array(
 					'enableGravatar' => 0
 				);
-				break;
-		
+			break;
+			
 			case 'gravatar':
 				$avatarData = array(
 					'avatarID' => null,
 					'enableGravatar' => 1
 				);
-				break;
+			break;
 		}
 		$avatarData['disableAvatar'] = $this->disableAvatar;
 		$avatarData['disableAvatarReason'] = $this->disableAvatarReason;

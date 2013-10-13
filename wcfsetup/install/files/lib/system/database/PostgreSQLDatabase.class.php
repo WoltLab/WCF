@@ -90,7 +90,7 @@ class PostgreSQLDatabase extends Database {
 		
 		// double quote identifiers (column & table names ...)
 		$query = preg_replace('~(?<=^|\s|\.|\(|,)([A-Za-z0-9_-]*[a-z]{1}[A-Za-z0-9_-]*)(?=$|\s|\.|\)|,|=)~', '"\\1"', $query);
-
+		
 		// rename LIKE to ILIKE for case-insensitive comparisons
 		$query = preg_replace('/(?<=\s)LIKE(?=\s)/si', 'ILIKE', $query);
 		

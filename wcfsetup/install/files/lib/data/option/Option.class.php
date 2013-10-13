@@ -143,7 +143,7 @@ class Option extends DatabaseObject {
 					$key++;
 					$value = $option;
 				}
-			
+				
 				$result[$key] = $value;
 			}
 		}

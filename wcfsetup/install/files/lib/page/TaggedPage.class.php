@@ -80,7 +80,7 @@ class TaggedPage extends MultipleLinkPage {
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		$this->tagCloud = new TypedTagCloud($this->objectType->objectType);
 	}
 	

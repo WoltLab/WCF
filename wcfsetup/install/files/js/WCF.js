@@ -7244,7 +7244,6 @@ WCF.Popover = Class.extend({
 	 */
 	_popoverContent: null,
 	
-	
 	/**
 	 * popover horizontal offset
 	 * @var	integer

@@ -122,7 +122,6 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 		}
 	}
 	
-	
 	/**
 	 * @see	wcf\form\IForm::save()
 	 */

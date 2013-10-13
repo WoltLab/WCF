@@ -811,7 +811,6 @@ WCF.User.Profile.Editor = Class.extend({
 	}
 });
 
-
 /**
  * Namespace for registration functions.
  */

@@ -91,12 +91,12 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	 */
 	public function readData() {
 		AbstractForm::readData();
-	
+		
 		$templateGroupList = new TemplateGroupList();
 		$templateGroupList->getConditionBuilder()->add('templateGroupID <> ?', array($this->templateGroupID));
 		$templateGroupList->readObjects();
 		$this->availableTemplateGroups = $templateGroupList->getObjects();
-	
+		
 		// default values
 		if (!count($_POST)) {
 			$this->templateGroupName = $this->templateGroup->templateGroupName;

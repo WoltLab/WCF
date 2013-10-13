@@ -32,7 +32,7 @@
 				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
 			</pages>
 		</action>
-
+		
 		<action name="exportMailAddress">
 			<actionclassname><![CDATA[wcf\system\clipboard\action\UserClipboardAction]]></actionclassname>
 			<showorder>6</showorder>

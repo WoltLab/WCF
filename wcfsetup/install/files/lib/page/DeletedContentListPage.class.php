@@ -36,7 +36,7 @@ class DeletedContentListPage extends MultipleLinkPage {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		// get object type
 		if (isset($_REQUEST['objectType'])) {
 			$this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.deletedContent', $_REQUEST['objectType']);

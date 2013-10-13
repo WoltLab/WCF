@@ -42,7 +42,7 @@ class RebuildDataPage extends AbstractPage {
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		// get object types
 		$this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.rebuildData');
 		

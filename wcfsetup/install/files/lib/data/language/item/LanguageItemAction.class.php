@@ -49,7 +49,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 		if (!WCF::getSession()->getPermission('admin.language.canManageLanguage')) {
 			throw new PermissionDeniedException();
 		}
-	
+		
 		$this->readObjects();
 		if (!count($this->objects)) {
 			throw new UserInputException('objectIDs');
@@ -78,7 +78,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 		if (!WCF::getSession()->getPermission('admin.language.canManageLanguage')) {
 			throw new PermissionDeniedException();
 		}
-	
+		
 		$this->readObjects();
 		if (!count($this->objects)) {
 			throw new UserInputException('objectIDs');

@@ -26,7 +26,7 @@ class LogoutAction extends AbstractSecureAction {
 	 */
 	public function execute() {
 		parent::execute();
-
+		
 		// do logout
 		WCF::getSession()->delete();
 		

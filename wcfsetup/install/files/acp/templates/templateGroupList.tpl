@@ -82,7 +82,7 @@
 		<nav>
 			<ul>
 				<li><a href="{link controller='TemplateGroupAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.template.group.add{/lang}</span></a></li>
-			
+				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>

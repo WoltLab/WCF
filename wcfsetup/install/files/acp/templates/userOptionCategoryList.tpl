@@ -70,7 +70,7 @@
 		<nav>
 			<ul>
 				<li><a href="{link controller='UserOptionCategoryAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.user.option.category.add{/lang}</span></a></li>
-			
+				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>

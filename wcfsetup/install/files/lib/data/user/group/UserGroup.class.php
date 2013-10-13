@@ -306,7 +306,7 @@ class UserGroup extends DatabaseObject {
 		if ($this->groupOptions === null) {
 			// get all options and filter options with low priority
 			$this->groupOptions = $groupOptionIDs = array();
-
+			
 			$sql = "SELECT		optionName, optionID
 				FROM		wcf".WCF_N."_user_group_option";
 			$statement = WCF::getDB()->prepareStatement($sql);

@@ -273,11 +273,11 @@ class RouteHandler extends SingletonFactory {
 					if (isset($_SERVER['SCRIPT_NAME']) && (self::$pathInfo == $_SERVER['SCRIPT_NAME'])) {
 						self::$pathInfo = '';
 					}
-			
+					
 					if (isset($_SERVER['PHP_SELF']) && (self::$pathInfo == $_SERVER['PHP_SELF'])) {
 						self::$pathInfo = '';
 					}
-			
+					
 					if (isset($_SERVER['SCRIPT_URL']) && (self::$pathInfo == $_SERVER['SCRIPT_URL'])) {
 						self::$pathInfo = '';
 					}

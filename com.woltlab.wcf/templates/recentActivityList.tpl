@@ -69,8 +69,6 @@
 	<p class="info">{lang}wcf.user.recentActivity.noEntries{/lang}</p>
 {/if}
 
-
-
 {include file='footer'}
 
 </body>

@@ -39,7 +39,6 @@ class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAc
 	 */
 	protected $requireACP = array('create', 'delete', 'toggle', 'update');
 	
-	
 	/**
 	 * @see	wcf\data\IToggleAction::toggle()
 	 */

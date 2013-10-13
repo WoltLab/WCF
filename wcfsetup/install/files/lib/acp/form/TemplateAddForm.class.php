@@ -210,7 +210,7 @@ class TemplateAddForm extends AbstractForm {
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		$templateGroupList = new TemplateGroupList();
 		$templateGroupList->sqlOrderBy = "templateGroupName";
 		$templateGroupList->readObjects();

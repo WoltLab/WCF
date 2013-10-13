@@ -80,7 +80,7 @@ class SignatureEditForm extends MessageForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		// get max text length
 		$this->maxTextLength = WCF::getSession()->getPermission('user.signature.maxLength');
 	}
