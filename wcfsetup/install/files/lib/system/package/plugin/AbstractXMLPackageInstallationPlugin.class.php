@@ -311,7 +311,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * @param	string		$parentName
 	 * @param	string		$columnName
 	 * @param	string		$tableNameExtension
-	 * @return	integer	
+	 * @return	integer
 	 */
 	protected function getShowOrder($showOrder, $parentName = null, $columnName = null, $tableNameExtension = '') {
 		if ($showOrder === null) {

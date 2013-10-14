@@ -74,5 +74,4 @@
 	{/hascontent}
 </div>
 
-
 {include file='footer'}

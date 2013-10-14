@@ -19,7 +19,7 @@ use wcf\system\WCF;
 class NewestMembersDashboardBox extends AbstractSidebarDashboardBox {
 	/**
 	 * user profile list
-	 * @var	wcf\data\user\UserProfileList 
+	 * @var	wcf\data\user\UserProfileList
 	 */
 	public $userProfileList = null; 
 	

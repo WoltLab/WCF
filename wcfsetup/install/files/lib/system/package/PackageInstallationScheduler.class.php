@@ -526,7 +526,7 @@ class PackageInstallationScheduler {
 	
 	/**
 	 * Determines intermediate update steps using a backtracking algorithm in case there is no direct upgrade possible.
-	 *
+	 * 
 	 * @param	string		$package		package identifier
 	 * @param	array		$fromversions		list of all fromversions
 	 * @param	string		$currentVersion		current package version
@@ -579,7 +579,7 @@ class PackageInstallationScheduler {
 	
 	/**
 	 * Compares the length of two updates threads.
-	 *
+	 * 
 	 * @param	array		$updateThreadListA
 	 * @param	array		$updateThreadListB
 	 * @return	integer

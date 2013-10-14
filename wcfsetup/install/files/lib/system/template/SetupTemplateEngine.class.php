@@ -26,7 +26,7 @@ class SetupTemplateEngine extends TemplateEngine {
 		if ($this->compilerObj === null) {
 			$this->compilerObj = new SetupTemplateCompiler($this);
 		}
-	
+		
 		return $this->compilerObj;
 	}
 	

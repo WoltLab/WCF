@@ -94,7 +94,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	/**
 	 * Imports option categories.
 	 * 
-	 * @param	\DOMXPath	$xpath 
+	 * @param	\DOMXPath	$xpath
 	 */
 	protected function importCategories(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:categories/ns:category');
@@ -143,7 +143,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	/**
 	 * Imports options.
 	 * 
-	 * @param	\DOMXPath	$xpath 
+	 * @param	\DOMXPath	$xpath
 	 */
 	protected function importOptions(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:options/ns:option');

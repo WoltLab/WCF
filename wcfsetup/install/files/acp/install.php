@@ -67,5 +67,3 @@ if ($timezone = @date_default_timezone_get()) {
 		$statement->execute(array($timezone, 'timezone'));
 	}
 }
-
-

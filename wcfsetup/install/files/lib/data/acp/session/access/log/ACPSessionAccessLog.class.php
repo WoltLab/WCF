@@ -39,7 +39,7 @@ class ACPSessionAccessLog extends DatabaseObject {
 	
 	/**
 	 * Returns the ip address and attempts to convert into IPv4.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getIpAddress() {

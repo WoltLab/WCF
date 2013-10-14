@@ -56,7 +56,7 @@ class UserExtendedClipboardAction extends AbstractClipboardAction {
 	
 	/**
 	 * Returns the ids of the users which can be enabled.
-	 *
+	 * 
 	 * @return	array<integer>
 	 */
 	protected function validateEnable() {
@@ -64,7 +64,7 @@ class UserExtendedClipboardAction extends AbstractClipboardAction {
 		if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
 			return array();
 		}
-	
+		
 		$userIDs = array();
 		foreach ($this->objects as $user) {
 			if ($user->activationCode) $userIDs[] = $user->userID;
@@ -75,7 +75,7 @@ class UserExtendedClipboardAction extends AbstractClipboardAction {
 	
 	/**
 	 * Returns the ids of the users which can be merge.
-	 *
+	 * 
 	 * @return	array<integer>
 	 */
 	protected function validateMerge() {

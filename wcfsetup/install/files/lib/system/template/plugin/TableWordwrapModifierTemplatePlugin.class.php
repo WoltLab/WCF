@@ -35,7 +35,7 @@ class TableWordwrapModifierTemplatePlugin implements IModifierTemplatePlugin {
 			$length = mb_strlen($substring);
 			if ($length > $width) {
 				$j = ceil($length / $width);
-		
+				
 				for ($i = 0; $i < $j; $i++) {
 					if ($i) $result .= $break;
 					if ($width * ($i + 1) > $length) $result .= mb_substr($substring, $width * $i);

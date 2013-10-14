@@ -6,7 +6,7 @@ use wcf\system\WCF;
 
 /**
  * List of deleted content.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -36,7 +36,7 @@ class DeletedContentListPage extends MultipleLinkPage {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		// get object type
 		if (isset($_REQUEST['objectType'])) {
 			$this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.deletedContent', $_REQUEST['objectType']);
@@ -64,7 +64,7 @@ class DeletedContentListPage extends MultipleLinkPage {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		WCF::getTPL()->assign(array(
 			'availableObjectTypes' => ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.deletedContent'),
 			'objectType' => $this->objectType->objectType,

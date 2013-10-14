@@ -4,7 +4,7 @@ use wcf\system\WCF;
 
 /**
  * Imports poll votes.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -21,7 +21,7 @@ class AbstractPollOptionVoteImporter extends AbstractImporter {
 	
 	/**
 	 * poll object type name
-	 * @var string
+	 * @var	string
 	 */
 	protected $pollObjectTypeName = '';
 	

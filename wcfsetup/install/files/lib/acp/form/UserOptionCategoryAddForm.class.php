@@ -9,7 +9,7 @@ use wcf\system\WCF;
 
 /**
  * Shows the form for adding new user option categories.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -45,7 +45,7 @@ class UserOptionCategoryAddForm extends AbstractForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		I18nHandler::getInstance()->register('categoryName');
 	}
 	

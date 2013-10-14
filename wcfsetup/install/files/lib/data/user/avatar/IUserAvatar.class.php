@@ -37,7 +37,7 @@ interface IUserAvatar {
 	
 	/**
 	 * Returns the width of this avatar.
-	 *
+	 * 
 	 * @return	integer
 	 */
 	public function getWidth();

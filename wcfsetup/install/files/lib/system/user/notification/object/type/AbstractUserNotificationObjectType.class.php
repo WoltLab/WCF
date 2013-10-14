@@ -50,7 +50,7 @@ class AbstractUserNotificationObjectType extends AbstractObjectTypeProcessor imp
 				$objects[$objectID] = new static::$decoratorClassName(new static::$objectClassName(null, array($indexName => $objectID)));
 			}
 		}
-	
+		
 		return $objects;
 	}
 }

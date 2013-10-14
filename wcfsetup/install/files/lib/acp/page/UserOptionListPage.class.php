@@ -43,7 +43,7 @@ class UserOptionListPage extends SortablePage {
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
-	
+		
 		$this->objectList->getConditionBuilder()->add("option_table.categoryName IN (SELECT categoryName FROM wcf".WCF_N."_user_option_category WHERE parentCategoryName = ?)", array('profile'));
 	}
 }

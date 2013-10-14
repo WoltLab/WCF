@@ -59,9 +59,9 @@
 	<div id="system" class="container containerPadding hidden tabMenuContent">
 		<fieldset>
 			<legend>{lang}wcf.acp.index.system.software{/lang}</legend>
-		
+			
 			{event name='softwareVersions'}
-		
+			
 			<dl>
 				<dt>{lang}wcf.acp.index.system.software.wcfVersion{/lang}</dt>
 				<dd>{@WCF_VERSION}</dd>
@@ -72,7 +72,7 @@
 		
 		<fieldset>
 			<legend>{lang}wcf.acp.index.system.server{/lang}</legend>
-		
+			
 			<dl>
 				<dt>{lang}wcf.acp.index.system.os{/lang}</dt>
 				<dd>{$server[os]}</dd>
@@ -109,7 +109,7 @@
 	<div id="credits" class="container containerPadding hidden tabMenuContent">
 		<fieldset>
 			<legend>{lang}wcf.acp.index.credits{/lang}</legend>
-		
+			
 			<dl>
 				<dt>{lang}wcf.acp.index.credits.developedBy{/lang}</dt>
 				<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}" class="externalURL">WoltLab&reg; GmbH</a></dd>

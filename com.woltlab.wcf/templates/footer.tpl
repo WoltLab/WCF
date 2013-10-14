@@ -33,7 +33,7 @@
 			{event name='footerContents'}
 			
 			{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
-		
+			
 			{event name='copyright'}
 		</div>
 	</div>

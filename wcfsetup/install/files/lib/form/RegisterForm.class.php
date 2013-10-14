@@ -123,7 +123,7 @@ class RegisterForm extends UserAddForm {
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
-	
+		
 		if (!empty($this->username) || !empty($this->email)) {
 			throw new PermissionDeniedException();
 		}

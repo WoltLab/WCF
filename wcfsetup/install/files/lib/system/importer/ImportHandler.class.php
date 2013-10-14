@@ -10,7 +10,7 @@ use wcf\system\WCF;
 
 /**
  * Handles data import.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -21,7 +21,7 @@ use wcf\system\WCF;
 class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	/**
 	 * id map cache
-	 * @var	array 
+	 * @var	array
 	 */
 	protected $idMappingCache = array();
 	
@@ -81,8 +81,8 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	}
 	
 	/**
-	 * Gets a new id from id mapping.
-	 *
+	 * Returns a new id from id mapping.
+	 * 
 	 * @param	string		$type
 	 * @param	mixed		$oldID
 	 * @return	integer		$newID
@@ -118,7 +118,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	
 	/**
 	 * Saves an id mapping.
-	 *
+	 * 
 	 * @param	string		$type
 	 * @param	integer		$oldID
 	 * @param	integer		$newID

@@ -163,8 +163,8 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets the object type id with the given definition name and given name.
-	 *
+	 * Returns the object type id with the given definition name and given name.
+	 * 
 	 * @param	string		$definitionName
 	 * @param	string		$objectTypeName
 	 * @return	integer

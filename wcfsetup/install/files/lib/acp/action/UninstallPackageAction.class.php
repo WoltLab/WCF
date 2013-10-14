@@ -188,7 +188,7 @@ class UninstallPackageAction extends InstallPackageAction {
 			$installationType = $this->installation->nodeBuilder->getInstallationTypeByQueue($queueID);
 			$currentAction = WCF::getLanguage()->getDynamicVariable('wcf.acp.package.uninstallation.step.'.$installationType, array('packageName' => $packageName));
 		}
-	
+		
 		return $currentAction;
 	}
 }

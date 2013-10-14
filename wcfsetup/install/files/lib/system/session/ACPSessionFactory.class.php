@@ -50,7 +50,7 @@ class ACPSessionFactory {
 	/**
 	 * Returns the session id from request (GET/POST). Returns an empty string,
 	 * if no session id was given.
-	 *
+	 * 
 	 * @return	string
 	 */
 	protected function readSessionID() {

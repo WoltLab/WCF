@@ -81,7 +81,6 @@
 			<category name="user">
 				<showorder>3</showorder>
 			</category>
-			
 				<category name="user.general">
 					<parent>user</parent>
 				</category>

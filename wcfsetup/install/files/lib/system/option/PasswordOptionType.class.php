@@ -5,7 +5,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 
 /**
  * Option type implementation for password input fields.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

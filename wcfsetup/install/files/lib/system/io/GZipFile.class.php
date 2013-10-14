@@ -56,8 +56,8 @@ class GZipFile extends File {
 		$byteBlock = 1<<14;
 		$eof = $byteBlock;
 		
-		// the correction is for zip files that are too small 
-		// to get in the first while loop 
+		// the correction is for zip files that are too small
+		// to get in the first while loop
 		$correction = 1;
 		while ($this->seek($eof) == 0) {
 			$eof += $byteBlock;

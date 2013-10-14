@@ -88,11 +88,11 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 		if (empty($this->objectListClassName)) {
 			throw new SystemException('DatabaseObjectList class name not specified.');
 		}
-	
+		
 		if (!ClassUtil::isInstanceOf($this->objectListClassName, 'wcf\data\DatabaseObjectList')) {
 			throw new SystemException("'".$this->objectListClassName."' does not extend 'wcf\data\DatabaseObjectList'");
 		}
-	
+		
 		$this->objectList = new $this->objectListClassName();
 		$this->objectList->sqlLimit = $this->limit;
 		$this->objectList->sqlOffset = $this->limit * $this->loopCount;

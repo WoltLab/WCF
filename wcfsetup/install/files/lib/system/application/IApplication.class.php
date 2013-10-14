@@ -19,7 +19,7 @@ interface IApplication {
 	
 	/**
 	 * Returns true if current application is treated as active and was invoked directly.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isActiveApplication();

@@ -425,14 +425,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	
 	/**
 	 * Unmarks users.
-	 *
+	 * 
 	 * @param	array<integer>		$userIDs
 	 */
 	protected function unmarkItems(array $userIDs = array()) {
 		if (empty($userIDs)) {
 			$userIDs = $this->objectIDs;
 		}
-	
+		
 		if (!empty($userIDs)) {
 			ClipboardHandler::getInstance()->unmark($userIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
 		}

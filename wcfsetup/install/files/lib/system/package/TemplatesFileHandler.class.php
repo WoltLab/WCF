@@ -24,13 +24,13 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler {
 	 */
 	public function logFiles(array $files) {
 		$packageID = $this->packageInstallation->getPackageID();
-	
+		
 		// remove file extension
 		foreach ($files as &$file) {
 			$file = substr($file, 0, -4);
 		}
 		unset($file);
-	
+		
 		// get existing templates
 		$existingTemplates = $updateTemplateIDs = array();
 		$sql = "SELECT	templateName, templateID
@@ -43,7 +43,7 @@ class TemplatesFileHandler extends ACPTemplatesFileHandler {
 		while ($row = $statement->fetchArray()) {
 			$existingTemplates[$row['templateName']] = $row['templateID'];
 		}
-	
+		
 		// save new templates
 		$sql = "INSERT INTO	wcf".WCF_N."_template
 					(packageID, templateName, lastModificationTime, application)

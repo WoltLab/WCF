@@ -76,7 +76,7 @@ class LanguageEditForm extends LanguageAddForm {
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		if (!count($_POST)) {
 			$this->countryCode = $this->language->countryCode;
 			$this->languageName = $this->language->languageName;

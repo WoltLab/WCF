@@ -84,7 +84,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	public $sqlJoins = '';
 	
 	/**
-	 * enables the automatic usage of the qualified shorthand 
+	 * enables the automatic usage of the qualified shorthand
 	 * @var	boolean
 	 */
 	public $useQualifiedShorthand = true;

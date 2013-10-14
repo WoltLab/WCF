@@ -48,7 +48,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 			foreach ($children as $child) {
 				$data[$child->tagName] = $child->nodeValue;
 			}
-
+			
 			$this->saveCategory($data);
 		}
 	}
@@ -88,7 +88,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * Imports options.
-	 *
+	 * 
 	 * @param	\DOMXPath	$xpath
 	 */
 	protected function importOptions(\DOMXPath $xpath) {
@@ -193,7 +193,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 			if (!$row) {
 				throw new SystemException("unknown object type '".$optionType."' given");
 			}
-
+			
 			$this->optionTypeIDs[$optionType] = $row['objectTypeID'];
 		}
 		

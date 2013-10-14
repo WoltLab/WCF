@@ -47,7 +47,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	
 	/**
 	 * Returns the message for this notification event.
-	 *
+	 * 
 	 * @param	string		$notificationType
 	 * @return	string
 	 */

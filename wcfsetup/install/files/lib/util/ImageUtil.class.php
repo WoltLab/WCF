@@ -36,7 +36,7 @@ final class ImageUtil {
 	 * Return the file extension for an image with the given mime type.
 	 * 
 	 * @param	string		$mimeType
-	 * @return	string		
+	 * @return	string
 	 * @see	http://www.php.net/manual/en/function.image-type-to-mime-type.php
 	 */
 	public static function getExtensionByMimeType($mimeType) {

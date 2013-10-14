@@ -29,7 +29,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		if (!isset($this->parameters['data']['lastChangeTime'])) {
 			$this->parameters['data']['lastChangeTime'] = TIME_NOW;
 		}
-	
+		
 		return parent::create();
 	}
 	

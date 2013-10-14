@@ -30,7 +30,7 @@ interface ITaggable {
 	
 	/**
 	 * Returns the application of the result template.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getApplication();

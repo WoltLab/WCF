@@ -168,7 +168,7 @@ $.extend(true, {
 	
 	/**
 	 * Escapes an ID to work with jQuery selectors.
-	 *
+	 * 
 	 * @see		http://docs.jquery.com/Frequently_Asked_Questions#How_do_I_select_an_element_by_an_ID_that_has_characters_used_in_CSS_notation.3F
 	 * @param	string		id
 	 * @return	string
@@ -201,7 +201,7 @@ $.extend(true, {
 				$length++;
 			}
 		}
-
+		
 		return $length;
 	}
 });
@@ -555,7 +555,7 @@ $.extend(WCF, {
 	
 	/**
 	 * Counter for dynamic element ids
-	 *
+	 * 
 	 * @var	integer
 	 */
 	_idCounter: 0,
@@ -756,7 +756,7 @@ WCF.Dropdown = {
 			
 			var $verticalScrollTolerance = $(element).height() / 2;
 			
-			// check if dropdown toggle is still (partially) visible 
+			// check if dropdown toggle is still (partially) visible
 			if ($dropdownOffset.top + $verticalScrollTolerance <= $dialogContentOffset.top) {
 				// top check
 				WCF.Dropdown.toggleDropdown($dropdownID);
@@ -3546,7 +3546,7 @@ WCF.String = {
 	
 	/**
 	 * Escapes a String to work with RegExp.
-	 *
+	 * 
 	 * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/regexp.js#L25
 	 * @param	string	string
 	 * @return	string
@@ -4053,7 +4053,7 @@ WCF.Template = Class.extend({
 	
 	/**
 	 * Fetches the template with the given variables.
-	 *
+	 * 
 	 * @param	v	variables to insert
 	 * @return		parsed template
 	 */
@@ -7244,7 +7244,6 @@ WCF.Popover = Class.extend({
 	 */
 	_popoverContent: null,
 	
-	
 	/**
 	 * popover horizontal offset
 	 * @var	integer
@@ -9176,18 +9175,18 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 	 */
 	_processTabs: function() {
 		var that = this;
-
+		
 		this.tablist = this._getList()
 			.addClass( "ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" )
 			.attr( "role", "tablist" );
-
+		
 		this.tabs = this.tablist.find( "> li:has(a[href])" )
 			.addClass( "ui-state-default ui-corner-top" )
 			.attr({
 				role: "tab",
 				tabIndex: -1
 			});
-
+		
 		this.anchors = this.tabs.map(function() {
 				return $( "a", this )[ 0 ];
 			})
@@ -9196,15 +9195,15 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 				role: "presentation",
 				tabIndex: -1
 			});
-
+		
 		this.panels = $();
-
+		
 		this.anchors.each(function( i, anchor ) {
 			var selector, panel,
 				anchorId = $( anchor ).uniqueId().attr( "id" ),
 				tab = $( anchor ).closest( "li" ),
 				originalAriaControls = tab.attr( "aria-controls" );
-
+			
 			// inline tab
 			selector = anchor.hash;
 			panel = that.element.find( that._sanitizeSelector( selector ) );
@@ -9221,7 +9220,7 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 			});
 			panel.attr( "aria-labelledby", anchorId );
 		});
-
+		
 		this.panels
 			.addClass( "ui-tabs-panel ui-widget-content ui-corner-bottom" )
 			.attr( "role", "tabpanel" );

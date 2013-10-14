@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace wcf\data\user\ignore;
 
 /**

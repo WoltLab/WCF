@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the form for adding new template groups.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -84,7 +84,7 @@ class TemplateGroupAddForm extends AbstractForm {
 		if (empty($this->templateGroupName)) {
 			throw new UserInputException('templateGroupName');
 		}
-	
+		
 		$sql = "SELECT	COUNT(*) AS count
 			FROM	wcf".WCF_N."_template_group
 			WHERE	templateGroupName = ?";
@@ -107,7 +107,7 @@ class TemplateGroupAddForm extends AbstractForm {
 		if (!preg_match('/^[a-z0-9_\- ]+\/$/i', $this->templateGroupFolderName)) {
 			throw new UserInputException('templateGroupFolderName', 'notValid');
 		}
-	
+		
 		$sql = "SELECT	COUNT(*) AS count
 			FROM	wcf".WCF_N."_template_group
 			WHERE	templateGroupFolderName = ?";
@@ -147,7 +147,7 @@ class TemplateGroupAddForm extends AbstractForm {
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		$templateGroupList = new TemplateGroupList();
 		$templateGroupList->sqlOrderBy = "templateGroupName";
 		$templateGroupList->readObjects();

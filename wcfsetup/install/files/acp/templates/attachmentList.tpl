@@ -21,7 +21,7 @@
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.global.filter{/lang}</legend>
-		
+			
 			<dl>
 				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 				<dd>

@@ -30,7 +30,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 		$data = array();
 		
 		// get all options
-		$sql = "SELECT	optionName, optionID 
+		$sql = "SELECT	optionName, optionID
 			FROM	wcf".WCF_N."_user_group_option";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();

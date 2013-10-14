@@ -48,7 +48,6 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 */
 	public $inDebugMode = false;
 	
-
 	/**
 	 * results of the executed action
 	 * @var	mixed
@@ -151,14 +150,14 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	
 	/**
 	 * Throws an previously catched exception while maintaing the propriate stacktrace.
-	 *
+	 * 
 	 * @param	\Exception	$e
 	 */
 	protected function throwException(\Exception $e) {
 		if ($this->inDebugMode) {
 			throw $e;
 		}
-	
+		
 		if ($e instanceof IllegalLinkException) {
 			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
 		}
@@ -193,7 +192,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	
 	/**
 	 * Returns action response.
-	 *
+	 * 
 	 * @return	mixed
 	 */
 	public function getResponse() {
@@ -210,7 +209,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	/**
 	 * Performs a debug call to AJAXInvokeAction, allowing testing without relying on JavaScript.
 	 * The $data-array should be build like within WCF.Action.Proxy, look below for an example:
-	 *
+	 * 
 	 * $data = array(
 	 * 	'actionName' => 'foo',
 	 * 	'className' => 'wcf\foo\bar\FooBarAction',
@@ -222,7 +221,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 * 		)
 	 * 	)
 	 * )
-	 *
+	 * 
 	 * @param	array		$data
 	 * @param	string		$className
 	 * @param	string		$actionName

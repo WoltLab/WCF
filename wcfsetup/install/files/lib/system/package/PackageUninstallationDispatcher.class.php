@@ -31,7 +31,7 @@ use wcf\system\WCF;
 class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	/**
 	 * Creates a new instance of PackageUninstallationDispatcher.
-	 *
+	 * 
 	 * @param	wcf\data\package\installation\queue\PackageInstallationQueue	$queue
 	 */
 	public function __construct(PackageInstallationQueue $queue) {

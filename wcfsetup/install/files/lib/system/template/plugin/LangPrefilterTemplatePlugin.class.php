@@ -30,7 +30,7 @@ class LangPrefilterTemplatePlugin implements IPrefilterTemplatePlugin {
 		$sourceContent = preg_replace_callback("~{$ldq}lang{$rdq}([\w\.]+){$ldq}/lang{$rdq}~", function ($match) {
 			return WCF::getLanguage()->get($match[1]);
 		}, $sourceContent);
-
+		
 		return $sourceContent;
 	}
 }

@@ -28,7 +28,7 @@ use wcf\system\WCF;
  * LikeHandler::getInstance()->loadLikeObjects($objectType, $objectIDs);
  * // get like data
  * $likeObjects = LikeHandler::getInstance()->getLikeObjects($objectType);
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

@@ -58,7 +58,7 @@ class StyleHandler extends SingletonFactory {
 	
 	/**
 	 * Returns a list of all styles.
-	 *
+	 * 
 	 * @return	array<wcf\data\style\Style>
 	 */
 	public function getStyles() {

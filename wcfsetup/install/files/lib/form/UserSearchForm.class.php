@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace wcf\form;
 use wcf\acp\form\UserOptionListForm;
 use wcf\data\search\SearchEditor;

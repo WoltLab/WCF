@@ -65,7 +65,7 @@ class GroupedAttachmentList extends AttachmentList {
 	
 	/**
 	 * Sets the permissions for attachment access.
-	 *
+	 * 
 	 * @param	array<boolean>		$permissions
 	 */
 	public function setPermissions(array $permissions) {

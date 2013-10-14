@@ -55,14 +55,14 @@ interface IMessageQuickReplyAction {
 	
 	/**
 	 * Creates a new message and returns it.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function quickReply();
 	
 	/**
 	 * Validates the container object for quick reply.
-	 *
+	 * 
 	 * @param	wcf\data\DatabaseObject		$container
 	 */
 	public function validateContainer(DatabaseObject $container);

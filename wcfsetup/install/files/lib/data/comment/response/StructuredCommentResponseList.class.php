@@ -88,7 +88,7 @@ class StructuredCommentResponseList extends CommentResponseList {
 	
 	/**
 	 * Fetches the like data.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function getLikeData() {

@@ -37,7 +37,7 @@ class TemplateEditor extends DatabaseObjectEditor {
 	/**
 	 * Saves the source of this template.
 	 * 
-	 * @param	string		$source 
+	 * @param	string		$source
 	 */
 	public function setSource($source) {
 		$path = $this->getPath();
@@ -47,7 +47,7 @@ class TemplateEditor extends DatabaseObjectEditor {
 			mkdir($folder, 0777);
 		}
 		
-		// set source		
+		// set source
 		$file = new File($path);
 		$file->write($source);
 		$file->close();
@@ -64,7 +64,7 @@ class TemplateEditor extends DatabaseObjectEditor {
 		// get current path
 		$currentPath = $this->getPath();
 		
-		// get new path		
+		// get new path
 		if ($templateGroupID != $this->templateGroupID) {
 			// get folder name
 			$sql = "SELECT	templateGroupFolderName

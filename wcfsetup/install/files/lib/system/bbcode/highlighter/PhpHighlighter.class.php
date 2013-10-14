@@ -62,7 +62,7 @@ class PhpHighlighter extends Highlighter {
 		// convert colors to classes
 		$highlightedCode = strtr($highlightedCode, self::$colorToClass);
 		
-		// replace double quotes by entity 
+		// replace double quotes by entity
 		return Regex::compile('(?<!\<span class=)"(?!\>)')->replace($highlightedCode, '&quot;');
 	}
 }

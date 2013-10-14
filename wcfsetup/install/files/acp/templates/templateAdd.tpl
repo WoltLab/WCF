@@ -57,10 +57,9 @@
 				{event name='dataFields'}
 			</fieldset>
 			
-			
 			<fieldset>
 				<legend><label for="templateSource">{lang}wcf.acp.template.source{/lang}</label></legend>
-			
+				
 				<dl class="wide">
 					<dt><label for="templateSource">{lang}wcf.acp.template.source{/lang}</label></dt>
 					<dd>
@@ -69,7 +68,6 @@
 					</dd>
 				</dl>
 			</fieldset>
-				
 			
 			{event name='fieldsets'}
 		</div>
@@ -83,6 +81,5 @@
 {else}
 	<p class="error">{lang}wcf.acp.template.error.noGroups{/lang}</p>
 {/if}
-
 
 {include file='footer'}

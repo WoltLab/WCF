@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace wcf\data\smiley\category;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\IllegalLinkException;

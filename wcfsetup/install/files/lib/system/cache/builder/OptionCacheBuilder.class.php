@@ -40,7 +40,7 @@ class OptionCacheBuilder extends AbstractCacheBuilder {
 		
 		// option categories
 		// get all option categories and sort categories by priority
-		$sql = "SELECT	categoryName, categoryID 
+		$sql = "SELECT	categoryName, categoryID
 			FROM	wcf".WCF_N."_".$this->tableName."_category";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
@@ -75,7 +75,7 @@ class OptionCacheBuilder extends AbstractCacheBuilder {
 		// options
 		// get all options and sort options by priority
 		$optionIDs = array();
-		$sql = "SELECT		optionName, optionID 
+		$sql = "SELECT		optionName, optionID
 			FROM		wcf".WCF_N."_".$this->tableName;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();

@@ -61,7 +61,6 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 			$content += $(listItem).text().replace(/\n+$/, '');
 		});
 		
-		
 		if (this._dialog === null) {
 			this._dialog = $('<div><textarea cols="60" rows="12" readonly="readonly" /></div>').hide().appendTo(document.body);
 			this._dialog.children('textarea').val($content);
@@ -724,7 +723,7 @@ WCF.Message.QuickReply = Class.extend({
 	
 	/**
 	 * Returns container element.
-	 *
+	 * 
 	 * @return	jQuery
 	 */
 	getContainer: function() {

@@ -118,10 +118,13 @@ final class PasswordUtil {
 		$dbHash = substr($dbHash, strlen($type) + 1);
 		
 		// check for salt
-		$salt = '';
-		if (($pos = strrpos($dbHash, ':')) !== false) {
-			$salt = substr(substr($dbHash, $pos), 1);
-			$dbHash = substr($dbHash, 0, $pos);
+		$parts = explode(':', $dbHash, 2);
+		if (count($parts) == 2) {
+			list($dbHash, $salt) = $parts;
+		}
+		else {
+			$dbHash = $parts[0];
+			$salt = '';
 		}
 		
 		// compare hash
@@ -321,7 +324,7 @@ final class PasswordUtil {
 	
 	/**
 	 * Validates the password hash for MyBB 1.x (mybb1).
-	 *
+	 * 
 	 * @param	string		$username
 	 * @param	string		$password
 	 * @param	string		$salt

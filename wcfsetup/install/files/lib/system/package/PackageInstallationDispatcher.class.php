@@ -99,7 +99,7 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Creates a new instance of PackageInstallationDispatcher.
-	 *
+	 * 
 	 * @param	wcf\data\package\installation\queue\PackageInstallationQueue	$queue
 	 */
 	public function __construct(PackageInstallationQueue $queue) {
@@ -1111,7 +1111,7 @@ class PackageInstallationDispatcher {
 				continue;
 			}
 			$baseTableColumns = WCF::getDB()->getEditor()->getColumns(call_user_func(array($objectType->className, 'getDatabaseTableName')));
-
+			
 			// remove primary key from base table columns
 			foreach ($baseTableColumns as $key => $column) {
 				if ($column['data']['key'] == 'PRIMARY') {
@@ -1130,7 +1130,7 @@ class PackageInstallationDispatcher {
 			if (empty($versionTableColumns)) {
 				$columns = array_merge($versionTableBaseColumns, $baseTableColumns);
 				WCF::getDB()->getEditor()->createTable(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')), $columns);
-
+				
 				// add version table to plugin
 				$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log
 							(packageID, sqlTable)
@@ -1152,7 +1152,7 @@ class PackageInstallationDispatcher {
 				foreach ($versionTableBaseColumns as $column) {
 					$versionTableBaseColumnNames[] = $column['name'];
 				}
-
+				
 				// check garbage columns in versioned table
 				foreach ($versionTableColumns as $columnData) {
 					if (!in_array($columnData['name'], $baseTableColumnNames) && !in_array($columnData['name'], $versionTableBaseColumnNames)) {

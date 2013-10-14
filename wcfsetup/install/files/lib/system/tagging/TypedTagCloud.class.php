@@ -22,7 +22,7 @@ class TypedTagCloud extends TagCloud {
 	
 	/**
 	 * Contructs a new TypedTagCloud object.
-	 *
+	 * 
 	 * @param	string		$objectType
 	 * @param	array<integer>	$languageIDs
 	 */

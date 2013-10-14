@@ -371,7 +371,7 @@ class ModerationQueueManager extends SingletonFactory {
 				$definitionNames[$objectTypeID] = $definitionName;
 			}
 		}
-	
+		
 		return $definitionNames;
 	}
 	

@@ -574,7 +574,7 @@ WCF.ACL.List = Class.extend({
 	
 	/**
 	 * Inserts hidden form elements for each value.
-	 *
+	 * 
 	 * @param	string		$type
 	 */
 	_save: function($type) {

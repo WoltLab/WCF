@@ -46,7 +46,7 @@ class SearchIndexManager extends SingletonFactory {
 	
 	/**
 	 * Adds a new entry.
-	 *
+	 * 
 	 * @param	string		$objectType
 	 * @param	integer		$objectID
 	 * @param	string		$message

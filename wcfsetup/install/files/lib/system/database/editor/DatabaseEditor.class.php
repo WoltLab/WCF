@@ -21,7 +21,7 @@ abstract class DatabaseEditor {
 	
 	/**
 	 * Creates a new DatabaseEditor object.
-	 *
+	 * 
 	 * @param	wcf\system\database\Database	$dbObj
 	 */
 	public function __construct(Database $dbObj) {

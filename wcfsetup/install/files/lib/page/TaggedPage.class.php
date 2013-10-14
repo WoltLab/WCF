@@ -8,7 +8,7 @@ use wcf\system\WCF;
 
 /**
  * Shows the a list of tagged objects.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -80,7 +80,7 @@ class TaggedPage extends MultipleLinkPage {
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		$this->tagCloud = new TypedTagCloud($this->objectType->objectType);
 	}
 	

@@ -78,12 +78,12 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	public function getOpenParentNodes() {
 		$element = $this;
 		$i = 0;
-	
+		
 		while ($element->parentNode->parentNode != null && $element->isLastSibling()) {
 			$i++;
 			$element = $element->parentNode;
 		}
-	
+		
 		return $i;
 	}
 	

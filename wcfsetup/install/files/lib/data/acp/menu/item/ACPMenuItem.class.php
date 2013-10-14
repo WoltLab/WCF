@@ -65,7 +65,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	
 	/**
 	 * Returns controller name.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getController() {
@@ -95,7 +95,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	
 	/**
 	 * Returns the menu item name.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function __toString() {

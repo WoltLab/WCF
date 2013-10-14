@@ -25,7 +25,7 @@ class PackageUpdate extends DatabaseObject {
 	
 	/**
 	 * Returns the name of the package the update belongs to.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getName() {

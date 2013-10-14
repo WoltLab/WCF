@@ -72,7 +72,7 @@ class UserOptionHandler extends OptionHandler {
 	
 	/**
 	 * Enables edit mode.
-	 *
+	 * 
 	 * @param	boolean		$enable
 	 */
 	public function enableEditMode($enable = true) {
@@ -81,7 +81,7 @@ class UserOptionHandler extends OptionHandler {
 	
 	/**
 	 * Enables search mode.
-	 *
+	 * 
 	 * @param	boolean		$enable
 	 */
 	public function enableSearchMode($enable = true) {

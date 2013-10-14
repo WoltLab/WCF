@@ -709,7 +709,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	
 	/**
 	 * Returns the formatted value of the user option with the given name.
-	 *
+	 * 
 	 * @param	string		$name
 	 * @return	mixed
 	 */

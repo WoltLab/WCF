@@ -60,7 +60,7 @@ class LanguageCacheBuilder extends AbstractCacheBuilder {
 			$data['categories'][$languageCategory->languageCategory] = $languageCategory;
 			$data['categoryIDs'][$languageCategory->languageCategoryID] = $languageCategory->languageCategory;
 		}
-
+		
 		return $data;
 	}
 }

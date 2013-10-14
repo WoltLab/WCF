@@ -93,7 +93,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator {
 	
 	/**
 	 * Sets editable state.
-	 *
+	 * 
 	 * @param	boolean		$editable
 	 */
 	public function setIsEditable($editable) {
@@ -111,7 +111,7 @@ class StructuredCommentResponse extends DatabaseObjectDecorator {
 	
 	/**
 	 * Returns true if the response is editable by current user.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isEditable() {

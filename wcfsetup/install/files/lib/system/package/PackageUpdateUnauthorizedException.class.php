@@ -65,7 +65,7 @@ class PackageUpdateUnauthorizedException extends UserException {
 	
 	/**
 	 * Returns package update version.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function getPackageUpdateVersion() {
@@ -74,7 +74,7 @@ class PackageUpdateUnauthorizedException extends UserException {
 	
 	/**
 	 * Returns the HTTP request object.
-	 *
+	 * 
 	 * @return	wcf\util\HTTPRequest
 	 */
 	public function getRequest() {
@@ -83,7 +83,7 @@ class PackageUpdateUnauthorizedException extends UserException {
 	
 	/**
 	 * Returns package update server object.
-	 *
+	 * 
 	 * @return	wcf\data\package\update\server\PackageUpdateServer
 	 */
 	public function getUpdateServer() {
