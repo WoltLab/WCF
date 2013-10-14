@@ -2143,6 +2143,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.register.honeyPot"><![CDATA[Please Ignore!]]></item>
 		<item name="wcf.user.register.honeyPot.description"><![CDATA[Heads up! If you can see this, you are strongly encouraged <strong>NOT</strong> to fill in the next two input fields!]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Search for content by “{$user->username}”]]></item>
+		<item name="wcf.user.author"><![CDATA[Author]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
