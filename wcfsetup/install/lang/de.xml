@@ -625,7 +625,7 @@
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Einbindung in einem Frame verhindern]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sendet den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'http://de.wikipedia.org/wiki/Clickjacking'|rawurlencode}" class="externalURL">„X-Frame-Options“</a> Header um die Einbettung dieser Seite in einem Frame zu verhindern (sendet „SAMEORIGIN“).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>
-		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (Standard)]]></item>
+		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Bibliothek für die Generierung von Grafiken, wird z.B. für die Skalierung von hochgeladenen Bildern verwendet. „ImageMagick“ ist in der Regel deutlich schneller, steht aber nicht auf jedem Server zur Verfügung.]]></item>
 		<item name="wcf.acp.option.import"><![CDATA[Optionen importieren]]></item>
