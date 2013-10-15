@@ -15,6 +15,11 @@ use wcf\system\WCF;
  */
 class FloatOptionType extends TextOptionType {
 	/**
+	 * @see	wcf\system\option\TextOptionType::$inputClass
+	 */
+	protected $inputClass = 'medium';
+	
+	/**
 	 * @see	wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
