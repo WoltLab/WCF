@@ -4,7 +4,6 @@ use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
-use wcf\util\StringUtil;
 use wcf\util\UserUtil; 
 
 /**

@@ -3,7 +3,6 @@ namespace wcf\data\user\avatar;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 use wcf\system\WCF;
 
 /**

@@ -7,7 +7,6 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a page with lists all categories of a certain object

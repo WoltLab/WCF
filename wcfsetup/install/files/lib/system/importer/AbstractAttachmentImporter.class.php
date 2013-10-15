@@ -3,7 +3,6 @@ namespace wcf\system\importer;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\SystemException;
-use wcf\util\StringUtil;
 
 /**
  * Imports attachments.

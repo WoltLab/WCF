@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\importer;
-use wcf\data\comment\CommentAction;
 use wcf\data\object\type\ObjectTypeCache;
 
 /**

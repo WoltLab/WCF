@@ -3,7 +3,6 @@ namespace wcf\data\package\update\server;
 use wcf\data\DatabaseObject;
 use wcf\system\Regex;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Represents a package update server.

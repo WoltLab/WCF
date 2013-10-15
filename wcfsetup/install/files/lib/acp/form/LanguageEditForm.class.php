@@ -6,7 +6,6 @@ use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the language edit form.

@@ -1,11 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
-use wcf\system\cache\source\NoCacheSource;
-use wcf\system\cache\CacheHandler;
-use wcf\system\event\EventHandler;
-use wcf\system\image\adapter\ImagickImageAdapter;
-use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;

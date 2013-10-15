@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\exporter;
-use wcf\system\database\DatabaseException;
 use wcf\system\database\MySQLDatabase;
 use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;

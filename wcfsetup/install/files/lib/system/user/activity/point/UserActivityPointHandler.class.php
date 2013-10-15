@@ -1,8 +1,6 @@
 <?php
 namespace wcf\system\user\activity\point;
-use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\activity\point\event\UserActivityPointEventAction;
 use wcf\data\user\UserProfileAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;

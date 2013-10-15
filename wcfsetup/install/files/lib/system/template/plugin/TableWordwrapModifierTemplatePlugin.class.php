@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\system\template\TemplateEngine;
-use wcf\util\StringUtil;
 
 /**
  * Template modifier plugin which wordwraps a string.

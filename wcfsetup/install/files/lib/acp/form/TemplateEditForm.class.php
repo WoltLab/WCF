@@ -1,15 +1,10 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\template\group\TemplateGroup;
-use wcf\data\template\group\TemplateGroupAction;
-use wcf\data\template\group\TemplateGroupList;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the form for adding new templates.

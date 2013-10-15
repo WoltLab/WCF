@@ -2,7 +2,6 @@
 namespace wcf\acp\form;
 use wcf\data\category\Category;
 use wcf\data\category\CategoryNodeTree;
-use wcf\data\package\PackageCache;
 use wcf\data\smiley\SmileyAction;
 use wcf\data\smiley\SmileyEditor;
 use wcf\form\AbstractForm;

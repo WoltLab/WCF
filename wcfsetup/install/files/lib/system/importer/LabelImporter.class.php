@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\label\LabelEditor;
-use wcf\system\WCF;
 
 /**
  * Imports labels.

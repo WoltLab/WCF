@@ -2,7 +2,6 @@
 namespace wcf\system\package;
 use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\system\exception\UserException;
-use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\HTTPRequest;
 

@@ -4,7 +4,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
-use wcf\util\StringUtil;
 
 /**
  * Abstract class for a list of database objects.

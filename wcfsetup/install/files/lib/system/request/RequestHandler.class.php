@@ -9,7 +9,6 @@ use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
-use wcf\util\StringUtil;
 
 /**
  * Handles http requests.

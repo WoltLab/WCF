@@ -3,7 +3,6 @@ namespace wcf\acp\form;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\template\group\TemplateGroup;
-use wcf\data\template\group\TemplateGroupAction;
 use wcf\data\template\group\TemplateGroupList;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateAction;

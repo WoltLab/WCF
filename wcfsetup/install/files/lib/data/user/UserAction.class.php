@@ -6,14 +6,12 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
-use wcf\system\cache\builder\UserNotificationEventCacheBuilder;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
 
 /**
