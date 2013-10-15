@@ -32,3 +32,8 @@ define('TIMEZONE', 'Europe/Berlin');
 
 define('ENABLE_DEBUG_MODE', 1);
 define('ENABLE_BENCHMARK', 0);
+define('REGISTER_FORBIDDEN_USERNAMES', 'moderator
+supermoderator
+administrator
+admin
+adminstrator');
