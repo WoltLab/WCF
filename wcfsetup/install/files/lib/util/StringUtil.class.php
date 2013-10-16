@@ -376,8 +376,8 @@ final class StringUtil {
 	 */
 	public static function split($string, $length = 1) {
 		$result = array();
-		for ($i = 0, $max = self::length($string); $i < $max; $i += $length) {
-			$result[] = self::substring($string, $i, $length);
+		for ($i = 0, $max = mb_strlen($string); $i < $max; $i += $length) {
+			$result[] = mb_substr($string, $i, $length);
 		}
 		return $result;
 	}
@@ -396,7 +396,7 @@ final class StringUtil {
 			$haystack = mb_strtolower($haystack);
 			$needle = mb_strtolower($needle);
 		}
-		// using substring and === is MUCH faster for long strings then using indexOf.
+		// using mb_substr and === is MUCH faster for long strings then using indexOf.
 		return mb_substr($haystack, 0, mb_strlen($needle)) === $needle;
 	}
 	
@@ -422,7 +422,7 @@ final class StringUtil {
 	 * Alias to php str_pad function with multibyte support.
 	 */
 	public static function pad($input, $padLength, $padString=' ', $padType=STR_PAD_RIGHT) {
-		$additionalPadding = strlen($input) - self::length($input);
+		$additionalPadding = strlen($input) - mb_strlen($input);
 		return str_pad($input, $padLength + $additionalPadding, $padString, $padType);
 	}
 	
