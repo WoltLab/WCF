@@ -17,7 +17,7 @@ use wcf\system\WCF;
 abstract class TreeMenu extends SingletonFactory {
 	/**
 	 * list of visible menu items
-	 * @var	array<wcf\system\menu\ITreeMenuItem>
+	 * @var	array<\wcf\system\menu\ITreeMenuItem>
 	 */
 	public $menuItemList = array();
 	
@@ -29,12 +29,12 @@ abstract class TreeMenu extends SingletonFactory {
 	
 	/**
 	 * list of all menu items
-	 * @var	array<wcf\system\menu\ITreeMenuItem>
+	 * @var	array<\wcf\system\menu\ITreeMenuItem>
 	 */
 	public $menuItems = null;
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get menu items from cache
@@ -66,7 +66,7 @@ abstract class TreeMenu extends SingletonFactory {
 	/**
 	 * Checks the options and permissions of given menu item.
 	 * 
-	 * @param	wcf\system\menu\ITreeMenuItem		$item
+	 * @param	\wcf\system\menu\ITreeMenuItem		$item
 	 * @return	boolean
 	 */
 	protected function checkMenuItem(ITreeMenuItem $item) {

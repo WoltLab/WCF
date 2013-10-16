@@ -25,7 +25,7 @@ class SearchEngine extends SingletonFactory {
 	protected $availableObjectTypes = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get available object types
@@ -50,7 +50,7 @@ class SearchEngine extends SingletonFactory {
 	 * Returns the object type with the given name.
 	 * 
 	 * @param	string		$objectTypeName
-	 * @return	wcf\data\object\type\ObjectType
+	 * @return	\wcf\data\object\type\ObjectType
 	 */
 	public function getObjectType($objectTypeName) {
 		if (isset($this->availableObjectTypes[$objectTypeName])) {
@@ -66,7 +66,7 @@ class SearchEngine extends SingletonFactory {
 	 * @param	string								$q
 	 * @param	array								$objectTypes
 	 * @param	boolean								$subjectOnly
-	 * @param	wcf\system\database\util\PreparedStatementConditionBuilder	$searchIndexCondition
+	 * @param	\wcf\system\database\util\PreparedStatementConditionBuilder	$searchIndexCondition
 	 * @param	array								$additionalConditions
 	 * @param	string								$orderBy
 	 * @param	integer								$limit

@@ -15,7 +15,7 @@ use wcf\system\moderation\queue\ModerationQueueManager;
  */
 class ModerationQueueEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
+	 * @see	\wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\moderation\queue\ModerationQueue';
 	

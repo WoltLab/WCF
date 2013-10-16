@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class NamedUserException extends UserException {
 	/**
-	 * @see	wcf\system\exception\LoggedException::$ignoreDebugMode
+	 * @see	\wcf\system\exception\LoggedException::$ignoreDebugMode
 	 */
 	protected $ignoreDebugMode = true;
 	

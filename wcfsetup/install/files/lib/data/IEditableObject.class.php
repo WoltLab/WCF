@@ -16,7 +16,7 @@ interface IEditableObject extends IStorableObject {
 	 * Creates a new object.
 	 * 
 	 * @param	array		$parameters
-	 * @return	wcf\data\IStorableObject
+	 * @return	\wcf\data\IStorableObject
 	 */
 	public static function create(array $parameters = array());
 	

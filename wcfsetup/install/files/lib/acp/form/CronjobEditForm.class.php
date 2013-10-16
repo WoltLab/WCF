@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class CronjobEditForm extends CronjobAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cronjob';
 	
@@ -31,12 +31,12 @@ class CronjobEditForm extends CronjobAddForm {
 	
 	/**
 	 * cronjob object
-	 * @var	wcf\data\cronjob\Cronjob
+	 * @var	\wcf\data\cronjob\Cronjob
 	 */
 	public $cronjob = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -51,7 +51,7 @@ class CronjobEditForm extends CronjobAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -88,7 +88,7 @@ class CronjobEditForm extends CronjobAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -107,7 +107,7 @@ class CronjobEditForm extends CronjobAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

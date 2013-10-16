@@ -59,7 +59,7 @@ abstract class AbstractExporter implements IExporter {
 	
 	/**
 	 * database connection
-	 * @var	wcf\system\database\Database
+	 * @var	\wcf\system\database\Database
 	 */
 	protected $database = null;
 	
@@ -88,7 +88,7 @@ abstract class AbstractExporter implements IExporter {
 	protected $selectedData = array();
 	
 	/**
-	 * @see	wcf\system\exporter\IExporter::setData()
+	 * @see	\wcf\system\exporter\IExporter::setData()
 	 */
 	public function setData($databaseHost, $databaseUser, $databasePassword, $databaseName, $databasePrefix, $fileSystemPath, $additionalData) {
 		$this->databaseHost = $databaseHost;
@@ -101,28 +101,28 @@ abstract class AbstractExporter implements IExporter {
 	}
 	
 	/**
-	 * @see	wcf\system\exporter\IExporter::init()
+	 * @see	\wcf\system\exporter\IExporter::init()
 	 */
 	public function init() {
 		$this->database = new MySQLDatabase($this->databaseHost, $this->databaseUser, $this->databasePassword, $this->databaseName, 0);
 	}
 	
 	/**
-	 * @see	wcf\system\exporter\IExporter::validateDatabaseAccess()
+	 * @see	\wcf\system\exporter\IExporter::validateDatabaseAccess()
 	 */
 	public function validateDatabaseAccess() {
 		$this->init();
 	}
 	
 	/**
-	 * @see	wcf\system\exporter\IExporter::getDefaultDatabasePrefix()
+	 * @see	\wcf\system\exporter\IExporter::getDefaultDatabasePrefix()
 	 */
 	public function getDefaultDatabasePrefix() {
 		return '';
 	}
 	
 	/**
-	 * @see	wcf\system\exporter\IExporter::countLoops()
+	 * @see	\wcf\system\exporter\IExporter::countLoops()
 	 */
 	public function countLoops($objectType) {
 		if (!isset($this->methods[$objectType]) || !method_exists($this, 'count'.$this->methods[$objectType])) {
@@ -135,7 +135,7 @@ abstract class AbstractExporter implements IExporter {
 	}
 	
 	/**
-	 * @see	wcf\system\exporter\IExporter::exportData()
+	 * @see	\wcf\system\exporter\IExporter::exportData()
 	 */
 	public function exportData($objectType, $loopCount = 0) {
 		if (!isset($this->methods[$objectType]) || !method_exists($this, 'export'.$this->methods[$objectType])) {
@@ -147,7 +147,7 @@ abstract class AbstractExporter implements IExporter {
 	}
 	
 	/**
-	 * @see	wcf\system\exporter\IExporter::validateSelectedData()
+	 * @see	\wcf\system\exporter\IExporter::validateSelectedData()
 	 */
 	public function validateSelectedData(array $selectedData) {
 		$this->selectedData = $selectedData;

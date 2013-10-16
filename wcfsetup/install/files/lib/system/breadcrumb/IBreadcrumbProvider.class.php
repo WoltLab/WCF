@@ -15,7 +15,7 @@ interface IBreadcrumbProvider {
 	/**
 	 * Returns a Breadcrumb object.
 	 * 
-	 * @return	wcf\system\breadcrumb\Breadcrumb
+	 * @return	\wcf\system\breadcrumb\Breadcrumb
 	 */
 	public function getBreadcrumb();
 }

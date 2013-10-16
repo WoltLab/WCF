@@ -26,14 +26,14 @@ interface ISearchableObjectType {
 	 * Returns the object with the given object id.
 	 * 
 	 * @param	integer		$objectID
-	 * @return	wcf\data\search\ISearchResultObject
+	 * @return	\wcf\data\search\ISearchResultObject
 	 */
 	public function getObject($objectID);
 	
 	/**
 	 * Shows the form part of this object type.
 	 * 
-	 * @param	wcf\form\IForm		$form		instance of the form class where the search has taken place
+	 * @param	\wcf\form\IForm		$form		instance of the form class where the search has taken place
 	 */
 	public function show(IForm $form = null);
 	
@@ -47,8 +47,8 @@ interface ISearchableObjectType {
 	/**
 	 * Returns the search conditions of this message type.
 	 * 
-	 * @param	wcf\form\IForm			$form
-	 * @return	wcf\system\database\util\PreparedStatementConditionBuilder
+	 * @param	\wcf\form\IForm			$form
+	 * @return	\wcf\system\database\util\PreparedStatementConditionBuilder
 	 */
 	public function getConditions(IForm $form = null);
 	
@@ -118,9 +118,9 @@ interface ISearchableObjectType {
 	/**
 	 * Provides the option to replace the default search index SQL query by an own version. 
 	 * 
-	 * @param	wcf\system\database\util\PreparedStatementConditionBuilder	$fulltextCondition
-	 * @param	wcf\system\database\util\PreparedStatementConditionBuilder	$searchIndexConditions
-	 * @param	wcf\system\database\util\PreparedStatementConditionBuilder	$additionalConditions
+	 * @param	\wcf\system\database\util\PreparedStatementConditionBuilder	$fulltextCondition
+	 * @param	\wcf\system\database\util\PreparedStatementConditionBuilder	$searchIndexConditions
+	 * @param	\wcf\system\database\util\PreparedStatementConditionBuilder	$additionalConditions
 	 * @param	string								$orderBy
 	 * @return	string
 	 */

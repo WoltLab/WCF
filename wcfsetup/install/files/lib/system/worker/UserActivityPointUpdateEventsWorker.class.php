@@ -16,18 +16,18 @@ use wcf\system\WCF;
  */
 class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	/**
-	 * @see	wcf\system\worker\AbstractWorker::$limit
+	 * @see	\wcf\system\worker\AbstractWorker::$limit
 	 */
 	protected $limit = 1;
 	
 	/**
 	 * object types
-	 * @var	array<wcf\data\object\type\ObjectType>
+	 * @var	array<\wcf\data\object\type\ObjectType>
 	 */
 	public $objectTypes = array();
 	
 	/**
-	 * @see	wcf\system\worker\IWorker
+	 * @see	\wcf\system\worker\IWorker
 	 */
 	public function __construct(array $parameters) {
 		parent::__construct($parameters);
@@ -36,21 +36,21 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::validate()
+	 * @see	\wcf\system\worker\IWorker::validate()
 	 */
 	public function validate() {
 		WCF::getSession()->checkPermissions(array('admin.user.canEditActivityPoints'));
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::countObjects()
+	 * @see	\wcf\system\worker\IWorker::countObjects()
 	 */
 	public function countObjects() {
 		$this->count = count($this->objectTypes);
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::execute()
+	 * @see	\wcf\system\worker\IWorker::execute()
 	 */
 	public function execute() {
 		$i = 0;
@@ -71,7 +71,7 @@ class UserActivityPointUpdateEventsWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::getProceedURL()
+	 * @see	\wcf\system\worker\IWorker::getProceedURL()
 	 */
 	public function getProceedURL() {
 		return LinkHandler::getInstance()->getLink('UserActivityPointOption');

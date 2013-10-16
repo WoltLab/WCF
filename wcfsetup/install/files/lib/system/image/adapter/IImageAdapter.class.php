@@ -52,7 +52,7 @@ interface IImageAdapter {
 	 * @param	integer		$originY
 	 * @param	integer		$width
 	 * @param	integer		$height
-	 * @see		wcf\system\image\adapter\IImageAdapter::getImage()
+	 * @see		\wcf\system\image\adapter\IImageAdapter::getImage()
 	 */
 	public function clip($originX, $originY, $width, $height);
 	
@@ -67,7 +67,7 @@ interface IImageAdapter {
 	 * @param	integer		$targetY
 	 * @param	integer		$targetWidth
 	 * @param	integer		$targetHeight
-	 * @see		wcf\system\image\adapter\IImageAdapter::getImage()
+	 * @see		\wcf\system\image\adapter\IImageAdapter::getImage()
 	 */
 	public function resize($originX, $originY, $originWidth, $originHeight, $targetX, $targetY, $targetWidth, $targetHeight);
 	
@@ -78,8 +78,8 @@ interface IImageAdapter {
 	 * @param	integer		$startY
 	 * @param	integer		$endX
 	 * @param	integer		$endY
-	 * @see		wcf\system\image\adapter\IImageAdapter::getImage()
-	 * @see		wcf\system\image\adapter\IImageAdapter::setColor()
+	 * @see		\wcf\system\image\adapter\IImageAdapter::getImage()
+	 * @see		\wcf\system\image\adapter\IImageAdapter::setColor()
 	 */
 	public function drawRectangle($startX, $startY, $endX, $endY);
 	
@@ -89,8 +89,8 @@ interface IImageAdapter {
 	 * @param	string		$string
 	 * @param	integer		$x
 	 * @param	integer		$y
-	 * @see		wcf\system\image\adapter\IImageAdapter::getImage()
-	 * @see		wcf\system\image\adapter\IImageAdapter::setColor()
+	 * @see		\wcf\system\image\adapter\IImageAdapter::getImage()
+	 * @see		\wcf\system\image\adapter\IImageAdapter::setColor()
 	 */
 	public function drawText($string, $x, $y);
 	

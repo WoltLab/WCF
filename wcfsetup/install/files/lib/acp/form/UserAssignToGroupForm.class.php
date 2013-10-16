@@ -26,12 +26,12 @@ use wcf\util\ArrayUtil;
  */
 class UserAssignToGroupForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditUser');
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
 	
@@ -49,13 +49,13 @@ class UserAssignToGroupForm extends AbstractForm {
 	
 	/**
 	 * relevant users
-	 * @var	array<wcf\data\user\User>
+	 * @var	array<\wcf\data\user\User>
 	 */
 	public $users = array();
 	
 	/**
 	 * assigned user groups
-	 * @var	array<wcf\data\user\group\UserGroup>
+	 * @var	array<\wcf\data\user\group\UserGroup>
 	 */
 	public $groups = array();
 	
@@ -66,7 +66,7 @@ class UserAssignToGroupForm extends AbstractForm {
 	protected $objectTypeID = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -87,7 +87,7 @@ class UserAssignToGroupForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -96,7 +96,7 @@ class UserAssignToGroupForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -114,7 +114,7 @@ class UserAssignToGroupForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -163,7 +163,7 @@ class UserAssignToGroupForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -172,7 +172,7 @@ class UserAssignToGroupForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

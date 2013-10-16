@@ -19,37 +19,37 @@ use wcf\system\WCF;
  */
 class UsersOnlineListPage extends SortablePage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.user.usersOnline';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('user.profile.canViewUsersOnlineList');
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$enableTracking
+	 * @see	\wcf\page\AbstractPage::$enableTracking
 	 */
 	public $enableTracking = true;
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortField
+	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = USERS_ONLINE_DEFAULT_SORT_FIELD;
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortOrder
+	 * @see	\wcf\page\SortablePage::$defaultSortOrder
 	 */
 	public $defaultSortOrder = USERS_ONLINE_DEFAULT_SORT_ORDER;
 	
 	/**
-	 * @see	wcf\page\SortablePage::$validSortFields
+	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('username', 'lastActivityTime', 'requestURI');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\user\online\UsersOnlineList';
 	
@@ -60,7 +60,7 @@ class UsersOnlineListPage extends SortablePage {
 	public $locations = array();
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -72,7 +72,7 @@ class UsersOnlineListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::readParameters()
+	 * @see	\wcf\page\MultipleLinkPage::readParameters()
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -93,7 +93,7 @@ class UsersOnlineListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -127,7 +127,7 @@ class UsersOnlineListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -142,7 +142,7 @@ class UsersOnlineListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::readObjects()
+	 * @see	\wcf\page\MultipleLinkPage::readObjects()
 	 */
 	protected function readObjects() {
 		$this->objectList->sqlLimit = 0;

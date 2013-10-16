@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class PollOptionEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
+	 * @see	\wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\poll\option\PollOption';
 }

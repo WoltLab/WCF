@@ -15,26 +15,26 @@ use wcf\data\DatabaseObjectDecorator;
  */
 class ViewablePackageUpdate extends DatabaseObjectDecorator {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\package\update\PackageUpdate';
 	
 	/**
 	 * latest accessible package update version object
-	 * @var	wcf\data\package\update\version\PackageUpdateVersion
+	 * @var	\wcf\data\package\update\version\PackageUpdateVersion
 	 */
 	protected $accessibleVersion = null;
 	
 	/**
 	 * latest package update version object
-	 * @var	wcf\data\package\update\version\PackageUpdateVersion
+	 * @var	\wcf\data\package\update\version\PackageUpdateVersion
 	 */
 	protected $latestVersion = null;
 	
 	/**
 	 * Sets latest accessible package update version object.
 	 * 
-	 * @param	wcf\data\package\update\version\PackageUpdateVersion	$latestVersion
+	 * @param	\wcf\data\package\update\version\PackageUpdateVersion	$latestVersion
 	 */
 	public function setAccessibleVersion(PackageUpdateVersion $latestVersion) {
 		$this->accessibleVersion = $latestVersion;
@@ -43,7 +43,7 @@ class ViewablePackageUpdate extends DatabaseObjectDecorator {
 	/**
 	 * Sets latest package update version object.
 	 * 
-	 * @param	wcf\data\package\update\version\PackageUpdateVersion	$latestVersion
+	 * @param	\wcf\data\package\update\version\PackageUpdateVersion	$latestVersion
 	 */
 	public function setLatestVersion(PackageUpdateVersion $latestVersion) {
 		$this->latestVersion = $latestVersion;
@@ -52,7 +52,7 @@ class ViewablePackageUpdate extends DatabaseObjectDecorator {
 	/**
 	 * Returns latest accessible package update version object.
 	 * 
-	 * @return	wcf\data\package\update\version\PackageUpdateVersion
+	 * @return	\wcf\data\package\update\version\PackageUpdateVersion
 	 */
 	public function getAccessibleVersion() {
 		return $this->accessibleVersion;
@@ -61,7 +61,7 @@ class ViewablePackageUpdate extends DatabaseObjectDecorator {
 	/**
 	 * Returns latest package update version object.
 	 * 
-	 * @return	wcf\data\package\update\version\PackageUpdateVersion
+	 * @return	\wcf\data\package\update\version\PackageUpdateVersion
 	 */
 	public function getLatestVersion() {
 		return $this->latestVersion;

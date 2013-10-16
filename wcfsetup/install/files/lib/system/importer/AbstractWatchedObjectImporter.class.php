@@ -14,7 +14,7 @@ use wcf\data\user\object\watch\UserObjectWatchEditor;
  */
 class AbstractWatchedObjectImporter extends AbstractImporter {
 	/**
-	 * @see	wcf\system\importer\AbstractImporter::$className
+	 * @see	\wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\user\object\watch';
 	
@@ -25,7 +25,7 @@ class AbstractWatchedObjectImporter extends AbstractImporter {
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see	wcf\system\importer\IImporter::import()
+	 * @see	\wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);

@@ -14,7 +14,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  */
 class ACPSessionAccessLogAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\acp\session\access\log\ACPSessionAccessLogEditor';
 }

@@ -183,7 +183,7 @@ class WindowsAnsicon extends Posix
     }
 
     /**
-     * @return Charset\AsciiExtended
+     * @return \Charset\AsciiExtended
      */
     public function getDefaultCharset()
     {

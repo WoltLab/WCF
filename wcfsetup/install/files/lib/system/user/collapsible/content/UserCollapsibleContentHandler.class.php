@@ -30,7 +30,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	protected $collapsedContent = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->cache = array(

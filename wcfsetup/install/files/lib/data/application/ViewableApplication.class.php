@@ -15,20 +15,20 @@ use wcf\data\DatabaseObjectDecorator;
  */
 class ViewableApplication extends DatabaseObjectDecorator {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\application\Application';
 	
 	/**
 	 * package object
-	 * @var	wcf\data\package\Package
+	 * @var	\wcf\data\package\Package
 	 */
 	protected $package = null;
 	
 	/**
 	 * Returns package object.
 	 * 
-	 * @return	wcf\data\package\Package
+	 * @return	\wcf\data\package\Package
 	 */
 	public function getPackage() {
 		if ($this->package === null) {

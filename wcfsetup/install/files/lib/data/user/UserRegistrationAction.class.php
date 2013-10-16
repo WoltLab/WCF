@@ -17,7 +17,7 @@ use wcf\util\UserUtil;
  */
 class UserRegistrationAction extends UserAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('validateEmailAddress', 'validatePassword', 'validateUsername');
 	

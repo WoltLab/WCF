@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
 class FormDocument {
 	/**
 	 * list of FormElementContainer objects
-	 * @var	array<wcf\system\form\IFormElementContainer>
+	 * @var	array<\wcf\system\form\IFormElementContainer>
 	 */
 	protected $containers = array();
 	
@@ -46,7 +46,7 @@ class FormDocument {
 	/**
 	 * Appends a FormElementContainer object.
 	 * 
-	 * @param	wcf\system\form\IFormElementContainer		$container
+	 * @param	\wcf\system\form\IFormElementContainer		$container
 	 */
 	public function appendContainer(IFormElementContainer $container) {
 		$this->containers[] = $container;
@@ -55,7 +55,7 @@ class FormDocument {
 	/**
 	 * Prepends a FormElementContainer object.
 	 * 
-	 * @param	wcf\system\form\IFormElementContainer		$container
+	 * @param	\wcf\system\form\IFormElementContainer		$container
 	 */
 	public function prependContainer(IFormElementContainer $container) {
 		array_unshift($this->containers, $container);
@@ -64,7 +64,7 @@ class FormDocument {
 	/**
 	 * Returns assigned FormElementContainer objects.
 	 * 
-	 * @return	array<wcf\system\form\IFormElementContainer>
+	 * @return	array<\wcf\system\form\IFormElementContainer>
 	 */
 	public function getContainers() {
 		return $this->containers;

@@ -19,12 +19,12 @@ use wcf\util\StringUtil;
 class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * list of used group option type objects
-	 * @var	array<wcf\system\option\group\IGroupOptionType>
+	 * @var	array<\wcf\system\option\group\IGroupOptionType>
 	 */
 	protected $typeObjects = array();
 	
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
 		$data = array();
@@ -95,7 +95,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 	 * Returns an object of the requested group option type.
 	 * 
 	 * @param	string			$type
-	 * @return	wcf\system\option\user\group\IUserGroupOptionType
+	 * @return	\wcf\system\option\user\group\IUserGroupOptionType
 	 */
 	protected function getTypeObject($type) {
 		if (!isset($this->typeObjects[$type])) {

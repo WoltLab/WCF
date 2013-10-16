@@ -15,43 +15,43 @@ use wcf\system\WCF;
  */
 class SmileyCategoryType extends AbstractCategoryType {
 	/**
-	 * @see	wcf\system\category\AbstractCategoryType::$langVarPrefix
+	 * @see	\wcf\system\category\AbstractCategoryType::$langVarPrefix
 	 */
 	protected $langVarPrefix = 'wcf.acp.smiley.category';
 	
 	/**
-	 * @see	wcf\system\category\AbstractCategoryType::$forceDescription
+	 * @see	\wcf\system\category\AbstractCategoryType::$forceDescription
 	 */
 	protected $hasDescription = false;
 	
 	/**
-	 * @see	wcf\system\category\AbstractCategoryType::$maximumNestingLevel
+	 * @see	\wcf\system\category\AbstractCategoryType::$maximumNestingLevel
 	 */
 	protected $maximumNestingLevel = 0;
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::getApplication()
+	 * @see	\wcf\system\category\ICategoryType::getApplication()
 	 */
 	public function getApplication() {
 		return 'wcf';
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::canAddCategory()
+	 * @see	\wcf\system\category\ICategoryType::canAddCategory()
 	 */
 	public function canAddCategory() {
 		return $this->canEditCategory();
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::canDeleteCategory()
+	 * @see	\wcf\system\category\ICategoryType::canDeleteCategory()
 	 */
 	public function canDeleteCategory() {
 		return $this->canEditCategory();
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::canEditCategory()
+	 * @see	\wcf\system\category\ICategoryType::canEditCategory()
 	 */
 	public function canEditCategory() {
 		return WCF::getSession()->getPermission('admin.content.smiley.canManageSmiley');

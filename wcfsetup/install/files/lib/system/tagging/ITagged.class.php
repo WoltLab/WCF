@@ -22,7 +22,7 @@ interface ITagged {
 	/**
 	 * Gets the taggable type of this tagged object.
 	 * 
-	 * @return	wcf\system\tagging\ITaggable
+	 * @return	\wcf\system\tagging\ITaggable
 	 */
 	public function getTaggable();
 }

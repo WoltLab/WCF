@@ -17,44 +17,44 @@ use wcf\util\StringUtil;
  */
 class XmlHighlighter extends Highlighter {
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$allowsNewslinesInQuotes
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$allowsNewslinesInQuotes
 	 */
 	protected $allowsNewslinesInQuotes = true;
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$quotes
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
 	 */
 	protected $quotes = array('"');
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
 	 */
 	protected $singleLineComment = array();
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$commentStart
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentStart
 	 */
 	protected $commentStart = array("<!--");
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$commentEnd
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentEnd
 	 */
 	protected $commentEnd = array("-->");
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
 	 */
 	protected $separators = array("<", ">");
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
 	 */
 	protected $operators = array();
 	
 	const XML_ATTRIBUTE_NAME = '[a-z0-9](?:(?:(?<!-)-)?[a-z0-9])*';
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::highlightKeywords()
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightKeywords()
 	 */
 	protected function highlightKeywords($string) {
 		$string = parent::highlightKeywords($string);
@@ -72,7 +72,7 @@ class XmlHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::cacheQuotes()
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::cacheQuotes()
 	 */
 	protected function cacheQuotes($string) {
 		// highlight CDATA-Tags as quotes
@@ -86,7 +86,7 @@ class XmlHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::highlightNumbers()
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightNumbers()
 	 */
 	protected function highlightNumbers($string) {
 		// do not highlight numbers

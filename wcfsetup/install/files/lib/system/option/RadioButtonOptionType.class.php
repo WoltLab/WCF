@@ -24,7 +24,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableUse
 	public $templateName = 'radioButtonOptionType';
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		// get options
@@ -54,7 +54,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableUse
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::validate()
+	 * @see	\wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!empty($newValue)) {
@@ -66,14 +66,14 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableUse
 	}
 	
 	/**
-	 * @see	wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		return $this->getFormElement($option, $value);
 	}
 	
 	/**
-	 * @see	wcf\system\option\ISearchableUserOption::getCondition()
+	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		$value = StringUtil::trim($value);

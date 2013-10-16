@@ -24,12 +24,12 @@ use wcf\util\StringUtil;
  */
 class UserSearchForm extends UserOptionListForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.user.search';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
 	public $neededModules = array('MODULE_MEMBERS_LIST');
 	
@@ -47,7 +47,7 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * condtion builder object
-	 * @var	wcf\system\database\condition\PreparedStatementConditionBuilder
+	 * @var	\wcf\system\database\condition\PreparedStatementConditionBuilder
 	 */
 	public $conditions = null;
 	
@@ -64,7 +64,7 @@ class UserSearchForm extends UserOptionListForm {
 	public $maxResults = 1000;
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -73,7 +73,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\AbstractOptionListForm::initOptionHandler()
+	 * @see	\wcf\acp\form\AbstractOptionListForm::initOptionHandler()
 	 */
 	protected function initOptionHandler() {
 		$this->optionHandler->enableSearchMode();
@@ -81,7 +81,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -100,7 +100,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -116,7 +116,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -140,7 +140,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		AbstractForm::validate();

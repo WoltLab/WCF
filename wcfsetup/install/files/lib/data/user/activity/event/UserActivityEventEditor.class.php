@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class UserActivityEventEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\activity\event\UserActivityEvent';
 }

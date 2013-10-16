@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class AdministrativeAttachmentList extends AttachmentList {
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$decoratorClassName
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
 	 */
 	public $decoratorClassName = 'wcf\data\attachment\AdministrativeAttachment';
 	
@@ -30,7 +30,7 @@ class AdministrativeAttachmentList extends AttachmentList {
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::readObjects()
+	 * @see	\wcf\data\DatabaseObjectList::readObjects()
 	 */
 	public function readObjects() {
 		parent::readObjects();

@@ -19,13 +19,13 @@ use wcf\system\WCF;
 class AttachmentHandler implements \Countable {
 	/**
 	 * object type
-	 * @var	wcf\data\object\type\ObjectType
+	 * @var	\wcf\data\object\type\ObjectType
 	 */
 	protected $objectType = null;
 	
 	/**
 	 * object type
-	 * @var	wcf\system\attachment\IAttachmentObjectType
+	 * @var	\wcf\system\attachment\IAttachmentObjectType
 	 */
 	protected $processor = null;
 	
@@ -49,7 +49,7 @@ class AttachmentHandler implements \Countable {
 	
 	/**
 	 * list of attachments
-	 * @var	wcf\data\attachment\AttachmentList
+	 * @var	\wcf\data\attachment\AttachmentList
 	 */
 	protected $attachmentList = null;
 	
@@ -71,7 +71,7 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Returns a list of attachments.
 	 * 
-	 * @return	wcf\data\attachment\AttachmentList
+	 * @return	\wcf\data\attachment\AttachmentList
 	 */
 	public function getAttachmentList() {
 		if ($this->attachmentList === null) {
@@ -152,14 +152,14 @@ class AttachmentHandler implements \Countable {
 	}
 	
 	/**
-	 * @see	wcf\system\attachment\IAttachmentObjectType::getMaxSize()
+	 * @see	\wcf\system\attachment\IAttachmentObjectType::getMaxSize()
 	 */
 	public function getMaxSize() {
 		return $this->processor->getMaxSize();
 	}
 	
 	/**
-	 * @see	wcf\system\attachment\IAttachmentObjectType::getAllowedExtensions()
+	 * @see	\wcf\system\attachment\IAttachmentObjectType::getAllowedExtensions()
 	 */
 	public function getAllowedExtensions() {
 		return $this->processor->getAllowedExtensions();
@@ -192,7 +192,7 @@ class AttachmentHandler implements \Countable {
 	}
 	
 	/**
-	 * @see	wcf\system\attachment\IAttachmentObjectType::getMaxCount()
+	 * @see	\wcf\system\attachment\IAttachmentObjectType::getMaxCount()
 	 */
 	public function getMaxCount() {
 		return $this->processor->getMaxCount();
@@ -210,7 +210,7 @@ class AttachmentHandler implements \Countable {
 	/**
 	 * Returns the object type processor.
 	 * 
-	 * @return	wcf\system\attachment\IAttachmentObjectType
+	 * @return	\wcf\system\attachment\IAttachmentObjectType
 	 */
 	public function getProcessor() {
 		return $this->processor;

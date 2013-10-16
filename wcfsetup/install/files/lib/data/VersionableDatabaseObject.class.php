@@ -41,7 +41,7 @@ abstract class VersionableDatabaseObject extends DatabaseObject {
 	/**
 	 * Returns all versions of this database object.
 	 * 
-	 * @return	array<wcf\data\VersionableDatabaseObject>
+	 * @return	array<\wcf\data\VersionableDatabaseObject>
 	 */
 	public function getVersions() {
 		$objectType = VersionHandler::getInstance()->getObjectTypeByName($this->versionableObjectTypeName);

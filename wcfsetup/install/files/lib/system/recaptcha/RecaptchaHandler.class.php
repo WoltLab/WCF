@@ -62,7 +62,7 @@ class RecaptchaHandler extends SingletonFactory {
 	const ERROR_NOT_REACHABLE = 'recaptcha-not-reachable';
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// set appropriate language code, fallback to EN if language code is not known to reCAPTCHA-API

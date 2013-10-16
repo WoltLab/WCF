@@ -30,7 +30,7 @@ interface IPollHandler {
 	/**
 	 * Returns related object for given poll object.
 	 * 
-	 * @param	wcf\data\poll\Poll	$poll
+	 * @param	\wcf\data\poll\Poll	$poll
 	 */
 	public function getRelatedObject(Poll $poll);
 }

@@ -13,38 +13,38 @@ namespace wcf\system\bbcode\highlighter;
  */
 class PythonHighlighter extends Highlighter {
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
 	 */
 	protected $separators = array('(', ')',/* from __future__ import braces '{', '}', */'[', ']', ';', '.', ',', ':');
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
 	 */
 	protected $singleLineComment = array('#');
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$commentStart
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentStart
 	 */
 	protected $commentStart = array();
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$commentEnd
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentEnd
 	 */
 	protected $commentEnd = array();
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
 	 */
 	protected $operators = array('+=', '-=', '**=', '*=', '//=', '/=', '%=', '~=', '+', '-', '**', '*', '//', '/', '%', 
 					'&=', '<<=', '>>=', '^=', '~', '&', '^', '|', '<<', '>>', '=', '!=', '<', '>', '<=', '>=');
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$quotes
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
 	 */
 	protected $quotes = array(array("r'", "'"), array("u'", "'"), array('r"', '"'), array('u"', '"'), "'", '"');
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
 	 */
 	protected $keywords1 = array(
 		'print',
@@ -62,7 +62,7 @@ class PythonHighlighter extends Highlighter {
 	);
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
 	 */
 	protected $keywords2 = array(
 		'if',
@@ -77,7 +77,7 @@ class PythonHighlighter extends Highlighter {
 	);
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$keywords3
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
 	 */
 	protected $keywords3 = array(
 		'from',
@@ -88,7 +88,7 @@ class PythonHighlighter extends Highlighter {
 	);
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$keywords4
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords4
 	 */
 	protected $keywords4 = array(
 		'__name__',

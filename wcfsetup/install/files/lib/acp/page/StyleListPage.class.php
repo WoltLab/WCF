@@ -14,32 +14,32 @@ use wcf\page\MultipleLinkPage;
  */
 class StyleListPage extends MultipleLinkPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.style.list';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.style.canManageStyle');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\style\StyleList';
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$sortField
+	 * @see	\wcf\page\MultipleLinkPage::$sortField
 	 */
 	public $sortField = 'style.isDefault DESC, style.styleName';
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$sortOrder
+	 * @see	\wcf\page\MultipleLinkPage::$sortOrder
 	 */
 	public $sortOrder = 'ASC';
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::initObjectList()
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	public function initObjectList() {
 		parent::initObjectList();

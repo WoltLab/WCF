@@ -16,12 +16,12 @@ use wcf\system\cache\builder\UserOptionCacheBuilder;
  */
 class UserOptionCategoryEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\user\option\category\UserOptionCategory::$baseClass
+	 * @see	\wcf\data\user\option\category\UserOptionCategory::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\option\category\UserOptionCategory';
 	
 	/**
-	 * @see	wcf\data\IEditableObject::create()
+	 * @see	\wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		// obtain default values
@@ -31,7 +31,7 @@ class UserOptionCategoryEditor extends DatabaseObjectEditor implements IEditable
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		UserOptionCacheBuilder::getInstance()->reset();

@@ -178,7 +178,7 @@ class Windows extends Virtual
     /**
      * Set Console charset to use.
      *
-     * @param Charset\CharsetInterface $charset
+     * @param \Charset\CharsetInterface $charset
      */
     public function setCharset(Charset\CharsetInterface $charset)
     {
@@ -188,7 +188,7 @@ class Windows extends Virtual
     /**
      * Get charset currently in use by this adapter.
      *
-     * @return Charset\CharsetInterface $charset
+     * @return \Charset\CharsetInterface $charset
      */
     public function getCharset()
     {
@@ -200,7 +200,7 @@ class Windows extends Virtual
     }
 
     /**
-     * @return Charset\AsciiExtended
+     * @return \Charset\AsciiExtended
      */
     public function getDefaultCharset()
     {

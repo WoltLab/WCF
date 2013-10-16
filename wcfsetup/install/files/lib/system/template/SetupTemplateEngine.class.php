@@ -13,14 +13,14 @@ namespace wcf\system\template;
  */
 class SetupTemplateEngine extends TemplateEngine {
 	/**
-	 * @see	wcf\system\template\TemplateEngine::loadTemplateGroupCache()
+	 * @see	\wcf\system\template\TemplateEngine::loadTemplateGroupCache()
 	 */
 	protected function loadTemplateGroupCache() {
 		// does nothing
 	}
 	
 	/**
-	 * @see	wcf\system\template\TemplateEngine::getCompiler()
+	 * @see	\wcf\system\template\TemplateEngine::getCompiler()
 	 */
 	public function getCompiler() {
 		if ($this->compilerObj === null) {
@@ -31,28 +31,28 @@ class SetupTemplateEngine extends TemplateEngine {
 	}
 	
 	/**
-	 * @see	wcf\system\template\TemplateEngine::getSourceFilename()
+	 * @see	\wcf\system\template\TemplateEngine::getSourceFilename()
 	 */
 	public function getSourceFilename($templateName, $application) {
 		return $this->compileDir.'setup/template/'.$templateName.'.tpl';
 	}
 	
 	/**
-	 * @see	wcf\system\template\TemplateEngine::getCompiledFilename()
+	 * @see	\wcf\system\template\TemplateEngine::getCompiledFilename()
 	 */
 	public function getCompiledFilename($templateName, $application) {
 		return $this->compileDir.'setup/template/compiled/'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**
-	 * @see	wcf\system\template\TemplateEngine::getMetaDataFilename()
+	 * @see	\wcf\system\template\TemplateEngine::getMetaDataFilename()
 	 */
 	public function getMetaDataFilename($templateName) {
 		return $this->compileDir.'setup/template/compiled/'.$this->languageID.'_'.$templateName.'.meta.php';
 	}
 	
 	/**
-	 * @see	wcf\system\template\TemplateEngine::loadTemplateListeners()
+	 * @see	\wcf\system\template\TemplateEngine::loadTemplateListeners()
 	 */
 	protected function loadTemplateListeners() {
 		// template isteners are not available during setup

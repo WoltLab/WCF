@@ -20,12 +20,12 @@ use wcf\util\StringUtil;
  */
 class LabelGroupAddForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.label.group.add';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.content.label.canManageLabel');
 	
@@ -43,13 +43,13 @@ class LabelGroupAddForm extends AbstractForm {
 	
 	/**
 	 * list of label object type handlers
-	 * @var	array<wcf\system\label\object\type\ILabelObjectTypeHandler>
+	 * @var	array<\wcf\system\label\object\type\ILabelObjectTypeHandler>
 	 */
 	public $labelObjectTypes = array();
 	
 	/**
 	 * list of label object type containers
-	 * @var	array<wcf\system\label\object\type\LabelObjectTypeContainer>
+	 * @var	array<\wcf\system\label\object\type\LabelObjectTypeContainer>
 	 */
 	public $labelObjectTypeContainers = array();
 	
@@ -66,7 +66,7 @@ class LabelGroupAddForm extends AbstractForm {
 	public $objectTypeID = 0;
 	
 	/**
-	 * @see	wcf\page\AbstractPage::readParameters()
+	 * @see	\wcf\page\AbstractPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -75,7 +75,7 @@ class LabelGroupAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -86,7 +86,7 @@ class LabelGroupAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		// get label object type handlers
@@ -107,7 +107,7 @@ class LabelGroupAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -126,7 +126,7 @@ class LabelGroupAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -164,7 +164,7 @@ class LabelGroupAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

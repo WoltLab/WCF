@@ -28,7 +28,7 @@ class OptionCacheBuilder extends AbstractCacheBuilder {
 	protected $tableName = 'option';
 	
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
 		$data = array(

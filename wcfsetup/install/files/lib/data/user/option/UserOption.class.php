@@ -76,12 +76,12 @@ class UserOption extends Option {
 	const EDITABILITY_ALL = 3;
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user_option';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 	
@@ -93,21 +93,21 @@ class UserOption extends Option {
 	
 	/**
 	 * user object
-	 * @var	wcf\data\user\User
+	 * @var	\wcf\data\user\User
 	 */
 	public $user = null;
 	
 	/**
 	 * Sets target user object.
 	 * 
-	 * @param	wcf\data\user\User	$user
+	 * @param	\wcf\data\user\User	$user
 	 */
 	public function setUser(User $user) {
 		$this->user = $user;
 	}
 	
 	/**
-	 * @see	wcf\data\option\Option::isVisible()
+	 * @see	\wcf\data\option\Option::isVisible()
 	 */
 	public function isVisible() {
 		// proceed if option is visible for all

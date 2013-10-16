@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectDecorator;
  */
 abstract class AbstractBBCode extends DatabaseObjectDecorator implements IBBCode {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\bbcode\BBCode';
 }

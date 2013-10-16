@@ -21,15 +21,15 @@ use wcf\util\XML;
 class LanguageServerProcessor extends SingletonFactory {
 	/**
 	 * language object
-	 * @var	wcf\data\language\Language
+	 * @var	\wcf\data\language\Language
 	 */
 	protected $language = null;
 	
 	/**
 	 * Imports language variables for a language from given language servers.
 	 * 
-	 * @param	wcf\data\language\Language			$language
-	 * @param	array<wcf\data\language\server\LanguageServer>	$languageServers
+	 * @param	\wcf\data\language\Language			$language
+	 * @param	array<\wcf\data\language\server\LanguageServer>	$languageServers
 	 */
 	public function import(Language $language, array $languageServers) {
 		if (empty($languageServers)) return;

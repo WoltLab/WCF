@@ -16,12 +16,12 @@ use wcf\system\WCF;
  */
 class UserExtendedClipboardAction extends AbstractClipboardAction {
 	/**
-	 * @see	wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
+	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
 	 */
 	protected $supportedActions = array('merge', 'enable');
 	
 	/**
-	 * @see	wcf\system\clipboard\action\IClipboardAction::execute()
+	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
 	 */
 	public function execute(array $objects, ClipboardAction $action) {
 		$item = parent::execute($objects, $action);
@@ -41,14 +41,14 @@ class UserExtendedClipboardAction extends AbstractClipboardAction {
 	}
 	
 	/**
-	 * @see	wcf\system\clipboard\action\IClipboardAction::getClassName()
+	 * @see	\wcf\system\clipboard\action\IClipboardAction::getClassName()
 	 */
 	public function getClassName() {
 		return 'wcf\data\user\UserAction';
 	}
 	
 	/**
-	 * @see	wcf\system\clipboard\action\IClipboardAction::getTypeName()
+	 * @see	\wcf\system\clipboard\action\IClipboardAction::getTypeName()
 	 */
 	public function getTypeName() {
 		return 'com.woltlab.wcf.user';

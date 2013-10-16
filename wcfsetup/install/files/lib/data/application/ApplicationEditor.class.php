@@ -17,7 +17,7 @@ use wcf\system\WCF;
  */
 class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\application\Application';
 	
@@ -85,7 +85,7 @@ class ApplicationEditor extends DatabaseObjectEditor implements IEditableCachedO
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		ApplicationCacheBuilder::getInstance()->reset();

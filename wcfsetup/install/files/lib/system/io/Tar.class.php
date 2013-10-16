@@ -48,7 +48,7 @@ class Tar implements IArchive {
 	
 	/**
 	 * file object
-	 * @var	wcf\system\io\File
+	 * @var	\wcf\system\io\File
 	 */
 	protected $file = null;
 	
@@ -126,7 +126,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	wcf\system\io\IArchive::getContentList()
+	 * @see	\wcf\system\io\IArchive::getContentList()
 	 */
 	public function getContentList() {
 		if (!$this->read) {
@@ -137,7 +137,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	wcf\system\io\IArchive::getFileInfo()
+	 * @see	\wcf\system\io\IArchive::getFileInfo()
 	 */
 	public function getFileInfo($fileIndex) {
 		if (!is_int($fileIndex)) {
@@ -151,7 +151,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	wcf\system\io\IArchive::getIndexByFilename()
+	 * @see	\wcf\system\io\IArchive::getIndexByFilename()
 	 */
 	public function getIndexByFilename($filename) {
 		foreach ($this->contentList as $index => $file) {
@@ -163,7 +163,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	wcf\system\io\IArchive::extractToString()
+	 * @see	\wcf\system\io\IArchive::extractToString()
 	 */
 	public function extractToString($index) {
 		if (!$this->read) {
@@ -195,7 +195,7 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	wcf\system\io\IArchive::extract()
+	 * @see	\wcf\system\io\IArchive::extract()
 	 */
 	public function extract($index, $destination) {
 		if (!$this->read) {

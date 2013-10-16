@@ -109,7 +109,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see	wcf\system\WCF::initSession()
+	 * @see	\wcf\system\WCF::initSession()
 	 */
 	protected function initSession() {
 		$factory = new ACPSessionFactory();
@@ -119,7 +119,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see	wcf\system\WCF::initTPL()
+	 * @see	\wcf\system\WCF::initTPL()
 	 */
 	protected function initTPL() {
 		self::$tplObj = ACPTemplateEngine::getInstance();
@@ -128,7 +128,7 @@ class WCFACP extends WCF {
 	}
 	
 	/**
-	 * @see	wcf\system\WCF::assignDefaultTemplateVariables()
+	 * @see	\wcf\system\WCF::assignDefaultTemplateVariables()
 	 */
 	protected function assignDefaultTemplateVariables() {
 		parent::assignDefaultTemplateVariables();

@@ -19,17 +19,17 @@ use wcf\system\WCF;
  */
 class UserMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user_menu_item';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'menuItemID';
 	
 	/**
-	 * @see	wcf\data\ProcessibleDatabaseObject::$processorInterface
+	 * @see	\wcf\data\ProcessibleDatabaseObject::$processorInterface
 	 */
 	protected static $processorInterface = 'wcf\system\menu\user\IUserMenuItemProvider';
 	
@@ -46,7 +46,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	protected $controller = null;
 	
 	/**
-	 * @see	wcf\data\ProcessibleDatabaseObject::getProcessor()
+	 * @see	\wcf\data\ProcessibleDatabaseObject::getProcessor()
 	 */
 	public function getProcessor() {
 		if (parent::getProcessor() === null) {
@@ -57,7 +57,7 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	}
 	
 	/**
-	 * @see	wcf\system\menu\ITreeMenuItem::getLink()
+	 * @see	\wcf\system\menu\ITreeMenuItem::getLink()
 	 */
 	public function getLink() {
 		// external link

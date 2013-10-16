@@ -15,7 +15,7 @@ interface IUploadFileSaveStrategy {
 	/**
 	 * Saves the given file.
 	 * 
-	 * @param	wcf\system\upload\UploadFile		$uploadFile
+	 * @param	\wcf\system\upload\UploadFile		$uploadFile
 	 */
 	public function save(UploadFile $uploadFile);
 }

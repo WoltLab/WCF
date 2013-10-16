@@ -17,14 +17,14 @@ use wcf\util\PasswordUtil;
  */
 class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
-	 * @see	wcf\system\user\authentication\IUserAuthentication::supportsPersistentLogins()
+	 * @see	\wcf\system\user\authentication\IUserAuthentication::supportsPersistentLogins()
 	 */
 	public function supportsPersistentLogins() {
 		return true;
 	}
 	
 	/**
-	 * @see	wcf\system\user\authentication\IUserAuthentication::storeAccessData()
+	 * @see	\wcf\system\user\authentication\IUserAuthentication::storeAccessData()
 	 */
 	public function storeAccessData(User $user, $username, $password) {
 		HeaderUtil::setCookie('userID', $user->userID, TIME_NOW + 365 * 24 * 3600);
@@ -32,7 +32,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	}
 	
 	/**
-	 * @see	wcf\system\user\authentication\IUserAuthentication::loginManually()
+	 * @see	\wcf\system\user\authentication\IUserAuthentication::loginManually()
 	 */
 	public function loginManually($username, $password, $userClassname = 'wcf\data\user\User') {
 		$user = $this->getUserByLogin($username);
@@ -51,7 +51,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	}
 	
 	/**
-	 * @see	wcf\system\user\authentication\IUserAuthentication::loginAutomatically()
+	 * @see	\wcf\system\user\authentication\IUserAuthentication::loginAutomatically()
 	 */
 	public function loginAutomatically($persistent = false, $userClassname = 'wcf\data\user\User') {
 		if (!$persistent) return null;
@@ -73,7 +73,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	 * Returns a user object by given login name.
 	 * 
 	 * @param	string			$login
-	 * @return	wcf\data\user\User
+	 * @return	\wcf\data\user\User
 	 */
 	protected function getUserByLogin($login) {
 		return User::getUserByUsername($login);
@@ -85,7 +85,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	 * @param	integer		$userID
 	 * @param	string		$password
 	 * @param	string		$userClassname
-	 * @return	wcf\data\user\User
+	 * @return	\wcf\data\user\User
 	 */
 	protected function getUserAutomatically($userID, $password, $userClassname = 'wcf\data\user\User') {
 		$user = new $userClassname($userID);
@@ -99,7 +99,7 @@ class DefaultUserAuthentication extends AbstractUserAuthentication {
 	/**
 	 * Validates the cookie password.
 	 * 
-	 * @param	wcf\data\user\User	$user
+	 * @param	\wcf\data\user\User	$user
 	 * @param	string			$password
 	 * @return	boolean
 	 */

@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 abstract class UserException extends \Exception implements IPrintableException {
 	/**
-	 * @see	wcf\system\exception\IPrintableException::show()
+	 * @see	\wcf\system\exception\IPrintableException::show()
 	 */
 	public function show() {
 		if (WCF::debugModeIsEnabled()) {

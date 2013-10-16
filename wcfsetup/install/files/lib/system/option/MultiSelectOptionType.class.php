@@ -18,7 +18,7 @@ use wcf\util\ArrayUtil;
  */
 class MultiSelectOptionType extends SelectOptionType {
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
@@ -30,7 +30,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::validate()
+	 * @see	\wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = array();
@@ -43,7 +43,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getData()
+	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = array();
@@ -51,7 +51,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\ISearchableUserOption::getCondition()
+	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		if (!is_array($value) || empty($value)) return false;

@@ -27,7 +27,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	
 	/**
 	 * regex object
-	 * @var	wcf\system\Regex;
+	 * @var	\wcf\system\Regex;
 	 */
 	protected $regex = null;
 	
@@ -38,7 +38,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	protected $objects = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->regex = new Regex('^https?://');

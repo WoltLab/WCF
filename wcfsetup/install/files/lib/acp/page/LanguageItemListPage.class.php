@@ -19,18 +19,18 @@ use wcf\util\StringUtil;
  */
 class LanguageItemListPage extends AbstractPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.item.list';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.language.canManageLanguage');
 	
 	/**
 	 * language item list
-	 * @var	wcf\data\language\item\LanguageItemList
+	 * @var	\wcf\data\language\item\LanguageItemList
 	 */
 	public $languageItemList = null;
 	
@@ -77,7 +77,7 @@ class LanguageItemListPage extends AbstractPage {
 	public $availableLanguageCategories = array();
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -90,7 +90,7 @@ class LanguageItemListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -123,7 +123,7 @@ class LanguageItemListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

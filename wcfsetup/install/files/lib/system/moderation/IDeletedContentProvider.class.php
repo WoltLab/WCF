@@ -15,7 +15,7 @@ interface IDeletedContentProvider {
 	/**
 	 * Returns a list of deleted content.
 	 * 
-	 * @return	wcf\data\DatabaseObjectList
+	 * @return	\wcf\data\DatabaseObjectList
 	 */
 	public function getObjectList();
 	

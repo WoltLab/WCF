@@ -24,7 +24,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	protected $groupIDs = null;
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'user_group_option';
 	
@@ -35,7 +35,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	public static $reservedTags = array('name', 'optiontype', 'defaultvalue', 'admindefaultvalue', 'userdefaultvalue', 'validationpattern', 'showorder', 'categoryname', 'selectoptions', 'enableoptions', 'permissions', 'options', 'attrs', 'cdata');
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
+	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values

@@ -25,7 +25,7 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 	protected $counter = 0;
 	
 	/**
-	 * @see	wcf\system\template\IBlockTemplatePlugin::execute()
+	 * @see	\wcf\system\template\IBlockTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, $blockContent, TemplateEngine $tplObj) {
 		if (!array_key_exists('controller', $tagArgs)) {
@@ -45,14 +45,14 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 	}
 	
 	/**
-	 * @see	wcf\system\template\IBlockTemplatePlugin::init()
+	 * @see	\wcf\system\template\IBlockTemplatePlugin::init()
 	 */
 	public function init($tagArgs, TemplateEngine $tplObj) {
 		$this->counter = 0;
 	}
 	
 	/**
-	 * @see	wcf\system\template\IBlockTemplatePlugin::next()
+	 * @see	\wcf\system\template\IBlockTemplatePlugin::next()
 	 */
 	public function next(TemplateEngine $tplObj) {
 		if ($this->counter == 0) {

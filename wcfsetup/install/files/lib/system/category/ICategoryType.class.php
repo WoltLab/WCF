@@ -16,7 +16,7 @@ interface ICategoryType {
 	/**
 	 * Is called right after the given category is deleted.
 	 * 
-	 * @param	wcf\data\category\CategoryEditor	$categoryEditor
+	 * @param	\wcf\data\category\CategoryEditor	$categoryEditor
 	 */
 	public function afterDeletion(CategoryEditor $categoryEditor);
 	

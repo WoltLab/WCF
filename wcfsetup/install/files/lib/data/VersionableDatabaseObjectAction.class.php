@@ -21,7 +21,7 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 	}
 	
 	/**
-	 * @see	wcf\data\IDeleteAction::delete()
+	 * @see	\wcf\data\IDeleteAction::delete()
 	 */
 	public function delete() {
 		if (empty($this->objects)) {
@@ -39,7 +39,7 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
 	 */
 	public function update() {
 		if (empty($this->objects)) {

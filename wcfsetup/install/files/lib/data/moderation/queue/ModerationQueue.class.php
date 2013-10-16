@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class ModerationQueue extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'moderation_queue';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
 	 */
 	protected static $databaseTableIndexName = 'queueID';
 	
@@ -30,7 +30,7 @@ class ModerationQueue extends DatabaseObject {
 	const STATUS_DONE = 2;
 	
 	/**
-	 * @see	wcf\data\IStorableObject::__get()
+	 * @see	\wcf\data\IStorableObject::__get()
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);
@@ -46,7 +46,7 @@ class ModerationQueue extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::handleData()
+	 * @see	\wcf\data\DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);

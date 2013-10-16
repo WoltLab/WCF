@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  */
 class UsersOnlineList extends SessionList {
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
 	 */
 	public $sqlOrderBy = 'user_table.username';
 	
@@ -41,7 +41,7 @@ class UsersOnlineList extends SessionList {
 	public $usersOnlineMarkings = null;
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::__construct()
+	 * @see	\wcf\data\DatabaseObjectList::__construct()
 	 */
 	public function __construct() {
 		parent::__construct();
@@ -57,7 +57,7 @@ class UsersOnlineList extends SessionList {
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::readObjects()
+	 * @see	\wcf\data\DatabaseObjectList::readObjects()
 	 */
 	public function readObjects() {
 		parent::readObjects();

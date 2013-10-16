@@ -20,7 +20,7 @@ use wcf\system\WCF;
 class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * list of user activity point object types
-	 * @var	array<wcf\data\object\type\ObjectType>
+	 * @var	array<\wcf\data\object\type\ObjectType>
 	 */
 	protected $objectTypes = array();
 	
@@ -31,7 +31,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	protected $objectTypeNames = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.user.activityPointEvent');
@@ -222,7 +222,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * null if no such object tyoe exists.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	wcf\data\object\type\ObjectType
+	 * @return	\wcf\data\object\type\ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->objectTypeNames[$objectTypeID])) {
@@ -237,7 +237,7 @@ class UserActivityPointHandler extends SingletonFactory {
 	 * or null if no such object type exists.
 	 * 
 	 * @param	string		$objectType
-	 * @return	wcf\data\object\type\ObjectType
+	 * @return	\wcf\data\object\type\ObjectType
 	 */
 	public function getObjectTypeByName($objectType) {
 		if (isset($this->objectTypes[$objectType])) {

@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserActivityEvent {
 	/**
-	 * @see	wcf\system\user\activity\event\IUserActivityEvent::prepare()
+	 * @see	\wcf\system\user\activity\event\IUserActivityEvent::prepare()
 	 */
 	public function prepare(array $events) {
 		$comments = $comentIDs = array();

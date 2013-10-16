@@ -19,7 +19,7 @@ use wcf\system\WCF;
 class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * list of tags
-	 * @var	array<wcf\data\tag\TagCloudTag>
+	 * @var	array<\wcf\data\tag\TagCloudTag>
 	 */
 	protected $tags = array();
 	
@@ -30,7 +30,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	protected $languageIDs = array();
 	
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::$maxLifetime
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::$maxLifetime
 	 */
 	protected $maxLifetime = 3600;
 	
@@ -41,7 +41,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	protected $objectTypeIDs = array();
 	
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	protected function rebuild(array $parameters) {
 		$this->languageIDs = $this->parseLanguageIDs($parameters);
@@ -118,8 +118,8 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Compares the weight between two tags.
 	 * 
-	 * @param	wcf\data\tag\TagCloudTag	$tagA
-	 * @param	wcf\data\tag\TagCloudTag	$tagB
+	 * @param	\wcf\data\tag\TagCloudTag	$tagA
+	 * @param	\wcf\data\tag\TagCloudTag	$tagB
 	 * @return	integer
 	 */
 	protected static function compareTags($tagA, $tagB) {

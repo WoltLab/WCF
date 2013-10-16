@@ -18,47 +18,47 @@ use wcf\system\WCF;
  */
 class TeamPage extends MultipleLinkPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.user.team';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('user.profile.canViewMembersList');
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
 	public $neededModules = array('MODULE_TEAM_PAGE');
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$enableTracking
+	 * @see	\wcf\page\AbstractPage::$enableTracking
 	 */
 	public $enableTracking = true;
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
 	 */
 	public $itemsPerPage = 1000;
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$sortField
+	 * @see	\wcf\page\MultipleLinkPage::$sortField
 	 */
 	public $sortField = MEMBERS_LIST_DEFAULT_SORT_FIELD;
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$sortOrder
+	 * @see	\wcf\page\MultipleLinkPage::$sortOrder
 	 */
 	public $sortOrder = MEMBERS_LIST_DEFAULT_SORT_ORDER;
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\user\TeamList';
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -68,7 +68,7 @@ class TeamPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

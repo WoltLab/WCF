@@ -28,13 +28,13 @@ class PackageArchive {
 	
 	/**
 	 * package object of an existing package
-	 * @var	wcf\data\package\Package
+	 * @var	\wcf\data\package\Package
 	 */
 	protected $package = null;
 	
 	/**
 	 * tar archive object
-	 * @var	wcf\system\io\Tar
+	 * @var	\wcf\system\io\Tar
 	 */
 	protected $tar = null;
 	
@@ -104,7 +104,7 @@ class PackageArchive {
 	/**
 	 * Sets associated package object.
 	 * 
-	 * @param	wcf\data\package\Package	$package
+	 * @param	\wcf\data\package\Package	$package
 	 */
 	public function setPackage(Package $package) {
 		$this->package = $package;
@@ -122,7 +122,7 @@ class PackageArchive {
 	/**
 	 * Returns the object of the package archive.
 	 * 
-	 * @return	wcf\system\io\Tar
+	 * @return	\wcf\system\io\Tar
 	 */
 	public function getTar() {
 		return $this->tar;
@@ -751,7 +751,7 @@ class PackageArchive {
 	/**
 	 * Returns a list of packages which exclude this package.
 	 * 
-	 * @return	array<wcf\data\package\Package>
+	 * @return	array<\wcf\data\package\Package>
 	 */
 	public function getConflictedExcludingPackages() {
 		$conflictedPackages = array();
@@ -778,7 +778,7 @@ class PackageArchive {
 	/**
 	 * Returns a list of packages which are excluded by this package.
 	 * 
-	 * @return	array<wcf\data\package\Package>
+	 * @return	array<\wcf\data\package\Package>
 	 */
 	public function getConflictedExcludedPackages() {
 		$conflictedPackages = array();

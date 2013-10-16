@@ -18,7 +18,7 @@ use wcf\system\WCF;
 class PackageInstallationSQLParser extends SQLParser {
 	/**
 	 * package object
-	 * @var	wcf\data\package\Package
+	 * @var	\wcf\data\package\Package
 	 */
 	protected $package = null;
 	
@@ -74,7 +74,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	 * Creates a new PackageInstallationSQLParser object.
 	 * 
 	 * @param	string				$queries
-	 * @param	wcf\data\package\Package	$package
+	 * @param	\wcf\data\package\Package	$package
 	 * @param	string				$action
 	 */
 	public function __construct($queries, Package $package, $action = 'install') {
@@ -253,7 +253,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	wcf\system\database\util\SQLParser::executeCreateTableStatement()
+	 * @see	\wcf\system\database\util\SQLParser::executeCreateTableStatement()
 	 */
 	protected function executeCreateTableStatement($tableName, $columns, $indices = array()) {
 		if ($this->test) {
@@ -277,7 +277,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	wcf\system\database\util\SQLParser::executeAddColumnStatement()
+	 * @see	\wcf\system\database\util\SQLParser::executeAddColumnStatement()
 	 */
 	protected function executeAddColumnStatement($tableName, $columnName, $columnData) {
 		if ($this->test) {
@@ -295,7 +295,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	wcf\system\database\util\SQLParser::executeAddColumnStatement()
+	 * @see	\wcf\system\database\util\SQLParser::executeAddColumnStatement()
 	 */
 	protected function executeAlterColumnStatement($tableName, $oldColumnName, $newColumnName, $newColumnData) {
 		if ($this->test) {
@@ -318,7 +318,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	wcf\system\database\util\SQLParser::executeAddIndexStatement()
+	 * @see	\wcf\system\database\util\SQLParser::executeAddIndexStatement()
 	 */
 	protected function executeAddIndexStatement($tableName, $indexName, $indexData) {
 		if (!$this->test) {
@@ -331,7 +331,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	wcf\system\database\util\SQLParser::executeAddForeignKeyStatement()
+	 * @see	\wcf\system\database\util\SQLParser::executeAddForeignKeyStatement()
 	 */
 	protected function executeAddForeignKeyStatement($tableName, $indexName, $indexData) {
 		if (!$this->test) {
@@ -344,7 +344,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	wcf\system\database\util\SQLParser::executeDropColumnStatement()
+	 * @see	\wcf\system\database\util\SQLParser::executeDropColumnStatement()
 	 */
 	protected function executeDropColumnStatement($tableName, $columnName) {
 		if ($this->test) {
@@ -364,7 +364,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	wcf\system\database\util\SQLParser::executeDropIndexStatement()
+	 * @see	\wcf\system\database\util\SQLParser::executeDropIndexStatement()
 	 */
 	protected function executeDropIndexStatement($tableName, $indexName) {
 		if ($this->test) {
@@ -384,7 +384,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	wcf\system\database\util\SQLParser::executeDropTableStatement()
+	 * @see	\wcf\system\database\util\SQLParser::executeDropTableStatement()
 	 */
 	protected function executeDropTableStatement($tableName) {
 		if ($this->test) {
@@ -410,7 +410,7 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
-	 * @see	wcf\system\database\util\SQLParser::executeStandardStatement()
+	 * @see	\wcf\system\database\util\SQLParser::executeStandardStatement()
 	 */
 	protected function executeStandardStatement($query) {
 		if (!$this->test) {

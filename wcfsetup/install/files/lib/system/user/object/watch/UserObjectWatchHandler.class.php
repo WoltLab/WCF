@@ -35,7 +35,7 @@ class UserObjectWatchHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * @see	wcf\system\user\object\watch\UserObjectWatchHandler::resetObjects();
+	 * @see	\wcf\system\user\object\watch\UserObjectWatchHandler::resetObjects();
 	 */
 	public function resetObject($objectType, $objectID) {
 		$this->resetObjects($objectType, array($objectID));
@@ -101,7 +101,7 @@ class UserObjectWatchHandler extends SingletonFactory {
 	 * @param	integer								$objectIDs
 	 * @param	string								$notificationEventName
 	 * @param	string								$notificationObjectType
-	 * @param	wcf\system\user\notification\object\IUserNotificationObject	$notificationObject
+	 * @param	\wcf\system\user\notification\object\IUserNotificationObject	$notificationObject
 	 * @param	array								$additionalData
 	 */
 	public function updateObject($objectType, $objectID, $notificationEventName, $notificationObjectType, IUserNotificationObject $notificationObject, array $additionalData = array()) {

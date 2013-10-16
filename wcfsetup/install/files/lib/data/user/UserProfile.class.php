@@ -30,13 +30,13 @@ use wcf\util\StringUtil;
  */
 class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\User';
 	
 	/**
 	 * cached list of user profiles
-	 * @var	array<wcf\data\user\UserProfile>
+	 * @var	array<\wcf\data\user\UserProfile>
 	 */
 	protected static $userProfiles = array();
 	
@@ -60,13 +60,13 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	
 	/**
 	 * user avatar
-	 * @var	wcf\data\user\avatar\IUserAvatar
+	 * @var	\wcf\data\user\avatar\IUserAvatar
 	 */
 	protected $avatar = null;
 	
 	/**
 	 * user rank object
-	 * @var	wcf\data\user\rank\UserRank
+	 * @var	\wcf\data\user\rank\UserRank
 	 */
 	protected $rank = null;
 	
@@ -97,7 +97,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	const ACCESS_NOBODY = 3;
 	
 	/**
-	 * @see	wcf\data\user\User::__toString()
+	 * @see	\wcf\data\user\User::__toString()
 	 */
 	public function __toString() {
 		return $this->getDecoratedObject()->__toString();
@@ -253,7 +253,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	/**
 	 * Gets the user's avatar.
 	 * 
-	 * @return	wcf\data\user\avatar\IUserAvatar
+	 * @return	\wcf\data\user\avatar\IUserAvatar
 	 */
 	public function getAvatar() {
 		if ($this->avatar === null) {
@@ -352,7 +352,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * Returns a new user profile object.
 	 * 
 	 * @param	integer				$userID
-	 * @return	wcf\data\user\UserProfile
+	 * @return	\wcf\data\user\UserProfile
 	 */
 	public static function getUserProfile($userID) {
 		$users = self::getUserProfiles(array($userID));
@@ -364,7 +364,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * Returns a list of user profiles.
 	 * 
 	 * @param	array				$userIDs
-	 * @return	array<wcf\data\user\UserProfile>
+	 * @return	array<\wcf\data\user\UserProfile>
 	 */
 	public static function getUserProfiles(array $userIDs) {
 		$users = array();
@@ -395,7 +395,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * Returns the user profile of the user with the given name.
 	 * 
 	 * @param	string				$username
-	 * @return	wcf\data\user\UserProfile
+	 * @return	\wcf\data\user\UserProfile
 	 */
 	public static function getUserProfileByUsername($username) {
 		$users = self::getUserProfilesByUsername(array($username));
@@ -407,7 +407,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * Returns the user profiles of the users with the given names.
 	 * 
 	 * @param	array<string>			$usernames
-	 * @return	array<wcf\data\user\UserProfile>
+	 * @return	array<\wcf\data\user\UserProfile>
 	 */
 	public static function getUserProfilesByUsername(array $usernames) {
 		$users = array();
@@ -547,7 +547,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	/**
 	 * Returns the user rank.
 	 * 
-	 * @return	wcf\data\user\rank\UserRank
+	 * @return	\wcf\data\user\rank\UserRank
 	 */
 	public function getRank() {
 		if ($this->rank === null) {
@@ -619,7 +619,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	}
 	
 	/**
-	 * @see	wcf\system\breadcrumb\IBreadcrumbProvider::getBreadcrumb()
+	 * @see	\wcf\system\breadcrumb\IBreadcrumbProvider::getBreadcrumb()
 	 */
 	public function getBreadcrumb() {
 		return new Breadcrumb($this->username, LinkHandler::getInstance()->getLink('User', array(

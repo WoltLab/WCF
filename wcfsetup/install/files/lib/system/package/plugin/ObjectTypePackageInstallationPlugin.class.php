@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\object\type\ObjectTypeEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */
 	public $tagName = 'type';
 	
@@ -49,7 +49,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -67,7 +67,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
 		$additionalData = array();
@@ -84,7 +84,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*

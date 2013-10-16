@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  */
 class EncodeJSONModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see	wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @see	\wcf\system\template\IModifierTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		return StringUtil::encodeJSON($tagArgs[0]);

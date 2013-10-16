@@ -15,7 +15,7 @@ interface IFormElement {
 	/**
 	 * Creates a new object of type FormElement.
 	 * 
-	 * @param	wcf\system\form\IFormElementContainer		$parent
+	 * @param	\wcf\system\form\IFormElementContainer		$parent
 	 */
 	public function __construct(IFormElementContainer $parent);
 	
@@ -50,7 +50,7 @@ interface IFormElement {
 	/**
 	 * Returns element's parent container element.
 	 * 
-	 * @return	wcf\system\form\IFormElementContainer
+	 * @return	\wcf\system\form\IFormElementContainer
 	 */
 	public function getParent();
 	

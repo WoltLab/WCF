@@ -14,22 +14,22 @@ use wcf\data\DatabaseObjectList;
  */
 class UserProfileVisitorList extends DatabaseObjectList {
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$decoratorClassName
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
 	 */
 	public $decoratorClassName = 'wcf\data\user\UserProfile';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$objectClassName
+	 * @see	\wcf\data\DatabaseObjectList::$objectClassName
 	 */
 	public $objectClassName = 'wcf\data\user\User';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
 	 */
 	public $sqlOrderBy = 'user_profile_visitor.time DESC';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::__construct()
+	 * @see	\wcf\data\DatabaseObjectList::__construct()
 	 */
 	public function __construct() {
 		parent::__construct();

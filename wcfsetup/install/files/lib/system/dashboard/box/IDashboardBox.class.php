@@ -17,8 +17,8 @@ interface IDashboardBox {
 	/**
 	 * Initializes this box.
 	 * 
-	 * @param	wcf\data\dashboard\box\DashboardBox	$box
-	 * @param	wcf\page\IPage				$page
+	 * @param	\wcf\data\dashboard\box\DashboardBox	$box
+	 * @param	\wcf\page\IPage				$page
 	 */
 	public function init(DashboardBox $box, IPage $page);
 	

@@ -15,17 +15,17 @@ use wcf\system\WCF;
  */
 class UserOptionCategory extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user_option_category';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'categoryID';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::__construct()
+	 * @see	\wcf\data\DatabaseObject::__construct()
 	 */
 	public function __construct($categoryID, $row = null, UserOptionCategory $category = null) {
 		if ($categoryID !== null) {
@@ -54,7 +54,7 @@ class UserOptionCategory extends DatabaseObject {
 	 * Returns an instance of UserOptionCategory by name.
 	 * 
 	 * @param	string		$categoryName
-	 * @return	wcf\data\user\option\category\UserOptionCategory
+	 * @return	\wcf\data\user\option\category\UserOptionCategory
 	 */
 	public static function getCategoryByName($categoryName) {
 		$sql = "SELECT	*

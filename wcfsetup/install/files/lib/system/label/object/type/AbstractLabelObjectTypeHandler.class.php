@@ -15,7 +15,7 @@ use wcf\system\SingletonFactory;
 abstract class AbstractLabelObjectTypeHandler extends SingletonFactory implements ILabelObjectTypeHandler {
 	/**
 	 * label object type container
-	 * @var	wcf\system\label\object\type\LabelObjectTypeContainer
+	 * @var	\wcf\system\label\object\type\LabelObjectTypeContainer
 	 */
 	public $container = null;
 	
@@ -26,21 +26,21 @@ abstract class AbstractLabelObjectTypeHandler extends SingletonFactory implement
 	public $objectTypeID = 0;
 	
 	/**
-	 * @see	wcf\system\label\object\type\ILabelObjectTypeHandler::setObjectTypeID()
+	 * @see	\wcf\system\label\object\type\ILabelObjectTypeHandler::setObjectTypeID()
 	 */
 	public function setObjectTypeID($objectTypeID) {
 		$this->objectTypeID = $objectTypeID;
 	}
 	
 	/**
-	 * @see	wcf\system\label\object\type\ILabelObjectTypeHandler::getObjectTypeID()
+	 * @see	\wcf\system\label\object\type\ILabelObjectTypeHandler::getObjectTypeID()
 	 */
 	public function getObjectTypeID() {
 		return $this->objectTypeID;
 	}
 	
 	/**
-	 * @see	wcf\system\label\object\type\ILabelObjectTypeHandler::getContainer()
+	 * @see	\wcf\system\label\object\type\ILabelObjectTypeHandler::getContainer()
 	 */
 	public function getContainer() {
 		return $this->container;

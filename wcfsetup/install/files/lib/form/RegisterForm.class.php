@@ -41,7 +41,7 @@ class RegisterForm extends UserAddForm {
 	public $challenge = '';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$enableTracking
+	 * @see	\wcf\page\AbstractPage::$enableTracking
 	 */
 	public $enableTracking = true;
 	
@@ -52,7 +52,7 @@ class RegisterForm extends UserAddForm {
 	public $isExternalAuthentication = false;
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array();
 	
@@ -88,7 +88,7 @@ class RegisterForm extends UserAddForm {
 	public static $minRegistrationTime = 10;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -119,7 +119,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -153,7 +153,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		// validate captcha first
@@ -170,7 +170,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -210,7 +210,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -224,7 +224,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
 		AbstractForm::show();
@@ -246,7 +246,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\UserAddForm::validateUsername()
+	 * @see	\wcf\acp\form\UserAddForm::validateUsername()
 	 */
 	protected function validateUsername($username) {
 		parent::validateUsername($username);
@@ -258,7 +258,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\UserAddForm::validatePassword()
+	 * @see	\wcf\acp\form\UserAddForm::validatePassword()
 	 */
 	protected function validatePassword($password, $confirmPassword) {
 		if (!$this->isExternalAuthentication) {
@@ -272,7 +272,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\UserAddForm::validateEmail()
+	 * @see	\wcf\acp\form\UserAddForm::validateEmail()
 	 */
 	protected function validateEmail($email, $confirmEmail) {
 		parent::validateEmail($email, $confirmEmail);
@@ -283,7 +283,7 @@ class RegisterForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();

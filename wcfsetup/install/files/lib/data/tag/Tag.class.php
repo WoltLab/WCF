@@ -17,12 +17,12 @@ use wcf\util\ArrayUtil;
  */
 class Tag extends DatabaseObject implements IRouteController {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'tag';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
 	 */
 	protected static $databaseTableIndexName = 'tagID';
 	
@@ -75,7 +75,7 @@ class Tag extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	wcf\data\ITitledObject::getTitle()
+	 * @see	\wcf\data\ITitledObject::getTitle()
 	 */
 	public function getTitle() {
 		return $this->name;

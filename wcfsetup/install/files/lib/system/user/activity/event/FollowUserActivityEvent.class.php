@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class FollowUserActivityEvent extends SingletonFactory implements IUserActivityEvent {
 	/**
-	 * @see	wcf\system\user\activity\event\IUserActivityEvent::prepare()
+	 * @see	\wcf\system\user\activity\event\IUserActivityEvent::prepare()
 	 */
 	public function prepare(array $events) {
 		$objectIDs = array();

@@ -96,7 +96,7 @@ class Mail {
 	
 	/**
 	 * mail language
-	 * @var	wcf\data\language\Language
+	 * @var	\wcf\data\language\Language
 	 */
 	protected $language = null;
 	
@@ -514,7 +514,7 @@ class Mail {
 	/**
 	 * Sets the mail language.
 	 * 
-	 * @param	wcf\data\language\Language	$language
+	 * @param	\wcf\data\language\Language	$language
 	 */
 	public function setLanguage(Language $language) {
 		$this->language = $language;
@@ -523,7 +523,7 @@ class Mail {
 	/**
 	 * Returns the mail language.
 	 * 
-	 * @return	wcf\data\language\Language
+	 * @return	\wcf\data\language\Language
 	 */
 	public function getLanguage() {
 		if ($this->language === null) return WCF::getLanguage();

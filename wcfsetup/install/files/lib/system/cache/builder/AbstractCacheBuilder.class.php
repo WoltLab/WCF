@@ -28,7 +28,7 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
 	protected $maxLifetime = 0;
 	
 	/**
-	 * @see	wcf\system\cache\builder\ICacheBuilder::getData()
+	 * @see	\wcf\system\cache\builder\ICacheBuilder::getData()
 	 */
 	public function getData(array $parameters = array(), $arrayIndex = '') {
 		$index = CacheHandler::getInstance()->getCacheIndex($parameters);
@@ -56,14 +56,14 @@ abstract class AbstractCacheBuilder extends SingletonFactory implements ICacheBu
 	}
 	
 	/**
-	 * @see	wcf\system\cache\builder\ICacheBuilder::getMaxLifetime()
+	 * @see	\wcf\system\cache\builder\ICacheBuilder::getMaxLifetime()
 	 */
 	public function getMaxLifetime() {
 		return $this->maxLifetime;
 	}
 	
 	/**
-	 * @see	wcf\system\cache\builder\ICacheBuilder::reset()
+	 * @see	\wcf\system\cache\builder\ICacheBuilder::reset()
 	 */
 	public function reset(array $parameters = array()) {
 		CacheHandler::getInstance()->flush($this, $parameters);

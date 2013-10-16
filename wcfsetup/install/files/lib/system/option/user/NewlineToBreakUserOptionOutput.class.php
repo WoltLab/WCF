@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  */
 class NewlineToBreakUserOptionOutput implements IUserOptionOutput {
 	/**
-	 * @see	wcf\system\option\user\IUserOptionOutput::getOutput()
+	 * @see	\wcf\system\option\user\IUserOptionOutput::getOutput()
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
 		return nl2br(StringUtil::encodeHTML($value));

@@ -23,7 +23,7 @@ class UserOnlineLocationHandler extends SingletonFactory {
 	public $locations = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// load locations
@@ -35,7 +35,7 @@ class UserOnlineLocationHandler extends SingletonFactory {
 	/**
 	 * Gets the location of a given user.
 	 * 
-	 * @param	wcf\data\user\online\UserOnline		$user
+	 * @param	\wcf\data\user\online\UserOnline		$user
 	 * @return	string
 	 */
 	public function getLocation(UserOnline $user) {

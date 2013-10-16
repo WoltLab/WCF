@@ -20,12 +20,12 @@ use wcf\system\WCF;
 class ModificationLogHandler extends SingletonFactory {
 	/**
 	 * list of object types
-	 * @var	array<wcf\data\object\type\ObjectType>
+	 * @var	array<\wcf\data\object\type\ObjectType>
 	 */
 	protected $cache = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->cache = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.modifiableContent');
@@ -35,7 +35,7 @@ class ModificationLogHandler extends SingletonFactory {
 	 * Returns object type by object type name.
 	 * 
 	 * @param	string		$objectType
-	 * @return	wcf\data\object\type\ObjectType
+	 * @return	\wcf\data\object\type\ObjectType
 	 */
 	public function getObjectType($objectType) {
 		foreach ($this->cache as $objectTypeObj) {
@@ -57,7 +57,7 @@ class ModificationLogHandler extends SingletonFactory {
 	 * @param	integer		$time
 	 * @param	integer		$userID
 	 * @param	string		$username
-	 * @return	wcf\data\modification\log\ModificationLog
+	 * @return	\wcf\data\modification\log\ModificationLog
 	 */
 	protected function _add($objectType, $objectID, $action, array $additionalData = array(), $time = TIME_NOW, $userID = null, $username = null) {
 		$objectTypeObj = $this->getObjectType($objectType);

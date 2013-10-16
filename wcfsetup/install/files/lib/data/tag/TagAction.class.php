@@ -18,12 +18,12 @@ use wcf\system\WCF;
  */
 class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction
+	 * @see	\wcf\data\AbstractDatabaseObjectAction
 	 */
 	protected $allowGuestAccess = array('getSearchResultList');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\tag\TagEditor';
 	
@@ -38,12 +38,12 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	protected $permissionsUpdate = array('admin.content.tag.canManageTag');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('delete', 'update');
 	
 	/**
-	 * @see	wcf\data\ISearchAction::validateGetSearchResultList()
+	 * @see	\wcf\data\ISearchAction::validateGetSearchResultList()
 	 */
 	public function validateGetSearchResultList() {
 		$this->readString('searchString', false, 'data');
@@ -54,7 +54,7 @@ class TagAction extends AbstractDatabaseObjectAction implements ISearchAction {
 	}
 	
 	/**
-	 * @see	wcf\data\ISearchAction::getSearchResultList()
+	 * @see	\wcf\data\ISearchAction::getSearchResultList()
 	 */
 	public function getSearchResultList() {
 		$excludedSearchValues = array();

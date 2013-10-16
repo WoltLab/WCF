@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class UserAvatarEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\avatar\UserAvatar';
 	
 	/**
-	 * @see	wcf\data\IEditableObject::delete()
+	 * @see	\wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		$sql = "DELETE FROM	wcf".WCF_N."_user_avatar
@@ -32,7 +32,7 @@ class UserAvatarEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableObject::deleteAll()
+	 * @see	\wcf\data\IEditableObject::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		$sql = "SELECT	*

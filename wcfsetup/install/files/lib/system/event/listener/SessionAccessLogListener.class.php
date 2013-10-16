@@ -19,7 +19,7 @@ use wcf\util\UserUtil;
  */
 class SessionAccessLogListener implements IEventListener {
 	/**
-	 * @see	wcf\system\event\IEventListener::execute()
+	 * @see	\wcf\system\event\IEventListener::execute()
 	 */
 	public function execute($eventObj, $className, $eventName) {
 		if (WCF::getUser()->userID && WCF::getSession()->getPermission('admin.general.canUseAcp') && !defined(get_class($eventObj).'::DO_NOT_LOG')) {

@@ -30,7 +30,7 @@ class SearchResultTextParser extends SingletonFactory {
 	protected $searchQuery = '';
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		if (isset($_GET['highlight'])) {

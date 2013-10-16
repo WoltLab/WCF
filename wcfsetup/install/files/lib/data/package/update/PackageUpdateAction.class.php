@@ -28,18 +28,18 @@ use wcf\system\WCF;
  */
 class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\package\update\PackageUpdateEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('getResultList', 'prepareInstallation', 'prepareUpdate', 'search', 'searchForUpdates');
 	
 	/**
 	 * search object
-	 * @var	wcf\data\search\Search
+	 * @var	\wcf\data\search\Search
 	 */
 	protected $search = null;
 	

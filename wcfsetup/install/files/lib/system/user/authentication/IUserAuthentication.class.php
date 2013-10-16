@@ -16,7 +16,7 @@ interface IUserAuthentication {
 	/**
 	 * Returns an unique instance of the authentication class
 	 * 
-	 * @return	wcf\system\user\authentication\IUserAuthentication
+	 * @return	\wcf\system\user\authentication\IUserAuthentication
 	 */
 	public static function getInstance();
 	
@@ -30,7 +30,7 @@ interface IUserAuthentication {
 	/**
 	 * Stores the user access data for a persistent login.
 	 * 
-	 * @param	wcf\data\user\User	$user
+	 * @param	\wcf\data\user\User	$user
 	 * @param	string			$username
 	 * @param	string			$password
 	 */
@@ -42,7 +42,7 @@ interface IUserAuthentication {
 	 * @param	string		$username
 	 * @param	string		$password
 	 * @param	string		$userClassname		class name of user class
-	 * @return	wcf\data\user\User
+	 * @return	\wcf\data\user\User
 	 */
 	public function loginManually($username, $password, $userClassname = 'wcf\data\user\User');
 	
@@ -51,7 +51,7 @@ interface IUserAuthentication {
 	 * 
 	 * @param	boolean		$persistent		true = persistent login
 	 * @param	string		$userClassname		class name of user class
-	 * @return	wcf\data\user\User
+	 * @return	\wcf\data\user\User
 	 */
 	public function loginAutomatically($persistent = false, $userClassname = 'wcf\data\user\User');
 }

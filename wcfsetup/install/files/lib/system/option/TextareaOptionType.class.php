@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  */
 class TextareaOptionType extends TextOptionType {
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
@@ -27,7 +27,7 @@ class TextareaOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getData()
+	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		$newValue = StringUtil::unifyNewlines(parent::getData($option, $newValue));

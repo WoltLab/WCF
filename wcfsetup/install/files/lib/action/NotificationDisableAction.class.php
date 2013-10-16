@@ -28,7 +28,7 @@ class NotificationDisableAction extends AbstractAction {
 	
 	/**
 	 * notification event
-	 * @var	wcf\data\user\notification\event\UserNotificationEvent
+	 * @var	\wcf\data\user\notification\event\UserNotificationEvent
 	 */
 	public $event = null;
 	
@@ -40,7 +40,7 @@ class NotificationDisableAction extends AbstractAction {
 	
 	/**
 	 * user object
-	 * @var	wcf\data\user\User
+	 * @var	\wcf\data\user\User
 	 */
 	public $user = null;
 	
@@ -51,7 +51,7 @@ class NotificationDisableAction extends AbstractAction {
 	public $token = '';
 	
 	/**
-	 * @see	wcf\action\IAction::readParameters()
+	 * @see	\wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -75,7 +75,7 @@ class NotificationDisableAction extends AbstractAction {
 	}
 	
 	/**
-	 * @see	wcf\action\IAction::execute()
+	 * @see	\wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();

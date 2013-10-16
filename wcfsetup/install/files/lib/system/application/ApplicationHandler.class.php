@@ -38,7 +38,7 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * Returns the primary application.
 	 * 
-	 * @return	wcf\data\application\Application
+	 * @return	\wcf\data\application\Application
 	 */
 	public function getPrimaryApplication() {
 		$packageID = ($this->cache['primary']) ?: PACKAGE_ID;
@@ -54,7 +54,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * Returns an application based upon it's abbreviation. Will return the
 	 * primary application if $abbreviation equals to 'wcf'
 	 * 
-	 * @return	wcf\data\application\Application
+	 * @return	\wcf\data\application\Application
 	 */
 	public function getApplication($abbreviation) {
 		if ($abbreviation == 'wcf') {
@@ -76,7 +76,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * Returns pseudo-application representing WCF used for special cases,
 	 * e.g. cross-domain files requestable through the webserver.
 	 * 
-	 * @return	wcf\data\application\Application
+	 * @return	\wcf\data\application\Application
 	 */
 	public function getWCF() {
 		return $this->cache['wcf'];
@@ -85,7 +85,7 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * Returns the currently active application.
 	 * 
-	 * @return	wcf\data\application\Application
+	 * @return	\wcf\data\application\Application
 	 */
 	public function getActiveApplication() {
 		// work-around during WCFSetup
@@ -99,7 +99,7 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * Returns a list of dependent applications.
 	 * 
-	 * @return	array<wcf\data\application\Application>
+	 * @return	array<\wcf\data\application\Application>
 	 */
 	public function getDependentApplications() {
 		$applications = $this->getApplications();
@@ -116,7 +116,7 @@ class ApplicationHandler extends SingletonFactory {
 	/**
 	 * Returns a list of all active applications.
 	 * 
-	 * @return	array<wcf\data\application\Application>
+	 * @return	array<\wcf\data\application\Application>
 	 */
 	public function getApplications() {
 		return $this->cache['application'];

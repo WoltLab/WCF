@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class UserActivityEventAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	public $allowGuestAccess = array('load');
 	

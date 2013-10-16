@@ -25,12 +25,12 @@ use wcf\util\StringUtil;
  */
 class FacebookAuthAction extends AbstractAction {
 	/**
-	 * @see	wcf\action\AbstractAction::$neededModules
+	 * @see	\wcf\action\AbstractAction::$neededModules
 	 */
 	public $neededModules = array('FACEBOOK_PUBLIC_KEY', 'FACEBOOK_PRIVATE_KEY');
 	
 	/**
-	 * @see	wcf\action\IAction::execute()
+	 * @see	\wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();
@@ -139,7 +139,7 @@ class FacebookAuthAction extends AbstractAction {
 	 * Fetches the User with the given userID.
 	 * 
 	 * @param	integer			$userID
-	 * @return	wcf\data\user\User
+	 * @return	\wcf\data\user\User
 	 */
 	public function getUser($userID) {
 		$sql = "SELECT	userID

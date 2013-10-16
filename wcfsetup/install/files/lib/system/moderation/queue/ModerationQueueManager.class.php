@@ -28,7 +28,7 @@ class ModerationQueueManager extends SingletonFactory {
 	
 	/**
 	 * list of moderation types
-	 * @var	array<wcf\data\object\type\ObjectType>
+	 * @var	array<\wcf\data\object\type\ObjectType>
 	 */
 	protected $moderationTypes = array();
 	
@@ -40,12 +40,12 @@ class ModerationQueueManager extends SingletonFactory {
 	
 	/**
 	 * list of object types
-	 * @var	array<wcf\data\object\type\ObjectType>
+	 * @var	array<\wcf\data\object\type\ObjectType>
 	 */
 	protected $objectTypes = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$moderationTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.moderation.type');
@@ -183,7 +183,7 @@ class ModerationQueueManager extends SingletonFactory {
 	 * Populates object properties for viewing.
 	 * 
 	 * @param	integer								$objectTypeID
-	 * @param	array<wcf\data\moderation\queue\ViewableModerationQueue>	$objects
+	 * @param	array<\wcf\data\moderation\queue\ViewableModerationQueue>	$objects
 	 */
 	public function populate($objectTypeID, array $objects) {
 		$moderationType = '';

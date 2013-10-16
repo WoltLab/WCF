@@ -16,14 +16,14 @@ interface IUserOnlineLocation {
 	/**
 	 * Caches the information of a page location.
 	 * 
-	 * @param	wcf\data\user\online\UserOnline		$user
+	 * @param	\wcf\data\user\online\UserOnline		$user
 	 */
 	public function cache(UserOnline $user);
 	
 	/**
 	 * Returns the information of a page location.
 	 * 
-	 * @param	wcf\data\user\online\UserOnline		$user
+	 * @param	\wcf\data\user\online\UserOnline		$user
 	 * @param	string					$languageVariable
 	 * @return	string
 	 */

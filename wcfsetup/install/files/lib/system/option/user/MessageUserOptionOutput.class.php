@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  */
 class MessageUserOptionOutput implements IUserOptionOutput {
 	/**
-	 * @see	wcf\system\option\user\IUserOptionOutput::getOutput()
+	 * @see	\wcf\system\option\user\IUserOptionOutput::getOutput()
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
 		$value = StringUtil::trim($value);

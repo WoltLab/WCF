@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
 class AttachmentBBCode extends AbstractBBCode {
 	/**
 	 * list of attachments
-	 * @var	wcf\data\attachment\GroupedAttachmentList
+	 * @var	\wcf\data\attachment\GroupedAttachmentList
 	 */
 	protected static $attachmentList = null;
 	
@@ -28,7 +28,7 @@ class AttachmentBBCode extends AbstractBBCode {
 	protected static $objectID = 0;
 	
 	/**
-	 * @see	wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		// get attachment id
@@ -83,7 +83,7 @@ class AttachmentBBCode extends AbstractBBCode {
 	/**
 	 * Sets the attachment list.
 	 * 
-	 * @param	wcf\data\attachment\GroupedAttachmentList	$attachments
+	 * @param	\wcf\data\attachment\GroupedAttachmentList	$attachments
 	 */
 	public static function setAttachmentList(GroupedAttachmentList $attachmentList) {
 		self::$attachmentList = $attachmentList;

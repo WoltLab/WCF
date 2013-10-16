@@ -22,12 +22,12 @@ use wcf\util\PasswordUtil;
  */
 final class User extends DatabaseObject implements IRouteController {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'userID';
 	
@@ -62,7 +62,7 @@ final class User extends DatabaseObject implements IRouteController {
 	protected static $userOptions = null;
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::__construct()
+	 * @see	\wcf\data\DatabaseObject::__construct()
 	 */
 	public function __construct($id, $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {
@@ -271,7 +271,7 @@ final class User extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::__get()
+	 * @see	\wcf\data\DatabaseObject::__get()
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);
@@ -283,7 +283,7 @@ final class User extends DatabaseObject implements IRouteController {
 	 * Returns the user with the given username.
 	 * 
 	 * @param	string		$username
-	 * @return	wcf\data\user\User
+	 * @return	\wcf\data\user\User
 	 */
 	public static function getUserByUsername($username) {
 		$sql = "SELECT	*
@@ -301,7 +301,7 @@ final class User extends DatabaseObject implements IRouteController {
 	 * Returns the user with the given email.
 	 * 
 	 * @param	string		$email
-	 * @return	wcf\data\user\User
+	 * @return	\wcf\data\user\User
 	 */
 	public static function getUserByEmail($email) {
 		$sql = "SELECT	*
@@ -351,7 +351,7 @@ final class User extends DatabaseObject implements IRouteController {
 	 * Returns a list of users.
 	 * 
 	 * @param	array		$userIDs
-	 * @return	array<wcf\data\user\User>
+	 * @return	array<\wcf\data\user\User>
 	 */
 	public static function getUsers(array $userIDs) {
 		$userList = new UserList();
@@ -371,14 +371,14 @@ final class User extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
 	 */
 	public static function getDatabaseTableAlias() {
 		return 'user_table';
 	}
 	
 	/**
-	 * @see	wcf\system\request\IRouteController::getTitle()
+	 * @see	\wcf\system\request\IRouteController::getTitle()
 	 */
 	public function getTitle() {
 		return $this->username;
@@ -387,7 +387,7 @@ final class User extends DatabaseObject implements IRouteController {
 	/**
 	 * Returns the language of this user.
 	 * 
-	 * @return	wcf\data\language\Language
+	 * @return	\wcf\data\language\Language
 	 */
 	public function getLanguage() {
 		$language = LanguageFactory::getInstance()->getLanguage($this->languageID);

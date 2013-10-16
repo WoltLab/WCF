@@ -24,13 +24,13 @@ use wcf\system\WCF;
  */
 class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('getGroupedUserList');
 	
 	/**
 	 * user profile object
-	 * @var	wcf\data\user\UserProfile;
+	 * @var	\wcf\data\user\UserProfile;
 	 */
 	public $userProfile = null;
 	
@@ -79,7 +79,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	}
 	
 	/**
-	 * @see	wcf\data\user\follow\UserFollowAction::validateFollow()
+	 * @see	\wcf\data\user\follow\UserFollowAction::validateFollow()
 	 */
 	public function validateUnfollow() {
 		$this->validateFollow();
@@ -111,7 +111,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
 	 */
 	public function validateDelete() {
 		// read objects
@@ -132,7 +132,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
 	 */
 	public function delete() {
 		$returnValues = parent::delete();
@@ -152,7 +152,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	}
 	
 	/**
-	 * @see	wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
 	 */
 	public function validateGetGroupedUserList() {
 		$this->readInteger('pageNo');
@@ -165,7 +165,7 @@ class UserFollowAction extends AbstractDatabaseObjectAction implements IGroupedU
 	}
 	
 	/**
-	 * @see	wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
 	 */
 	public function getGroupedUserList() {
 		// resolve page count

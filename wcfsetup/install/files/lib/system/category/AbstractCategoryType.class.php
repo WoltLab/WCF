@@ -60,7 +60,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	protected $objectTypes = array();
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::afterDeletion()
+	 * @see	\wcf\system\category\ICategoryType::afterDeletion()
 	 */
 	public function afterDeletion(CategoryEditor $categoryEditor) {
 		$categoryIDs = array_keys(CategoryHandler::getInstance()->getChildCategories($categoryEditor->categoryID));
@@ -78,42 +78,42 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::canAddCategory()
+	 * @see	\wcf\system\category\ICategoryType::canAddCategory()
 	 */
 	public function canAddCategory() {
 		return WCF::getSession()->getPermission($this->permissionPrefix.'.canAddCategory');
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::canDeleteCategory()
+	 * @see	\wcf\system\category\ICategoryType::canDeleteCategory()
 	 */
 	public function canDeleteCategory() {
 		return WCF::getSession()->getPermission($this->permissionPrefix.'.canDeleteCategory');
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::canEditCategory()
+	 * @see	\wcf\system\category\ICategoryType::canEditCategory()
 	 */
 	public function canEditCategory() {
 		return WCF::getSession()->getPermission($this->permissionPrefix.'.canEditCategory');
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::forceDescription()
+	 * @see	\wcf\system\category\ICategoryType::forceDescription()
 	 */
 	public function forceDescription() {
 		return $this->hasDescription() && $this->forceDescription;
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::getApplication()
+	 * @see	\wcf\system\category\ICategoryType::getApplication()
 	 */
 	public function getApplication() {
 		return 'wcf';
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::getObjectTypeName()
+	 * @see	\wcf\system\category\ICategoryType::getObjectTypeName()
 	 */
 	public function getObjectTypeName($definitionName) {
 		if (isset($this->objectTypes[$definitionName])) {
@@ -124,21 +124,21 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::getDescriptionLangVarCategory()
+	 * @see	\wcf\system\category\ICategoryType::getDescriptionLangVarCategory()
 	 */
 	public function getDescriptionLangVarCategory() {
 		return $this->i18nLangVarCategory;
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::getI18nLangVarPrefix()
+	 * @see	\wcf\system\category\ICategoryType::getI18nLangVarPrefix()
 	 */
 	public function getI18nLangVarPrefix() {
 		return $this->i18nLangVarCategory.'.category';
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::getLanguageVariable()
+	 * @see	\wcf\system\category\ICategoryType::getLanguageVariable()
 	 */
 	public function getLanguageVariable($name, $optional = false) {
 		if ($this->langVarPrefix) {
@@ -152,21 +152,21 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::getMaximumNestingLevel()
+	 * @see	\wcf\system\category\ICategoryType::getMaximumNestingLevel()
 	 */
 	public function getMaximumNestingLevel() {
 		return $this->maximumNestingLevel;
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::getTitleLangVarCategory()
+	 * @see	\wcf\system\category\ICategoryType::getTitleLangVarCategory()
 	 */
 	public function getTitleLangVarCategory() {
 		return $this->i18nLangVarCategory;
 	}
 	
 	/**
-	 * @see	wcf\system\category\ICategoryType::hasDescription()
+	 * @see	\wcf\system\category\ICategoryType::hasDescription()
 	 */
 	public function hasDescription() {
 		return $this->hasDescription;

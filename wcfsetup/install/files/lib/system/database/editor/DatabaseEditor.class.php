@@ -15,14 +15,14 @@ use wcf\system\database\Database;
 abstract class DatabaseEditor {
 	/**
 	 * database object
-	 * @var	wcf\system\database\Database
+	 * @var	\wcf\system\database\Database
 	 */
 	protected $dbObj = null;
 	
 	/**
 	 * Creates a new DatabaseEditor object.
 	 * 
-	 * @param	wcf\system\database\Database	$dbObj
+	 * @param	\wcf\system\database\Database	$dbObj
 	 */
 	public function __construct(Database $dbObj) {
 		$this->dbObj = $dbObj;

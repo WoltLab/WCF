@@ -23,7 +23,7 @@ use wcf\util\HeaderUtil;
 class RequestHandler extends SingletonFactory {
 	/**
 	 * active request object
-	 * @var	wcf\system\request\Request
+	 * @var	\wcf\system\request\Request
 	 */
 	protected $activeRequest = null;
 	
@@ -40,7 +40,7 @@ class RequestHandler extends SingletonFactory {
 	protected $isACPRequest = false;
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
@@ -218,7 +218,7 @@ class RequestHandler extends SingletonFactory {
 	/**
 	 * Returns the active request object.
 	 * 
-	 * @return	wcf\system\request\Request
+	 * @return	\wcf\system\request\Request
 	 */
 	public function getActiveRequest() {
 		return $this->activeRequest;

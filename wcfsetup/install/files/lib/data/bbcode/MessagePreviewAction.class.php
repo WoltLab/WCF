@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  */
 class MessagePreviewAction extends BBCodeAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('getMessagePreview');
 		

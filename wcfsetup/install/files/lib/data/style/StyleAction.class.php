@@ -27,44 +27,44 @@ use wcf\util\StringUtil;
  */
 class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('changeStyle', 'getStyleChooser');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\style\StyleEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.style.canManageStyle');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.style.canManageStyle');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('copy', 'delete', 'setAsDefault', 'toggle', 'update', 'upload');
 	
 	/**
 	 * style object
-	 * @var	wcf\data\style\Style
+	 * @var	\wcf\data\style\Style
 	 */
 	public $style = null;
 	
 	/**
 	 * style editor object
-	 * @var	wcf\data\style\StyleEditor
+	 * @var	\wcf\data\style\StyleEditor
 	 */
 	public $styleEditor = null;
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::create()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
 	 */
 	public function create() {
 		$style = parent::create();
@@ -79,7 +79,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
 	 */
 	public function update() {
 		parent::update();
@@ -97,7 +97,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
 	 */
 	public function delete() {
 		$count = parent::delete();
@@ -146,7 +146,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	/**
 	 * Updates style variables for given style.
 	 * 
-	 * @param	wcf\data\style\Style	$style
+	 * @param	\wcf\data\style\Style	$style
 	 * @param	boolean			$removePreviousVariables
 	 */
 	protected function updateVariables(Style $style, $removePreviousVariables = false) {
@@ -203,7 +203,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	/**
 	 * Updates style preview image.
 	 * 
-	 * @param	wcf\data\style\Style	$style
+	 * @param	\wcf\data\style\Style	$style
 	 */
 	protected function updateStylePreviewImage(Style $style) {
 		if (!isset($this->parameters['tmpHash'])) {
@@ -472,7 +472,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	}
 	
 	/**
-	 * @see	wcf\data\IToggleAction::validateToggle()
+	 * @see	\wcf\data\IToggleAction::validateToggle()
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
@@ -485,7 +485,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	}
 	
 	/**
-	 * @see	wcf\data\IToggleAction::toggle()
+	 * @see	\wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {
 		foreach ($this->objects as $style) {

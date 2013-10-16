@@ -25,7 +25,7 @@ use wcf\system\WCF;
  */
 class UserGroupOptionForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.group';
 	
@@ -37,24 +37,24 @@ class UserGroupOptionForm extends AbstractForm {
 	
 	/**
 	 * list of accessible groups
-	 * @var	array<wcf\data\user\group\UserGroup>
+	 * @var	array<\wcf\data\user\group\UserGroup>
 	 */
 	public $groups = array();
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditGroup');
 	
 	/**
 	 * user group option type object
-	 * @var	wcf\system\option\user\group\IUserGroupOptionType
+	 * @var	\wcf\system\option\user\group\IUserGroupOptionType
 	 */
 	public $optionType = null;
 	
 	/**
 	 * list of parent categories
-	 * @var	array<wcf\data\user\group\option\category\UserGroupOptionCategory>
+	 * @var	array<\wcf\data\user\group\option\category\UserGroupOptionCategory>
 	 */
 	public $parentCategories = array();
 	
@@ -66,7 +66,7 @@ class UserGroupOptionForm extends AbstractForm {
 	
 	/**
 	 * user group option object
-	 * @var	wcf\data\user\group\option\UserGroupOption
+	 * @var	\wcf\data\user\group\option\UserGroupOption
 	 */
 	public $userGroupOption = null;
 	
@@ -77,7 +77,7 @@ class UserGroupOptionForm extends AbstractForm {
 	public $userGroupOptionID = 0;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -129,7 +129,7 @@ class UserGroupOptionForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -138,7 +138,7 @@ class UserGroupOptionForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -172,7 +172,7 @@ class UserGroupOptionForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -201,7 +201,7 @@ class UserGroupOptionForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -216,7 +216,7 @@ class UserGroupOptionForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -233,7 +233,7 @@ class UserGroupOptionForm extends AbstractForm {
 	/**
 	 * Validates object options and permissions.
 	 * 
-	 * @param	wcf\data\DatabaseObject		$object
+	 * @param	\wcf\data\DatabaseObject		$object
 	 * @return	boolean
 	 */
 	protected function verifyPermissions(DatabaseObject $object) {

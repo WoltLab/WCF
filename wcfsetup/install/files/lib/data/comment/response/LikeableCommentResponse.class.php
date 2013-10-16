@@ -15,12 +15,12 @@ use wcf\data\object\type\ObjectTypeCache;
  */
 class LikeableCommentResponse extends AbstractLikeObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\comment\response\CommentResponse';
 	
 	/**
-	 * @see	wcf\data\like\object\ILikeObject::getObjectType()
+	 * @see	\wcf\data\like\object\ILikeObject::getObjectType()
 	 */
 	public function getObjectType() {
 		if ($this->objectType === null) {
@@ -31,21 +31,21 @@ class LikeableCommentResponse extends AbstractLikeObject {
 	}
 	
 	/**
-	 * @see	wcf\data\ITitledObject::getTitle()
+	 * @see	\wcf\data\ITitledObject::getTitle()
 	 */
 	public function getTitle() {
 		return $this->message;
 	}
 	
 	/**
-	 * @see	wcf\data\like\object\ILikeObject::getURL()
+	 * @see	\wcf\data\like\object\ILikeObject::getURL()
 	 */
 	public function getURL() {
 		return $this->getLink();
 	}
 	
 	/**
-	 * @see	wcf\data\like\object\ILikeObject::getUserID()
+	 * @see	\wcf\data\like\object\ILikeObject::getUserID()
 	 */
 	public function getUserID() {
 		return $this->userID;

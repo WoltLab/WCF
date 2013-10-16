@@ -20,7 +20,7 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	const AVAILABLE_DURING_OFFLINE_MODE = true;
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$enableTracking
+	 * @see	\wcf\page\AbstractPage::$enableTracking
 	 */
 	public $enableTracking = true;
 	
@@ -31,7 +31,7 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	public $useCookies = 1;
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -53,7 +53,7 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -77,7 +77,7 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

@@ -30,7 +30,7 @@ class PackageInstallationScheduler {
 	
 	/**
 	 * list of package update servers
-	 * @var	array<wcf\data\package\update\server\PackageUpdateServer>
+	 * @var	array<\wcf\data\package\update\server\PackageUpdateServer>
 	 */
 	protected $packageUpdateServers = array();
 	

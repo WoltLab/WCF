@@ -27,13 +27,13 @@ use wcf\util\StringUtil;
  */
 class PackageStartInstallForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.install';
 	
 	/**
 	 * updated package object
-	 * @var	wcf\system\package\Package
+	 * @var	\wcf\system\package\Package
 	 */
 	public $package = null;
 	
@@ -51,18 +51,18 @@ class PackageStartInstallForm extends AbstractForm {
 	
 	/**
 	 * archive of the installation/update package
-	 * @var	wcf\system\package\PackageArchive
+	 * @var	\wcf\system\package\PackageArchive
 	 */
 	public $archive = null;
 	
 	/**
 	 * package installation/update queue
-	 * @var	wcf\data\package\installation\queue\PackageInstallationQueue
+	 * @var	\wcf\data\package\installation\queue\PackageInstallationQueue
 	 */
 	public $queue = null;
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -72,7 +72,7 @@ class PackageStartInstallForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -194,7 +194,7 @@ class PackageStartInstallForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -225,7 +225,7 @@ class PackageStartInstallForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -236,7 +236,7 @@ class PackageStartInstallForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
 		if (!WCF::getSession()->getPermission('admin.system.package.canInstallPackage') && !WCF::getSession()->getPermission('admin.system.package.canUpdatePackage')) {

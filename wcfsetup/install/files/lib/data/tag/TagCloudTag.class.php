@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectDecorator;
  */
 class TagCloudTag extends DatabaseObjectDecorator {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\tag\Tag';
 	

@@ -17,7 +17,7 @@ use wcf\system\WCF;
  */
 class RecentActivityUserProfileMenuContent extends SingletonFactory implements IUserProfileMenuContent {
 	/**
-	 * @see	wcf\system\menu\user\profile\content\IUserProfileMenuContent::getContent()
+	 * @see	\wcf\system\menu\user\profile\content\IUserProfileMenuContent::getContent()
 	 */
 	public function getContent($userID) {
 		$eventList = new ViewableUserActivityEventList();
@@ -40,7 +40,7 @@ class RecentActivityUserProfileMenuContent extends SingletonFactory implements I
 	}
 	
 	/**
-	 * @see	wcf\system\menu\user\profile\content\IUserProfileMenuContent::isVisible()
+	 * @see	\wcf\system\menu\user\profile\content\IUserProfileMenuContent::isVisible()
 	 */
 	public function isVisible($userID) {
 		return true;

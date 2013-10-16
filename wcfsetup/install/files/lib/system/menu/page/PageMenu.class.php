@@ -19,12 +19,12 @@ use wcf\system\menu\TreeMenu;
 class PageMenu extends TreeMenu {
 	/**
 	 * landing page menu item
-	 * @var	wcf\data\page\menu\item\PageMenuItem
+	 * @var	\wcf\data\page\menu\item\PageMenuItem
 	 */
 	protected $landingPage = null;
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get menu items from cache
@@ -60,14 +60,14 @@ class PageMenu extends TreeMenu {
 	/**
 	 * Returns landing page menu item.
 	 * 
-	 * @return	wcf\data\page\menu\item\PageMenuItem
+	 * @return	\wcf\data\page\menu\item\PageMenuItem
 	 */
 	public function getLandingPage() {
 		return $this->landingPage;
 	}
 	
 	/**
-	 * @see	wcf\system\menu\TreeMenu::loadCache()
+	 * @see	\wcf\system\menu\TreeMenu::loadCache()
 	 */
 	protected function loadCache() {
 		parent::loadCache();
@@ -77,7 +77,7 @@ class PageMenu extends TreeMenu {
 	}
 	
 	/**
-	 * @see	wcf\system\menu\TreeMenu::checkMenuItem()
+	 * @see	\wcf\system\menu\TreeMenu::checkMenuItem()
 	 */
 	protected function checkMenuItem(ITreeMenuItem $item) {
 		// landing page must always be accessible
@@ -91,7 +91,7 @@ class PageMenu extends TreeMenu {
 	}
 	
 	/**
-	 * @see	wcf\system\menu\TreeMenu::setActiveMenuItem()
+	 * @see	\wcf\system\menu\TreeMenu::setActiveMenuItem()
 	 */
 	public function setActiveMenuItem($menuItem) {
 		if (isset($this->menuItemList[$menuItem]) && $this->menuItemList[$menuItem]->menuPosition == 'footer') {

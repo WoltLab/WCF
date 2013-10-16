@@ -50,7 +50,7 @@ class ImportCLICommand implements ICLICommand {
 	
 	/**
 	 * selected exporter
-	 * @var	wcf\system\exporter\IExporter
+	 * @var	\wcf\system\exporter\IExporter
 	 */
 	protected $exporter = null;
 	
@@ -62,7 +62,7 @@ class ImportCLICommand implements ICLICommand {
 	
 	/**
 	 * list of available exporters
-	 * @var	array<wcf\data\object\type\ObjectType>
+	 * @var	array<\wcf\data\object\type\ObjectType>
 	 */
 	protected $exporters = array();
 	
@@ -103,14 +103,14 @@ class ImportCLICommand implements ICLICommand {
 	public $userMergeMode = 0;
 	
 	/**
-	 * @see	wcf\system\cli\command\ICLICommand::canAccess()
+	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
 	 */
 	public function canAccess() {
 		return WCF::getSession()->getPermission('admin.system.canImportData');
 	}
 	
 	/**
-	 * @see	wcf\system\cli\command\ICLICommand::execute()
+	 * @see	\wcf\system\cli\command\ICLICommand::execute()
 	 */
 	public function execute(array $parameters) {
 		CLIWCF::getReader()->setHistoryEnabled(false);

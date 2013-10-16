@@ -22,12 +22,12 @@ use wcf\util\StringUtil;
 class MailWorker extends AbstractWorker {
 	/**
 	 * condition builder object
-	 * @var	wcf\system\database\util\PreparedStatementConditionBuilder
+	 * @var	\wcf\system\database\util\PreparedStatementConditionBuilder
 	 */
 	protected $conditions = null;
 	
 	/**
-	 * @see	wcf\system\worker\AbstractWorker::$limit
+	 * @see	\wcf\system\worker\AbstractWorker::$limit
 	 */
 	protected $limit = 50;
 	
@@ -38,7 +38,7 @@ class MailWorker extends AbstractWorker {
 	protected $mailData = null;
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::validate()
+	 * @see	\wcf\system\worker\IWorker::validate()
 	 */
 	public function validate() {
 		WCF::getSession()->checkPermissions(array('admin.user.canMailUser'));
@@ -56,7 +56,7 @@ class MailWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::countObjects()
+	 * @see	\wcf\system\worker\IWorker::countObjects()
 	 */
 	public function countObjects() {
 		$this->conditions = new PreparedStatementConditionBuilder();
@@ -78,7 +78,7 @@ class MailWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::getProgress()
+	 * @see	\wcf\system\worker\IWorker::getProgress()
 	 */
 	public function getProgress() {
 		$progress = parent::getProgress();
@@ -98,7 +98,7 @@ class MailWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::execute()
+	 * @see	\wcf\system\worker\IWorker::execute()
 	 */
 	public function execute() {
 		// get users
@@ -122,7 +122,7 @@ class MailWorker extends AbstractWorker {
 	/**
 	 * Sends the mail to given user.
 	 * 
-	 * @param	wcf\data\user\User	$user
+	 * @param	\wcf\data\user\User	$user
 	 */
 	protected function sendMail(User $user) {
 		try {
@@ -137,7 +137,7 @@ class MailWorker extends AbstractWorker {
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::getProceedURL()
+	 * @see	\wcf\system\worker\IWorker::getProceedURL()
 	 */
 	public function getProceedURL() {
 		return LinkHandler::getInstance()->getLink('UserList');

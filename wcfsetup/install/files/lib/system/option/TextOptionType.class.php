@@ -30,7 +30,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 	protected $inputClass = 'long';
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
@@ -43,14 +43,14 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 	}
 	
 	/**
-	 * @see	wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		return $this->getFormElement($option, $value);
 	}
 	
 	/**
-	 * @see	wcf\system\option\ISearchableUserOption::getCondition()
+	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		$value = StringUtil::trim($value);
@@ -61,7 +61,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::validate()
+	 * @see	\wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		$newValue = $this->getContent($option, $newValue);
@@ -75,7 +75,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getData()
+	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		return $this->getContent($option, $newValue);
@@ -84,7 +84,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 	/**
 	 * Tries to extract content from value.
 	 * 
-	 * @param	wcf\data\option\Option		$option
+	 * @param	\wcf\data\option\Option		$option
 	 * @param	string				$newValue
 	 * @return					string
 	 */

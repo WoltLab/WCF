@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  */
 class SelectOptionsUserOptionOutput implements IUserOptionOutput {
 	/**
-	 * @see	wcf\system\option\user\IUserOptionOutput::getOutput()
+	 * @see	\wcf\system\option\user\IUserOptionOutput::getOutput()
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
 		$result = self::getResult($option, $value);
@@ -42,7 +42,7 @@ class SelectOptionsUserOptionOutput implements IUserOptionOutput {
 	/**
 	 * Returns the selected option value(s) for output.
 	 * 
-	 * @param	wcf\data\user\option\UserOption		$option
+	 * @param	\wcf\data\user\option\UserOption		$option
 	 * @param	string					$value
 	 * @return	mixed
 	 */

@@ -13,7 +13,7 @@ namespace wcf\system\bbcode\highlighter;
  */
 class BrainfuckHighlighter extends Highlighter {
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::highlight()
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlight()
 	 */
 	public function highlight($string) {
 		$string = preg_replace('/[^-\\+\\.,\\[\\]\\>\\<]+/', '||span class="hlComments"||\\0||/span||', $string);

@@ -20,25 +20,25 @@ use wcf\util\StringUtil;
  */
 abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator implements IUserNotificationEvent {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\notification\event\UserNotificationEvent';
 	
 	/**
 	 * author object
-	 * @var	wcf\data\user\UserProfile
+	 * @var	\wcf\data\user\UserProfile
 	 */
 	protected $author = null;
 	
 	/**
 	 * user notification
-	 * @var	wcf\data\user\notification\UserNotification
+	 * @var	\wcf\data\user\notification\UserNotification
 	 */
 	protected $notification = null;
 	
 	/**
 	 * user notification object
-	 * @var	wcf\system\user\notification\object\IUserNotificationObject
+	 * @var	\wcf\system\user\notification\object\IUserNotificationObject
 	 */
 	protected $userNotificationObject = null;
 	
@@ -50,12 +50,12 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	
 	/**
 	 * language object
-	 * @var	wcf\data\language\Language
+	 * @var	\wcf\data\language\Language
 	 */
 	protected $language = null;
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::setObject()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setObject()
 	 */
 	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array()) {
 		$this->notification = $notification;
@@ -65,21 +65,21 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getAuthorID()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getAuthorID()
 	 */
 	public function getAuthorID() {
 		return $this->author->userID;
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getAuthor()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getAuthor()
 	 */
 	public function getAuthor() {
 		return $this->author;
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::isVisible()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::isVisible()
 	 */
 	public function isVisible() {
 		if ($this->options) {
@@ -110,28 +110,28 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getEmailTitle()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailTitle()
 	 */
 	public function getEmailTitle() {
 		return $this->getTitle();
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
 		return $this->getMessage();
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getEventHash()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEventHash()
 	 */
 	public function getEventHash() {
 		return StringUtil::getHash($this->packageID . '-'. $this->eventID . '-' . $this->userNotificationObject->getObjectID());
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::setLanguage()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setLanguage()
 	 */
 	public function setLanguage(Language $language) {
 		$this->language = $language;
@@ -140,7 +140,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	/**
 	 * Gets the language of this event.
 	 * 
-	 * @return	wcf\data\language\Language
+	 * @return	\wcf\data\language\Language
 	 */
 	public function getLanguage() {
 		if ($this->language !== null) return $this->language;

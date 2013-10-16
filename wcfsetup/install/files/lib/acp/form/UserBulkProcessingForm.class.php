@@ -30,7 +30,7 @@ use wcf\util\StringUtil;
  */
 class UserBulkProcessingForm extends UserOptionListForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditUser', 'admin.user.canDeleteUser', 'admin.user.canMailUser');
 	
@@ -135,7 +135,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	
 	/**
 	 * conditions builder object
-	 * @var	wcf\system\database\condition\PreparedStatementConditionBuilder
+	 * @var	\wcf\system\database\condition\PreparedStatementConditionBuilder
 	 */
 	public $conditions = null;
 	
@@ -146,7 +146,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	public $activeOptions = array();
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -179,7 +179,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		AbstractForm::validate();
@@ -213,7 +213,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -440,7 +440,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -466,7 +466,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -505,7 +505,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::show()
+	 * @see	\wcf\form\IForm::show()
 	 */
 	public function show() {
 		// set active menu item

@@ -56,7 +56,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	public static $allowInvoke = array('resetMapping');
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.importer');
@@ -66,7 +66,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	 * Gets a data importer.
 	 * 
 	 * @param	string		$type
-	 * @return	wcf\system\importer\IImporter
+	 * @return	\wcf\system\importer\IImporter
 	 */
 	public function getImporter($type) {
 		if (!isset($this->importers[$type])) {

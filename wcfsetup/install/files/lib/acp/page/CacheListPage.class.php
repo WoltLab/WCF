@@ -21,12 +21,12 @@ use wcf\util\StringUtil;
  */
 class CacheListPage extends AbstractPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.maintenance.cache';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canManageApplication');
 	
@@ -49,7 +49,7 @@ class CacheListPage extends AbstractPage {
 	public $cacheData = array();
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -58,7 +58,7 @@ class CacheListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -127,7 +127,7 @@ class CacheListPage extends AbstractPage {
 	 * 
 	 * @param	string			$cacheType
 	 * @param	strign			$cacheDir
-	 * @param	wcf\system\Regex	$ignore
+	 * @param	\wcf\system\Regex	$ignore
 	 */
 	protected function readCacheFiles($cacheType, $cacheDir, Regex $ignore = null, $extension = 'php') {
 		if (!isset($this->cacheData[$cacheType])) {
@@ -169,7 +169,7 @@ class CacheListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

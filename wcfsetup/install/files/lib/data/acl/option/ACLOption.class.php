@@ -14,12 +14,12 @@ use wcf\data\DatabaseObject;
  */
 class ACLOption extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'acl_option';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 	
@@ -27,7 +27,7 @@ class ACLOption extends DatabaseObject {
 	 * Returns a list of options by object type id.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	wcf\data\acl\option\ACLOptionList
+	 * @return	\wcf\data\acl\option\ACLOptionList
 	 */
 	public static function getOptions($objectTypeID) {
 		$optionList = new ACLOptionList();

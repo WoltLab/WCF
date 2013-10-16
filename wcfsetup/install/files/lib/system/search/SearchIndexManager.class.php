@@ -23,7 +23,7 @@ class SearchIndexManager extends SingletonFactory {
 	protected $availableObjectTypes = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get available object types

@@ -15,7 +15,7 @@ interface IUserActivityEvent {
 	/**
 	 * Prepares a list of events for output.
 	 * 
-	 * @param	array<wcf\data\user\activity\event\ViewableUserActivityEvent>	$events
+	 * @param	array<\wcf\data\user\activity\event\ViewableUserActivityEvent>	$events
 	 */
 	public function prepare(array $events);
 }

@@ -26,12 +26,12 @@ class LabelHandler extends SingletonFactory {
 	
 	/**
 	 * list of label groups
-	 * @var	array<wcf\data\label\group\ViewableLabelGroup>
+	 * @var	array<\wcf\data\label\group\ViewableLabelGroup>
 	 */
 	protected $labelGroups = null;
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->cache = array(
@@ -70,7 +70,7 @@ class LabelHandler extends SingletonFactory {
 	 * object.
 	 * 
 	 * @param	string		$objectType
-	 * @return	wcf\data\object\type\ObjectType
+	 * @return	\wcf\data\object\type\ObjectType
 	 */
 	public function getObjectType($objectType) {
 		if (isset($this->cache['objectTypeNames'][$objectType])) {
@@ -86,7 +86,7 @@ class LabelHandler extends SingletonFactory {
 	 * 
 	 * @param	array<integer>		$labelIDs
 	 * @return	array
-	 * @see		wcf\system\label\LabelHandler::getPermissions()
+	 * @see		\wcf\system\label\LabelHandler::getPermissions()
 	 */
 	public function validateCanView(array $labelIDs) {
 		return $this->getPermissions('canViewLabel', $labelIDs);
@@ -97,7 +97,7 @@ class LabelHandler extends SingletonFactory {
 	 * 
 	 * @param	array<integer>		$labelIDs
 	 * @return	array
-	 * @see		wcf\system\label\LabelHandler::getPermissions()
+	 * @see		\wcf\system\label\LabelHandler::getPermissions()
 	 */
 	public function validateCanUse(array $labelIDs) {
 		return $this->getPermissions('canUseLabel', $labelIDs);
@@ -257,7 +257,7 @@ class LabelHandler extends SingletonFactory {
 	 * @param	integer		$objectTypeID
 	 * @param	integer		$objectID
 	 * @param	boolean		$validatePermissions
-	 * @see		wcf\system\label\LabelHandler::setLabel()
+	 * @see		\wcf\system\label\LabelHandler::setLabel()
 	 */
 	public function removeLabels($objectTypeID, $objectID, $validatePermissions = true) {
 		$this->setLabel(array(), $objectTypeID, $objectID, $validatePermissions);
@@ -269,7 +269,7 @@ class LabelHandler extends SingletonFactory {
 	 * @param	array<integer>		$groupID
 	 * @param	boolean			$validatePermissions
 	 * @param	string			$permission
-	 * @return	array<wcf\data\label\group\ViewableLabelGroup>
+	 * @return	array<\wcf\data\label\group\ViewableLabelGroup>
 	 */
 	public function getLabelGroups(array $groupIDs = array(), $validatePermissions = true, $permission = 'canSetLabel') {
 		$data = array();
@@ -321,7 +321,7 @@ class LabelHandler extends SingletonFactory {
 	 * Returns label group by id.
 	 * 
 	 * @param	integer		$groupID
-	 * @return	wcf\data\label\group\ViewableLabelGroup
+	 * @return	\wcf\data\label\group\ViewableLabelGroup
 	 */
 	public function getLabelGroup($groupID) {
 		if (isset($this->labelGroups['groups'][$groupID])) {

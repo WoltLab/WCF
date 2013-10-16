@@ -18,13 +18,13 @@ use wcf\system\WCF;
 abstract class AbstractContentDashboardBox implements IDashboardBox {
 	/**
 	 * dashboard box object
-	 * @var	wcf\data\dashboard\box\DashboardBox
+	 * @var	\wcf\data\dashboard\box\DashboardBox
 	 */
 	public $box = null;
 	
 	/**
 	 * IPage object
-	 * @var	wcf\page\IPage
+	 * @var	\wcf\page\IPage
 	 */
 	public $page = null;
 	
@@ -35,7 +35,7 @@ abstract class AbstractContentDashboardBox implements IDashboardBox {
 	public $templateName = 'dashboardBoxContent';
 	
 	/**
-	 * @see	wcf\system\dashboard\box\IDashboardBox::init()
+	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
 	 */
 	public function init(DashboardBox $box, IPage $page) {
 		$this->box = $box;
@@ -46,7 +46,7 @@ abstract class AbstractContentDashboardBox implements IDashboardBox {
 	}
 	
 	/**
-	 * @see	wcf\system\dashboard\box\IDashboardBox::getTemplate()
+	 * @see	\wcf\system\dashboard\box\IDashboardBox::getTemplate()
 	 */
 	public function getTemplate() {
 		$template = $this->render();

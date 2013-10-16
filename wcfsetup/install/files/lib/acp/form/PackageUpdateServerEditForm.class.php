@@ -25,12 +25,12 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	
 	/**
 	 * active package update server
-	 * @var	wcf\data\package\update\server\PackageUpdateServer
+	 * @var	\wcf\data\package\update\server\PackageUpdateServer
 	 */
 	public $updateServer = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -43,7 +43,7 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -62,7 +62,7 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -75,7 +75,7 @@ class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

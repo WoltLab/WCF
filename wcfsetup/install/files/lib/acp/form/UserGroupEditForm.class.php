@@ -21,12 +21,12 @@ use wcf\system\WCF;
  */
 class UserGroupEditForm extends UserGroupAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.group';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditGroup');
 	
@@ -38,12 +38,12 @@ class UserGroupEditForm extends UserGroupAddForm {
 	
 	/**
 	 * user group editor object
-	 * @var	wcf\data\user\group\UserGroupEditor
+	 * @var	\wcf\data\user\group\UserGroupEditor
 	 */
 	public $group = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -63,7 +63,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		if (empty($_POST)) {
@@ -99,7 +99,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -120,7 +120,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();

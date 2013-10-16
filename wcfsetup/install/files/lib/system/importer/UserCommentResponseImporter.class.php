@@ -13,7 +13,7 @@ namespace wcf\system\importer;
  */
 class UserCommentResponseImporter extends AbstractCommentResponseImporter {
 	/**
-	 * @see	wcf\system\importer\AbstractCommentResponseImporter::$objectTypeName
+	 * @see	\wcf\system\importer\AbstractCommentResponseImporter::$objectTypeName
 	 */
 	protected $objectTypeName = 'com.woltlab.wcf.user.comment';
 }

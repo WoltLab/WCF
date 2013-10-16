@@ -25,7 +25,7 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	
 	/**
 	 * object action
-	 * @var	wcf\data\IDatabaseObjectAction
+	 * @var	\wcf\data\IDatabaseObjectAction
 	 */
 	protected $objectAction = null;
 	
@@ -42,7 +42,7 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	protected $parameters = array();
 	
 	/**
-	 * @see	wcf\action\IAction::readParameters()
+	 * @see	\wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -53,7 +53,7 @@ class AJAXProxyAction extends AJAXInvokeAction {
 	}
 	
 	/**
-	 * @see	wcf\action\IAction::execute()
+	 * @see	\wcf\action\IAction::execute()
 	 */
 	protected function invoke() {
 		if (!ClassUtil::isInstanceOf($this->className, 'wcf\data\IDatabaseObjectAction')) {

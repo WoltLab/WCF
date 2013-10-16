@@ -27,12 +27,12 @@ class UninstallPackageAction extends InstallPackageAction {
 	protected $packageID = 0;
 	
 	/**
-	 * @see	wcf\action\AbstractDialogAction::$templateName
+	 * @see	\wcf\action\AbstractDialogAction::$templateName
 	 */
 	public $templateName = 'packageUninstallationStep';
 	
 	/**
-	 * @see	wcf\action\IAction::readParameters()
+	 * @see	\wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
 		AbstractDialogAction::readParameters();
@@ -159,7 +159,7 @@ class UninstallPackageAction extends InstallPackageAction {
 	}
 	
 	/**
-	 * @see	wcf\action\AbstractDialogAction::validateStep()
+	 * @see	\wcf\action\AbstractDialogAction::validateStep()
 	 */
 	protected function validateStep() {
 		switch ($this->step) {
@@ -175,7 +175,7 @@ class UninstallPackageAction extends InstallPackageAction {
 	}
 	
 	/**
-	 * @see	wcf\acp\action\InstallPackageAction::getCurrentAction()
+	 * @see	\wcf\acp\action\InstallPackageAction::getCurrentAction()
 	 */
 	protected function getCurrentAction($queueID) {
 		if ($queueID === null) {

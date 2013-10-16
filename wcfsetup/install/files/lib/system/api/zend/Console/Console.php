@@ -20,7 +20,7 @@ namespace Zend\Console;
 abstract class Console
 {
     /**
-     * @var Adapter\AdapterInterface
+     * @var \Adapter\AdapterInterface
      */
     protected static $instance;
 
@@ -42,7 +42,7 @@ abstract class Console
      *                                    automatically.
      * @throws Exception\InvalidArgumentException
      * @throws Exception\RuntimeException
-     * @return Adapter\AdapterInterface
+     * @return \Adapter\AdapterInterface
      */
     public static function getInstance($forceAdapter = null, $forceCharset = null)
     {

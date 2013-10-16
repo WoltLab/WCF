@@ -44,7 +44,7 @@ interface IMessage extends IUserContent {
 	/**
 	 * Returns formatted message text.
 	 * 
-	 * @see	wcf\data\IMessage::getFormattedMessage()
+	 * @see	\wcf\data\IMessage::getFormattedMessage()
 	 */
 	public function __toString();
 }

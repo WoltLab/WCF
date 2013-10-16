@@ -27,12 +27,12 @@ class StyleHandler extends SingletonFactory {
 	
 	/**
 	 * active style object
-	 * @var	wcf\data\style\ActiveStyle
+	 * @var	\wcf\data\style\ActiveStyle
 	 */
 	protected $style = null;
 	
 	/**
-	 * @see	wcf\system\exception\SystemException::init()
+	 * @see	\wcf\system\exception\SystemException::init()
 	 */
 	protected function init() {
 		// load cache
@@ -42,7 +42,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns a list of all for the current user available styles.
 	 * 
-	 * @return	array<wcf\data\style\Style>
+	 * @return	array<\wcf\data\style\Style>
 	 */
 	public function getAvailableStyles() {
 		$styles = array();
@@ -59,7 +59,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns a list of all styles.
 	 * 
-	 * @return	array<wcf\data\style\Style>
+	 * @return	array<\wcf\data\style\Style>
 	 */
 	public function getStyles() {
 		return $this->cache['styles'];
@@ -68,7 +68,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Returns the active style.
 	 * 
-	 * @return	wcf\data\style\ActiveStyle
+	 * @return	\wcf\data\style\ActiveStyle
 	 */
 	public function getStyle() {
 		if ($this->style === null) {
@@ -140,7 +140,7 @@ class StyleHandler extends SingletonFactory {
 	/**
 	 * Resets stylesheet for given style.
 	 * 
-	 * @param	wcf\data\style\Style	$style
+	 * @param	\wcf\data\style\Style	$style
 	 */
 	public function resetStylesheet(Style $style) {
 		$stylesheets = glob(WCF_DIR.'style/style-'.$style->styleID.'*.css');

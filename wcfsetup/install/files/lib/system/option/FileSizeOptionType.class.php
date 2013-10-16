@@ -17,12 +17,12 @@ use wcf\util\StringUtil;
  */
 class FileSizeOptionType extends TextOptionType {
 	/**
-	 * @see	wcf\system\option\TextOptionType::$inputClass
+	 * @see	\wcf\system\option\TextOptionType::$inputClass
 	 */
 	protected $inputClass = 'medium';
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getData()
+	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		$number = str_replace(WCF::getLanguage()->get('wcf.global.thousandsSeparator'), '', $newValue);
@@ -58,7 +58,7 @@ class FileSizeOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		$value = FileUtil::formatFileSize($value);

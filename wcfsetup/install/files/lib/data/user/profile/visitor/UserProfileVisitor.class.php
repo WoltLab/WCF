@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class UserProfileVisitor extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user_profile_visitor';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'visitorID';
 	
@@ -29,7 +29,7 @@ class UserProfileVisitor extends DatabaseObject {
 	 * 
 	 * @param	integer		$ownerID
 	 * @param	integer		$userID
-	 * @return	wcf\data\user\profile\visitor\UserProfileVisitor
+	 * @return	\wcf\data\user\profile\visitor\UserProfileVisitor
 	 */
 	public static function getObject($ownerID, $userID) {
 		$sql = "SELECT	*

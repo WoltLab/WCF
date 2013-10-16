@@ -16,17 +16,17 @@ use wcf\util\ClassUtil;
  */
 class ObjectType extends ProcessibleDatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'object_type';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'objectTypeID';
 	
 	/**
-	 * @see	wcf\data\IStorableObject::__get()
+	 * @see	\wcf\data\IStorableObject::__get()
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);
@@ -53,7 +53,7 @@ class ObjectType extends ProcessibleDatabaseObject {
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::handleData()
+	 * @see	\wcf\data\DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);
@@ -65,7 +65,7 @@ class ObjectType extends ProcessibleDatabaseObject {
 	}
 	
 	/**
-	 * @see	wcf\data\ProcessibleDatabaseObject::getProcessor()
+	 * @see	\wcf\data\ProcessibleDatabaseObject::getProcessor()
 	 */
 	public function getProcessor() {
 		if ($this->processor === null) {

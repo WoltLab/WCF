@@ -26,7 +26,7 @@ use wcf\system\WCF;
 class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	/**
 	 * edited category
-	 * @var	wcf\data\category\Category
+	 * @var	\wcf\data\category\Category
 	 */
 	public $category = null;
 	
@@ -37,7 +37,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	public $categoryID = 0;
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -53,7 +53,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\AbstractCategoryAddForm::checkCategoryPermissions()
+	 * @see	\wcf\acp\form\AbstractCategoryAddForm::checkCategoryPermissions()
 	 */
 	protected function checkCategoryPermissions() {
 		if (!$this->objectType->getProcessor()->canEditCategory()) {
@@ -62,14 +62,14 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\AbstractCategoryAddForm::readCategories()
+	 * @see	\wcf\acp\form\AbstractCategoryAddForm::readCategories()
 	 */
 	protected function readCategories() {
 		$this->categoryNodeTree = new CategoryNodeTree($this->objectType->objectType, 0, true, array($this->category->categoryID));
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -84,7 +84,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -103,7 +103,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -160,7 +160,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\AbstractCategoryAddForm::validateParentCategory()
+	 * @see	\wcf\acp\form\AbstractCategoryAddForm::validateParentCategory()
 	 */
 	protected function validateParentCategory() {
 		parent::validateParentCategory();

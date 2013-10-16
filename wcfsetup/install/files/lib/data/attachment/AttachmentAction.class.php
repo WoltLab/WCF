@@ -24,18 +24,18 @@ use wcf\util\FileUtil;
  */
 class AttachmentAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('delete', 'upload');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\attachment\AttachmentEditor';
 	
 	/**
 	 * current attachment object, used to communicate with event listeners
-	 * @var	wcf\data\attachment\Attachment
+	 * @var	\wcf\data\attachment\Attachment
 	 */
 	public $eventAttachment = null;
 	

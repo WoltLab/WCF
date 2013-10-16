@@ -13,27 +13,27 @@ namespace wcf\data\user\ignore;
  */
 class ViewableUserIgnoreList extends UserIgnoreList {
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$className
+	 * @see	\wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\user\ignore\UserIgnore';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$decoratorClassName
+	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
 	 */
 	public $decoratorClassName = 'wcf\data\user\UserProfile';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$objectClassName
+	 * @see	\wcf\data\DatabaseObjectList::$objectClassName
 	 */
 	public $objectClassName = 'wcf\data\user\User';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$useQualifiedShorthand
+	 * @see	\wcf\data\DatabaseObjectList::$useQualifiedShorthand
 	 */
 	public $useQualifiedShorthand = false;
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::__construct()
+	 * @see	\wcf\data\DatabaseObjectList::__construct()
 	 */
 	public function __construct() {
 		parent::__construct();

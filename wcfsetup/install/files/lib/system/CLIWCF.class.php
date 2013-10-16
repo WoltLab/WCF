@@ -34,13 +34,13 @@ use Zend\Loader\StandardAutoloader as ZendLoader;
 class CLIWCF extends WCF {
 	/**
 	 * instance of ConsoleReader
-	 * @var	phpline\console\ConsoleReader
+	 * @var	\phpline\console\ConsoleReader
 	 */
 	protected static $consoleReader = null;
 	
 	/**
 	 * instance of ArgvParser
-	 * @var	Zend\Console\Getopt
+	 * @var	\Zend\Console\Getopt
 	 */
 	protected static $argvParser = null;
 	
@@ -78,7 +78,7 @@ class CLIWCF extends WCF {
 	}
 	
 	/**
-	 * @see	wcf\system\WCF::destruct()
+	 * @see	\wcf\system\WCF::destruct()
 	 */
 	public static function destruct() {
 		if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCLICommandHistory) {
@@ -160,7 +160,7 @@ class CLIWCF extends WCF {
 	/**
 	 * Returns the argv parser.
 	 * 
-	 * @return	Zend\Console\Getopt
+	 * @return	\Zend\Console\Getopt
 	 */
 	public static function getArgvParser() {
 		return self::$argvParser;
@@ -185,7 +185,7 @@ class CLIWCF extends WCF {
 	/**
 	 * Returns ConsoleReader.
 	 * 
-	 * @return	phpline\console\ConsoleReader
+	 * @return	\phpline\console\ConsoleReader
 	 */
 	public static function getReader() {
 		return self::$consoleReader;
@@ -194,7 +194,7 @@ class CLIWCF extends WCF {
 	/**
 	 * Returns the terminal that is attached to ConsoleReader
 	 * 
-	 * @return	phpline\Terminal
+	 * @return	\phpline\Terminal
 	 */
 	public static function getTerminal() {
 		return self::getReader()->getTerminal();

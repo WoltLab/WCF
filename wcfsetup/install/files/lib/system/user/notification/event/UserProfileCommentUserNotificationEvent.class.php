@@ -17,14 +17,14 @@ use wcf\system\WCF;
  */
 class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
 	 */
 	public function getTitle() {
 		return $this->getLanguage()->get('wcf.user.notification.comment.title');
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getMessage()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getMessage()
 	 */
 	public function getMessage() {
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.message', array(
@@ -33,7 +33,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
 		$user = new User($this->userNotificationObject->objectID);
@@ -47,7 +47,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getLink()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getLink()
 	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink('User', array('object' => WCF::getUser()), '#wall');

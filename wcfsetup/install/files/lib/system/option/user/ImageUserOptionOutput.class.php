@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  */
 class ImageUserOptionOutput implements IUserOptionOutput {
 	/**
-	 * @see	wcf\system\option\user\IUserOptionOutput::getOutput()
+	 * @see	\wcf\system\option\user\IUserOptionOutput::getOutput()
 	 */
 	public function getOutput(User $user, UserOption $option, $value) {
 		if (empty($value)) return '';

@@ -18,14 +18,14 @@ interface IModerationQueueActivationHandler extends IModerationQueueHandler {
 	/**
 	 * Enables affected content.
 	 * 
-	 * @param	wcf\data\moderation\queue\ModerationQueue	$queue
+	 * @param	\wcf\data\moderation\queue\ModerationQueue	$queue
 	 */
 	public function enableContent(ModerationQueue $queue);
 	
 	/**
 	 * Returns rendered template for disabled content.
 	 * 
-	 * @param	wcf\data\moderation\queue\ViewableModerationQueue	$queue
+	 * @param	\wcf\data\moderation\queue\ViewableModerationQueue	$queue
 	 * @return	string
 	 */
 	public function getDisabledContent(ViewableModerationQueue $queue);

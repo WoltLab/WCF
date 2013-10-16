@@ -18,7 +18,7 @@ interface IModifierTemplatePlugin {
 	 * Executes this modifier.
 	 * 
 	 * @param	array					$tagArgs
-	 * @param	wcf\system\template\TemplateEngine	$tplObj
+	 * @param	\wcf\system\template\TemplateEngine	$tplObj
 	 * @return	string
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj);

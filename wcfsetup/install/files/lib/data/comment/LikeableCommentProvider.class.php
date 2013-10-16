@@ -17,22 +17,22 @@ use wcf\system\comment\CommentHandler;
  */
 class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider {
 	/**
-	 * @see	wcf\data\object\type\AbstractObjectTypeProvider::$className
+	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$className
 	 */
 	public $className = 'wcf\data\comment\Comment';
 	
 	/**
-	 * @see	wcf\data\object\type\AbstractObjectTypeProvider::$decoratorClassName
+	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$decoratorClassName
 	 */
 	public $decoratorClassName = 'wcf\data\comment\LikeableComment';
 	
 	/**
-	 * @see	wcf\data\object\type\AbstractObjectTypeProvider::$listClassName
+	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$listClassName
 	 */
 	public $listClassName = 'wcf\data\comment\CommentList';
 	
 	/**
-	 * @see	wcf\data\like\ILikeObjectTypeProvider::checkPermissions()
+	 * @see	\wcf\data\like\ILikeObjectTypeProvider::checkPermissions()
 	 */
 	public function checkPermissions(ILikeObject $comment) {
 		$objectType = CommentHandler::getInstance()->getObjectType($comment->objectTypeID);

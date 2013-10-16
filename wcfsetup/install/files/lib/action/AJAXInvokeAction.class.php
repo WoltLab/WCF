@@ -32,7 +32,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	
 	/**
 	 * action object
-	 * @var	wcf\system\SingletonFactory
+	 * @var	\wcf\system\SingletonFactory
 	 */
 	public $actionObject = null;
 	
@@ -55,7 +55,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	protected $response = null;
 	
 	/**
-	 * @see	wcf\action\IAction::__run()
+	 * @see	\wcf\action\IAction::__run()
 	 */
 	public function __run() {
 		try {
@@ -72,7 +72,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	}
 	
 	/**
-	 * @see	wcf\action\IAction::readParameters()
+	 * @see	\wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -85,7 +85,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	}
 	
 	/**
-	 * @see	wcf\action\IAction::execute()
+	 * @see	\wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();
@@ -225,7 +225,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 * @param	array		$data
 	 * @param	string		$className
 	 * @param	string		$actionName
-	 * @return	wcf\action\AJAXInvokeAction
+	 * @return	\wcf\action\AJAXInvokeAction
 	 */
 	public static function debugCall(array $data) {
 		// validate $data array

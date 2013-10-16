@@ -14,32 +14,32 @@ use wcf\page\SortablePage;
  */
 class UserOptionCategoryListPage extends SortablePage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.option.category.list';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canManageUserOption');
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortField
+	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'showOrder';
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\user\option\category\UserOptionCategoryList';
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortField
+	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $validSortFields = array('categoryID', 'categoryName', 'showOrder', 'userOptions');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::initObjectList
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();

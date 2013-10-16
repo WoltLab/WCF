@@ -16,17 +16,17 @@ use wcf\util\StringUtil;
  */
 class Option extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'option';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'optionID';
 	
 	/**
-	 * @see	wcf\data\IStorableObject::__get()
+	 * @see	\wcf\data\IStorableObject::__get()
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);
@@ -42,7 +42,7 @@ class Option extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::handleData()
+	 * @see	\wcf\data\DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);
@@ -54,7 +54,7 @@ class Option extends DatabaseObject {
 	/**
 	 * Returns a list of options.
 	 * 
-	 * @return	array<wcf\data\option\Option>
+	 * @return	array<\wcf\data\option\Option>
 	 */
 	public static function getOptions() {
 		$sql = "SELECT	*
@@ -161,7 +161,7 @@ class Option extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
 	 */
 	public static function getDatabaseTableAlias() {
 		return 'option_table';

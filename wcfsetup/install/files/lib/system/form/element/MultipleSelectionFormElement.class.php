@@ -19,7 +19,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 	protected $disabledMessage = '';
 	
 	/**
-	 * @see	wcf\system\form\element\AbstractNamedFormElement::setValue()
+	 * @see	\wcf\system\form\element\AbstractNamedFormElement::setValue()
 	 */
 	public function setValue($value) {
 		if (!is_array($value)) {
@@ -40,7 +40,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 	}
 	
 	/**
-	 * @see	wcf\system\form\element\AbstractNamedFormElement::getDescription()
+	 * @see	\wcf\system\form\element\AbstractNamedFormElement::getDescription()
 	 */
 	public function getDescription() {
 		if ($this->disabledMessage) {
@@ -51,7 +51,7 @@ class MultipleSelectionFormElement extends AbstractNamedFormElement {
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElement::getHTML()
+	 * @see	\wcf\system\form\IFormElement::getHTML()
 	 */
 	public function getHTML($formName) {
 		$disabled = '';

@@ -54,7 +54,7 @@ class ACPSearchResult {
 	}
 	
 	/**
-	 * @see	wcf\system\search\acp\ACPSearchResult::getTitle()
+	 * @see	\wcf\system\search\acp\ACPSearchResult::getTitle()
 	 */
 	public function __toString() {
 		return $this->getTitle();

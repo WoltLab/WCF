@@ -21,7 +21,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	
 	/**
 	 * quotable database object
-	 * @var	wcf\data\IQuotableDatabaseObject
+	 * @var	\wcf\data\IQuotableDatabaseObject
 	 */
 	public $object = null;
 	
@@ -46,7 +46,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	/**
 	 * Creates a new QuotedMessage object.
 	 * 
-	 * @param	wcf\data\IMessage	$object
+	 * @param	\wcf\data\IMessage	$object
 	 */
 	public function __construct(IMessage $object) {
 		$this->object = $object;
@@ -66,7 +66,7 @@ class QuotedMessage implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	wcf\data\ITitledObject::getTitle()
+	 * @see	\wcf\data\ITitledObject::getTitle()
 	 */
 	public function __toString() {
 		return $this->object->getTitle();

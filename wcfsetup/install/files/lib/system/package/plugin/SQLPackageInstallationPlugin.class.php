@@ -23,12 +23,12 @@ use wcf\util\StringUtil;
  */
 class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'package_installation_sql_log';
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();
@@ -87,7 +87,7 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// get logged sql tables/columns

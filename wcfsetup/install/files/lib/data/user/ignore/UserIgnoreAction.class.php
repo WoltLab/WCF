@@ -90,7 +90,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
 	 */
 	public function validateDelete() {
 		// read objects
@@ -111,7 +111,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
 	 */
 	public function delete() {
 		$returnValues = parent::delete();

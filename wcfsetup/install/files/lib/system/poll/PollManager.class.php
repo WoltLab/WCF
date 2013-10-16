@@ -26,7 +26,7 @@ use wcf\util\StringUtil;
 class PollManager extends SingletonFactory {
 	/**
 	 * list of object types
-	 * @var	array<wcf\data\object\type\ObjectType>
+	 * @var	array<\wcf\data\object\type\ObjectType>
 	 */
 	protected $cache = array();
 	
@@ -44,7 +44,7 @@ class PollManager extends SingletonFactory {
 	
 	/**
 	 * poll object
-	 * @var	wcf\data\poll\Poll
+	 * @var	\wcf\data\poll\Poll
 	 */
 	protected $poll = null;
 	
@@ -75,7 +75,7 @@ class PollManager extends SingletonFactory {
 	protected $pollOptions = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.poll');
@@ -323,7 +323,7 @@ class PollManager extends SingletonFactory {
 	 * Returns a list of polls including options and vote state for current user.
 	 * 
 	 * @param	array<integer>		$pollIDs
-	 * @return	array<wcf\data\poll\Poll>
+	 * @return	array<\wcf\data\poll\Poll>
 	 */
 	public function getPolls(array $pollIDs) {
 		$pollList = new PollList();
@@ -351,7 +351,7 @@ class PollManager extends SingletonFactory {
 	 * Returns a list of poll options with vote state for current user.
 	 * 
 	 * @param	array<integer>		$pollIDs
-	 * @return	wcf\data\poll\option\PollOptionList
+	 * @return	\wcf\data\poll\option\PollOptionList
 	 */
 	public function getPollOptions(array $pollIDs) {
 		$optionList = new PollOptionList();
@@ -374,8 +374,8 @@ class PollManager extends SingletonFactory {
 	/**
 	 * Returns related object for given poll object.
 	 * 
-	 * @param	wcf\data\poll\Poll	$poll
-	 * @return	wcf\data\IPollObject
+	 * @param	\wcf\data\poll\Poll	$poll
+	 * @return	\wcf\data\IPollObject
 	 */
 	public function getRelatedObject(Poll $poll) {
 		if ($poll->objectID) {

@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  */
 class MembersListPage extends SortablePage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.user.members';
 	
@@ -31,42 +31,42 @@ class MembersListPage extends SortablePage {
 	public static $availableLetters = '#ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('user.profile.canViewMembersList');
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
 	public $neededModules = array('MODULE_MEMBERS_LIST');
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$enableTracking
+	 * @see	\wcf\page\AbstractPage::$enableTracking
 	 */
 	public $enableTracking = true;
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
 	 */
 	public $itemsPerPage = MEMBERS_LIST_USERS_PER_PAGE;
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortField
+	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = MEMBERS_LIST_DEFAULT_SORT_FIELD;
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortOrder
+	 * @see	\wcf\page\SortablePage::$defaultSortOrder
 	 */
 	public $defaultSortOrder = MEMBERS_LIST_DEFAULT_SORT_ORDER;
 	
 	/**
-	 * @see	wcf\page\SortablePage::$validSortFields
+	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('username', 'registrationDate', 'activityPoints', 'likesReceived');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\user\UserProfileList';
 	
@@ -84,12 +84,12 @@ class MembersListPage extends SortablePage {
 	
 	/**
 	 * user search
-	 * @var	wcf\data\search\Search
+	 * @var	\wcf\data\search\Search
 	 */
 	public $search = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -109,7 +109,7 @@ class MembersListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::initObjectList()
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -138,7 +138,7 @@ class MembersListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

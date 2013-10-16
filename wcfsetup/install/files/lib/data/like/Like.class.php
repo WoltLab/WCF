@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class Like extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'like';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
 	 */
 	protected static $databaseTableIndexName = 'likeID';
 	
@@ -67,7 +67,7 @@ class Like extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
 	 */
 	public static function getDatabaseTableAlias() {
 		return 'like_table';

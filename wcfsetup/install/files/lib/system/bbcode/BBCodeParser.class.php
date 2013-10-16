@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
 class BBCodeParser extends SingletonFactory {
 	/**
 	 * list of bbcodes
-	 * @var	array<wcf\data\bbcode\BBCode>
+	 * @var	array<\wcf\data\bbcode\BBCode>
 	 */
 	protected $bbcodes = array();
 	
@@ -53,7 +53,7 @@ class BBCodeParser extends SingletonFactory {
 	protected $textArray = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get bbcodes
@@ -217,7 +217,7 @@ class BBCodeParser extends SingletonFactory {
 	 * Validates an attributes of a tag.
 	 * 
 	 * @param	array					$tagAttributes
-	 * @param	wcf\data\bbcode\BBCodeAttribute		$definedTagAttribute
+	 * @param	\wcf\data\bbcode\BBCodeAttribute		$definedTagAttribute
 	 * @return	boolean
 	 */
 	protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute) {

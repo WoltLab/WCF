@@ -13,7 +13,7 @@ namespace wcf\data\application;
  */
 class ViewableApplicationList extends ApplicationList {
 	/**
-	 * @see	wcf\data\DatabaseObjectList::readObjects()
+	 * @see	\wcf\data\DatabaseObjectList::readObjects()
 	 */
 	public function readObjects() {
 		parent::readObjects();

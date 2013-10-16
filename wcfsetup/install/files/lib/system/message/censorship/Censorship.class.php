@@ -40,7 +40,7 @@ class Censorship extends SingletonFactory {
 	protected $matches = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get words which should be censored

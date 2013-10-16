@@ -20,12 +20,12 @@ use wcf\util\StringUtil;
  */
 class UserEmailAddressExportForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canMailUser');
 	
@@ -55,7 +55,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	
 	/**
 	 * users whose email addresses are exported
-	 * @var	array<wcf\data\user\User>
+	 * @var	array<\wcf\data\user\User>
 	 */
 	public $users = array();
 	
@@ -66,7 +66,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	protected $objectTypeID = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -89,7 +89,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -100,7 +100,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -156,7 +156,7 @@ class UserEmailAddressExportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

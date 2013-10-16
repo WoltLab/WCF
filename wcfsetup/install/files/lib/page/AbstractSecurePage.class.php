@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractSecurePage extends AbstractPage {
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();

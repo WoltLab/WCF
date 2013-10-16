@@ -35,12 +35,12 @@ use Zend\ProgressBar\ProgressBar;
 class PackageCLICommand implements ICLICommand {
 	/**
 	 * arguments parser
-	 * @var	Zend\Console\Getopt
+	 * @var	\Zend\Console\Getopt
 	 */
 	private $argv = null;
 	
 	/**
-	 * @see	wcf\system\cli\command\ICLICommand::execute()
+	 * @see	\wcf\system\cli\command\ICLICommand::execute()
 	 */
 	public function execute(array $parameters) {
 		$this->argv = new ArgvParser(array());
@@ -468,7 +468,7 @@ class PackageCLICommand implements ICLICommand {
 	}
 	
 	/**
-	 * @see	wcf\system\cli\command\ICLICommand::canAccess()
+	 * @see	\wcf\system\cli\command\ICLICommand::canAccess()
 	 */
 	public function canAccess() {
 		return CLIWCF::getSession()->getPermission('admin.system.package.canInstallPackage') || CLIWCF::getSession()->getPermission('admin.system.package.canUpdatePackage');

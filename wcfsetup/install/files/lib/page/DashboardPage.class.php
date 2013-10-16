@@ -17,22 +17,22 @@ use wcf\system\WCF;
  */
 class DashboardPage extends AbstractPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.user.dashboard';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededModules
+	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
 	public $neededModules = array('MODULE_DASHBOARD_PAGE');
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$enableTracking
+	 * @see	\wcf\page\AbstractPage::$enableTracking
 	 */
 	public $enableTracking = true;
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -44,7 +44,7 @@ class DashboardPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\AbstractPage::assignVariables()
+	 * @see	\wcf\page\AbstractPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

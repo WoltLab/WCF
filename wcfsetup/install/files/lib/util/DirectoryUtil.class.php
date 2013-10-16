@@ -70,7 +70,7 @@ final class DirectoryUtil {
 	 * 
 	 * @param	string		$directory	directory path
 	 * @param	boolean		$recursive	created a recursive directory iterator
-	 * @see		wcf\util\DirectoryUtil::getInstance()
+	 * @see		\wcf\util\DirectoryUtil::getInstance()
 	 */
 	public function __construct($directory, $recursive = true) {
 		$this->directory = $directory;
@@ -90,7 +90,7 @@ final class DirectoryUtil {
 	 * 
 	 * @param	string		$directory	path
 	 * @param	boolean		$recursive	walk through sub-directories too
-	 * @return	wcf\util\DirectoryUtil
+	 * @return	\wcf\util\DirectoryUtil
 	 */
 	public static function getInstance($tmpDirectory, $recursive = true) {
 		$directory = realpath(FileUtil::unifyDirSeparator($tmpDirectory));
@@ -110,7 +110,7 @@ final class DirectoryUtil {
 	}
 	
 	/**
-	 * @see	wcf\util\DirectoryUtil::getInstance()
+	 * @see	\wcf\util\DirectoryUtil::getInstance()
 	 */
 	private final function __clone() {}
 	
@@ -118,7 +118,7 @@ final class DirectoryUtil {
 	 * Returns a sorted list of files.
 	 * 
 	 * @param	integer			$order			sort-order
-	 * @param	wcf\system\Regex	$pattern		pattern to match
+	 * @param	\wcf\system\Regex	$pattern		pattern to match
 	 * @param	boolean			$negativeMatch		true if the pattern should be inversed
 	 * @return	array<string>
 	 */
@@ -154,7 +154,7 @@ final class DirectoryUtil {
 	 * Returns a sorted list of files, with DirectoryIterator object as value
 	 * 
 	 * @param	integer			$order			sort order
-	 * @param	wcf\system\Regex	$pattern		pattern to match
+	 * @param	\wcf\system\Regex	$pattern		pattern to match
 	 * @param	boolean			$negativeMatch		should the pattern be inversed
 	 * @return	array<\DirectoryIterator>
 	 */
@@ -249,8 +249,8 @@ final class DirectoryUtil {
 	/**
 	 * Executes a callback on each file and returns false if callback is invalid.
 	 * 
-	 * @param	wcf\system\Callback		$callback
-	 * @param	wcf\system\Regex		$pattern	callback is only applied to files matching the given pattern
+	 * @param	\wcf\system\Callback		$callback
+	 * @param	\wcf\system\Regex		$pattern	callback is only applied to files matching the given pattern
 	 * @return	boolean
 	 */
 	public function executeCallback(Callback $callback, Regex $pattern = null) {
@@ -277,7 +277,7 @@ final class DirectoryUtil {
 	/**
 	 * Removes all files that match the given pattern.
 	 * 
-	 * @param	wcf\system\Regex	$pattern		pattern to match
+	 * @param	\wcf\system\Regex	$pattern		pattern to match
 	 * @param	boolean			$negativeMatch		should the pattern be inversed
 	 */
 	public function removePattern(Regex $pattern, $negativeMatch = false) {

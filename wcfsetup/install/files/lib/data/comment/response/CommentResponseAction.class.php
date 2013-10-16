@@ -23,29 +23,29 @@ use wcf\system\WCF;
  */
 class CommentResponseAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('loadResponses');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\comment\response\CommentResponseEditor';
 	
 	/**
 	 * comment object
-	 * @var	wcf\data\comment\Comment
+	 * @var	\wcf\data\comment\Comment
 	 */
 	public $comment = null;
 	
 	/**
 	 * comment manager object
-	 * @var	wcf\system\comment\manager\ICommentManager
+	 * @var	\wcf\system\comment\manager\ICommentManager
 	 */
 	public $commentManager = null;
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
 	 */
 	public function delete() {
 		if (empty($this->objects)) {

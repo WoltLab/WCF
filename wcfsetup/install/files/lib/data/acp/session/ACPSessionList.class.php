@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectList;
  */
 class ACPSessionList extends DatabaseObjectList {
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$className
+	 * @see	\wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\acp\session\ACPSession';
 }

@@ -19,13 +19,13 @@ use wcf\system\WCF;
 class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 	/**
 	 * object type object
-	 * @var	wcf\data\object\type\ObjectType
+	 * @var	\wcf\data\object\type\ObjectType
 	 */
 	protected $objectType = null;
 	
 	/**
 	 * user object watch object
-	 * @var	wcf\data\user\object\watch\UserObjectWatch
+	 * @var	\wcf\data\user\object\watch\UserObjectWatch
 	 */
 	protected $userObjectWatch = null;
 	

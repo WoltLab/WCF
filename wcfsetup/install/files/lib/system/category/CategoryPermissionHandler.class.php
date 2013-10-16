@@ -27,8 +27,8 @@ class CategoryPermissionHandler extends SingletonFactory {
 	 * Returns the acl options for the given category and for the given user.
 	 * If no user is given, the active user is used.
 	 * 
-	 * @param	wcf\data\category\Category	$category
-	 * @param	wcf\data\user\User		$user
+	 * @param	\wcf\data\category\Category	$category
+	 * @param	\wcf\data\user\User		$user
 	 */
 	public function getPermissions(Category $category, User $user = null) {
 		if ($user === null) {
@@ -63,7 +63,7 @@ class CategoryPermissionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->categoryPermissions = CategoryACLOptionCacheBuilder::getInstance()->getData();

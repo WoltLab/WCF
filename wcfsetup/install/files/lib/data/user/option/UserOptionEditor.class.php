@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\option\UserOption';
 	
 	/**
-	 * @see	wcf\data\IEditableObject::create()
+	 * @see	\wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		$userOption = parent::create($parameters);
@@ -42,7 +42,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableObject::update()
+	 * @see	\wcf\data\IEditableObject::update()
 	 */
 	public function update(array $parameters = array()) {
 		parent::update($parameters);
@@ -59,7 +59,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableObject::delete()
+	 * @see	\wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		$sql = "DELETE FROM	wcf".WCF_N."_user_option
@@ -71,7 +71,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableObject::deleteAll()
+	 * @see	\wcf\data\IEditableObject::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		$returnValue = parent::deleteAll($objectIDs);
@@ -157,7 +157,7 @@ class UserOptionEditor extends DatabaseObjectEditor implements IEditableCachedOb
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		UserOptionCacheBuilder::getInstance()->reset();

@@ -34,7 +34,7 @@ class ApcCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::flush()
+	 * @see	\wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush($cacheName, $useWildcard) {
 		if ($useWildcard) {
@@ -46,14 +46,14 @@ class ApcCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::flushAll()
+	 * @see	\wcf\system\cache\source\ICacheSource::flushAll()
 	 */
 	public function flushAll() {
 		$this->removeKeys();
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::get()
+	 * @see	\wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get($cacheName, $maxLifetime) {
 		if (($data = apc_fetch($this->prefix . $cacheName)) === false) {
@@ -64,7 +64,7 @@ class ApcCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::set()
+	 * @see	\wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
 		apc_store($this->prefix . $cacheName, $value, $this->getTTL($maxLifetime));
@@ -93,7 +93,7 @@ class ApcCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::clear()
+	 * @see	\wcf\system\cache\source\ICacheSource::clear()
 	 */
 	public function removeKeys($pattern = null) {
 		$regex = null;

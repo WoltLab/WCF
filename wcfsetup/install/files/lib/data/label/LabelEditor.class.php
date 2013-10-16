@@ -16,12 +16,12 @@ use wcf\system\cache\builder\LabelCacheBuilder;
  */
 class LabelEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
+	 * @see	\wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\label\Label';
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		LabelCacheBuilder::getInstance()->reset();

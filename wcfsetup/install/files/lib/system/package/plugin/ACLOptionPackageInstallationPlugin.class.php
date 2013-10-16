@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\acl\option\ACLOptionEditor';
 	
@@ -26,17 +26,17 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	protected $optionTypeIDs = array();
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'acl_option';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */	
 	public $tagName = 'option';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::importCategories()
+	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::importCategories()
 	 */
 	protected function importCategories(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:categories/ns:category');
@@ -54,7 +54,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveCategory()
+	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveCategory()
 	 */
 	protected function saveCategory($category) {
 		$objectTypeID = $this->getObjectTypeID($category['objecttype']);
@@ -164,7 +164,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
+	 * @see	\wcf\system\package\plugin\AbstractOptionPackageInstallationPlugin::saveOption()
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		/* Does nothing */

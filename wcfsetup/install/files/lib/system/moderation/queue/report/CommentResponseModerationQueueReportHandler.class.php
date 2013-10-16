@@ -24,23 +24,23 @@ use wcf\system\WCF;
  */
 class CommentResponseModerationQueueReportHandler extends CommentCommentModerationQueueReportHandler {
 	/**
-	 * @see	wcf\system\moderation\queue\AbstractModerationQueueHandler::$className
+	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueHandler::$className
 	 */
 	protected $className = 'wcf\data\comment\response\CommentResponse';
 	
 	/**
-	 * @see	wcf\system\moderation\queue\AbstractModerationQueueHandler::$objectType
+	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueHandler::$objectType
 	 */
 	protected $objectType = 'com.woltlab.wcf.comment.response';
 	
 	/**
 	 * list of comment responses
-	 * @var	array<wcf\data\comment\response\CommentResponse>
+	 * @var	array<\wcf\data\comment\response\CommentResponse>
 	 */
 	protected static $responses = array();
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueHandler::assignQueues()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::assignQueues()
 	 */
 	public function assignQueues(array $queues) {
 		$assignments = array();
@@ -89,7 +89,7 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\report\IModerationQueueReportHandler::canReport()
+	 * @see	\wcf\system\moderation\queue\report\IModerationQueueReportHandler::canReport()
 	 */
 	public function canReport($objectID) {
 		if (!$this->isValid($objectID)) {
@@ -106,14 +106,14 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueHandler::getContainerID()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::getContainerID()
 	 */
 	public function getContainerID($objectID) {
 		return 0;
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\report\IModerationQueueReportHandler::getReportedContent()
+	 * @see	\wcf\system\moderation\queue\report\IModerationQueueReportHandler::getReportedContent()
 	 */
 	public function getReportedContent(ViewableModerationQueue $queue) {
 		WCF::getTPL()->assign(array(
@@ -124,7 +124,7 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\report\IModerationQueueReportHandler::getReportedObject()
+	 * @see	\wcf\system\moderation\queue\report\IModerationQueueReportHandler::getReportedObject()
 	 */
 	public function getReportedObject($objectID) {
 		if ($this->isValid($objectID)) {
@@ -135,7 +135,7 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueHandler::isValid()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::isValid()
 	 */
 	public function isValid($objectID) {
 		if ($this->getResponse($objectID) === null) {
@@ -149,7 +149,7 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 	 * Returns a comment response object by response id or null if response id is invalid.
 	 * 
 	 * @param	integer		$objectID
-	 * @return	wcf\data\comment\response\CommentResponse
+	 * @return	\wcf\data\comment\response\CommentResponse
 	 */
 	protected function getResponse($objectID) {
 		if (!array_key_exists($objectID, self::$responses)) {
@@ -163,7 +163,7 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueHandler::populate()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::populate()
 	 */
 	public function populate(array $queues) {
 		$objectIDs = array();
@@ -204,7 +204,7 @@ class CommentResponseModerationQueueReportHandler extends CommentCommentModerati
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueHandler::removeContent()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::removeContent()
 	 */
 	public function removeContent(ModerationQueue $queue, $message) {
 		if ($this->isValid($queue->objectID)) {

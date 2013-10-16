@@ -15,7 +15,7 @@ use wcf\util\FileUtil;
 class UploadHandler {
 	/**
 	 * list of uploaded files
-	 * @var	array<wcf\system\upload\UploadFile>
+	 * @var	array<\wcf\system\upload\UploadFile>
 	 */
 	protected $files = array();
 	
@@ -65,7 +65,7 @@ class UploadHandler {
 	/**
 	 * Returns the list of uploaded files.
 	 * 
-	 * @return	array<wcf\system\upload\UploadFile>
+	 * @return	array<\wcf\system\upload\UploadFile>
 	 */
 	public function getFiles() {
 		return $this->files;
@@ -93,7 +93,7 @@ class UploadHandler {
 	/**
 	 * Returns a list of erroneous files.
 	 * 
-	 * @return	array<wcf\system\upload\UploadFile>
+	 * @return	array<\wcf\system\upload\UploadFile>
 	 */
 	public function getErroneousFiles() {
 		return $this->erroneousFiles;
@@ -102,7 +102,7 @@ class UploadHandler {
 	/**
 	 * Saves the uploaded files.
 	 * 
-	 * @param	wcf\system\upload\IUploadFileSaveStrategy	$saveStrategy
+	 * @param	\wcf\system\upload\IUploadFileSaveStrategy	$saveStrategy
 	 */
 	public function saveFiles(IUploadFileSaveStrategy $saveStrategy) {
 		foreach ($this->files as $file) {
@@ -116,7 +116,7 @@ class UploadHandler {
 	 * Gets an upload handler instance.
 	 * 
 	 * @param	string		$identifier
-	 * @return	wcf\system\upload\UploadHandler
+	 * @return	\wcf\system\upload\UploadHandler
 	 */
 	public static function getUploadHandler($identifier) {
 		if (isset($_FILES[$identifier]) && is_array($_FILES[$identifier])) return new UploadHandler($_FILES[$identifier]);

@@ -24,21 +24,21 @@ class PackageUpdateUnauthorizedException extends UserException {
 	
 	/**
 	 * HTTP request object
-	 * @var	wcf\util\HTTPRequest
+	 * @var	\wcf\util\HTTPRequest
 	 */
 	protected $request = null;
 	
 	/**
 	 * package update server object
-	 * @var	wcf\data\package\update\server\PackageUpdateServer
+	 * @var	\wcf\data\package\update\server\PackageUpdateServer
 	 */
 	protected $updateServer = null;
 	
 	/**
 	 * Creates a new PackageUpdateUnauthorizedException object.
 	 * 
-	 * @param	wcf\util\HTTPRequest					$request
-	 * @param	wcf\data\package\update\server\PackageUpdateServer	$updateServer
+	 * @param	\wcf\util\HTTPRequest					$request
+	 * @param	\wcf\data\package\update\server\PackageUpdateServer	$updateServer
 	 * @param	array							$packageUpdateVersion
 	 */
 	public function __construct(HTTPRequest $request, PackageUpdateServer $updateServer, array $packageUpdateVersion = array()) {
@@ -74,7 +74,7 @@ class PackageUpdateUnauthorizedException extends UserException {
 	/**
 	 * Returns the HTTP request object.
 	 * 
-	 * @return	wcf\util\HTTPRequest
+	 * @return	\wcf\util\HTTPRequest
 	 */
 	public function getRequest() {
 		return $this->request;
@@ -83,7 +83,7 @@ class PackageUpdateUnauthorizedException extends UserException {
 	/**
 	 * Returns package update server object.
 	 * 
-	 * @return	wcf\data\package\update\server\PackageUpdateServer
+	 * @return	\wcf\data\package\update\server\PackageUpdateServer
 	 */
 	public function getUpdateServer() {
 		return $this->updateServer;

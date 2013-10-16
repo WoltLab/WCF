@@ -15,7 +15,7 @@ use wcf\data\DatabaseObjectDecorator;
 class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator, \Countable {
 	/**
 	 * child category nodes
-	 * @var	array<wcf\data\category\CategoryNode>
+	 * @var	array<\wcf\data\category\CategoryNode>
 	 */
 	protected $children = array();
 	
@@ -27,19 +27,19 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	
 	/**
 	 * parent node object
-	 * @var	wcf\data\category\CategoryNode
+	 * @var	\wcf\data\category\CategoryNode
 	 */
 	protected $parentNode = null;
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\category\Category';
 	
 	/**
 	 * Adds the given category node as child node.
 	 * 
-	 * @param	wcf\data\category\CategoryNode		$categoryNode
+	 * @param	\wcf\data\category\CategoryNode		$categoryNode
 	 */
 	public function addChild(CategoryNode $categoryNode) {
 		$categoryNode->setParentNode($this);
@@ -50,7 +50,7 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	/**
 	 * Sets parent node object.
 	 * 
-	 * @param	wcf\data\category\CategoryNode		$parentNode
+	 * @param	\wcf\data\category\CategoryNode		$parentNode
 	 */
 	public function setParentNode(CategoryNode $parentNode) {
 		$this->parentNode = $parentNode;

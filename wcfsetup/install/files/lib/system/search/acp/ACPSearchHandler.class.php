@@ -25,12 +25,12 @@ class ACPSearchHandler extends SingletonFactory {
 	
 	/**
 	 * list of acp search provider
-	 * @var	array<wcf\data\acp\search\provider\ACPSearchProvider>
+	 * @var	array<\wcf\data\acp\search\provider\ACPSearchProvider>
 	 */
 	protected $cache = null;
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->cache = ACPSearchProviderCacheBuilder::getInstance()->getData();
@@ -41,7 +41,7 @@ class ACPSearchHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$query
 	 * @param	integer		$limit
-	 * @return	array<wcf\system\search\acp\ACPSearchResultList>
+	 * @return	array<\wcf\system\search\acp\ACPSearchResultList>
 	 */
 	public function search($query, $limit = 10) {
 		$data = array();

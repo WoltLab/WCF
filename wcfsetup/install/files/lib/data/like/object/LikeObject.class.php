@@ -17,29 +17,29 @@ use wcf\system\WCF;
  */
 class LikeObject extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'like_object';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
 	 */
 	protected static $databaseTableIndexName = 'likeObjectID';
 	
 	/**
 	 * liked object
-	 * @var	wcf\data\like\object\ILikeObject
+	 * @var	\wcf\data\like\object\ILikeObject
 	 */
 	protected $likedObject = null;
 	
 	/**
 	 * list of users who liked this object
-	 * @var	array<wcf\data\user\User>
+	 * @var	array<\wcf\data\user\User>
 	 */
 	protected $users = array();
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::handleData();
+	 * @see	\wcf\data\DatabaseObject::handleData();
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);
@@ -60,7 +60,7 @@ class LikeObject extends DatabaseObject {
 	/**
 	 * Gets the first 3 users who liked this object.
 	 * 
-	 * @return	array<wcf\data\user\User>
+	 * @return	array<\wcf\data\user\User>
 	 */
 	public function getUsers() {
 		return $this->users;
@@ -69,7 +69,7 @@ class LikeObject extends DatabaseObject {
 	/**
 	 * Returns the liked object.
 	 * 
-	 * @return	wcf\data\like\object\ILikeObject
+	 * @return	\wcf\data\like\object\ILikeObject
 	 */
 	public function getLikedObject() {
 		if ($this->likedObject === null) {
@@ -82,7 +82,7 @@ class LikeObject extends DatabaseObject {
 	/**
 	 * Sets the liked object.
 	 * 
-	 * @param	wcf\data\like\object\ILikeObject	$likeObject
+	 * @param	\wcf\data\like\object\ILikeObject	$likeObject
 	 */
 	public function setLikedObject(ILikeObject $likedObject) {
 		$this->likedObject = $likedObject;
@@ -93,7 +93,7 @@ class LikeObject extends DatabaseObject {
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @param	integer		$objectID
-	 * @return	wcf\data\like\object\LikeObject
+	 * @return	\wcf\data\like\object\LikeObject
 	 */
 	public static function getLikeObject($objectTypeID, $objectID) {
 		$sql = "SELECT	*

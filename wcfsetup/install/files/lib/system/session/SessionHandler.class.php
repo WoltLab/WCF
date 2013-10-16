@@ -57,7 +57,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * session object
-	 * @var	wcf\data\acp\session\ACPSession
+	 * @var	\wcf\data\acp\session\ACPSession
 	 */
 	protected $session = null;
 	
@@ -87,7 +87,7 @@ class SessionHandler extends SingletonFactory {
 	
 	/**
 	 * user object
-	 * @var	wcf\data\user\User
+	 * @var	\wcf\data\user\User
 	 */
 	protected $user = null;
 	
@@ -283,7 +283,7 @@ class SessionHandler extends SingletonFactory {
 	/**
 	 * Returns the user object of this session.
 	 * 
-	 * @return	wcf\data\user\User	$user
+	 * @return	\wcf\data\user\User	$user
 	 */
 	public function getUser() {
 		return $this->user;
@@ -473,7 +473,7 @@ class SessionHandler extends SingletonFactory {
 	 * Stores a new user object in this session, e.g. a user was guest because not
 	 * logged in, after the login his old session is used to store his full data.
 	 * 
-	 * @param	wcf\data\userUser		$user
+	 * @param	\wcf\data\userUser		$user
 	 * @param	boolean				$hideSession	if true, database won't be updated
 	 */
 	public function changeUser(User $user, $hideSession = false) {
@@ -652,7 +652,7 @@ class SessionHandler extends SingletonFactory {
 	 * Searches for existing session of a search spider.
 	 * 
 	 * @param	integer		$spiderID
-	 * @return	wcf\data\session\Session
+	 * @return	\wcf\data\session\Session
 	 */
 	protected function getExistingSpiderSession($spiderID) {
 		$sql = "SELECT	*

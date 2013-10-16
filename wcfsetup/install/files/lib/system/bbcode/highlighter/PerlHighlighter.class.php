@@ -13,34 +13,34 @@ namespace wcf\system\bbcode\highlighter;
  */
 class PerlHighlighter extends Highlighter {
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
 	 */
 	protected $separators = array('(', ')', '{', '}', '[', ']', ';', '.', ',');
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
 	 */
 	protected $singleLineComment = array('#');
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$commentStart
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentStart
 	 */
 	protected $commentStart = array();
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$commentEnd
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$commentEnd
 	 */
 	protected $commentEnd = array();
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
 	 */
 	protected $operators = array('.=', '=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
 		'&&', '||', '++', '--', '+', '-', '*', '/', '&', '|', '^', '%', '<<', '>>', '>>>', '+=', '-=', '*=',
 		'/=', '&=', '|=', '^=', '%=', '<<=', '>>=', '>>>=', '->', '::');
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
 	 */
 	protected $keywords1 = array(
 		'print',
@@ -84,7 +84,7 @@ class PerlHighlighter extends Highlighter {
 	);
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
 	 */
 	protected $keywords2 = array(
 		'case',
@@ -118,7 +118,7 @@ class PerlHighlighter extends Highlighter {
 	);
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$keywords3
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords3
 	 */
 	protected $keywords3 = array(
 		'use',

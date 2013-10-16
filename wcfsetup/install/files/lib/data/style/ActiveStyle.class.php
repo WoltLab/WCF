@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class ActiveStyle extends DatabaseObjectDecorator {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\style\Style';
 	

@@ -19,12 +19,12 @@ use wcf\util\FileUtil;
  */
 class TemplateEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\template\Template';
 	
 	/**
-	 * @see	wcf\data\IEditableObject::create()
+	 * @see	\wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		// obtain default values
@@ -111,7 +111,7 @@ class TemplateEditor extends DatabaseObjectEditor {
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableObject::deleteAll()
+	 * @see	\wcf\data\IEditableObject::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		$list = new TemplateList();

@@ -20,7 +20,7 @@ class NoCacheSource implements ICacheSource {
 	protected $cache = array();
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::flush()
+	 * @see	\wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush($cacheName, $useWildcard) {
 		if (isset($this->cache[$cacheName])) {
@@ -38,14 +38,14 @@ class NoCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::flushAll()
+	 * @see	\wcf\system\cache\source\ICacheSource::flushAll()
 	 */
 	public function flushAll() {
 		$this->cache = array();
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::get()
+	 * @see	\wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get($cacheName, $maxLifetime) {
 		if (isset($this->cache[$cacheName])) {
@@ -56,7 +56,7 @@ class NoCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::set()
+	 * @see	\wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
 		$this->cache[$cacheName] = $value;

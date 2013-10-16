@@ -32,7 +32,7 @@ class CommentHandler extends SingletonFactory {
 	protected $cache = null;
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->cache = array(
@@ -65,7 +65,7 @@ class CommentHandler extends SingletonFactory {
 	 * Returns the object type for a given object type id.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	wcf\data\object\type\ObjectType
+	 * @return	\wcf\data\object\type\ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->cache['objectTypes'][$objectTypeID])) {
@@ -79,7 +79,7 @@ class CommentHandler extends SingletonFactory {
 	 * Returns comment manager object for given object type.
 	 * 
 	 * @param	string		$objectType
-	 * @return	wcf\system\comment\manager\ICommentManager
+	 * @return	\wcf\system\comment\manager\ICommentManager
 	 */
 	public function getCommentManager($objectType) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -94,11 +94,11 @@ class CommentHandler extends SingletonFactory {
 	/**
 	 * Returns a comment list for a given object type and object id.
 	 * 
-	 * @param	wcf\data\comment\manager\ICommentManager	$commentManager
+	 * @param	\wcf\data\comment\manager\ICommentManager	$commentManager
 	 * @param	integer						$objectTypeID
 	 * @param	integer						$objectID
 	 * @param	boolean						$readObjects
-	 * @return	wcf\data\comment\StructuredCommentList
+	 * @return	\wcf\data\comment\StructuredCommentList
 	 */
 	public function getCommentList(ICommentManager $commentManager, $objectTypeID, $objectID, $readObjects = true) {
 		$commentList = new StructuredCommentList($commentManager, $objectTypeID, $objectID);

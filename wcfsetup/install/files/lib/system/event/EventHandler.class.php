@@ -42,7 +42,7 @@ class EventHandler extends SingletonFactory {
 	
 	/**
 	 * instances of listener objects
-	 * @var	array<wcf\system\event\IEventListener>
+	 * @var	array<\wcf\system\event\IEventListener>
 	 */
 	protected $listenerObjects = array();
 	

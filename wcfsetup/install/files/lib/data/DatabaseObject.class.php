@@ -54,7 +54,7 @@ abstract class DatabaseObject implements IStorableObject {
 	 * 
 	 * @param	mixed				$id
 	 * @param	array				$row
-	 * @param	wcf\data\DatabaseObject		$object
+	 * @param	\wcf\data\DatabaseObject		$object
 	 */
 	public function __construct($id, array $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {
@@ -90,7 +90,7 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::__get()
+	 * @see	\wcf\data\IStorableObject::__get()
 	 */
 	public function __get($name) {
 		if (isset($this->data[$name])) {
@@ -111,42 +111,42 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::__isset()
+	 * @see	\wcf\data\IStorableObject::__isset()
 	 */
 	public function __isset($name) {
 		return isset($this->data[$name]);
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::getData()
+	 * @see	\wcf\data\IStorableObject::getData()
 	 */
 	public function getData() {
 		return $this->data;
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::getDatabaseTableName()
+	 * @see	\wcf\data\IStorableObject::getDatabaseTableName()
 	 */
 	public static function getDatabaseTableName() {
 		return 'wcf'.WCF_N.'_'.static::$databaseTableName;
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
 	 */
 	public static function getDatabaseTableAlias() {
 		return static::$databaseTableName;
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::getDatabaseTableIndexIsIdentity()
+	 * @see	\wcf\data\IStorableObject::getDatabaseTableIndexIsIdentity()
 	 */
 	public static function getDatabaseTableIndexIsIdentity() {
 		return static::$databaseTableIndexIsIdentity;
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::getDatabaseTableIndexName()
+	 * @see	\wcf\data\IStorableObject::getDatabaseTableIndexName()
 	 */
 	public static function getDatabaseTableIndexName() {
 		return static::$databaseTableIndexName;
@@ -155,7 +155,7 @@ abstract class DatabaseObject implements IStorableObject {
 	/**
 	 * Sorts a list of database objects.
 	 * 
-	 * @param	array<wcf\data\DatabaseObject>	$objects
+	 * @param	array<\wcf\data\DatabaseObject>	$objects
 	 * @param	mixed				$sortBy
 	 * @param	string				$sortOrder
 	 * @return	boolean

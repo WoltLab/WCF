@@ -60,7 +60,7 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Returns an object type from cache.
 	 * 
-	 * @return	wcf\data\object\type\ObjectType
+	 * @return	\wcf\data\object\type\ObjectType
 	 */
 	public function getObjectType($objectName) {
 		if (isset($this->cache[$objectName])) {
@@ -73,9 +73,9 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Gets a like object.
 	 * 
-	 * @param	wcf\data\object\type\ObjectType		$objectType
+	 * @param	\wcf\data\object\type\ObjectType		$objectType
 	 * @param	integer					$objectID
-	 * @return	wcf\data\like\object\LikeObject
+	 * @return	\wcf\data\like\object\LikeObject
 	 */
 	public function getLikeObject(ObjectType $objectType, $objectID) {
 		if (isset($this->likeObjectCache[$objectType->objectTypeID][$objectID])) {
@@ -88,8 +88,8 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Gets the like objects of a specific object type.
 	 * 
-	 * @param	wcf\data\object\type\ObjectType		$objectType
-	 * @return	array<wcf\data\like\object\LikeObject>
+	 * @param	\wcf\data\object\type\ObjectType		$objectType
+	 * @return	array<\wcf\data\like\object\LikeObject>
 	 */
 	public function getLikeObjects(ObjectType $objectType) {
 		if (isset($this->likeObjectCache[$objectType->objectTypeID])) {
@@ -103,7 +103,7 @@ class LikeHandler extends SingletonFactory {
 	 * Loads the like data for a set of objects and returns the number of loaded
 	 * like objects
 	 * 
-	 * @param	wcf\data\object\type\ObjectType		$objectType
+	 * @param	\wcf\data\object\type\ObjectType		$objectType
 	 * @param	array					$objectIDs
 	 * @return	integer
 	 */
@@ -150,8 +150,8 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Saves the like of an object.
 	 * 
-	 * @param	wcf\data\like\object\ILikeObject	$likeable
-	 * @param	wcf\data\user\User			$user
+	 * @param	\wcf\data\like\object\ILikeObject	$likeable
+	 * @param	\wcf\data\user\User			$user
 	 * @param	integer					$likeValue
 	 * @param	integer					$time
 	 * @return	array
@@ -318,10 +318,10 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Reverts the like of an object.
 	 * 
-	 * @param	wcf\data\like\Like			$like
-	 * @param	wcf\data\like\object\ILikeObject	$likeable
-	 * @param	wcf\data\like\object\LikeObject		$likeObject
-	 * @param	wcf\data\user\User			$user
+	 * @param	\wcf\data\like\Like			$like
+	 * @param	\wcf\data\like\object\ILikeObject	$likeable
+	 * @param	\wcf\data\like\object\LikeObject		$likeObject
+	 * @param	\wcf\data\user\User			$user
 	 * @return	array
 	 */
 	public function revertLike(Like $like, ILikeObject $likeable, LikeObject $likeObject, User $user) {
@@ -468,8 +468,8 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Returns current like object status.
 	 * 
-	 * @param	wcf\data\like\object\LikeObject		$likeObject
-	 * @param	wcf\data\user\User			$user
+	 * @param	\wcf\data\like\object\LikeObject		$likeObject
+	 * @param	\wcf\data\user\User			$user
 	 * @return	array
 	 */
 	protected function loadLikeStatus(LikeObject $likeObject, User $user) {

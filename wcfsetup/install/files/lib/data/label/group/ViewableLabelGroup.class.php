@@ -18,13 +18,13 @@ use wcf\system\WCF;
  */
 class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, ITraversableObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\label\group\LabelGroup';
 	
 	/**
 	 * list of labels
-	 * @var	array<wcf\data\label\Label>
+	 * @var	array<\wcf\data\label\Label>
 	 */
 	protected $labels = array();
 	
@@ -52,7 +52,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	/**
 	 * Adds a label.
 	 * 
-	 * @param	wcf\data\label\Label	$label
+	 * @param	\wcf\data\label\Label	$label
 	 */
 	public function addLabel(Label $label) {
 		$this->labels[$label->labelID] = $label;
@@ -129,7 +129,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	/**
 	 * Returns a list of labels.
 	 * 
-	 * @return	array<wcf\data\label\Label>
+	 * @return	array<\wcf\data\label\Label>
 	 */
 	public function getLabels() {
 		return $this->labels;
@@ -139,7 +139,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	 * Returns a label by id.
 	 * 
 	 * @param	integer		$labelID
-	 * @return	wcf\data\label\Label
+	 * @return	\wcf\data\label\Label
 	 */
 	public function getLabel($labelID) {
 		if (isset($this->labels[$labelID])) {
@@ -207,7 +207,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	}
 	
 	/**
-	 * @see	wcf\data\ITraversableObject::seekTo()
+	 * @see	\wcf\data\ITraversableObject::seekTo()
 	 */
 	public function seekTo($objectID) {
 		$this->index = array_search($objectID, $this->indexToObject);
@@ -218,7 +218,7 @@ class ViewableLabelGroup extends DatabaseObjectDecorator implements \Countable, 
 	}
 	
 	/**
-	 * @see	wcf\data\ITraversableObject::search()
+	 * @see	\wcf\data\ITraversableObject::search()
 	 */
 	public function search($objectID) {
 		try {

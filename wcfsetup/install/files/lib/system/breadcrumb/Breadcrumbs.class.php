@@ -17,7 +17,7 @@ use wcf\system\WCF;
 class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * list of breadcrumbs
-	 * @var	array<wcf\system\breadcrumb\Breadcrumb>
+	 * @var	array<\wcf\system\breadcrumb\Breadcrumb>
 	 */
 	protected $items = array();
 	
@@ -27,7 +27,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	protected $index = 0;
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// add main breadcrumbs entry
@@ -37,7 +37,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * Adds a breadcrumb (insertion order is crucial!).
 	 * 
-	 * @param	wcf\system\breadcrumb\Breadcrumb	$item
+	 * @param	\wcf\system\breadcrumb\Breadcrumb	$item
 	 */
 	public function add(Breadcrumb $item) {
 		$this->items[] = $item;
@@ -46,7 +46,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * Returns the list of breadcrumbs.
 	 * 
-	 * @return	array<wcf\system\breadcrumb\Breadcrumb>
+	 * @return	array<\wcf\system\breadcrumb\Breadcrumb>
 	 */
 	public function get() {
 		return $this->items;
@@ -55,7 +55,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	/**
 	 * Replaces a breadcrumb, returns true if replacement was successful.
 	 * 
-	 * @param	wcf\system\breadcrumb\Breadcrumb	$item
+	 * @param	\wcf\system\breadcrumb\Breadcrumb	$item
 	 * @param	integer					$index
 	 * @return	boolean
 	 */

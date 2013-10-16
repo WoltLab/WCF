@@ -45,7 +45,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::load()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::load()
 	 */
 	public function load($image, $type = '') {
 		if (!($image instanceof \Imagick)) {
@@ -58,7 +58,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::loadFile()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::loadFile()
 	 */
 	public function loadFile($file) {
 		try {
@@ -72,14 +72,14 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::createEmptyImage()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::createEmptyImage()
 	 */
 	public function createEmptyImage($width, $height) {
 		$this->imagick->newImage($width, $height, 'white');
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::createThumbnail()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::createThumbnail()
 	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
 		/* todo: obtainDimensions=false doesn't work */
@@ -90,21 +90,21 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::clip()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::clip()
 	 */
 	public function clip($originX, $originY, $width, $height) {
 		$this->imagick->cropImage($width, $height, $originX, $originY);
 	}
 
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::resize()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::resize()
 	 */
 	public function resize($originX, $originY, $originWidth, $originHeight, $targetX, $targetY, $targetWidth, $targetHeight) {
 		throw new \Exception("resize() method not implemented yet."); // TODO: Implement resize() method.
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::drawRectangle()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::drawRectangle()
 	 */
 	public function drawRectangle($startX, $startY, $endX, $endY) {
 		$draw = new \ImagickDraw();
@@ -116,7 +116,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::drawText()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
 	public function drawText($string, $x, $y) {
 		$draw = new \ImagickDraw();
@@ -129,7 +129,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::setColor()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::setColor()
 	 */
 	public function setColor($red, $green, $blue) {
 		$this->color = new \ImagickPixel();
@@ -137,7 +137,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::hasColor()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::hasColor()
 	 */
 	public function hasColor() {
 		if ($this->color instanceof \ImagickPixel) {
@@ -148,7 +148,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::setTransparentColor()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::setTransparentColor()
 	 */
 	public function setTransparentColor($red, $green, $blue) {
 		$color = 'rgb(' . $red . ',' . $green . ',' . $blue . ')';
@@ -156,14 +156,14 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::getImage()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::getImage()
 	 */
 	public function getImage() {
 		return $this->imagick;
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::writeImage()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::writeImage()
 	 */
 	public function writeImage($image, $filename) {
 		if (!($image instanceof \Imagick)) {
@@ -174,21 +174,21 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::getHeight()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::getHeight()
 	 */
 	public function getHeight() {
 		return $this->height;
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::getWidth()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::getWidth()
 	 */
 	public function getWidth() {
 		return $this->width;
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::isSupported()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::isSupported()
 	 */
 	public static function isSupported() {
 		return class_exists('\Imagick', false);

@@ -21,17 +21,17 @@ use wcf\util\StringUtil;
  */
 class ExceptionLogViewPage extends MultipleLinkPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.log.exception';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canViewLog');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
 	 */
 	public $itemsPerPage = 10;
 	
@@ -60,7 +60,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	public $exceptions = array();
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -70,7 +70,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		AbstractPage::readData();
@@ -156,7 +156,7 @@ Stacktrace:
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::countItems()
+	 * @see	\wcf\page\MultipleLinkPage::countItems()
 	 */
 	public function countItems() {
 		// call countItems event
@@ -182,7 +182,7 @@ Stacktrace:
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

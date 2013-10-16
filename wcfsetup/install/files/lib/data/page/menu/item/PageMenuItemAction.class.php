@@ -19,39 +19,39 @@ use wcf\system\WCF;
  */
 class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\page\menu\item\PageMenuItemEditor';
 	
 	/**
 	 * page menu item editor
-	 * @var	wcf\data\page\menu\item\PageMenuItemEditor
+	 * @var	\wcf\data\page\menu\item\PageMenuItemEditor
 	 */
 	public $menuItemEditor = null;
 	
 	/**
 	 * list of menu items
-	 * @var	array<wcf\data\page\menu\item\PageMenuItem>
+	 * @var	array<\wcf\data\page\menu\item\PageMenuItem>
 	 */
 	public $menuItems = array();
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.display.canManagePageMenu');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.display.canManagePageMenu');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('delete', 'toggle', 'update', 'updatePosition');
 	
 	/**
-	 * @see	wcf\data\IDatabaseObjectAction::create()
+	 * @see	\wcf\data\IDatabaseObjectAction::create()
 	 */
 	public function create() {
 		if (!isset($this->parameters['data']['packageID'])) {
@@ -71,7 +71,7 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
 	 */
 	public function delete() {
 		$returnValues = parent::delete();
@@ -82,7 +82,7 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
 	 */
 	public function update() {
 		parent::update();
@@ -91,7 +91,7 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	}
 	
 	/**
-	 * @see	wcf\data\ISortableAction::validateUpdatePosition()
+	 * @see	\wcf\data\ISortableAction::validateUpdatePosition()
 	 */
 	public function validateUpdatePosition() {
 		WCF::getSession()->checkPermissions(array('admin.display.canManagePageMenu'));
@@ -133,7 +133,7 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	}
 	
 	/**
-	 * @see	wcf\data\ISortableAction::updatePosition()
+	 * @see	\wcf\data\ISortableAction::updatePosition()
 	 */
 	public function updatePosition() {
 		$sql = "UPDATE	wcf".WCF_N."_page_menu_item
@@ -161,7 +161,7 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	}
 	
 	/**
-	 * @see	wcf\data\IToggleAction::validateToggle()
+	 * @see	\wcf\data\IToggleAction::validateToggle()
 	 */
 	public function validateToggle() {
 		$this->menuItemEditor = $this->getSingleObject();
@@ -173,7 +173,7 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	}
 	
 	/**
-	 * @see	wcf\data\IToggleAction::toggle()
+	 * @see	\wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {
 		$this->menuItemEditor->update(array(

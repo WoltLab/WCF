@@ -23,7 +23,7 @@ use wcf\util\UserUtil;
  */
 class MailForm extends RecaptchaForm {
 	/**
-	 * @see	wcf\form\RecaptchaForm::$useCaptcha
+	 * @see	\wcf\form\RecaptchaForm::$useCaptcha
 	 */
 	public $useCaptcha = PROFILE_MAIL_USE_CAPTCHA;
 	
@@ -35,7 +35,7 @@ class MailForm extends RecaptchaForm {
 	
 	/**
 	 * recipient's user object
-	 * @var	wcf\data\user\UserProfile
+	 * @var	\wcf\data\user\UserProfile
 	 */
 	public $user = 0;
 	
@@ -64,7 +64,7 @@ class MailForm extends RecaptchaForm {
 	public $email = '';
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -81,7 +81,7 @@ class MailForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -94,7 +94,7 @@ class MailForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		if (!WCF::getUser()->userID) {
@@ -119,7 +119,7 @@ class MailForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -160,7 +160,7 @@ class MailForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -169,7 +169,7 @@ class MailForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -184,7 +184,7 @@ class MailForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
 		WCF::getSession()->checkPermissions(array('user.profile.canMail'));

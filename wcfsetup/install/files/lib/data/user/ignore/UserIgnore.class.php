@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class UserIgnore extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user_ignore';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'ignoreID';
 	
@@ -28,7 +28,7 @@ class UserIgnore extends DatabaseObject {
 	 * Returns a UserIgnore object for given ignored user id.
 	 * 
 	 * @param	integer		$ignoreUserID
-	 * @return	wcf\data\user\ignore\UserIgnore
+	 * @return	\wcf\data\user\ignore\UserIgnore
 	 */
 	public static function getIgnore($ignoreUserID) {
 		$sql = "SELECT	*

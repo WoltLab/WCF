@@ -16,7 +16,7 @@ interface IObjectTypeProvider {
 	 * Gets an object by its ID.
 	 * 
 	 * @param	integer		$objectID
-	 * @return	wcf\data\DatabaseObject
+	 * @return	\wcf\data\DatabaseObject
 	 */
 	public function getObjectByID($objectID);
 	
@@ -24,7 +24,7 @@ interface IObjectTypeProvider {
 	 * Gets like objects by their IDs.
 	 * 
 	 * @param	array<integer>		$objectIDs
-	 * @return	array<wcf\data\DatabaseObject>
+	 * @return	array<\wcf\data\DatabaseObject>
 	 */
 	public function getObjectsByIDs(array $objectIDs);
 }

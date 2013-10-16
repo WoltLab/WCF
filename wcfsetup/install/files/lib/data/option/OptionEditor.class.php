@@ -26,7 +26,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	const FILENAME = 'options.inc.php';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\option\Option';
 	
@@ -104,7 +104,7 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		// reset cache

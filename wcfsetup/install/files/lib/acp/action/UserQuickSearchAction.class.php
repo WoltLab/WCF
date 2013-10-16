@@ -21,7 +21,7 @@ use wcf\util\HeaderUtil;
  */
 class UserQuickSearchAction extends AbstractAction {
 	/**
-	 * @see	wcf\action\AbstractAction::$neededPermissions
+	 * @see	\wcf\action\AbstractAction::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditUser');
 	
@@ -68,7 +68,7 @@ class UserQuickSearchAction extends AbstractAction {
 	public $maxResults = 500;
 	
 	/**
-	 * @see	wcf\action\IAction::readParameters()
+	 * @see	\wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -77,7 +77,7 @@ class UserQuickSearchAction extends AbstractAction {
 	}
 	
 	/**
-	 * @see	wcf\action\IAction::execute();
+	 * @see	\wcf\action\IAction::execute();
 	 */
 	public function execute() {
 		ACPMenu::getInstance()->setActiveMenuItem('wcf.acp.menu.link.user.search');

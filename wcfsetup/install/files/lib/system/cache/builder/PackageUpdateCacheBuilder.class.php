@@ -14,7 +14,7 @@ use wcf\system\package\PackageUpdateDispatcher;
  */
 class PackageUpdateCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
 		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();

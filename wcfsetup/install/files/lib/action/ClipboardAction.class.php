@@ -67,7 +67,7 @@ class ClipboardAction extends AJAXInvokeAction {
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see	wcf\action\Action::readParameters()
+	 * @see	\wcf\action\Action::readParameters()
 	 */
 	public function readParameters() {
 		AbstractSecureAction::readParameters();
@@ -81,7 +81,7 @@ class ClipboardAction extends AJAXInvokeAction {
 	}
 	
 	/**
-	 * @see	wcf\action\Action::execute()
+	 * @see	\wcf\action\Action::execute()
 	 */
 	public function execute() {
 		AbstractSecureAction::execute();

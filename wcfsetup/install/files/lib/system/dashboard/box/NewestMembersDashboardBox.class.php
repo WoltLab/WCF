@@ -19,12 +19,12 @@ use wcf\system\WCF;
 class NewestMembersDashboardBox extends AbstractSidebarDashboardBox {
 	/**
 	 * user profile list
-	 * @var	wcf\data\user\UserProfileList
+	 * @var	\wcf\data\user\UserProfileList
 	 */
 	public $userProfileList = null; 
 	
 	/**
-	 * @see	wcf\system\dashboard\box\IDashboardBox::init()
+	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
 	 */
 	public function init(DashboardBox $box, IPage $page) {
 		parent::init($box, $page); 
@@ -43,7 +43,7 @@ class NewestMembersDashboardBox extends AbstractSidebarDashboardBox {
 	}
 	
 	/**
-	 * @see	wcf\system\dashboard\box\AbstractContentDashboardBox::render()
+	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
 		if ($this->userProfileList == null) return ''; 

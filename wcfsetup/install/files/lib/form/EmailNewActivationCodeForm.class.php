@@ -21,7 +21,7 @@ use wcf\util\UserRegistrationUtil;
  */
 class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -50,7 +50,7 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();

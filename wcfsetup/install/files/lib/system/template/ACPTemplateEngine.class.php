@@ -13,12 +13,12 @@ namespace wcf\system\template;
  */
 class ACPTemplateEngine extends TemplateEngine {
 	/**
-	 * @see	wcf\system\template\TemplateEngine::$environment
+	 * @see	\wcf\system\template\TemplateEngine::$environment
 	 */
 	protected $environment = 'admin';
 	
 	/**
-	 * @see	wcf\system\template\TemplateEngine::__construct()
+	 * @see	\wcf\system\template\TemplateEngine::__construct()
 	 */
 	protected function init() {
 		parent::init();
@@ -43,7 +43,7 @@ class ACPTemplateEngine extends TemplateEngine {
 	}
 	
 	/**
-	 * @see	wcf\system\template\TemplateEngine::setTemplateGroupID()
+	 * @see	\wcf\system\template\TemplateEngine::setTemplateGroupID()
 	 */
 	public final function setTemplateGroupID($templateGroupID) {
 		// template groups are not supported by the acp template engine

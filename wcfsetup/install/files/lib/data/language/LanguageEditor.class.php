@@ -30,12 +30,12 @@ use wcf\util\XML;
  */
 class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\language\Language';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectEditor::delete()
+	 * @see	\wcf\data\DatabaseObjectEditor::delete()
 	 */
 	public function delete() {
 		parent::delete();
@@ -46,7 +46,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Updates the language files for the given category.
 	 * 
-	 * @param	wcf\data\language\category\LanguageCategory	$languageCategory
+	 * @param	\wcf\data\language\category\LanguageCategory	$languageCategory
 	 */
 	public function updateCategory(LanguageCategory $languageCategory) {
 		$this->writeLanguageFiles(array($languageCategory->languageCategoryID));
@@ -161,7 +161,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Imports language items from an XML file into this language.
 	 * Updates the relevant language files automatically.
 	 * 
-	 * @param	wcf\util\XML	$xml
+	 * @param	\wcf\util\XML	$xml
 	 * @param	integer		$packageID
 	 * @param	boolean		$updateFiles
 	 * @param	boolean		$updateExistingItems
@@ -288,7 +288,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Takes an XML object and returns the specific language code.
 	 * 
-	 * @param	wcf\util\XML	$xml
+	 * @param	\wcf\util\XML	$xml
 	 * @return	string
 	 */
 	public static function readLanguageCodeFromXML(XML $xml) {
@@ -306,7 +306,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Takes an XML object and returns the specific language name.
 	 * 
-	 * @param	wcf\util\XML	$xml
+	 * @param	\wcf\util\XML	$xml
 	 * @return	string		language name
 	 */
 	public static function readLanguageNameFromXML(XML $xml) {
@@ -324,7 +324,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	/**
 	 * Takes an XML object and returns the specific country code.
 	 * 
-	 * @param	wcf\util\XML	$xml
+	 * @param	\wcf\util\XML	$xml
 	 * @return	string		country code
 	 */
 	public static function readCountryCodeFromXML(XML $xml) {
@@ -343,9 +343,9 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Imports language items from an XML file into a new or a current language.
 	 * Updates the relevant language files automatically.
 	 * 
-	 * @param	wcf\util\XML	$xml
+	 * @param	\wcf\util\XML	$xml
 	 * @param	integer		$packageID
-	 * @return	wcf\data\language\LanguageEditor
+	 * @return	\wcf\data\language\LanguageEditor
 	 */
 	public static function importFromXML(XML $xml, $packageID) {
 		$languageCode = self::readLanguageCodeFromXML($xml);
@@ -395,7 +395,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * Updates the language items of a language category.
 	 * 
 	 * @param	array						$items
-	 * @param	wcf\data\language\category\LanguageCategory	$category
+	 * @param	\wcf\data\language\category\LanguageCategory	$category
 	 * @param	integer						$packageID
 	 * @param	array						$useCustom
 	 */
@@ -604,7 +604,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		LanguageFactory::getInstance()->clearCache();

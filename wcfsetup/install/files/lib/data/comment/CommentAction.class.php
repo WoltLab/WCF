@@ -32,35 +32,35 @@ use wcf\util\StringUtil;
  */
 class CommentAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('loadComments');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\comment\CommentEditor';
 	
 	/**
 	 * comment object
-	 * @var	wcf\data\comment\Comment
+	 * @var	\wcf\data\comment\Comment
 	 */
 	protected $comment = null;
 	
 	/**
 	 * comment processor
-	 * @var	wcf\system\comment\manager\ICommentManager
+	 * @var	\wcf\system\comment\manager\ICommentManager
 	 */
 	protected $commentProcessor = null;
 	
 	/**
 	 * response object
-	 * @var	wcf\data\comment\response\CommentResponse
+	 * @var	\wcf\data\comment\response\CommentResponse
 	 */
 	protected $response = null;
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
 	 */
 	public function delete() {
 		if (empty($this->objects)) {
@@ -361,7 +361,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	wcf\data\comment\CommentAction::validatePrepareEdit()
+	 * @see	\wcf\data\comment\CommentAction::validatePrepareEdit()
 	 */
 	public function validateEdit() {
 		$this->validatePrepareEdit();
@@ -462,7 +462,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Renders a comment.
 	 * 
-	 * @param	wcf\data\comment\Comment	$comment
+	 * @param	\wcf\data\comment\Comment	$comment
 	 * @return	string
 	 */
 	protected function renderComment(Comment $comment) {
@@ -483,7 +483,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Renders a response.
 	 * 
-	 * @param	wcf\data\comment\response\CommentResponse	$response
+	 * @param	\wcf\data\comment\response\CommentResponse	$response
 	 * @return	string
 	 */
 	protected function renderResponse(CommentResponse $response) {
@@ -517,7 +517,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Validates object type id parameter.
 	 * 
-	 * @return	wcf\data\object\type\ObjectType
+	 * @return	\wcf\data\object\type\ObjectType
 	 */
 	protected function validateObjectType() {
 		$this->readInteger('objectTypeID', false, 'data');
@@ -557,7 +557,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns the comment object.
 	 * 
-	 * @return	wcf\data\comment\Comment
+	 * @return	\wcf\data\comment\Comment
 	 */
 	public function getComment() {
 		return $this->comment;
@@ -566,7 +566,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns the comment response object.
 	 * 
-	 * @return	wcf\data\comment\response\CommentResponse
+	 * @return	\wcf\data\comment\response\CommentResponse
 	 */
 	public function getResponse() {
 		return $this->response;
@@ -575,7 +575,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Returns the comment manager.
 	 * 
-	 * @return	wcf\system\comment\manager\ICommentManager
+	 * @return	\wcf\system\comment\manager\ICommentManager
 	 */
 	public function getCommentManager() {
 		return $this->commentProcessor;

@@ -21,12 +21,12 @@ use wcf\system\WCF;
 class UserActivityEventHandler extends SingletonFactory {
 	/**
 	 * cached object types
-	 * @var	array<wcf\data\object\type\ObjectType>
+	 * @var	array<\wcf\data\object\type\ObjectType>
 	 */
 	protected $objectTypes = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// load object types
@@ -41,7 +41,7 @@ class UserActivityEventHandler extends SingletonFactory {
 	 * Returns an object type by id.
 	 * 
 	 * @param	integer				$objectTypeID
-	 * @return	wcf\data\object\type\ObjectType
+	 * @return	\wcf\data\object\type\ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->objectTypes['objects'][$objectTypeID])) {
@@ -74,7 +74,7 @@ class UserActivityEventHandler extends SingletonFactory {
 	 * @param	integer		$userID
 	 * @param	integer		$time
 	 * @param	array		$additonalData
-	 * @return	wcf\data\user\activity\event\UserActivityEvent
+	 * @return	\wcf\data\user\activity\event\UserActivityEvent
 	 */
 	public function fireEvent($objectType, $objectID, $languageID = null, $userID = null, $time = TIME_NOW, $additonalData = array()) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
@@ -126,7 +126,7 @@ class UserActivityEventHandler extends SingletonFactory {
 	/**
 	 * Validates an event list and removes orphaned events.
 	 * 
-	 * @param	wcf\data\user\activity\event\ViewableUserActivityEventList	$eventList
+	 * @param	\wcf\data\user\activity\event\ViewableUserActivityEventList	$eventList
 	 */
 	public static function validateEvents(ViewableUserActivityEventList $eventList) {
 		$eventIDs = $eventList->validateEvents();

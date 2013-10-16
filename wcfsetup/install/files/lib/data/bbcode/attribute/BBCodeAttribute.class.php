@@ -15,20 +15,20 @@ use wcf\data\DatabaseObject;
  */
 class BBCodeAttribute extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'bbcode_attribute';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'attributeID';
 	
 	/**
 	 * Reads attributes by assigned bbcode.
 	 * 
-	 * @param	wcf\data\bbcode\BBCode		$bbcode
-	 * @return	array<wcf\data\bbcode\attribute\BBCodeAttribute>
+	 * @param	\wcf\data\bbcode\BBCode		$bbcode
+	 * @return	array<\wcf\data\bbcode\attribute\BBCodeAttribute>
 	 */
 	public static function getAttributesByBBCode(BBCode $bbcode) {
 		$attributeList = new BBCodeAttributeList();

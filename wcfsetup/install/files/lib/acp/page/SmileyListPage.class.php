@@ -18,27 +18,27 @@ use wcf\system\WCF;
  */
 class SmileyListPage extends MultipleLinkPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.smiley.list';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.content.smiley.canManageSmiley');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\smiley\SmileyList';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$templateName
+	 * @see	\wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'smileyList';
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$sqlOrderBy
+	 * @see	\wcf\page\MultipleLinkPage::$sqlOrderBy
 	 */
 	public $sqlOrderBy = 'showOrder ASC, smileyID ASC';
 	
@@ -50,18 +50,18 @@ class SmileyListPage extends MultipleLinkPage {
 	
 	/**
 	 * active category
-	 * @var	wcf\data\category\Category
+	 * @var	\wcf\data\category\Category
 	 */
 	public $category = null;
 	
 	/**
 	 * available categories
-	 * @var	array<wcf\data\category\Category>
+	 * @var	array<\wcf\data\category\Category>
 	 */
 	public $categories = array();
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -76,7 +76,7 @@ class SmileyListPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -89,7 +89,7 @@ class SmileyListPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::initObjectList()
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -103,7 +103,7 @@ class SmileyListPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();

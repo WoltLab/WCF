@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  */
 class MessageOptionType extends TextareaOptionType {
 	/**
-	 * @see	wcf\system\option\IOptionType::getData()
+	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		$newValue = StringUtil::trim($newValue);
@@ -31,7 +31,7 @@ class MessageOptionType extends TextareaOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		$allowedBBCodes = array();
@@ -53,7 +53,7 @@ class MessageOptionType extends TextareaOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::validate()
+	 * @see	\wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		parent::validate($option, $newValue);

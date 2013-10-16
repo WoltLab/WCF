@@ -24,12 +24,12 @@ use wcf\util\StringUtil;
  */
 class TwitterAuthAction extends AbstractAction {
 	/**
-	 * @see	wcf\action\AbstractAction::$neededModules
+	 * @see	\wcf\action\AbstractAction::$neededModules
 	 */
 	public $neededModules = array('TWITTER_PUBLIC_KEY', 'TWITTER_PRIVATE_KEY');
 	
 	/**
-	 * @see	wcf\action\IAction::execute()
+	 * @see	\wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();
@@ -229,7 +229,7 @@ class TwitterAuthAction extends AbstractAction {
 	 * Fetches the User with the given userID
 	 * 
 	 * @param	integer			$userID
-	 * @return	wcf\data\user\User
+	 * @return	\wcf\data\user\User
 	 */
 	public function getUser($userID) {
 		$sql = "SELECT	userID

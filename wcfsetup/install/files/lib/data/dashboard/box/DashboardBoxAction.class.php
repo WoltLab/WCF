@@ -22,7 +22,7 @@ use wcf\util\ArrayUtil;
 class DashboardBoxAction extends AbstractDatabaseObjectAction implements ISortableAction {
 	/**
 	 * list of available dashboard boxes
-	 * @var	array<wcf\data\dashboard\box\DashboardBox>
+	 * @var	array<\wcf\data\dashboard\box\DashboardBox>
 	 */
 	public $boxes = array();
 	
@@ -34,17 +34,17 @@ class DashboardBoxAction extends AbstractDatabaseObjectAction implements ISortab
 	
 	/**
 	 * object type object
-	 * @var	wcf\data\object\type\ObjectType
+	 * @var	\wcf\data\object\type\ObjectType
 	 */
 	public $objectType = null;
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('updatePosition');
 	
 	/**
-	 * @see	wcf\data\ISortableAction::validateUpdatePosition()
+	 * @see	\wcf\data\ISortableAction::validateUpdatePosition()
 	 */
 	public function validateUpdatePosition() {
 		// validate permissions
@@ -95,7 +95,7 @@ class DashboardBoxAction extends AbstractDatabaseObjectAction implements ISortab
 	}
 	
 	/**
-	 * @see	wcf\data\ISortableAction::updatePosition()
+	 * @see	\wcf\data\ISortableAction::updatePosition()
 	 */
 	public function updatePosition() {
 		// remove previous settings

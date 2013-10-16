@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class CommentEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\comment\Comment';
 	

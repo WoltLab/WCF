@@ -16,23 +16,23 @@ use wcf\system\WCF;
  */
 class DeletedContentListPage extends MultipleLinkPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$loginRequired
+	 * @see	\wcf\page\AbstractPage::$loginRequired
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('mod.general.canUseModeration');
 	
 	/**
 	 * object type object
-	 * @var	wcf\data\object\type\ObjectType
+	 * @var	\wcf\data\object\type\ObjectType
 	 */
 	public $objectType = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -53,14 +53,14 @@ class DeletedContentListPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::readParameters()
+	 * @see	\wcf\page\MultipleLinkPage::readParameters()
 	 */
 	protected function initObjectList() {
 		$this->objectList = $this->objectType->getProcessor()->getObjectList();
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

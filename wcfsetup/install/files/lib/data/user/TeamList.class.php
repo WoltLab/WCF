@@ -17,12 +17,12 @@ use wcf\system\WCF;
 class TeamList extends UserProfileList {
 	/**
 	 * teams included in the list
-	 * @var	array<wcf\data\user\group\Team>
+	 * @var	array<\wcf\data\user\group\Team>
 	 */
 	protected $teams = array();
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::countObjects()
+	 * @see	\wcf\data\DatabaseObjectList::countObjects()
 	 */
 	public function countObjects() {
 		$sql = "SELECT	COUNT(*) AS count
@@ -37,7 +37,7 @@ class TeamList extends UserProfileList {
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::readObjectIDs()
+	 * @see	\wcf\data\DatabaseObjectList::readObjectIDs()
 	 */
 	public function readObjectIDs() {
 		$this->objectIDs = array();
@@ -57,7 +57,7 @@ class TeamList extends UserProfileList {
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::readObjects()
+	 * @see	\wcf\data\DatabaseObjectList::readObjects()
 	 */
 	public function readObjects() {
 		parent::readObjects();
@@ -85,7 +85,7 @@ class TeamList extends UserProfileList {
 	/**
 	 * Returns the teams in the list.
 	 * 
-	 * @return	array<wcf\data\user\group\Team>
+	 * @return	array<\wcf\data\user\group\Team>
 	 */
 	public function getTeams() {
 		return $this->teams;

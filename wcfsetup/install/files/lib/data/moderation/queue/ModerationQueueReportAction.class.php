@@ -18,13 +18,13 @@ use wcf\util\StringUtil;
  */
 class ModerationQueueReportAction extends ModerationQueueAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('prepareReport', 'removeContent', 'removeReport', 'report');
 	
 	/**
 	 * moderation queue editor object
-	 * @var	wcf\data\moderation\queue\ModerationQueueEditor
+	 * @var	\wcf\data\moderation\queue\ModerationQueueEditor
 	 */
 	public $queue = null;
 	

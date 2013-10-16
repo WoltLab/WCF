@@ -47,7 +47,7 @@ class AbstractACLImporter extends AbstractImporter {
 	}
 	
 	/**
-	 * @see	wcf\system\importer\IImporter::import()
+	 * @see	\wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		if (!isset($this->options[$additionalData['optionName']])) return 0;

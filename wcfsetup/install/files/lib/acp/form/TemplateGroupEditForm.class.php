@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class TemplateGroupEditForm extends TemplateGroupAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.template';
 	
@@ -31,12 +31,12 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	
 	/**
 	 * template group object
-	 * @var	wcf\data\template\group\TemplateGroup
+	 * @var	\wcf\data\template\group\TemplateGroup
 	 */
 	public $templateGroup = null;
 	
 	/**
-	 * @see	wcf\patge\IPage::readParameters()
+	 * @see	\wcf\patge\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -49,7 +49,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\TemplateGroupAddForm::validateName()
+	 * @see	\wcf\acp\form\TemplateGroupAddForm::validateName()
 	 */
 	protected function validateName() {
 		if ($this->templateGroupName != $this->templateGroup->templateGroupName) {
@@ -58,7 +58,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\TemplateGroupAddForm::validateFolderName()
+	 * @see	\wcf\acp\form\TemplateGroupAddForm::validateFolderName()
 	 */
 	protected function validateFolderName() {
 		if ($this->templateGroupFolderName != $this->templateGroup->templateGroupFolderName) {
@@ -67,7 +67,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -87,7 +87,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		AbstractForm::readData();
@@ -106,7 +106,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

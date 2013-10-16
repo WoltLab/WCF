@@ -19,7 +19,7 @@ use wcf\util\FileReader;
  */
 class AttachmentPage extends AbstractPage {
 	/**
-	 * @see	wcf\page\IPage::$useTemplate
+	 * @see	\wcf\page\IPage::$useTemplate
 	 */
 	public $useTemplate = false;
 	
@@ -31,7 +31,7 @@ class AttachmentPage extends AbstractPage {
 	
 	/**
 	 * attachment object
-	 * @var	wcf\data\attachment\Attachment
+	 * @var	\wcf\data\attachment\Attachment
 	 */
 	public $attachment = null;
 	
@@ -49,7 +49,7 @@ class AttachmentPage extends AbstractPage {
 	
 	/**
 	 * file reader object
-	 * @var	wcf\util\FileReader
+	 * @var	\wcf\util\FileReader
 	 */
 	public $fileReader = null;
 	
@@ -60,7 +60,7 @@ class AttachmentPage extends AbstractPage {
 	public static $inlineMimeTypes = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'application/pdf', 'image/pjpeg');
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -75,7 +75,7 @@ class AttachmentPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::checkPermissions()
+	 * @see	\wcf\page\IPage::checkPermissions()
 	 */
 	public function checkPermissions() {
 		parent::checkPermissions();
@@ -99,7 +99,7 @@ class AttachmentPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -140,7 +140,7 @@ class AttachmentPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
 		parent::show();

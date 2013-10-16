@@ -21,14 +21,14 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	
 	/**
 	 * decorated object
-	 * @var	wcf\data\DatabaseObject
+	 * @var	\wcf\data\DatabaseObject
 	 */
 	protected $object = null;
 	
 	/**
 	 * Creates a new DatabaseObjectDecorator object.
 	 * 
-	 * @param	wcf\data\DatabaseObject		$object
+	 * @param	\wcf\data\DatabaseObject		$object
 	 */
 	public function __construct(DatabaseObject $object) {
 		if (empty(static::$baseClass)) {
@@ -43,21 +43,21 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::__get()
+	 * @see	\wcf\data\IStorableObject::__get()
 	 */
 	public function __get($name) {
 		return $this->object->__get($name);
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::__isset()
+	 * @see	\wcf\data\IStorableObject::__isset()
 	 */
 	public function __isset($name) {
 		return $this->object->__isset($name);
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::getObjectID()
+	 * @see	\wcf\data\DatabaseObject::getObjectID()
 	 */
 	public function getObjectID() {
 		return $this->object->getObjectID();
@@ -79,28 +79,28 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::getDatabaseTableAlias()
+	 * @see	\wcf\data\IStorableObject::getDatabaseTableAlias()
 	 */
 	public static function getDatabaseTableAlias() {
 		return call_user_func(array(static::$baseClass, 'getDatabaseTableAlias'));
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::getDatabaseTableName()
+	 * @see	\wcf\data\IStorableObject::getDatabaseTableName()
 	 */
 	public static function getDatabaseTableName() {
 		return call_user_func(array(static::$baseClass, 'getDatabaseTableName'));
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::getDatabaseTableIndexIsIdentity()
+	 * @see	\wcf\data\IStorableObject::getDatabaseTableIndexIsIdentity()
 	 */
 	public static function getDatabaseTableIndexIsIdentity() {
 		return call_user_func(array(static::$baseClass, 'getDatabaseTableIndexIsIdentity'));
 	}
 	
 	/**
-	 * @see	wcf\data\IStorableObject::getDatabaseTableIndexName()
+	 * @see	\wcf\data\IStorableObject::getDatabaseTableIndexName()
 	 */
 	public static function getDatabaseTableIndexName() {
 		return call_user_func(array(static::$baseClass, 'getDatabaseTableIndexName'));
@@ -118,7 +118,7 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	/**
 	 * Returns the decorated object
 	 * 
-	 * @return	wcf\data\DatabaseObject
+	 * @return	\wcf\data\DatabaseObject
 	 */
 	public function getDecoratedObject() {
 		return $this->object;

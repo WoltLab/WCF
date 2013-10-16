@@ -15,7 +15,7 @@ interface IUploadFileValidationStrategy {
 	/**
 	 * Validates the given file and returns true on success, otherwise false.
 	 * 
-	 * @param	wcf\system\upload\UploadFile		$uploadFile
+	 * @param	\wcf\system\upload\UploadFile		$uploadFile
 	 * @return	boolean
 	 */
 	public function validate(UploadFile $uploadFile);

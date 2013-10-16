@@ -20,12 +20,12 @@ use wcf\system\WCF;
  */
 class SmileyEditForm extends SmileyAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.smiley';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.content.smiley.canManageSmiley');
 	
@@ -37,12 +37,12 @@ class SmileyEditForm extends SmileyAddForm {
 	
 	/**
 	 * smiley object
-	 * @var	wcf\data\smiley\Smiley
+	 * @var	\wcf\data\smiley\Smiley
 	 */
 	public $smiley = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -55,7 +55,7 @@ class SmileyEditForm extends SmileyAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -89,7 +89,7 @@ class SmileyEditForm extends SmileyAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -107,7 +107,7 @@ class SmileyEditForm extends SmileyAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

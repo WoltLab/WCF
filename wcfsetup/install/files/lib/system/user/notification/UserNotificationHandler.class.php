@@ -51,12 +51,12 @@ class UserNotificationHandler extends SingletonFactory {
 	
 	/**
 	 * list of object types
-	 * @var	array<wcf\data\object\type\ObjectType>
+	 * @var	array<\wcf\data\object\type\ObjectType>
 	 */
 	protected $objectTypes = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get available object types
@@ -74,7 +74,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * 
 	 * @param	string								$eventName
 	 * @param	string								$objectType
-	 * @param	wcf\system\user\notification\object\IUserNotificationObject	$notificationObject
+	 * @param	\wcf\system\user\notification\object\IUserNotificationObject	$notificationObject
 	 * @param	array<integer>							$recipientIDs
 	 * @param	array<mixed>							$additionalData
 	 */
@@ -307,7 +307,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	string		$eventName
-	 * @return	wcf\system\user\notification\event\IUserNotificationEvent
+	 * @return	\wcf\system\user\notification\event\IUserNotificationEvent
 	 */
 	public function getEvent($objectType, $eventName) {
 		if (!isset($this->availableEvents[$objectType][$eventName])) return null;
@@ -349,7 +349,7 @@ class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * Returns a list of available object types.
 	 * 
-	 * @return	array<wcf\system\user\notification\object\type\IUserNotificationObjectType>
+	 * @return	array<\wcf\system\user\notification\object\type\IUserNotificationObjectType>
 	 */
 	public function getAvailableObjectTypes() {
 		return $this->availableObjectTypes;
@@ -358,7 +358,7 @@ class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * Returns a list of available events.
 	 * 
-	 * @return	array<wcf\system\user\notification\event\IUserNotificationEvent>
+	 * @return	array<\wcf\system\user\notification\event\IUserNotificationEvent>
 	 */
 	public function getAvailableEvents() {
 		return $this->availableEvents;
@@ -395,9 +395,9 @@ class UserNotificationHandler extends SingletonFactory {
 	/**
 	 * Sends the mail notification.
 	 * 
-	 * @param	wcf\data\user\notification\UserNotification			$notification
-	 * @param	wcf\data\user\User						$user
-	 * @param	wcf\system\user\notification\event\IUserNotificationEvent	$event
+	 * @param	\wcf\data\user\notification\UserNotification			$notification
+	 * @param	\wcf\data\user\User						$user
+	 * @param	\wcf\system\user\notification\event\IUserNotificationEvent	$event
 	 */
 	public function sendInstantMailNotification(UserNotification $notification, User $user, IUserNotificationEvent $event) {
 		// recipient's language

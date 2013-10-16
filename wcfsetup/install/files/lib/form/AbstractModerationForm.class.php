@@ -41,18 +41,18 @@ abstract class AbstractModerationForm extends AbstractForm {
 	public $data = array();
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$loginRequired
+	 * @see	\wcf\page\AbstractPage::$loginRequired
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('mod.general.canUseModeration');
 	
 	/**
 	 * moderation queue object
-	 * @var	wcf\data\moderation\queue\ViewableModerationQueue
+	 * @var	\wcf\data\moderation\queue\ViewableModerationQueue
 	 */
 	public $queue = null;
 	
@@ -63,7 +63,7 @@ abstract class AbstractModerationForm extends AbstractForm {
 	public $queueID = 0;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -80,7 +80,7 @@ abstract class AbstractModerationForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -100,7 +100,7 @@ abstract class AbstractModerationForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -117,7 +117,7 @@ abstract class AbstractModerationForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -130,7 +130,7 @@ abstract class AbstractModerationForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();

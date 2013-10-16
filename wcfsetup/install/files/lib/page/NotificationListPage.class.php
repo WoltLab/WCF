@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class NotificationListPage extends MultipleLinkPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$loginRequired
+	 * @see	\wcf\page\AbstractPage::$loginRequired
 	 */
 	public $loginRequired = true;
 	
@@ -27,24 +27,24 @@ class NotificationListPage extends MultipleLinkPage {
 	public $notifications = array();
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::countItems()
+	 * @see	\wcf\page\MultipleLinkPage::countItems()
 	 */
 	public function countItems() {
 		return UserNotificationHandler::getInstance()->getNotificationCount();
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::initObjectList()
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	protected function initObjectList() {}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::readObjects()
+	 * @see	\wcf\page\MultipleLinkPage::readObjects()
 	 */
 	protected function readObjects() {}
 	
 	/**
-	 * @see	wcf\page\AbstractPage::readData()
+	 * @see	\wcf\page\AbstractPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -53,7 +53,7 @@ class NotificationListPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\AbstractPage::assignVariables()
+	 * @see	\wcf\page\AbstractPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -64,7 +64,7 @@ class NotificationListPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\Page::show()
+	 * @see	\wcf\page\Page::show()
 	 */
 	public function show() {
 		// set active tab

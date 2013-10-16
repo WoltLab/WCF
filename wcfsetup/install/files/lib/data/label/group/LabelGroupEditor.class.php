@@ -17,12 +17,12 @@ use wcf\system\cache\builder\LabelCacheBuilder;
  */
 class LabelGroupEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectEditor::$baseClass
+	 * @see	\wcf\data\DatabaseObjectEditor::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\label\group\LabelGroup';
 	
 	/**
-	 * @see	wcf\data\IEditableObject::deleteAll()
+	 * @see	\wcf\data\IEditableObject::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		$count = parent::deleteAll($objectIDs);
@@ -35,7 +35,7 @@ class LabelGroupEditor extends DatabaseObjectEditor implements IEditableCachedOb
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		LabelCacheBuilder::getInstance()->reset();

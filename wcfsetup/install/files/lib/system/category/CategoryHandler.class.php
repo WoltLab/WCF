@@ -18,7 +18,7 @@ use wcf\system\SingletonFactory;
 class CategoryHandler extends SingletonFactory {
 	/**
 	 * cached categories
-	 * @var	array<wcf\data\category\Category>
+	 * @var	array<\wcf\data\category\Category>
 	 */
 	protected $categories = array();
 	
@@ -36,7 +36,7 @@ class CategoryHandler extends SingletonFactory {
 	
 	/**
 	 * list of category object types
-	 * @var	array<wcf\data\object\type>
+	 * @var	array<\wcf\data\object\type>
 	 */
 	protected $objectTypes = array();
 	
@@ -67,7 +67,7 @@ class CategoryHandler extends SingletonFactory {
 	 * Returns the category object with the given category id.
 	 * 
 	 * @param	integer		$categoryID
-	 * @return	wcf\data\category\Category
+	 * @return	\wcf\data\category\Category
 	 */
 	public function getCategory($categoryID) {
 		if (isset($this->categories[$categoryID])) {
@@ -84,7 +84,7 @@ class CategoryHandler extends SingletonFactory {
 	 * 
 	 * @param	integer		$categoryID
 	 * @param	integer		$objectTypeID
-	 * @return	array<wcf\data\category\Category>
+	 * @return	array<\wcf\data\category\Category>
 	 */
 	public function getChildCategories($categoryID, $objectTypeID = null) {
 		if (!$categoryID && $objectTypeID === null) {
@@ -105,7 +105,7 @@ class CategoryHandler extends SingletonFactory {
 	 * Gets the object type with the given id.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @return	wcf\data\object\type\ObjectType
+	 * @return	\wcf\data\object\type\ObjectType
 	 */
 	public function getObjectType($objectTypeID) {
 		if (isset($this->objectTypeIDs[$objectTypeID])) {
@@ -119,7 +119,7 @@ class CategoryHandler extends SingletonFactory {
 	 * Gets the object type with the given name.
 	 * 
 	 * @param	string		$objectType
-	 * @return	wcf\data\object\type\ObjectType
+	 * @return	\wcf\data\object\type\ObjectType
 	 */
 	public function getObjectTypeByName($objectType) {
 		if (isset($this->objectTypes[$objectType])) {
@@ -132,14 +132,14 @@ class CategoryHandler extends SingletonFactory {
 	/**
 	 * Returns all category object types.
 	 * 
-	 * @return	array<wcf\data\object\type\ObjectType>
+	 * @return	array<\wcf\data\object\type\ObjectType>
 	 */
 	public function getObjectTypes() {
 		return $this->objectTypes;
 	}
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.category');

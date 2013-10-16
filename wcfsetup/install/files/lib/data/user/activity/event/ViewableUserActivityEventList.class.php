@@ -17,17 +17,17 @@ use wcf\system\WCF;
  */
 class ViewableUserActivityEventList extends UserActivityEventList {
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$className
+	 * @see	\wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\user\activity\event\UserActivityEvent';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$sqlLimit
+	 * @see	\wcf\data\DatabaseObjectList::$sqlLimit
 	 */
 	public $sqlLimit = 20;
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
 	 */
 	public $sqlOrderBy = 'user_activity_event.time DESC';
 	
@@ -43,7 +43,7 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::readObjects()
+	 * @see	\wcf\data\DatabaseObjectList::readObjects()
 	 */
 	public function readObjects() {
 		parent::readObjects();

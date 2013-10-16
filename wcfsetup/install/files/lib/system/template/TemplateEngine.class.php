@@ -48,7 +48,7 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * active template compiler
-	 * @var	wcf\system\template\TemplateCompiler
+	 * @var	\wcf\system\template\TemplateCompiler
 	 */
 	protected $compilerObj = null;
 	
@@ -107,7 +107,7 @@ class TemplateEngine extends SingletonFactory {
 	protected $environment = 'user';
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->templatePaths = array('wcf' => WCF_DIR.'templates/');
@@ -463,7 +463,7 @@ class TemplateEngine extends SingletonFactory {
 	/**
 	 * Returns the template compiler.
 	 * 
-	 * @return	wcf\system\template\TemplateCompiler
+	 * @return	\wcf\system\template\TemplateCompiler
 	 */
 	public function getCompiler() {
 		if ($this->compilerObj === null) {

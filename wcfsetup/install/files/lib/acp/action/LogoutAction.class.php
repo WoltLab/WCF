@@ -17,12 +17,12 @@ use wcf\util\HeaderUtil;
  */
 class LogoutAction extends AbstractSecureAction {
 	/**
-	 * @see	wcf\action\AbstractAction::$loginRequired
+	 * @see	\wcf\action\AbstractAction::$loginRequired
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	wcf\action\IAction::execute()
+	 * @see	\wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();

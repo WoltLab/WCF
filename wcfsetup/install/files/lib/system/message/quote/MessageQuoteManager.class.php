@@ -33,7 +33,7 @@ class MessageQuoteManager extends SingletonFactory {
 	
 	/**
 	 * list of object types
-	 * @var	array<wcf\data\object\type\ObjectType>
+	 * @var	array<\wcf\data\object\type\ObjectType>
 	 */
 	protected $objectTypes = array();
 	
@@ -68,7 +68,7 @@ class MessageQuoteManager extends SingletonFactory {
 	protected $removeQuoteIDs = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->packageID = ApplicationHandler::getInstance()->getPrimaryApplication()->packageID;
@@ -380,7 +380,7 @@ class MessageQuoteManager extends SingletonFactory {
 	/**
 	 * Renders a quote for given message.
 	 * 
-	 * @param	wcf\data\IMessage	$message
+	 * @param	\wcf\data\IMessage	$message
 	 * @param	string			$text
 	 * @return	string
 	 */

@@ -70,7 +70,7 @@ abstract class Database {
 	
 	/**
 	 * database editor object
-	 * @var	wcf\system\database\editor\DatabaseEditor
+	 * @var	\wcf\system\database\editor\DatabaseEditor
 	 */
 	protected $editor = null;
 	
@@ -217,7 +217,7 @@ abstract class Database {
 	 * @param	string			$statement
 	 * @param	integer			$limit
 	 * @param	integer			$offset
-	 * @return	wcf\system\database\statement\PreparedStatement
+	 * @return	\wcf\system\database\statement\PreparedStatement
 	 */
 	public function prepareStatement($statement, $limit = 0, $offset = 0) {
 		$statement = $this->handleLimitParameter($statement, $limit, $offset);
@@ -347,7 +347,7 @@ abstract class Database {
 	/**
 	 * Returns a database editor object.
 	 * 
-	 * @return	wcf\system\database\editor\DatabaseEditor
+	 * @return	\wcf\system\database\editor\DatabaseEditor
 	 */
 	public function getEditor() {
 		if ($this->editor === null) {

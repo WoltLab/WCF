@@ -15,12 +15,12 @@ use wcf\system\language\LanguageFactory;
  */
 abstract class UserOptionListForm extends AbstractOptionListForm {
 	/**
-	 * @see	wcf\acp\form\AbstractOptionListForm::$optionHandlerClassName
+	 * @see	\wcf\acp\form\AbstractOptionListForm::$optionHandlerClassName
 	 */
 	public $optionHandlerClassName = 'wcf\system\option\user\UserOptionHandler';
 	
 	/**
-	 * @see	wcf\acp\form\AbstractOptionListForm::$supportI18n
+	 * @see	\wcf\acp\form\AbstractOptionListForm::$supportI18n
 	 */
 	public $supportI18n = false;
 	

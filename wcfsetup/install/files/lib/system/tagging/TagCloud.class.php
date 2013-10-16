@@ -28,7 +28,7 @@ class TagCloud {
 	
 	/**
 	 * list of tags
-	 * @var	array<wcf\data\tag\TagCloudTag>
+	 * @var	array<\wcf\data\tag\TagCloudTag>
 	 */
 	protected $tags = array();
 	
@@ -76,7 +76,7 @@ class TagCloud {
 	 * Gets a list of weighted tags.
 	 * 
 	 * @param	integer				$slice
-	 * @return	array<wcf\data\tag\TagCloudTag>	the tags to get
+	 * @return	array<\wcf\data\tag\TagCloudTag>	the tags to get
 	 */
 	public function getTags($slice = 50) {
 		// slice list

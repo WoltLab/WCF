@@ -16,17 +16,17 @@ use wcf\system\WCF;
  */
 class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\bbcode\BBCodeEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'bbcode';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */
 	public $tagName = 'bbcode';
 	
@@ -37,7 +37,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	protected $attributes = array();
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -53,7 +53,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getElement()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getElement()
 	 */
 	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		$nodeValue = $element->nodeValue;
@@ -78,7 +78,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
 		$data = array(
@@ -101,7 +101,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::validateImport()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::validateImport()
 	 */
 	protected function validateImport(array $data) {
 		if ($data['bbcodeTag'] == 'all' || $data['bbcodeTag'] == 'none') {
@@ -110,7 +110,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
@@ -129,7 +129,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
 	 */
 	protected function import(array $row, array $data) {
 		// extract attributes
@@ -144,7 +144,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::postImport()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::postImport()
 	 */
 	protected function postImport() {
 		// clear attributes

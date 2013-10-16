@@ -25,12 +25,12 @@ use wcf\util\StringUtil;
  */
 class GoogleAuthAction extends AbstractAction {
 	/**
-	 * @see	wcf\action\AbstractAction::$neededModules
+	 * @see	\wcf\action\AbstractAction::$neededModules
 	 */
 	public $neededModules = array('GOOGLE_PUBLIC_KEY', 'GOOGLE_PRIVATE_KEY');
 	
 	/**
-	 * @see	wcf\action\IAction::execute()
+	 * @see	\wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();
@@ -150,7 +150,7 @@ class GoogleAuthAction extends AbstractAction {
 	 * Fetches the User with the given userID.
 	 * 
 	 * @param	integer			$userID
-	 * @return	wcf\data\user\User
+	 * @return	\wcf\data\user\User
 	 */
 	public function getUser($userID) {
 		$sql = "SELECT	userID

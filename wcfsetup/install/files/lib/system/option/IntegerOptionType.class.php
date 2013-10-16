@@ -16,12 +16,12 @@ use wcf\system\WCF;
  */
 class IntegerOptionType extends TextOptionType {
 	/**
-	 * @see	wcf\system\option\TextOptionType::$inputClass
+	 * @see	\wcf\system\option\TextOptionType::$inputClass
 	 */
 	protected $inputClass = 'medium';
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
@@ -34,14 +34,14 @@ class IntegerOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getData()
+	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		return intval($newValue);
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::validate()
+	 * @see	\wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		if ($option->minvalue !== null && $option->minvalue > $newValue) {

@@ -14,12 +14,12 @@ use wcf\data\label\LabelEditor;
  */
 class LabelImporter extends AbstractImporter {
 	/**
-	 * @see	wcf\system\importer\AbstractImporter::$className
+	 * @see	\wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\label\Label';
 	
 	/**
-	 * @see	wcf\system\importer\IImporter::import()
+	 * @see	\wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		$data['groupID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.label.group', $data['groupID']);

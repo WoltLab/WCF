@@ -25,7 +25,7 @@ class UserOnline extends UserProfile {
 	
 	/**
 	 * spider object
-	 * @var	wcf\data\spider\Spider
+	 * @var	\wcf\data\spider\Spider
 	 */
 	protected $spider = null;
 	
@@ -226,7 +226,7 @@ class UserOnline extends UserProfile {
 	/**
 	 * Returns the spider object
 	 * 
-	 * @return	wcf\data\spider\Spider
+	 * @return	\wcf\data\spider\Spider
 	 */
 	public function getSpider() {
 		if (!$this->spiderID) return null;

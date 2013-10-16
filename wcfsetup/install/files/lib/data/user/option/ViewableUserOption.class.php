@@ -19,19 +19,19 @@ use wcf\util\StringUtil;
  */
 class ViewableUserOption extends DatabaseObjectDecorator {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\option\UserOption';
 	
 	/**
 	 * list of output objects
-	 * @var	array<wcf\system\option\user\IUserOptionOutput>
+	 * @var	array<\wcf\system\option\user\IUserOptionOutput>
 	 */
 	public static $outputObjects = array();
 	
 	/**
 	 * cached user options
-	 * @var	array<wcf\data\user\option\ViewableUserOption>
+	 * @var	array<\wcf\data\user\option\ViewableUserOption>
 	 */
 	public static $userOptions = array();
 	
@@ -44,7 +44,7 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	/**
 	 * Sets option values for a specific user.
 	 * 
-	 * @param	wcf\data\user\User	$user
+	 * @param	\wcf\data\user\User	$user
 	 */
 	public function setOptionValue(User $user) {
 		$userOption = 'userOption' . $this->optionID;
@@ -63,7 +63,7 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	/**
 	 * Returns the output object for current user option.
 	 * 
-	 * @return	wcf\system\option\user\IUserOptionOutput
+	 * @return	\wcf\system\option\user\IUserOptionOutput
 	 */
 	public function getOutputObject() {
 		if (!isset(self::$outputObjects[$this->outputClass])) {
@@ -87,7 +87,7 @@ class ViewableUserOption extends DatabaseObjectDecorator {
 	 * Returns the user option with the given name
 	 * 
 	 * @param	string		$name
-	 * @return	wcf\data\user\option\ViewableUserOption
+	 * @return	\wcf\data\user\option\ViewableUserOption
 	 */
 	public static function getUserOption($name) {
 		if (!isset(self::$userOptions[$name])) {

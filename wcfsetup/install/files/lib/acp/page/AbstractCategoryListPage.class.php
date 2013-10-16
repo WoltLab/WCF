@@ -28,7 +28,7 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	
 	/**
 	 * category node tree
-	 * @var	wcf\data\category\CategoryNodeTree
+	 * @var	\wcf\data\category\CategoryNodeTree
 	 */
 	public $categoryNodeTree = null;
 	
@@ -58,7 +58,7 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	
 	/**
 	 * category object type object
-	 * @var	wcf\data\object\type\ObjectType
+	 * @var	\wcf\data\object\type\ObjectType
 	 */
 	public $objectType = null;
 	
@@ -69,12 +69,12 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	public $objectTypeName = '';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$templateName
+	 * @see	\wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'categoryList';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::__run()
+	 * @see	\wcf\page\AbstractPage::__run()
 	 */
 	public function __run() {
 		$classNameParts = explode('\\', get_called_class());
@@ -92,7 +92,7 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -128,7 +128,7 @@ abstract class AbstractCategoryListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		$this->objectType = CategoryHandler::getInstance()->getObjectTypeByName($this->objectTypeName);

@@ -36,7 +36,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	protected $objectType = '';
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueHandler::identifyOrphans()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::identifyOrphans()
 	 */
 	public function identifyOrphans(array $queues) {
 		if (empty($this->className) || !class_exists($this->className) || !ClassUtil::isInstanceOf($this->className, 'wcf\data\DatabaseObject')) {
@@ -62,7 +62,7 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueHandler::removeQueues()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::removeQueues()
 	 */
 	public function removeQueues(array $objectIDs) {
 		$objectTypeID = ModerationQueueManager::getInstance()->getObjectTypeID($this->definitionName, $this->objectType);

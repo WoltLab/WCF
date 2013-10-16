@@ -24,7 +24,7 @@ use wcf\util\StringUtil;
  */
 class DailyMailNotificationCronjob extends AbstractCronjob {
 	/**
-	 * @see	wcf\system\cronjob\ICronjob::execute()
+	 * @see	\wcf\system\cronjob\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
