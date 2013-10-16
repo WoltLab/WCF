@@ -3933,7 +3933,7 @@ WCF.Template = Class.extend({
 			return "' + " + content + " + '";
 		})
 		// {lang}foo{/lang}
-		.replace(/{lang}(.+?){\/lang}/, function(_, content) {
+		.replace(/{lang}(.+?){\/lang}/g, function(_, content) {
 			return "' + WCF.Language.get('" + unescape(content) + "') + '";
 		})
 		// {if}
