@@ -93,6 +93,7 @@ class PreParserAtUserListener implements IEventListener {
 					
 					if (isset($users[$username])) {
 						$link = LinkHandler::getInstance()->getLink('User', array(
+							'appendSession' => false,
 							'object' => $users[$username]
 						));
 						return "[url='".$link."']@".$users[$username]->username.'[/url]';
