@@ -48,7 +48,7 @@ class Tar implements IArchive {
 	
 	/**
 	 * file object
-	 * @var	\wcf\system\io\File
+	 * @var	wcf\system\io\File
 	 */
 	protected $file = null;
 	
@@ -77,8 +77,9 @@ class Tar implements IArchive {
 	 * @param	string		$archiveName
 	 */
 	public function __construct($archiveName) {
+		$match = array();
 		if (!is_file($archiveName)) {
-			throw new SystemException("unable to find tar archive '".$archiveName."'");
+			throw new SystemException("unable to find tar archive '".$archiveName."'", 11002);
 		}
 		
 		$this->archiveName = $archiveName;
@@ -98,7 +99,7 @@ class Tar implements IArchive {
 	 */
 	public function open() {
 		if (!$this->opened) {
-			if ($this->isZipped) $this->file = new GZipFile($this->archiveName, $this->mode);
+			if ($this->isZipped) $this->file = new ZipFile($this->archiveName, $this->mode);
 			else {
 				// test compression
 				$this->file = new File($this->archiveName, $this->mode);
@@ -114,7 +115,7 @@ class Tar implements IArchive {
 			$this->opened = true;
 		}
 	}
-	
+
 	/**
 	 * Closes the opened file.
 	 */
@@ -125,8 +126,10 @@ class Tar implements IArchive {
 		}
 	}
 	
-	/**
-	 * @see	\wcf\system\io\IArchive::getContentList()
+	/** 
+	 * Returns the table of contents (TOC) list for this tar archive.
+	 * 
+	 * @return 	array 		list of content
 	 */
 	public function getContentList() {
 		if (!$this->read) {
@@ -137,7 +140,11 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getFileInfo()
+	 * Returns an associative array with information
+	 * about a specific file in the archive.
+	 *
+	 * @param 	mixed 	$fileindex	index or name of the requested file
+	 * @return 	array 	$fileInfo
 	 */
 	public function getFileInfo($fileIndex) {
 		if (!is_int($fileIndex)) {
@@ -145,13 +152,18 @@ class Tar implements IArchive {
 		}
 		
 		if (!isset($this->contentList[$fileIndex])) {
-			throw new SystemException("Tar: could find file '".$fileIndex."' in archive");
+			throw new SystemException("Tar: could find file '".$fileIndex."' in archive", 11013);
 		}
 		return $this->contentList[$fileIndex];
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::getIndexByFilename()
+	 * Searchs a file in the tar archive
+	 * and returns the numeric fileindex.
+	 * Returns false if not found.
+	 *
+	 * @param 	string 		$filename
+	 * @return 	integer 			index of the requested file
 	 */
 	public function getIndexByFilename($filename) {
 		foreach ($this->contentList as $index => $file) {
@@ -163,7 +175,11 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::extractToString()
+	 * Extracts a specific file and returns the content as string.
+	 * Returns false if extraction failed.
+	 * 
+	 * @param 	mixed 		$index		index or name of the requested file
+	 * @return 	string 				content of the requested file
 	 */
 	public function extractToString($index) {
 		if (!$this->read) {
@@ -195,7 +211,12 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * @see	\wcf\system\io\IArchive::extract()
+	 * Extracts a specific file and writes it's content
+	 * to the file specified with $destination.
+	 * 
+	 * @param 	mixed 		$index		index or name of the requested file
+	 * @param 	string 		$destination
+	 * @return 	boolean 	$success
 	 */
 	public function extract($index, $destination) {
 		if (!$this->read) {
@@ -204,15 +225,9 @@ class Tar implements IArchive {
 		}
 		$header = $this->getFileInfo($index);
 		
-		// check file size
-		if (!$header['size']) {
-			throw new SystemException("Could not untar file '".$header['filename']."', file is empty.");
-		}
-		
-		FileUtil::makePath(dirname($destination));
-		if ($header['type'] === 'folder') {
-			FileUtil::makePath($destination);
-			return;
+		// can not extract a folder
+		if ($header['type'] != 'file') {
+			return false;
 		}
 		
 		// seek to offset
@@ -220,12 +235,19 @@ class Tar implements IArchive {
 		
 		$targetFile = new File($destination);
 		
-		// read and write data
-		$buffer = $this->file->read($header['size']);
-		$targetFile->write($buffer);
+		// read data
+		$n = floor($header['size'] / 512);
+		for ($i = 0; $i < $n; $i++) {
+			$content = $this->file->read(512);
+			$targetFile->write($content, 512);
+		}
+		if (($header['size'] % 512) != 0) {
+			$content = $this->file->read(512);
+			$targetFile->write($content, ($header['size'] % 512));
+		}
+		
 		$targetFile->close();
 		
-		FileUtil::makeWritable($destination);
 		
 		if ($header['mtime']) {
 			@$targetFile->touch($header['mtime']);
@@ -233,11 +255,11 @@ class Tar implements IArchive {
 		
 		// check filesize
 		if (filesize($destination) != $header['size']) {
-			throw new SystemException("Could not untar file '".$header['filename']."' to '".$destination."'. Maybe disk quota exceeded in folder '".dirname($destination)."'.");
+			throw new SystemException("Could not untar file '".$header['filename']."' to '".$destination."'. Maybe disk quota exceeded in folder '".dirname($destination)."'.", 11015);
 		}
 		
 		return true;
-	}
+	}	
 	
 	/**
 	 * Reads table of contents (TOC) from tar archive.
@@ -249,38 +271,15 @@ class Tar implements IArchive {
 		$i = 0;
 		
 		// Read the 512 bytes header
-		$longFilename = null;
 		while (strlen($binaryData = $this->file->read(512)) != 0) {
 			// read header
 			$header = $this->readHeader($binaryData);
 			if ($header === false) {
-				continue;
+				continue;	
 			}
-			
-			// fixes a bug that files with long names aren't correctly
-			// extracted
-			if ($longFilename !== null) {
-				$header['filename'] = $longFilename;
-				$longFilename = null;
-			}
-			if ($header['typeflag'] == 'L') {
-				if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
-					$format = 'Z'.$header['size'].'filename';
-				}
-				else {
-					$format = 'a'.$header['size'].'filename';
-				}
-				
-				$fileData = unpack($format, $this->file->read(512));
-				$longFilename = $fileData['filename'];
-				$header['size'] = 0;
-			}
-			// don't include the @LongLink file in the content list
-			else {
-				$this->contentList[$i] = $header;
-				$this->contentList[$i]['index'] = $i;
-				$i++;
-			}
+			$this->contentList[$i] = $header;
+			$this->contentList[$i]['index'] = $i;
+			$i++;
 			
 			$this->file->seek($this->file->tell() + (512 * ceil(($header['size'] / 512))));
 		}
@@ -288,15 +287,15 @@ class Tar implements IArchive {
 	
 	/**
 	 * Unpacks file header for one file entry.
-	 * 
-	 * @param	string		$binaryData
-	 * @return	array		$fileheader
+	 *
+	 * @param 	string 		$binaryData
+	 * @return 	array 		$fileheader
 	 */
 	protected function readHeader($binaryData) {
 		if (strlen($binaryData) != 512) {
-			return false;
+			return false;	
 		}
-		
+
 		$header = array();
 		$checksum = 0;
 		// First part of the header
@@ -312,16 +311,10 @@ class Tar implements IArchive {
 		for ($i = 156; $i < 512; $i++) {
 			$checksum += ord(substr($binaryData, $i, 1));
 		}
-		
-		// extract values
-		if (version_compare(PHP_VERSION, '5.5.0-dev', '>=')) {
-			$format = 'Z100filename/Z8mode/Z8uid/Z8gid/Z12size/Z12mtime/Z8checksum/Z1typeflag/Z100link/Z6magic/Z2version/Z32uname/Z32gname/Z8devmajor/Z8devminor/Z155prefix';
-		}
-		else {
-			$format = 'a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix';
-		}
-		
-		$data = unpack($format, $binaryData);
+
+		// Extract the values
+		//$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor", $binaryData);
+		$data = unpack("a100filename/a8mode/a8uid/a8gid/a12size/a12mtime/a8checksum/a1typeflag/a100link/a6magic/a2version/a32uname/a32gname/a8devmajor/a8devminor/a155prefix", $binaryData);
 		
 		// Extract the properties
 		$header['checksum'] = octDec(trim($data['checksum']));
@@ -353,11 +346,12 @@ class Tar implements IArchive {
 	}
 	
 	/**
-	 * Returns true if this tar is (g)zipped.
+	 * Returns true, if this tar is (g)zipped.
 	 * 
-	 * @return	boolean
+	 * @return 	boolean
 	 */
 	public function isZipped() {
 		return $this->isZipped;
 	}
 }
+?>
