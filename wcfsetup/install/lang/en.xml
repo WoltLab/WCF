@@ -347,7 +347,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Can approve users]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Rename]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Minimum period until members may rename themselves. [time in days]]]></item>
-		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Can not be ignored]]></item>
+		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Cannot be ignored]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Can access moderation]]></item>
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Like System]]></item>
 		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Can view likes]]></item>
