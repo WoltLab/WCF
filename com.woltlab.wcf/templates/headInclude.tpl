@@ -138,8 +138,9 @@
 			
 			{event name='javascriptLanguageImport'}
 		});
-		
+
 		if (jQuery.browser.touch) $('html').addClass('touch');
+		WCF.System.FlexibleMenu.init();
 		new WCF.Date.Time();
 		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
@@ -148,7 +149,6 @@
 		WCF.Dropdown.init();
 		WCF.System.PageNavigation.init('.pageNavigation');
 		WCF.Date.Picker.init();
-		WCF.System.MobileNavigation.init();
 		new WCF.User.ProfilePreview();
 		
 		{event name='javascriptInit'}

@@ -168,7 +168,7 @@ $.extend(true, {
 	
 	/**
 	 * Escapes an ID to work with jQuery selectors.
-	 *
+	 * 
 	 * @see		http://docs.jquery.com/Frequently_Asked_Questions#How_do_I_select_an_element_by_an_ID_that_has_characters_used_in_CSS_notation.3F
 	 * @param	string		id
 	 * @return	string
@@ -201,7 +201,7 @@ $.extend(true, {
 				$length++;
 			}
 		}
-
+		
 		return $length;
 	}
 });
@@ -555,7 +555,7 @@ $.extend(WCF, {
 	
 	/**
 	 * Counter for dynamic element ids
-	 *
+	 * 
 	 * @var	integer
 	 */
 	_idCounter: 0,
@@ -756,7 +756,7 @@ WCF.Dropdown = {
 			
 			var $verticalScrollTolerance = $(element).height() / 2;
 			
-			// check if dropdown toggle is still (partially) visible 
+			// check if dropdown toggle is still (partially) visible
 			if ($dropdownOffset.top + $verticalScrollTolerance <= $dialogContentOffset.top) {
 				// top check
 				WCF.Dropdown.toggleDropdown($dropdownID);
@@ -807,12 +807,14 @@ WCF.Dropdown = {
 		var $dropdown = button.parents('.dropdown');
 		if (!$dropdown.length) {
 			// broken dropdown, ignore
+			console.debug("[WCF.Dropdown] Invalid dropdown passed, button '" + button.wcfIdentify() + "' does not have a parent with .dropdown, aborting.");
 			return;
 		}
 		
 		var $dropdownMenu = button.next('.dropdownMenu');
 		if (!$dropdownMenu.length) {
 			// broken dropdown, ignore
+			console.debug("[WCF.Dropdown] Invalid dropdown passed, dropdown '" + $dropdown.wcfIdentify() + "' does not have a dropdown menu, aborting.");
 			return;
 		}
 		
@@ -3546,7 +3548,7 @@ WCF.String = {
 	
 	/**
 	 * Escapes a String to work with RegExp.
-	 *
+	 * 
 	 * @see		https://github.com/sstephenson/prototype/blob/master/src/prototype/lang/regexp.js#L25
 	 * @param	string	string
 	 * @return	string
@@ -3682,8 +3684,6 @@ WCF.TabMenu = {
 							}
 						}
 					}
-					
-					//$container.trigger('tabsbeforeactivate', event, eventData);
 				}
 			});
 			
@@ -3693,6 +3693,12 @@ WCF.TabMenu = {
 				if ($tabMenu.parent().hasClass('tabMenuContainer')) {
 					$tabMenu.data('parent', $tabMenu.parent());
 				}
+			}
+			
+			// register as flexible menu unless it has no tabs
+			var $navigation = $tabMenu.children('nav');
+			if ($navigation.length && $navigation.find('> ul:eq(0) > li').length) {
+				WCF.System.FlexibleMenu.registerMenu($navigation.wcfIdentify());
 			}
 		});
 		
@@ -3933,7 +3939,7 @@ WCF.Template = Class.extend({
 			return "' + " + content + " + '";
 		})
 		// {lang}foo{/lang}
-		.replace(/{lang}(.+?){\/lang}/, function(_, content) {
+		.replace(/{lang}(.+?){\/lang}/g, function(_, content) {
 			return "' + WCF.Language.get('" + unescape(content) + "') + '";
 		})
 		// {if}
@@ -4053,7 +4059,7 @@ WCF.Template = Class.extend({
 	
 	/**
 	 * Fetches the template with the given variables.
-	 *
+	 * 
 	 * @param	v	variables to insert
 	 * @return		parsed template
 	 */
@@ -5856,23 +5862,201 @@ WCF.Search.User = WCF.Search.Base.extend({
 WCF.System = { };
 
 /**
- * Enables mobile navigation.
+ * Provides flexible dropdowns for tab-based menus.
  */
-WCF.System.MobileNavigation = {
+WCF.System.FlexibleMenu = {
+	/**
+	 * list of containers
+	 * @var	object<jQuery>
+	 */
+	_containers: { },
+	
+	/**
+	 * list of registered container ids
+	 * @var	array<string>
+	 */
+	_containerIDs: [ ],
+	
+	/**
+	 * list of dropdowns
+	 * @var	object<jQuery>
+	 */
+	_dropdowns: { },
+	
+	/**
+	 * list of dropdown menus
+	 * @var	object<jQuery>
+	 */
+	_dropdownMenus: { },
+	
+	/**
+	 * list of hidden status for containers
+	 * @var	object<boolean>
+	 */
+	_hasHiddenItems: { },
+	
+	/**
+	 * true if menus are currently rebuilt
+	 * @var	boolean
+	 */
+	_isWorking: false,
+	
+	/**
+	 * list of tab menu items per container
+	 * @var	object<jQuery>
+	 */
+	_menuItems: { },
+	
+	/**
+	 * Initializes the WCF.System.FlexibleMenu class.
+	 */
 	init: function() {
-		this._convertNavigation();
+		// register .mainMenu and .navigationHeader by default
+		this.registerMenu('mainMenu');
+		this.registerMenu($('.navigationHeader:eq(0)').wcfIdentify());
 		
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.System.MobileNavigation', function() {
-			WCF.System.MobileNavigation._convertNavigation();
-		});
+		$(window).resize($.proxy(this.rebuildAll, this));
 	},
 	
-	_convertNavigation: function() {
-		$('nav.jsMobileNavigation').removeClass('jsMobileNavigation').each(function(index, navigation) {
-			var $navigation = $(navigation);
-			$('<a class="invisible" tabindex="9999999" />').click(function() {}).prependTo($navigation);
-			$('<a class="invisible" tabindex="9999999"><span class="icon icon16 icon-list" />' + ($navigation.data('buttonLabel') !== undefined ? (' ' + $navigation.data('buttonLabel')) : '') + '</a>').click(function() {}).prependTo($navigation);
-		});
+	/**
+	 * Registers a tab-based menu by id.
+	 * 
+	 * Required DOM:
+	 * <container>
+	 * 	<ul style="white-space: nowrap">
+	 * 		<li>tab 1</li>
+	 * 		<li>tab 2</li>
+	 * 		...
+	 * 		<li>tab n</li>
+	 * 	</ul>
+	 * </container>
+	 * 
+	 * @param	string		containerID
+	 */
+	registerMenu: function(containerID) {
+		var $container = $('#' + containerID);
+		if (!$container.length) {
+			console.debug("[WCF.System.FlexibleMenu] Unable to find container identified by '" + containerID + "', aborting.");
+			return;
+		}
+		
+		this._containerIDs.push(containerID);
+		this._containers[containerID] = $container;
+		this._menuItems[containerID] = $container.find('> ul:eq(0) > li');
+		this._dropdowns[containerID] = $('<li class="dropdown"><a class="icon icon16 icon-list" /></li>').data('containerID', containerID).hide().appendTo($container.children('ul')).click($.proxy(this._click, this));
+		this._dropdownMenus[containerID] = $('<ul class="dropdownMenu" />').appendTo(this._dropdowns[containerID]);
+		this._hasHiddenItems[containerID] = false;
+		
+		this.rebuild(containerID);
+		
+		WCF.Dropdown.initDropdown(this._dropdowns[containerID].children('a'));
+	},
+	
+	/**
+	 * Rebuilds all registered containers.
+	 */
+	rebuildAll: function() {
+		if (this._isWorking) {
+			return;
+		}
+		
+		this._isWorking = true;
+		
+		for (var $i = 0, $length = this._containerIDs.length; $i < $length; $i++) {
+			this.rebuild(this._containerIDs[$i]);
+		}
+		
+		this._isWorking = false;
+	},
+	
+	/**
+	 * Rebuilds a container, will be automatically invoked on window resize and registering.
+	 * 
+	 * @param	string		containerID
+	 */
+	rebuild: function(containerID) {
+		if (!this._containers[containerID]) {
+			console.debug("[WCF.System.FlexibleMenu] Cannot rebuild unknown container identified by '" + containerID + "'");
+			return;
+		}
+		
+		var $changedItems = false;
+		var $currentWidth = 0;
+		
+		// the current width is based upon all items without the dropdown
+		var $menuItems = this._menuItems[containerID].filter(':visible');
+		for (var $i = 0, $length = $menuItems.length; $i < $length; $i++) {
+			$currentWidth += $($menuItems[$i]).outerWidth(true);
+		}
+		
+		var $dropdownWidth = this._dropdowns[containerID].outerWidth(true);
+		var $container = this._containers[containerID];
+		var $maximumWidth = $container.parent().innerWidth() - $dropdownWidth;
+		
+		// substract padding from the parent element
+		$maximumWidth -= parseInt($container.parent().css('padding-left').replace(/px$/, '')) + parseInt($container.parent().css('padding-right').replace(/px$/, ''));
+		
+		// substract margins and paddings from the container itself
+		$maximumWidth -= parseInt($container.css('margin-left').replace(/px$/, '')) + parseInt($container.css('margin-right').replace(/px$/, ''));
+		$maximumWidth -= parseInt($container.css('padding-left').replace(/px$/, '')) + parseInt($container.css('padding-right').replace(/px$/, ''));
+		
+		// substract paddings from the actual list
+		$maximumWidth -= parseInt($container.children('ul:eq(0)').css('padding-left').replace(/px$/, '')) + parseInt($container.children('ul:eq(0)').css('padding-right').replace(/px$/, '')); 
+		
+		if ($currentWidth > $maximumWidth) {
+			var $menuItems = $menuItems.filter(':not(.active):not(.ui-state-active)');
+			
+			// hide items starting with the last in list (ignores active item)
+			for (var $i = ($menuItems.length - 1); $i >= 0; $i--) {
+				if ($currentWidth > $maximumWidth) {
+					var $item = $($menuItems[$i]);
+					$currentWidth -= $item.outerWidth(true);
+					$item.hide();
+					
+					$changedItems = true;
+					this._hasHiddenItems[containerID] = true;
+				}
+				else {
+					break;
+				}
+			}
+			
+			if (this._hasHiddenItems[containerID]) {
+				this._dropdowns[containerID].show();
+			}
+		}
+		else if (this._hasHiddenItems[containerID] && $currentWidth < $maximumWidth) {
+			var $hiddenItems = this._menuItems[containerID].filter(':not(:visible)');
+			
+			// reverts items starting with the first hidden one
+			for (var $i = 0, $length = $hiddenItems.length; $i < $length; $i++) {
+				var $item = $($hiddenItems[$i]);
+				$currentWidth += $item.outerWidth();
+				if ($currentWidth < $maximumWidth) {
+					// enough space, show item
+					$item.css('display', '');
+					$changedItems = true;
+				}
+				else {
+					break;
+				}
+			}
+			
+			if ($changedItems) {
+				this._hasHiddenItems[containerID] = (this._menuItems[containerID].filter(':not(:visible)').length > 0);
+				if (!this._hasHiddenItems[containerID]) {
+					this._dropdowns[containerID].hide();
+				}
+			}
+		}
+		
+		// build dropdown menu for hidden items
+		if ($changedItems) {
+			this._dropdownMenus[containerID].empty();
+			this._menuItems[containerID].filter(':not(:visible)').each($.proxy(function(index, item) {
+				$('<li>' + $(item).html() + '</li>').appendTo(this._dropdownMenus[containerID]);
+			}, this));
+		}
 	}
 };
 
@@ -7243,7 +7427,6 @@ WCF.Popover = Class.extend({
 	 * @var	jQuery
 	 */
 	_popoverContent: null,
-	
 	
 	/**
 	 * popover horizontal offset
@@ -9176,18 +9359,18 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 	 */
 	_processTabs: function() {
 		var that = this;
-
+		
 		this.tablist = this._getList()
 			.addClass( "ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" )
 			.attr( "role", "tablist" );
-
+		
 		this.tabs = this.tablist.find( "> li:has(a[href])" )
 			.addClass( "ui-state-default ui-corner-top" )
 			.attr({
 				role: "tab",
 				tabIndex: -1
 			});
-
+		
 		this.anchors = this.tabs.map(function() {
 				return $( "a", this )[ 0 ];
 			})
@@ -9196,15 +9379,15 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 				role: "presentation",
 				tabIndex: -1
 			});
-
+		
 		this.panels = $();
-
+		
 		this.anchors.each(function( i, anchor ) {
 			var selector, panel,
 				anchorId = $( anchor ).uniqueId().attr( "id" ),
 				tab = $( anchor ).closest( "li" ),
 				originalAriaControls = tab.attr( "aria-controls" );
-
+			
 			// inline tab
 			selector = anchor.hash;
 			panel = that.element.find( that._sanitizeSelector( selector ) );
@@ -9221,7 +9404,7 @@ $.widget('ui.wcfTabs', $.ui.tabs, {
 			});
 			panel.attr( "aria-labelledby", anchorId );
 		});
-
+		
 		this.panels
 			.addClass( "ui-tabs-panel ui-widget-content ui-corner-bottom" )
 			.attr( "role", "tabpanel" );

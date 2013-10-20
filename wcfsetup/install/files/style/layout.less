@@ -320,29 +320,38 @@
 }
 
 /* main menu */
-@media screen and (min-width: 801px), print {
-	.mainMenu {
-		font-size: 0;
+.mainMenu {
+	font-size: 0;
+	white-space: nowrap;
+	
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	
+	> ul {
+		background-color: @wcfMainMenuBackgroundColor;
+		display: inline-block;
 		
-		-webkit-user-select: none;  
-		-moz-user-select: none;    
-		-ms-user-select: none;      
-		user-select: none;
-		
-		> ul {
-			background-color: @wcfMainMenuBackgroundColor;
+		> li {
 			display: inline-block;
+			font-size: @wcfTitleFontSize;
+			vertical-align: middle;
 			
-			> li {
+			> a {
+				color: @wcfMainMenuColor;
 				display: inline-block;
-				font-size: @wcfTitleFontSize;
-				margin-top: -7px;
-				vertical-align: bottom;
+				padding: 4px 9px;
 				
-				> a {
+				.textShadow(@wcfMainMenuBackgroundColor);
+				
+				&:hover {
+					color: @wcfMainMenuActiveColor;
+					text-decoration: none;
+				}
+				
+				> span {
 					color: @wcfMainMenuColor;
-					display: inline-block;
-					padding: 9px 21px;
 					
 					.textShadow(@wcfMainMenuBackgroundColor);
 					
@@ -351,104 +360,44 @@
 						text-decoration: none;
 					}
 				}
+			}
+			
+			&.active > a {
+				background-color: @wcfNavigationHeaderBackgroundColor;
+				color: @wcfMainMenuActiveColor;
+				text-align: center;
 				
-				&.active {
-					font-size: @wcfSubHeadlineFontSize;
-					margin-top: -8px;
-					
-					> a {
-						background-color: @wcfNavigationHeaderBackgroundColor;
-						color: @wcfMainMenuActiveColor;
-						font-weight: bold;
-						min-width: 80px;
-						padding: 14px 21px 8px;
-						text-align: center;
-						
-						.textShadow(@wcfNavigationHeaderBackgroundColor);
-					}
-				}
-				
-				&:not(.active) {
-					padding-top: 5px;
-				}
-				
-				&:not(:last-child) > a {
-					border-right: 1px solid @wcfContainerBorderColor;
-				}
+				.textShadow(@wcfNavigationHeaderBackgroundColor);
+			}
+			
+			&:not(:last-child) > a {
+				border-right: 1px solid @wcfContainerBorderColor;
 			}
 		}
 	}
 }
+@media screen and (min-width: 801px), print {
+	.mainMenu > ul > li {
+		margin-top: -7px;
+		vertical-align: bottom;
 
-@media only screen and (max-width: 800px) {
-	.mainMenu {
-		position: relative;
+		> a {
+			padding: 9px 21px;
+		}
 		
-		> a:first-child {
-			.button;
-			margin-left: @wcfGapSmall;
-			outline: 0;
+		&.active {
+			font-size: @wcfSubHeadlineFontSize;
+			margin-top: -8px;
 			
-			+ a {
-				height: 100%;
-				left: 0;
-				position: absolute;
-				top: 0;
-				width: 100%;
-				z-index:100;
-			}
-			
-			&:focus {
-				+ a {
-					display: block;
-				}
-				
-				~ ul {
-					display: block;
-				}
+			> a {
+				font-weight: bold;
+				min-width: 80px;
+				padding: 14px 21px 8px;
 			}
 		}
 		
-		> ul {
-			.dropdownMenu;
-			font-size: @wcfTitleFontSize;
-			left: @wcfGapSmall;
-			
-			&:hover {
-				display: block;
-			}
-			
-			> li.active {
-				> ul.invisible {
-					display: block;
-					font-size: @wcfSmallFontSize;
-					padding-left: 14px;
-					
-					> li > span.badge {
-						display: none;
-					}
-				}
-				
-				> a {
-					position: relative;
-					
-					&:after {
-						content: "\f00c";
-						font-family: FontAwesome;
-						font-size: 14px;
-						position: absolute;
-						right: 7px;
-					}
-				}
-			}
-		}
-	}
-}
-
-@media only screen and (min-width: 641px) and (max-width: 800px) {
-	.mainMenu {
-		> a:first-child {
-			margin-left: @wcfGapMedium;
+		&:not(.active) {
+			padding-top: 5px;
 		}
 	}
 }
@@ -529,8 +478,8 @@
 @media only screen and (max-width: 800px) {
 	.navigation.navigationHeader {
 		> ul.navigationIcons,
-		> ul.navigationItems,
-		> ul.navigationMenuItems {
+		> ul.navigationItems/*,
+		> ul.navigationMenuItems*/ {
 			display: none;
 		}
 	}
@@ -548,11 +497,16 @@
 }
 
 .navigationHeader {
+	overflow: hidden;
 	.clearfix;
 	
 	background-color: @wcfNavigationHeaderBackgroundColor;
 	border-bottom: 1px solid @wcfContainerBorderColor;
 	border-top: 1px solid @wcfContainerBorderColor;
+
+	> ul.navigationMenuItems {
+		white-space: nowrap;
+	}
 }
 	
 .navigationFooter {
@@ -564,8 +518,8 @@
 
 @media only screen and (max-width: 800px) {
 	.navigationHeader {
-		background-color: transparent;
-		border: 0;
+		border-top-width: 0;
+		min-height: 4px;
 	}
 }
 
@@ -701,7 +655,7 @@
 	#main {
 		border-right-width: 0;
 		position: relative;
-		margin-top: 7px;
+		//margin-top: 7px;
 		
 		> div {
 			display: block;
@@ -1353,7 +1307,7 @@
 		border-style: solid;
 		border-width: 1px 1px 0 1px;
 		display: inline-block;
-		padding: 0 5px 3px 5px;
+		font-size: 0;
 		position: relative;
 		white-space: nowrap;
 		word-wrap: normal;
@@ -1372,28 +1326,16 @@
 					border-width: 1px;
 					color: @wcfLinkColor;
 					font-weight: bold;
-					font-size: 1.3rem;
-					margin-top: -10px;
-					padding: 10px 15px 5px;
 					z-index: 30;
-				}
-				
-				&:first-child {
-					margin-left: -6px;
-				}
-				
-				&:last-child {
-					margin-right: -6px;
 				}
 			}
 			
 			> a {
-				bottom: -3px;
 				color: @wcfDimmedColor;
 				display: inline-block;
 				font-size: 1.1rem;
 				outline: 0;
-				padding: 1px 10px 3px;
+				padding: 7px 10px;
 				position: relative;
 				text-decoration: none;
 				z-index: 10;
@@ -1406,6 +1348,52 @@
 			&:not(.ui-state-active) {
 				> a:hover {
 					color: @wcfLinkColor;
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.tabMenu {
+		> ul > li.ui-state-active {
+			margin-top: -1px;
+			
+			&:first-child {
+				margin-left: -1px;
+			}
+			
+			&:last-child {
+				margin-right: -1px;
+			}
+		}
+	
+	}
+}
+
+@media all and (min-width: 801px) {
+	.tabMenu > ul {
+		padding: 0 5px 3px 5px;
+
+		> li {
+			> a {
+				bottom: -3px;
+				padding: 1px 10px 3px;
+			}
+			
+			&.ui-state-active {
+				> a {
+					font-size: 1.3rem;
+					margin-top: -10px;
+					padding: 10px 15px 5px;
+				}
+				
+				&:first-child {
+					margin-left: -6px;
+				}
+				
+				&:last-child {
+					margin-right: -6px;
 				}
 			}
 		}
@@ -1438,12 +1426,15 @@
 		
 		.linearGradient(@wcfContainerBackgroundColor, @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor);
 		
-		ul{
+		ul {
 			display: inline-block;
+			font-size: 0;
+			white-space: nowrap;
 			
 			li {
 				display: inline-block;
 				outline: 0;
+				vertical-align: bottom;
 				
 				&.ui-state-active a,
 				&.ui-state-active a:hover {
@@ -1471,39 +1462,28 @@
 						text-decoration: none;
 					}
 				}
+				
+				&:not(:last-child) {
+					padding-right: @wcfGapTiny;
+				}
+				
+				&.dropdown > a {
+					font-size: 1.0rem;
+					padding: 4px 7px 2px;
+				}
 			}
 		}
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.tabMenuContainer.containerPadding > .menu {
+		margin-top: -@wcfGapSmall;
 	}
 }
 
 .containerPadding > .tabMenuContainer:last-child {
 	margin-bottom: @wcfGapSmall;
-}
-
-@media only screen and (max-width: 800px) {
-	.tabMenu {
-		> ul {
-			margin-left: @wcfGapTiny;
-			margin-right: @wcfGapTiny;
-			
-			> li {
-				&.ui-state-active {
-					> a {
-						font-size: 1rem;
-						padding-left: 10px;
-						padding-right: 10px;
-					}
-				}
-				
-				> a {
-					font-size: 1rem;
-					padding-left: 5px;
-					padding-right: 5px;
-				}
-			}
-		}
-	
-	}
 }
 
 /* jquery ui fixes */
