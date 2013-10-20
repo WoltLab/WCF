@@ -362,9 +362,11 @@
 				}
 			}
 			
-			&.active > a {
+			&.active > a,
+			&.active > a:hover {
 				background-color: @wcfNavigationHeaderBackgroundColor;
 				color: @wcfMainMenuActiveColor;
+				font-weight: bold;
 				text-align: center;
 				
 				.textShadow(@wcfNavigationHeaderBackgroundColor);
@@ -390,7 +392,6 @@
 			margin-top: -8px;
 			
 			> a {
-				font-weight: bold;
 				min-width: 80px;
 				padding: 14px 21px 8px;
 			}

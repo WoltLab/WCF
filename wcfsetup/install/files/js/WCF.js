@@ -5943,7 +5943,7 @@ WCF.System.FlexibleMenu = {
 		this._containerIDs.push(containerID);
 		this._containers[containerID] = $container;
 		this._menuItems[containerID] = $container.find('> ul:eq(0) > li');
-		this._dropdowns[containerID] = $('<li class="dropdown"><a class="icon icon16 icon-list" /></li>').data('containerID', containerID).hide().appendTo($container.children('ul')).click($.proxy(this._click, this));
+		this._dropdowns[containerID] = $('<li class="dropdown"><a class="icon icon16 icon-list" /></li>').data('containerID', containerID).hide().appendTo($container.children('ul:eq(0)')).click($.proxy(this._click, this));
 		this._dropdownMenus[containerID] = $('<ul class="dropdownMenu" />').appendTo(this._dropdowns[containerID]);
 		this._hasHiddenItems[containerID] = false;
 		
@@ -6833,13 +6833,13 @@ WCF.Upload = Class.extend({
 	_name: '__files[]',
 	
 	/**
-	 * button object
+	 * button selector
 	 * @var	jQuery
 	 */
 	_buttonSelector: null,
 	
 	/**
-	 * file list object
+	 * file list selector
 	 * @var	jQuery
 	 */
 	_fileListSelector: null,
@@ -6895,8 +6895,8 @@ WCF.Upload = Class.extend({
 	/**
 	 * Initializes a new upload handler.
 	 * 
-	 * @param	jQuery		buttonSelector		button object, not button selector!
-	 * @param	jQuery		fileListSelector	file list object, not file list selector!
+	 * @param	string		buttonSelector
+	 * @param	string		fileListSelector
 	 * @param	string		className
 	 * @param	object		options
 	 */

@@ -140,7 +140,6 @@
 		});
 
 		if (jQuery.browser.touch) $('html').addClass('touch');
-		WCF.System.FlexibleMenu.init();
 		new WCF.Date.Time();
 		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
@@ -150,6 +149,7 @@
 		WCF.System.PageNavigation.init('.pageNavigation');
 		WCF.Date.Picker.init();
 		new WCF.User.ProfilePreview();
+		WCF.System.FlexibleMenu.init();
 		
 		{event name='javascriptInit'}
 		
