@@ -19,13 +19,13 @@ use wcf\system\moderation\queue\ModerationQueueManager;
  */
 class ViewableModerationQueue extends DatabaseObjectDecorator {
 	/**
-	 * @see	wcf\data\DatabaseObject::$baseClass
+	 * @see	\wcf\data\DatabaseObject::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\moderation\queue\ModerationQueue';
 	
 	/**
 	 * affected object
-	 * @var	wcf\data\IUserContent
+	 * @var	\wcf\data\IUserContent
 	 */
 	protected $affectedObject = null;
 	
@@ -37,14 +37,14 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	
 	/**
 	 * user profile object
-	 * @var	wcf\data\user\UserProfile
+	 * @var	\wcf\data\user\UserProfile
 	 */
 	protected $userProfile = null;
 	
 	/**
 	 * Sets link for viewing/editing.
 	 * 
-	 * @param	wcf\data\IUserContent		$object
+	 * @param	\wcf\data\IUserContent		$object
 	 */
 	public function setAffectedObject(IUserContent $object) {
 		$this->affectedObject = $object;
@@ -71,7 +71,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	/**
 	 * Returns affected object.
 	 * 
-	 * @return	wcf\data\IUserContent
+	 * @return	\wcf\data\IUserContent
 	 */
 	public function getAffectedObject() {
 		return $this->affectedObject;
@@ -80,7 +80,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	/**
 	 * Sets associated user profile object.
 	 * 
-	 * @param	wcf\data\user\UserProfile	$userProfile
+	 * @param	\wcf\data\user\UserProfile	$userProfile
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		if ($this->affectedObject !== null && ($userProfile->userID == $this->affectedObject->getUserID())) {
@@ -91,7 +91,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	/**
 	 * Returns associated user profile object.
 	 * 
-	 * @return	wcf\data\user\UserProfile
+	 * @return	\wcf\data\user\UserProfile
 	 */
 	public function getUserProfile() {
 		if ($this->affectedObject !== null && $this->userProfile === null) {
@@ -123,7 +123,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	}
 	
 	/**
-	 * @see	wcf\data\moderation\queue\ViewableModerationQueue::getTitle()
+	 * @see	\wcf\data\moderation\queue\ViewableModerationQueue::getTitle()
 	 */
 	public function __toString() {
 		return $this->getTitle();
@@ -133,7 +133,7 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	 * Returns a viewable moderation queue entry.
 	 * 
 	 * @param	integer		$queueID
-	 * @return	wcf\data\moderation\queue\ViewableModerationQueue
+	 * @return	\wcf\data\moderation\queue\ViewableModerationQueue
 	 */
 	public static function getViewableModerationQueue($queueID) {
 		$queueList = new ViewableModerationQueueList();

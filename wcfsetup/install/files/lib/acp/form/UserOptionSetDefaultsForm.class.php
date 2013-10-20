@@ -7,7 +7,7 @@ use wcf\system\WCF;
 
 /**
  * Provides functions to set the default values of user options.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -17,18 +17,18 @@ use wcf\system\WCF;
  */
 class UserOptionSetDefaultsForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.option.setDefaults';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canManageUserOption');
 	
 	/**
 	 * user option handler
-	 * @var	wcf\system\option\user\UserOptionHandler
+	 * @var	\wcf\system\option\user\UserOptionHandler
 	 */
 	public $optionHandler = null;
 	
@@ -39,7 +39,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	public $applyChangesToExistingUsers = 0;
 	
 	/**
-	 * @see	wcf\page\AbstractPage::readParameters()
+	 * @see	\wcf\page\AbstractPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -49,7 +49,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -60,7 +60,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\AbstractForm::validate()
+	 * @see	\wcf\form\AbstractForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -69,7 +69,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\AbstractForm::save()
+	 * @see	\wcf\form\AbstractForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -120,7 +120,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -131,7 +131,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

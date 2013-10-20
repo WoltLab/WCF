@@ -15,33 +15,33 @@ use wcf\data\object\type\ObjectTypeCache;
  */
 class LikeableComment extends AbstractLikeObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\comment\Comment';
 	
 	/**
-	 * @see	wcf\data\like\object\ILikeObject::getTitle()
+	 * @see	\wcf\data\like\object\ILikeObject::getTitle()
 	 */
 	public function getTitle() {
 		return $this->message;
 	}
 	
 	/**
-	 * @see	wcf\data\like\object\ILikeObject::getURL()
+	 * @see	\wcf\data\like\object\ILikeObject::getURL()
 	 */
 	public function getURL() {
 		return $this->getLink();
 	}
 	
 	/**
-	 * @see	wcf\data\like\object\ILikeObject::getUserID()
+	 * @see	\wcf\data\like\object\ILikeObject::getUserID()
 	 */
 	public function getUserID() {
 		return $this->userID;
 	}
 	
 	/**
-	 * @see	wcf\data\like\object\ILikeObject::getObjectType()
+	 * @see	\wcf\data\like\object\ILikeObject::getObjectType()
 	 */
 	public function getObjectType() {
 		if ($this->objectType === null) {

@@ -34,7 +34,7 @@ abstract class RecaptchaForm extends AbstractForm {
 	public $useCaptcha = true;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -45,7 +45,7 @@ abstract class RecaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -55,7 +55,7 @@ abstract class RecaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -74,7 +74,7 @@ abstract class RecaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -83,7 +83,7 @@ abstract class RecaptchaForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

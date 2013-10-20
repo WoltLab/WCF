@@ -18,12 +18,12 @@ use wcf\system\WCF;
  */
 class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'acp_menu_item';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'menuItemID';
 	
@@ -40,7 +40,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	protected $controller = null;
 	
 	/**
-	 * @see	wcf\system\menu\ITreeMenuItem::getLink()
+	 * @see	\wcf\system\menu\ITreeMenuItem::getLink()
 	 */
 	public function getLink() {
 		// external link
@@ -65,7 +65,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	
 	/**
 	 * Returns controller name.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getController() {
@@ -95,7 +95,7 @@ class ACPMenuItem extends DatabaseObject implements ITreeMenuItem {
 	
 	/**
 	 * Returns the menu item name.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function __toString() {

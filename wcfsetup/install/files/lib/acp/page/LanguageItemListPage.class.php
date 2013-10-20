@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
 
 /**
  * Shows a list of language items.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -19,18 +19,18 @@ use wcf\util\StringUtil;
  */
 class LanguageItemListPage extends AbstractPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.item.list';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.language.canManageLanguage');
 	
 	/**
 	 * language item list
-	 * @var	wcf\data\language\item\LanguageItemList
+	 * @var	\wcf\data\language\item\LanguageItemList
 	 */
 	public $languageItemList = null;
 	
@@ -77,11 +77,11 @@ class LanguageItemListPage extends AbstractPage {
 	public $availableLanguageCategories = array();
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		if (isset($_REQUEST['id'])) $this->languageID = intval($_REQUEST['id']);
 		if (isset($_REQUEST['languageCategoryID'])) $this->languageCategoryID = intval($_REQUEST['languageCategoryID']);
 		if (isset($_REQUEST['languageItem'])) $this->languageItem = StringUtil::trim($_REQUEST['languageItem']);
@@ -90,7 +90,7 @@ class LanguageItemListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -98,7 +98,7 @@ class LanguageItemListPage extends AbstractPage {
 		// get languages
 		$this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
 		
-		// get categories		
+		// get categories
 		$languageCategoryList = new LanguageCategoryList();
 		$languageCategoryList->readObjects();
 		$this->availableLanguageCategories = $languageCategoryList->getObjects();
@@ -123,11 +123,11 @@ class LanguageItemListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		WCF::getTPL()->assign(array(
 			'objects' => $this->languageItemList,
 			'languageID' => $this->languageID,

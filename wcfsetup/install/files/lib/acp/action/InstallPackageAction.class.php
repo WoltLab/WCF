@@ -27,13 +27,13 @@ class InstallPackageAction extends AbstractDialogAction {
 	
 	/**
 	 * PackageInstallationDispatcher object
-	 * @var	wcf\system\package\PackageInstallationDispatcher
+	 * @var	\wcf\system\package\PackageInstallationDispatcher
 	 */
 	public $installation = null;
 	
 	/**
 	 * PackageInstallationQueue object
-	 * @var	wcf\data\package\installation\queue\PackageInstallationQueue
+	 * @var	\wcf\data\package\installation\queue\PackageInstallationQueue
 	 */
 	public $queue = null;
 	
@@ -44,12 +44,12 @@ class InstallPackageAction extends AbstractDialogAction {
 	public $queueID = 0;
 	
 	/**
-	 * @see	wcf\action\AbstractDialogAction::$templateName
+	 * @see	\wcf\action\AbstractDialogAction::$templateName
 	 */
 	public $templateName = 'packageInstallationStep';
 	
 	/**
-	 * @see	wcf\action\IAction::readParameters()
+	 * @see	\wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -184,7 +184,7 @@ class InstallPackageAction extends AbstractDialogAction {
 	}
 	
 	/**
-	 * @see	wcf\action\AbstractDialogAction\AbstractDialogAction::validateStep()
+	 * @see	\wcf\action\AbstractDialogAction\AbstractDialogAction::validateStep()
 	 */
 	protected function validateStep() {
 		switch ($this->step) {

@@ -20,17 +20,17 @@ use wcf\system\WCF;
  */
 class AvatarEditForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$enableTracking
+	 * @see	\wcf\page\AbstractPage::$enableTracking
 	 */
 	public $enableTracking = true;
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$loginRequired
+	 * @see	\wcf\page\AbstractPage::$loginRequired
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$templateName
+	 * @see	\wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'avatarEdit';
 	
@@ -41,7 +41,7 @@ class AvatarEditForm extends AbstractForm {
 	public $avatarType = 'none';
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -50,7 +50,7 @@ class AvatarEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -81,7 +81,7 @@ class AvatarEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -125,7 +125,7 @@ class AvatarEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -137,7 +137,7 @@ class AvatarEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -148,7 +148,7 @@ class AvatarEditForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
 		// set active tab

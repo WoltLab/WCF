@@ -15,23 +15,23 @@ interface IMessageQuickReplyAction {
 	/**
 	 * Creates a new message object.
 	 * 
-	 * @return	wcf\data\DatabaseObject
+	 * @return	\wcf\data\DatabaseObject
 	 */
 	public function create();
 	
 	/**
 	 * Returns a message list object.
 	 * 
-	 * @param	wcf\data\DatabaseObject		$container
+	 * @param	\wcf\data\DatabaseObject		$container
 	 * @param	integer				$lastMessageTime
-	 * @return	wcf\data\DatabaseObjectList
+	 * @return	\wcf\data\DatabaseObjectList
 	 */
 	public function getMessageList(DatabaseObject $container, $lastMessageTime);
 	
 	/**
 	 * Returns page no for given container object.
 	 * 
-	 * @param	wcf\data\DatabaseObject		$container
+	 * @param	\wcf\data\DatabaseObject		$container
 	 * @return	array
 	 */
 	public function getPageNo(DatabaseObject $container);
@@ -39,8 +39,8 @@ interface IMessageQuickReplyAction {
 	/**
 	 * Returns the redirect url.
 	 * 
-	 * @param	wcf\data\DatabaseObject		$container
-	 * @param	wcf\data\DatabaseObject		$message
+	 * @param	\wcf\data\DatabaseObject		$container
+	 * @param	\wcf\data\DatabaseObject		$message
 	 * @return	string
 	 */
 	public function getRedirectUrl(DatabaseObject $container, DatabaseObject $message);
@@ -48,22 +48,22 @@ interface IMessageQuickReplyAction {
 	/**
 	 * Validates the message.
 	 * 
-	 * @param	wcf\data\DatabaseObject		$container
+	 * @param	\wcf\data\DatabaseObject		$container
 	 * @param	string				$message
 	 */
 	public function validateMessage(DatabaseObject $container, $message);
 	
 	/**
 	 * Creates a new message and returns it.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function quickReply();
 	
 	/**
 	 * Validates the container object for quick reply.
-	 *
-	 * @param	wcf\data\DatabaseObject		$container
+	 * 
+	 * @param	\wcf\data\DatabaseObject		$container
 	 */
 	public function validateContainer(DatabaseObject $container);
 	

@@ -94,7 +94,7 @@ class PagesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	}
 	
 	/**
-	 * @see	wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// needed params: controller, link, page, pages

@@ -14,7 +14,7 @@ use wcf\data\acp\search\provider\ACPSearchProviderList;
  */
 class ACPSearchProviderCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
 		$providerList = new ACPSearchProviderList();

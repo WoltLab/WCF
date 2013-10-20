@@ -15,19 +15,19 @@ use wcf\data\DatabaseObject;
  */
 class DashboardBox extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'dashboard_box';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'boxID';
 	
 	/**
 	 * Returns the owner of this dashboard box.
 	 * 
-	 * @return	wcf\data\package\Package
+	 * @return	\wcf\data\package\Package
 	 */
 	public function getPackage() {
 		return PackageCache::getInstance()->getPackage($this->packageID);

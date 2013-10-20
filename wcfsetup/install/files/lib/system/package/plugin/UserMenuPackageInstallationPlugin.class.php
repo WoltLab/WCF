@@ -13,22 +13,22 @@ namespace wcf\system\package\plugin;
  */
 class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\user\menu\item\UserMenuItemEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'user_menu_item';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */
 	public $tagName = 'usermenuitem';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
 		$result = parent::prepareImport($data);

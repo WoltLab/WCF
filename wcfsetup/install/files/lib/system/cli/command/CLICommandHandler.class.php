@@ -19,14 +19,14 @@ use wcf\util\StringUtil;
 class CLICommandHandler {
 	/**
 	 * list of all available commands
-	 * @var	array<wcf\system\cli\command\ICLICommand>
+	 * @var	array<\wcf\system\cli\command\ICLICommand>
 	 */
 	private static $commands = array();
 	
 	/**
 	 * Returns all available commands.
 	 * 
-	 * @return	array<wcf\system\cli\command\ICLICommand>
+	 * @return	array<\wcf\system\cli\command\ICLICommand>
 	 */
 	public static function getCommands() {
 		if (empty(self::$commands)) {
@@ -57,7 +57,7 @@ class CLICommandHandler {
 	 * Returns a command by the given line.
 	 * 
 	 * @param	string		$line
-	 * @return	wcf\system\cli\command\ICLICommand
+	 * @return	\wcf\system\cli\command\ICLICommand
 	 */
 	public static function getCommand($line) {
 		list($command, $parameters) = explode(' ', $line.' ', 2);

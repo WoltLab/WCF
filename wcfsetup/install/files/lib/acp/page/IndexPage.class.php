@@ -1,11 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
-use wcf\system\cache\source\NoCacheSource;
-use wcf\system\cache\CacheHandler;
-use wcf\system\event\EventHandler;
-use wcf\system\image\adapter\ImagickImageAdapter;
-use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
@@ -28,7 +23,7 @@ class IndexPage extends AbstractPage {
 	public $server = array();
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -50,11 +45,11 @@ class IndexPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		$usersAwaitingApproval = 0;
 		if (REGISTER_ACTIVATION_METHOD == 2) {
 			$sql = "SELECT	COUNT(*) AS count
@@ -74,7 +69,7 @@ class IndexPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
 		// check package installation queue

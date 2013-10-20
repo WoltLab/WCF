@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  */
 class HtmlHighlighter extends XmlHighlighter {
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::cacheComments()
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::cacheComments()
 	 */
 	protected function cacheComments($string) {
 		// cache inline scripts and inline css
@@ -52,7 +52,7 @@ class HtmlHighlighter extends XmlHighlighter {
 	}
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::highlightComments()
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightComments()
 	 */
 	protected function highlightComments($string) {
 		$string = parent::highlightComments($string);

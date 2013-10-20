@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\profile\menu\item\UserProfileMenuItem';
 	
 	/**
-	 * @see	wcf\data\IEditableObject::create()
+	 * @see	\wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		// calculate show order
@@ -32,7 +32,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableObject::update()
+	 * @see	\wcf\data\IEditableObject::update()
 	 */
 	public function update(array $parameters = array()) {
 		if (isset($parameters['showOrder'])) {
@@ -43,7 +43,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableObject::delete()
+	 * @see	\wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		// update show order
@@ -117,7 +117,7 @@ class UserProfileMenuItemEditor extends DatabaseObjectEditor implements IEditabl
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		UserProfileMenuCacheBuilder::getInstance()->reset();

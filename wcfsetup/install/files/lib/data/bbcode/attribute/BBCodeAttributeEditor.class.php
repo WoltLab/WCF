@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class BBCodeAttributeEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	public static $baseClass = 'wcf\data\bbcode\attribute\BBCodeAttribute';
 }

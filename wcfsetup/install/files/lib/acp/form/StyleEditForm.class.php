@@ -19,13 +19,13 @@ use wcf\system\WCF;
  */
 class StyleEditForm extends StyleAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.style';
 	
 	/**
 	 * style object
-	 * @var	wcf\data\style\Style
+	 * @var	\wcf\data\style\Style
 	 */
 	public $style = null;
 	
@@ -36,7 +36,7 @@ class StyleEditForm extends StyleAddForm {
 	public $styleID = 0;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->styleID = intval($_REQUEST['id']);
@@ -49,7 +49,7 @@ class StyleEditForm extends StyleAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\StyleAddForm::readStyleVariables()
+	 * @see	\wcf\acp\form\StyleAddForm::readStyleVariables()
 	 */
 	protected function readStyleVariables() {
 		$this->variables = $this->style->getVariables();
@@ -64,7 +64,7 @@ class StyleEditForm extends StyleAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -86,7 +86,7 @@ class StyleEditForm extends StyleAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -121,7 +121,7 @@ class StyleEditForm extends StyleAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

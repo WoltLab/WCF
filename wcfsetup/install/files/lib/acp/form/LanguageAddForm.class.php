@@ -20,7 +20,7 @@ use wcf\util\XML;
  */
 class LanguageAddForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language';
 	
@@ -31,13 +31,13 @@ class LanguageAddForm extends AbstractForm {
 	public $countryCode = '';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.language.canManageLanguage');
 	
 	/**
 	 * language object
-	 * @var	wcf\data\language\Language
+	 * @var	\wcf\data\language\Language
 	 */
 	public $language = null;
 	
@@ -55,13 +55,13 @@ class LanguageAddForm extends AbstractForm {
 	
 	/**
 	 * list of available languages
-	 * @var	array<wcf\data\language\Language>
+	 * @var	array<\wcf\data\language\Language>
 	 */
 	public $languages = array();
 	
 	/**
 	 * source language object
-	 * @var	wcf\data\language\Language
+	 * @var	\wcf\data\language\Language
 	 */
 	public $sourceLanguage = null;
 	
@@ -72,7 +72,7 @@ class LanguageAddForm extends AbstractForm {
 	public $sourceLanguageID = 0;
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -84,7 +84,7 @@ class LanguageAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -134,7 +134,7 @@ class LanguageAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -157,7 +157,7 @@ class LanguageAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -166,7 +166,7 @@ class LanguageAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

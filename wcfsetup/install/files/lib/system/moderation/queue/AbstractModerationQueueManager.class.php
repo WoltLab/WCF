@@ -24,42 +24,42 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	protected $definitionName = '';
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueManager::assignQueues()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::assignQueues()
 	 */
 	public function assignQueues($objectTypeID, array $queues) {
 		ModerationQueueManager::getInstance()->getProcessor($this->definitionName, null, $objectTypeID)->assignQueues($queues);
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueManager::isValid()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::isValid()
 	 */
 	public function isValid($objectType, $objectID = null) {
 		return ModerationQueueManager::getInstance()->isValid($this->definitionName, $objectType);
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueManager::getObjectTypeID()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::getObjectTypeID()
 	 */
 	public function getObjectTypeID($objectType) {
 		return ModerationQueueManager::getInstance()->getObjectTypeID($this->definitionName, $objectType);
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueManager::getProcessor()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::getProcessor()
 	 */
 	public function getProcessor($objectType, $objectTypeID = null) {
 		return ModerationQueueManager::getInstance()->getProcessor($this->definitionName, $objectType, $objectTypeID);
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueManager::populate()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::populate()
 	 */
 	public function populate($objectTypeID, array $objects) {
 		ModerationQueueManager::getInstance()->getProcessor($this->definitionName, null, $objectTypeID)->populate($objects);
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueManager::removeContent()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::removeContent()
 	 */
 	public function removeContent(ModerationQueue $queue, $message = '') {
 		$this->getProcessor(null, $queue->objectTypeID)->removeContent($queue, $message);

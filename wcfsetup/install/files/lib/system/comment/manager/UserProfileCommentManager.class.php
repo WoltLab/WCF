@@ -16,37 +16,37 @@ use wcf\system\WCF;
  */
 class UserProfileCommentManager extends AbstractCommentManager {
 	/**
-	 * @see	wcf\system\comment\manager\AbstractCommentManager::$permissionAdd
+	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionAdd
 	 */
 	protected $permissionAdd = 'user.profileComment.canAddComment';
 	
 	/**
-	 * @see	wcf\system\comment\manager\AbstractCommentManager::$permissionCanModerate
+	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionCanModerate
 	 */
 	protected $permissionCanModerate = 'mod.profileComment.canModerateComment';
 	
 	/**
-	 * @see	wcf\system\comment\manager\AbstractCommentManager::$permissionDelete
+	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionDelete
 	 */
 	protected $permissionDelete = 'user.profileComment.canDeleteComment';
 	
 	/**
-	 * @see	wcf\system\comment\manager\AbstractCommentManager::$permissionEdit
+	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionEdit
 	 */
 	protected $permissionEdit = 'user.profileComment.canEditComment';
 	
 	/**
-	 * @see	wcf\system\comment\manager\AbstractCommentManager::$permissionModDelete
+	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionModDelete
 	 */
 	protected $permissionModDelete = 'mod.profileComment.canDeleteComment';
 	
 	/**
-	 * @see	wcf\system\comment\manager\AbstractCommentManager::$permissionModEdit
+	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionModEdit
 	 */
 	protected $permissionModEdit = 'mod.profileComment.canEditComment';
 	
 	/**
-	 * @see	wcf\system\comment\manager\ICommentManager::isAccessible()
+	 * @see	\wcf\system\comment\manager\ICommentManager::isAccessible()
 	 */
 	public function isAccessible($objectID, $validateWritePermission = false) {
 		// check object id
@@ -75,14 +75,14 @@ class UserProfileCommentManager extends AbstractCommentManager {
 	}
 	
 	/**
-	 * @see	wcf\system\comment\manager\ICommentManager::getLink()
+	 * @see	\wcf\system\comment\manager\ICommentManager::getLink()
 	 */
 	public function getLink($objectTypeID, $objectID) {
 		return LinkHandler::getInstance()->getLink('User', array('id' => $objectID));
 	}
 	
 	/**
-	 * @see	wcf\system\comment\manager\ICommentManager::getTitle()
+	 * @see	\wcf\system\comment\manager\ICommentManager::getTitle()
 	 */
 	public function getTitle($objectTypeID, $objectID, $isResponse = false) {
 		if ($isResponse) return WCF::getLanguage()->get('wcf.user.profile.content.wall.commentResponse');
@@ -91,7 +91,7 @@ class UserProfileCommentManager extends AbstractCommentManager {
 	}
 	
 	/**
-	 * @see	wcf\system\comment\manager\ICommentManager::updateCounter()
+	 * @see	\wcf\system\comment\manager\ICommentManager::updateCounter()
 	 */
 	public function updateCounter($objectID, $value) { }
 }

@@ -98,24 +98,24 @@ abstract class Highlighter extends SingletonFactory {
 	
 	/**
 	 * regular expression to extract comments
-	 * @var	wcf\system\Regex
+	 * @var	\wcf\system\Regex
 	 */
 	public $cacheCommentsRegEx = null;
 	
 	/**
 	 * regular expression to find quote marks
-	 * @var	wcf\system\Regex
+	 * @var	\wcf\system\Regex
 	 */
 	public $quotesRegEx = null;
 	
 	/**
 	 * regular expression to find string separators
-	 * @var	wcf\system\Regex
+	 * @var	\wcf\system\Regex
 	 */
 	public $separatorsRegEx = '';
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->buildRegularExpressions();

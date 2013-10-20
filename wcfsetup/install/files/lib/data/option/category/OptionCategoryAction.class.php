@@ -14,27 +14,27 @@ use wcf\data\AbstractDatabaseObjectAction;
  */
 class OptionCategoryAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\option\category\OptionCategoryEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
 	protected $permissionsCreate = array('admin.system.canEditOption');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.system.canEditOption');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.system.canEditOption');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('create', 'delete', 'update');
 }

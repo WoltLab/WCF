@@ -32,7 +32,7 @@ abstract class MessageForm extends RecaptchaForm {
 	
 	/**
 	 * attachment handler
-	 * @var	wcf\system\attachment\AttachmentHandler
+	 * @var	\wcf\system\attachment\AttachmentHandler
 	 */
 	public $attachmentHandler = null;
 	
@@ -56,13 +56,13 @@ abstract class MessageForm extends RecaptchaForm {
 	
 	/**
 	 * list of available content languages
-	 * @var	array<wcf\data\language\Language>
+	 * @var	array<\wcf\data\language\Language>
 	 */
 	public $availableContentLanguages = array();
 	
 	/**
 	 * list of default smilies
-	 * @var	array<wcf\data\smiley\Smiley>
+	 * @var	array<\wcf\data\smiley\Smiley>
 	 */
 	public $defaultSmilies = array();
 	
@@ -140,7 +140,7 @@ abstract class MessageForm extends RecaptchaForm {
 	
 	/**
 	 * list of smiley categories
-	 * @var	array<wcf\data\smiley\category\SmileyCategory>
+	 * @var	array<\wcf\data\smiley\category\SmileyCategory>
 	 */
 	public $smileyCategories = array();
 	
@@ -163,7 +163,7 @@ abstract class MessageForm extends RecaptchaForm {
 	public $tmpHash = '';
 	
 	/**
-	 * @see	wcf\form\IPage::readParameters()
+	 * @see	\wcf\form\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -186,7 +186,7 @@ abstract class MessageForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -207,7 +207,7 @@ abstract class MessageForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		// subject
@@ -290,7 +290,7 @@ abstract class MessageForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -314,7 +314,7 @@ abstract class MessageForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		// get attachments
@@ -357,7 +357,7 @@ abstract class MessageForm extends RecaptchaForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables();
+	 * @see	\wcf\page\IPage::assignVariables();
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

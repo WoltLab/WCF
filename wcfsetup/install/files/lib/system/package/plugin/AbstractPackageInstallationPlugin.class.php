@@ -29,7 +29,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	
 	/**
 	 * active instance of PackageInstallationDispatcher
-	 * @var	wcf\system\package\PackageInstallationDispatcher
+	 * @var	\wcf\system\package\PackageInstallationDispatcher
 	 */
 	public $installation = null;
 	
@@ -42,7 +42,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	/**
 	 * Creates a new AbstractPackageInstallationPlugin object.
 	 * 
-	 * @param	wcf\system\package\PackageInstallationDispatcher	$installation
+	 * @param	\wcf\system\package\PackageInstallationDispatcher	$installation
 	 * @param	array		$instruction
 	 */
 	public function __construct(PackageInstallationDispatcher $installation, $instruction = array()) {
@@ -54,7 +54,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
 		// call 'install' event
@@ -62,7 +62,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::update()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::update()
 	 */
 	public function update() {
 		// call 'update' event
@@ -72,7 +72,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::hasUninstall()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::hasUninstall()
 	 */
 	public function hasUninstall() {
 		// call 'hasUninstall' event
@@ -88,7 +88,7 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// call 'uninstall' event

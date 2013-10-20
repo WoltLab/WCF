@@ -18,27 +18,27 @@ use wcf\system\WCF;
  */
 class LanguageItemAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\language\item\LanguageItemEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
 	protected $permissionsCreate = array('admin.language.canManageLanguage');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.language.canManageLanguage');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.language.canManageLanguage');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('create', 'delete', 'edit', 'prepareEdit', 'update');
 	
@@ -49,7 +49,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 		if (!WCF::getSession()->getPermission('admin.language.canManageLanguage')) {
 			throw new PermissionDeniedException();
 		}
-	
+		
 		$this->readObjects();
 		if (!count($this->objects)) {
 			throw new UserInputException('objectIDs');
@@ -64,7 +64,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 		WCF::getTPL()->assign(array(
 			'item' => $item
 		));
-	
+		
 		return array(
 			'languageItem' => $item->languageItem,
 			'template' => WCF::getTPL()->fetch('languageItemEditDialog')
@@ -78,7 +78,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 		if (!WCF::getSession()->getPermission('admin.language.canManageLanguage')) {
 			throw new PermissionDeniedException();
 		}
-	
+		
 		$this->readObjects();
 		if (!count($this->objects)) {
 			throw new UserInputException('objectIDs');

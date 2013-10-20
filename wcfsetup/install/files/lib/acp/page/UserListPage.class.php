@@ -45,12 +45,12 @@ class UserListPage extends SortablePage {
 	public $columnValues = array();
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortField
+	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'username';
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
 	 */
 	public $itemsPerPage = 50;
 	
@@ -61,13 +61,13 @@ class UserListPage extends SortablePage {
 	public $markedUsers = array();
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canSearchUser');
 	
 	/**
 	 * IOptionHandler object
-	 * @var	wcf\system\option\IOptionHandler
+	 * @var	\wcf\system\option\IOptionHandler
 	 */
 	protected $optionHandler = null;
 	
@@ -91,7 +91,7 @@ class UserListPage extends SortablePage {
 	
 	/**
 	 * list of users
-	 * @var	array<wcf\data\user\User>
+	 * @var	array<\wcf\data\user\User>
 	 */
 	public $users = array();
 	
@@ -102,12 +102,12 @@ class UserListPage extends SortablePage {
 	public $url = '';
 	
 	/**
-	 * @see	wcf\page\SortablePage::$validSortFields
+	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('email', 'userID', 'registrationDate', 'username');
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -128,7 +128,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\SortablePage::validateSortField()
+	 * @see	\wcf\page\SortablePage::validateSortField()
 	 */
 	public function validateSortField() {
 		// add options to valid sort fields
@@ -138,7 +138,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -158,7 +158,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -174,7 +174,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
 		$this->activeMenuItem = 'wcf.acp.menu.link.user.'.($this->searchID ? 'search' : 'list');
@@ -183,7 +183,7 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::countItems()
+	 * @see	\wcf\page\MultipleLinkPage::countItems()
 	 */
 	public function countItems() {
 		// call countItems event
@@ -236,7 +236,7 @@ class UserListPage extends SortablePage {
 				FROM		wcf".WCF_N."_user user_table
 				LEFT JOIN	wcf".WCF_N."_user_option_value option_value
 				ON		(option_value.userID = user_table.userID)
-				LEFT JOIN 	wcf".WCF_N."_user_avatar user_avatar
+				LEFT JOIN	wcf".WCF_N."_user_avatar user_avatar
 				ON		(user_avatar.avatarID = user_table.avatarID)
 				".$conditions."
 				ORDER BY	".(($this->sortField != 'email' && isset($this->options[$this->sortField])) ? 'option_value.userOption'.$this->options[$this->sortField]['optionID'] : 'user_table.'.$this->sortField)." ".$this->sortOrder;
@@ -340,12 +340,12 @@ class UserListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::initObjectList()
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	protected function initObjectList() { }
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::readObjects()
+	 * @see	\wcf\page\MultipleLinkPage::readObjects()
 	 */
 	protected function readObjects() { }
 }

@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  */
 class UserImporter extends AbstractImporter {
 	/**
-	 * @see	wcf\system\importer\AbstractImporter::$className
+	 * @see	\wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\user\User';
 	
@@ -33,7 +33,7 @@ class UserImporter extends AbstractImporter {
 	
 	/**
 	 * list of user options
-	 * @var	array<wcf\data\user\option\UserOption>
+	 * @var	array<\wcf\data\user\option\UserOption>
 	 */
 	protected $userOptions = array();
 	
@@ -57,7 +57,7 @@ class UserImporter extends AbstractImporter {
 	}
 	
 	/**
-	 * @see	wcf\system\importer\IImporter::import()
+	 * @see	\wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		// resolve duplicates

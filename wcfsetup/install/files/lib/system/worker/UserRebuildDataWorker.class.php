@@ -19,17 +19,17 @@ use wcf\system\WCF;
  */
 class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 	/**
-	 * @see	wcf\system\worker\AbstractRebuildDataWorker::$objectListClassName
+	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::$objectListClassName
 	 */
 	protected $objectListClassName = 'wcf\data\user\UserList';
 	
 	/**
-	 * @see	wcf\system\worker\AbstractWorker::$limit
+	 * @see	\wcf\system\worker\AbstractWorker::$limit
 	 */
 	protected $limit = 50;
 	
 	/**
-	 * @see	wcf\system\worker\AbstractRebuildDataWorker::initObjectList
+	 * @see	\wcf\system\worker\AbstractRebuildDataWorker::initObjectList
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -38,7 +38,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::execute()
+	 * @see	\wcf\system\worker\IWorker::execute()
 	 */
 	public function execute() {
 		parent::execute();

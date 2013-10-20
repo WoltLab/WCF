@@ -16,32 +16,32 @@ use wcf\util\StringUtil;
  */
 class SqlHighlighter extends Highlighter {
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$allowsNewslinesInQuotes
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$allowsNewslinesInQuotes
 	 */
 	protected $allowsNewslinesInQuotes = true;
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$quotes
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$quotes
 	 */
 	protected $quotes = array("'", '"');
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$singleLineComment
 	 */
 	protected $singleLineComment = array('#', '--');
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$separators
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$separators
 	 */
 	protected $separators = array('(', ')', ',', ';');
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$operators
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$operators
 	 */
 	protected $operators = array('<>', '~=', '!=', '^=', '=', '<', '<=', '>', '>=', '*', '/', '+', '-', '||', '@', '%', '&', '?', '\$');
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::cacheComments()
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::cacheComments()
 	 */
 	protected function cacheComments($string) {
 		if ($this->cacheCommentsRegEx !== null) {
@@ -68,7 +68,7 @@ class SqlHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::cacheQuotes()
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::cacheQuotes()
 	 */
 	protected function cacheQuotes($string) {
 		if ($this->quotesRegEx !== null) {
@@ -81,7 +81,7 @@ class SqlHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$keywords1
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords1
 	 */
 	protected $keywords1 = array(
 		'action',
@@ -319,7 +319,7 @@ class SqlHighlighter extends Highlighter {
 	);
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::$keywords2
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::$keywords2
 	 */
 	protected $keywords2 = array(
 		'ABS',

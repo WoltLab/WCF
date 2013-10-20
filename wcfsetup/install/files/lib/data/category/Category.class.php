@@ -21,19 +21,19 @@ use wcf\system\WCF;
 class Category extends ProcessibleDatabaseObject implements IPermissionObject, IRouteController {
 	/**
 	 * list of all child categories of this category
-	 * @var	array<wcf\data\category\Category>
+	 * @var	array<\wcf\data\category\Category>
 	 */
 	protected $childCategories = null;
 	
 	/**
 	 * list of all parent category generations of this category
-	 * @var	array<wcf\data\category\Category>
+	 * @var	array<\wcf\data\category\Category>
 	 */
 	protected $parentCategories = null;
 	
 	/**
 	 * parent category of this category
-	 * @var	wcf\data\category\Category
+	 * @var	\wcf\data\category\Category
 	 */
 	protected $parentCategory = null;
 	
@@ -44,22 +44,22 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	protected $permissions = null;
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'categoryID';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'category';
 	
 	/**
-	 * @see	wcf\data\ProcessibleDatabaseObject::$processorInterface
+	 * @see	\wcf\data\ProcessibleDatabaseObject::$processorInterface
 	 */
 	protected static $processorInterface = 'wcf\system\category\ICategoryType';
 	
 	/**
-	 * @see	wcf\data\IStorableObject::__get()
+	 * @see	\wcf\data\IStorableObject::__get()
 	 */
 	public function __get($name) {
 		// forward 'className' property requests to object type
@@ -80,7 +80,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
-	 * @see	wcf\data\IPermissionObject::checkPermissions()
+	 * @see	\wcf\data\IPermissionObject::checkPermissions()
 	 */
 	public function checkPermissions(array $permissions) {
 		foreach ($permissions as $permission) {
@@ -93,7 +93,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * Returns the category object type of the category.
 	 * 
-	 * @return	wcf\data\category\Category
+	 * @return	\wcf\data\category\Category
 	 */
 	public function getObjectType() {
 		return CategoryHandler::getInstance()->getObjectType($this->objectTypeID);
@@ -102,7 +102,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * Returns the child categories of this category.
 	 * 
-	 * @return	array<wcf\data\category\Category>
+	 * @return	array<\wcf\data\category\Category>
 	 */
 	public function getChildCategories() {
 		if ($this->childCategories === null) {
@@ -115,7 +115,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * Returns the parent category of this category.
 	 * 
-	 * @return	wcf\data\category\Category
+	 * @return	\wcf\data\category\Category
 	 */
 	public function getParentCategory() {
 		if ($this->parentCategoryID && $this->parentCategory === null) {
@@ -128,7 +128,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * Returns the parent categories of this category.
 	 * 
-	 * @return	array<wcf\data\category\Category>
+	 * @return	array<\wcf\data\category\Category>
 	 */
 	public function getParentCategories() {
 		if ($this->parentCategories === null) {
@@ -145,7 +145,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
-	 * @see	wcf\data\IPermissionObject::getPermission()
+	 * @see	\wcf\data\IPermissionObject::getPermission()
 	 */
 	public function getPermission($permission) {
 		if ($this->permissions === null) {
@@ -160,7 +160,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
-	 * @see	wcf\data\ITitledObject::getTitle()
+	 * @see	\wcf\data\ITitledObject::getTitle()
 	 */
 	public function getTitle() {
 		return WCF::getLanguage()->get($this->title);
@@ -177,7 +177,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::handleData()
+	 * @see	\wcf\data\DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {
 		// handle additional data

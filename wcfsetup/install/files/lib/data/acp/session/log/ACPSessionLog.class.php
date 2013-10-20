@@ -16,17 +16,17 @@ use wcf\util\UserUtil;
  */
 class ACPSessionLog extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'acp_session_log';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'sessionLogID';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::__construct()
+	 * @see	\wcf\data\DatabaseObject::__construct()
 	 */
 	public function __construct($id, array $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {

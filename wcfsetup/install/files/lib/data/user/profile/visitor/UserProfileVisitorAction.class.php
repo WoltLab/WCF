@@ -19,18 +19,18 @@ use wcf\system\WCF;
  */
 class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('getGroupedUserList');
 	
 	/**
 	 * user profile object
-	 * @var	wcf\data\user\UserProfile;
+	 * @var	\wcf\data\user\UserProfile;
 	 */
 	public $userProfile = null;
 	
 	/**
-	 * @see	wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
 	 */
 	public function validateGetGroupedUserList() {
 		$this->readInteger('pageNo');
@@ -43,7 +43,7 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 	}
 	
 	/**
-	 * @see	wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
 	 */
 	public function getGroupedUserList() {
 		// resolve page count

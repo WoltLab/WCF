@@ -13,11 +13,10 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a form to create categories.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -46,7 +45,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	
 	/**
 	 * tree with the category nodes
-	 * @var	wcf\data\category\CategoryNodeTree
+	 * @var	\wcf\data\category\CategoryNodeTree
 	 */
 	public $categoryNodeTree = null;
 	
@@ -70,7 +69,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	
 	/**
 	 * category object type object
-	 * @var	wcf\data\object\type\ObjectType
+	 * @var	\wcf\data\object\type\ObjectType
 	 */
 	public $objectType = null;
 	
@@ -105,12 +104,12 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	public $showOrder = 0;
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$templateName
+	 * @see	\wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'categoryAdd';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::__run()
+	 * @see	\wcf\page\AbstractPage::__run()
 	 */
 	public function __run() {
 		$classNameParts = explode('\\', get_called_class());
@@ -131,7 +130,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -177,7 +176,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		$this->objectType = CategoryHandler::getInstance()->getObjectTypeByName($this->objectTypeName);
@@ -210,7 +209,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IForm::readFormParameters()
+	 * @see	\wcf\page\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -232,7 +231,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IForm::save()
+	 * @see	\wcf\page\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -294,7 +293,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IForm::validate()
+	 * @see	\wcf\page\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();

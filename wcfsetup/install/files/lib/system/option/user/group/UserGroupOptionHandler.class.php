@@ -17,27 +17,27 @@ use wcf\util\ClassUtil;
  */
 class UserGroupOptionHandler extends OptionHandler {
 	/**
-	 * @see	wcf\system\option\OptionHandler::$cacheClass
+	 * @see	\wcf\system\option\OptionHandler::$cacheClass
 	 */
 	protected $cacheClass = 'wcf\system\cache\builder\UserGroupOptionCacheBuilder';
 	
 	/**
 	 * user group object
-	 * @var	wcf\data\user\group\UserGroup
+	 * @var	\wcf\data\user\group\UserGroup
 	 */
 	protected $group = null;
 	
 	/**
 	 * Sets current user group.
 	 * 
-	 * @param	wcf\data\user\group\UserGroup	$group
+	 * @param	\wcf\data\user\group\UserGroup	$group
 	 */
 	public function setUserGroup(UserGroup $group) {
 		$this->group = $group;
 	}
 	
 	/**
-	 * @see	wcf\system\option\OptionHandler::getClassName()
+	 * @see	\wcf\system\option\OptionHandler::getClassName()
 	 */
 	protected function getClassName($type) {
 		$className = 'wcf\system\option\user\group\\'.ucfirst($type).'UserGroupOptionType';
@@ -54,7 +54,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionHandler::readData()
+	 * @see	\wcf\system\option\IOptionHandler::readData()
 	 */
 	public function readData() {
 		$defaultGroup = UserGroup::getGroupByType(UserGroup::EVERYONE);

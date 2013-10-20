@@ -23,26 +23,26 @@ use wcf\system\template\TemplateEngine;
  */
 class SmallpagesFunctionTemplatePlugin extends PagesFunctionTemplatePlugin {
 	/**
-	 * @see	wcf\system\template\plugin\PagesFunctionTemplatePlugin::SHOW_LINKS
+	 * @see	\wcf\system\template\plugin\PagesFunctionTemplatePlugin::SHOW_LINKS
 	 */
 	const SHOW_LINKS = 7;
 	
 	/**
-	 * @see	wcf\system\template\plugin\PagesFunctionTemplatePlugin::makePreviousLink()
+	 * @see	\wcf\system\template\plugin\PagesFunctionTemplatePlugin::makePreviousLink()
 	 */
 	protected function makePreviousLink($link, $pageNo) {
 		return '';
 	}
 	
 	/**
-	 * @see	wcf\system\template\plugin\PagesFunctionTemplatePlugin::makeNextLink()
+	 * @see	\wcf\system\template\plugin\PagesFunctionTemplatePlugin::makeNextLink()
 	 */
 	protected function makeNextLink($link, $pageNo, $pages) {
 		return '';
 	}
 	
 	/**
-	 * @see	wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		$tagArgs['page'] = 0;

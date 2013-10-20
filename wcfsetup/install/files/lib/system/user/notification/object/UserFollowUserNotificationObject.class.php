@@ -15,26 +15,26 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  */
 class UserFollowUserNotificationObject extends DatabaseObjectDecorator implements IUserNotificationObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\follow\UserFollow';
 	
 	/**
-	 * @see	wcf\system\user\notification\object\IUserNotificationObject::getTitle()
+	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getTitle()
 	 */
 	public function getTitle() {
 		return '';
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\object\IUserNotificationObject::getURL()
+	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getURL()
 	 */
 	public function getURL() {
 		return '';
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\object\IUserNotificationObject::getAuthorID()
+	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getAuthorID()
 	 */
 	public function getAuthorID() {
 		return $this->userID;

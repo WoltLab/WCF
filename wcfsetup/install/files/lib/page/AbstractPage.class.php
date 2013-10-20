@@ -73,12 +73,12 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	public $enableTracking = false;
 	
 	/**
-	 * @see	wcf\form\IPage::__run()
+	 * @see	\wcf\form\IPage::__run()
 	 */
 	public final function __construct() { }
 	
 	/**
-	 * @see	wcf\page\IPage::__run()
+	 * @see	\wcf\page\IPage::__run()
 	 */
 	public function __run() {
 		// call default methods
@@ -87,7 +87,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		// call readParameters event
@@ -98,7 +98,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		// call readData event
@@ -106,7 +106,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		// call assignVariables event
@@ -120,7 +120,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::checkModules()
+	 * @see	\wcf\page\IPage::checkModules()
 	 */
 	public function checkModules() {
 		// call checkModules event
@@ -135,7 +135,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::checkPermissions()
+	 * @see	\wcf\page\IPage::checkPermissions()
 	 */
 	public function checkPermissions() {
 		// call checkPermissions event
@@ -158,7 +158,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
 		// check if active user is logged in
@@ -221,42 +221,42 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\ITrackablePage::isTracked()
+	 * @see	\wcf\page\ITrackablePage::isTracked()
 	 */
 	public function isTracked() {
 		return $this->enableTracking;
 	}
 	
 	/**
-	 * @see	wcf\page\ITrackablePage::getController()
+	 * @see	\wcf\page\ITrackablePage::getController()
 	 */
 	public function getController() {
 		return get_class($this);
 	}
 	
 	/**
-	 * @see	wcf\page\ITrackablePage::getParentObjectType()
+	 * @see	\wcf\page\ITrackablePage::getParentObjectType()
 	 */
 	public function getParentObjectType() {
 		return '';
 	}
 	
 	/**
-	 * @see	wcf\page\ITrackablePage::getParentObjectID()
+	 * @see	\wcf\page\ITrackablePage::getParentObjectID()
 	 */
 	public function getParentObjectID() {
 		return 0;
 	}
 	
 	/**
-	 * @see	wcf\page\ITrackablePage::getObjectType()
+	 * @see	\wcf\page\ITrackablePage::getObjectType()
 	 */
 	public function getObjectType() {
 		return '';
 	}
 	
 	/**
-	 * @see	wcf\page\ITrackablePage::getObjectID()
+	 * @see	\wcf\page\ITrackablePage::getObjectID()
 	 */
 	public function getObjectID() {
 		return 0;

@@ -22,7 +22,7 @@ interface IArchive {
 	/**
 	 * Returns an associative array with information about a specific file
 	 * in the archive.
-	 *
+	 * 
 	 * @param	mixed		$index		index or name of the requested file
 	 * @return	array
 	 */
@@ -50,7 +50,7 @@ interface IArchive {
 	/**
 	 * Searchs a file in the archive and returns the numeric file index.
 	 * Returns false if not found.
-	 *
+	 * 
 	 * @param	string		$filename
 	 * @return	integer				index of the requested file
 	 */

@@ -30,7 +30,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 	
 	/**
 	 * list of assigned smilies
-	 * @var	array<wcf\data\smiley\Smiley>
+	 * @var	array<\wcf\data\smiley\Smiley>
 	 */
 	public $smilies = null;
 	
@@ -62,7 +62,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 	/**
 	 * CAUTION: This methods does not return the current iterator index,
 	 * rather than the object key which maps to that index.
-	 *
+	 * 
 	 * @see	\Iterator::key()
 	 */
 	public function key() {
@@ -102,7 +102,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 	}
 	
 	/**
-	 * @see	wcf\data\ITraversableObject::seekTo()
+	 * @see	\wcf\data\ITraversableObject::seekTo()
 	 */
 	public function seekTo($objectID) {
 		$this->index = array_search($objectID, $this->indexToObject);
@@ -113,7 +113,7 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 	}
 	
 	/**
-	 * @see	wcf\data\ITraversableObject::search()
+	 * @see	\wcf\data\ITraversableObject::search()
 	 */
 	public function search($objectID) {
 		try {

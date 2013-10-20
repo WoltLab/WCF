@@ -47,7 +47,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	
 	/**
 	 * Returns the message for this notification event.
-	 *
+	 * 
 	 * @param	string		$notificationType
 	 * @return	string
 	 */
@@ -63,7 +63,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Returns the author for this notification event.
 	 * 
-	 * @return	wcf\data\user\UserProfile
+	 * @return	\wcf\data\user\UserProfile
 	 */
 	public function getAuthor();
 	
@@ -84,9 +84,9 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Sets the object for the event.
 	 * 
-	 * @param	wcf\data\user\notification\UserNotification			$notification
-	 * @param	wcf\system\user\notification\object\IUserNotificationObject	$object
-	 * @param	wcf\data\user\UserProfile					$author
+	 * @param	\wcf\data\user\notification\UserNotification			$notification
+	 * @param	\wcf\system\user\notification\object\IUserNotificationObject	$object
+	 * @param	\wcf\data\user\UserProfile					$author
 	 * @param	array<mixed>							$additionalData
 	 */
 	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array());
@@ -94,7 +94,7 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	/**
 	 * Sets the language for the event
 	 * 
-	 * @param	wcf\data\language\Language	$language
+	 * @param	\wcf\data\language\Language	$language
 	 */
 	public function setLanguage(Language $language);
 }

@@ -136,8 +136,8 @@ final class DateUtil {
 	 * 
 	 * @param	\DateTime			$time
 	 * @param	string				$format
-	 * @param	wcf\data\language\Language	$language
-	 * @param	wcf\data\user\User		$user
+	 * @param	\wcf\data\language\Language	$language
+	 * @param	\wcf\data\user\User		$user
 	 * @return	string
 	 */
 	public static function format(\DateTime $time = null, $format = null, Language $language = null, User $user = null) {
@@ -236,7 +236,7 @@ final class DateUtil {
 	 * 
 	 * @param	string				$date
 	 * @param	string				$format
-	 * @param	wcf\data\language\Language	$language
+	 * @param	\wcf\data\language\Language	$language
 	 * @return	string
 	 */
 	public static function localizeDate($date, $format, Language $language) {

@@ -20,30 +20,30 @@ use wcf\system\WCF;
  */
 class LikeAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('getLikeDetails');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\like\LikeEditor';
 	
 	/**
 	 * likeable object
-	 * @var	wcf\data\like\object\ILikeObject
+	 * @var	\wcf\data\like\object\ILikeObject
 	 */
 	public $likeableObject = null;
 	
 	/**
 	 * object type object
-	 * @var	wcf\data\object\type\ObjectType
+	 * @var	\wcf\data\object\type\ObjectType
 	 */
 	public $objectType = null;
 	
 	/**
 	 * like object type provider object
-	 * @var	wcf\data\like\ILikeObjectTypeProvider
+	 * @var	\wcf\data\like\ILikeObjectTypeProvider
 	 */
 	public $objectTypeProvider = null;
 	
@@ -120,21 +120,21 @@ class LikeAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * @see	wcf\data\like\LikeAction::updateLike()
+	 * @see	\wcf\data\like\LikeAction::updateLike()
 	 */
 	public function like() {
 		return $this->updateLike(Like::LIKE);
 	}
 	
 	/**
-	 * @see	wcf\data\like\LikeAction::validateLike()
+	 * @see	\wcf\data\like\LikeAction::validateLike()
 	 */
 	public function validateDislike() {
 		$this->validateLike();
 	}
 	
 	/**
-	 * @see	wcf\data\like\LikeAction::updateLike()
+	 * @see	\wcf\data\like\LikeAction::updateLike()
 	 */
 	public function dislike() {
 		return $this->updateLike(Like::DISLIKE);

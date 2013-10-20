@@ -16,18 +16,18 @@ use wcf\system\SingletonFactory;
 class BBCodeHandler extends SingletonFactory {
 	/**
 	 * list of BBCodes allowed for usage
-	 * @var	array<wcf\data\bbcode\BBCode>
+	 * @var	array<\wcf\data\bbcode\BBCode>
 	 */
 	protected $allowedBBCodes = array();
 	
 	/**
 	 * list of BBCodes displayed as buttons
-	 * @var	array<wcf\data\bbcode\BBCode>
+	 * @var	array<\wcf\data\bbcode\BBCode>
 	 */
 	protected $buttonBBCodes = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		foreach (BBCodeCache::getInstance()->getBBCodes() as $bbcode) {
@@ -62,7 +62,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns a list of BBCodes displayed as buttons.
 	 * 
-	 * @return	array<wcf\data\bbcode\BBCode>
+	 * @return	array<\wcf\data\bbcode\BBCode>
 	 */
 	public function getButtonBBCodes() {
 		// todo: check if BBCodes are available

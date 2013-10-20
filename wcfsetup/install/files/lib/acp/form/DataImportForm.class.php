@@ -27,12 +27,12 @@ class DataImportForm extends AbstractForm {
 	public $additionalData = array();
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.maintenance.import';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canImportData');
 	
@@ -50,7 +50,7 @@ class DataImportForm extends AbstractForm {
 	
 	/**
 	 * exporter object
-	 * @var	wcf\system\exporter\IExporter
+	 * @var	\wcf\system\exporter\IExporter
 	 */
 	public $exporter = null;
 	
@@ -127,7 +127,7 @@ class DataImportForm extends AbstractForm {
 	public $userMergeMode = 2;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -167,7 +167,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -185,7 +185,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -218,7 +218,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -243,7 +243,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -274,7 +274,7 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

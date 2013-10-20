@@ -18,22 +18,22 @@ use wcf\system\comment\CommentHandler;
  */
 class LikeableCommentResponseProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider {
 	/**
-	 * @see	wcf\data\object\type\AbstractObjectTypeProvider::$className
+	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$className
 	 */
 	public $className = 'wcf\data\comment\response\CommentResponse';
 	
 	/**
-	 * @see	wcf\data\object\type\AbstractObjectTypeProvider::$decoratorClassName
+	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$decoratorClassName
 	 */
 	public $decoratorClassName = 'wcf\data\comment\response\LikeableCommentResponse';
 	
 	/**
-	 * @see	wcf\data\object\type\AbstractObjectTypeProvider::$listClassName
+	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$listClassName
 	 */
 	public $listClassName = 'wcf\data\comment\response\CommentResponseList';
 	
 	/**
-	 * @see	wcf\data\like\ILikeObjectTypeProvider::checkPermissions()
+	 * @see	\wcf\data\like\ILikeObjectTypeProvider::checkPermissions()
 	 */
 	public function checkPermissions(ILikeObject $response) {
 		$comment = new Comment($response->commentID);

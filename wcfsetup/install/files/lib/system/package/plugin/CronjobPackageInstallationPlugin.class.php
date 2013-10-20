@@ -15,12 +15,12 @@ use wcf\util\CronjobUtil;
  */
 class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\cronjob\CronjobEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getElement()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getElement()
 	 */
 	protected function getElement(\DOMXpath $xpath, array &$elements, \DOMElement $element) {
 		if ($element->tagName == 'description') {
@@ -36,7 +36,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -52,7 +52,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
 		return array(
@@ -70,21 +70,21 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::validateImport()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::validateImport()
 	 */
 	protected function validateImport(array $data) {
 		CronjobUtil::validate($data['startMinute'], $data['startHour'], $data['startDom'], $data['startMonth'], $data['startDow']);
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) {
 		return null;
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareCreate()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareCreate()
 	 */
 	protected function prepareCreate(array &$data) {
 		parent::prepareCreate($data);

@@ -16,23 +16,23 @@ use wcf\system\WCF;
  */
 class ApplicationManagementPage extends AbstractPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.application.management';
 	
 	/**
 	 * list of applications
-	 * @var	wcf\data\application\ViewableApplicationList
+	 * @var	\wcf\data\application\ViewableApplicationList
 	 */
 	public $applicationList = null;
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canManageApplication');
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -42,7 +42,7 @@ class ApplicationManagementPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

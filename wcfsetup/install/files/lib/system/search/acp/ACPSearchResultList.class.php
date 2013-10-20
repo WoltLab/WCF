@@ -27,7 +27,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	
 	/**
 	 * result list
-	 * @var	array<wcf\system\search\acp\ACPSearchResult>
+	 * @var	array<\wcf\system\search\acp\ACPSearchResult>
 	 */
 	protected $results = array();
 	
@@ -43,7 +43,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	/**
 	 * Adds a result to the collection.
 	 * 
-	 * @param	wcf\system\search\acp\ACPSearchResult	$result
+	 * @param	\wcf\system\search\acp\ACPSearchResult	$result
 	 */
 	public function addResult(ACPSearchResult $result) {
 		$this->results[] = $result;
@@ -104,7 +104,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	}
 	
 	/**
-	 * @see	wcf\system\search\acp\ACPSearchResultList::getTitle()
+	 * @see	\wcf\system\search\acp\ACPSearchResultList::getTitle()
 	 */
 	public function __toString() {
 		return $this->title;

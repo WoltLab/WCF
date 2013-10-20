@@ -25,19 +25,19 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	
 	/**
 	 * database object list
-	 * @var	wcf\data\DatabaseObjectList
+	 * @var	\wcf\data\DatabaseObjectList
 	 */
 	protected $objectList = null;
 	
 	/**
-	 * @see	wcf\system\worker\IRebuildDataWorker::getObjectList()
+	 * @see	\wcf\system\worker\IRebuildDataWorker::getObjectList()
 	 */
 	public function getObjectList() {
 		return $this->objectList;
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::getLoopCount()
+	 * @see	\wcf\system\worker\IWorker::getLoopCount()
 	 */
 	public function setLoopCount($loopCount) {
 		parent::setLoopCount($loopCount);
@@ -46,14 +46,14 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::validate()
+	 * @see	\wcf\system\worker\IWorker::validate()
 	 */
 	public function validate() {
 		WCF::getSession()->checkPermissions(array('admin.system.canRebuildData'));
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::countObjects()
+	 * @see	\wcf\system\worker\IWorker::countObjects()
 	 */
 	public function countObjects() {
 		if ($this->count === null) {
@@ -66,7 +66,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::execute()
+	 * @see	\wcf\system\worker\IWorker::execute()
 	 */
 	public function execute() {
 		$this->objectList->readObjects();
@@ -75,7 +75,7 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	}
 	
 	/**
-	 * @see	wcf\system\worker\IWorker::getProceedURL()
+	 * @see	\wcf\system\worker\IWorker::getProceedURL()
 	 */
 	public function getProceedURL() {
 		return LinkHandler::getInstance()->getLink('RebuildData');
@@ -88,11 +88,11 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 		if (empty($this->objectListClassName)) {
 			throw new SystemException('DatabaseObjectList class name not specified.');
 		}
-	
+		
 		if (!ClassUtil::isInstanceOf($this->objectListClassName, 'wcf\data\DatabaseObjectList')) {
 			throw new SystemException("'".$this->objectListClassName."' does not extend 'wcf\data\DatabaseObjectList'");
 		}
-	
+		
 		$this->objectList = new $this->objectListClassName();
 		$this->objectList->sqlLimit = $this->limit;
 		$this->objectList->sqlOffset = $this->limit * $this->loopCount;

@@ -13,7 +13,7 @@ namespace wcf\system\dashboard\box;
  */
 abstract class AbstractSidebarDashboardBox extends AbstractContentDashboardBox {
 	/**
-	 * @see	wcf\system\dashboard\box\AbstractDashboardBoxContent::$templateName
+	 * @see	\wcf\system\dashboard\box\AbstractDashboardBoxContent::$templateName
 	 */
 	public $templateName = 'dashboardBoxSidebar';
 }

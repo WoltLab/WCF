@@ -17,7 +17,7 @@ use wcf\util\ClassUtil;
 class Sitemap extends DatabaseObject {
 	/**
 	 * ISitemapProvider object
-	 * @var	wcf\system\sitemap\ISitemapProvider
+	 * @var	\wcf\system\sitemap\ISitemapProvider
 	 */
 	protected $sitemapObj = null;
 	
@@ -28,7 +28,7 @@ class Sitemap extends DatabaseObject {
 	protected static $databaseTableName = 'sitemap';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'sitemapID';
 	

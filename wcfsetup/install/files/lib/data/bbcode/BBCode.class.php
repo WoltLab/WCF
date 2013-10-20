@@ -16,24 +16,24 @@ use wcf\system\WCF;
  */
 class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'bbcode';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'bbcodeID';
 	
 	/**
-	 * @see	wcf\data\ProcessibleDatabaseObject::$processorInterface
+	 * @see	\wcf\data\ProcessibleDatabaseObject::$processorInterface
 	 */
 	protected static $processorInterface = 'wcf\system\bbcode\IBBCode';
 	
 	/**
 	 * Returns the attributes of this bbcode.
 	 * 
-	 * @return	array<wcf\data\bbcode\attribute\BBCodeAttribute>
+	 * @return	array<\wcf\data\bbcode\attribute\BBCodeAttribute>
 	 */
 	public function getAttributes() {
 		if ($this->attributes === null) {
@@ -44,7 +44,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	wcf\data\ITitledObject::getTitle()
+	 * @see	\wcf\data\ITitledObject::getTitle()
 	 */
 	public function getTitle() {
 		return $this->bbcodeTag;
@@ -54,7 +54,7 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	 * Returns BBCode object with the given tag.
 	 * 
 	 * @param	string		$tag
-	 * @return	wcf\data\bbcode\BBCode
+	 * @return	\wcf\data\bbcode\BBCode
 	 */
 	public static function getBBCodeByTag($tag) {
 		$sql = "SELECT	*

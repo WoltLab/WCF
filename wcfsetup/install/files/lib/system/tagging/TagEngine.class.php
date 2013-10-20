@@ -135,7 +135,7 @@ class TagEngine extends SingletonFactory {
 	 * @param	string			$objectType
 	 * @param	integer			$objectID
 	 * @param	array<integer>		$languageIDs
-	 * @return	array<wcf\data\tag\Tag>
+	 * @return	array<\wcf\data\tag\Tag>
 	 */
 	public function getObjectTags($objectType, $objectID, array $languageIDs = array()) {
 		$tags = $this->getObjectsTags($objectType, array($objectID), $languageIDs);

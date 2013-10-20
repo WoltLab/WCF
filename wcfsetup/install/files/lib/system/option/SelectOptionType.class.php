@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  */
 class SelectOptionType extends RadioButtonOptionType {
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		// get options
@@ -33,7 +33,7 @@ class SelectOptionType extends RadioButtonOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		return $this->getFormElement($option, $value);
@@ -42,7 +42,7 @@ class SelectOptionType extends RadioButtonOptionType {
 	/**
 	 * Prepares JSON-encoded values for disabling or enabling dependent options.
 	 * 
-	 * @param	wcf\data\option\Option	$option
+	 * @param	\wcf\data\option\Option	$option
 	 * @return	array
 	 */
 	protected function parseEnableOptions(Option $option) {

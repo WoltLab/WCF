@@ -22,12 +22,12 @@ use wcf\system\WCF;
  */
 class BBCodeEditForm extends BBCodeAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.bbcode';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.content.bbcode.canManageBBCode');
 	
@@ -39,7 +39,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 	
 	/**
 	 * bbcode object
-	 * @var	wcf\data\bbcode\BBCode
+	 * @var	\wcf\data\bbcode\BBCode
 	 */
 	public $bbcode = null;
 	
@@ -50,7 +50,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 	public static $nativeBBCodes = array('b', 'i', 'u', 's', 'sub', 'sup', 'list', 'align', 'color', 'size', 'font', 'url', 'img', 'email', 'table');
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		AbstractForm::readParameters();
@@ -67,7 +67,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\BBCodeAddForm::readButtonLabelFormParameter()
+	 * @see	\wcf\acp\form\BBCodeAddForm::readButtonLabelFormParameter()
 	 */
 	protected function readButtonLabelFormParameter() {
 		if (!in_array($this->bbcode->bbcodeTag, self::$nativeBBCodes)) {
@@ -76,7 +76,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -133,7 +133,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -155,7 +155,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

@@ -14,7 +14,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  */
 class PollOptionAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\poll\option\PollOptionEditor';
 }

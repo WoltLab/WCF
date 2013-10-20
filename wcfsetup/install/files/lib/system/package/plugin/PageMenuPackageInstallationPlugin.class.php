@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\page\menu\item\PageMenuItemEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
 		$result = parent::prepareImport($data);
@@ -44,14 +44,14 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
 	 */
 	protected function cleanup() {
 		PageMenuItemEditor::updateLandingPage();
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
 	 */
 	protected function import(array $row, array $data) {
 		if (!empty($row)) {
@@ -71,7 +71,7 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getShowOrder()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getShowOrder()
 	 */
 	protected function getShowOrder($showOrder, $parentName = null, $columnName = null, $tableNameExtension = '') {
 		// will be recalculated anyway

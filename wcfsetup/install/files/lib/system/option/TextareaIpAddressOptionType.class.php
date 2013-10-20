@@ -20,7 +20,7 @@ use wcf\util\UserUtil;
  */
 class TextareaIpAddressOptionType extends TextOptionType {
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		if (!empty($value)) {
@@ -41,7 +41,7 @@ class TextareaIpAddressOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::validate()
+	 * @see	\wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!empty($newValue)) {
@@ -58,7 +58,7 @@ class TextareaIpAddressOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getData()
+	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		if (!empty($newValue)) {

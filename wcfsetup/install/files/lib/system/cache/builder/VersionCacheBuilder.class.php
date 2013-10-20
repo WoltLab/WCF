@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class VersionCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {	
 		// get object types

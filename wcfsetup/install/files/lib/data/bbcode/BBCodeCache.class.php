@@ -16,12 +16,12 @@ use wcf\system\SingletonFactory;
 class BBCodeCache extends SingletonFactory {
 	/**
 	 * cached bbcodes
-	 * @var	array<wcf\data\bbcode\BBCode>
+	 * @var	array<\wcf\data\bbcode\BBCode>
 	 */
 	protected $cachedBBCodes = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get bbcode cache
@@ -31,7 +31,7 @@ class BBCodeCache extends SingletonFactory {
 	/**
 	 * Returns all bbcodes.
 	 * 
-	 * @return	array<wcf\data\bbcode\BBCode>
+	 * @return	array<\wcf\data\bbcode\BBCode>
 	 */
 	public function getBBCodes() {
 		return $this->cachedBBCodes;
@@ -41,7 +41,7 @@ class BBCodeCache extends SingletonFactory {
 	 * Returns the BBCode with the given tag or null if no such BBCode exists.
 	 * 
 	 * @param	string		$tag
-	 * @return	wcf\data\bbcode\BBCode
+	 * @return	\wcf\data\bbcode\BBCode
 	 */
 	public function getBBCodeByTag($tag) {
 		if (isset($this->cachedBBCodes[$tag])) {
@@ -55,7 +55,7 @@ class BBCodeCache extends SingletonFactory {
 	 * Returns all attributes of a bbcode.
 	 * 
 	 * @param	string		$tag
-	 * @return	array<wcf\data\bbcode\attribute\BBCodeAttribute>
+	 * @return	array<\wcf\data\bbcode\attribute\BBCodeAttribute>
 	 */
 	public function getBBCodeAttributes($tag) {
 		return $this->cachedBBCodes[$tag]->getAttributes();

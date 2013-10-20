@@ -20,12 +20,12 @@ use wcf\util\FileUtil;
 class DiskCacheSource implements ICacheSource {
 	/**
 	 * up-to-date directory util object for the cache folder
-	 * @var	wcf\util\DirectoryUtil
+	 * @var	\wcf\util\DirectoryUtil
 	 */
 	protected $directoryUtil = null;
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::flush()
+	 * @see	\wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush($cacheName, $useWildcard) {
 		if ($useWildcard) {
@@ -37,14 +37,14 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::flushAll()
+	 * @see	\wcf\system\cache\source\ICacheSource::flushAll()
 	 */
 	public function flushAll() {
 		$this->getDirectoryUtil()->removePattern(new Regex('.*\.php$'));
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::get()
+	 * @see	\wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get($cacheName, $maxLifetime) {
 		$filename = $this->getFilename($cacheName);
@@ -62,7 +62,7 @@ class DiskCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::set()
+	 * @see	\wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
 		$file = new File($this->getFilename($cacheName));
@@ -165,7 +165,7 @@ class DiskCacheSource implements ICacheSource {
 	/**
 	 * Returns an up-to-date directory util object for the cache folder.
 	 * 
-	 * @return	wcf\util\DirectoryUtil
+	 * @return	\wcf\util\DirectoryUtil
 	 */
 	protected function getDirectoryUtil() {
 		if ($this->directoryUtil === null) {

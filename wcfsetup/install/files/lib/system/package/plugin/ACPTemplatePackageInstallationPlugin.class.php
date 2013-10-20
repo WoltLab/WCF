@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'acp_template';
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();
@@ -52,7 +52,7 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// fetch ACP templates from log

@@ -17,14 +17,14 @@ use wcf\system\request\LinkHandler;
  */
 class ModerationQueueActivationManager extends AbstractModerationQueueManager {
 	/**
-	 * @see	wcf\system\moderation\queue\AbstractModerationQueueManager::$definitionName
+	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueManager::$definitionName
 	 */
 	protected $definitionName = 'com.woltlab.wcf.moderation.activation';
 	
 	/**
 	 * Enables affected content.
 	 * 
-	 * @param	wcf\data\moderation\queue\ModerationQueue	$queue
+	 * @param	\wcf\data\moderation\queue\ModerationQueue	$queue
 	 */
 	public function enableContent(ModerationQueue $queue) {
 		$this->getProcessor(null, $queue->objectTypeID)->enableContent($queue);
@@ -33,7 +33,7 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager {
 	/**
 	 * Returns outstanding content.
 	 * 
-	 * @param	wcf\data\moderation\queue\ViewableModerationQueue	$queue
+	 * @param	\wcf\data\moderation\queue\ViewableModerationQueue	$queue
 	 * @return	string
 	 */
 	public function getDisabledContent(ViewableModerationQueue $queue) {
@@ -41,7 +41,7 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager {
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueManager::getLink()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::getLink()
 	 */
 	public function getLink($queueID) {
 		return LinkHandler::getInstance()->getLink('ModerationActivation', array('id' => $queueID));

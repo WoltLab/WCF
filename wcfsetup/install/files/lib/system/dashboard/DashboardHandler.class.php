@@ -23,7 +23,7 @@ use wcf\util\ClassUtil;
 class DashboardHandler extends SingletonFactory {
 	/**
 	 * list of cached dashboard boxes
-	 * @var	array<wcf\data\dashboard\box\DashboardBox>
+	 * @var	array<\wcf\data\dashboard\box\DashboardBox>
 	 */
 	protected $boxCache = null;
 	
@@ -34,7 +34,7 @@ class DashboardHandler extends SingletonFactory {
 	protected $pageCache = null;
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->boxCache = DashboardBoxCacheBuilder::getInstance()->getData(array(), 'boxes');
@@ -45,7 +45,7 @@ class DashboardHandler extends SingletonFactory {
 	 * Loads the active dashboard boxes for the given object type and page.
 	 * 
 	 * @param	string		$objectType
-	 * @param	wcf\page\IPage	$page
+	 * @param	\wcf\page\IPage	$page
 	 */
 	public function loadBoxes($objectType, IPage $page) {
 		$objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.dashboardContainer', $objectType);

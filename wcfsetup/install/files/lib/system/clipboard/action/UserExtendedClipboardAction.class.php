@@ -16,12 +16,12 @@ use wcf\system\WCF;
  */
 class UserExtendedClipboardAction extends AbstractClipboardAction {
 	/**
-	 * @see	wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
+	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
 	 */
 	protected $supportedActions = array('merge', 'enable');
 	
 	/**
-	 * @see	wcf\system\clipboard\action\IClipboardAction::execute()
+	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
 	 */
 	public function execute(array $objects, ClipboardAction $action) {
 		$item = parent::execute($objects, $action);
@@ -41,14 +41,14 @@ class UserExtendedClipboardAction extends AbstractClipboardAction {
 	}
 	
 	/**
-	 * @see	wcf\system\clipboard\action\IClipboardAction::getClassName()
+	 * @see	\wcf\system\clipboard\action\IClipboardAction::getClassName()
 	 */
 	public function getClassName() {
 		return 'wcf\data\user\UserAction';
 	}
 	
 	/**
-	 * @see	wcf\system\clipboard\action\IClipboardAction::getTypeName()
+	 * @see	\wcf\system\clipboard\action\IClipboardAction::getTypeName()
 	 */
 	public function getTypeName() {
 		return 'com.woltlab.wcf.user';
@@ -56,7 +56,7 @@ class UserExtendedClipboardAction extends AbstractClipboardAction {
 	
 	/**
 	 * Returns the ids of the users which can be enabled.
-	 *
+	 * 
 	 * @return	array<integer>
 	 */
 	protected function validateEnable() {
@@ -64,7 +64,7 @@ class UserExtendedClipboardAction extends AbstractClipboardAction {
 		if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
 			return array();
 		}
-	
+		
 		$userIDs = array();
 		foreach ($this->objects as $user) {
 			if ($user->activationCode) $userIDs[] = $user->userID;
@@ -75,7 +75,7 @@ class UserExtendedClipboardAction extends AbstractClipboardAction {
 	
 	/**
 	 * Returns the ids of the users which can be merge.
-	 *
+	 * 
 	 * @return	array<integer>
 	 */
 	protected function validateMerge() {

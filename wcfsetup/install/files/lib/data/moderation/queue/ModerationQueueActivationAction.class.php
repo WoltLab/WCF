@@ -17,13 +17,13 @@ use wcf\util\StringUtil;
  */
 class ModerationQueueActivationAction extends ModerationQueueAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('enableContent', 'removeContent');
 	
 	/**
 	 * moderation queue editor object
-	 * @var	wcf\data\moderation\queue\ModerationQueueEditor
+	 * @var	\wcf\data\moderation\queue\ModerationQueueEditor
 	 */
 	public $queue = null;
 	

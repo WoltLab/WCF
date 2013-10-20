@@ -6833,13 +6833,13 @@ WCF.Upload = Class.extend({
 	_name: '__files[]',
 	
 	/**
-	 * button selector
+	 * button object
 	 * @var	jQuery
 	 */
 	_buttonSelector: null,
 	
 	/**
-	 * file list selector
+	 * file list object
 	 * @var	jQuery
 	 */
 	_fileListSelector: null,
@@ -6895,8 +6895,8 @@ WCF.Upload = Class.extend({
 	/**
 	 * Initializes a new upload handler.
 	 * 
-	 * @param	string		buttonSelector
-	 * @param	string		fileListSelector
+	 * @param	jQuery		buttonSelector		button object, not button selector!
+	 * @param	jQuery		fileListSelector	file list object, not file list selector!
 	 * @param	string		className
 	 * @param	object		options
 	 */

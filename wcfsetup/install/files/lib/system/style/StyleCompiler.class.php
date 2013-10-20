@@ -35,7 +35,7 @@ class StyleCompiler extends SingletonFactory {
 	public static $supportedOptionType = array('boolean', 'integer');
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		require_once(WCF_DIR.'lib/system/style/lessc.inc.php');
@@ -46,7 +46,7 @@ class StyleCompiler extends SingletonFactory {
 	/**
 	 * Compiles LESS stylesheets.
 	 * 
-	 * @param	wcf\data\style\Style	$style
+	 * @param	\wcf\data\style\Style	$style
 	 */
 	public function compile(Style $style) {
 		// read stylesheets by dependency order
@@ -179,7 +179,7 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	array<string>		$files
 	 * @param	array<string>		$variables
 	 * @param	string			$individualLess
-	 * @param	wcf\system\Callback	$callback
+	 * @param	\wcf\system\Callback	$callback
 	 */
 	protected function compileStylesheet($filename, array $files, array $variables, $individualLess, Callback $callback) {
 		// add options as LESS variables

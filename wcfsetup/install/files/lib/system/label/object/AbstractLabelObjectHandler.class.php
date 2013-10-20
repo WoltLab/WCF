@@ -17,7 +17,7 @@ use wcf\system\SingletonFactory;
 abstract class AbstractLabelObjectHandler extends SingletonFactory implements ILabelObjectHandler {
 	/**
 	 * list of available label groups
-	 * @var	array<wcf\data\label\group\ViewableLabelGroup>
+	 * @var	array<\wcf\data\label\group\ViewableLabelGroup>
 	 */
 	protected $labelGroups = array();
 	
@@ -34,7 +34,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->labelGroups = LabelHandler::getInstance()->getLabelGroups();
@@ -47,14 +47,14 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	}
 	
 	/**
-	 * @see	wcf\system\label\manager\ILabelObjectHandler::getLabelGroupIDs()
+	 * @see	\wcf\system\label\manager\ILabelObjectHandler::getLabelGroupIDs()
 	 */
 	public function getLabelGroupIDs(array $parameters = array()) {
 		return array_keys($this->labelGroups);
 	}
 	
 	/**
-	 * @see	wcf\system\label\manager\ILabelObjectHandler::getLabelGroups()
+	 * @see	\wcf\system\label\manager\ILabelObjectHandler::getLabelGroups()
 	 */
 	public function getLabelGroups(array $parameters = array()) {
 		$groupIDs = $this->getLabelGroupIDs($parameters);
@@ -68,7 +68,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	}
 	
 	/**
-	 * @see	wcf\system\label\manager\ILabelObjectHandler::validateLabelIDs()
+	 * @see	\wcf\system\label\manager\ILabelObjectHandler::validateLabelIDs()
 	 */
 	public function validateLabelIDs(array $labelIDs, $optionName = '') {
 		$optionID = 0;
@@ -115,21 +115,21 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	}
 	
 	/**
-	 * @see	wcf\system\label\manager\ILabelObjectHandler::setLabels()
+	 * @see	\wcf\system\label\manager\ILabelObjectHandler::setLabels()
 	 */
 	public function setLabels(array $labelIDs, $objectID, $validatePermissions = true) {
 		LabelHandler::getInstance()->setLabels($labelIDs, $this->objectTypeID, $objectID, $validatePermissions);
 	}
 	
 	/**
-	 * @see	wcf\system\label\manager\ILabelObjectHandler::removeLabels()
+	 * @see	\wcf\system\label\manager\ILabelObjectHandler::removeLabels()
 	 */
 	public function removeLabels($objectID, $validatePermissions = true) {
 		LabelHandler::getInstance()->removeLabels($this->objectTypeID, $objectID, $validatePermissions);
 	}
 	
 	/**
-	 * @see	wcf\system\label\manager\ILabelObjectHandler::getAssignedLabels()
+	 * @see	\wcf\system\label\manager\ILabelObjectHandler::getAssignedLabels()
 	 */
 	public function getAssignedLabels(array $objectIDs, $validatePermissions = true) {
 		return LabelHandler::getInstance()->getAssignedLabels($this->objectTypeID, $objectIDs, $validatePermissions);

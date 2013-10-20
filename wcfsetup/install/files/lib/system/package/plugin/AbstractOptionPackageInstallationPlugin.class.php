@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
 		AbstractPackageInstallationPlugin::install();
@@ -36,7 +36,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::deleteItems()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::deleteItems()
 	 */
 	protected function deleteItems(\DOMXPath $xpath) {
 		// delete options
@@ -94,7 +94,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	/**
 	 * Imports option categories.
 	 * 
-	 * @param	\DOMXPath	$xpath 
+	 * @param	\DOMXPath	$xpath
 	 */
 	protected function importCategories(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:categories/ns:category');
@@ -143,7 +143,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	/**
 	 * Imports options.
 	 * 
-	 * @param	\DOMXPath	$xpath 
+	 * @param	\DOMXPath	$xpath
 	 */
 	protected function importOptions(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:options/ns:option');
@@ -167,7 +167,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::hasUninstall()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::hasUninstall()
 	 */
 	public function hasUninstall() {
 		$hasUninstallOptions = parent::hasUninstall();
@@ -181,7 +181,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// delete options
@@ -264,17 +264,17 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	abstract protected function saveOption($option, $categoryName, $existingOptionID = 0);
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) { }
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) { }
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) { }
 }

@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  */
 class PreParserAtUserListener implements IEventListener {
 	/**
-	 * @see	wcf\system\event\IEventListener::execute()
+	 * @see	\wcf\system\event\IEventListener::execute()
 	 */
 	public function execute($eventObj, $className, $eventName) {
 		if (!$eventObj->text) return;
@@ -37,7 +37,7 @@ class PreParserAtUserListener implements IEventListener {
 		}
 		
 		// cache quotes
-		// @see	wcf\system\bbcode\BBCodeParser::buildTagArray()
+		// @see	\wcf\system\bbcode\BBCodeParser::buildTagArray()
 		$pattern = '~\[(?:/(?:quote)|(?:quote)
 			(?:=
 				(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*)
@@ -93,6 +93,7 @@ class PreParserAtUserListener implements IEventListener {
 					
 					if (isset($users[$username])) {
 						$link = LinkHandler::getInstance()->getLink('User', array(
+							'appendSession' => false,
 							'object' => $users[$username]
 						));
 						return "[url='".$link."']@".$users[$username]->username.'[/url]';

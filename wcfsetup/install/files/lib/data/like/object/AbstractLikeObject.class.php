@@ -15,30 +15,30 @@ use wcf\data\DatabaseObjectDecorator;
  */
 abstract class AbstractLikeObject extends DatabaseObjectDecorator implements ILikeObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\like\object\LikeObject';
 	
 	/**
 	 * object type
-	 * @var	wcf\data\object\type\ObjectType
+	 * @var	\wcf\data\object\type\ObjectType
 	 */
 	protected $objectType = null;
 	
 	/**
-	 * @see	wcf\data\like\object\ILikeObject::updateLikeCounter()
+	 * @see	\wcf\data\like\object\ILikeObject::updateLikeCounter()
 	 */
 	public function updateLikeCounter($cumulativeLikes) { }
 	
 	/**
-	 * @see	wcf\data\like\object\ILikeObject::getObjectType()
+	 * @see	\wcf\data\like\object\ILikeObject::getObjectType()
 	 */
 	public function getObjectType() {
 		return $this->objectType;
 	}
 	
 	/**
-	 * @see	wcf\data\like\object\ILikeObject::setObjectType()
+	 * @see	\wcf\data\like\object\ILikeObject::setObjectType()
 	 */
 	public function setObjectType(ObjectType $objectType) {
 		$this->objectType = $objectType;

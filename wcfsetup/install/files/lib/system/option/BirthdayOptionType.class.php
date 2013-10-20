@@ -25,7 +25,7 @@ class BirthdayOptionType extends DateOptionType {
 	protected $inputClass = 'birthday';
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function validate(Option $option, $newValue) {
 		parent::validate($option, $newValue);
@@ -39,7 +39,7 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		if ($value == '0000-00-00') $value = '';
@@ -48,7 +48,7 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		$ageFrom = $ageTo = '';
@@ -64,13 +64,15 @@ class BirthdayOptionType extends DateOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\ISearchableUserOption::getCondition()
+	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		if (empty($value['ageFrom']) || empty($value['ageTo'])) return false;
 		
 		$ageFrom = intval($value['ageFrom']);
 		$ageTo = intval($value['ageTo']);
+		if ($ageFrom < 0 || $ageFrom > 120) return false;
+		if ($ageTo < 0 || $ageTo > 120) return false;
 		if (!$ageFrom || !$ageTo) return false;
 		
 		$dateFrom = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P'.($ageTo + 1).'Y'))->add(new \DateInterval('P1D'));

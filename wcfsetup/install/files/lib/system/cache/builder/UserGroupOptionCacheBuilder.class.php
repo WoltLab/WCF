@@ -13,12 +13,12 @@ namespace wcf\system\cache\builder;
  */
 class UserGroupOptionCacheBuilder extends OptionCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\builder\OptionCacheBuilder::$optionClassName
+	 * @see	\wcf\system\cache\builder\OptionCacheBuilder::$optionClassName
 	 */
 	protected $optionClassName = 'wcf\data\user\group\option\UserGroupOption';
 	
 	/**
-	 * @see	wcf\system\cache\builder\OptionCacheBuilder::$tableName
+	 * @see	\wcf\system\cache\builder\OptionCacheBuilder::$tableName
 	 */
 	protected $tableName = 'user_group_option';
 }

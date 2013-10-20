@@ -28,7 +28,7 @@ abstract class AbstractAdapter implements AdapterInterface
     protected static $hasMBString;
 
     /**
-     * @var Charset\CharsetInterface
+     * @var \Charset\CharsetInterface
      */
     protected $charset;
 
@@ -479,7 +479,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Set Console charset to use.
      *
-     * @param Charset\CharsetInterface $charset
+     * @param \Charset\CharsetInterface $charset
      */
     public function setCharset(Charset\CharsetInterface $charset)
     {
@@ -489,7 +489,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Get charset currently in use by this adapter.
      *
-     * @return Charset\CharsetInterface $charset
+     * @return \Charset\CharsetInterface $charset
      */
     public function getCharset()
     {
@@ -501,7 +501,7 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * @return Charset\Utf8
+     * @return \Charset\Utf8
      */
     public function getDefaultCharset()
     {

@@ -17,13 +17,13 @@ use wcf\system\WCF;
  */
 class StatsSidebarDashboardBox extends AbstractSidebarDashboardBox {
 	/**
-	 * the stats 
-	 * @var	wcf\system\cache\builder\UserStatsCacheBuilder 
+	 * displayed stats
+	 * @var	\wcf\system\cache\builder\UserStatsCacheBuilder
 	 */
 	public $stats = null; 
 	
 	/**
-	 * @see	wcf\system\dashboard\box\IDashboardBox::init()
+	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
 	 */
 	public function init(DashboardBox $box, IPage $page) {
 		parent::init($box, $page);
@@ -34,7 +34,7 @@ class StatsSidebarDashboardBox extends AbstractSidebarDashboardBox {
 	}
 	
 	/**
-	 * @see	wcf\system\dashboard\box\AbstractContentDashboardBox::render()
+	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
 		WCF::getTPL()->assign(array(

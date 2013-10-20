@@ -40,7 +40,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	
 	/**
 	 * list of object editors
-	 * @var	array<wcf\data\DatabaseObjectEditor>
+	 * @var	array<\wcf\data\DatabaseObjectEditor>
 	 */
 	protected $objects = array();
 	
@@ -144,7 +144,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
-	 * @see	wcf\data\IDatabaseObjectAction::validateAction()
+	 * @see	\wcf\data\IDatabaseObjectAction::validateAction()
 	 */
 	public function validateAction() {
 		// validate if user is logged in
@@ -171,7 +171,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
-	 * @see	wcf\data\IDatabaseObjectAction::executeAction()
+	 * @see	\wcf\data\IDatabaseObjectAction::executeAction()
 	 */
 	public function executeAction() {
 		// execute action
@@ -202,14 +202,14 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
-	 * @see	wcf\data\IDatabaseObjectAction::getActionName()
+	 * @see	\wcf\data\IDatabaseObjectAction::getActionName()
 	 */
 	public function getActionName() {
 		return $this->action;
 	}
 	
 	/**
-	 * @see	wcf\data\IDatabaseObjectAction::getObjectIDs()
+	 * @see	\wcf\data\IDatabaseObjectAction::getObjectIDs()
 	 */
 	public function getObjectIDs() {
 		return $this->objectIDs;
@@ -218,21 +218,21 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * Sets the database objects.
 	 * 
-	 * @param	array<wcf\data\DatabaseObject>		$objects
+	 * @param	array<\wcf\data\DatabaseObject>		$objects
 	 */
 	public function setObjects(array $objects) {
 		$this->objects = $objects;
 	}
 	
 	/**
-	 * @see	wcf\data\IDatabaseObjectAction::getParameters()
+	 * @see	\wcf\data\IDatabaseObjectAction::getParameters()
 	 */
 	public function getParameters() {
 		return $this->parameters;
 	}
 	
 	/**
-	 * @see	wcf\data\IDatabaseObjectAction::getReturnValues()
+	 * @see	\wcf\data\IDatabaseObjectAction::getReturnValues()
 	 */
 	public function getReturnValues() {
 		return array(
@@ -256,7 +256,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
-	 * @see	wcf\data\IDeleteAction::validateDelete()
+	 * @see	\wcf\data\IDeleteAction::validateDelete()
 	 */
 	public function validateDelete() {
 		// validate permissions
@@ -302,14 +302,14 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * Creates new database object.
 	 * 
-	 * @return	wcf\data\DatabaseObject
+	 * @return	\wcf\data\DatabaseObject
 	 */
 	public function create() {
 		return call_user_func(array($this->className, 'create'), $this->parameters['data']);
 	}
 	
 	/**
-	 * @see	wcf\data\IDeleteAction::delete()
+	 * @see	\wcf\data\IDeleteAction::delete()
 	 */
 	public function delete() {
 		if (empty($this->objects)) {
@@ -376,7 +376,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * Returns a single object and throws and exception if no or more than one object is given.
 	 * 
-	 * @return	wcf\data\DatabaseObject
+	 * @return	\wcf\data\DatabaseObject
 	 */
 	protected function getSingleObject() {
 		if (empty($this->objects)) {
@@ -514,7 +514,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	/**
 	 * Returns a list of currently loaded objects.
 	 * 
-	 * @return	array<wcf\data\IEditableObject>
+	 * @return	array<\wcf\data\IEditableObject>
 	 */
 	public function getObjects() {
 		return $this->objects;

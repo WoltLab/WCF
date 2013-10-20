@@ -19,27 +19,27 @@ use wcf\system\WCF;
  */
 class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\bbcode\BBCodeEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.content.bbcode.canManageBBCode');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.content.bbcode.canManageBBCode');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('delete', 'toggle', 'update');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::create()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
 	 */
 	public function create() {
 		$bbCode = parent::create();
@@ -99,14 +99,14 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 	}
 	
 	/**
-	 * @see	wcf\data\IToggleAction::validateToggle()
+	 * @see	\wcf\data\IToggleAction::validateToggle()
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
 	}
 	
 	/**
-	 * @see	wcf\data\IToggleAction::toggle()
+	 * @see	\wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {
 		foreach ($this->objects as $bbcode) {

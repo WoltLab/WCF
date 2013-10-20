@@ -16,7 +16,7 @@
 					
 					<ul>
 						<li><span class="icon icon16 icon-remove pointer jsTooltip jsDeleteButton " title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$attachment->attachmentID}" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}"></span></li>
-						<li><span class="icon icon16 icon-paste pointer jsTooltip jsButtonInsertAttachment" title="{lang}wcf.attachment.insert{/lang}" data-object-id="{@$attachment->attachmentID}" /></li>
+						<li><span class="icon icon16 icon-paste pointer jsTooltip jsButtonInsertAttachment" title="{lang}wcf.attachment.insert{/lang}" data-object-id="{@$attachment->attachmentID}"></span></li>
 					</ul>
 				</div>
 			</li>

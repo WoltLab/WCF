@@ -16,7 +16,7 @@ interface ICategoryType {
 	/**
 	 * Is called right after the given category is deleted.
 	 * 
-	 * @param	wcf\data\category\CategoryEditor	$categoryEditor
+	 * @param	\wcf\data\category\CategoryEditor	$categoryEditor
 	 */
 	public function afterDeletion(CategoryEditor $categoryEditor);
 	
@@ -66,7 +66,7 @@ interface ICategoryType {
 	public function getObjectTypeName($definitionName);
 	
 	/**
-	 * Returns the language variable category for the description language 
+	 * Returns the language variable category for the description language
 	 * variables of categories of this type.
 	 * 
 	 * @return	string

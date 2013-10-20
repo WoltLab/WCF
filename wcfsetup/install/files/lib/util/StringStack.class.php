@@ -45,7 +45,7 @@ final class StringStack {
 	
 	/**
 	 * Reinserts strings that have been replaced by unique hash values.
-	 *
+	 * 
 	 * @param	string		$string
 	 * @param	string		$type
 	 * @return	string

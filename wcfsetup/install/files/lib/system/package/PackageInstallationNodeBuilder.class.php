@@ -28,7 +28,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * active package installation dispatcher
-	 * @var	wcf\system\package\PackageInstallationDispatcher
+	 * @var	\wcf\system\package\PackageInstallationDispatcher
 	 */
 	public $installation = null;
 	
@@ -343,7 +343,7 @@ class PackageInstallationNodeBuilder {
 	 * to insert more than a single node, you should prefer shiftNodes().
 	 * 
 	 * @param	string			$beforeNode
-	 * @param	wcf\system\Callback	$callback
+	 * @param	\wcf\system\Callback	$callback
 	 */
 	public function insertNode($beforeNode, Callback $callback) {
 		$newNode = $this->getToken();

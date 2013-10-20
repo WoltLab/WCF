@@ -15,7 +15,7 @@ interface ISearchResultObject {
 	/**
 	 * Returns author's user profile.
 	 * 
-	 * @return	wcf\data\user\UserProfile
+	 * @return	\wcf\data\user\UserProfile
 	 */
 	public function getUserProfile();
 	

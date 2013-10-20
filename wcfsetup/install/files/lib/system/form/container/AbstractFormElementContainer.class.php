@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
 abstract class AbstractFormElementContainer implements IFormElementContainer {
 	/**
 	 * list of IFormElement objects
-	 * @var	array<wcf\system\form\IFormElement>
+	 * @var	array<\wcf\system\form\IFormElement>
 	 */
 	protected $children = array();
 	
@@ -35,56 +35,56 @@ abstract class AbstractFormElementContainer implements IFormElementContainer {
 	protected $label = '';
 	
 	/**
-	 * @see	wcf\system\form\IFormElementContainer::setDescription()
+	 * @see	\wcf\system\form\IFormElementContainer::setDescription()
 	 */
 	public function setDescription($description) {
 		$this->description = StringUtil::trim($description);
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElementContainer::getDescription()
+	 * @see	\wcf\system\form\IFormElementContainer::getDescription()
 	 */
 	public function getDescription() {
 		return $this->description;
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElementContainer::setLabel()
+	 * @see	\wcf\system\form\IFormElementContainer::setLabel()
 	 */
 	public function setLabel($label) {
 		$this->label = StringUtil::trim($label);
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElementContainer::getLabel()
+	 * @see	\wcf\system\form\IFormElementContainer::getLabel()
 	 */
 	public function getLabel() {
 		return $this->label;
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElementContainer::appendChild()
+	 * @see	\wcf\system\form\IFormElementContainer::appendChild()
 	 */
 	public function appendChild(IFormElement $element) {
 		$this->children[] = $element;
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElementContainer::prependChild()
+	 * @see	\wcf\system\form\IFormElementContainer::prependChild()
 	 */
 	public function prependChild(IFormElement $element) {
 		array_unshift($this->children, $element);
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElementContainer::getChildren()
+	 * @see	\wcf\system\form\IFormElementContainer::getChildren()
 	 */
 	public function getChildren() {
 		return $this->children;
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElementContainer::getValue()
+	 * @see	\wcf\system\form\IFormElementContainer::getValue()
 	 */
 	public function getValue($key) {
 		foreach ($this->children as $element) {
@@ -99,7 +99,7 @@ abstract class AbstractFormElementContainer implements IFormElementContainer {
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElementContainer::handleRequest()
+	 * @see	\wcf\system\form\IFormElementContainer::handleRequest()
 	 */
 	public function handleRequest(array $variables) {
 		foreach ($this->children as $element) {
@@ -114,7 +114,7 @@ abstract class AbstractFormElementContainer implements IFormElementContainer {
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElementContainer::setError()
+	 * @see	\wcf\system\form\IFormElementContainer::setError()
 	 */
 	public function setError($name, $error) {
 		foreach ($this->children as $element) {

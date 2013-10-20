@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class Attachment extends DatabaseObject implements IRouteController {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'attachment';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'attachmentID';
 	
@@ -33,7 +33,7 @@ class Attachment extends DatabaseObject implements IRouteController {
 	protected $embedded = false;
 	
 	/**
-	 * user permissions for attachment access 
+	 * user permissions for attachment access
 	 * @var	array<boolean>
 	 */
 	protected $permissions = array();
@@ -131,7 +131,7 @@ class Attachment extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * @see	wcf\system\request\IRouteController::getTitle()
+	 * @see	\wcf\system\request\IRouteController::getTitle()
 	 */
 	public function getTitle() {
 		return $this->filename;

@@ -19,7 +19,7 @@ use wcf\system\WCF;
 class PreparedStatement {
 	/**
 	 * database object
-	 * @var	wcf\system\database\Database
+	 * @var	\wcf\system\database\Database
 	 */
 	protected $database = null;
 	
@@ -44,7 +44,7 @@ class PreparedStatement {
 	/**
 	 * Creates a new PreparedStatement object.
 	 * 
-	 * @param	wcf\system\database\Database	$database
+	 * @param	\wcf\system\database\Database	$database
 	 * @param	PDOStatement			$pdoStatement
 	 * @param	string				$query		SQL query
 	 */
@@ -140,7 +140,7 @@ class PreparedStatement {
 	 * Fetches the next row from a result set in a database object.
 	 * 
 	 * @param	string			$className
-	 * @return	wcf\data\DatabaseObject
+	 * @return	\wcf\data\DatabaseObject
 	 */
 	public function fetchObject($className) {
 		$row = $this->fetchArray();
@@ -155,7 +155,7 @@ class PreparedStatement {
 	 * Fetches the all rows from a result set into database objects.
 	 * 
 	 * @param	string			$className
-	 * @return	array<wcf\data\DatabaseObject>
+	 * @return	array<\wcf\data\DatabaseObject>
 	 */
 	public function fetchObjects($className) {
 		$objects = array();

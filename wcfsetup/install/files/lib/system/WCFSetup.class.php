@@ -699,12 +699,11 @@ class WCFSetup extends WCF {
 		WCF::getTPL()->display('stepConfigureDB');
 	}
 	
-	
 	/**
 	 * Checks if in the chosen database are tables in conflict with the wcf tables
 	 * which will be created in the next step.
 	 * 
-	 * @param	wcf\system\database\Database	$db
+	 * @param	\wcf\system\database\Database	$db
 	 * @param	integer				$dbNumber
 	 */
 	protected function getConflictedTables($db, $dbNumber) {

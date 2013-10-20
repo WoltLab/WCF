@@ -4,7 +4,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
-use wcf\util\StringUtil;
 
 /**
  * Abstract class for a list of database objects.
@@ -37,7 +36,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	
 	/**
 	 * result objects
-	 * @var	array<wcf\data\DatabaseObject>
+	 * @var	array<\wcf\data\DatabaseObject>
 	 */
 	public $objects = array();
 	
@@ -84,14 +83,14 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	public $sqlJoins = '';
 	
 	/**
-	 * enables the automatic usage of the qualified shorthand 
+	 * enables the automatic usage of the qualified shorthand
 	 * @var	boolean
 	 */
 	public $useQualifiedShorthand = true;
 	
 	/**
 	 * sql conditions
-	 * @var	wcf\system\database\util\PreparedStatementConditionBuilder
+	 * @var	\wcf\system\database\util\PreparedStatementConditionBuilder
 	 */
 	protected $conditionBuilder = null;
 	
@@ -240,7 +239,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * Returns the objects of the list.
 	 * 
-	 * @return	array<wcf\data\DatabaseObject>
+	 * @return	array<\wcf\data\DatabaseObject>
 	 */
 	public function getObjects() {
 		return $this->objects;
@@ -249,7 +248,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	/**
 	 * Returns the condition builder object.
 	 * 
-	 * @return	wcf\system\database\util\PreparedStatementConditionBuilder
+	 * @return	\wcf\system\database\util\PreparedStatementConditionBuilder
 	 */
 	public function getConditionBuilder() {
 		return $this->conditionBuilder;
@@ -340,7 +339,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
-	 * @see	wcf\data\ITraversableObject::seekTo()
+	 * @see	\wcf\data\ITraversableObject::seekTo()
 	 */
 	public function seekTo($objectID) {
 		$this->index = array_search($objectID, $this->indexToObject);
@@ -351,7 +350,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	}
 	
 	/**
-	 * @see	wcf\data\ITraversableObject::search()
+	 * @see	\wcf\data\ITraversableObject::search()
 	 */
 	public function search($objectID) {
 		try {

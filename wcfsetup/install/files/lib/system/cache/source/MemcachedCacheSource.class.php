@@ -89,7 +89,7 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::flush()
+	 * @see	\wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush($cacheName, $useWildcard) {
 		$cacheName = $this->prefix . $cacheName;
@@ -102,7 +102,7 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::flushAll()
+	 * @see	\wcf\system\cache\source\ICacheSource::flushAll()
 	 */
 	public function flushAll() {
 		// read all keys
@@ -121,7 +121,7 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::get()
+	 * @see	\wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get($cacheName, $maxLifetime) {
 		$cacheName = $this->prefix . $cacheName;
@@ -140,7 +140,7 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * @see	wcf\system\cache\source\ICacheSource::set()
+	 * @see	\wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
 		$cacheName = $this->prefix . $cacheName;

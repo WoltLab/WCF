@@ -7,6 +7,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -21,17 +22,17 @@ use wcf\util\StringUtil;
  */
 class ExceptionLogViewPage extends MultipleLinkPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.log.exception';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canViewLog');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
 	 */
 	public $itemsPerPage = 10;
 	
@@ -60,7 +61,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	public $exceptions = array();
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -70,7 +71,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		AbstractPage::readData();
@@ -135,6 +136,7 @@ WCF version: (?P<wcfVersion>.*?)
 Request URI: (?P<requestURI>.*?)
 Referrer: (?P<referrer>.*?)
 User-Agent: (?P<userAgent>.*?)
+Information: (?P<information>.*?)
 Stacktrace: 
 (?P<stacktrace>.*)', Regex::DOT_ALL);
 		$stackTraceFormatter = new Regex('^\s+(#\d+)', Regex::MULTILINE);
@@ -152,11 +154,12 @@ Stacktrace:
 			
 			$this->exceptions[$key] = $exceptionRegex->getMatches();
 			$this->exceptions[$key]['stacktrace'] = explode("\n", $stackTraceFormatter->replace(StringUtil::encodeHTML($this->exceptions[$key]['stacktrace']), '<strong>\\1</strong>'));
+			$this->exceptions[$key]['information'] = JSON::decode($this->exceptions[$key]['information']);
 		}
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::countItems()
+	 * @see	\wcf\page\MultipleLinkPage::countItems()
 	 */
 	public function countItems() {
 		// call countItems event
@@ -182,7 +185,7 @@ Stacktrace:
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

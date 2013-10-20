@@ -17,8 +17,8 @@ interface IUserOptionOutput {
 	/**
 	 * Returns the html code for the output of the given user option.
 	 * 
-	 * @param	wcf\data\user\User			$user
-	 * @param	wcf\data\user\option\UserOption		$option
+	 * @param	\wcf\data\user\User			$user
+	 * @param	\wcf\data\user\option\UserOption		$option
 	 * @param	string					$value
 	 * @return	string
 	 */

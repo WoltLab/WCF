@@ -29,12 +29,12 @@ class ModerationListPage extends SortablePage {
 	public $availableDefinitions = array();
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortField
+	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'lastChangeTime';
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortField
+	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortOrder = 'DESC';
 	
@@ -45,17 +45,17 @@ class ModerationListPage extends SortablePage {
 	public $definitionID = 0;
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$loginRequired
+	 * @see	\wcf\page\AbstractPage::$loginRequired
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('mod.general.canUseModeration');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\moderation\queue\ViewableModerationQueueList';
 	
@@ -66,12 +66,12 @@ class ModerationListPage extends SortablePage {
 	public $status = -1;
 	
 	/**
-	 * @see	wcf\page\SortablePage::$validSortFields
+	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('assignedUsername', 'lastChangeTime', 'queueID', 'time', 'username');
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -89,7 +89,7 @@ class ModerationListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::initObjectList()
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -118,7 +118,7 @@ class ModerationListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

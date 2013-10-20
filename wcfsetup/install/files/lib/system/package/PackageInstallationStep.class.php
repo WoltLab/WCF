@@ -15,7 +15,7 @@ use wcf\system\form\FormDocument;
 class PackageInstallationStep {
 	/**
 	 * form document object
-	 * @var	wcf\system\form\FormDocument
+	 * @var	\wcf\system\form\FormDocument
 	 */
 	protected $document = null;
 	

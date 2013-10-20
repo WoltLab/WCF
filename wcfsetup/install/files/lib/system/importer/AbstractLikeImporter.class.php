@@ -4,7 +4,7 @@ use wcf\system\WCF;
 
 /**
  * Imports likes.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class AbstractLikeImporter extends AbstractImporter {
 	/**
-	 * @see	wcf\system\importer\AbstractImporter::$className
+	 * @see	\wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\like\Like';
 	
@@ -25,7 +25,7 @@ class AbstractLikeImporter extends AbstractImporter {
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see	wcf\system\importer\IImporter::import()
+	 * @see	\wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		if ($data['objectUserID']) $data['objectUserID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['objectUserID']);

@@ -17,7 +17,7 @@ use wcf\system\WCF;
  */
 class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	/**
-	 * @see	wcf\system\moderation\queue\AbstractModerationQueueManager::$definitionName
+	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueManager::$definitionName
 	 */
 	protected $definitionName = 'com.woltlab.wcf.moderation.report';
 	
@@ -57,7 +57,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	}
 	
 	/**
-	 * @see	wcf\system\moderation\queue\IModerationQueueManager::getLink()
+	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::getLink()
 	 */
 	public function getLink($queueID) {
 		return LinkHandler::getInstance()->getLink('ModerationReport', array('id' => $queueID));
@@ -66,7 +66,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	/**
 	 * Returns rendered template for reported content.
 	 * 
-	 * @param	wcf\data\moderation\queue\ViewableModerationQueue	$queue
+	 * @param	\wcf\data\moderation\queue\ViewableModerationQueue	$queue
 	 * @return	string
 	 */
 	public function getReportedContent(ViewableModerationQueue $queue) {
@@ -78,7 +78,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	 * 
 	 * @param	string		$objectType
 	 * @param	integer		$objectID
-	 * @return	wcf\data\IUserContent
+	 * @return	\wcf\data\IUserContent
 	 */
 	public function getReportedObject($objectType, $objectID) {
 		return $this->getProcessor($objectType)->getReportedObject($objectID);

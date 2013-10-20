@@ -20,18 +20,18 @@ use wcf\system\WCF;
  */
 class RecentActivityListPage extends AbstractPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.user.recentActivity';
 	
 	/**
 	 * viewable user activity event list
-	 * @var	wcf\data\user\activity\event\ViewableUserActivityEventList
+	 * @var	\wcf\data\user\activity\event\ViewableUserActivityEventList
 	 */
 	public $eventList = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -44,7 +44,7 @@ class RecentActivityListPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

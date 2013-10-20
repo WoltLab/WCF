@@ -5,7 +5,7 @@ use wcf\system\category\CategoryHandler;
 
 /**
  * Caches the acl options of categories.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -15,7 +15,7 @@ use wcf\system\category\CategoryHandler;
  */
 class CategoryACLOptionCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
 		$data = array();

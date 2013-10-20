@@ -25,7 +25,7 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	protected $tagStack = array();
 	
 	/**
-	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeStart()
+	 * @see	\wcf\system\template\ICompilerTemplatePlugin::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		$compiler->pushTag('implode');
@@ -49,7 +49,7 @@ class ImplodeCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	}
 	
 	/**
-	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeEnd()
+	 * @see	\wcf\system\template\ICompilerTemplatePlugin::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('implode');

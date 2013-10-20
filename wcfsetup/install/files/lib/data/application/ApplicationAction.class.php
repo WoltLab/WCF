@@ -19,18 +19,18 @@ use wcf\util\StringUtil;
  */
 class ApplicationAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\application\ApplicationEditor';
 	
 	/**
 	 * application editor object
-	 * @var	wcf\data\application\ApplicationEditor
+	 * @var	\wcf\data\application\ApplicationEditor
 	 */
 	public $applicationEditor = null;
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('setAsPrimary');
 	

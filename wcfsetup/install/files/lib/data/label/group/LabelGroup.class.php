@@ -15,17 +15,17 @@ use wcf\system\request\IRouteController;
  */
 class LabelGroup extends DatabaseObject implements IRouteController {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'label_group';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseIndexName
 	 */
 	protected static $databaseTableIndexName = 'groupID';
 	
 	/**
-	 * @see	wcf\data\ITitledObject::getTitle()
+	 * @see	\wcf\data\ITitledObject::getTitle()
 	 */
 	public function getTitle() {
 		return $this->groupName;

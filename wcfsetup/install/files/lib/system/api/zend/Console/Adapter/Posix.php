@@ -31,7 +31,7 @@ class Posix extends AbstractAdapter
     protected static $hasMBString;
 
     /**
-     * @var Charset\CharsetInterface
+     * @var \Charset\CharsetInterface
      */
     protected $charset;
 
@@ -313,7 +313,7 @@ class Posix extends AbstractAdapter
     /**
      * Set Console charset to use.
      *
-     * @param Charset\CharsetInterface $charset
+     * @param \Charset\CharsetInterface $charset
      */
     public function setCharset(Charset\CharsetInterface $charset)
     {
@@ -323,7 +323,7 @@ class Posix extends AbstractAdapter
     /**
      * Get charset currently in use by this adapter.
      *
-     * @return Charset\CharsetInterface $charset
+     * @return \Charset\CharsetInterface $charset
      */
     public function getCharset()
     {
@@ -335,7 +335,7 @@ class Posix extends AbstractAdapter
     }
 
     /**
-     * @return Charset\CharsetInterface
+     * @return \Charset\CharsetInterface
      */
     public function getDefaultCharset()
     {

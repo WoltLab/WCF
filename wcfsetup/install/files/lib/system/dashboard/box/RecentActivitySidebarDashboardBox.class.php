@@ -19,12 +19,12 @@ use wcf\system\WCF;
 class RecentActivitySidebarDashboardBox extends AbstractSidebarDashboardBox {
 	/**
 	 * recent activity list
-	 * @var	wcf\data\user\activity\event\ViewableUserActivityEventList
+	 * @var	\wcf\data\user\activity\event\ViewableUserActivityEventList
 	 */
 	public $eventList = null;
 	
 	/**
-	 * @see	wcf\system\dashboard\box\IDashboardBox::init()
+	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
 	 */
 	public function init(DashboardBox $box, IPage $page) {
 		parent::init($box, $page);
@@ -40,7 +40,7 @@ class RecentActivitySidebarDashboardBox extends AbstractSidebarDashboardBox {
 	}
 	
 	/**
-	 * @see	wcf\system\dashboard\box\AbstractContentDashboardBox::render()
+	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
 		if (count($this->eventList)) {

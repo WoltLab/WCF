@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class SitemapEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\sitemap\Sitemap';
 }

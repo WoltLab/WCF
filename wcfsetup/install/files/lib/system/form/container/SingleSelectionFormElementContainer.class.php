@@ -29,14 +29,14 @@ class SingleSelectionFormElementContainer extends SelectionFormElementContainer 
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElementContainer::getValue()
+	 * @see	\wcf\system\form\IFormElementContainer::getValue()
 	 */
 	public function getValue($key) {
 		return $this->value;
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElementContainer::getHTML()
+	 * @see	\wcf\system\form\IFormElementContainer::getHTML()
 	 */
 	public function getHTML($formName) {
 		$content = '';

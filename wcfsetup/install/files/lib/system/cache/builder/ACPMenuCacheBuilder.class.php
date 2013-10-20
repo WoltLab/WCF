@@ -25,12 +25,12 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 	
 	/**
 	 * list of option categories grouped by the name of their parent category
-	 * @var	array<wcf\data\option\category\OptionCategory>
+	 * @var	array<\wcf\data\option\category\OptionCategory>
 	 */
 	protected $categoryStructure = array();
 	
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) { 
 		$data = array();
@@ -62,7 +62,7 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Returns the list with top option categories which contain options.
 	 * 
-	 * @return	array<wcf\data\option\category\OptionCategory>
+	 * @return	array<\wcf\data\option\category\OptionCategory>
 	 */
 	protected function getTopOptionCategories() {
 		$optionCategoryList = new OptionCategoryList();

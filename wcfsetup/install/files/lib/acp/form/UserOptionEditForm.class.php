@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class UserOptionEditForm extends UserOptionAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.option';
 	
@@ -31,12 +31,12 @@ class UserOptionEditForm extends UserOptionAddForm {
 	
 	/**
 	 * user option object
-	 * @var	wcf\data\user\option\UserOption
+	 * @var	\wcf\data\user\option\UserOption
 	 */
 	public $userOption = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -49,7 +49,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -78,7 +78,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -103,7 +103,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

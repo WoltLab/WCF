@@ -17,12 +17,12 @@ use wcf\system\WCF;
  */
 class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'template';
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();

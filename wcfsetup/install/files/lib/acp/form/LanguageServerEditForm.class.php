@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class LanguageServerEditForm extends LanguageServerAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.language.server';
 	
@@ -30,12 +30,12 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	
 	/**
 	 * active language server
-	 * @var	wcf\data\language\server\LanguageServer
+	 * @var	\wcf\data\language\server\LanguageServer
 	 */
 	public $languageServer = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -48,7 +48,7 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -65,7 +65,7 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -76,7 +76,7 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

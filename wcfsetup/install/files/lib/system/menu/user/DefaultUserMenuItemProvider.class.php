@@ -14,19 +14,19 @@ use wcf\data\DatabaseObjectDecorator;
  */
 class DefaultUserMenuItemProvider extends DatabaseObjectDecorator implements IUserMenuItemProvider {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\menu\item\UserMenuItem';
 	
 	/**
-	 * @see	wcf\system\menu\page\IUserMenuItemProvider::isVisible()
+	 * @see	\wcf\system\menu\page\IUserMenuItemProvider::isVisible()
 	 */
 	public function isVisible() {
 		return true;
 	}
 	
 	/**
-	 * @see	wcf\system\menu\page\IUserMenuItemProvider::getLink()
+	 * @see	\wcf\system\menu\page\IUserMenuItemProvider::getLink()
 	 */
 	public function getLink() {
 		// explicit call to satisfy our interface

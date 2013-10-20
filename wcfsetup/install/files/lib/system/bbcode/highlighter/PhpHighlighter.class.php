@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\bbcode\highlighter;
 use wcf\system\Regex;
-use wcf\util\StringUtil;
 
 /**
  * Highlights syntax of PHP sourcecode.
@@ -17,7 +16,7 @@ class PhpHighlighter extends Highlighter {
 	public static $colorToClass = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		parent::init();
@@ -31,7 +30,7 @@ class PhpHighlighter extends Highlighter {
 	}
 	
 	/**
-	 * @see	wcf\system\bbcode\highlighter\Highlighter::highlight()
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlight()
 	 */
 	public function highlight($code) {
 		// add starting php tag
@@ -62,7 +61,7 @@ class PhpHighlighter extends Highlighter {
 		// convert colors to classes
 		$highlightedCode = strtr($highlightedCode, self::$colorToClass);
 		
-		// replace double quotes by entity 
+		// replace double quotes by entity
 		return Regex::compile('(?<!\<span class=)"(?!\>)')->replace($highlightedCode, '&quot;');
 	}
 }

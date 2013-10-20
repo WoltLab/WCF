@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
 class CacheHandler extends SingletonFactory {
 	/**
 	 * cache source object
-	 * @var	wcf\system\cache\source\ICacheSource
+	 * @var	\wcf\system\cache\source\ICacheSource
 	 */
 	protected $cacheSource = null;
 	
@@ -46,7 +46,7 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Flush cache for given resource.
 	 * 
-	 * @param	wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
+	 * @param	\wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
 	 * @param	array						$parameters
 	 */
 	public function flush(ICacheBuilder $cacheBuilder, array $parameters) {
@@ -63,7 +63,7 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Returns cached value for given resource, false if no cache exists.
 	 * 
-	 * @param	wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
+	 * @param	\wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
 	 * @param	array						$parameters
 	 * @return	mixed
 	 */
@@ -74,7 +74,7 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Caches a value for given resource,
 	 * 
-	 * @param	wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
+	 * @param	\wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
 	 * @param	array						$parameters
 	 * @param	array						$data
 	 */
@@ -95,7 +95,7 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Builds cache name.
 	 * 
-	 * @param	wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
+	 * @param	\wcf\system\cache\builder\ICacheBuilder		$cacheBuilder
 	 * @param	array						$parameters
 	 * @return	string
 	 */
@@ -113,7 +113,7 @@ class CacheHandler extends SingletonFactory {
 	/**
 	 * Returns the cache source object.
 	 * 
-	 * @return	wcf\system\cache\source\ICacheSource
+	 * @return	\wcf\system\cache\source\ICacheSource
 	 */
 	public function getCacheSource() {
 		return $this->cacheSource;

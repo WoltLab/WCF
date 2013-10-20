@@ -17,13 +17,13 @@ use wcf\system\menu\user\profile\UserProfileMenu;
  */
 class UserProfileMenuItemAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('getContent');
 	
 	/**
 	 * menu item
-	 * @var	wcf\data\user\profile\menu\item\UserProfileMenuItem
+	 * @var	\wcf\data\user\profile\menu\item\UserProfileMenuItem
 	 */
 	protected $menuItem = null;
 	

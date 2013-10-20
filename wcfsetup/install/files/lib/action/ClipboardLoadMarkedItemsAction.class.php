@@ -14,12 +14,12 @@ use wcf\system\clipboard\ClipboardHandler;
  */
 class ClipboardLoadMarkedItemsAction extends ClipboardAction {
 	/**
-	 * @see	wcf\action\ClipboardAction::executeAction()
+	 * @see	\wcf\action\ClipboardAction::executeAction()
 	 */
 	protected function executeAction() { }
 	
 	/**
-	 * @see	wcf\action\ClipboardAction::getEditorItems()
+	 * @see	\wcf\action\ClipboardAction::getEditorItems()
 	 */
 	protected function getEditorItems() {
 		$returnValues = parent::getEditorItems();

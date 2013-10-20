@@ -15,7 +15,7 @@ use wcf\data\IDatabaseObjectProcessor;
  */
 abstract class AbstractObjectTypeProcessor extends DatabaseObjectDecorator implements IDatabaseObjectProcessor {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\object\type\ObjectType';
 }

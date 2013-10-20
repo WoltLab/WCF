@@ -18,32 +18,32 @@ use wcf\util\StringUtil;
  */
 class AttachmentListPage extends SortablePage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.attachment.list';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.attachment.canManageAttachment');
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortField
+	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'uploadTime';
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortOrder
+	 * @see	\wcf\page\SortablePage::$defaultSortOrder
 	 */
 	public $defaultSortOrder = 'DESC';
 	
 	/**
-	 * @see	wcf\page\SortablePage::$validSortFields
+	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('attachmentID', 'filename', 'filesize', 'downloads', 'uploadTime', 'lastDownloadTime');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\attachment\AdministrativeAttachmentList';
 	
@@ -78,7 +78,7 @@ class AttachmentListPage extends SortablePage {
 	public $stats = array();
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -89,7 +89,7 @@ class AttachmentListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::initObjectList
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -125,7 +125,7 @@ class AttachmentListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

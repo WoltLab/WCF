@@ -15,7 +15,7 @@ use wcf\util\ArrayUtil;
  */
 class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	/**
-	 * @see	wcf\system\database\editor\DatabaseEditor::getTableNames()
+	 * @see	\wcf\system\database\editor\DatabaseEditor::getTableNames()
 	 */
 	public function getTableNames() {
 		$existingTables = array();
@@ -32,7 +32,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	wcf\system\database\editor\DatabaseEditor::getColumns()
+	 * @see	\wcf\system\database\editor\DatabaseEditor::getColumns()
 	 */
 	public function getColumns($tableName) {
 		$columns = array();
@@ -63,7 +63,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	wcf\system\database\editor\DatabaseEditor::getIndices()
+	 * @see	\wcf\system\database\editor\DatabaseEditor::getIndices()
 	 */
 	public function getIndices($tableName) {
 		$indices = array();
@@ -114,7 +114,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	wcf\system\database\editor\DatabaseEditor::createTable()
+	 * @see	\wcf\system\database\editor\DatabaseEditor::createTable()
 	 */
 	public function createTable($tableName, $columns, $indices = array()) {
 		$columnDefinition = $indexDefinition = '';
@@ -151,7 +151,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	wcf\system\database\editor\DatabaseEditor::dropTable()
+	 * @see	\wcf\system\database\editor\DatabaseEditor::dropTable()
 	 */
 	public function dropTable($tableName) {
 		$sql = "DROP TABLE IF EXISTS ".$tableName." CASCADE";
@@ -160,7 +160,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	wcf\system\database\editor\DatabaseEditor::addColumn()
+	 * @see	\wcf\system\database\editor\DatabaseEditor::addColumn()
 	 */
 	public function addColumn($tableName, $columnName, $columnData) {
 		$sql = "ALTER TABLE ".$tableName." ADD COLUMN ".$this->buildColumnDefinition($columnName, $columnData);
@@ -169,7 +169,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	wcf\system\database\editor\DatabaseEditor::alterColumn()
+	 * @see	\wcf\system\database\editor\DatabaseEditor::alterColumn()
 	 */
 	public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData) {
 		// change column name if necessary
@@ -219,7 +219,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	wcf\system\database\editor\DatabaseEditor::dropColumn()
+	 * @see	\wcf\system\database\editor\DatabaseEditor::dropColumn()
 	 */
 	public function dropColumn($tableName, $columnName) {
 		$sql = "ALTER TABLE ".$tableName." DROP COLUMN ".$columnName." CASCADE";
@@ -228,7 +228,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	wcf\system\database\editor\DatabaseEditor::addIndex()
+	 * @see	\wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addIndex($tableName, $indexName, $indexData) {
 		$columns = ArrayUtil::trim(explode(',', $indexData['columns']));
@@ -282,7 +282,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	wcf\system\database\editor\DatabaseEditor::addIndex()
+	 * @see	\wcf\system\database\editor\DatabaseEditor::addIndex()
 	 */
 	public function addForeignKey($tableName, $indexName, $indexData) {
 		$sql = "ALTER TABLE ".$tableName." ADD";
@@ -307,7 +307,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	wcf\system\database\editor\DatabaseEditor::dropIndex()
+	 * @see	\wcf\system\database\editor\DatabaseEditor::dropIndex()
 	 */
 	public function dropIndex($tableName, $indexName) {
 		$sql = "DROP INDEX IF EXISTS ".$tableName."_".$indexName."_key CASCADE";
@@ -316,7 +316,7 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 	}
 	
 	/**
-	 * @see	wcf\system\database\editor\DatabaseEditor::dropForeignKey()
+	 * @see	\wcf\system\database\editor\DatabaseEditor::dropForeignKey()
 	 */
 	public function dropForeignKey($tableName, $indexName) {
 		// TODO: Could it be, that this method is not required because Postgre is clever enough to delete references anyway?

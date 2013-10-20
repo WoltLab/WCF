@@ -20,7 +20,7 @@ use wcf\system\WCF;
  */
 class UserRankEditForm extends UserRankAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.rank.list';
 	
@@ -32,12 +32,12 @@ class UserRankEditForm extends UserRankAddForm {
 	
 	/**
 	 * rank object
-	 * @var	wcf\data\user\rank\UserRank
+	 * @var	\wcf\data\user\rank\UserRank
 	 */
 	public $rank = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -50,7 +50,7 @@ class UserRankEditForm extends UserRankAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -87,7 +87,7 @@ class UserRankEditForm extends UserRankAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -109,7 +109,7 @@ class UserRankEditForm extends UserRankAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

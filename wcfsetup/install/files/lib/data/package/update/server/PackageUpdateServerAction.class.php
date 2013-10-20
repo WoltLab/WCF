@@ -15,39 +15,39 @@ use wcf\data\IToggleAction;
  */
 class PackageUpdateServerAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\package\update\server\PackageUpdateServerEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
 	protected $permissionsCreate = array('admin.system.package.canEditServer');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.system.package.canEditServer');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.system.package.canEditServer');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('create', 'delete', 'toggle', 'update');
 	
 	/**
-	 * @see	wcf\data\IToggleAction::validateToggle()
+	 * @see	\wcf\data\IToggleAction::validateToggle()
 	 */
 	public function validateToggle() {
 		parent::validateUpdate();
 	}
 	
 	/**
-	 * @see	wcf\data\IToggleAction::toggle()
+	 * @see	\wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {
 		foreach ($this->objects as $server) {

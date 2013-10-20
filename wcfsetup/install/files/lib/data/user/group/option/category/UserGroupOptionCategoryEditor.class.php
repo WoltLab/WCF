@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class UserGroupOptionCategoryEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\user\group\option\category\UserGroupOptionCategory';
 }

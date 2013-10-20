@@ -16,12 +16,12 @@ use wcf\system\cache\builder\PackageCacheBuilder;
  */
 class PackageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\package\Package';
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		PackageCacheBuilder::getInstance()->reset();

@@ -20,13 +20,13 @@ use wcf\util\StringUtil;
 class Package extends DatabaseObject {
 	/**
 	 * list of packages that this package requires
-	 * @var	array<wcf\data\package\Package>
+	 * @var	array<\wcf\data\package\Package>
 	 */
 	protected $dependencies = null;
 	
 	/**
 	 * list of packages that require this package
-	 * @var	array<wcf\data\package\Package>
+	 * @var	array<\wcf\data\package\Package>
 	 */
 	protected $dependentPackages = null;
 	
@@ -38,17 +38,17 @@ class Package extends DatabaseObject {
 	
 	/**
 	 * list of packages that were given as required packages during installation
-	 * @var	array<wcf\data\package\Package>
+	 * @var	array<\wcf\data\package\Package>
 	 */
 	protected $requiredPackages = null;
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'package';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'packageID';
 	
@@ -98,7 +98,7 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	wcf\data\package\Package::getName()
+	 * @see	\wcf\data\package\Package::getName()
 	 */
 	public function __toString() {
 		return $this->getName();
@@ -120,7 +120,7 @@ class Package extends DatabaseObject {
 	 * returned packages are the packages given in the <requiredpackages> tag
 	 * in the package.xml of this package.
 	 * 
-	 * @return	array<wcf\data\package\Package>
+	 * @return	array<\wcf\data\package\Package>
 	 */
 	public function getRequiredPackages() {
 		if ($this->requiredPackages === null) {
@@ -163,7 +163,7 @@ class Package extends DatabaseObject {
 	/**
 	 * Returns a list of packages dependent from current package.
 	 * 
-	 * @return	array<wcf\data\package\Package>
+	 * @return	array<\wcf\data\package\Package>
 	 */
 	public function getDependentPackages() {
 		if ($this->dependentPackages === null) {

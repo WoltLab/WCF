@@ -16,12 +16,12 @@ use wcf\system\event\EventHandler;
  */
 class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\style\StyleEditor';
 	
 	/** 
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
 		parent::install();
@@ -42,7 +42,7 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 	}
 	
 	/** 
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		// call uninstall event

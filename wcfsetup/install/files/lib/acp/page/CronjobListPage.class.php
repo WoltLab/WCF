@@ -14,32 +14,32 @@ use wcf\page\SortablePage;
  */
 class CronjobListPage extends SortablePage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cronjob.list';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canManageCronjob');
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortField
+	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'description';
 	
 	/**
-	 * @see	wcf\page\SortablePage::$validSortFields
+	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('description', 'cronjobID', 'nextExec', 'startMinute', 'startHour', 'startDom', 'startMonth', 'startDow');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\cronjob\CronjobList';
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::initObjectList()
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	public function initObjectList() {
 		parent::initObjectList();

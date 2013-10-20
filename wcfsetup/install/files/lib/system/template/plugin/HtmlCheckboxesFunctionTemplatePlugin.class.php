@@ -28,7 +28,7 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	protected $disableEncoding = false;
 	
 	/**
-	 * @see	wcf\system\template\IFunctionTemplatePlugin::execute()
+	 * @see	\wcf\system\template\IFunctionTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// get options
@@ -79,7 +79,7 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	
 	/**
 	 * Executes StringUtil::encodeHTML on the given text if disableEncoding is false.
-	 * @see	wcf\util\StringUtil::encodeHTML()
+	 * @see	\wcf\util\StringUtil::encodeHTML()
 	 */
 	protected function encodeHTML($text) {
 		if (!$this->disableEncoding) {

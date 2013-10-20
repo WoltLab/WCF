@@ -6,14 +6,12 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
-use wcf\system\cache\builder\UserNotificationEventCacheBuilder;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
 
 /**
@@ -28,32 +26,32 @@ use wcf\util\UserRegistrationUtil;
  */
 class UserAction extends AbstractDatabaseObjectAction implements IClipboardAction, ISearchAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	public $className = 'wcf\data\user\UserEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('getSearchResultList');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsCreate
 	 */
 	protected $permissionsCreate = array('admin.user.canAddUser');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
 	protected $permissionsDelete = array('admin.user.canDeleteUser');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
 	protected $permissionsUpdate = array('admin.user.canEditUser');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('create', 'ban', 'delete', 'disable', 'enable', 'unban');
 	
@@ -115,7 +113,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * @see	wcf\data\IDeleteAction::delete()
+	 * @see	\wcf\data\IDeleteAction::delete()
 	 */
 	public function delete() {
 		if (empty($this->objects)) {
@@ -269,7 +267,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
 	 */
 	public function update() {
 		if (isset($this->parameters['data'])) {
@@ -349,7 +347,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * @see	wcf\data\ISearchAction::validateGetSearchResultList()
+	 * @see	\wcf\data\ISearchAction::validateGetSearchResultList()
 	 */
 	public function validateGetSearchResultList() {
 		$this->readBoolean('includeUserGroups', false, 'data');
@@ -361,7 +359,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * @see	wcf\data\ISearchAction::getSearchResultList()
+	 * @see	\wcf\data\ISearchAction::getSearchResultList()
 	 */
 	public function getSearchResultList() {
 		$searchString = $this->parameters['data']['searchString'];
@@ -410,14 +408,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * @see	wcf\data\IClipboardAction::validateUnmarkAll()
+	 * @see	\wcf\data\IClipboardAction::validateUnmarkAll()
 	 */
 	public function validateUnmarkAll() {
 		// does nothing
 	}
 	
 	/**
-	 * @see	wcf\data\IClipboardAction::unmarkAll()
+	 * @see	\wcf\data\IClipboardAction::unmarkAll()
 	 */
 	public function unmarkAll() {
 		ClipboardHandler::getInstance()->removeItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
@@ -425,14 +423,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	
 	/**
 	 * Unmarks users.
-	 *
+	 * 
 	 * @param	array<integer>		$userIDs
 	 */
 	protected function unmarkItems(array $userIDs = array()) {
 		if (empty($userIDs)) {
 			$userIDs = $this->objectIDs;
 		}
-	
+		
 		if (!empty($userIDs)) {
 			ClipboardHandler::getInstance()->unmark($userIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user'));
 		}

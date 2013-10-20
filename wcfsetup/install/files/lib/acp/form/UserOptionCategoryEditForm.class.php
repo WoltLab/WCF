@@ -19,7 +19,7 @@ use wcf\system\WCF;
  */
 class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.option';
 	
@@ -31,12 +31,12 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	
 	/**
 	 * category object
-	 * @var	wcf\data\user\option\category\UserOptionCategory
+	 * @var	\wcf\data\user\option\category\UserOptionCategory
 	 */
 	public $category = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -49,7 +49,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -66,7 +66,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -79,7 +79,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

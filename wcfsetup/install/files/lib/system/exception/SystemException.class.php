@@ -56,7 +56,7 @@ class SystemException extends LoggedException implements IPrintableException {
 	}
 	
 	/**
-	 * @see	wcf\system\exception\IPrintableException::show()
+	 * @see	\wcf\system\exception\IPrintableException::show()
 	 */
 	public function show() {
 		// send status code

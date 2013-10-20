@@ -2,7 +2,6 @@
 namespace wcf\acp\form;
 use wcf\data\category\Category;
 use wcf\data\category\CategoryNodeTree;
-use wcf\data\package\PackageCache;
 use wcf\data\smiley\SmileyAction;
 use wcf\data\smiley\SmileyEditor;
 use wcf\form\AbstractForm;
@@ -25,17 +24,17 @@ use wcf\util\StringUtil;
  */
 class SmileyAddForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.smiley.add';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$templateName
+	 * @see	\wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'smileyAdd';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.content.smiley.canManageSmiley');
 	
@@ -77,12 +76,12 @@ class SmileyAddForm extends AbstractForm {
 	
 	/**
 	 * node tree with available smiley categories
-	 * @var	wcf\data\category\CategoryNodeTree
+	 * @var	\wcf\data\category\CategoryNodeTree
 	 */
 	public $categoryNodeTree = null;
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -102,7 +101,7 @@ class SmileyAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -119,9 +118,8 @@ class SmileyAddForm extends AbstractForm {
 		I18nHandler::getInstance()->register('smileyTitle');
 	}
 	
-	
 	/**
-	 * @see	wcf\page\IForm::readFormParameters()
+	 * @see	\wcf\page\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -138,7 +136,7 @@ class SmileyAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IForm::save()
+	 * @see	\wcf\page\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -184,7 +182,7 @@ class SmileyAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IForm::validate()
+	 * @see	\wcf\page\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();

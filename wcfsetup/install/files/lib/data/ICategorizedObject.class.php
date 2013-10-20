@@ -15,7 +15,7 @@ interface ICategorizedObject {
 	/**
 	 * Returns the category this object belongs to.
 	 * 
-	 * @return	wcf\data\category\Category
+	 * @return	\wcf\data\category\Category
 	 */
 	public function getCategory();
 }

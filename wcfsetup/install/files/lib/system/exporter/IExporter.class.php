@@ -3,7 +3,7 @@ namespace wcf\system\exporter;
 
 /**
  * Basic interface for all exporters.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -40,7 +40,7 @@ interface IExporter {
 	
 	/**
 	 * Runs the data export.
-	 *
+	 * 
 	 * @param	string		$objectType
 	 * @param	integer		$loopCount
 	 */
@@ -48,14 +48,14 @@ interface IExporter {
 	
 	/**
 	 * Validates database access.
-	 *
+	 * 
 	 * @throws	wcf\system\database\DatabaseException
 	 */
 	public function validateDatabaseAccess();
 	
 	/**
 	 * Validates given file system path. Returns false on failure.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function validateFileAccess();

@@ -14,12 +14,12 @@ use wcf\util\HeaderUtil;
  */
 class SessionFactory extends ACPSessionFactory {
 	/**
-	 * @see	wcf\system\session\ACPSessionFactory::$sessionEditor
+	 * @see	\wcf\system\session\ACPSessionFactory::$sessionEditor
 	 */
 	protected $sessionEditor = 'wcf\data\session\SessionEditor';
 	
 	/**
-	 * @see	wcf\system\session\ACPSessionFactory::readSessionID()
+	 * @see	\wcf\system\session\ACPSessionFactory::readSessionID()
 	 */
 	protected function readSessionID() {
 		$sessionID = parent::readSessionID();
@@ -33,7 +33,7 @@ class SessionFactory extends ACPSessionFactory {
 	}
 	
 	/**
-	 * @see	wcf\system\session\ACPSessionFactory::init()
+	 * @see	\wcf\system\session\ACPSessionFactory::init()
 	 */
 	protected function init() {
 		$usesCookies = true;

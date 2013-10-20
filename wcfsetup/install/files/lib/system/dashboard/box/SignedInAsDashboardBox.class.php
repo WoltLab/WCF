@@ -14,12 +14,12 @@ use wcf\system\WCF;
  */
 class SignedInAsDashboardBox extends AbstractSidebarDashboardBox {
 	/**
-	 * @see	wcf\system\dashboard\box\AbstractContentDashboardBox::$templateName
+	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::$templateName
 	 */
 	public $templateName = 'dashboardBoxSignedInAs';
 	
 	/**
-	 * @see	wcf\system\dashboard\box\AbstractContentDashboardBox::render()
+	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
 		return (WCF::getUser()->userID ? true : false);

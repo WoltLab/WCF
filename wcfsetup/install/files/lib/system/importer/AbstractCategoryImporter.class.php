@@ -4,7 +4,7 @@ use wcf\data\category\CategoryEditor;
 
 /**
  * Imports categories.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -14,7 +14,7 @@ use wcf\data\category\CategoryEditor;
  */
 class AbstractCategoryImporter extends AbstractImporter {
 	/**
-	 * @see	wcf\system\importer\AbstractImporter::$className
+	 * @see	\wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\category\Category';
 	
@@ -31,7 +31,7 @@ class AbstractCategoryImporter extends AbstractImporter {
 	protected $objectTypeName = '';
 	
 	/**
-	 * @see	wcf\system\importer\IImporter::import()
+	 * @see	\wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		if (!empty($data['parentCategoryID'])) $data['parentCategoryID'] = ImportHandler::getInstance()->getNewID($this->objectTypeName, $data['parentCategoryID']);

@@ -15,12 +15,12 @@ use wcf\data\IEditableCachedObject;
  */
 class ObjectTypeEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\object\type\ObjectType';
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		ObjectTypeCache::getInstance()->resetCache();

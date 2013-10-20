@@ -15,17 +15,17 @@ use wcf\system\WCF;
  */
 class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\event\listener\EventListenerEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$tagName
 	 */
 	public $tagName = 'eventlistener';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -49,7 +49,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
 		$nice = (isset($data['elements']['nice'])) ? intval($data['elements']['nice']) : 0;
@@ -67,7 +67,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
@@ -92,7 +92,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		parent::uninstall();

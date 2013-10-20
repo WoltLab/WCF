@@ -24,17 +24,17 @@ use wcf\system\WCF;
 class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction, IToggleContainerAction {
 	/**
 	 * categorized object type
-	 * @var	wcf\data\object\type\ObjectType
+	 * @var	\wcf\data\object\type\ObjectType
 	 */
 	protected $objectType = null;
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('create', 'delete', 'toggle', 'update', 'updatePosition');
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::delete()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
 	 */
 	public function delete() {
 		$returnValue = parent::delete();
@@ -48,7 +48,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	wcf\data\IToggleAction::toggle()
+	 * @see	\wcf\data\IToggleAction::toggle()
 	 */
 	public function toggle() {
 		foreach ($this->objects as $categoryEditor) {
@@ -59,7 +59,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	wcf\data\IToggleContainerAction::toggleContainer()
+	 * @see	\wcf\data\IToggleContainerAction::toggleContainer()
 	 */
 	public function toggleContainer() {
 		$collapsibleObjectTypeName = $this->objects[0]->getProcessor()->getObjectTypeName('com.woltlab.wcf.collapsibleContent');
@@ -80,7 +80,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	wcf\data\ISortableAction::updatePosition()
+	 * @see	\wcf\data\ISortableAction::updatePosition()
 	 */
 	public function updatePosition() {
 		$showOrders = array();
@@ -102,7 +102,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
 	 */
 	public function validateCreate() {
 		$this->readInteger('objectTypeID', false, 'data');
@@ -117,7 +117,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
 	 */
 	public function validateDelete() {
 		// read objects
@@ -137,21 +137,21 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	wcf\data\IToggleAction::validateToggle()
+	 * @see	\wcf\data\IToggleAction::validateToggle()
 	 */
 	public function validateToggle() {
 		$this->validateUpdate();
 	}
 	
 	/**
-	 * @see	wcf\data\IToggleContainerAction::validateToggleContainer()
+	 * @see	\wcf\data\IToggleContainerAction::validateToggleContainer()
 	 */
 	public function validateToggleContainer() {
 		$this->validateUpdate();
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::validateUpdate()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateUpdate()
 	 */
 	public function validateUpdate() {
 		// read objects
@@ -171,7 +171,7 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
-	 * @see	wcf\data\ISortableAction::validateUpdatePosition()
+	 * @see	\wcf\data\ISortableAction::validateUpdatePosition()
 	 */
 	public function validateUpdatePosition() {
 		// validate 'structure' parameter

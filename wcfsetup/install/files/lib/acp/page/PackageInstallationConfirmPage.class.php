@@ -22,7 +22,7 @@ use wcf\system\WCFACP;
  */
 class PackageInstallationConfirmPage extends AbstractPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.install';
 	
@@ -40,13 +40,13 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	
 	/**
 	 * package installation dispatcher object
-	 * @var	wcf\system\package\PackageInstallationDispatcher
+	 * @var	\wcf\system\package\PackageInstallationDispatcher
 	 */
 	public $packageInstallationDispatcher = null;
 	
 	/**
 	 * package installation queue object
-	 * @var	wcf\data\package\installation\queue\PackageInstallationQueue
+	 * @var	\wcf\data\package\installation\queue\PackageInstallationQueue
 	 */
 	public $queue = null;
 	
@@ -63,7 +63,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	public $requirements = array();
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -83,7 +83,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -138,7 +138,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -154,7 +154,7 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
 		// check master password

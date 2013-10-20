@@ -15,27 +15,27 @@ use wcf\system\WCF;
  */
 class PackageUpdateServerListPage extends SortablePage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.server.list';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canEditServer');
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortField
+	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'serverURL';
 	
 	/**
-	 * @see	wcf\page\SortablePage::$validSortFields
+	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('packageUpdateServerID', 'serverURL', 'status', 'errorMessage', 'lastUpdateTime', 'packages');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\package\update\server\PackageUpdateServerList';
 	
@@ -46,7 +46,7 @@ class PackageUpdateServerListPage extends SortablePage {
 	public $deletedPackageUpdateServerID = 0;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -55,7 +55,7 @@ class PackageUpdateServerListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::readObjects()
+	 * @see	\wcf\page\MultipleLinkPage::readObjects()
 	 */
 	public function readObjects() {
 		$this->sqlOrderBy = ($this->sortField != 'packages' ? 'package_update_server.' : '') . $this->sortField.' '.$this->sortOrder;
@@ -64,7 +64,7 @@ class PackageUpdateServerListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

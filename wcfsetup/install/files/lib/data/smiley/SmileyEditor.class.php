@@ -16,12 +16,12 @@ use wcf\system\cache\builder\SmileyCacheBuilder;
  */
 class SmileyEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	public static $baseClass = 'wcf\data\smiley\Smiley';
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		SmileyCacheBuilder::getInstance()->reset();

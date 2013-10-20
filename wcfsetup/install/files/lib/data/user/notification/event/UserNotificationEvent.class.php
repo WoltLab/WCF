@@ -14,17 +14,17 @@ use wcf\data\ProcessibleDatabaseObject;
  */
 class UserNotificationEvent extends ProcessibleDatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user_notification_event';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'eventID';
 	
 	/**
-	 * @see	wcf\data\ProcessibleDatabaseObject::$processorInterface
+	 * @see	\wcf\data\ProcessibleDatabaseObject::$processorInterface
 	 */
 	protected static $processorInterface = 'wcf\system\user\notification\event\IUserNotificationEvent';
 }

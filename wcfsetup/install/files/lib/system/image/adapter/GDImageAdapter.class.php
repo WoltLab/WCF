@@ -45,7 +45,7 @@ class GDImageAdapter implements IImageAdapter {
 	protected $width = 0;
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::load()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::load()
 	 */
 	public function load($image, $type = '') {
 		if (!is_resource($image)) {
@@ -64,7 +64,7 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::loadFile()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::loadFile()
 	 */
 	public function loadFile($file) {
 		list($this->width, $this->height, $this->type) = getImageSize($file);
@@ -89,7 +89,7 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::createEmptyImage()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::createEmptyImage()
 	 */
 	public function createEmptyImage($width, $height) {
 		$this->image = imageCreate($width, $height);
@@ -99,7 +99,7 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::createThumbnail()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::createThumbnail()
 	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
 		$width = $height = $x = $y = 0;
@@ -142,7 +142,7 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::clip()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::clip()
 	 */
 	public function clip($originX, $originY, $width, $height) {
 		$image = imageCreateTrueColor($width, $height);
@@ -156,7 +156,7 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::resize()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::resize()
 	 */
 	public function resize($originX, $originY, $originWidth, $originHeight, $targetX = 0, $targetY = 0, $targetWidth = 0, $targetHeight = 0) {
 		$image = imageCreateTrueColor($targetWidth, $targetHeight);
@@ -170,14 +170,14 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::drawRectangle()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::drawRectangle()
 	 */
 	public function drawRectangle($startX, $startY, $endX, $endY) {
 		imageFilledRectangle($this->image, $startX, $startY, $endX, $endY, $this->color);
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::drawText()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
 	public function drawText($string, $x, $y) {
 		if (!StringUtil::isUTF8($string)) {
@@ -191,21 +191,21 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::setColor()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::setColor()
 	 */
 	public function setColor($red, $green, $blue) {
 		$this->color = imageColorAllocate($this->image, $red, $green, $blue);
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::hasColor()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::hasColor()
 	 */
 	public function hasColor() {
 		return ($this->color !== null);
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::setTransparentColor()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::setTransparentColor()
 	 */
 	public function setTransparentColor($red, $green, $blue) {
 		if ($this->type == IMAGETYPE_PNG) {
@@ -215,7 +215,7 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::writeImage()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::writeImage()
 	 */
 	public function writeImage($image, $filename) {
 		if (!is_resource($image)) {
@@ -241,28 +241,28 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::getWidth()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::getWidth()
 	 */
 	public function getWidth() {
 		return $this->width;
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::getHeight()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::getHeight()
 	 */
 	public function getHeight() {
 		return $this->height;
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::getImage()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::getImage()
 	 */
 	public function getImage() {
 		return $this->image;
 	}
 	
 	/**
-	 * @see	wcf\system\image\adapter\IImageAdapter::isSupported()
+	 * @see	\wcf\system\image\adapter\IImageAdapter::isSupported()
 	 */
 	public static function isSupported() {
 		return true;

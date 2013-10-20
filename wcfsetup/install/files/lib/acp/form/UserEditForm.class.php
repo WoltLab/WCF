@@ -28,12 +28,12 @@ use wcf\util\StringUtil;
  */
 class UserEditForm extends UserAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditUser');
 	
@@ -45,7 +45,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * user editor object
-	 * @var	wcf\data\user\UserEditor
+	 * @var	\wcf\data\user\UserEditor
 	 */
 	public $user = null;
 	
@@ -63,7 +63,7 @@ class UserEditForm extends UserAddForm {
 	
 	/**
 	 * user avatar object
-	 * @var	wcf\data\user\avatar\UserAvatar
+	 * @var	\wcf\data\user\avatar\UserAvatar
 	 */
 	public $userAvatar = null;
 	
@@ -86,7 +86,7 @@ class UserEditForm extends UserAddForm {
 	public $disableAvatarReason = '';
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->userID = intval($_REQUEST['id']);
@@ -111,7 +111,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readFormParameters()
+	 * @see	\wcf\page\IPage::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -127,7 +127,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		if (empty($_POST)) {
@@ -179,7 +179,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -200,7 +200,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -219,20 +219,20 @@ class UserEditForm extends UserAddForm {
 					'avatarID' => null,
 					'enableGravatar' => 0
 				);
-				break;
-		
+			break;
+			
 			case 'custom':
 				$avatarData = array(
 					'enableGravatar' => 0
 				);
-				break;
-		
+			break;
+			
 			case 'gravatar':
 				$avatarData = array(
 					'avatarID' => null,
 					'enableGravatar' => 1
 				);
-				break;
+			break;
 		}
 		$avatarData['disableAvatar'] = $this->disableAvatar;
 		$avatarData['disableAvatarReason'] = $this->disableAvatarReason;
@@ -306,7 +306,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\UserAddForm::validateUsername()
+	 * @see	\wcf\acp\form\UserAddForm::validateUsername()
 	 */
 	protected function validateUsername($username) {
 		if (mb_strtolower($this->user->username) != mb_strtolower($username)) {
@@ -315,7 +315,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\UserAddForm::validateEmail()
+	 * @see	\wcf\acp\form\UserAddForm::validateEmail()
 	 */
 	protected function validateEmail($email, $confirmEmail) {
 		if (mb_strtolower($this->user->email) != mb_strtolower($email)) {
@@ -324,7 +324,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\UserAddForm::validatePassword()
+	 * @see	\wcf\acp\form\UserAddForm::validatePassword()
 	 */
 	protected function validatePassword($password, $confirmPassword) {
 		if (!empty($password) || !empty($confirmPassword)) {
@@ -337,7 +337,7 @@ class UserEditForm extends UserAddForm {
 	 */
 	protected function validateAvatar() {
 		if ($this->avatarType != 'custom' && $this->avatarType != 'gravatar') $this->avatarType = 'none';
-	
+		
 		try {
 			switch ($this->avatarType) {
 				case 'custom':
@@ -345,13 +345,13 @@ class UserEditForm extends UserAddForm {
 						throw new UserInputException('customAvatar');
 					}
 					break;
-						
+					
 				case 'gravatar':
 					if (!MODULE_GRAVATAR) {
 						$this->avatarType = 'none';
 						break;
 					}
-						
+					
 					// test gravatar
 					if (!Gravatar::test($this->user->email)) {
 						throw new UserInputException('gravatar', 'notFound');
@@ -364,7 +364,7 @@ class UserEditForm extends UserAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		$this->validateAvatar();

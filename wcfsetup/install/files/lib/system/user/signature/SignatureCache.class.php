@@ -24,7 +24,7 @@ class SignatureCache extends SingletonFactory {
 	/**
 	 * Returns a parsed user signature.
 	 * 
-	 * @param	wcf\data\user\User	$user
+	 * @param	\wcf\data\user\User	$user
 	 * @return	string
 	 */
 	public function getSignature(User $user) {

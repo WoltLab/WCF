@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace wcf\data\smiley\category;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\IllegalLinkException;
@@ -16,18 +16,18 @@ use wcf\system\WCF;
  */
 class SmileyCategoryAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\category\CategoryEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('getSmilies');
 	
 	/**
 	 * active smiley category
-	 * @var	wcf\data\smiley\category\SmileyCategory
+	 * @var	\wcf\data\smiley\category\SmileyCategory
 	 */
 	public $smileyCategory = null;
 	

@@ -17,7 +17,7 @@ use wcf\system\WCF;
 class CommentUserProfileMenuContent extends SingletonFactory implements IUserProfileMenuContent {
 	/**
 	 * comment manager object
-	 * @var	wcf\system\comment\manager\ICommentManager
+	 * @var	\wcf\system\comment\manager\ICommentManager
 	 */
 	public $commentManager = null;
 	
@@ -28,7 +28,7 @@ class CommentUserProfileMenuContent extends SingletonFactory implements IUserPro
 	public $objectTypeID = 0;
 	
 	/**
-	 * @see	wcf\system\menu\user\profile\content\IUserProfileMenuContent::getContent()
+	 * @see	\wcf\system\menu\user\profile\content\IUserProfileMenuContent::getContent()
 	 */
 	public function getContent($userID) {
 		if ($this->commentManager === null) {
@@ -53,7 +53,7 @@ class CommentUserProfileMenuContent extends SingletonFactory implements IUserPro
 	}
 	
 	/**
-	 * @see	wcf\system\menu\user\profile\content\IUserProfileMenuContent::isVisible()
+	 * @see	\wcf\system\menu\user\profile\content\IUserProfileMenuContent::isVisible()
 	 */
 	public function isVisible($userID) {
 		return true;

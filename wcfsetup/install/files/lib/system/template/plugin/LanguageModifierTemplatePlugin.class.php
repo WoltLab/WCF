@@ -18,7 +18,7 @@ use wcf\system\WCF;
  */
 class LanguageModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**
-	 * @see	wcf\system\template\IModifierTemplatePlugin::execute()
+	 * @see	\wcf\system\template\IModifierTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		return WCF::getLanguage()->getDynamicVariable($tagArgs[0]);

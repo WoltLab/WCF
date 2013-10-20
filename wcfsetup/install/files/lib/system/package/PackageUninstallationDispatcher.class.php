@@ -31,8 +31,8 @@ use wcf\system\WCF;
 class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	/**
 	 * Creates a new instance of PackageUninstallationDispatcher.
-	 *
-	 * @param	wcf\data\package\installation\queue\PackageInstallationQueue	$queue
+	 * 
+	 * @param	\wcf\data\package\installation\queue\PackageInstallationQueue	$queue
 	 */
 	public function __construct(PackageInstallationQueue $queue) {
 		$this->queue = $queue;
@@ -102,7 +102,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	}
 	
 	/**
-	 * @see	wcf\system\package\PackageInstallationDispatcher::executePIP()
+	 * @see	\wcf\system\package\PackageInstallationDispatcher::executePIP()
 	 */
 	protected function executePIP(array $nodeData) {
 		$pip = new $nodeData['className']($this);

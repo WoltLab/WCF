@@ -114,7 +114,7 @@ class ACLHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.acl');
@@ -140,7 +140,7 @@ class ACLHandler extends SingletonFactory {
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @param	string		$categoryName
-	 * @return	wcf\data\acl\option\category\ACLOptionCategory
+	 * @return	\wcf\data\acl\option\category\ACLOptionCategory
 	 */
 	public function getCategory($objectTypeID, $categoryName) {
 		if (isset($this->categories[$objectTypeID][$categoryName])) {
@@ -167,7 +167,7 @@ class ACLHandler extends SingletonFactory {
 	/**
 	 * Replaces values for given type and object.
 	 * 
-	 * @param	wcf\data\acl\option\ACLOptionList	$optionList
+	 * @param	\wcf\data\acl\option\ACLOptionList	$optionList
 	 * @param	string					$type
 	 * @param	integer					$objectID
 	 */
@@ -276,7 +276,7 @@ class ACLHandler extends SingletonFactory {
 	/**
 	 * Fetches ACL option values by type.
 	 * 
-	 * @param	wcf\data\acl\option\ACLOptionList	$optionList
+	 * @param	\wcf\data\acl\option\ACLOptionList	$optionList
 	 * @param	string					$type
 	 * @param	array					$objectIDs
 	 * @param	array					$data
@@ -365,7 +365,7 @@ class ACLHandler extends SingletonFactory {
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @param	string		$categoryName
-	 * @return	wcf\data\acl\option\ACLOptionList
+	 * @return	\wcf\data\acl\option\ACLOptionList
 	 */
 	public function getOptions($objectTypeID, $categoryName = '') {
 		$optionList = new ACLOptionList();
@@ -389,7 +389,7 @@ class ACLHandler extends SingletonFactory {
 	 * 
 	 * @param	integer						$objectTypeID
 	 * @param	array<integer>					$objectIDs
-	 * @param	wcf\data\acl\option\category\ACLOptionCategory	$category
+	 * @param	\wcf\data\acl\option\category\ACLOptionCategory	$category
 	 */
 	public function removeValues($objectTypeID, array $objectIDs, ACLOptionCategory $category = null) {
 		$optionList = $this->getOptions($objectTypeID, $category);

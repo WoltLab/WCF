@@ -15,22 +15,22 @@ use wcf\system\WCF;
  */
 class IgnoredUsersPage extends MultipleLinkPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$loginRequired
+	 * @see	\wcf\page\AbstractPage::$loginRequired
 	 */
 	public $loginRequired = true;
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\user\ignore\ViewableUserIgnoreList';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$sqlOrderBy
+	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
 	 */
 	public $sqlOrderBy = 'user_ignore.time DESC';
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::readData()
+	 * @see	\wcf\page\MultipleLinkPage::readData()
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -39,7 +39,7 @@ class IgnoredUsersPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\Page::show()
+	 * @see	\wcf\page\Page::show()
 	 */
 	public function show() {
 		// set active tab

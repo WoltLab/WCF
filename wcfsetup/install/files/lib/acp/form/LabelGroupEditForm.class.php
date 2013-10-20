@@ -19,12 +19,12 @@ use wcf\system\WCF;
  */
 class LabelGroupEditForm extends LabelGroupAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.label';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.content.label.canManageLabel');
 	
@@ -36,12 +36,12 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	
 	/**
 	 * label group object
-	 * @var	wcf\data\label\group\LabelGroup
+	 * @var	\wcf\data\label\group\LabelGroup
 	 */
 	public $group = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -54,7 +54,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -86,7 +86,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -98,7 +98,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -111,7 +111,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\LabelGroupAddForm::setObjectTypeRelations()
+	 * @see	\wcf\acp\form\LabelGroupAddForm::setObjectTypeRelations()
 	 */
 	protected function setObjectTypeRelations($data = null) {
 		if (empty($_POST)) {

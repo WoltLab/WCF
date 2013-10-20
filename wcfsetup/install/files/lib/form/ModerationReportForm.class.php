@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class ModerationReportForm extends AbstractModerationForm {
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

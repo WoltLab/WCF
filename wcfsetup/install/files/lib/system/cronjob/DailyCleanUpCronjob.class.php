@@ -17,7 +17,7 @@ use wcf\system\WCF;
  */
 class DailyCleanUpCronjob extends AbstractCronjob {
 	/**
-	 * @see	wcf\system\cronjob\ICronjob::execute()
+	 * @see	\wcf\system\cronjob\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);

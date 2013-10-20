@@ -25,12 +25,12 @@ use wcf\util\UserUtil;
  */
 class UserAddForm extends UserOptionListForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.add';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canAddUser');
 	
@@ -131,7 +131,7 @@ class UserAddForm extends UserOptionListForm {
 	public $disableSignatureReason = '';
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -157,10 +157,10 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
-		// validate static user options 
+		// validate static user options
 		try {
 			$this->validateUsername($this->username);
 		}
@@ -237,7 +237,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -356,7 +356,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -372,7 +372,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -402,7 +402,7 @@ class UserAddForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::show()
+	 * @see	\wcf\page\IPage::show()
 	 */
 	public function show() {
 		// get the default language id

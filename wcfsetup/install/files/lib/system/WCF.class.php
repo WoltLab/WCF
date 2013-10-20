@@ -60,7 +60,7 @@ if (!defined('NO_IMPORTS')) {
 class WCF {
 	/**
 	 * list of currently loaded applications
-	 * @var	array<wcf\system\application\IApplication>
+	 * @var	array<\wcf\system\application\IApplication>
 	 */
 	protected static $applications = array();
 	
@@ -72,7 +72,7 @@ class WCF {
 	
 	/**
 	 * list of unique instances of each core object
-	 * @var	array<wcf\system\SingletonFactory>
+	 * @var	array<\wcf\system\SingletonFactory>
 	 */
 	protected static $coreObject = array();
 	
@@ -84,13 +84,13 @@ class WCF {
 	
 	/**
 	 * database object
-	 * @var	wcf\system\database\Database
+	 * @var	\wcf\system\database\Database
 	 */
 	protected static $dbObj = null;
 	
 	/**
 	 * language object
-	 * @var	wcf\system\language\Language
+	 * @var	\wcf\system\language\Language
 	 */
 	protected static $languageObj = null;
 	
@@ -102,13 +102,13 @@ class WCF {
 	
 	/**
 	 * session object
-	 * @var	wcf\system\session\SessionHandler
+	 * @var	\wcf\system\session\SessionHandler
 	 */
 	protected static $sessionObj = null;
 	
 	/**
 	 * template object
-	 * @var	wcf\system\template\TemplateEngine
+	 * @var	\wcf\system\template\TemplateEngine
 	 */
 	protected static $tplObj = null;
 	
@@ -205,7 +205,7 @@ class WCF {
 	/**
 	 * Returns the database object.
 	 * 
-	 * @return	wcf\system\database\Database
+	 * @return	\wcf\system\database\Database
 	 */
 	public static final function getDB() {
 		return self::$dbObj;
@@ -214,7 +214,7 @@ class WCF {
 	/**
 	 * Returns the session object.
 	 * 
-	 * @return	wcf\system\session\SessionHandler
+	 * @return	\wcf\system\session\SessionHandler
 	 */
 	public static final function getSession() {
 		return self::$sessionObj;
@@ -223,7 +223,7 @@ class WCF {
 	/**
 	 * Returns the user object.
 	 * 
-	 * @return	wcf\data\user\User
+	 * @return	\wcf\data\user\User
 	 */
 	public static final function getUser() {
 		return self::getSession()->getUser();
@@ -232,7 +232,7 @@ class WCF {
 	/**
 	 * Returns the language object.
 	 * 
-	 * @return	wcf\data\language\Language
+	 * @return	\wcf\data\language\Language
 	 */
 	public static final function getLanguage() {
 		return self::$languageObj;
@@ -241,7 +241,7 @@ class WCF {
 	/**
 	 * Returns the template object.
 	 * 
-	 * @return	wcf\system\template\TemplateEngine
+	 * @return	\wcf\system\template\TemplateEngine
 	 */
 	public static final function getTPL() {
 		return self::$tplObj;
@@ -438,9 +438,9 @@ class WCF {
 	/**
 	 * Loads an application.
 	 * 
-	 * @param	wcf\data\application\Application		$application
+	 * @param	\wcf\data\application\Application		$application
 	 * @param	boolean						$isDependentApplication
-	 * @return	wcf\system\application\IApplication
+	 * @return	\wcf\system\application\IApplication
 	 */
 	protected function loadApplication(Application $application, $isDependentApplication = false) {
 		$applicationObject = null;
@@ -570,7 +570,7 @@ class WCF {
 	
 	/**
 	 * Includes the required util or exception classes automatically.
-	 *
+	 * 
 	 * @param	string		$className
 	 * @see		spl_autoload_register()
 	 */
@@ -591,7 +591,7 @@ class WCF {
 	}
 	
 	/**
-	 * @see	wcf\system\WCF::__callStatic()
+	 * @see	\wcf\system\WCF::__callStatic()
 	 */
 	public final function __call($name, array $arguments) {
 		// bug fix to avoid php crash, see http://bugs.php.net/bug.php?id=55020
@@ -703,7 +703,7 @@ class WCF {
 	
 	/**
 	 * Returns the URI of the current page.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public static function getRequestURI() {
@@ -732,7 +732,7 @@ class WCF {
 	/**
 	 * Returns style handler.
 	 * 
-	 * @return	wcf\system\style\StyleHandler
+	 * @return	\wcf\system\style\StyleHandler
 	 */
 	public function getStyleHandler() {
 		return StyleHandler::getInstance();

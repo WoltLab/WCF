@@ -65,7 +65,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	/**
 	 * Gets the package_update.xml from an update server.
 	 * 
-	 * @param	wcf\data\package\update\server\PackageUpdateServer	$updateServer
+	 * @param	\wcf\data\package\update\server\PackageUpdateServer	$updateServer
 	 */
 	protected function getPackageUpdateXML(PackageUpdateServer $updateServer) {
 		$authData = $updateServer->getAuthData();
@@ -676,7 +676,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * Creates a new package installation scheduler.
 	 * 
 	 * @param	array			$selectedPackages
-	 * @return	wcf\system\package\PackageInstallationScheduler
+	 * @return	\wcf\system\package\PackageInstallationScheduler
 	 */
 	public function prepareInstallation(array $selectedPackages) {
 		return new PackageInstallationScheduler($selectedPackages);

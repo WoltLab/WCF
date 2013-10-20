@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class UserObjectWatchEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\object\watch\UserObjectWatch';
 }

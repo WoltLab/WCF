@@ -24,9 +24,9 @@ interface IClipboardAction {
 	 * Returns editor item for the clipboard action with the given name or null
 	 * if the action is not applicable to the given objects.
 	 * 
-	 * @param	array<wcf\data\DatabaseObject>			$objects
-	 * @param	wcf\data\clipboard\action\ClipboardAction	$action
-	 * @return	wcf\system\clipboard\ClipboardEditorItem
+	 * @param	array<\wcf\data\DatabaseObject>			$objects
+	 * @param	\wcf\data\clipboard\action\ClipboardAction	$action
+	 * @return	\wcf\system\clipboard\ClipboardEditorItem
 	 */
 	public function execute(array $objects, ClipboardAction $action);
 	

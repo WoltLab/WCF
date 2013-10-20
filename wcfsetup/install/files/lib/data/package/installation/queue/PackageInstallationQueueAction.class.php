@@ -19,24 +19,24 @@ use wcf\system\WCF;
  */
 class PackageInstallationQueueAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\package\installation\queue\PackageInstallationQueueEditor';
 	
 	/**
 	 * queue of the canceled installation
-	 * @var	wcf\data\package\installation\queue\PackageInstallationQueueEditor
+	 * @var	\wcf\data\package\installation\queue\PackageInstallationQueueEditor
 	 */
 	protected $queue = null;
 	
 	/**
 	 * package the prepared queue belongs to
-	 * @var	wcf\data\package\Package
+	 * @var	\wcf\data\package\Package
 	 */
 	protected $package = null;
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
 	protected $requireACP = array('cancelInstallation', 'prepareQueue');
 	

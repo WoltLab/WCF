@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class ACLOptionEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	public static $baseClass = 'wcf\data\acl\option\ACLOption';
 }

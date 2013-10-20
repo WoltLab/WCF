@@ -38,12 +38,12 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	
 	/**
 	 * database object action
-	 * @var	wcf\data\AbstractDatabaseObjectAction
+	 * @var	\wcf\data\AbstractDatabaseObjectAction
 	 */
 	public $objectAction = null;
 	
 	/**
-	 * @see	wcf\form\IForm::submit()
+	 * @see	\wcf\form\IForm::submit()
 	 */
 	public function submit() {
 		// call submit event
@@ -63,7 +63,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		// call readFormParameters event
@@ -73,7 +73,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		// call validate event
@@ -85,7 +85,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		// call save event
@@ -101,7 +101,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		if (!empty($_POST) || !empty($_FILES)) {
@@ -112,7 +112,7 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

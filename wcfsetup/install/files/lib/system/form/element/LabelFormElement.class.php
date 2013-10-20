@@ -38,7 +38,7 @@ class LabelFormElement extends AbstractFormElement {
 	}
 	
 	/**
-	 * @see	wcf\system\form\IFormElement::getHTML()
+	 * @see	\wcf\system\form\IFormElement::getHTML()
 	 */
 	public function getHTML($formName) {
 		return <<<HTML

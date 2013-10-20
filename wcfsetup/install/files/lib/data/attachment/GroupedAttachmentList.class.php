@@ -21,7 +21,7 @@ class GroupedAttachmentList extends AttachmentList {
 	
 	/**
 	 * object type
-	 * @var	wcf\data\object\type\ObjectType
+	 * @var	\wcf\data\object\type\ObjectType
 	 */
 	protected $objectType = null;
 	
@@ -48,7 +48,7 @@ class GroupedAttachmentList extends AttachmentList {
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::readObjects()
+	 * @see	\wcf\data\DatabaseObjectList::readObjects()
 	 */
 	public function readObjects() {
 		parent::readObjects();
@@ -65,7 +65,7 @@ class GroupedAttachmentList extends AttachmentList {
 	
 	/**
 	 * Sets the permissions for attachment access.
-	 *
+	 * 
 	 * @param	array<boolean>		$permissions
 	 */
 	public function setPermissions(array $permissions) {
@@ -77,7 +77,7 @@ class GroupedAttachmentList extends AttachmentList {
 	/**
 	 * Returns the objects of the list.
 	 * 
-	 * @return	array<wcf\data\DatabaseObject>
+	 * @return	array<\wcf\data\DatabaseObject>
 	 */
 	public function getGroupedObjects($objectID) {
 		if (isset($this->groupedObjects[$objectID])) {

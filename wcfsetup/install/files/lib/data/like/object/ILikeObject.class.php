@@ -39,7 +39,7 @@ interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
 	/**
 	 * Gets the object type.
 	 * 
-	 * @return	wcf\data\like\object\type\LikeObjectType
+	 * @return	\wcf\data\like\object\type\LikeObjectType
 	 */
 	public function getObjectType();
 	
@@ -53,7 +53,7 @@ interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
 	/**
 	 * Sets the object type.
 	 * 
-	 * @param	wcf\data\object\type\ObjectType
+	 * @param	\wcf\data\object\type\ObjectType
 	 */
 	public function setObjectType(ObjectType $objectType);
 }

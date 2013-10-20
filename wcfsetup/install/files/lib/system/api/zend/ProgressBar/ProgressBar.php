@@ -73,7 +73,7 @@ class ProgressBar
     /**
      * Create a new progressbar backend.
      *
-     * @param  Adapter\AbstractAdapter $adapter
+     * @param  \Adapter\AbstractAdapter $adapter
      * @param  float|int               $min
      * @param  float|int               $max
      * @param  string|null             $persistenceNamespace
@@ -121,7 +121,7 @@ class ProgressBar
     /**
      * Get the current adapter
      *
-     * @return Adapter\AbstractAdapter
+     * @return \Adapter\AbstractAdapter
      */
     public function getAdapter()
     {

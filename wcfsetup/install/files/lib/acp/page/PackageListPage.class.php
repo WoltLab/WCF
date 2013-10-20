@@ -15,27 +15,27 @@ use wcf\system\WCF;
  */
 class PackageListPage extends SortablePage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package.list';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canUninstallPackage');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
 	 */
 	public $itemsPerPage = 50;
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortField
+	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'packageType';
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortOrder
+	 * @see	\wcf\page\SortablePage::$defaultSortOrder
 	 */
 	public $defaultSortOrder = 'DESC';
 	
@@ -46,17 +46,17 @@ class PackageListPage extends SortablePage {
 	public $packageID = 0;
 	
 	/**
-	 * @see	wcf\page\SortablePage::$validSortFields
+	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('packageID', 'package', 'packageDir', 'packageName', 'packageDescription', 'packageDate', 'packageURL', 'isApplication', 'author', 'authorURL', 'installDate', 'updateDate');
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\package\PackageList';
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -65,7 +65,7 @@ class PackageListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -76,7 +76,7 @@ class PackageListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::readObjects()
+	 * @see	\wcf\page\MultipleLinkPage::readObjects()
 	 */
 	protected function readObjects() {
 		$this->sqlOrderBy = 'package.'.($this->sortField == 'packageType' ? 'isApplication '.$this->sortOrder : $this->sortField.' '.$this->sortOrder).($this->sortField != 'packageName' ? ', package.packageName ASC' : '');

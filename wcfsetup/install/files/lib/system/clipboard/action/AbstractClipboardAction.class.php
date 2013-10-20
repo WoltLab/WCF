@@ -24,7 +24,7 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	
 	/**
 	 * relevant database objects
-	 * @var	array<wcf\data\DatabaseObject>
+	 * @var	array<\wcf\data\DatabaseObject>
 	 */
 	protected $objects = array();
 	
@@ -35,7 +35,7 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	protected $supportedActions = array();
 	
 	/**
-	 * @see	wcf\system\clipboard\action\IClipboardAction::execute()
+	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
 	 */
 	public function execute(array $objects, ClipboardAction $action) {
 		if (!in_array($action->actionName, $this->supportedActions)) {
@@ -68,14 +68,14 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	}
 	
 	/**
-	 * @see	wcf\system\clipboard\action\IClipboardAction::filterObjects()
+	 * @see	\wcf\system\clipboard\action\IClipboardAction::filterObjects()
 	 */
 	public function filterObjects(array $objects, array $typeData) {
 		return $objects;
 	}
 	
 	/**
-	 * @see	wcf\system\clipboard\action\IClipboardAction::getEditorLabel()
+	 * @see	\wcf\system\clipboard\action\IClipboardAction::getEditorLabel()
 	 */
 	public function getEditorLabel(array $objects) {
 		return WCF::getLanguage()->getDynamicVariable('wcf.clipboard.label.'.$this->getTypeName().'.marked', array(

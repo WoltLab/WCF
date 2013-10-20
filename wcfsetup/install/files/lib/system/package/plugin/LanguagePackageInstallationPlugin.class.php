@@ -19,12 +19,12 @@ use wcf\util\XML;
  */
 class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
+	 * @see	\wcf\system\package\plugin\AbstractPackageInstallationPlugin::$tableName
 	 */
 	public $tableName = 'language_item';
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::install()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::install()
 	 */
 	public function install() {
 		AbstractPackageInstallationPlugin::install();
@@ -136,7 +136,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::uninstall()
 	 */
 	public function uninstall() {
 		parent::uninstall();
@@ -180,7 +180,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * was not found, an exception message is thrown.
 	 * 
 	 * @param	string		$filename
-	 * @return	wcf\util\XML
+	 * @return	\wcf\util\XML
 	 */
 	protected function readLanguage($filename) {
 		// search language files in package archive
@@ -238,17 +238,17 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) { }
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) { }
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) { }
 }

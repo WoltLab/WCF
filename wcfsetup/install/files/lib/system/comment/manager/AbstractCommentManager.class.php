@@ -59,7 +59,7 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	protected $permissionModEdit = '';
 	
 	/**
-	 * @see	wcf\system\comment\manager\ICommentManager::canAdd()
+	 * @see	\wcf\system\comment\manager\ICommentManager::canAdd()
 	 */
 	public function canAdd($objectID) {
 		if (!$this->isAccessible($objectID, true)) {
@@ -70,35 +70,35 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	}
 	
 	/**
-	 * @see	wcf\system\comment\manager\ICommentManager::canEditComment()
+	 * @see	\wcf\system\comment\manager\ICommentManager::canEditComment()
 	 */
 	public function canEditComment(Comment $comment) {
 		return $this->canEdit(($comment->userID == WCF::getUser()->userID));
 	}
 	
 	/**
-	 * @see	wcf\system\comment\manager\ICommentManager::canEditResponse()
+	 * @see	\wcf\system\comment\manager\ICommentManager::canEditResponse()
 	 */
 	public function canEditResponse(CommentResponse $response) {
 		return $this->canEdit(($response->userID == WCF::getUser()->userID));
 	}
 	
 	/**
-	 * @see	wcf\system\comment\manager\ICommentManager::canDeleteComment()
+	 * @see	\wcf\system\comment\manager\ICommentManager::canDeleteComment()
 	 */
 	public function canDeleteComment(Comment $comment) {
 		return $this->canDelete(($comment->userID == WCF::getUser()->userID));
 	}
 	
 	/**
-	 * @see	wcf\system\comment\manager\ICommentManager::canDeleteResponse()
+	 * @see	\wcf\system\comment\manager\ICommentManager::canDeleteResponse()
 	 */
 	public function canDeleteResponse(CommentResponse $response) {
 		return $this->canDelete(($response->userID == WCF::getUser()->userID));
 	}
 	
 	/**
-	 * @see	wcf\system\comment\manager\ICommentManager::canModerate()
+	 * @see	\wcf\system\comment\manager\ICommentManager::canModerate()
 	 */
 	public function canModerate($objectTypeID, $objectID) {
 		return (WCF::getSession()->getPermission($this->permissionCanModerate) ? true : false);
@@ -155,7 +155,7 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	}
 	
 	/**
-	 * @see	wcf\system\comment\manager\ICommentManager::getCommentsPerPage()
+	 * @see	\wcf\system\comment\manager\ICommentManager::getCommentsPerPage()
 	 */
 	public function getCommentsPerPage() {
 		return $this->commentsPerPage;

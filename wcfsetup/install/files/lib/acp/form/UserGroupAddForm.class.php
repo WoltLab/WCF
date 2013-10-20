@@ -21,12 +21,12 @@ use wcf\util\StringUtil;
  */
 class UserGroupAddForm extends AbstractOptionListForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.group.add';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canAddGroup');
 	
@@ -37,12 +37,12 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	public $optionTree = array();
 	
 	/**
-	 * @see	wcf\acp\form\AbstractOptionListForm::$optionHandlerClassName
+	 * @see	\wcf\acp\form\AbstractOptionListForm::$optionHandlerClassName
 	 */
 	public $optionHandlerClassName = 'wcf\system\option\user\group\UserGroupOptionHandler';
 	
 	/**
-	 * @see	wcf\acp\form\AbstractOptionListForm::$supportI18n
+	 * @see	\wcf\acp\form\AbstractOptionListForm::$supportI18n
 	 */
 	public $supportI18n = false;
 	
@@ -89,7 +89,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	protected $showOnTeamPage = 0;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -99,7 +99,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -115,7 +115,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		// validate dynamic options
@@ -137,7 +137,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -195,7 +195,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -207,7 +207,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -226,7 +226,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::show()
+	 * @see	\wcf\form\IForm::show()
 	 */
 	public function show() {
 		// check master password

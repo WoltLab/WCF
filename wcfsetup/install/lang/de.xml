@@ -215,6 +215,7 @@
 		<item name="wcf.acp.exceptionLog.exception.file"><![CDATA[Datei (Zeile)]]></item>
 		<item name="wcf.acp.exceptionLog.exception.requestURI"><![CDATA[Aufgerufene URL]]></item>
 		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
+		<item name="wcf.acp.exceptionLog.exception.information"><![CDATA[Zusatzinformationen]]></item>
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Fehlermeldung kopieren]]></item>
 		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[Es wurde kein Fehler mit der ID „{$exceptionID}“ gefunden.]]></item>
@@ -625,7 +626,7 @@
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Einbindung in einem Frame verhindern]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sendet den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'http://de.wikipedia.org/wiki/Clickjacking'|rawurlencode}" class="externalURL">„X-Frame-Options“</a> Header um die Einbettung dieser Seite in einem Frame zu verhindern (sendet „SAMEORIGIN“).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>
-		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (Standard)]]></item>
+		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Bibliothek für die Generierung von Grafiken, wird z.B. für die Skalierung von hochgeladenen Bildern verwendet. „ImageMagick“ ist in der Regel deutlich schneller, steht aber nicht auf jedem Server zur Verfügung.]]></item>
 		<item name="wcf.acp.option.import"><![CDATA[Optionen importieren]]></item>
@@ -2155,6 +2156,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.register.honeyPot"><![CDATA[Bitte ignorieren!]]></item>
 		<item name="wcf.user.register.honeyPot.description"><![CDATA[Falls Sie dies sehen können, füllen Sie bitte die nächsten zwei Eingabfelder <strong>NICHT</strong> aus!]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Inhalte von „{$user->username}“ suchen]]></item>
+		<item name="wcf.user.author"><![CDATA[Autor]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

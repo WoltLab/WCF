@@ -10,7 +10,7 @@ use wcf\system\WCF;
 
 /**
  * Handles data import.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -21,7 +21,7 @@ use wcf\system\WCF;
 class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	/**
 	 * id map cache
-	 * @var	array 
+	 * @var	array
 	 */
 	protected $idMappingCache = array();
 	
@@ -56,7 +56,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	public static $allowInvoke = array('resetMapping');
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.importer');
@@ -66,7 +66,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	 * Gets a data importer.
 	 * 
 	 * @param	string		$type
-	 * @return	wcf\system\importer\IImporter
+	 * @return	\wcf\system\importer\IImporter
 	 */
 	public function getImporter($type) {
 		if (!isset($this->importers[$type])) {
@@ -81,8 +81,8 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	}
 	
 	/**
-	 * Gets a new id from id mapping.
-	 *
+	 * Returns a new id from id mapping.
+	 * 
 	 * @param	string		$type
 	 * @param	mixed		$oldID
 	 * @return	integer		$newID
@@ -118,7 +118,7 @@ class ImportHandler extends SingletonFactory implements IAJAXInvokeAction {
 	
 	/**
 	 * Saves an id mapping.
-	 *
+	 * 
 	 * @param	string		$type
 	 * @param	integer		$oldID
 	 * @param	integer		$newID

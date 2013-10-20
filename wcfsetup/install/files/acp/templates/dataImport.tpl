@@ -119,7 +119,7 @@
 					{event name='selectExporterFields'}
 				</fieldset>
 			</div>
-		
+			
 			<div class="formSubmit">
 				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 				{@SID_INPUT_TAG}
@@ -229,7 +229,7 @@
 			
 			{event name='fieldsets'}
 		</div>
-	
+		
 		<div class="formSubmit">
 			<input type="hidden" name="exporterName" value="{$exporterName}" />
 			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />

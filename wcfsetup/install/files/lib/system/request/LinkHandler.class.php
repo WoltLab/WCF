@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
 class LinkHandler extends SingletonFactory {
 	/**
 	 * regex object to filter title
-	 * @var	wcf\system\RegEx
+	 * @var	\wcf\system\RegEx
 	 */
 	protected $titleRegex = null;
 	
@@ -38,7 +38,7 @@ class LinkHandler extends SingletonFactory {
 	protected $titleReplace = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->titleRegex = new Regex('[\x0-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+');

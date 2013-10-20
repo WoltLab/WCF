@@ -19,13 +19,13 @@ use wcf\system\WCF;
  */
 class PageMenuItemEditForm extends PageMenuItemAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.pageMenu';
 	
 	/**
 	 * page menu item object
-	 * @var	wcf\data\page\menu\item\PageMenuItem
+	 * @var	\wcf\data\page\menu\item\PageMenuItem
 	 */
 	public $menuItem = null;
 	
@@ -36,7 +36,7 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 	public $menuItemID = 0;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->menuItemID = intval($_REQUEST['id']);
@@ -49,7 +49,7 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\PageMenuItemAddForm::initAvailableParentMenuItems()
+	 * @see	\wcf\acp\form\PageMenuItemAddForm::initAvailableParentMenuItems()
 	 */
 	protected function initAvailableParentMenuItems() {
 		parent::initAvailableParentMenuItems();
@@ -59,7 +59,7 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -85,7 +85,7 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -128,7 +128,7 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

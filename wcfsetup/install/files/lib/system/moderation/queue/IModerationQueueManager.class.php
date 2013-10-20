@@ -17,7 +17,7 @@ interface IModerationQueueManager {
 	 * Creates queue assignments for matching object type ids.
 	 * 
 	 * @param	integer							$objectTypeID
-	 * @param	array<wcf\data\moderation\queue\ModerationQueue>	$queues
+	 * @param	array<\wcf\data\moderation\queue\ModerationQueue>	$queues
 	 */
 	public function assignQueues($objectTypeID, array $queues);
 	
@@ -59,7 +59,7 @@ interface IModerationQueueManager {
 	 * Populates object properties for viewing.
 	 * 
 	 * @param	integer								$objectTypeID
-	 * @param	array<wcf\data\moderation\queue\ViewableModerationQueue>	$objects
+	 * @param	array<\wcf\data\moderation\queue\ViewableModerationQueue>	$objects
 	 */
 	public function populate($objectTypeID, array $objects);
 	
@@ -67,7 +67,7 @@ interface IModerationQueueManager {
 	 * Removes affected content. It is up to the processing object to use a
 	 * soft-delete or remove the content permanently.
 	 * 
-	 * @param	wcf\data\moderation\queue\ModerationQueue	$queue
+	 * @param	\wcf\data\moderation\queue\ModerationQueue	$queue
 	 * @param	string						$message
 	 */
 	public function removeContent(ModerationQueue $queue, $message = '');

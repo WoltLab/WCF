@@ -6,7 +6,7 @@
 	if (window.jQuery) {
 		$(function() {
 			$('#wcfUrlContainer').show();
-
+			
 			// data
 			var $domainName = '{@$domainName|encodeJS}';
 			var $installScriptDir = '{@$installScriptDir|encodeJS}';
@@ -14,7 +14,7 @@
 			var $invalidErrorMessage = '{lang}wcf.global.wcfDir.error.invalid{/lang}';
 			var $wcfDir = $('#wcfDir');
 			var $wcfUrl = $('#wcfUrl');
-
+			
 			function updateWcfUrl() {
 				// split paths and remove empty parts
 				var $installScriptDirs = removeEmptyDirParts($installScriptDir.split('/'));
@@ -41,7 +41,7 @@
 						$relativePathDirs.push($wcfDirs[$i]);
 					}
 				}
-
+				
 				// loop dirs
 				for (var $i = 0; $i < $relativePathDirs.length; $i++) {
 					if ($relativePathDirs[$i] == '..') {
@@ -49,30 +49,30 @@
 							$wcfUrl.html($invalidErrorMessage);
 							return;
 						}
-				
+						
 						$installScriptUrlDirs.pop();
 					}
 					else {
 						$installScriptUrlDirs.push($relativePathDirs[$i]);
 					}
 				}
-		
+				
 				// implode and show result
 				var $result = $domainName;
 				for (var $i = 0; $i < $installScriptUrlDirs.length; $i++) $result += '/' + $installScriptUrlDirs[$i];
 				$wcfUrl.html($result);
 			}
-
+			
 			function removeEmptyDirParts(dir) {
 				for (var $i = dir.length; $i >= 0; $i--) {
 					if (dir[$i] == '' || dir[$i] == '.') {
 						dir.splice($i, 1);
 					}
 				}
-
+				
 				return dir;
 			}
-
+			
 			$wcfDir.keyup(updateWcfUrl).blur(updateWcfUrl);
 			updateWcfUrl();
 		});

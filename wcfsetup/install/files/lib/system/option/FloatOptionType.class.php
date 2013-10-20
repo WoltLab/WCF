@@ -15,7 +15,12 @@ use wcf\system\WCF;
  */
 class FloatOptionType extends TextOptionType {
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\TextOptionType::$inputClass
+	 */
+	protected $inputClass = 'medium';
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		$value = str_replace('.', WCF::getLanguage()->get('wcf.global.decimalPoint'), $value);
@@ -24,7 +29,7 @@ class FloatOptionType extends TextOptionType {
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getData()
+	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		$newValue = str_replace(' ', '', $newValue);

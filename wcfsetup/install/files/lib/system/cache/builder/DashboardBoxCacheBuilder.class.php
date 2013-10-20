@@ -17,7 +17,7 @@ use wcf\system\WCF;
  */
 class DashboardBoxCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	protected function rebuild(array $parameters) {
 		$data = array(

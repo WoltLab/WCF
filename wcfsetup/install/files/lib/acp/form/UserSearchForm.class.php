@@ -24,17 +24,17 @@ use wcf\util\StringUtil;
  */
 class UserSearchForm extends UserOptionListForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.search';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canSearchUser');
 	
 	/**
-	 * username 
+	 * username
 	 * @var	string
 	 */
 	public $username = '';
@@ -71,7 +71,7 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * registration start date
-	 * @var string
+	 * @var	string
 	 */
 	public $registrationDateStart = '';
 	
@@ -125,7 +125,7 @@ class UserSearchForm extends UserOptionListForm {
 	
 	/**
 	 * condtion builder object
-	 * @var	wcf\system\database\condition\PreparedStatementConditionBuilder
+	 * @var	\wcf\system\database\condition\PreparedStatementConditionBuilder
 	 */
 	public $conditions = null;
 	
@@ -166,7 +166,7 @@ class UserSearchForm extends UserOptionListForm {
 	public $maxResults = 0;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -188,7 +188,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -215,7 +215,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\AbstractOptionListForm::initOptionHandler()
+	 * @see	\wcf\acp\form\AbstractOptionListForm::initOptionHandler()
 	 */
 	protected function initOptionHandler() {
 		$this->optionHandler->enableSearchMode();
@@ -223,7 +223,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -239,7 +239,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -271,7 +271,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -301,7 +301,7 @@ class UserSearchForm extends UserOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		AbstractForm::validate();
@@ -321,7 +321,7 @@ class UserSearchForm extends UserOptionListForm {
 		$this->matches = array();
 		$sql = "SELECT		user_table.userID
 			FROM		wcf".WCF_N."_user user_table
-			LEFT JOIN	wcf".WCF_N."_user_option_value option_value 
+			LEFT JOIN	wcf".WCF_N."_user_option_value option_value
 			ON		(option_value.userID = user_table.userID)";
 		
 		// build search condition

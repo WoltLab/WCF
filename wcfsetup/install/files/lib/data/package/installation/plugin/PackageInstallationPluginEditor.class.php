@@ -14,7 +14,7 @@ use wcf\data\DatabaseObjectEditor;
  */
 class PackageInstallationPluginEditor extends DatabaseObjectEditor {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\package\installation\plugin\PackageInstallationPlugin';
 }

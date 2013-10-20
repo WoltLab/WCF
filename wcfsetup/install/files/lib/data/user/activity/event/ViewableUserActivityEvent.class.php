@@ -16,7 +16,7 @@ use wcf\system\user\activity\event\UserActivityEventHandler;
  */
 class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	public static $baseClass = 'wcf\data\user\activity\event\UserActivityEvent';
 	
@@ -46,7 +46,7 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	
 	/**
 	 * user profile
-	 * @var	wcf\data\user\UserProfile
+	 * @var	\wcf\data\user\UserProfile
 	 */
 	protected $userProfile = null;
 	
@@ -85,7 +85,7 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	/**
 	 * Sets user profile.
 	 * 
-	 * @param	wcf\data\user\UserProfile	$userProfile
+	 * @param	\wcf\data\user\UserProfile	$userProfile
 	 */
 	public function setUserProfile(UserProfile $userProfile) {
 		$this->userProfile = $userProfile;
@@ -94,7 +94,7 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	/**
 	 * Returns user profile.
 	 * 
-	 * @return	wcf\data\user\UserProfile
+	 * @return	\wcf\data\user\UserProfile
 	 */
 	public function getUserProfile() {
 		return $this->userProfile;

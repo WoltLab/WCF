@@ -14,12 +14,12 @@ use wcf\data\user\UserList;
  */
 class MostActiveMembersCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::$maxLifetime
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::$maxLifetime
 	 */
 	protected $maxLifetime = 600;
 	
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	protected function rebuild(array $parameters) {
 		$userProfileList = new UserList();

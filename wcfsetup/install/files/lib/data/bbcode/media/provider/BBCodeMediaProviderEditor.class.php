@@ -16,12 +16,12 @@ use wcf\system\cache\builder\BBCodeMediaProviderCacheBuilder;
  */
 class BBCodeMediaProviderEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	public static $baseClass = 'wcf\data\bbcode\media\provider\BBCodeMediaProvider';
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		BBCodeMediaProviderCacheBuilder::getInstance()->reset();

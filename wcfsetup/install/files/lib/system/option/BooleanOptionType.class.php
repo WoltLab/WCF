@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class BooleanOptionType extends AbstractOptionType implements ISearchableUserOption {
 	/**
-	 * @see	wcf\system\option\IOptionType::getFormElement()
+	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
 		$options = Option::parseEnableOptions($option->enableOptions);
@@ -31,7 +31,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getData()
+	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
 		if ($newValue !== null) return 1;
@@ -39,21 +39,21 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 	}
 	
 	/**
-	 * @see	wcf\system\option\IOptionType::getCSSClassName()
+	 * @see	\wcf\system\option\IOptionType::getCSSClassName()
 	 */
 	public function getCSSClassName() {
 		return 'reversed';
 	}
 	
 	/**
-	 * @see	wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		return $this->getFormElement($option, $value);
 	}
 	
 	/**
-	 * @see	wcf\system\option\ISearchableUserOption::getCondition()
+	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		$value = intval($value);

@@ -11,7 +11,7 @@
 {if $item->languageItemOriginIsSystem}
 	<fieldset>
 		<legend><label for="overlayLanguageCustomItemValue">{lang}wcf.acp.language.item.customValue{/lang}</label></legend>
-	
+		
 		<dl class="wide">
 			<dd>
 				<textarea rows="5" cols="60" name="languageCustomItemValue" id="overlayLanguageCustomItemValue">{$item->languageCustomItemValue}</textarea>

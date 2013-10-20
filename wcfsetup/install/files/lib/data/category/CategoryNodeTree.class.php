@@ -28,7 +28,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	
 	/**
 	 * parent category node
-	 * @var	wcf\data\category\CategoryNode
+	 * @var	\wcf\data\category\CategoryNode
 	 */
 	protected $parentNode = null;
 	
@@ -63,7 +63,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	/**
 	 * Builds a certain level of the tree.
 	 * 
-	 * @param	wcf\data\category\CategoryNode	$parentNode
+	 * @param	\wcf\data\category\CategoryNode	$parentNode
 	 */
 	protected function buildTreeLevel(CategoryNode $parentNode) {
 		foreach ($this->getChildCategories($parentNode) as $childCategory) {
@@ -82,7 +82,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * Returns the category with the given id.
 	 * 
 	 * @param	integer		$categoryID
-	 * @return	wcf\data\category\Category
+	 * @return	\wcf\data\category\Category
 	 */
 	protected function getCategory($categoryID) {
 		return CategoryHandler::getInstance()->getCategory($categoryID);
@@ -91,8 +91,8 @@ class CategoryNodeTree implements \IteratorAggregate {
 	/**
 	 * Returns the child categories of the given category node.
 	 * 
-	 * @param	wcf\data\category\CategoryNode		$parentNode
-	 * @return	array<wcf\data\category\Category>
+	 * @param	\wcf\data\category\CategoryNode		$parentNode
+	 * @return	array<\wcf\data\category\Category>
 	 */
 	protected function getChildCategories(CategoryNode $parentNode) {
 		return CategoryHandler::getInstance()->getChildCategories($parentNode->categoryID, $parentNode->objectTypeID);
@@ -113,7 +113,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * Returns the category node for the category with the given id.
 	 * 
 	 * @param	integer		$categoryID
-	 * @return	wcf\data\category\CategoryNode
+	 * @return	\wcf\data\category\CategoryNode
 	 */
 	protected function getNode($categoryID) {
 		if (!$categoryID) {
@@ -139,7 +139,7 @@ class CategoryNodeTree implements \IteratorAggregate {
 	 * Returns true if the given category node fulfils all relevant conditions
 	 * to be included in this tree.
 	 * 
-	 * @param	wcf\data\category\CategoryNode		$categoryNode
+	 * @param	\wcf\data\category\CategoryNode		$categoryNode
 	 * @return	boolean
 	 */
 	protected function isIncluded(CategoryNode $categoryNode) {

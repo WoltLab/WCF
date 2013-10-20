@@ -16,7 +16,7 @@ use wcf\system\WCF;
  */
 class BBCodeCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	protected function rebuild(array $parameters) {
 		$data = $attributes = array();

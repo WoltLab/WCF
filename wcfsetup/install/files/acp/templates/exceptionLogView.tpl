@@ -97,6 +97,12 @@
 						<dt>{lang}wcf.acp.exceptionLog.exception.userAgent{/lang}</dt>
 						<dd>{$exception[userAgent]}</dd>
 					</dl>
+					{if $exception[information]}
+						<dl>
+							<dt>{lang}wcf.acp.exceptionLog.exception.information{/lang}</dt>
+							<dd>{@$exception[information]}</dd>
+						</dl>
+					{/if}
 					<dl>
 						<dt>{lang}wcf.acp.exceptionLog.exception.stacktrace{/lang}</dt>
 						<dd style="font-family: monospace; word-wrap: wrap-all; word-break: break-all;">

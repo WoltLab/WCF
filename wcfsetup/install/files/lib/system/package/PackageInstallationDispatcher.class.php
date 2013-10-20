@@ -57,25 +57,25 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * instance of PackageArchive
-	 * @var	wcf\system\package\PackageArchive
+	 * @var	\wcf\system\package\PackageArchive
 	 */
 	public $archive = null;
 	
 	/**
 	 * instance of PackageInstallationNodeBuilder
-	 * @var	wcf\system\package\PackageInstallationNodeBuilder
+	 * @var	\wcf\system\package\PackageInstallationNodeBuilder
 	 */
 	public $nodeBuilder = null;
 	
 	/**
 	 * instance of Package
-	 * @var	wcf\data\package\Package
+	 * @var	\wcf\data\package\Package
 	 */
 	public $package = null;
 	
 	/**
 	 * instance of PackageInstallationQueue
-	 * @var	wcf\system\package\PackageInstallationQueue
+	 * @var	\wcf\system\package\PackageInstallationQueue
 	 */
 	public $queue = null;
 	
@@ -99,8 +99,8 @@ class PackageInstallationDispatcher {
 	
 	/**
 	 * Creates a new instance of PackageInstallationDispatcher.
-	 *
-	 * @param	wcf\data\package\installation\queue\PackageInstallationQueue	$queue
+	 * 
+	 * @param	\wcf\data\package\installation\queue\PackageInstallationQueue	$queue
 	 */
 	public function __construct(PackageInstallationQueue $queue) {
 		$this->queue = $queue;
@@ -122,7 +122,7 @@ class PackageInstallationDispatcher {
 	 * Installs node components and returns next node.
 	 * 
 	 * @param	string		$node
-	 * @return	wcf\system\package\PackageInstallationStep
+	 * @return	\wcf\system\package\PackageInstallationStep
 	 */
 	public function install($node) {
 		$nodes = $this->nodeBuilder->getNodeData($node);
@@ -261,7 +261,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Returns current package archive.
 	 * 
-	 * @return	wcf\system\package\PackageArchive
+	 * @return	\wcf\system\package\PackageArchive
 	 */
 	public function getArchive() {
 		if ($this->archive === null) {
@@ -471,10 +471,10 @@ class PackageInstallationDispatcher {
 	/**
 	 * Saves a localized package info.
 	 * 
-	 * @param	wcf\system\database\statement\PreparedStatement		$statement
-	 * @param	wcf\data\language\LanguageList				$languageList
-	 * @param	wcf\data\language\category\LanguageCategory		$languageCategory
-	 * @param	wcf\data\package\Package				$package
+	 * @param	\wcf\system\database\statement\PreparedStatement		$statement
+	 * @param	\wcf\data\language\LanguageList				$languageList
+	 * @param	\wcf\data\language\category\LanguageCategory		$languageCategory
+	 * @param	\wcf\data\package\Package				$package
 	 * @param	string							$infoName
 	 */
 	protected function saveLocalizedPackageInfo(PreparedStatement $statement, $languageList, LanguageCategory $languageCategory, Package $package, $infoName) {
@@ -577,7 +577,7 @@ class PackageInstallationDispatcher {
 	 * 
 	 * @param	string		$currentNode
 	 * @param	array		$nodeData
-	 * @return	wcf\system\package\PackageInstallationStep
+	 * @return	\wcf\system\package\PackageInstallationStep
 	 */
 	protected function selectOptionalPackages($currentNode, array $nodeData) {
 		$installationStep = new PackageInstallationStep();
@@ -642,7 +642,7 @@ class PackageInstallationDispatcher {
 	 * @param	string			$targetDir
 	 * @param	string			$sourceArchive
 	 * @param	FileHandler		$fileHandler
-	 * @return	wcf\system\setup\Installer
+	 * @return	\wcf\system\setup\Installer
 	 */
 	public function extractFiles($targetDir, $sourceArchive, $fileHandler = null) {
 		return new Installer($targetDir, $sourceArchive, $fileHandler);
@@ -651,7 +651,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Returns current package.
 	 * 
-	 * @return	wcf\data\package\Package
+	 * @return	\wcf\data\package\Package
 	 */
 	public function getPackage() {
 		if ($this->package === null) {
@@ -664,7 +664,7 @@ class PackageInstallationDispatcher {
 	/**
 	 * Prompts for a text input for package directory (applies for applications only)
 	 * 
-	 * @return	wcf\system\form\FormDocument
+	 * @return	\wcf\system\form\FormDocument
 	 */
 	protected function promptPackageDir() {
 		if (!PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
@@ -1111,7 +1111,7 @@ class PackageInstallationDispatcher {
 				continue;
 			}
 			$baseTableColumns = WCF::getDB()->getEditor()->getColumns(call_user_func(array($objectType->className, 'getDatabaseTableName')));
-
+			
 			// remove primary key from base table columns
 			foreach ($baseTableColumns as $key => $column) {
 				if ($column['data']['key'] == 'PRIMARY') {
@@ -1130,7 +1130,7 @@ class PackageInstallationDispatcher {
 			if (empty($versionTableColumns)) {
 				$columns = array_merge($versionTableBaseColumns, $baseTableColumns);
 				WCF::getDB()->getEditor()->createTable(call_user_func(array($objectType->className, 'getDatabaseVersionTableName')), $columns);
-
+				
 				// add version table to plugin
 				$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log
 							(packageID, sqlTable)
@@ -1152,7 +1152,7 @@ class PackageInstallationDispatcher {
 				foreach ($versionTableBaseColumns as $column) {
 					$versionTableBaseColumnNames[] = $column['name'];
 				}
-
+				
 				// check garbage columns in versioned table
 				foreach ($versionTableColumns as $columnData) {
 					if (!in_array($columnData['name'], $baseTableColumnNames) && !in_array($columnData['name'], $versionTableBaseColumnNames)) {

@@ -27,7 +27,7 @@ class GravatarDownloadAction extends AbstractAction {
 	
 	/**
 	 * user object
-	 * @var	wcf\data\user\User
+	 * @var	\wcf\data\user\User
 	 */
 	public $user = null;
 	
@@ -38,7 +38,7 @@ class GravatarDownloadAction extends AbstractAction {
 	public $size = 150;
 	
 	/**
-	 * @see	wcf\action\IAction::readParameters()
+	 * @see	\wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -53,7 +53,7 @@ class GravatarDownloadAction extends AbstractAction {
 	}
 	
 	/**
-	 * @see	wcf\action\IAction::execute()
+	 * @see	\wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();

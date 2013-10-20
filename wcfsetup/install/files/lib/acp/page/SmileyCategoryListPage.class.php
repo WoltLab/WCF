@@ -13,17 +13,17 @@ namespace wcf\acp\page;
  */
 class SmileyCategoryListPage extends AbstractCategoryListPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.smiley.category.list';
 	
 	/**
-	 * @see	wcf\acp\page\AbstractCategoryListPage::$activeMenuItem
+	 * @see	\wcf\acp\page\AbstractCategoryListPage::$activeMenuItem
 	 */
 	public $objectTypeName = 'com.woltlab.wcf.bbcode.smiley';
 
 	/**
-	 * @see	wcf\acp\page\AbstractCategoryListPage::$pageTitle
+	 * @see	\wcf\acp\page\AbstractCategoryListPage::$pageTitle
 	 */
 	public $pageTitle = 'wcf.acp.smiley.category.list';
 }

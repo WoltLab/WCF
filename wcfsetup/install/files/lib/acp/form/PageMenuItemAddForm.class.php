@@ -21,13 +21,13 @@ use wcf\util\StringUtil;
  */
 class PageMenuItemAddForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.pageMenu.add';
 	
 	/**
 	 * list of available parent menu items
-	 * @var	wcf\data\page\menu\item\PageMenuItemList
+	 * @var	\wcf\data\page\menu\item\PageMenuItemList
 	 */
 	public $availableParentMenuItems = null;
 	
@@ -68,7 +68,7 @@ class PageMenuItemAddForm extends AbstractForm {
 	public $menuPosition = 'header';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.display.canManagePageMenu');
 	
@@ -91,7 +91,7 @@ class PageMenuItemAddForm extends AbstractForm {
 	public $showOrder = 0;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -122,7 +122,7 @@ class PageMenuItemAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -141,7 +141,7 @@ class PageMenuItemAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -203,7 +203,7 @@ class PageMenuItemAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -256,7 +256,7 @@ class PageMenuItemAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

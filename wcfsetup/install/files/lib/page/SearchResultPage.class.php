@@ -20,7 +20,7 @@ use wcf\system\WCF;
  */
 class SearchResultPage extends MultipleLinkPage {
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$itemsPerPage
+	 * @see	\wcf\page\MultipleLinkPage::$itemsPerPage
 	 */
 	public $itemsPerPage = SEARCH_RESULTS_PER_PAGE;
 	
@@ -38,7 +38,7 @@ class SearchResultPage extends MultipleLinkPage {
 	
 	/**
 	 * search object
-	 * @var	wcf\data\search\Search
+	 * @var	\wcf\data\search\Search
 	 */
 	public $search = null;
 	
@@ -67,7 +67,7 @@ class SearchResultPage extends MultipleLinkPage {
 	public $resultListApplication = 'wcf';
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -92,7 +92,7 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -145,7 +145,7 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -166,7 +166,7 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::countItems()
+	 * @see	\wcf\page\MultipleLinkPage::countItems()
 	 */
 	public function countItems() {
 		// call countItems event
@@ -176,12 +176,12 @@ class SearchResultPage extends MultipleLinkPage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::initObjectList()
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	protected function initObjectList() { }
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::readObjects()
+	 * @see	\wcf\page\MultipleLinkPage::readObjects()
 	 */
 	protected function readObjects() { }
 }

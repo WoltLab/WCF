@@ -22,12 +22,12 @@ use wcf\system\WCF;
  */
 class UserMergeForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.user.canEditUser');
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
 	
@@ -39,7 +39,7 @@ class UserMergeForm extends AbstractForm {
 	
 	/**
 	 * relevant users
-	 * @var	array<wcf\data\user\User>
+	 * @var	array<\wcf\data\user\User>
 	 */
 	public $users = array();
 	
@@ -62,7 +62,7 @@ class UserMergeForm extends AbstractForm {
 	protected $objectTypeID = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -78,7 +78,7 @@ class UserMergeForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -87,7 +87,7 @@ class UserMergeForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -98,7 +98,7 @@ class UserMergeForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		foreach ($this->userIDs as $userID) {
@@ -261,7 +261,7 @@ class UserMergeForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

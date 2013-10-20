@@ -17,7 +17,7 @@ interface IUserNotificationObjectType extends IDatabaseObjectProcessor {
 	 * Gets notification objects by their IDs.
 	 * 
 	 * @param	array<integer>		$objectIDs
-	 * @return	array<wcf\system\user\notification\object\IUserNotificationObject>
+	 * @return	array<\wcf\system\user\notification\object\IUserNotificationObject>
 	 */
 	public function getObjectsByIDs(array $objectIDs);
 }

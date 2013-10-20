@@ -28,12 +28,12 @@ class CronjobScheduler extends SingletonFactory {
 	
 	/**
 	 * list of editors for outstanding cronjobs
-	 * @var	array<wcf\data\cronjob\CronjobEditor>
+	 * @var	array<\wcf\data\cronjob\CronjobEditor>
 	 */
 	protected $cronjobEditors = array();
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->loadCache();
@@ -154,8 +154,8 @@ class CronjobScheduler extends SingletonFactory {
 	/**
 	 * Executes a cronjob.
 	 * 
-	 * @param	wcf\data\cronjob\CronjobEditor		$cronjobEditor
-	 * @param	wcf\data\cronjob\log\CronjobLogEditor	$logEditor
+	 * @param	\wcf\data\cronjob\CronjobEditor		$cronjobEditor
+	 * @param	\wcf\data\cronjob\log\CronjobLogEditor	$logEditor
 	 */
 	protected function executeCronjob(CronjobEditor $cronjobEditor, CronjobLogEditor $logEditor) {
 		$className = $cronjobEditor->className;
@@ -178,8 +178,8 @@ class CronjobScheduler extends SingletonFactory {
 	/**
 	 * Logs cronjob exec success or failure.
 	 * 
-	 * @param	wcf\data\cronjob\CronjobEditor		$logEditor
-	 * @param	wcf\system\exception\SystemException	$exception
+	 * @param	\wcf\data\cronjob\CronjobEditor		$logEditor
+	 * @param	\wcf\system\exception\SystemException	$exception
 	 */
 	protected function logResult(CronjobLogEditor $logEditor, SystemException $exception = null) {
 		if ($exception !== null) {

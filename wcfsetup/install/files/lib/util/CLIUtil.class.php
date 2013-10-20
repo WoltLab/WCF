@@ -27,7 +27,7 @@ final class CLIUtil {
 			$i = 0;
 			foreach ($row as $column) {
 				if (!isset($columnSize[$i])) $columnSize[$i] = 0;
-				$columnSize[$i] = max($columnSize[$i], StringUtil::length(AnsiUtil::stripAnsi($column)));
+				$columnSize[$i] = max($columnSize[$i], mb_strlen(AnsiUtil::stripAnsi($column)));
 				$i++;
 			}
 		}
@@ -44,7 +44,7 @@ final class CLIUtil {
 			$i = 0;
 			foreach ($row as $column) {
 				$paddedString = StringUtil::pad(AnsiUtil::stripAnsi($column), $columnSize[$i], ' ', (is_numeric($column) ? STR_PAD_LEFT : STR_PAD_RIGHT));
-				$result .= ' '.StringUtil::replace(AnsiUtil::stripAnsi($column), $column, $paddedString).' |';
+				$result .= ' '.str_replace(AnsiUtil::stripAnsi($column), $column, $paddedString).' |';
 				$i++;
 			}
 				

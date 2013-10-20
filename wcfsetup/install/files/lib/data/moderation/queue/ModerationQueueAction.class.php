@@ -18,23 +18,23 @@ use wcf\system\WCF;
  */
 class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$className
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	 */
 	protected $className = 'wcf\data\moderation\queue\ModerationQueueEditor';
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::create()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
 	 */
 	public function create() {
 		if (!isset($this->parameters['data']['lastChangeTime'])) {
 			$this->parameters['data']['lastChangeTime'] = TIME_NOW;
 		}
-	
+		
 		return parent::create();
 	}
 	
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::update()
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
 	 */
 	public function update() {
 		if (!isset($this->parameters['data']['lastChangeTime'])) {

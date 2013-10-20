@@ -1,19 +1,14 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\template\group\TemplateGroup;
-use wcf\data\template\group\TemplateGroupAction;
-use wcf\data\template\group\TemplateGroupList;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the form for adding new templates.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -23,7 +18,7 @@ use wcf\util\StringUtil;
  */
 class TemplateEditForm extends TemplateAddForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.template';
 	
@@ -35,16 +30,16 @@ class TemplateEditForm extends TemplateAddForm {
 	
 	/**
 	 * template object
-	 * @var	wcf\data\template\Template
+	 * @var	\wcf\data\template\Template
 	 */
 	public $template = null;
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		if (isset($_REQUEST['id'])) $this->templateID = intval($_REQUEST['id']);
 		$this->template = new Template($this->templateID);
 		if (!$this->template->templateID || !$this->template->templateGroupID) {
@@ -54,7 +49,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\TemplateAddForm::validateName()
+	 * @see	\wcf\acp\form\TemplateAddForm::validateName()
 	 */
 	protected function validateName() {
 		if ($this->tplName != $this->template->templateName) {
@@ -63,7 +58,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	wcf\acp\form\TemplateAddForm::validateName()
+	 * @see	\wcf\acp\form\TemplateAddForm::validateName()
 	 */
 	protected function validateGroup() {
 		if ($this->templateGroupID != $this->template->templateGroupID) {
@@ -72,7 +67,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		AbstractForm::save();
@@ -92,11 +87,11 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		if (!count($_POST)) {
 			$this->tplName = $this->template->templateName;
 			$this->templateSource = $this->template->getSource();
@@ -105,7 +100,7 @@ class TemplateEditForm extends TemplateAddForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

@@ -15,7 +15,7 @@ interface IRebuildDataWorker extends IWorker {
 	/**
 	 * Returns the list of objects.
 	 * 
-	 * @return	wcf\data\DatabaseObjectList
+	 * @return	\wcf\data\DatabaseObjectList
 	 */
 	public function getObjectList();
 }

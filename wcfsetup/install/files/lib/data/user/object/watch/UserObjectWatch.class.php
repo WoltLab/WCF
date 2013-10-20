@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class UserObjectWatch extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user_object_watch';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'watchID';
 	
@@ -31,7 +31,7 @@ class UserObjectWatch extends DatabaseObject {
 	 * @param	integer		$objectTypeID
 	 * @param	integer		$userID
 	 * @param	integer		$objectID
-	 * @return	wcf\data\user\object\watch\UserObjectWatch
+	 * @return	\wcf\data\user\object\watch\UserObjectWatch
 	 */
 	public static function getUserObjectWatch($objectTypeID, $userID, $objectID) {
 		$sql = "SELECT	*

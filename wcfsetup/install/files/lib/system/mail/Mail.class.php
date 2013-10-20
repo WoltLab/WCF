@@ -96,7 +96,7 @@ class Mail {
 	
 	/**
 	 * mail language
-	 * @var	wcf\data\language\Language
+	 * @var	\wcf\data\language\Language
 	 */
 	protected $language = null;
 	
@@ -144,7 +144,7 @@ class Mail {
 		
 		$this->header .=
 			'X-Priority: 3'.self::$lineEnding
-			.'X-Mailer: WoltLab Community Framework Mail Package'.self::$lineEnding									
+			.'X-Mailer: WoltLab Community Framework Mail Package'.self::$lineEnding
 			.'From: '.$this->getFrom().self::$lineEnding
 			.($this->getCCString() != '' ? 'CC:'.$this->getCCString().self::$lineEnding : '')
 			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$lineEnding : '');
@@ -190,7 +190,7 @@ class Mail {
 	public function getBody() {
 		$counter = 1;
 		$this->body = '';
-
+		
 		if (count($this->getAttachments())) {
 			// add message
 			$this->body .= '--'.$this->getBoundary().self::$lineEnding;
@@ -514,16 +514,16 @@ class Mail {
 	/**
 	 * Sets the mail language.
 	 * 
-	 * @param	wcf\data\language\Language	$language
+	 * @param	\wcf\data\language\Language	$language
 	 */
 	public function setLanguage(Language $language) {
 		$this->language = $language;
 	}
 	
 	/**
-	 * Gets the mail language.
-	 *
-	 * @return	wcf\data\language\Language
+	 * Returns the mail language.
+	 * 
+	 * @return	\wcf\data\language\Language
 	 */
 	public function getLanguage() {
 		if ($this->language === null) return WCF::getLanguage();

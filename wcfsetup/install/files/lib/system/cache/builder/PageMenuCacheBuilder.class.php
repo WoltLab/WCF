@@ -14,7 +14,7 @@ use wcf\data\page\menu\item\PageMenuItemList;
  */
 class PageMenuCacheBuilder extends AbstractCacheBuilder {
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) { 
 		$data = array();

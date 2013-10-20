@@ -13,7 +13,7 @@ namespace wcf\system\package\plugin;
  */
 class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\acp\menu\item\ACPMenuItemEditor';
 }

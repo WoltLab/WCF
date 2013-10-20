@@ -13,7 +13,7 @@ namespace wcf\system\template;
  */
 class SetupTemplateCompiler extends TemplateCompiler {
 	/**
-	 * @see	wcf\system\template\TemplateScriptingCompiler::compileOutputTag()
+	 * @see	\wcf\system\template\TemplateScriptingCompiler::compileOutputTag()
 	 */
 	protected function compileOutputTag($tag) {
 		$encodeHTML = false;

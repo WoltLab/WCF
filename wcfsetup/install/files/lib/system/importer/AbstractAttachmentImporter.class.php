@@ -3,11 +3,10 @@ namespace wcf\system\importer;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\SystemException;
-use wcf\util\StringUtil;
 
 /**
  * Imports attachments.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -17,7 +16,7 @@ use wcf\util\StringUtil;
  */
 class AbstractAttachmentImporter extends AbstractImporter {
 	/**
-	 * @see	wcf\system\importer\AbstractImporter::$className
+	 * @see	\wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\attachment\Attachment';
 	
@@ -28,7 +27,7 @@ class AbstractAttachmentImporter extends AbstractImporter {
 	protected $objectTypeID = 0;
 	
 	/**
-	 * @see	wcf\system\importer\IImporter::import()
+	 * @see	\wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		// check file location

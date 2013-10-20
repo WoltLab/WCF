@@ -25,12 +25,12 @@ use wcf\util\StringUtil;
  */
 class GithubAuthAction extends AbstractAction {
 	/**
-	 * @see	wcf\action\AbstractAction::$neededModules
+	 * @see	\wcf\action\AbstractAction::$neededModules
 	 */
 	public $neededModules = array('GITHUB_PUBLIC_KEY', 'GITHUB_PRIVATE_KEY');
 	
 	/**
-	 * @see	wcf\action\IAction::execute()
+	 * @see	\wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();
@@ -171,7 +171,7 @@ class GithubAuthAction extends AbstractAction {
 	 * Fetches the User with the given access-token.
 	 * 
 	 * @param	string			$token
-	 * @return	wcf\data\user\User
+	 * @return	\wcf\data\user\User
 	 */
 	public function getUser($token) {
 		$sql = "SELECT	userID

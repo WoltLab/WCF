@@ -25,7 +25,7 @@ interface IModerationQueueReportHandler extends IModerationQueueHandler {
 	/**
 	 * Returns rendered template for reported content.
 	 * 
-	 * @param	wcf\data\moderation\queue\ViewableModerationQueue	$queue
+	 * @param	\wcf\data\moderation\queue\ViewableModerationQueue	$queue
 	 * @return	string
 	 */
 	public function getReportedContent(ViewableModerationQueue $queue);
@@ -34,7 +34,7 @@ interface IModerationQueueReportHandler extends IModerationQueueHandler {
 	 * Returns reported object.
 	 * 
 	 * @param	integer		$objectID
-	 * @return	wcf\data\IUserContent
+	 * @return	\wcf\data\IUserContent
 	 */
 	public function getReportedObject($objectID);
 }

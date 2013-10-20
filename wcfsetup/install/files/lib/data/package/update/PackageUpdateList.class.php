@@ -15,12 +15,12 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  */
 class PackageUpdateList extends DatabaseObjectList {
 	/**
-	 * @see	wcf\data\DatabaseObjectList::$className
+	 * @see	\wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\package\update\PackageUpdate';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectList::__construct()
+	 * @see	\wcf\data\DatabaseObjectList::__construct()
 	 */
 	public function __construct($useSqlOr = false) {
 		parent::__construct();

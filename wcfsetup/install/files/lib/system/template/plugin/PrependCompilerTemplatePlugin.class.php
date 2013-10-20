@@ -18,7 +18,7 @@ use wcf\system\template\TemplateScriptingCompiler;
  */
 class PrependCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	/**
-	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeStart()
+	 * @see	\wcf\system\template\ICompilerTemplatePlugin::executeStart()
 	 */
 	public function executeStart($tagArgs, TemplateScriptingCompiler $compiler) {
 		if (!isset($tagArgs['var'])) {
@@ -32,7 +32,7 @@ class PrependCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	}
 	
 	/**
-	 * @see	wcf\system\template\ICompilerTemplatePlugin::executeEnd()
+	 * @see	\wcf\system\template\ICompilerTemplatePlugin::executeEnd()
 	 */
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		throw new SystemException($compiler->formatSyntaxError("unknown tag {/prepend}", $compiler->getCurrentIdentifier(), $compiler->getCurrentLineNo()));

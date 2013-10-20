@@ -18,14 +18,14 @@ use wcf\system\WCF;
  */
 class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
 	 */
 	public function getTitle() {
 		return $this->getLanguage()->get('wcf.user.notification.commentResponseOwner.title');
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getMessage()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getMessage()
 	 */
 	public function getMessage() {
 		// @todo: use cache or a single query to retrieve required data
@@ -39,7 +39,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractUserN
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
 		$comment = new Comment($this->userNotificationObject->commentID);
@@ -56,7 +56,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractUserN
 	}
 	
 	/**
-	 * @see	wcf\system\user\notification\event\IUserNotificationEvent::getLink()
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getLink()
 	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink('User', array('object' => WCF::getUser()), '#wall');

@@ -17,27 +17,27 @@ use wcf\system\WCF;
  */
 class ACPSessionLogPage extends SortablePage {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.log.session';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$templateName
+	 * @see	\wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'acpSessionLog';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.system.canViewLog');
 	
 	/**
-	 * @see	wcf\page\SortablePage::$defaultSortField
+	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'time';
 	
 	/**
-	 * @see	wcf\page\SortablePage::$validSortFields
+	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
 	public $validSortFields = array('sessionAccessLogID', 'ipAddress', 'time', 'requestURI', 'requestMethod', 'className');
 	
@@ -49,17 +49,17 @@ class ACPSessionLogPage extends SortablePage {
 	
 	/**
 	 * session log object
-	 * @var	wcf\data\acp\session\log\ACPSessionLog
+	 * @var	\wcf\data\acp\session\log\ACPSessionLog
 	 */
 	public $sessionLog = null;
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::$objectListClassName
+	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\acp\session\access\log\ACPSessionAccessLogList';
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -73,7 +73,7 @@ class ACPSessionLogPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::initObjectList()
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();
@@ -82,7 +82,7 @@ class ACPSessionLogPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\MultipleLinkPage::readObjects()
+	 * @see	\wcf\page\MultipleLinkPage::readObjects()
 	 */
 	protected function readObjects() {
 		$this->sqlOrderBy = 'acp_session_access_log.'.$this->sortField." ".$this->sortOrder;
@@ -91,7 +91,7 @@ class ACPSessionLogPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

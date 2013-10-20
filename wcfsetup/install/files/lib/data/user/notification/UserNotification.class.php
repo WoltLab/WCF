@@ -15,17 +15,17 @@ use wcf\system\WCF;
  */
 class UserNotification extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'user_notification';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'notificationID';
 	
 	/**
-	 * @see	wcf\data\IStorableObject::__get()
+	 * @see	\wcf\data\IStorableObject::__get()
 	 */
 	public function __get($name) {
 		$value = parent::__get($name);
@@ -39,7 +39,7 @@ class UserNotification extends DatabaseObject {
 	}
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::handleData()
+	 * @see	\wcf\data\DatabaseObject::handleData()
 	 */
 	protected function handleData($data) {
 		parent::handleData($data);
@@ -56,7 +56,7 @@ class UserNotification extends DatabaseObject {
 	 * @param	integer		$packageID
 	 * @param	integer		$eventID
 	 * @param	integer		$objectID
-	 * @return	wcf\data\user\notification\UserNotification
+	 * @return	\wcf\data\user\notification\UserNotification
 	 */
 	public static function getNotification($packageID, $eventID, $objectID) {
 		$sql = "SELECT	*

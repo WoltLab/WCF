@@ -16,12 +16,12 @@ use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
  */
 class UserGroupOptionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\user\group\option\UserGroupOption';
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		UserGroupOptionCacheBuilder::getInstance()->reset();

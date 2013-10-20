@@ -15,7 +15,7 @@ use wcf\system\WCF;
  */
 class QuoteBBCode extends AbstractBBCode {
 	/**
-	 * @see	wcf\system\bbcode\IBBCode::getParsedTag()
+	 * @see	\wcf\system\bbcode\IBBCode::getParsedTag()
 	 */
 	public function getParsedTag(array $openingTag, $content, array $closingTag, BBCodeParser $parser) {
 		if ($parser->getOutputType() == 'text/html') {

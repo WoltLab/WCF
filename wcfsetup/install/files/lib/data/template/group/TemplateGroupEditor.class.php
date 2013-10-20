@@ -17,12 +17,12 @@ use wcf\util\DirectoryUtil;
  */
 class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\template\group\TemplateGroup';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectEditor::update()
+	 * @see	\wcf\data\DatabaseObjectEditor::update()
 	 */
 	public function update(array $parameters = array()) {
 		parent::update($parameters);
@@ -33,7 +33,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableObject::deleteAll()
+	 * @see	\wcf\data\IEditableObject::deleteAll()
 	 */
 	public static function deleteAll(array $objectIDs = array()) {
 		$list = new TemplateGroupList();
@@ -57,7 +57,7 @@ class TemplateGroupEditor extends DatabaseObjectEditor implements IEditableCache
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		TemplateGroupCacheBuilder::getInstance()->reset();

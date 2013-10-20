@@ -28,7 +28,7 @@ use wcf\util\HTTPRequest;
 class UserAvatarAction extends AbstractDatabaseObjectAction {
 	/**
 	 * currently edited avatar
-	 * @var	wcf\data\user\avatar\UserAvatarEditor
+	 * @var	\wcf\data\user\avatar\UserAvatarEditor
 	 */
 	public $avatar = null;
 	

@@ -16,8 +16,8 @@ interface ITaggable {
 	/**
 	 * Returns a list of tagged objects.
 	 * 
-	 * @param	wcf\data\tag\Tag	$tag
-	 * @return	wcf\data\DatabaseObjectList
+	 * @param	\wcf\data\tag\Tag	$tag
+	 * @return	\wcf\data\DatabaseObjectList
 	 */
 	public function getObjectList(Tag $tag);
 	
@@ -30,7 +30,7 @@ interface ITaggable {
 	
 	/**
 	 * Returns the application of the result template.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getApplication();

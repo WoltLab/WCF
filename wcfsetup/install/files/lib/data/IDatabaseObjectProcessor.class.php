@@ -15,7 +15,7 @@ interface IDatabaseObjectProcessor {
 	/**
 	 * Creates a new instance of a database object processor.
 	 * 
-	 * @param	wcf\data\DatabaseObject		$object
+	 * @param	\wcf\data\DatabaseObject		$object
 	 */
 	public function __construct(DatabaseObject $object);
 	

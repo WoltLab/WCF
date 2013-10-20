@@ -37,12 +37,12 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	const INFO_FILE = 'style.xml';
 	
 	/**
-	 * @see	wcf\data\DatabaseObjectDecorator::$baseClass
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\style\Style';
 	
 	/**
-	 * @see	wcf\data\IEditableObject::update()
+	 * @see	\wcf\data\IEditableObject::update()
 	 */
 	public function update(array $parameters = array()) {
 		$variables = null;
@@ -66,7 +66,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableObject::delete()
+	 * @see	\wcf\data\IEditableObject::delete()
 	 */
 	public function delete() {
 		parent::delete();
@@ -120,7 +120,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	/**
 	 * Reads the data of a style exchange format file.
 	 * 
-	 * @param	wcf\system\io\Tar	$tar
+	 * @param	\wcf\system\io\Tar	$tar
 	 * @return	array
 	 */
 	public static function readStyleData(Tar $tar) {
@@ -491,7 +491,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	/**
 	 * Saves localized style descriptions.
 	 * 
-	 * @param	wcf\data\style\StyleEditor	$styleEditor
+	 * @param	\wcf\data\style\StyleEditor	$styleEditor
 	 * @param	array<string>			$descriptions
 	 */
 	protected static function saveLocalizedDescriptions(StyleEditor $styleEditor, array $descriptions) {
@@ -814,7 +814,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableObject::create()
+	 * @see	\wcf\data\IEditableObject::create()
 	 */
 	public static function create(array $parameters = array()) {
 		$variables = null;
@@ -858,7 +858,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
-	 * @see	wcf\data\IEditableCachedObject::resetCache()
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
 	 */
 	public static function resetCache() {
 		StyleCacheBuilder::getInstance()->reset();

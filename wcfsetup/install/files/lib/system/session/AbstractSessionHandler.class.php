@@ -15,12 +15,12 @@ use wcf\system\SingletonFactory;
 abstract class AbstractSessionHandler extends SingletonFactory {
 	/**
 	 * SessionHandler object
-	 * @var	wcf\system\session\SessionHandler
+	 * @var	\wcf\system\session\SessionHandler
 	 */
 	protected $sessionHandler = null;
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected final function init() {
 		$this->sessionHandler = SessionHandler::getInstance();

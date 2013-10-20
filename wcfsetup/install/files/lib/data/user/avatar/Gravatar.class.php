@@ -3,7 +3,6 @@ namespace wcf\data\user\avatar;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 use wcf\system\WCF;
 
 /**
@@ -66,7 +65,7 @@ class Gravatar extends DefaultAvatar {
 	}
 	
 	/**
-	 * @see	wcf\data\user\avatar\IUserAvatar::getURL()
+	 * @see	\wcf\data\user\avatar\IUserAvatar::getURL()
 	 */
 	public function getURL($size = null) {
 		if ($size === null) $size = $this->size;
@@ -79,7 +78,7 @@ class Gravatar extends DefaultAvatar {
 			}
 			else {
 				$this->url[$size] = LinkHandler::getInstance()->getLink('GravatarDownload', array(
-					'forceFrontend' => true		
+					'forceFrontend' => true
 				), 'userID='.$this->userID.'&size='.$size);
 			}
 		}
@@ -106,7 +105,7 @@ class Gravatar extends DefaultAvatar {
 	}
 	
 	/**
-	 * @see	wcf\data\user\avatar\IUserAvatar::canCrop()
+	 * @see	\wcf\data\user\avatar\IUserAvatar::canCrop()
 	 */
 	public function canCrop() {
 		return false;

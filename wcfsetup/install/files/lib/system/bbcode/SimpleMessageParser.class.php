@@ -24,7 +24,7 @@ class SimpleMessageParser extends SingletonFactory {
 	
 	/**
 	 * list of smilies
-	 * @var	array<wcf\data\smiley\Smiley>
+	 * @var	array<\wcf\data\smiley\Smiley>
 	 */
 	protected $smilies = array();
 	
@@ -35,7 +35,7 @@ class SimpleMessageParser extends SingletonFactory {
 	public $message = '';
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		parent::init();
@@ -147,7 +147,7 @@ class SimpleMessageParser extends SingletonFactory {
 	/**
 	 * Callback for preg_replace.
 	 * 
-	 * @see	wcf\system\bbcode\SimpleMessageParser::parseURLs()
+	 * @see	\wcf\system\bbcode\SimpleMessageParser::parseURLs()
 	 */
 	protected function parseURLsCallback($matches) {
 		return StringUtil::getAnchorTag(StringUtil::decodeHTML($matches[0]));

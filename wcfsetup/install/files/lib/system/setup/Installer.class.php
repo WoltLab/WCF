@@ -37,7 +37,7 @@ class Installer {
 	
 	/**
 	 * file handler of the installed files
-	 * @var	wcf\system\setup\IFileHandler
+	 * @var	\wcf\system\setup\IFileHandler
 	 */
 	protected $fileHandler;
 	
@@ -46,7 +46,7 @@ class Installer {
 	 * 
 	 * @param	string				$targetDir
 	 * @param	string				$source
-	 * @param	wcf\system\setup\IFileHandler	$fileHandler
+	 * @param	\wcf\system\setup\IFileHandler	$fileHandler
 	 * @param	string				$folder
 	 */
 	public function __construct($targetDir, $source, $fileHandler = null, $folder = '') {

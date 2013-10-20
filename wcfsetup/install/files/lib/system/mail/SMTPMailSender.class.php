@@ -16,7 +16,7 @@ use wcf\system\io\RemoteFile;
 class SMTPMailSender extends MailSender {
 	/**
 	 * smtp connection
-	 * @var	wcf\system\io\RemoteFile
+	 * @var	\wcf\system\io\RemoteFile
 	 */
 	protected $connection = null;
 	
@@ -120,7 +120,7 @@ class SMTPMailSender extends MailSender {
 	}
 	
 	/**
-	 * @see	wcf\system\mail\MailSender::sendMail()
+	 * @see	\wcf\system\mail\MailSender::sendMail()
 	 */
 	public function sendMail(Mail $mail) {
 		$this->recipients = array();

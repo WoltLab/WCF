@@ -19,7 +19,7 @@ use wcf\system\WCF;
 class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * list of tags
-	 * @var	array<wcf\data\tag\TagCloudTag>
+	 * @var	array<\wcf\data\tag\TagCloudTag>
 	 */
 	protected $tags = array();
 	
@@ -30,7 +30,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	protected $languageIDs = array();
 	
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::$maxLifetime
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::$maxLifetime
 	 */
 	protected $maxLifetime = 3600;
 	
@@ -41,7 +41,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	protected $objectTypeIDs = array();
 	
 	/**
-	 * @see	wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	protected function rebuild(array $parameters) {
 		$this->languageIDs = $this->parseLanguageIDs($parameters);
@@ -78,6 +78,8 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	 * Reads associated tags.
 	 */
 	protected function getTags() {
+		$this->tags = array();
+		
 		if (!empty($this->objectTypeIDs)) {
 			// get tag ids
 			$tagIDs = array();
@@ -86,7 +88,7 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 			$conditionBuilder->add('object.languageID IN (?)', array($this->languageIDs));
 			$sql = "SELECT		COUNT(*) AS counter, object.tagID
 				FROM		wcf".WCF_N."_tag_to_object object
-				".$conditionBuilder->__toString()."
+				".$conditionBuilder."
 				GROUP BY	object.tagID
 				ORDER BY	counter DESC";
 			$statement = WCF::getDB()->prepareStatement($sql, 500);
@@ -116,8 +118,8 @@ class TagCloudCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * Compares the weight between two tags.
 	 * 
-	 * @param	wcf\data\tag\TagCloudTag	$tagA
-	 * @param	wcf\data\tag\TagCloudTag	$tagB
+	 * @param	\wcf\data\tag\TagCloudTag	$tagA
+	 * @param	\wcf\data\tag\TagCloudTag	$tagB
 	 * @return	integer
 	 */
 	protected static function compareTags($tagA, $tagB) {

@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
 class OptionForm extends AbstractOptionListForm {
 	/**
 	 * category option
-	 * @var	wcf\data\option\category\OptionCategory
+	 * @var	\wcf\data\option\category\OptionCategory
 	 */
 	public $category = null;
 	
@@ -45,12 +45,12 @@ class OptionForm extends AbstractOptionListForm {
 	public $optionTree = array();
 	
 	/**
-	 * @see	wcf\acp\form\AbstractOptionListForm::$languageItemPattern
+	 * @see	\wcf\acp\form\AbstractOptionListForm::$languageItemPattern
 	 */
 	protected $languageItemPattern = 'wcf.acp.option.option\d+';
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->categoryID = intval($_REQUEST['id']);
@@ -66,7 +66,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -85,7 +85,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
@@ -102,7 +102,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
@@ -115,7 +115,7 @@ class OptionForm extends AbstractOptionListForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::show()
+	 * @see	\wcf\form\IForm::show()
 	 */
 	public function show() {
 		// set active menu item

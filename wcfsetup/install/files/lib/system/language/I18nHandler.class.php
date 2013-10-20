@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
 class I18nHandler extends SingletonFactory {
 	/**
 	 * list of available languages
-	 * @var	array<wcf\data\language\Language>
+	 * @var	array<\wcf\data\language\Language>
 	 */
 	protected $availableLanguages = array();
 	
@@ -51,12 +51,12 @@ class I18nHandler extends SingletonFactory {
 	
 	/**
 	 * language variable regex object
-	 * @var	wcf\system\Regex
+	 * @var	\wcf\system\Regex
 	 */
 	protected $regex = null;
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
@@ -133,7 +133,7 @@ class I18nHandler extends SingletonFactory {
 	 * 
 	 * @param	string		elementID
 	 * @return	string
-	 * @see		wcf\system\language\I18nHandler::isPlainValue()
+	 * @see		\wcf\system\language\I18nHandler::isPlainValue()
 	 */
 	public function getValue($elementID) {
 		return $this->plainValues[$elementID];

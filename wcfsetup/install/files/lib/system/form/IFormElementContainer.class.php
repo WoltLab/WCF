@@ -51,21 +51,21 @@ interface IFormElementContainer {
 	/**
 	 * Returns a list of child elements.
 	 * 
-	 * @return	array<wcf\system\form\IFormElement>
+	 * @return	array<\wcf\system\form\IFormElement>
 	 */
 	public function getChildren();
 	
 	/**
 	 * Appends a new child to stack.
 	 * 
-	 * @param	wcf\system\form\IFormElement		$element
+	 * @param	\wcf\system\form\IFormElement		$element
 	 */
 	public function appendChild(IFormElement $element);
 	
 	/**
 	 * Preprens a new child to stack.
 	 * 
-	 * @param	wcf\system\form\IFormElement		$element
+	 * @param	\wcf\system\form\IFormElement		$element
 	 */
 	public function prependChild(IFormElement $element);
 	

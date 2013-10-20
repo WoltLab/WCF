@@ -214,6 +214,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.exceptionLog.exception.file"><![CDATA[File (Line)]]></item>
 		<item name="wcf.acp.exceptionLog.exception.requestURI"><![CDATA[Requested URL]]></item>
 		<item name="wcf.acp.exceptionLog.exception.referrer"><![CDATA[Referrer]]></item>
+		<item name="wcf.acp.exceptionLog.exception.information"><![CDATA[Additional information]]></item>
 		<item name="wcf.acp.exceptionLog.exception.stacktrace"><![CDATA[Stacktrace]]></item>
 		<item name="wcf.acp.exceptionLog.exception.copy"><![CDATA[Copy error message]]></item>
 		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[No error with the ID “{$exceptionID}” was found.]]></item>
@@ -297,7 +298,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.attachment.maxSize"><![CDATA[Maximum File Size]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions"><![CDATA[Allowed File Extensions]]></item>
 		<item name="wcf.acp.group.option.user.attachment.allowedExtensions.description"><![CDATA[One extension per line]]></item>
-		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
+		<item name="wcf.acp.group.option.user.attachment.maxCount"><![CDATA[Maximum Attachments Per Message]]></item>
 		<item name="wcf.acp.group.option.category.admin.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.group.option.admin.attachment.canManageAttachment"><![CDATA[Can manage attachments]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.bbcode"><![CDATA[BBCodes]]></item>
@@ -346,7 +347,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Can approve users]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Rename]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Minimum period until members may rename themselves. [time in days]]]></item>
-		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Can not be ignored]]></item>
+		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Cannot be ignored]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Can access moderation]]></item>
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Like System]]></item>
 		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Can view likes]]></item>
@@ -562,7 +563,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.blacklist_ip_addresses"><![CDATA[Block by IP address]]></item>
 		<item name="wcf.acp.option.blacklist_ip_addresses.description"><![CDATA[One address per line]]></item>
 		<item name="wcf.acp.option.blacklist_user_agents"><![CDATA[Block by User-Agent]]></item>
-		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[One User-Agent per line]]></item>
+		<item name="wcf.acp.option.blacklist_user_agents.description"><![CDATA[One user-agent per line]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host.description"><![CDATA[One server per line, you can additionally specify a weight factor to allow load balancing, for example “localhost:11211:67” or “10.0.13.37:31337:33”.]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Caching Method]]></item>
@@ -617,14 +618,14 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.export.download.description"><![CDATA[Downloads a backup of the configuration settings to your local machine. This is not a replacement for a backup!]]></item>
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Enable gzip-compression]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Compresses content transfered to users, reduces traffic and page load time. Does not affect files, e.g. images.]]></item>
-		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Prevent Browser-caching]]></item>
-		<item name="wcf.acp.option.http_enable_no_cache_headers.description"><![CDATA[Prevents Browser’s caching ensuring your users are always viewing the latest content. Increases both traffic and server load.]]></item>
-		<item name="wcf.acp.option.http_gzip_level"><![CDATA[gzip-compression level]]></item>
+		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Prevent browser-caching]]></item>
+		<item name="wcf.acp.option.http_enable_no_cache_headers.description"><![CDATA[Prevents browser’s caching ensuring your users are always viewing the latest content. Increases both traffic and server load.]]></item>
+		<item name="wcf.acp.option.http_gzip_level"><![CDATA[Gzip-Compression Level]]></item>
 		<item name="wcf.acp.option.http_gzip_level.description"><![CDATA[Values between 1 and 9 are valid, it is recommended to use “1” for good compression without causing high server loads.]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Disallow embedding in a frame]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sends the <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'http://en.wikipedia.org/wiki/Clickjacking'|rawurlencode}" class="externalURL">“X-Frame-Options”</a> header to prevent 3rd party sites from embedding this site in a frame (sends “SAMEORIGIN”).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Graphics Library]]></item>
-		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Library (default)]]></item>
+		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (default)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Library used for image processing, e.g. scaling uploaded images. “ImageMagick” is a lot faster, but is not available on every machine.]]></item>
 		<item name="wcf.acp.option.import"><![CDATA[Restore Options]]></item>
@@ -667,7 +668,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Timeout in seconds]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[Validate IP address]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Enabling this validation might cause troubles for users with rotating IP addresses.]]></item>
-		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Validate User-Agent]]></item>
+		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Validate user-agent]]></item>
 		<item name="wcf.acp.option.show_clock"><![CDATA[Show current time in page footer]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Default timezone of your page]]></item>
@@ -717,7 +718,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.censored_words.description"><![CDATA[One word per Line. Using at least one of these words within a message causes an immediate rejection.<br />
 <em>Use “*” to match parts: “wolt*” matches “woltlab”</em><br />
 <em>Use “~” to find splitted parts: “wolt~” matches “wolt-lab”</em>]]></item>
-		<item name="wcf.acp.option.enable_censorship"><![CDATA[Enable Censorship]]></item>
+		<item name="wcf.acp.option.enable_censorship"><![CDATA[Enable censorship]]></item>
 		<item name="wcf.acp.option.enable_censorship.description"><![CDATA[Enables censorship for all messages containing the words below.]]></item>
 		<item name="wcf.acp.option.category.message.general.share"><![CDATA[Share]]></item>
 		<item name="wcf.acp.option.enable_bbcodes_default_value"><![CDATA[Enable BBCodes [default value]]]></item>
@@ -760,10 +761,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.max_avatar_width"><![CDATA[Maximum Avatar Width]]></item>
 		<item name="wcf.acp.option.module_gravatar"><![CDATA[Gravatars]]></item>
 		<item name="wcf.acp.option.module_gravatar.description"><![CDATA[Enables support for Gravatars (“Global Recognized Avatar”).]]></item>
-		<item name="wcf.acp.option.module_users_online"><![CDATA[“Users Online” List]]></item>
-		<item name="wcf.acp.option.module_user_rank"><![CDATA[User Ranks]]></item>
+		<item name="wcf.acp.option.module_users_online"><![CDATA[“Users Online” list]]></item>
+		<item name="wcf.acp.option.module_user_rank"><![CDATA[User ranks]]></item>
 		<item name="wcf.acp.option.module_user_signature"><![CDATA[Signatures]]></item>
-		<item name="wcf.acp.option.module_team_page"><![CDATA[Staff List]]></item>
+		<item name="wcf.acp.option.module_team_page"><![CDATA[Staff list]]></item>
 		<item name="wcf.acp.option.module_dashboard_page"><![CDATA[Dashboard]]></item>
 		<item name="wcf.acp.option.module_dashboard_page.description"><![CDATA[Notice: In case the Dashboard is currently defined as landing page, you must set a different landing page through the <a href="{link controller='PageMenuItemList'}{/link}">Page Menu</a> management afterwards.]]></item>
 		<item name="wcf.acp.option.register_enable_password_security_check"><![CDATA[Enable password validation]]></item>
@@ -800,7 +801,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.user_forbidden_titles.description"><![CDATA[List of user titles unavailable for members, one title per line.]]></item>
 		<item name="wcf.acp.option.profile_show_old_username"><![CDATA[Show Previous Username]]></item>
 		<item name="wcf.acp.option.profile_show_old_username.description"><![CDATA[Previous username will be additionally displayed for the given period. [time in days]]]></item>
-		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Members per Page]]></item>
+		<item name="wcf.acp.option.members_list_users_per_page"><![CDATA[Members Per Page]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_field"><![CDATA[Default Sort Field]]></item>
 		<item name="wcf.acp.option.members_list_default_sort_order"><![CDATA[Default Sort Order]]></item>
 		<item name="wcf.acp.option.users_online_show_guests"><![CDATA[Show guests]]></item>
@@ -819,11 +820,11 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.recent_activity_items"><![CDATA[Number of Entries]]></item>
 		<item name="wcf.acp.option.recent_activity_sidebar_items"><![CDATA[Number of Entries]]></item>
 		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Like System]]></item>
-		<item name="wcf.acp.option.module_like"><![CDATA[Like System]]></item>
+		<item name="wcf.acp.option.module_like"><![CDATA[Like system]]></item>
 		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Users can like their own content]]></item>
 		<item name="wcf.acp.option.like_enable_dislike"><![CDATA[Users can dislike content]]></item>
 		<item name="wcf.acp.option.like_show_summary"><![CDATA[Show like summary]]></item>
-		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[User Profile Wall]]></item>
+		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[User profile wall]]></item>
 		<item name="wcf.acp.option.category.message.sidebar"><![CDATA[Sidebar]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_avatar"><![CDATA[Show avatar]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_online_status"><![CDATA[Show online status]]></item>
@@ -831,20 +832,20 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.message_sidebar_enable_message_group_starter_icon"><![CDATA[Highlight thread starter]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_likes_received"><![CDATA[Show author’s likes received]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_activity_points"><![CDATA[Show author’s activity points]]></item>
-		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Show selected author profile fields]]></item>
+		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Show Selected Author Profile Fields]]></item>
 		<item name="wcf.acp.option.module_tagging"><![CDATA[Tagging]]></item>
 		<item name="wcf.acp.option.module_tagging.description"><![CDATA[Enables the tagging of content.]]></item>
 		<item name="wcf.acp.option.tagging_max_tag_length"><![CDATA[Maximum Length of a Tag]]></item>
 		<item name="wcf.acp.option.category.message.search"><![CDATA[Search]]></item>
-		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results per Page]]></item>
+		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results Per Page]]></item>
 		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Default Sort Field]]></item>
 		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Default Sort Order]]></item>
 		<item name="wcf.acp.option.search_use_captcha"><![CDATA[Enable reCAPTCHA protection for search]]></item>
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
-		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum number of options]]></item>
+		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum Number of Options]]></item>
 		<item name="wcf.acp.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
-		<item name="wcf.acp.option.module_members_list"><![CDATA[Members List]]></item>
+		<item name="wcf.acp.option.module_members_list"><![CDATA[Members list]]></item>
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer Code]]></item>
 		<item name="wcf.acp.option.footer_code.description"><![CDATA[The entered code will be appended to the page footer of your site. You can use it to embed services like “Google Analytics” or “Piwik”.]]></item>
 		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Show profile visitors]]></item>
@@ -2143,6 +2144,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.register.honeyPot"><![CDATA[Please Ignore!]]></item>
 		<item name="wcf.user.register.honeyPot.description"><![CDATA[Heads up! If you can see this, you are strongly encouraged <strong>NOT</strong> to fill in the next two input fields!]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Search for content by “{$user->username}”]]></item>
+		<item name="wcf.user.author"><![CDATA[Author]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

@@ -16,7 +16,7 @@ use wcf\util\ClassUtil;
 abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSearchResultProvider {
 	/**
 	 * list of categories
-	 * @var	array<wcf\data\DatabaseObject>
+	 * @var	array<\wcf\data\DatabaseObject>
 	 */
 	protected $categories = array();
 	
@@ -67,7 +67,7 @@ abstract class AbstractCategorizedACPSearchResultProvider extends AbstractACPSea
 	 * Returns a level 1 or 2 category for given category name.
 	 * 
 	 * @param	string			$categoryName
-	 * @return	wcf\data\DatabaseObject
+	 * @return	\wcf\data\DatabaseObject
 	 */
 	protected function getTopCategory($categoryName) {
 		if (!$this->isValid($categoryName)) {

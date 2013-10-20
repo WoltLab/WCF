@@ -3,7 +3,6 @@ namespace wcf\data\package\update\server;
 use wcf\data\DatabaseObject;
 use wcf\system\Regex;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Represents a package update server.
@@ -17,12 +16,12 @@ use wcf\util\StringUtil;
  */
 class PackageUpdateServer extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'package_update_server';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'packageUpdateServerID';
 	
@@ -119,8 +118,8 @@ class PackageUpdateServer extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if update server requires license data instead of username/password.
-	 *
+	 * Returns true if update server requires license data instead of username/password.
+	 * 
 	 * @return	integer
 	 */
 	public final function requiresLicense() {

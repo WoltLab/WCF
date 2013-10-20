@@ -15,12 +15,12 @@ use wcf\system\WCF;
  */
 class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::$className
 	 */
 	public $className = 'wcf\data\acp\search\provider\ACPSearchProviderEditor';
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
 		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
@@ -39,7 +39,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
 		// get show order
@@ -54,7 +54,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) {
 		$sql = "SELECT	*
@@ -73,7 +73,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	}
 	
 	/**
-	 * @see	wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
 	 */
 	protected function cleanup() {
 		ACPSearchProviderCacheBuilder::getInstance()->reset();

@@ -57,7 +57,7 @@ class RouteHandler extends SingletonFactory {
 	
 	/**
 	 * list of available routes
-	 * @var	array<wcf\system\request\Route>
+	 * @var	array<\wcf\system\request\Route>
 	 */
 	protected $routes = array();
 	
@@ -68,7 +68,7 @@ class RouteHandler extends SingletonFactory {
 	protected $routeData = null;
 	
 	/**
-	 * @see	wcf\system\SingletonFactory::init()
+	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		$this->addDefaultRoutes();
@@ -97,7 +97,7 @@ class RouteHandler extends SingletonFactory {
 	/**
 	 * Adds a new route to the beginning of all routes.
 	 * 
-	 * @param	wcf\system\request\Route	$route
+	 * @param	\wcf\system\request\Route	$route
 	 */
 	public function addRoute(Route $route) {
 		array_unshift($this->routes, $route);
@@ -273,11 +273,11 @@ class RouteHandler extends SingletonFactory {
 					if (isset($_SERVER['SCRIPT_NAME']) && (self::$pathInfo == $_SERVER['SCRIPT_NAME'])) {
 						self::$pathInfo = '';
 					}
-			
+					
 					if (isset($_SERVER['PHP_SELF']) && (self::$pathInfo == $_SERVER['PHP_SELF'])) {
 						self::$pathInfo = '';
 					}
-			
+					
 					if (isset($_SERVER['SCRIPT_URL']) && (self::$pathInfo == $_SERVER['SCRIPT_URL'])) {
 						self::$pathInfo = '';
 					}

@@ -23,13 +23,13 @@ use wcf\util\StringUtil;
  */
 class UserProfileAction extends UserAction {
 	/**
-	 * @see	wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('getUserProfile', 'getDetailedActivityPointList');
 	
 	/**
 	 * user profile object
-	 * @var	wcf\data\user\UserProfile
+	 * @var	\wcf\data\user\UserProfile
 	 */
 	public $userProfile = null;
 	
@@ -393,9 +393,9 @@ class UserProfileAction extends UserAction {
 	/**
 	 * Returns the user option handler object.
 	 * 
-	 * @param	wcf\data\user\User	$user
+	 * @param	\wcf\data\user\User	$user
 	 * @param	boolean			$editMode
-	 * @return	wcf\system\option\user\UserOptionHandler
+	 * @return	\wcf\system\option\user\UserOptionHandler
 	 */
 	protected function getOptionHandler(User $user, $editMode = true) {
 		$optionHandler = new UserOptionHandler(false, '', 'profile');

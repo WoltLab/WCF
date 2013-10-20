@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
 
 /**
  * Clipboard proxy implementation.
- *
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
 class ClipboardProxyAction extends AbstractSecureAction {
 	/**
 	 * IDatabaseObjectAction object
-	 * @var	wcf\data\IDatabaseObjectAction
+	 * @var	\wcf\data\IDatabaseObjectAction
 	 */
 	protected $objectAction = null;
 	
@@ -37,7 +37,7 @@ class ClipboardProxyAction extends AbstractSecureAction {
 	protected $typeName = '';
 	
 	/**
-	 * @see	wcf\action\IAction::__run()
+	 * @see	\wcf\action\IAction::__run()
 	 */
 	public function __run() {
 		try {
@@ -54,7 +54,7 @@ class ClipboardProxyAction extends AbstractSecureAction {
 	}
 	
 	/**
-	 * @see	wcf\action\IAction::readParameters()
+	 * @see	\wcf\action\IAction::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -107,7 +107,7 @@ class ClipboardProxyAction extends AbstractSecureAction {
 	}
 	
 	/**
-	 * @see	wcf\action\IAction::execute()
+	 * @see	\wcf\action\IAction::execute()
 	 */
 	public function execute() {
 		parent::execute();

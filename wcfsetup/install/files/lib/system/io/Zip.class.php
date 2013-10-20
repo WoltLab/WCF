@@ -19,14 +19,14 @@ class Zip extends File implements IArchive {
 	const EOF_SIGNATURE = "\x50\x4b\x05\x06";
 	
 	/**
-	 * @see	wcf\system\io\File::__construct()
+	 * @see	\wcf\system\io\File::__construct()
 	 */
 	public function __construct($filename) {
 		parent::__construct($filename, 'rb');
 	}
 	
 	/**
-	 * @see	wcf\system\io\IArchive::getIndexByFilename()
+	 * @see	\wcf\system\io\IArchive::getIndexByFilename()
 	 */
 	public function getIndexByFilename($filename) {
 		$this->jumpToCentralDirectory();
@@ -37,7 +37,7 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * @see	wcf\system\io\IArchive::getContentList()
+	 * @see	\wcf\system\io\IArchive::getContentList()
 	 */
 	public function getContentList() {
 		$this->jumpToCentralDirectory();
@@ -47,7 +47,7 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * @see	wcf\system\io\IArchive::getFileInfo()
+	 * @see	\wcf\system\io\IArchive::getFileInfo()
 	 */
 	public function getFileInfo($offset) {
 		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
@@ -75,7 +75,7 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * @see	wcf\system\io\IArchive::extractToString()
+	 * @see	\wcf\system\io\IArchive::extractToString()
 	 */
 	public function extractToString($offset) {
 		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);
@@ -92,7 +92,7 @@ class Zip extends File implements IArchive {
 	}
 	
 	/**
-	 * @see	wcf\system\io\IArchive::extract()
+	 * @see	\wcf\system\io\IArchive::extract()
 	 */
 	public function extract($offset, $destination) {
 		if (!is_int($offset)) $offset = $this->getIndexByFilename($offset);

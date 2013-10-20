@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\template;
-use wcf\data\package\Package;
 use wcf\data\DatabaseObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
@@ -19,17 +18,17 @@ use wcf\util\StringUtil;
  */
 class Template extends DatabaseObject {
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'template';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'templateID';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::__construct()
+	 * @see	\wcf\data\DatabaseObject::__construct()
 	 */
 	public function __construct($id, $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {
@@ -84,7 +83,7 @@ class Template extends DatabaseObject {
 	 * @param	boolean		$useRegex
 	 * @param	boolean		$caseSensitive
 	 * @param	boolean		$invertSearch
-	 * @return	array		results 
+	 * @return	array
 	 */
 	public static function search($search, $replace = null, $templateIDs = null, $invertTemplates = 0, $useRegex = 0, $caseSensitive = 0, $invertSearch = 0) {
 		// get available template ids

@@ -1,8 +1,8 @@
 <?php
 /**
- * default options.inc.php for package installation of package com.woltlab.wcf.
- *
- * @author	Marcel Werk 
+ * Default options.inc.php for package installation of package com.woltlab.wcf.
+ * 
+ * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */

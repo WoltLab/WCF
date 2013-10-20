@@ -3,7 +3,6 @@ namespace wcf\acp\form;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\template\group\TemplateGroup;
-use wcf\data\template\group\TemplateGroupAction;
 use wcf\data\template\group\TemplateGroupList;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateAction;
@@ -15,7 +14,7 @@ use wcf\util\StringUtil;
 
 /**
  * Shows the form for adding new templates.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -25,12 +24,12 @@ use wcf\util\StringUtil;
  */
 class TemplateAddForm extends AbstractForm {
 	/**
-	 * @see	wcf\page\AbstractPage::$activeMenuItem
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.template.add';
 	
 	/**
-	 * @see	wcf\page\AbstractPage::$neededPermissions
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.template.canManageTemplate');
 	
@@ -72,7 +71,7 @@ class TemplateAddForm extends AbstractForm {
 	
 	/**
 	 * copied template object
-	 * @var	wcf\data\template\Template
+	 * @var	\wcf\data\template\Template
 	 */
 	public $copiedTemplate = null;
 	
@@ -83,11 +82,11 @@ class TemplateAddForm extends AbstractForm {
 	public $application = '';
 	
 	/**
-	 * @see	wcf\page\IPage::readParameters()
+	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
-	
+		
 		if (!empty($_REQUEST['copy'])) {
 			$this->copy = intval($_REQUEST['copy']);
 			$this->copiedTemplate = new Template($this->copy);
@@ -101,7 +100,7 @@ class TemplateAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::readFormParameters()
+	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
@@ -124,7 +123,7 @@ class TemplateAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::validate()
+	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
 		parent::validate();
@@ -140,7 +139,7 @@ class TemplateAddForm extends AbstractForm {
 		if (empty($this->tplName)) {
 			throw new UserInputException('tplName');
 		}
-	
+		
 		if (!preg_match('/^[a-z0-9_\-]+$/i', $this->tplName)) {
 			throw new UserInputException('tplName', 'notValid');
 		}
@@ -177,7 +176,7 @@ class TemplateAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\form\IForm::save()
+	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
@@ -206,11 +205,11 @@ class TemplateAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::readData()
+	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
 		parent::readData();
-	
+		
 		$templateGroupList = new TemplateGroupList();
 		$templateGroupList->sqlOrderBy = "templateGroupName";
 		$templateGroupList->readObjects();
@@ -223,7 +222,7 @@ class TemplateAddForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();

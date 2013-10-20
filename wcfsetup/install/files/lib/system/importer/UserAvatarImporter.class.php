@@ -8,7 +8,7 @@ use wcf\util\FileUtil;
 
 /**
  * Imports user avatars.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -18,12 +18,12 @@ use wcf\util\FileUtil;
  */
 class UserAvatarImporter extends AbstractImporter {
 	/**
-	 * @see	wcf\system\importer\AbstractImporter::$className
+	 * @see	\wcf\system\importer\AbstractImporter::$className
 	 */
 	protected $className = 'wcf\data\user\avatar\UserAvatar';
 	
 	/**
-	 * @see	wcf\system\importer\IImporter::import()
+	 * @see	\wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		// check file location

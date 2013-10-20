@@ -25,17 +25,17 @@ class Application extends DatabaseObject {
 	protected $pageURL = '';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
 	protected static $databaseTableName = 'application';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexName
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'packageID';
 	
 	/**
-	 * @see	wcf\data\DatabaseObject::$databaseTableIndexIsIdentity
+	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexIsIdentity
 	 */
 	protected static $databaseTableIndexIsIdentity = false;
 	

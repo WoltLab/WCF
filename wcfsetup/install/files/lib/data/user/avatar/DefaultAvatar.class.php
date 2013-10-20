@@ -20,7 +20,7 @@ class DefaultAvatar implements IUserAvatar {
 	public $size = 150;
 	
 	/**
-	 * @see	wcf\data\user\avatar\IUserAvatar::getURL()
+	 * @see	\wcf\data\user\avatar\IUserAvatar::getURL()
 	 */
 	public function getURL($size = null) {
 		if ($size === null) $size = $this->size;
@@ -29,7 +29,7 @@ class DefaultAvatar implements IUserAvatar {
 	}
 	
 	/**
-	 * @see	wcf\data\user\avatar\IUserAvatar::getImageTag()
+	 * @see	\wcf\data\user\avatar\IUserAvatar::getImageTag()
 	 */
 	public function getImageTag($size = null) {
 		if ($size === null) $size = $this->size;
@@ -38,21 +38,21 @@ class DefaultAvatar implements IUserAvatar {
 	}
 	
 	/**
-	 * @see	wcf\data\user\avatar\IUserAvatar::getWidth()
+	 * @see	\wcf\data\user\avatar\IUserAvatar::getWidth()
 	 */
 	public function getWidth() {
 		return $this->size;
 	}
 	
 	/**
-	 * @see	wcf\data\user\avatar\IUserAvatar::getHeight()
+	 * @see	\wcf\data\user\avatar\IUserAvatar::getHeight()
 	 */
 	public function getHeight() {
 		return $this->size;
 	}
 	
 	/**
-	 * @see	wcf\data\user\avatar\IUserAvatar::canCrop()
+	 * @see	\wcf\data\user\avatar\IUserAvatar::canCrop()
 	 */
 	public function canCrop() {
 		return false;

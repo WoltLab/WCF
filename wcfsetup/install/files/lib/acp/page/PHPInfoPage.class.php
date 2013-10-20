@@ -5,7 +5,7 @@ use wcf\system\WCF;
 
 /**
  * Shows phpinfo() output.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -15,22 +15,22 @@ use wcf\system\WCF;
  */
 class PHPInfoPage extends AbstractPage {
 	/**
-	 * @see	wcf\page\AbstractPage::$templateName
+	 * @see	\wcf\page\AbstractPage::$templateName
 	 */
 	public $templateName = 'phpInfo';
 	
 	/**
-	 * @see	wcf\page\IPage::assignVariables()
+	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		// get phpinfo() output
 		ob_start();
 		phpinfo();
 		$info = ob_get_contents();
 		ob_end_clean();
-	
+		
 		// parse output
 		$info = preg_replace('%^.*<body>(.*)</body>.*$%s', '$1', $info);
 		
