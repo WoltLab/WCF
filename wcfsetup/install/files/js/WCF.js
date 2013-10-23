@@ -8141,6 +8141,22 @@ WCF.EditableItemList = Class.extend({
 	},
 	
 	/**
+	 * Clears the list of items.
+	 */
+	clearList: function() {
+		this._itemList.children('li').each($.proxy(function(index, element) {
+			var $element = $(element);
+			
+			if (this._search) {
+				this._search.removeExcludedSearchValue($element.data('label'));
+			}
+			
+			$element.remove();
+			this._removeItem($element.data('objectID'), $element.data('label'));
+		}, this));
+	},
+	
+	/**
 	 * Handles form submit, override in your class.
 	 */
 	_submit: function() {
@@ -8165,6 +8181,15 @@ WCF.EditableItemList = Class.extend({
 	 */
 	_removeItem: function(objectID, label) {
 		delete this._data[objectID];
+	},
+	
+	/**
+	 * Returns the search input field.
+	 * 
+	 * @return	jQuery
+	 */
+	getSearchInput: function() {
+		return this._searchInput;
 	}
 });
 
