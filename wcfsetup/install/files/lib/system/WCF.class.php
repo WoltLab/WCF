@@ -9,6 +9,7 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\cronjob\CronjobScheduler;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IPrintableException;
 use wcf\system\exception\NamedUserException;
@@ -133,6 +134,8 @@ class WCF {
 		$this->initCoreObjects();
 		$this->initApplications();
 		$this->initBlacklist();
+		
+		EventHandler::getInstance()->fireAction($this, 'initialized');
 	}
 	
 	/**
