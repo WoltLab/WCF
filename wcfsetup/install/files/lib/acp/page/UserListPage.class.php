@@ -243,8 +243,10 @@ class UserListPage extends SortablePage {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
-				$row['groupIDs'] = implode(',', $userToGroups[$row['userID']]);
-				$accessible = UserGroup::isAccessibleGroup($userToGroups[$row['userID']]);
+				$groupIDs = (isset($userToGroups[$row['userID']]) ? $userToGroups[$row['userID']] : array());
+				
+				$row['groupIDs'] = implode(',', $groupIDs);
+				$accessible = (!empty($groupIDs) ? UserGroup::isAccessibleGroup($groupIDs) : true);
 				$row['accessible'] = $accessible;
 				$row['deletable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canDeleteUser') && $row['userID'] != WCF::getUser()->userID) ? 1 : 0;
 				$row['editable'] = ($accessible && WCF::getSession()->getPermission('admin.user.canEditUser')) ? 1 : 0;
