@@ -314,7 +314,6 @@ class AccountManagementForm extends AbstractForm {
 		$success = array();
 		$updateParameters = array();
 		$updateOptions = array();
-		$userEditor = new UserEditor(WCF::getUser());
 		
 		// quit
 		if (WCF::getSession()->getPermission('user.profile.canQuit')) {
@@ -334,7 +333,7 @@ class AccountManagementForm extends AbstractForm {
 		if (WCF::getSession()->getPermission('user.profile.canRename') && $this->username != WCF::getUser()->username) {
 			if (mb_strtolower($this->username) != mb_strtolower(WCF::getUser()->username)) {
 				$updateParameters['lastUsernameChange'] = TIME_NOW;
-				$updateParameters['oldUsername'] = $userEditor->username;
+				$updateParameters['oldUsername'] = WCF::getUser()->username;
 			}
 			$updateParameters['username'] = $this->username;
 			$success[] = 'wcf.user.changeUsername.success';
@@ -370,18 +369,7 @@ class AccountManagementForm extends AbstractForm {
 		// password
 		if (!WCF::getUser()->authData) {
 			if (!empty($this->newPassword) || !empty($this->confirmNewPassword)) {
-				$userEditor->update(array(
-					'password' => $this->newPassword
-				));
-				
-				// update cookie
-				if (isset($_COOKIE[COOKIE_PREFIX.'password'])) {
-					// reload user
-					$user = new User($userEditor->userID);
-					
-					HeaderUtil::setCookie('password', PasswordUtil::getSaltedHash($this->newPassword, $user->password), TIME_NOW + 365 * 24 * 3600);
-				}
-				
+				$updateParameters['password'] = $this->newPassword;
 				$success[] = 'wcf.user.changePassword.success';
 			}
 		}
@@ -443,11 +431,23 @@ class AccountManagementForm extends AbstractForm {
 			}
 		}
 		
+		$data = array();
 		if (!empty($updateParameters)) {
-			$userEditor->update($updateParameters);
+			$data['data'] = $updateParameters;
 		}
 		if (!empty($updateOptions)) {
-			$userEditor->updateUserOptions($updateOptions);
+			$data['options'] = $updateOptions;
+		}
+		
+		$this->objectAction = new UserAction(array(WCF::getUser()), 'update', $data);
+		$this->objectAction->executeAction();
+		
+		// update cookie
+		if (isset($_COOKIE[COOKIE_PREFIX.'password']) && isset($updateParameters['password'])) {
+			// reload user
+			$user = new User(WCF::getUser()->userID);
+			
+			HeaderUtil::setCookie('password', PasswordUtil::getSaltedHash($updateParameters['password'], $user->password), TIME_NOW + 365 * 24 * 3600);
 		}
 		
 		$this->saved();

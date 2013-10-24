@@ -7,6 +7,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -135,6 +136,7 @@ WCF version: (?P<wcfVersion>.*?)
 Request URI: (?P<requestURI>.*?)
 Referrer: (?P<referrer>.*?)
 User-Agent: (?P<userAgent>.*?)
+Information: (?P<information>.*?)
 Stacktrace: 
 (?P<stacktrace>.*)', Regex::DOT_ALL);
 		$stackTraceFormatter = new Regex('^\s+(#\d+)', Regex::MULTILINE);
@@ -152,6 +154,7 @@ Stacktrace:
 			
 			$this->exceptions[$key] = $exceptionRegex->getMatches();
 			$this->exceptions[$key]['stacktrace'] = explode("\n", $stackTraceFormatter->replace(StringUtil::encodeHTML($this->exceptions[$key]['stacktrace']), '<strong>\\1</strong>'));
+			$this->exceptions[$key]['information'] = JSON::decode($this->exceptions[$key]['information']);
 		}
 	}
 	

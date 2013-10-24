@@ -40,6 +40,7 @@ WCF.Tagging.TagList = WCF.EditableItemList.extend({
 		this._data = [ ];
 		this._search = new WCF.Tagging.TagSearch(this._searchInput, $.proxy(this.addItem, this));
 		this._itemList.addClass('tagList');
+		$(itemListSelector).data('__api', this);
 	},
 	
 	/**
@@ -106,6 +107,24 @@ WCF.Tagging.TagList = WCF.EditableItemList.extend({
 	 */
 	_addItem: function(objectID, label) {
 		this._data.push(label);
+	},
+	
+	/**
+	 * @see	WCF.EditableItemList.clearList()
+	 */
+	clearList: function() {
+		this._super();
+		
+		this._data = [ ];
+	},
+	
+	/**
+	 * Returns the current tags.
+	 * 
+	 * @return	array<string>
+	 */
+	getTags: function() {
+		return this._data;
 	},
 	
 	/**

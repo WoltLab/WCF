@@ -72,7 +72,7 @@ class UsersOnlineListPage extends SortablePage {
 	}
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::readParameters()
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();

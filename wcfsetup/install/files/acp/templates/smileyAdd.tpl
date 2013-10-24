@@ -51,7 +51,7 @@
 				<dd>
 					<select id="categoryID" name="categoryID">
 						<option value="0"{if $categoryID === null} selected="selected"{/if}>{lang}wcf.acp.smiley.categoryID.default{/lang}</option>
-						{include file='categoryOptionList' maximumNestingLevel=0}
+						{include file='categoryOptionList'}
 					</select>
 					
 					{if $errorField == 'categoryID'}

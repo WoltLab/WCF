@@ -6,65 +6,67 @@ body, .tabularBox, .dialogTitlebar {
 }
 
 /* main menu */
+.mainMenu > ul {
+	background-color: rgba(0, 0, 0, .4);
+	
+	> li {
+		> a {
+			border-width: 0 !important;
+			color: @wcfPageLinkColor;
+			
+			.transition(color, .3s, ease); 
+			.textShadow(@wcfPageBackgroundColor);
+			
+			&:hover {
+				color: @wcfPageLinkHoverColor;
+			}
+		}
+		
+		&.active > a {
+			.linearGradient(@wcfNavigationHeaderBackgroundColor, lighten(@wcfNavigationHeaderBackgroundColor, 20%), @wcfNavigationHeaderBackgroundColor);
+		}
+		
+		&:hover {
+			color: @wcfMainMenuActiveColor;
+		}
+	}
+}
+
 @media all and (min-width: 801px) {
 	.mainMenu {
 		margin: @wcfGapMedium 9px 0;
 		
 		> ul {
-			background-color: rgba(0, 0, 0, .4);
 			border-radius: 5px 5px 0 0;
 			
-			> li {
-				> a {
-					border-width: 0 !important;
-					color: @wcfPageLinkColor;
-					position: relative;
+			> li.active > a {
+				border-radius: 5px 5px 0 0;
+				position: relative;
+				
+				&:after {
+					border-bottom-left-radius: 6px;
+					border-width: 0 0 1px 1px;
+					bottom: 0;
+					content: "";
+					height: 7px;
+					position: absolute;
+					right: -7px;
+					width: 7px;
 					
-					.transition(color, .3s, ease); 
-					.textShadow(@wcfPageBackgroundColor);
-					
-					&:hover {
-						color: @wcfPageLinkHoverColor;
-					}
+					.boxShadow(-2px, 2px, @wcfNavigationHeaderBackgroundColor, 0);
 				}
 				
-				&.active {
-					> a {
-						border-radius: 5px 5px 0 0;
-						
-						.linearGradient(@wcfNavigationHeaderBackgroundColor, lighten(@wcfNavigationHeaderBackgroundColor, 20%), @wcfNavigationHeaderBackgroundColor);
-						
-						&:after {
-							border-bottom-left-radius: 6px;
-							border-width: 0 0 1px 1px;
-							bottom: 0;
-							content: "";
-							height: 7px;
-							position: absolute;
-							right: -7px;
-							width: 7px;
-							
-							.boxShadow(-2px, 2px, @wcfNavigationHeaderBackgroundColor, 0);
-						}
-						
-						&:before {
-							border-bottom-right-radius: 6px;
-							border-width: 0 1px 1px 0;
-							bottom: 0;
-							content: "";
-							height: 7px;
-							left: -7px;
-							position: absolute;
-							width: 7px;
-							
-							.boxShadow(2px, 2px, @wcfNavigationHeaderBackgroundColor, 0);
-						}
-						
-						&:hover {
-							color: @wcfMainMenuActiveColor;
-						}
-					}
-				
+				&:before {
+					border-bottom-right-radius: 6px;
+					border-width: 0 1px 1px 0;
+					bottom: 0;
+					content: "";
+					height: 7px;
+					left: -7px;
+					position: absolute;
+					width: 7px;
+					
+					.boxShadow(2px, 2px, @wcfNavigationHeaderBackgroundColor, 0);
 				}
 			}
 		}
@@ -532,54 +534,55 @@ button.active:hover {
 
 		
 /* tab menus */
-.tabMenu {
-	padding: 0 10px;
-	
-	> ul {
-		border-top-left-radius: @wcfContainerBorderRadius;
-		border-top-right-radius: @wcfContainerBorderRadius;
+@media all and (min-width: 801px) {
+	.tabMenu {
+		padding: 0 10px;
 		
-		> li {
-			&.ui-state-active {
-				> a {
-					border-top-right-radius: @wcfContainerBorderRadius;
-					border-top-left-radius: @wcfContainerBorderRadius;
-					
-					&:before {
-						border: 1px solid @wcfContainerBorderColor;
-						border-bottom-right-radius: 6px;
-						border-width: 0 1px 1px 0;
-						bottom: -1px;
-						clip: rect(0, 6px, 6px, 0);
-						content: " ";
-						height: 5px;
-						left: -6px;
-						position: absolute;
-						width: 5px;
+		> ul {
+			border-top-left-radius: @wcfContainerBorderRadius;
+			border-top-right-radius: @wcfContainerBorderRadius;
+			
+			> li {
+				&.ui-state-active {
+					> a {
+						border-top-right-radius: @wcfContainerBorderRadius;
+						border-top-left-radius: @wcfContainerBorderRadius;
 						
-						.boxShadow(2px, 1px, @wcfContainerBackgroundColor, 0);
-					}
-					
-					&:after {
-						border: 1px solid @wcfContainerBorderColor;
-						border-bottom-left-radius: 6px;
-						border-width: 0 0 1px 1px;
-						bottom: -1px;
-						clip: rect(0, 6px, 6px, 0);
-						content: " ";
-						height: 5px;
-						position: absolute;
-						right: -6px;
-						width: 5px;
+						&:before {
+							border: 1px solid @wcfContainerBorderColor;
+							border-bottom-right-radius: 6px;
+							border-width: 0 1px 1px 0;
+							bottom: -1px;
+							clip: rect(0, 6px, 6px, 0);
+							content: " ";
+							height: 5px;
+							left: -6px;
+							position: absolute;
+							width: 5px;
+							
+							.boxShadow(2px, 1px, @wcfContainerBackgroundColor, 0);
+						}
 						
-						.boxShadow(-2px, 1px, @wcfContainerBackgroundColor, 0);
+						&:after {
+							border: 1px solid @wcfContainerBorderColor;
+							border-bottom-left-radius: 6px;
+							border-width: 0 0 1px 1px;
+							bottom: -1px;
+							clip: rect(0, 6px, 6px, 0);
+							content: " ";
+							height: 5px;
+							position: absolute;
+							right: -6px;
+							width: 5px;
+							
+							.boxShadow(-2px, 1px, @wcfContainerBackgroundColor, 0);
+						}
 					}
 				}
 			}
 		}
 	}
 }
-
 
 /* ### inputs ### */
 /* normal state */
