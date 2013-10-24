@@ -108,7 +108,7 @@
 		<item name="wcf.acp.cache.list.size"><![CDATA[Größe]]></item>
 		<item name="wcf.acp.cache.source.type.ApcCacheSource"><![CDATA[Alternative PHP Cache]]></item>
 		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Dateisystem]]></item>
-		<item name="wcf.acp.cache.source.type.MemcacheCacheSource"><![CDATA[Memcached]]></item>
+		<item name="wcf.acp.cache.source.type.MemcachedCacheSource"><![CDATA[Memcached]]></item>
 		<item name="wcf.acp.cache.source.type.NoCacheSource"><![CDATA[keine (Caching deaktiviert)]]></item>
 		<item name="wcf.acp.cache.type.data"><![CDATA[Daten]]></item>
 		<item name="wcf.acp.cache.type.language"><![CDATA[Sprachen]]></item>
