@@ -3,7 +3,6 @@ namespace wcf\system\setup;
 use wcf\system\exception\SystemException;
 use wcf\system\io\Tar;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * Extracts files and directories from a tar archive.

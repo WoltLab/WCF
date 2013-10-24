@@ -7,7 +7,6 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\util\StringUtil;
 
 /**
  * Shows the language export form.

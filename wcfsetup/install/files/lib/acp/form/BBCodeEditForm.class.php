@@ -4,7 +4,6 @@ use wcf\data\bbcode\attribute\BBCodeAttribute;
 use wcf\data\bbcode\attribute\BBCodeAttributeAction;
 use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeAction;
-use wcf\data\package\PackageCache;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;

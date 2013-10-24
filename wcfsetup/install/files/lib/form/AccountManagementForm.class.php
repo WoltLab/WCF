@@ -1,7 +1,7 @@
 <?php
 namespace wcf\form;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserAction;
 use wcf\system\exception\UserInputException;
 use wcf\system\mail\Mail;
 use wcf\system\menu\user\UserMenu;

@@ -7,7 +7,6 @@ use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * Shows a list of all cache resources.

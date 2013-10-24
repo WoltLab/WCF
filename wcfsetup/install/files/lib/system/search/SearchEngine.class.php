@@ -5,7 +5,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * SearchEngine searches for given query in the selected object types.

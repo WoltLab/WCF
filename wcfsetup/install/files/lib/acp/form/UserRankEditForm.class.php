@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\package\PackageCache;
 use wcf\data\user\rank\UserRank;
 use wcf\data\user\rank\UserRankAction;
 use wcf\form\AbstractForm;

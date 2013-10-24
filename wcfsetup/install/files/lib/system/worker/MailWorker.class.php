@@ -7,7 +7,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\mail\Mail;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Worker implementation for sending mails.

@@ -1,7 +1,5 @@
 <?php
 namespace wcf\data\user;
-use wcf\system\exception\UserInputException;
-use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
 use wcf\util\UserUtil;
 

@@ -4,10 +4,8 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\option\UserOptionList;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
-use wcf\system\database\DatabaseException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Imports users.

@@ -7,7 +7,6 @@ use wcf\system\request\LinkHandler;
 use wcf\system\Callback;
 use wcf\system\Regex;
 use wcf\util\StringStack;
-use wcf\util\StringUtil;
 
 /**
  * Parses @user mentions.

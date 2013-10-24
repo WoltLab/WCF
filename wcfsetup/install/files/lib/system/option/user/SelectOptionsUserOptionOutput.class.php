@@ -4,7 +4,6 @@ use wcf\data\user\option\UserOption;
 use wcf\data\user\User;
 use wcf\system\WCF;
 use wcf\util\OptionUtil;
-use wcf\util\StringUtil;
 
 /**
  * User option output implementation for the output of select options.

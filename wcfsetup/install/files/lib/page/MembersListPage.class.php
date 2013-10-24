@@ -6,7 +6,6 @@ use wcf\system\database\PostgreSQLDatabase;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows members page.

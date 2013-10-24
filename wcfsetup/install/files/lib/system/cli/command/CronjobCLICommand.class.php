@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cli\command;
 use wcf\system\cronjob\CronjobScheduler;
-use wcf\system\CLIWCF;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
 

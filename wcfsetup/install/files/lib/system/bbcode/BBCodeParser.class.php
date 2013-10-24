@@ -3,7 +3,6 @@ namespace wcf\system\bbcode;
 use wcf\data\bbcode\attribute\BBCodeAttribute;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\SingletonFactory;
-use wcf\util\StringUtil;
 
 /**
  * Parses bbcode tags in text.

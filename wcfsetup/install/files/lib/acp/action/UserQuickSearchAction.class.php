@@ -2,7 +2,6 @@
 namespace wcf\acp\action;
 use wcf\data\search\SearchEditor;
 use wcf\action\AbstractAction;
-use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;

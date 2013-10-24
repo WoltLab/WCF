@@ -3,7 +3,6 @@ namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * Option type implementation for file sizes.

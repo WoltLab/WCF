@@ -1,9 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
-use wcf\system\package\PackageInstallationDispatcher;
-use wcf\system\exception\SystemException;
-use wcf\system\exception\UserInputException;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\breadcrumb;
-use wcf\util\StringUtil;
 
 /**
  * Represents a breadcrumb.

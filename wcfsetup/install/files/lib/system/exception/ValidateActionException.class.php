@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\exception;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Simple exception for AJAX-driven requests.

@@ -6,7 +6,6 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\PasswordUtil;
-use wcf\util\StringUtil;
 
 /**
  * Shows the master password form.

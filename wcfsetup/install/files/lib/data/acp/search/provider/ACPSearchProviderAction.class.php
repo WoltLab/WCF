@@ -2,9 +2,7 @@
 namespace wcf\data\acp\search\provider;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
-use wcf\system\exception\UserInputException;
 use wcf\system\search\acp\ACPSearchHandler;
-use wcf\util\StringUtil;
 
 /**
  * Executes ACP search provider-related actions.

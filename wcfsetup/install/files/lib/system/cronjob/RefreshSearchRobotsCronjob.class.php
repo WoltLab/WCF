@@ -4,7 +4,6 @@ use wcf\data\cronjob\Cronjob;
 use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 use wcf\util\XML;
 
 /**

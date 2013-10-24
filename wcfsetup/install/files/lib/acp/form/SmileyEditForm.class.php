@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\package\PackageCache;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyAction;
 use wcf\form\AbstractForm;

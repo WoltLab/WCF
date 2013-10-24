@@ -5,7 +5,6 @@ use wcf\system\io\File;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * Represents a package.

@@ -4,7 +4,6 @@ use wcf\data\label\group\LabelGroupList;
 use wcf\data\label\LabelAction;
 use wcf\data\label\LabelEditor;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\package\PackageCache;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;

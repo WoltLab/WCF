@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\system\Regex;
-use wcf\util\StringUtil;
 
 /**
  * Parses the [table] bbcode tag.

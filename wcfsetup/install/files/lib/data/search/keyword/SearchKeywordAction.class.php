@@ -2,7 +2,6 @@
 namespace wcf\data\search\keyword;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
-use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**

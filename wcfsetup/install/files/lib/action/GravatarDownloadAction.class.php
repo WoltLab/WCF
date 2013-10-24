@@ -6,7 +6,6 @@ use wcf\data\user\UserEditor;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * Downloads and caches gravatars.

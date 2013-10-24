@@ -1,8 +1,6 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\system\WCF;
 
 /**
  * Executes package-related actions.

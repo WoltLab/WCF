@@ -3,7 +3,6 @@ namespace wcf\acp\form;
 use wcf\data\label\Label;
 use wcf\data\label\LabelAction;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\package\PackageCache;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;

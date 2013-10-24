@@ -18,7 +18,6 @@ use wcf\system\user\notification\object\CommentUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\MessageUtil;
-use wcf\util\StringUtil;
 
 /**
  * Executes comment-related actions.

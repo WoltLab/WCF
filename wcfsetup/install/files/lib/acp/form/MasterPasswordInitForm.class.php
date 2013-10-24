@@ -8,7 +8,6 @@ use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\PasswordUtil;
-use wcf\util\StringUtil;
 
 /**
  * Shows the master password init form.

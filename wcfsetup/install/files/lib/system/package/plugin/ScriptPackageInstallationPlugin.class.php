@@ -4,7 +4,6 @@ use wcf\data\package\Package;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Executes individual PHP scripts during installation.

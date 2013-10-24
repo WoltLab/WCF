@@ -1,9 +1,6 @@
 <?php
 namespace wcf\data\bbcode\media\provider;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\SystemException;
-use wcf\system\Regex;
-use wcf\util\StringUtil;
 
 /**
  * Executes BBCode media provider-related actions.

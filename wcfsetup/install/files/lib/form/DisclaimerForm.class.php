@@ -1,7 +1,6 @@
 <?php
 namespace wcf\form;
 use wcf\system\exception\NamedUserException;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;

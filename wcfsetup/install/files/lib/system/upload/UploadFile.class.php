@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\upload;
-use wcf\util\StringUtil;
 
 /**
  * Represents a file upload.

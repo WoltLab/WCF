@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
 use wcf\data\user\UserList;
-use wcf\system\WCF;
 
 /**
  * Caches a list of the most liked members.

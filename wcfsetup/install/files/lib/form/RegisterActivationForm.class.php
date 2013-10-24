@@ -1,6 +1,5 @@
 <?php
 namespace wcf\form;
-use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\exception\IllegalLinkException;

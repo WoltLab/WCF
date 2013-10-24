@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\database\editor;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\Regex;
 
 /**

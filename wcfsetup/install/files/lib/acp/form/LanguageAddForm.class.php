@@ -6,7 +6,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
-use wcf\util\XML;
 
 /**
  * Shows the language add form.

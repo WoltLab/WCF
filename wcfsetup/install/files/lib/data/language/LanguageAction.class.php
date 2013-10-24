@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\language;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**

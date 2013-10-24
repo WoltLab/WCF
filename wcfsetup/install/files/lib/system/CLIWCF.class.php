@@ -9,7 +9,6 @@ use wcf\system\cli\DatabaseCLICommandHistory;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageUpdateDispatcher;

@@ -8,7 +8,6 @@ use wcf\system\Callback;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
 use wcf\util\StringStack;
-use wcf\util\StringUtil;
 
 /**
  * Parses message before inserting them into the database.
