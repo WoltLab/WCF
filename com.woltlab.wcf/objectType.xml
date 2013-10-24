@@ -77,6 +77,12 @@
 			<controller><![CDATA[wcf\page\DashboardPage]]></controller>
 			<languagevariable>wcf.user.usersOnline.location.DashboardPage</languagevariable>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.user.RecentActivityListPage</name>
+			<definitionname>com.woltlab.wcf.user.online.location</definitionname>
+			<controller><![CDATA[wcf\page\RecentActivityListPage]]></controller>
+			<languagevariable>wcf.user.usersOnline.location.RecentActivityListPage</languagevariable>
+		</type>
 		
 		<type>
 			<name>com.woltlab.wcf.user.RegisterForm</name>

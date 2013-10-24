@@ -1482,6 +1482,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.dashboard.objectType"><![CDATA[Seite]]></item>
 		<item name="wcf.dashboard.objectType.com.woltlab.wcf.user.DashboardPage"><![CDATA[Dashboard]]></item>
 		<item name="wcf.dashboard.objectType.com.woltlab.wcf.user.MembersListPage"><![CDATA[Mitgliederliste]]></item>
+		<item name="wcf.dashboard.objectType.com.woltlab.wcf.user.RecentActivityListPage"><![CDATA[Letzte Aktivitäten]]></item>
 		<item name="wcf.dashboard.box.mostActiveMembers.points"><![CDATA[{#$activeMember->activityPoints} Punkt{if $activeMember->activityPoints != 1}e{/if}]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.recentActivity"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.like.mostLikedMembers"><![CDATA[Mitglieder mit den meisten Likes]]></item>
