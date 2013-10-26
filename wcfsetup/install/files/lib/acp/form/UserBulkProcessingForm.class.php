@@ -423,7 +423,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		}
 		
 		foreach ($users as $userID => $userData) {
-			if (!UserGroup::isAccessibleGroup($groupIDs[$userID])) {
+			if (!empty($groupIDs[$userID]) && !UserGroup::isAccessibleGroup($groupIDs[$userID])) {
 				throw new PermissionDeniedException();
 			}
 			
