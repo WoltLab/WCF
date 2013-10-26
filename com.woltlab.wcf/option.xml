@@ -1075,6 +1075,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<defaultvalue>30</defaultvalue>
 				<minvalue>1</minvalue>
 				<maxvalue>255</maxvalue>
+				<options>module_tagging</options>
 			</option>
 			<!-- /message.general -->
 			
