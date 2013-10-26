@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\data\package\Package;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 
 /**
  * Executes individual PHP scripts during installation.
@@ -23,26 +23,31 @@ class ScriptPackageInstallationPlugin extends AbstractPackageInstallationPlugin 
 		parent::install();
 		
 		$abbreviation = 'wcf';
+		$path = '';
 		if (isset($this->instruction['attributes']['application'])) {
 			$abbreviation = $this->instruction['attributes']['application'];
 		}
 		else if ($this->installation->getPackage()->isApplication) {
-			$abbreviation = Package::getAbbreviation($this->installation->getPackage()->package);
+			$path = FileUtil::getRealPath(WCF_DIR.$this->installation->getPackage()->packageDir);
 		}
 		
-		$dirConstant = strtoupper($abbreviation) . '_DIR';
-		if (!defined($dirConstant)) {
-			throw new SystemException("Can not execute script-PIP, abbreviation '".$abbreviation."' is unknown");
+		if (empty($path)) {
+			$dirConstant = strtoupper($abbreviation) . '_DIR';
+			if (!defined($dirConstant)) {
+				throw new SystemException("Can not execute script-PIP, abbreviation '".$abbreviation."' is unknown");
+			}
+			
+			$path = constant($dirConstant);
 		}
 		
 		// reset WCF cache
 		CacheHandler::getInstance()->flushAll();
 		
 		// run script
-		$this->run(constant($dirConstant).$this->instruction['value']);
+		$this->run($path.$this->instruction['value']);
 		
 		// delete script
-		if (@unlink(constant($dirConstant).$this->instruction['value'])) {
+		if (@unlink($path.$this->instruction['value'])) {
 			// delete file log entry
 			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_file_log
 				WHERE		packageID = ?
