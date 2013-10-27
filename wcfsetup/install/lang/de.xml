@@ -962,6 +962,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.optionalPackages.description"><![CDATA[Es stehen folgende optionale Pakete zur Auswahl:]]></item>
 		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[Es wurden keine Pakete gefunden.]]></item>
 		<item name="wcf.acp.package.url"><![CDATA[Website]]></item>
+		<item name="wcf.acp.package.error.uploadFailed"><![CDATA[Das Hochladen der ausgewählten Datei ist fehlgeschlagen.]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
