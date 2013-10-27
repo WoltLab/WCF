@@ -220,6 +220,11 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		// build conditions
 		$this->conditions = new PreparedStatementConditionBuilder();
 		
+		// deny self delete
+		if ($this->action == 'delete') {
+			$this->conditions->add("user_table.userID <> ?", array(WCF::getUser()->userID));
+		}
+		
 		// static fields
 		if (!empty($this->username)) {
 			$this->conditions->add("user_table.username LIKE ?", array('%'.addcslashes($this->username, '_%').'%'));
@@ -365,7 +370,9 @@ class UserBulkProcessingForm extends UserOptionListForm {
 					$user->addToGroups($_this->assignToGroupIDs, false, false);
 				});
 				
-				UserStorageHandler::getInstance()->reset($userIDs, 'groupIDs', 1);
+				if (!empty($userIDs)) {
+					UserStorageHandler::getInstance()->reset($userIDs, 'groupIDs', 1);
+				}
 			break;
 			
 			case 'delete':
@@ -373,8 +380,10 @@ class UserBulkProcessingForm extends UserOptionListForm {
 				
 				$userIDs = $this->fetchUsers();
 				
-				$userAction = new UserAction($userIDs, 'delete');
-				$userAction->executeAction();
+				if (!empty($userIDs)) {
+					$userAction = new UserAction($userIDs, 'delete');
+					$userAction->executeAction();
+				}
 			break;
 		}
 		$this->saved();
@@ -402,6 +411,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		while ($row = $statement->fetchArray()) {
 			$users[$row['userID']] = $row;
 		}
+		if (empty($users)) return array();
 		
 		// select group ids
 		$conditions = new PreparedStatementConditionBuilder();
@@ -423,7 +433,7 @@ class UserBulkProcessingForm extends UserOptionListForm {
 		}
 		
 		foreach ($users as $userID => $userData) {
-			if (!UserGroup::isAccessibleGroup($groupIDs[$userID])) {
+			if (!empty($groupIDs[$userID]) && !UserGroup::isAccessibleGroup($groupIDs[$userID])) {
 				throw new PermissionDeniedException();
 			}
 			
