@@ -7237,9 +7237,172 @@ WCF.Upload = Class.extend({
 });
 
 /**
+ * Default implementation for parallel AJAX file uploads.
+ */
+WCF.Upload.Parallel = WCF.Upload.extend({
+	/**
+	 * @see	WCF.Upload.init()
+	 */
+	init: function(buttonSelector, fileListSelector, className, options) {
+		// force multiple uploads
+		options.multiple = true;
+		
+		this._super(buttonSelector, fileListSelector, className, options);
+	},
+	
+	/**
+	 * @see	WCF.Upload._upload()
+	 */
+	_upload: function() {
+		var $files = this._fileUpload.prop('files');
+		for (var $i = 0, $length = $files.length; $i < $length; $i++) {
+			var $file = $files[$i];
+			var $formData = new FormData();
+			var $internalFileID = this._createUploadMatrix($file);
+			
+			if (!this._uploadMatrix[$internalFileID].length) {
+				continue;
+			}
+			
+			$formData.append('__files[' + $internalFileID + ']', $file);
+			$formData.append('actionName', this._options.action);
+			$formData.append('className', this._className);
+			var $additionalParameters = this._getParameters();
+			for (var $name in $additionalParameters) {
+				$formData.append('parameters[' + $name + ']', $additionalParameters[$name]);
+			}
+			
+			this._sendRequest($internalFileID, $formData);
+		}
+	},
+	
+	/**
+	 * Sends an AJAX request to upload a file.
+	 * 
+	 * @param	integer		internalFileID
+	 * @param	FormData	formData
+	 */
+	_sendRequest: function(internalFileID, formData) {
+		var self = this;
+		$.ajax({ 
+			type: 'POST',
+			url: this._options.url,
+			enctype: 'multipart/form-data',
+			data: formData,
+			contentType: false,
+			processData: false,
+			success: function(data, textStatus, jqXHR) {
+				self._success(internalFileID, data);
+			},
+			error: $.proxy(this._error, this),
+			xhr: function() {
+				var $xhr = $.ajaxSettings.xhr();
+				if ($xhr) {
+					$xhr.upload.addEventListener('progress', function(event) {
+						self._progress(internalFileID, event);
+					}, false);
+				}
+				return $xhr;
+			}
+		});
+	},
+	
+	/**
+	 * Creates upload matrix for provided file and returns its internal file id.
+	 * 
+	 * @param	object		file
+	 * @return	integer
+	 */
+	_createUploadMatrix: function(file) {
+		var $li = this._initFile(file);
+		if (!$li.hasClass('uploadFailed')) {
+			$li.data('filename', file.name).data('internalFileID', this._internalFileID);
+			this._uploadMatrix[this._internalFileID++] = $li;
+			
+			return this._internalFileID - 1;
+		}
+		
+		return null;
+	},
+	
+	/**
+	 * Callback for success event.
+	 * 
+	 * @param	integer		internalFileID
+	 * @param	object		data
+	 */
+	_success: function(internalFileID, data) { },
+	
+	/**
+	 * Callback for progress event.
+	 * 
+	 * @param	integer		internalFileID
+	 * @param	object		event
+	 */
+	_progress: function(internalFileID, event) {
+		var $percentComplete = Math.round(event.loaded * 100 / event.total);
+		
+		this._uploadMatrix[internalFileID].find('progress').attr('value', $percentComplete);
+	},
+	
+	/**
+	 * @see	WCF.Upload._showOverlay()
+	 */
+	_showOverlay: function() {
+		// create iframe
+		if (this._iframe === null) {
+			this._iframe = $('<iframe name="__fileUploadIFrame" />').hide().appendTo(document.body);
+		}
+		
+		// create overlay
+		if (!this._overlay) {
+			this._overlay = $('<div><form enctype="multipart/form-data" method="post" action="' + this._options.url + '" target="__fileUploadIFrame" /></div>').hide().appendTo(document.body);
+			
+			var $form = this._overlay.find('form');
+			$('<dl class="wide"><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
+			$('<div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form>').appendTo($form);
+			
+			$('<input type="hidden" name="isFallback" value="1" />').appendTo($form);
+			$('<input type="hidden" name="actionName" value="' + this._options.action + '" />').appendTo($form);
+			$('<input type="hidden" name="className" value="' + this._className + '" />').appendTo($form);
+			var $additionalParameters = this._getParameters();
+			for (var $name in $additionalParameters) {
+				$('<input type="hidden" name="' + $name + '" value="' + $additionalParameters[$name] + '" />').appendTo($form);
+			}
+			
+			$form.submit($.proxy(function() {
+				var $file = {
+					name: this._getFilename(),
+					size: ''
+				};
+				
+				var $internalFileID = this._createUploadMatrix($file);
+				var self = this;
+				this._iframe.data('loading', true).off('load').load(function() { self._evaluateResponse($internalFileID); });
+				this._overlay.wcfDialog('close');
+			}, this));
+		}
+		
+		this._overlay.wcfDialog({
+			title: WCF.Language.get('wcf.global.button.upload')
+		});
+	},
+	
+	/**
+	 * Evaluates iframe response.
+	 * 
+	 * @param	integer		internalFileID
+	 */
+	_evaluateResponse: function(internalFileID) {
+		var $returnValues = $.parseJSON(this._iframe.contents().find('pre').html());
+		this._success(internalFileID, $returnValues);
+	}
+});
+
+/**
  * Namespace for sortables.
  */
-WCF.Sortable = {};
+WCF.Sortable = { };
 
 /**
  * Sortable implementation for lists.
@@ -9240,7 +9403,9 @@ $.widget('ui.wcfSlideshow', {
 		this._count = this._items.length;
 		this._index = 0;
 		
-		this._initSlideshow();
+		if (this._count > 1) {
+			this._initSlideshow();
+		}
 	},
 	
 	/**
@@ -9267,17 +9432,15 @@ $.widget('ui.wcfSlideshow', {
 		}).hover($.proxy(this._hoverIn, this), $.proxy(this._hoverOut, this));
 		
 		// create toggle buttons
-		if (this._items.length > 1) {
-			this._buttonList = $('<ul class="slideshowButtonList" />').appendTo(this.element);
-			for (var $i = 0; $i < this._count; $i++) {
-				var $link = $('<li><a><span class="icon icon16 icon-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
-				if ($i == 0) {
-					$link.find('.icon').addClass('active');
-				}
+		this._buttonList = $('<ul class="slideshowButtonList" />').appendTo(this.element);
+		for (var $i = 0; $i < this._count; $i++) {
+			var $link = $('<li><a><span class="icon icon16 icon-circle" /></a></li>').data('index', $i).click($.proxy(this._click, this)).appendTo(this._buttonList);
+			if ($i == 0) {
+				$link.find('.icon').addClass('active');
 			}
-			
-			this._resetTimer();
 		}
+		
+		this._resetTimer();
 		
 		$(window).resize($.proxy(this._resize, this));
 	},
