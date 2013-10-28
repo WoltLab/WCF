@@ -122,6 +122,10 @@
 			'wcf.global.page.next': '{capture assign=pageNext}{lang}wcf.global.page.next{/lang}{/capture}{@$pageNext|encodeJS}',
 			'wcf.global.page.previous': '{capture assign=pagePrevious}{lang}wcf.global.page.previous{/lang}{/capture}{@$pagePrevious|encodeJS}',
 			'wcf.global.pageDirection': '{lang}wcf.global.pageDirection{/lang}',
+			'wcf.global.sidebar.hideLeftSidebar': '{lang}wcf.global.sidebar.hideLeftSidebar{/lang}',
+			'wcf.global.sidebar.hideRightSidebar': '{lang}wcf.global.sidebar.hideRightSidebar{/lang}',
+			'wcf.global.sidebar.showLeftSidebar': '{lang}wcf.global.sidebar.showLeftSidebar{/lang}',
+			'wcf.global.sidebar.showRightSidebar': '{lang}wcf.global.sidebar.showRightSidebar{/lang}',
 			'wcf.global.success': '{lang}wcf.global.success{/lang}',
 			'wcf.global.success.add': '{lang}wcf.global.success.add{/lang}',
 			'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
@@ -138,14 +142,18 @@
 			
 			{event name='javascriptLanguageImport'}
 		});
-
-		if (jQuery.browser.touch) $('html').addClass('touch');
+		
+		WCF.Dropdown.init();
+		
+		if ($.browser.touch) {
+			WCF.System.Mobile.UX.init();
+		}
+		
 		new WCF.Date.Time();
 		new WCF.Effect.SmoothScroll();
 		new WCF.Effect.BalloonTooltip();
 		new WCF.Sitemap();
 		{if $__wcf->getStyleHandler()->countStyles() > 1}new WCF.Style.Chooser();{/if}
-		WCF.Dropdown.init();
 		WCF.System.PageNavigation.init('.pageNavigation');
 		WCF.Date.Picker.init();
 		new WCF.User.ProfilePreview();
@@ -172,22 +180,22 @@
 	});
 	//]]>
 </script>
- <!--[IF IE 9]>
- <script data-relocate="true">
- 	$(function() {
- 		function fixButtonTypeIE9() {
- 			$('button').each(function(index, button) {
- 				var $button = $(button);
- 				if (!$button.attr('type')) {
- 					$button.attr('type', 'button');
- 				}
- 			});
- 		}
- 		
- 		WCF.DOMNodeInsertedHandler.addCallback('WCF.FixButtonTypeIE9', fixButtonTypeIE9);
- 		fixButtonTypeIE9();
- 	});
- </script>
- <![ENDIF]-->
+<!--[IF IE 9]>
+<script data-relocate="true">
+	$(function() {
+		function fixButtonTypeIE9() {
+			$('button').each(function(index, button) {
+				var $button = $(button);
+				if (!$button.attr('type')) {
+					$button.attr('type', 'button');
+				}
+			});
+		}
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.FixButtonTypeIE9', fixButtonTypeIE9);
+		fixButtonTypeIE9();
+	});
+</script>
+<![ENDIF]-->
 
 {include file='imageViewer'}

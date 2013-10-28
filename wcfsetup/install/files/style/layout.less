@@ -224,7 +224,7 @@
 					}
 				}
 				
-				&:hover {
+				&.searchBarOpen {
 					width: 100%;
 					
 					> form {
@@ -573,6 +573,10 @@
 			> .content {
 				display: table-cell;
 				vertical-align: top;
+				
+				> .mobileSidebarToggleButton {
+					display: none;
+				}
 			}
 					
 			> .sidebar {
@@ -654,7 +658,124 @@
 @media only screen and (max-width: 800px) {
 	/* hide sidebar */
 	#main {
-		border-right-width: 0;
+		> div > div {
+			> .sidebar,
+			> .content {
+				position: relative;
+				width: 100%;
+			}
+		}
+		
+		&.sidebarOrientationLeft,
+		&.sidebarOrientationRight {
+			overflow: hidden;
+			
+			> div {
+				/* revert overflow from parent */
+				overflow: visible;
+				
+				width: 200%;
+				
+				.transition(margin-left, .2s, ease);
+			}
+		}
+		
+		&.sidebarOrientationLeft {
+			> div {
+				margin-left: -100%;
+				
+				> div {
+					> .sidebar {
+						margin-left: -100%;
+						
+						> div {
+							width: 100%;
+							
+							fieldset {
+								width: 100%;
+							}
+						}
+						
+						> .mobileSidebarToggleButton {
+							border-radius: 0 0 0 @wcfSmallButtonBorderRadius;
+							border-width: 0 0 1px 1px;
+							display: block;
+							right: -3px;
+							position: absolute;
+							top: 0;
+						}
+					}
+					
+					> .content {
+						padding-top: 35px;
+						
+						> .mobileSidebarToggleButton {
+							border-radius: 0 0 @wcfSmallButtonBorderRadius 0;
+							border-width: 0 1px 1px 0;
+							display: block;
+							left: -3px;
+							position: absolute;
+							top: 0;
+						}
+					}
+				}
+			}
+		}
+		
+		&.sidebarOrientationRight {
+			> div > div {
+				> .sidebar {
+					> div {
+						width: 100%;
+						
+						fieldset {
+							width: 100%;
+						}
+					}
+					
+					> .mobileSidebarToggleButton {
+						border-radius: 0 0 @wcfSmallButtonBorderRadius 0;
+						border-width: 0 1px 1px 0;
+						display: block;
+						left: -3px;
+						position: absolute;
+						top: 0;
+					}
+				}
+				
+				> .content {
+					padding-top: 35px;
+					
+					> .mobileSidebarToggleButton {
+						border-radius: 0 0 0 @wcfSmallButtonBorderRadius;
+						border-width: 0 0 1px 1px;
+						display: block;
+						right: -3px;
+						position: absolute;
+						top: 0;
+					}
+				}
+			}
+		}
+		
+		&.mobileShowSidebar {
+			.sidebar {
+				padding-top: 35px;
+			}
+			
+			&.sidebarOrientationLeft {
+				> div {
+					margin-left: 0;
+				}
+			}
+			
+			&.sidebarOrientationRight {
+				> div {
+					margin-left: -100%;
+				}
+			}
+		}
+		/*border-right-width: 0;
 		position: relative;
 		//margin-top: 7px;
 		
@@ -673,7 +794,7 @@
 		
 		&.sidebarOrientationRight {
 			.sidebar {
-				display: none;
+				//display: none;
 			}
 		}
 		
@@ -718,13 +839,13 @@
 					}
 				}
 			}
-		}
+		}*/
 		
 		.content {
 			border-left: 0 !important;
 			border-right: 0 !important;
-			margin-left: 0 !important;
-			margin-right: 0 !important;
+			margin-left: 0;
+			margin-right: 0;
 			padding-left: 0 !important;
 			padding-right: 0 !important;
 			
@@ -1262,7 +1383,7 @@
 					padding: @wcfGapTiny @wcfGapMedium;
 					
 					&:before {
-						content: "\f060";
+						content: "\f062";
 						font-family: FontAwesome;
 						font-size: 14px;
 						padding-right: @wcfGapSmall;

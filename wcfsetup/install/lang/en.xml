@@ -1703,6 +1703,10 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.global.scrollDown"><![CDATA[Go to Page Bottom]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Go to Page Top]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Search …]]></item>
+		<item name="wcf.global.sidebar.showLeftSidebar"><![CDATA[]]></item>
+		<item name="wcf.global.sidebar.showRightSidebar"><![CDATA[]]></item>
+		<item name="wcf.global.sidebar.hideLeftSidebar"><![CDATA[]]></item>
+		<item name="wcf.global.sidebar.hideRightSidebar"><![CDATA[]]></item>
 		<item name="wcf.global.sortOrder.ascending"><![CDATA[Ascending]]></item>
 		<item name="wcf.global.sortOrder.descending"><![CDATA[Descending]]></item>
 		<item name="wcf.global.state.closed"><![CDATA[Closed]]></item>
