@@ -42,7 +42,9 @@ if (!empty($_GET['type'])) {
 		die($data);
 	}
 	
-	die("Invalid type '" . $_GET['type'] . "' given");
+	header("HTTP/1.1 400 Bad Request");
+	die("Invalid type '" . htmlentities($_GET['type']) . "' given");
 }
 
+header("HTTP/1.1 400 Bad Request");
 die("Missing type parameter");
