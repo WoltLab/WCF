@@ -1,8 +1,10 @@
 <?php
 namespace wcf\data\application;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -98,6 +100,12 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		WCF::getDB()->commitTransaction();
+		
+		// rebuild templates
+		LanguageFactory::getInstance()->deleteLanguageCache();
+		
+		// reset application cache
+		ApplicationCacheBuilder::getInstance()->reset();
 	}
 	
 	/**

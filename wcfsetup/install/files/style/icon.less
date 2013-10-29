@@ -1,9 +1,10 @@
+/* do NOT reference fonts directly, always make use of 'getFont.php' */
 @font-face {
 	font-family: 'FontAwesome';
-	src: url('../font/fontawesome-webfont.eot?v=3.2.1');
-	src: url('../font/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'),
-		url('../font/fontawesome-webfont.woff?v=3.2.1') format('woff'),
-		url('../font/fontawesome-webfont.ttf?v=3.2.1') format('truetype');
+	src: url('../font/getFont.php?type=eot&v=3.2.1');
+	src: url('../font/getFont.php?type=eot&v=3.2.1#iefix') format('embedded-opentype'),
+		url('../font/getFont.php?type=woff&v=3.2.1') format('woff'),
+		url('../font/getFont.php?type=ttf&v=3.2.1') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }

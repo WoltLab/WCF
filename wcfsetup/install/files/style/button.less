@@ -192,65 +192,59 @@ button.small,
 
 @media only screen and (max-width: 800px) {
 	nav.buttonGroupNavigation {
-		> a:first-child {
+		> a:first-child > {
 			display: inline-block;
 			outline: 0;
 			
-			> span.icon {
+			span.icon {
 				font-size: 21px;
 				height: 24px;
 				width: 24px;
-			}
-			
-			+ a {
-				height: 100%;
-				left: 0;
-				position: absolute;
-				top: 0;
-				width: 100%;
-				z-index:100;
-			}
-			
-			&:focus {
-				+ a {
-					display: block;
-				}
-				
-				~ ul {
-					display: block;
-				}
 			}
 		}
 		
 		> ul {
 			display: none;
-			opacity: 1;
-			position: absolute;
-			right: 0;
-			z-index: 350;
+		}
+	}
+	
+	ul.buttonGroup {
+		display: none;
+	}
+	
+	#dropdownMenuContainer > ul.buttonGroup {
+		font-size: 0;
+		position: absolute;
+		z-index: 450;
+		
+		&.dropdownOpen {
+			display: block;
+		}
+		
+		> li {
+			display: block;
+			float: none;
+			font-size: 0 !important;
+			opacity: 1 !important;
+			overflow: hidden;
 			
-			&:hover {
-				display: block;
+			&:not(:last-child) > a {
+				border-bottom-width: 0;
 			}
 			
-			> li {
-				display: block;
-				float: none;
-				opacity: 1 !important;
+			> a {
+				.button;
 				
-				> a {
-					.button;
-					
-					border-radius: 0 !important;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					width: 124px;
-					white-space: nowrap;
-					word-wrap: normal;
-					
-					> span.invisible {
-						display: inline;
-					}
+				border-radius: 0 !important;
+				font-size: @wcfSmallFontSize;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				width: 124px;
+				white-space: nowrap;
+				word-wrap: normal;
+				
+				> span.invisible {
+					display: inline;
 				}
 			}
 		}

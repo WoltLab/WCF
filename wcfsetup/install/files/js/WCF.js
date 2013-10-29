@@ -6061,6 +6061,92 @@ WCF.System.FlexibleMenu = {
 };
 
 /**
+ * Namespace for mobile device-related classes.
+ */
+WCF.System.Mobile = { };
+
+/**
+ * Handles general navigation and UX on mobile devices.
+ */
+WCF.System.Mobile.UX = {
+	/**
+	 * main container
+	 * @var	jQuery
+	 */
+	_main: null,
+	
+	/**
+	 * Initializes the WCF.System.Mobile.UX class.
+	 */
+	init: function() {
+		this._main = $('#main');
+		
+		$('html').addClass('touch');
+		
+		this._initSidebarToggleButtons();
+		this._initSearchBar();
+		this._initButtonGroupNavigation();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.System.Mobile.UX', $.proxy(this._initButtonGroupNavigation, this));
+	},
+	
+	/**
+	 * Initializes the sidebar toggle buttons.
+	 */
+	_initSidebarToggleButtons: function() {
+		var $sidebarLeft = this._main.hasClass('sidebarOrientationLeft');
+		var $sidebarRight = this._main.hasClass('sidebarOrientationRight');
+		if ($sidebarLeft || $sidebarRight) {
+			// use icons if language item is empty/non-existant
+			var $languageShowSidebar = 'wcf.global.sidebar.show' + ($sidebarLeft ? 'Left' : 'Right') + 'Sidebar';
+			if ($languageShowSidebar === WCF.Language.get($languageShowSidebar) || WCF.Language.get($languageShowSidebar) === '') {
+				$languageShowSidebar = '<span class="icon icon16 icon-double-angle-' + ($sidebarLeft ? 'left' : 'right') + '" />';
+			}
+			
+			var $languageHideSidebar = 'wcf.global.sidebar.hide' + ($sidebarLeft ? 'Left' : 'Right') + 'Sidebar';
+			if ($languageHideSidebar === WCF.Language.get($languageHideSidebar) || WCF.Language.get($languageHideSidebar) === '') {
+				$languageHideSidebar = '<span class="icon icon16 icon-double-angle-' + ($sidebarLeft ? 'right' : 'left') + '" />';
+			}
+			
+			// add toggle buttons
+			var self = this;
+			$('<span class="button small mobileSidebarToggleButton">' + $languageShowSidebar + '</span>').appendTo($('.content')).click(function() { self._main.addClass('mobileShowSidebar'); });
+			$('<span class="button small mobileSidebarToggleButton">' + $languageHideSidebar + '</span>').appendTo($('.sidebar')).click(function() { self._main.removeClass('mobileShowSidebar'); });
+		}
+	},
+	
+	/**
+	 * Initializes the search bar.
+	 */
+	_initSearchBar: function() {
+		var $searchBar = $('.searchBar:eq(0)');
+		
+		$searchBar.click(function() { $searchBar.addClass('searchBarOpen'); });
+		this._main.click(function() { $searchBar.removeClass('searchBarOpen'); });
+	},
+	
+	/**
+	 * Initializes the button group lists, converting them into native dropdowns.
+	 */
+	_initButtonGroupNavigation: function() {
+		$('.buttonGroupNavigation:not(.jsMobileButtonGroupNavigation)').each(function(index, navigation) {
+			var $navigation = $(navigation).addClass('jsMobileButtonGroupNavigation dropdown');
+			var $button = $('<a class="dropdownLabel"><span class="icon icon24 icon-list" /></a>').prependTo($navigation);
+			
+			// convert button group into a dropdown menu
+			var $dropdownMenu = $navigation.children('ul:eq(0)').addClass('dropdownMenu');//.removeClass('smallButtons buttonGroup');
+			//var $links = $dropdownMenu.find('> li > a').removeClass('button jsTooltip').removeAttr('title');
+			//$links.children('span.invisible').removeClass('invisible');
+			//$links.children('span.icon').remove();
+			
+			WCF.Dropdown.initDropdown($button, false);
+			
+			$dropdownMenu.removeClass('dropdownMenu');
+		});
+	}
+};
+
+/**
  * System notification overlays.
  * 
  * @param	string		message

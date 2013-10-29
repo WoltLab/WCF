@@ -40,6 +40,14 @@ WCF.ImageViewer = Class.extend({
 	 * Initializes the image viewer for all links with class ".jsImageViewer"
 	 */
 	_initImageViewer: function() {
+		// disable ImageViewer on touch devices identifying themselves as 'mobile'
+		if ($.browser.touch && /[Mm]obile/.test(navigator.userAgent)) {
+			// Apple always appends mobile regardless if it is an iPad or iP(hone|od)
+			if (!/iPad/.test(navigator.userAgent)) {
+				return;
+			}
+		}
+		
 		var $links = $('a.jsImageViewer');
 		if ($links.length) {
 			$links.removeClass('jsImageViewer').slimbox({
