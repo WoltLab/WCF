@@ -128,17 +128,20 @@ button.small,
 /* button list */
 .buttonList {
 	font-size: 0;
+	margin-bottom: -@wcfGapSmall;
 	
 	> li {
 		display: inline-block;
 		font-size: 1rem;
+		margin-bottom: @wcfGapSmall;
 		
 		&:not(:last-child) {
 			margin-right: 8px;
 		}
 		
 		.button {
-			margin: 0;
+			margin-left: 0;
+			margin-right: 0;
 		}
 	}
 	
