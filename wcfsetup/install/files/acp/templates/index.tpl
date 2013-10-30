@@ -8,12 +8,6 @@
 	//]]>
 </script>
 
-<style type="text/css">
-	#news iframe {
-		width: 100%;	
-	}
-</style>
-
 <header class="boxHeadline">
 	<h1>{lang}wcf.global.acp{/lang}</h1>
 </header>
