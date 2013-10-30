@@ -5943,7 +5943,7 @@ WCF.System.FlexibleMenu = {
 		this._containerIDs.push(containerID);
 		this._containers[containerID] = $container;
 		this._menuItems[containerID] = $container.find('> ul:eq(0) > li');
-		this._dropdowns[containerID] = $('<li class="dropdown"><a class="icon icon16 icon-list" /></li>').data('containerID', containerID).hide().appendTo($container.children('ul:eq(0)')).click($.proxy(this._click, this));
+		this._dropdowns[containerID] = $('<li class="dropdown"><a class="icon icon16 icon-list" /></li>').data('containerID', containerID).click($.proxy(this._click, this));
 		this._dropdownMenus[containerID] = $('<ul class="dropdownMenu" />').appendTo(this._dropdowns[containerID]);
 		this._hasHiddenItems[containerID] = false;
 		
@@ -6022,7 +6022,7 @@ WCF.System.FlexibleMenu = {
 			}
 			
 			if (this._hasHiddenItems[containerID]) {
-				this._dropdowns[containerID].show();
+				this._dropdowns[containerID].appendTo($container.children('ul:eq(0)'));
 			}
 		}
 		else if (this._hasHiddenItems[containerID] && $currentWidth < $maximumWidth) {
@@ -6045,7 +6045,7 @@ WCF.System.FlexibleMenu = {
 			if ($changedItems) {
 				this._hasHiddenItems[containerID] = (this._menuItems[containerID].filter(':not(:visible)').length > 0);
 				if (!this._hasHiddenItems[containerID]) {
-					this._dropdowns[containerID].hide();
+					this._dropdowns[containerID].detach();
 				}
 			}
 		}
