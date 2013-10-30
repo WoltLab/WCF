@@ -11,15 +11,6 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
-// allow font fetching from all domains (CORS)
-header('Access-Control-Allow-Origin: *');
-
-// ignore request if client seems to already have fetched this file
-if (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE']) || !empty($_SERVER['HTTP_IF_NONE_MATCH'])) {
-	header("HTTP/1.1 304 Not Modified");
-	exit;
-}
-
 // list of known font types
 $types = array(
 	'eot' => 'application/vnd.ms-fontobject',
@@ -30,13 +21,29 @@ $types = array(
 if (!empty($_GET['type'])) {
 	if (isset($types[$_GET['type']])) {
 		$filename = 'fontawesome-webfont.' . $_GET['type'];
+		$filemtime = filemtime($filename);
+		
+		$etag = '"' . md5($filemtime . $filename) . '"';
+		$clientEtag = (!empty($_SERVER['HTTP_IF_NONE_MATCH'])) ? trim($_SERVER['HTTP_IF_NONE_MATCH']) : '';
+		$clientLastModified = (!empty($_SERVER['HTTP_IF_MODIFIED_SINCE'])) ? trim($_SERVER['HTTP_IF_MODIFIED_SINCE']) : 0;
+		$clientLastModified = @strtotime($clientLastModified);
+		
+		// ignore request if client seems to already have fetched this file
+		if (($clientLastModified && $clientEtag) ? (($clientLastModified == $filemtime) && ($clientEtag == $etag)) : ($clientLastModified == $filemtime) ) {
+			header("HTTP/1.1 304 Not Modified");
+			exit;
+		}
+		
 		$data = file_get_contents($filename);
 		
 		// send cache and type headers
+		// allow font fetching from all domains (CORS)
+		header('Access-Control-Allow-Origin: *');
 		header('Content-Type: ' . $types[$_GET['type']]);
-		header('Cache-control: max-age=31536000, private');
+		header('Cache-Control: max-age=31536000, private');
+		header('ETag: ' . $etag);
 		header('Expires: ' . gmdate("D, d M Y H:i:s", time() + 31536000) . ' GMT');
-		header('Last-Modified: ' . gmdate('D, d M Y H:i:s', filemtime($filename)) . ' GMT');
+		header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $filemtime) . ' GMT');
 		header('Content-Length: ' . strlen($data));
 		
 		die($data);
