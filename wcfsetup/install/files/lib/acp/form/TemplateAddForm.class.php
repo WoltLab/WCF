@@ -110,15 +110,17 @@ class TemplateAddForm extends AbstractForm {
 		if (isset($_POST['templateGroupID'])) $this->templateGroupID = intval($_POST['templateGroupID']);
 		
 		// get package id for this template
-		$sql = "SELECT	packageID
-			FROM	wcf".WCF_N."_template
-			WHERE	templateName = ?
-				AND templateGroupID IS NULL";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->tplName));
-		$row = $statement->fetchArray();
-		if ($row !== false) {
-			$this->packageID = $row['packageID'];
+		if (!$this->packageID) {
+			$sql = "SELECT	packageID
+				FROM	wcf".WCF_N."_template
+				WHERE	templateName = ?
+					AND templateGroupID IS NULL";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->tplName));
+			$row = $statement->fetchArray();
+			if ($row !== false) {
+				$this->packageID = $row['packageID'];
+			}
 		}
 	}
 	
