@@ -98,6 +98,21 @@ class QuotedMessage implements \Countable, \Iterator {
 	}
 	
 	/**
+	 * Returns true if given quote id represents a full quote.
+	 * 
+	 * @param	string		$quoteID
+	 * @return	boolean
+	 */
+	public function isFullQuote($quoteID) {
+		if (isset($this->fullQuotes[$quoteID]) && $this->quotes[$quoteID] != $this->fullQuotes[$quoteID]) {
+			// full quotes are parsed and differ from their original
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * @see	\Countable::count()
 	 */
 	public function count() {

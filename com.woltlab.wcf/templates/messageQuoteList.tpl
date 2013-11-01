@@ -32,7 +32,13 @@
 											</span>
 											
 											<div class="jsQuote">
-												<label for="quote_{@$quoteID}">{@$quote}</label>
+												<label for="quote_{@$quoteID}">
+													{if $message->isFullQuote($quoteID)}
+														{@$quote}
+													{else}
+														{$quote}
+													{/if}
+												</label>
 											</div>
 											<div class="jsFullQuote">
 												{$message->getFullQuote($quoteID)}
