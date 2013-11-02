@@ -404,6 +404,17 @@ a.badge:hover {
 	}
 }
 
+/* the CSS below can be detected through JavaScript and works better than matchMedia-API (not supported by IE9) */
+@media only screen and (max-width: 800px) {
+	html {
+		caption-side: bottom;
+	}
+	
+	body {
+		caption-side: top;
+	}
+}
+
 @media only screen and (max-width: 800px) and (-webkit-min-device-pixel-ratio: 2) {
 	// Preserve HTML font-size when iPhone orientation changes from portrait to landscape
 	html {

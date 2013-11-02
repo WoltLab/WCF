@@ -42,14 +42,11 @@
 		}, null, null, 9);
 		
 		// prevent drag and drop of images in Firefox
-		event.editor.document.on('drop', function(ev) {
-			if (ev.data.$.dataTransfer) {
-				var $html = ev.data.$.dataTransfer.getData('text/html');
-				if (/<img src="data:image\/[a-zA-Z0-9]+;base64/.exec($html)) {
-					ev.data.preventDefault(true);
-				}
-			}
-		});
+		if ($.browser.mozilla) {
+			event.editor.document.on('drop', function(ev) {
+				ev.data.preventDefault(true);
+			});
+		}
 		
 		event.editor.on('insertText', function(ev) {
 			$insertedText = ev.data;

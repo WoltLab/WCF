@@ -133,7 +133,10 @@ String.prototype.hashCode = function() {
 	}
 	
 	jQuery.browser = browser;
-	jQuery.browser.touch = (!!('ontouchstart' in window) || !!('msmaxtouchpoints' in window.navigator));
+	jQuery.browser.touch = (!!('ontouchstart' in window) || !!('msMaxTouchPoints' in window.navigator));
+	
+	// detect smartphones
+	jQuery.browser.smartphone = ($('html').css('caption-side') == 'bottom');
 })();
 
 /**
@@ -5943,7 +5946,7 @@ WCF.System.FlexibleMenu = {
 		this._containerIDs.push(containerID);
 		this._containers[containerID] = $container;
 		this._menuItems[containerID] = $container.find('> ul:eq(0) > li');
-		this._dropdowns[containerID] = $('<li class="dropdown"><a class="icon icon16 icon-list" /></li>').data('containerID', containerID).hide().appendTo($container.children('ul:eq(0)')).click($.proxy(this._click, this));
+		this._dropdowns[containerID] = $('<li class="dropdown"><a class="icon icon16 icon-list" /></li>').data('containerID', containerID).click($.proxy(this._click, this));
 		this._dropdownMenus[containerID] = $('<ul class="dropdownMenu" />').appendTo(this._dropdowns[containerID]);
 		this._hasHiddenItems[containerID] = false;
 		
@@ -6022,7 +6025,7 @@ WCF.System.FlexibleMenu = {
 			}
 			
 			if (this._hasHiddenItems[containerID]) {
-				this._dropdowns[containerID].show();
+				this._dropdowns[containerID].appendTo($container.children('ul:eq(0)'));
 			}
 		}
 		else if (this._hasHiddenItems[containerID] && $currentWidth < $maximumWidth) {
@@ -6045,7 +6048,7 @@ WCF.System.FlexibleMenu = {
 			if ($changedItems) {
 				this._hasHiddenItems[containerID] = (this._menuItems[containerID].filter(':not(:visible)').length > 0);
 				if (!this._hasHiddenItems[containerID]) {
-					this._dropdowns[containerID].hide();
+					this._dropdowns[containerID].detach();
 				}
 			}
 		}
@@ -6087,6 +6090,7 @@ WCF.System.Mobile.UX = {
 		this._initSearchBar();
 		this._initButtonGroupNavigation();
 		
+		WCF.CloseOverlayHandler.addCallback('WCF.System.Mobile.UX', $.proxy(this._closeMenus, this));
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.System.Mobile.UX', $.proxy(this._initButtonGroupNavigation, this));
 	},
 	
@@ -6130,19 +6134,18 @@ WCF.System.Mobile.UX = {
 	 */
 	_initButtonGroupNavigation: function() {
 		$('.buttonGroupNavigation:not(.jsMobileButtonGroupNavigation)').each(function(index, navigation) {
-			var $navigation = $(navigation).addClass('jsMobileButtonGroupNavigation dropdown');
+			var $navigation = $(navigation).addClass('jsMobileButtonGroupNavigation');// dropdown');
 			var $button = $('<a class="dropdownLabel"><span class="icon icon24 icon-list" /></a>').prependTo($navigation);
 			
-			// convert button group into a dropdown menu
-			var $dropdownMenu = $navigation.children('ul:eq(0)').addClass('dropdownMenu');//.removeClass('smallButtons buttonGroup');
-			//var $links = $dropdownMenu.find('> li > a').removeClass('button jsTooltip').removeAttr('title');
-			//$links.children('span.invisible').removeClass('invisible');
-			//$links.children('span.icon').remove();
-			
-			WCF.Dropdown.initDropdown($button, false);
-			
-			$dropdownMenu.removeClass('dropdownMenu');
+			$button.click(function() { $button.next().toggleClass('open'); return false; });
 		});
+	},
+	
+	/**
+	 * Closes menus.
+	 */
+	_closeMenus: function() {
+		$('.jsMobileButtonGroupNavigation > ul.open').removeClass('open');
 	}
 };
 

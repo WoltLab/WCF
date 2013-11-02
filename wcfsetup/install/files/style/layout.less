@@ -356,7 +356,6 @@
 					.textShadow(@wcfMainMenuBackgroundColor);
 					
 					&:hover {
-						color: @wcfMainMenuActiveColor;
 						text-decoration: none;
 					}
 				}
@@ -666,57 +665,39 @@
 			}
 		}
 		
-		&.sidebarOrientationLeft,
-		&.sidebarOrientationRight {
-			overflow: hidden;
-			
-			> div {
-				/* revert overflow from parent */
-				overflow: visible;
-				
-				width: 200%;
-				
-				.transition(margin-left, .2s, ease);
-			}
-		}
-		
 		&.sidebarOrientationLeft {
-			> div {
-				margin-left: -100%;
-				
-				> div {
-					> .sidebar {
-						margin-left: -100%;
+			> div > div {
+				> .sidebar {
+					display: none;
+					
+					> div {
+						width: 100%;
 						
-						> div {
+						fieldset {
 							width: 100%;
-							
-							fieldset {
-								width: 100%;
-							}
-						}
-						
-						> .mobileSidebarToggleButton {
-							border-radius: 0 0 0 @wcfSmallButtonBorderRadius;
-							border-width: 0 0 1px 1px;
-							display: block;
-							right: -3px;
-							position: absolute;
-							top: 0;
 						}
 					}
 					
-					> .content {
-						padding-top: 35px;
-						
-						> .mobileSidebarToggleButton {
-							border-radius: 0 0 @wcfSmallButtonBorderRadius 0;
-							border-width: 0 1px 1px 0;
-							display: block;
-							left: -3px;
-							position: absolute;
-							top: 0;
-						}
+					> .mobileSidebarToggleButton {
+						border-radius: 0 0 0 @wcfSmallButtonBorderRadius;
+						border-width: 0 0 1px 1px;
+						display: block;
+						right: -3px;
+						position: absolute;
+						top: 0;
+					}
+				}
+				
+				> .content {
+					padding-top: 35px;
+					
+					> .mobileSidebarToggleButton {
+						border-radius: 0 0 @wcfSmallButtonBorderRadius 0;
+						border-width: 0 1px 1px 0;
+						display: block;
+						left: -3px;
+						position: absolute;
+						top: 0;
 					}
 				}
 			}
@@ -725,6 +706,8 @@
 		&.sidebarOrientationRight {
 			> div > div {
 				> .sidebar {
+					display: none;
+					
 					> div {
 						width: 100%;
 						
@@ -758,88 +741,16 @@
 			}
 		}
 		
-		&.mobileShowSidebar {
-			.sidebar {
+		&.mobileShowSidebar > div > div {
+			> .sidebar {
+				display: table-cell;
 				padding-top: 35px;
 			}
 			
-			&.sidebarOrientationLeft {
-				> div {
-					margin-left: 0;
-				}
-			}
-			
-			&.sidebarOrientationRight {
-				> div {
-					margin-left: -100%;
-				}
+			> .content {
+				display: none;
 			}
 		}
-		/*border-right-width: 0;
-		position: relative;
-		//margin-top: 7px;
-		
-		> div {
-			display: block;
-			
-			> div {
-				display: block;
-				
-				> .sidebar,
-				> .content {
-					display: block;
-				}
-			}
-		}
-		
-		&.sidebarOrientationRight {
-			.sidebar {
-				//display: none;
-			}
-		}
-		
-		&.sidebarOrientationLeft {
-			.sidebar {
-				background-color: transparent;
-				padding: 0;
-				position: absolute;
-				right: 0px;
-				top: 14px;
-				width: 100%;
-				
-				&.mobileSidebar {
-					&:before {
-						content: "\f03a";
-						font-family: FontAwesome;
-						font-size: 21px;
-						right: 7px;
-						position: absolute;
-						top: 0;
-					}
-					
-					&:hover {
-						> div {
-							display: block;
-						}
-					}
-					
-					> div {
-						background-color: @wcfSidebarBackgroundColor;
-						margin-top: 28px;
-						padding-top: 14px;
-						width: 100%;
-					}
-				}
-				
-				> div {
-					display: none;
-					
-					> fieldset.jsOnly {
-						display: none;
-					}
-				}
-			}
-		}*/
 		
 		.content {
 			border-left: 0 !important;
