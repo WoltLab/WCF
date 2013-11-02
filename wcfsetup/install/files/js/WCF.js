@@ -6090,6 +6090,7 @@ WCF.System.Mobile.UX = {
 		this._initSearchBar();
 		this._initButtonGroupNavigation();
 		
+		WCF.CloseOverlayHandler.addCallback('WCF.System.Mobile.UX', $.proxy(this._closeMenus, this));
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.System.Mobile.UX', $.proxy(this._initButtonGroupNavigation, this));
 	},
 	
@@ -6133,19 +6134,18 @@ WCF.System.Mobile.UX = {
 	 */
 	_initButtonGroupNavigation: function() {
 		$('.buttonGroupNavigation:not(.jsMobileButtonGroupNavigation)').each(function(index, navigation) {
-			var $navigation = $(navigation).addClass('jsMobileButtonGroupNavigation dropdown');
+			var $navigation = $(navigation).addClass('jsMobileButtonGroupNavigation');// dropdown');
 			var $button = $('<a class="dropdownLabel"><span class="icon icon24 icon-list" /></a>').prependTo($navigation);
 			
-			// convert button group into a dropdown menu
-			var $dropdownMenu = $navigation.children('ul:eq(0)').addClass('dropdownMenu');//.removeClass('smallButtons buttonGroup');
-			//var $links = $dropdownMenu.find('> li > a').removeClass('button jsTooltip').removeAttr('title');
-			//$links.children('span.invisible').removeClass('invisible');
-			//$links.children('span.icon').remove();
-			
-			WCF.Dropdown.initDropdown($button, false);
-			
-			$dropdownMenu.removeClass('dropdownMenu');
+			$button.click(function() { $button.next().toggleClass('open'); return false; });
 		});
+	},
+	
+	/**
+	 * Closes menus.
+	 */
+	_closeMenus: function() {
+		$('.jsMobileButtonGroupNavigation > ul.open').removeClass('open');
 	}
 };
 

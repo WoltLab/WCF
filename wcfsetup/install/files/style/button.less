@@ -208,43 +208,45 @@ button.small,
 		
 		> ul {
 			display: none;
-		}
-	}
-	
-	#dropdownMenuContainer > ul.buttonGroup {
-		display: none;
-		font-size: 0;
-		position: absolute;
-		z-index: 450;
-		
-		&.dropdownOpen {
-			display: block;
-		}
-		
-		> li {
-			display: block;
-			float: none;
-			font-size: 0 !important;
-			opacity: 1 !important;
-			overflow: hidden;
+			font-size: 0;
+			position: absolute;
+			right: -3px;
+			top: 24px;
+			z-index: 450;
 			
-			&:not(:last-child) > a {
-				border-bottom-width: 0;
+			&.open {
+				display: block;
 			}
 			
-			> a {
-				.button;
-				
-				border-radius: 0 !important;
-				font-size: @wcfSmallFontSize;
+			&.buttonGroup > li > .button {
+				margin: 0;
+			}
+			
+			> li {
+				display: block;
+				float: none;
+				font-size: 0 !important;
+				opacity: 1 !important;
 				overflow: hidden;
-				text-overflow: ellipsis;
-				width: 124px;
-				white-space: nowrap;
-				word-wrap: normal;
 				
-				> span.invisible {
-					display: inline;
+				&:not(:last-child) > a {
+					border-bottom-width: 0;
+				}
+				
+				> a {
+					.button;
+					
+					border-radius: 0 !important;
+					font-size: @wcfSmallFontSize;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					width: 124px;
+					white-space: nowrap;
+					word-wrap: normal;
+					
+					> span.invisible {
+						display: inline;
+					}
 				}
 			}
 		}
