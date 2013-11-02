@@ -136,7 +136,7 @@ String.prototype.hashCode = function() {
 	jQuery.browser.touch = (!!('ontouchstart' in window) || !!('msmaxtouchpoints' in window.navigator));
 	
 	// detect smartphones
-	jQuery.browser.smartphone = ($(html).css('caption-side') == 'bottom');
+	jQuery.browser.smartphone = ($('html').css('caption-side') == 'bottom');
 })();
 
 /**
