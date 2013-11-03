@@ -184,6 +184,11 @@ class SearchForm extends RecaptchaForm {
 			}
 		}
 		
+		// disable check for security token for GET requests
+		if ($this->submit) {
+			$_POST['t'] = WCF::getSession()->getSecurityToken();
+		}
+		
 		// sort order
 		if (isset($_REQUEST['sortField'])) {
 			$this->sortField = $_REQUEST['sortField'];
