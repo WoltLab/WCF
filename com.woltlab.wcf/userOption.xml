@@ -117,7 +117,6 @@
 			<option name="adminComment">
 				<categoryname>profile.personal</categoryname>
 				<optiontype>textarea</optiontype>
-				<editable>3</editable>
 				<outputclass>wcf\system\option\user\NewlineToBreakUserOptionOutput</outputclass>
 				<visible>2</visible>
 				<editable>2</editable>
