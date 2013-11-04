@@ -5984,6 +5984,7 @@ WCF.System.FlexibleMenu = {
 		}
 		
 		var $changedItems = false;
+		var $container = this._containers[containerID];
 		var $currentWidth = 0;
 		
 		// the current width is based upon all items without the dropdown
@@ -5992,8 +5993,18 @@ WCF.System.FlexibleMenu = {
 			$currentWidth += $($menuItems[$i]).outerWidth(true);
 		}
 		
+		// insert dropdown for calculation purposes
+		if (!this._hasHiddenItems[containerID]) {
+			this._dropdowns[containerID].appendTo($container.children('ul:eq(0)'));
+		}
+		
 		var $dropdownWidth = this._dropdowns[containerID].outerWidth(true);
-		var $container = this._containers[containerID];
+		
+		// remove dropdown previously inserted
+		if (!this._hasHiddenItems[containerID]) {
+			this._dropdowns[containerID].detach();
+		}
+		
 		var $maximumWidth = $container.parent().innerWidth() - $dropdownWidth;
 		
 		// substract padding from the parent element
@@ -6005,7 +6016,6 @@ WCF.System.FlexibleMenu = {
 		
 		// substract paddings from the actual list
 		$maximumWidth -= parseInt($container.children('ul:eq(0)').css('padding-left').replace(/px$/, '')) + parseInt($container.children('ul:eq(0)').css('padding-right').replace(/px$/, '')); 
-		
 		if ($currentWidth > $maximumWidth) {
 			var $menuItems = $menuItems.filter(':not(.active):not(.ui-state-active)');
 			
