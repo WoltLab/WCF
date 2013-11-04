@@ -4,6 +4,10 @@
 		<name>ABCdatos BotLink</name>
 		<url>http://www.robotstxt.org/wc/active/html/abcdatos.html</url>
 	</spider>
+	<spider ident="AbraveSpider">
+		<name>Abrave</name>
+		<url>http://robot.abrave.co.uk/</url>
+	</spider>
 	<spider ident="abot/">
 		<name>abot</name>
 		<url>http://www.abot.com/</url>
@@ -518,6 +522,10 @@
 		<name>HolyCowDude</name>
 		<url>http://www.holycowdude.com/spider.htm</url>
 	</spider>
+	<spider ident="HomeTags">
+		<name>HomeTags</name>
+		<url>http://www.hometags.nl/bot</url>
+	</spider>
 	<spider ident="Hometown">
 		<name>Hometown</name>
 	</spider>
@@ -967,6 +975,10 @@
 	<spider ident="RuLeS">
 		<name>RuLeS</name>
 	</spider>
+	<spider ident="RyzeCrawler">
+		<name>RyzeCrawler</name>
+		<url>http://www.domain2day.nl/crawler/</url>
+	</spider>
 	<spider ident="SafetyNet Robot">
 		<name>SafetyNet</name>
 	</spider>
@@ -1168,6 +1180,10 @@
 		<name>Turtle</name>
 		<url>http://www.turtle.ru/</url>
 	</spider>
+	<spider ident="TwengaBot">
+		<name>Twenga</name>
+		<url>http://www.twenga.com/bot.html</url>
+	</spider>
 	<spider ident="Twiceler">
 		<name>Twiceler</name>
 		<url>http://www.cuill.com/twiceler/robot.html</url>
@@ -1206,6 +1222,10 @@
 	<spider ident="VoilaBot">
 		<name>VoilaBot</name>
 		<url>http://www.voila.com/</url>
+	</spider>
+	<spider ident="VisBot">
+		<name>VisBot</name>
+		<url>http://www.visvo.com/webmasters.html</url>
 	</spider>
 	<spider ident="Voyager">
 		<name>Voyager</name>
