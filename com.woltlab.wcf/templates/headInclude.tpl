@@ -177,6 +177,20 @@
 		{if $__sessionKeepAlive|isset}
 			new WCF.System.KeepAlive({@$__sessionKeepAlive});
 		{/if}
+
+		// Internet Explorer seems to be unable to properly revert CSS applied through
+		// media queries and sometimes temporarily apply them on init even though they
+		// should not match
+		if ($.browser.msie) {
+			var $sidebar = $('#main > div > div .sidebar');
+			function fixSidebarIE() {
+				$sidebar.css('display', 'none').css('display', '');
+			}
+			
+			fixSidebarIE();
+			$(window).resize(fixSidebarIE);
+			
+		}
 	});
 	//]]>
 </script>

@@ -139,7 +139,7 @@ WCF.Label.Chooser = Class.extend({
 		// pre-select labels
 		if ($.getLength(selectedLabelIDs)) {
 			for (var $groupID in selectedLabelIDs) {
-				WCF.Dropdown.getDropdownMenu(this._groups[$groupID].wcfIdentify()).children('li').each($.proxy(function(index, label) {
+				WCF.Dropdown.getDropdownMenu(this._groups[$groupID].wcfIdentify()).find('> ul > li:not(.dropdownDivider)').each($.proxy(function(index, label) {
 					var $label = $(label);
 					var $labelID = $label.data('labelID') || 0;
 					if ($labelID && selectedLabelIDs[$groupID] == $labelID) {
