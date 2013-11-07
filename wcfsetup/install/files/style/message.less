@@ -461,7 +461,7 @@
 	padding: @wcfGapTiny @wcfGapSmall;
 		
 	@messageFooterNoteGradientColor: fade(@wcfContainerBorderColor, 20%);
-	.linearGradientNative(~"left top, @{messageFooterNoteGradientColor} 0%, transparent 40%");
+	.linearGradientNative(~"90deg, @{messageFooterNoteGradientColor} 0%, transparent 40%");
 }
 
 .messageHeader + .messageBody > div:first-child,
@@ -655,7 +655,7 @@ li:nth-child(2n+1) .message {
 		
 		.messageContent {
 			@wcfDisabledBackgroundGradientColor: fade(@wcfDisabledBackgroundColor, 0%);
-			.linearGradientNative(~"to bottom, @{wcfDisabledBackgroundColor}, @{wcfDisabledBackgroundGradientColor} 90px");
+			.linearGradientNative(~"180deg, @{wcfDisabledBackgroundColor}, @{wcfDisabledBackgroundGradientColor} 90px");
 		}
 	}
 	
@@ -664,7 +664,7 @@ li:nth-child(2n+1) .message {
 		
 		.messageContent {
 			@wcfDeletedBackgroundGradientColor: fade(@wcfDeletedBackgroundColor, 0%);
-			.linearGradientNative(~"to bottom, @{wcfDeletedBackgroundColor}, @{wcfDeletedBackgroundGradientColor} 90px");
+			.linearGradientNative(~"180deg, @{wcfDeletedBackgroundColor}, @{wcfDeletedBackgroundGradientColor} 90px");
 		}
 	}
 	
@@ -673,7 +673,7 @@ li:nth-child(2n+1) .message {
 		
 		.messageContent {
 			@wcfSelectedBackgroundGradientColor: fade(@wcfSelectedBackgroundColor, 0%);
-			.linearGradientNative(~"to bottom, @{wcfSelectedBackgroundColor}, @{wcfSelectedBackgroundGradientColor} 90px");
+			.linearGradientNative(~"180deg, @{wcfSelectedBackgroundColor}, @{wcfSelectedBackgroundGradientColor} 90px");
 		}
 	}
 }

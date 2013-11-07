@@ -14,11 +14,15 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageUpdateDispatcher;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\util\CLIUtil;
+use wcf\util\FileUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
 use Zend\Loader\StandardAutoloader as ZendLoader;
+
+// set exception handler
+set_exception_handler(array('wcf\system\CLIWCF', 'handleCLIException'));
 
 /**
  * Extends WCF class with functions for CLI.
@@ -47,6 +51,12 @@ class CLIWCF extends WCF {
 	 * Calls all init functions of the WCF class.
 	 */
 	public function __construct() {
+		// add autoload directory
+		self::$autoloadDirectories['wcf'] = WCF_DIR . 'lib/';
+		
+		// define tmp directory
+		if (!defined('TMP_DIR')) define('TMP_DIR', FileUtil::getTempFolder());
+		
 		// register additional autoloaders
 		require_once(WCF_DIR.'lib/system/api/phpline/phpline.phar');
 		require_once(WCF_DIR.'lib/system/api/zend/Loader/StandardAutoloader.php');
@@ -63,12 +73,18 @@ class CLIWCF extends WCF {
 		// disable benchmark
 		define('ENABLE_BENCHMARK', 0);
 		
-		parent::__construct();
+		// start initialization
+		$this->initDB();
+		$this->loadOptions();
+		$this->initSession();
+		$this->initLanguage();
+		$this->initTPL();
+		$this->initCoreObjects();
+		$this->initApplications();
 		
 		// the destructor registered in core.functions.php will only call the destructor of the parent class
 		register_shutdown_function(array('wcf\system\CLIWCF', 'destruct'));
 		
-		$this->initApplications();
 		$this->initArgv();
 		$this->initPHPLine();
 		$this->initAuth();
@@ -86,6 +102,13 @@ class CLIWCF extends WCF {
 		}
 		
 		self::getSession()->delete();
+	}
+	
+	/**
+	 * @see	\wcf\system\WCF::handleException()
+	 */
+	public static final function handleCLIException(\Exception $e) {
+		die($e->getMessage()."\n".$e->getTraceAsString());
 	}
 	
 	/**
