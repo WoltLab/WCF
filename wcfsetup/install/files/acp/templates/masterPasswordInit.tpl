@@ -16,9 +16,7 @@
 	<h1>{lang}wcf.acp.masterPassword.init{/lang}</h1>
 </header>
 
-{if $errorField}
-	<p class="error">{lang}wcf.global.form.error{/lang}</p>
-{/if}
+{include file='formError'}
 
 <form method="post" action="{link controller='MasterPasswordInit'}{/link}">
 	<div class="container containerPadding marginTop">
@@ -75,6 +73,7 @@
 	<div class="formSubmit">
 		<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		<input type="hidden" name="url" value="{$url}" />
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
 
