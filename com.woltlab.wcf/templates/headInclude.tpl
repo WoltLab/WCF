@@ -178,18 +178,16 @@
 			new WCF.System.KeepAlive({@$__sessionKeepAlive});
 		{/if}
 
-		// Internet Explorer seems to be unable to properly revert CSS applied through
-		// media queries and sometimes temporarily apply them on init even though they
-		// should not match
+		// Internet Explorer seems to be unable to properly revert display: table-cell
+		// if it was previously 'none' and table-layout: fixed is set
 		if ($.browser.msie) {
 			var $sidebar = $('#main > div > div .sidebar');
 			function fixSidebarIE() {
 				$sidebar.css('display', 'none').css('display', '');
 			}
 			
-			fixSidebarIE();
+			//fixSidebarIE();
 			$(window).resize(fixSidebarIE);
-			
 		}
 	});
 	//]]>
