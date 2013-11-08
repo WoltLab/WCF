@@ -6090,25 +6090,80 @@ WCF.System.Mobile = { };
  */
 WCF.System.Mobile.UX = {
 	/**
+	 * true if mobile optimizations are enabled
+	 * @var	boolean
+	 */
+	_enabled: false,
+	
+	/**
 	 * main container
 	 * @var	jQuery
 	 */
 	_main: null,
 	
 	/**
+	 * sidebar container
+	 * @var	jQuery
+	 */
+	_sidebar: null,
+	
+	/**
 	 * Initializes the WCF.System.Mobile.UX class.
 	 */
 	init: function() {
+		this._enabled = false;
 		this._main = $('#main');
+		this._sidebar = this._main.find('> div > div > .sidebar');
 		
-		$('html').addClass('touch');
+		if ($.browser.touch) {
+			$('html').addClass('touch');
+		}
 		
+		enquire.register('screen and (max-width: 800px)', {
+			match: $.proxy(this._enable, this),
+			unmatch: $.proxy(this._disable, this),
+			setup: $.proxy(this._setup, this),
+			deferSetup: true
+		});
+		
+		if ($.browser.msie && this._sidebar.width() > 305) {
+			// sidebar is rarely broken on IE9/IE10
+			this._sidebar.css('display', 'none').css('display', '');
+		}
+	},
+	
+	/**
+	 * Initializes the mobile optimization once the media query matches.
+	 */
+	_setup: function() {
 		this._initSidebarToggleButtons();
 		this._initSearchBar();
 		this._initButtonGroupNavigation();
 		
 		WCF.CloseOverlayHandler.addCallback('WCF.System.Mobile.UX', $.proxy(this._closeMenus, this));
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.System.Mobile.UX', $.proxy(this._initButtonGroupNavigation, this));
+	},
+	
+	/**
+	 * Enables the mobile optimization.
+	 */
+	_enable: function() {
+		this._enabled = true;
+		
+		if ($.browser.msie) {
+			this._sidebar.css('display', 'none').css('display', '');
+		}
+	},
+	
+	/**
+	 * Disables the mobile optimization.
+	 */
+	_disable: function() {
+		this._enabled = false;
+		
+		if ($.browser.msie) {
+			this._sidebar.css('display', 'none').css('display', '');
+		}
 	},
 	
 	/**
@@ -6142,7 +6197,13 @@ WCF.System.Mobile.UX = {
 	_initSearchBar: function() {
 		var $searchBar = $('.searchBar:eq(0)');
 		
-		$searchBar.click(function() { $searchBar.addClass('searchBarOpen'); });
+		var self = this;
+		$searchBar.click(function() {
+			if (self._enabled) {
+				$searchBar.addClass('searchBarOpen');
+			}
+		});
+		
 		this._main.click(function() { $searchBar.removeClass('searchBarOpen'); });
 	},
 	
@@ -6151,7 +6212,7 @@ WCF.System.Mobile.UX = {
 	 */
 	_initButtonGroupNavigation: function() {
 		$('.buttonGroupNavigation:not(.jsMobileButtonGroupNavigation)').each(function(index, navigation) {
-			var $navigation = $(navigation).addClass('jsMobileButtonGroupNavigation');// dropdown');
+			var $navigation = $(navigation).addClass('jsMobileButtonGroupNavigation');
 			var $button = $('<a class="dropdownLabel"><span class="icon icon24 icon-list" /></a>').prependTo($navigation);
 			
 			$button.click(function() { $button.next().toggleClass('open'); return false; });
