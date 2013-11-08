@@ -139,7 +139,10 @@ class UserImporter extends AbstractImporter {
 			}
 		}
 		
-		$groupIDs = array_merge($groupIDs, UserGroup::getGroupIDsByType(array(UserGroup::EVERYONE, UserGroup::USERS)));
+		if (!$user->activationCode) $defaultGroupIDs = UserGroup::getGroupIDsByType(array(UserGroup::EVERYONE, UserGroup::USERS));
+		else $defaultGroupIDs = UserGroup::getGroupIDsByType(array(UserGroup::EVERYONE, UserGroup::GUESTS));
+		
+		$groupIDs = array_merge($groupIDs, $defaultGroupIDs);
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_to_group
 						(userID, groupID)
 			VALUES			(?, ?)";
