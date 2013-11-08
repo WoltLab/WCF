@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\exception;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -145,7 +146,7 @@ class SystemException extends LoggedException implements IPrintableException {
 			</head>
 			<body>
 				<div class="systemException">
-					<h1>Fatal error: <?php echo StringUtil::encodeHTML($this->_getMessage()); ?></h1>
+					<h1>Fatal error: <?php if(!$this->getExceptionID()) { ?>Unable to write log file, please make &quot;<?php echo FileUtil::unifyDirSeparator(WCF_DIR); ?>log/&quot; writable!<?php } else { echo StringUtil::encodeHTML($this->_getMessage()); } ?></h1>
 					
 					<?php if (WCF::debugModeIsEnabled()) { ?>
 						<div>
@@ -172,8 +173,12 @@ class SystemException extends LoggedException implements IPrintableException {
 						<div>
 							<h2>Information:</h2>
 							<p>
-								<b>ID:</b> <code><?php echo $this->getExceptionID(); ?></code><br>
-								<?php echo $innerMessage; ?>
+								<?php if (!$this->getExceptionID()) { ?>
+									Unable to write log file, please make &quot;<?php echo FileUtil::unifyDirSeparator(WCF_DIR); ?>log/&quot; writable!
+								<?php } else { ?>
+									<b>ID:</b> <code><?php echo $this->getExceptionID(); ?></code><br>
+									<?php echo $innerMessage; ?>
+								<?php } ?>
 							</p>
 						</div>
 					<?php } ?>
