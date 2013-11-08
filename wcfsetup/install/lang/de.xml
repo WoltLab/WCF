@@ -585,6 +585,8 @@
 		<item name="wcf.acp.option.category.general.system.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy-Server]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Hier können Sie optional Proxy-Server für Verbindungen zu externen Servern konfigurieren.]]></item>
+		<item name="wcf.acp.option.category.general.system.networkInterface"><![CDATA[Interface-Adresse]]></item>
+		<item name="wcf.acp.option.category.general.system.networkInterface.description"><![CDATA[Hier können Sie optional das zu verwendende Netzwerk-Interface für Verbindungen zu externen Servern konfigurieren. Geben Sie die IP-Adresse (IPv4 oder IPv6) und den Port des Interfaces an, welches verwendet werden soll. Durch Angabe von Port 0 wählt das System den zu verwendenden Port automatisch.]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[E-Mails]]></item>
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Versand]]></item>
@@ -665,6 +667,8 @@
 		<item name="wcf.acp.option.page_description"><![CDATA[Seitenbeschreibung]]></item>
 		<item name="wcf.acp.option.page_title"><![CDATA[Titel der Seite]]></item>
 		<item name="wcf.acp.option.proxy_server_http"><![CDATA[Proxy-Server (HTTP)]]></item>
+		<item name="wcf.acp.option.network_interface_ip"><![CDATA[Netzwerk-Interface-IP]]></item>
+		<item name="wcf.acp.option.network_interface_port"><![CDATA[Netzwerk-Interface-Port]]></item>
 		<item name="wcf.acp.option.session_timeout"><![CDATA[Gültigkeitslänge einer Sitzung]]></item>
 		<item name="wcf.acp.option.session_timeout.description"><![CDATA[Angabe in Sekunden]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[IP-Adresse der Sitzung überprüfen]]></item>
