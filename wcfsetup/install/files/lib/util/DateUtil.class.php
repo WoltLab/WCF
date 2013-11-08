@@ -288,18 +288,18 @@ final class DateUtil {
 			// short textual representation of a month (M)
 			if (stripos($format, 'M') !== false) {
 				$date = str_replace(array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'), array(
-					$language->get('wcf.date.month.jan'),
-					$language->get('wcf.date.month.feb'),
-					$language->get('wcf.date.month.mar'),
-					$language->get('wcf.date.month.apr'),
-					$language->get('wcf.date.month.may'),
-					$language->get('wcf.date.month.jun'),
-					$language->get('wcf.date.month.jul'),
-					$language->get('wcf.date.month.aug'),
-					$language->get('wcf.date.month.sep'),
-					$language->get('wcf.date.month.oct'),
-					$language->get('wcf.date.month.nov'),
-					$language->get('wcf.date.month.dec')
+					$language->get('wcf.date.month.short.jan'),
+					$language->get('wcf.date.month.short.feb'),
+					$language->get('wcf.date.month.short.mar'),
+					$language->get('wcf.date.month.short.apr'),
+					$language->get('wcf.date.month.short.may'),
+					$language->get('wcf.date.month.short.jun'),
+					$language->get('wcf.date.month.short.jul'),
+					$language->get('wcf.date.month.short.aug'),
+					$language->get('wcf.date.month.short.sep'),
+					$language->get('wcf.date.month.short.oct'),
+					$language->get('wcf.date.month.short.nov'),
+					$language->get('wcf.date.month.short.dec')
 				), $date);
 			}
 		}
