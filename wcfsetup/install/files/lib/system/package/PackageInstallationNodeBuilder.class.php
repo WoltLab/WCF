@@ -416,6 +416,8 @@ class PackageInstallationNodeBuilder {
 				'isApplication' => $this->installation->getArchive()->getPackageInfo('isApplication'),
 				'author' => $this->installation->getArchive()->getAuthorInfo('author'),
 				'authorURL' => $this->installation->getArchive()->getAuthorInfo('authorURL') !== null ? $this->installation->getArchive()->getAuthorInfo('authorURL') : '',
+				'license' => $this->installation->getArchive()->getLicenseInfo('license') !== null ? $this->installation->getArchive()->getLicenseInfo('license') : '',
+				'licenseURL' => $this->installation->getArchive()->getLicenseInfo('licenseURL') !== null ? $this->installation->getArchive()->getLicenseInfo('licenseURL') : '',
 				'installDate' => TIME_NOW,
 				'updateDate' => TIME_NOW,
 				'requirements' => $this->requirements

@@ -101,6 +101,14 @@
 		</xs:all>
 	</xs:complexType>
 	
+	<!-- license information element -->
+	<xs:complexType name="licenseInformation">
+		<xs:all>
+			<xs:element name="license" type="woltlab_varchar" minOccurs="0" />
+			<xs:element name="licenseurl" type="xs:anyURI" minOccurs="0" />
+		</xs:all>
+	</xs:complexType>
+	
 	<!-- required packages element -->
 	<xs:complexType name="requiredPackages">
 		<xs:sequence>
