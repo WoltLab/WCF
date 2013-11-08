@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.0.0 Beta 11</version> <!-- codename: maelstrom -->
-		<date>2013-11-04</date>
+		<version>2.0.0 RC 1</version> <!-- codename: maelstrom -->
+		<date>2013-11-08</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -43,19 +43,15 @@
 		<instruction type="script">acp/post_install.php</instruction> 
 	</instructions>
 	
-	<instructions type="update" fromversion="2.0.0 Beta 10">
+	<instructions type="update" fromversion="2.0.0 Beta 11">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
+		<instruction type="language">language/*.xml</instruction>
+		<instruction type="script">acp/update_rc1.php</instruction>
 		
-		<!-- a lot of files and templates have been changed, prevent timeouts on horribly slow systems -->
-		<instruction type="language" run="standalone">language/*.xml</instruction>
-		
-		<instruction type="clipboardAction">clipboardAction.xml</instruction>
-		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="option">option.xml</instruction>
-		<instruction type="userGroupOption">userGroupOption.xml</instruction>
-		<instruction type="userOption">userOption.xml</instruction>
+		
+		<instruction type="style">blue-temptation-style.tgz</instruction>
 	</instructions>
 </package>

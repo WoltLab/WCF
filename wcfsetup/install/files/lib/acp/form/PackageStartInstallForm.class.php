@@ -91,6 +91,8 @@ class PackageStartInstallForm extends AbstractForm {
 	 * Validates the upload package input.
 	 */
 	protected function validateUploadPackage() {
+		$this->activeTabMenuItem = 'upload';
+		
 		if (empty($this->uploadPackage['tmp_name'])) {
 			throw new UserInputException('uploadPackage', 'uploadFailed');
 		}

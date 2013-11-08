@@ -37,7 +37,7 @@
 		</nav>
 		<section id="smileyList" class="sortableListContainer">
 			{if $objects|count}
-				<ol class="sortableList" data-object-id="0">
+				<ol class="sortableList" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
 					{foreach from=$objects item=smiley}
 						<li class="sortableNode sortableNoNesting smileyRow" data-object-id="{@$smiley->smileyID}">
 							<span class="sortableNodeLabel">

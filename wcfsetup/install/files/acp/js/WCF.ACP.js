@@ -2182,6 +2182,7 @@ WCF.ACP.Import.Manager = Class.extend({
 					data: {
 						noRedirect: 1
 					},
+					dataType: 'html',
 					success: $.proxy(function() {
 						window.location = this._redirectURL;
 					}, this),

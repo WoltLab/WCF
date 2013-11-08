@@ -36,7 +36,7 @@
 	</nav>
 </div>
 
-<div class="tabMenuContainer">
+<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
 	<nav class="tabMenu">
 		<ul>
 			<li><a href="{@$__wcf->getAnchor('packageSearch')}">{lang}wcf.acp.package.search{/lang}</a></li>
