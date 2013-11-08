@@ -33,7 +33,7 @@ a {
 		text-decoration: underline;
 	}
 	
-	&.externalURL:after {
+	&.externalURL::after {
 		content: "\f08e";
 		display: inline-block;
 		font-family: FontAwesome !important;
@@ -254,7 +254,7 @@ fieldset {
 		padding: @wcfGapSmall @wcfGapMedium;
 	}
 	
-	&:after {
+	&::after {
 		border: 10px solid transparent;
 		content: "";
 		display: inline-block;
@@ -262,23 +262,23 @@ fieldset {
 		z-index: 100;
 	}
 	
-	&.top:after {
+	&.top::after {
 		border-bottom-width: 0;
 		border-top-color: rgba(0, 0, 0, .3);
 		bottom: -10px;
 	}
 	
-	&.bottom:after {
+	&.bottom::after {
 		border-bottom-color: rgba(0, 0, 0, .3);
 		border-top-width: 0;
 		top: -10px;
 	}
 	
-	&.right:after {
+	&.right::after {
 		left: 10px;
 	}
 	
-	&.left:after {
+	&.left::after {
 		right: 10px;
 	}
 }

@@ -43,7 +43,7 @@ body, .tabularBox, .dialogTitlebar {
 				border-radius: 5px 5px 0 0;
 				position: relative;
 				
-				&:after {
+				&::after {
 					border-bottom-left-radius: 6px;
 					border-width: 0 0 1px 1px;
 					bottom: 0;
@@ -56,7 +56,7 @@ body, .tabularBox, .dialogTitlebar {
 					.boxShadow(-2px, 2px, @wcfNavigationHeaderBackgroundColor, 0);
 				}
 				
-				&:before {
+				&::before {
 					border-bottom-right-radius: 6px;
 					border-width: 0 1px 1px 0;
 					bottom: 0;
@@ -548,7 +548,7 @@ button.active:hover {
 						border-top-right-radius: @wcfContainerBorderRadius;
 						border-top-left-radius: @wcfContainerBorderRadius;
 						
-						&:before {
+						&::before {
 							border: 1px solid @wcfContainerBorderColor;
 							border-bottom-right-radius: 6px;
 							border-width: 0 1px 1px 0;
@@ -563,7 +563,7 @@ button.active:hover {
 							.boxShadow(2px, 1px, @wcfContainerBackgroundColor, 0);
 						}
 						
-						&:after {
+						&::after {
 							border: 1px solid @wcfContainerBorderColor;
 							border-bottom-left-radius: 6px;
 							border-width: 0 0 1px 1px;
@@ -745,7 +745,7 @@ select[multiple]:focus {
 @media only screen and (min-width: 801px) {
 	.messageList {
 		.messageGroupStarter {
-			> .message.messageSidebarOrientationLeft:before {
+			> .message.messageSidebarOrientationLeft::before {
 				border-top-left-radius: @wcfContainerBorderRadius;
 				content: "";
 				display: block;
@@ -758,7 +758,7 @@ select[multiple]:focus {
 				.linearGradientNative(~"135deg, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%");
 			}
 			
-			> .message.messageSidebarOrientationRight:before {
+			> .message.messageSidebarOrientationRight::before {
 				border-top-right-radius: @wcfContainerBorderRadius;
 				content: "";
 				display: block;

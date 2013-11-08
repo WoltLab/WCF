@@ -6,7 +6,7 @@
 	
 	.boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
 
-	&:after {
+	&::after {
 		border: 7px solid transparent;
 		border-bottom-color: @wcfDropdownBorderColor;
 		border-top-width: 0;
@@ -18,7 +18,7 @@
 		z-index: 100;
 	}
 	
-	&:before {
+	&::before {
 		border: 6px solid transparent;
 		border-bottom-color: @wcfDropdownBackgroundColor;
 		border-top-width: 0;
@@ -51,7 +51,7 @@
 		> .ui-datepicker-prev {
 			float: left;
 			
-			&:before {
+			&::before {
 				content: "\f060";
 				font-family: FontAwesome;
 				font-size: 14px;
@@ -61,7 +61,7 @@
 		> .ui-datepicker-next {
 			float: right;
 			
-			&:before {
+			&::before {
 				content: "\f061";
 				font-family: FontAwesome;
 				font-size: 14px;

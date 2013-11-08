@@ -74,7 +74,7 @@
 		}
 		
 		&.new .columnAvatar > div {
-			&:after {
+			&::after {
 				color: @wcfLinkColor;
 				content: "\f069";
 				font-family: FontAwesome;
@@ -132,7 +132,7 @@
 		.messageGroupStarter {
 			position: relative;
 			
-			> .message:after {
+			> .message::after {
 				content: "\f005";
 				font-family: FontAwesome;
 				font-size: 14px;
@@ -144,7 +144,7 @@
 				.textShadow(@wcfSidebarBackgroundColor);
 			}
 			
-			> .message.messageSidebarOrientationRight:after {
+			> .message.messageSidebarOrientationRight::after {
 				left: auto;
 				right: 4px;
 			}
@@ -311,8 +311,8 @@
 .message.messageSidebarOrientationLeft,
 .message.messageSidebarOrientationRight {
 	.messageHeader {
-		&:before,
-		&:after {
+		&::before,
+		&::after {
 			border-width: 20px;
 			content: "";
 			display: block;
@@ -322,11 +322,11 @@
 			width: 0;
 		}
 		
-		&:before {
+		&::before {
 			z-index: 100;
 		}
 		
-		&:after {
+		&::after {
 			z-index: 101;
 		}
 	}
@@ -334,17 +334,17 @@
 
 .message.messageSidebarOrientationLeft {
 	.messageHeader {
-		&:before,
-		&:after {
+		&::before,
+		&::after {
 			border-style: inset solid inset none;
 		}
 		
-		&:before {
+		&::before {
 			border-color: transparent @wcfContainerBorderColor transparent transparent;
 			left: -20px;
 		}
 		
-		&:after {
+		&::after {
 			border-color: transparent @wcfContainerBackgroundColor transparent transparent;
 			left: -19px;
 		}
@@ -353,17 +353,17 @@
 
 .message.messageSidebarOrientationRight {
 	.messageHeader {
-		&:before,
-		&:after {
+		&::before,
+		&::after {
 			border-style: inset none inset solid;
 		}
 		
-		&:before {
+		&::before {
 			border-color: transparent transparent transparent @wcfContainerBorderColor;
 			right: -20px;
 		}
 		
-		&:after {
+		&::after {
 			border-color: transparent transparent transparent @wcfContainerBackgroundColor;
 			right: -19px;
 		}
@@ -385,7 +385,7 @@
 	.linearGradient(darken(@wcfTabularBoxBackgroundColor, 10%), @wcfTabularBoxBackgroundColor, darken(@wcfTabularBoxBackgroundColor, 10%));
 	.textShadow(darken(@wcfTabularBoxBackgroundColor, 10%));
 	
-	&:before {
+	&::before {
 		border-bottom: 4px solid darken(@wcfTabularBoxBackgroundColor, 20%);
 		content: "";
 		display: block;
@@ -398,7 +398,7 @@
 	border-radius: 0 5px 5px 0;
 	left: -219px;
 	
-	&:before {
+	&::before {
 		border-left: 6px solid transparent;
 		left: 0;
 	}
@@ -418,7 +418,7 @@
 	.newMessageBadge {
 		border-radius: 5px 0 0 5px;
 		
-		&:before {
+		&::before {
 			border-right: 6px solid transparent;
 			right: 0;
 		}
@@ -504,7 +504,7 @@
 					margin: -2px 0 -1px 4px;
 				}
 				
-				> .username:after {
+				> .username::after {
 					content: " - ";
 				}
 			}
@@ -524,7 +524,7 @@
 				display: block;
 			}
 			
-			> .username:after {
+			> .username::after {
 				content: "";
 			}
 			
@@ -544,7 +544,7 @@
 	text-align: center;
 	width: 170px; /* Width toggle */
 	
-	&:after {
+	&::after {
 		clear: both;
 		content: '';
 		display: block;
@@ -589,7 +589,7 @@
 			.linearGradient(darken(rgba(0, 153, 0, 1), 10%), rgba(0, 153, 0, 1), darken(rgba(0, 153, 0, 1), 10%));
 			.textShadow(darken(rgba(0, 153, 0, 1), 10%));
 			
-			&:before {
+			&::before {
 				border-bottom: 4px solid darken(rgba(0, 153, 0, 1), 20%);
 				border-left: 6px solid transparent;
 				content: "";
@@ -629,11 +629,11 @@
 }
 
 li:nth-child(2n+1) .message {
-	&.messageSidebarOrientationLeft .messageHeader:after {
+	&.messageSidebarOrientationLeft .messageHeader::after {
 		border-right-color: @wcfContainerAccentBackgroundColor;
 	}
 	
-	&.messageSidebarOrientationRight .messageHeader:after {
+	&.messageSidebarOrientationRight .messageHeader::after {
 		border-left-color: @wcfContainerAccentBackgroundColor;
 	}
 	
@@ -818,7 +818,7 @@ li:nth-child(2n+1) .message {
 			position: relative;
 			vertical-align: 1px;
 			
-			&:before {
+			&::before {
 				border: 6px solid @wcfContainerBorderColor;
 				border-color: transparent @wcfContainerBorderColor transparent transparent;
 				content: "";
@@ -831,7 +831,7 @@ li:nth-child(2n+1) .message {
 				width: 0;
 			}
 			
-			&:after {
+			&::after {
 				border: 6px solid @wcfContainerBackgroundColor;
 				border-color: transparent @wcfContainerBackgroundColor transparent transparent;
 				content: "";
@@ -963,8 +963,8 @@ li:nth-child(2n+1) .message {
 		}
 		
 		.messageHeader {
-			&:before,
-			&:after {
+			&::before,
+			&::after {
 				display: none;
 			}
 		}

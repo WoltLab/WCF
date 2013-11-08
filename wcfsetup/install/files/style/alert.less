@@ -11,7 +11,7 @@
 	padding: @wcfGapSmall+@wcfGapTiny @wcfGapMedium @wcfGapSmall+@wcfGapTiny 48px;
 	position: relative;
 	
-	&:after {
+	&::after {
 		font-family: FontAwesome;
 		font-size: 28px;
 		display: block;
@@ -37,7 +37,7 @@
 		margin-right: @wcfGapSmall;
 		padding: @wcfGapTiny @wcfGapSmall;
 		
-		&:after {
+		&::after {
 			display: none;
 		}
 	}
@@ -51,7 +51,7 @@
 	
 	.textShadow(@wcfInfoBackgroundColor);
 	
-	&:after {
+	&::after {
 		content: "\f05a";
 	}
 	
@@ -73,7 +73,7 @@
 	
 	.textShadow(@wcfSuccessBackgroundColor);
 	
-	&:after {
+	&::after {
 		content: "\f058";
 	}
 	
@@ -95,7 +95,7 @@
 	
 	.textShadow(@wcfWarningBackgroundColor);
 	
-	&:after {
+	&::after {
 		content: "\f071";
 	}
 	
@@ -117,7 +117,7 @@
 	
 	.textShadow(@wcfErrorBackgroundColor);
 	
-	&:after {
+	&::after {
 		content: "\f05e";
 	}
 	
@@ -144,7 +144,7 @@
 	position: relative; /* Firefox support (from version 10 on) is buggy */
 	
 	/* pointer */
-	&:after {
+	&::after {
 		border: 7px solid transparent;
 		border-bottom-color: @wcfErrorBorderColor;
 		border-top-width: 0;
@@ -156,7 +156,7 @@
 		z-index: 100;
 	}
 	
-	&:before {
+	&::before {
 		border: 6px solid transparent;
 		border-bottom-color: @wcfErrorBackgroundColor;
 		border-top-width: 0;

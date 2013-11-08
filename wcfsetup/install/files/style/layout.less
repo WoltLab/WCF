@@ -113,7 +113,7 @@
 			right: 0;
 			top: 0;
 			
-			&:before {
+			&::before {
 				content: "\f002";
 				color: @wcfUserPanelColor;
 				font-family: FontAwesome;
@@ -122,7 +122,7 @@
 				position: absolute;
 				top: 12px;
 			}
-			&.loading:before {
+			&.loading::before {
 				content: "\f110";
 				
 				-moz-animation: spin 2s infinite linear;
@@ -210,7 +210,7 @@
 				min-width: 40px;
 				right: 0 !important;
 				
-				&:before {
+				&::before {
 					font-size: 21px;
 				}
 				
@@ -232,7 +232,7 @@
 					}
 				}
 				
-				&:before {
+				&::before {
 					top: 8px;
 				}
 			}
@@ -609,7 +609,7 @@
 						top: 0;
 						width: 24px;
 						
-						&:before {
+						&::before {
 							content: "\f054";
 							font-family: FontAwesome;
 							font-size: 14px;
@@ -651,7 +651,7 @@
 				width: 20px;
 				
 				> span > .collapsibleButton {
-					&:before {
+					&::before {
 						content: "\f053";
 					}
 				}
@@ -1067,7 +1067,7 @@
 				}
 			}
 			
-			&:after {
+			&::after {
 				content: "";
 				display: table;
 				clear: left;
@@ -1115,7 +1115,7 @@
 			}
 		}
 		
-		&:after {
+		&::after {
 			content: "";
 			display: table;
 			clear: left;
@@ -1248,7 +1248,7 @@
 			position: relative;
 			
 			&:first-child > a {
-				&:before {
+				&::before {
 					content: "\f015";
 					display: inline-block;
 					font-family: FontAwesome;
@@ -1304,7 +1304,7 @@
 				> a {
 					padding: @wcfGapTiny @wcfGapMedium;
 					
-					&:before {
+					&::before {
 						content: "\f062";
 						font-family: FontAwesome;
 						font-size: 14px;
@@ -1662,8 +1662,8 @@
 			padding-right: 20px;
 		}
 		
-		&.ASC > a:after,
-		&.DESC > a:after {
+		&.ASC > a::after,
+		&.DESC > a::after {
 			display: inline-block;
 			font-family: FontAwesome;
 			font-size: 14px;
@@ -1673,12 +1673,12 @@
 			.textShadow(@wcfTabularBoxBackgroundColor);
 		}
 		
-		&.ASC > a:after {
+		&.ASC > a::after {
 			content: "\f0de";
 			top: 8px;
 		}
 		
-		&.DESC > a:after {
+		&.DESC > a::after {
 			content: "\f0dd";
 			top: 3px;
 		}
@@ -1885,7 +1885,7 @@ dl.statsDataList {
 		}
 	}
 	
-	&:after {
+	&::after {
 		display: table;
 		content: "";
 		clear: both;
@@ -1909,7 +1909,7 @@ dl.inlineDataList {
 		text-align: left;
 		width: auto;
 		
-		&:after {
+		&::after {
 			content: ":";
 		}
 	}
@@ -1936,7 +1936,7 @@ ul.inlineDataList, ul.dataList {
 	li {
 		display: inline-block;
 		
-		&:not(:last-child):after {
+		&:not(:last-child)::after {
 			content: ",";
 		}
 	}
@@ -2106,7 +2106,7 @@ ul.inlineDataList {
 			}
 		}
 		
-		&:after {
+		&::after {
 			content: "";
 			height: 0;
 			display: block;
@@ -2198,7 +2198,7 @@ ul.inlineDataList {
 			margin-left: -@wcfGapMedium;
 			text-transform: none;
 			
-			&:before {
+			&::before {
 				content: "\f054";
 				display: inline-block;
 				font-family: FontAwesome;
@@ -2211,7 +2211,7 @@ ul.inlineDataList {
 				width: 16px;
 			}
 			
-			&.active:before {
+			&.active::before {
 				content: "\f078";
 			}
 		}
@@ -2257,11 +2257,11 @@ ul.inlineDataList {
 	}
 	
 	.badge {
-		&:before {
+		&::before {
 			content: "[";
 		}
 		
-		&:after {
+		&::after {
 			content: "]";
 		}
 	}
@@ -2275,7 +2275,7 @@ ul.inlineDataList {
 		margin-top: 14px !important;
 	}
 	
-	a.externalURL:after {
+	a.externalURL::after {
 		content: " (" attr(href) ")";
 		font-size: .85rem;
 	}

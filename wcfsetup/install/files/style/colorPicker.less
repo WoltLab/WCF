@@ -49,8 +49,8 @@
 		top: 27px;
 		width: 16px;
 		
-		&:after,
-		&:before {
+		&::after,
+		&::before {
 			content: "";
 			display: block;
 			height: 0;
@@ -59,7 +59,7 @@
 			width: 0;
 		}
 		
-		&:after {
+		&::after {
 			border-bottom: 5px solid transparent;
 			border-right: 5px solid rgba(0, 0, 0, 1);
 			border-top: 5px solid transparent;
@@ -67,7 +67,7 @@
 			top: -5px;
 		}
 		
-		&:before {
+		&::before {
 			border-bottom: 5px solid transparent;
 			border-left: 5px solid rgba(0, 0, 0, 1);
 			border-top: 5px solid transparent;

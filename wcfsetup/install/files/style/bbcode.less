@@ -197,7 +197,7 @@
 		padding-left: 54px;
 	}
 	
-	&:before {
+	&::before {
 		content: "\f10d";
 		color: @wcfDimmedColor;
 		font-family: FontAwesome;
@@ -223,7 +223,7 @@
 		padding-left: @wcfGapLarge;
 		min-height: 0;
 		
-		&:before {
+		&::before {
 			display: none;
 		}
 	}
@@ -231,7 +231,7 @@
 
 @media only screen and (max-width: 800px) {
 	.quoteBox {
-		&:before {
+		&::before {
 			font-size: 14px;
 			left: @wcfGapSmall;
 		}

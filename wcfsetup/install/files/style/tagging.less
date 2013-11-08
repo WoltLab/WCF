@@ -12,7 +12,7 @@
 	padding-bottom: 2px;
 	padding-left: 10px;
 		
-	&:before{
+	&::before{
 		border-color: transparent @wcfColor transparent transparent;
 		border-style: inset solid inset inset;
 		border-width: 8px 8px 8px 0;
@@ -25,7 +25,7 @@
 		width: 0;
 	}
 	
-	&:after{
+	&::after{
 		background: @wcfContentBackgroundColor;
 		border-radius: 2px;
 		content: "";
@@ -42,7 +42,7 @@
 		background-color: @wcfTabularBoxBackgroundColor;
 		color: @wcfTabularBoxColor;
 		
-		&:before{
+		&::before{
 			border-right-color: @wcfTabularBoxBackgroundColor;
 		}
 	}

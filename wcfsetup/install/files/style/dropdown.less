@@ -40,7 +40,7 @@
 				white-space: nowrap;
 				word-wrap: normal;
 				
-				&.active:after {
+				&.active::after {
 					content: "\f0d7";
 					font-family: FontAwesome;
 					font-size: 14px;
@@ -67,7 +67,7 @@
 				white-space: nowrap;
 				word-wrap: normal;
 				
-				&.active:after {
+				&.active::after {
 					content: "\f0d7";
 					font-family: FontAwesome;
 					font-size: 14px;
@@ -106,7 +106,7 @@
 	
 	.boxShadow(2px, 2px, rgba(0, 0, 0, .2), 10px);
 	
-	&:after {
+	&::after {
 		border: 7px solid transparent;
 		border-bottom-color: @wcfDropdownBorderColor;
 		border-top-width: 0;
@@ -118,7 +118,7 @@
 		z-index: 100;
 	}
 	
-	&:before {
+	&::before {
 		border: 6px solid transparent;
 		border-bottom-color: @wcfDropdownBackgroundColor;
 		border-top-width: 0;
@@ -131,19 +131,19 @@
 	}
 	
 	&.dropdownArrowRight {
-		&:after {
+		&::after {
 			left: auto;
 			right: 9px;
 		}
 		
-		&:before {
+		&::before {
 			left: auto;
 			right: 10px;
 		}
 	}
 	
 	&.dropdownArrowBottom {
-		&:after {
+		&::after {
 			border: 7px transparent solid;
 			border-top-color: @wcfDropdownBorderColor;
 			border-bottom-width: 0;
@@ -151,7 +151,7 @@
 			top: auto;
 		}
 		
-		&:before {
+		&::before {
 			border: 6px transparent solid;
 			border-top-color: @wcfDropdownBackgroundColor;
 			border-bottom-width: 0;
