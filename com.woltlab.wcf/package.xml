@@ -48,6 +48,7 @@
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
+		<instruction type="script">acp/update_rc1.php</instruction>
 		
 		<instruction type="option">option.xml</instruction>
 		
