@@ -28,10 +28,10 @@
 
 {include file='userNotice'}
 
-{include file='formError'}
-
 {if $errorField == 'search'}
 	<p class="error">{lang}wcf.user.search.error.noMatches{/lang}</p>
+{else}
+	{include file='formError'}
 {/if}
 
 <div class="contentNavigation">
