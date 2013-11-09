@@ -133,7 +133,9 @@ WCF.Tagging.TagList = WCF.EditableItemList.extend({
 	_removeItem: function(objectID, label) {
 		for (var $i = 0, $length = this._data.length; $i < $length; $i++) {
 			if (this._data[$i] === label) {
-				delete this._data[$i];
+				// don't use "delete" here since it doesn't reindex
+				// the array
+				this._data.splice($i, 1);
 				return;
 			}
 		}
