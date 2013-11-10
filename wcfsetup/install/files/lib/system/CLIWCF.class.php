@@ -301,7 +301,7 @@ class CLIWCF extends WCF {
 			catch (ArgvException $e) {
 				// show error message and usage
 				if ($e->getMessage()) echo $e->getMessage().PHP_EOL;
-				echo str_replace($_SERVER['argv'][0], CLICommandHandler::getCommandName($line), $e->getUsageMessage());
+				echo $e->getUsageMessage();
 				
 				if (self::getArgvParser()->exitOnFail) {
 					exit(1);

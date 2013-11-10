@@ -1442,8 +1442,12 @@ Errors are:
 - Core errors]]></item>
 		<item name="wcf.cli.help.packageID"><![CDATA[The given package id will be used as a default for this session.]]></item>
 		
+		<item name="wcf.cli.worker.setParameter"><![CDATA[Sets a worker parameter e.g.: --setParameter param=value]]></item>
+		<item name="wcf.cli.worker.list"><![CDATA[Lists all workers.]]></item>
+		
+		<item name="wcf.cli.error.help.noArguments"><![CDATA[The command "{$command}" does not support any parameters.]]></item>
 		<item name="wcf.cli.error.language.notFound"><![CDATA[The language with the language code "{$languageCode}" could not be found.]]></item>
-		<item name="wcf.cli.error.command.notFound"><![CDATA[The command "{$command}" could not be found.]]></item>
+		<item name="wcf.cli.error.command.notFound"><![CDATA[The command "{$command}" could not be found. Type in "commands" to list available commands.]]></item>
 	</category>
 	
 	<category name="wcf.clipboard">
