@@ -1427,11 +1427,20 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	</category>
 	
 	<category name="wcf.cli">
+		<item name="wcf.cli.help.noLongHelp"><![CDATA[There is no long help for the parameter "{$topic}".]]></item>
 		<item name="wcf.cli.help.language"><![CDATA[Forces the language with the given language code.]]></item>
 		<item name="wcf.cli.help.version"><![CDATA[Shows the version number and exists.]]></item>
 		<item name="wcf.cli.help.help"><![CDATA[Shows this help and exists.]]></item>
 		<item name="wcf.cli.help.q"><![CDATA[Quiet: Show less information.]]></item>
 		<item name="wcf.cli.help.v"><![CDATA[Verbose: Show more information.]]></item>
+		<item name="wcf.cli.help.disableUpdateCheck"><![CDATA[Don't search for updates after login]]></item>
+		<item name="wcf.cli.help.exitOnFail"><![CDATA[Exists the script if an error occurs.]]></item>
+		<item name="wcf.cli.help.exitOnFail.description"><![CDATA[If this parameter is set the script execution will be terminated once an error occurs.
+Errors are:
+- Missing commands
+- Failing commands
+- Core errors]]></item>
+		<item name="wcf.cli.help.packageID"><![CDATA[The given package id will be used as a default for this session.]]></item>
 		
 		<item name="wcf.cli.error.language.notFound"><![CDATA[The language with the language code "{$languageCode}" could not be found.]]></item>
 		<item name="wcf.cli.error.command.notFound"><![CDATA[The command "{$command}" could not be found.]]></item>
