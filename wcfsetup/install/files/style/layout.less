@@ -644,24 +644,6 @@
 			display: none;
 		}
 	}
-	
-	&.sidebarOrientationRight {
-		&.sidebarCollapsed > div > div {
-			> .sidebar {
-				width: 20px;
-				
-				> span > .collapsibleButton {
-					&::before {
-						content: "\f053";
-					}
-				}
-				
-				> div {
-					width: 0;
-				}
-			}
-		}
-	}
 }
 
 @media only screen and (max-width: 800px) {
@@ -783,6 +765,26 @@
 		> div > .content {
 			padding-left: @wcfGapLarge + @wcfGapSmall;
 			padding-right: @wcfGapLarge + @wcfGapSmall;
+		}
+	}
+}
+
+@media only screen and (min-width: 801px) {
+	#main.sidebarOrientationRight.sidebarCollapsed {
+		> div > div {
+			> .sidebar {
+				width: 20px;
+				
+				> span > .collapsibleButton {
+					&::before {
+						content: "\f053";
+					}
+				}
+				
+				> div {
+					width: 0;
+				}
+			}
 		}
 	}
 }
