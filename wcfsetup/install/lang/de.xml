@@ -1442,8 +1442,13 @@ Fehler sind beispielsweise:
 - Befehle, welche ihre Aktion nicht erfolgreich ausführen konnten
 - Systemfehler]]></item>
 		<item name="wcf.cli.help.packageID"><![CDATA[Die Anwendung mit der angegebenen Paket-ID wird als Standard für diese Sitzung verwendet.]]></item>
+		
+		<item name="wcf.cli.worker.setParameter"><![CDATA[Übergibt einen Parameter an den Worker. Bsp.: --setParameter param=wert]]></item>
+		<item name="wcf.cli.worker.list"><![CDATA[Listet alle Worker auf.]]></item>
+		
+		<item name="wcf.cli.error.help.noArguments"><![CDATA[Der Befehl "{$command}" unterstützt keine Parameter.]]></item>
 		<item name="wcf.cli.error.language.notFound"><![CDATA[Die Sprache mit dem Sprachcode "{$languageCode}" konnte nicht gefunden werden.]]></item>
-		<item name="wcf.cli.error.command.notFound"><![CDATA[Der Befehl "{$command}" konnte nicht gefunden werden.]]></item>
+		<item name="wcf.cli.error.command.notFound"><![CDATA[Der Befehl "{$command}" konnte nicht gefunden werden. Benutze "commands", um verfügbare Befehle aufzulisten.]]></item>
 	</category>
 	
 	<category name="wcf.clipboard">

@@ -11,7 +11,8 @@
 <script data-relocate="true">
 //<![CDATA[
 $(function() {
-	if ($.browser.mobile) {
+	if ($.browser.mobile || navigator.userAgent.match(/[aA]ndroid/)) {
+		// exclude smartphones and Android (not properly supported by CKEditor yet)
 		return;
 	}
 	

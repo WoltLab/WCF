@@ -2785,7 +2785,12 @@ WCF.Message.Share.Content = Class.extend({
 			this._dialog.html(this._cache[$key]).wcfDialog('open');
 		}
 		
-		this._dialog.find('input').click(function() { $(this).select(); });
+		var $inputElements = this._dialog.find('input').click(function() { $(this).select(); });
+		
+		// Safari on iOS can only select the text if it is not readonly and setSelectionRange() is used
+		if (navigator.userAgent.match(/iP(ad|hone|od)/)) {
+			$inputElements.keydown(function() { return false; }).removeAttr('readonly').click(function() { this.setSelectionRange(0, 9999); });
+		}
 	}
 });
 

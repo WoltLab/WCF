@@ -22,32 +22,44 @@ use Zend\ProgressBar\ProgressBar;
  * @subpackage	system.cli.command
  * @category	Community Framework
  */
-class WorkerCLICommand implements ICLICommand {
+class WorkerCLICommand implements IArgumentedCLICommand {
 	/**
-	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 * arguments parser
+	 * @var	\Zend\Console\Getopt
 	 */
-	public function execute(array $parameters) {
-		$argv = new ArgvParser(array(
-			'l|list' => 'Lists available workers',
-			'setParameter=s' => 'Sets a parameter given to the worker'
+	protected $argv = null;
+	
+	/**
+	 * Initializes the argument parser.
+	 */
+	public function __construct() {
+		$this->argv = new ArgvParser(array(
+			'l|list' => CLIWCF::getLanguage()->get('wcf.cli.worker.list'),
+			'setParameter=s' => CLIWCF::getLanguage()->get('wcf.cli.worker.setParameter')
 		));
-		$argv->setOptions(array(
+		$this->argv->setOptions(array(
 			ArgvParser::CONFIG_FREEFORM_FLAGS => true,
 			ArgvParser::CONFIG_PARSEALL => false,
 			ArgvParser::CONFIG_CUMULATIVE_PARAMETERS => true
 		));
-		$argv->setArguments($parameters);
-		$argv->parse();
+	}
+	
+	/**
+	 * @see	\wcf\system\cli\command\ICLICommand::execute()
+	 */
+	public function execute(array $parameters) {
+		$this->argv->setArguments($parameters);
+		$this->argv->parse();
 		
-		if ($argv->list) {
+		if ($this->argv->list) {
 			CLIWCF::getReader()->println(CLIUtil::generateTable($this->generateList()));
 			return;
 		}
 		
-		$args = $argv->getRemainingArgs();
+		$args = $this->argv->getRemainingArgs();
 		// validate parameters
 		if (count($args) != 1) {
-			throw new ArgvException('', str_replace($_SERVER['argv'][0].' [ options ]', $_SERVER['argv'][0].' [ options ] <worker>', $argv->getUsageMessage()));
+			throw new ArgvException('', $this->getUsage());
 		}
 		
 		$class = $args[0];
@@ -71,14 +83,14 @@ class WorkerCLICommand implements ICLICommand {
 			}
 		}
 		if ($invalid) {
-			throw new ArgvException("Invalid worker '".$class."' given", $argv->getUsageMessage());
+			throw new ArgvException("Invalid worker '".$class."' given", $this->getUsage());
 		}
 		
 		// parse parameters
-		$options = $argv->getOptions();
+		$options = $this->argv->getOptions();
 		$parameters = array();
 		foreach ($options as $option) {
-			$value = $argv->getOption($option);
+			$value = $this->argv->getOption($option);
 			if ($option === 'setParameter') {
 				if (!is_array($value)) {
 					$value = array($value);
@@ -163,6 +175,13 @@ class WorkerCLICommand implements ICLICommand {
 		}
 		
 		return $table;
+	}
+	
+	/**
+	 * @see	\wcf\system\cli\command\ICLICommand::getUsage()
+	 */
+	public function getUsage() {
+		return str_replace($_SERVER['argv'][0].' [ options ]', 'worker [ options ] <worker>', $this->argv->getUsageMessage());
 	}
 	
 	/**

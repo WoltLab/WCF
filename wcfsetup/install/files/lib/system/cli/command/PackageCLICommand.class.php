@@ -29,18 +29,24 @@ use Zend\ProgressBar\ProgressBar;
  * @subpackage	system.cli.command
  * @category	Community Framework
  */
-class PackageCLICommand implements ICLICommand {
+class PackageCLICommand implements IArgumentedCLICommand {
 	/**
 	 * arguments parser
 	 * @var	\Zend\Console\Getopt
 	 */
-	private $argv = null;
+	protected $argv = null;
+	
+	/**
+	 * Initializes the argument parser.
+	 */
+	public function __construct() {
+		$this->argv = new ArgvParser(array());
+	}
 	
 	/**
 	 * @see	\wcf\system\cli\command\ICLICommand::execute()
 	 */
 	public function execute(array $parameters) {
-		$this->argv = new ArgvParser(array());
 		$this->argv->setArguments($parameters);
 		$this->argv->parse();
 		
@@ -447,21 +453,18 @@ class PackageCLICommand implements ICLICommand {
 		Log::error('package.'.$name.':'.JSON::encode($parameters));
 		
 		if ($parameters) {
-			throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.acp.package.error.'.$name, $parameters), $this->fixUsage($this->argv->getUsageMessage()));
+			throw new ArgvException(CLIWCF::getLanguage()->getDynamicVariable('wcf.acp.package.error.'.$name, $parameters), $this->getUsage());
 		}
 		else {
-			throw new ArgvException(CLIWCF::getLanguage()->get('wcf.acp.package.error.'.$name), $this->fixUsage($this->argv->getUsageMessage()));
+			throw new ArgvException(CLIWCF::getLanguage()->get('wcf.acp.package.error.'.$name), $this->argv->getUsageMessage());
 		}
 	}
 	
 	/**
-	 * Returns fixed usage message of ArgvParser.
-	 * 
-	 * @param	string		$usage
-	 * @return	string
+	 * @see	\wcf\system\cli\command\ICLICommand::getUsage()
 	 */
-	public function fixUsage($usage) {
-		return str_replace($_SERVER['argv'][0].' [ options ]', $_SERVER['argv'][0].' [ options ] <install|uninstall> <package>', $usage);
+	public function getUsage() {
+		return str_replace($_SERVER['argv'][0].' [ options ]', 'package [ options ] <install|uninstall> <package>', $this->argv->getUsageMessage());
 	}
 	
 	/**

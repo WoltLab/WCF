@@ -154,7 +154,7 @@ class CLIWCF extends WCF {
 			$help = WCF::getLanguage()->get('wcf.cli.help.'.self::getArgvParser()->help.'.description', true);
 			if ($help) echo $help.PHP_EOL;
 			else {
-				echo WCF::getLanguage()->getDynamicVariable('wcf.cli.noLongHelp', array('topic' => self::getArgvParser()->help)).PHP_EOL;
+				echo WCF::getLanguage()->getDynamicVariable('wcf.cli.help.noLongHelp', array('topic' => self::getArgvParser()->help)).PHP_EOL;
 			}
 			exit;
 		}
@@ -301,7 +301,7 @@ class CLIWCF extends WCF {
 			catch (ArgvException $e) {
 				// show error message and usage
 				if ($e->getMessage()) echo $e->getMessage().PHP_EOL;
-				echo str_replace($_SERVER['argv'][0], CLICommandHandler::getCommandName($line), $e->getUsageMessage());
+				echo $e->getUsageMessage();
 				
 				if (self::getArgvParser()->exitOnFail) {
 					exit(1);
