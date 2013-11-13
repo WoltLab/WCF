@@ -118,8 +118,8 @@ class ObjectTypeCache extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the object type with the given name or null if no such object
-	 * type exists.
+	 * Returns the object type with the given id or null if no such object type
+	 * exists.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @return	\wcf\data\object\type\ObjectType
