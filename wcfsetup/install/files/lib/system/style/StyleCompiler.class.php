@@ -73,6 +73,14 @@ class StyleCompiler extends SingletonFactory {
 			unset($variables['individualLess']);
 		}
 		
+		// add style image path
+		$imagePath = '../images/';
+		if ($style->imagePath) {
+			$imagePath = FileUtil::getRelativePath(WCF_DIR . 'style/', WCF_DIR . $style->imagePath);
+			$imagePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($imagePath));
+		}
+		$variables['style_image_path'] = "'{$imagePath}'";
+		
 		// apply overrides
 		if (isset($variables['overrideLess'])) {
 			$lines = explode("\n", StringUtil::unifyNewlines($variables['overrideLess']));
@@ -119,6 +127,8 @@ class StyleCompiler extends SingletonFactory {
 		
 		// insert blue temptation files
 		array_unshift($files, WCF_DIR.'acp/style/blueTemptation/variables.less', WCF_DIR.'acp/style/blueTemptation/override.less');
+		
+		$variables['style_image_path'] = "'../images/blueTemptation/'";
 		
 		$this->compileStylesheet(
 			WCF_DIR.'acp/style/style',
