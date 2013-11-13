@@ -28,8 +28,8 @@ use wcf\util\ClassUtil;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
-// try to set a time-limit of 5 minutes
-@set_time_limit(300);
+// try to set a time-limit to infinite
+@set_time_limit(0);
 
 // fix timezone warning issue
 if (!@ini_get('date.timezone')) {
