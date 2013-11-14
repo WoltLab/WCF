@@ -11,8 +11,8 @@
 <script data-relocate="true">
 //<![CDATA[
 $(function() {
-	if ($.browser.mobile || navigator.userAgent.match(/[aA]ndroid/)) {
-		// exclude smartphones and Android (not properly supported by CKEditor yet)
+	// exclude Android (not properly supported by CKEditor yet)
+	if (navigator.userAgent.match(/[aA]ndroid/)) {
 		return;
 	}
 	
@@ -49,6 +49,12 @@ $(function() {
 			]
 		{/if}
 	};
+
+	// collapse toolbar on smartphones
+	if ($.browser.mobile && !navigator.userAgent.match(/iPad/)) {
+		$config.toolbarCanCollapse = true;
+		$config.toolbarStartupExpanded = false;
+	}
 	
 	{event name='javascriptInit'}
 	
