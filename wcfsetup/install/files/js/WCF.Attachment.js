@@ -240,7 +240,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		var $attachmentID = $(event.currentTarget).data('objectID');
 		var $bbcode = '[attach=' + $attachmentID + '][/attach]';
 		
-		var $ckEditor = ($.browser.mobile) ? null : $('#' + this._wysiwygContainerID).ckeditorGet();
+		var $ckEditor = ($.browser.mobile) ? null : $('#' + this._wysiwygContainerID).ckeditor().editor;
 		if ($ckEditor !== null && $ckEditor.mode === 'wysiwyg') {
 			// in design mode
 			$ckEditor.insertText($bbcode);
