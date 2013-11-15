@@ -89,6 +89,10 @@
  */
 (function(t,i,n){var e=i.matchMedia;"undefined"!=typeof module&&module.exports?module.exports=n(e):"function"==typeof define&&define.amd?define(function(){return i[t]=n(e)}):i[t]=n(e)})("enquire",this,function(t){"use strict";function i(t,i){var n,e=0,s=t.length;for(e;s>e&&(n=i(t[e],e),n!==!1);e++);}function n(t){return"[object Array]"===Object.prototype.toString.apply(t)}function e(t){return"function"==typeof t}function s(t){this.options=t,!t.deferSetup&&this.setup()}function o(i,n){this.query=i,this.isUnconditional=n,this.handlers=[],this.mql=t(i);var e=this;this.listener=function(t){e.mql=t,e.assess()},this.mql.addListener(this.listener)}function r(){if(!t)throw Error("matchMedia not present, legacy browsers require a polyfill");this.queries={},this.browserIsIncapable=!t("only all").matches}return s.prototype={setup:function(){this.options.setup&&this.options.setup(),this.initialised=!0},on:function(){!this.initialised&&this.setup(),this.options.match&&this.options.match()},off:function(){this.options.unmatch&&this.options.unmatch()},destroy:function(){this.options.destroy?this.options.destroy():this.off()},equals:function(t){return this.options===t||this.options.match===t}},o.prototype={addHandler:function(t){var i=new s(t);this.handlers.push(i),this.matches()&&i.on()},removeHandler:function(t){var n=this.handlers;i(n,function(i,e){return i.equals(t)?(i.destroy(),!n.splice(e,1)):void 0})},matches:function(){return this.mql.matches||this.isUnconditional},clear:function(){i(this.handlers,function(t){t.destroy()}),this.mql.removeListener(this.listener),this.handlers.length=0},assess:function(){var t=this.matches()?"on":"off";i(this.handlers,function(i){i[t]()})}},r.prototype={register:function(t,s,r){var h=this.queries,u=r&&this.browserIsIncapable;return h[t]||(h[t]=new o(t,u)),e(s)&&(s={match:s}),n(s)||(s=[s]),i(s,function(i){h[t].addHandler(i)}),this},unregister:function(t,i){var n=this.queries[t];return n&&(i?n.removeHandler(i):(n.clear(),delete this.queries[t])),this}},new r});
 
+/*! head.load - v1.0.1 */
+(function(n,t){"use strict";function p(){}function u(n,t){if(n){typeof n=="object"&&(n=[].slice.call(n));for(var i=0,r=n.length;i<r;i++)t.call(n,n[i],i)}}function ut(n,i){var r=Object.prototype.toString.call(i).slice(8,-1);return i!==t&&i!==null&&r===n}function c(n){return ut("Function",n)}function w(n){return ut("Array",n)}function st(n){var i=n.split("/"),t=i[i.length-1],r=t.indexOf("?");return r!==-1?t.substring(0,r):t}function f(n){(n=n||p,n._done)||(n(),n._done=1)}function ht(n,t,r,u){var f=typeof n=="object"?n:{test:n,success:!t?!1:w(t)?t:[t],failure:!r?!1:w(r)?r:[r],callback:u||p},e=!!f.test;return e&&!!f.success?(f.success.push(f.callback),i.load.apply(null,f.success)):e||!f.failure?u():(f.failure.push(f.callback),i.load.apply(null,f.failure)),i}function l(n){var t={},i,r;if(typeof n=="object")for(i in n)!n[i]||(t={name:i,url:n[i]});else t={name:st(n),url:n};return(r=h[t.name],r&&r.url===t.url)?r:(h[t.name]=t,t)}function a(n){n=n||h;for(var t in n)if(n.hasOwnProperty(t)&&n[t].state!==y)return!1;return!0}function ct(n){n.state=ot,u(n.onpreload,function(n){n.call()})}function lt(n){n.state===t&&(n.state=it,n.onpreload=[],ft({url:n.url,type:"cache"},function(){ct(n)}))}function at(){var n=arguments,t=[].slice.call(n,1),r=t[0];return d?(r?(u(t,function(n){c(n)||!n||lt(l(n))}),b(l(n[0]),c(r)?r:function(){i.load.apply(null,t)})):b(l(n[0])),i):(nt.push(function(){i.load.apply(null,n)}),i)}function vt(){var n=arguments,t=n[n.length-1],r={};return(c(t)||(t=null),w(n[0]))?(n[0].push(t),i.load.apply(null,n[0]),i):(u(n,function(n){n!==t&&(n=l(n),r[n.name]=n)}),u(n,function(n){n!==t&&(n=l(n),b(n,function(){a(r)&&f(t)}))}),i)}function b(n,t){if(t=t||p,n.state===y){t();return}if(n.state===rt){i.ready(n.name,t);return}if(n.state===it){n.onpreload.push(function(){b(n,t)});return}n.state=rt,ft(n,function(){n.state=y,t(),u(s[n.name],function(n){f(n)}),o&&a()&&u(s.ALL,function(n){f(n)})})}function ft(t,i){function e(t){t=t||n.event,u.onload=u.onreadystatechange=u.onerror=null,i()}function o(t){t=t||n.event,(t.type==="load"||/loaded|complete/.test(u.readyState)&&(!r.documentMode||r.documentMode<9))&&(u.onload=u.onreadystatechange=u.onerror=null,i())}var u,f;i=i||p,/\.css[^\.]*$/.test(t.url)?(u=r.createElement("link"),u.type="text/"+(t.type||"css"),u.rel="stylesheet",u.href=t.url):(u=r.createElement("script"),u.type="text/"+(t.type||"javascript"),u.src=t.url),u.onload=u.onreadystatechange=o,u.onerror=e,u.async=!1,u.defer=!1,f=r.head||r.getElementsByTagName("head")[0],f.insertBefore(u,f.lastChild)}function yt(){for(var u=r.getElementsByTagName("script"),t,n=0,f=u.length;n<f;n++)if(t=u[n].getAttribute("data-headjs-load"),!!t){i.load(t);return}}function pt(n,t){var l,v,e;return n===r?(o?f(t):g.push(t),i):(c(n)&&(t=n,n="ALL"),w(n))?(l={},u(n,function(n){l[n]=h[n],i.ready(n,function(){a(l)&&f(t)})}),i):typeof n!="string"||!c(t)?i:(v=h[n],v&&v.state===y||n==="ALL"&&a()&&o)?(f(t),i):(e=s[n],e?e.push(t):e=s[n]=[t],i)}function e(){if(!r.body){n.clearTimeout(i.readyTimeout),i.readyTimeout=n.setTimeout(e,50);return}o||(o=!0,yt(),u(g,function(n){f(n)}))}function k(){r.addEventListener?(r.removeEventListener("DOMContentLoaded",k,!1),e()):r.readyState==="complete"&&(r.detachEvent("onreadystatechange",k),e())}var r=n.document,g=[],nt=[],s={},h={},et="async"in r.createElement("script")||"MozAppearance"in r.documentElement.style||n.opera,d,o,tt=n.head_conf&&n.head_conf.head||"head",i=n[tt]=n[tt]||function(){i.ready.apply(null,arguments)},it=1,ot=2,rt=3,y=4,v;if(r.readyState==="complete")e();else if(r.addEventListener)r.addEventListener("DOMContentLoaded",k,!1),n.addEventListener("load",e,!1);else{r.attachEvent("onreadystatechange",k),n.attachEvent("onload",e),v=!1;try{v=!n.frameElement&&r.documentElement}catch(bt){}v&&v.doScroll&&function wt(){if(!o){try{v.doScroll("left")}catch(t){n.clearTimeout(i.readyTimeout),i.readyTimeout=n.setTimeout(wt,50);return}e()}}()}i.load=i.js=et?vt:at,i.test=ht,i.ready=pt,i.ready(r,function(){d&&a()&&u(s.ALL,function(n){f(n)}),i.feature&&i.feature("domloaded",!0)}),setTimeout(function(){d=!0,u(nt,function(n){n()})},300)})(window);
+//# sourceMappingURL=head.load.min.js.map
+
 /**
  * Provides a hashCode() method for strings, similar to Java's String.hashCode().
  * 
@@ -5870,6 +5874,101 @@ WCF.Search.User = WCF.Search.Base.extend({
  * Namespace for system-related classes.
  */
 WCF.System = { };
+
+/**
+ * Namespace for dependency-related classes.
+ */
+WCF.System.Dependency = { };
+
+/**
+ * JavaScript Dependency Manager.
+ */
+WCF.System.Dependency.Manager = {
+	/**
+	 * list of callbacks grouped by identifier
+	 * @var	object
+	 */
+	_callbacks: { },
+	
+	/**
+	 * list of loaded identifiers
+	 * @var	array<string>
+	 */
+	_loaded: [ ],
+	
+	/**
+	 * list of setup callbacks grouped by identifier
+	 * @var	object
+	 */
+	_setupCallbacks: { },
+	
+	/**
+	 * Registers a callback for given identifier, will be executed after all setup
+	 * callbacks have been invoked.
+	 * 
+	 * @param	string		identifier
+	 * @param	object		callback
+	 */
+	register: function(identifier, callback) {
+		if (!$.isFunction(callback)) {
+			console.debug("[WCF.System.Dependency.Manager] Callback for identifier '" + identifier + "' is invalid, aborting.");
+			return;
+		}
+		
+		// already loaded, invoke now
+		if (WCF.inArray(identifier, this._loaded)) {
+			callback();
+		}
+		else {
+			if (!this._callbacks[identifier]) {
+				this._callbacks[identifier] = [ ];
+			}
+			
+			this._callbacks[identifier].push(callback);
+		}
+	},
+	
+	/**
+	 * Registers a setup callback for given identifier, will be invoked
+	 * prior to all other callbacks.
+	 * 
+	 * @param	string		identifier
+	 * @param	object		callback
+	 */
+	setup: function(identifier, callback) {
+		if (!$.isFunction(callback)) {
+			console.debug("[WCF.System.Dependency.Manager] Setup callback for identifier '" + identifier + "' is invalid, aborting.");
+			return;
+		}
+		
+		if (!this._setupCallbacks[identifier]) {
+			this._setupCallbacks[identifier] = [ ];
+		}
+		
+		this._setupCallbacks[identifier].push(callback);
+	},
+	
+	/**
+	 * Invokes all callbacks for given identifier and marks it as loaded.
+	 * 
+	 * @param	string		identifier
+	 */
+	invoke: function(identifier) {
+		if (this._setupCallbacks[identifier]) {
+			for (var $i = 0, $length = this._setupCallbacks[identifier].length; $i < $length; $i++) {
+				this._setupCallbacks[identifier][$i]();
+			}
+		}
+		
+		this._loaded.push(identifier);
+		
+		if (this._callbacks[identifier]) {
+			for (var $i = 0, $length = this._callbacks[identifier].length; $i < $length; $i++) {
+				this._callbacks[identifier][$i]();
+			}
+		}
+	}
+};
 
 /**
  * Provides flexible dropdowns for tab-based menus.
