@@ -331,30 +331,23 @@ final class FileUtil {
 	/**
 	 * Formats the given filesize.
 	 * 
-	 * @param	integer		$byte
-	 * @param	integer		$precision
-	 * @return	string
+	 * @param   integer	 $byte
+	 * @param   integer	 $precision
+	 * @param   integer	 $base
+	 * @param   array	   $units
+	 * @return  string
 	 */
-	public static function formatFilesize($byte, $precision = 2) {
-		$symbol = 'Byte';
-		if ($byte >= 1000) {
-			$byte /= 1000;
-			$symbol = 'kB';
+	public static function formatFilesize($byte, $precision = 1, $base = 1000, $units = array('B', 'kB', 'MB', 'GB', 'TB')) {
+		$max = count($units) - 1;
+		$unitSize = 1;
+		for ($exp = 0; $exp <= $max; $exp++) {
+			if ($byte/$unitSize >= $base) {
+				$unitSize *= $base;
+			} else {
+				break;
+			}
 		}
-		if ($byte >= 1000) {
-			$byte /= 1000;
-			$symbol = 'MB';
-		}
-		if ($byte >= 1000) {
-			$byte /= 1000;
-			$symbol = 'GB';
-		}
-		if ($byte >= 1000) {
-			$byte /= 1000;
-			$symbol = 'TB';
-		}
-		
-		return StringUtil::formatNumeric(round($byte, $precision)).' '.$symbol;
+		return StringUtil::formatNumeric(round($byte/$unitSize, $precision)) . ' ' . $units[$exp];
 	}
 	
 	/**
@@ -362,30 +355,12 @@ final class FileUtil {
 	 * 
 	 * For more informations: <http://en.wikipedia.org/wiki/Binary_prefix>
 	 * 
-	 * @param	integer		$byte
-	 * @param	integer		$precision
-	 * @return	string
+	 * @param   integer	 $byte
+	 * @param   integer	 $precision
+	 * @return  string
 	 */
-	public static function formatFilesizeBinary($byte, $precision = 2) {
-		$symbol = 'Byte';
-		if ($byte >= 1024) {
-			$byte /= 1024;
-			$symbol = 'KiB';
-		}
-		if ($byte >= 1024) {
-			$byte /= 1024;
-			$symbol = 'MiB';
-		}
-		if ($byte >= 1024) {
-			$byte /= 1024;
-			$symbol = 'GiB';
-		}
-		if ($byte >= 1024) {
-			$byte /= 1024;
-			$symbol = 'TiB';
-		}
-		
-		return StringUtil::formatNumeric(round($byte, $precision)).' '.$symbol;
+	public static function formatFilesizeBinary($bytes, $precision = 1) {
+		return self::formatFilesize($bytes, $precision, 1024, array('B', 'KiB', 'MiB', 'GiB', 'TiB'));
 	}
 	
 	/**
