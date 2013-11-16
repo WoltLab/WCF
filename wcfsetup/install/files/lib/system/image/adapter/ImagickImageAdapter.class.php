@@ -96,8 +96,8 @@ class ImagickImageAdapter implements IImageAdapter {
 			$width = $maxWidth;
 			$height = $maxHeight;
 		}
-			$thumbnail = clone $this->imagick;
-			$thumbnail->cropThumbnailImage($width, $height);
+		$thumbnail = clone $this->imagick;
+		$thumbnail->cropThumbnailImage($width, $height);
 
 		return $thumbnail;
 	}
