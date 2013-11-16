@@ -364,6 +364,22 @@ final class FileUtil {
 	}
 	
 	/**
+	 * Formats UNIX file permissions as string (rwxrwxrwx)
+	 * @param  integer	  $perms
+	 * @return string
+	 */
+	public static function formatFilePermissions($perms) {
+		$permsString = 'rwxrwxrwx';
+		for ($i = 8; $i >= 0; $i--) {
+			if ($perms % 2 === 0) {
+				$permsString[$i] = '-';
+			}
+			$perms >>= 1;
+		}
+		return $permsString;
+	}
+	
+	/**
 	 * Downloads a package archive from an http URL and returns the path to
 	 * the downloaded file.
 	 * 
