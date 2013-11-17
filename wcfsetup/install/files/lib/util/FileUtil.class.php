@@ -338,9 +338,9 @@ final class FileUtil {
 	 * @return  string
 	 */
 	public static function formatFilesize($byte, $precision = 1, $base = 1000, $units = array('B', 'kB', 'MB', 'GB', 'TB')) {
-		$max = count($units) - 1;
+		$max = count($units);
 		$unitSize = 1;
-		for ($exp = 0; $exp <= $max; $exp++) {
+		for ($exp = 0; $exp < $max; $exp++) {
 			if ($byte/$unitSize >= $base) {
 				$unitSize *= $base;
 			} else {
