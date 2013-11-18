@@ -175,6 +175,9 @@ class UserSearchForm extends UserOptionListForm {
 		if (isset($_GET['groupID'])) {
 			$this->groupIDs[] = intval($_GET['groupID']);
 			
+			// disable check for security token for GET requests
+			$_POST['t'] = WCF::getSession()->getSecurityToken();
+			
 			// do search
 			try {
 				$this->validate();
