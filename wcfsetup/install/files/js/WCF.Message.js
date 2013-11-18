@@ -1739,6 +1739,10 @@ WCF.Message.Quote.Handler = Class.extend({
 				nodeText += node.childNodes[i].nodeValue;
 			}
 			else {
+				if (!node.childNodes[i].tagName) {
+					continue;
+				}
+				
 				var $tagName = node.childNodes[i].tagName.toLowerCase();
 				if ($tagName === 'li') {
 					nodeText += "\r\n";
