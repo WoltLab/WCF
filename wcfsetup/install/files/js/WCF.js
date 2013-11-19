@@ -5917,7 +5917,9 @@ WCF.System.Dependency.Manager = {
 		
 		// already loaded, invoke now
 		if (WCF.inArray(identifier, this._loaded)) {
-			callback();
+			setTimeout(function() {
+				callback();
+			}, 1);
 		}
 		else {
 			if (!this._callbacks[identifier]) {
