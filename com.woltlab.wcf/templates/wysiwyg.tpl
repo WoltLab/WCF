@@ -15,21 +15,14 @@ $(function() {
 	if (navigator.userAgent.match(/[aA]ndroid/)) {
 		return;
 	}
+
+	var $editorName = '{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}';
+	var $callbackIdentifier = 'CKEditor';
+	if ($editorName != 'text') {
+		$callbackIdentifier += '_' + $editorName;
+	}
 	
-	head.load([
-		{ CKEditorCore: '{@$__wcf->getPath()}js/3rdParty/ckeditor/ckeditor.js' },
-		{ CKEditor: '{@$__wcf->getPath()}js/3rdParty/ckeditor/adapters/jquery.js' }
-		{event name='javascriptFiles'}
-	], function() {
-		WCF.System.Dependency.Manager.invoke('CKEditor');
-	});
-	
-	head.ready('CKEditorCore', function() {
-		// prevent double editor initialization if used in combination with divarea-plugin
-		CKEDITOR.disableAutoInline = true;
-	});
-	
-	WCF.System.Dependency.Manager.setup('CKEditor', function() {
+	WCF.System.Dependency.Manager.setup($callbackIdentifier, function() {
 		{include file='wysiwygToolbar'}
 		
 		if (__CKEDITOR_BUTTONS.length) {
@@ -78,12 +71,24 @@ $(function() {
 			CKEDITOR.dom.element.prototype.disableContextMenu = function() { };
 		}
 		
-		var $editor = CKEDITOR.instances['{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}'];
+		var $editor = CKEDITOR.instances[$editorName];
 		if ($editor) $editor.destroy(true);
 		
-		//CKEDITOR.replace('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
-		$('{if $wysiwygSelector|isset}#{$wysiwygSelector|encodeJS}{else}#text{/if}').ckeditor($config);
-	})
+		$('#' + $editorName).ckeditor($config);
+	});
+
+	head.load([
+		{ CKEditorCore: '{@$__wcf->getPath()}js/3rdParty/ckeditor/ckeditor.js' },
+		{ CKEditor: '{@$__wcf->getPath()}js/3rdParty/ckeditor/adapters/jquery.js' }
+		{event name='javascriptFiles'}
+	], function() {
+		WCF.System.Dependency.Manager.invoke($callbackIdentifier);
+	});
+	
+	head.ready('CKEditorCore', function() {
+		// prevent double editor initialization if used in combination with divarea-plugin
+		CKEDITOR.disableAutoInline = true;
+	});
 });
 //]]>
 </script>
