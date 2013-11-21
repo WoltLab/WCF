@@ -59,17 +59,28 @@ class UserImporter extends AbstractImporter {
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
 		// resolve duplicates
-		$existingUser = User::getUserByUsername($data['username']);
-		if ($existingUser->userID) {
-			if (ImportHandler::getInstance()->getUserMergeMode() == 1 || (ImportHandler::getInstance()->getUserMergeMode() == 3 && mb_strtolower($existingUser->email) != mb_strtolower($data['email']))) {
-				// rename user
-				$data['username'] = self::resolveDuplicate($data['username']);
-			}
-			else {
+		if (ImportHandler::getInstance()->getUserMergeMode() == 4) {
+			$existingUser = User::getUserByEmail($data['email']);
+			if ($existingUser->userID) {
 				// merge user
 				ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user', $oldID, $existingUser->userID);
-				
+					
 				return 0;
+			}
+		}
+		else {
+			$existingUser = User::getUserByUsername($data['username']);
+			if ($existingUser->userID) {
+				if (ImportHandler::getInstance()->getUserMergeMode() == 1 || (ImportHandler::getInstance()->getUserMergeMode() == 3 && mb_strtolower($existingUser->email) != mb_strtolower($data['email']))) {
+					// rename user
+					$data['username'] = self::resolveDuplicate($data['username']);
+				}
+				else {
+					// merge user
+					ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user', $oldID, $existingUser->userID);
+					
+					return 0;
+				}
 			}
 		}
 		

@@ -461,15 +461,16 @@ class ImportCLICommand implements ICLICommand {
 		CLIWCF::getReader()->println('1) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.1'));
 		CLIWCF::getReader()->println('2) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.2').' (*)');
 		CLIWCF::getReader()->println('3) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.3'));
+		CLIWCF::getReader()->println('4) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.4'));
 		CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', array(
 			'minSelection' => 1,
-			'maxSelection' => 3
+			'maxSelection' => 4
 		)));
 		
 		while (true) {
 			$this->userMergeMode = CLIWCF::getReader()->readLine('> ');
 			if ($this->userMergeMode === null) exit;
-			if ($this->userMergeMode != intval($this->userMergeMode) || $this->userMergeMode < 1 || $this->userMergeMode > 3) {
+			if ($this->userMergeMode != intval($this->userMergeMode) || $this->userMergeMode < 1 || $this->userMergeMode > 4) {
 				$this->userMergeMode = 2;
 			}
 			

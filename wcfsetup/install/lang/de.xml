@@ -187,10 +187,11 @@
 		<br /><strong>{$exception->getMessage()}<br />{$exception->getErrorDesc()}</strong>]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Es wurde keine Installation unter dem angegeben Pfad gefunden.]]></item>
 		<item name="wcf.acp.dataImport.configure.settings"><![CDATA[Einstellungen]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[Verhalten bei sich überschneidenden Benutzernamen]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[Verhalten bei sich überschneidenden Benutzeraccounts]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"><![CDATA[Benutzeraccounts umbennen]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"><![CDATA[Benutzeraccounts zusammenlegen]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"><![CDATA[Benutzeraccounts zusammenlegen, wenn auch die E-Mail-Adresse identisch ist]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"><![CDATA[Benutzeraccounts mit identischen Namen zusammenlegen]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"><![CDATA[Benutzeraccounts mit identischen Namen und E-Mail-Adressen zusammenlegen]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.4"><![CDATA[Benutzeraccounts mit identischen E-Mail-Adressen zusammenlegen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[Benutzerprofilfelder]]></item>

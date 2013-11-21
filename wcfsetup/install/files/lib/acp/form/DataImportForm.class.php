@@ -212,7 +212,7 @@ class DataImportForm extends AbstractForm {
 		}
 		
 		// validate user merge mode
-		if ($this->userMergeMode < 1 || $this->userMergeMode > 3) {
+		if ($this->userMergeMode < 1 || $this->userMergeMode > 4) {
 			$this->userMergeMode = 2;
 		}
 	}
