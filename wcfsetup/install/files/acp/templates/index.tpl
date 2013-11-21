@@ -16,10 +16,6 @@
 	<p style="background-color: rgb(255, 153, 153); border: 2px solid rgb(255, 0, 0); padding: 1em;">{lang}wcf.acp.index.inRescueMode{/lang}</p>
 {/if}
 
-{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
-	<p class="info">{lang}wcf.global.availableUpdates{/lang}</p>
-{/if}
-
 {if $usersAwaitingApproval}
 	<p class="info">{lang}wcf.acp.user.usersAwaitingApprovalInfo{/lang}</p>
 {/if}

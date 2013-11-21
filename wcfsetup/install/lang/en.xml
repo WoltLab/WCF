@@ -395,6 +395,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.index.system.php"><![CDATA[PHP Version]]></item>
 		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL Version]]></item>
 		<item name="wcf.acp.index.system.load"><![CDATA[Current UNIX Load]]></item>
+		<item name="wcf.acp.index.woltlab.website"><![CDATA[Website]]></item>
+		<item name="wcf.acp.index.woltlab.forums"><![CDATA[Support Forums]]></item>
+		<item name="wcf.acp.index.woltlab.tickets"><![CDATA[Ticket Support]]></item>
+		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin Store]]></item>
 	</category>
 	
 	<category name="wcf.acp.label">
@@ -964,6 +968,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[No packages matched your criteria.]]></item>
 		<item name="wcf.acp.package.url"><![CDATA[Website]]></item>
 		<item name="wcf.acp.package.error.uploadFailed"><![CDATA[Uploading of specified file has failed.]]></item>
+		<item name="wcf.acp.package.updates"><![CDATA[Updates]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -1730,7 +1735,7 @@ Errors are:
 		<item name="wcf.global.subject"><![CDATA[Subject]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[,]]></item>
 		<item name="wcf.global.title"><![CDATA[Title]]></item>
-		<item name="wcf.global.toLandingPage"><![CDATA[To Front Page]]></item>
+		<item name="wcf.global.jumpToPage"><![CDATA[To Front Page]]></item>
 		<item name="wcf.global.preview"><![CDATA[Preview]]></item>
 		<item name="wcf.global.multiSelect"><![CDATA[Multiple items can be selected by holding the “Ctrl/Shift” key (Windows) or “Command” (Mac OS) key and clicking on the desired items.]]></item>
 		<item name="wcf.global.page.jumpTo"><![CDATA[Go to Page]]></item>

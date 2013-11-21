@@ -131,12 +131,53 @@
 								<a class="dropdownToggle framed" data-toggle="userMenu">{if PACKAGE_ID}{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)} {/if}{lang}wcf.user.userNote{/lang}</a>
 								<ul class="dropdownMenu">
 									{if PACKAGE_ID > 1}
-										<li><a href="{@$__wcf->getPageMenu()->getLandingPage()->getLink()}">{lang}wcf.global.toLandingPage{/lang}</a></li>
+										<li><a href="{link controller='User' object=$__wcf->user forceFrontend=true}{/link}" class="box32">
+											<div class="framed">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</div>
+											
+											<div class="containerHeadline">
+												<h3>{$__wcf->user->username}</h3>
+												<small>{lang}wcf.user.myProfile{/lang}</small>
+											</div>
+										</a></li>
+										{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<li><a href="{link controller='User' object=$__wcf->user forceFrontend=true}editOnInit=true#about{/link}">{lang}wcf.user.editProfile{/lang}</a></li>{/if}
+										<li><a href="{link controller='Settings' forceFrontend=true}{/link}">{lang}wcf.user.menu.settings{/lang}</a></li>
+										
+										{event name='userMenuItems'}
+										
 										<li class="dropdownDivider"></li>
 									{/if}
 									<li><a href="{link controller='Logout'}t={@SECURITY_TOKEN}{/link}" onclick="WCF.System.Confirmation.show('{lang}wcf.user.logout.sure{/lang}', $.proxy(function (action) { if (action == 'confirm') window.location.href = $(this).attr('href'); }, this)); return false;">{lang}wcf.user.logout{/lang}</a></li>
 								</ul>
 							</li>
+							
+							{if PACKAGE_ID > 1}
+								<li id="jumpToPage" class="dropdown">
+									<a class="dropdownToggle" data-toggle="jumpToPage"><span class="icon icon16 icon-home"></span> <span>{lang}wcf.global.jumpToPage{/lang}</span></a>
+									<ul class="dropdownMenu">
+										{foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=menuItem}
+											<li><a href="{$menuItem->getProcessor()->getLink()}">{lang}{$menuItem->menuItem}{/lang}</a></li>
+										{/foreach}
+									</ul>
+								</li>
+								
+								{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
+									<li>
+										<a href="{link controller='PackageUpdate'}{/link}"><span class="icon icon16 icon-refresh"></span> <span>{lang}wcf.acp.package.updates{/lang}</span> <span class="badge badgeInverse">{#$__wcf->getAvailableUpdates()|count}</span></a>
+									</li>
+								{/if}
+							{/if}
+														
+							<li id="woltlab" class="dropdown">
+								<a class="dropdownToggle" data-toggle="woltlab"><span class="icon icon16 icon-info-sign"></span> <span>WoltLab&reg;</span></a>
+								
+								<ul class="dropdownMenu">
+									<li><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}">{lang}wcf.acp.index.woltlab.website{/lang}</a></li>
+									<li><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com/forum/"|rawurlencode}">{lang}wcf.acp.index.woltlab.forums{/lang}</a></li>
+									{* @todo<li><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}">{lang}wcf.acp.index.woltlab.tickets{/lang}</a></li>*}
+									<li><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com/pluginstore/"|rawurlencode}">{lang}wcf.acp.index.woltlab.pluginStore{/lang}</a></li>
+								</ul>
+							</li>
+							
 							{event name='topMenu'}
 						</ul>
 						

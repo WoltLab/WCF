@@ -396,6 +396,10 @@
 		<item name="wcf.acp.index.system.php"><![CDATA[PHP-Version]]></item>
 		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL-Version]]></item>
 		<item name="wcf.acp.index.system.load"><![CDATA[Aktueller UNIX Load]]></item>
+		<item name="wcf.acp.index.woltlab.website"><![CDATA[Website]]></item>
+		<item name="wcf.acp.index.woltlab.forums"><![CDATA[Supportforum]]></item>
+		<item name="wcf.acp.index.woltlab.tickets"><![CDATA[Ticket-Support]]></item>
+		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin-Store]]></item>
 	</category>
 	
 	<category name="wcf.acp.label">
@@ -964,6 +968,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.search.error.noMatches"><![CDATA[Es wurden keine Pakete gefunden.]]></item>
 		<item name="wcf.acp.package.url"><![CDATA[Website]]></item>
 		<item name="wcf.acp.package.error.uploadFailed"><![CDATA[Das Hochladen der ausgewählten Datei ist fehlgeschlagen.]]></item>
+		<item name="wcf.acp.package.updates"><![CDATA[Aktualisierungen]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -1731,7 +1736,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.subject"><![CDATA[Betreff]]></item>
 		<item name="wcf.global.thousandsSeparator"><![CDATA[.]]></item>
 		<item name="wcf.global.title"><![CDATA[Titel]]></item>
-		<item name="wcf.global.toLandingPage"><![CDATA[Zur Seite]]></item>
+		<item name="wcf.global.jumpToPage"><![CDATA[Zur Seite]]></item>
 		<item name="wcf.global.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.multiSelect"><![CDATA[Mehrfache Markierungen sind durch zusätzliches Drücken der Taste „Strg/Ctrl“ (Windows) oder „Befehl/Command“ (Mac OS) möglich.]]></item>
 		<item name="wcf.global.page.jumpTo"><![CDATA[Gehe zu Seite]]></item>
