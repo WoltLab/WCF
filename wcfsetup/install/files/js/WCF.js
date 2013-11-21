@@ -5960,6 +5960,8 @@ WCF.System.Dependency.Manager = {
 			for (var $i = 0, $length = this._setupCallbacks[identifier].length; $i < $length; $i++) {
 				this._setupCallbacks[identifier][$i]();
 			}
+			
+			delete this._setupCallbacks[identifier];
 		}
 		
 		this._loaded.push(identifier);
@@ -5968,6 +5970,8 @@ WCF.System.Dependency.Manager = {
 			for (var $i = 0, $length = this._callbacks[identifier].length; $i < $length; $i++) {
 				this._callbacks[identifier][$i]();
 			}
+			
+			delete this._callbacks[identifier];
 		}
 	}
 };
