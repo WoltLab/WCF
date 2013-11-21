@@ -6113,7 +6113,7 @@ WCF.System.FlexibleMenu = {
 			this._dropdowns[containerID].detach();
 		}
 		
-		var $maximumWidth = $container.parent().innerWidth() - $dropdownWidth;
+		var $maximumWidth = $container.parent().innerWidth();
 		
 		// substract padding from the parent element
 		$maximumWidth -= parseInt($container.parent().css('padding-left').replace(/px$/, '')) + parseInt($container.parent().css('padding-right').replace(/px$/, ''));
@@ -6124,8 +6124,11 @@ WCF.System.FlexibleMenu = {
 		
 		// substract paddings from the actual list
 		$maximumWidth -= parseInt($container.children('ul:eq(0)').css('padding-left').replace(/px$/, '')) + parseInt($container.children('ul:eq(0)').css('padding-right').replace(/px$/, '')); 
-		if ($currentWidth > $maximumWidth) {
-			var $menuItems = $menuItems.filter(':not(.active):not(.ui-state-active)');
+		if ($currentWidth > $maximumWidth || (this._hasHiddenItems[containerID] && ($currentWidth > $maximumWidth - $dropdownWidth))) {
+			var $menuItems = $menuItems.filter(':not(.active):not(.ui-state-active):visible');
+			
+			// substract dropdown width from maximum width
+			$maximumWidth -= $dropdownWidth;
 			
 			// hide items starting with the last in list (ignores active item)
 			for (var $i = ($menuItems.length - 1); $i >= 0; $i--) {
@@ -6149,10 +6152,18 @@ WCF.System.FlexibleMenu = {
 		else if (this._hasHiddenItems[containerID] && $currentWidth < $maximumWidth) {
 			var $hiddenItems = this._menuItems[containerID].filter(':not(:visible)');
 			
+			// substract dropdown width from maximum width unless it is the last item
+			$maximumWidth -= $dropdownWidth;
+			
 			// reverts items starting with the first hidden one
 			for (var $i = 0, $length = $hiddenItems.length; $i < $length; $i++) {
 				var $item = $($hiddenItems[$i]);
 				$currentWidth += $item.outerWidth();
+				
+				if ($i + 1 == $length) {
+					$maximumWidth += $dropdownWidth;
+				}
+				
 				if ($currentWidth < $maximumWidth) {
 					// enough space, show item
 					$item.css('display', '');
