@@ -57,6 +57,9 @@
 					<category name="general.system.jquery">
 						<parent>general.system</parent>
 					</category>
+					<category name="general.system.googleMaps">
+						<parent>general.system</parent>
+					</category>
 				<category name="general.mail">
 					<parent>general</parent>
 				</category>
@@ -519,7 +522,61 @@ cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
 			</option>
 			<!-- /general.system.jquery -->
 			
-			<!-- mail.general -->
+			<!-- general.system.googleMaps -->
+			<option name="google_maps_zoom">
+				<categoryname>general.system.googleMaps</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue>13</defaultvalue>
+				<selectoptions><![CDATA[1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17]]></selectoptions>
+			</option>
+			<option name="google_maps_type">
+				<categoryname>general.system.googleMaps</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue>hybrid</defaultvalue>
+				<selectoptions><![CDATA[map:wcf.acp.option.google_maps_type.map
+satellite:wcf.acp.option.google_maps_type.satellite
+hybrid:wcf.acp.option.google_maps_type.hybrid
+physical:wcf.acp.option.google_maps_type.physical]]></selectoptions>
+			</option>
+			<option name="google_maps_enable_scale_control">
+				<categoryname>general.system.googleMaps</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="google_maps_enable_dragging">
+				<categoryname>general.system.googleMaps</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="google_maps_enable_scroll_wheel_zoom">
+				<categoryname>general.system.googleMaps</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="google_maps_enable_double_click_zoom">
+				<categoryname>general.system.googleMaps</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<!-- /general.system.googleMaps -->
+			
+			<!-- general.mail.general -->
 			<option name="mail_from_name">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
@@ -541,9 +598,9 @@ cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
 				<defaultvalue><![CDATA[]]></defaultvalue>
 				<supporti18n>1</supporti18n>
 			</option>
-			<!-- /mail.general -->
+			<!-- /general.mail.general -->
 			
-			<!-- mail.send -->
+			<!-- general.mail.send -->
 			<option name="mail_send_method">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>radioButton</optiontype>
@@ -584,7 +641,7 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>boolean</optiontype>
 			</option>
-			<!-- /mail.send -->
+			<!-- /general.mail.send -->
 			
 			<!-- general.cache -->
 			<option name="cache_source_type">

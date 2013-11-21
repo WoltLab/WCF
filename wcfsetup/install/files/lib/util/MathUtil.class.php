@@ -24,5 +24,24 @@ final class MathUtil {
 		return (($min !== null && $max !== null) ? mt_rand($min, $max) : mt_rand());
 	}
 	
+	/**
+	 * Transforms the given latitude and longitude into cartesion coordinates
+	 * (x, y, z).
+	 * 
+	 * @param	float		$latitude
+	 * @param	float		$longitude
+	 * @return	array<float>
+	 */
+	public static function latitudeLongitudeToCartesian($latitude, $longitude) {
+		$lambda = $longitude * pi() / 180;
+		$phi = $latitude * pi() / 180;
+		
+		return array(
+				6371 * cos($phi) * cos($lambda),	// x
+				6371 * cos($phi) * sin($lambda),	// y
+				6371 * sin($phi)			// z
+		);
+	}
+	
 	private function __construct() { }
 }
