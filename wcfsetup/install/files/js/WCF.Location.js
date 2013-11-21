@@ -494,7 +494,9 @@ WCF.Location.GoogleMaps.LocationInput = Class.extend({
 			this._marker = this._map.addDraggableMarker(0, 0);
 			
 			WCF.Location.Util.getLocation($.proxy(function(latitude, longitude) {
-				WCF.Location.GoogleMaps.Util.moveMarker(this._marker, latitude, longitude);
+				if (latitude !== undefined && longitude !== undefined) {
+					WCF.Location.GoogleMaps.Util.moveMarker(this._marker, latitude, longitude);
+				}
 			}, this));
 		}
 	},
@@ -564,5 +566,5 @@ WCF.Location.GoogleMaps.Util = {
 	 */
 	moveMarker: function(marker, latitude, longitude) {
 		marker.setPosition(new google.maps.LatLng(latitude, longitude));
-	},
+	}
 };
