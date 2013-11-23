@@ -129,6 +129,6 @@ class TemplateEditor extends DatabaseObjectEditor {
 	 * Deletes the compiled files of this template.
 	 */
 	public function deleteCompiledFiles() {
-		DirectoryUtil::getInstance(WCF_DIR . 'templates/compiled/')->removePattern(new Regex(intval($this->packageID) . '_.*_' . preg_quote($this->templateName) . '.php$'));
+		DirectoryUtil::getInstance(WCF_DIR . 'templates/compiled/')->removePattern(new Regex($this->templateGroupID . '_' . $this->application . '_.*_' . preg_quote($this->templateName) . '.php$'));
 	}
 }
