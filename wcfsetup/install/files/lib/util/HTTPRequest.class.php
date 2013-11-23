@@ -202,7 +202,6 @@ final class HTTPRequest {
 		$this->useSSL = $parsedUrl['scheme'] === 'https';
 		$this->host = $parsedUrl['host'];
 		$this->port = isset($parsedUrl['port']) ? $parsedUrl['port'] : ($this->useSSL ? 443 : 80);
-		$this->path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '/';
 		$this->query = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
 		
 		// update the 'Host:' header if URL has changed
