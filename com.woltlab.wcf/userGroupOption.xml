@@ -527,11 +527,13 @@ png]]></defaultvalue>
 				<categoryname>user.like</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
+				<options>module_like</options>
 			</option>
 			<option name="user.like.canLike">
 				<categoryname>user.like</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
+				<options>module_like</options>
 			</option>
 			
 			<!-- mod.general -->
