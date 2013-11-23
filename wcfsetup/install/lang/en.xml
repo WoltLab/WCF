@@ -861,6 +861,20 @@ WBB=WoltLab Burning Board<br />
 GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.users_online_enable_legendusers_online_record_no_guests"><![CDATA[Exclude guests from user online record]]></item>
 		<item name="wcf.acp.option.users_online_enable_legend"><![CDATA[Display legend for “Users Online” list]]></item>
+		<item name="wcf.acp.option.category.general.system.googleMaps"><![CDATA[Google Maps]]></item>
+		<item name="wcf.acp.option.google_maps_zoom"><![CDATA[Map Zoom]]></item>
+		<item name="wcf.acp.option.google_maps_zoom.description"><![CDATA[Default map zoom]]></item>
+		<item name="wcf.acp.option.google_maps_type"><![CDATA[Map Type]]></item>
+		<item name="wcf.acp.option.google_maps_type.description"><![CDATA[Default map type]]></item>
+		<item name="wcf.acp.option.google_maps_type.hybrid"><![CDATA[Hybrid]]></item>
+		<item name="wcf.acp.option.google_maps_type.map"><![CDATA[Map]]></item>
+		<item name="wcf.acp.option.google_maps_type.satellite"><![CDATA[Satellite]]></item>
+		<item name="wcf.acp.option.google_maps_type.physical"><![CDATA[Terrain]]></item>
+		<item name="wcf.acp.option.google_maps_enable_scale_control"><![CDATA[Show Map Scale]]></item>
+		<item name="wcf.acp.option.google_maps_enable_dragging"><![CDATA[Enable Map Dragging]]></item>
+		<item name="wcf.acp.option.google_maps_enable_dragging.description"><![CDATA[You can move the map by keeping the left button of your mouse pressed.]]></item>
+		<item name="wcf.acp.option.google_maps_enable_scroll_wheel_zoom"><![CDATA[Enable Zoom by Scroll Wheel]]></item>
+		<item name="wcf.acp.option.google_maps_enable_double_click_zoom"><![CDATA[Enable Zoom by Double-Clicking]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

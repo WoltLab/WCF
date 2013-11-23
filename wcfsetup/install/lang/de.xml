@@ -203,7 +203,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[Wollen Sie die bestehenden Zuordnungen wirklich löschen?]]></item>
-		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet um Inhalte aus dem importierten Forum einwandfrei zu zuordnen. Wenn Sie den Import-Vorgang vollständig abgeschlossen haben, können Sie diese Zuordnungen <a id="deleteMapping">löschen</a>. Sie sollten die Zuordnungen nicht löschen, wenn Sie jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernommen wollen.]]></item>
+		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet, um Inhalte aus dem importierten Forum einwandfrei zuzuordnen. Wenn Sie den Import-Vorgang vollständig abgeschlossen haben, können Sie diese Zuordnungen <a id="deleteMapping">löschen</a>. Sie sollten die Zuordnungen nicht löschen, wenn Sie jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernehmen wollen.]]></item>
 		<item name="wcf.acp.dataImport.exporter"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Datenquelle wählen]]></item>
 		<item name="wcf.acp.dataImport.selectExporter.error.notValid"><![CDATA[Die ausgewählte Datenquelle ist ungültig.]]></item>
@@ -861,6 +861,20 @@ WBB=WoltLab Burning Board<br />
 GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.users_online_record_no_guests"><![CDATA[Nur registrierte Benutzer im Benutzer-Online-Rekord zählen]]></item>
 		<item name="wcf.acp.option.users_online_enable_legend"><![CDATA[Legende der Benutzergruppen anzeigen]]></item>
+		<item name="wcf.acp.option.category.general.system.googleMaps"><![CDATA[Google Maps]]></item>
+		<item name="wcf.acp.option.google_maps_zoom"><![CDATA[Karten-Zoom]]></item>
+		<item name="wcf.acp.option.google_maps_zoom.description"><![CDATA[Standard-Einstellung des Karten-Zooms]]></item>
+		<item name="wcf.acp.option.google_maps_type"><![CDATA[Karten-Typ]]></item>
+		<item name="wcf.acp.option.google_maps_type.description"><![CDATA[Standard-Einstellung des Karten-Typs]]></item>
+		<item name="wcf.acp.option.google_maps_type.hybrid"><![CDATA[Hybrid]]></item>
+		<item name="wcf.acp.option.google_maps_type.map"><![CDATA[Karte]]></item>
+		<item name="wcf.acp.option.google_maps_type.satellite"><![CDATA[Satellit]]></item>
+		<item name="wcf.acp.option.google_maps_type.physical"><![CDATA[Gelände]]></item>
+		<item name="wcf.acp.option.google_maps_enable_scale_control"><![CDATA[Karten-Maßstab anzeigen]]></item>
+		<item name="wcf.acp.option.google_maps_enable_dragging"><![CDATA[Ziehen der Karte zulassen]]></item>
+		<item name="wcf.acp.option.google_maps_enable_dragging.description"><![CDATA[Sie können die Karte durch das Gedrückthalten der linken Maustaste verschieben.]]></item>
+		<item name="wcf.acp.option.google_maps_enable_scroll_wheel_zoom"><![CDATA[Zoom durch Mausrad zulassen]]></item>
+		<item name="wcf.acp.option.google_maps_enable_double_click_zoom"><![CDATA[Zoom durch Doppelklick zulassen]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
