@@ -13,6 +13,7 @@
 /* PADDING */
 
 .CodeMirror-lines {
+  line-height: 1.2;
   padding: 4px 0; /* Vertical padding around content */
 }
 .CodeMirror pre {
