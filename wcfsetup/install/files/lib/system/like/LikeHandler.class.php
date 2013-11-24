@@ -294,7 +294,10 @@ class LikeHandler extends SingletonFactory {
 					'likeValue' => $likeValue
 				));
 				
-				if ($likeValue == Like::DISLIKE) UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($user->userID => 1));
+				if ($likeable->getUserID()) {
+					if ($likeValue == Like::DISLIKE) UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($likeable->getUserID() => 1));
+					else UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
+				}
 			}
 			
 			// update object's like counter
@@ -320,7 +323,7 @@ class LikeHandler extends SingletonFactory {
 	 * 
 	 * @param	\wcf\data\like\Like			$like
 	 * @param	\wcf\data\like\object\ILikeObject	$likeable
-	 * @param	\wcf\data\like\object\LikeObject		$likeObject
+	 * @param	\wcf\data\like\object\LikeObject	$likeObject
 	 * @param	\wcf\data\user\User			$user
 	 * @return	array
 	 */
@@ -381,9 +384,9 @@ class LikeHandler extends SingletonFactory {
 					$userEditor->updateCounters(array(
 						'likesReceived' => -1
 					));
+					
+					UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($likeable->getUserID() => 1));
 				}
-				
-				UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($likeable->getUserID() => 1));
 			}
 			
 			// update object's like counter
