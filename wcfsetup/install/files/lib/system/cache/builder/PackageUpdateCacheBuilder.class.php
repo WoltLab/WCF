@@ -17,7 +17,6 @@ class PackageUpdateCacheBuilder extends AbstractCacheBuilder {
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
 	public function rebuild(array $parameters) {
-		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
 		$updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 		
 		return array('updates' => count($updates));
