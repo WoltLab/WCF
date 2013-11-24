@@ -1255,7 +1255,7 @@ CREATE TABLE wcf1_user_profile_visitor (
 DROP TABLE IF EXISTS wcf1_user_rank;
 CREATE TABLE wcf1_user_rank (
 	rankID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	groupID INT(10),
+	groupID INT(10) NOT NULL,
 	requiredPoints INT(10) NOT NULL DEFAULT 0,
 	rankTitle VARCHAR(255) NOT NULL DEFAULT '',
 	cssClassName VARCHAR(255) NOT NULL DEFAULT '',
@@ -1483,7 +1483,7 @@ ALTER TABLE wcf1_user_profile_menu_item ADD FOREIGN KEY (packageID) REFERENCES w
 
 /* SQL_PARSER_OFFSET */
 
-ALTER TABLE wcf1_user_rank ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE SET NULL;
+ALTER TABLE wcf1_user_rank ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_activity_event ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_activity_event ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
