@@ -145,8 +145,6 @@
 		<smiley name="&lt;3">
 			<title>heart</title>
 			<path>images/smilies/heart.png</path>
-			<aliases><![CDATA[<3
-x3]]></aliases>
 		</smiley>
 		<smiley name=":!:">
 			<title>attention</title>

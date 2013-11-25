@@ -36,6 +36,7 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
 	 * @see	\wcf\data\like\ILikeObjectTypeProvider::checkPermissions()
 	 */
 	public function checkPermissions(ILikeObject $response) {
+		if (!$response->responseID) return false;
 		$comment = new Comment($response->commentID);
 		if (!$comment->commentID) {
 			return false;
