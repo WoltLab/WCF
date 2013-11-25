@@ -42,16 +42,35 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		$refreshedPackageLists = false;
 		foreach ($updateServers as $updateServer) {
 			if ($updateServer->lastUpdateTime < TIME_NOW - 600) {
+				$errorMessage = '';
+				
 				try {
 					$this->getPackageUpdateXML($updateServer);
 					$refreshedPackageLists = true;
 				}
 				catch (SystemException $e) {
+					$errorMessage = $e->getMessage();
+				}
+				catch (PackageUpdateUnauthorizedException $e) {
+					$reply = $e->getRequest()->getReply();
+					foreach ($reply['headers'] as $header) {
+						if (preg_match('~^HTTP~', $header)) {
+							$errorMessage = $header;
+							break;
+						}
+					}
+					
+					if (!$errorMessage) {
+						$errorMessage = 'Unknown (HTTP status ' . (is_array($reply['statusCode']) ? reset($reply['statusCode']) : $reply['statusCode']) . ')';
+					}
+				}
+				
+				if ($errorMessage) {
 					// save error status
 					$updateServerEditor = new PackageUpdateServerEditor($updateServer);
 					$updateServerEditor->update(array(
 						'status' => 'offline',
-						'errorMessage' => $e->getMessage()
+						'errorMessage' => $errorMessage
 					));
 				}
 			}
