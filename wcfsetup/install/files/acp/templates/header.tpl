@@ -107,6 +107,7 @@
 			WCF.Dropdown.init();
 			WCF.System.PageNavigation.init('.pageNavigation');
 			WCF.Date.Picker.init();
+			WCF.System.FlexibleMenu.init();
 			
 			{if $__wcf->user->userID}
 				new WCF.ACP.Search();
