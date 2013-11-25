@@ -1413,7 +1413,10 @@ WCF.ACP.Package.Update.Search = Class.extend({
 				autoSend: true,
 				data: {
 					actionName: 'searchForUpdates',
-					className: 'wcf\\data\\package\\update\\PackageUpdateAction'
+					className: 'wcf\\data\\package\\update\\PackageUpdateAction',
+					parameters: {
+						ignoreCache: 1
+					}
 				},
 				success: $.proxy(this._success, this)
 			});

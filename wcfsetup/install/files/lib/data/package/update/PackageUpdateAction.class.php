@@ -323,6 +323,8 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validateSearchForUpdates() {
 		WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+		
+		$this->readBoolean('ignoreCache', true);
 	}
 	
 	/**
@@ -331,7 +333,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function searchForUpdates() {
-		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
+		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase(array(), $this->parameters['ignoreCache']);
 		
 		$updates = PackageUpdateDispatcher::getInstance()->getAvailableUpdates();
 		$url = '';

@@ -33,15 +33,16 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * Refreshes the package database.
 	 * 
 	 * @param	array<integer>		$packageUpdateServerIDs
+	 * @param	boolean			$ignoreCache
 	 */
-	public function refreshPackageDatabase(array $packageUpdateServerIDs = array()) {
+	public function refreshPackageDatabase(array $packageUpdateServerIDs = array(), $ignoreCache = false) {
 		// get update server data
 		$updateServers = PackageUpdateServer::getActiveUpdateServers($packageUpdateServerIDs);
 		
 		// loop servers
 		$refreshedPackageLists = false;
 		foreach ($updateServers as $updateServer) {
-			if ($updateServer->lastUpdateTime < TIME_NOW - 600) {
+			if ($ignoreCache || $updateServer->lastUpdateTime < TIME_NOW - 600) {
 				$errorMessage = '';
 				
 				try {
