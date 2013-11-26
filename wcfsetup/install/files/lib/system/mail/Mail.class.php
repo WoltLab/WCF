@@ -60,9 +60,9 @@ class Mail {
 	
 	/**
 	 * mail sender
-	 * @var	array<string>
+	 * @var	string
 	 */
-	protected $from = array();
+	protected $from = '';
 	
 	/**
 	 * mail carbon copy
@@ -347,7 +347,7 @@ class Mail {
 	/**
 	 * Gets the sender of this mail.
 	 * 
-	 * @return	mixed
+	 * @return	string
 	 */
 	public function getFrom() {
 		return $this->from;
