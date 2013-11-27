@@ -92,7 +92,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 		}
 		
 		// update bbcode
-		$this->objectAction = new BBCodeAction(array($this->bbcodeID), 'update', array('data' => array(
+		$this->objectAction = new BBCodeAction(array($this->bbcodeID), 'update', array('data' => array_merge($this->additionalFields, array(
 			'allowedChildren' => $this->allowedChildren,
 			'bbcodeTag' => $this->bbcodeTag,
 			'buttonLabel' => $this->buttonLabel,
@@ -102,7 +102,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 			'isSourceCode' => ($this->isSourceCode ? 1 : 0),
 			'showButton' => ($this->showButton ? 1 : 0),
 			'wysiwygIcon' => $this->wysiwygIcon
-		)));
+		))));
 		$this->objectAction->executeAction();
 		
 		// clear existing attributes

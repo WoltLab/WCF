@@ -1,7 +1,7 @@
 <?php
 namespace wcf\form;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
@@ -66,7 +66,7 @@ class EmailActivationForm extends AbstractForm {
 		parent::validate();
 		
 		// check given user id
-		$this->user = new UserEditor(new User($this->userID));
+		$this->user = new User($this->userID);
 		if (!$this->user->userID) {
 			throw new UserInputException('u', 'notValid');
 		}
@@ -94,11 +94,14 @@ class EmailActivationForm extends AbstractForm {
 		parent::save();
 		
 		// enable new email
-		$this->user->update(array(
-			'email' => $this->user->newEmail,
-			'newEmail' => '',
-			'reactivationCode' => 0
+		$this->objectAction = new UserAction(array($this->user), 'update', array(
+			'data' => array_merge($this->additionalFields, array(
+				'email' => $this->user->newEmail,
+				'newEmail' => '',
+				'reactivationCode' => 0
+			))
 		));
+		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// forward to index page

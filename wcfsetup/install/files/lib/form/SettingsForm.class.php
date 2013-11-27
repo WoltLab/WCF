@@ -192,10 +192,10 @@ class SettingsForm extends AbstractForm {
 		$parameters = array('options' => $saveOptions);
 		// static options
 		if ($this->category == 'general') {
-			$parameters['data'] = array(
+			$parameters['data'] = array_merge($this->additionalFields, array(
 				'languageID' => $this->languageID,
 				'styleID' => $this->styleID
-			);
+			));
 			$parameters['languageIDs'] = $this->contentLanguageIDs;
 		}
 		

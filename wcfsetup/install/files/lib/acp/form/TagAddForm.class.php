@@ -141,10 +141,10 @@ class TagAddForm extends AbstractForm {
 		parent::save();
 		
 		// save tag
-		$this->objectAction = new TagAction(array(), 'create', array('data' => array(
+		$this->objectAction = new TagAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'name' => $this->name,
 			'languageID' => $this->languageID
-		)));
+		))));
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
 		$editor = new TagEditor($returnValues['returnValues']);

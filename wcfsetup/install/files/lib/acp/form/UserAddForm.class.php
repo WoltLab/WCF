@@ -83,12 +83,6 @@ class UserAddForm extends UserOptionListForm {
 	public $visibleLanguages = array();
 	
 	/**
-	 * additional fields
-	 * @var	array<mixed>
-	 */
-	public $additionalFields = array();
-	
-	/**
 	 * title of the user
 	 * @var	string
 	 */

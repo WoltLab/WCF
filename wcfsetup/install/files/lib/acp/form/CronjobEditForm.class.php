@@ -66,7 +66,7 @@ class CronjobEditForm extends CronjobAddForm {
 		}
 		
 		// update cronjob
-		$data = array(
+		$data = array_merge($this->additionalFields, array(
 			'className' => $this->className,
 			'description' => $this->description,
 			'startMinute' => $this->startMinute,
@@ -74,7 +74,7 @@ class CronjobEditForm extends CronjobAddForm {
 			'startDom' => $this->startDom,
 			'startMonth' => $this->startMonth,
 			'startDow' => $this->startDow
-		);
+		));
 		
 		$this->objectAction = new CronjobAction(array($this->cronjobID), 'update', array('data' => $data));
 		$this->objectAction->executeAction();
