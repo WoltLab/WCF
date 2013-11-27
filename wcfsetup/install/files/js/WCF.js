@@ -156,6 +156,9 @@ String.prototype.hashCode = function() {
 	
 	// detect smartphones
 	jQuery.browser.smartphone = ($('html').css('caption-side') == 'bottom');
+	
+	// CKEditor support (disabled for Android & Windows Phone)
+	jQuery.browser.ckeditor = (navigator.userAgent.match(/(Android|Windows Phone)/i)) ? false : true;
 })();
 
 /**
