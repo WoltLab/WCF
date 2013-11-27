@@ -134,6 +134,12 @@ class DataImportForm extends AbstractForm {
 		
 		// get available exporters/importers
 		$this->exporters = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.exporter');
+		
+		// sort exporters by name
+		uksort($this->exporters, function ($a, $b) {
+			return strcasecmp(WCF::getLanguage()->get('wcf.acp.dataImport.exporter.'.$a), WCF::getLanguage()->get('wcf.acp.dataImport.exporter.'.$b));
+		});
+		
 		$this->importers = array_keys(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.importer'));
 		
 		if (isset($_REQUEST['exporterName'])) {

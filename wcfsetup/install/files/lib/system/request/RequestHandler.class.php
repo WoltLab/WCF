@@ -43,18 +43,24 @@ class RequestHandler extends SingletonFactory {
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-			if ($application->domainName == $_SERVER['HTTP_HOST']) {
-				$this->inRescueMode = false;
-				break;
+		if (isset($_SERVER['HTTP_HOST'])) {
+			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+				if ($application->domainName == $_SERVER['HTTP_HOST']) {
+					$this->inRescueMode = false;
+					break;
+				}
+			}
+			
+			// check if WCF is running as standalone
+			if ($this->inRescueMode() && PACKAGE_ID == 1) {
+				if (ApplicationHandler::getInstance()->getWCF()->domainName == $_SERVER['HTTP_HOST']) {
+					$this->inRescueMode = false;
+				}
 			}
 		}
-		
-		// check if WCF is running as standalone
-		if ($this->inRescueMode() && PACKAGE_ID == 1) {
-			if (ApplicationHandler::getInstance()->getWCF()->domainName == $_SERVER['HTTP_HOST']) {
-				$this->inRescueMode = false;
-			}
+		else {
+			// when using cli, no rescue mode is provided
+			$this->inRescueMode = false;
 		}
 	}
 	

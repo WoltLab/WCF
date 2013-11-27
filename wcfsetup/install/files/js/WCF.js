@@ -156,6 +156,9 @@ String.prototype.hashCode = function() {
 	
 	// detect smartphones
 	jQuery.browser.smartphone = ($('html').css('caption-side') == 'bottom');
+	
+	// CKEditor support (disabled for Android & Windows Phone)
+	jQuery.browser.ckeditor = (navigator.userAgent.match(/(Android|Windows Phone)/i)) ? false : true;
 })();
 
 /**
@@ -3716,12 +3719,6 @@ WCF.TabMenu = {
 					$tabMenu.data('parent', $tabMenu.parent());
 				}
 			}
-			
-			// register as flexible menu unless it has no tabs
-			var $navigation = $tabMenu.children('nav');
-			if ($navigation.length && $navigation.find('> ul:eq(0) > li').length) {
-				WCF.System.FlexibleMenu.registerMenu($navigation.wcfIdentify());
-			}
 		});
 		
 		// try to resolve location hash
@@ -6038,7 +6035,23 @@ WCF.System.FlexibleMenu = {
 		this.registerMenu('mainMenu');
 		this.registerMenu($('.navigationHeader:eq(0)').wcfIdentify());
 		
+		this._registerTabMenus();
+		
 		$(window).resize($.proxy(this.rebuildAll, this));
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.System.FlexibleMenu', $.proxy(this._registerTabMenus, this));
+	},
+	
+	/**
+	 * Registers tab menus.
+	 */
+	_registerTabMenus: function() {
+		// register tab menus
+		$('.tabMenuContainer:not(.jsFlexibleMenuEnabled)').each(function(index, tabMenuContainer) {
+			var $navigation = $(tabMenuContainer).children('nav');
+			if ($navigation.length && $navigation.find('> ul:eq(0) > li').length) {
+				WCF.System.FlexibleMenu.registerMenu($navigation.wcfIdentify());
+			}
+		});
 	},
 	
 	/**

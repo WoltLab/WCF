@@ -75,14 +75,21 @@ class XmlHighlighter extends Highlighter {
 	 * @see	\wcf\system\bbcode\highlighter\Highlighter::cacheQuotes()
 	 */
 	protected function cacheQuotes($string) {
+		$string = parent::cacheQuotes($string);
+		
 		// highlight CDATA-Tags as quotes
 		$string = Regex::compile('<!\[CDATA\[.*?\]\]>', Regex::DOT_ALL)->replace($string, new Callback(function (array $matches) {
 			return StringStack::pushToStringStack('<span class="hlQuotes">'.StringUtil::encodeHTML($matches[0]).'</span>', 'highlighterQuotes');
 		}));
 		
-		$string = parent::cacheQuotes($string);
-		
 		return $string;
+	}
+	
+	/**
+	 * @see	\wcf\system\bbcode\highlighter\Highlighter::highlightQuotes()
+	 */
+	protected function highlightQuotes($string) {
+		return StringStack::reinsertStrings(parent::highlightQuotes($string), 'highlighterQuotes');
 	}
 	
 	/**

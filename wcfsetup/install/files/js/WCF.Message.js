@@ -1136,7 +1136,7 @@ WCF.Message.InlineEditor = Class.extend({
 	 */
 	_click: function(event, containerID) {
 		var $containerID = (event === null) ? containerID : $(event.currentTarget).data('containerID');
-		
+		console.debug("_click()");
 		if (this._activeElementID === '') {
 			this._activeElementID = $containerID;
 			this._prepare();
@@ -1333,16 +1333,21 @@ WCF.Message.InlineEditor = Class.extend({
 		// hide message options
 		this._container[this._activeElementID].find('.messageOptions').addClass('forceHidden');
 		
-		new WCF.PeriodicalExecuter($.proxy(function(pe) {
-			pe.stop();
-			
-			var $ckEditor = $('#' + this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID'));
-			$ckEditor.ckeditor(function() { this.ui.editor.focus(); });
-			
-			if (this._quoteManager) {
-				this._quoteManager.setAlternativeCKEditor($ckEditor);
-			}
-		}, this), 250);
+		if ($.browser.ckeditor) {
+			new WCF.PeriodicalExecuter($.proxy(function(pe) {
+				pe.stop();
+				
+				var $ckEditor = $('#' + this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID'));
+				$ckEditor.ckeditor(function() { this.ui.editor.focus(); });
+				
+				if (this._quoteManager) {
+					this._quoteManager.setAlternativeCKEditor($ckEditor);
+				}
+			}, this), 250);
+		}
+		else {
+			$('#' + this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID')).focus();
+		}
 	},
 	
 	/**
@@ -1369,12 +1374,12 @@ WCF.Message.InlineEditor = Class.extend({
 		var $objectID = $container.data('objectID');
 		var $message = '';
 		
-		if ($.browser.mobile) {
-			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
-		}
-		else {
+		if ($.browser.ckeditor) {
 			var $ckEditor = $('#' + this._messageEditorIDPrefix + $objectID).ckeditorGet();
 			$message = $ckEditor.getData();
+		}
+		else {
+			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
 		}
 		
 		this._proxy.setOption('data', {
@@ -1402,12 +1407,12 @@ WCF.Message.InlineEditor = Class.extend({
 		var $objectID = $container.data('objectID');
 		var $message = '';
 		
-		if ($.browser.mobile) {
-			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
-		}
-		else {
+		if ($.browser.ckeditor) {
 			var $ckEditor = $('#' + this._messageEditorIDPrefix + $objectID).ckeditorGet();
 			$message = $ckEditor.getData();
+		}
+		else {
+			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
 		}
 		
 		new WCF.Action.Proxy({
@@ -1461,7 +1466,7 @@ WCF.Message.InlineEditor = Class.extend({
 		this._container[this._activeElementID].find('.messageOptions').removeClass('forceHidden');
 		
 		// remove editor
-		if (!$.browser.mobile) {
+		if ($.browser.ckeditor) {
 			var $ckEditor = $('#' + this._messageEditorIDPrefix + $container.data('objectID')).ckeditorGet();
 			$ckEditor.destroy();
 		}

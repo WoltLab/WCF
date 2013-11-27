@@ -107,6 +107,7 @@
 			WCF.Dropdown.init();
 			WCF.System.PageNavigation.init('.pageNavigation');
 			WCF.Date.Picker.init();
+			WCF.System.FlexibleMenu.init();
 			
 			{if $__wcf->user->userID}
 				new WCF.ACP.Search();
@@ -152,7 +153,7 @@
 							
 							{if PACKAGE_ID > 1}
 								<li id="jumpToPage" class="dropdown">
-									<a class="dropdownToggle" data-toggle="jumpToPage"><span class="icon icon16 icon-home"></span> <span>{lang}wcf.global.jumpToPage{/lang}</span></a>
+									<a href="{link forceFrontend=true}{/link}" class="dropdownToggle" data-toggle="jumpToPage"><span class="icon icon16 icon-home"></span> <span>{lang}wcf.global.jumpToPage{/lang}</span></a>
 									<ul class="dropdownMenu">
 										{foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=menuItem}
 											<li><a href="{$menuItem->getProcessor()->getLink()}">{lang}{$menuItem->menuItem}{/lang}</a></li>
