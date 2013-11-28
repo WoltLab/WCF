@@ -155,8 +155,8 @@
 								<li id="jumpToPage" class="dropdown">
 									<a href="{link forceFrontend=true}{/link}" class="dropdownToggle" data-toggle="jumpToPage"><span class="icon icon16 icon-home"></span> <span>{lang}wcf.global.jumpToPage{/lang}</span></a>
 									<ul class="dropdownMenu">
-										{foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=menuItem}
-											<li><a href="{$menuItem->getProcessor()->getLink()}">{lang}{$menuItem->menuItem}{/lang}</a></li>
+										{foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=_menuItem}
+											<li><a href="{$_menuItem->getProcessor()->getLink()}">{lang}{$_menuItem->menuItem}{/lang}</a></li>
 										{/foreach}
 									</ul>
 								</li>
