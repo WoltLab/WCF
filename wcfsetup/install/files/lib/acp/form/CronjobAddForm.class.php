@@ -151,7 +151,7 @@ class CronjobAddForm extends AbstractForm {
 		parent::save();
 		
 		// save cronjob
-		$data = array(
+		$data = array_merge($this->additionalFields, array(
 			'className' => $this->className,
 			'packageID' => $this->packageID,
 			'description' => $this->description,
@@ -160,7 +160,7 @@ class CronjobAddForm extends AbstractForm {
 			'startDom' => $this->startDom,
 			'startMonth' => $this->startMonth,
 			'startDow' => $this->startDow
-		);
+		));
 		
 		$this->objectAction = new CronjobAction(array(), 'create', array('data' => $data));
 		$this->objectAction->executeAction();

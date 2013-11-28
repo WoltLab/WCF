@@ -61,9 +61,9 @@ class TagEditForm extends TagAddForm {
 		AbstractForm::save();
 		
 		// update tag
-		$this->objectAction = new TagAction(array($this->tagID), 'update', array('data' => array(
+		$this->objectAction = new TagAction(array($this->tagID), 'update', array('data' => array_merge($this->additionalFields, array(
 			'name' => $this->name
-		)));
+		))));
 		$this->objectAction->executeAction();
 		
 		if ($this->tagObj->synonymFor === null) {

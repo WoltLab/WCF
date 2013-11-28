@@ -54,9 +54,9 @@ class LanguageServerEditForm extends LanguageServerAddForm {
 		AbstractForm::save();
 		
 		// save server
-		$this->objectAction = new LanguageServerAction(array($this->languageServerID), 'update', array('data' => array(
+		$this->objectAction = new LanguageServerAction(array($this->languageServerID), 'update', array('data' => array_merge($this->additionalFields, array(
 			'serverURL' => $this->server
-		)));
+		))));
 		$this->objectAction->executeAction();
 		$this->saved();
 		

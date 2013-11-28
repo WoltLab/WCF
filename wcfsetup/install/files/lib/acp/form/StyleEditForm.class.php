@@ -92,7 +92,7 @@ class StyleEditForm extends StyleAddForm {
 		AbstractForm::save();
 		
 		$this->objectAction = new StyleAction(array($this->style), 'update', array(
-			'data' => array(
+			'data' => array_merge($this->additionalFields, array(
 				'styleName' => $this->styleName,
 				'templateGroupID' => $this->templateGroupID,
 				'styleVersion' => $this->styleVersion,
@@ -102,7 +102,7 @@ class StyleEditForm extends StyleAddForm {
 				'license' => $this->license,
 				'authorName' => $this->authorName,
 				'authorURL' => $this->authorURL
-			),
+			)),
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
 		));

@@ -43,6 +43,12 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	public $objectAction = null;
 	
 	/**
+	 * additional fields
+	 * @var	array<mixed>
+	 */
+	public $additionalFields = array();
+	
+	/**
 	 * @see	\wcf\form\IForm::submit()
 	 */
 	public function submit() {

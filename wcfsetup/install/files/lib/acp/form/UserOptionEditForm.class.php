@@ -57,7 +57,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 		I18nHandler::getInstance()->save('optionName', 'wcf.user.option.'.$this->userOption->optionName, 'wcf.user.option');
 		I18nHandler::getInstance()->save('optionDescription', 'wcf.user.option.'.$this->userOption->optionName.'.description', 'wcf.user.option');
 		
-		$this->objectAction = new UserOptionAction(array($this->userOption), 'update', array('data' => array(
+		$this->objectAction = new UserOptionAction(array($this->userOption), 'update', array('data' => array_merge($this->additionalFields, array(
 			'categoryName' => $this->categoryName,
 			'optionType' => $this->optionType,
 			'defaultValue' => $this->defaultValue,
@@ -70,7 +70,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 			'searchable' => $this->searchable,
 			'editable' => $this->editable,
 			'visible' => $this->visible
-		)));
+		))));
 		$this->objectAction->executeAction();
 		$this->saved();
 		

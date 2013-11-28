@@ -1,7 +1,7 @@
 <?php
 namespace wcf\form;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserAction;
 use wcf\page\AbstractPage;
 use wcf\system\exception\UserInputException;
 use wcf\system\mail\Mail;
@@ -94,12 +94,14 @@ class NewPasswordForm extends AbstractForm {
 		$this->newPassword = PasswordUtil::getRandomPassword((REGISTER_PASSWORD_MIN_LENGTH > 9 ? REGISTER_PASSWORD_MIN_LENGTH : 9));
 		
 		// update user
-		$userEditor = new UserEditor($this->user);
-		$userEditor->update(array(
-			'password' => $this->newPassword,
-			'lastLostPasswordRequestTime' => 0,
-			'lostPasswordKey' => ''
+		$this->objectAction = new UserAction(array($this->user), 'update', array(
+			'data' => array_merge($this->additionalFields, array(
+				'password' => $this->newPassword,
+				'lastLostPasswordRequestTime' => 0,
+				'lostPasswordKey' => ''
+			))
 		));
+		$this->objectAction->executeAction();
 		
 		// send mail
 		$mail = new Mail(array($this->user->username => $this->user->email), WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.mail', array(

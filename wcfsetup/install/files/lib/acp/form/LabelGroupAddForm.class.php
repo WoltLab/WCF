@@ -132,10 +132,10 @@ class LabelGroupAddForm extends AbstractForm {
 		parent::save();
 		
 		// save label
-		$this->objectAction = new LabelGroupAction(array(), 'create', array('data' => array(
+		$this->objectAction = new LabelGroupAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'forceSelection' => ($this->forceSelection ? 1 : 0),
 			'groupName' => $this->groupName
-		)));
+		))));
 		$returnValues = $this->objectAction->executeAction();
 		
 		// save acl

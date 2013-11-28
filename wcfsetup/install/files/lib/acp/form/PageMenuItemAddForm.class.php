@@ -208,7 +208,7 @@ class PageMenuItemAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new PageMenuItemAction(array(), 'create', array('data' => array(
+		$this->objectAction = new PageMenuItemAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'menuItem' => $this->pageMenuItem,
 			'menuItemController' => $this->menuItemController,
@@ -216,7 +216,7 @@ class PageMenuItemAddForm extends AbstractForm {
 			'menuPosition' => $this->menuPosition,
 			'parentMenuItem' => $this->parentMenuItem,
 			'showOrder' => $this->showOrder
-		)));
+		))));
 		$this->objectAction->executeAction();
 		
 		$returnValues = $this->objectAction->getReturnValues();

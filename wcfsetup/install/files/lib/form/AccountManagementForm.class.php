@@ -433,7 +433,7 @@ class AccountManagementForm extends AbstractForm {
 		
 		$data = array();
 		if (!empty($updateParameters)) {
-			$data['data'] = $updateParameters;
+			$data['data'] = array_merge($this->additionalFields, $updateParameters);
 		}
 		if (!empty($updateOptions)) {
 			$data['options'] = $updateOptions;

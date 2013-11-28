@@ -1,7 +1,7 @@
 <?php
 namespace wcf\form;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserAction;
 use wcf\system\exception\UserInputException;
 use wcf\system\mail\Mail;
 use wcf\system\request\LinkHandler;
@@ -59,8 +59,12 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 		$activationCode = UserRegistrationUtil::getActivationCode();
 		
 		// save user
-		$userEditor = new UserEditor($this->user);
-		$userEditor->update(array('reactivationCode' => $activationCode));
+		$this->objectAction = new UserAction(array($this->user), 'update', array(
+			'data' => array_merge($this->additionalFields, array(
+				'reactivationCode' => $activationCode
+			))
+		));
+		$this->objectAction->executeAction();
 		
 		// send activation mail
 		$messageData = array(

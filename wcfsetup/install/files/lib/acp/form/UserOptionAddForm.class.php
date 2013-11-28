@@ -228,7 +228,7 @@ class UserOptionAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new UserOptionAction(array(), 'create', array('data' => array(
+		$this->objectAction = new UserOptionAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'optionName' => StringUtil::getRandomID(),
 			'categoryName' => $this->categoryName,
 			'optionType' => $this->optionType,
@@ -244,7 +244,7 @@ class UserOptionAddForm extends AbstractForm {
 			'visible' => $this->visible,
 			'packageID' => 1,
 			'additionalData' => ($this->optionType == 'select' ? serialize(array('allowEmptyValue' => true)) : '')
-		)));
+		))));
 		$this->objectAction->executeAction();
 		
 		$returnValues = $this->objectAction->getReturnValues();

@@ -13,10 +13,10 @@
 	<h1>{lang}wcf.acp.user.search{/lang}</h1>
 </header>
 
-{include file='formError'}
-
 {if $errorField == 'search'}
 	<p class="error">{lang}wcf.acp.user.search.error.noMatches{/lang}</p>
+{else}
+	{include file='formError'}
 {/if}
 
 <div class="contentNavigation">

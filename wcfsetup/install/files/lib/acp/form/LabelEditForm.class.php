@@ -70,11 +70,11 @@ class LabelEditForm extends LabelAddForm {
 		}
 		
 		// update label
-		$this->objectAction = new LabelAction(array($this->labelID), 'update', array('data' => array(
+		$this->objectAction = new LabelAction(array($this->labelID), 'update', array('data' => array_merge($this->additionalFields, array(
 			'label' => $this->label,
 			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
 			'groupID' => $this->groupID
-		)));
+		))));
 		$this->objectAction->executeAction();
 		
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.label.objectType');

@@ -104,14 +104,14 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 		}
 		
 		// save menu item
-		$this->objectAction = new PageMenuItemAction(array($this->menuItem), 'update', array('data' => array(
+		$this->objectAction = new PageMenuItemAction(array($this->menuItem), 'update', array('data' => array_merge($this->additionalFields, array(
 			'isDisabled' => ($this->isDisabled) ? 1 : 0,
 			'menuItemController' => $this->menuItemController,
 			'menuItemLink' => ($this->menuItemController ? $this->menuItemParameters : $this->menuItemLink),
 			'parentMenuItem' => ($this->menuPosition == 'header' ? $this->parentMenuItem : ''),
 			'menuPosition' => $this->menuPosition,
 			'showOrder' => $this->showOrder
-		)));
+		))));
 		$this->objectAction->executeAction();
 		
 		// update children

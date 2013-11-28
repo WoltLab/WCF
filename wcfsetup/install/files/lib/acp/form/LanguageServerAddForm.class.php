@@ -66,9 +66,9 @@ class LanguageServerAddForm extends AbstractForm {
 		parent::save();
 		
 		// save server
-		$this->objectAction = new LanguageServerAction(array(), 'create', array('data' => array(
+		$this->objectAction = new LanguageServerAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'serverURL' => $this->server
-		)));
+		))));
 		$this->objectAction->executeAction();
 		$this->saved();
 		
