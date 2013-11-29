@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.0.0 RC 3</version> <!-- codename: maelstrom -->
-		<date>2013-11-26</date>
+		<version>2.0.0 RC 4</version> <!-- codename: maelstrom -->
+		<date>2013-11-30</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -43,17 +43,10 @@
 		<instruction type="script">acp/post_install.php</instruction> 
 	</instructions>
 	
-	<instructions type="update" fromversion="2.0.0 RC 2">
+	<instructions type="update" fromversion="2.0.0 RC 3">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
-		
-		<instruction type="script" run="standalone">acp/update_rc3.php</instruction>
-		
-		<instruction type="sql">update_rc3.sql</instruction>
-		
-		<instruction type="option">option.xml</instruction>
-		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 	</instructions>
 </package>
