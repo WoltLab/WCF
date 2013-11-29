@@ -2,7 +2,7 @@
 namespace wcf\form;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\UserAvatarAction;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\menu\user\UserMenu;
@@ -97,28 +97,29 @@ class AvatarEditForm extends AbstractForm {
 		// update user
 		switch ($this->avatarType) {
 			case 'none':
-				$editor = new UserEditor(WCF::getUser());
-				$editor->update(array(
+				$data = array(
 					'avatarID' => null,
 					'enableGravatar' => 0
-				));
+				);
 			break;
 				
 			case 'custom':
-				$editor = new UserEditor(WCF::getUser());
-				$editor->update(array(
+				$data = array(
 					'enableGravatar' => 0
-				));
+				);
 			break;
 				
 			case 'gravatar':
-				$editor = new UserEditor(WCF::getUser());
-				$editor->update(array(
+				$data = array(
 					'avatarID' => null,
 					'enableGravatar' => 1
-				));
+				);
 			break;
 		}
+		$this->objectAction = new UserAction(array(WCF::getUser()), 'update', array(
+			'data' => array_merge($this->additionalFields, $data)
+		));
+		$this->objectAction->executeAction();
 		
 		$this->saved();
 		WCF::getTPL()->assign('success', true);

@@ -176,7 +176,7 @@ class UserRankAddForm extends AbstractForm {
 		parent::save();
 		
 		// save label
-		$this->objectAction = new UserRankAction(array(), 'create', array('data' => array(
+		$this->objectAction = new UserRankAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'rankTitle' => $this->rankTitle,
 			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
 			'groupID' => $this->groupID,
@@ -184,7 +184,7 @@ class UserRankAddForm extends AbstractForm {
 			'rankImage' => $this->rankImage,
 			'repeatImage' => $this->repeatImage,
 			'requiredGender' => $this->requiredGender
-		)));
+		))));
 		$this->objectAction->executeAction();
 		
 		if (!I18nHandler::getInstance()->isPlainValue('rankTitle')) {

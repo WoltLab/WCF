@@ -59,12 +59,6 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	protected $groupDescription = '';
 	
 	/**
-	 * additional fields
-	 * @var	array
-	 */
-	public $additionalFields = array();
-	
-	/**
 	 * list of values of group 'Anyone'
 	 * @var	array
 	 */

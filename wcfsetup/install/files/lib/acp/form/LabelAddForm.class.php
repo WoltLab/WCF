@@ -150,11 +150,11 @@ class LabelAddForm extends AbstractForm {
 		parent::save();
 		
 		// save label
-		$this->objectAction = new LabelAction(array(), 'create', array('data' => array(
+		$this->objectAction = new LabelAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'label' => $this->label,
 			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
 			'groupID' => $this->groupID
-		)));
+		))));
 		$this->objectAction->executeAction();
 		
 		if (!I18nHandler::getInstance()->isPlainValue('label')) {

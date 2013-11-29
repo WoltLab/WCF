@@ -1,7 +1,7 @@
 <?php
 namespace wcf\form;
 use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\user\UserAction;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
 use wcf\system\mail\Mail;
@@ -105,11 +105,13 @@ class LostPasswordForm extends RecaptchaForm {
 		$lostPasswordKey = StringUtil::getRandomID();
 		
 		// save key and request time in database
-		$userEditor = new UserEditor($this->user);
-		$userEditor->update(array(
-			'lostPasswordKey' => $lostPasswordKey,
-			'lastLostPasswordRequestTime' => TIME_NOW
+		$this->objectAction = new UserAction(array($this->user), 'update', array(
+			'data' => array_merge($this->additionalFields, array(
+				'lostPasswordKey' => $lostPasswordKey,
+				'lastLostPasswordRequestTime' => TIME_NOW
+			))
 		));
+		$this->objectAction->executeAction();
 		
 		// send mail
 		$mail = new Mail(array($this->user->username => $this->user->email), WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.lostPassword.mail', array(

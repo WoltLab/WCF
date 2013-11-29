@@ -466,7 +466,7 @@ class StyleAddForm extends AbstractForm {
 		parent::save();
 		
 		$this->objectAction = new StyleAction(array(), 'create', array(
-			'data' => array(
+			'data' => array_merge($this->additionalFields, array(
 				'styleName' => $this->styleName,
 				'templateGroupID' => $this->templateGroupID,
 				'isDisabled' => 1, // styles are disabled by default
@@ -478,7 +478,7 @@ class StyleAddForm extends AbstractForm {
 				'license' => $this->license,
 				'authorName' => $this->authorName,
 				'authorURL' => $this->authorURL
-			),
+			)),
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
 		));

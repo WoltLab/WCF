@@ -143,12 +143,12 @@ class SignatureEditForm extends MessageForm {
 		parent::save();
 		
 		$this->objectAction = new UserAction(array(WCF::getUser()), 'update', array(
-			'data' => array(
+			'data' => array_merge($this->additionalFields, array(
 				'signature' => $this->text,
 				'signatureEnableBBCodes' => $this->enableBBCodes,
 				'signatureEnableHtml' => $this->enableHtml,
 				'signatureEnableSmilies' => $this->enableSmilies
-			)
+			))
 		));
 		$this->objectAction->executeAction();
 		SignatureCache::getInstance()->getSignature(new User(WCF::getUser()->userID));

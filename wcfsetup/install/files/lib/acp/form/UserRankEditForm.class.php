@@ -64,7 +64,7 @@ class UserRankEditForm extends UserRankAddForm {
 		}
 		
 		// update label
-		$this->objectAction = new UserRankAction(array($this->rank), 'update', array('data' => array(
+		$this->objectAction = new UserRankAction(array($this->rank), 'update', array('data' => array_merge($this->additionalFields, array(
 			'rankTitle' => $this->rankTitle,
 			'cssClassName' => ($this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName),
 			'groupID' => $this->groupID,
@@ -72,7 +72,7 @@ class UserRankEditForm extends UserRankAddForm {
 			'rankImage' => $this->rankImage,
 			'repeatImage' => $this->repeatImage,
 			'requiredGender' => $this->requiredGender
-		)));
+		))));
 		$this->objectAction->executeAction();
 		$this->saved();
 		

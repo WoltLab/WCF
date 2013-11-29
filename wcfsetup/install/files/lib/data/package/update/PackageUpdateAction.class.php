@@ -108,21 +108,32 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// get excluded packages
-		$sql = "SELECT	excludedPackage, excludedPackageVersion
-			FROM	wcf".WCF_N."_package_exclusion";
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_package_update_exclusion";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		$excludedPackages = array();
 		while ($row = $statement->fetchArray()) {
 			$package = $row['excludedPackage'];
 			$packageVersion = $row['excludedPackageVersion'];
+			$packageUpdateVersionID = $row['packageUpdateVersionID'];
 			
-			if (!isset($excludedPackages[$package])) {
-				$excludedPackages[$package] = $packageVersion;
+			if (!isset($excludedPackages[$packageUpdateVersionID][$package])) {
+				$excludedPackages[$packageUpdateVersionID][$package] = $packageVersion;
 			}
-			else if (Package::compareVersion($excludedPackages[$package], $packageVersion) == 1) {
-				$excludedPackages[$package] = $packageVersion;
+			else if (Package::compareVersion($excludedPackages[$packageUpdateVersionID][$package], $packageVersion) == 1) {
+				$excludedPackages[$packageUpdateVersionID][$package] = $packageVersion;
 			}
+		}
+		
+		// get installed packages
+		$sql = "SELECT	package, packageVersion
+			FROM	wcf".WCF_N."_package";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		$installedPackages = array();
+		while ($row = $statement->fetchArray()) {
+			$installedPackages[$row['package']] = $row['packageVersion'];
 		}
 		
 		// filter by version
@@ -139,11 +150,22 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		while ($row = $statement->fetchArray()) {
 			$package = $row['package'];
 			$packageVersion = $row['packageVersion'];
+			$packageUpdateVersionID = $row['packageUpdateVersionID'];
 			
 			// check excluded packages
-			if (isset($excludedPackages[$package]) && Package::compareVersion($excludedPackages[$package], $packageVersion) <= 0) {
-				// excluded, ignore
-				continue;
+			if (isset($excludedPackages[$packageUpdateVersionID])) {
+				$isExcluded = false;
+				foreach ($excludedPackages[$packageUpdateVersionID] as $excludedPackage => $excludedPackageVersion) {
+					if (isset($installedPackages[$excludedPackage]) && Package::compareVersion($excludedPackageVersion, $installedPackages[$excludedPackage]) <= 0) {
+						// excluded, ignore
+						$isExcluded = true;
+						break;
+					}
+				}
+				
+				if ($isExcluded) {
+					continue;
+				}
 			}
 			
 			if (!isset($packageVersions[$package])) {

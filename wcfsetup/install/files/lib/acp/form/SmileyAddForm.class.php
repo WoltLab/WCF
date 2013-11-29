@@ -142,7 +142,7 @@ class SmileyAddForm extends AbstractForm {
 		parent::save();
 		
 		$this->objectAction = new SmileyAction(array(), 'create', array(
-			'data' => array(
+			'data' => array_merge($this->additionalFields, array(
 				'smileyTitle' => $this->smileyTitle,
 				'smileyCode' => $this->smileyCode,
 				'aliases' => $this->aliases,
@@ -150,7 +150,7 @@ class SmileyAddForm extends AbstractForm {
 				'showOrder' => $this->showOrder,
 				'categoryID' => $this->categoryID ?: null,
 				'packageID' => 1
-			)
+			))
 		));
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
