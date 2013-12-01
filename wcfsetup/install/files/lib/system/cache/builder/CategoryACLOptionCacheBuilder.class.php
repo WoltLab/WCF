@@ -32,7 +32,7 @@ class CategoryACLOptionCacheBuilder extends AbstractCacheBuilder {
 			$data = array();
 			foreach (array('group', 'user') as $type) {
 				foreach ($aclOptions[$type] as $categoryID => $optionData) {
-					if (!isset($aclValues[$categoryID])) {
+					if (!isset($data[$categoryID])) {
 						$data[$categoryID] = array(
 							'group' => array(),
 							'user' => array()
