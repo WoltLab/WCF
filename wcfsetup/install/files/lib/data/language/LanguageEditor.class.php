@@ -170,19 +170,6 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		$xpath = $xml->xpath();
 		$usedCategories = array();
 		
-		// fetch deletes
-		$deletes = $xpath->query('/ns:language/ns:delete');
-		if (!empty($deletes)) {
-			foreach ($xpath->query('child::*', $deletes) as $delete) {
-				$deleteValue = $delete->nodeValue;
-				if (!empty($deleteValue)) {
-					$sql = "DELETE FROM wcf".WCF_N."_language_item where languageItem = ? AND packageID = ?";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array($deleteValue, $packageID));
-				}
-			}
-		}
-		
 		// fetch categories
 		$categories = $xpath->query('/ns:language/ns:category');
 		foreach ($categories as $category) {
