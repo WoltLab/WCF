@@ -6,10 +6,6 @@
 
 {include file='formError'}
 
-{if $success|isset}
-	<p class="success">{lang}wcf.acp.language.add.success{/lang}</p>
-{/if}
-
 <div class="contentNavigation">
 	<nav>
 		<ul>
@@ -35,7 +31,7 @@
 			<dl>
 				<dt><label for="selectedPackages">{lang}wcf.acp.language.export.selectPackages{/lang}</label></dt>
 				<dd>
-					<select id="selectedPackages" name="selectedPackages[]" multiple="multiple" size="20" class="long">
+					<select id="selectedPackages" name="selectedPackages[]" multiple="multiple" size="20" class="long" style="font-family: monospace;">
 						<option value="*"{if $selectAllPackages} selected="selected"{/if}>{lang}wcf.acp.language.export.allPackages{/lang}</option>
 						<option value="-">--------------------</option>
 						{foreach from=$packages item=package}
