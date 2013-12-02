@@ -66,8 +66,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 */
 	public function search() {
 		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
+		$availableUpdateServers = PackageUpdateServer::getActiveUpdateServers();
 		
 		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("package_update.packageUpdateServerID IN (?)", array(array_keys($availableUpdateServers)));
 		if (!empty($this->parameters['package'])) {
 			$conditions->add("package_update.package LIKE ?", array('%'.$this->parameters['package'].'%'));
 		}
