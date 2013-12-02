@@ -67,6 +67,10 @@ class PreParserAtUserListener implements IEventListener {
 			}
 		}
 		
+		if ($quote) {
+			$text .= $quote;
+		}
+		
 		$userRegex->match($text, true);
 		$matches = $userRegex->getMatches();
 		
