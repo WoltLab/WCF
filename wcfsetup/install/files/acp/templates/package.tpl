@@ -73,12 +73,6 @@
 					<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->packageURL|rawurlencode}" class="externalURL">{$package->packageURL}</a></dd>
 				</dl>
 			{/if}
-			{if $package->parentPackageID}
-				<dl>
-					<dt>{lang}wcf.acp.package.parentPackage{/lang}</dt>
-					<dd><a href="{link controller='Package' id=$package->parentPackageID}{/link}">{$package->getParentPackage()->getName()}</a></dd>
-				</dl>
-			{/if}
 			<dl>
 				<dt>{lang}wcf.acp.package.author{/lang}</dt>
 				<dd>{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
