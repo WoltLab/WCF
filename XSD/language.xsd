@@ -21,6 +21,13 @@
 			<xs:element name="item" type="item" maxOccurs="unbounded" />
 		</xs:sequence>
 		<xs:attribute name="name" type="woltlab_varchar" use="required" />
+	</xs:complexType>	
+	
+	<!-- language delete element type -->
+	<xs:complexType name="delete">
+		<xs:sequence>
+			<xs:element name="item" type="item" maxOccurs="unbounded" />
+		</xs:sequence>
 	</xs:complexType>
 	
 	<!-- language item element type -->
