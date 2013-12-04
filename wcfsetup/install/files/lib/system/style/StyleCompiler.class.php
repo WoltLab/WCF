@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\style;
+use wcf\data\application\Application;
 use wcf\data\option\Option;
 use wcf\data\style\Style;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -51,18 +52,16 @@ class StyleCompiler extends SingletonFactory {
 	public function compile(Style $style) {
 		// read stylesheets by dependency order
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("file_log.filename REGEXP ?", array('style/([a-zA-Z0-9\_\-\.]+)\.less'));
+		$conditions->add("filename REGEXP ?", array('style/([a-zA-Z0-9\_\-\.]+)\.less'));
 		
-		$sql = "SELECT		file_log.filename, package.packageDir
-			FROM		wcf".WCF_N."_package_installation_file_log file_log
-			LEFT JOIN	wcf".WCF_N."_package package
-			ON		(file_log.packageID = package.packageID)
+		$sql = "SELECT	filename, application
+			FROM	wcf".WCF_N."_package_installation_file_log file_log
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		$files = array();
 		while ($row = $statement->fetchArray()) {
-			$files[] = WCF_DIR.$row['packageDir'].$row['filename'];
+			$files[] = Application::getDirectory($row['application']).$row['filename'];
 		}
 		
 		// get style variables
