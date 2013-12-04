@@ -254,6 +254,9 @@ class Route {
 	 * @return	string
 	 */
 	public function buildLink(array $components) {
+		// drop application component to avoid being appended as query string
+		unset($components['application']);
+		
 		$link = '';
 		
 		// handle default values for controller
