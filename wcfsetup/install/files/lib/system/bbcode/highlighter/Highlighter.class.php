@@ -197,16 +197,18 @@ abstract class Highlighter extends SingletonFactory {
 			}
 			
 			$cacheCommentsRegEx .= "(";
-			if (!empty($this->singleLineComment)) {
-				$cacheCommentsRegEx .= "(?:".implode('|', array_map('preg_quote', $this->singleLineComment)).")[^\n]*";
-				if (!empty($this->commentStart)) {
+			if (!empty($this->commentStart)) {
+				$cacheCommentsRegEx .= '(?:'.implode('|', array_map('preg_quote', $this->commentStart)).').*?(?:'.implode('|', array_map('preg_quote', $this->commentEnd)).')';
+				
+				if (!empty($this->singleLineComment)) {
 					$cacheCommentsRegEx .= '|';
 				}
 			}
 			
-			if (!empty($this->commentStart)) {
-				$cacheCommentsRegEx .= '(?:'.implode('|', array_map('preg_quote', $this->commentStart)).').*?(?:'.implode('|', array_map('preg_quote', $this->commentEnd)).')';
+			if (!empty($this->singleLineComment)) {
+				$cacheCommentsRegEx .= "(?:".implode('|', array_map('preg_quote', $this->singleLineComment)).")[^\n]*";
 			}
+			
 			$cacheCommentsRegEx .= ")";
 			
 			$this->cacheCommentsRegEx = new Regex($cacheCommentsRegEx, Regex::DOT_ALL);
