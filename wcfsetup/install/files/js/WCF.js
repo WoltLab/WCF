@@ -7463,7 +7463,9 @@ WCF.Upload.Parallel = WCF.Upload.extend({
 	 */
 	init: function(buttonSelector, fileListSelector, className, options) {
 		// force multiple uploads
-		options.multiple = true;
+		options = $.extend(true, options || { }, {
+			multiple: true
+		});
 		
 		this._super(buttonSelector, fileListSelector, className, options);
 	},
