@@ -244,7 +244,7 @@ class PackageInstallationScheduler {
 			
 			// check response
 			if ($response['statusCode'] != 200) {
-				throw new SystemException(WCF::getLanguage()->get('wcf.acp.packageUpdate.error.downloadFailed', array('$package' => $package)) . ' ('.$response['body'].')');
+				throw new SystemException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.error.downloadFailed', array('__downloadPackage' => $package)) . ' ('.$response['body'].')');
 			}
 			
 			// write content to tmp file

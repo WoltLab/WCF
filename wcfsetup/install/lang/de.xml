@@ -984,6 +984,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.url"><![CDATA[Website]]></item>
 		<item name="wcf.acp.package.error.uploadFailed"><![CDATA[Das Hochladen der ausgewählten Datei ist fehlgeschlagen.]]></item>
 		<item name="wcf.acp.package.updates"><![CDATA[Aktualisierungen]]></item>
+		<item name="wcf.acp.package.error.downloadFailed"><![CDATA[Das Herunterladen des Paketes{if $__downloadPackage|isset} „{$__downloadPackage}“{/if} ist fehlgeschlagen.]]></item>
+		<item name="wcf.acp.package.newVersion"><![CDATA[Neue Version]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">

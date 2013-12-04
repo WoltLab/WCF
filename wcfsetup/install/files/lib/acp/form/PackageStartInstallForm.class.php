@@ -120,13 +120,13 @@ class PackageStartInstallForm extends AbstractForm {
 				$this->downloadPackage = $this->archive->downloadArchive();
 			}
 			catch (SystemException $e) {
-				throw new UserInputException('downloadPackage', 'notFound');
+				throw new UserInputException('downloadPackage', 'downloadFailed');
 			}
 		}
 		else {
 			// probably local path
 			if (!file_exists($this->downloadPackage)) {
-				throw new UserInputException('downloadPackage', 'notFound');
+				throw new UserInputException('downloadPackage', 'downloadFailed');
 			}
 			
 			$this->archive = new PackageArchive($this->downloadPackage, $this->package);
