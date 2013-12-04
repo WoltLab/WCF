@@ -55,7 +55,7 @@ class StyleCompiler extends SingletonFactory {
 		$conditions->add("filename REGEXP ?", array('style/([a-zA-Z0-9\_\-\.]+)\.less'));
 		
 		$sql = "SELECT	filename, application
-			FROM	wcf".WCF_N."_package_installation_file_log file_log
+			FROM	wcf".WCF_N."_package_installation_file_log
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
