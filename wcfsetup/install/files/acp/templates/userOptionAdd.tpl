@@ -225,7 +225,7 @@
 		</div>
 	</form>
 {else}
-	<p class="info">{lang}wcf.acp.user.option.add.noCategories{/lang}</p>
+	<p class="error">{lang}wcf.acp.user.option.error.noCategories{/lang}</p>
 {/if}
 
 {include file='footer'}

@@ -1328,6 +1328,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP Class Name for Output]]></item>
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Allows custom output formatting using a PHP class.]]></item>
 		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
+		<item name="wcf.acp.user.option.error.noCategories"><![CDATA[Please <a href="{link controller='UserOptionCategoryAdd'}{/link}">add a user field category</a> prior to creating custom user fields.]]></item>
 		<item name="wcf.acp.user.search.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.user.search.conditions.states"><![CDATA[States]]></item>
 		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Banned]]></item>
