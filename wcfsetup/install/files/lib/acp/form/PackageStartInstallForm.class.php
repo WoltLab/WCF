@@ -112,6 +112,8 @@ class PackageStartInstallForm extends AbstractForm {
 	 * Validates the download package input.
 	 */
 	protected function validateDownloadPackage() {
+		$this->activeTabMenuItem = 'upload';
+		
 		if (FileUtil::isURL($this->downloadPackage)) {
 			// download package
 			$this->archive = new PackageArchive($this->downloadPackage, $this->package);
