@@ -74,47 +74,7 @@ class CodeBBCode extends AbstractBBCode {
 		}
 		else {
 			// try to guess highlighter
-			if (mb_strpos($content, '<?php') !== false) {
-				$className = '\wcf\system\bbcode\highlighter\PhpHighlighter';
-			}
-			else if (mb_strpos($content, '<html') !== false) {
-				$className = '\wcf\system\bbcode\highlighter\HtmlHighlighter';
-			}
-			else if (mb_strpos($content, '<?xml') === 0) {
-				$className = '\wcf\system\bbcode\highlighter\XmlHighlighter';
-			}
-			else if (	mb_strpos($content, 'SELECT') === 0
-					||	mb_strpos($content, 'UPDATE') === 0
-					||	mb_strpos($content, 'INSERT') === 0
-					||	mb_strpos($content, 'DELETE') === 0) {
-				$className = '\wcf\system\bbcode\highlighter\SqlHighlighter';
-			}
-			else if (mb_strpos($content, 'import java.') !== false) {
-				$className = '\wcf\system\bbcode\highlighter\JavaHighlighter';
-			}
-			else if (	mb_strpos($content, "---") !== false
-					&&	mb_strpos($content, "\n+++") !== false) {
-				$className = '\wcf\system\bbcode\highlighter\DiffHighlighter';
-			}
-			else if (mb_strpos($content, "\n#include ") !== false) {
-				$className = '\wcf\system\bbcode\highlighter\CHighlighter';
-			}
-			else if (mb_strpos($content, '#!/usr/bin/perl') === 0) {
-				$className = '\wcf\system\bbcode\highlighter\PerlHighlighter';
-			}
-			else if (mb_strpos($content, 'def __init__(self') !== false) {
-				$className = '\wcf\system\bbcode\highlighter\PythonHighlighter';
-			}
-			else if (Regex::compile('^#!/bin/(ba|z)?sh')->match($content)) {
-				$className = '\wcf\system\bbcode\highlighter\BashHighlighter';
-			}
-			else if (mb_strpos($content, '\\documentclass') !== false) {
-				$className = '\wcf\system\bbcode\highlighter\TexHighlighter';
-			}
-			else if (Regex::compile('[-\\+\\.,\\[\\]\\>\\<]{9}')->match($content)) {
-				// 9 times a brainfuck char in a row -> seems to be brainfuck
-				$className = '\wcf\system\bbcode\highlighter\BrainfuckHighlighter';
-			}
+			$className = $this->guessHighlighter($code, $className);
 		}
 		
 		if (!class_exists($className)) {
@@ -140,6 +100,59 @@ class CodeBBCode extends AbstractBBCode {
 				'lines' => substr_count($content, "\n") + 1
 			));
 		}
+	}
+	
+	/**
+	 * Returns the classname of a highlighter if we can guess it
+	 * 
+	 * @param	string		$code
+	 * @param	string		$className
+	 * @return	string
+	 */
+	protected static function guessHighlighter($code, $className) {
+		if (mb_strpos($content, '<?php') !== false) {
+			$className = '\wcf\system\bbcode\highlighter\PhpHighlighter';
+		}
+		else if (mb_strpos($content, '<html') !== false) {
+			$className = '\wcf\system\bbcode\highlighter\HtmlHighlighter';
+		}
+		else if (mb_strpos($content, '<?xml') === 0) {
+			$className = '\wcf\system\bbcode\highlighter\XmlHighlighter';
+		}
+		else if (	mb_strpos($content, 'SELECT') === 0
+				||	mb_strpos($content, 'UPDATE') === 0
+				||	mb_strpos($content, 'INSERT') === 0
+				||	mb_strpos($content, 'DELETE') === 0) {
+			$className = '\wcf\system\bbcode\highlighter\SqlHighlighter';
+		}
+		else if (mb_strpos($content, 'import java.') !== false) {
+			$className = '\wcf\system\bbcode\highlighter\JavaHighlighter';
+		}
+		else if (	mb_strpos($content, "---") !== false
+				&&	mb_strpos($content, "\n+++") !== false) {
+			$className = '\wcf\system\bbcode\highlighter\DiffHighlighter';
+		}
+		else if (mb_strpos($content, "\n#include ") !== false) {
+			$className = '\wcf\system\bbcode\highlighter\CHighlighter';
+		}
+		else if (mb_strpos($content, '#!/usr/bin/perl') === 0) {
+			$className = '\wcf\system\bbcode\highlighter\PerlHighlighter';
+		}
+		else if (mb_strpos($content, 'def __init__(self') !== false) {
+			$className = '\wcf\system\bbcode\highlighter\PythonHighlighter';
+		}
+		else if (Regex::compile('^#!/bin/(ba|z)?sh')->match($content)) {
+			$className = '\wcf\system\bbcode\highlighter\BashHighlighter';
+		}
+		else if (mb_strpos($content, '\\documentclass') !== false) {
+			$className = '\wcf\system\bbcode\highlighter\TexHighlighter';
+		}
+		else if (Regex::compile('[-\\+\\.,\\[\\]\\>\\<]{9}')->match($content)) {
+			// 9 times a brainfuck char in a row -> seems to be brainfuck
+			$className = '\wcf\system\bbcode\highlighter\BrainfuckHighlighter';
+		}
+		
+		return $className;
 	}
 	
 	/**
