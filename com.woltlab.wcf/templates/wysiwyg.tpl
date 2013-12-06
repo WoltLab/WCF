@@ -8,8 +8,7 @@
 <script data-relocate="true">
 //<![CDATA[
 $(function() {
-	// exclude Android (not properly supported by CKEditor yet)
-	if (navigator.userAgent.match(/[aA]ndroid/)) {
+	if (!$.browser.ckeditor) {
 		return;
 	}
 

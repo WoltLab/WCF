@@ -26,9 +26,9 @@
 							<td class="columnText">{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</td>
 							<td class="columnText">
 								{$package->getAccessibleVersion()->packageVersion}
-								{if $package->getAccessibleVersion()->packageUpdateVersionID != $package->getLatestVersion()->packageUpdateVersionID}
+								{*if $package->getAccessibleVersion()->packageUpdateVersionID != $package->getLatestVersion()->packageUpdateVersionID}
 									<span class="icon icon16 icon-info-sign jsTooltip" title="{lang packageVersion=$package->getLatestVersion()->packageVersion}wcf.acp.package.newerVersionAvailable{/lang}"></span>
-								{/if}
+								{/if*}
 							</td>
 							<td class="columnText">{if $package->getAccessibleVersion()->licenseURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->getAccessibleVersion()->licenseURL|rawurlencode}" class="externalURL">{$package->getAccessibleVersion()->license}</a>{else}{$package->getAccessibleVersion()->license}{/if}</td>
 							<td class="columnDate">{@$package->getAccessibleVersion()->packageDate|time}</td>

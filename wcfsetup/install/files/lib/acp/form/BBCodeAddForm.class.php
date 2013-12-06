@@ -216,7 +216,7 @@ class BBCodeAddForm extends AbstractForm {
 		parent::save();
 		
 		// save bbcode
-		$this->objectAction = new BBCodeAction(array(), 'create', array('data' => array(
+		$this->objectAction = new BBCodeAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'allowedChildren' => $this->allowedChildren,
 			'bbcodeTag' => $this->bbcodeTag,
 			'buttonLabel' => $this->buttonLabel,
@@ -227,7 +227,7 @@ class BBCodeAddForm extends AbstractForm {
 			'packageID' => 1,
 			'showButton' => ($this->showButton ? 1 : 0),
 			'wysiwygIcon' => $this->wysiwygIcon
-		)));
+		))));
 		$returnValues = $this->objectAction->executeAction();
 		foreach ($this->attributes as $attribute) {
 			$attributeAction = new BBCodeAttributeAction(array(), 'create', array('data' => array(

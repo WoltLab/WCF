@@ -268,7 +268,7 @@ class PackageInstallationDispatcher {
 			$package = $this->getPackage();
 			// check if we're doing an iterative update of the same package
 			if ($this->previousPackageData !== null && $this->getPackage()->package == $this->previousPackageData['package']) {
-				if (version_compare($this->getPackage()->packageVersion, $this->previousPackageData['packageVersion'], '<')) {
+				if (Package::compareVersion($this->getPackage()->packageVersion, $this->previousPackageData['packageVersion'], '<')) {
 					// fake package to simulate the package version required by current archive
 					$this->getPackage()->setPackageVersion($this->previousPackageData['packageVersion']);
 				}

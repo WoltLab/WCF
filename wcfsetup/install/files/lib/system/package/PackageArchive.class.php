@@ -313,7 +313,7 @@ class PackageArchive {
 		}
 		
 		// get php requirements
-		$requirements = $xpath->query('./ns:phprequirements', $package);
+		/*$requirements = $xpath->query('./ns:phprequirements', $package);
 		foreach ($requirements as $requirement) {
 			$elements = $xpath->query('child::*', $requirement);
 			foreach ($elements as $element) {
@@ -339,7 +339,7 @@ class PackageArchive {
 					break;
 				}
 			}
-		}
+		}*/
 		
 		// add com.woltlab.wcf to package requirements
 		if (!isset($this->requirements['com.woltlab.wcf']) && $this->packageInfo['name'] != 'com.woltlab.wcf') {

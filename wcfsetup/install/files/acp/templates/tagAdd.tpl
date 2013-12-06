@@ -67,13 +67,6 @@
 					<dd>
 						<div id="synonymList" class="editableItemList"></div>
 						<input id="synonyms" type="text" value="" class="long" />
-						{if $errorField == 'synonyms'}
-							<small class="innerError">
-								{if $errorType == 'duplicate'}
-									{lang}wcf.acp.tag.error.synonym.duplicate{/lang}
-								{/if}
-							</small>
-						{/if}
 					</dd>
 				</dl>
 				

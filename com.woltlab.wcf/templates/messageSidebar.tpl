@@ -70,7 +70,7 @@
 				<div class="userCredits">
 					<dl class="plain dataList">
 						{content}
-							{if MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && $userProfile->likesReceived}
+							{if MODULE_LIKE && MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && $userProfile->likesReceived}
 								<dt>{lang}wcf.like.likesReceived{/lang}</dt>
 								<dd>{#$userProfile->likesReceived}</dd>
 							{/if}

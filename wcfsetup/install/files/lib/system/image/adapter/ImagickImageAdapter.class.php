@@ -82,9 +82,14 @@ class ImagickImageAdapter implements IImageAdapter {
 	 * @see	\wcf\system\image\adapter\IImageAdapter::createThumbnail()
 	 */
 	public function createThumbnail($maxWidth, $maxHeight, $obtainDimensions = true) {
-		/* todo: obtainDimensions=false doesn't work */
 		$thumbnail = clone $this->imagick;
-		$thumbnail->cropThumbnailImage($maxWidth, $maxHeight);
+		
+		if ($obtainDimensions) {
+			$thumbnail->thumbnailImage($maxWidth, $maxHeight, true);
+		}
+		else {
+			$thumbnail->cropThumbnailImage($maxWidth, $maxHeight);
+		}
 		
 		return $thumbnail;
 	}

@@ -150,13 +150,13 @@ class UserGroupEditForm extends UserGroupAddForm {
 		}
 		
 		$data = array(
-			'data' => array_merge(array(
+			'data' => array_merge($this->additionalFields, array(
 				'groupName' => $this->groupName,
 				'groupDescription' => $this->groupDescription,
 				'priority' => $this->priority,
 				'userOnlineMarking' => $this->userOnlineMarking,
 				'showOnTeamPage' => $this->showOnTeamPage
-			), $this->additionalFields),
+			)),
 			'options' => $optionValues
 		);
 		$this->objectAction = new UserGroupAction(array($this->groupID), 'update', $data);

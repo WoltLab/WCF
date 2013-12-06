@@ -72,11 +72,11 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	public function save() {
 		AbstractForm::save();
 		
-		$this->objectAction = new TemplateGroupAction(array($this->templateGroup), 'update', array('data' => array(
+		$this->objectAction = new TemplateGroupAction(array($this->templateGroup), 'update', array('data' => array_merge($this->additionalFields, array(
 			'templateGroupName' => $this->templateGroupName,
 			'templateGroupFolderName' => $this->templateGroupFolderName,
 			'parentTemplateGroupID' => ($this->parentTemplateGroupID ?: null)
-		)));
+		))));
 		$this->objectAction->executeAction();
 		$this->saved();
 		

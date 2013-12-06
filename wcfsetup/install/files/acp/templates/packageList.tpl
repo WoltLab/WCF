@@ -4,7 +4,6 @@
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.acp.package.view.button.uninstall.sure': '{lang}wcf.acp.package.view.button.uninstall.sure{/lang}',
 			'wcf.acp.package.searchForUpdates': '{lang}wcf.acp.package.searchForUpdates{/lang}',
 			'wcf.acp.package.searchForUpdates.noResults': '{lang}wcf.acp.package.searchForUpdates.noResults{/lang}',
 			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}'

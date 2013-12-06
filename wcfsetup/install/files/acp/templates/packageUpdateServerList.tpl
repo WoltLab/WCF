@@ -13,10 +13,6 @@
 	<h1>{lang}wcf.acp.updateServer.list{/lang}</h1>
 </header>
 
-{if $deletedPackageUpdateServerID}
-	<p class="success">{lang}wcf.acp.updateServer.delete.success{/lang}</p>
-{/if}
-
 <div class="contentNavigation">
 	{pages print=true assign=pagesLinks controller="PackageUpdateServerList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	

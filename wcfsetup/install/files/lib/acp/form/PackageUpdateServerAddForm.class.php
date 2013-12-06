@@ -80,11 +80,11 @@ class PackageUpdateServerAddForm extends AbstractForm {
 		parent::save();
 		
 		// save server
-		$this->objectAction = new PackageUpdateServerAction(array(), 'create', array('data' => array(
+		$this->objectAction = new PackageUpdateServerAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'serverURL' => $this->serverURL,
 			'loginUsername' => $this->loginUsername,
 			'loginPassword' => $this->loginPassword
-		)));
+		))));
 		$this->objectAction->executeAction();
 		$this->saved();
 		

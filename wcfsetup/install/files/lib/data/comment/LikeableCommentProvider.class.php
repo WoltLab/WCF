@@ -35,6 +35,8 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILik
 	 * @see	\wcf\data\like\ILikeObjectTypeProvider::checkPermissions()
 	 */
 	public function checkPermissions(ILikeObject $comment) {
+		if (!$comment->commentID) return false;
+		
 		$objectType = CommentHandler::getInstance()->getObjectType($comment->objectTypeID);
 		return CommentHandler::getInstance()->getCommentManager($objectType->objectType)->isAccessible($comment->objectID);
 	}

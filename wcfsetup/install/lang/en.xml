@@ -186,11 +186,11 @@ Examples for medium ID detection:
 		<br /><strong>{$exception->getMessage()}<br />{$exception->getErrorDesc()}</strong>]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Unable to find a valid installation with the given path.]]></item>
 		<item name="wcf.acp.dataImport.configure.settings"><![CDATA[Settings]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[TOOD: Verhalten bei sich überschneidenden Benutzeraccounts]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[Behavior for colliding user acounts]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.1"><![CDATA[Rename users]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"><![CDATA[TOOD: Benutzeraccounts mit identischen Namen zusammenlegen]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"><![CDATA[TOOD: Benutzeraccounts mit identischen Namen und E-Mail-Adressen zusammenlegen]]></item>
-		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.4"><![CDATA[TOOD: Benutzeraccounts mit identischen E-Mail-Adressen zusammenlegen]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.2"><![CDATA[Merge users with same account name]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.3"><![CDATA[Merge users with same account name and email address]]></item>
+		<item name="wcf.acp.dataImport.configure.settings.userMergeMode.4"><![CDATA[Merge users with same email address]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[User groups]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[User profile fields]]></item>
@@ -201,6 +201,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Replies to wall comments]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smilies]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley.category"><![CDATA[Smiley categories]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[Do you really want to delete the existing import mappings?]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[There are import mappings created by a previous import process, these mappings are used to properly handle connections between data from the imported forum and this one. In case you’ve imported all desired data, you can <a id="deleteMapping">delete</a> the mappings. It is strongly recommended to keep these mappings as long as there is still data to be imported now or in the future.]]></item>
 		<item name="wcf.acp.dataImport.exporter"><![CDATA[Data Source]]></item>
@@ -983,6 +984,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.url"><![CDATA[Website]]></item>
 		<item name="wcf.acp.package.error.uploadFailed"><![CDATA[Uploading of specified file has failed.]]></item>
 		<item name="wcf.acp.package.updates"><![CDATA[Updates]]></item>
+		<item name="wcf.acp.package.error.downloadFailed"><![CDATA[Downloading package{if $__downloadPackage|isset} “{$__downloadPackage}”{/if} has failed.]]></item>
+		<item name="wcf.acp.package.newVersion"><![CDATA[New Version]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -1327,6 +1330,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP Class Name for Output]]></item>
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Allows custom output formatting using a PHP class.]]></item>
 		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
+		<item name="wcf.acp.user.option.error.noCategories"><![CDATA[Please <a href="{link controller='UserOptionCategoryAdd'}{/link}">add a user field category</a> prior to creating custom user fields.]]></item>
 		<item name="wcf.acp.user.search.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.user.search.conditions.states"><![CDATA[States]]></item>
 		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Banned]]></item>

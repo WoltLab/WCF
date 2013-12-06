@@ -79,11 +79,11 @@ class UserOptionCategoryAddForm extends AbstractForm {
 		parent::save();
 		
 		// save label
-		$this->objectAction = new UserOptionCategoryAction(array(), 'create', array('data' => array(
+		$this->objectAction = new UserOptionCategoryAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'parentCategoryName' => 'profile',
 			'categoryName' => $this->categoryName,
 			'showOrder' => $this->showOrder
-		)));
+		))));
 		$this->objectAction->executeAction();
 		
 		// update name

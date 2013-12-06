@@ -59,11 +59,11 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 		AbstractForm::save();
 		
 		// update media-provider
-		$this->objectAction = new BBCodeMediaProviderAction(array($this->providerID), 'update', array('data' => array(
+		$this->objectAction = new BBCodeMediaProviderAction(array($this->providerID), 'update', array('data' => array_merge($this->additionalFields, array(
 			'title' => $this->title,
 			'regex' => $this->regex,
 			'html' => $this->html
-		)));
+		))));
 		$this->objectAction->executeAction();
 		
 		$this->saved();

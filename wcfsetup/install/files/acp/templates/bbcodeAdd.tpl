@@ -238,7 +238,7 @@
 							{if $errorField == 'attributeValidationPattern'|concat:$attribute->attributeNo}
 								<small class="innerError">
 									{if $errorType == 'notValid'}
-										{lang}wcf.acp.bbcode.attribute.error.validationPattern.notValid{/lang}
+										{lang}wcf.acp.bbcode.attribute.validationPattern.error.notValid{/lang}
 									{/if}
 								</small>
 							{/if}

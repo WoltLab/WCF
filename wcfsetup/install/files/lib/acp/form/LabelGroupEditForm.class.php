@@ -60,10 +60,10 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 		AbstractForm::save();
 		
 		// update label
-		$this->objectAction = new LabelGroupAction(array($this->groupID), 'update', array('data' => array(
+		$this->objectAction = new LabelGroupAction(array($this->groupID), 'update', array('data' => array_merge($this->additionalFields, array(
 			'forceSelection' => ($this->forceSelection ? 1 : 0),
 			'groupName' => $this->groupName
-		)));
+		))));
 		$this->objectAction->executeAction();
 		
 		// update acl

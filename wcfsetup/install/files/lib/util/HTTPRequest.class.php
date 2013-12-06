@@ -202,7 +202,6 @@ final class HTTPRequest {
 		$this->useSSL = $parsedUrl['scheme'] === 'https';
 		$this->host = $parsedUrl['host'];
 		$this->port = isset($parsedUrl['port']) ? $parsedUrl['port'] : ($this->useSSL ? 443 : 80);
-		$this->path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '/';
 		$this->query = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
 		
 		// update the 'Host:' header if URL has changed
@@ -314,13 +313,26 @@ final class HTTPRequest {
 				catch (SystemException $e) {
 					throw new SystemException("Received 'Location: ".$this->replyHeaders['Location']."' from server, which is invalid.", 0, $e);
 				}
-				$newRequest->execute();
 				
-				// update data with data from the inner request
-				$this->url = $newRequest->url;
-				$this->statusCode = $newRequest->statusCode;
-				$this->replyHeaders = $newRequest->replyHeaders;
-				$this->replyBody = $newRequest->replyBody;
+				try {
+					$newRequest->execute();
+					
+					// update data with data from the inner request
+					$this->url = $newRequest->url;
+					$this->statusCode = $newRequest->statusCode;
+					$this->replyHeaders = $newRequest->replyHeaders;
+					$this->replyBody = $newRequest->replyBody;
+				}
+				catch (SystemException $e) {
+					// update data with data from the inner request
+					$this->url = $newRequest->url;
+					$this->statusCode = $newRequest->statusCode;
+					$this->replyHeaders = $newRequest->replyHeaders;
+					$this->replyBody = $newRequest->replyBody;
+					
+					throw $e;
+				}
+				
 				return;
 			break;
 			

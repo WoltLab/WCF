@@ -107,6 +107,7 @@
 			WCF.Dropdown.init();
 			WCF.System.PageNavigation.init('.pageNavigation');
 			WCF.Date.Picker.init();
+			WCF.System.FlexibleMenu.init();
 			
 			{if $__wcf->user->userID}
 				new WCF.ACP.Search();
@@ -152,10 +153,10 @@
 							
 							{if PACKAGE_ID > 1}
 								<li id="jumpToPage" class="dropdown">
-									<a class="dropdownToggle" data-toggle="jumpToPage"><span class="icon icon16 icon-home"></span> <span>{lang}wcf.global.jumpToPage{/lang}</span></a>
+									<a href="{link forceFrontend=true}{/link}" class="dropdownToggle" data-toggle="jumpToPage"><span class="icon icon16 icon-home"></span> <span>{lang}wcf.global.jumpToPage{/lang}</span></a>
 									<ul class="dropdownMenu">
-										{foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=menuItem}
-											<li><a href="{$menuItem->getProcessor()->getLink()}">{lang}{$menuItem->menuItem}{/lang}</a></li>
+										{foreach from=$__wcf->getPageMenu()->getMenuItems('header') item=_menuItem}
+											<li><a href="{$_menuItem->getProcessor()->getLink()}">{lang}{$_menuItem->menuItem}{/lang}</a></li>
 										{/foreach}
 									</ul>
 								</li>
@@ -171,10 +172,10 @@
 								<a class="dropdownToggle" data-toggle="woltlab"><span class="icon icon16 icon-info-sign"></span> <span>WoltLab&reg;</span></a>
 								
 								<ul class="dropdownMenu">
-									<li><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}">{lang}wcf.acp.index.woltlab.website{/lang}</a></li>
-									<li><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com/forum/"|rawurlencode}">{lang}wcf.acp.index.woltlab.forums{/lang}</a></li>
-									{* @todo<li><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}">{lang}wcf.acp.index.woltlab.tickets{/lang}</a></li>*}
-									<li><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com/pluginstore/"|rawurlencode}">{lang}wcf.acp.index.woltlab.pluginStore{/lang}</a></li>
+									<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}">{lang}wcf.acp.index.woltlab.website{/lang}</a></li>
+									<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com/forum/"|rawurlencode}">{lang}wcf.acp.index.woltlab.forums{/lang}</a></li>
+									{* @todo<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}">{lang}wcf.acp.index.woltlab.tickets{/lang}</a></li>*}
+									<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com/pluginstore/"|rawurlencode}">{lang}wcf.acp.index.woltlab.pluginStore{/lang}</a></li>
 								</ul>
 							</li>
 							

@@ -126,7 +126,7 @@
 					<dl>
 						<dt><label for="email">{lang}wcf.user.email{/lang}</label></dt>
 						<dd>
-							<input type="email" id="email" name="email" value="{$email}" class="medium" />
+							<input type="text" id="email" name="email" value="{$email}" class="medium" />
 						</dd>
 					</dl>
 				{/if}

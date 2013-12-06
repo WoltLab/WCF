@@ -56,9 +56,9 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 		
 		I18nHandler::getInstance()->save('categoryName', 'wcf.user.option.category.'.$this->category->categoryName, 'wcf.user.option');
 		
-		$this->objectAction = new UserOptionCategoryAction(array($this->category), 'update', array('data' => array(
+		$this->objectAction = new UserOptionCategoryAction(array($this->category), 'update', array('data' => array_merge($this->additionalFields, array(
 			'showOrder' => $this->showOrder
-		)));
+		))));
 		$this->objectAction->executeAction();
 		$this->saved();
 		

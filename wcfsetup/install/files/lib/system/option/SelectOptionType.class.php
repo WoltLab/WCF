@@ -53,7 +53,7 @@ class SelectOptionType extends RadioButtonOptionType {
 			foreach ($options as $key => $optionData) {
 				$tmp = explode(',', $optionData);
 				
-				foreach ($optionData as $item) {
+				foreach ($tmp as $item) {
 					if ($item{0} == '!') {
 						if (!empty($disableOptions)) $disableOptions .= ',';
 						$disableOptions .= "{ value: '".$key."', option: '".mb_substr($item, 1)."' }";

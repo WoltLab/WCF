@@ -202,8 +202,9 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Pinnwand-Kommentar-Antworten]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smileys]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley.category"><![CDATA[Smiley-Kategorien]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[Wollen Sie die bestehenden Zuordnungen wirklich löschen?]]></item>
-		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet um Inhalte aus dem importierten Forum einwandfrei zu zuordnen. Wenn Sie den Import-Vorgang vollständig abgeschlossen haben, können Sie diese Zuordnungen <a id="deleteMapping">löschen</a>. Sie sollten die Zuordnungen nicht löschen, wenn Sie jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernommen wollen.]]></item>
+		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet, um Inhalte aus dem importierten Forum einwandfrei zuzuordnen. Wenn Sie den Import-Vorgang vollständig abgeschlossen haben, können Sie diese Zuordnungen <a id="deleteMapping">löschen</a>. Sie sollten die Zuordnungen nicht löschen, wenn Sie jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernehmen wollen.]]></item>
 		<item name="wcf.acp.dataImport.exporter"><![CDATA[Datenquelle]]></item>
 		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Datenquelle wählen]]></item>
 		<item name="wcf.acp.dataImport.selectExporter.error.notValid"><![CDATA[Die ausgewählte Datenquelle ist ungültig.]]></item>
@@ -983,6 +984,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.url"><![CDATA[Website]]></item>
 		<item name="wcf.acp.package.error.uploadFailed"><![CDATA[Das Hochladen der ausgewählten Datei ist fehlgeschlagen.]]></item>
 		<item name="wcf.acp.package.updates"><![CDATA[Aktualisierungen]]></item>
+		<item name="wcf.acp.package.error.downloadFailed"><![CDATA[Das Herunterladen des Paketes{if $__downloadPackage|isset} „{$__downloadPackage}“{/if} ist fehlgeschlagen.]]></item>
+		<item name="wcf.acp.package.newVersion"><![CDATA[Neue Version]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -1327,6 +1330,7 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.option.outputClass"><![CDATA[PHP-Klasse für Ausgabe]]></item>
 		<item name="wcf.acp.user.option.outputClass.description"><![CDATA[Erlaubt die Angabe einer speziellen PHP-Klasse für die Ausgabeformatierung bei der Anzeige des Feldes.]]></item>
 		<item name="wcf.acp.user.option.outputClass.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegeben Namen existiert nicht.]]></item>
+		<item name="wcf.acp.user.option.error.noCategories"><![CDATA[Bevor Sie ein Benutzerprofilfeld hinzufügen können, müssen Sie eine <a href="{link controller='UserOptionCategoryAdd'}{/link}">Benutzerprofilfeld-Kategorie hinzufügen</a>.]]></item>
 		<item name="wcf.acp.user.search.conditions"><![CDATA[Bedingungen]]></item>
 		<item name="wcf.acp.user.search.conditions.states"><![CDATA[Zustände]]></item>
 		<item name="wcf.acp.user.search.conditions.state.banned"><![CDATA[Gesperrt]]></item>

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
-use wcf\system\WCF;
 
 /**
  * Shows information about available update package servers.
@@ -40,37 +39,11 @@ class PackageUpdateServerListPage extends SortablePage {
 	public $objectListClassName = 'wcf\data\package\update\server\PackageUpdateServerList';
 	
 	/**
-	 * id of a package update server that has just been deleted
-	 * @var	integer
-	 */
-	public $deletedPackageUpdateServerID = 0;
-	
-	/**
-	 * @see	\wcf\page\IPage::readParameters()
-	 */
-	public function readParameters() {
-		parent::readParameters();
-		
-		if (isset($_REQUEST['deletedPackageUpdateServerID'])) $this->deletedPackageUpdateServerID = intval($_REQUEST['deletedPackageUpdateServerID']);
-	}
-	
-	/**
 	 * @see	\wcf\page\MultipleLinkPage::readObjects()
 	 */
 	public function readObjects() {
 		$this->sqlOrderBy = ($this->sortField != 'packages' ? 'package_update_server.' : '') . $this->sortField.' '.$this->sortOrder;
 		
 		parent::readObjects();
-	}
-	
-	/**
-	 * @see	\wcf\page\IPage::assignVariables()
-	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		WCF::getTPL()->assign(array(
-			'deletedPackageUpdateServerID' => $this->deletedPackageUpdateServerID
-		));
 	}
 }

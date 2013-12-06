@@ -230,7 +230,7 @@ WCF.Message.Preview = Class.extend({
 	 * @return	string
 	 */
 	_getMessage: function() {
-		if ($.browser.mobile) {
+		if (!$.browser.ckeditor) {
 			return this._messageField.val();
 		}
 		else if (this._messageField.data('ckeditorInstance')) {
@@ -690,7 +690,7 @@ WCF.Message.QuickReply = Class.extend({
 			if (this._quoteManager) {
 				// check if message field is empty
 				var $empty = true;
-				if (CKEDITOR) {
+				if ($.browser.ckeditor) {
 					var self = this;
 					this._messageField.ckeditor(function() {
 						$empty = (!$.trim(this.getData()).length);
@@ -717,16 +717,12 @@ WCF.Message.QuickReply = Class.extend({
 			this._quoteManager.insertQuotes(this._getClassName(), this._getObjectID(), $.proxy(this._insertQuotes, this));
 		}
 		
-		/*new WCF.PeriodicalExecuter($.proxy(function(pe) {
-			pe.stop();
-			*/
-			if (CKEDITOR) {
-				this._messageField.ckeditorGet().ui.editor.focus();
-			}
-			else {
-				this._messageField.focus();
-			}
-		//}, this), 250);
+		if ($.browser.ckeditor) {
+			this._messageField.ckeditorGet().ui.editor.focus();
+		}
+		else {
+			this._messageField.focus();
+		}
 	},
 	
 	/**
@@ -748,11 +744,11 @@ WCF.Message.QuickReply = Class.extend({
 			return;
 		}
 		
-		if ($.browser.mobile) {
-			this._messageField.val(data.returnValues.template);
+		if ($.browser.ckeditor) {
+			this._messageField.ckeditorGet().insertText(data.returnValues.template);
 		}
 		else {
-			this._messageField.ckeditorGet().insertText(data.returnValues.template);
+			this._messageField.val(data.returnValues.template);
 		}
 	},
 	
@@ -766,12 +762,12 @@ WCF.Message.QuickReply = Class.extend({
 		
 		var $message = '';
 		
-		if ($.browser.mobile) {
-			$message = $.trim(this._messageField.val());
-		}
-		else {
+		if ($.browser.ckeditor) {
 			var $ckEditor = this._messageField.ckeditorGet();
 			$message = $.trim($ckEditor.getData());
+		}
+		else {
+			$message = $.trim(this._messageField.val());
 		}
 		
 		// check if message is empty
@@ -833,12 +829,12 @@ WCF.Message.QuickReply = Class.extend({
 	_cancel: function() {
 		this._revertQuickReply(true);
 		
-		if ($.browser.mobile) {
-			this._messageField.val('');
-		}
-		else {
+		if ($.browser.ckeditor) {
 			// revert CKEditor
 			this._messageField.ckeditorGet().setData('');
+		}
+		else {
+			this._messageField.val('');
 		}
 	},
 	
@@ -878,12 +874,12 @@ WCF.Message.QuickReply = Class.extend({
 		
 		var $message = '';
 		
-		if ($.browser.mobile) {
-			$message = this._messageField.val();
-		}
-		else {
+		if ($.browser.ckeditor) {
 			var $ckEditor = this._messageField.ckeditorGet();
 			$message = $ckEditor.getData();
+		}
+		else {
+			$message = this._messageField.val();
 		}
 		
 		new WCF.Action.Proxy({
@@ -935,12 +931,12 @@ WCF.Message.QuickReply = Class.extend({
 				this._notification.show(undefined, 5000, WCF.Language.get($message));
 			}
 			
-			if ($.browser.mobile) {
-				this._messageField.val('');
-			}
-			else {
+			if ($.browser.ckeditor) {
 				// remove CKEditor contents
 				this._messageField.ckeditorGet().setData('');
+			}
+			else {
+				this._messageField.val('');
 			}
 			
 			// hide quick reply and revert it
@@ -1136,7 +1132,7 @@ WCF.Message.InlineEditor = Class.extend({
 	 */
 	_click: function(event, containerID) {
 		var $containerID = (event === null) ? containerID : $(event.currentTarget).data('containerID');
-		
+		console.debug("_click()");
 		if (this._activeElementID === '') {
 			this._activeElementID = $containerID;
 			this._prepare();
@@ -1333,16 +1329,21 @@ WCF.Message.InlineEditor = Class.extend({
 		// hide message options
 		this._container[this._activeElementID].find('.messageOptions').addClass('forceHidden');
 		
-		new WCF.PeriodicalExecuter($.proxy(function(pe) {
-			pe.stop();
-			
-			var $ckEditor = $('#' + this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID'));
-			$ckEditor.ckeditor(function() { this.ui.editor.focus(); });
-			
-			if (this._quoteManager) {
-				this._quoteManager.setAlternativeCKEditor($ckEditor);
-			}
-		}, this), 250);
+		if ($.browser.ckeditor) {
+			new WCF.PeriodicalExecuter($.proxy(function(pe) {
+				pe.stop();
+				
+				var $ckEditor = $('#' + this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID'));
+				$ckEditor.ckeditor(function() { this.ui.editor.focus(); });
+				
+				if (this._quoteManager) {
+					this._quoteManager.setAlternativeCKEditor($ckEditor);
+				}
+			}, this), 250);
+		}
+		else {
+			$('#' + this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID')).focus();
+		}
 	},
 	
 	/**
@@ -1369,12 +1370,12 @@ WCF.Message.InlineEditor = Class.extend({
 		var $objectID = $container.data('objectID');
 		var $message = '';
 		
-		if ($.browser.mobile) {
-			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
-		}
-		else {
+		if ($.browser.ckeditor) {
 			var $ckEditor = $('#' + this._messageEditorIDPrefix + $objectID).ckeditorGet();
 			$message = $ckEditor.getData();
+		}
+		else {
+			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
 		}
 		
 		this._proxy.setOption('data', {
@@ -1402,12 +1403,12 @@ WCF.Message.InlineEditor = Class.extend({
 		var $objectID = $container.data('objectID');
 		var $message = '';
 		
-		if ($.browser.mobile) {
-			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
-		}
-		else {
+		if ($.browser.ckeditor) {
 			var $ckEditor = $('#' + this._messageEditorIDPrefix + $objectID).ckeditorGet();
 			$message = $ckEditor.getData();
+		}
+		else {
+			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
 		}
 		
 		new WCF.Action.Proxy({
@@ -1461,7 +1462,7 @@ WCF.Message.InlineEditor = Class.extend({
 		this._container[this._activeElementID].find('.messageOptions').removeClass('forceHidden');
 		
 		// remove editor
-		if (!$.browser.mobile) {
+		if ($.browser.ckeditor) {
 			var $ckEditor = $('#' + this._messageEditorIDPrefix + $container.data('objectID')).ckeditorGet();
 			$ckEditor.destroy();
 		}
@@ -2530,7 +2531,7 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		// insert into ckEditor
 		var $ckEditor = null;
-		if (!$.browser.mobile) {
+		if ($.browser.ckeditor) {
 			if (this._ckEditorAlternative === null) {
 				$ckEditor = this._ckEditor.ckeditorGet();
 			}
@@ -2554,10 +2555,10 @@ WCF.Message.Quote.Manager = Class.extend({
 			// in source mode
 			var $textarea = null;
 			if (this._ckEditorAlternative === null) {
-				$textarea = ($.browser.mobile) ? this._ckEditor : this._ckEditor.next('.cke_editor_text').find('textarea');
+				$textarea = ($.browser.ckeditor) ? this._ckEditor.next('.cke_editor_text').find('textarea') : this._ckEditor;
 			}
 			else {
-				$textarea = ($.browser.mobile) ? this._ckEditorAlternative : this._ckEditorAlternative.next('.cke_editor_text').find('textarea');
+				$textarea = ($.browser.ckeditor) ? this._ckEditorAlternative.next('.cke_editor_text').find('textarea') : this._ckEditorAlternative;
 			}
 			
 			var $value = $textarea.val();
