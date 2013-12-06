@@ -82,11 +82,11 @@ class TagEditForm extends TagAddForm {
 				if (empty($synonym)) continue;
 				
 				// find existing tag
-				$synonymObj = Tag::getTag($synonym, $this->languageID);
+				$synonymObj = Tag::getTag($synonym, $this->tagObj->languageID);
 				if ($synonymObj === null) {
 					$synonymAction = new TagAction(array(), 'create', array('data' => array(
 						'name' => $synonym,
-						'languageID' => $this->languageID,
+						'languageID' => $this->tagObj->languageID,
 						'synonymFor' => $this->tagID
 					)));
 					$synonymAction->executeAction();
