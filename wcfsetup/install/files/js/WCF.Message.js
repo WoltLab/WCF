@@ -2865,37 +2865,38 @@ WCF.Message.Share.Page = Class.extend({
 	 * 
 	 * @param	string		objectName
 	 * @param	string		url
+	 * @param	boolean		appendURL
 	 */
-	_share: function(objectName, url) {
-		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription + " " + this._pageURL), 'height=600,width=600');
+	_share: function(objectName, url, appendURL) {
+		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription + (appendURL ? " " + this._pageURL : "")), 'height=600,width=600');
 	},
 	
 	/**
 	 * Shares current page with Facebook.
 	 */
 	_shareFacebook: function() {
-		this._share('facebook', 'https://www.facebook.com/sharer.php?u={pageURL}&t={text}');
+		this._share('facebook', 'https://www.facebook.com/sharer.php?u={pageURL}&t={text}', true);
 	},
 	
 	/**
 	 * Shares current page with Google Plus.
 	 */
 	_shareGoogle: function() {
-		this._share('google', 'https://plus.google.com/share?url={pageURL}');
+		this._share('google', 'https://plus.google.com/share?url={pageURL}', true);
 	},
 	
 	/**
 	 * Shares current page with Reddit.
 	 */
 	_shareReddit: function() {
-		this._share('reddit', 'https://ssl.reddit.com/submit?url={pageURL}');
+		this._share('reddit', 'https://ssl.reddit.com/submit?url={pageURL}', true);
 	},
 	
 	/**
 	 * Shares current page with Twitter.
 	 */
 	_shareTwitter: function() {
-		this._share('twitter', 'https://twitter.com/share?url={pageURL}&text={text}');
+		this._share('twitter', 'https://twitter.com/share?url={pageURL}&text={text}', false);
 	},
 	
 	/**
