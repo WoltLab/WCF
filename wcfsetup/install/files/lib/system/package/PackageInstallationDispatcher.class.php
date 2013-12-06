@@ -133,15 +133,11 @@ class PackageInstallationDispatcher {
 			
 			switch ($data['nodeType']) {
 				case 'package':
-					file_put_contents(WCF_DIR.'__installPerformance.log', "\n\nInstalling ".$nodeData['package']."\n", FILE_APPEND);
 					$step = $this->installPackage($nodeData);
 				break;
 				
 				case 'pip':
-					$start = microtime(true);
 					$step = $this->executePIP($nodeData);
-					$end = round(microtime(true) - $start, 4);
-					file_put_contents(WCF_DIR.'__installPerformance.log', "Executing PIP ".$nodeData['pip']."... {$end}\n", FILE_APPEND);
 				break;
 				
 				case 'optionalPackages':

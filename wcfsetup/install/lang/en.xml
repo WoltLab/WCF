@@ -2518,8 +2518,6 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.rank.moderator"><![CDATA[Moderator]]></item>
 		<item name="wcf.user.rank.superModerator"><![CDATA[Super-Moderator]]></item>
 		
-		<!-- TODO: These rank translations are bullshit, find something better -->
-		
 		<item name="wcf.user.rank.user0"><![CDATA[Beginner]]></item>
 		<item name="wcf.user.rank.user1"><![CDATA[Student]]></item>
 		<item name="wcf.user.rank.user2"><![CDATA[Intermediate]]></item>
