@@ -88,13 +88,15 @@ class TagAddForm extends AbstractForm {
 		}
 		
 		// validate language
-		if (empty($this->availableLanguages)) {
-			// force default language id
-			$this->languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
-		}
-		else {
-			if (!isset($this->availableLanguages[$this->languageID])) {
-				throw new UserInputException('languageID', 'notFound');
+		if (!isset($this->tagObj)) {
+			if (empty($this->availableLanguages)) {
+				// force default language id
+				$this->languageID = LanguageFactory::getInstance()->getDefaultLanguageID();
+			}
+			else {
+				if (!isset($this->availableLanguages[$this->languageID])) {
+					throw new UserInputException('languageID', 'notFound');
+				}
 			}
 		}
 		

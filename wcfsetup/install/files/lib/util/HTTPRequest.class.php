@@ -313,13 +313,26 @@ final class HTTPRequest {
 				catch (SystemException $e) {
 					throw new SystemException("Received 'Location: ".$this->replyHeaders['Location']."' from server, which is invalid.", 0, $e);
 				}
-				$newRequest->execute();
 				
-				// update data with data from the inner request
-				$this->url = $newRequest->url;
-				$this->statusCode = $newRequest->statusCode;
-				$this->replyHeaders = $newRequest->replyHeaders;
-				$this->replyBody = $newRequest->replyBody;
+				try {
+					$newRequest->execute();
+					
+					// update data with data from the inner request
+					$this->url = $newRequest->url;
+					$this->statusCode = $newRequest->statusCode;
+					$this->replyHeaders = $newRequest->replyHeaders;
+					$this->replyBody = $newRequest->replyBody;
+				}
+				catch (SystemException $e) {
+					// update data with data from the inner request
+					$this->url = $newRequest->url;
+					$this->statusCode = $newRequest->statusCode;
+					$this->replyHeaders = $newRequest->replyHeaders;
+					$this->replyBody = $newRequest->replyBody;
+					
+					throw $e;
+				}
+				
 				return;
 			break;
 			

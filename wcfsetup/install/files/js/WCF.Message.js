@@ -230,7 +230,7 @@ WCF.Message.Preview = Class.extend({
 	 * @return	string
 	 */
 	_getMessage: function() {
-		if ($.browser.mobile) {
+		if (!$.browser.ckeditor) {
 			return this._messageField.val();
 		}
 		else if (this._messageField.data('ckeditorInstance')) {
@@ -690,7 +690,7 @@ WCF.Message.QuickReply = Class.extend({
 			if (this._quoteManager) {
 				// check if message field is empty
 				var $empty = true;
-				if (CKEDITOR) {
+				if ($.browser.ckeditor) {
 					var self = this;
 					this._messageField.ckeditor(function() {
 						$empty = (!$.trim(this.getData()).length);
@@ -717,16 +717,12 @@ WCF.Message.QuickReply = Class.extend({
 			this._quoteManager.insertQuotes(this._getClassName(), this._getObjectID(), $.proxy(this._insertQuotes, this));
 		}
 		
-		/*new WCF.PeriodicalExecuter($.proxy(function(pe) {
-			pe.stop();
-			*/
-			if (CKEDITOR) {
-				this._messageField.ckeditorGet().ui.editor.focus();
-			}
-			else {
-				this._messageField.focus();
-			}
-		//}, this), 250);
+		if ($.browser.ckeditor) {
+			this._messageField.ckeditorGet().ui.editor.focus();
+		}
+		else {
+			this._messageField.focus();
+		}
 	},
 	
 	/**
@@ -748,11 +744,11 @@ WCF.Message.QuickReply = Class.extend({
 			return;
 		}
 		
-		if ($.browser.mobile) {
-			this._messageField.val(data.returnValues.template);
+		if ($.browser.ckeditor) {
+			this._messageField.ckeditorGet().insertText(data.returnValues.template);
 		}
 		else {
-			this._messageField.ckeditorGet().insertText(data.returnValues.template);
+			this._messageField.val(data.returnValues.template);
 		}
 	},
 	
@@ -766,12 +762,12 @@ WCF.Message.QuickReply = Class.extend({
 		
 		var $message = '';
 		
-		if ($.browser.mobile) {
-			$message = $.trim(this._messageField.val());
-		}
-		else {
+		if ($.browser.ckeditor) {
 			var $ckEditor = this._messageField.ckeditorGet();
 			$message = $.trim($ckEditor.getData());
+		}
+		else {
+			$message = $.trim(this._messageField.val());
 		}
 		
 		// check if message is empty
@@ -833,12 +829,12 @@ WCF.Message.QuickReply = Class.extend({
 	_cancel: function() {
 		this._revertQuickReply(true);
 		
-		if ($.browser.mobile) {
-			this._messageField.val('');
-		}
-		else {
+		if ($.browser.ckeditor) {
 			// revert CKEditor
 			this._messageField.ckeditorGet().setData('');
+		}
+		else {
+			this._messageField.val('');
 		}
 	},
 	
@@ -878,12 +874,12 @@ WCF.Message.QuickReply = Class.extend({
 		
 		var $message = '';
 		
-		if ($.browser.mobile) {
-			$message = this._messageField.val();
-		}
-		else {
+		if ($.browser.ckeditor) {
 			var $ckEditor = this._messageField.ckeditorGet();
 			$message = $ckEditor.getData();
+		}
+		else {
+			$message = this._messageField.val();
 		}
 		
 		new WCF.Action.Proxy({
@@ -935,12 +931,12 @@ WCF.Message.QuickReply = Class.extend({
 				this._notification.show(undefined, 5000, WCF.Language.get($message));
 			}
 			
-			if ($.browser.mobile) {
-				this._messageField.val('');
-			}
-			else {
+			if ($.browser.ckeditor) {
 				// remove CKEditor contents
 				this._messageField.ckeditorGet().setData('');
+			}
+			else {
+				this._messageField.val('');
 			}
 			
 			// hide quick reply and revert it
@@ -2535,7 +2531,7 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		// insert into ckEditor
 		var $ckEditor = null;
-		if (!$.browser.mobile) {
+		if ($.browser.ckeditor) {
 			if (this._ckEditorAlternative === null) {
 				$ckEditor = this._ckEditor.ckeditorGet();
 			}
@@ -2559,10 +2555,10 @@ WCF.Message.Quote.Manager = Class.extend({
 			// in source mode
 			var $textarea = null;
 			if (this._ckEditorAlternative === null) {
-				$textarea = ($.browser.mobile) ? this._ckEditor : this._ckEditor.next('.cke_editor_text').find('textarea');
+				$textarea = ($.browser.ckeditor) ? this._ckEditor.next('.cke_editor_text').find('textarea') : this._ckEditor;
 			}
 			else {
-				$textarea = ($.browser.mobile) ? this._ckEditorAlternative : this._ckEditorAlternative.next('.cke_editor_text').find('textarea');
+				$textarea = ($.browser.ckeditor) ? this._ckEditorAlternative.next('.cke_editor_text').find('textarea') : this._ckEditorAlternative;
 			}
 			
 			var $value = $textarea.val();
@@ -2869,37 +2865,38 @@ WCF.Message.Share.Page = Class.extend({
 	 * 
 	 * @param	string		objectName
 	 * @param	string		url
+	 * @param	boolean		appendURL
 	 */
-	_share: function(objectName, url) {
-		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription + " " + this._pageURL), 'height=600,width=600');
+	_share: function(objectName, url, appendURL) {
+		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription + (appendURL ? " " + this._pageURL : "")), 'height=600,width=600');
 	},
 	
 	/**
 	 * Shares current page with Facebook.
 	 */
 	_shareFacebook: function() {
-		this._share('facebook', 'https://www.facebook.com/sharer.php?u={pageURL}&t={text}');
+		this._share('facebook', 'https://www.facebook.com/sharer.php?u={pageURL}&t={text}', true);
 	},
 	
 	/**
 	 * Shares current page with Google Plus.
 	 */
 	_shareGoogle: function() {
-		this._share('google', 'https://plus.google.com/share?url={pageURL}');
+		this._share('google', 'https://plus.google.com/share?url={pageURL}', true);
 	},
 	
 	/**
 	 * Shares current page with Reddit.
 	 */
 	_shareReddit: function() {
-		this._share('reddit', 'https://ssl.reddit.com/submit?url={pageURL}');
+		this._share('reddit', 'https://ssl.reddit.com/submit?url={pageURL}', true);
 	},
 	
 	/**
 	 * Shares current page with Twitter.
 	 */
 	_shareTwitter: function() {
-		this._share('twitter', 'https://twitter.com/share?url={pageURL}&text={text}');
+		this._share('twitter', 'https://twitter.com/share?url={pageURL}&text={text}', false);
 	},
 	
 	/**
