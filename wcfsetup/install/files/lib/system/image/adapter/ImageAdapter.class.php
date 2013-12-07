@@ -88,14 +88,14 @@ class ImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::resize()
 	 */
-	public function resize($originX, $originY, $originWidth, $originHeight, $targetX, $targetY, $targetWidth, $targetHeight) {
+	public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight) {
 		// use origin dimensions if target dimensions are both zero
 		if ($targetWidth == 0 && $targetHeight == 0) {
 			$targetWidth = $originWidth;
 			$targetHeight = $originHeight;
 		}
 		
-		$this->adapter->resize($originX, $originY, $originWidth, $originHeight, $targetX, $targetY, $targetWidth, $targetHeight);
+		$this->adapter->resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight);
 	}
 	
 	/**

@@ -63,13 +63,11 @@ interface IImageAdapter {
 	 * @param	integer		$originY
 	 * @param	integer		$originWidth
 	 * @param	integer		$originHeight
-	 * @param	integer		$targetX
-	 * @param	integer		$targetY
 	 * @param	integer		$targetWidth
 	 * @param	integer		$targetHeight
 	 * @see		\wcf\system\image\adapter\IImageAdapter::getImage()
 	 */
-	public function resize($originX, $originY, $originWidth, $originHeight, $targetX, $targetY, $targetWidth, $targetHeight);
+	public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight);
 	
 	/**
 	 * Draws a rectangle, overwrites image resource within instance.
