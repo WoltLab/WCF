@@ -114,6 +114,12 @@ class WCF {
 	protected static $tplObj = null;
 	
 	/**
+	 * true if Zend Opcache is loaded and enabled
+	 * @var	boolean
+	 */
+	protected static $zendOpcacheEnabled = null;
+	
+	/**
 	 * Calls all init functions of the WCF class.
 	 */
 	public function __construct() {
@@ -730,6 +736,30 @@ class WCF {
 		}
 		
 		return $baseHref . $path;
+	}
+	
+	/**
+	 * Resets Zend Opcache cache if installed and enabled.
+	 * 
+	 * @param	string		$script
+	 */
+	public static function resetZendOpcache($script = '') {
+		if (self::$zendOpcacheEnabled === null) {
+			if (extension_loaded('Zend Opcache') && @ini_get('opcache.enable')) {
+				self::$zendOpcacheEnabled = true;
+			}
+			
+			self::$zendOpcacheEnabled = false;
+		}
+		
+		if (self::$zendOpcacheEnabled) {
+			if (empty($script)) {
+				opcache_reset();
+			}
+			else {
+				opcache_invalidate($script, true);
+			}
+		}
 	}
 	
 	/**
