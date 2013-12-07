@@ -175,6 +175,12 @@
 		{if $__sessionKeepAlive|isset}
 			new WCF.System.KeepAlive({@$__sessionKeepAlive});
 		{/if}
+		
+		if ($.browser.msie) {
+			window.onbeforeunload = function() {
+				/* Prevent "Back navigation caching" (http://msdn.microsoft.com/en-us/library/ie/dn265017%28v=vs.85%29.aspx) */
+			};
+		}
 	});
 	//]]>
 </script>

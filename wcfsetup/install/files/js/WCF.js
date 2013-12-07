@@ -159,6 +159,12 @@ String.prototype.hashCode = function() {
 	
 	// CKEditor support (disabled for Android & Windows Phone)
 	jQuery.browser.ckeditor = (navigator.userAgent.match(/(Android|Windows Phone)/i)) ? false : true;
+	
+	// properly detect IE11
+	if (jQuery.browser.mozilla && ua.match(/trident/)) {
+		jQuery.browser.mozilla = false;
+		jQuery.browser.msie = true;
+	}
 })();
 
 /**
