@@ -149,6 +149,13 @@ interface IImageAdapter {
 	public function getHeight();
 	
 	/**
+	 * Rotates an image the specified number of degrees.
+	 * 
+	 * @param	float		$degrees	number of degrees to rotate the image clockwise
+	 */
+	public function rotate($degrees);
+	
+	/**
 	 * Determines if an image adapter is supported.
 	 * 
 	 * @return	boolean

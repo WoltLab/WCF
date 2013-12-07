@@ -175,6 +175,17 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::rotate()
+	 */
+	public function rotate($degrees) {
+		if ($degrees > 360.0 || $degrees < 0.0) {
+			throw new SystemException("Degress must be a value between 0 and 360.");
+		}
+		
+		return $this->adapter->rotate($degrees);
+	}
+	
+	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::isSupported()
 	 */
 	public static function isSupported() {

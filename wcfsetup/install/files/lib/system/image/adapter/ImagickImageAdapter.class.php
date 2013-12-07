@@ -193,6 +193,16 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::rotate()
+	 */
+	public function rotate($degrees) {
+		$image = clone $this->imagick;
+		$image->rotateImage(($this->color ?: new \ImagickPixel()), $degrees);
+		
+		return $image;
+	}
+	
+	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::isSupported()
 	 */
 	public static function isSupported() {
