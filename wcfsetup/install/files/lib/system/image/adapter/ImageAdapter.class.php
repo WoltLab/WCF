@@ -88,14 +88,14 @@ class ImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::resize()
 	 */
-	public function resize($originX, $originY, $originWidth, $originHeight, $targetX, $targetY, $targetWidth, $targetHeight) {
+	public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight) {
 		// use origin dimensions if target dimensions are both zero
 		if ($targetWidth == 0 && $targetHeight == 0) {
 			$targetWidth = $originWidth;
 			$targetHeight = $originHeight;
 		}
 		
-		$this->adapter->resize($originX, $originY, $originWidth, $originHeight, $targetX, $targetY, $targetWidth, $targetHeight);
+		$this->adapter->resize($originX, $originY, $originWidth, $originHeight, $targetWidth, $targetHeight);
 	}
 	
 	/**
@@ -172,6 +172,17 @@ class ImageAdapter implements IImageAdapter {
 	 */
 	public function getHeight() {
 		return $this->adapter->getHeight();
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::rotate()
+	 */
+	public function rotate($degrees) {
+		if ($degrees > 360.0 || $degrees < 0.0) {
+			throw new SystemException("Degress must be a value between 0 and 360.");
+		}
+		
+		return $this->adapter->rotate($degrees);
 	}
 	
 	/**

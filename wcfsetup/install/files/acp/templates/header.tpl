@@ -174,7 +174,7 @@
 								<ul class="dropdownMenu">
 									<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}">{lang}wcf.acp.index.woltlab.website{/lang}</a></li>
 									<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com/forum/"|rawurlencode}">{lang}wcf.acp.index.woltlab.forums{/lang}</a></li>
-									{* @todo<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}">{lang}wcf.acp.index.woltlab.tickets{/lang}</a></li>*}
+									<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com/index.php/TicketAdd/"|rawurlencode}">{lang}wcf.acp.index.woltlab.tickets{/lang}</a></li>
 									<li><a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com/pluginstore/"|rawurlencode}">{lang}wcf.acp.index.woltlab.pluginStore{/lang}</a></li>
 								</ul>
 							</li>

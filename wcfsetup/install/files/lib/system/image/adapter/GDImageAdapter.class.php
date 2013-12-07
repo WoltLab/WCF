@@ -158,11 +158,11 @@ class GDImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::resize()
 	 */
-	public function resize($originX, $originY, $originWidth, $originHeight, $targetX = 0, $targetY = 0, $targetWidth = 0, $targetHeight = 0) {
+	public function resize($originX, $originY, $originWidth, $originHeight, $targetWidth = 0, $targetHeight = 0) {
 		$image = imageCreateTrueColor($targetWidth, $targetHeight);
 		imageAlphaBlending($image, false);
 		
-		imageCopyResampled($image, $this->image, $targetX, $targetY, $originX, $originY, $targetWidth, $targetHeight, $originWidth, $originHeight);
+		imageCopyResampled($image, $this->image, 0, 0, $originX, $originY, $targetWidth, $targetHeight, $originWidth, $originHeight);
 		imageSaveAlpha($image, true);
 		
 		// reload image to update image resource, width and height
@@ -259,6 +259,14 @@ class GDImageAdapter implements IImageAdapter {
 	 */
 	public function getImage() {
 		return $this->image;
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::rotate()
+	 */
+	public function rotate($degrees) {
+		// imagerotate interpretes degress as counter-clockwise
+		return imagerotate($this->image, (360.0 - $degrees), ($this->color ?: 0));
 	}
 	
 	/**
