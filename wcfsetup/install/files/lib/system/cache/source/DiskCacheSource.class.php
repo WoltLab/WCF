@@ -35,8 +35,6 @@ class DiskCacheSource implements ICacheSource {
 		else {
 			$this->removeFiles('cache.'.$cacheName.'.php');
 		}
-		
-		WCF::resetZendOpcache();
 	}
 	
 	/**
@@ -104,6 +102,8 @@ class DiskCacheSource implements ICacheSource {
 		$this->getDirectoryUtil()->executeCallback(new Callback(function ($filename) {
 			if (!@touch($filename, 1)) {
 				@unlink($filename);
+				
+				WCF::resetZendOpcache($filename);
 			}
 		}), new Regex('^'.$directory.$pattern.'$', Regex::CASE_INSENSITIVE));
 	}

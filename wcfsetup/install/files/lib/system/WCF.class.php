@@ -745,11 +745,12 @@ class WCF {
 	 */
 	public static function resetZendOpcache($script = '') {
 		if (self::$zendOpcacheEnabled === null) {
+			self::$zendOpcacheEnabled = false;
+			
 			if (extension_loaded('Zend Opcache') && @ini_get('opcache.enable')) {
 				self::$zendOpcacheEnabled = true;
 			}
 			
-			self::$zendOpcacheEnabled = false;
 		}
 		
 		if (self::$zendOpcacheEnabled) {
