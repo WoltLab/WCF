@@ -1,6 +1,5 @@
 <?php
 namespace wcf\action;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
@@ -56,10 +55,13 @@ class NotificationDisableAction extends AbstractAction {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['eventID'])) $this->eventID = intval($_REQUEST['eventID']);
-		$this->event = new UserNotificationEvent($this->eventID);
-		if (!$this->event->eventID) {
-			throw new IllegalLinkException();
+		if (isset($_REQUEST['eventID'])) {
+			$this->eventID = intval($_REQUEST['eventID']);
+			
+			$this->event = new UserNotificationEvent($this->eventID);
+			if (!$this->event->eventID) {
+				throw new IllegalLinkException();
+			}
 		}
 		
 		if (isset($_REQUEST['userID'])) $this->userID = intval($_REQUEST['userID']);
@@ -80,20 +82,29 @@ class NotificationDisableAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
-		// get object type
-		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.notification.notificationType', 'com.woltlab.wcf.notification.notificationType.mail');
+		if ($this->event !== null) {
+			$sql = "UPDATE	wcf".WCF_N."_user_notification_event_to_user
+				SET	mailNotificationType = ?
+				WHERE	userID = ?
+					AND eventID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array(
+				'none',
+				$this->userID,
+				$this->eventID
+			));
+		}
+		else {
+			$sql = "UPDATE	wcf".WCF_N."_user_notification_event_to_user
+				SET	mailNotificationType = ?
+				WHERE	userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array(
+				'none',
+				$this->userID
+			));
+		}
 		
-		// delete notification setting
-		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_event_notification_type
-			WHERE		userID = ?
-					AND eventID = ?
-					AND notificationTypeID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$this->userID,
-			$this->eventID,
-			$objectType->objectTypeID
-		));
 		$this->executed();
 		
 		// redirect to url
