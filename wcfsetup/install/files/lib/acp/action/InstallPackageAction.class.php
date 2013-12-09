@@ -120,6 +120,8 @@ class InstallPackageAction extends AbstractDialogAction {
 				// build redirect location
 				$location = $application->getPageURL() . 'acp/index.php/PackageList/' . SID_ARG_1ST;
 				
+				WCF::resetZendOpcache();
+				
 				// show success
 				$this->data = array(
 					'currentAction' => $this->getCurrentAction(null),
@@ -129,6 +131,8 @@ class InstallPackageAction extends AbstractDialogAction {
 				);
 				return;
 			}
+			
+			WCF::resetZendOpcache();
 			
 			// continue with next node
 			$this->data = array(

@@ -52,7 +52,7 @@ class PackageUpdateServer extends DatabaseObject {
 		if (trim($serverURL)) {
 			if (!$parsedURL = @parse_url($serverURL))
 				return false;
-			if (!isset($parsedURL['scheme']) || $parsedURL['scheme'] != 'http')
+			if (!isset($parsedURL['scheme']) || ($parsedURL['scheme'] != 'http' && $parsedURL['scheme'] != 'https'))
 				return false;
 			if (!isset($parsedURL['host']))
 				return false;

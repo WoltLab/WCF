@@ -4,6 +4,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\Callback;
 use wcf\system\Regex;
+use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 
@@ -41,6 +42,8 @@ class DiskCacheSource implements ICacheSource {
 	 */
 	public function flushAll() {
 		$this->getDirectoryUtil()->removePattern(new Regex('.*\.php$'));
+		
+		WCF::resetZendOpcache();
 	}
 	
 	/**
@@ -73,6 +76,8 @@ class DiskCacheSource implements ICacheSource {
 		// unset current DirectoryUtil object to make sure new cache file
 		// can be deleted in the same request
 		$this->directoryUtil = null;
+		
+		WCF::resetZendOpcache($this->getFilename($cacheName));
 	}
 	
 	/**
@@ -97,6 +102,8 @@ class DiskCacheSource implements ICacheSource {
 		$this->getDirectoryUtil()->executeCallback(new Callback(function ($filename) {
 			if (!@touch($filename, 1)) {
 				@unlink($filename);
+				
+				WCF::resetZendOpcache($filename);
 			}
 		}), new Regex('^'.$directory.$pattern.'$', Regex::CASE_INSENSITIVE));
 	}
