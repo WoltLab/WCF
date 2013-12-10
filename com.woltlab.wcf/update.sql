@@ -1,0 +1,1 @@
+ALTER TABLE wcf1_search_index ADD KEY (objectTypeID);
