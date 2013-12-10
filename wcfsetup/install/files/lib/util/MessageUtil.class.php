@@ -32,8 +32,9 @@ class MessageUtil {
 		// unify new lines
 		$text = StringUtil::unifyNewlines($text);
 		
-		// remove emoji (MySQL 5.1 does not support them)
-		$text = preg_replace('~\xF0\x9F[\x80-\xBF][\x80-\xBF]~', '', $text);
+		// remove 4 byte utf-8 characters as MySQL < 5.5 does not support them
+		// see http://stackoverflow.com/a/16902461/782822
+		$text = $text = preg_replace('/[\xF0-\xF7].../s', '', $text);
 		
 		// remove control characters
 		$text = preg_replace('~[\x00-\x08\x0B-\x1F\x7F]~', '', $text);
