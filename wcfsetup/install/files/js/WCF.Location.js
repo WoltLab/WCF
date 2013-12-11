@@ -496,6 +496,7 @@ WCF.Location.GoogleMaps.LocationInput = Class.extend({
 			WCF.Location.Util.getLocation($.proxy(function(latitude, longitude) {
 				if (latitude !== undefined && longitude !== undefined) {
 					WCF.Location.GoogleMaps.Util.moveMarker(this._marker, latitude, longitude);
+					WCF.Location.GoogleMaps.Util.focusMarker(this._marker);
 				}
 			}, this));
 		}
