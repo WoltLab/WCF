@@ -44,6 +44,7 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="2.0.0 RC 5">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file" run="standalone">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="script">acp/update_2.0.0.php</instruction>
