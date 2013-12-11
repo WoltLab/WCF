@@ -32,7 +32,6 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		parent::initObjectList();
 		
 		$this->objectList->sqlOrderBy = 'like_table.objectID, like_table.likeID';
-		$this->objectList->getConditionBuilder()->add('like_table.objectUserID IS NOT NULL');
 	}
 	
 	/**
@@ -57,11 +56,13 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		$itemsToUser = array();
 		$likeObjectData = array();
 		foreach ($this->objectList as $like) {
-			if (!isset($itemsToUser[$like->objectUserID])) {
-				$itemsToUser[$like->objectUserID] = 0;
+			if ($like->objectUserID) {
+				if (!isset($itemsToUser[$like->objectUserID])) {
+					$itemsToUser[$like->objectUserID] = 0;
+				}
+				
+				$itemsToUser[$like->objectUserID]++;
 			}
-			
-			$itemsToUser[$like->objectUserID]++;
 			
 			if (!isset($likeObjectData[$like->objectTypeID])) {
 				$likeObjectData[$like->objectTypeID] = array();
