@@ -48,6 +48,7 @@
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="script">acp/update_2.0.0.php</instruction>
 		<instruction type="language">language/*.xml</instruction>
+		<instruction type="style">blue-temptation-style.tgz</instruction>
 		<instruction type="sql" run="standalone">update.sql</instruction>
 	</instructions>
 </package>
