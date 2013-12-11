@@ -84,11 +84,6 @@ class SearchResultPage extends MultipleLinkPage {
 		
 		// get search data
 		$this->searchData = unserialize($this->search->searchData);
-		
-		// check package id of this search
-		if (!empty($this->searchData['packageID']) && $this->searchData['packageID'] != PACKAGE_ID) {
-			throw new IllegalLinkException();
-		}
 	}
 	
 	/**
