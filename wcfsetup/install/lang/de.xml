@@ -2078,7 +2078,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.lostPassword.mail"><![CDATA[Hallo {@$username},
 
 wenn Sie Ihr Kennwort vergessen haben, können Sie über folgenden Link ein neues Kennwort anfordern.
-Klicken Sie hier, um ein neues Kennwort anzufordern: {link controller='NewPassword' encode=false}u={@$userID}&k={@$key}{/link}  
+Klicken Sie hier, um ein neues Kennwort anzufordern: {link controller='NewPassword' encode=false isACP=false}u={@$userID}&k={@$key}{/link}  
 
 Falls Sie Ihr Kennwort nicht vergessen haben, können Sie diese E-Mail ignorieren.]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[Sie erhalten in Kürze eine E-Mail mit weiteren Informationen.]]></item>
@@ -2092,7 +2092,7 @@ Ihr neues Kennwort für die Website "{@PAGE_TITLE|language}" lautet:
 {@$newPassword} 
 
 Sie können Ihr Kennwort unter folgender Adresse jederzeit ändern:
-{link controller='AccountManagement' encode=false}{/link} ]]></item>
+{link controller='AccountManagement' encode=false isACP=false}{/link} ]]></item>
 		<item name="wcf.user.newPassword.mail.subject"><![CDATA[Neues Kennwort auf der Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.newPassword.success"><![CDATA[Sie erhalten in Kürze eine E-Mail mit Ihrem neuen Kennwort.]]></item>
 		<item name="wcf.user.accountManagement"><![CDATA[Benutzerkonto-Verwaltung]]></item>
