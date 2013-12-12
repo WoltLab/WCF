@@ -61,6 +61,11 @@ class NewPasswordForm extends AbstractForm {
 		
 		if (isset($_REQUEST['u'])) $this->userID = intval($_REQUEST['u']);
 		if (isset($_REQUEST['k'])) $this->lostPasswordKey = StringUtil::trim($_REQUEST['k']);
+		
+		// disable check for security token for GET requests
+		if ($this->userID || $this->lostPasswordKey) {
+			$_POST['t'] = WCF::getSession()->getSecurityToken();
+		}
 	}
 	
 	/**
