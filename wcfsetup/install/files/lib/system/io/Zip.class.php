@@ -172,7 +172,7 @@ class Zip extends File implements IArchive {
 			$data['mtime'] = gmmktime($hour, $minute, $second, $month, $day, $year);
 			
 			$data += unpack('Vcrc32/VcompressedSize/Vsize/vfilenameLength/vextraFieldLength/vfileCommentLength/vdiskNo/vinternalAttr/vexternalAttr', $this->read(26));
-			$data['offset'] = $this->readAndUnpack(4, 'v');
+			$data['offset'] = $this->readAndUnpack(4, 'V');
 			$data['filename'] = $this->read($data['filenameLength']);
 			if (substr($data['filename'], -1) == '/') $data['type'] = 'folder';
 			else $data['type'] = 'file';
