@@ -34,6 +34,12 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	protected $packageID = 0;
 	
 	/**
+	 * qualified name of application's primary controller
+	 * @var	string
+	 */
+	protected $primaryController = '';
+	
+	/**
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected final function init() {
@@ -75,6 +81,13 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	 */
 	public function getPackage() {
 		return PackageCache::getInstance()->getPackage($this->packageID);
+	}
+	
+	/**
+	 * @see	\wcf\system\application\IApplication::getPrimaryController()
+	 */
+	public function getPrimaryController() {
+		return $this->primaryController;
 	}
 	
 	/**

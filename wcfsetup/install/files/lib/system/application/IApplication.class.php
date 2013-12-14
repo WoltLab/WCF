@@ -25,6 +25,13 @@ interface IApplication {
 	public function isActiveApplication();
 	
 	/**
+	 * Returns the qualified name of this application's primary controller.
+	 * 
+	 * @return	string
+	 */
+	public function getPrimaryController();
+	
+	/**
 	 * Forwards unknown method calls to WCF.
 	 * 
 	 * @param	string		$method
