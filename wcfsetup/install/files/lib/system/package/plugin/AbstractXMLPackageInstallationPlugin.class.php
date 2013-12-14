@@ -181,7 +181,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * @param	array		$elements
 	 * @param	\DOMElement	$element
 	 */
-	protected function getElement(\DOMXpath $xpath, array &$elements, \DOMElement $element) {
+	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		$elements[$element->tagName] = $element->nodeValue;
 	}
 	

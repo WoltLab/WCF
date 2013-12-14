@@ -243,7 +243,7 @@ final class DirectoryUtil {
 		}
 		
 		// add the directory itself
-		$this->fileObjects[$this->directory] = new \SPLFileInfo($this->directory);
+		$this->fileObjects[$this->directory] = new \SplFileInfo($this->directory);
 	}
 	
 	/**
