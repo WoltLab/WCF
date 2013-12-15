@@ -740,6 +740,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			if ($this->authorURL) $xml->writeElement('authorurl', $this->authorURL);
 			$xml->endElement();
 			
+			$xml->startElement('requiredpackages');
+			$xml->writeElement('requiredpackage', 'com.woltlab.wcf', array('minversion' => '2.0.0'));
+			$xml->endElement();
+			
 			$xml->startElement('instructions', array('type' => 'install'));
 			$xml->writeElement('instruction', basename($styleTarName), array('type' => 'style'));
 			$xml->endElement();
