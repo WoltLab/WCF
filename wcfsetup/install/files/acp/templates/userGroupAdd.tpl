@@ -103,7 +103,7 @@
 						<input type="text" id="userOnlineMarking" name="userOnlineMarking" value="{$userOnlineMarking}" class="long" />
 						{if $errorType.userOnlineMarking|isset}
 							<small class="innerError">
-								{lang}wcf.acp.group.userOnlineMarking.error.{@$errorType.priority}{/lang}
+								{lang}wcf.acp.group.userOnlineMarking.error.{@$errorType.userOnlineMarking}{/lang}
 							</small>
 						{/if}
 						<small>{lang}wcf.acp.group.userOnlineMarking.description{/lang}</small>
