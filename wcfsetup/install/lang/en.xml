@@ -2088,10 +2088,11 @@ If you have not lost your password, you can safely ignore this email.]]></item>
 		<item name="wcf.user.newPassword.mail"><![CDATA[Dear {@$username},
 
 your new password for "{@PAGE_TITLE|language}" is:
-{@$newPassword} 
+{@$newPassword}
+
 
 You can change your password any time at:
-{link controller='AccountManagement' encode=false isACP=false}{/link}]]></item>
+{link controller='AccountManagement' encode=false isACP=false}{/link} ]]></item>
 		<item name="wcf.user.newPassword.mail.subject"><![CDATA[New Password for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.newPassword.success"><![CDATA[You should receive an email with your password shortly.]]></item>
 		<item name="wcf.user.accountManagement"><![CDATA[Account Management]]></item>

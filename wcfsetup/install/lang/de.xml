@@ -2089,7 +2089,8 @@ Falls Sie Ihr Kennwort nicht vergessen haben, können Sie diese E-Mail ignoriere
 		<item name="wcf.user.newPassword.mail"><![CDATA[Hallo {@$username},
 
 Ihr neues Kennwort für die Website "{@PAGE_TITLE|language}" lautet:
-{@$newPassword} 
+{@$newPassword}
+
 
 Sie können Ihr Kennwort unter folgender Adresse jederzeit ändern:
 {link controller='AccountManagement' encode=false isACP=false}{/link} ]]></item>
