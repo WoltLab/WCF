@@ -144,10 +144,12 @@ class UserGroupOptionForm extends AbstractForm {
 		parent::validate();
 		
 		// validate option values
-		foreach ($this->values as $groupID => $optionValue) {
+		foreach ($this->values as $groupID => &$optionValue) {
 			if (!isset($this->groups[$groupID])) {
 				throw new PermissionDeniedException();
 			}
+			
+			$optionValue = $this->optionType->getData($this->userGroupOption, $optionValue);
 			
 			try {
 				$this->optionType->validate($this->userGroupOption, $optionValue);
