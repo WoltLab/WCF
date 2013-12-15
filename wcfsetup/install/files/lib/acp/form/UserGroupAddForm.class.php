@@ -120,6 +120,9 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			if (!I18nHandler::getInstance()->validateValue('groupName')) {
 				throw new UserInputException('groupName');
 			}
+			if (mb_strpos($this->userOnlineMarking, '%s') === false) {
+				throw new UserInputException('userOnlineMarking', 'notValid');
+			}
 		}
 		catch (UserInputException $e) {
 			$this->errorType[$e->getField()] = $e->getType();
