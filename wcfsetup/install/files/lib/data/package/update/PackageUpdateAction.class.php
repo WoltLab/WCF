@@ -246,6 +246,20 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			);
 		}
 		
+		// no found packages is accessible
+		if (empty($packageUpdates)) {
+			WCF::getTPL()->assign(array(
+				'packageUpdates' => array()
+			));
+			
+			return array(
+				'count' => 0,
+				'pageCount' => 0,
+				'searchID' => 0,
+				'template' => WCF::getTPL()->fetch('packageSearchResultList')
+			);
+		}
+		
 		$search = SearchEditor::create(array(
 			'userID' => WCF::getUser()->userID,
 			'searchData' => serialize($packageUpdates),

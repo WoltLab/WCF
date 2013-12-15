@@ -2191,7 +2191,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Erhaltene Likes]]></item>
 		<item name="wcf.user.register.honeyPot"><![CDATA[Bitte ignorieren!]]></item>
-		<item name="wcf.user.register.honeyPot.description"><![CDATA[Falls Sie dies sehen können, füllen Sie bitte die nächsten zwei Eingabfelder <strong>NICHT</strong> aus!]]></item>
+		<item name="wcf.user.register.honeyPot.description"><![CDATA[Falls Sie dies sehen können, füllen Sie bitte die nächsten zwei Eingabefelder <strong>NICHT</strong> aus!]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Inhalte von „{$user->username}“ suchen]]></item>
 		<item name="wcf.user.author"><![CDATA[Autor]]></item>
 	</category>

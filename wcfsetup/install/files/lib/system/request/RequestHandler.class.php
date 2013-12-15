@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\request;
+use wcf\system\application\AbstractApplication;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
@@ -134,6 +135,19 @@ class RequestHandler extends SingletonFactory {
 						$routeData['controller'] = $landingPage->getController();
 					}
 					else {
+						// check if current URL matches an application but controller was omitted
+						$currentRequestURI = RouteHandler::getHost() . $requestUri;
+						foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+							if ($currentRequestURI == $application->getPageURL()) {
+								if ($controller = WCF::getApplicationObject($application)->getPrimaryController()) {
+									$controller = explode('\\', $controller);
+									HeaderUtil::redirect(LinkHandler::getInstance()->getLink(array_pop($controller), array('application' => $controller[0])));
+									exit;
+								}
+							}
+							
+						}
+						
 						// redirect to landing page
 						HeaderUtil::redirect($landingPage->getLink(), true);
 						exit;

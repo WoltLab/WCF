@@ -104,7 +104,15 @@ abstract class AbstractExporter implements IExporter {
 	 * @see	\wcf\system\exporter\IExporter::init()
 	 */
 	public function init() {
-		$this->database = new MySQLDatabase($this->databaseHost, $this->databaseUser, $this->databasePassword, $this->databaseName, 0);
+		$host = $this->databaseHost;
+		$port = 0;
+		if (preg_match('^~([0-9.]+):([0-9]{1,5})~$', $host, $matches)) {
+			// simple check, does not care for valid ip addresses
+			$host = $matches[1];
+			$port = $matches[2];
+		}
+		
+		$this->database = new MySQLDatabase($host, $this->databaseUser, $this->databasePassword, $this->databaseName, $port);
 	}
 	
 	/**

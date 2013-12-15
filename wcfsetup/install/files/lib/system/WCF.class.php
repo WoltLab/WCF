@@ -61,9 +61,15 @@ if (!defined('NO_IMPORTS')) {
 class WCF {
 	/**
 	 * list of currently loaded applications
-	 * @var	array<\wcf\system\application\IApplication>
+	 * @var	array<\wcf\data\application\Application>
 	 */
 	protected static $applications = array();
+	
+	/**
+	 * list of currently loaded application objects
+	 * @var	array<\wcf\system\application\IApplication>
+	 */
+	protected static $applicationObjects = array();
 	
 	/**
 	 * list of autoload directories
@@ -490,8 +496,8 @@ class WCF {
 			}
 			
 			// init application and assign it as template variable
-			$applicationObject = call_user_func(array($className, 'getInstance'));
-			$this->getTPL()->assign('__'.$abbreviation, $applicationObject);
+			self::$applicationObjects[$application->packageID] = call_user_func(array($className, 'getInstance'));
+			$this->getTPL()->assign('__'.$abbreviation, self::$applicationObjects[$application->packageID]);
 		}
 		else {
 			unset(self::$autoloadDirectories[$abbreviation]);
@@ -510,7 +516,21 @@ class WCF {
 		// register application
 		self::$applications[$abbreviation] = $application;
 		
-		return $applicationObject;
+		return self::$applicationObjects[$application->packageID];
+	}
+	
+	/**
+	 * Returns the corresponding application object. Does not support the 'wcf' pseudo application.
+	 * 
+	 * @param	wcf\data\application\Application	$application
+	 * @return	\wcf\system\application\IApplication
+	 */
+	public static function getApplicationObject(Application $application) {
+		if (isset(self::$applicationObjects[$application->packageID])) {
+			return self::$applicationObjects[$application->packageID];
+		}
+		
+		return null;
 	}
 	
 	/**
