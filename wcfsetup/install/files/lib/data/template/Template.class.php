@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\template;
+use wcf\data\package\PackageCache;
 use wcf\data\DatabaseObject;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -33,7 +35,7 @@ class Template extends DatabaseObject {
 	public function __construct($id, $row = null, DatabaseObject $object = null) {
 		if ($id !== null) {
 			$sql = "SELECT		template.*, template_group.templateGroupFolderName,
-						package.package, package.packageDir
+						package.package
 				FROM		wcf".WCF_N."_template template
 				LEFT JOIN	wcf".WCF_N."_template_group template_group
 				ON		(template_group.templateGroupID = template.templateGroupID)
@@ -43,6 +45,16 @@ class Template extends DatabaseObject {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($id));
 			$row = $statement->fetchArray();
+			
+			// get relative directory of the template the application
+			// belongs to
+			if ($row['application'] != 'wcf') {
+				$application = ApplicationHandler::getInstance()->getApplication($row['application']);
+			}
+			else {
+				$application = ApplicationHandler::getInstance()->getWCF();
+			}
+			$row['packageDir'] = PackageCache::getInstance()->getPackage($application->packageID)->packageDir;
 			
 			// enforce data type 'array'
 			if ($row === false) $row = array();
