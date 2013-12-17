@@ -174,7 +174,7 @@ Stacktrace:
 	 * @param	string	$exceptionID
 	 */
 	public function searchPage($exceptionID) {
-		$i = 0;
+		$i = 1;
 		
 		foreach ($this->exceptions as $key => $val) {
 			if ($key == $exceptionID) break;
