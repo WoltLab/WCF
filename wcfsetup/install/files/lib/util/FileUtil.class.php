@@ -505,10 +505,13 @@ final class FileUtil {
 			// WCFSetup
 			if (defined('INSTALL_SCRIPT')) {
 				// do not use PHP_OS here, as this represents the system it was built on != running on
-				if (strpos(php_uname(), 'Windows') !== false) {
-					self::$mode = '0777';
+				// php_uname() is forbidden on some strange hosts; PHP_EOL is reliable 
+				if (PHP_EOL == "\r\n") {
+					// Windows
+					self::$mode = 0777;
 				}
 				else {
+					// anything but Windows
 					clearstatcache();
 					
 					self::$mode = '0666';
