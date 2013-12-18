@@ -2,11 +2,13 @@
 namespace wcf\data\style;
 use wcf\data\language\LanguageList;
 use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupAction;
 use wcf\data\template\TemplateEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\image\ImageHandler;
@@ -656,7 +658,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			
 			// append templates to tar
 			// get templates
-			$sql = "SELECT		template.*, package.package, package.packageDir
+			$sql = "SELECT		template.*, package.package
 				FROM		wcf".WCF_N."_template template
 				LEFT JOIN	wcf".WCF_N."_package package
 				ON		(package.packageID = template.packageID)
@@ -665,9 +667,17 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$statement->execute(array($this->templateGroupID));
 			while ($row = $statement->fetchArray()) {
 				$packageDir = 'com.woltlab.wcf';
-				if (!empty($row['packageDir'])) $packageDir = $row['package'];
 				
-				$filename = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $row['packageDir'] . 'templates/' . $templateGroup->templateGroupFolderName)) . $row['templateName'] . '.tpl';
+				if ($row['application'] != 'wcf') {
+					$application = ApplicationHandler::getInstance()->getApplication($row['application']);
+					$packageDir = $row['package'];
+				}
+				else {
+					$application = ApplicationHandler::getInstance()->getWCF();
+				}
+				$package = PackageCache::getInstance()->getPackage($application->packageID);
+				
+				$filename = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $package->packageDir . 'templates/' . $templateGroup->templateGroupFolderName)) . $row['templateName'] . '.tpl';
 				$templatesTar->add($filename, $packageDir, dirname($filename));
 			}
 			
