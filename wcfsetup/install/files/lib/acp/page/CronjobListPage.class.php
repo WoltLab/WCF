@@ -26,12 +26,12 @@ class CronjobListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
-	public $defaultSortField = 'description';
+	public $defaultSortField = 'cronjobID';
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('description', 'cronjobID', 'nextExec', 'startMinute', 'startHour', 'startDom', 'startMonth', 'startDow');
+	public $validSortFields = array('cronjobID', 'nextExec', 'startMinute', 'startHour', 'startDom', 'startMonth', 'startDow');
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
