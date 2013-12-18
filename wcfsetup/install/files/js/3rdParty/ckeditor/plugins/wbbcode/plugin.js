@@ -350,10 +350,10 @@
 		html = html.replace(/&nbsp;/gi," ");
 		
 		// [email]
-		html = html.replace(/<a .*?href=(["'])mailto:(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[email=$2]$3[/email]');
+		html = html.replace(/<a [^>]*?href=(["'])mailto:(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[email=$2]$3[/email]');
 		
 		// [url]
-		html = html.replace(/<a .*?href=(["'])(.+?)\1.*?>([\s\S]+?)<\/a>/gi, function(match, x, url, text) {
+		html = html.replace(/<a [^>]*?href=(["'])(.+?)\1.*?>([\s\S]+?)<\/a>/gi, function(match, x, url, text) {
 			if (url == text) return '[url]' + url + '[/url]';
 			
 			return "[url='" + url + "']" + text + "[/url]";
@@ -375,7 +375,7 @@
 		html = html.replace(/<s>/gi, '[s]');
 		html = html.replace(/<\/s>/gi, '[/s]');
 		
-		// [sub
+		// [sub]
 		html = html.replace(/<sub>/gi, '[sub]');
 		html = html.replace(/<\/sub>/gi, '[/sub]');
 		
