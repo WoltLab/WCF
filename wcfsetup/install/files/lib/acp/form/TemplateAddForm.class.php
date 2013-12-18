@@ -7,6 +7,7 @@ use wcf\data\template\group\TemplateGroupList;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateAction;
 use wcf\form\AbstractForm;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -146,17 +147,22 @@ class TemplateAddForm extends AbstractForm {
 			throw new UserInputException('tplName', 'notValid');
 		}
 		
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('templateName = ?', array($this->tplName));
+		$conditionBuilder->add('templateGroupID = ?', array($this->templateGroupID));
+		
+		if ($this->copiedTemplate !== null) {
+			$conditionBuilder->add('(packageID = ? OR application = ?)', array($this->packageID, $this->copiedTemplate->application));
+		}
+		else {
+			$conditionBuilder->add('packageID = ?', array($this->packageID));
+		}
+		
 		$sql = "SELECT	COUNT(*) AS count
 			FROM	wcf".WCF_N."_template
-			WHERE	templateName = ?
-				AND packageID = ?
-				AND templateGroupID = ?";
+			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$this->tplName,
-			$this->packageID,
-			$this->templateGroupID
-		));
+		$statement->execute($conditionBuilder->getParameters());
 		$row = $statement->fetchArray();
 		if ($row['count']) {
 			throw new UserInputException('tplName', 'notUnique');

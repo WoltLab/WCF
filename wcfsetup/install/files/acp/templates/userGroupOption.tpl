@@ -5,8 +5,20 @@
 		$('#optionValueContainer label').each(function(index, label) {
 			var $label = $(label);
 			var $id = $label.prop('for');
-			var $groupID = $id.replace(/^userGroupOption/, '');
-			$label.parents('dl').children('dd').find('input, select, textarea').attr('id', $id).attr('name', 'values[' + $groupID + ']');
+			if ($id && $id.match(/^userGroupOption/)) {
+				var $groupID = $id.replace(/^userGroupOption/, '');
+				$label.parents('dl').children('dd').find('input, select, textarea').each(function(index, element) {
+					var $element = $(element);
+					var $oldName = $element.attr('name');
+					
+					var $newName = 'values[' + $groupID + ']';
+					if ($oldName.substr(-2) == '[]') {
+						$newName += '[]';
+					}
+					
+					$element.attr('id', $id).attr('name', $newName);
+				});
+			}
 		});
 	});
 </script>
