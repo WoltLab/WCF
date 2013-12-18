@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\bbcode\attribute\BBCodeAttributeEditor;
+use wcf\data\package\PackageCache;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -106,6 +107,16 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	protected function validateImport(array $data) {
 		if ($data['bbcodeTag'] == 'all' || $data['bbcodeTag'] == 'none') {
 			throw new SystemException("BBCodes can't be called 'all' or 'none'");
+		}
+		
+		// check if bbcode tag already exists
+		$sqlData = $this->findExistingItem($data);
+		$statement = WCF::getDB()->prepareStatement($sqlData['sql']);
+		$statement->execute($sqlData['parameters']);
+		$row = $statement->fetchArray();
+		if ($row && $row['packageID'] != $this->installation->getPackageID()) {
+			$package = PackageCache::getInstance()->getPackage($row['packageID']);
+			throw new SystemException("BBCode '" . $data['bbcodeTag'] . "' is already provided by '" . $package . "' ('" . $package->package . "').");
 		}
 	}
 	
