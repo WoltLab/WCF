@@ -1132,7 +1132,6 @@ WCF.Message.InlineEditor = Class.extend({
 	 */
 	_click: function(event, containerID) {
 		var $containerID = (event === null) ? containerID : $(event.currentTarget).data('containerID');
-		console.debug("_click()");
 		if (this._activeElementID === '') {
 			this._activeElementID = $containerID;
 			this._prepare();
