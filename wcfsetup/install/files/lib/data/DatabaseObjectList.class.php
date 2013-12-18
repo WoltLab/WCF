@@ -233,7 +233,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 	 * @param	array<integer>		$objectIDs
 	 */
 	public function setObjectIDs(array $objectIDs) {
-		$this->objectIDs = $objectIDs;
+		$this->objectIDs = array_merge($objectIDs);
 	}
 	
 	/**
