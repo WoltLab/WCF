@@ -31,8 +31,8 @@
 					<input type="text" id="categoryName" name="categoryName" value="{$i18nPlainValues['categoryName']}" required="required" autofocus="autofocus" class="long" />
 					{if $errorField == 'categoryName'}
 						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
+							{if $errorType == 'multilingual'}
+								{lang}wcf.global.form.error.multilingual{/lang}
 							{else}
 								{lang}wcf.acp.user.option.category.name.error.{@$errorType}{/lang}
 							{/if}

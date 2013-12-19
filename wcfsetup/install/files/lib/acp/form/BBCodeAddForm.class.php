@@ -196,7 +196,12 @@ class BBCodeAddForm extends AbstractForm {
 		if ($this->showButton) {
 			// validate label
 			if (!I18nHandler::getInstance()->validateValue('buttonLabel')) {
-				throw new UserInputException('buttonLabel');
+				if (I18nHandler::getInstance()->isPlainValue('buttonLabel')) {
+					throw new UserInputException('buttonLabel');
+				}
+				else {
+					throw new UserInputException('buttonLabel', 'multilingual');
+				}
 			}
 			
 			// validate image path

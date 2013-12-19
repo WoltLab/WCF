@@ -187,7 +187,7 @@ class UserOptionAddForm extends AbstractForm {
 		
 		// option name
 		if (!I18nHandler::getInstance()->validateValue('optionName', true)) {
-			throw new UserInputException('optionName');
+			throw new UserInputException('optionName', 'multilingual');
 		}
 		
 		// category name

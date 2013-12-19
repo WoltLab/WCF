@@ -180,7 +180,7 @@ class PageMenuItemAddForm extends AbstractForm {
 		
 		// validate page menu item name
 		if (!I18nHandler::getInstance()->validateValue('pageMenuItem', true)) {
-			throw new UserInputException('pageMenuItem');
+			throw new UserInputException('pageMenuItem', 'multilingual');
 		}
 		
 		// validate parent menu item

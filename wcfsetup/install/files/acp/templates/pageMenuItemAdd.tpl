@@ -112,8 +112,8 @@
 					<input type="text" name="pageMenuItem" id="pageMenuItem" value="{$i18nPlainValues['pageMenuItem']}" class="long" required="required" />
 					{if $errorField == 'pageMenuItem'}
 						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
+							{if $errorType == 'multilingual'}
+								{lang}wcf.global.form.error.multilingual{/lang}
 							{else}
 								{lang}wcf.acp.pageMenu.pageMenuItem.error.{$errorType}{/lang}
 							{/if}
