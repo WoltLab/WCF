@@ -508,7 +508,7 @@ final class FileUtil {
 				// php_uname() is forbidden on some strange hosts; PHP_EOL is reliable 
 				if (PHP_EOL == "\r\n") {
 					// Windows
-					self::$mode = 0777;
+					self::$mode = '0777';
 				}
 				else {
 					// anything but Windows
