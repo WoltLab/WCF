@@ -118,7 +118,12 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		// validate group name
 		try {
 			if (!I18nHandler::getInstance()->validateValue('groupName')) {
-				throw new UserInputException('groupName');
+				if (I18nHandler::getInstance()->isPlainValue('groupName')) {
+					throw new UserInputException('groupName');
+				}
+				else {
+					throw new UserInputException('groupName', 'multilingual');
+				}
 			}
 			if (mb_strpos($this->userOnlineMarking, '%s') === false) {
 				throw new UserInputException('userOnlineMarking', 'notValid');

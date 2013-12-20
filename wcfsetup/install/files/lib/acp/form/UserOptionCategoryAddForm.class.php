@@ -68,7 +68,7 @@ class UserOptionCategoryAddForm extends AbstractForm {
 		parent::validate();
 		
 		if (!I18nHandler::getInstance()->validateValue('categoryName', true)) {
-			throw new UserInputException('categoryName');
+			throw new UserInputException('categoryName', 'multilingual');
 		}
 	}
 	

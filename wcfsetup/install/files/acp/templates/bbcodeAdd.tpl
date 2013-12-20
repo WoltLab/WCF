@@ -186,6 +186,8 @@
 							<small class="innerError">
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
+								{elseif $errorType == 'multilingual'}
+									{lang}wcf.global.form.error.multilingual{/lang}
 								{else}
 									{lang}wcf.acp.bbcode.buttonLabel.error.{@$errorType}{/lang}
 								{/if}
