@@ -163,7 +163,7 @@
 								
 								{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
 									<li>
-										<a href="{link controller='PackageUpdate'}{/link}"><span class="icon icon16 icon-refresh"></span> <span>{lang}wcf.acp.package.updates{/lang}</span> <span class="badge badgeInverse">{#$__wcf->getAvailableUpdates()|count}</span></a>
+										<a href="{link controller='PackageUpdate'}{/link}"><span class="icon icon16 icon-refresh"></span> <span>{lang}wcf.acp.package.updates{/lang}</span> <span class="badge badgeInverse">{#$__wcf->getAvailableUpdates()}</span></a>
 									</li>
 								{/if}
 							{/if}
