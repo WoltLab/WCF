@@ -1,5 +1,6 @@
 <?php
 use wcf\system\WCF;
+
 /**
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
