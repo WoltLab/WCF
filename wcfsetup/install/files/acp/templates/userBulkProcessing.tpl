@@ -4,6 +4,8 @@
 	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
+			WCF.Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
+			
 			new WCF.ACP.Worker('mail', 'wcf\\system\\worker\\MailWorker', '', {
 				mailID: {@$mailID}
 			});
