@@ -15,6 +15,11 @@ if (!defined('PACKAGE_ID')) {
 // define the wcf-root-dir
 define('WCF_DIR', dirname(__FILE__).'/');
 
+// APCu below 3.1.4 breaks PHP's late static binding
+if (extension_loaded('apcu') && strnatcmp(phpversion('apcu'), '4.0.2') < 0) {
+	apcu_clear_cache('opcode');
+}
+
 // APC below 3.1.4 breaks PHP's late static binding
 if (extension_loaded('apc') && strnatcmp(phpversion('apc'), '3.1.4') < 0) {
 	apc_clear_cache('opcode');

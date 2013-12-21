@@ -650,10 +650,12 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 				<defaultvalue><![CDATA[disk]]></defaultvalue>
 				<selectoptions><![CDATA[disk:wcf.acp.option.cache_source_type.disk
 memcached:wcf.acp.option.cache_source_type.memcached
+apcu:wcf.acp.option.cache_source_type.apcu
 no:wcf.acp.option.cache_source_type.no]]></selectoptions>
 				<!-- apc:wcf.acp.option.cache_source_type.apc -->
 				<enableoptions><![CDATA[disk:!cache_source_memcached_host
 memcached:cache_source_memcached_host
+apcu:!cache_source_memcached_host
 no:!cache_source_memcached_host]]></enableoptions>
 				<!-- apc:!cache_source_memcached_host -->
 			</option>
