@@ -10,24 +10,32 @@
 	</div>
 </fieldset>
 
-<fieldset>
-	<legend class="invisible">{lang}wcf.user.stats{/lang}</legend>
-	
-	<dl class="plain statsDataList">
-		{event name='statistics'}
+{hascontent}
+	<fieldset>
+		<legend class="invisible">{lang}wcf.user.stats{/lang}</legend>
 		
-		<dt>{if $user->activityPoints}<a class="activityPointsDisplay jsTooltip" title="{lang}wcf.user.activityPoint.showDetails{/lang}" data-user-id="{@$user->userID}">{lang}wcf.user.activityPoint{/lang}</a>{else}{lang}wcf.user.activityPoint{/lang}{/if}</dt>
-		<dd>{#$user->activityPoints}</dd>
-		
-		{if MODULE_LIKE}
-			<dt>{lang}wcf.like.likesReceived{/lang}</dt>
-			<dd>{#$user->likesReceived}</dd>
-		{/if}
-		
-		<dt>{lang}wcf.user.profileHits{/lang}</dt>
-		<dd{if $user->getProfileAge() > 1} title="{lang}wcf.user.profileHits.hitsPerDay{/lang}"{/if}>{#$user->profileHits}</dd>
-	</dl>
-</fieldset>
+		<dl class="plain statsDataList">
+			{content}
+				{event name='statistics'}
+				
+				{if MODULE_LIKE && $user->likesReceived}
+					<dt>{lang}wcf.like.likesReceived{/lang}</dt>
+					<dd>{#$user->likesReceived}</dd>
+				{/if}
+				
+				{if $user->activityPoints}
+					<dt>{if $user->activityPoints}<a class="activityPointsDisplay jsTooltip" title="{lang}wcf.user.activityPoint.showDetails{/lang}" data-user-id="{@$user->userID}">{lang}wcf.user.activityPoint{/lang}</a>{else}{lang}wcf.user.activityPoint{/lang}{/if}</dt>
+					<dd>{#$user->activityPoints}</dd>
+				{/if}
+				
+				{if $user->profileHits}
+					<dt>{lang}wcf.user.profileHits{/lang}</dt>
+					<dd{if $user->getProfileAge() > 1} title="{lang}wcf.user.profileHits.hitsPerDay{/lang}"{/if}>{#$user->profileHits}</dd>
+				{/if}
+			{/content}
+		</dl>
+	</fieldset>
+{/hascontent}
 
 {if $followingCount}
 	<fieldset>
