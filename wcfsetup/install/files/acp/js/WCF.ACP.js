@@ -2096,9 +2096,7 @@ WCF.ACP.User.EnableHandler = {
 		});
 		
 		var $notification = new WCF.System.Notification();
-		$notification.show();
-		
-		WCF.Clipboard.reload();
+		$notification.show(function() { window.location.reload(); });
 	}
 };
 

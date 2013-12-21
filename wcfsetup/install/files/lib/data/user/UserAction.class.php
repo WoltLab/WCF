@@ -471,6 +471,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			'addDefaultGroups' => false
 		));
 		$action->executeAction();
+		
+		$this->unmarkItems();
 	}
 	
 	/**
@@ -492,5 +494,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			'addDefaultGroups' => false
 		));
 		$action->executeAction();
+		
+		$this->unmarkItems();
 	}
 }
