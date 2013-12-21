@@ -1,6 +1,5 @@
 <?php
 use wcf\system\WCF;
-
 /**
  * @author	Alexander Ebert
  * @copyright	2001-2013 WoltLab GmbH
@@ -9,6 +8,14 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 
-// remove log files used during Beta/RC
-@unlink(WCF_DIR.'__installPerformance.log');
-@unlink(WCF_DIR.'__wcfSetupPerformance.log');
+// disable APC if applicable
+$sql = "UPDATE	wcf".WCF_N."_option
+	SET	optionValue = ?
+	WHERE	optionName = ?
+		AND optionValue = ?";
+$statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute(array(
+	'disk',
+	'cache_source_type',
+	'apc'
+));
