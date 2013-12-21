@@ -109,6 +109,32 @@ class CacheListPage extends AbstractPage {
 				}
 			break;
 			
+			case 'wcf\system\cache\source\ApcuCacheSource':
+				// set version
+				$this->cacheData['version'] = phpversion('apcu');
+				
+				$apcuinfo = apcu_cache_info('user');
+				$cacheList = $apcuinfo['cache_list'];
+				usort($cacheList, function ($a, $b) {
+					return $a['key'] > $b['key'];
+				});
+				
+				$prefix = new Regex('^WCF_'.substr(sha1(WCF_DIR), 0, 10) . '_');
+				foreach ($cacheList as $cache) {
+					if (!$prefix->match($cache['key'])) continue;
+					
+					// get additional cache information
+					$this->caches['data']['apcu'][] = array(
+						'filename' => $prefix->replace($cache['key'], ''),
+						'filesize' => $cache['mem_size'],
+						'mtime' => $cache['mtime']
+					);
+					
+					$this->cacheData['files']++;
+					$this->cacheData['size'] += $cache['mem_size'];
+				}
+			break;
+			
 			case 'wcf\system\cache\source\NoCacheSource':
 				$this->cacheData['version'] = WCF_VERSION;
 			break;
