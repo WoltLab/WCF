@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\package\update\server;
 use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
+use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 
 /**
  * Provides functions to edit package update servers.
@@ -12,9 +14,16 @@ use wcf\data\DatabaseObjectEditor;
  * @subpackage	data.package.update.server
  * @category	Community Framework
  */
-class PackageUpdateServerEditor extends DatabaseObjectEditor {
+class PackageUpdateServerEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\package\update\server\PackageUpdateServer';
+	
+	/**
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 */
+	public static function resetCache() {
+		PackageUpdateCacheBuilder::getInstance()->reset();
+	}
 }
