@@ -2871,7 +2871,7 @@ WCF.Message.Share.Page = Class.extend({
 	 * @param	string		url
 	 */
 	_share: function(objectName, url) {
-		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription + " " + this._pageURL), 'height=600,width=600');
+		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription + " " + this._pageURL), objectName, 'height=600,width=600');
 	},
 	
 	/**
@@ -2927,7 +2927,7 @@ WCF.Message.Share.Page = Class.extend({
 	},
 	
 	/**
-	 * Fetches number of Facebook likes.
+	 * Fetches number of Facebook shares.
 	 */
 	_fetchFacebook: function() {
 		this._fetchCount('https://graph.facebook.com/?id={pageURL}', $.proxy(function(data) {
