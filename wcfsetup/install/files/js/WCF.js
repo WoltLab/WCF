@@ -2428,6 +2428,7 @@ WCF.Action.Toggle = Class.extend({
 		this._containerSelector = containerSelector;
 		this._className = className;
 		this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsToggleButton';
+		this._containers = [ ];
 		
 		// initialize proxy
 		var options = {

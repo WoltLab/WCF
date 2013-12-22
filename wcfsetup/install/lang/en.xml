@@ -700,7 +700,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
 		<item name="wcf.acp.option.jquery_source.cloudflare"><![CDATA[Cloudflare CDN]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Enable benchmark]]></item>
-		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[It is strongly recommended to disable this option in productive environments.]]></item>
+		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[It is strongly recommended to disable this option in production environments.]]></item>
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
@@ -780,7 +780,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.register_password_must_contain_digit"><![CDATA[Password must contain digits]]></item>
 		<item name="wcf.acp.option.register_password_must_contain_lower_case"><![CDATA[Password must contain lowercase characters]]></item>
 		<item name="wcf.acp.option.register_password_must_contain_special_char"><![CDATA[Password must contain special characters]]></item>
-		<item name="wcf.acp.option.register_password_must_contain_upper_case"><![CDATA[Password must container uppercase characters]]></item>
+		<item name="wcf.acp.option.register_password_must_contain_upper_case"><![CDATA[Password must contain uppercase characters]]></item>
 		<item name="wcf.acp.option.register_forbidden_usernames"><![CDATA[Reserved Usernames]]></item>
 		<item name="wcf.acp.option.register_forbidden_usernames.description"><![CDATA[List of names unavailable for registration, one name per line.]]></item>
 		<item name="wcf.acp.option.register_forbidden_emails"><![CDATA[Reserved Email Addresses]]></item>
@@ -895,7 +895,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.dependencies.title"><![CDATA[Dependencies]]></item>
 		<item name="wcf.acp.package.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.package.error.cli.installIsApplication"><![CDATA[Applications cannot be installed via CLI.]]></item>
-		<item name="wcf.acp.package.error.noUniqueAbbrevation"><![CDATA[There is already an application installed which has the same abbrevation.]]></item>
+		<item name="wcf.acp.package.error.noUniqueAbbrevation"><![CDATA[There is already an application installed which has the same abbreviation.]]></item>
 		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[The uploaded archive is invalid.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Overwrite Existing Tables]]></item>
 		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[The tables above already exist and will be replaced during the installation. Any contained data will be lost.]]></item>
@@ -1459,7 +1459,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.cli.help.q"><![CDATA[Quiet: Show less information.]]></item>
 		<item name="wcf.cli.help.v"><![CDATA[Verbose: Show more information.]]></item>
 		<item name="wcf.cli.help.disableUpdateCheck"><![CDATA[Don't search for updates after login]]></item>
-		<item name="wcf.cli.help.exitOnFail"><![CDATA[Exists the script if an error occurs.]]></item>
+		<item name="wcf.cli.help.exitOnFail"><![CDATA[Exits the script if an error occurs.]]></item>
 		<item name="wcf.cli.help.exitOnFail.description"><![CDATA[If this parameter is set the script execution will be terminated once an error occurs.
 Errors are:
 - Missing commands
