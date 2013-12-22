@@ -97,11 +97,9 @@ class UserStorageHandler extends SingletonFactory {
 		$this->updateFields[$userID][$field] = $fieldValue;
 		
 		// update data cache for given user
-		if (!isset($this->cache[$userID])) {
-			$this->cache[$userID] = array();
+		if (isset($this->cache[$userID])) {
+			$this->cache[$userID][$field] = $fieldValue;
 		}
-		
-		$this->cache[$userID][$field] = $fieldValue;
 	}
 	
 	/**
