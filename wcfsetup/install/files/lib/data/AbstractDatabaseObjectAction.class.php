@@ -222,6 +222,12 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	 */
 	public function setObjects(array $objects) {
 		$this->objects = $objects;
+		
+		// update object IDs
+		$this->objectIDs = array();
+		foreach ($this->objects as $object) {
+			$this->objectIDs[] = $object->getObjectID();
+		}
 	}
 	
 	/**
