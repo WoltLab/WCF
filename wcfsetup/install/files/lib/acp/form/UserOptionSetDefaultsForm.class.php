@@ -77,15 +77,6 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 		// get new values
 		$saveOptions = $this->optionHandler->save();
 		
-		// save values
-		$sql = "UPDATE	wcf".WCF_N."_user_option
-			SET	defaultValue = ?
-			WHERE	optionID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		foreach ($saveOptions as $optionID => $value) {
-			$statement->execute(array($value, $optionID));
-		}
-		
 		// apply changes
 		if ($this->applyChangesToExistingUsers) {
 			$optionIDs = array_keys($saveOptions);
@@ -110,6 +101,15 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute(array_merge($optionValues));
 			}
+		}
+		
+		// save values
+		$sql = "UPDATE	wcf".WCF_N."_user_option
+			SET	defaultValue = ?
+			WHERE	optionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		foreach ($saveOptions as $optionID => $value) {
+			$statement->execute(array($value, $optionID));
 		}
 		
 		// reset cache
