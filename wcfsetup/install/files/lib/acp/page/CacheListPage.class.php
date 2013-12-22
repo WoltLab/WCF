@@ -5,6 +5,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
 use wcf\system\WCF;
+use wcf\util\APCUtil;
 use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 
@@ -84,15 +85,14 @@ class CacheListPage extends AbstractPage {
 			break;
 			
 			case 'wcf\system\cache\source\ApcCacheSource':
+				// apc object
+				$apc = new APCUtil();
+				
 				// set version
-				$this->cacheData['version'] = phpversion('apc');
+				$this->cacheData['version'] = $apc->version;
 				
-				$apcinfo = apc_cache_info('user');
-				$cacheList = $apcinfo['cache_list'];
-				usort($cacheList, function ($a, $b) {
-					return $a['info'] > $b['info'];
-				});
-				
+				$cacheList = $apc->cache_info('user');
+					
 				$prefix = new Regex('^WCF_'.substr(sha1(WCF_DIR), 0, 10) . '_');
 				foreach ($cacheList as $cache) {
 					if (!$prefix->match($cache['info'])) continue;
