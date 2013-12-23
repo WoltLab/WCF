@@ -143,7 +143,7 @@
 		{capture append=robotsOnlineList}
 			<li>
 				<div class="box48">
-					<p class="framed"><img src="{$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon48" /></p>
+					<p class="framed"><img src="{$__wcf->getPath()}images/avatars/avatar-spider-default.svg" alt="" class="icon48" /></p>
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
