@@ -336,25 +336,13 @@ final class FileUtil {
 	 * @return	string
 	 */
 	public static function formatFilesize($byte, $precision = 2) {
-		$symbol = 'Byte';
-		if ($byte >= 1000) {
+		$units = array('Byte', 'kB', 'MB', 'GB', 'TB');
+		while (isset($units[1]) && $byte >= 1000) {
 			$byte /= 1000;
-			$symbol = 'kB';
-		}
-		if ($byte >= 1000) {
-			$byte /= 1000;
-			$symbol = 'MB';
-		}
-		if ($byte >= 1000) {
-			$byte /= 1000;
-			$symbol = 'GB';
-		}
-		if ($byte >= 1000) {
-			$byte /= 1000;
-			$symbol = 'TB';
+			array_shift($units);
 		}
 		
-		return StringUtil::formatNumeric(round($byte, $precision)).' '.$symbol;
+		return StringUtil::formatNumeric(round($byte, $precision)).' '.$units[0];
 	}
 	
 	/**
@@ -591,11 +579,11 @@ final class FileUtil {
 					break;
 					
 					case 'M':
-						self::$memoryLimit = $matches[1] * 1024 * 1024;
+						self::$memoryLimit = $matches[1] * pow(1024, 2);
 					break;
 					
 					case 'G':
-						self::$memoryLimit = $matches[1] * 1024 * 1024 * 1024;
+						self::$memoryLimit = $matches[1] * pow(1024, 3);
 					break;
 				}
 			}
