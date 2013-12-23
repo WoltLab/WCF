@@ -1164,7 +1164,7 @@
 		<name>TinEye</name>
 		<url>http://tineye.com/crawler.html</url>
 	</spider>
-	<spider ident="Tiny Tiny RSS">
+	<spider ident="http://tt-rss.org/">
 		<name>Tiny Tiny RSS</name>
 		<url>http://tt-rss.org/</url>
 	</spider>
