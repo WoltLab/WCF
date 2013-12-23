@@ -3,6 +3,7 @@ namespace wcf\system;
 use wcf\acp\form\MasterPasswordForm;
 use wcf\acp\form\MasterPasswordInitForm;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -52,6 +53,8 @@ class WCFACP extends WCF {
 		
 		$this->initBlacklist();
 		$this->initAuth();
+		
+		EventHandler::getInstance()->fireAction($this, 'initialized');
 	}
 	
 	/**
