@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+	<title>Default Spider Avatar</title>
+	<desc>Default Spider Avatar for WCF 2.0</desc>
+	
+	<!--
+		@author		Suat Secmen
+		@copyright	FirePanther.PRO 
+		@license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php> 
+	-->
+	
+	<defs>
+		<style type="text/css">
+			<![CDATA[
+				.surface { fill: #fff; }
+				.shadow { fill: #bbb; }
+			]]>
+		</style>
+	</defs>
+	<rect x="0" class="shadow" width="16" height="16"/>
+	<rect x="4.5" y="2.5" class="surface" width="7" height="6.5"/> <!-- head -->
+	<rect x="6" y="9" class="surface" width="4" height="1"/> <!-- neck -->
+	<rect x="3.5" y="10" class="surface" width="9" height="6"/> <!-- body -->
+	<rect x="3.5" y="5" class="surface" width="9" height="1.5"/> <!-- ears -->
+	<rect x="6" y="1.25" class="surface" width="0.5" height="1.25"/> <!-- antenna 1 -->
+	<rect x="9.5" y="1.25" class="surface" width="0.5" height="1.25"/> <!-- antenna 2 -->
+</svg>
