@@ -39,7 +39,7 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	public function __construct($maxFilesize, array $fileExtensions) {
 		$this->maxFilesize = $maxFilesize;
 		$this->fileExtensions = $fileExtensions;
-		$this->fileExtensionRegex = '/^('.str_replace("\n", "|", str_replace('\*', '.*', preg_quote(implode("\n", $fileExtensions), '/'))).')$/i';
+		$this->fileExtensionRegex = '/('.str_replace("\n", "|", str_replace('\*', '.*', preg_quote(implode("\n", $fileExtensions), '/'))).')$/i';
 	}
 	
 	/**
@@ -56,7 +56,7 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 			return false;
 		}
 		
-		if (!preg_match($this->fileExtensionRegex, $uploadFile->getFileExtension())) {
+		if (!preg_match($this->fileExtensionRegex, mb_strtolower($uploadFile->getFilename()))) {
 			$uploadFile->setValidationErrorType('invalidExtension');
 			return false;
 		}
