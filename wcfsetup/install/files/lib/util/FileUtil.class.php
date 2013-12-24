@@ -579,11 +579,11 @@ final class FileUtil {
 					break;
 					
 					case 'M':
-						self::$memoryLimit = $matches[1] * pow(1024, 2);
+						self::$memoryLimit = $matches[1] * 1024 * 1024;
 					break;
 					
 					case 'G':
-						self::$memoryLimit = $matches[1] * pow(1024, 3);
+						self::$memoryLimit = $matches[1] * 1024 * 1024 * 1024;
 					break;
 				}
 			}
