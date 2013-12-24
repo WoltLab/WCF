@@ -5,6 +5,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * SearchEngine searches for given query in the selected object types.
@@ -76,45 +77,7 @@ class SearchEngine extends SingletonFactory {
 		$fulltextCondition = null;
 		$relevanceCalc = '';
 		if (!empty($q)) {
-			// expand search terms with a * unless they're encapsulated with quotes
-			$inQuotes = false;
-			$tmp = '';
-			$controlCharacterOrSpace = false;
-			$chars = array('+', '-', '*');
-			for ($i = 0, $length = mb_strlen($q); $i < $length; $i++) {
-				$char = mb_substr($q, $i, 1);
-				
-				if ($inQuotes) {
-					if ($char == '"') {
-						$inQuotes = false;
-					}
-				}
-				else {
-					if ($char == '"') {
-						$inQuotes = true;
-					}
-					else {
-						if ($char == ' ' && !$controlCharacterOrSpace) {
-							$controlCharacterOrSpace = true;
-							$tmp .= '*';
-						}
-						else if (in_array($char, $chars)) {
-							$controlCharacterOrSpace = true;
-						}
-						else {
-							$controlCharacterOrSpace = false;
-						}
-					}
-				}
-				
-				$tmp .= $char;
-			}
-			
-			// handle last char
-			if (!$inQuotes && !$controlCharacterOrSpace) {
-				$tmp .= '*';
-			}
-			$q = $tmp;
+			$q = $this->parseSearchQuery($q);
 			
 			$fulltextCondition = new PreparedStatementConditionBuilder(false);
 			switch (WCF::getDB()->getDBType()) {
@@ -205,5 +168,78 @@ class SearchEngine extends SingletonFactory {
 		}
 		
 		return $messages;
+	}
+	
+	/**
+	 * Manipulates the search term (< and > used as quotation marks):
+	 * 
+	 * - <test foo> becomes <+test* +foo*>
+	 * - <test -foo bar> becomes <+test* -foo* +bar*>
+	 * - <test "foo bar"> becomes <+test* +"foo bar">
+	 * 
+	 * @see	http://dev.mysql.com/doc/refman/5.5/en/fulltext-boolean.html
+	 * 
+	 * @param	string		$query
+	 */
+	protected function parseSearchQuery($query) {
+		$query = StringUtil::trim($query);
+		
+		// expand search terms with a * unless they're encapsulated with quotes
+		$inQuotes = false;
+		$previousChar = $tmp = '';
+		$controlCharacterOrSpace = false;
+		$chars = array('+', '-', '*');
+		for ($i = 0, $length = mb_strlen($query); $i < $length; $i++) {
+			$char = mb_substr($query, $i, 1);
+			
+			if ($inQuotes) {
+				if ($char == '"') {
+					$inQuotes = false;
+				}
+			}
+			else {
+				if ($char == '"') {
+					$inQuotes = true;
+				}
+				else {
+					if ($char == ' ' && !$controlCharacterOrSpace) {
+						$controlCharacterOrSpace = true;
+						$tmp .= '*';
+					}
+					else if (in_array($char, $chars)) {
+						$controlCharacterOrSpace = true;
+					}
+					else {
+						$controlCharacterOrSpace = false;
+					}
+				}
+			}
+			
+			/*
+			 * prepend a plus sign (logical AND) if ALL these conditions are given:
+			 * 
+			 * 1) previous character:
+			 *   - is empty (start of string)
+			 *   - is a space (MySQL uses spaces to separate words)
+			 * 
+			 * 2) not within quotation marks
+			 * 
+			 * 3) current char:
+			 *   - is NOT +, - or *
+			 */
+			if (($previousChar == '' || $previousChar == ' ') && !$inQuotes && !in_array($char, $chars)) {
+				$tmp .= '+';
+			}
+			
+			$tmp .= $char;
+			$previousChar = $char;
+		}
+		
+		// handle last char
+		if (!$inQuotes && !$controlCharacterOrSpace) {
+			$tmp .= '*';
+		}
+		
+		return $tmp;
 	}
 }
