@@ -2,15 +2,17 @@
 namespace wcf\system\cache\source;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
+use wcf\util\APCUtil;
 use wcf\util\StringUtil;
 
 /**
- * ApcCacheSource is an implementation of CacheSource that uses APC to store cached variables.
+ * ApcCacheSource is an implementation of CacheSource that uses APC(u) to store cached variables.
  * 
- * @author	Alexander Ebert
- * @copyright	2001-2013 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	com.woltlab.wcf
+ * originally by Alexander Ebert
+ * @author		Jan Altensen (Stricted)
+ * @copyright	2013 Jan Altensen (Stricted)
+ * @license		GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package		com.woltlab.wcf
  * @subpackage	system.cache.source
  * @category	Community Framework
  */
@@ -22,12 +24,17 @@ class ApcCacheSource implements ICacheSource {
 	protected $prefix = '';
 	
 	/**
+	 * APC object
+	 * @var object
+	 */
+	protected $apc = null;
+	
+	/**
 	 * Creates a new ApcCacheSource object.
 	 */
 	public function __construct() {
-		if (!function_exists('apc_store')) {
-			throw new SystemException('APC support is not enabled.');
-		}
+		// store apc object
+		$this->apc = new APCUtil();
 		
 		// set variable prefix to prevent collision
 		$this->prefix = 'WCF_'.substr(sha1(WCF_DIR), 0, 10) . '_';
@@ -41,7 +48,7 @@ class ApcCacheSource implements ICacheSource {
 			$this->removeKeys($this->prefix . $cacheName . '(\-[a-f0-9]+)?');
 		}
 		else {
-			apc_delete($this->prefix . $cacheName);
+			$this->apc->elete($this->prefix . $cacheName);
 		}
 	}
 	
@@ -56,7 +63,7 @@ class ApcCacheSource implements ICacheSource {
 	 * @see	\wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get($cacheName, $maxLifetime) {
-		if (($data = apc_fetch($this->prefix . $cacheName)) === false) {
+		if (($data = $this->apc->fetch($this->prefix . $cacheName)) === false) {
 			return null;
 		}
 		
@@ -67,7 +74,7 @@ class ApcCacheSource implements ICacheSource {
 	 * @see	\wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
-		apc_store($this->prefix . $cacheName, $value, $this->getTTL($maxLifetime));
+		$this->apc->store($this->prefix . $cacheName, $value, $this->getTTL($maxLifetime));
 	}
 	
 	/**
@@ -101,15 +108,15 @@ class ApcCacheSource implements ICacheSource {
 			$regex = new Regex('^'.$pattern.'$');
 		}
 		
-		$apcCacheInfo = apc_cache_info('user');
-		foreach ($apcCacheInfo['cache_list'] as $cache) {
+		$apcuCacheInfo = $this->apc->cache_info('user');
+		foreach ($apcuCacheInfo as $cache) {
 			if ($regex === null) {
 				if (StringUtil::startsWith($cache['info'], $this->prefix)) {
-					apc_delete($cache['info']);
+					$this->apc->delete($cache['info']);
 				}
 			}
 			else if ($regex->match($cache['info'])) {
-				apc_delete($cache['info']);
+				$this->apc->delete($cache['info']);
 			}
 		}
 	}
