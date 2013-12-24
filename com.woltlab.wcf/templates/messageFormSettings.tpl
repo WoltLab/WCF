@@ -7,7 +7,7 @@
 				<small>{lang}wcf.message.settings.preParse.description{/lang}</small>
 			</dd>
 		{/if}
-		{if $__wcf->getSession()->getPermission($permissionCanUseSmilies)}
+		{if 'MODULE_SMILEY'|defined && MODULE_SMILEY && $__wcf->getSession()->getPermission($permissionCanUseSmilies)}
 			<dt></dt>
 			<dd>
 				<label><input id="enableSmilies" name="enableSmilies" type="checkbox" value="1"{if $enableSmilies} checked="checked"{/if} /> {lang}wcf.message.settings.enableSmilies{/lang}</label>
