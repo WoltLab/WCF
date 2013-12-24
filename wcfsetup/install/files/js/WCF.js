@@ -2570,7 +2570,7 @@ WCF.Action.ClipboardToggle = WCF.Action.Toggle.extend({
 	
 	/**
 	 * @see		WCF.Action.Toggle.init()
-	 * @param	string		buttonSelector
+	 * @param	string		objectType
 	 */
 	init: function(className, containerSelector, buttonSelector, objectType) {
 		this._super(className, containerSelector, buttonSelector);
