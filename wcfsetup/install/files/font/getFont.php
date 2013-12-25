@@ -14,7 +14,7 @@
 // list of known font types
 $types = array(
 	'eot' => 'application/vnd.ms-fontobject',
-	'woff' => 'application/x-woff', // best supported, but this is not the right one according to http://www.w3.org/TR/WOFF/#appendix-b
+	'woff' => 'application/x-font-woff', // best supported, but this is not the right one according to http://www.w3.org/TR/WOFF/#appendix-b
 	'ttf' => 'application/octet-stream'
 );
 
