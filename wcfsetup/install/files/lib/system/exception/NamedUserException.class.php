@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\exception;
 use wcf\system\WCF;
+use wcf\system\event\EventHandler;
 
 /**
  * NamedUserException shows a (well) styled page with the given error message.
@@ -30,6 +31,9 @@ class NamedUserException extends UserException {
 			'stacktrace' => $this->getTraceAsString(),
 			'templateName' => 'userException'
 		));
+		
+		EventHandler::getInstance()->fireAction($this, 'display');
+		
 		WCF::getTPL()->display('userException');
 	}
 }
