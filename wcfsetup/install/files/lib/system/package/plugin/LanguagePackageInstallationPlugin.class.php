@@ -240,15 +240,47 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	/**
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
-	protected function handleDelete(array $items) { }
+	protected function handleDelete(array $items) {
+		$sql = "DELETE FROM wcf".WCF_N."_".$this->tableName."
+		WHERE languageItem = ?
+		AND packageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		foreach ($items as $item) {
+			if (!empty($item['value'])) {
+				$statement->execute(array(
+					$item['value'],
+					$this->installation->getPackageID()
+					));
+			}
+		}
+	}
 	
 	/**
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
-	protected function prepareImport(array $data) { }
+	protected function prepareImport(array $data) {
+		return array(
+			'languageItem' => $data['attributes']['name'],
+			'languageValue' => $data['value']
+		);
+	}
 	
 	/**
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
-	protected function findExistingItem(array $data) { }
+	protected function findExistingItem(array $data) {
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_".$this->tableName."
+			WHERE	languageItem = ?
+				AND packageID = ?";
+		$parameters = array(
+			$data['languageItem'],
+			$this->installation->getPackageID()
+		);
+		
+		return array(
+			'sql' => $sql,
+			'parameters' => $parameters
+		);
+	}
 }
