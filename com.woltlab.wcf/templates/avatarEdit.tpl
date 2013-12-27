@@ -53,34 +53,36 @@
 				</dd>
 			</dl>
 			
-			<dl class="jsOnly{if $errorField == 'custom'} formError{/if}" id="avatarUpload">
-				<dt class="framed">
-					{if $avatarType == 'custom'}
-						{assign var='__customAvatar' value=$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
-						{if $__wcf->getUserProfileHandler()->getAvatar()->canCrop()}
-							{assign var='__customAvatar' value=$__customAvatar|substr:0:-2}
-							{assign var='__customAvatarTitle' value='wcf.user.avatar.type.custom.crop'|language}
-							{append var='__customAvatar' value='class="userAvatarCrop jsTooltip" title="'|concat:$__customAvatarTitle:'" />'}
+			{if $__wcf->getSession()->getPermission('user.profile.avatar.canUploadAvatar')}
+				<dl class="jsOnly{if $errorField == 'custom'} formError{/if}" id="avatarUpload">
+					<dt class="framed">
+						{if $avatarType == 'custom'}
+							{assign var='__customAvatar' value=$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
+							{if $__wcf->getUserProfileHandler()->getAvatar()->canCrop()}
+								{assign var='__customAvatar' value=$__customAvatar|substr:0:-2}
+								{assign var='__customAvatarTitle' value='wcf.user.avatar.type.custom.crop'|language}
+								{append var='__customAvatar' value='class="userAvatarCrop jsTooltip" title="'|concat:$__customAvatarTitle:'" />'}
+							{/if}
+							{@$__customAvatar}
+						{else}
+							<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon96" />
 						{/if}
-						{@$__customAvatar}
-					{else}
-						<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon96" />
-					{/if}
-				</dt>
-				<dd>
-					<label><input type="radio" name="avatarType" value="custom" {if $avatarType == 'custom'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.custom{/lang}</label>
-					<small>{lang}wcf.user.avatar.type.custom.description{/lang}</small>
-					
-					{* placeholder for upload button: *}
-					<div></div>
-					
-					{if $errorField == 'custom'}
-						<small class="innerError">
-							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						</small>
-					{/if}
-				</dd>
-			</dl>
+					</dt>
+					<dd>
+						<label><input type="radio" name="avatarType" value="custom" {if $avatarType == 'custom'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.custom{/lang}</label>
+						<small>{lang}wcf.user.avatar.type.custom.description{/lang}</small>
+						
+						{* placeholder for upload button: *}
+						<div></div>
+						
+						{if $errorField == 'custom'}
+							<small class="innerError">
+								{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+							</small>
+						{/if}
+					</dd>
+				</dl>
+			{/if}
 			
 			{if MODULE_GRAVATAR}
 				<dl{if $errorField == 'gravatar'} class="formError"{/if}>
@@ -113,30 +115,32 @@
 
 {include file='footer'}
 
-<script data-relocate="true">
-	//<![CDATA[
-	$(function() {
-		WCF.Language.addObject({
-			'wcf.user.avatar.type.custom.crop': '{lang}wcf.user.avatar.type.custom.crop{/lang}',
-			'wcf.user.avatar.upload.error.invalidExtension': '{lang}wcf.user.avatar.upload.error.invalidExtension{/lang}',
-			'wcf.user.avatar.upload.error.tooSmall': '{lang}wcf.user.avatar.upload.error.tooSmall{/lang}',
-			'wcf.user.avatar.upload.error.tooLarge': '{lang}wcf.user.avatar.upload.error.tooLarge{/lang}',
-			'wcf.user.avatar.upload.error.uploadFailed': '{lang}wcf.user.avatar.upload.error.uploadFailed{/lang}',
-			'wcf.user.avatar.upload.error.badImage': '{lang}wcf.user.avatar.upload.error.badImage{/lang}',
-			'wcf.user.avatar.upload.success': '{lang}wcf.user.avatar.upload.success{/lang}',
-			'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}'
-		});
-		
-		{if !$__wcf->user->disableAvatar}
-			{if $__wcf->getUserProfileHandler()->getAvatar()->canCrop()}
-				new WCF.User.Avatar.Upload(0, new WCF.User.Avatar.Crop({@$__wcf->getUserProfileHandler()->getAvatar()->avatarID}));
-			{else}
-				new WCF.User.Avatar.Upload();
+{if $__wcf->getSession()->getPermission('user.profile.avatar.canUploadAvatar')}
+	<script data-relocate="true">
+		//<![CDATA[
+		$(function() {
+			WCF.Language.addObject({
+				'wcf.user.avatar.type.custom.crop': '{lang}wcf.user.avatar.type.custom.crop{/lang}',
+				'wcf.user.avatar.upload.error.invalidExtension': '{lang}wcf.user.avatar.upload.error.invalidExtension{/lang}',
+				'wcf.user.avatar.upload.error.tooSmall': '{lang}wcf.user.avatar.upload.error.tooSmall{/lang}',
+				'wcf.user.avatar.upload.error.tooLarge': '{lang}wcf.user.avatar.upload.error.tooLarge{/lang}',
+				'wcf.user.avatar.upload.error.uploadFailed': '{lang}wcf.user.avatar.upload.error.uploadFailed{/lang}',
+				'wcf.user.avatar.upload.error.badImage': '{lang}wcf.user.avatar.upload.error.badImage{/lang}',
+				'wcf.user.avatar.upload.success': '{lang}wcf.user.avatar.upload.success{/lang}',
+				'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}'
+			});
+			
+			{if !$__wcf->user->disableAvatar}
+				{if $__wcf->getUserProfileHandler()->getAvatar()->canCrop()}
+					new WCF.User.Avatar.Upload(0, new WCF.User.Avatar.Crop({@$__wcf->getUserProfileHandler()->getAvatar()->avatarID}));
+				{else}
+					new WCF.User.Avatar.Upload();
+				{/if}
 			{/if}
-		{/if}
-	});
-	//]]>
-</script>
+		});
+		//]]>
+	</script>
+{/if}
 
 </body>
 </html>
