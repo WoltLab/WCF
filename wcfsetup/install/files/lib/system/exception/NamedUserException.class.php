@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\exception;
-use wcf\system\WCF;
 use wcf\system\event\EventHandler;
+use wcf\system\WCF;
 
 /**
  * NamedUserException shows a (well) styled page with the given error message.
