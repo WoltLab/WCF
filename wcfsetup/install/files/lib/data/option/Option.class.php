@@ -184,4 +184,13 @@ class Option extends DatabaseObject {
 	public function modifySelectOptions($selectOptions) {
 		$this->data['selectOptions'] = $selectOptions;
 	}
+	
+	/**
+	 * Allows modifications of enable options.
+	 * 
+	 * @param	string		$enableOptions
+	 */
+	public function modifyEnableOptions($enableOptions) {
+		$this->data['enableOptions'] = $enableOptions;
+	}
 }
