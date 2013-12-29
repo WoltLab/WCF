@@ -154,7 +154,7 @@ final class DateUtil {
 		$output = $time->format($language->get($format));
 		
 		// localize output
-		$output = self::localizeDate($output, $format, $language);
+		$output = self::localizeDate($output, $language->get($format), $language);
 		
 		return $output;
 	}
@@ -242,7 +242,7 @@ final class DateUtil {
 	public static function localizeDate($date, $format, Language $language) {
 		if ($language->languageCode != 'en') {
 			// full textual representation of the day of the week (l)
-			if (stripos($format, 'l') !== false) {
+			if (strpos($format, 'l') !== false) {
 				$date = str_replace(array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'), array(
 					$language->get('wcf.date.day.sunday'),
 					$language->get('wcf.date.day.monday'),
@@ -255,7 +255,7 @@ final class DateUtil {
 			}
 			
 			// textual representation of a day, three letters (D)
-			if (stripos($format, 'D') !== false) {
+			if (strpos($format, 'D') !== false) {
 				$date = str_replace(array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'), array(
 					$language->get('wcf.date.day.sun'),
 					$language->get('wcf.date.day.mon'),
@@ -268,7 +268,7 @@ final class DateUtil {
 			}
 			
 			// full textual representation of a month (F)
-			if (stripos($format, 'F') !== false) {
+			if (strpos($format, 'F') !== false) {
 				$date = str_replace(array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'), array(
 					$language->get('wcf.date.month.january'),
 					$language->get('wcf.date.month.february'),
@@ -286,7 +286,7 @@ final class DateUtil {
 			}
 			
 			// short textual representation of a month (M)
-			if (stripos($format, 'M') !== false) {
+			if (strpos($format, 'M') !== false) {
 				$date = str_replace(array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'), array(
 					$language->get('wcf.date.month.short.jan'),
 					$language->get('wcf.date.month.short.feb'),
