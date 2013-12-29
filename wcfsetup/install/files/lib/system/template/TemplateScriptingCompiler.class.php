@@ -204,7 +204,6 @@ class TemplateScriptingCompiler {
 				'autoloadPlugins' => $this->autoloadPlugins,
 				'currentIdentifier' => $this->currentIdentifier,
 				'currentLineNo' => $this->currentLineNo,
-				'stringStack' => $this->stringStack,
 				'tagStack' => $this->tagStack
 			);
 		}
@@ -213,7 +212,7 @@ class TemplateScriptingCompiler {
 		}
 		
 		// reset vars
-		$this->autoloadPlugins = $this->tagStack = $this->stringStack = array();
+		$this->autoloadPlugins = $this->tagStack = array();
 		$this->currentIdentifier = $identifier;
 		$this->currentLineNo = 1;
 		
@@ -285,7 +284,6 @@ class TemplateScriptingCompiler {
 			$this->autoloadPlugins = $previousData['autoloadPlugins'];
 			$this->currentIdentifier = $previousData['currentIdentifier'];
 			$this->currentLineNo = $previousData['currentLineNo'];
-			$this->stringStack = $previousData['stringStack'];
 			$this->tagStack = $previousData['tagStack'];
 		}
 		
