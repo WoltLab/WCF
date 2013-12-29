@@ -25,12 +25,9 @@ class PHPInfoPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		// check if phpinfo() is disabled
-		if (preg_match('%(^|,)\s*phpinfo\s*($|,)%i', ini_get('disable_functions'))) {
-			$info = '<div class="error">phpinfo() has been disabled for security reasons</div>';
-		}
-		else {
-		// if not, get phpinfo() output
+		// check if phpinfo() exists
+		if (function_exists('phpinfo')) {
+			// get phpinfo() output
 			ob_start();
 			phpinfo();
 			$info = ob_get_contents();
@@ -47,6 +44,9 @@ class PHPInfoPage extends AbstractPage {
 			$info = preg_replace('%<h2>(.*?)</h2>\s*<table border="0" cellpadding="3" width="600">%', '<div class="tabularBox tabularBoxTitle marginTop"><header><h2>\\1</h2></header><table class="table">', $info);
 			$info = preg_replace('%<table border="0" cellpadding="3" width="600">%', '<div class="tabularBox marginTop"><table class="table">', $info);
 			$info = str_replace('</table>', '</table></div>', $info);
+		}
+		else {
+			$info = '<div class="error">phpinfo() has been disabled for security reasons</div>';
 		}
 		
 		WCF::getTPL()->assign(array(
