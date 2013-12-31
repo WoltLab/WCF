@@ -17,11 +17,6 @@
 .boxHeadline.labeledHeadline {
 	font-size: 0;
 	
-	> h1 {
-		display: inline-block;
-		margin-right: @wcfGapSmall;
-	}
-	
 	> ul {
 		display: inline-block;
 		font-size: 1rem;
@@ -41,6 +36,12 @@
 		position: relative;
 		top: -4px;
 	}
+}
+
+.boxHeadline.labeledHeadline > h1,
+.boxSubHeadline.labeledHeadline > h2 {
+	display: inline-block;
+	margin-right: @wcfGapSmall;
 }
 
 /* ACP label list */

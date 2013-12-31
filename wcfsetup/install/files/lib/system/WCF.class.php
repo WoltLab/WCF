@@ -37,7 +37,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current wcf version
-define('WCF_VERSION', '2.0.0 (Maelstrom)');
+define('WCF_VERSION', '2.0.1 (Maelstrom)');
 
 // define current unix timestamp
 define('TIME_NOW', time());
