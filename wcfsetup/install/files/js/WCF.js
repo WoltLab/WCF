@@ -9990,7 +9990,7 @@ $.widget('ui.wcfPages', {
 			else {
 				var $previousImage = $('<span class="icon icon16 icon-double-angle-left" />');
 				$previousElement.append($previousImage);
-				$previousElement.addClass('disabled');
+				$previousElement.addClass('disabled').removeClass('button');
 				$previousImage.addClass('disabled');
 			}
 			
@@ -10078,7 +10078,7 @@ $.widget('ui.wcfPages', {
 			else {
 				var $nextImage = $('<span class="icon icon16 icon-double-angle-right" />');
 				$nextElement.append($nextImage);
-				$nextElement.addClass('disabled');
+				$nextElement.addClass('disabled').removeClass('button');
 				$nextImage.addClass('disabled');
 			}
 			
