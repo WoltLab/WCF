@@ -204,9 +204,18 @@ class PollManager extends SingletonFactory {
 			return;
 		}
 		
-		// end time is in the past
-		if ($this->pollData['endTime'] != 0 && $this->pollData['endTime'] <= TIME_NOW && ($this->poll === null || $this->poll->endTime != $this->pollData['endTime'])) {
-			throw new UserInputException('pollEndTime', 'notValid');
+		if ($this->pollData['endTime'] && $this->pollData['endTime'] <= TIME_NOW) {
+			if ($this->poll === null) {
+				// end time is in the past
+				throw new UserInputException('pollEndTime', 'notValid');
+			}
+			else {
+				// check if the difference to the stored time is less than 60 minutes (editing an old poll)
+				$difference = abs($this->poll->endTime - $this->pollData['endTime']);
+				if ($difference > 3599) {
+					throw new UserInputException('pollEndTime', 'notValid');
+				}
+			}
 		}
 		
 		// no options given
