@@ -42,12 +42,6 @@ class ApplicationEditForm extends AbstractForm {
 	public $cookieDomain = '';
 	
 	/**
-	 * cookie path
-	 * @var	string
-	 */
-	public $cookiePath = '';
-	
-	/**
 	 * domain name
 	 * @var	string
 	 */
@@ -95,7 +89,6 @@ class ApplicationEditForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		if (isset($_POST['cookieDomain'])) $this->cookieDomain = StringUtil::trim($_POST['cookieDomain']);
-		if (isset($_POST['cookiePath'])) $this->cookiePath = StringUtil::trim($_POST['cookiePath']);
 		if (isset($_POST['domainName'])) $this->domainName = StringUtil::trim($_POST['domainName']);
 		if (isset($_POST['domainPath'])) $this->domainPath = StringUtil::trim($_POST['domainPath']);
 	}
@@ -108,7 +101,6 @@ class ApplicationEditForm extends AbstractForm {
 		
 		if (empty($_POST)) {
 			$this->cookieDomain = $this->application->cookieDomain;
-			$this->cookiePath = $this->application->cookiePath;
 			$this->domainName = $this->application->domainName;
 			$this->domainPath = $this->application->domainPath;
 		}
@@ -143,25 +135,8 @@ class ApplicationEditForm extends AbstractForm {
 			}
 		}
 		
-		if (empty($this->domainPath)) {
-			$this->cookiePath = '';
-		}
-		else {
-			// strip first and last slash
-			$this->domainPath = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($this->domainPath));
-			$this->cookiePath = FileUtil::removeLeadingSlash(FileUtil::removeTrailingSlash($this->cookiePath));
-			
-			if (!empty($this->cookiePath) && ($this->domainPath != $this->cookiePath)) {
-				// check if cookie path is contained within domain path
-				if (!StringUtil::startsWith($this->domainPath, $this->cookiePath)) {
-					throw new UserInputException('cookiePath', 'notValid');
-				}
-			}
-		}
-		
 		// add slashes
 		$this->domainPath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($this->domainPath));
-		$this->cookiePath = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($this->cookiePath));
 		
 		// search for other applications with the same domain and path
 		$sql = "SELECT	packageID
@@ -191,7 +166,6 @@ class ApplicationEditForm extends AbstractForm {
 		// save application
 		$this->objectAction = new ApplicationAction(array($this->application->getDecoratedObject()), 'update', array('data' => array_merge($this->additionalFields, array(
 			'cookieDomain' => $this->cookieDomain,
-			'cookiePath' => $this->cookiePath,
 			'domainName' => $this->domainName,
 			'domainPath' => $this->domainPath
 		))));
@@ -217,7 +191,6 @@ class ApplicationEditForm extends AbstractForm {
 		WCF::getTPL()->assign(array(
 			'application' => $this->application,
 			'cookieDomain' => $this->cookieDomain,
-			'cookiePath' => $this->cookiePath,
 			'domainName' => $this->domainName,
 			'domainPath' => $this->domainPath,
 			'packageID' => $this->packageID

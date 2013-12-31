@@ -101,22 +101,6 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'cookiePath'} class="formError"{/if}>
-				<dt><label for="cookiePath">{lang}wcf.acp.application.cookiePath{/lang}</label></dt>
-				<dd>
-					<input type="text" name="cookiePath" id="cookiePath" value="{$cookiePath}" class="long" />
-					{if $errorField == 'cookiePath'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.acp.application.cookiePath.error.{$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-			
 			{event name='cookieFields'}
 		</fieldset>
 		
