@@ -355,7 +355,7 @@ pdf]]></defaultvalue>
 			<!-- user.message.comment -->
 			<option name="user.comment.floodControlTime">
 				<categoryname>user.message.comment</categoryname>
-				<optiontype>integer</optiontype>
+				<optiontype>inverseInteger</optiontype>
 				<defaultvalue>15</defaultvalue>
 				<admindefaultvalue>0</admindefaultvalue>
 				<minvalue>0</minvalue>
