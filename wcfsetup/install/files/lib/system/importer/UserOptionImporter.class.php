@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\user\option\category\UserOptionCategoryEditor;
+use wcf\data\user\option\category\UserOptionCategoryList;
 use wcf\data\user\option\UserOptionAction;
 use wcf\data\user\option\UserOptionEditor;
 use wcf\system\language\LanguageFactory;
@@ -29,6 +31,12 @@ class UserOptionImporter extends AbstractImporter {
 	protected $languageCategoryID = null;
 	
 	/**
+	 * list of available user option categories
+	 * @var array<string>
+	 */
+	protected $categoryCache = null;
+	
+	/**
 	 * Creates a new UserOptionImporter object.
 	 */
 	public function __construct() {
@@ -55,6 +63,9 @@ class UserOptionImporter extends AbstractImporter {
 				$data['defaultValue'] = intval($data['defaultValue']);
 			}
 		}
+		
+		// create category
+		$this->createCategory($data['categoryName']);
 		
 		// save option
 		$action = new UserOptionAction(array(), 'create', array('data' => $data));
@@ -84,5 +95,31 @@ class UserOptionImporter extends AbstractImporter {
 		ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user.option', $oldID, $userOption->optionID);
 		
 		return $userOption->optionID;
+	}
+	
+	/**
+	 * Creates the given category if necessary.
+	 * 
+	 * @param	string		$name
+	 */
+	protected function createCategory($name) {
+		if ($this->categoryCache === null) {
+			// get existing categories
+			$list = new UserOptionCategoryList();
+			$list->getConditionBuilder()->add('categoryName = ? OR parentCategoryName = ?', array('profile', 'profile'));
+			$list->readObjects();
+			foreach ($list->getObjects() as $category) $this->categoryCache[] = $category->categoryName;
+		}
+		
+		if (!in_array($name, $this->categoryCache)) {
+			// create category
+			UserOptionCategoryEditor::create(array(
+				'packageID' => 1,
+				'categoryName' => $name,
+				'parentCategoryName' => 'profile'
+			));
+			
+			$this->categoryCache[] = $name;
+		}
 	}
 }
