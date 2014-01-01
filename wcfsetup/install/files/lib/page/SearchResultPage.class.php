@@ -5,6 +5,7 @@ use wcf\data\search\Search;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
+use wcf\system\menu\page\PageMenu;
 use wcf\system\search\SearchEngine;
 use wcf\system\WCF;
 
@@ -97,6 +98,14 @@ class SearchResultPage extends MultipleLinkPage {
 		
 		// get messages
 		$this->readMessages();
+		
+		// set active menu item
+		if (count($this->searchData['selectedObjectTypes']) == 1) {
+			$objectType = SearchEngine::getInstance()->getObjectType($this->searchData['selectedObjectTypes'][0]);
+			if (($activeMenuItem = $objectType->getActiveMenuItem())) {
+				PageMenu::getInstance()->setActiveMenuItem($activeMenuItem);
+			}
+		}
 	}
 	
 	/**

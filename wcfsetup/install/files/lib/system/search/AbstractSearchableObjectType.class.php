@@ -16,6 +16,12 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  */
 abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor implements ISearchableObjectType {
 	/**
+	 * active main menu item
+	 * @var string
+	 */
+	protected $activeMenuItem = '';
+	
+	/**
 	 * @see	\wcf\system\search\ISearchableObjectType::show()
 	 */
 	public function show(IForm $form = null) {}
@@ -88,5 +94,12 @@ abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor 
 	 */
 	public function getSpecialSQLQuery(PreparedStatementConditionBuilder &$fulltextCondition = null, PreparedStatementConditionBuilder &$searchIndexConditions = null, PreparedStatementConditionBuilder &$additionalConditions = null, $orderBy = 'time DESC') {
 		return '';
+	}
+	
+	/**
+	 * @see	\wcf\system\search\ISearchableObjectType::getActiveMenuItem()
+	 */
+	public function getActiveMenuItem() {
+		return $this->activeMenuItem;
 	}
 }

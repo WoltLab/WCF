@@ -125,4 +125,11 @@ interface ISearchableObjectType {
 	 * @return	string
 	 */
 	public function getSpecialSQLQuery(PreparedStatementConditionBuilder &$fulltextCondition = null, PreparedStatementConditionBuilder &$searchIndexConditions = null, PreparedStatementConditionBuilder &$additionalConditions = null, $orderBy = 'time DESC');
+	
+	/**
+	 * Returns the name of the active main menu item.
+	 * 
+	 * @return	string
+	 */
+	public function getActiveMenuItem();
 }
