@@ -29,7 +29,6 @@
 				<th class="columnText columnDomainName">{lang}wcf.acp.application.domainName{/lang}</th>
 				<th class="columnText columnDomainPath">{lang}wcf.acp.application.domainPath{/lang}</th>
 				<th class="columnText columnCookieDomain">{lang}wcf.acp.application.cookieDomain{/lang}</th>
-				<th class="columnText columnCookiePath">{lang}wcf.acp.application.cookiePath{/lang}</th>
 				
 				{event name='columnHeads'}
 			</tr>
@@ -53,7 +52,6 @@
 					<td class="columnText columnDomainName">{$application->domainName}</td>
 					<td class="columnText columnDomainPath">{$application->domainPath}</td>
 					<td class="columnText columnCookieDomain">{$application->cookieDomain}</td>
-					<td class="columnText columnCookiePath">{$application->cookiePath}</td>
 					
 					{event name='columns'}
 				</tr>

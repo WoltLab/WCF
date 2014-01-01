@@ -30,7 +30,13 @@ class CacheHandler extends SingletonFactory {
 		// init cache source object
 		try {
 			$className = 'wcf\system\cache\source\\'.ucfirst(CACHE_SOURCE_TYPE).'CacheSource';
-			$this->cacheSource = new $className();
+			if (class_exists($className)) {
+				$this->cacheSource = new $className();
+			}
+			else {
+				// fallback to disk cache
+				$this->cacheSource = new DiskCacheSource();
+			}
 		}
 		catch (SystemException $e) {
 			if (CACHE_SOURCE_TYPE != 'disk') {

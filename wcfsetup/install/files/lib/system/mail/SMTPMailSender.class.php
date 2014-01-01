@@ -63,8 +63,16 @@ class SMTPMailSender extends MailSender {
 			throw new SystemException($this->formatError("can not connect to '".MAIL_SMTP_HOST.":".MAIL_SMTP_PORT."'"));
 		}
 		
+		$host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : '';
+		if (empty($host)) {
+			$host = gethostname();
+			if ($host === false) {
+				$host = 'localhost';
+			}
+		}
+		
 		// send ehlo
-		$this->write('EHLO '.$_SERVER['HTTP_HOST']);
+		$this->write('EHLO '.$host);
 		$this->getSMTPStatus();
 		if ($this->statusCode == 250) {
 			// do authentication
@@ -74,7 +82,7 @@ class SMTPMailSender extends MailSender {
 		}
 		else {
 			// send helo
-			$this->write('HELO '.$_SERVER['HTTP_HOST']);
+			$this->write('HELO '.$host);
 			$this->getSMTPStatus();
 			if ($this->statusCode != 250) {
 				throw new SystemException($this->formatError("can not connect to '".MAIL_SMTP_HOST.":".MAIL_SMTP_PORT."'"));
@@ -165,10 +173,18 @@ class SMTPMailSender extends MailSender {
 			throw new SystemException($this->formatError("smtp error"));
 		}
 		
+		$serverName = (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : '';
+		if (empty($serverName)) {
+			$serverName = gethostname();
+			if ($serverName === false) {
+				$serverName = 'localhost';
+			}
+		}
+		
 		$header =
 			"Date: ".gmdate('r').Mail::$lineEnding
 			."To: ".$mail->getToString().Mail::$lineEnding
-			."Message-ID: <".md5(uniqid())."@".$_SERVER['SERVER_NAME'].">".Mail::$lineEnding
+			."Message-ID: <".md5(uniqid())."@".$serverName.">".Mail::$lineEnding
 			."Subject: ".Mail::encodeMIMEHeader($mail->getSubject()).Mail::$lineEnding
 			.$mail->getHeader();
 		
