@@ -2811,6 +2811,7 @@ WCF.Date.Picker = {
 				dayNames: WCF.Language.get('__days'),
 				dayNamesMin: WCF.Language.get('__daysShort'),
 				dayNamesShort: WCF.Language.get('__daysShort'),
+				firstDay: parseInt(WCF.Language.get('wcf.date.firstDayOfTheWeek')) || 0,
 				isRTL: WCF.Language.get('wcf.global.pageDirection') == 'rtl',
 				maxDate: $maxDate,
 				minDate: $minDate,
