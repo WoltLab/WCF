@@ -1548,17 +1548,17 @@ ALTER TABLE wcf1_poll_option_vote ADD FOREIGN KEY (userID) REFERENCES wcf1_user 
 
 /* default inserts */
 -- default user groups
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group1', 1);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group2', 2);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group3', 3);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group4', 4);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group5', 4);
-INSERT INTO wcf1_user_group (groupName, groupType) VALUES ('wcf.acp.group.group6', 4);
+INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (1, 'wcf.acp.group.group1', 1); -- Everyone
+INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (2, 'wcf.acp.group.group2', 2); -- Guests
+INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (3, 'wcf.acp.group.group3', 3); -- Registered Users
+INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (4, 'wcf.acp.group.group4', 4); -- Administrators
+INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (5, 'wcf.acp.group.group5', 4); -- Moderators
+INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (6, 'wcf.acp.group.group6', 4); -- Super-Moderators
 
 -- default user group options
-INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, showOrder) VALUES ('admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1);
-INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, showOrder) VALUES ('admin.system.package.canInstallPackage', 'admin.system.package', 'boolean', '0', 1);
-INSERT INTO wcf1_user_group_option (optionName, categoryName, optionType, defaultValue, showOrder) VALUES ('admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', 1);
+INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder) VALUES (1, 'admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1);
+INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder) VALUES (2, 'admin.system.package.canInstallPackage', 'admin.system.package', 'boolean', '0', 1);
+INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder) VALUES (3, 'admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', 1);
 
 -- default user group option values
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (1, 1, '0');	-- Everyone
