@@ -77,11 +77,13 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					SET	showOrder = showOrder + 1
 					WHERE	showOrder >= ?
 						AND showOrder < ?
+						AND parentCategoryID = ?
 						AND objectTypeID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute(array(
 					$showOrder,
 					$this->showOrder,
+					$this->parentCategoryID,
 					$this->objectTypeID
 				));
 			}
