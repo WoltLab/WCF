@@ -141,7 +141,7 @@ class RequestHandler extends SingletonFactory {
 							if ($currentRequestURI == $application->getPageURL()) {
 								if ($controller = WCF::getApplicationObject($application)->getPrimaryController()) {
 									$controller = explode('\\', $controller);
-									HeaderUtil::redirect(LinkHandler::getInstance()->getLink(array_pop($controller), array('application' => $controller[0])));
+									HeaderUtil::redirect(LinkHandler::getInstance()->getLink(preg_replace('~(Action|Form|Page)$~', '', array_pop($controller)), array('application' => $controller[0])));
 									exit;
 								}
 							}
