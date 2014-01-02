@@ -100,7 +100,7 @@ class SearchResultPage extends MultipleLinkPage {
 		$this->readMessages();
 		
 		// set active menu item
-		if (count($this->searchData['selectedObjectTypes']) == 1) {
+		if (isset($this->searchData['selectedObjectTypes']) && count($this->searchData['selectedObjectTypes']) == 1) {
 			$objectType = SearchEngine::getInstance()->getObjectType($this->searchData['selectedObjectTypes'][0]);
 			if (($activeMenuItem = $objectType->getActiveMenuItem())) {
 				PageMenu::getInstance()->setActiveMenuItem($activeMenuItem);
