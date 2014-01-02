@@ -80,21 +80,30 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	}
 	
 	/**
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 */
+	public function update() {
+		// check if showOrder needs to be recalculated
+		if (count($this->objects) == 1 && isset($this->parameters['data']['parentCategoryID']) && isset($this->parameters['data']['showOrder'])) {
+			if ($this->objects[0]->parentCategoryID != $this->parameters['data']['parentCategoryID'] || $this->objects[0]->showOrder != $this->parameters['data']['showOrder']) {
+				$this->parameters['data']['showOrder'] = $this->objects[0]->updateShowOrder($this->parameters['data']['parentCategoryID'], $this->parameters['data']['showOrder']);
+			}
+		}
+		
+		parent::update();
+	}
+	
+	/**
 	 * @see	\wcf\data\ISortableAction::updatePosition()
 	 */
 	public function updatePosition() {
-		$showOrders = array();
-		
 		WCF::getDB()->beginTransaction();
 		foreach ($this->parameters['data']['structure'] as $parentCategoryID => $categoryIDs) {
-			if (!isset($showOrders[$parentCategoryID])) {
-				$showOrders[$parentCategoryID] = 1;
-			}
-			
+			$showOrder = 1;
 			foreach ($categoryIDs as $categoryID) {
 				$this->objects[$categoryID]->update(array(
 					'parentCategoryID' => $parentCategoryID ? $this->objects[$parentCategoryID]->categoryID : 0,
-					'showOrder' => $showOrders[$parentCategoryID]++
+					'showOrder' => $showOrder++
 				));
 			}
 		}

@@ -23,26 +23,6 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	protected static $baseClass = 'wcf\data\category\Category';
 	
 	/**
-	 * @see	\wcf\data\IEditableObject::update()
-	 */
-	public function update(array $parameters = array()) {
-		// update show order
-		if (isset($parameters['parentCategoryID']) || isset($parameters['showOrder'])) {
-			if (!isset($parameters['parentCategoryID'])) {
-				$parameters['parentCategoryID'] = $this->parentCategoryID;
-			}
-			
-			if (!isset($parameters['showOrder'])) {
-				$parameters['showOrder'] = $this->showOrder;
-			}
-			
-			$parameters['showOrder'] = $this->updateShowOrder($parameters['parentCategoryID'], $parameters['showOrder']);
-		}
-		
-		parent::update($parameters);
-	}
-	
-	/**
 	 * Prepares the update of the show order of this category and return the
 	 * correct new show order.
 	 * 
