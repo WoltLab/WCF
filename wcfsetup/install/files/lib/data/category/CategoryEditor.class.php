@@ -30,7 +30,7 @@ class CategoryEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * @param	integer		$showOrder
 	 * @return	integer
 	 */
-	protected function updateShowOrder($parentCategoryID, $showOrder) {
+	public function updateShowOrder($parentCategoryID, $showOrder) {
 		// correct invalid values
 		if ($showOrder === null) {
 			$showOrder = PHP_INT_MAX;
