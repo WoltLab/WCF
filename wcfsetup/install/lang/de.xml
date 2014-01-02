@@ -1692,6 +1692,7 @@ Fehler sind beispielsweise:
 		
 		<item name="wcf.date.period.start"><![CDATA[von]]></item>
 		<item name="wcf.date.period.end"><![CDATA[bis]]></item>
+		<item name="wcf.date.firstDayOfTheWeek"><![CDATA[1]]></item>
 	</category>
 	
 	<category name="wcf.global">

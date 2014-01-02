@@ -1691,6 +1691,7 @@ Errors are:
 		
 		<item name="wcf.date.period.start"><![CDATA[from]]></item>
 		<item name="wcf.date.period.end"><![CDATA[to]]></item>
+		<item name="wcf.date.firstDayOfTheWeek"><![CDATA[0]]></item>
 	</category>
 	
 	<category name="wcf.global">

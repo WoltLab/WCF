@@ -61,6 +61,7 @@
 				'wcf.date.hour': '{lang}wcf.date.hour{/lang}',
 				'wcf.date.minute': '{lang}wcf.date.minute{/lang}',
 				'wcf.date.timeFormat': '{lang}wcf.date.timeFormat{/lang}',
+				'wcf.date.firstDayOfTheWeek': '{lang}wcf.date.firstDayOfTheWeek{/lang}',
 				'wcf.global.button.add': '{lang}wcf.global.button.add{/lang}',
 				'wcf.global.button.cancel': '{lang}wcf.global.button.cancel{/lang}',
 				'wcf.global.button.close': '{lang}wcf.global.button.close{/lang}',
