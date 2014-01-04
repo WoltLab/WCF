@@ -236,8 +236,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				if ($updateExistingItems) {
 					$sql .= " ON DUPLICATE KEY
 					UPDATE			languageItemValue = IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)),
-								languageCategoryID = VALUES(languageCategoryID),
-								languageUseCustomValue = 0";
+								languageCategoryID = VALUES(languageCategoryID)";
 				}
 				
 				$statement = WCF::getDB()->prepareStatement($sql);
