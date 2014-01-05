@@ -97,7 +97,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 		$editor = reset($this->objects);
 		if ($editor->languageItemOriginIsSystem) {
 			$updateData = array(
-				'languageCustomItemValue' => $this->parameters['languageCustomItemValue'],
+				'languageCustomItemValue' => !$this->parameters['languageUseCustomValue'] && empty($this->parameters['languageCustomItemValue']) ? null : $this->parameters['languageCustomItemValue'],
 				'languageUseCustomValue' => ($this->parameters['languageUseCustomValue'] ? 1 : 0)
 			);
 		}
