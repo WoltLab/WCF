@@ -109,13 +109,13 @@ class TagEditForm extends TagAddForm {
 	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
+		$this->languageID = $this->tagObj->languageID;
+		
 		parent::readData();
 		
 		if (empty($_POST)) {
 			$this->name = $this->tagObj->name;
 		}
-		
-		$this->languageID = $this->tagObj->languageID;
 		
 		$synonymList = new TagList();
 		$synonymList->getConditionBuilder()->add('synonymFor = ?', array($this->tagObj->tagID));
