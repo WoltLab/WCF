@@ -520,6 +520,7 @@ class BBCodeParser extends SingletonFactory {
 		
 		$this->setText($text);
 		$this->buildTagArray(false);
+		$this->buildXMLStructure();
 		
 		$usedDisallowedBBCodes = array();
 		foreach ($this->tagArray as $tag) {
