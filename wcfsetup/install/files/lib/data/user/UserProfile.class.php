@@ -615,7 +615,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	 * @return	boolean
 	 */
 	public function canEditOwnProfile() {
-		return ($this->activationCode ? false : true);
+		return (!$this->activationCode && WCF::getSession()->getPermission('user.profile.canViewUserProfile'));
 	}
 	
 	/**
