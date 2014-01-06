@@ -3,15 +3,23 @@
 	<li id="userMenu" class="dropdown">
 		<a class="dropdownToggle framed" data-toggle="userMenu" href="{link controller='User' object=$__wcf->user}{/link}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)} <span>{lang}wcf.user.userNote{/lang}</span></a>
 		<ul class="dropdownMenu">
-			<li><a href="{link controller='User' object=$__wcf->user}{/link}" class="box32">
-				<div class="framed">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</div>
-				
-				<div class="containerHeadline">
-					<h3>{$__wcf->user->username}</h3>
-					<small>{lang}wcf.user.myProfile{/lang}</small>
-				</div>
-			</a></li>
-			{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<li><a href="{link controller='User' object=$__wcf->user}editOnInit=true#about{/link}">{lang}wcf.user.editProfile{/lang}</a></li>{/if}
+			{if $__wcf->session->getPermission('user.profile.canViewUserProfile')}
+				<li><a href="{link controller='User' object=$__wcf->user}{/link}" class="box32">
+					<div class="framed">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</div>
+					<div class="containerHeadline">
+						<h3>{$__wcf->user->username}</h3>
+						<small>{lang}wcf.user.myProfile{/lang}</small>
+					</div>
+				</a></li>
+				{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<li><a href="{link controller='User' object=$__wcf->user}editOnInit=true#about{/link}">{lang}wcf.user.editProfile{/lang}</a></li>{/if}
+			{else}
+				<li><a class="box32">
+					<div class="framed">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</div>
+					<div class="containerHeadline">
+						<h3>{$__wcf->user->username}</h3>
+					</div>
+				</a></li>
+			{/if}
 			<li><a href="{link controller='Settings'}{/link}">{lang}wcf.user.menu.settings{/lang}</a></li>
 			
 			{event name='userMenuItems'}
