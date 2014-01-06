@@ -5,7 +5,7 @@ namespace wcf\system\io;
  * Represents an archive of files.
  * 
  * @author	Tim Duesterhus
- * @copyright	2012 Tim Duesterhus
+ * @copyright	2012-2014 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.io

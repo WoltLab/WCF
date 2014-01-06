@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Represents a BBCode media provider.
  * 
  * @author	Tim Duesterhus
- * @copyright	2011-2013 WoltLab GmbH
+ * @copyright	2011-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode.media.provider

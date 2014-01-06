@@ -48,7 +48,7 @@ if (isset($_SERVER['PATH_INFO']) || isset($_SERVER['ORIG_PATH_INFO'])) {
  * ><p><b>Support for PHP is missing.<br />PHP Unterst&uuml;tzung nicht gefunden</b></p> <!--
  * 
  * @author	Marcel Werk
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 // @codingStandardsIgnoreFile

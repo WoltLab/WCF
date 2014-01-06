@@ -6,7 +6,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * Executes BBCode media provider-related actions.
  * 
  * @author	Tim Duesterhus
- * @copyright	2011-2013 Tim Duesterhus
+ * @copyright	2011-2014 Tim Duesterhus
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode.media.provider
