@@ -13,7 +13,7 @@ use wcf\util\HeaderUtil;
 
 /**
  * Handles http requests.
- * 
+ *
  * @author	Marcel Werk
  * @copyright	2001-2013 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -67,7 +67,7 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Handles a http request.
-	 * 
+	 *
 	 * @param	string		$application
 	 * @param	boolean		$isACPRequest
 	 */
@@ -109,7 +109,7 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Builds a new request.
-	 * 
+	 *
 	 * @param	string		$application
 	 */
 	protected function buildRequest($application) {
@@ -135,8 +135,16 @@ class RequestHandler extends SingletonFactory {
 						$routeData['controller'] = $landingPage->getController();
 					}
 					else {
-						// check if current URL matches an application but controller was omitted
+						// check if request URI resolves to an application different from relative route
+						// important: request URI may not contain anything else expect for the path
 						$currentRequestURI = RouteHandler::getHost() . $requestUri;
+						$redirectToLandingPage = false;
+						if ($currentRequestURI == ApplicationHandler::getInstance()->getPrimaryApplication()->getPageURL()) {
+							HeaderUtil::redirect($landingPage->getLink(), true);
+							exit;
+						}
+						
+						// check if current URL matches an application but controller was omitted
 						foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
 							if ($currentRequestURI == $application->getPageURL()) {
 								if ($controller = WCF::getApplicationObject($application)->getPrimaryController()) {
@@ -145,12 +153,7 @@ class RequestHandler extends SingletonFactory {
 									exit;
 								}
 							}
-							
 						}
-						
-						// redirect to landing page
-						HeaderUtil::redirect($landingPage->getLink(), true);
-						exit;
 					}
 				}
 				
@@ -207,7 +210,7 @@ class RequestHandler extends SingletonFactory {
 	/**
 	 * Returns the class data for the active request or null if for the given
 	 * configuration no proper class exist.
-	 * 
+	 *
 	 * @param	string		$controller
 	 * @param	string		$pageType
 	 * @param	string		$application
@@ -237,7 +240,7 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the active request object.
-	 * 
+	 *
 	 * @return	\wcf\system\request\Request
 	 */
 	public function getActiveRequest() {
@@ -246,7 +249,7 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Returns true if the request is an acp request.
-	 * 
+	 *
 	 * @return	boolean
 	 */
 	public function isACPRequest() {
@@ -255,7 +258,7 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Returns true, if current host mismatches any known domain.
-	 * 
+	 *
 	 * @return	boolean
 	 */
 	public function inRescueMode() {
