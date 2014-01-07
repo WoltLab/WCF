@@ -253,7 +253,7 @@
 					<dl{if $errorField == 'from'} class="formError"{/if}>
 						<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
 						<dd>
-							<input type="email" id="from" name="from" value="{$from}" class="medium" />
+							<input type="text" id="from" name="from" value="{$from}" class="medium" />
 							{if $errorField == 'from'}
 								<small class="innerError">
 									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
