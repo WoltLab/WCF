@@ -451,7 +451,9 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		// revert usernames to original case
 		foreach ($users as $username => $user) {
 			unset($users[$username]);
-			$users[$caseSensitiveUsernames[$username]] = $user;
+			if (isset($caseSensitiveUsernames[$username])) {
+				$users[$caseSensitiveUsernames[$username]] = $user;
+			}
 		}
 		
 		return $users;
