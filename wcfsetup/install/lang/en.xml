@@ -2295,6 +2295,7 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on <a href="{link controller='User' object=$user}{/link}#wall">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.user.profile.access.registered"><![CDATA[The details of the user profile of „{$username}“ are only available for registered users.]]></item>
 		<item name="wcf.user.profile.access.follower"><![CDATA[The details of this user profile are only available for users which follows „{$username}“ accessible]]></item>
+		<item name="wcf.user.profile.access.nobody"><![CDATA[The details of the user profile of „{$username}“ are available for nobody.]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">
