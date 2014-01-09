@@ -87,8 +87,23 @@ class UserNotificationHandler extends SingletonFactory {
 		// get objects
 		$objectTypeObject = $this->availableObjectTypes[$objectType];
 		$event = $this->availableEvents[$objectType][$eventName];
+		
+		// get author's profile
+		$userProfile = null;
+		if ($notificationObject->getAuthorID()) {
+			if ($notificationObject->getAuthorID() == WCF::getUser()->userID) {
+				$userProfile = new UserProfile(WCF::getUser());
+			}
+			else {
+				$userProfile = UserProfile::getUserProfile($notificationObject->getAuthorID());
+			}
+		}
+		if ($userProfile === null) {
+			$userProfile = new UserProfile(new User(null, array()));
+		}
+		
 		// set object data
-		$event->setObject(new UserNotification(null, array()), $notificationObject, new UserProfile(WCF::getUser()), $additionalData);
+		$event->setObject(new UserNotification(null, array()), $notificationObject, $userProfile, $additionalData);
 		
 		// find existing events
 		$userIDs = array();
