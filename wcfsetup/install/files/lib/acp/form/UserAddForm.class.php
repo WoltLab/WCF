@@ -258,18 +258,6 @@ class UserAddForm extends UserOptionListForm {
 		);
 		$this->objectAction = new UserAction(array(), 'create', $data);
 		$this->objectAction->executeAction();
-		$returnValues = $this->objectAction->getReturnValues();
-		
-		// set user rank
-		$editor = new UserEditor($returnValues['returnValues']);
-		if (MODULE_USER_RANK) {
-			$action = new UserProfileAction(array($editor), 'updateUserRank');
-			$action->executeAction();
-		}
-		if (MODULE_USERS_ONLINE) {
-			$action = new UserProfileAction(array($editor), 'updateUserOnlineMarking');
-			$action->executeAction();
-		}
 		$this->saved();
 		
 		// show empty add form

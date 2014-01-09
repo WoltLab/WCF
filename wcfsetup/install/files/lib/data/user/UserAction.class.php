@@ -261,6 +261,15 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				WHERE		preset = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array($user->userID, 1));
+			
+			// update user rank
+			if (MODULE_USER_RANK) {
+				$action = new UserProfileAction(array($userEditor), 'updateUserRank');
+				$action->executeAction();
+			}
+			// update user online marking
+			$action = new UserProfileAction(array($userEditor), 'updateUserOnlineMarking');
+			$action->executeAction();
 		}
 		
 		return $user;
