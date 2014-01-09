@@ -497,4 +497,28 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		$this->unmarkItems();
 	}
+	
+	/**
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::readObjects()
+	 */
+	protected function readObjects() {
+		if (empty($this->objectIDs)) {
+			return;
+		}
+	
+		// get base class
+		$baseClass = call_user_func(array($this->className, 'getBaseClass'));
+	
+		// get objects
+		$sql = "SELECT		user_option_value.*, user_table.*
+			FROM		wcf".WCF_N."_user user_table
+			LEFT JOIN	wcf".WCF_N."_user_option_value user_option_value
+			ON		(user_option_value.userID = user_table.userID)
+			WHERE		user_table.userID IN (".str_repeat('?,', count($this->objectIDs) - 1)."?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($this->objectIDs);
+		while ($object = $statement->fetchObject($baseClass)) {
+			$this->objects[] = new $this->className($object);
+		}
+	}
 }
