@@ -346,11 +346,14 @@ class RegisterForm extends UserAddForm {
 						if (isset($facebookData['bio'])) $saveOptions[User::getUserOptionID('aboutMe')] = $facebookData['bio'];
 						if (isset($facebookData['location'])) $saveOptions[User::getUserOptionID('location')] = $facebookData['location']['name'];
 						if (isset($facebookData['website'])) {
-							if (!Regex::compile('^https?://')->match($facebookData['website'])) {
-								$facebookData['website'] = 'http://' . $facebookData['website'];
+							$urls = preg_split('/[\s,;]/', $facebookData['website'], -1, PREG_SPLIT_NO_EMPTY);
+							if (!empty($urls)) {
+								if (!Regex::compile('^https?://')->match($urls[0])) {
+									$urls[0] = 'http://' . $urls[0];
+								}
+								
+								$saveOptions[User::getUserOptionID('homepage')] = $urls[0];
 							}
-							
-							$saveOptions[User::getUserOptionID('homepage')] = $facebookData['website'];
 						}
 						
 						// avatar
@@ -423,15 +426,6 @@ class RegisterForm extends UserAddForm {
 		$result = $this->objectAction->executeAction();
 		$user = $result['returnValues'];
 		$userEditor = new UserEditor($user);
-		
-		// update user rank
-		if (MODULE_USER_RANK && !REGISTER_ACTIVATION_METHOD) {
-			$action = new UserProfileAction(array($userEditor), 'updateUserRank');
-			$action->executeAction();
-		}
-		// update user online marking
-		$action = new UserProfileAction(array($userEditor), 'updateUserOnlineMarking');
-		$action->executeAction();
 		
 		// set avatar if provided
 		if (!empty($avatarURL)) {
