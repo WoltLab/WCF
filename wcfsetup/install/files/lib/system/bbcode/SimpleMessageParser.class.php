@@ -150,7 +150,14 @@ class SimpleMessageParser extends SingletonFactory {
 	 * @see	\wcf\system\bbcode\SimpleMessageParser::parseURLs()
 	 */
 	protected function parseURLsCallback($matches) {
-		return StringUtil::getAnchorTag(StringUtil::decodeHTML($matches[0]));
+		$url = StringUtil::decodeHTML($matches[0]);
+		
+		// add protocol if necessary
+		if (!preg_match("/[a-z]:\/\//si", $url)) {
+			$url = 'http://'.$url;
+		}
+		
+		return StringUtil::getAnchorTag($url);
 	}
 	
 	/**
