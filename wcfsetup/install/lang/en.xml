@@ -1422,6 +1422,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.code.perl.title"><![CDATA[Perl Source Code]]></item>
 		<item name="wcf.bbcode.code.php.title"><![CDATA[PHP Source Code]]></item>
 		<item name="wcf.bbcode.code.plain.title"><![CDATA[Source Code]]></item>
+		<item name="wcf.bbcode.code.python.title"><![CDATA[Python Source Code]]></item>
 		<item name="wcf.bbcode.code.sql.title"><![CDATA[SQL-Query]]></item>
 		<item name="wcf.bbcode.code.tex.title"><![CDATA[TeX Source Code]]></item>
 		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty-Template]]></item>
