@@ -49,7 +49,7 @@ class ApplicationCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		// assign wcf pseudo-application
-		if (PACKAGE_ID) {
+		if (isset($data['application'][1])) {
 			$data['wcf'] = $data['application'][1];
 			unset($data['application'][1]);
 		}
