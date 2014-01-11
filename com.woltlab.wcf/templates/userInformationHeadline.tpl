@@ -9,5 +9,5 @@
 	{/if}
 	<li>{lang}wcf.user.membersList.registrationDate{/lang}</li>
 	
-	{event name='userData'}			
+	{event name='userData'}
 </ul>
