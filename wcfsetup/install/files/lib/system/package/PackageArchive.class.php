@@ -495,7 +495,7 @@ class PackageArchive {
 	 * Returns a localized information about this package.
 	 * 
 	 * @param	string		$name
-	 * @return	mixed
+	 * @return	string
 	 */
 	public function getLocalizedPackageInfo($name) {
 		if (isset($this->packageInfo[$name][WCF::getLanguage()->getFixedLanguageCode()])) {
@@ -505,7 +505,11 @@ class PackageArchive {
 			return $this->packageInfo[$name]['default'];
 		}
 		
-		return $this->getPackageInfo($name);
+		if (!empty($this->packageInfo[$name])) {
+			return reset($this->packageInfo[$name]);
+		}
+		
+		return '';
 	}
 	
 	/**
