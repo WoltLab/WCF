@@ -56,8 +56,12 @@ class PhpHighlighter extends Highlighter {
 		// remove breaks
 		$highlightedCode = str_replace("\n", "", $highlightedCode);
 		$highlightedCode = str_replace('<br />', "\n", $highlightedCode);
+		
 		// get tabs back
 		$highlightedCode = str_replace('&nbsp;&nbsp;&nbsp;&nbsp;', "\t", $highlightedCode);
+		// replace non breaking space with normal space, white-space is preserved by CSS
+		$highlightedCode = str_replace('&nbsp;', " ", $highlightedCode);
+		
 		// convert colors to classes
 		$highlightedCode = strtr($highlightedCode, self::$colorToClass);
 		
