@@ -3,6 +3,7 @@ namespace wcf\data\user;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\UserEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
@@ -344,6 +345,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		foreach ($this->objects as $userEditor) {
 			$userEditor->addToGroups($groupIDs, $deleteOldGroups, $addDefaultGroups);
 		}
+		
+		//reread objects
+		$this->objects = array();
+		UserEditor::resetCache();
+		$this->readObjects();
 		
 		if (MODULE_USER_RANK) {
 			$action = new UserProfileAction($this->objects, 'updateUserRank');
