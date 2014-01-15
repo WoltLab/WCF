@@ -47,6 +47,8 @@ class FacebookAuthAction extends AbstractAction {
 				$content = $reply['body'];
 			}
 			catch (SystemException $e) {
+				// force logging
+				$e->getExceptionID();
 				throw new IllegalLinkException();
 			}
 			
@@ -65,6 +67,8 @@ class FacebookAuthAction extends AbstractAction {
 				$content = $reply['body'];
 			}
 			catch (SystemException $e) {
+				// force logging
+				$e->getExceptionID();
 				throw new IllegalLinkException();
 			}
 			
