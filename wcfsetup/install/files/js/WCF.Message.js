@@ -915,7 +915,12 @@ WCF.Message.QuickReply = Class.extend({
 			if (data.returnValues.template) {
 				// insert HTML
 				var $message = $('' + data.returnValues.template);
-				$message.insertBefore(this._container);
+				if (this._container.data('sortOrder') == 'DESC') {
+					$message.insertAfter(this._container);
+				}
+				else {
+					$message.insertBefore(this._container);
+				}
 				
 				// update last post time
 				this._container.data('lastPostTime', data.returnValues.lastPostTime);
