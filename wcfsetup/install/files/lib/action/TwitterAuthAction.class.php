@@ -68,6 +68,8 @@ class TwitterAuthAction extends AbstractAction {
 				$content = $reply['body'];
 			}
 			catch (SystemException $e) {
+				// force logging
+				$e->getExceptionID();
 				throw new IllegalLinkException();
 			}
 			
@@ -167,6 +169,8 @@ class TwitterAuthAction extends AbstractAction {
 			$content = $reply['body'];
 		}
 		catch (SystemException $e) {
+			// force logging
+			$e->getExceptionID();
 			throw new IllegalLinkException();
 		}
 		
