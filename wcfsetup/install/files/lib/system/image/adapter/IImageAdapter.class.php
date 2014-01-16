@@ -147,9 +147,17 @@ interface IImageAdapter {
 	public function getHeight();
 	
 	/**
+	 * Returns the image type (GD only)
+	 * 
+	 * @return	integer
+	 */
+	public function getType();
+	
+	/**
 	 * Rotates an image the specified number of degrees.
 	 * 
 	 * @param	float		$degrees	number of degrees to rotate the image clockwise
+	 * @return	mixed
 	 */
 	public function rotate($degrees);
 	

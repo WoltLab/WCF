@@ -195,6 +195,13 @@ class ImagickImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::getType()
+	 */
+	public function getType() {
+		return 0;
+	}
+	
+	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::rotate()
 	 */
 	public function rotate($degrees) {

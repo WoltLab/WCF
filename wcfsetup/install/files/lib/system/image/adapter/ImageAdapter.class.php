@@ -175,6 +175,13 @@ class ImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::getType()
+	 */
+	public function getType() {
+		return $this->adapter->getType();
+	}
+	
+	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::rotate()
 	 */
 	public function rotate($degrees) {

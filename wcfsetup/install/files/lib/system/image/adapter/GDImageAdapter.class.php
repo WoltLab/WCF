@@ -255,6 +255,13 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::getType()
+	 */
+	public function getType() {
+		return $this->type;
+	}
+	
+	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::getImage()
 	 */
 	public function getImage() {
