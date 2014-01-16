@@ -6997,7 +6997,7 @@ WCF.InlineEditor = Class.extend({
 			if (!$count) {
 				$quickOption.trigger('click');
 				
-				if ($trigger === null) {
+				if ($trigger !== null) {
 					WCF.Dropdown.close($trigger.parents('.dropdown').wcfIdentify());
 				}
 				
