@@ -40,5 +40,10 @@
 			<classname><![CDATA[wcf\system\dashboard\box\MostLikedMembersDashboardBox]]></classname>
 			<boxtype>sidebar</boxtype>
 		</dashboardbox>
+		
+		<dashboardbox name="com.woltlab.wcf.user.todaysBirthdays">
+			<classname><![CDATA[wcf\system\dashboard\box\TodaysBirthdaysDashboardBox]]></classname>
+			<boxtype>sidebar</boxtype>
+		</dashboardbox>
 	</import>
 </data>
