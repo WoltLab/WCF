@@ -31,11 +31,7 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 		$spiders = $xpath->query('/ns:data/ns:spider');
 		
 		if (!empty($spiders)) {
-			// delete old entries
-			$sql = "DELETE FROM wcf".WCF_N."_spider";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute();
-			
+			$existingSpiders = SpiderCacheBuilder::getInstance()->getData();
 			$statementParameters = array();
 			foreach ($spiders as $spider) {
 				$identifier = mb_strtolower($spider->getAttribute('ident'));
@@ -50,9 +46,11 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 			}
 			
 			if (!empty($statementParameters)) {
-				$sql = "INSERT INTO	wcf".WCF_N."_spider
-							(spiderIdentifier, spiderName, spiderURL)
-					VALUES		(?, ?, ?)";
+				$sql = "INSERT INTO			wcf".WCF_N."_spider
+									(spiderIdentifier, spiderName, spiderURL)
+					VALUES				(?, ?, ?)
+					ON DUPLICATE KEY UPDATE		spiderName = VALUES(spiderName),
+									spiderURL = VALUES(spiderURL)";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				
 				WCF::getDB()->beginTransaction();
@@ -64,6 +62,15 @@ class RefreshSearchRobotsCronjob implements ICronjob {
 					));
 				}
 				WCF::getDB()->commitTransaction();
+			}
+			
+			// delete obsolete entries
+			$sql = "DELETE FROM wcf".WCF_N."_spider WHERE spiderIdentifier = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			foreach ($existingSpiders as $spider) {
+				if (!isset($statementParameters[$spider->spiderIdentifier])) {
+					$statement->execute(array($spider->spiderIdentifier));
+				}
 			}
 			
 			// clear spider cache
