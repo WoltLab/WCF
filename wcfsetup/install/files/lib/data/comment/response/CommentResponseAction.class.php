@@ -56,6 +56,8 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 			return 0;
 		}
 		
+		$ignoreCounters = !empty($this->parameters['ignoreCounters']);
+		
 		// read object type ids for comments
 		$commentIDs = array();
 		foreach ($this->objects as $response) {
@@ -77,27 +79,31 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 				$processors[$objectTypeID] = $objectType->getProcessor();
 				$responseIDs[$objectTypeID] = array();
 			}
-			
-			$processors[$objectTypeID]->updateCounter($comments[$response->commentID]->objectID, -1);
 			$responseIDs[$objectTypeID][] = $response->responseID;
 			
-			if (!isset($updateComments[$response->commentID])) {
-				$updateComments[$response->commentID] = 0;
+			if (!$ignoreCounters) {
+				$processors[$objectTypeID]->updateCounter($comments[$response->commentID]->objectID, -1);
+				
+				if (!isset($updateComments[$response->commentID])) {
+					$updateComments[$response->commentID] = 0;
+				}
+				
+				$updateComments[$response->commentID]++;
 			}
-			
-			$updateComments[$response->commentID]++;
 		}
 		
 		// remove responses
 		$count = parent::delete();
 		
 		// update comment responses and cached response ids
-		foreach ($comments as $comment) {
-			$commentEditor = new CommentEditor($comment);
-			$commentEditor->updateResponseIDs();
-			$commentEditor->updateCounters(array(
-				'responses' => -1 * $updateComments[$comment->commentID]
-			));
+		if (!$ignoreCounters) {
+			foreach ($comments as $comment) {
+				$commentEditor = new CommentEditor($comment);
+				$commentEditor->updateResponseIDs();
+				$commentEditor->updateCounters(array(
+					'responses' => -1 * $updateComments[$comment->commentID]
+				));
+			}
 		}
 		
 		foreach ($responseIDs as $objectTypeID => $objectIDs) {
