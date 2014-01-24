@@ -2,6 +2,7 @@
 namespace wcf\system\request;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\menu\page\IPageMenuItemProvider;
 use wcf\system\menu\page\PageMenu;
 use wcf\system\request\RouteHandler;
 use wcf\system\Regex;
@@ -120,9 +121,14 @@ class LinkHandler extends SingletonFactory {
 			else {
 				// build link to landing page
 				$landingPage = PageMenu::getInstance()->getLandingPage();
-				$controller = $landingPage->getController();
-				$abbreviation = $landingPage->getApplication();
-				$url = $landingPage->menuItemLink;
+				if ($landingPage instanceof IPageMenuItemProvider) {
+					return $landingPage->getLink();
+				}
+				else {
+					$controller = $landingPage->getController();
+					$abbreviation = $landingPage->getApplication();
+					$url = $landingPage->menuItemLink;
+				}
 			}
 		}
 		
