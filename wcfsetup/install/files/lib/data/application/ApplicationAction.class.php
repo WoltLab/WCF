@@ -5,6 +5,7 @@ use wcf\system\cache\builder\ApplicationCacheBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
@@ -52,9 +53,10 @@ class ApplicationAction extends AbstractDatabaseObjectAction {
 		
 		// calculate cookie path
 		$domains = array();
+		$regex = new Regex(':[0-9]+');
 		foreach ($this->objects as $application) {
 			$domainName = $application->domainName;
-			if (StringUtil::endsWith($domainName, $application->cookieDomain)) {
+			if (StringUtil::endsWith($regex->replace($domainName, ''), $application->cookieDomain)) {
 				$domainName = $application->cookieDomain;
 			}
 			
