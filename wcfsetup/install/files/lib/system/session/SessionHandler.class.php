@@ -637,7 +637,7 @@ class SessionHandler extends SingletonFactory {
 	 */
 	protected function getSpiderID($userAgent) {
 		$spiderList = SpiderCacheBuilder::getInstance()->getData();
-		$userAgent = strtolower($userAgent);
+		$userAgent = mb_strtolower($userAgent);
 		
 		foreach ($spiderList as $spider) {
 			if (strpos($userAgent, $spider->spiderIdentifier) !== false) {

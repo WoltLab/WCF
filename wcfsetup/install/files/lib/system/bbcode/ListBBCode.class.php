@@ -33,7 +33,7 @@ class ListBBCode extends AbstractBBCode {
 				// get list style type
 				$listType = 'disc';
 				if (isset($openingTag['attributes'][0])) $listType = $openingTag['attributes'][0];
-				$listType = strtolower($listType);
+				$listType = mb_strtolower($listType);
 				
 				// replace old types
 				if ($listType == '1') $listType = 'decimal';

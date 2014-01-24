@@ -182,10 +182,10 @@ class LanguageFactory extends SingletonFactory {
 	 */
 	public static function getPreferredLanguage($availableLanguageCodes, $defaultLanguageCode) {
 		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE']) {
-			$acceptedLanguages = explode(',', str_replace('_', '-', strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE'])));
+			$acceptedLanguages = explode(',', str_replace('_', '-', mb_strtolower($_SERVER['HTTP_ACCEPT_LANGUAGE'])));
 			foreach ($acceptedLanguages as $acceptedLanguage) {
 				foreach ($availableLanguageCodes as $availableLanguageCode) {
-					$fixedCode = strtolower(self::fixLanguageCode($availableLanguageCode));
+					$fixedCode = mb_strtolower(self::fixLanguageCode($availableLanguageCode));
 					
 					if ($fixedCode == $acceptedLanguage || $fixedCode == preg_replace('%^([a-z]{2}).*$%i', '$1', $acceptedLanguage)) {
 						return $availableLanguageCode;
