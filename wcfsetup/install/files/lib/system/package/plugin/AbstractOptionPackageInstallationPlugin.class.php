@@ -47,7 +47,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		}
 		
 		if (!empty($options)) {
-			$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
+			$sql = "DELETE FROM	".$this->application.WCF_N."_".$this->tableName."
 				WHERE		optionName = ?
 				AND packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -69,15 +69,19 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		
 		if (!empty($categories)) {
 			// delete options for given categories
-			$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
-				WHERE		categoryName = ?";
+			$sql = "DELETE FROM	".$this->application.WCF_N."_".$this->tableName."
+				WHERE		categoryName = ?
+						AND packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			foreach ($categories as $category) {
-				$statement->execute(array($category));
+				$statement->execute(array(
+					$category,
+					$this->installation->getPackageID()
+				));
 			}
 			
 			// delete categories
-			$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."_category
+			$sql = "DELETE FROM	".$this->application.WCF_N."_".$this->tableName."_category
 				WHERE		categoryName = ?
 				AND		packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
@@ -124,7 +128,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			// validate parent
 			if (!empty($data['parentCategoryName'])) {
 				$sql = "SELECT	COUNT(categoryID) AS count
-					FROM	wcf".WCF_N."_".$this->tableName."_category
+					FROM	".$this->application.WCF_N."_".$this->tableName."_category
 					WHERE	categoryName = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute(array($data['parentCategoryName']));
@@ -172,7 +176,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	public function hasUninstall() {
 		$hasUninstallOptions = parent::hasUninstall();
 		$sql = "SELECT	COUNT(categoryID) AS count
-			FROM	wcf".WCF_N."_".$this->tableName."_category
+			FROM	".$this->application.WCF_N."_".$this->tableName."_category
 			WHERE	packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
@@ -188,7 +192,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		parent::uninstall();
 		
 		// delete categories
-		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."_category
+		$sql = "DELETE FROM	".$this->application.WCF_N."_".$this->tableName."_category
 			WHERE		packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
@@ -202,7 +206,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	protected function saveCategory($category) {
 		// search existing category
 		$sql = "SELECT	categoryID, packageID
-			FROM	wcf".WCF_N."_".$this->tableName."_category
+			FROM	".$this->application.WCF_N."_".$this->tableName."_category
 			WHERE	categoryName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
@@ -211,7 +215,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		$row = $statement->fetchArray();
 		if (empty($row['categoryID'])) {
 			// insert new category
-			$sql = "INSERT INTO	wcf".WCF_N."_".$this->tableName."_category
+			$sql = "INSERT INTO	".$this->application.WCF_N."_".$this->tableName."_category
 						(packageID, categoryName, parentCategoryName, permissions,
 						options".($category['showOrder'] !== null ? ",showOrder" : "").")
 				VALUES		(?, ?, ?, ?, ?".($category['showOrder'] !== null ? ", ?" : "").")";
@@ -234,7 +238,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			}
 			
 			// update existing category
-			$sql = "UPDATE	wcf".WCF_N."_".$this->tableName."_category
+			$sql = "UPDATE	".$this->application.WCF_N."_".$this->tableName."_category
 				SET	parentCategoryName = ?,
 					permissions = ?,
 					options = ?
