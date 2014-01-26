@@ -1581,15 +1581,15 @@ WCF.Clipboard = {
 					type: $typeName
 				});
 				this._proxy.setOption('success', $.proxy(function(data, textStatus, jqXHR) {
-					for (var $__containerID in this._containers) {
-						var $__container = $(this._containers[$__containerID]);
-						if ($__container.data('type') == $typeName) {
-							$__container.find('.jsClipboardMarkAll, .jsClipboardItem').prop('checked', false);
-							$__container.find('.jsClipboardObject').removeClass('jsMarked');
+					this._containers.each($.proxy(function(index, container) {
+						var $container = $(container);
+						if ($container.data('type') == $typeName) {
+							$container.find('.jsClipboardMarkAll, .jsClipboardItem').prop('checked', false);
+							$container.find('.jsClipboardObject').removeClass('jsMarked');
 							
-							break;
+							return false;
 						}
-					}
+					}, this));
 					
 					// call and restore success method
 					this._success(data, textStatus, jqXHR);

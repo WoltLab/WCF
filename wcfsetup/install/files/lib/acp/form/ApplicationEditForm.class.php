@@ -129,8 +129,12 @@ class ApplicationEditForm extends AbstractForm {
 				throw new UserInputException('cookieDomain', 'containsPath');
 			}
 			
+			// strip port from cookie domain
+			$regex = new Regex(':[0-9]+$');
+			$this->cookieDomain = $regex->replace($this->cookieDomain, '');
+			
 			// check if cookie domain shares the same domain (may exclude subdomains)
-			if (!StringUtil::endsWith($this->domainName, $this->cookieDomain)) {
+			if (!StringUtil::endsWith($regex->replace($this->domainName, ''), $this->cookieDomain)) {
 				throw new UserInputException('cookieDomain', 'notValid');
 			}
 		}

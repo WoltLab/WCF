@@ -110,7 +110,9 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			$commentResponseList->getConditionBuilder()->add('comment_response.commentID IN (?)', array($commentIDs));
 			$commentResponseList->readObjectIDs();
 			if (count($commentResponseList->getObjectIDs())) {
-				$action = new CommentResponseAction($commentResponseList->getObjectIDs(), 'delete');
+				$action = new CommentResponseAction($commentResponseList->getObjectIDs(), 'delete', array(
+					'ignoreCounters' => true
+				));
 				$action->executeAction();
 			}
 		}

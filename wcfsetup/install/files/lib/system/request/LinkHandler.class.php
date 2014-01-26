@@ -118,11 +118,7 @@ class LinkHandler extends SingletonFactory {
 				$controller = 'Index';
 			}
 			else {
-				// build link to landing page
-				$landingPage = PageMenu::getInstance()->getLandingPage();
-				$controller = $landingPage->getController();
-				$abbreviation = $landingPage->getApplication();
-				$url = $landingPage->menuItemLink;
+				return PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink();
 			}
 		}
 		
