@@ -1577,13 +1577,13 @@ Fehler sind beispielsweise:
 		<item name="wcf.date.month.short.oct"><![CDATA[Okt]]></item>
 		<item name="wcf.date.month.short.nov"><![CDATA[Nov]]></item>
 		<item name="wcf.date.month.short.dec"><![CDATA[Dez]]></item>
-		<item name="wcf.date.day.sun"><![CDATA[Son]]></item>
-		<item name="wcf.date.day.mon"><![CDATA[Mon]]></item>
-		<item name="wcf.date.day.tue"><![CDATA[Die]]></item>
-		<item name="wcf.date.day.wed"><![CDATA[Mit]]></item>
-		<item name="wcf.date.day.thu"><![CDATA[Don]]></item>
-		<item name="wcf.date.day.fri"><![CDATA[Fre]]></item>
-		<item name="wcf.date.day.sat"><![CDATA[Sam]]></item>
+		<item name="wcf.date.day.sun"><![CDATA[So]]></item>
+		<item name="wcf.date.day.mon"><![CDATA[Mo]]></item>
+		<item name="wcf.date.day.tue"><![CDATA[Di]]></item>
+		<item name="wcf.date.day.wed"><![CDATA[Mi]]></item>
+		<item name="wcf.date.day.thu"><![CDATA[Do]]></item>
+		<item name="wcf.date.day.fri"><![CDATA[Fr]]></item>
+		<item name="wcf.date.day.sat"><![CDATA[Sa]]></item>
 		
 		<!-- localized days -->
 		<item name="wcf.date.day.sunday"><![CDATA[Sonntag]]></item>
