@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
 class TemplateScriptingCompiler {
 	/**
 	 * template engine object
-	 * @var	\wcf\system\templateTemplateEngine
+	 * @var	\wcf\system\template\TemplateEngine
 	 */
 	protected $template;
 	
