@@ -2,6 +2,7 @@
 namespace wcf\system\search;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\database\DatabaseException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -11,7 +12,7 @@ use wcf\util\StringUtil;
  * SearchEngine searches for given query in the selected object types.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.search
@@ -23,6 +24,12 @@ class SearchEngine extends SingletonFactory {
 	 * @var	array
 	 */
 	protected $availableObjectTypes = array();
+	
+	/**
+	 * MySQL's minimum word length for fulltext indices
+	 * @var	integer
+	 */
+	protected static $ftMinWordLen = null;
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -189,6 +196,7 @@ class SearchEngine extends SingletonFactory {
 		$previousChar = $tmp = '';
 		$controlCharacterOrSpace = false;
 		$chars = array('+', '-', '*');
+		$ftMinWordLen = self::getFulltextMinimumWordLength();
 		for ($i = 0, $length = mb_strlen($query); $i < $length; $i++) {
 			$char = mb_substr($query, $i, 1);
 			
@@ -228,7 +236,23 @@ class SearchEngine extends SingletonFactory {
 			 *   - is NOT +, - or *
 			 */
 			if (($previousChar == '' || $previousChar == ' ') && !$inQuotes && !in_array($char, $chars)) {
-				$tmp .= '+';
+				// check if the term is shorter than MySQL's ft_min_word_len
+				
+				if ($i + $ftMinWordLen <= $length) {
+					$term = '';// $char;
+					for ($j = $i, $innerLength = $ftMinWordLen + $i; $j < $innerLength; $j++) {
+						$currentChar = mb_substr($query, $j, 1);
+						if ($currentChar == '"' || $currentChar == ' ' || in_array($currentChar, $chars)) {
+							break;
+						}
+						
+						$term .= $currentChar;
+					}
+					
+					if (mb_strlen($term) == $ftMinWordLen) {
+						$tmp .= '+';
+					}
+				}
 			}
 			
 			$tmp .= $char;
@@ -241,5 +265,30 @@ class SearchEngine extends SingletonFactory {
 		}
 		
 		return $tmp;
+	}
+	
+	/**
+	 * Returns MySQL's minimum word length for fulltext indices.
+	 * 
+	 * @return	integer
+	 */
+	public static function getFulltextMinimumWordLength() {
+		if (self::$ftMinWordLen === null) {
+			$sql = "SHOW VARIABLES LIKE ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			try {
+				$statement->execute(array('ft_min_word_len'));
+				$row = $statement->fetchArray();
+			}
+			catch (DatabaseException $e) {
+				// fallback if user is disallowed to issue 'SHOW VARIABLES'
+				$row = array('Value' => 4);
+			}
+			
+			self::$ftMinWordLen = $row['Value'];
+		}
+		
+		return self::$ftMinWordLen;
 	}
 }
