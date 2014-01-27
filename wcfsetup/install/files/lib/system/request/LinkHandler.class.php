@@ -68,6 +68,13 @@ class LinkHandler extends SingletonFactory {
 		$isACP = $originIsACP = RequestHandler::getInstance()->isACPRequest();
 		$encodeTitle = $forceWCF = $isRaw = false;
 		$appendSession = true;
+		
+		// enforce a certain level of sanitation and protection for links embedded in emails
+		if (isset($parameters['isEmail']) && (bool)$parameters['isEmail']) {
+			$parameters['forceFrontend'] = true;
+			$parameters['appendSession'] = false;
+		}
+		
 		if (isset($parameters['application'])) {
 			$abbreviation = $parameters['application'];
 		}

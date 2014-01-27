@@ -36,6 +36,10 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 			$tagArgs['application'] = 'wcf';
 		}
 		
+		if (isset($tagArgs['isEmail']) && $tagArgs['isEmail']) {
+			$tagArgs['encode'] = true;
+		}
+		
 		if (isset($tagArgs['encode']) && !$tagArgs['encode']) {
 			unset($tagArgs['encode']);
 			return LinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent);

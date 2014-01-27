@@ -2080,7 +2080,7 @@ Errors are:
 		<item name="wcf.user.lostPassword.mail"><![CDATA[Dear {@$username},
 
 if you have lost your password you can request a new one using the link below.
-Request a new password: {link controller='NewPassword' encode=false isACP=false}u={@$userID}&k={@$key}{/link}  
+Request a new password: {link controller='NewPassword' isEmail=true}u={@$userID}&k={@$key}{/link}  
 
 If you have not lost your password, you can safely ignore this email.]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[You should receive an email shortly.]]></item>
@@ -2095,7 +2095,7 @@ your new password for "{@PAGE_TITLE|language}" is:
 
 
 You can change your password any time at:
-{link controller='AccountManagement' encode=false isACP=false}{/link} ]]></item>
+{link controller='AccountManagement' isEmail=true}{/link} ]]></item>
 		<item name="wcf.user.newPassword.mail.subject"><![CDATA[New Password for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.newPassword.success"><![CDATA[You should receive an email with your password shortly.]]></item>
 		<item name="wcf.user.accountManagement"><![CDATA[Account Management]]></item>
@@ -2129,11 +2129,11 @@ You can change your password any time at:
 
 you’ve changed your email address on: {@PAGE_TITLE|language}. It is required to open the link below in order to verify this email address.
 
-{link controller='EmailActivation' encode=false}u={@$userID}&a={@$activationCode}{/link} 
+{link controller='EmailActivation' isEmail=true}u={@$userID}&a={@$activationCode}{/link} 
 
 **** Unable to click or open the link above? ****
 Please open the link below in your browser:
-{link controller='EmailActivation' encode=false}{/link}
+{link controller='EmailActivation' isEmail=true}{/link}
 
 Once prompted please provide the following details:
 
@@ -2223,7 +2223,7 @@ someone registered with your website {@PAGE_TITLE|language}: {@$user->username}
 Email address used: {@$user->email} 
 
 Open the link below to access the user profile:
-{link controller='User' object=$user encode=false}{/link} ]]></item>
+{link controller='User' object=$user isEmail=true}{/link} ]]></item>
 		<item name="wcf.user.register.notification.mail.subject"><![CDATA[New Registration with Your Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.user.register.error.disabled"><![CDATA[Registration is currently disabled.]]></item>
 		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br />
@@ -2234,7 +2234,7 @@ thank you for registering on our website: {@PAGE_TITLE|language}.
 Please validate your email address to complete your registration.
 
 Open the link below:
-{link controller='RegisterActivation' encode=false}{/link} 
+{link controller='RegisterActivation' isEmail=true}{/link} 
 
 Once prompted provide the details as shown below:
 
@@ -2382,20 +2382,20 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.notification.mail.footer"><![CDATA[This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
 		
 You can manage your notification settings for {@PAGE_TITLE|language} on the page below:
-{link controller='NotificationSettings' encode=false}{/link} 
+{link controller='NotificationSettings' isEmail=true}{/link} 
 
 If you do not want to receive further email notifications for this event, you can quickly disable it by opening the link below:
-{link controller='NotificationDisable' encode=false}eventID={@$notification->eventID}&userID={@$user->userID}&token={@$token}{/link}]]></item>
+{link controller='NotificationDisable' isEmail=true}eventID={@$notification->eventID}&userID={@$user->userID}&token={@$token}{/link}]]></item>
 		<item name="wcf.user.notification.mail.header"><![CDATA[Dear {@$user->username},]]></item>
 		<item name="wcf.user.notification.mail.subject"><![CDATA[New Notification: {@$title}]]></item>
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.footer"><![CDATA[This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
 		
 You can manage your notification settings for {@PAGE_TITLE|language} on the page below:
-{link controller='NotificationSettings' encode=false}{/link} 
+{link controller='NotificationSettings' isEmail=true}{/link} 
 
 If you do not want to receive further email notifications for this event, you can quickly disable it by opening the link below:
-{link controller='NotificationDisable' encode=false}userID={@$user->userID}&token={@$token}{/link}]]></item>
+{link controller='NotificationDisable' isEmail=true}userID={@$user->userID}&token={@$token}{/link}]]></item>
 		<item name="wcf.user.notification.mailNotificationType.none"><![CDATA[No Email Notification]]></item>
 		<item name="wcf.user.notification.mailNotificationType.instant"><![CDATA[Instant Email Notification]]></item>
 		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Daily Email Notification]]></item>
@@ -2415,7 +2415,7 @@ If you do not want to receive further email notifications for this event, you ca
 ---------------------------------
 {@$comment->message} 
 ---------------------------------
-{/if}{link controller='User' object=$owner encode=false forceFrontend=true}#wall{/link}]]></item>
+{/if}{link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.message"><![CDATA[Wrote a reply to your comment on {$owner->username}’s wall.]]></item>
 		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{@$author->username} wrote a reply to your comment on {@$owner->username}’s wall:
@@ -2423,7 +2423,7 @@ If you do not want to receive further email notifications for this event, you ca
 ---------------------------------
 {@$response->message} 
 ---------------------------------
-{/if}{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+{/if}{link controller='User' object=$owner isEmail=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[Wrote a reply to {$commentAuthor->username}’s comment on your wall.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail"><![CDATA[{@$author->username} wrote a reply to {@$commentAuthor->username}’s comment on your wall:
@@ -2431,7 +2431,7 @@ If you do not want to receive further email notifications for this event, you ca
 ---------------------------------
 {@$response->message} 
 ---------------------------------
-{/if}{link controller='User' object=$owner encode=false forceFrontend=true}{/link}#wall]]></item>
+{/if}{link controller='User' object=$owner isEmail=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[New comment on your wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[New reply to a comment on your wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[New reply to one of your comments]]></item>
