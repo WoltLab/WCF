@@ -745,7 +745,17 @@ WCF.Message.QuickReply = Class.extend({
 		}
 		
 		if ($.browser.ckeditor) {
-			this._messageField.ckeditorGet().insertText(data.returnValues.template);
+			var $ckEditor = this._messageField.ckeditorGet();
+			
+			// work-around for a strange selection bug in Firefox: http://www.woltlab.com/forum/index.php/Thread/220522-Zitat-Fehler/
+			if ($ckEditor.getSelection().getStartElement() === null) {
+				// range is broken, set it to end of text: http://stackoverflow.com/a/16308194
+				var $range = $ckEditor.createRange();
+				$range.moveToPosition($range.root, CKEDITOR.POSITION_BEFORE_END);
+				$ckEditor.getSelection().selectRanges([ $range ]);
+			}
+			
+			$ckEditor.insertText(data.returnValues.template);
 		}
 		else {
 			this._messageField.val(data.returnValues.template);
