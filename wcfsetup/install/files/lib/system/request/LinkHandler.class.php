@@ -73,6 +73,7 @@ class LinkHandler extends SingletonFactory {
 		if (isset($parameters['isEmail']) && (bool)$parameters['isEmail']) {
 			$parameters['forceFrontend'] = true;
 			$parameters['appendSession'] = false;
+			unset($parameters['isEmail']);
 		}
 		
 		if (isset($parameters['application'])) {

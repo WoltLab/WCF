@@ -37,7 +37,7 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 		}
 		
 		if (isset($tagArgs['isEmail']) && $tagArgs['isEmail']) {
-			$tagArgs['encode'] = true;
+			$tagArgs['encode'] = false;
 		}
 		
 		if (isset($tagArgs['encode']) && !$tagArgs['encode']) {
