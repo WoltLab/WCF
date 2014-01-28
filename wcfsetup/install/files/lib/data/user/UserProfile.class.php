@@ -542,6 +542,8 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		if (isset($value[1])) $month = intval($value[1]);
 		if (isset($value[2])) $day = intval($value[2]);
 		
+		if (!$month || !$day) return '';
+		
 		$d = new \DateTime();
 		$d->setTimezone(WCF::getUser()->getTimeZone());
 		$d->setDate($birthdayYear, $month, $day);
