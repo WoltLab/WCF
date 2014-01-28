@@ -106,7 +106,7 @@ class PreParser extends SingletonFactory {
 			@
 			(?:'.self::$illegalChars.'\.)+		# hostname
 			(?:[a-z]{2,4}(?=\b))
-			(?!"|\'|\[|\-|\.[a-z])', Regex::IGNORE_WHITESPACE | Regex::CASE_INSENSITIVE);
+			(?!"|\'|\[|\-|\]|\.[a-z])', Regex::IGNORE_WHITESPACE | Regex::CASE_INSENSITIVE);
 		}
 		
 		$this->text = $emailPattern->replace($this->text, '[email]\\0[/email]');
