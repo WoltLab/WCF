@@ -61,7 +61,7 @@ class SearchIndexManager extends SingletonFactory {
 		if ($languageID === null) $languageID = 0;
 		
 		// save new entry
-		$sql = "INSERT INTO	wcf".WCF_N."_search_index
+		$sql = "REPLACE INTO	wcf".WCF_N."_search_index
 					(objectTypeID, objectID, subject, message, time, userID, username, languageID, metaData)
 			VALUES		(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
