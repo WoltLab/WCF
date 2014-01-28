@@ -52,6 +52,12 @@ class RegisterForm extends UserAddForm {
 	public $isExternalAuthentication = false;
 	
 	/**
+	 * true if external authentication is used
+	 * @var	boolean
+	 */
+	public $registerVia3rdParty = false;
+	
+	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array();
@@ -290,7 +296,6 @@ class RegisterForm extends UserAddForm {
 		
 		// get options
 		$saveOptions = $this->optionHandler->save();
-		$registerVia3rdParty = false;
 		
 		$avatarURL = '';
 		if ($this->isExternalAuthentication) {
@@ -306,7 +311,7 @@ class RegisterForm extends UserAddForm {
 						WCF::getSession()->unregister('__githubToken');
 						
 						if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
-							$registerVia3rdParty = true;
+							$this->registerVia3rdParty = true;
 						}
 						
 						if (isset($githubData['bio'])) $saveOptions[User::getUserOptionID('aboutMe')] = $githubData['bio'];
@@ -334,7 +339,7 @@ class RegisterForm extends UserAddForm {
 						WCF::getSession()->unregister('__facebookData');
 						
 						if (isset($facebookData['email']) && $facebookData['email'] == $this->email) {
-							$registerVia3rdParty = true;
+							$this->registerVia3rdParty = true;
 						}
 						
 						if (isset($facebookData['gender'])) $saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
@@ -368,7 +373,7 @@ class RegisterForm extends UserAddForm {
 						WCF::getSession()->unregister('__googleData');
 						
 						if (isset($googleData['email']) && $googleData['email'] == $this->email) {
-							$registerVia3rdParty = true;
+							$this->registerVia3rdParty = true;
 						}
 						
 						if (isset($googleData['gender'])) {
@@ -395,7 +400,7 @@ class RegisterForm extends UserAddForm {
 		
 		// generate activation code
 		$addDefaultGroups = true;
-		if ((REGISTER_ACTIVATION_METHOD == 1 && !$registerVia3rdParty) || REGISTER_ACTIVATION_METHOD == 2) {
+		if ((REGISTER_ACTIVATION_METHOD == 1 && !$this->registerVia3rdParty) || REGISTER_ACTIVATION_METHOD == 2) {
 			$activationCode = UserRegistrationUtil::getActivationCode();
 			$this->additionalFields['activationCode'] = $activationCode;
 			$addDefaultGroups = false;
@@ -451,7 +456,7 @@ class RegisterForm extends UserAddForm {
 		}
 		else if (REGISTER_ACTIVATION_METHOD == 1) {
 			// registering via 3rdParty leads to instant activation
-			if ($registerVia3rdParty) {
+			if ($this->registerVia3rdParty) {
 				$this->message = 'wcf.user.register.success';
 			}
 			else {
