@@ -137,9 +137,15 @@ class AccountManagementForm extends AbstractForm {
 	
 	/**
 	 * updateParameters
-	 * @var	integer
+	 * @var	array
 	 */
 	public $updateParameters = array();
+	
+	/**
+	 * success
+	 * @var	array
+	 */
+	public $success = array();
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -317,7 +323,6 @@ class AccountManagementForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$success = array();
 		$updateOptions = array();
 		
 		// quit
@@ -325,12 +330,12 @@ class AccountManagementForm extends AbstractForm {
 			if (!WCF::getUser()->quitStarted && $this->quit == 1) {
 				$this->updateParameters['quitStarted'] = TIME_NOW;
 				$this->quitStarted = TIME_NOW;
-				$success[] = 'wcf.user.quit.success';
+				$this->success[] = 'wcf.user.quit.success';
 			}
 			else if (WCF::getUser()->quitStarted && $this->cancelQuit == 1) {
 				$this->updateParameters['quitStarted'] = 0;
 				$this->quitStarted = 0;
-				$success[] = 'wcf.user.quit.cancel.success';
+				$this->success[] = 'wcf.user.quit.cancel.success';
 			}
 		}
 		
@@ -341,7 +346,7 @@ class AccountManagementForm extends AbstractForm {
 				$this->updateParameters['oldUsername'] = WCF::getUser()->username;
 			}
 			$this->updateParameters['username'] = $this->username;
-			$success[] = 'wcf.user.changeUsername.success';
+			$this->success[] = 'wcf.user.changeUsername.success';
 		}
 		
 		// email
@@ -349,7 +354,7 @@ class AccountManagementForm extends AbstractForm {
 			if (REGISTER_ACTIVATION_METHOD == 0 || REGISTER_ACTIVATION_METHOD == 2 || mb_strtolower($this->email) == mb_strtolower(WCF::getUser()->email)) {
 				// update email
 				$this->updateParameters['email'] = $this->email;
-				$success[] = 'wcf.user.changeEmail.success';
+				$this->success[] = 'wcf.user.changeEmail.success';
 			}
 			else if (REGISTER_ACTIVATION_METHOD == 1) {
 				// get reactivation code
@@ -367,7 +372,7 @@ class AccountManagementForm extends AbstractForm {
 				
 				$mail = new Mail(array(WCF::getUser()->username => $this->email), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
 				$mail->send();
-				$success[] = 'wcf.user.changeEmail.needReactivation';
+				$this->success[] = 'wcf.user.changeEmail.needReactivation';
 			}
 		}
 		
@@ -375,7 +380,7 @@ class AccountManagementForm extends AbstractForm {
 		if (!WCF::getUser()->authData) {
 			if (!empty($this->newPassword) || !empty($this->confirmNewPassword)) {
 				$this->updateParameters['password'] = $this->newPassword;
-				$success[] = 'wcf.user.changePassword.success';
+				$this->success[] = 'wcf.user.changePassword.success';
 			}
 		}
 		
@@ -383,56 +388,56 @@ class AccountManagementForm extends AbstractForm {
 		if (GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== '') {
 			if ($this->githubConnect && WCF::getSession()->getVar('__githubToken')) {
 				$this->updateParameters['authData'] = 'github:'.WCF::getSession()->getVar('__githubToken');
-				$success[] = 'wcf.user.3rdparty.github.connect.success';
+				$this->success[] = 'wcf.user.3rdparty.github.connect.success';
 				
 				WCF::getSession()->unregister('__githubToken');
 				WCF::getSession()->unregister('__githubUsername');
 			}
 			else if ($this->githubDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'github:')) {
 				$this->updateParameters['authData'] = '';
-				$success[] = 'wcf.user.3rdparty.github.disconnect.success';
+				$this->success[] = 'wcf.user.3rdparty.github.disconnect.success';
 			}
 		}
 		if (TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== '') {
 			if ($this->twitterConnect && WCF::getSession()->getVar('__twitterData')) {
 				$twitterData = WCF::getSession()->getVar('__twitterData');
 				$this->updateParameters['authData'] = 'twitter:'.$twitterData['user_id'];
-				$success[] = 'wcf.user.3rdparty.twitter.connect.success';
+				$this->success[] = 'wcf.user.3rdparty.twitter.connect.success';
 				
 				WCF::getSession()->unregister('__twitterData');
 				WCF::getSession()->unregister('__twitterUsername');
 			}
 			else if ($this->twitterDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'twitter:')) {
 				$this->updateParameters['authData'] = '';
-				$success[] = 'wcf.user.3rdparty.twitter.disconnect.success';
+				$this->success[] = 'wcf.user.3rdparty.twitter.disconnect.success';
 			}
 		}
 		if (FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== '') {
 			if ($this->facebookConnect && WCF::getSession()->getVar('__facebookData')) {
 				$facebookData = WCF::getSession()->getVar('__facebookData');
 				$this->updateParameters['authData'] = 'facebook:'.$facebookData['id'];
-				$success[] = 'wcf.user.3rdparty.facebook.connect.success';
+				$this->success[] = 'wcf.user.3rdparty.facebook.connect.success';
 				
 				WCF::getSession()->unregister('__facebookData');
 				WCF::getSession()->unregister('__facebookUsername');
 			}
 			else if ($this->facebookDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'facebook:')) {
 				$this->updateParameters['authData'] = '';
-				$success[] = 'wcf.user.3rdparty.facebook.disconnect.success';
+				$this->success[] = 'wcf.user.3rdparty.facebook.disconnect.success';
 			}
 		}
 		if (GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== '') {
 			if ($this->googleConnect && WCF::getSession()->getVar('__googleData')) {
 				$googleData = WCF::getSession()->getVar('__googleData');
 				$this->updateParameters['authData'] = 'facebook:'.$googleData['id'];
-				$success[] = 'wcf.user.3rdparty.google.connect.success';
+				$this->success[] = 'wcf.user.3rdparty.google.connect.success';
 				
 				WCF::getSession()->unregister('__googleData');
 				WCF::getSession()->unregister('__googleUsername');
 			}
 			else if ($this->googleDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'google:')) {
 				$this->updateParameters['authData'] = '';
-				$success[] = 'wcf.user.3rdparty.google.disconnect.success';
+				$this->success[] = 'wcf.user.3rdparty.google.disconnect.success';
 			}
 		}
 		
@@ -457,10 +462,10 @@ class AccountManagementForm extends AbstractForm {
 		
 		$this->saved();
 		
-		$success = array_merge($success, WCF::getTPL()->get('success') ?: array());
+		$this->success = array_merge($this->success, WCF::getTPL()->get('success') ?: array());
 		
 		// show success message
-		WCF::getTPL()->assign('success', $success);
+		WCF::getTPL()->assign('success', $this->success);
 		
 		// reset password
 		$this->password = '';
