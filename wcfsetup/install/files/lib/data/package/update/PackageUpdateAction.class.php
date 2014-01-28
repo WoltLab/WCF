@@ -68,6 +68,20 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
 		$availableUpdateServers = PackageUpdateServer::getActiveUpdateServers();
 		
+		// there are no available package update servers
+		if (empty($availableUpdateServers)) {
+			WCF::getTPL()->assign(array(
+				'packageUpdates' => array()
+			));
+			
+			return array(
+				'count' => 0,
+				'pageCount' => 0,
+				'searchID' => 0,
+				'template' => WCF::getTPL()->fetch('packageSearchResultList')
+			);
+		}
+		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("package_update.packageUpdateServerID IN (?)", array(array_keys($availableUpdateServers)));
 		if (!empty($this->parameters['package'])) {
