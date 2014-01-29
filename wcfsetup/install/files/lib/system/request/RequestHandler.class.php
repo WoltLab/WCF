@@ -154,6 +154,10 @@ class RequestHandler extends SingletonFactory {
 								}
 							}
 						}
+						
+						// redirect to landing page
+						HeaderUtil::redirect($redirectURL, true);
+						exit;
 					}
 				}
 				
