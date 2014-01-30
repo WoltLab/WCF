@@ -347,24 +347,32 @@ class PackageArchive {
 		}
 		
 		if ($this->package != null) {
-			$validFromVersion = null;
-			foreach ($this->instructions['update'] as $fromVersion => $update) {
-				if (Package::checkFromversion($this->package->packageVersion, $fromVersion)) {
-					$validFromVersion = $fromVersion;
-					break;
-				}
-			}
-			if ($validFromVersion === null) {
-				$this->instructions['update'] = array();
-			}
-			else {
-				$this->instructions['update'] = $this->instructions['update'][$validFromVersion];
-			}
+			$this->filterUpdateInstructions();
 		}
 		
 		// set default values
 		if (!isset($this->packageInfo['isApplication'])) $this->packageInfo['isApplication'] = 0;
 		if (!isset($this->packageInfo['packageURL'])) $this->packageInfo['packageURL'] = '';
+	}
+	
+	/**
+	 * Filters update instructions.
+	 */
+	protected function filterUpdateInstructions() {
+		$validFromVersion = null;
+		foreach ($this->instructions['update'] as $fromVersion => $update) {
+			if (Package::checkFromversion($this->package->packageVersion, $fromVersion)) {
+				$validFromVersion = $fromVersion;
+				break;
+			}
+		}
+		
+		if ($validFromVersion === null) {
+			$this->instructions['update'] = array();
+		}
+		else {
+			$this->instructions['update'] = $this->instructions['update'][$validFromVersion];
+		}
 	}
 	
 	/**
@@ -408,9 +416,17 @@ class PackageArchive {
 	 * Checks if the new package is compatible with
 	 * the package that is about to be updated.
 	 * 
-	 * @return	boolean		isValidUpdate
+	 * @param	\wcf\data\package\Package	$package
+	 * @return	boolean				isValidUpdate
 	 */
-	public function isValidUpdate() {
+	public function isValidUpdate(Package $package = null) {
+		if ($this->package === null && $package !== null) {
+			$this->setPackage($package);
+			
+			// re-evaluate update data
+			$this->filterUpdateInstructions();
+		}
+		
 		// Check name of the installed package against the name of the update. Both must be identical.
 		if ($this->packageInfo['name'] != $this->package->package) {
 			return false;
@@ -421,10 +437,12 @@ class PackageArchive {
 		if (Package::compareVersion($this->packageInfo['version'], $this->package->packageVersion) != 1) {
 			return false;
 		}
+		
 		// Check if the package provides an instructions block for the update from the installed package version
 		if (empty($this->instructions['update'])) {
 			return false;
 		}
+		
 		return true;
 	}
 	

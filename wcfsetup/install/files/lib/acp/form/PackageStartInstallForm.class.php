@@ -176,8 +176,7 @@ class PackageStartInstallForm extends AbstractForm {
 			WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
 			$this->activeMenuItem = 'wcf.acp.menu.link.package';
 			
-			$this->archive->setPackage($this->package);
-			if (!$this->archive->isValidUpdate()) {
+			if (!$this->archive->isValidUpdate($this->package)) {
 				throw new UserInputException($type, 'noValidUpdate');
 			}
 		}
