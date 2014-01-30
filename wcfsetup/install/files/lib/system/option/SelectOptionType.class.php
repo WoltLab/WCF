@@ -14,6 +14,8 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class SelectOptionType extends RadioButtonOptionType {
+	protected $allowEmptyValue = false; 
+	
 	/**
 	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
@@ -26,7 +28,8 @@ class SelectOptionType extends RadioButtonOptionType {
 			'enableOptions' => $options['enableOptions'],
 			'option' => $option,
 			'selectOptions' => $option->parseSelectOptions(),
-			'value' => $value
+			'value' => $value,
+			'allowEmptyValue' => ($this->allowEmptyValue || $option->allowEmptyValue)
 		));
 		return WCF::getTPL()->fetch('selectOptionType');
 	}
@@ -35,6 +38,7 @@ class SelectOptionType extends RadioButtonOptionType {
 	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
+		$this->allowEmptyValue = true;
 		return $this->getFormElement($option, $value);
 	}
 	
