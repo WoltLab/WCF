@@ -135,7 +135,8 @@
 		formattedTime: '',
 		formattedDateTime: '',
 		timezoneList: null,
-		units: ['hour', 'minute', 'second', 'millisec', 'microsec'],
+		//units: ['hour', 'minute', 'second', 'millisec', 'microsec'],
+		units: ['hour', 'minute', 'second'], // WoltLab modification: milisec and microsec waste around 650ms creating 1k option-elements each
 		support: {},
 		control: null,
 
