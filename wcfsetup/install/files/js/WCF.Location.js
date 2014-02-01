@@ -538,6 +538,12 @@ WCF.Location.GoogleMaps.LocationInput = Class.extend({
  */
 WCF.Location.GoogleMaps.Util = {
 	/**
+	 * geocoder instance
+	 * @var	google.maps.Geocoder
+	 */
+	_geocoder: null,
+	
+	/**
 	 * Focuses the given marker's map on the marker.
 	 * 
 	 * @param	google.maps.Marker	marker
@@ -567,5 +573,35 @@ WCF.Location.GoogleMaps.Util = {
 	 */
 	moveMarker: function(marker, latitude, longitude) {
 		marker.setPosition(new google.maps.LatLng(latitude, longitude));
+	},
+	
+	/**
+	 * Performs a reverse geocoding request.
+	 * 
+	 * @param	object			callback
+	 * @param	google.maps.Marker	marker
+	 * @param	string			latitude
+	 * @param	string			longitude
+	 * @param	boolean			fullResult
+	 */
+	reverseGeocoding: function(callback, marker, latitude, longitude, fullResult) {
+		if (marker) {
+			latitude = marker.getPosition().lat();
+			longitude = marker.getPosition().lng();
+		}
+		
+		if (this._geocoder === null) {
+			this._geocoder = new google.maps.Geocoder();
+		}
+		
+		var $latLng = new google.maps.LatLng(latitude, longitude);
+		this._geocoder.geocode({ latLng: $latLng }, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				callback((fullResult ? results : results[0].formatted_address));
+			}
+			else {
+				callback(null);
+			}
+		});
 	}
 };
