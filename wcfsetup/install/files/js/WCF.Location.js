@@ -375,22 +375,22 @@ WCF.Location.GoogleMaps.LocationSearch = WCF.Search.Base.extend({
 	_keyUp: function(event) {
 		// handle arrow keys and return key
 		switch (event.which) {
-			case 37: // arrow-left
-			case 39: // arrow-right
+			case $.ui.keyCode.LEFT:
+			case $.ui.keyCode.RIGHT:
 				return;
 			break;
 			
-			case 38: // arrow up
+			case $.ui.keyCode.UP:
 				this._selectPreviousItem();
 				return;
 			break;
 			
-			case 40: // arrow down
+			case $.ui.keyCode.DOWN:
 				this._selectNextItem();
 				return;
 			break;
 			
-			case 13: // return key
+			case $.ui.keyCode.ENTER:
 				return this._selectElement(event);
 			break;
 		}
@@ -529,7 +529,7 @@ WCF.Location.GoogleMaps.LocationInput = Class.extend({
 		this._marker.setPosition(data.location);
 		WCF.Location.GoogleMaps.Util.focusMarker(this._marker);
 		
-		$(this._searchInput).val('');
+		$(this._searchInput).val(data.label);
 	}
 });
 

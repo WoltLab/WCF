@@ -5619,8 +5619,8 @@ WCF.Search.Base = Class.extend({
 		var $searchString = $.trim(this._searchInput.val());
 		if (this._commaSeperated) {
 			var $keyCode = event.keyCode || event.which;
-			if ($keyCode == 188) {
-				// ignore event if char is 188 = ,
+			if ($keyCode == $.ui.keyCode.COMMA) {
+				// ignore event if char is ','
 				return '';
 			}
 			
