@@ -500,6 +500,8 @@ WCF.Location.GoogleMaps.LocationInput = Class.extend({
 				}
 			}, this));
 		}
+		
+		this._marker.addListener('dragend', $.proxy(this._updateLocation, this));
 	},
 	
 	/**
@@ -518,6 +520,17 @@ WCF.Location.GoogleMaps.LocationInput = Class.extend({
 	 */
 	getMarker: function() {
 		return this._marker;
+	},
+	
+	/**
+	 * Updates location on marker position change.
+	 */
+	_updateLocation: function() {
+		WCF.Location.GoogleMaps.Util.reverseGeocoding($.proxy(function(result) {
+			if (result !== null) {
+				$(this._searchInput).val(result);
+			}
+		}, this), this._marker);
 	},
 	
 	/**
