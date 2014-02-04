@@ -204,7 +204,8 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 			clickable: false,
 			draggable: true,
 			map: this._map,
-			position: new google.maps.LatLng(latitude, longitude)
+			position: new google.maps.LatLng(latitude, longitude),
+			zIndex: 1
 		});
 		
 		this._markers.push($marker);
