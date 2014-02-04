@@ -584,9 +584,14 @@ WCF.Location.GoogleMaps.Util = {
 	 * @param	google.maps.Marker		marker
 	 * @param	float				latitude
 	 * @param	float				longitude
+	 * @param	boolean				dragend		indicates if "dragend" event is fired
 	 */
-	moveMarker: function(marker, latitude, longitude) {
+	moveMarker: function(marker, latitude, longitude, triggerDragend) {
 		marker.setPosition(new google.maps.LatLng(latitude, longitude));
+		
+		if (triggerDragend) {
+			google.maps.event.trigger(marker, 'dragend');
+		}
 	},
 	
 	/**
