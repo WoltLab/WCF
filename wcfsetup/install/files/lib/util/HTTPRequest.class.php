@@ -233,12 +233,13 @@ final class HTTPRequest {
 		
 		$remoteFile->puts($request);
 		
+		$bodyLength = 0;
 		$inHeader = true;
 		$this->replyHeaders = array();
 		$this->replyBody = '';
 		
 		// read http response.
-		while (!$remoteFile->eof()) {
+		while (!$remoteFile->eof() && (!isset($this->options['limit']) || $bodyLength < $this->options['limit'])) {
 			$line = $remoteFile->gets();
 			if ($inHeader) {
 				if (rtrim($line) === '') {
@@ -249,6 +250,7 @@ final class HTTPRequest {
 			}
 			else {
 				$this->replyBody .= $line;
+				$bodyLength = strlen($this->replyBody);
 			}
 		}
 		
@@ -279,7 +281,7 @@ final class HTTPRequest {
 		$this->statusCode = $matches[1];
 		
 		// validate length
-		if (isset($this->replyHeaders['Content-Length'])) {
+		if (isset($this->replyHeaders['Content-Length']) && !isset($this->options['limit'])) {
 			if (strlen($this->replyBody) != $this->replyHeaders['Content-Length']) {
 				throw new SystemException('Body length does not match length given in header');
 			}
