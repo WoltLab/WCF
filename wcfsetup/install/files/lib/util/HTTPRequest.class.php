@@ -124,6 +124,11 @@ final class HTTPRequest {
 		$this->addHeader('User-Agent', "HTTP.PHP (HTTPRequest.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")");
 		$this->addHeader('Accept', '*/*');
 		$this->addHeader('Accept-Language', WCF::getLanguage()->getFixedLanguageCode());
+		
+		if (isset($this->options['maxLength'])) {
+			$this->addHeader('Range', 'bytes=0-'.$this->options['maxLength']);
+		}
+		
 		if ($this->options['method'] !== 'GET') {
 			if (empty($this->files)) {
 				if (is_array($postParameters)) {
@@ -233,6 +238,7 @@ final class HTTPRequest {
 		
 		$remoteFile->puts($request);
 		
+		$bodyLength = 0;
 		$inHeader = true;
 		$this->replyHeaders = array();
 		$this->replyBody = '';
@@ -249,6 +255,11 @@ final class HTTPRequest {
 			}
 			else {
 				$this->replyBody .= $line;
+				$bodyLength = strlen($line);
+				
+				if (isset($this->options['maxLength']) && $bodyLength >= $this->options['maxLength']) {
+					break;
+				}
 			}
 		}
 		
@@ -279,7 +290,7 @@ final class HTTPRequest {
 		$this->statusCode = $matches[1];
 		
 		// validate length
-		if (isset($this->replyHeaders['Content-Length'])) {
+		if (isset($this->replyHeaders['Content-Length']) && !isset($this->options['maxLength'])) {
 			if (strlen($this->replyBody) != $this->replyHeaders['Content-Length']) {
 				throw new SystemException('Body length does not match length given in header');
 			}
@@ -339,6 +350,16 @@ final class HTTPRequest {
 			case '200':
 			case '204':
 				// we are fine
+			break;
+			
+			case '206':
+				// check, if partial content was expected
+				if (!isset($this->headers['Range'])) {
+					throw new HTTPServerErrorException("Received unexpected status code '206' from server");
+				}
+				else if (!isset($this->replyHeaders['Content-Range'])) {
+					throw new HTTPServerErrorException("Content-Range is missing in reply header");
+				}
 			break;
 			
 			case '401':
