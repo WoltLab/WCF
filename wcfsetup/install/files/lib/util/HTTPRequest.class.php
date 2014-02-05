@@ -124,6 +124,11 @@ final class HTTPRequest {
 		$this->addHeader('User-Agent', "HTTP.PHP (HTTPRequest.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")");
 		$this->addHeader('Accept', '*/*');
 		$this->addHeader('Accept-Language', WCF::getLanguage()->getFixedLanguageCode());
+		
+		if (isset($this->options['maxLength'])) {
+			$this->addHeader('Range', 'bytes=0-'.$this->options['maxLength']);
+		}
+		
 		if ($this->options['method'] !== 'GET') {
 			if (empty($this->files)) {
 				if (is_array($postParameters)) {
@@ -239,7 +244,7 @@ final class HTTPRequest {
 		$this->replyBody = '';
 		
 		// read http response.
-		while (!$remoteFile->eof() && (!isset($this->options['limit']) || $bodyLength < $this->options['limit'])) {
+		while (!$remoteFile->eof()) {
 			$line = $remoteFile->gets();
 			if ($inHeader) {
 				if (rtrim($line) === '') {
@@ -250,7 +255,11 @@ final class HTTPRequest {
 			}
 			else {
 				$this->replyBody .= $line;
-				$bodyLength = strlen($this->replyBody);
+				$bodyLength = strlen($line);
+				
+				if (isset($this->options['maxLength']) && $bodyLength >= $this->options['maxLength']) {
+					break;
+				}
 			}
 		}
 		
@@ -281,7 +290,7 @@ final class HTTPRequest {
 		$this->statusCode = $matches[1];
 		
 		// validate length
-		if (isset($this->replyHeaders['Content-Length']) && !isset($this->options['limit'])) {
+		if (isset($this->replyHeaders['Content-Length']) && !isset($this->options['maxLength'])) {
 			if (strlen($this->replyBody) != $this->replyHeaders['Content-Length']) {
 				throw new SystemException('Body length does not match length given in header');
 			}
