@@ -422,8 +422,9 @@ final class HTTPRequest {
 		if ($append && isset($this->headers[$name])) {
 			$this->headers[$name][] = $value;
 		}
-		
-		$this->headers[$name] = (array) $value;
+		else {
+			$this->headers[$name] = array($value);
+		}
 	}
 	
 	/**
