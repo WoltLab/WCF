@@ -204,7 +204,8 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 			clickable: false,
 			draggable: true,
 			map: this._map,
-			position: new google.maps.LatLng(latitude, longitude)
+			position: new google.maps.LatLng(latitude, longitude),
+			zIndex: 1
 		});
 		
 		this._markers.push($marker);
@@ -375,22 +376,22 @@ WCF.Location.GoogleMaps.LocationSearch = WCF.Search.Base.extend({
 	_keyUp: function(event) {
 		// handle arrow keys and return key
 		switch (event.which) {
-			case 37: // arrow-left
-			case 39: // arrow-right
+			case $.ui.keyCode.LEFT:
+			case $.ui.keyCode.RIGHT:
 				return;
 			break;
 			
-			case 38: // arrow up
+			case $.ui.keyCode.UP:
 				this._selectPreviousItem();
 				return;
 			break;
 			
-			case 40: // arrow down
+			case $.ui.keyCode.DOWN:
 				this._selectNextItem();
 				return;
 			break;
 			
-			case 13: // return key
+			case $.ui.keyCode.ENTER:
 				return this._selectElement(event);
 			break;
 		}
@@ -500,6 +501,8 @@ WCF.Location.GoogleMaps.LocationInput = Class.extend({
 				}
 			}, this));
 		}
+		
+		this._marker.addListener('dragend', $.proxy(this._updateLocation, this));
 	},
 	
 	/**
@@ -521,6 +524,17 @@ WCF.Location.GoogleMaps.LocationInput = Class.extend({
 	},
 	
 	/**
+	 * Updates location on marker position change.
+	 */
+	_updateLocation: function() {
+		WCF.Location.GoogleMaps.Util.reverseGeocoding($.proxy(function(result) {
+			if (result !== null) {
+				$(this._searchInput).val(result);
+			}
+		}, this), this._marker);
+	},
+	
+	/**
 	 * Sets the marker based on an entered location.
 	 * 
 	 * @param	object		data
@@ -529,7 +543,7 @@ WCF.Location.GoogleMaps.LocationInput = Class.extend({
 		this._marker.setPosition(data.location);
 		WCF.Location.GoogleMaps.Util.focusMarker(this._marker);
 		
-		$(this._searchInput).val('');
+		$(this._searchInput).val(data.label);
 	}
 });
 
@@ -537,6 +551,12 @@ WCF.Location.GoogleMaps.LocationInput = Class.extend({
  * Provides utility functions for Google Maps maps.
  */
 WCF.Location.GoogleMaps.Util = {
+	/**
+	 * geocoder instance
+	 * @var	google.maps.Geocoder
+	 */
+	_geocoder: null,
+	
 	/**
 	 * Focuses the given marker's map on the marker.
 	 * 
@@ -564,8 +584,43 @@ WCF.Location.GoogleMaps.Util = {
 	 * @param	google.maps.Marker		marker
 	 * @param	float				latitude
 	 * @param	float				longitude
+	 * @param	boolean				dragend		indicates if "dragend" event is fired
 	 */
-	moveMarker: function(marker, latitude, longitude) {
+	moveMarker: function(marker, latitude, longitude, triggerDragend) {
 		marker.setPosition(new google.maps.LatLng(latitude, longitude));
+		
+		if (triggerDragend) {
+			google.maps.event.trigger(marker, 'dragend');
+		}
+	},
+	
+	/**
+	 * Performs a reverse geocoding request.
+	 * 
+	 * @param	object			callback
+	 * @param	google.maps.Marker	marker
+	 * @param	string			latitude
+	 * @param	string			longitude
+	 * @param	boolean			fullResult
+	 */
+	reverseGeocoding: function(callback, marker, latitude, longitude, fullResult) {
+		if (marker) {
+			latitude = marker.getPosition().lat();
+			longitude = marker.getPosition().lng();
+		}
+		
+		if (this._geocoder === null) {
+			this._geocoder = new google.maps.Geocoder();
+		}
+		
+		var $latLng = new google.maps.LatLng(latitude, longitude);
+		this._geocoder.geocode({ latLng: $latLng }, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				callback((fullResult ? results : results[0].formatted_address));
+			}
+			else {
+				callback(null);
+			}
+		});
 	}
 };
