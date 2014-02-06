@@ -24,85 +24,85 @@ final class HTTPRequest {
 	 * given options
 	 * @var	array
 	 */
-	private $options = array();
+	protected $options = array();
 	
 	/**
 	 * given post parameters
 	 * @var	array
 	 */
-	private $postParameters = array();
+	protected $postParameters = array();
 	
 	/**
 	 * given files
 	 * @var	array
 	 */
-	private $files = array();
+	protected $files = array();
 	
 	/**
 	 * indicates if request will be made via SSL
 	 * @var	boolean
 	 */
-	private $useSSL = false;
+	protected $useSSL = false;
 	
 	/**
 	 * target host
 	 * @var	string
 	 */
-	private $host;
+	protected $host;
 	
 	/**
 	 * target port
 	 * @var	integer
 	 */
-	private $port;
+	protected $port;
 	
 	/**
 	 * target path
 	 * @var	string
 	 */
-	private $path;
+	protected $path;
 	
 	/**
 	 * target query string
 	 * @var	string
 	 */
-	private $query;
+	protected $query;
 	
 	/**
 	 * request URL
 	 * @var	string
 	 */
-	private $url = '';
+	protected $url = '';
 	
 	/**
 	 * request headers
 	 * @var	array<string>
 	 */
-	private $headers = array();
+	protected $headers = array();
 	
 	/**
 	 * request body
 	 * @var	string
 	 */
-	private $body = '';
+	protected $body = '';
 	
 	/**
 	 * reply headers
 	 * @var	array<string>
 	 */
-	private $replyHeaders = array();
+	protected $replyHeaders = array();
 	
 	/**
 	 * reply body
 	 * @var	string
 	 */
-	private $replyBody = '';
+	protected $replyBody = '';
 	
 	/**
 	 * reply status code
 	 * @var	integer
 	 */
-	private $statusCode = 0;
+	protected $statusCode = 0;
 	
 	/**
 	 * Constructs a new instance of HTTPRequest.
@@ -189,7 +189,7 @@ final class HTTPRequest {
 	 * 
 	 * @param	string		$url
 	 */
-	private function setURL($url) {
+	protected function setURL($url) {
 		if (PROXY_SERVER_HTTP) {
 			$parsedUrl = parse_url(PROXY_SERVER_HTTP);
 			$this->path = $url;
@@ -258,7 +258,7 @@ final class HTTPRequest {
 	/**
 	 * Parses the reply.
 	 */
-	private function parseReply() {
+	protected function parseReply() {
 		$headers = array();
 		
 		foreach ($this->replyHeaders as $header) {
@@ -379,7 +379,7 @@ final class HTTPRequest {
 	 * 
 	 * @param	array		$options
 	 */
-	private function setOptions(array $options) {
+	protected function setOptions(array $options) {
 		if (!isset($options['timeout'])) {
 			$options['timeout'] = 10;
 		}
@@ -430,7 +430,7 @@ final class HTTPRequest {
 	/**
 	 * Resets reply data when cloning.
 	 */
-	private function __clone() {
+	protected function __clone() {
 		$this->replyHeaders = array();
 		$this->replyBody = '';
 		$this->statusCode = 0;
