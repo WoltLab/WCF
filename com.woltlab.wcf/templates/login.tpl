@@ -138,6 +138,8 @@
 										<a href="{link controller='GoogleAuth'}{/link}" class="button small"><span class="icon icon16 icon-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
 									</li>
 								{/if}
+								
+								{event name='3rdpartyFields'}
 							{/content}
 						</ul>
 					</dd>
