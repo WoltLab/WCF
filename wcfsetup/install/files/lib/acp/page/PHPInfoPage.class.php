@@ -20,6 +20,11 @@ class PHPInfoPage extends AbstractPage {
 	public $templateName = 'phpInfo';
 	
 	/**
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 */
+	public $neededPermissions = array("admin.system.canViewPHPInfo");
+	
+	/**
 	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {

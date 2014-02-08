@@ -158,6 +158,12 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
+			<option name="admin.system.canViewPHPInfo">
+				<categoryname>admin.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
 			<option name="admin.system.package.canUpdatePackage">
 				<categoryname>admin.system.package</categoryname>
 				<optiontype>boolean</optiontype>
