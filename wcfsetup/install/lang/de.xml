@@ -250,6 +250,7 @@
 		<item name="wcf.acp.group.option.admin.system.canViewLog"><![CDATA[Kann Protokolle abrufen]]></item>
 		<item name="wcf.acp.group.option.admin.system.canManageApplication"><![CDATA[Kann Anwendungen verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.system.canManageCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.system.canViewPHPInfo"><![CDATA[Kann PHPInfo abrufen]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canEditServer"><![CDATA[Kann Update-Server bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canInstallPackage"><![CDATA[Kann Pakete installieren]]></item>
 		<item name="wcf.acp.group.option.admin.system.package.canUninstallPackage"><![CDATA[Kann Pakete deinstallieren]]></item>
