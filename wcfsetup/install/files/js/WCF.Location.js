@@ -2,7 +2,7 @@
  * Location-related classes for WCF
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Location = { };
@@ -241,9 +241,12 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 			var $infoWindow = new google.maps.InfoWindow({
 				content: information
 			});
-			google.maps.event.addEventListemer($marker, 'click', $.proxy(function() {
+			google.maps.event.addListener($marker, 'click', $.proxy(function() {
 				$infoWindow.open(this._map, $marker);
 			}, this));
+			
+			// add info window object to marker object
+			$marker.infoWindow = $infoWindow;
 		}
 		
 		this._markers.push($marker);
@@ -336,6 +339,154 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 	 */
 	setCenter: function(latitude, longitude) {
 		this._map.setCenter(new google.maps.LatLng(latitude, longitude));
+	}
+});
+
+/**
+ * Handles a large map with many markers where (new) markers are loaded via AJAX.
+ */
+WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
+	/**
+	 * name of the PHP class executing the 'getMapMarkers' action
+	 * @var	string
+	 */
+	_actionClassName: null,
+	
+	/**
+	 * indicates if the maps center can be set by location search
+	 * @var	WCF.Location.GoogleMaps.LocationSearch
+	 */
+	_locationSearch: null,
+	
+	/**
+	 * selector for the location search input
+	 * @var	string
+	 */
+	_locationSearchInputSelector: null,
+	
+	/**
+	 * cluster handling the markers on the map
+	 * @var	MarkerClusterer
+	 */
+	_markerClusterer: null,
+	
+	/**
+	 * ids of the objects which are already displayed
+	 * @var	array<integer>
+	 */
+	_objectIDs: [ ],
+	
+	/**
+	 * previous coordinates of the north east map boundary
+	 * @var	google.maps.LatLng
+	 */
+	_previousNorthEast: null,
+	
+	/**
+	 * previous coordinates of the south west map boundary
+	 * @var	google.maps.LatLng
+	 */
+	_previousSouthWest: null,
+	
+	/**
+	 * @see	WCF.Location.GoogleMaps.Map.init()
+	 */
+	init: function(mapContainerID, mapOptions, actionClassName, locationSearchInputSelector) {
+		this._super(mapContainerID, mapOptions);
+		
+		this._actionClassName = actionClassName;
+		this._locationSearchInputSelector = locationSearchInputSelector || '';
+		this._objectIDs = [ ];
+		
+		if (this._locationSearchInputSelector) {
+			this._locationSearch = new WCF.Location.GoogleMaps.LocationSearch(locationSearchInputSelector, $.proxy(this._centerMap, this));
+		}
+		
+		this._markerClusterer = new MarkerClusterer(this._map, this._markers);
+		
+		this._proxy = new WCF.Action.Proxy({
+			showLoadingOverlay: false,
+			success: $.proxy(this._success, this)
+		});
+		
+		this._previousNorthEast = null;
+		this._previousSouthWest = null;
+		google.maps.event.addListener(this._map, 'idle', $.proxy(this._loadMarkers, this));
+	},
+	
+	/**
+	 * Centers the map based on a location search result.
+	 * 
+	 * @param	object		data
+	 */
+	_centerMap: function(data) {
+		this.setCenter(data.location.lat(), data.location.lng());
+		
+		$(this._locationSearchInputSelector).val(data.label);
+	},
+	
+	/**
+	 * Loads markers if the map is reloaded.
+	 */
+	_loadMarkers: function() {
+		var $northEast = this._map.getBounds().getNorthEast();
+		var $southWest = this._map.getBounds().getSouthWest();
+		
+		// check if the user has zoomed in, then all markers are already
+		// displayed
+		if (this._previousNorthEast && this._previousNorthEast.lat() >= $northEast.lat() && this._previousNorthEast.lng() >= $northEast.lng() && this._previousSouthWest.lat() <= $southWest.lat() && this._previousSouthWest.lng() <= $southWest.lng()) {
+			return;
+		}
+		
+		this._previousNorthEast = $northEast;
+		this._previousSouthWest = $southWest;
+		
+		this._proxy.setOption('data', {
+			actionName: 'getMapMarkers',
+			className: this._actionClassName,
+			parameters: {
+				excludedObjectIDs: this._objectIDs,
+				eastLongitude: $northEast.lng(),
+				northLatitude: $northEast.lat(),
+				southLatitude: $southWest.lat(),
+				westLongitude: $southWest.lng()
+			}
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Handles a successful AJAX request.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (data.returnValues && data.returnValues.markers) {
+			for (var $index in data.returnValues.markers) {
+				var $markerInfo = data.returnValues.markers[$index];
+				
+				this.addMarker($markerInfo.latitude, $markerInfo.longitude, $markerInfo.title, null, $markerInfo.infoWindow);
+				
+				if ($markerInfo.objectID) {
+					this._objectIDs.push($markerInfo.objectID);
+				}
+				else if ($markerInfo.objectIDs) {
+					this._objectIDs = this._objectIDs.concat($markerInfo.objectIDs);
+				}
+			}
+		}
+	},
+	
+	/**
+	 * @see	WCF.Location.GoogleMaps.Map.addMarker()
+	 */
+	addMarker: function(latitude, longitude, title, icon, information) {
+		var $marker = this._super(latitude, longitude, title, icon, information);
+		this._markerClusterer.addMarker($marker);
+		
+		return $marker;
 	}
 });
 
