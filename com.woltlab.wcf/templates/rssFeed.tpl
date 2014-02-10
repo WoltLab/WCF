@@ -22,13 +22,13 @@
 			<link><![CDATA[{@$item->getLink()|escapeCDATA}]]></link>
 			{hascontent}<description><![CDATA[{content}{@$item->getExcerpt()|escapeCDATA}{/content}]]></description>{/hascontent}
 			<pubDate>{'r'|gmdate:$item->getTime()}</pubDate>
-			<dc:creator>{@$item->getUsername()|escapeCDATA}</dc:creator>
+			<dc:creator><![CDATA[{@$item->getUsername()|escapeCDATA}]]></dc:creator>
 			<guid><![CDATA[{@$item->getLink()|escapeCDATA}]]></guid>
 			{foreach from=$item->getCategories() item='category'}
 				<category><![CDATA[{@$category|escapeCDATA}]]></category>
 			{/foreach}
 			{hascontent}<content:encoded><![CDATA[{content}{@$item->getFormattedMessage()|escapeCDATA}{/content}]]></content:encoded>{/hascontent}
-			<slash:comments>{@$item->getComments()|escapeCDATA}</slash:comments>
+			<slash:comments><![CDATA[{@$item->getComments()|escapeCDATA}]]></slash:comments>
 		</item>
 {*		*}{/foreach}
 	</channel>
