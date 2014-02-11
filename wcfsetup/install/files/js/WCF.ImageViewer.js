@@ -303,6 +303,8 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._isOpen = true;
 		
+		WCF.System.DisableScrolling.disable();
+		
 		return true;
 	},
 	
@@ -323,6 +325,8 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._isOpen = false;
 		
+		WCF.System.DisableScrolling.enable();
+		
 		return true;
 	},
 	
@@ -336,14 +340,19 @@ $.widget('ui.wcfImageViewer', {
 			return false;
 		}
 		
-		this._timer = new WCF.PeriodicalExecuter($.proxy(function() {
-			var $index = this._active + 1;
-			if ($index == this._items) {
-				$index = 0;
-			}
-			
-			this.showImage($index);
-		}, this), this.options.speed * 1000);
+		if (this._timer === null) {
+			this._timer = new WCF.PeriodicalExecuter($.proxy(function() {
+				var $index = this._active + 1;
+				if ($index == this._items) {
+					$index = 0;
+				}
+				
+				this.showImage($index);
+			}, this), this.options.speed * 1000);
+		}
+		else {
+			this._timer.resume();
+		}
 		
 		this._slideshowEnabled = true;
 		
@@ -355,9 +364,10 @@ $.widget('ui.wcfImageViewer', {
 	/**
 	 * Disables the slideshow.
 	 * 
+	 * @param	boolean		disableSlideshow
 	 * @return	boolean
 	 */
-	stopSlideshow: function() {
+	stopSlideshow: function(disableSlideshow) {
 		if (!this._slideshowEnabled) {
 			return false;
 		}
@@ -415,20 +425,22 @@ $.widget('ui.wcfImageViewer', {
 	 * @param	object		event
 	 */
 	_showImage: function(event) {
-		this.stopSlideshow();
-		this.showImage($(event.currentTarget).data('index'));
+		this.showImage($(event.currentTarget).data('index'), true);
 	},
 	
 	/**
 	 * Displays an image by index.
 	 * 
 	 * @param	integer		index
+	 * @param	boolean		disableSlideshow
 	 * @return	boolean
 	 */
-	showImage: function(index) {
+	showImage: function(index, disableSlideshow) {
 		if (this._active == index) {
 			return false;
 		}
+		
+		this.stopSlideshow(disableSlideshow || false);
 		
 		// reset active marking
 		if (this._active != -1) {
@@ -442,19 +454,26 @@ $.widget('ui.wcfImageViewer', {
 		$image.listItem.addClass('active');
 		
 		var $dimensions = this._ui.imageContainer.getDimensions('inner');
+		var $newImageIndex = (this._activeImage ? 0 : 1);
+		this._renderImage($newImageIndex, $image, $dimensions);
 		
-		if (this._activeImage === null) {
-			this._activeImage = 0;
-			this._renderImage(this._activeImage, $image, $dimensions);
+		if (this._activeImage !== null) {
+			this._ui.images[this._activeImage].removeClass('active');
+		}
+		
+		this._activeImage = $newImageIndex;
+		
+		var $currentActiveImage = this._active;
+		if (this._ui.images[$newImageIndex].get(0).complete) {
+			// image was fetched from cache
+			this._imageOnLoad($currentActiveImage, $newImageIndex);
 		}
 		else {
-			var $newImageIndex = (this._activeImage ? 0 : 1);
-			this._renderImage($newImageIndex, $image, $dimensions);
-			
-			this._ui.images[this._activeImage].removeClass('active');
-			this._ui.images[$newImageIndex].addClass('active');
-			
-			this._activeImage = $newImageIndex;
+			// image is loading, display once loaded
+			this._ui.imageContainer.addClass('loading');
+			this._ui.images[$newImageIndex].off('load').on('load', $.proxy(function() {
+				this._imageOnLoad($currentActiveImage, $newImageIndex);
+			}, this));
 		}
 		
 		// user
@@ -479,6 +498,16 @@ $.widget('ui.wcfImageViewer', {
 		this._toggleButtons();
 		
 		return true;
+	},
+	
+	_imageOnLoad: function(currentActiveImage, activeImageIndex) {
+		// image did not load in time, ignore
+		if (currentActiveImage != this._active) {
+			return;
+		}
+		
+		this._ui.imageContainer.removeClass('loading');
+		this._ui.images[activeImageIndex].addClass('active');
 	},
 	
 	/**
@@ -584,7 +613,7 @@ $.widget('ui.wcfImageViewer', {
 		$slideshowButtonEnlarge.click($.proxy(this._toggleView, this));
 		$slideshowButtonToggle.click($.proxy(function() {
 			if (this._slideshowEnabled) {
-				this.stopSlideshow();
+				this.stopSlideshow(true);
 			}
 			else {
 				this.startSlideshow();
@@ -618,7 +647,7 @@ $.widget('ui.wcfImageViewer', {
 	_next: function(event, shiftBy) {
 		if (this._ui.buttonNext.hasClass('pointer')) {
 			if (shiftBy == undefined) {
-				this.stopSlideshow();
+				this.stopSlideshow(true);
 			}
 			
 			var $maximumOffset = Math.max((this._items * this._thumbnailWidth) - this._thumbnailContainerWidth - this._thumbnailMarginRight, 0);
@@ -640,7 +669,7 @@ $.widget('ui.wcfImageViewer', {
 	_previous: function(event, unshiftBy) {
 		if (this._ui.buttonPrevious.hasClass('pointer')) {
 			if (unshiftBy == undefined) {
-				this.stopSlideshow();
+				this.stopSlideshow(true);
 			}
 			
 			this._thumbnailOffset = Math.max(this._thumbnailOffset - (this._thumbnailWidth * (unshiftBy ? unshiftBy : this.options.shiftBy)), 0);
@@ -657,7 +686,7 @@ $.widget('ui.wcfImageViewer', {
 	 */
 	_nextImage: function(event) {
 		if (this._ui.slideshow.next.hasClass('pointer')) {
-			this.stopSlideshow();
+			this.stopSlideshow(true);
 			this.showImage(this._active + 1);
 		}
 	},
@@ -669,7 +698,7 @@ $.widget('ui.wcfImageViewer', {
 	 */
 	_previousImage: function(event) {
 		if (this._ui.slideshow.previous.hasClass('pointer')) {
-			this.stopSlideshow();
+			this.stopSlideshow(true);
 			this.showImage(this._active - 1);
 		}
 	},
@@ -765,8 +794,16 @@ $.widget('ui.wcfImageViewer', {
 		for (var $i = 0, $length = images.length; $i < $length; $i++) {
 			var $image = images[$i];
 			
-			var $listItem = $('<li><a style="background-image: url(' + $image.thumbnail.url + ')"></a></li>').appendTo(this._ui.imageList);
+			var $listItem = $('<li class="loading pointer"><img src="' + $image.thumbnail.url + '" /></li>').appendTo(this._ui.imageList);
 			$listItem.data('index', this._images.length).click($.proxy(this._showImage, this));
+			var $img = $listItem.children('img');
+			if ($img.get(0).complete) {
+				// thumbnail is read from cache
+				$listItem.removeClass('loading');
+			}
+			else {
+				$img.on('load', function() { $(this).parent().removeClass('loading'); });
+			}
 			
 			$image.listItem = $listItem;
 			this._images.push($image);
@@ -788,6 +825,7 @@ $.widget('ui.wcfImageViewer', {
 				offset: this._images.length
 			}
 		});
+		this._proxy.setOption('showLoadingOverlay', false);
 		this._proxy.sendRequest();
 	},
 	

@@ -210,6 +210,18 @@
 		
 		-webkit-transition: top .3s, bottom .3s, border-color .3s;
 		
+		&.loading:before {
+			content: @spinner;
+			margin: -24px 0 0 -24px;
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			
+			.icon;
+			.icon48;
+			.icon-spinner;
+		}
+		
 		> img {
 			opacity: 0;
 			position: absolute;
@@ -291,7 +303,7 @@
 		
 		transition: bottom linear .3s;
 		
-		&:hover > div > ul > li > a {
+		&:hover > div > ul > li > img {
 			filter: none;
 			-webkit-filter: none;
 		}
@@ -340,12 +352,15 @@
 				
 				> li {
 					display: inline-block;
+					height: 80px;
 					opacity: .6;
+					position: relative;
+					width: 80px;
 					
 					transition: opacity linear .5s;
 					
 					&.active,
-					&.hover {
+					&:hover {
 						opacity: 1;
 					}
 					
@@ -353,22 +368,38 @@
 						margin-right: 10px;
 					}
 					
-					&.active > a {
+					&.active > img {
 						filter: none;
 						-webkit-filter: none;
 					}
 					
-					> a {
-						background-position: center;
-						background-repeat: no-repeat;
-						background-size: contain;
-						display: block;
+					&.loading{
+						&:before {
+							content: @spinner;
+							margin: -16px 0 0 -16px;
+							left: 50%;
+							position: absolute;
+							top: 50%;
+							z-index: -1;
+							
+							.icon;
+							.icon32;
+							.icon-spinner;
+						}
+						
+						> img {
+							opacity: 0;
+						}
+					}
+					
+					> img {
 						height: 80px;
+						opacity: 1;
 						width: 80px;
 						
 						.grayscale;
 						-webkit-filter: grayscale(100%);
-						-webkit-transition: filter,-webkit-filter .5s linear;
+						-webkit-transition: -webkit-filter .5s, opacity 1s;
 					}
 				}
 			}

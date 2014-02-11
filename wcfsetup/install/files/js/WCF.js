@@ -1733,6 +1733,12 @@ WCF.PeriodicalExecuter = Class.extend({
 	_callback: null,
 	
 	/**
+	 * interval
+	 * @var	integer
+	 */
+	_delay: 0,
+	
+	/**
 	 * interval id
 	 * @var	integer
 	 */
@@ -1757,7 +1763,8 @@ WCF.PeriodicalExecuter = Class.extend({
 		}
 		
 		this._callback = callback;
-		this._intervalID = setInterval($.proxy(this._execute, this), delay);
+		this._interval = delay;
+		this.resume();
 	},
 	
 	/**
@@ -1786,6 +1793,17 @@ WCF.PeriodicalExecuter = Class.extend({
 		}
 		
 		clearInterval(this._intervalID);
+	},
+	
+	/**
+	 * Resumes the interval-based callback execution.
+	 */
+	resume: function() {
+		if (this._intervalID) {
+			this.stop();
+		}
+		
+		this._intervalID = setInterval($.proxy(this._execute, this), this._interval);
 	}
 });
 
