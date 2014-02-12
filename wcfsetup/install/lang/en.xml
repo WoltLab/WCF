@@ -1374,6 +1374,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 	</category>
 	
 	<category name="wcf.ajax">
+		<item name="wcf.ajax.error.illegalLink"><![CDATA[The server was unable to process your request because the target is unknown or no longer available.]]></item>
 		<item name="wcf.ajax.error.invalidParameter"><![CDATA[Parameter “{$fieldName}” is missing or invalid.]]></item>
 		<item name="wcf.ajax.error.badRequest"><![CDATA[The server was unable to proceed your request due to an incomplete request.]]></item>
 		<item name="wcf.ajax.error.internalError"><![CDATA[The server encountered an unresolvable problem, please try again later.]]></item>
@@ -1788,6 +1789,8 @@ Errors are:
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Fullscreen Mode]]></item>
 		<item name="wcf.imageViewer.button.full"><![CDATA[View Source Image]]></item>
+		<item name="wcf.imageViewer.button.openSlideshow"><![CDATA[Slideshow]]></item>
+		
 		<item name="wcf.imageViewer.close"><![CDATA[Close]]></item>
 		<item name="wcf.imageViewer.counter"><![CDATA[{literal}Image {x} of {y}{/literal}]]></item>
 		<item name="wcf.imageViewer.enlarge"><![CDATA[View Full Image]]></item>

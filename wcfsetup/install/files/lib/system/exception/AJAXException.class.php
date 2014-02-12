@@ -7,7 +7,7 @@ use wcf\util\JSON;
  * AJAXException provides JSON-encoded exceptions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.exception
@@ -31,6 +31,12 @@ class AJAXException extends LoggedException {
 	 * @var	integer
 	 */
 	const INSUFFICIENT_PERMISSIONS = 403;
+	
+	/**
+	 * illegal link
+	 * @var	integer
+	 */
+	const ILLEGAL_LINK = 404;
 	
 	/**
 	 * bad parameters

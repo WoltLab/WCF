@@ -1,6 +1,6 @@
 <?php
 namespace wcf\action;
-use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\WCF;
 
 /**
@@ -30,7 +30,7 @@ abstract class AbstractSecureAction extends AbstractAction {
 	 */
 	protected function checkSecurityToken() {
 		if (!isset($_REQUEST['t']) || !WCF::getSession()->checkSecurityToken($_REQUEST['t'])) {
-			throw new IllegalLinkException();
+			throw new InvalidSecurityTokenException();
 		}
 	}
 }

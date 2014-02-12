@@ -12,6 +12,7 @@ use wcf\system\WCF;
 use wcf\util\ClassUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
+use wcf\system\exception\InvalidSecurityTokenException;
 
 /**
  * Default implementation for AJAX-based method calls.
@@ -158,7 +159,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			throw $e;
 		}
 		
-		if ($e instanceof IllegalLinkException) {
+		if ($e instanceof InvalidSecurityTokenException) {
 			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.sessionExpired'), AJAXException::SESSION_EXPIRED, $e->getTraceAsString());
 		}
 		else if ($e instanceof PermissionDeniedException) {
@@ -166,6 +167,9 @@ class AJAXInvokeAction extends AbstractSecureAction {
 		}
 		else if ($e instanceof SystemException) {
 			throw new AJAXException($e->getMessage(), AJAXException::INTERNAL_ERROR, $e->__getTraceAsString(), array(), $e->getExceptionID());
+		}
+		else if ($e instanceof IllegalLinkException) {
+			throw new AJAXException(WCF::getLanguage()->get('wcf.ajax.error.illegalLink'), AJAXException::ILLEGAL_LINK, $e->getTraceAsString());
 		}
 		else if ($e instanceof UserInputException) {
 			// repackage as ValidationActionException

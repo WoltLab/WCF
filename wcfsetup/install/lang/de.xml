@@ -1374,6 +1374,7 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 	</category>
 	
 	<category name="wcf.ajax">
+		<item name="wcf.ajax.error.illegalLink"><![CDATA[Der Server konnte die Anfrage nicht verarbeiten, weil das Ziel unbekannt ist oder nicht mehr zur Verfügung steht.]]></item>
 		<item name="wcf.ajax.error.invalidParameter"><![CDATA[Der Parameter „{$fieldName}“ fehlt oder ist ungültig.]]></item>
 		<item name="wcf.ajax.error.badRequest"><![CDATA[Die Anfrage war unvollständig und konnte nicht verarbeitet werden.]]></item>
 		<item name="wcf.ajax.error.internalError"><![CDATA[Es ist ein Fehler bei der Verarbeitung aufgetreten, bitte versuchen Sie es später erneut.]]></item>
@@ -1789,6 +1790,8 @@ Fehler sind beispielsweise:
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Vollbild-Modus]]></item>
 		<item name="wcf.imageViewer.button.full"><![CDATA[Originalversion aufrufen]]></item>
+		<item name="wcf.imageViewer.button.openSlideshow"><![CDATA[Slideshow]]></item>
+		
 		<item name="wcf.imageViewer.close"><![CDATA[Schließen]]></item>
 		<item name="wcf.imageViewer.counter"><![CDATA[{literal}Bild {x} von {y}{/literal}]]></item>
 		<item name="wcf.imageViewer.enlarge"><![CDATA[Bild direkt anzeigen]]></item>
