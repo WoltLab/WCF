@@ -2,6 +2,7 @@
 namespace wcf\action;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\exception\LoggedException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
@@ -12,7 +13,6 @@ use wcf\system\WCF;
 use wcf\util\ClassUtil;
 use wcf\util\JSON;
 use wcf\util\StringUtil;
-use wcf\system\exception\InvalidSecurityTokenException;
 
 /**
  * Default implementation for AJAX-based method calls.
