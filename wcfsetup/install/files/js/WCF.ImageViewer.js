@@ -373,7 +373,9 @@ $.widget('ui.wcfImageViewer', {
 		}
 		
 		this._timer.stop();
-		this._ui.slideshow.toggle.children('span').removeClass('icon-pause').addClass('icon-play');
+		if (disableSlideshow) {
+			this._ui.slideshow.toggle.children('span').removeClass('icon-pause').addClass('icon-play');
+		}
 		
 		this._slideshowEnabled = false;
 		
@@ -508,6 +510,8 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._ui.imageContainer.removeClass('loading');
 		this._ui.images[activeImageIndex].addClass('active');
+		
+		this.startSlideshow();
 	},
 	
 	/**
