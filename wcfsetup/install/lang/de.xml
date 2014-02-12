@@ -1787,6 +1787,8 @@ Fehler sind beispielsweise:
 	</category>
 	
 	<category name="wcf.imageViewer">
+		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Vollbild-Modus]]></item>
+		<item name="wcf.imageViewer.button.full"><![CDATA[Originalversion aufrufen]]></item>
 		<item name="wcf.imageViewer.close"><![CDATA[Schließen]]></item>
 		<item name="wcf.imageViewer.counter"><![CDATA[{literal}Bild {x} von {y}{/literal}]]></item>
 		<item name="wcf.imageViewer.enlarge"><![CDATA[Bild direkt anzeigen]]></item>

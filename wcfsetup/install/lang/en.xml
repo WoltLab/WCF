@@ -1786,6 +1786,8 @@ Errors are:
 	</category>
 	
 	<category name="wcf.imageViewer">
+		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Fullscreen Mode]]></item>
+		<item name="wcf.imageViewer.button.full"><![CDATA[View Source Image]]></item>
 		<item name="wcf.imageViewer.close"><![CDATA[Close]]></item>
 		<item name="wcf.imageViewer.counter"><![CDATA[{literal}Image {x} of {y}{/literal}]]></item>
 		<item name="wcf.imageViewer.enlarge"><![CDATA[View Full Image]]></item>

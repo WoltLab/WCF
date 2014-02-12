@@ -6,6 +6,8 @@
 		var $imageViewer = null;
 		$(function() {
 			WCF.Language.addObject({
+				'wcf.imageViewer.button.enlarge': '{lang}wcf.imageViewer.button.enlarge{/lang}',
+				'wcf.imageViewer.button.full': '{lang}wcf.imageViewer.button.full{/lang}',
 				'wcf.imageViewer.counter': '{lang}wcf.imageViewer.counter{/lang}',
 				'wcf.imageViewer.close': '{lang}wcf.imageViewer.close{/lang}',
 				'wcf.imageViewer.enlarge': '{lang}wcf.imageViewer.enlarge{/lang}',
