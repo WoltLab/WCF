@@ -6,8 +6,8 @@ use wcf\system\WCF;
 /**
  * Imports comment responses.
  * 
- * @author	Marcel Werk
- * @copyright	2001-2013 WoltLab GmbH
+ * @author	Tim Duesterhus, Marcel Werk
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.importer
@@ -36,13 +36,23 @@ class AbstractCommentResponseImporter extends AbstractImporter {
 		
 		$response = CommentResponseEditor::create($data);
 		
+		$sql = "SELECT		responseID
+			FROM		wcf".WCF_N."_comment_response
+			WHERE	 	commentID = ?
+			ORDER BY 	responseID ASC";
+		$statement = WCF::getDB()->prepareStatement($sql, 3);
+		$statement->execute(array($response->commentID));
+		$responseIDs = array();
+		while ($responseID = $statement->fetchColumn()) $responseIDs[] = $responseID;
+		
 		// update parent comment
 		$sql = "UPDATE	wcf".WCF_N."_comment
-			SET	responseIDs = ?
+			SET	responseIDs = ?,
+				responses = responses + 1
 			WHERE	commentID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-			serialize(array($response->responseID)),
+			serialize($responseIDs),
 			$response->commentID
 		));
 		
