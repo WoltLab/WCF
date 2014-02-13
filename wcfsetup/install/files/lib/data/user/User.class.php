@@ -115,7 +115,7 @@ final class User extends DatabaseObject implements IRouteController {
 		}
 		
 		// create new password hash, either different encryption or different blowfish cost factor
-		if ($rebuild) {
+		if ($rebuild && $isValid) {
 			$userEditor = new UserEditor($this);
 			$userEditor->update(array(
 				'password' => $password
