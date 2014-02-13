@@ -37,7 +37,8 @@ final class PasswordUtil {
 		'wbb2',		// WoltLab Burning Board 2.x
 		'wcf1',		// WoltLab Community Framework 1.x
 		'wcf2',		// WoltLab Community Framework 2.x
-		'xf1',		// XenForo 1.x
+		'xf1',		// XenForo 1.0 / 1.1
+		'xf12',		// XenForo 1.2+
 		'joomla1',	// Joomla 1.x
 		'joomla2',	// Joomla 2.x
 		'joomla3',	// Joomla 3.x
@@ -590,7 +591,7 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Validates the password hash for XenForo 1.x with (xf1).
+	 * Validates the password hash for XenForo 1.0 / 1.1 (xf1).
 	 * 
 	 * @param	string		$username
 	 * @param	string		$password
@@ -604,6 +605,23 @@ final class PasswordUtil {
 		}
 		else if (extension_loaded('hash')) {
 			return self::secureCompare($dbHash, hash('sha256', hash('sha256', $password) . $salt));
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Validates the password hash for XenForo 1.2+ (xf12).
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function xf12($username, $password, $salt, $dbHash) {
+		if (self::secureCompare($dbHash, self::getSaltedHash($password, $dbHash))) {
+			return true;
 		}
 		
 		return false;
