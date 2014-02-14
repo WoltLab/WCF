@@ -276,7 +276,13 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 	 * Refreshes the map.
 	 */
 	refresh: function() {
+		// save current center since resize does not preserve it
+		var $center = this._map.getCenter();
+		
 		google.maps.event.trigger(this._map, 'resize');
+		
+		// set center to old value again
+		this._map.setCenter($center);
 	},
 	
 	/**
@@ -714,7 +720,10 @@ WCF.Location.GoogleMaps.Util = {
 	 * @param	google.maps.Marker	marker
 	 */
 	focusMarker: function(marker) {
+		console.log(marker.getPosition().lat(), marker.getPosition().lng());
+		console.log(marker.getMap().getCenter().lat(), marker.getMap().getCenter().lng());
 		marker.getMap().setCenter(marker.getPosition());
+		console.log(marker.getMap().getCenter().lat(), marker.getMap().getCenter().lng());
 	},
 	
 	/**
