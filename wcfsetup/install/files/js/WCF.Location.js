@@ -720,10 +720,7 @@ WCF.Location.GoogleMaps.Util = {
 	 * @param	google.maps.Marker	marker
 	 */
 	focusMarker: function(marker) {
-		console.log(marker.getPosition().lat(), marker.getPosition().lng());
-		console.log(marker.getMap().getCenter().lat(), marker.getMap().getCenter().lng());
 		marker.getMap().setCenter(marker.getPosition());
-		console.log(marker.getMap().getCenter().lat(), marker.getMap().getCenter().lng());
 	},
 	
 	/**
