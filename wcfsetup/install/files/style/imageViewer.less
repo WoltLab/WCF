@@ -112,7 +112,7 @@
 
 /* ImageViewer for WCF */
 @wcfImageViewerBorderColor: rgba(51, 51, 51, 1);
-@wcfImageViewerFontColor: rgba(192, 192, 192, 1);
+@wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 
 .wcfImageViewer {
 	background-color: rgba(0, 0, 0, 1);
@@ -124,6 +124,12 @@
 	right: 0;
 	top: 0;
 	z-index: 399;
+	
+	.icon {
+		color: rgba(102, 102, 102, 1);
+		
+		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+	}
 	
 	&.open {
 		display: block;
@@ -150,6 +156,7 @@
 	> div,
 	> footer {
 		box-sizing: border-box;
+		-moz-box-sizing: border-box;
 		left: 0;
 		position: fixed;
 		right: 0;
@@ -161,7 +168,7 @@
 		padding: 1rem;
 		top: 0;
 		
-		transition: top linear .3s;
+		.transition(top, .3s);
 		
 		> div {
 			> h1,
@@ -169,6 +176,10 @@
 			> h3 {
 				color: @wcfImageViewerFontColor;
 				margin-left: 80px !important;
+				
+				> a {
+					color: @wcfImageViewerFontColor;
+				}
 			}
 			
 			> h1 {
@@ -180,7 +191,7 @@
 			}
 			
 			> h3 {
-				color: rgba(153, 153, 153, 1);
+				color: @wcfImageViewerFontColor;
 				font-size: .85rem;
 				margin-top: .25rem;
 			}
@@ -197,7 +208,7 @@
 			right: 26px;
 			top: 26px;
 			
-			transition: opacity linear .3s;
+			.transition(opacity, .3s);
 			
 			&:hover {
 				opacity: 1;
@@ -213,7 +224,7 @@
 		top: 100px;
 		z-index: 401;
 		
-		-webkit-transition: top .3s, bottom .3s, border-color .3s;
+		.transition(~"top, bottom, border-color", .3s);
 		
 		&.loading:before {
 			content: @spinner;
@@ -232,9 +243,10 @@
 			position: absolute;
 			top: 50%;
 			
-			transition: opacity linear .75s;
+			.transition(opacity, .75s);
 			
 			&.animateTransformation {
+				transition: left .3s, margin-top .3s, height .3s, width .3s, opacity .75s;
 				-webkit-transition: left .3s, margin-top .3s, height .3s, width .3s, opacity .75s;
 			}
 			
@@ -255,7 +267,7 @@
 			opacity: .4;
 			position: absolute;
 			
-			transition: opacity linear .5s;
+			.transition(opacity, .5s);
 			
 			&:hover {
 				opacity: 1;
@@ -265,7 +277,7 @@
 				display: inline-block;
 				opacity: .6;
 				
-				transition: opacity linear .5s;
+				.transition(opacity, .5s);
 				
 				&.pointer > span.icon {
 					cursor: pointer;
@@ -306,7 +318,7 @@
 		height: 100px;
 		padding: 10px;
 		
-		transition: bottom linear .3s;
+		.transition(bottom, .3s);
 		
 		&:hover > div > ul > li > img {
 			filter: none;
@@ -323,7 +335,7 @@
 			width: 30px;
 			z-index: 2;
 			
-			transition: opacity linear .5s;
+			.transition(opacity, .5s);
 			
 			&.pointer {
 				opacity: .6;
@@ -354,6 +366,7 @@
 				z-index: 1;
 				
 				transition: margin-left cubic-bezier(.5, 1.595, .56, .98) .75s;
+				-webkit-transition: margin-left cubic-bezier(.5, 1.595, .56, .98) .75s;
 				
 				> li {
 					display: inline-block;
@@ -362,7 +375,7 @@
 					position: relative;
 					width: 80px;
 					
-					transition: opacity linear .5s;
+					.transition(opacity, .5s);
 					
 					&.active,
 					&:hover {
@@ -403,7 +416,7 @@
 						width: 80px;
 						
 						.grayscale;
-						-webkit-filter: grayscale(100%);
+						transition: filter .5s, opacity 1s;
 						-webkit-transition: -webkit-filter .5s, opacity 1s;
 					}
 				}
