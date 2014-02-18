@@ -5292,6 +5292,107 @@ WCF.DOMNodeRemovedHandler = {
 	}
 };
 
+WCF.PageVisibilityHandler = {
+	/**
+	 * list of callbacks
+	 * @var	WCF.Dictionary
+	 */
+	_callbacks: new WCF.Dictionary(),
+	
+	/**
+	 * indicates that event listeners are bound
+	 * @var	boolean
+	 */
+	_isListening: false,
+	
+	/**
+	 * name of window's hidden property
+	 * @var	string
+	 */
+	_hiddenFieldName: '',
+	
+	/**
+	 * Adds a new callback.
+	 * 
+	 * @param	string		identifier
+	 * @param	object		callback
+	 */
+	addCallback: function(identifier, callback) {
+		this._bindListener();
+		
+		if (this._callbacks.isset(identifier)) {
+			console.debug("[WCF.PageVisibilityHandler] identifier '" + identifier + "' is already bound to a callback");
+			return false;
+		}
+		
+		this._callbacks.add(identifier, callback);
+	},
+	
+	/**
+	 * Removes a callback from list.
+	 * 
+	 * @param	string		identifier
+	 */
+	removeCallback: function(identifier) {
+		if (this._callbacks.isset(identifier)) {
+			this._callbacks.remove(identifier);
+		}
+	},
+	
+	/**
+	 * Binds click event handler.
+	 */
+	_bindListener: function() {
+		if (this._isListening) return;
+		
+		var $eventName = null;
+		if (typeof document.hidden !== "undefined") {
+			this._hiddenFieldName = "hidden";
+			$eventName = "visibilitychange";
+		}
+		else if (typeof document.mozHidden !== "undefined") {
+			this._hiddenFieldName = "mozHidden";
+			$eventName = "mozvisibilitychange";
+		}
+		else if (typeof document.msHidden !== "undefined") {
+			this._hiddenFieldName = "msHidden";
+			$eventName = "msvisibilitychange";
+		}
+		else if (typeof document.webkitHidden !== "undefined") {
+			this._hiddenFieldName = "webkitHidden";
+			$eventName = "webkitvisibilitychange";
+		}
+		
+		if ($eventName === null) {
+			console.debug("[WCF.PageVisibilityHandler] This browser does not support the page visibility API.");
+		}
+		else {
+			$(document).on($eventName, $.proxy(this._executeCallbacks, this));
+		}
+		
+		this._isListening = true;
+	},
+	
+	/**
+	 * Executes callbacks if page is hidden/visible again.
+	 */
+	_executeCallbacks: function(event) {
+		if (this._isExecuting) return;
+		
+		// do not track events while executing callbacks
+		this._isExecuting = true;
+		
+		var $state = document[this._hiddenFieldName];
+		this._callbacks.each(function(pair) {
+			// execute callback
+			pair.value($state);
+		});
+		
+		// enable listener again
+		this._isExecuting = false;
+	}
+};
+
 /**
  * Namespace for table related classes.
  */
