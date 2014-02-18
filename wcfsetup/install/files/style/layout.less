@@ -859,13 +859,18 @@
 		float: left;
 	}
 	
-	> nav:not(.pageNavigation) > ul {
+	> nav:not(.pageNavigation) > ul:not(.buttonGroup) {
 		margin-right: 2px;
 		float: right;
 		.buttonList;
 	}
 	
-	> nav:not(.pageNavigation) + nav.jsClipboardEditor > ul {
+	> nav:not(.pageNavigation) > ul.buttonGroup {
+		float: right;
+	}
+	
+	> nav:not(.pageNavigation) + nav.jsClipboardEditor > ul,
+	> nav:not(.pageNavigation) + nav > ul.buttonGroup {
 		margin-right: 8px;
 	}
 }
