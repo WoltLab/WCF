@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * Shows the result of a user search.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.page
@@ -272,9 +272,9 @@ class UserListPage extends SortablePage {
 						default:
 							if (isset($this->options[$column])) {
 								if ($this->options[$column]->outputClass) {
-									$this->options[$column]->setOptionValue($user);
+									$this->options[$column]->setOptionValue($user->getDecoratedObject());
 									$outputObj = $this->options[$column]->getOutputObject();
-									$this->columnValues[$user->userID][$column] = $outputObj->getOutput($user, $this->options[$column]->getDecoratedObject(), $user->{$column});
+									$this->columnValues[$user->userID][$column] = $outputObj->getOutput($user->getDecoratedObject(), $this->options[$column]->getDecoratedObject(), $user->{$column});
 								}
 								else {
 									$this->columnValues[$user->userID][$column] = StringUtil::encodeHTML($user->{$column});
