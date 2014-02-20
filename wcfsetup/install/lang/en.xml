@@ -943,7 +943,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.search.packageName"><![CDATA[Package Name]]></item>
 		<item name="wcf.acp.package.search.resultList"><![CDATA[Search Results]]></item>
 		<item name="wcf.acp.package.searchForUpdates"><![CDATA[Search for Updates]]></item>
-		<item name="wcf.acp.package.searchForUpdates.noResults"><![CDATA[Your system is up to date, there are no outstanding updates.]]></item>
+		<item name="wcf.acp.package.searchForUpdates.noResults"><![CDATA[Your system is up to date, there are no updates available.]]></item>
 		<item name="wcf.acp.package.source"><![CDATA[Data Source]]></item>
 		<item name="wcf.acp.package.source.download"><![CDATA[Download Package]]></item>
 		<item name="wcf.acp.package.source.download.description"><![CDATA[Provide the direct path to the desired resource, it may be either an URL or a local filesystem path.]]></item>
@@ -1871,7 +1871,7 @@ Errors are:
 		<item name="wcf.moderation.filterByUser.allEntries"><![CDATA[All Items]]></item>
 		<item name="wcf.moderation.filterByUser.myself"><![CDATA[Myself ({$__wcf->getUser()->username})]]></item>
 		<item name="wcf.moderation.filterByUser.nobody"><![CDATA[Nobody]]></item>
-		<item name="wcf.moderation.outstandingItems"><![CDATA[Outstanding Items]]></item>
+		<item name="wcf.moderation.outstandingItems"><![CDATA[Pending Items]]></item>
 		<item name="wcf.moderation.doneItems"><![CDATA[Done Items]]></item>
 		<item name="wcf.moderation.lastChangeTime"><![CDATA[Last Change]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
