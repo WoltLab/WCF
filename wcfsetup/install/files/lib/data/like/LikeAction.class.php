@@ -60,10 +60,11 @@ class LikeAction extends AbstractDatabaseObjectAction {
 	 * @return	array<string>
 	 */
 	public function getLikeDetails() {
-		$sql = "SELECT	userID, likeValue
-			FROM	wcf".WCF_N."_like
-			WHERE	objectID = ?
-				AND objectTypeID = ?";
+		$sql = "SELECT		userID, likeValue
+			FROM		wcf".WCF_N."_like
+			WHERE		objectID = ?
+					AND objectTypeID = ?
+			ORDER BY	time DESC";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			$this->parameters['data']['objectID'],
