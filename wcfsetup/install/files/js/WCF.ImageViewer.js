@@ -521,6 +521,12 @@ $.widget('ui.wcfImageViewer', {
 		return true;
 	},
 	
+	/**
+	 * Callback function for the image 'load' event.
+	 * 
+	 * @param	integer		currentActiveImage
+	 * @param	integer		activeImageIndex
+	 */
 	_imageOnLoad: function(currentActiveImage, activeImageIndex) {
 		// image did not load in time, ignore
 		if (currentActiveImage != this._active) {
@@ -580,7 +586,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._ui.images[targetIndex].css({
 			height: $height + 'px',
-			left: $left + 'px',
+			left: ($left + 10) + 'px',
 			marginTop: (Math.round($height / 2) * -1) + 'px',
 			width: $width + 'px'
 		});
