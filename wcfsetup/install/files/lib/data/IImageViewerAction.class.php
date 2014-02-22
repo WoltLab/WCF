@@ -25,6 +25,7 @@ interface IImageViewerAction {
 	 *  - offset: number of already loaded image
 	 *  - maximumHeight: image provided in 'url' must be as close as possible to this value
 	 *  - maximumWidth: see above
+	 *  - targetImageID: preload all images which are before the target image id as well as the next X images (optional, always present but might be '0')
 	 * 
 	 * Each image can specify a link which should not point to the image itself, instead it should provide a viewable
 	 * page directly related to the image (e.g. photo page). The 'fullURL' parameter is optional and results in the
