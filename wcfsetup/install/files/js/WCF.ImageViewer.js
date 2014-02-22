@@ -147,6 +147,12 @@ $.widget('ui.wcfImageViewer', {
 	_didInit: false,
 	
 	/**
+	 * overrides slideshow settings unless explicitly enabled by user
+	 * @var	boolean
+	 */
+	_disableSlideshow: false,
+	
+	/**
 	 * list of available images
 	 * @var	array<object>
 	 */
@@ -259,6 +265,7 @@ $.widget('ui.wcfImageViewer', {
 		this._activeImage = null;
 		this._container = null;
 		this._didInit = false;
+		this._disableSlideshow = (this.element.data('disableSlideshow'));
 		this._images = [ ];
 		this._isOpen = false;
 		this._items = -1;
@@ -291,7 +298,7 @@ $.widget('ui.wcfImageViewer', {
 		}
 		
 		if (this._images.length === 0) {
-			this._loadNextImages();
+			this._loadNextImages(true);
 		}
 		else {
 			this._render();
@@ -336,7 +343,7 @@ $.widget('ui.wcfImageViewer', {
 	 * @return	boolean
 	 */
 	startSlideshow: function() {
-		if (this._slideshowEnabled) {
+		if (this._disableSlideshow || this._slideshowEnabled) {
 			return false;
 		}
 		
@@ -386,19 +393,31 @@ $.widget('ui.wcfImageViewer', {
 	 * Renders the image viewer UI.
 	 * 
 	 * @param	boolean		initialized
+	 * @param	integer		targetImageID
 	 */
-	_render: function(initialized) {
+	_render: function(initialized, targetImageID) {
 		this._container.addClass('open');
 		
 		if (initialized) {
-			var $thumbnail = this._ui.imageList.children('li:eq(0)');;
+			var $thumbnail = this._ui.imageList.children('li:eq(0)');
 			this._thumbnailMarginRight = parseInt($thumbnail.css('marginRight').replace(/px$/, '')) || 0;
 			this._thumbnailWidth = $thumbnail.outerWidth(true);
 			this._thumbnailContainerWidth = this._ui.imageList.parent().innerWidth();
 			
-			$thumbnail.trigger('click');
+			if (targetImageID) {
+				this._ui.imageList.children('li').each(function(index, item) {
+					var $item = $(item);
+					if ($item.data('objectID') == targetImageID) {
+						$thumbnail = $item;
+						return false;
+					}
+				});
+			}
 			
-			if (this._items > 1 && this.options.enableSlideshow) {
+			$thumbnail.trigger('click');
+			this.moveToImage($thumbnail.data('index'));
+			
+			if (this._items > 1 && this.options.enableSlideshow && !targetImageID) {
 				this.startSlideshow();
 			}
 		}
@@ -416,7 +435,7 @@ $.widget('ui.wcfImageViewer', {
 		if (this._images.length < this._items) {
 			var $thumbnailsWidth = this._images.length * this._thumbnailWidth;
 			if ($thumbnailsWidth - this._thumbnailOffset < this._thumbnailContainerWidth) {
-				this._loadNextImages();
+				this._loadNextImages(false);
 			}
 		}
 	},
@@ -491,7 +510,7 @@ $.widget('ui.wcfImageViewer', {
 		if ($image.series.link) $seriesTitle = '<a href="' + $image.series.link + '">' + $seriesTitle + '</a>';
 		this._ui.header.find('> div > h2').html($seriesTitle);
 		
-		this._ui.header.find('> div > h3').text(($image.listItem.data('index') + 1) + " von " + this._items);
+		this._ui.header.find('> div > h3').text(WCF.Language.get('wcf.imageViewer.seriesIndex').replace(/{x}/, $image.listItem.data('index') + 1).replace(/{y}/, this._items));
 		
 		this._ui.slideshow.full.data('link', ($image.image.fullURL ? $image.image.fullURL : $image.image.url));
 		
@@ -620,6 +639,7 @@ $.widget('ui.wcfImageViewer', {
 				this.stopSlideshow(true);
 			}
 			else {
+				this._disableSlideshow = false;
 				this.startSlideshow();
 			}
 		}, this));
@@ -799,7 +819,7 @@ $.widget('ui.wcfImageViewer', {
 			var $image = images[$i];
 			
 			var $listItem = $('<li class="loading pointer"><img src="' + $image.thumbnail.url + '" /></li>').appendTo(this._ui.imageList);
-			$listItem.data('index', this._images.length).click($.proxy(this._showImage, this));
+			$listItem.data('index', this._images.length).data('objectID', $image.objectID).click($.proxy(this._showImage, this));
 			var $img = $listItem.children('img');
 			if ($img.get(0).complete) {
 				// thumbnail is read from cache
@@ -816,8 +836,10 @@ $.widget('ui.wcfImageViewer', {
 	
 	/**
 	 * Loads the next images via AJAX.
+	 * 
+	 * @param	boolean		init
 	 */
-	_loadNextImages: function() {
+	_loadNextImages: function(init) {
 		this._proxy.setOption('data', {
 			actionName: 'loadNextImages',
 			className: this.options.className,
@@ -826,7 +848,8 @@ $.widget('ui.wcfImageViewer', {
 			parameters: {
 				maximumHeight: this._maxDimensions.height,
 				maximumWidth: this._maxDimensions.width,
-				offset: this._images.length
+				offset: this._images.length,
+				targetImageID: (init && this.element.data('targetImageID') ? this.element.data('targetImageID') : 0)
 			}
 		});
 		this._proxy.setOption('showLoadingOverlay', false);
@@ -849,6 +872,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._createThumbnails(data.returnValues.images);
 		
-		this._render($initialized);
+		var $targetImageID = (data.returnValues.targetImageID ? data.returnValues.targetImageID : 0);
+		this._render($initialized, $targetImageID);
 	}
 });
