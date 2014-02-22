@@ -415,6 +415,7 @@ $.widget('ui.wcfImageViewer', {
 			}
 			
 			$thumbnail.trigger('click');
+			this.moveToImage($thumbnail.data('index'));
 			
 			if (this._items > 1 && this.options.enableSlideshow && !targetImageID) {
 				this.startSlideshow();
