@@ -347,8 +347,6 @@ $.widget('ui.wcfImageViewer', {
 			return false;
 		}
 		
-		console.debug(new Error().stack);
-		
 		if (this._timer === null) {
 			this._timer = new WCF.PeriodicalExecuter($.proxy(function() {
 				var $index = this._active + 1;
