@@ -402,7 +402,7 @@ $.widget('ui.wcfImageViewer', {
 	 */
 	_render: function(initialized, targetImageID) {
 		this._container.addClass('open');
-		console.debug("_render(" + initialized + ", " + targetImageID + ")");
+		
 		var $thumbnail = null;
 		if (initialized) {
 			$thumbnail = this._ui.imageList.children('li:eq(0)');
