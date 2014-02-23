@@ -9888,6 +9888,21 @@ $.widget('ui.wcfSlideshow', {
 		
 		$(this._buttonList.find('.icon').removeClass('active').get(this._index)).addClass('active');
 		this._itemList.css('left', this._index * (this._width + this.options.itemGap) * -1);
+		
+		this._trigger('moveTo', null, { index: this._index });
+	},
+	
+	/**
+	 * Returns item by index or null if index is invalid.
+	 * 
+	 * @return	jQuery
+	 */
+	getItem: function(index) {
+		if (this._items[index]) {
+			return this._items[index];
+		}
+		
+		return null;
 	}
 });
 

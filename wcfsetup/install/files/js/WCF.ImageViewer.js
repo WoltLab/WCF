@@ -290,9 +290,12 @@ $.widget('ui.wcfImageViewer', {
 	/**
 	 * Opens the image viewer.
 	 * 
+	 * @param	object		event
 	 * @return	boolean
 	 */
-	open: function() {
+	open: function(event) {
+		if (event) event.preventDefault();
+		
 		if (this._isOpen) {
 			return false;
 		}
@@ -301,7 +304,7 @@ $.widget('ui.wcfImageViewer', {
 			this._loadNextImages(true);
 		}
 		else {
-			this._render();
+			this._render(false, this.element.data('targetImageID'));
 			
 			if (this._items > 1 && this._slideshowEnabled) {
 				this.startSlideshow();
@@ -321,6 +324,8 @@ $.widget('ui.wcfImageViewer', {
 	 * @return	boolean
 	 */
 	close: function() {
+		if (event) event.preventDefault();
+		
 		if (!this._isOpen) {
 			return false;
 		}
@@ -397,31 +402,34 @@ $.widget('ui.wcfImageViewer', {
 	 */
 	_render: function(initialized, targetImageID) {
 		this._container.addClass('open');
-		
+		console.debug("_render(" + initialized + ", " + targetImageID + ")");
+		var $thumbnail = null;
 		if (initialized) {
-			var $thumbnail = this._ui.imageList.children('li:eq(0)');
+			$thumbnail = this._ui.imageList.children('li:eq(0)');
 			this._thumbnailMarginRight = parseInt($thumbnail.css('marginRight').replace(/px$/, '')) || 0;
 			this._thumbnailWidth = $thumbnail.outerWidth(true);
 			this._thumbnailContainerWidth = this._ui.imageList.parent().innerWidth();
-			
-			if (targetImageID) {
-				this._ui.imageList.children('li').each(function(index, item) {
-					var $item = $(item);
-					if ($item.data('objectID') == targetImageID) {
-						$thumbnail = $item;
-						return false;
-					}
-				});
-			}
-			
-			$thumbnail.trigger('click');
-			this.moveToImage($thumbnail.data('index'));
 			
 			if (this._items > 1 && this.options.enableSlideshow && !targetImageID) {
 				this.startSlideshow();
 			}
 		}
 		
+		if (targetImageID) {
+			this._ui.imageList.children('li').each($.proxy(function(index, item) {
+				var $item = $(item);
+				if ($item.data('objectID') == targetImageID) {
+					$item.trigger('click');
+					this.moveToImage($item.data('index'));
+					
+					return false;
+				}
+			}, this));
+		}
+		else if ($thumbnail !== null) {
+			$thumbnail.trigger('click');
+		}
+			
 		this._toggleButtons();
 		
 		// check if there is enough space to load more thumbnails
