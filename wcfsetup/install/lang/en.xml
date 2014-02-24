@@ -1320,6 +1320,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[Provide a regular expression to validate user input.]]></item>
 		<item name="wcf.acp.user.option.list"><![CDATA[Custom User Fields]]></item>
 		<item name="wcf.acp.user.option.visible"><![CDATA[Visible for]]></item>
+		<item name="wcf.acp.user.option.visible.0"><![CDATA[Nobody]]></item>
 		<item name="wcf.acp.user.option.visible.1"><![CDATA[Owner]]></item>
 		<item name="wcf.acp.user.option.visible.2"><![CDATA[Administrator]]></item>
 		<item name="wcf.acp.user.option.visible.3"><![CDATA[Owner and Administrator]]></item>
