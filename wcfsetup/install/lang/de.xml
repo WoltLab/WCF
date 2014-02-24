@@ -1320,6 +1320,7 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.option.validationPattern.description"><![CDATA[Tragen Sie hier den regulären Ausdruck ein, um die Eingabe der Benutzer zu validieren.]]></item>
 		<item name="wcf.acp.user.option.list"><![CDATA[Benutzerprofilfelder]]></item>
 		<item name="wcf.acp.user.option.visible"><![CDATA[Wer darf den Inhalt sehen?]]></item>
+		<item name="wcf.acp.user.option.visible.0"><![CDATA[Niemand]]></item>
 		<item name="wcf.acp.user.option.visible.1"><![CDATA[Eigentümer]]></item>
 		<item name="wcf.acp.user.option.visible.2"><![CDATA[Administrator]]></item>
 		<item name="wcf.acp.user.option.visible.3"><![CDATA[Eigentümer und Administrator]]></item>

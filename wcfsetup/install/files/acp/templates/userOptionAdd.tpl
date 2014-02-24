@@ -178,6 +178,7 @@
 					<dt><label for="visible">{lang}wcf.acp.user.option.visible{/lang}</label></dt>
 					<dd>
 						<select name="visible" id="visible">
+							<option value="0"{if $visible == 0} selected="selected"{/if}>{lang}wcf.acp.user.option.visible.0{/lang}</option>
 							<option value="1"{if $visible == 1} selected="selected"{/if}>{lang}wcf.acp.user.option.visible.1{/lang}</option>
 							<option value="2"{if $visible == 2} selected="selected"{/if}>{lang}wcf.acp.user.option.visible.2{/lang}</option>
 							<option value="3"{if $visible == 3} selected="selected"{/if}>{lang}wcf.acp.user.option.visible.3{/lang}</option>
@@ -212,7 +213,7 @@
 						<label><input type="checkbox" name="searchable" id="searchable" value="1" {if $searchable == 1}checked="checked" {/if}/> {lang}wcf.acp.user.option.searchable{/lang}</label>
 					</dd>
 				</dl>
-					
+				
 				{event name='accessFields'}
 			</fieldset>
 			
