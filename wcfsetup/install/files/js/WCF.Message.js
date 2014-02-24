@@ -544,11 +544,10 @@ WCF.Message.Smilies = Class.extend({
 	_smileyClick: function(event) {
 		var $target = $(event.currentTarget);
 		var $smileyCode = $target.data('smileyCode');
+		var $smileyPath = $target.data('smileyPath');
 		
 		// get ckEditor
 		var $ckEditor = this._ckEditor.ckeditorGet();
-		// get smiley path
-		var $smileyPath = $target.find('img').attr('src');
 		
 		// add smiley to config
 		if (!WCF.inArray($smileyCode, $ckEditor.config.smiley_descriptions)) {
@@ -560,7 +559,7 @@ WCF.Message.Smilies = Class.extend({
 			// in design mode
 			var $img = $ckEditor.document.createElement('img', {
 				attributes: {
-					src: $smileyPath,
+					src: $ckEditor.config.smiley_path + $smileyPath,
 					'class': 'smiley',
 					alt: $smileyCode
 				}
