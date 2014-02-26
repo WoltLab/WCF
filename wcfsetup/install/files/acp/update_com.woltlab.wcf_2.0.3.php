@@ -3,20 +3,18 @@ use wcf\system\WCF;
 
 /**
  * @author	Alexander Ebert
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @category	Community Framework
  */
-
-// disable APC if applicable
+// enforce new limits for session timeout (prevents misconfiguration)
 $sql = "UPDATE	wcf".WCF_N."_option
-	SET	optionValue = ?
-	WHERE	optionName = ?
-		AND optionValue = ?";
+	SET	optionValue =  MIN(MAX(optionValue, ?), ?)
+	WHERE	optionName = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute(array(
-	'disk',
-	'cache_source_type',
-	'apc'
+	600,
+	86400,
+	'session_timeout'
 ));

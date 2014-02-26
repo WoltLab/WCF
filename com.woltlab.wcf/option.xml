@@ -449,7 +449,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<categoryname>security.general.session</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>1800</defaultvalue>
-				<minvalue>1</minvalue>
+				<minvalue>600</minvalue>
 				<maxvalue>86400</maxvalue>
 			</option>
 			<option name="user_online_timeout">
