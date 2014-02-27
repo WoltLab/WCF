@@ -143,7 +143,7 @@ class RecaptchaHandler extends SingletonFactory {
 	 * @param	string		$response
 	 */
 	protected function verify($challenge, $response) {
-		$request = new HTTPRequest('http://www.google.com/recaptcha/api/verify', array(), array(
+		$request = new HTTPRequest('http://www.google.com/recaptcha/api/verify', array('timeout' => 10), array(
 			'privatekey' => $this->privateKey,
 			'remoteip' => UserUtil::getIpAddress(),
 			'challenge' => $challenge,
