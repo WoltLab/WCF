@@ -52,7 +52,7 @@
 				var $followingList = null;
 				$('#followingAll').click(function() {
 					if ($followingList === null) {
-						$followingList = new WCF.User.List('wcf\\data\\user\\follow\\UserFollowingAction', '{lang}wcf.user.profile.following{/lang}', { userID: {@$user->userID} });
+						$followingList = new WCF.User.List('wcf\\data\\user\\follow\\UserFollowingAction', $('#followingAll').parents('fieldset').children('legend').text().replace(/ \d+$/, ''), { userID: {@$user->userID} });
 					}
 					
 					$followingList.open();
@@ -62,7 +62,7 @@
 				var $followerList = null;
 				$('#followerAll').click(function() {
 					if ($followerList === null) {
-						$followerList = new WCF.User.List('wcf\\data\\user\\follow\\UserFollowAction', '{lang}wcf.user.profile.followers{/lang}', { userID: {@$user->userID} });
+						$followerList = new WCF.User.List('wcf\\data\\user\\follow\\UserFollowAction', $('#followerAll').parents('fieldset').children('legend').text().replace(/ \d+$/, ''), { userID: {@$user->userID} });
 					}
 					
 					$followerList.open();
@@ -72,7 +72,7 @@
 				var $visitorList = null;
 				$('#visitorAll').click(function() {
 					if ($visitorList === null) {
-						$visitorList = new WCF.User.List('wcf\\data\\user\\profile\\visitor\\UserProfileVisitorAction', '{lang}wcf.user.profile.visitors{/lang}', { userID: {@$user->userID} });
+						$visitorList = new WCF.User.List('wcf\\data\\user\\profile\\visitor\\UserProfileVisitorAction', $('#visitorAll').parents('fieldset').children('legend').text().replace(/ \d+$/, ''), { userID: {@$user->userID} });
 					}
 					
 					$visitorList.open();
