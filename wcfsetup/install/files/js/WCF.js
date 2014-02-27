@@ -3797,19 +3797,47 @@ WCF.TabMenu = {
 	 * @return	boolean
 	 */
 	_selectErroneousTab: function() {
+		var $foundErrors = false;
 		for (var $containerID in this._containers) {
 			var $tabMenu = this._containers[$containerID];
 			
-			if (!$tabMenu.data('isParent') && $tabMenu.find('.formError').length) {
-				while (true) {
-					if ($tabMenu.data('parent') === false) {
-						break;
+			if ($tabMenu.find('.formError').length) {
+				$foundErrors = true;
+				
+				if (!$tabMenu.data('isParent')) {
+					while (true) {
+						if ($tabMenu.data('parent') === false) {
+							break;
+						}
+						
+						$tabMenu = $tabMenu.data('parent').wcfTabs('selectTab', $tabMenu.wcfIdentify());
 					}
 					
-					$tabMenu = $tabMenu.data('parent').wcfTabs('selectTab', $tabMenu.wcfIdentify());
+					return true;
 				}
+			}
+		}
+		
+		// found an error in a non-nested tab menu
+		if ($foundErrors) {
+			for (var $containerID in this._containers) {
+				var $tabMenu = this._containers[$containerID];
+				var $formError = $tabMenu.find('.formError:eq(0)');
 				
-				return true;
+				if ($formError.length) {
+					// find the tab container
+					$tabMenu.wcfTabs('selectTab', $formError.parents('.tabMenuContent').wcfIdentify());
+					
+					while (true) {
+						if ($tabMenu.data('parent') === false) {
+							break;
+						}
+						
+						$tabMenu = $tabMenu.data('parent').wcfTabs('selectTab', $tabMenu.wcfIdentify());
+					}
+					
+					return true;
+				}
 			}
 		}
 		
