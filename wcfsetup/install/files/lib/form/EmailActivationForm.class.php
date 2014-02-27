@@ -2,6 +2,7 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
@@ -63,7 +64,7 @@ class EmailActivationForm extends AbstractForm {
 	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
-		parent::validate();
+		EventHandler::getInstance()->fireAction($this, 'validate');
 		
 		// check given user id
 		$this->user = new User($this->userID);
