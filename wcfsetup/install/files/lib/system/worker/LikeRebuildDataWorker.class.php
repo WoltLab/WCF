@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Worker implementation for updating likes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.worker
@@ -56,7 +56,7 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		$itemsToUser = array();
 		$likeObjectData = array();
 		foreach ($this->objectList as $like) {
-			if ($like->objectUserID) {
+			if ($like->objectUserID && $like->likeValue == Like::LIKE) {
 				if (!isset($itemsToUser[$like->objectUserID])) {
 					$itemsToUser[$like->objectUserID] = 0;
 				}
