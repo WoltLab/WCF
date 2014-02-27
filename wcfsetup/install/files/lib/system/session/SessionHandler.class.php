@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\session;
 use wcf\data\user\User;
+use wcf\data\user\UserEditor;
 use wcf\page\ITrackablePage;
 use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
@@ -559,17 +560,23 @@ class SessionHandler extends SingletonFactory {
 	 * Deletes this session and it's related data.
 	 */
 	public function delete() {
+		// clear storage
+		if ($this->user->userID) {
+			self::resetSessions(array($this->user->userID));
+				
+			// update last activity time
+			if (!class_exists('\wcf\system\WCFACP', false)) {
+				$editor = new UserEditor($this->user);
+				$editor->update(array('lastActivityTime' => TIME_NOW));
+			}
+		}
+		
 		// set user to guest
 		$this->changeUser(new User(null), true);
 		
 		// remove session
 		$sessionEditor = new $this->sessionEditorClassName($this->session);
 		$sessionEditor->delete();
-		
-		// clear storage
-		if ($this->user->userID) {
-			self::resetSessions(array($this->user->userID));
-		}
 		
 		// disable update
 		$this->disableUpdate();
