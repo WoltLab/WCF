@@ -94,15 +94,27 @@ WCF.Search.Message.KeywordList = WCF.Search.Base.extend({
 });
 
 /**
+ * Handles the search area box.
  * 
+ * @param	jQuery		searchArea
  */
 WCF.Search.Message.SearchArea = Class.extend({
+	/**
+	 * search area object
+	 * @var	jQuery
+	 */
 	_searchArea: null,
 	
+	/**
+	 * Initializes the WCF.Search.Message.SearchArea class.
+	 * 
+	 * @param	jQuery		searchArea
+	 */
 	init: function(searchArea) {
 		this._searchArea = searchArea;
 		
-		new WCF.Search.Message.KeywordList(this._searchArea.find('input[type=search]'), $.proxy(this._callback, this));
+		var $keywordList = new WCF.Search.Message.KeywordList(this._searchArea.find('input[type=search]'), $.proxy(this._callback, this));
+		$keywordList.setDelay(500);
 		
 		// forward clicks on the search icon to input field
 		var self = this;
@@ -117,7 +129,9 @@ WCF.Search.Message.SearchArea = Class.extend({
 		
 		if (this._searchArea.hasClass('dropdown')) {
 			var $containerID = this._searchArea.wcfIdentify();
-			var $form = this._searchArea.find('form').submit(function() {
+			var $form = this._searchArea.find('form');
+			$form.submit(function() {
+				// copy checkboxes and hidden fields into form
 				var $dropdownMenu = WCF.Dropdown.getDropdownMenu($containerID);
 				
 				$dropdownMenu.find('input[type=hidden]').appendTo($form);
@@ -130,6 +144,12 @@ WCF.Search.Message.SearchArea = Class.extend({
 		}
 	},
 	
+	/**
+	 * Callback for WCF.Search.Message.KeywordList.
+	 * 
+	 * @param	object		data
+	 * @return	boolean
+	 */
 	_callback: function(data) {
 		this._searchArea.find('input[type=search]').val(data.label);
 		this._searchArea.find('input[type=search]').focus();

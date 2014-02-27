@@ -5543,6 +5543,12 @@ WCF.Search.Base = Class.extend({
 	_commaSeperated: false,
 	
 	/**
+	 * delay in miliseconds before a request is send to the server
+	 * @var	integer
+	 */
+	_delay: 0,
+	
+	/**
 	 * list with values that are excluded from seaching
 	 * @var	array
 	 */
@@ -5591,6 +5597,12 @@ WCF.Search.Base = Class.extend({
 	_triggerLength: 3,
 	
 	/**
+	 * delay timer
+	 * @var	WCF.PeriodicalExecuter
+	 */
+	_timer: null,
+	
+	/**
 	 * Initializes a new search.
 	 * 
 	 * @param	jQuery		searchInput
@@ -5606,6 +5618,7 @@ WCF.Search.Base = Class.extend({
 		}
 		
 		this._callback = (callback) ? callback : null;
+		this._delay = 0;
 		this._excludedSearchValues = [];
 		if (excludedSearchValues) {
 			this._excludedSearchValues = excludedSearchValues;
@@ -5714,19 +5727,52 @@ WCF.Search.Base = Class.extend({
 				}
 			};
 			
-			this._searchInput.parents('.searchBar').addClass('loading');
-			this._proxy.setOption('data', {
-				actionName: 'getSearchResultList',
-				className: this._className,
-				interfaceName: 'wcf\\data\\ISearchAction',
-				parameters: this._getParameters($parameters)
-			});
-			this._proxy.sendRequest();
+			if (this._delay) {
+				if (this._timer !== null) {
+					this._timer.stop();
+				}
+				
+				var self = this;
+				this._timer = new WCF.PeriodicalExecuter(function() {
+					self._queryServer($parameters);
+					
+					self._timer.stop();
+					self._timer = null;
+				}, this._delay);
+			}
+			else {
+				this._queryServer($parameters);
+			}
 		}
 		else {
 			// input below trigger length
 			this._clearList(false);
 		}
+	},
+	
+	/**
+	 * Queries the server.
+	 * 
+	 * @param	object		parameters
+	 */
+	_queryServer: function(parameters) {
+		this._searchInput.parents('.searchBar').addClass('loading');
+		this._proxy.setOption('data', {
+			actionName: 'getSearchResultList',
+			className: this._className,
+			interfaceName: 'wcf\\data\\ISearchAction',
+			parameters: this._getParameters(parameters)
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Sets query delay in miliseconds.
+	 * 
+	 * @param	integer		delay
+	 */
+	setDelay: function(delay) {
+		this._delay = delay;
 	},
 	
 	/**
