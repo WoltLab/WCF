@@ -71,6 +71,8 @@ $(function() {
 		if ($editor) $editor.destroy(true);
 		
 		$('#' + $editorName).ckeditor($config);
+		
+		{event name='afterInit'}
 	});
 
 	head.load([
