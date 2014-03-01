@@ -8,7 +8,7 @@
 	<channel>
 		<title><![CDATA[{if $title}{@$title|escapeCDATA} - {/if}{@PAGE_TITLE|language|escapeCDATA}]]></title>
 		<link><![CDATA[{@$baseHref|escapeCDATA}]]></link>
-		<description><![CDATA[{@PAGE_DESCRIPTION|escapeCDATA}]]></description>
+		<description><![CDATA[{@PAGE_DESCRIPTION|language|escapeCDATA}]]></description>
 		<language>{@$__wcf->language->getFixedLanguageCode()}</language>
 		<pubDate>{'r'|gmdate:TIME_NOW}</pubDate>
 {assign var='dummy' value=$items->rewind()}
