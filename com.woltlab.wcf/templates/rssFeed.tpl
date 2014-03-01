@@ -6,7 +6,7 @@
 	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
 >
 	<channel>
-		<title><![CDATA[{if $title}{@$title} - {/if}{@PAGE_TITLE|language|escapeCDATA}]]></title>
+		<title><![CDATA[{if $title}{@$title|escapeCDATA} - {/if}{@PAGE_TITLE|language|escapeCDATA}]]></title>
 		<link><![CDATA[{@$baseHref|escapeCDATA}]]></link>
 		<description><![CDATA[{@PAGE_DESCRIPTION|escapeCDATA}]]></description>
 		<language>{@$__wcf->language->getFixedLanguageCode()}</language>
