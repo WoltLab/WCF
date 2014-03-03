@@ -86,7 +86,7 @@
 			
 			{if MODULE_GRAVATAR}
 				<dl{if $errorField == 'gravatar'} class="formError"{/if}>
-					<dt class="framed"><img src="http://www.gravatar.com/avatar/{@$__wcf->user->email|strtolower|md5}?s=96" alt="" class="icon96" /></dt>
+					<dt class="framed"><img src="https://secure.gravatar.com/avatar/{@$__wcf->user->email|strtolower|md5}?s=96" alt="" class="icon96" /></dt>
 					<dd>
 						<label><input type="radio" name="avatarType" value="gravatar" {if $avatarType == 'gravatar'}checked="checked" {/if}/> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
 						{if $errorField == 'gravatar'}
