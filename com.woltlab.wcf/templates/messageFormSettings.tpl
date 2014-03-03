@@ -7,7 +7,7 @@
 				<small>{lang}wcf.message.settings.preParse.description{/lang}</small>
 			</dd>
 		{/if}
-		{if $__wcf->getSession()->getPermission($permissionCanUseSmilies)}
+		{if MODULE_SMILEY && $__wcf->getSession()->getPermission($permissionCanUseSmilies)}
 			<dt></dt>
 			<dd>
 				<label><input id="enableSmilies" name="enableSmilies" type="checkbox" value="1"{if $enableSmilies} checked="checked"{/if} /> {lang}wcf.message.settings.enableSmilies{/lang}</label>
@@ -28,7 +28,7 @@
 				<small>{lang}wcf.message.settings.enableHtml.description{/lang}</small>
 			</dd>
 		{/if}
-		{if 'MODULE_USER_SIGNATURE'|defined && MODULE_USER_SIGNATURE && $showSignatureSetting && $__wcf->user->userID}
+		{if MODULE_USER_SIGNATURE && $showSignatureSetting && $__wcf->user->userID}
 			<dt></dt>
 			<dd>
 				<label><input id="showSignature" name="showSignature" type="checkbox" value="1"{if $showSignature} checked="checked"{/if} /> {lang}wcf.message.settings.showSignature{/lang}</label>
