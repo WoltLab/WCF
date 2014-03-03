@@ -123,6 +123,7 @@
 						
 						<div class="formSubmit">
 							<input type="submit" id="loginSubmitButton" name="submitButton" value="{lang}wcf.user.button.login{/lang}" accesskey="s" />
+							<a class="button" href="{link controller='LostPassword'}{/link}"><span>{lang}wcf.user.lostPassword{/lang}</span></a>
 							<input type="hidden" name="url" value="{$__wcf->session->requestURI}" />
 							{@SECURITY_TOKEN_INPUT_TAG}
 						</div>
