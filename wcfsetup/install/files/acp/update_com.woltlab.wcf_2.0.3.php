@@ -9,12 +9,18 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 // enforce new limits for session timeout (prevents misconfiguration)
-$sql = "UPDATE	wcf".WCF_N."_option
-	SET	optionValue =  MIN(MAX(optionValue, ?), ?)
+$sql = "SELECT	optionID, optionValue
+	FROM	wcf".WCF_N."_option
 	WHERE	optionName = ?";
 $statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute(array('session_timeout'));
+$row = $statement->fetchArray();
+
+$sql = "UPDATE	wcf".WCF_N."_option
+	SET	optionValue = ?
+	WHERE	optionID = ?";
+$statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute(array(
-	600,
-	86400,
-	'session_timeout'
+	min(max(600, $row['optionValue']), 86400),
+	$row['optionID']
 ));

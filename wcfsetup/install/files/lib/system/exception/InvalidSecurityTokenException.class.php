@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	system.exception
  * @category	Community Framework
  */
-class InvalidSecurityTokenException extends UserException {
+class InvalidSecurityTokenException extends NamedUserException {
 	/**
 	 * Creates a new InvalidSecurityTokenException object.
 	 */

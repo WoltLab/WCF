@@ -14,6 +14,7 @@
 				{if PACKAGE_ID && SHOW_CLOCK}
 					<li title="{lang}wcf.date.timezone.{@'/'|str_replace:'.':$__wcf->getUser()->getTimeZone()->getName()|strtolower}{/lang}"><p><span class="icon icon16 icon-time"></span> <span>{@TIME_NOW|plainTime}</span></p></li>
 				{/if}
+				
 				{event name='navigationItems'}
 			</ul>
 		</nav>
