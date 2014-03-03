@@ -8,7 +8,7 @@ use wcf\system\cache\builder\BBCodeMediaProviderCacheBuilder;
  * Provides functions to edit BBCode media providers.
  * 
  * @author	Tim Duesterhus
- * @copyright	2011-2013 WoltLab GmbH
+ * @copyright	2011-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	data.bbcode.media.provider

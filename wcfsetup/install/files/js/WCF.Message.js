@@ -2,7 +2,7 @@
  * Message related classes for WCF
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Message = { };
