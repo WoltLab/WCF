@@ -374,6 +374,10 @@
 		<name>FeedBurner</name>
 		<url>http://www.FeedBurner.com</url>
 	</spider>
+	<spider ident="Feedly">
+		<name>Feedly</name>
+		<url>http://www.feedly.com/fetcher.html</url>
+	</spider>
 	<spider ident="Feedfetcher-Google">
 		<name>FeedFetcher-Google</name>
 		<url>http://www.google.com/feedfetcher.html</url>
