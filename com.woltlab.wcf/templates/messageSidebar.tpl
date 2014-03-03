@@ -21,7 +21,7 @@
 			<header>
 				<h2 class="username">
 					<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" class="userLink" data-user-id="{@$userProfile->userID}" rel="author">
-						<span itemprop="name">{$username}</span>
+						{event name='beforeUsername'} <span itemprop="name">{$username}</span>
 					</a>
 				</h2>
 				
