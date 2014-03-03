@@ -680,7 +680,7 @@ class PackageInstallationDispatcher {
 			$row = $statement->fetchArray();
 			if ($row['count']) {
 				// use abbreviation
-				$defaultPath .= strtolower(Package::getAbbreviation($this->getPackage()->package)) . '/';
+				$defaultPath .= mb_strtolower(Package::getAbbreviation($this->getPackage()->package)) . '/';
 			}
 			
 			$packageDir->setValue($defaultPath);

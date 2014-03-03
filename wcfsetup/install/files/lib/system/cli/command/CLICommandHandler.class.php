@@ -46,7 +46,7 @@ class CLICommandHandler {
 				}
 				
 				if (!$object->canAccess()) continue;
-				self::$commands[strtolower(basename($command, 'CLICommand.class.php'))] = $object;
+				self::$commands[mb_strtolower(basename($command, 'CLICommand.class.php'))] = $object;
 			}
 		}
 		
@@ -62,9 +62,9 @@ class CLICommandHandler {
 	public static function getCommand($line) {
 		list($command, $parameters) = explode(' ', $line.' ', 2);
 		
-		if (!isset(self::$commands[strtolower($command)])) throw new IllegalLinkException();
+		if (!isset(self::$commands[mb_strtolower($command)])) throw new IllegalLinkException();
 		
-		return self::$commands[strtolower($command)];
+		return self::$commands[mb_strtolower($command)];
 	}
 	
 	/**
@@ -76,9 +76,9 @@ class CLICommandHandler {
 	public static function getCommandName($line) {
 		list($command, $parameters) = explode(' ', $line.' ', 2);
 		
-		if (!isset(self::$commands[strtolower($command)])) throw new IllegalLinkException();
+		if (!isset(self::$commands[mb_strtolower($command)])) throw new IllegalLinkException();
 		
-		return strtolower($command);
+		return mb_strtolower($command);
 	}
 	
 	/**

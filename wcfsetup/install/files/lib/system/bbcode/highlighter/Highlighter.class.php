@@ -130,7 +130,7 @@ abstract class Highlighter extends SingletonFactory {
 		// regex to extract the Highlighter out of the namespaced classname
 		$reType = new Regex('\\\\?wcf\\\\system\\\\bbcode\\\\highlighter\\\\(.*)Highlighter', Regex::CASE_INSENSITIVE);
 		
-		return WCF::getLanguage()->get('wcf.bbcode.code.'.$reType->replace(strtolower(get_class($this)), '\1').'.title');
+		return WCF::getLanguage()->get('wcf.bbcode.code.'.$reType->replace(mb_strtolower(get_class($this)), '\1').'.title');
 	}
 	
 	/**

@@ -23,7 +23,7 @@ final class ImageUtil {
 		$content = file_get_contents($file);
 		
 		// remove some characters
-		$content = strtolower(preg_replace('/[^a-z0-9<\(]+/i', '', $content));
+		$content = mb_strtolower(preg_replace('/[^a-z0-9<\(]+/i', '', $content));
 		$content = str_replace('description', '', $content);
 		
 		// search for javascript

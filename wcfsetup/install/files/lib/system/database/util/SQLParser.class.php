@@ -72,7 +72,7 @@ class SQLParser {
 							if ($columName == 'UNIQUE' || $columName == 'KEY' || $columName == 'PRIMARY' || $columName == 'FULLTEXT') continue;
 							
 							$column = array('name' => $matches[1][$i]);
-							$columnType = strtolower($matches[2][$i]);
+							$columnType = mb_strtolower($matches[2][$i]);
 							$column['data'] = array(
 								'type' => $columnType,
 								'notNull' => ((!empty($matches[4][$i]) && strtoupper($matches[4][$i]) == 'NOT NULL') ? true : false),
@@ -125,7 +125,7 @@ class SQLParser {
 				}
 				// add/change column
 				else if (preg_match("~^ALTER\s+TABLE\s+(\w+)\s+(?:(ADD)\s+(?:COLUMN\s+)?|(CHANGE)\s+(?:COLUMN\s+)?(\w+)\s+)(\w+)\s+(\w+)(?:\s*\((\s*(?:\d+(?:\s*,\s*\d+)?|'[^']*'(?:\s*,\s*'[^']*')*))\))?(?:\s+UNSIGNED)?(?:\s+(NOT NULL|NULL))?(?:\s+DEFAULT\s+(-?\d+.\d+|-?\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\s+(AUTO_INCREMENT))?(?:\s+(UNIQUE|PRIMARY)(?: KEY)?)?~is", $query, $match)) {
-					$columnType = strtolower($match[6]);
+					$columnType = mb_strtolower($match[6]);
 					$columnData = array(
 						'type' => $columnType,
 						'notNull' => ((!empty($match[8]) && strtoupper($match[8]) == 'NOT NULL') ? true : false),

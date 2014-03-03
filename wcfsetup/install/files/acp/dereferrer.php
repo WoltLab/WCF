@@ -12,7 +12,7 @@ $url = '';
 if (isset($_GET['url'])) $url = htmlspecialchars(str_replace(';', '%3B', trim($_GET['url'])));
 if (empty($url)) exit;
 // check url
-$testURL = preg_replace('/[^a-z0-9:\/]+/', '', strtolower($url));
+$testURL = preg_replace('/[^a-z0-9:\/]+/', '', mb_strtolower($url));
 if (strpos($testURL, 'script:') !== false || !preg_match('~^https?://~', $testURL)) {
 	exit;
 }
