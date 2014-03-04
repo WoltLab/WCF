@@ -323,7 +323,7 @@ $.widget('ui.wcfImageViewer', {
 	 * 
 	 * @return	boolean
 	 */
-	close: function() {
+	close: function(event) {
 		if (event) event.preventDefault();
 		
 		if (!this._isOpen) {
