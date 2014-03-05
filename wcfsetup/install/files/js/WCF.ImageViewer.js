@@ -153,6 +153,12 @@ $.widget('ui.wcfImageViewer', {
 	_disableSlideshow: false,
 	
 	/**
+	 * event namespace used to distinguish event handlers using $.proxy
+	 * @var	string
+	 */
+	_eventNamespace: '',
+	
+	/**
 	 * list of available images
 	 * @var	array<object>
 	 */
@@ -266,6 +272,7 @@ $.widget('ui.wcfImageViewer', {
 		this._container = null;
 		this._didInit = false;
 		this._disableSlideshow = (this.element.data('disableSlideshow'));
+		this._eventNamespace = this.element.wcfIdentify();
 		this._images = [ ];
 		this._isOpen = false;
 		this._items = -1;
@@ -311,6 +318,8 @@ $.widget('ui.wcfImageViewer', {
 			}
 		}
 		
+		$(document).on('keydown.' + this._eventNamespace, $.proxy(this._keyDown, this));
+		
 		this._isOpen = true;
 		
 		WCF.System.DisableScrolling.disable();
@@ -334,6 +343,8 @@ $.widget('ui.wcfImageViewer', {
 		if (this._timer !== null) {
 			this._timer.stop();
 		}
+		
+		$(document).off('keydown.' + this._eventNamespace);
 		
 		this._isOpen = false;
 		
@@ -392,6 +403,65 @@ $.widget('ui.wcfImageViewer', {
 		this._slideshowEnabled = false;
 		
 		return true;
+	},
+	
+	/**
+	 * Closes the slideshow on escape.
+	 * 
+	 * @param	object		event
+	 * @return	boolean
+	 */
+	_keyDown: function(event) {
+		switch (event.which) {
+			// close slideshow
+			case $.ui.keyCode.ESCAPE:
+				this.close();
+			break;
+			
+			// show previous image
+			case $.ui.keyCode.LEFT:
+				this._previousImage();
+			break;
+			
+			// show next image
+			case $.ui.keyCode.RIGHT:
+				this._nextImage();
+			break;
+			
+			// enable fullscreen mode
+			case $.ui.keyCode.UP:
+				if (!this._container.hasClass('maximized')) {
+					this._toggleView();
+				}
+			break;
+			
+			// disable fullscreen mode
+			case $.ui.keyCode.DOWN:
+				if (this._container.hasClass('maximized')) {
+					this._toggleView();
+				}
+			break;
+			
+			// jump to image page or full version
+			case $.ui.keyCode.ENTER:
+				var $link = this._ui.header.find('> div > h1 > a');
+				if ($link.length == 1) {
+					// forward to image page
+					window.location = $link.prop('href');
+				}
+				else {
+					// forward to full version
+					this._ui.slideshow.full.trigger('click');
+				}
+			break;
+			
+			// toggle play/pause (80 = [p])
+			case 80:
+				this._ui.slideshow.toggle.trigger('click');
+			break;
+		}
+		
+		return false;
 	},
 	
 	/**
@@ -590,7 +660,6 @@ $.widget('ui.wcfImageViewer', {
 		}
 		
 		var $left = Math.floor((containerDimensions.width - $width) / 2);
-		var $top = Math.floor((containerDimensions.height - $height) / 2);
 		
 		this._ui.images[targetIndex].css({
 			height: $height + 'px',
@@ -724,6 +793,8 @@ $.widget('ui.wcfImageViewer', {
 	 */
 	_nextImage: function(event) {
 		if (this._ui.slideshow.next.hasClass('pointer')) {
+			this._disableSlideshow = true;
+			
 			this.stopSlideshow(true);
 			this.showImage(this._active + 1);
 		}
@@ -736,6 +807,8 @@ $.widget('ui.wcfImageViewer', {
 	 */
 	_previousImage: function(event) {
 		if (this._ui.slideshow.previous.hasClass('pointer')) {
+			this._disableSlideshow = true;
+			
 			this.stopSlideshow(true);
 			this.showImage(this._active - 1);
 		}
