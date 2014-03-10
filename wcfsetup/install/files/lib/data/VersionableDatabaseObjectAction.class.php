@@ -49,10 +49,10 @@ abstract class VersionableDatabaseObjectAction extends AbstractDatabaseObjectAct
 		if (isset($this->parameters['data'])) {
 			foreach ($this->objects as $object) {
 				$object->update($this->parameters['data']);
-				
-				// create revision retroactively
-				$this->createRevision();
 			}
+			
+			// create revision retroactively
+			$this->createRevision();
 		}
 	}
 	
