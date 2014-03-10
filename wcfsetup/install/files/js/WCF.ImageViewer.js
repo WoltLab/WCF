@@ -475,6 +475,10 @@ $.widget('ui.wcfImageViewer', {
 			case 80:
 				this._ui.slideshow.toggle.trigger('click');
 			break;
+			
+			default:
+				return true;
+			break;
 		}
 		
 		return false;
