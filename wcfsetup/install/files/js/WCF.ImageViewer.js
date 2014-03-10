@@ -318,7 +318,7 @@ $.widget('ui.wcfImageViewer', {
 			}
 		}
 		
-		$(document).on('keydown.' + this._eventNamespace, $.proxy(this._keyDown, this));
+		this._bindListener();
 		
 		this._isOpen = true;
 		
@@ -344,7 +344,7 @@ $.widget('ui.wcfImageViewer', {
 			this._timer.stop();
 		}
 		
-		$(document).off('keydown.' + this._eventNamespace);
+		this._unbindListener();
 		
 		this._isOpen = false;
 		
@@ -403,6 +403,22 @@ $.widget('ui.wcfImageViewer', {
 		this._slideshowEnabled = false;
 		
 		return true;
+	},
+	
+	/**
+	 * Binds event listeners.
+	 */
+	_bindListener: function() {
+		$(document).on('keydown.' + this._eventNamespace, $.proxy(this._keyDown, this));
+		$(window).on('resize.' + this._eventNamespace, $.proxy(this._renderImage, this));
+	},
+	
+	/**
+	 * Unbinds event listeners.
+	 */
+	_unbindListener: function() {
+		$(document).off('keydown.' + this._eventNamespace);
+		$(window).off('resize.' + this._eventNamespace);
 	},
 	
 	/**
