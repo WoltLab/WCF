@@ -403,7 +403,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		
 		// create the new style
 		$newStyle = StyleEditor::create(array(
-			'packageID' => PACKAGE_ID,
 			'styleName' => $styleName,
 			'templateGroupID' => $this->styleEditor->templateGroupID,
 			'isDisabled' => 1, // newly created styles are disabled by default

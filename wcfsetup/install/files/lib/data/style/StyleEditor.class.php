@@ -291,7 +291,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @param	StyleEditor	$style
 	 * @return	StyleEditor
 	 */
-	public static function import($filename, $packageID = PACKAGE_ID, StyleEditor $style = null) {
+	public static function import($filename, $packageID = 1, StyleEditor $style = null) {
 		// open file
 		$tar = new Tar($filename);
 		
@@ -838,7 +838,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		
 		// default values
-		if (!isset($parameters['packageID'])) $parameters['packageID'] = PACKAGE_ID;
+		if (!isset($parameters['packageID'])) $parameters['packageID'] = 1;
 		if (!isset($parameters['styleDate'])) $parameters['styleDate'] = gmdate('Y-m-d', TIME_NOW);
 		
 		// check if no default style is defined
