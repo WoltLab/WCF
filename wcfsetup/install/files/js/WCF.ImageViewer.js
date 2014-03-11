@@ -574,7 +574,6 @@ $.widget('ui.wcfImageViewer', {
 		
 		var $dimensions = this._ui.imageContainer.getDimensions('inner');
 		var $newImageIndex = (this._activeImage ? 0 : 1);
-		this._renderImage($newImageIndex, $image, $dimensions);
 		
 		if (this._activeImage !== null) {
 			this._ui.images[this._activeImage].removeClass('active');
@@ -583,17 +582,12 @@ $.widget('ui.wcfImageViewer', {
 		this._activeImage = $newImageIndex;
 		
 		var $currentActiveImage = this._active;
-		if (this._ui.images[$newImageIndex].get(0).complete) {
-			// image was fetched from cache
+		this._ui.imageContainer.addClass('loading');
+		this._ui.images[$newImageIndex].off('load').on('load', $.proxy(function() {
 			this._imageOnLoad($currentActiveImage, $newImageIndex);
-		}
-		else {
-			// image is loading, display once loaded
-			this._ui.imageContainer.addClass('loading');
-			this._ui.images[$newImageIndex].off('load').on('load', $.proxy(function() {
-				this._imageOnLoad($currentActiveImage, $newImageIndex);
-			}, this));
-		}
+		}, this));
+		
+		this._renderImage($newImageIndex, $image, $dimensions);
 		
 		// user
 		var $link = this._ui.header.find('> div > a').prop('href', $image.user.link).prop('title', $image.user.username);
