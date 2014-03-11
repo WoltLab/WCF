@@ -46,6 +46,23 @@ final class StyleUtil {
 		$contents = str_replace('border-right-width:', 'border-left-width:', $contents);
 		$contents = str_replace('wcf-border-left-width:', 'border-right-width:', $contents);
 		
+		// border-style
+		$contents = preg_replace('/border-style:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/', 'border-style:\\1 \\4 \\3 \\2', $contents);
+		
+		// (border-left-style, border-right-style)
+		$contents = str_replace('border-left-style:', 'wcf-border-left-style:', $contents);
+		$contents = str_replace('border-right-style:', 'border-left-style:', $contents);
+		$contents = str_replace('wcf-border-left-style:', 'border-right-style:', $contents);
+		
+		// border-color
+		$contents = preg_replace('/border-color:\s*(rgba?\(.*?\))\s+(rgba?\(.*?\))\s+(rgba?\(.*?\))\s+(rgba?\(.*?\))/', 'border-color:\\1 \\4 \\3 \\2', $contents);
+		$contents = preg_replace('/border-color:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/', 'border-color:\\1 \\4 \\3 \\2', $contents);
+		
+		// (border-left-color, border-right-color)
+		$contents = str_replace('border-left-color:', 'wcf-border-left-color:', $contents);
+		$contents = str_replace('border-right-color:', 'border-left-color:', $contents);
+		$contents = str_replace('wcf-border-left-color:', 'border-right-color:', $contents);
+		
 		// clear
 		$contents = preg_replace('/clear:\s*left/', 'wcf-clear:left', $contents);
 		$contents = preg_replace('/clear:\s*right/', 'clear:left', $contents);
@@ -71,6 +88,15 @@ final class StyleUtil {
 		
 		// text-shadow
 		$contents = preg_replace('/text-shadow:\s*(\d)/', 'text-shadow:-\\1', $contents);
+		
+		// border-radius
+		$contents = preg_replace('/border-radius:\s*([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)\s+([^\s;\}]+)/', 'border-radius:\\2 \\1 \\4 \\3', $contents);
+		$contents = str_replace('border-top-left-radius:', 'wcf-border-top-left-radius:', $contents);
+		$contents = str_replace('border-top-right-radius:', 'border-top-left-radius:', $contents);
+		$contents = str_replace('wcf-border-top-left-radius:', 'border-top-right-radius:', $contents);
+		$contents = str_replace('border-bottom-left-radius:', 'wcf-border-bottom-left-radius:', $contents);
+		$contents = str_replace('border-bottom-right-radius:', 'border-bottom-left-radius:', $contents);
+		$contents = str_replace('wcf-border-bottom-left-radius:', 'border-bottom-right-radius:', $contents);
 		
 		return $contents;
 	}
