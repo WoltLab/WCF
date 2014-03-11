@@ -78,12 +78,6 @@
 		
 		if ($.browser.mozilla) {
 			fixFirefox();
-			
-			// fix empty <p></p> breaking firefox
-			var $div = $(event.editor.container.$).find('.cke_wysiwyg_div');
-			if ($div.html() == '<p></p>') {
-				$div.children('p').remove();
-			}
 		}
 	});
 	
@@ -213,7 +207,7 @@
 	 * Converts bbcodes to html.
 	 */
 	var toHtml = function(data, fixForBody) {
-		if ($.trim(data) === "") return "<p></p>";
+		//if ($.trim(data) === "") return "<p></p>";
 		
 		// remove 0x200B (unicode zero width space)
 		data = removeCrap(data);
