@@ -78,7 +78,16 @@
 		
 		if ($.browser.mozilla) {
 			fixFirefox();
+			
+			// fix empty <p></p> breaking firefox
+			var $div = $(event.editor.container.$).find('.cke_wysiwyg_div');
+			if ($div.html() == '<p></p>') {
+				$div.children('p').remove();
+			}
 		}
+		
+		window.dtdesign = event.editor;
+		console.debug(event.editor);
 	});
 	
 	/**
