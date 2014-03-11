@@ -78,6 +78,12 @@ class Poll extends DatabaseObject {
 				return ($a->votes > $b->votes) ? -1 : 1;
 			});
 		}
+		else {
+			// order options by show order
+			uasort($this->options, function($a, $b) {
+				return ($a->showOrder < $b->showOrder) ? -1 : 1;
+			});
+		}
 		
 		return $this->options;
 	}

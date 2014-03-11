@@ -1080,13 +1080,39 @@ WCF.Dropdown = {
 		if ($align === 'left') {
 			dropdownMenu.removeClass('dropdownArrowRight');
 			
-			$left = $dropdownOffsets.left + 'px';
+			$left = $dropdownOffsets.left;
 		}
 		else {
 			dropdownMenu.addClass('dropdownArrowRight');
 			
-			$right = ($windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width)) + 'px';
+			$right = ($windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width));
 		}
+		
+		// rtl works the same with the exception that we need to offset it with the right boundary
+		if (WCF.Language.get('wcf.global.pageDirection') == 'rtl') {
+			var $oldLeft = $left;
+			var $oldRight = $right;
+			
+			// use reverse positioning
+			if ($left == 'auto') {
+				dropdownMenu.removeClass('dropdownArrowRight');
+			}
+			else {
+				$right = $windowWidth - ($dropdownOffsets.left + $dropdownDimensions.width);
+				$left = 'auto';
+				
+				if ($right + $menuDimensions.width > $windowWidth) {
+					// exceeded window width, restore ltr values
+					$left = $oldLeft;
+					$right = $oldRight;
+					
+					dropdownMenu.addClass('dropdownArrowRight');
+				}
+			}
+		}
+		
+		if ($left == 'auto') $right += 'px';
+		else $left += 'px';
 		
 		// calculate vertical offset
 		var $wasHidden = true;
