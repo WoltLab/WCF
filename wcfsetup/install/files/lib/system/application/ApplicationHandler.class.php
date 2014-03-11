@@ -3,6 +3,7 @@ namespace wcf\system\application;
 use wcf\data\application\ApplicationAction;
 use wcf\data\application\ApplicationList;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
+use wcf\system\Regex;
 use wcf\system\SingletonFactory;
 
 /**
@@ -144,14 +145,15 @@ class ApplicationHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function isInternalURL($url) {
+		$protocolRegex = new Regex('^https(?=://)');
 		if (empty($this->pageURLs)) {
 			foreach ($this->getApplications() as $application) {
-				$this->pageURLs[] = $application->getPageURL();
+				$this->pageURLs[] = $protocolRegex->replace($application->getPageURL(), 'http');
 			}
 		}
 		
 		foreach ($this->pageURLs as $pageURL) {
-			if (stripos($url, $pageURL) === 0) {
+			if (stripos($protocolRegex->replace($url, 'http'), $pageURL) === 0) {
 				return true;
 			}
 		}

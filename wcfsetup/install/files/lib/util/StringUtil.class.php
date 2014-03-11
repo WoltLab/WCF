@@ -1,6 +1,7 @@
 <?php
 namespace wcf\util;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 
 /**
@@ -741,6 +742,7 @@ final class StringUtil {
 		$external = true;
 		if (ApplicationHandler::getInstance()->isInternalURL($url)) {
 			$external = false;
+			$url = preg_replace('~^https?://~', RouteHandler::getProtocol(), $url);
 		}
 		
 		// cut visible url
