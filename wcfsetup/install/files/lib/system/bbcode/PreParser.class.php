@@ -120,7 +120,7 @@ class PreParser extends SingletonFactory {
 		static $callback = null;
 		if ($urlPattern === null) {
 			$urlPattern = new Regex('
-			(?<!\B|"|\'|=|/|\]|,|\?)
+			(?<!\B|"|\'|=|/|\]|,|\?|\.)
 			(?:						# hostname
 				(?:ftp|https?)://'.static::$illegalChars.'(?:\.'.static::$illegalChars.')*
 				|
