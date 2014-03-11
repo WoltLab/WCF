@@ -371,6 +371,7 @@
 		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[Kann Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.group.description"><![CDATA[Beschreibung der Benutzergruppe]]></item>
 		<item name="wcf.acp.group.button.choose"><![CDATA[Benutzergruppe wählen]]></item>
+		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">

@@ -370,6 +370,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.system.canRebuildData"><![CDATA[Can rebuild data]]></item>
 		<item name="wcf.acp.group.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.group.button.choose"><![CDATA[Choose User Group]]></item>
+		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
