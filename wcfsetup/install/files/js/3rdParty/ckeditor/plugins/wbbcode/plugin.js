@@ -85,9 +85,6 @@
 				$div.children('p').remove();
 			}
 		}
-		
-		window.dtdesign = event.editor;
-		console.debug(event.editor);
 	});
 	
 	/**
