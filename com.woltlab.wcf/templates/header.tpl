@@ -30,6 +30,8 @@
 		
 		{include file='mainMenu'}
 		
+		{event name='mainMenuAfter'}
+		
 		<nav class="navigation navigationHeader">
 			{include file='mainMenuSubMenu'}
 			
