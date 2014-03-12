@@ -9,7 +9,7 @@ use wcf\util\ClassUtil;
  * EventHandler executes all registered actions for a specific event.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.event

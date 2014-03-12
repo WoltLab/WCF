@@ -9,7 +9,7 @@ use wcf\system\user\notification\event\AbstractUserNotificationEvent;
  * User notification event for profile commment responses.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.user.notification.event
