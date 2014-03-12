@@ -23,7 +23,7 @@
 		</li>
 		<li class="jsShareReddit">
 			<a>
-				<img class="jsTooltip" src="{$__wcf->getPath()}icon/reddit.png" alt="{lang}wcf.message.share.reddit{/lang}" title="{lang}wcf.message.share.reddit{/lang}" />
+				<img class="jsTooltip" src="{$__wcf->getPath()}icon/reddit.svg" alt="{lang}wcf.message.share.reddit{/lang}" title="{lang}wcf.message.share.reddit{/lang}" />
 				<span class="invisible">{lang}wcf.message.share.reddit{/lang}</span>
 			</a>
 			<span class="badge" style="display: none">0</span>
