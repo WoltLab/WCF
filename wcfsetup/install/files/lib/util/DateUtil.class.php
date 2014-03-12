@@ -357,6 +357,12 @@ final class DateUtil {
 	 * @param	string		$date
 	 */
 	public static function validateDate($date) {
+		if (preg_match('~^(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})~', $date, $matches)) {
+			return checkdate($matches['month'], $matches['day'], $matches['year']);
+		}
+		
+		return false;
+		
 		// matches almost any valid date between year 2000 and 2038
 		if (!preg_match('~^(20[0-2][0-9]|203[0-8])\-(0[1-9]|1[0-2])\-(0[1-9]|[1-2][0-9]|3[0-1])$~', $date)) {
 			throw new SystemException("date '".$date."' is invalid, violating ISO-8601 date format.");
