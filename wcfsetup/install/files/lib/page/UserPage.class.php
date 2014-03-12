@@ -38,11 +38,6 @@ class UserPage extends AbstractPage {
 	public $enableTracking = true;
 	
 	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
-	 */
-	public $neededPermissions = array('user.profile.canViewUserProfile');
-	
-	/**
 	 * edit profile on page load
 	 * @var	boolean
 	 */
@@ -100,6 +95,10 @@ class UserPage extends AbstractPage {
 		$this->user = UserProfile::getUserProfile($this->userID);
 		if ($this->user === null) {
 			throw new IllegalLinkException();
+		}
+		
+		if ($this->user->userID != WCF::getUser()->userID && !WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+			throw new PermissionDeniedException();
 		}
 		
 		// check is Accessible
