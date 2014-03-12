@@ -358,25 +358,12 @@ final class DateUtil {
 	 */
 	public static function validateDate($date) {
 		if (preg_match('~^(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})~', $date, $matches)) {
-			return checkdate($matches['month'], $matches['day'], $matches['year']);
+			if (!checkdate($matches['month'], $matches['day'], $matches['year'])) {
+				throw new SystemException("Date '".$date."' is invalid");
+			}
 		}
-		
-		return false;
-		
-		// matches almost any valid date between year 2000 and 2038
-		if (!preg_match('~^(20[0-2][0-9]|203[0-8])\-(0[1-9]|1[0-2])\-(0[1-9]|[1-2][0-9]|3[0-1])$~', $date)) {
-			throw new SystemException("date '".$date."' is invalid, violating ISO-8601 date format.");
-		}
-		
-		// try to convert $date into a UNIX timestamp
-		$time = @strtotime($date." GMT");
-		if ($time === false) {
-			throw new SystemException("date '".$date."' is invalid");
-		}
-		
-		// convert back to ISO-8601, if date was bogus (e.g. 2000-02-31) date() returns a different date than $date
-		if (gmdate('Y-m-d', $time) != $date) {
-			throw new SystemException("date '".$date."' is invalid");
+		else {
+			throw new SystemException("Date '".$date."' is not a valid ISO-8601 date");
 		}
 	}
 	
