@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\Package;
+namespace wcf\system\package;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\system\form\FormDocument;
 use wcf\system\WCF;

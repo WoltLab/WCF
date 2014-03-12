@@ -7,7 +7,7 @@ use wcf\util\CronjobUtil;
  * Installs, updates and deletes cronjobs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	acp.package.plugin
@@ -22,7 +22,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	/**
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::getElement()
 	 */
-	protected function getElement(\DOMXpath $xpath, array &$elements, \DOMElement $element) {
+	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		if ($element->tagName == 'description') {
 			if (!isset($elements['description'])) {
 				$elements['description'] = array();

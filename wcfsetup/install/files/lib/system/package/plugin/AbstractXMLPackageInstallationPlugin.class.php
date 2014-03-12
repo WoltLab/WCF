@@ -11,7 +11,7 @@ use wcf\util\XML;
  * Abstract implementation of a package installation plugin using a XML file.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
  * @subpackage	system.package.plugin
@@ -181,7 +181,7 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 	 * @param	array		$elements
 	 * @param	\DOMElement	$element
 	 */
-	protected function getElement(\DOMXpath $xpath, array &$elements, \DOMElement $element) {
+	protected function getElement(\DOMXPath $xpath, array &$elements, \DOMElement $element) {
 		$elements[$element->tagName] = $element->nodeValue;
 	}
 	
