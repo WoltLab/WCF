@@ -145,6 +145,7 @@ class SMTPMailSender extends MailSender {
 		$this->write('MAIL FROM:<'.$mail->getFrom().'>');
 		$this->getSMTPStatus();
 		if ($this->statusCode != 250) {
+			$this->abort();
 			throw new SystemException($this->formatError("wrong from format '".$mail->getFrom()."'"));
 		}
 		
@@ -155,6 +156,7 @@ class SMTPMailSender extends MailSender {
 			$this->getSMTPStatus();
 			if ($this->statusCode != 250 && $this->statusCode != 251) {
 				if ($this->statusCode < 550) {
+					$this->abort();
 					throw new SystemException($this->formatError("wrong recipient format '".$recipient."'"));
 				}
 				continue;
@@ -162,7 +164,7 @@ class SMTPMailSender extends MailSender {
 			$recipientCounter++;
 		}
 		if (!$recipientCounter) {
-			$this->write("RSET");
+			$this->abort();
 			return;
 		}
 		
@@ -170,6 +172,7 @@ class SMTPMailSender extends MailSender {
 		$this->write("DATA");
 		$this->getSMTPStatus();
 		if ($this->statusCode != 354 && $this->statusCode != 250) {
+			$this->abort();
 			throw new SystemException($this->formatError("smtp error"));
 		}
 		
@@ -195,6 +198,7 @@ class SMTPMailSender extends MailSender {
 		
 		$this->getSMTPStatus();
 		if ($this->statusCode != 250) {
+			$this->abort();
 			throw new SystemException($this->formatError("message sending failed"));
 		}
 	}
@@ -225,6 +229,15 @@ class SMTPMailSender extends MailSender {
 			if (substr($read, 3, 1) == " ") break;
 		}
 		return $result;
+	}
+	
+	/**
+	 * Aborts the current process. This is needed in case a new mail should be
+	 * sent after a exception has occured
+	 */
+	protected function abort() {
+		$this->write("RSET");
+		$this->read(); // read response, but do not care about status here
 	}
 	
 	/**
