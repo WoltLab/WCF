@@ -217,7 +217,7 @@ final class PasswordUtil {
 		$password = '';
 		$type = 0;
 		for ($i = 0; $i < $length; $i++) {
-			$type = ($i % 4 == 0) ? 0 : ($type + 1);
+			$type = $i % 4;
 			$password .= substr($availableCharacters[$type], self::secureRandomNumber(0, strlen($availableCharacters[$type]) - 1), 1);
 		}
 		
