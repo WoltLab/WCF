@@ -20,10 +20,14 @@ WCF.Label.ACPList = Class.extend({
 	_labelList: [ ],
 	
 	/**
-	 * Intitializes the ACP label list.
+	 * Initializes the ACP label list.
 	 */
 	init: function() {
 		this._labelInput = $('#label').keydown($.proxy(this._keyPressed, this)).keyup($.proxy(this._keyPressed, this)).blur($.proxy(this._keyPressed, this));
+		
+		if ($.browser.mozilla && $.browser.touch) {
+			this._labelInput.on('input', $.proxy(this._keyPressed, this));
+		}
 		
 		$('#labelList').find('input[type="radio"]').each($.proxy(function(index, input) {
 			var $input = $(input);

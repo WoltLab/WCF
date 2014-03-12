@@ -113,7 +113,6 @@
 		var $tab;
 		var $name = event.data.name;
 		var $definition = event.data.definition;
-
 		if ($name == 'link') {
 			$definition.removeContents('target');
 			$definition.removeContents('upload');
@@ -129,6 +128,13 @@
 			$tab = $definition.getContents('info');
 			$tab.remove('txtAlt');
 			$tab.remove('basic');
+			
+			// remove preview, do NOT use $tab.remove() because that breaks the plugin
+			$definition.dialog.on('show', function(event) {
+				var $container = $(event.sender._.element.$).find('div[name=info]')
+				$container.find('> table > tbody > tr:eq(1)').hide();
+				$container.parent().css('height', 'auto');
+			});
 		}
 		else if ($name == 'table') {
 			$definition.removeContents('advanced');

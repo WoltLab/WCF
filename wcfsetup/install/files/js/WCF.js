@@ -5657,6 +5657,11 @@ WCF.Search.Base = Class.extend({
 		}
 		
 		this._searchInput.keydown($.proxy(this._keyDown, this)).keyup($.proxy(this._keyUp, this)).wrap('<span class="dropdown" />');
+		
+		if ($.browser.mozilla && $.browser.touch) {
+			this._searchInput.on('input', $.proxy(this._keyUp, this));
+		}
+		
 		this._list = $('<ul class="dropdownMenu" />').insertAfter(this._searchInput);
 		this._commaSeperated = (commaSeperated) ? true : false;
 		this._oldSearchString = [ ];

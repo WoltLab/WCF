@@ -104,7 +104,6 @@
 		<item name="wcf.acp.cache.list.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.cache.list.perm"><![CDATA[Zugriffsrechte]]></item>
 		<item name="wcf.acp.cache.list.size"><![CDATA[Größe]]></item>
-		<item name="wcf.acp.cache.source.type.ApcCacheSource"><![CDATA[Alternative PHP Cache]]></item>
 		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Dateisystem]]></item>
 		<item name="wcf.acp.cache.source.type.MemcachedCacheSource"><![CDATA[Memcached]]></item>
 		<item name="wcf.acp.cache.source.type.NoCacheSource"><![CDATA[keine (Caching deaktiviert)]]></item>
@@ -349,7 +348,7 @@
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Kann Benutzer aktivieren]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod"><![CDATA[Umbenennung]]></item>
 		<item name="wcf.acp.group.option.user.profile.renamePeriod.description"><![CDATA[Zeitraum nach dem Mitglieder dieser Benutzergruppe ihren Benutzernamen ändern können. [Zeit in Tagen]]]></item>
-		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Kann nicht ignoriert werden]]></item>
+		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Kann nicht blockiert werden]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Kann Moderation benutzen]]></item>
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Like-System]]></item>
 		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Kann vergebene Likes sehen]]></item>
@@ -574,7 +573,6 @@
 		<item name="wcf.acp.option.cache_source_memcached_host"><![CDATA[Memcached-Server]]></item>
 		<item name="wcf.acp.option.cache_source_memcached_host.description"><![CDATA[Mehrere Server können zeilenweise angegeben und die Gewichtung als dritter Parameter angegeben werden, zum Beispiel „localhost:11211:67“ oder „10.0.13.37:31337:33“.]]></item>
 		<item name="wcf.acp.option.cache_source_type"><![CDATA[Cache-Methode]]></item>
-		<item name="wcf.acp.option.cache_source_type.apc"><![CDATA[Alternative PHP Cache (experimentell)]]></item>
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Beachten Sie, dass einige Methoden spezielle Anforderungen an das Server-System stellen und nicht auf jedem Server zur Verfügung stehen.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Dateisystem (Standard)]]></item>
 		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached]]></item>

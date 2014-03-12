@@ -1175,6 +1175,11 @@ WCF.User.Registration.LostPassword = Class.extend({
 		this._email.keyup($.proxy(this._checkEmail, this));
 		this._username.keyup($.proxy(this._checkUsername, this));
 		
+		if ($.browser.mozilla && $.browser.touch) {
+			this._email.on('input', $.proxy(this._checkEmail, this));
+			this._username.on('input', $.proxy(this._checkUsername, this));
+		}
+		
 		// toggle fields on init
 		this._checkEmail();
 		this._checkUsername();

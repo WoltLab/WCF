@@ -583,7 +583,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		var $currentActiveImage = this._active;
 		this._ui.imageContainer.addClass('loading');
-		this._ui.images[$newImageIndex].off('load').on('load', $.proxy(function() {
+		this._ui.images[$newImageIndex].off('load').prop('src', false).on('load', $.proxy(function() {
 			this._imageOnLoad($currentActiveImage, $newImageIndex);
 		}, this));
 		
