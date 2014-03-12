@@ -6,7 +6,7 @@
  * not work here as it discards the inline styles set for the selection.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2013 WoltLab GmbH
+ * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 (function() {
