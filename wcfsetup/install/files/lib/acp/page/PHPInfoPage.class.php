@@ -30,23 +30,29 @@ class PHPInfoPage extends AbstractPage {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		// get phpinfo() output
-		ob_start();
-		phpinfo();
-		$info = ob_get_contents();
-		ob_end_clean();
+		// check if phpinfo() exists
+		if (function_exists('phpinfo')) {
+			// get phpinfo() output
+			ob_start();
+			phpinfo();
+			$info = ob_get_contents();
+			ob_end_clean();
 		
-		// parse output
-		$info = preg_replace('%^.*<body>(.*)</body>.*$%s', '$1', $info);
-		
-		// style fixes
-		// remove first table
-		$info = preg_replace('%<table.*?</table><br />%s', '', $info, 1);
-		
-		// fix tables
-		$info = preg_replace('%<h2>(.*?)</h2>\s*<table border="0" cellpadding="3" width="600">%', '<div class="tabularBox tabularBoxTitle marginTop"><header><h2>\\1</h2></header><table class="table">', $info);
-		$info = preg_replace('%<table border="0" cellpadding="3" width="600">%', '<div class="tabularBox marginTop"><table class="table">', $info);
-		$info = str_replace('</table>', '</table></div>', $info);
+			// parse output
+			$info = preg_replace('%^.*<body>(.*)</body>.*$%s', '$1', $info);
+			
+			// style fixes
+			// remove first table
+			$info = preg_replace('%<table.*?</table><br />%s', '', $info, 1);
+			
+			// fix tables
+			$info = preg_replace('%<h2>(.*?)</h2>\s*<table border="0" cellpadding="3" width="600">%', '<div class="tabularBox tabularBoxTitle marginTop"><header><h2>\\1</h2></header><table class="table">', $info);
+			$info = preg_replace('%<table border="0" cellpadding="3" width="600">%', '<div class="tabularBox marginTop"><table class="table">', $info);
+			$info = str_replace('</table>', '</table></div>', $info);
+		}
+		else {
+			$info = '<div class="error">phpinfo() has been disabled for security reasons</div>';
+		}
 		
 		WCF::getTPL()->assign(array(
 			'phpInfo' => $info
