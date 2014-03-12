@@ -224,17 +224,7 @@ class MemcachedCacheSource implements ICacheSource {
 	 * @return	integer
 	 */
 	protected function getTTL($maxLifetime = 0) {
-		if ($maxLifetime) {
-			// max lifetime is a timestamp -> http://www.php.net/manual/en/memcached.expiration.php
-			if ($maxLifetime > (60 * 60 * 24 * 30)) {
-				// timestamp is in the past, discard
-				if ($maxLifetime < TIME_NOW) {
-					$maxLifetime = 0;
-				}
-			}
-		}
-		
-		if ($maxLifetime) {
+		if ($maxLifetime && ($maxLifetime <= (60 * 60 * 24 * 30) || $maxLifetime >= TIME_NOW)) {
 			return $maxLifetime;
 		}
 		
