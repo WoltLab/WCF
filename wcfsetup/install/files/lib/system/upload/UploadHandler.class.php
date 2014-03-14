@@ -54,11 +54,11 @@ class UploadHandler {
 			
 			// multiple uploads
 			for ($i = 0, $l = count($rawFileData['name']); $i < $l; $i++) {
-				$this->files[] = new UploadFile($rawFileData['name'][$i], $rawFileData['tmp_name'][$i], $rawFileData['size'][$i], $rawFileData['error'][$i], ($rawFileData['tmp_name'][$i] ? (FileUtil::getMimeType($rawFileData['tmp_name'][$i]) ?: $rawFileData['type'][$i]) : ''));
+				$this->files[] = new UploadFile($rawFileData['name'][$i], $rawFileData['tmp_name'][$i], $rawFileData['size'][$i], $rawFileData['error'][$i], ($rawFileData['tmp_name'][$i] ? (self::getMimeType($rawFileData['tmp_name'][$i], $rawFileData['type'][$i])) : ''));
 			}
 		}
 		else {
-			$this->files[] = new UploadFile($rawFileData['name'], $rawFileData['tmp_name'], $rawFileData['size'], $rawFileData['error'], ($rawFileData['tmp_name'] ? (FileUtil::getMimeType($rawFileData['tmp_name']) ?: $rawFileData['type']) : ''));
+			$this->files[] = new UploadFile($rawFileData['name'], $rawFileData['tmp_name'], $rawFileData['size'], $rawFileData['error'], ($rawFileData['tmp_name'] ? (self::getMimeType($rawFileData['tmp_name'], $rawFileData['type'])) : ''));
 		}
 	}
 	
@@ -122,5 +122,24 @@ class UploadHandler {
 		if (isset($_FILES[$identifier]) && is_array($_FILES[$identifier])) return new UploadHandler($_FILES[$identifier]);
 		
 		return null;
+	}
+	
+	/**
+	 * Returns the mime type of a file.
+	 * 
+	 * @param	string		$file
+	 * @param	string		$mimeType	mime type transferred by client
+	 * @return	string
+	 */
+	protected static function getMimeType($file, $mimeType) {
+		if ($mimeType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || $mimeType == 'application/vnd.openxmlformats-officedocument.presentationml.presentation' || $mimeType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+			// libmagic can not detect mime type of docx, xlsx and pttx files
+			return $mimeType;
+		}
+		
+		$finfoMimeType = FileUtil::getMimeType($file);
+		if ($finfoMimeType) return $finfoMimeType;
+		
+		return $mimeType;
 	}
 }
