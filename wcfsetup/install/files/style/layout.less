@@ -791,6 +791,16 @@
 	}
 }
 
+html[dir="rtl"] {
+	#main.sidebarOrientationRight > div > div > .sidebar > span > .collapsibleButton::before {
+		content: "\f053";
+	}
+	
+	#main.sidebarOrientationRight.sidebarCollapsed > div > div > .sidebar > span > .collapsibleButton::before {
+		content: "\f054";
+	}
+}
+
 /* basic layout elements */
 .boxHeadline {
 	margin-top: @wcfGapMedium;
