@@ -148,6 +148,9 @@ class CommentHandler extends SingletonFactory {
 		}
 		
 		if (!empty($responseIDs)) {
+			// delete likes (for responses)
+			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment.response', $responseIDs);
+			
 			// delete activity events (for responses)
 			if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.response.recentActivityEvent')) {
 				UserActivityEventHandler::getInstance()->removeEvents($objectTypeObj->objectType.'.response.recentActivityEvent', $responseIDs);
