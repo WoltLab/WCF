@@ -6,7 +6,7 @@
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
 		<version>2.0.4</version> <!-- codename: maelstrom -->
-		<date>2014-03-02</date>
+		<date>2014-03-17</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -49,6 +49,8 @@
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="script">acp/update_com.woltlab.wcf_2.0.4.php</instruction>
 		
-		<!-- todo: other pips -->
+		<instruction type="language">languages/*</instruction>
+		<instruction type="smiley">smiley.xml</instruction>
+		<instruction type="userOption">userOption.xml</instruction>
 	</instructions>
 </package>
