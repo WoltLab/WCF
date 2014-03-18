@@ -53,4 +53,15 @@
 		<instruction type="smiley">smiley.xml</instruction>
 		<instruction type="userOption">userOption.xml</instruction>
 	</instructions>
+	
+	<instructions type="update" fromversion="2.0.3 pl 1">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf_2.0.4.php</instruction>
+		
+		<instruction type="language">languages/*</instruction>
+		<instruction type="smiley">smiley.xml</instruction>
+		<instruction type="userOption">userOption.xml</instruction>
+	</instructions>
 </package>
