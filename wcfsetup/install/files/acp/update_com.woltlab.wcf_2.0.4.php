@@ -22,4 +22,6 @@ foreach ($likeObjectList as $likeObject) {
 	$deletedResponseIDs[] = $likeObject->objectID;
 }
 
-LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment.response', $deletedResponseIDs);
+if (!empty($deletedResponseIDs)) {
+	LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment.response', $deletedResponseIDs);
+}
