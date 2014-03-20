@@ -1,10 +1,12 @@
 <?php
 namespace wcf\data\user;
 use wcf\data\user\group\UserGroup;
+use wcf\data\IUserContent; 
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -20,7 +22,7 @@ use wcf\util\PasswordUtil;
  * @subpackage	data.user
  * @category	Community Framework
  */
-final class User extends DatabaseObject implements IRouteController {
+final class User extends DatabaseObject implements IRouteController, IUserContent {
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -226,6 +228,36 @@ final class User extends DatabaseObject implements IRouteController {
 		}
 		
 		return $this->languageIDs;
+	}
+	
+	/**
+	 * @see \wcf\data\IUserContent::getUserID()
+	 */
+	public function getUserID() {
+		return $this->userID;
+	}
+	
+	/**
+	 * \wcf\data\ILinkableObject::getLink()
+	 */
+	public function getLink() {
+		return LinkHandler::getInstance()->getLink('User', array(
+			'object' => $this
+		));
+	}
+	
+	/**
+	 * @see \wcf\data\IUserContent::getTime()
+	 */
+	public function getTime() {
+		return $this->registrationDate;
+	}
+	
+	/**
+	 * @see \wcf\data\IUserContent::getUsername()
+	 */
+	public function getUsername() {
+		return $this->username;
 	}
 	
 	/**
