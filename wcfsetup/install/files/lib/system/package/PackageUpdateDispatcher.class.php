@@ -54,16 +54,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				}
 				catch (PackageUpdateUnauthorizedException $e) {
 					$reply = $e->getRequest()->getReply();
-					foreach ($reply['headers'] as $header) {
-						if (preg_match('~^HTTP~', $header)) {
-							$errorMessage = $header;
-							break;
-						}
-					}
-					
-					if (!$errorMessage) {
-						$errorMessage = 'Unknown (HTTP status ' . (is_array($reply['statusCode']) ? reset($reply['statusCode']) : $reply['statusCode']) . ')';
-					}
+					$errorMessage = reset($reply['httpHeaders']);
 				}
 				
 				if ($errorMessage) {

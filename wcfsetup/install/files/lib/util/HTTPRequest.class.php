@@ -9,7 +9,7 @@ use wcf\system\Regex;
 use wcf\system\WCF;
 
 /**
- * Sends HTTP requests.
+ * Sends HTTP/1.1 requests.
  * It supports POST, SSL, Basic Auth etc.
  * 
  * @author	Tim Duesterhus
@@ -81,6 +81,12 @@ final class HTTPRequest {
 	private $headers = array();
 	
 	/**
+	 * legacy headers
+	 * @var	array<string>
+	 */
+	private $legacyHeaders = array();
+	
+	/**
 	 * request body
 	 * @var	string
 	 */
@@ -121,9 +127,10 @@ final class HTTPRequest {
 		$this->setOptions($options);
 		
 		// set default headers
-		$this->addHeader('User-Agent', "HTTP.PHP (HTTPRequest.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")");
-		$this->addHeader('Accept', '*/*');
-		$this->addHeader('Accept-Language', WCF::getLanguage()->getFixedLanguageCode());
+		$this->addHeader('user-agent', "HTTP.PHP (HTTPRequest.class.php; WoltLab Community Framework/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")");
+		$this->addHeader('accept', '*/*');
+		$this->addHeader('accept-language', WCF::getLanguage()->getFixedLanguageCode());
+		
 		if ($this->options['method'] !== 'GET') {
 			if (empty($this->files)) {
 				if (is_array($postParameters)) {
@@ -133,11 +140,11 @@ final class HTTPRequest {
 					$this->body = $postParameters;
 				}
 				
-				$this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
+				$this->addHeader('content-type', 'application/x-www-form-urlencoded');
 			}
 			else {
 				$boundary = StringUtil::getRandomID();
-				$this->addHeader('Content-Type', 'multipart/form-data; boundary='.$boundary);
+				$this->addHeader('content-type', 'multipart/form-data; boundary='.$boundary);
 				
 				// source of the iterators: http://stackoverflow.com/a/7623716/782822
 				if (!empty($this->postParameters)) {
@@ -175,13 +182,13 @@ final class HTTPRequest {
 				
 				$this->body .= "--".$boundary."--";
 			}
-			$this->addHeader('Content-length', strlen($this->body));
+			$this->addHeader('content-length', strlen($this->body));
 		}
 		if (isset($this->options['auth'])) {
-			$this->addHeader('Authorization', "Basic ".base64_encode($options['auth']['username'].":".$options['auth']['password']));
+			$this->addHeader('authorization', "Basic ".base64_encode($options['auth']['username'].":".$options['auth']['password']));
 		}
-		$this->addHeader('Host', $this->host.($this->port != ($this->useSSL ? 443 : 80) ? ':'.$this->port : ''));
-		$this->addHeader('Connection', 'Close');
+		$this->addHeader('host', $this->host.($this->port != ($this->useSSL ? 443 : 80) ? ':'.$this->port : ''));
+		$this->addHeader('connection', 'Close');
 	}
 	
 	/**
@@ -206,7 +213,7 @@ final class HTTPRequest {
 		
 		// update the 'Host:' header if URL has changed
 		if (!empty($this->url) && $this->url != $url) {
-			$this->addHeader('Host', $this->host.($this->port != ($this->useSSL ? 443 : 80) ? ':'.$this->port : ''));
+			$this->addHeader('host', $this->host.($this->port != ($this->useSSL ? 443 : 80) ? ':'.$this->port : ''));
 		}
 		
 		$this->url = $url;
@@ -219,7 +226,7 @@ final class HTTPRequest {
 		// connect
 		$remoteFile = new RemoteFile(($this->useSSL ? 'ssl://' : '').$this->host, $this->port, $this->options['timeout']);
 		
-		$request = $this->options['method']." ".$this->path.($this->query ? '?'.$this->query : '')." HTTP/1.0\r\n";
+		$request = $this->options['method']." ".$this->path.($this->query ? '?'.$this->query : '')." HTTP/1.1\r\n";
 		
 		// add headers
 		foreach ($this->headers as $name => $values) {
@@ -228,6 +235,7 @@ final class HTTPRequest {
 			}
 		}
 		$request .= "\r\n";
+		
 		// add post parameters
 		if ($this->options['method'] !== 'GET') $request .= $this->body."\r\n\r\n";
 		
@@ -236,51 +244,115 @@ final class HTTPRequest {
 		$inHeader = true;
 		$this->replyHeaders = array();
 		$this->replyBody = '';
+		$chunkLength = 0;
 		
 		// read http response.
 		while (!$remoteFile->eof()) {
-			$line = $remoteFile->gets();
+			if ($chunkLength) {
+				$line = $remoteFile->read($chunkLength);
+			}
+			else {
+				$line = $remoteFile->gets();
+			}
+			
 			if ($inHeader) {
 				if (rtrim($line) === '') {
 					$inHeader = false;
+					$this->parseReplyHeaders();
+					
 					continue;
 				}
 				$this->replyHeaders[] = $line;
 			}
 			else {
-				$this->replyBody .= $line;
+				$chunkedTransferRegex = new Regex('(^|,)[ \t]*chunked[ \t]*$', Regex::CASE_INSENSITIVE);
+				if (isset($this->replyHeaders['transfer-encoding']) && $chunkedTransferRegex->match(end($this->replyHeaders['transfer-encoding']))) {
+					// remove chunked from transfer-encoding
+					$this->replyHeaders['transfer-encoding'] = array_filter(array_map(function ($element) use ($chunkedTransferRegex) {
+						return $chunkedTransferRegex->replace($element, '');
+					}, $this->replyHeaders['transfer-encoding']), 'trim');
+					if (empty($this->replyHeaders['transfer-encoding'])) unset($this->replyHeaders['transfer-encoding']);
+					
+					// last chunk finished
+					if ($chunkLength === 0) {
+						// read hex data and trash chunk-extension
+						list($hex) = explode(';', $line, 2);
+						$chunkLength = hexdec($hex);
+						
+						// $chunkLength === 0 -> no more data
+						if ($chunkLength === 0) {
+							// clear remaining response
+							while (!$remoteFile->gets());
+							
+							// break out of main reading loop
+							break;
+						}
+					}
+					else {
+						$this->replyBody .= $line;
+						$chunkLength -= strlen($line);
+						$remoteFile->read(2); // CRLF
+					}
+				}
+				else {
+					$this->replyBody .= $line;
+				}
 			}
 		}
 		
+		$remoteFile->close();
+		
 		$this->parseReply();
+	}
+	
+	/**
+	 * Parses the reply headers.
+	 */
+	private function parseReplyHeaders() {
+		$headers = array();
+		$lastKey = '';
+		foreach ($this->replyHeaders as $header) {
+			if (strpos($header, ':') === false) {
+				$headers[trim($header)] = array(trim($header));
+				continue;
+			}
+			
+			// 4.2 Header fields can be
+			// extended over multiple lines by preceding each extra line with at
+			// least one SP or HT.
+			if (ltrim($header, "\t ") !== $header) {
+				$headers[$lastKey][] = array_pop($headers[$lastKey]).' '.trim($header);
+			}
+			else {
+				list($key, $value) = explode(':', $header, 2);
+				
+				$lastKey = $key;
+				if (!isset($headers[$key])) $headers[$key] = array();
+				$headers[$key][] = trim($value);
+			}
+		}
+		// 4.2 Field names are case-insensitive.
+		$this->replyHeaders = array_change_key_case($headers);
+		if (isset($this->replyHeaders['transfer-encoding'])) $this->replyHeaders['transfer-encoding'] = array(implode(',', $this->replyHeaders['transfer-encoding']));
+		$this->legacyHeaders = array_map('end', $headers);
+		
+		// get status code
+		$statusLine = reset($this->replyHeaders);
+		$regex = new Regex('^HTTP/1.\d+ +(\d{3})');
+		if (!$regex->match($statusLine[0])) throw new SystemException("Unexpected status '".$statusLine."'");
+		$matches = $regex->getMatches();
+		$this->statusCode = $matches[1];
 	}
 	
 	/**
 	 * Parses the reply.
 	 */
 	private function parseReply() {
-		$headers = array();
-		
-		foreach ($this->replyHeaders as $header) {
-			if (strpos($header, ':') === false) {
-				$headers[trim($header)] = trim($header);
-				continue;
-			}
-			list($key, $value) = explode(':', $header, 2);
-			$headers[$key] = trim($value);
-		}
-		$this->replyHeaders = $headers;
-		
-		// get status code
-		$statusLine = reset($this->replyHeaders);
-		$regex = new Regex('^HTTP/1.[01] (\d{3})');
-		if (!$regex->match($statusLine)) throw new SystemException("Unexpected status '".$statusLine."'");
-		$matches = $regex->getMatches();
-		$this->statusCode = $matches[1];
-		
-		// validate length
-		if (isset($this->replyHeaders['Content-Length'])) {
-			if (strlen($this->replyBody) != $this->replyHeaders['Content-Length']) {
+		// 4.4 Messages MUST NOT include both a Content-Length header field and a
+		// non-identity transfer-coding. If the message does include a non-
+		// identity transfer-coding, the Content-Length MUST be ignored.
+		if (isset($this->replyHeaders['content-length']) && (!isset($this->replyHeaders['transfer-encoding']) || strtolower(end($this->replyHeaders['transfer-encoding'])) !== 'identity')) {
+			if (strlen($this->replyBody) != $this->replyHeaders['content-length']) {
 				throw new SystemException('Body length does not match length given in header');
 			}
 		}
@@ -297,21 +369,20 @@ final class HTTPRequest {
 				$newRequest = clone $this;
 				$newRequest->options['maxDepth']--;
 				
-				// The response to the request can be found under a different URI and SHOULD
+				// 10.3.4 The response to the request can be found under a different URI and SHOULD
 				// be retrieved using a GET method on that resource.
-				// http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.4
 				if ($this->statusCode == '303') {
 					$newRequest->options['method'] = 'GET';
 					$newRequest->postParameters = array();
-					$newRequest->addHeader('Content-length', '');
-					$newRequest->addHeader('Content-Type', '');
+					$newRequest->addHeader('content-length', '');
+					$newRequest->addHeader('content-type', '');
 				}
 				
 				try {
-					$newRequest->setURL($this->replyHeaders['Location']);
+					$newRequest->setURL(end($this->replyHeaders['location']));
 				}
 				catch (SystemException $e) {
-					throw new SystemException("Received 'Location: ".$this->replyHeaders['Location']."' from server, which is invalid.", 0, $e);
+					throw new SystemException("Received 'Location: ".end($this->replyHeaders['location'])."' from server, which is invalid.", 0, $e);
 				}
 				
 				try {
@@ -336,11 +407,6 @@ final class HTTPRequest {
 				return;
 			break;
 			
-			case '200':
-			case '204':
-				// we are fine
-			break;
-			
 			case '401':
 			case '403':
 				throw new HTTPUnauthorizedException("Received status code '".$this->statusCode."' from server");
@@ -349,26 +415,40 @@ final class HTTPRequest {
 			case '404':
 				throw new HTTPNotFoundException("Received status code '404' from server");
 			break;
-			
-			case '500':
-				throw new HTTPServerErrorException("Received status code '500' from server");
-			break;
-			
+				
 			default:
-				throw new SystemException("Received unhandled status code '".$this->statusCode."' from server");
+				// 6.1.1 However, applications MUST
+				// understand the class of any status code, as indicated by the first
+				// digit, and treat any unrecognized response as being equivalent to the
+				// x00 status code of that class, with the exception that an
+				// unrecognized response MUST NOT be cached.
+				switch (substr($this->statusCode, 0, 1)) {
+					case '2': // 200 and unknown 2XX
+					case '3': // 300 and unknown 3XX
+						// we are fine
+					break;
+					case '5': // 500 and unknown 5XX
+						throw new HTTPServerErrorException("Received status code '".$this->statusCode."' from server");
+					break;
+					default:
+						throw new SystemException("Received unhandled status code '".$this->statusCode."' from server");
+					break;
+				}
 			break;
 		}
 	}
 	
 	/**
 	 * Returns an array with the replied data.
+	 * Note that the 'headers' element is deprecated and may be removed in the future.
 	 * 
 	 * @return	array
 	 */
 	public function getReply() {
 		return array(
 			'statusCode' => $this->statusCode, 
-			'headers' => $this->replyHeaders, 
+			'headers' => $this->legacyHeaders,
+			'httpHeaders' => $this->replyHeaders,
 			'body' => $this->replyBody,
 			'url' => $this->url
 		);
@@ -414,6 +494,9 @@ final class HTTPRequest {
 	 * @param	boolean		$append
 	 */
 	public function addHeader($name, $value, $append = false) {
+		// 4.2 Field names are case-insensitive.
+		$name = strtolower($name);
+		
 		if ($value === '') {
 			unset($this->headers[$name]);
 			return;
