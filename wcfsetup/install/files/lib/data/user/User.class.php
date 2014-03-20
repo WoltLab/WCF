@@ -1,13 +1,13 @@
 <?php
 namespace wcf\data\user;
 use wcf\data\user\group\UserGroup;
-use wcf\data\IUserContent; 
 use wcf\data\user\UserList;
+use wcf\data\IUserContent; 
 use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
-use wcf\system\request\LinkHandler;
 use wcf\system\request\IRouteController;
+use wcf\system\request\LinkHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\PasswordUtil;
