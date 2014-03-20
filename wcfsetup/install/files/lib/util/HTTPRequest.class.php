@@ -131,6 +131,10 @@ final class HTTPRequest {
 		$this->addHeader('accept', '*/*');
 		$this->addHeader('accept-language', WCF::getLanguage()->getFixedLanguageCode());
 		
+		if (isset($this->options['maxLength'])) {
+			$this->addHeader('Range', 'bytes=0-'.($this->options['maxLength'] - 1));
+		}
+		
 		if ($this->options['method'] !== 'GET') {
 			if (empty($this->files)) {
 				if (is_array($postParameters)) {
@@ -245,10 +249,12 @@ final class HTTPRequest {
 		$this->replyHeaders = array();
 		$this->replyBody = '';
 		$chunkLength = 0;
+		$bodyLength = 0;
 		
 		// read http response.
 		while (!$remoteFile->eof()) {
 			if ($chunkLength) {
+				if (isset($this->options['maxLength'])) $chunkLength = min($chunkLength, $this->options['maxLength'] - $bodyLength);
 				$line = $remoteFile->read($chunkLength);
 			}
 			else {
@@ -291,14 +297,22 @@ final class HTTPRequest {
 					else {
 						$this->replyBody .= $line;
 						$chunkLength -= strlen($line);
+						$bodyLength = +strlen($line);
 						$remoteFile->read(2); // CRLF
 					}
 				}
 				else {
 					$this->replyBody .= $line;
+					$bodyLength = +strlen($line);
+				}
+				
+				if (isset($this->options['maxLength']) && $bodyLength >= $this->options['maxLength']) {
+					break;
 				}
 			}
 		}
+		
+		if (isset($this->options['maxLength'])) $this->replyBody = substr($this->replyBody, 0, $this->options['maxLength']);
 		
 		$remoteFile->close();
 		
@@ -351,7 +365,7 @@ final class HTTPRequest {
 		// 4.4 Messages MUST NOT include both a Content-Length header field and a
 		// non-identity transfer-coding. If the message does include a non-
 		// identity transfer-coding, the Content-Length MUST be ignored.
-		if (isset($this->replyHeaders['content-length']) && (!isset($this->replyHeaders['transfer-encoding']) || strtolower(end($this->replyHeaders['transfer-encoding'])) !== 'identity')) {
+		if (isset($this->replyHeaders['content-length']) && (!isset($this->replyHeaders['transfer-encoding']) || strtolower(end($this->replyHeaders['transfer-encoding'])) !== 'identity') && !isset($this->options['maxLength'])) {
 			if (strlen($this->replyBody) != $this->replyHeaders['content-length']) {
 				throw new SystemException('Body length does not match length given in header');
 			}
@@ -405,6 +419,16 @@ final class HTTPRequest {
 				}
 				
 				return;
+			break;
+			
+			case '206':
+				// check, if partial content was expected
+				if (!isset($this->headers['range'])) {
+					throw new HTTPServerErrorException("Received unexpected status code '206' from server");
+				}
+				else if (!isset($this->replyHeaders['content-range'])) {
+					throw new HTTPServerErrorException("Content-Range is missing in reply header");
+				}
 			break;
 			
 			case '401':
