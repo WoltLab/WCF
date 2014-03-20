@@ -3,8 +3,11 @@ CONTRIBUTING
 
 First of all: Thanks for your interest in contributing to WoltLab Community Framework! However, you have to meet some requirements in order to get your changes accepted.
 
+**Notice:** This is the unstable development tree of WCF, if you wish to submit pull requests for WCF 2.0.x, please select the branch "2.0". 
+
 General requirements
 --------------------
+- **API changes are undesirable**, we want to maintain full backwards compatibility to WCF 2.0.x
 - Testing is the key, you MUST try out your changes before submitting pull requests. It saves us and yourself a lot of time.
 - The code SHOULD be written by yourself, otherwise you have to check the license beforehand with regard to compatibility and give the proper credit to the original author.
 
