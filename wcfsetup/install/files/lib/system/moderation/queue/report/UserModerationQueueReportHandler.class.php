@@ -12,7 +12,7 @@ use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\WCF;
 
 /**
- * An implementation of IModerationQueueReportHandler for comment responses.
+ * An implementation of IModerationQueueReportHandler for user.
  * 
  * @author	Joshua Rüsweg
  * @copyright	2001-2014 WoltLab GmbH
