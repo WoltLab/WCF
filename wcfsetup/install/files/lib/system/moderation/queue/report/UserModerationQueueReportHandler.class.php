@@ -97,13 +97,13 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
 	 * @see	\wcf\system\moderation\queue\report\IModerationQueueReportHandler::getReportedContent()
 	 */
 	public function getReportedContent(ViewableModerationQueue $queue) {
-		$this->optionHandler = new UserOptionHandler(false, '', 'profile');
-		$this->optionHandler->enableEditMode(false);
-		$this->optionHandler->showEmptyOptions(false);
-		$this->optionHandler->setUser($queue->getAffectedObject());
+		$optionHandler = new UserOptionHandler(false, '', 'profile');
+		$optionHandler->enableEditMode(false);
+		$optionHandler->showEmptyOptions(false);
+		$optionHandler->setUser($queue->getAffectedObject());
 		
 		WCF::getTPL()->assign(array(
-			'options' => $this->optionHandler->getOptionTree(),
+			'options' => $optionHandler->getOptionTree(),
 			'user' => new UserProfile($queue->getAffectedObject()), 
 			'userID' => $queue->getAffectedObject()->userID
 		));
