@@ -1908,7 +1908,7 @@ Errors are:
 		<item name="wcf.moderation.report.alreadyReported"><![CDATA[This content has already been reported.]]></item>
 		<item name="wcf.moderation.report.details"><![CDATA[Information]]></item>
 		<item name="wcf.moderation.report.reason"><![CDATA[Reason]]></item>
-		<item name="wcf.moderation.report.reason.description"><![CDATA[This function is reserved for: Spam, Advertisement and other questionable (rassism, glorification of violence, offending or sexist) content]]></item>
+		<item name="wcf.moderation.report.reason.description"><![CDATA[This function is reserved for: Spam, Advertisement and other questionable (racism, glorification of violence, offending or sexist) content]]></item>
 		<item name="wcf.moderation.report.removeContent"><![CDATA[Delete Reported Content]]></item>
 		<item name="wcf.moderation.report.removeContent.confirmMessage"><![CDATA[Do you really want to delete the reported content?]]></item>
 		<item name="wcf.moderation.report.removeContent.reason"><![CDATA[Reason (optional)]]></item>
