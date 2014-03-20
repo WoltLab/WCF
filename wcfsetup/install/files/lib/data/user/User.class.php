@@ -2,8 +2,8 @@
 namespace wcf\data\user;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
-use wcf\data\IUserContent; 
 use wcf\data\DatabaseObject;
+use wcf\data\IUserContent; 
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
