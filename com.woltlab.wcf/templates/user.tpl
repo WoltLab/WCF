@@ -18,9 +18,7 @@
 					'wcf.user.button.follow': '{lang}wcf.user.button.follow{/lang}',
 					'wcf.user.button.unfollow': '{lang}wcf.user.button.unfollow{/lang}',
 					'wcf.user.button.ignore': '{lang}wcf.user.button.ignore{/lang}',
-					'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}',
-					'wcf.moderation.report.reportContent': '{lang}wcf.moderation.report.reportContent{/lang}',
-					'wcf.moderation.report.success': '{lang}wcf.moderation.report.success{/lang}'
+					'wcf.user.button.unignore': '{lang}wcf.user.button.unignore{/lang}'
 				});
 				
 				{if !$user->getPermission('user.profile.cannotBeIgnored')}
