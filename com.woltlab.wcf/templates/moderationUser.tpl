@@ -13,7 +13,6 @@
 						<div class="messageHeadline">
 							<h1><a href="{@$user->getLink()}">{$user->getTitle()}</a></h1>
 							<p>
-								<span class="username"><a href="{link controller='User' object=$user->getDecoratedObject()}{/link}">{$user->getUsername()}</a></span>
 									{lang}wcf.user.membersList.registrationDate{/lang}
 							</p>
 						</div>
