@@ -4,6 +4,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction; 
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfile;
+use wcf\system\option\user\UserOptionHandler; 
 use wcf\data\user\group\UserGroup; 
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
@@ -103,7 +104,8 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
 		
 		WCF::getTPL()->assign(array(
 			'options' => $this->optionHandler->getOptionTree(),
-			'user' => new UserProfile($queue->getAffectedObject())
+			'user' => new UserProfile($queue->getAffectedObject()), 
+			'userID' => $queue->getAffectedObject()->userID
 		));
 		
 		return WCF::getTPL()->fetch('moderationUser');
@@ -162,7 +164,7 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
 		
 		// fetch user
 		$userList = new UserList();
-		$userList->getConditionBuilder()->add("user.userID IN (?)", array($objectIDs));
+		$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($objectIDs));
 		$userList->readObjects();
 		$user = $userList->getObjects();
 		
