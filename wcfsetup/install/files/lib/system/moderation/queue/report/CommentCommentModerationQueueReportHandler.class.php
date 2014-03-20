@@ -134,11 +134,7 @@ class CommentCommentModerationQueueReportHandler extends AbstractModerationQueue
 	 * @see	\wcf\system\moderation\queue\report\IModerationQueueReportHandler::getReportedObject()
 	 */
 	public function getReportedObject($objectID) {
-		if ($this->isValid($objectID)) {
-			return $this->getComment($objectID);
-		}
-		
-		return null;
+		return $this->getComment($objectID);
 	}
 	
 	/**
