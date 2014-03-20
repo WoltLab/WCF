@@ -44,6 +44,7 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="2.0.4">
+		<instruction type="file">files_update.tar</instruction>
 		<instruction type="language">languages/*</instruction>
 		<instruction type="smiley">smiley.xml</instruction>
 		<instruction type="userOption">userOption.xml</instruction>
