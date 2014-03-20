@@ -209,6 +209,12 @@
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
 			<classname><![CDATA[wcf\system\moderation\queue\report\CommentResponseModerationQueueReportHandler]]></classname>
 		</type>
+                
+                <type>
+			<name>com.woltlab.wcf.user.user</name>
+			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
+			<classname><![CDATA[wcf\system\moderation\queue\report\UserModerationQueueReportHandler]]></classname>
+		</type>
 		<!-- /moderation -->
 		
 		<type>
