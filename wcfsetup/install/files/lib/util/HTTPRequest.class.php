@@ -366,7 +366,7 @@ final class HTTPRequest {
 		// non-identity transfer-coding. If the message does include a non-
 		// identity transfer-coding, the Content-Length MUST be ignored.
 		if (isset($this->replyHeaders['content-length']) && (!isset($this->replyHeaders['transfer-encoding']) || strtolower(end($this->replyHeaders['transfer-encoding'])) !== 'identity') && !isset($this->options['maxLength'])) {
-			if (strlen($this->replyBody) != $this->replyHeaders['content-length']) {
+			if (strlen($this->replyBody) != end($this->replyHeaders['content-length'])) {
 				throw new SystemException('Body length does not match length given in header');
 			}
 		}
