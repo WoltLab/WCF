@@ -49,6 +49,17 @@ class QuickReplyManager extends SingletonFactory {
 	public $type = '';
 	
 	/**
+	 * additional fields
+	 * @var	array
+	 */
+	public $additionalFields = array();
+	
+	/**
+	 * the message that just was created
+	 */
+	public $message = null;
+	
+	/**
 	 * Returns a stored message from session.
 	 * 
 	 * @param	string		$type
@@ -139,6 +150,8 @@ class QuickReplyManager extends SingletonFactory {
 		
 		// check for message quote ids
 		$parameters['removeQuoteIDs'] = (isset($parameters['removeQuoteIDs']) && is_array($parameters['removeQuoteIDs'])) ? ArrayUtil::trim($parameters['removeQuoteIDs']) : array();
+		
+		EventHandler::getInstance()->fireAction($this, 'validateParameters');
 	}
 	
 	/**
@@ -153,6 +166,8 @@ class QuickReplyManager extends SingletonFactory {
 	 * @return	array
 	 */
 	public function createMessage(IMessageQuickReplyAction $object, array &$parameters, $containerActionClassName, $sortOrder, $templateName, $application = 'wcf') {
+		EventHandler::getInstance()->fireAction($this, 'createMessage');
+		
 		$tableIndexName = call_user_func(array($this->container, 'getDatabaseTableIndexName'));
 		$parameters['data'][$tableIndexName] = $parameters['objectID'];
 		$parameters['data']['enableSmilies'] = WCF::getSession()->getPermission('user.message.canUseSmilies');
@@ -160,14 +175,25 @@ class QuickReplyManager extends SingletonFactory {
 		$parameters['data']['enableBBCodes'] = WCF::getSession()->getPermission('user.message.canUseBBCodes');
 		$parameters['data']['showSignature'] = (WCF::getUser()->userID ? WCF::getUser()->showSignature : 0);
 		$parameters['data']['time'] = TIME_NOW;
-		$parameters['data']['userID'] = WCF::getUser()->userID;
+		$parameters['data']['userID'] = WCF::getUser()->userID ?: null;
 		$parameters['data']['username'] = WCF::getUser()->username;
 		
 		// pre-parse message text
 		$parameters['data']['message'] = MessageUtil::stripCrap($parameters['data']['message']);
 		$parameters['data']['message'] = PreParser::getInstance()->parse($parameters['data']['message'], $this->allowedBBodes);
 		
-		$message = $object->create();
+		$parameters['data'] = array_merge($this->additionalFields, $parameters['data']);
+		
+		// clean up
+		$this->additionalFields = array();
+		
+		$this->message = $object->create();
+		EventHandler::getInstance()->fireAction($this, 'createdMessage');
+		$message = $this->message;
+		
+		// clean up
+		$this->message = null;
+		
 		if ($message instanceof IMessage && !$message->isVisible()) {
 			return array(
 				'isVisible' => false
