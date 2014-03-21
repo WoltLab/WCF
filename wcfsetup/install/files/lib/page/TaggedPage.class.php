@@ -18,6 +18,11 @@ use wcf\system\WCF;
  */
 class TaggedPage extends MultipleLinkPage {
 	/**
+	 * @see	\wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_TAGGING');
+	
+	/**
 	 * tag id
 	 * @var	integer
 	 */
