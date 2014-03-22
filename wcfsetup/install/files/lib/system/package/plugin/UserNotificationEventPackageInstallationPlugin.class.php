@@ -30,6 +30,12 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	public $tagName = 'event';
 	
 	/**
+	 * preset event ids
+	 * @var array<integer>
+	 */
+	protected $presetEventIDs = array();
+	
+	/**
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::handleDelete()
 	 */
 	protected function handleDelete(array $items) {
@@ -72,6 +78,37 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 			'options' => (isset($data['elements']['options']) ? $data['elements']['options'] : ''),
 			'preset' => (!empty($data['elements']['preset']) ? 1 : 0)
 		);
+	}
+	
+	/**
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::import()
+	 */
+	protected function import(array $row, array $data) {
+		$result = parent::import($row, $data);
+		
+		if (empty($row)) {
+			$this->presetEventIDs[] = $result->eventID;
+		}
+
+		return $result;
+	}
+	
+	/**
+	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::cleanup()
+	 */
+	protected function cleanup() {
+		if (empty($this->presetEventIDs)) return;
+		
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_notification_event_to_user
+						(userID, eventID)
+			SELECT			userID, ?
+			FROM			wcf".WCF_N."_user";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		WCF::getDB()->beginTransaction();
+		foreach ($this->presetEventIDs as $eventID) {
+			$statement->execute(array($eventID));
+		}
+		WCF::getDB()->commitTransaction();
 	}
 	
 	/**
