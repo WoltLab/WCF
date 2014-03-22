@@ -117,7 +117,23 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 		this._map = new google.maps.Map(this._mapContainer[0], this._mapOptions);
 		this._markers = [ ];
 		
+		// fix maps in mobile sidebars by refreshing the map when displaying
+		// the map
+		if (this._mapContainer.parents('.sidebar').length) {
+			enquire.register('screen and (max-width: 800px)', {
+				setup: $.proxy(this._addSidebarMapListener, this),
+				deferSetup: true
+			});
+		}
+		
 		this.refresh();
+	},
+	
+	/**
+	 * Adds click listener to mobile sidebar toggle button to refresh map.
+	 */
+	_addSidebarMapListener: function() {
+		$('.content > .mobileSidebarToggleButton').click($.proxy(this.refresh, this));
 	},
 	
 	/**
@@ -129,7 +145,7 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 		var $defaultMapOptions = { };
 		
 		// dummy center value
-		$defaultMapOptions.center = new google.maps.LatLng(52.517, 13.4); // Berlin
+		$defaultMapOptions.center = new google.maps.LatLng(WCF.Location.GoogleMaps.Settings.get('defaultLatitude'), WCF.Location.GoogleMaps.Settings.get('defaultLongitude'));
 		
 		// double click to zoom
 		$defaultMapOptions.disableDoubleClickZoom = WCF.Location.GoogleMaps.Settings.get('disableDoubleClickZoom');

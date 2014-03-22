@@ -10,7 +10,9 @@
 			scaleControl: {@GOOGLE_MAPS_ENABLE_SCALE_CONTROL},
 			scrollwheel: {@GOOGLE_MAPS_ENABLE_SCROLL_WHEEL_ZOOM},
 			type: '{@GOOGLE_MAPS_TYPE}',
-			zoom: {@GOOGLE_MAPS_ZOOM}
+			zoom: {@GOOGLE_MAPS_ZOOM},
+			defaultLatitude: {@GOOGLE_MAPS_DEFAULT_LATITUDE},
+			defaultLongitude: {@GOOGLE_MAPS_DEFAULT_LONGITUDE}
 		});
 		
 		{event name='javascriptInit'}
