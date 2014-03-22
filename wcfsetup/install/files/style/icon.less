@@ -9,7 +9,7 @@
 	font-style: normal;
 }
 
-.icon {
+.icon, .fa {
 	color: @wcfColor;
 	display: inline-block;
 	font-family: FontAwesome;
@@ -70,11 +70,13 @@
 }
 
 // firefox cursor issue
-span.icon:not(.pointer):not(.disabled) {
+span.icon:not(.pointer):not(.disabled),
+span.fa:not(.pointer):not(.disabled) {
 	cursor: default;
 }
 
-a > span.icon:not(.pointer) {
+a > span.icon:not(.pointer),
+a > span.fa:not(.pointer) {
 	cursor: pointer !important;
 }
 
