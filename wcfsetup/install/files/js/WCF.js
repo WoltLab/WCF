@@ -3670,9 +3670,11 @@ WCF.String = {
 	 */
 	formatNumeric: function(number, decimalPlaces) {
 		number = String(WCF.Number.round(number, decimalPlaces || 2));
-		number = number.replace('.', WCF.Language.get('wcf.global.decimalPoint'));
+		numberParts = number.split('.');
 		
-		number = this.addThousandsSeparator(number);
+		number = this.addThousandsSeparator(numberParts[0]);
+		if (numberParts.length > 1) number += WCF.Language.get('wcf.global.decimalPoint') + numberParts[1];
+		
 		number = number.replace('-', '\u2212');
 		
 		return number;
