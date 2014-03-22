@@ -117,7 +117,23 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 		this._map = new google.maps.Map(this._mapContainer[0], this._mapOptions);
 		this._markers = [ ];
 		
+		// fix maps in mobile sidebars by refreshing the map when displaying
+		// the map
+		if (this._mapContainer.parents('.sidebar').length) {
+			enquire.register('screen and (max-width: 800px)', {
+				setup: $.proxy(this._addSidebarMapListener, this),
+				deferSetup: true
+			});
+		}
+		
 		this.refresh();
+	},
+	
+	/**
+	 * Adds click listener to mobile sidebar toggle button to refresh map.
+	 */
+	_addSidebarMapListener: function() {
+		$('.content > .mobileSidebarToggleButton').click($.proxy(this.refresh, this));
 	},
 	
 	/**
