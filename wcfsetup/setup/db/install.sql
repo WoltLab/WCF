@@ -930,6 +930,7 @@ CREATE TABLE wcf1_template_listener (
 	templateName VARCHAR(80) NOT NULL DEFAULT '',
 	eventName VARCHAR(50) NOT NULL DEFAULT '',
 	templateCode TEXT NOT NULL,
+	niceValue TINYINT(3) NOT NULL DEFAULT 0,
 	KEY templateName (environment, templateName)
 );
 

@@ -45,9 +45,18 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
+		$niceValue = isset($data['elements']['nice']) ? intval($data['elements']['nice']) : 0;
+		if ($niceValue < -128) {
+			$niceValue = -128;
+		}
+		else if ($niceValue > 127) {
+			$niceValue = 127;
+		}
+		
 		return array(
 			'environment' => $data['elements']['environment'],
 			'eventName' => $data['elements']['eventname'],
+			'niceValue' => $niceValue,
 			'name' => $data['attributes']['name'],
 			'templateCode' => $data['elements']['templatecode'],
 			'templateName' => $data['elements']['templatename']
