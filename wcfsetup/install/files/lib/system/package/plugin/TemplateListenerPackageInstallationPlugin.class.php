@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\system\cache\builder\TemplateListenerCacheBuilder;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\WCF;
 
@@ -85,7 +84,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 */
 	protected function cleanup() {
 		// clear cache immediately
-		TemplateListenerCacheBuilder::getInstance()->reset();
 		TemplateListenerCodeCacheBuilder::getInstance()->reset();
 	}
 }

@@ -50,11 +50,4 @@ class SetupTemplateEngine extends TemplateEngine {
 	public function getMetaDataFilename($templateName) {
 		return $this->compileDir.'setup/template/compiled/'.$this->languageID.'_'.$templateName.'.meta.php';
 	}
-	
-	/**
-	 * @see	\wcf\system\template\TemplateEngine::loadTemplateListeners()
-	 */
-	protected function loadTemplateListeners() {
-		// template isteners are not available during setup
-	}
 }
