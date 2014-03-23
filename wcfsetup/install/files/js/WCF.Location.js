@@ -145,7 +145,7 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 		var $defaultMapOptions = { };
 		
 		// dummy center value
-		$defaultMapOptions.center = new google.maps.LatLng(52.517, 13.4); // Berlin
+		$defaultMapOptions.center = new google.maps.LatLng(WCF.Location.GoogleMaps.Settings.get('defaultLatitude'), WCF.Location.GoogleMaps.Settings.get('defaultLongitude'));
 		
 		// double click to zoom
 		$defaultMapOptions.disableDoubleClickZoom = WCF.Location.GoogleMaps.Settings.get('disableDoubleClickZoom');
