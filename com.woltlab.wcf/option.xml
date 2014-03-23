@@ -1129,6 +1129,12 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
+			<option name="message_sidebar_enable_user_online_marking">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_users_online</options>
+			</option>
 			<option name="message_sidebar_user_options">
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>useroptions</optiontype>
