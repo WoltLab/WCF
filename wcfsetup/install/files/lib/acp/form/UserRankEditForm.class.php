@@ -21,7 +21,7 @@ class UserRankEditForm extends UserRankAddForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.user.rank.list';
+	public $activeMenuItem = 'wcf.acp.menu.link.user.rank';
 	
 	/**
 	 * rank id
