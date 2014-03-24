@@ -1952,11 +1952,12 @@ Errors are:
 		<item name="wcf.poll.options"><![CDATA[Options]]></item>
 		<item name="wcf.poll.options.description"><![CDATA[You can sort the options with drag and drop to change their order. You can create up to {@POLL_MAX_OPTIONS} options.]]></item>
 		<item name="wcf.poll.question"><![CDATA[Question]]></item>
-		<item name="wcf.poll.restrictedResult"><![CDATA[Result is only visible for participants]]></item>
+		<item name="wcf.poll.restrictedResult"><![CDATA[Result is only visible for participants.]]></item>
 		<item name="wcf.poll.resultsRequireVote"><![CDATA[Restrict results for participants only]]></item>
 		<item name="wcf.poll.resultsRequireVote.description"><![CDATA[Results are invisible unless the poll ended or the user voted.]]></item>
 		<item name="wcf.poll.sortByVotes"><![CDATA[Sort result by votes]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[A total of {#$poll->votes} vote{if $poll->votes != 1}s{/if}]]></item>
+		<item name="wcf.poll.endTimeInfo"><![CDATA[TODO: Umfrage endet am {@$poll->endTime|plainTime}]]></item>
 	</category>
 	
 	<category name="wcf.recaptcha">
