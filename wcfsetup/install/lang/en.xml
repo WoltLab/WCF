@@ -370,6 +370,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.group.button.choose"><![CDATA[Choose User Group]]></item>
 		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
+		<item name="wcf.acp.group.option.admin.user.canDisableAvatar"><![CDATA[Can block avatar]]></item>
+		<item name="wcf.acp.group.option.admin.user.canDisableSignature"><![CDATA[Can block signature]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -1775,6 +1777,7 @@ Errors are:
 		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.global.noItems"><![CDATA[There are no items.]]></item>
 		<item name="wcf.global.button.showAll"><![CDATA[Show All]]></item>
+		<item name="wcf.global.reason"><![CDATA[Reason]]></item>
 	</category>
 	
 	<category name="wcf.global.form">
@@ -2203,6 +2206,18 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.register.honeyPot.description"><![CDATA[Heads up! If you can see this, you are strongly encouraged <strong>NOT</strong> to fill in the next two input fields!]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Search for content by “{$user->username}”]]></item>
 		<item name="wcf.user.author"><![CDATA[Author]]></item>
+		<item name="wcf.user.moderate"><![CDATA[Moderate User]]></item>
+		<item name="wcf.user.ban"><![CDATA[Ban User]]></item>
+		<item name="wcf.user.ban.confirmMessage"><![CDATA[Do you really want to ban this user?]]></item>
+		<item name="wcf.user.ban.reason.description"><![CDATA[The reason will be displayed for the user when visiting the site.]]></item>
+		<item name="wcf.user.unban"><![CDATA[Unban User]]></item>
+		<item name="wcf.user.disableAvatar"><![CDATA[Block Avatar]]></item>
+		<item name="wcf.user.disableAvatar.confirmMessage"><![CDATA[Do you really want to block the avatar of this user?]]></item>
+		<item name="wcf.user.enableAvatar"><![CDATA[Unblock Avatar]]></item>
+		<item name="wcf.user.disableSignature"><![CDATA[Block Signature]]></item>
+		<item name="wcf.user.disableSignature.confirmMessage"><![CDATA[Do you really want to block the signature of this user?]]></item>
+		<item name="wcf.user.enableSignature"><![CDATA[Unblock Signature]]></item>
+		<item name="wcf.user.edit"><![CDATA[Edit User]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

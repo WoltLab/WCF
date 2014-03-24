@@ -79,6 +79,30 @@
 				});
 			{/if}
 			
+			{if $isAccessible}
+				WCF.Language.addObject({
+					'wcf.user.ban': '{lang}wcf.user.ban{/lang}',
+					'wcf.user.ban.confirmMessage': '{lang}wcf.user.ban.confirmMessage{/lang}',
+					'wcf.user.ban.reason.description': '{lang}wcf.user.ban.reason.description{/lang}',
+					'wcf.user.unban': '{lang}wcf.user.unban{/lang}',
+					'wcf.user.disableAvatar': '{lang}wcf.user.disableAvatar{/lang}',
+					'wcf.user.disableAvatar.confirmMessage': '{lang}wcf.user.disableAvatar.confirmMessage{/lang}',
+					'wcf.user.disableSignature': '{lang}wcf.user.disableSignature{/lang}',
+					'wcf.user.disableSignature.confirmMessage': '{lang}wcf.user.disableSignature.confirmMessage{/lang}',
+					'wcf.user.edit': '{lang}wcf.user.edit{/lang}',
+					'wcf.user.enableAvatar': '{lang}wcf.user.enableAvatar{/lang}',
+					'wcf.user.enableSignature': '{lang}wcf.user.enableSignature{/lang}'
+				});
+				
+				var $userInlineEditor = new WCF.User.InlineEditor('.userHeadline');
+				$userInlineEditor.setPermissions({
+					canBanUser: {if $__wcf->session->getPermission('admin.user.canBanUser')}true{else}false{/if},
+					canDisableAvatar: {if $__wcf->session->getPermission('admin.user.canDisableAvatar')}true{else}false{/if},
+					canDisableSignature: {if $__wcf->session->getPermission('admin.user.canDisableSignature')}true{else}false{/if},
+					canEditUser: {if $__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')}true{else}false{/if}
+				});
+			{/if}
+			
 			{event name='javascriptInit'}
 		});
 		//]]>
@@ -103,7 +127,20 @@
 
 {include file='header' sidebarOrientation='left'}
 
-<header class="boxHeadline userHeadline">
+<header class="boxHeadline userHeadline"
+	{if $isAccessible}
+		data-object-id="{@$user->userID}"
+		{if $__wcf->session->getPermission('admin.user.canBanUser')}
+			data-banned="{@$user->banned}"
+		{/if}
+		{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
+			data-disable-avatar="{@$user->disableAvatar}"
+		{/if}
+		{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
+			data-disable-signature="{@$user->disableSignature}"
+		{/if}
+	{/if}
+>
 	<span class="framed invisible">{@$user->getAvatar()->getImageTag(48)}</span>
 	
 	<h1>{$user->username}{if MODULE_USER_RANK && $user->getUserTitle()} <span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>{/if}</h1>
@@ -135,8 +172,20 @@
 					</ul>
 				</li>
 			{/hascontent}
-			{if $user->userID != $__wcf->user->userID}{if $user->isAccessible('canViewEmailAddress')}<li><a class="button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}<li><a class="button jsTooltip" href="{link controller='Mail' object=$user}{/link}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>{/if}{/if}
+			
+			{if $user->userID != $__wcf->user->userID && $user->isAccessible('canViewEmailAddress')}
+				<li><a class="button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}<li><a class="button jsTooltip" href="{link controller='Mail' object=$user}{/link}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
+			{/if}
+			
 			{event name='buttons'}
+			
+			{if $__wcf->session->getPermission('admin.user.canBanUser') || $__wcf->session->getPermission('admin.user.canDisableAvatar') || $__wcf->session->getPermission('admin.user.canDisableSignature') || ($__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser'))}
+				<li class="dropdown">
+					{* todo: better icon? *}
+					<a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="button jsTooltip jsUserInlineEditor" title="{lang}wcf.user.moderate{/lang}"><span class="icon icon16 icon-lock"></span> <span class="invisible">{lang}{lang}wcf.acp.user.edit{/lang}{/lang}</span></a>
+					<ul class="dropdownMenu"></ul>
+				</li>
+			{/if}
 		</ul>
 	</nav>
 </header>

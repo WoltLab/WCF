@@ -224,12 +224,25 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
+			<option name="admin.user.canDisableAvatar">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			<option name="admin.user.canDisableSignature">
+				<categoryname>admin.user.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
 			<option name="admin.user.canMailUser">
 				<categoryname>admin.user.user</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
+			
 			<option name="admin.user.canAddGroup">
 				<categoryname>admin.user.group</categoryname>
 				<optiontype>boolean</optiontype>
@@ -242,6 +255,7 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
+			
 			<option name="admin.user.canManageUserOption">
 				<categoryname>admin.user.option</categoryname>
 				<optiontype>boolean</optiontype>

@@ -281,37 +281,39 @@
 					</dl>
 				</fieldset>
 				
-				<fieldset>
-					<legend>{lang}wcf.acp.user.disableSignature{/lang}</legend>
+				{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
+					<fieldset>
+						<legend>{lang}wcf.acp.user.disableSignature{/lang}</legend>
+						
+						<dl>
+							<dt></dt>
+							<dd>
+								<label><input type="checkbox" id="disableSignature" name="disableSignature" value="1" {if $disableSignature == 1}checked="checked" {/if}/> {lang}wcf.acp.user.disableSignature{/lang}</label>
+							</dd>
+						</dl>
+						
+						<dl>
+							<dt><label for="disableSignatureReason">{lang}wcf.acp.user.disableSignatureReason{/lang}</label></dt>
+							<dd>
+								<textarea name="disableSignatureReason" id="disableSignatureReason" cols="40" rows="10">{$disableSignatureReason}</textarea>
+							</dd>
+						</dl>
+					</fieldset>
 					
-					<dl>
-						<dt></dt>
-						<dd>
-							<label><input type="checkbox" id="disableSignature" name="disableSignature" value="1" {if $disableSignature == 1}checked="checked" {/if}/> {lang}wcf.acp.user.disableSignature{/lang}</label>
-						</dd>
-					</dl>
-					
-					<dl>
-						<dt><label for="disableSignatureReason">{lang}wcf.acp.user.disableSignatureReason{/lang}</label></dt>
-						<dd>
-							<textarea name="disableSignatureReason" id="disableSignatureReason" cols="40" rows="10">{$disableSignatureReason}</textarea>
-						</dd>
-					</dl>
-				</fieldset>
-				
-				<script data-relocate="true">
-					//<![CDATA[
-					$('#disableSignature').change(function (event) {
-						if ($('#disableSignature').is(':checked')) {
-							$('#disableSignatureReason').attr('readonly', false);
-						}
-						else {
-							$('#disableSignatureReason').attr('readonly', true);
-						}
-					});
-					$('#disableSignature').change();
-					//]]>
-				</script>
+					<script data-relocate="true">
+						//<![CDATA[
+						$('#disableSignature').change(function (event) {
+							if ($('#disableSignature').is(':checked')) {
+								$('#disableSignatureReason').attr('readonly', false);
+							}
+							else {
+								$('#disableSignatureReason').attr('readonly', true);
+							}
+						});
+						$('#disableSignature').change();
+						//]]>
+					</script>
+				{/if}
 			</div>
 		{/if}
 		
@@ -359,27 +361,26 @@
 					{/if}
 				</fieldset>
 				
-				<fieldset>
-					<legend>{lang}wcf.acp.user.disableAvatar{/lang}</legend>
+				{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
+					<fieldset>
+						<legend>{lang}wcf.acp.user.disableAvatar{/lang}</legend>
+						
+						<dl>
+							<dt></dt>
+							<dd>
+								<label><input type="checkbox" id="disableAvatar" name="disableAvatar" value="1" {if $disableAvatar == 1}checked="checked" {/if}/> {lang}wcf.acp.user.disableAvatar{/lang}</label>
+							</dd>
+						</dl>
+						
+						<dl>
+							<dt><label for="disableAvatarReason">{lang}wcf.acp.user.disableAvatarReason{/lang}</label></dt>
+							<dd>
+								<textarea name="disableAvatarReason" id="disableAvatarReason" cols="40" rows="10">{$disableAvatarReason}</textarea>
+							</dd>
+						</dl>
+					</fieldset>
 					
-					<dl>
-						<dt></dt>
-						<dd>
-							<label><input type="checkbox" id="disableAvatar" name="disableAvatar" value="1" {if $disableAvatar == 1}checked="checked" {/if}/> {lang}wcf.acp.user.disableAvatar{/lang}</label>
-						</dd>
-					</dl>
-					
-					<dl>
-						<dt><label for="disableAvatarReason">{lang}wcf.acp.user.disableAvatarReason{/lang}</label></dt>
-						<dd>
-							<textarea name="disableAvatarReason" id="disableAvatarReason" cols="40" rows="10">{$disableAvatarReason}</textarea>
-						</dd>
-					</dl>
-				</fieldset>
-				
-				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-				<script data-relocate="true">
+					<script data-relocate="true">
 					//<![CDATA[
 					$(function() {
 						$('#disableAvatar').change(function (event) {
@@ -391,7 +392,15 @@
 							}
 						});
 						$('#disableAvatar').change();
-						
+					//]]>
+					</script>
+				{/if}
+				
+				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+				<script data-relocate="true">
+					//<![CDATA[
+					$(function() {
 						WCF.Language.addObject({
 							'wcf.user.avatar.upload.error.invalidExtension': '{lang}wcf.user.avatar.upload.error.invalidExtension{/lang}',
 							'wcf.user.avatar.upload.error.tooSmall': '{lang}wcf.user.avatar.upload.error.tooSmall{/lang}',

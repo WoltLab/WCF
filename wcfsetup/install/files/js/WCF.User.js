@@ -2523,3 +2523,272 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 		this._proxy.sendRequest();
 	}
 });
+
+/**
+ * Handles inline editing of users.
+ */
+WCF.User.InlineEditor = WCF.InlineEditor.extend({
+	/**
+	 * list of permissions
+	 * @var	object
+	 */
+	_permissions: { },
+	
+	/**
+	 * @see	WCF.InlineEditor._execute()
+	 */
+	_execute: function(elementID, optionName) {
+		if (!this._validate(elementID, optionName)) {
+			return false;
+		}
+		
+		var $data = { };
+		var $element = $('#' + elementID);
+		switch (optionName) {
+			case 'unban':
+			case 'enableAvatar':
+			case 'enableSignature':
+				switch (optionName) {
+					case 'unban':
+						$data.banned = 0;
+					break;
+					
+					case 'enableAvatar':
+						$data.disableAvatar = 0;
+					break;
+					
+					case 'enableSignature':
+						$data.disableSignature = 0;
+					break;
+				}
+				
+				this._proxy.setOption('data', {
+					actionName: optionName,
+					className: 'wcf\\data\\user\\UserAction',
+					objectIDs: [ $element.data('objectID') ]
+				});
+				this._proxy.sendRequest();
+			break;
+			
+			case 'ban':
+			case 'disableAvatar':
+			case 'disableSignature':
+				if (optionName == 'unban') {
+					$data.banned = 1;
+				}
+				else {
+					$data[optionName] = 1;
+				}
+				
+				this._showReasonDialog($element.data('objectID'), optionName);
+			break;
+			
+			case 'advanced':
+				window.location = this._getTriggerElement($element).attr('href');
+			break;
+		}
+		
+		if ($.getLength($data)) {
+			this._updateData.push({
+				data: $data,
+				elementID: elementID,
+			});
+		}
+	},
+	
+	/**
+	 * Executes an action with a reason.
+	 * 
+	 * @param	integer		userID
+	 * @param	string		optionName
+	 * @param	string		reason
+	 */
+	_executeReasonAction: function(userID, optionName, reason) {
+		var $parameters = { };
+		$parameters[optionName + WCF.String.ucfirst('reason')] = reason;
+		
+		this._proxy.setOption('data', {
+			actionName: optionName,
+			className: 'wcf\\data\\user\\UserAction',
+			objectIDs: [ userID ],
+			parameters: $parameters
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Returns a specific permission.
+	 * 
+	 * @param	string		permission
+	 * @return	integer
+	 */
+	_getPermission: function(permission) {
+		if (this._permissions[permission]) {
+			return this._permissions[permission];
+		}
+		
+		return 0;
+	},
+	
+	/**
+	 * @see	WCF.InlineEditor._getTriggerElement()
+	 */
+	_getTriggerElement: function(element) {
+		return element.find('.jsUserInlineEditor');
+	},
+	
+	/**
+	 * @see	WCF.InlineEditor._setOptions()
+	 */
+	_setOptions: function() {
+		this._options = [
+			// banning
+			{ label: WCF.Language.get('wcf.user.ban'), optionName: 'ban' },
+			{ label: WCF.Language.get('wcf.user.unban'), optionName: 'unban' },
+			
+			// disabling avatar
+			{ label: WCF.Language.get('wcf.user.disableAvatar'), optionName: 'disableAvatar' },
+			{ label: WCF.Language.get('wcf.user.enableAvatar'), optionName: 'enableAvatar' },
+			
+			// disabling signature
+			{ label: WCF.Language.get('wcf.user.disableSignature'), optionName: 'disableSignature' },
+			{ label: WCF.Language.get('wcf.user.enableSignature'), optionName: 'enableSignature' },
+			
+			// divider
+			{ optionName: 'divider' },
+			
+			// overlay
+			{ label: WCF.Language.get('wcf.user.edit'), optionName: 'advanced' }
+		];
+	},
+	
+	/**
+	 * @see	WCF.InlineEditor._show()
+	 */
+	_show: function(event) {
+		var $element = $(event.currentTarget);
+		var $elementID = $element.data('elementID');
+		
+		if (!this._dropdowns[$elementID]) {
+			var $dropdownMenu = $element.next('.dropdownMenu');
+			
+			if ($dropdownMenu) {
+				this._dropdowns[$elementID] = $dropdownMenu;
+				WCF.Dropdown.initDropdown(this._getTriggerElement(this._elements[$elementID]), true);
+			}
+		}
+		
+		return this._super(event);
+	},
+	
+	/**
+	 * Shows the dialog to enter a reason for executing the option with the
+	 * given name.
+	 * 
+	 * @param	string		optionName
+	 */
+	_showReasonDialog: function(userID, optionName) {
+		var $languageItem = 'wcf.user.' + optionName + '.reason.description';
+		var $reasonDescription = WCF.Language.get($languageItem);
+		
+		WCF.System.Confirmation.show(WCF.Language.get('wcf.user.' + optionName + '.confirmMessage'), $.proxy(function(action) {
+			if (action === 'confirm') {
+				this._executeReasonAction(userID, optionName, $('#wcfSystemConfirmationContent').find('textarea').val());
+			}
+		}, this), { }, $('<fieldset><dl><dt>' + WCF.Language.get('wcf.global.reason') + '</dt><dd><textarea cols="40" rows="4" />' + ($reasonDescription != $languageID ? '<small>' + $reasonDescription + '</small>' : '') + '</dd></dl></fieldset>'));
+	},
+	
+	/**
+	 * @see	WCF.InlineEditor._updateState()
+	 */
+	_updateState: function(data) {
+		this._notification.show();
+		
+		for (var $index in this._updateData) {
+			var $data = this._updateData[$index];
+			var $element = $('#' + $data.elementID);
+			
+			for (var $property in $data.data) {
+				$element.data($property, $data.data[$property]);
+			}
+		}
+	},
+	
+	/**
+	 * @see	WCF.InlineEditor._validate()
+	 */
+	_validate: function(elementID, optionName) {
+		var $user = $('#' + elementID);
+		
+		switch (optionName) {
+			case 'ban':
+			case 'unban':
+				if (!this._getPermission('canBanUser')) {
+					return false;
+				}
+				
+				if (optionName == 'ban') {
+					return !$user.data('banned');
+				}
+				else {
+					return $user.data('banned');
+				}
+			break;
+			
+			case 'disableAvatar':
+			case 'enableAvatar':
+				if (!this._getPermission('canDisableAvatar')) {
+					return false;
+				}
+				
+				if (optionName == 'disableAvatar') {
+					return !$user.data('disableAvatar');
+				}
+				else {
+					return $user.data('disableAvatar');
+				}
+			break;
+			
+			case 'disableSignature':
+			case 'enableSignature':
+				if (!this._getPermission('canDisableSignature')) {
+					return false;
+				}
+				
+				if (optionName == 'disableSignature') {
+					return !$user.data('disableSignature');
+				}
+				else {
+					return $user.data('disableSignature');
+				}
+			break;
+			
+			case 'advanced':
+				return this._getPermission('canEditUser');
+			break;
+		}
+		
+		return false;
+	},
+	
+	/**
+	 * Sets a permission.
+	 * 
+	 * @param	string		permission
+	 * @param	integer		value
+	 */
+	setPermission: function(permission, value) {
+		this._permissions[permission] = value;
+	},
+	
+	/**
+	 * Sets permissions.
+	 * 
+	 * @param	object		permissions
+	 */
+	setPermissions: function(permissions) {
+		for (var $permission in permissions) {
+			this.setPermission($permission, permissions[$permission]);
+		}
+	}
+});
