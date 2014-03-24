@@ -541,17 +541,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates the 'disableSignature' action.
 	 */
 	public function validateDisableSignature() {
-		WCF::getSession()->checkPermissions(array('admin.user.canDisableSignature'));
-		
-		$this->__validateAccessibleGroups();
-		
-		if (empty($this->objects)) {
-			$this->readObjects();
-			
-			if (empty($this->objects)) {
-				throw new UserInputException('objectIDs');
-			}
-		}
+		$this->validateEnableSignature();
 		
 		$this->readString('disableSignatureReason', true);
 	}
@@ -608,17 +598,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates the 'disableAvatar' action.
 	 */
 	public function validateDisableAvatar() {
-		WCF::getSession()->checkPermissions(array('admin.user.canDisableAvatar'));
-		
-		$this->__validateAccessibleGroups();
-		
-		if (empty($this->objects)) {
-			$this->readObjects();
-			
-			if (empty($this->objects)) {
-				throw new UserInputException('objectIDs');
-			}
-		}
+		$this->validateEnableAvatar();
 		
 		$this->readString('disableAvatarReason', true);
 	}
