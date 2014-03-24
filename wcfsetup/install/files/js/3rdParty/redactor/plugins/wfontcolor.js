@@ -1,0 +1,68 @@
+if (!RedactorPlugins) var RedactorPlugins = {};
+
+/**
+ * Provides a text color picker, this is actually a heavily modified version of Imperavi's 'fontcolor' plugin.
+ * 
+ * @author	Alexander Ebert
+ * @copyright	2001-2014 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ */
+RedactorPlugins.wfontcolor = {
+	/**
+	 * Initializes the RedactorPlugins.wfontcolor plugin.
+	 */
+	init: function() {
+		this._createFontColorDropdown();
+		
+		this.buttonAdd('fontcolor', this.opts.curLang.fontcolor, $.proxy(function(btnName, $button, btnObject, e) {
+			this.dropdownShow(e, btnName);
+		}, this))
+	},
+	
+	/**
+	 * Creates the color dropdown.
+	 */
+	_createFontColorDropdown: function() {
+		var $dropdown = $('<div class="redactor_dropdown redactor_dropdown_box_fontcolor" style="display: none;">');
+		var $colors = [
+			'#000000', '#800000', '#8B4513', '#2F4F4F', '#008080', '#000080', '#4B0082', '#696969',
+			'#B22222', '#A52A2A', '#DAA520', '#006400', '#40E0D0', '#0000CD', '#800080', '#808080',
+			'#FF0000', '#FF8C00', '#FFD700', '#008000', '#00FFFF', '#0000FF', '#EE82EE', '#A9A9A9',
+			'#FFA07A', '#FFA500', '#FFFF00', '#00FF00', '#AFEEEE', '#ADD8E6', '#DDA0DD', '#D3D3D3',
+			'#FFF0F5', '#FAEBD7', '#FFFFE0', '#F0FFF0', '#F0FFFF', '#F0F8FF', '#E6E6FA', '#FFFFFF'
+		];
+		
+		for (var $i = 0, $length = $colors.length; $i < $length; $i++) {
+			var $color = $colors[$i];
+			
+			var $swatch = $('<a />').data('color', $color).css('background-color', $color);
+			$dropdown.append($swatch);
+			$swatch.click($.proxy(this._onColorPick, this));
+		}
+		
+		var $elNone = $('<a />').html(this.opts.curLang.none).data('color', 'none');
+		$elNone.click($.proxy(this._onColorPick, this));
+		
+		$dropdown.append($elNone);
+		$(this.$toolbar).append($dropdown);
+	},
+	
+	/**
+	 * Handles click on a specific text color.
+	 * 
+	 * @param	object		event
+	 */
+	_onColorPick: function(event) {
+		event.preventDefault();
+		
+		this.bufferSet();
+		
+		this.$editor.focus();
+		this.inlineRemoveStyle('color');
+		
+		var $type = $(event.currentTarget).data('color');
+		if ($type !== 'none') this.inlineSetStyle('color', $type);
+		if (this.opts.air) this.$air.fadeOut(100);
+		this.sync();
+	}
+};

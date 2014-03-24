@@ -516,24 +516,27 @@ WCF.Message.SmileyCategories = Class.extend({
  */
 WCF.Message.Smilies = Class.extend({
 	/**
-	 * ckEditor element
-	 * @var	jQuery
+	 * redactor element
+	 * @var	$.Redactor
 	 */
-	_ckEditor: null,
+	_redactor: null,
+	
+	_wysiwygSelector: '',
 	
 	/**
 	 * Initializes the smiley handler.
 	 * 
-	 * @param	string		ckEditorID
+	 * @param	string		wysiwygSelector
 	 */
-	init: function(ckEditorID) {
-		// get ck editor
-		if (ckEditorID) {
-			this._ckEditor = $('#' + ckEditorID);
+	init: function(wysiwygSelector) {
+		this._wysiwygSelector = wysiwygSelector;
+		
+		WCF.System.Dependency.Manager.register('Redactor_' + this._wysiwygSelector, $.proxy(function() {
+			this._redactor = $('#' + this._wysiwygSelector).redactor('getObject');
 			
 			// add smiley click handler
 			$(document).on('click', '.jsSmiley', $.proxy(this._smileyClick, this));
-		}
+		}, this));
 	},
 	
 	/**
@@ -546,43 +549,8 @@ WCF.Message.Smilies = Class.extend({
 		var $smileyCode = $target.data('smileyCode');
 		var $smileyPath = $target.data('smileyPath');
 		
-		// get ckEditor
-		var $ckEditor = this._ckEditor.ckeditorGet();
-		
-		// add smiley to config
-		if (!WCF.inArray($smileyCode, $ckEditor.config.smiley_descriptions)) {
-			$ckEditor.config.smiley_descriptions.push($smileyCode);
-			$ckEditor.config.smiley_images.push($smileyPath);
-		}
-		
-		if ($ckEditor.mode === 'wysiwyg') {
-			// in design mode
-			var $img = $ckEditor.document.createElement('img', {
-				attributes: {
-					src: $ckEditor.config.smiley_path + $smileyPath,
-					'class': 'smiley',
-					alt: $smileyCode
-				}
-			});
-			$ckEditor.insertText(' ');
-			$ckEditor.insertElement($img);
-			$ckEditor.insertText(' ');
-		}
-		else {
-			// in source mode
-			var $textarea = this._ckEditor.next('.cke_editor_text').find('textarea');
-			var $value = $textarea.val();
-			if ($value.length == 0) {
-				$textarea.val($smileyCode);
-				$textarea.setCaret($smileyCode.length);
-			}
-			else {
-				var $position = $textarea.getCaret();
-				var $string = (($value.substr($position - 1, 1) !== ' ') ? ' ' : '') + $smileyCode + ' ';
-				$textarea.val( $value.substr(0, $position) + $string + $value.substr($position) );
-				$textarea.setCaret($position + $string.length);
-			}
-		}
+		// register smiley
+		this._redactor.insertSmiley($smileyCode, $smileyPath, true);
 	}
 });
 
