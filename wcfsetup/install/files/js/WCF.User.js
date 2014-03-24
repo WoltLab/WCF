@@ -2573,7 +2573,7 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 			case 'ban':
 			case 'disableAvatar':
 			case 'disableSignature':
-				if (optionName == 'unban') {
+				if (optionName == 'ban') {
 					$data.banned = 1;
 				}
 				else {
@@ -2695,7 +2695,7 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 			if (action === 'confirm') {
 				this._executeReasonAction(userID, optionName, $('#wcfSystemConfirmationContent').find('textarea').val());
 			}
-		}, this), { }, $('<fieldset><dl><dt>' + WCF.Language.get('wcf.global.reason') + '</dt><dd><textarea cols="40" rows="4" />' + ($reasonDescription != $languageID ? '<small>' + $reasonDescription + '</small>' : '') + '</dd></dl></fieldset>'));
+		}, this), { }, $('<fieldset><dl><dt>' + WCF.Language.get('wcf.global.reason') + '</dt><dd><textarea cols="40" rows="4" />' + ($reasonDescription != $languageItem ? '<small>' + $reasonDescription + '</small>' : '') + '</dd></dl></fieldset>'));
 	},
 	
 	/**
