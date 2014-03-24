@@ -12,7 +12,6 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\system\application\ApplicationHandler;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\cache\builder\TemplateListenerCacheBuilder;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
@@ -197,9 +196,8 @@ class PackageInstallationDispatcher {
 			}
 			
 			// remove template listener cache
-			TemplateListenerCacheBuilder::getInstance()->reset();
 			TemplateListenerCodeCacheBuilder::getInstance()->reset();
-				
+			
 			// reset language cache
 			LanguageFactory::getInstance()->clearCache();
 			LanguageFactory::getInstance()->deleteLanguageCache();

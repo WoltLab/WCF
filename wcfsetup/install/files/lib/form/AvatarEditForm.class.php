@@ -121,6 +121,17 @@ class AvatarEditForm extends AbstractForm {
 		));
 		$this->objectAction->executeAction();
 		
+		// reset gravatar cache
+		if ($this->avatarType == 'gravatar') {
+			$pattern = WCF_DIR . sprintf(Gravatar::GRAVATAR_CACHE_LOCATION, md5(mb_strtolower(WCF::getUser()->email)), '*');
+			$files = glob($pattern);
+			if (!empty($files)) {
+				foreach ($files as $file) {
+					@unlink($file);
+				}
+			}
+		}
+		
 		$this->saved();
 		WCF::getTPL()->assign('success', true);
 	}

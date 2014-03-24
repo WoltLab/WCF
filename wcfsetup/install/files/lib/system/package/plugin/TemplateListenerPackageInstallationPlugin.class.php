@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\system\cache\builder\TemplateListenerCacheBuilder;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\WCF;
 
@@ -46,9 +45,18 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::prepareImport()
 	 */
 	protected function prepareImport(array $data) {
+		$niceValue = isset($data['elements']['nice']) ? intval($data['elements']['nice']) : 0;
+		if ($niceValue < -128) {
+			$niceValue = -128;
+		}
+		else if ($niceValue > 127) {
+			$niceValue = 127;
+		}
+		
 		return array(
 			'environment' => $data['elements']['environment'],
 			'eventName' => $data['elements']['eventname'],
+			'niceValue' => $niceValue,
 			'name' => $data['attributes']['name'],
 			'templateCode' => $data['elements']['templatecode'],
 			'templateName' => $data['elements']['templatename']
@@ -85,7 +93,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 */
 	protected function cleanup() {
 		// clear cache immediately
-		TemplateListenerCacheBuilder::getInstance()->reset();
 		TemplateListenerCodeCacheBuilder::getInstance()->reset();
 	}
 }

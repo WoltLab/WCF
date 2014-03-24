@@ -11,6 +11,7 @@ use wcf\data\template\listener\TemplateListenerList;
  * @package	com.woltlab.wcf
  * @subpackage	system.cache.builder
  * @category	Community Framework
+ * @deprecated	since 2.1
  */
 class TemplateListenerCacheBuilder extends AbstractCacheBuilder {
 	/**

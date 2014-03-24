@@ -3,6 +3,7 @@ namespace wcf\data\user;
 use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\UserAvatar;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\online\UserOnline;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\rank\UserRank;
@@ -771,5 +772,23 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		$option = ViewableUserOption::getUserOption($name);
 		$option->setOptionValue($this->getDecoratedObject());
 		return $option->optionValue;
+	}
+	
+	/**
+	 * Returns the formatted username.
+	 *
+	 * @return	string
+	 */
+	public function getFormattedUsername() {
+		$username = StringUtil::encodeHTML($this->username);
+	
+		if ($this->userOnlineGroupID) {
+			$group = UserGroup::getGroupByID($this->userOnlineGroupID);
+			if ($group !== null && $group->userOnlineMarking && $group->userOnlineMarking != '%s') {
+				return sprintf($group->userOnlineMarking, $username);
+			}
+		}
+		
+		return $username;
 	}
 }

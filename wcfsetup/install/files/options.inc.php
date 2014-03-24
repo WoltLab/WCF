@@ -32,3 +32,4 @@ define('TIMEZONE', 'Europe/Berlin');
 
 define('ENABLE_DEBUG_MODE', 1);
 define('ENABLE_BENCHMARK', 0);
+define('EXTERNAL_LINK_TARGET_BLANK', 0);

@@ -20,6 +20,7 @@ class TemplateListenerCodeCacheBuilder extends AbstractCacheBuilder {
 		// get template codes for specified template
 		$templateListenerList = new TemplateListenerList();
 		$templateListenerList->getConditionBuilder()->add("template_listener.environment = ?", array($parameters['environment']));
+		$templateListenerList->sqlOrderBy = 'template_listener.niceValue ASC, template_listener.listenerID ASC';
 		$templateListenerList->readObjects();
 		
 		$data = array();

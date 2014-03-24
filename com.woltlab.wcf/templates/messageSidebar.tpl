@@ -21,7 +21,7 @@
 			<header>
 				<h2 class="username">
 					<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" class="userLink" data-user-id="{@$userProfile->userID}" rel="author">
-						<span itemprop="name">{$username}</span>
+						<span itemprop="name">{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$userProfile->getFormattedUsername()}{else}{$username}{/if}</span>
 					</a>
 				</h2>
 				

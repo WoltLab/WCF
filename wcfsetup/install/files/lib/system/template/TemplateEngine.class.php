@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\template;
 use wcf\system\cache\builder\TemplateGroupCacheBuilder;
-use wcf\system\cache\builder\TemplateListenerCacheBuilder;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
@@ -704,9 +703,11 @@ class TemplateEngine extends SingletonFactory {
 	
 	/**
 	 * Loads all available template listeners.
+	 * 
+	 * @deprecated	since 2.1
 	 */
 	protected function loadTemplateListeners() {
-		$this->templateListeners = TemplateListenerCacheBuilder::getInstance()->getData(array('environment' => $this->environment));
+		// does nothing
 	}
 	
 	/**
