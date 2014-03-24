@@ -56,6 +56,7 @@ class QuickReplyManager extends SingletonFactory {
 	
 	/**
 	 * the message that just was created
+	 * @var	\wcf\data\DatabaseObject
 	 */
 	public $message = null;
 	
