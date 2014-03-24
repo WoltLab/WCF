@@ -1372,6 +1372,14 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} Benutzer</a> {if $usersAwaitingApproval == 1}wartet auf seine{else}warten auf ihre{/if} Aktivierung.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Aktiviert]]></item>
 		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Nicht aktiviert]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail"><![CDATA[Hallo {@$username},
+
+Ihr Kennwort wurde von einem Administrator geändert.
+Ihr neues Kennwort lautet: {$password}
+
+Klicken Sie hier, um sich mit Ihrem neuen Kennwort anzumelden: {link controller='Login' isEmail=true}{/link}]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[Neues Kennwort für Ihr Benutzerkonto auf der Website: {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.acp.user.sendNewPassword.workerTitle"><![CDATA[Neue Passwörter zusenden]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
@@ -1489,6 +1497,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Benutzer löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[E-Mail senden]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Neues Kennwort senden ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Wollen Sie wirklich {if $count == 1}einem{else}{#$count}{/if} Benutzer ein neues Kennwort zusenden?]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer markiert]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Zusammenfügen]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Aktivieren]]></item>
@@ -2094,7 +2104,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.lostPassword.mail"><![CDATA[Hallo {@$username},
 
 wenn Sie Ihr Kennwort vergessen haben, können Sie über folgenden Link ein neues Kennwort anfordern.
-Klicken Sie hier, um ein neues Kennwort anzufordern: {link controller='NewPassword' isEmail=true}u={@$userID}&k={@$key}{/link}  
+Klicken Sie hier, um ein neues Kennwort anzufordern: {link controller='NewPassword' isEmail=true}u={@$userID}&k={@$key}{/link}
 
 Falls Sie Ihr Kennwort nicht vergessen haben, können Sie diese E-Mail ignorieren.]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[Sie erhalten in Kürze eine E-Mail mit weiteren Informationen.]]></item>
