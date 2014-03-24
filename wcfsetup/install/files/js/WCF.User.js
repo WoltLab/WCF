@@ -2704,8 +2704,8 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 	_updateState: function(data) {
 		this._notification.show();
 		
-		for (var $index in this._updateData) {
-			var $data = this._updateData[$index];
+		for (var $i = 0, $length = this._updateData.length; $i < $length; $i++) {
+			var $data = this._updateData[$i];
 			var $element = $('#' + $data.elementID);
 			
 			for (var $property in $data.data) {
