@@ -26,6 +26,13 @@ RedactorPlugins.wmonkeypatch = {
 			$mpIndentingStart.call(self, cmd);
 			self.mpIndentingStart(cmd);
 		};
+		
+		var $mpBuildEventKeydown = this.buildEventKeydown;
+		this.buildEventKeydown = function(e) {
+			if (self.callback('wkeydown', e) !== false) {
+				$mpBuildEventKeydown.call(self, e);
+			}
+		};
 	},
 	
 	/**

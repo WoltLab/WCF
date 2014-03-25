@@ -2948,7 +2948,7 @@ WCF.Message.Share.Page = Class.extend({
 });
 
 /**
- * Handles user mention suggestions in CKEditors.
+ * Handles user mention suggestions in Redactor instances.
  * 
  * Important: Objects of this class have to be created before the CKEditor
  * is initialized!
@@ -2990,36 +2990,23 @@ WCF.Message.UserMention = Class.extend({
 	 */
 	_mentionStart: '',
 	
+	_redactor: null,
+	
 	/**
 	 * Initalizes user suggestions for the CKEditor with the given textarea id.
 	 * 
-	 * @param	string		editorID
+	 * @param	string		wysiwygSelector
 	 */
-	init: function(editorID) {
-		// temporary disable suggestions for Internet Explorer
-		//
-		// this issue is caused by misplacing the range within the parent element,
-		// while the typed chars are appended to the preceeding text node, without
-		// getting focused for some reason
-		if ($.browser.msie) {
-			return;
-		}
+	init: function(wysiwygSelector) {
+		this._textarea = $('#' + wysiwygSelector);
+		this._redactor = this._textarea.redactor('getObject');
 		
-		this._textarea = $('#' + editorID);
+		this._redactor.setOption('keyupCallback', $.proxy(this._keyup, this));
+		this._redactor.setOption('wkeydownCallback', $.proxy(this._keydown, this));
 		
-		// get associated (ready) CKEditor object and add event listeners
-		CKEDITOR.on('instanceReady', $.proxy(function(event) {
-			if (event.editor.name === this._textarea.wcfIdentify()) {
-				this._ckEditor = event.editor;
-				this._ckEditor.container.on('keyup', $.proxy(this._keyup, this));
-				this._ckEditor.container.on('keydown', $.proxy(this._keydown, this));
-				this._ckEditor.on('key', $.proxy(this._key, this));
-				
-				this._dropdown = $(this._ckEditor.editable().$);
-				this._dropdownMenu = $('<ul class="dropdownMenu userSuggestionList" />').appendTo(this._textarea.parent());
-				WCF.Dropdown.initDropdownFragment(this._dropdown, this._dropdownMenu);
-			}
-		}, this));
+		this._dropdown = this._textarea.redactor('getEditor');
+		this._dropdownMenu = $('<ul class="dropdownMenu userSuggestionList" />').appendTo(this._textarea.parent());
+		WCF.Dropdown.initDropdownFragment(this._dropdown, this._dropdownMenu);
 		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
@@ -3064,48 +3051,27 @@ WCF.Message.UserMention = Class.extend({
 	 * @return	object
 	 */
 	_getDropdownMenuPosition: function() {
-		var $range = this._ckEditor.getSelection().getRanges()[0];
-		var $orgRange = $range.clone();
-		var $startOffset = $range.startOffset;
+		var $range = this._redactor.getSelection().getRangeAt(0);
+		var $orgRange = $range.cloneRange();
 		
-		// move caret after the '@' sign
-		$range.setStart($range.startContainer, $startOffset - this._mentionStart.length);
+		// insert span before the '@' to prevent node splitting (or at least node splitting in between the username and the @)
+		$range.setStart($range.startContainer, $range.startOffset - (this._mentionStart.length + 1));
 		$range.collapse(true);
-		$range.select();
 		
-		// create span with random id and add it in front of the '@' sign
 		var $element = document.createElement('span');
-		$node = new CKEDITOR.dom.node($element);
-		$range.insertNode($node);
+		$range.insertNode($element);
 		
-		// get offsets of span
-		$jElement = $($element);
-		if ($.browser.opera) {
-			// in opera, the span's height is 0 if it has no content
-			$jElement.text(' ');
-		}
+		var $jElement = $($element);
 		var $offsets = $jElement.offset();
 		if (this._lineHeight === null) {
 			this._lineHeight = $jElement.height();
 		}
 		
-		// merge text nodes before and after the temporary span element
-		// to avoid split text nodes which were one node before inserting
-		// the span element since split nodes can cause problems working
-		// with ranges and then remove the merged text node
-		if (!$.browser.msie || $element.previousSibling && $element.nextSibling) {
-			$element.previousSibling.nodeValue += $element.nextSibling.nodeValue;
-			$($element.nextSibling).remove();
-		}
-		
-		// reset caret position to original position at the end and make
-		// sure that the range is the same in all browsers
-		$range.setStart($orgRange.startContainer, $startOffset);
-		$range.setEnd($orgRange.startContainer, $startOffset);
-		$range.select();
-		
-		// remove span
 		$jElement.remove();
+		
+		// move to end of node
+		$range.setEnd($orgRange.startContainer, $orgRange.startOffset);
+		$range.collapse(false);
 		
 		return $offsets;
 	},
@@ -3130,16 +3096,15 @@ WCF.Message.UserMention = Class.extend({
 	 * @return	string
 	 */
 	_getTextLineInFrontOfCaret: function() {
-		var $range = this._ckEditor.getSelection().getRanges()[0];
-		
 		// if text is marked, user suggestions are disabled
-		if (!$range.collapsed) {
+		if (this._redactor.getSelectionHtml().length) {
 			return '';
 		}
 		
-		var $text = $range.startContainer.getText().substr(0, $range.startOffset);
+		var $range = this._redactor.getSelection().getRangeAt(0);
+		var $text = $range.startContainer.textContent.substr(0, $range.startOffset);
 		
-		// remove unicode zero width space and no-breaking space
+		// remove unicode zero width space and non-breaking space
 		var $textBackup = $text;
 		$text = '';
 		for (var $i = 0; $i < $textBackup.length; $i++) {
@@ -3170,47 +3135,44 @@ WCF.Message.UserMention = Class.extend({
 	},
 	
 	/**
-	 * Handles the key event of the CKEditor to select user suggestion on enter.
-	 */
-	_key: function(event) {
-		if (this._ckEditor.mode !== 'wysiwyg') {
-			return true;
-		}
-		
-		if (this._dropdownMenu.is(':visible')) {
-			if (event.data.keyCode === 13) { // enter
-				this._dropdownMenu.children('li').eq(this._itemIndex).trigger('click');
-				
-				event.cancel();
-			}
-		}
-	},
-	
-	/**
 	 * Handles the keydown event to check if the user starts mentioning someone.
 	 * 
 	 * @param	object		event
 	 */
 	_keydown: function(event) {
-		if (this._ckEditor.mode !== 'wysiwyg') {
+		if (this._redactor.inPlainMode()) {
 			return true;
 		}
 		
 		if (this._dropdownMenu.is(':visible')) {
-			switch (event.data.$.keyCode) {
-				case 38: // arrow up
-					event.data.$.preventDefault();
+			switch (event.which) {
+				case $.ui.keyCode.ENTER:
+					event.preventDefault();
 					
-					this._selectItem(this._itemIndex - 1);
+					this._dropdownMenu.children('li').eq(this._itemIndex).trigger('click');
+					
+					return false;
 				break;
 				
-				case 40: // arrow down
-					event.data.$.preventDefault();
+				case $.ui.keyCode.UP:
+					event.preventDefault();
+					
+					this._selectItem(this._itemIndex - 1);
+					
+					return false;
+				break;
+				
+				case $.ui.keyCode.DOWN:
+					event.preventDefault();
 					
 					this._selectItem(this._itemIndex + 1);
+					
+					return false;
 				break;
 			}
 		}
+		
+		return true;
 	},
 	
 	/**
@@ -3219,17 +3181,17 @@ WCF.Message.UserMention = Class.extend({
 	 * @param	object		event
 	 */
 	_keyup: function(event) {
-		if (this._ckEditor.mode !== 'wysiwyg') {
+		if (this._redactor.inPlainMode()) {
 			return true;
 		}
 		
 		// ignore enter key up event
-		if (event.data.$.keyCode === 13) {
+		if (event.which === $.ui.keyCode.ENTER) {
 			return;
 		}
 		
 		// ignore event if suggestion list and user pressed enter, arrow up or arrow down
-		if (this._dropdownMenu.is(':visible') && event.data.$.keyCode in { 13:1, 38:1, 40:1 }) {
+		if (this._dropdownMenu.is(':visible') && event.which in { 13:1, 38:1, 40:1 }) {
 			return;
 		}
 		
@@ -3264,11 +3226,13 @@ WCF.Message.UserMention = Class.extend({
 	 * Replaces the started mentioning with a chosen username.
 	 */
 	_setUsername: function(username) {
-		var $range = this._ckEditor.getSelection().getRanges()[0];
+		// allow redactor to undo this
+		this._redactor.bufferSet();
 		
-		// remove the beginning of the username
-		$range.setStart($range.startContainer, $range.startOffset - this._mentionStart.length);
+		var $range = this._redactor.getSelection().getRangeAt(0);
+		$range.setStart($range.startContainer, $range.startOffset - (this._mentionStart.length + 1));
 		$range.deleteContents();
+		$range.collapse(true);
 		
 		// insert username
 		if (username.indexOf("'") !== -1) {
@@ -3278,27 +3242,10 @@ WCF.Message.UserMention = Class.extend({
 		else if (username.indexOf(' ') !== -1) {
 			username = "'" + username + "'";
 		}
-		this._ckEditor.insertText(username);
 		
-		// add whitespace after username
-		var $element = CKEDITOR.dom.element.createFromHtml('<span class="wcfUserMentionTemporary">&nbsp;</span>');
-		this._ckEditor.insertElement($element);
-		$(this._ckEditor.document.$).find('span.wcfUserMentionTemporary').replaceWith(function() {
-			return $(this).html();
-		});
-		
-		// the @-sign and the entered username are now in seperate text
-		// nodes which causes issues if the user changes the text
-		$range.endContainer.$.nodeValue += $range.endContainer.$.nextSibling.nodeValue;
-		$($range.endContainer.$.nextSibling).remove();
-		
-		// make sure that the range in Firefox is that same as in the
-		// other browsers
-		if ($.browser.mozilla) {
-			$range.selectNodeContents(new CKEDITOR.dom.text($range.endContainer.$.nextSibling));
-			$range.setStart($range.startContainer, 1);
-			$range.select();
-		}
+		// use native API to prevent issues in Internet Explorer
+		var $text = document.createTextNode('@' + username);
+		$range.insertNode($text);
 		
 		this._hideList();
 	},
@@ -3360,7 +3307,7 @@ WCF.Message.UserMention = Class.extend({
 		try {
 			var $dropdownMenuPosition = this._getDropdownMenuPosition();
 			$dropdownMenuPosition.top += 5 + this._lineHeight; // add little vertical gap
-			$dropdownMenuPosition.left -= 16; // make sure dropdown arrow is at correct position
+			$dropdownMenuPosition.left;
 			this._dropdownMenu.css($dropdownMenuPosition);
 			this._selectItem(0);
 			
@@ -3376,6 +3323,7 @@ WCF.Message.UserMention = Class.extend({
 			}
 		}
 		catch (e) {
+			console.debug(e);
 			// ignore errors that are caused by pressing enter to
 			// often in a short period of time
 		}
