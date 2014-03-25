@@ -31,5 +31,30 @@ RedactorPlugins.wutil = {
 		this.$source.val($content);
 		
 		return true;
+	},
+	
+	/**
+	 * Sets an option value after initialization.
+	 */
+	setOption: function(key, value) {
+		this.opts[key] = value;
+	},
+	
+	/**
+	 * Returns true if editor is in source mode.
+	 * 
+	 * @return	boolean
+	 */
+	inPlainMode: function() {
+		return !this.opts.visual;
+	},
+	
+	/**
+	 * Returns true if editor is in WYSIWYG mode.
+	 * 
+	 * @return	boolean
+	 */
+	inWysiwygMode: function() {
+		return (this.opts.visual);
 	}
 };
