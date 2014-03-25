@@ -3307,7 +3307,6 @@ WCF.Message.UserMention = Class.extend({
 		try {
 			var $dropdownMenuPosition = this._getDropdownMenuPosition();
 			$dropdownMenuPosition.top += 5 + this._lineHeight; // add little vertical gap
-			$dropdownMenuPosition.left;
 			this._dropdownMenu.css($dropdownMenuPosition);
 			this._selectItem(0);
 			
@@ -3323,7 +3322,6 @@ WCF.Message.UserMention = Class.extend({
 			}
 		}
 		catch (e) {
-			console.debug(e);
 			// ignore errors that are caused by pressing enter to
 			// often in a short period of time
 		}
