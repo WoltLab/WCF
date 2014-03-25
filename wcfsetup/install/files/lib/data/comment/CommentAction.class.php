@@ -268,7 +268,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		if (count($responseIDs) < 3) {
 			$responseIDs[] = $this->createdResponse->responseID;
 		}
-		$responses = $this->comment->createdResponse + 1;
+		$responses = $this->comment->responses + 1;
 		
 		// update comment
 		$commentEditor = new CommentEditor($this->comment);
