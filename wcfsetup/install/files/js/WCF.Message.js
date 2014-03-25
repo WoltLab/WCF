@@ -3052,10 +3052,9 @@ WCF.Message.UserMention = Class.extend({
 	 */
 	_getDropdownMenuPosition: function() {
 		var $range = this._redactor.getSelection().getRangeAt(0);
-		var $orgRange = $range.cloneRange();
+		var $startOffset = $range.startOffset;
 		
-		// insert span before the '@' to prevent node splitting (or at least node splitting in between the username and the @)
-		$range.setStart($range.startContainer, $range.startOffset - (this._mentionStart.length + 1));
+		$range.setStart($range.startContainer, $range.startOffset - this._mentionStart.length);
 		$range.collapse(true);
 		
 		var $element = document.createElement('span');
@@ -3069,8 +3068,13 @@ WCF.Message.UserMention = Class.extend({
 		
 		$jElement.remove();
 		
+		// inserting the node caused the text node to be split, merge them again
+		// using stupid DOM manipulation since .normalize() is broken in Internet Explorer 11
+		$range.startContainer.nodeValue += $range.startContainer.nextSibling.textContent;
+		$range.startContainer.parentNode.removeChild($range.startContainer.nextSibling);
+		
 		// move to end of node
-		$range.setEnd($orgRange.startContainer, $orgRange.startOffset);
+		$range.setEnd($range.startContainer, $startOffset);
 		$range.collapse(false);
 		
 		return $offsets;
@@ -3230,7 +3234,7 @@ WCF.Message.UserMention = Class.extend({
 		this._redactor.bufferSet();
 		
 		var $range = this._redactor.getSelection().getRangeAt(0);
-		$range.setStart($range.startContainer, $range.startOffset - (this._mentionStart.length + 1));
+		$range.setStart($range.startContainer, $range.startOffset - this._mentionStart.length);
 		$range.deleteContents();
 		$range.collapse(true);
 		
@@ -3244,7 +3248,7 @@ WCF.Message.UserMention = Class.extend({
 		}
 		
 		// use native API to prevent issues in Internet Explorer
-		var $text = document.createTextNode('@' + username);
+		var $text = document.createTextNode(username);
 		$range.insertNode($text);
 		
 		this._hideList();
@@ -3304,9 +3308,10 @@ WCF.Message.UserMention = Class.extend({
 	 * Updates the position of the suggestion list.
 	 */
 	_updateSuggestionListPosition: function() {
-		try {
+		//try {
 			var $dropdownMenuPosition = this._getDropdownMenuPosition();
 			$dropdownMenuPosition.top += 5 + this._lineHeight; // add little vertical gap
+			$dropdownMenuPosition.left -= 16;
 			this._dropdownMenu.css($dropdownMenuPosition);
 			this._selectItem(0);
 			
@@ -3320,10 +3325,10 @@ WCF.Message.UserMention = Class.extend({
 			else {
 				this._dropdownMenu.removeClass('dropdownArrowBottom');
 			}
-		}
+		/*}
 		catch (e) {
 			// ignore errors that are caused by pressing enter to
 			// often in a short period of time
-		}
+		}*/
 	}
 });
