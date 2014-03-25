@@ -53,7 +53,7 @@ interface IPrintableException {
  */
 class SystemException extends \Exception implements IPrintableException {
 	protected $description;
-	protected $information = '';
+ss	protected $information = '';
 	protected $functions = '';
 	
 	/**
