@@ -234,6 +234,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		CommentHandler::enforceFloodControl();
 		
 		$this->readInteger('objectID', false, 'data');
+		$this->validateMessage();
 		
 		// validate comment id
 		$this->validateCommentID();
