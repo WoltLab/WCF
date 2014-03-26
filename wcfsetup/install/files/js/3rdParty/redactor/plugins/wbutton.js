@@ -32,32 +32,17 @@ RedactorPlugins.wbutton = {
 	 */
 	_addBBCodeButton: function(data) {
 		var $buttonName = '__wcf_' + data.name;
-		this.buttonAdd($buttonName, data.label, this._insertBBCode);
+		var $button = this.buttonAdd($buttonName, data.label, this._insertBBCode);
 		this._bbcodes[$buttonName] = data.name;
 		
-		//
-		// TODO: These are hardcoded for now, since the API does not provide class names yet, this has to be changes
-		//
-		var $iconName = '';
-		switch (data.name) {
-			case 'code':
-				$iconName = 'fa-code';
-			break;
-			
-			case 'quote':
-				$iconName = 'fa-quote-left';
-			break;
-			
-			case 'spoiler':
-				$iconName = 'fa-eye-slash';
-			break;
-			
-			case 'tt':
-				$iconName = 'fa-font';
-			break;
+		// FontAwesome class name
+		if (data.icon.match(/^fa\-[a-z\-]+$/)) {
+			this.buttonAwesome($buttonName, data.icon);
 		}
-		
-		this.buttonAwesome($buttonName, $iconName);
+		else {
+			// image reference
+			$button.css('background-image', 'url(' + __REDACTOR_ICON_PATH + data.icon + ')');
+		}
 	},
 	
 	/**

@@ -95,7 +95,7 @@
 				<attribute name="0"></attribute>
 				<attribute name="1"></attribute>
 			</attributes>
-			<wysiwygicon>quote.png</wysiwygicon>
+			<wysiwygicon>fa-quote-left</wysiwygicon>
 			<buttonlabel>wcf.bbcode.button.quote</buttonlabel>
 		</bbcode>
 		<bbcode name="code">
@@ -107,7 +107,7 @@
 				</attribute>
 			</attributes>
 			<sourcecode>1</sourcecode>
-			<wysiwygicon>code.png</wysiwygicon>
+			<wysiwygicon>fa-code</wysiwygicon>
 			<buttonlabel>wcf.bbcode.button.code</buttonlabel>
 		</bbcode>
 		<bbcode name="img">
@@ -156,7 +156,7 @@
 			<attributes>
 				<attribute name="0"></attribute>
 			</attributes>
-			<wysiwygicon>spoiler.png</wysiwygicon>
+			<wysiwygicon>fa-eye-slash</wysiwygicon>
 			<buttonlabel>wcf.bbcode.button.spoiler</buttonlabel>
 		</bbcode>
 		<bbcode name="tt">
@@ -164,7 +164,7 @@
 			<htmlclose>code</htmlclose>
 			<allowedchildren>none</allowedchildren>
 			<sourcecode>1</sourcecode>
-			<wysiwygicon>inlineCode.png</wysiwygicon>
+			<wysiwygicon>fa-font</wysiwygicon>
 			<buttonlabel>wcf.bbcode.button.inlineCode</buttonlabel>
 		</bbcode>
 		
