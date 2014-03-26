@@ -2,9 +2,9 @@
 namespace wcf\system\moderation\queue\report;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueue;
+use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfile;
-use wcf\data\user\User;
 use wcf\system\exception\SystemException;
 use wcf\system\moderation\queue\AbstractModerationQueueHandler;
 use wcf\system\moderation\queue\ModerationQueueManager;
