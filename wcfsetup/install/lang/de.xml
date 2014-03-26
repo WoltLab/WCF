@@ -1892,6 +1892,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.type.com.woltlab.wcf.moderation.report"><![CDATA[Meldung]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.comment"><![CDATA[Kommentar]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.response"><![CDATA[Antwort auf Kommentar]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.user"><![CDATA[Benutzerprofil]]></item>
 		<item name="wcf.moderation.showAll"><![CDATA[Alle Einträge anzeigen]]></item>
 		<item name="wcf.moderation.showDeletedContent"><![CDATA[Gelöschte Inhalte anzeigen]]></item>
 		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[Gelöschte Inhalte]]></item>
@@ -2467,6 +2468,7 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.profile.menu.wall"><![CDATA[Pinnwand]]></item>
 		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[Hat einen Kommentar an die <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a> geschrieben.]]></item>
 		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a> geantwortet.]]></item>
+		<item name="wcf.user.profile.report"><![CDATA[Benutzerprofil melden]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">
