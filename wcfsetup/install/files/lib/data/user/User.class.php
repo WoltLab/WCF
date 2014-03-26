@@ -3,9 +3,11 @@ namespace wcf\data\user;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObject;
+use wcf\data\IUserContent;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
+use wcf\system\request\LinkHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\PasswordUtil;
@@ -20,7 +22,7 @@ use wcf\util\PasswordUtil;
  * @subpackage	data.user
  * @category	Community Framework
  */
-final class User extends DatabaseObject implements IRouteController {
+final class User extends DatabaseObject implements IRouteController, IUserContent {
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
 	 */
@@ -428,5 +430,37 @@ final class User extends DatabaseObject implements IRouteController {
 		}
 		
 		return $this->hasAdministrativePermissions;
+	}
+	
+	/**
+	 * @see	\wcf\data\IMessage::getUserID()
+	 */
+	public function getUserID() {
+		return $this->userID;
+	}
+	
+	/**
+	 * @see	\wcf\data\IMessage::getUsername()
+	 */
+	public function getUsername() {
+		return $this->username;
+	}
+	
+	/**
+	 * @see	\wcf\data\IMessage::getTime()
+	 */
+	public function getTime() {
+		return $this->registrationDate;
+	}
+	
+	/**
+	 * @see	\wcf\data\ILinkableObject::getLink()
+	 */
+	public function getLink() {
+		return LinkHandler::getInstance()->getLink('User', array(
+			'application' => 'wcf',
+			'object' => $this,
+			'forceFrontend' => true
+		));
 	}
 }
