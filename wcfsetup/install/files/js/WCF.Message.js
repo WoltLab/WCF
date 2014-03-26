@@ -2955,6 +2955,12 @@ WCF.Message.Share.Page = Class.extend({
  */
 WCF.Message.UserMention = Class.extend({
 	/**
+	 * current caret position
+	 * @var	DOMRange
+	 */
+	_caretPosition: null,
+	
+	/**
 	 * name of the class used to get the user suggestions
 	 * @var	string
 	 */
@@ -2990,6 +2996,10 @@ WCF.Message.UserMention = Class.extend({
 	 */
 	_mentionStart: '',
 	
+	/**
+	 * redactor instance object
+	 * @var	$.Redactor
+	 */
 	_redactor: null,
 	
 	/**
@@ -3028,6 +3038,9 @@ WCF.Message.UserMention = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
+		// restore caret position
+		this._redactor.replaceRangesWith(this._caretPosition);
+		
 		this._setUsername($(event.currentTarget).data('username'));
 	},
 	
@@ -3075,6 +3088,7 @@ WCF.Message.UserMention = Class.extend({
 		
 		// restore caret position
 		this._redactor.replaceRangesWith($orgRange);
+		this._caretPosition = $orgRange;
 		
 		return $offsets;
 	},
