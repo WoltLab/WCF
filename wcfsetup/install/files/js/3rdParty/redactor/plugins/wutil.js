@@ -56,5 +56,15 @@ RedactorPlugins.wutil = {
 	 */
 	inWysiwygMode: function() {
 		return (this.opts.visual);
+	},
+	
+	/**
+	 * Replaces all ranges from the current selection with the provided one.
+	 * 
+	 * @param	DOMRange	range
+	 */
+	replaceRangesWith: function(range) {
+		getSelection().removeAllRanges();
+		getSelection().addRange(range);
 	}
 };

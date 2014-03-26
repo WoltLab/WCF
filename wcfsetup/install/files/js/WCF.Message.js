@@ -3051,33 +3051,73 @@ WCF.Message.UserMention = Class.extend({
 	 * @return	object
 	 */
 	_getDropdownMenuPosition: function() {
-		var $range = this._redactor.getSelection().getRangeAt(0);
-		var $startOffset = $range.startOffset;
+		var $orgRange = getSelection().getRangeAt(0).cloneRange();
 		
-		$range.setStart($range.startContainer, $range.startOffset - this._mentionStart.length);
-		$range.collapse(true);
+		// mark the entire text, starting from the '@' to the current cursor position
+		var $newRange = document.createRange();
+		$newRange.setStart($orgRange.startContainer, $orgRange.startOffset - (this._mentionStart.length + 1));
+		$newRange.setEnd($orgRange.startContainer, $orgRange.startOffset);
 		
-		var $element = document.createElement('span');
-		$range.insertNode($element);
+		this._redactor.replaceRangesWith($newRange);
 		
-		var $jElement = $($element);
-		var $offsets = $jElement.offset();
+		// get the offsets of the bounding box of current text selection
+		var $range = getSelection().getRangeAt(0);
+		var $rect = $range.getBoundingClientRect();
+		var $window = $(window);
+		var $offsets = {
+			top: Math.round($rect.bottom) + $window.scrollTop(),
+			left: Math.round($rect.left) + $window.scrollLeft()
+		};
+		
 		if (this._lineHeight === null) {
-			this._lineHeight = $jElement.height();
+			this._lineHeight = Math.round($rect.bottom - $rect.top);
 		}
 		
-		$jElement.remove();
-		
-		// inserting the node caused the text node to be split, merge them again
-		// using stupid DOM manipulation since .normalize() is broken in Internet Explorer 11
-		$range.startContainer.nodeValue += $range.startContainer.nextSibling.textContent;
-		$range.startContainer.parentNode.removeChild($range.startContainer.nextSibling);
-		
-		// move to end of node
-		$range.setEnd($range.startContainer, $startOffset);
-		$range.collapse(false);
+		// restore caret position
+		this._redactor.replaceRangesWith($orgRange);
 		
 		return $offsets;
+	},
+	
+	/**
+	 * Replaces the started mentioning with a chosen username.
+	 */
+	_setUsername: function(username) {
+		var $orgRange = getSelection().getRangeAt(0).cloneRange();
+		
+		// allow redactor to undo this
+		this._redactor.bufferSet();
+		
+		var $newRange = document.createRange();
+		$newRange.setStart($orgRange.startContainer, $orgRange.startOffset - (this._mentionStart.length + 1));
+		$newRange.setEnd($orgRange.startContainer, $orgRange.startOffset);
+		
+		this._redactor.replaceRangesWith($newRange);
+		
+		var $range = getSelection().getRangeAt(0);
+		$range.deleteContents();
+		$range.collapse(true);
+		
+		// insert username
+		if (username.indexOf("'") !== -1) {
+			username = username.replace(/'/g, "''");
+			username = "'" + username + "'";
+		}
+		else if (username.indexOf(' ') !== -1) {
+			username = "'" + username + "'";
+		}
+		
+		// use native API to prevent issues in Internet Explorer
+		var $text = document.createTextNode('@' + username);
+		$range.insertNode($text);
+		
+		var $newRange = document.createRange();
+		$newRange.setStart($text, username.length + 1);
+		$newRange.setEnd($text, username.length + 1);
+		
+		this._redactor.replaceRangesWith($newRange);
+		
+		this._hideList();
 	},
 	
 	/**
@@ -3227,34 +3267,6 @@ WCF.Message.UserMention = Class.extend({
 	},
 	
 	/**
-	 * Replaces the started mentioning with a chosen username.
-	 */
-	_setUsername: function(username) {
-		// allow redactor to undo this
-		this._redactor.bufferSet();
-		
-		var $range = this._redactor.getSelection().getRangeAt(0);
-		$range.setStart($range.startContainer, $range.startOffset - this._mentionStart.length);
-		$range.deleteContents();
-		$range.collapse(true);
-		
-		// insert username
-		if (username.indexOf("'") !== -1) {
-			username = username.replace(/'/g, "''");
-			username = "'" + username + "'";
-		}
-		else if (username.indexOf(' ') !== -1) {
-			username = "'" + username + "'";
-		}
-		
-		// use native API to prevent issues in Internet Explorer
-		var $text = document.createTextNode(username);
-		$range.insertNode($text);
-		
-		this._hideList();
-	},
-	
-	/**
 	 * Selects the suggestion with the given item index.
 	 * 
 	 * @param	integer		itemIndex
@@ -3308,10 +3320,10 @@ WCF.Message.UserMention = Class.extend({
 	 * Updates the position of the suggestion list.
 	 */
 	_updateSuggestionListPosition: function() {
-		//try {
+		try {
 			var $dropdownMenuPosition = this._getDropdownMenuPosition();
-			$dropdownMenuPosition.top += 5 + this._lineHeight; // add little vertical gap
-			$dropdownMenuPosition.left -= 16;
+			$dropdownMenuPosition.top += 5; // add a little vertical gap
+			
 			this._dropdownMenu.css($dropdownMenuPosition);
 			this._selectItem(0);
 			
@@ -3325,10 +3337,10 @@ WCF.Message.UserMention = Class.extend({
 			else {
 				this._dropdownMenu.removeClass('dropdownArrowBottom');
 			}
-		/*}
+		}
 		catch (e) {
 			// ignore errors that are caused by pressing enter to
 			// often in a short period of time
-		}*/
+		}
 	}
 });
