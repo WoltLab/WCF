@@ -97,7 +97,7 @@ WCF.Message.FormGuard = Class.extend({
 });
 
 /**
- * Provides previews for ckEditor message fields.
+ * Provides previews for Redactor message fields.
  * 
  * @param	string		className
  * @param	string		messageFieldID
@@ -230,12 +230,11 @@ WCF.Message.Preview = Class.extend({
 	 * @return	string
 	 */
 	_getMessage: function() {
-		if (!$.browser.ckeditor) {
+		if (!$.browser.redactor) {
 			return this._messageField.val();
 		}
-		else if (this._messageField.data('ckeditorInstance')) {
-			var $ckEditor = this._messageField.ckeditorGet();
-			return $ckEditor.getData();
+		else if (this._messageField.data('redactor')) {
+			return this._messageField.redactor('getText');
 		}
 		
 		return null;

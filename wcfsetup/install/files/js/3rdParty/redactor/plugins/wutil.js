@@ -9,6 +9,14 @@ if (!RedactorPlugins) var RedactorPlugins = {};
  */
 RedactorPlugins.wutil = {
 	/**
+	 * Initializes the RedactorPlugins.wutil plugin.
+	 */
+	init: function() {
+		// convert HTML to BBCode upon submit
+		this.$source.parents('form').submit($.proxy(this.submit, this));
+	},
+	
+	/**
 	 * Allows inserting of text contents in Redactor's source area.
 	 * 
 	 * @param	string		string
@@ -66,5 +74,31 @@ RedactorPlugins.wutil = {
 	replaceRangesWith: function(range) {
 		getSelection().removeAllRanges();
 		getSelection().addRange(range);
+	},
+	
+	/**
+	 * Returns text using BBCodes.
+	 * 
+	 * @return	string
+	 */
+	getText: function() {
+		if (this.inWysiwygMode()) {
+			this.sync();
+			
+			this._convertFromHtml();
+		}
+		
+		return this.$source.val();
+	},
+	
+	/**
+	 * Converts HTML to BBCode upon submit.
+	 */
+	submit: function() {
+		if (this.inWysiwygMode()) {
+			this.sync();
+			
+			this._convertFromHtml();
+		}
 	}
 };
