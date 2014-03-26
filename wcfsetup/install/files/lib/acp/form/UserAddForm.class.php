@@ -141,13 +141,16 @@ class UserAddForm extends UserOptionListForm {
 		if (isset($_POST['userTitle'])) $this->userTitle = $_POST['userTitle'];
 		
 		if (isset($_POST['signature'])) $this->signature = StringUtil::trim($_POST['signature']);
-		if (isset($_POST['disableSignatureReason'])) $this->disableSignatureReason = StringUtil::trim($_POST['disableSignatureReason']);
 		
 		$this->signatureEnableBBCodes = $this->signatureEnableSmilies = 0;
 		if (!empty($_POST['signatureEnableBBCodes'])) $this->signatureEnableBBCodes = 1;
 		if (!empty($_POST['signatureEnableSmilies'])) $this->signatureEnableSmilies = 1;
 		if (!empty($_POST['signatureEnableHtml'])) $this->signatureEnableHtml = 1;
-		if (!empty($_POST['disableSignature'])) $this->disableSignature = 1;
+		
+		if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
+			if (isset($_POST['disableSignatureReason'])) $this->disableSignatureReason = StringUtil::trim($_POST['disableSignatureReason']);
+			if (!empty($_POST['disableSignature'])) $this->disableSignature = 1;
+		}
 	}
 	
 	/**
@@ -248,14 +251,18 @@ class UserAddForm extends UserOptionListForm {
 				'signature' => $this->signature,
 				'signatureEnableBBCodes' => $this->signatureEnableBBCodes,
 				'signatureEnableSmilies' => $this->signatureEnableSmilies,
-				'signatureEnableHtml' => $this->signatureEnableHtml,
-				'disableSignature' => $this->disableSignature,
-				'disableSignatureReason' => $this->disableSignatureReason
+				'signatureEnableHtml' => $this->signatureEnableHtml
 			)),
 			'groups' => $this->groupIDs,
 			'languages' => $this->visibleLanguages,
 			'options' => $saveOptions
 		);
+		
+		if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
+			$data['data']['disableSignature'] = $this->disableSignature;
+			$data['data']['disableSignatureReason'] = $this->disableSignatureReason;
+		}
+		
 		$this->objectAction = new UserAction(array(), 'create', $data);
 		$this->objectAction->executeAction();
 		$this->saved();

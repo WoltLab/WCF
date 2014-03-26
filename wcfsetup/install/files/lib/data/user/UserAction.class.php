@@ -54,7 +54,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('create', 'ban', 'delete', 'disable', 'enable', 'unban');
+	protected $requireACP = array('create', 'delete', 'disable', 'enable');
 	
 	/**
 	 * Validates permissions and parameters.
@@ -211,7 +211,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(
-			array_merge(array(1, $this->parameters['banReason']), $conditionBuilder->getParameters())		
+			array_merge(array(1, $this->parameters['banReason']), $conditionBuilder->getParameters())
 		);
 		
 		$this->unmarkItems();
@@ -520,10 +520,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (empty($this->objectIDs)) {
 			return;
 		}
-	
+		
 		// get base class
 		$baseClass = call_user_func(array($this->className, 'getBaseClass'));
-	
+		
 		// get objects
 		$sql = "SELECT		user_option_value.*, user_table.*
 			FROM		wcf".WCF_N."_user user_table
@@ -534,6 +534,120 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$statement->execute($this->objectIDs);
 		while ($object = $statement->fetchObject($baseClass)) {
 			$this->objects[] = new $this->className($object);
+		}
+	}
+	
+	/**
+	 * Validates the 'disableSignature' action.
+	 */
+	public function validateDisableSignature() {
+		$this->validateEnableSignature();
+		
+		$this->readString('disableSignatureReason', true);
+	}
+	
+	/**
+	 * Disables the signature of the handled users.
+	 */
+	public function disableSignature() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		foreach ($this->objects as $userEditor) {
+			$userEditor->update(array(
+				'disableSignature' => 1,
+				'disableSignatureReason' => $this->parameters['disableSignatureReason']
+			));
+		}
+	}
+	
+	/**
+	 * Validates the 'enableSignature' action.
+	 */
+	public function validateEnableSignature() {
+		WCF::getSession()->checkPermissions(array('admin.user.canDisableSignature'));
+		
+		$this->__validateAccessibleGroups();
+		
+		if (empty($this->objects)) {
+			$this->readObjects();
+			
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Enables the signature of the handled users.
+	 */
+	public function enableSignature() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		foreach ($this->objects as $userEditor) {
+			$userEditor->update(array(
+				'disableSignature' => 0
+			));
+		}
+	}
+	
+	/**
+	 * Validates the 'disableAvatar' action.
+	 */
+	public function validateDisableAvatar() {
+		$this->validateEnableAvatar();
+		
+		$this->readString('disableAvatarReason', true);
+	}
+	
+	/**
+	 * Disables the avatar of the handled users.
+	 */
+	public function disableAvatar() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		foreach ($this->objects as $userEditor) {
+			$userEditor->update(array(
+				'disableAvatar' => 1,
+				'disableAvatarReason' => $this->parameters['disableAvatarReason']
+			));
+		}
+	}
+	
+	/**
+	 * Validates the 'enableAvatar' action.
+	 */
+	public function validateEnableAvatar() {
+		WCF::getSession()->checkPermissions(array('admin.user.canDisableAvatar'));
+		
+		$this->__validateAccessibleGroups();
+		
+		if (empty($this->objects)) {
+			$this->readObjects();
+			
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Enables the avatar of the handled users.
+	 */
+	public function enableAvatar() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		foreach ($this->objects as $userEditor) {
+			$userEditor->update(array(
+				'disableAvatar' => 0
+			));
 		}
 	}
 }

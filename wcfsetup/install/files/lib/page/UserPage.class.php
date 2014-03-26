@@ -3,6 +3,7 @@ namespace wcf\page;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\follow\UserFollowerList;
 use wcf\data\user\follow\UserFollowingList;
+use wcf\data\user\group\UserGroup;
 use wcf\data\user\profile\visitor\UserProfileVisitor;
 use wcf\data\user\profile\visitor\UserProfileVisitorEditor;
 use wcf\data\user\profile\visitor\UserProfileVisitorList;
@@ -174,7 +175,8 @@ class UserPage extends AbstractPage {
 			'followingCount' => $this->followingList->countObjects(),
 			'visitors' => ($this->visitorList !== null ? $this->visitorList->getObjects() : array()),
 			'visitorCount' => ($this->visitorList !== null ? $this->visitorList->countObjects() : 0),
-			'allowSpidersToIndexThisPage' => true
+			'allowSpidersToIndexThisPage' => true,
+			'isAccessible' => UserGroup::isAccessibleGroup($this->user->getGroupIDs())
 		));
 	}
 	

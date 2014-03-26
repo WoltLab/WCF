@@ -59,6 +59,18 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	protected $response = null;
 	
 	/**
+	 * comment object created by addComment()
+	 * @var	\wcf\data\comment\Comment
+	 */
+	public $createdComment = null;
+	
+	/**
+	 * response object created by addResponse()
+	 * @var	\wcf\data\comment\response\CommentResponse
+	 */
+	public $createdResponse = null;
+	
+	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
 	 */
 	public function delete() {
@@ -179,7 +191,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 */
 	public function addComment() {
 		// create comment
-		$comment = CommentEditor::create(array(
+		$this->createdComment = CommentEditor::create(array(
 			'objectTypeID' => $this->parameters['data']['objectTypeID'],
 			'objectID' => $this->parameters['data']['objectID'],
 			'time' => TIME_NOW,
@@ -196,22 +208,22 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		// fire activity event
 		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->parameters['data']['objectTypeID']);
 		if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.recentActivityEvent')) {
-			UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.recentActivityEvent', $comment->commentID);
+			UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.recentActivityEvent', $this->createdComment->commentID);
 		}
 		
 		// fire notification event
 		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
 			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
-			$userID = $notificationObjectType->getOwnerID($comment->commentID);
+			$userID = $notificationObjectType->getOwnerID($this->createdComment->commentID);
 			if ($userID != WCF::getUser()->userID) {
-				$notificationObject = new CommentUserNotificationObject($comment);
+				$notificationObject = new CommentUserNotificationObject($this->createdComment);
 				
 				UserNotificationHandler::getInstance()->fireEvent('comment', $objectType->objectType.'.notification', $notificationObject, array($userID));
 			}
 		}
 		
 		return array(
-			'template' => $this->renderComment($comment)
+			'template' => $this->renderComment($this->createdComment)
 		);
 	}
 	
@@ -243,7 +255,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 */
 	public function addResponse() {
 		// create response
-		$response = CommentResponseEditor::create(array(
+		$this->createdResponse = CommentResponseEditor::create(array(
 			'commentID' => $this->comment->commentID,
 			'time' => TIME_NOW,
 			'userID' => WCF::getUser()->userID,
@@ -254,7 +266,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		// update response data
 		$responseIDs = $this->comment->getResponseIDs();
 		if (count($responseIDs) < 3) {
-			$responseIDs[] = $response->responseID;
+			$responseIDs[] = $this->createdResponse->responseID;
 		}
 		$responses = $this->comment->responses + 1;
 		
@@ -271,12 +283,12 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		// fire activity event
 		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->comment->objectTypeID);
 		if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.recentActivityEvent')) {
-			UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.response.recentActivityEvent', $response->responseID);
+			UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.response.recentActivityEvent', $this->createdResponse->responseID);
 		}
 		
 		// fire notification event
 		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.notification')) {
-			$notificationObject = new CommentResponseUserNotificationObject($response);
+			$notificationObject = new CommentResponseUserNotificationObject($this->createdResponse);
 			if ($this->comment->userID != WCF::getUser()->userID) {
 				UserNotificationHandler::getInstance()->fireEvent('commentResponse', $objectType->objectType.'.response.notification', $notificationObject, array($this->comment->userID));
 			}
@@ -285,7 +297,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
 				$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
 				$userID = $notificationObjectType->getOwnerID($this->comment->commentID);
-					
+				
 				if ($userID != $this->comment->userID && $userID != WCF::getUser()->userID) {
 					UserNotificationHandler::getInstance()->fireEvent('commentResponseOwner', $objectType->objectType.'.response.notification', $notificationObject, array($userID));
 				}
@@ -294,7 +306,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		
 		return array(
 			'commentID' => $this->comment->commentID,
-			'template' => $this->renderResponse($response),
+			'template' => $this->renderResponse($this->createdResponse),
 			'responses' => $responses
 		);
 	}

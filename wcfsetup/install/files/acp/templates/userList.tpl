@@ -26,10 +26,19 @@
 		WCF.Language.addObject({
 			'wcf.acp.user.banReason': '{lang}wcf.acp.user.banReason{/lang}',
 			'wcf.acp.user.banReason.description': '{lang}wcf.acp.user.banReason.description{/lang}',
-			'wcf.acp.user.ban.sure': '{lang}wcf.acp.user.ban.sure{/lang}'
+			'wcf.acp.user.ban.sure': '{lang}wcf.acp.user.ban.sure{/lang}',
+			'wcf.acp.user.sendNewPassword.workerTitle': '{lang}wcf.acp.user.sendNewPassword.workerTitle{/lang}',
+			'wcf.acp.worker.abort.confirmMessage': '{lang}wcf.acp.worker.abort.confirmMessage{/lang}'
 		});
 		WCF.ACP.User.BanHandler.init();
-		{if $__wcf->session->getPermission('admin.user.canEnableUser')}WCF.ACP.User.EnableHandler.init();{/if}
+		
+		{if $__wcf->session->getPermission('admin.user.canEnableUser')}
+			WCF.ACP.User.EnableHandler.init();
+		{/if}
+		
+		{if $__wcf->session->getPermission('admin.user.canEditPassword')}
+			WCF.ACP.User.SendNewPasswordHandler.init();
+		{/if}
 		
 		{event name='javascriptInit'}
 	});

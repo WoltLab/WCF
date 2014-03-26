@@ -97,7 +97,7 @@ WCF.Message.FormGuard = Class.extend({
 });
 
 /**
- * Provides previews for ckEditor message fields.
+ * Provides previews for Redactor message fields.
  * 
  * @param	string		className
  * @param	string		messageFieldID
@@ -179,7 +179,7 @@ WCF.Message.Preview = Class.extend({
 	_click: function(event) {
 		var $message = this._getMessage();
 		if ($message === null) {
-			console.debug("[WCF.Message.Preview] Unable to access ckEditor instance of '" + this._messageFieldID + "'");
+			console.debug("[WCF.Message.Preview] Unable to access Redactor instance of '" + this._messageFieldID + "'");
 			return;
 		}
 		
@@ -225,17 +225,16 @@ WCF.Message.Preview = Class.extend({
 	},
 	
 	/**
-	 * Returns parsed message from ckEditor or null if editor was not accessible.
+	 * Returns parsed message from Redactor or null if editor was not accessible.
 	 * 
 	 * @return	string
 	 */
 	_getMessage: function() {
-		if (!$.browser.ckeditor) {
+		if (!$.browser.redactor) {
 			return this._messageField.val();
 		}
-		else if (this._messageField.data('ckeditorInstance')) {
-			var $ckEditor = this._messageField.ckeditorGet();
-			return $ckEditor.getData();
+		else if (this._messageField.data('redactor')) {
+			return this._messageField.redactor('getText');
 		}
 		
 		return null;
@@ -450,15 +449,7 @@ WCF.Message.SmileyCategories = Class.extend({
 	_proxy: null,
 	
 	/**
-	 * ckEditor element
-	 * @var	jQuery
-	 */
-	_ckEditor: null,
-	
-	/**
 	 * Initializes the smiley loader.
-	 * 
-	 * @param	string		ckEditorID
 	 */
 	init: function() {
 		this._cache = [ ];
@@ -516,24 +507,27 @@ WCF.Message.SmileyCategories = Class.extend({
  */
 WCF.Message.Smilies = Class.extend({
 	/**
-	 * ckEditor element
-	 * @var	jQuery
+	 * redactor element
+	 * @var	$.Redactor
 	 */
-	_ckEditor: null,
+	_redactor: null,
+	
+	_wysiwygSelector: '',
 	
 	/**
 	 * Initializes the smiley handler.
 	 * 
-	 * @param	string		ckEditorID
+	 * @param	string		wysiwygSelector
 	 */
-	init: function(ckEditorID) {
-		// get ck editor
-		if (ckEditorID) {
-			this._ckEditor = $('#' + ckEditorID);
+	init: function(wysiwygSelector) {
+		this._wysiwygSelector = wysiwygSelector;
+		
+		WCF.System.Dependency.Manager.register('Redactor_' + this._wysiwygSelector, $.proxy(function() {
+			this._redactor = $('#' + this._wysiwygSelector).redactor('getObject');
 			
 			// add smiley click handler
 			$(document).on('click', '.jsSmiley', $.proxy(this._smileyClick, this));
-		}
+		}, this));
 	},
 	
 	/**
@@ -546,43 +540,8 @@ WCF.Message.Smilies = Class.extend({
 		var $smileyCode = $target.data('smileyCode');
 		var $smileyPath = $target.data('smileyPath');
 		
-		// get ckEditor
-		var $ckEditor = this._ckEditor.ckeditorGet();
-		
-		// add smiley to config
-		if (!WCF.inArray($smileyCode, $ckEditor.config.smiley_descriptions)) {
-			$ckEditor.config.smiley_descriptions.push($smileyCode);
-			$ckEditor.config.smiley_images.push($smileyPath);
-		}
-		
-		if ($ckEditor.mode === 'wysiwyg') {
-			// in design mode
-			var $img = $ckEditor.document.createElement('img', {
-				attributes: {
-					src: $ckEditor.config.smiley_path + $smileyPath,
-					'class': 'smiley',
-					alt: $smileyCode
-				}
-			});
-			$ckEditor.insertText(' ');
-			$ckEditor.insertElement($img);
-			$ckEditor.insertText(' ');
-		}
-		else {
-			// in source mode
-			var $textarea = this._ckEditor.next('.cke_editor_text').find('textarea');
-			var $value = $textarea.val();
-			if ($value.length == 0) {
-				$textarea.val($smileyCode);
-				$textarea.setCaret($smileyCode.length);
-			}
-			else {
-				var $position = $textarea.getCaret();
-				var $string = (($value.substr($position - 1, 1) !== ' ') ? ' ' : '') + $smileyCode + ' ';
-				$textarea.val( $value.substr(0, $position) + $string + $value.substr($position) );
-				$textarea.setCaret($position + $string.length);
-			}
-		}
+		// register smiley
+		this._redactor.insertSmiley($smileyCode, $smileyPath, true);
 	}
 });
 
@@ -682,6 +641,7 @@ WCF.Message.QuickReply = Class.extend({
 		this._container.toggle();
 		
 		if (this._container.is(':visible')) {
+			// TODO: Scrolling is anything but smooth, better use the init callback
 			this._scroll.scrollTo(this._container, true);
 			
 			WCF.Message.Submit.registerButton('text', this._container.find('.formSubmit button[data-type=save]'));
@@ -689,17 +649,15 @@ WCF.Message.QuickReply = Class.extend({
 			if (this._quoteManager) {
 				// check if message field is empty
 				var $empty = true;
-				if ($.browser.ckeditor) {
-					var self = this;
-					this._messageField.ckeditor(function() {
-						$empty = (!$.trim(this.getData()).length);
-						self._ckeditorCallback($empty);
-					});
-					
+				if ($.browser.redactor) {
+					if (this._messageField.data('redactor')) {
+						$empty = (!$.trim(this._messageField.redactor('getText')));
+						this._editorCallback($empty);
+					}
 				}
 				else {
 					$empty = (!this._messageField.val().length);
-					this._ckeditorCallback($empty);
+					this._editorCallback($empty);
 				}
 			}
 		}
@@ -711,13 +669,16 @@ WCF.Message.QuickReply = Class.extend({
 		}
 	},
 	
-	_ckeditorCallback: function(isEmpty) {
+	/**
+	 * Inserts quotes and focuses the editor.
+	 */
+	_editorCallback: function(isEmpty) {
 		if (isEmpty) {
 			this._quoteManager.insertQuotes(this._getClassName(), this._getObjectID(), $.proxy(this._insertQuotes, this));
 		}
 		
-		if ($.browser.ckeditor) {
-			this._messageField.ckeditorGet().ui.editor.focus();
+		if ($.browser.redactor) {
+			this._messageField.redactor('focus');
 		}
 		else {
 			this._messageField.focus();
@@ -743,18 +704,8 @@ WCF.Message.QuickReply = Class.extend({
 			return;
 		}
 		
-		if ($.browser.ckeditor) {
-			var $ckEditor = this._messageField.ckeditorGet();
-			
-			// work-around for a strange selection bug in Firefox: http://www.woltlab.com/forum/index.php/Thread/220522-Zitat-Fehler/
-			if ($ckEditor.getSelection().getStartElement() === null) {
-				// range is broken, set it to end of text: http://stackoverflow.com/a/16308194
-				var $range = $ckEditor.createRange();
-				$range.moveToPosition($range.root, CKEDITOR.POSITION_BEFORE_END);
-				$ckEditor.getSelection().selectRanges([ $range ]);
-			}
-			
-			$ckEditor.insertText(data.returnValues.template);
+		if ($.browser.redactor) {
+			this._messageField.redactor('insertDynamic', data.returnValues.template);
 		}
 		else {
 			this._messageField.val(data.returnValues.template);
@@ -770,10 +721,8 @@ WCF.Message.QuickReply = Class.extend({
 		}
 		
 		var $message = '';
-		
-		if ($.browser.ckeditor) {
-			var $ckEditor = this._messageField.ckeditorGet();
-			$message = $.trim($ckEditor.getData());
+		if ($.browser.redactor) {
+			$message = this._messageField.redactor('getText');
 		}
 		else {
 			$message = $.trim(this._messageField.val());
@@ -803,10 +752,10 @@ WCF.Message.QuickReply = Class.extend({
 		});
 		this._proxy.sendRequest();
 		
-		// show spinner and hide CKEditor
+		// show spinner and hide Redactor
 		var $messageBody = this._container.find('.messageQuickReplyContent .messageBody');
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
-		$messageBody.children('#cke_text').hide().end().next().hide();
+		$messageBody.children('.redactor_box').hide().end().next().hide();
 	},
 	
 	/**
@@ -838,9 +787,8 @@ WCF.Message.QuickReply = Class.extend({
 	_cancel: function() {
 		this._revertQuickReply(true);
 		
-		if ($.browser.ckeditor) {
-			// revert CKEditor
-			this._messageField.ckeditorGet().setData('');
+		if ($.browser.redactor) {
+			this._messageField.redactor('reset');
 		}
 		else {
 			this._messageField.val('');
@@ -862,9 +810,9 @@ WCF.Message.QuickReply = Class.extend({
 			$messageBody.children('small.innerError').remove();
 		}
 		
-		// display CKEditor
+		// display Redactor
 		$messageBody.children('.icon-spinner').remove();
-		$messageBody.children('#cke_text').show();
+		$messageBody.children('.redactor_box').show();
 		
 		// display form submit
 		$messageBody.next().show();
@@ -882,10 +830,8 @@ WCF.Message.QuickReply = Class.extend({
 		}
 		
 		var $message = '';
-		
-		if ($.browser.ckeditor) {
-			var $ckEditor = this._messageField.ckeditorGet();
-			$message = $ckEditor.getData();
+		if ($.browser.redactor) {
+			$message = this._messageField.redactor('getText');
 		}
 		else {
 			$message = this._messageField.val();
@@ -945,9 +891,8 @@ WCF.Message.QuickReply = Class.extend({
 				this._notification.show(undefined, 5000, WCF.Language.get($message));
 			}
 			
-			if ($.browser.ckeditor) {
-				// remove CKEditor contents
-				this._messageField.ckeditorGet().setData('');
+			if ($.browser.redactor) {
+				this._messageField.redactor('reset');
 			}
 			else {
 				this._messageField.val('');
@@ -2980,12 +2925,18 @@ WCF.Message.Share.Page = Class.extend({
 });
 
 /**
- * Handles user mention suggestions in CKEditors.
+ * Handles user mention suggestions in Redactor instances.
  * 
  * Important: Objects of this class have to be created before the CKEditor
  * is initialized!
  */
 WCF.Message.UserMention = Class.extend({
+	/**
+	 * current caret position
+	 * @var	DOMRange
+	 */
+	_caretPosition: null,
+	
 	/**
 	 * name of the class used to get the user suggestions
 	 * @var	string
@@ -3023,35 +2974,26 @@ WCF.Message.UserMention = Class.extend({
 	_mentionStart: '',
 	
 	/**
+	 * redactor instance object
+	 * @var	$.Redactor
+	 */
+	_redactor: null,
+	
+	/**
 	 * Initalizes user suggestions for the CKEditor with the given textarea id.
 	 * 
-	 * @param	string		editorID
+	 * @param	string		wysiwygSelector
 	 */
-	init: function(editorID) {
-		// temporary disable suggestions for Internet Explorer
-		//
-		// this issue is caused by misplacing the range within the parent element,
-		// while the typed chars are appended to the preceeding text node, without
-		// getting focused for some reason
-		if ($.browser.msie) {
-			return;
-		}
+	init: function(wysiwygSelector) {
+		this._textarea = $('#' + wysiwygSelector);
+		this._redactor = this._textarea.redactor('getObject');
 		
-		this._textarea = $('#' + editorID);
+		this._redactor.setOption('keyupCallback', $.proxy(this._keyup, this));
+		this._redactor.setOption('wkeydownCallback', $.proxy(this._keydown, this));
 		
-		// get associated (ready) CKEditor object and add event listeners
-		CKEDITOR.on('instanceReady', $.proxy(function(event) {
-			if (event.editor.name === this._textarea.wcfIdentify()) {
-				this._ckEditor = event.editor;
-				this._ckEditor.container.on('keyup', $.proxy(this._keyup, this));
-				this._ckEditor.container.on('keydown', $.proxy(this._keydown, this));
-				this._ckEditor.on('key', $.proxy(this._key, this));
-				
-				this._dropdown = $(this._ckEditor.editable().$);
-				this._dropdownMenu = $('<ul class="dropdownMenu userSuggestionList" />').appendTo(this._textarea.parent());
-				WCF.Dropdown.initDropdownFragment(this._dropdown, this._dropdownMenu);
-			}
-		}, this));
+		this._dropdown = this._textarea.redactor('getEditor');
+		this._dropdownMenu = $('<ul class="dropdownMenu userSuggestionList" />').appendTo(this._textarea.parent());
+		WCF.Dropdown.initDropdownFragment(this._dropdown, this._dropdownMenu);
 		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
@@ -3073,6 +3015,9 @@ WCF.Message.UserMention = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
+		// restore caret position
+		this._redactor.replaceRangesWith(this._caretPosition);
+		
 		this._setUsername($(event.currentTarget).data('username'));
 	},
 	
@@ -3096,50 +3041,74 @@ WCF.Message.UserMention = Class.extend({
 	 * @return	object
 	 */
 	_getDropdownMenuPosition: function() {
-		var $range = this._ckEditor.getSelection().getRanges()[0];
-		var $orgRange = $range.clone();
-		var $startOffset = $range.startOffset;
+		var $orgRange = getSelection().getRangeAt(0).cloneRange();
 		
-		// move caret after the '@' sign
-		$range.setStart($range.startContainer, $startOffset - this._mentionStart.length);
-		$range.collapse(true);
-		$range.select();
+		// mark the entire text, starting from the '@' to the current cursor position
+		var $newRange = document.createRange();
+		$newRange.setStart($orgRange.startContainer, $orgRange.startOffset - (this._mentionStart.length + 1));
+		$newRange.setEnd($orgRange.startContainer, $orgRange.startOffset);
 		
-		// create span with random id and add it in front of the '@' sign
-		var $element = document.createElement('span');
-		$node = new CKEDITOR.dom.node($element);
-		$range.insertNode($node);
+		this._redactor.replaceRangesWith($newRange);
 		
-		// get offsets of span
-		$jElement = $($element);
-		if ($.browser.opera) {
-			// in opera, the span's height is 0 if it has no content
-			$jElement.text(' ');
-		}
-		var $offsets = $jElement.offset();
+		// get the offsets of the bounding box of current text selection
+		var $range = getSelection().getRangeAt(0);
+		var $rect = $range.getBoundingClientRect();
+		var $window = $(window);
+		var $offsets = {
+			top: Math.round($rect.bottom) + $window.scrollTop(),
+			left: Math.round($rect.left) + $window.scrollLeft()
+		};
+		
 		if (this._lineHeight === null) {
-			this._lineHeight = $jElement.height();
+			this._lineHeight = Math.round($rect.bottom - $rect.top);
 		}
 		
-		// merge text nodes before and after the temporary span element
-		// to avoid split text nodes which were one node before inserting
-		// the span element since split nodes can cause problems working
-		// with ranges and then remove the merged text node
-		if (!$.browser.msie || $element.previousSibling && $element.nextSibling) {
-			$element.previousSibling.nodeValue += $element.nextSibling.nodeValue;
-			$($element.nextSibling).remove();
-		}
-		
-		// reset caret position to original position at the end and make
-		// sure that the range is the same in all browsers
-		$range.setStart($orgRange.startContainer, $startOffset);
-		$range.setEnd($orgRange.startContainer, $startOffset);
-		$range.select();
-		
-		// remove span
-		$jElement.remove();
+		// restore caret position
+		this._redactor.replaceRangesWith($orgRange);
+		this._caretPosition = $orgRange;
 		
 		return $offsets;
+	},
+	
+	/**
+	 * Replaces the started mentioning with a chosen username.
+	 */
+	_setUsername: function(username) {
+		var $orgRange = getSelection().getRangeAt(0).cloneRange();
+		
+		// allow redactor to undo this
+		this._redactor.bufferSet();
+		
+		var $newRange = document.createRange();
+		$newRange.setStart($orgRange.startContainer, $orgRange.startOffset - (this._mentionStart.length + 1));
+		$newRange.setEnd($orgRange.startContainer, $orgRange.startOffset);
+		
+		this._redactor.replaceRangesWith($newRange);
+		
+		var $range = getSelection().getRangeAt(0);
+		$range.deleteContents();
+		$range.collapse(true);
+		
+		// insert username
+		if (username.indexOf("'") !== -1) {
+			username = username.replace(/'/g, "''");
+			username = "'" + username + "'";
+		}
+		else if (username.indexOf(' ') !== -1) {
+			username = "'" + username + "'";
+		}
+		
+		// use native API to prevent issues in Internet Explorer
+		var $text = document.createTextNode('@' + username);
+		$range.insertNode($text);
+		
+		var $newRange = document.createRange();
+		$newRange.setStart($text, username.length + 1);
+		$newRange.setEnd($text, username.length + 1);
+		
+		this._redactor.replaceRangesWith($newRange);
+		
+		this._hideList();
 	},
 	
 	/**
@@ -3162,16 +3131,15 @@ WCF.Message.UserMention = Class.extend({
 	 * @return	string
 	 */
 	_getTextLineInFrontOfCaret: function() {
-		var $range = this._ckEditor.getSelection().getRanges()[0];
-		
 		// if text is marked, user suggestions are disabled
-		if (!$range.collapsed) {
+		if (this._redactor.getSelectionHtml().length) {
 			return '';
 		}
 		
-		var $text = $range.startContainer.getText().substr(0, $range.startOffset);
+		var $range = this._redactor.getSelection().getRangeAt(0);
+		var $text = $range.startContainer.textContent.substr(0, $range.startOffset);
 		
-		// remove unicode zero width space and no-breaking space
+		// remove unicode zero width space and non-breaking space
 		var $textBackup = $text;
 		$text = '';
 		for (var $i = 0; $i < $textBackup.length; $i++) {
@@ -3202,47 +3170,44 @@ WCF.Message.UserMention = Class.extend({
 	},
 	
 	/**
-	 * Handles the key event of the CKEditor to select user suggestion on enter.
-	 */
-	_key: function(event) {
-		if (this._ckEditor.mode !== 'wysiwyg') {
-			return true;
-		}
-		
-		if (this._dropdownMenu.is(':visible')) {
-			if (event.data.keyCode === 13) { // enter
-				this._dropdownMenu.children('li').eq(this._itemIndex).trigger('click');
-				
-				event.cancel();
-			}
-		}
-	},
-	
-	/**
 	 * Handles the keydown event to check if the user starts mentioning someone.
 	 * 
 	 * @param	object		event
 	 */
 	_keydown: function(event) {
-		if (this._ckEditor.mode !== 'wysiwyg') {
+		if (this._redactor.inPlainMode()) {
 			return true;
 		}
 		
 		if (this._dropdownMenu.is(':visible')) {
-			switch (event.data.$.keyCode) {
-				case 38: // arrow up
-					event.data.$.preventDefault();
+			switch (event.which) {
+				case $.ui.keyCode.ENTER:
+					event.preventDefault();
 					
-					this._selectItem(this._itemIndex - 1);
+					this._dropdownMenu.children('li').eq(this._itemIndex).trigger('click');
+					
+					return false;
 				break;
 				
-				case 40: // arrow down
-					event.data.$.preventDefault();
+				case $.ui.keyCode.UP:
+					event.preventDefault();
+					
+					this._selectItem(this._itemIndex - 1);
+					
+					return false;
+				break;
+				
+				case $.ui.keyCode.DOWN:
+					event.preventDefault();
 					
 					this._selectItem(this._itemIndex + 1);
+					
+					return false;
 				break;
 			}
 		}
+		
+		return true;
 	},
 	
 	/**
@@ -3251,17 +3216,17 @@ WCF.Message.UserMention = Class.extend({
 	 * @param	object		event
 	 */
 	_keyup: function(event) {
-		if (this._ckEditor.mode !== 'wysiwyg') {
+		if (this._redactor.inPlainMode()) {
 			return true;
 		}
 		
 		// ignore enter key up event
-		if (event.data.$.keyCode === 13) {
+		if (event.which === $.ui.keyCode.ENTER) {
 			return;
 		}
 		
 		// ignore event if suggestion list and user pressed enter, arrow up or arrow down
-		if (this._dropdownMenu.is(':visible') && event.data.$.keyCode in { 13:1, 38:1, 40:1 }) {
+		if (this._dropdownMenu.is(':visible') && event.which in { 13:1, 38:1, 40:1 }) {
 			return;
 		}
 		
@@ -3290,49 +3255,6 @@ WCF.Message.UserMention = Class.extend({
 		else {
 			this._hideList();
 		}
-	},
-	
-	/**
-	 * Replaces the started mentioning with a chosen username.
-	 */
-	_setUsername: function(username) {
-		var $range = this._ckEditor.getSelection().getRanges()[0];
-		
-		// remove the beginning of the username
-		$range.setStart($range.startContainer, $range.startOffset - this._mentionStart.length);
-		$range.deleteContents();
-		
-		// insert username
-		if (username.indexOf("'") !== -1) {
-			username = username.replace(/'/g, "''");
-			username = "'" + username + "'";
-		}
-		else if (username.indexOf(' ') !== -1) {
-			username = "'" + username + "'";
-		}
-		this._ckEditor.insertText(username);
-		
-		// add whitespace after username
-		var $element = CKEDITOR.dom.element.createFromHtml('<span class="wcfUserMentionTemporary">&nbsp;</span>');
-		this._ckEditor.insertElement($element);
-		$(this._ckEditor.document.$).find('span.wcfUserMentionTemporary').replaceWith(function() {
-			return $(this).html();
-		});
-		
-		// the @-sign and the entered username are now in seperate text
-		// nodes which causes issues if the user changes the text
-		$range.endContainer.$.nodeValue += $range.endContainer.$.nextSibling.nodeValue;
-		$($range.endContainer.$.nextSibling).remove();
-		
-		// make sure that the range in Firefox is that same as in the
-		// other browsers
-		if ($.browser.mozilla) {
-			$range.selectNodeContents(new CKEDITOR.dom.text($range.endContainer.$.nextSibling));
-			$range.setStart($range.startContainer, 1);
-			$range.select();
-		}
-		
-		this._hideList();
 	},
 	
 	/**
@@ -3391,8 +3313,8 @@ WCF.Message.UserMention = Class.extend({
 	_updateSuggestionListPosition: function() {
 		try {
 			var $dropdownMenuPosition = this._getDropdownMenuPosition();
-			$dropdownMenuPosition.top += 5 + this._lineHeight; // add little vertical gap
-			$dropdownMenuPosition.left -= 16; // make sure dropdown arrow is at correct position
+			$dropdownMenuPosition.top += 5; // add a little vertical gap
+			
 			this._dropdownMenu.css($dropdownMenuPosition);
 			this._selectItem(0);
 			

@@ -27,6 +27,12 @@ class BBCodeHandler extends SingletonFactory {
 	protected $buttonBBCodes = array();
 	
 	/**
+	 * list of BBCodes which contain raw code (disabled BBCode parsing)
+	 * @var	array<\wcf\data\bbcode\BBCode>
+	 */
+	protected $sourceBBCodes = null;
+	
+	/**
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
@@ -82,5 +88,32 @@ class BBCodeHandler extends SingletonFactory {
 	 */
 	public function setAllowedBBCodes(array $bbCodes) {
 		$this->allowedBBCodes = $bbCodes;
+	}
+	
+	/**
+	 * Returns a list of BBCodes which contain raw code (disabled BBCode parsing)
+	 * 
+	 * @return	array<\wcf\data\bbcode\BBCode>
+	 */
+	public function getSourceBBCodes() {
+		if (empty($this->allowedBBCodes)) {
+			return array();
+		}
+		
+		if ($this->sourceBBCodes === null) {
+			$this->sourceBBCodes = array();
+			
+			foreach (BBCodeCache::getInstance()->getBBCodes() as $bbcode) {
+				if (!$bbcode->isSourceCode) {
+					continue;
+				}
+				
+				if ($this->isAvailableBBCode($bbcode->bbcodeTag)) {
+					$this->sourceBBCodes[] = $bbcode;
+				}
+			}
+		}
+		
+		return $this->sourceBBCodes;
 	}
 }

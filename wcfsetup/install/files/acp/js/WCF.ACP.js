@@ -9,7 +9,7 @@
 /**
  * Initialize WCF.ACP namespace
  */
-WCF.ACP = {};
+WCF.ACP = { };
 
 /**
  * Namespace for ACP application management.
@@ -613,7 +613,7 @@ WCF.ACP.Package.Installation = Class.extend({
 		this._setIcon('spinner');
 		
 		// collect form values
-		var $additionalData = {};
+		var $additionalData = { };
 		$('#packageInstallationInnerContent input').each(function(index, inputElement) {
 			var $inputElement = $(inputElement);
 			var $type = $inputElement.attr('type');
@@ -677,7 +677,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	object		additionalData
 	 */
 	_executeStep: function(step, node, additionalData) {
-		if (!additionalData) additionalData = {};
+		if (!additionalData) additionalData = { };
 		
 		var $data = $.extend({
 			node: node,
@@ -1725,7 +1725,7 @@ WCF.ACP.Worker = Class.extend({
 /**
  * Namespace for category-related functions.
  */
-WCF.ACP.Category = {};
+WCF.ACP.Category = { };
 
 /**
  * Handles collapsing categories.
@@ -1775,8 +1775,8 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
 		$('.collapsibleButton').remove();
 		
 		// reinit containers
-		this._containers = {};
-		this._containerData = {};
+		this._containers = { };
+		this._containerData = { };
 		
 		var $containers = this._getContainers();
 		if ($containers.length == 0) {
@@ -2098,6 +2098,56 @@ WCF.ACP.User.EnableHandler = {
 		
 		var $notification = new WCF.System.Notification();
 		$notification.show(function() { window.location.reload(); });
+	}
+};
+
+/**
+ * Handles the send new password clipboard action.
+ */
+WCF.ACP.User.SendNewPasswordHandler = {
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes WCF.ACP.User.SendNewPasswordHandler on first use.
+	 */
+	init: function() {
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		// bind clipboard event listener
+		$('.jsClipboardEditor').each($.proxy(function(index, container) {
+			var $container = $(container);
+			var $types = eval($container.data('types'));
+			if (WCF.inArray('com.woltlab.wcf.user', $types)) {
+				$container.on('clipboardAction', $.proxy(this._execute, this));
+				return false;
+			}
+		}, this));
+	},
+	
+	/**
+	 * Handles clipboard actions.
+	 * 
+	 * @param	object		event
+	 * @param	string		type
+	 * @param	string		actionName
+	 * @param	object		parameters
+	 */
+	_execute: function(event, type, actionName, parameters) {
+		if (actionName == 'com.woltlab.wcf.user.sendNewPassword') {
+			WCF.System.Confirmation.show(parameters.confirmMessage, function(action) {
+				if (action === 'confirm') {
+					new WCF.ACP.Worker('sendingNewPasswords', 'wcf\\system\\worker\\SendNewPasswordWorker', WCF.Language.get('wcf.acp.user.sendNewPassword.workerTitle'), {
+						userIDs: parameters.objectIDs
+					});
+				}
+			});
+		}
 	}
 };
 

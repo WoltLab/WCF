@@ -273,12 +273,6 @@ final class HTTPRequest {
 			else {
 				$chunkedTransferRegex = new Regex('(^|,)[ \t]*chunked[ \t]*$', Regex::CASE_INSENSITIVE);
 				if (isset($this->replyHeaders['transfer-encoding']) && $chunkedTransferRegex->match(end($this->replyHeaders['transfer-encoding']))) {
-					// remove chunked from transfer-encoding
-					$this->replyHeaders['transfer-encoding'] = array_filter(array_map(function ($element) use ($chunkedTransferRegex) {
-						return $chunkedTransferRegex->replace($element, '');
-					}, $this->replyHeaders['transfer-encoding']), 'trim');
-					if (empty($this->replyHeaders['transfer-encoding'])) unset($this->replyHeaders['transfer-encoding']);
-					
 					// last chunk finished
 					if ($chunkLength === 0) {
 						// read hex data and trash chunk-extension
@@ -290,6 +284,12 @@ final class HTTPRequest {
 							// clear remaining response
 							while (!$remoteFile->gets());
 							
+							// remove chunked from transfer-encoding
+							$this->replyHeaders['transfer-encoding'] = array_filter(array_map(function ($element) use ($chunkedTransferRegex) {
+								return $chunkedTransferRegex->replace($element, '');
+							}, $this->replyHeaders['transfer-encoding']), 'trim');
+							if (empty($this->replyHeaders['transfer-encoding'])) unset($this->replyHeaders['transfer-encoding']);
+							
 							// break out of main reading loop
 							break;
 						}
@@ -297,13 +297,13 @@ final class HTTPRequest {
 					else {
 						$this->replyBody .= $line;
 						$chunkLength -= strlen($line);
-						$bodyLength = +strlen($line);
-						$remoteFile->read(2); // CRLF
+						$bodyLength += strlen($line);
+						if ($chunkLength === 0) $remoteFile->read(2); // CRLF
 					}
 				}
 				else {
 					$this->replyBody .= $line;
-					$bodyLength = +strlen($line);
+					$bodyLength += strlen($line);
 				}
 				
 				if (isset($this->options['maxLength']) && $bodyLength >= $this->options['maxLength']) {

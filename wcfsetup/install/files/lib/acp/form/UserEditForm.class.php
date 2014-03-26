@@ -122,8 +122,11 @@ class UserEditForm extends UserAddForm {
 		if (!empty($_POST['banned'])) $this->banned = 1;
 		if (isset($_POST['banReason'])) $this->banReason = StringUtil::trim($_POST['banReason']);
 		if (isset($_POST['avatarType'])) $this->avatarType = $_POST['avatarType'];
-		if (!empty($_POST['disableAvatar'])) $this->disableAvatar = 1;
-		if (isset($_POST['disableAvatarReason'])) $this->disableAvatarReason = StringUtil::trim($_POST['disableAvatarReason']);
+		
+		if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
+			if (!empty($_POST['disableAvatar'])) $this->disableAvatar = 1;
+			if (isset($_POST['disableAvatarReason'])) $this->disableAvatarReason = StringUtil::trim($_POST['disableAvatarReason']);
+		}
 	}
 	
 	/**
@@ -173,7 +176,7 @@ class UserEditForm extends UserAddForm {
 		$this->disableSignatureReason = $this->user->disableSignatureReason;
 		$this->disableAvatar = $this->user->disableAvatar;
 		$this->disableAvatarReason = $this->user->disableAvatarReason;
-			
+		
 		if ($this->user->avatarID) $this->avatarType = 'custom';
 		else if (MODULE_GRAVATAR && $this->user->enableGravatar) $this->avatarType = 'gravatar';
 	}
@@ -234,8 +237,12 @@ class UserEditForm extends UserAddForm {
 				);
 			break;
 		}
-		$avatarData['disableAvatar'] = $this->disableAvatar;
-		$avatarData['disableAvatarReason'] = $this->disableAvatarReason;
+		
+		if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
+			$avatarData['disableAvatar'] = $this->disableAvatar;
+			$avatarData['disableAvatarReason'] = $this->disableAvatarReason;
+		}
+		
 		$this->additionalFields = array_merge($this->additionalFields, $avatarData);
 		
 		// add default groups
@@ -266,14 +273,18 @@ class UserEditForm extends UserAddForm {
 				'signature' => $this->signature,
 				'signatureEnableBBCodes' => $this->signatureEnableBBCodes,
 				'signatureEnableSmilies' => $this->signatureEnableSmilies,
-				'signatureEnableHtml' => $this->signatureEnableHtml,
-				'disableSignature' => $this->disableSignature,
-				'disableSignatureReason' => $this->disableSignatureReason
+				'signatureEnableHtml' => $this->signatureEnableHtml
 			)),
 			'groups' => $this->groupIDs,
 			'languages' => $this->visibleLanguages,
 			'options' => $saveOptions
 		);
+		
+		if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
+			$data['data']['disableSignature'] = $this->disableSignature;
+			$data['data']['disableSignatureReason'] = $this->disableSignatureReason;
+		}
+		
 		$this->objectAction = new UserAction(array($this->userID), 'update', $data);
 		$this->objectAction->executeAction();
 		

@@ -25,7 +25,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @see	\wcf\system\clipboard\action\AbstractClipboardAction::$supportedActions
 	 */
-	protected $supportedActions = array('assignToGroup', 'ban', 'delete', 'exportMailAddress', 'sendMail');
+	protected $supportedActions = array('assignToGroup', 'ban', 'delete', 'exportMailAddress', 'sendMail', 'sendNewPassword');
 	
 	/**
 	 * @see	\wcf\system\clipboard\action\IClipboardAction::execute()
@@ -55,6 +55,12 @@ class UserClipboardAction extends AbstractClipboardAction {
 			
 			case 'sendMail':
 				$item->setURL(LinkHandler::getInstance()->getLink('UserMail'));
+			break;
+			
+			case 'sendNewPassword':
+				$item->addParameter('confirmMessage', WCF::getLanguage()->getDynamicVariable('wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage', array(
+					'count' => $item->getCount()
+				)));
 			break;
 		}
 		
@@ -135,7 +141,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 			if (!isset($userToGroup[$row['userID']])) {
 				$userToGroup[$row['userID']] = array();
 			}
-				
+			
 			$userToGroup[$row['userID']][] = $row['groupID'];
 		}
 		
@@ -147,5 +153,19 @@ class UserClipboardAction extends AbstractClipboardAction {
 		}
 		
 		return $userIDs;
+	}
+	
+	/**
+	 * Returns the ids of the users which can be sent new passwords.
+	 * 
+	 * @return	array<integer>
+	 */
+	public function validateSendNewPassword() {
+		// check permissions
+		if (!WCF::getSession()->getPermission('admin.user.canEditPassword')) {
+			return array();
+		}
+		
+		return $this->__validateAccessibleGroups(array_keys($this->objects));
 	}
 }

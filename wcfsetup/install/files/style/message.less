@@ -903,39 +903,8 @@ li:nth-child(2n+1) .message {
 	}
 }
 
-/* ckeditor fixes */
-.cke_editor_text {
-	border-style: solid !important;
-	padding: 0 !important;
-}
-
-.cke_source,
-.cke_wysiwyg_div {
-	padding: 8px !important;
-}
-
-/* fixes textarea width */
-.cke_source {
-	box-sizing: border-box !important;
-	-moz-box-sizing: border-box !important;
-	-webkit-box-sizing: border-box !important; 
-}
-
-.cke_combo__fontsize .cke_combo_text {
-	width: auto !important;
-}
-
-.cke_dialog_background_cover {
-	background-color: #000 !important;
-}
-
-.cke_wysiwyg_div,
-.cke_inner {
-	background-color: transparent !important;
-}
-
-/* fixes list styling */
-.cke_wysiwyg_div {
+/* redactor fixes */
+.redactor_editor {
 	ul,
 	ol {
 		.nativeList;
@@ -950,9 +919,32 @@ li:nth-child(2n+1) .message {
 	}
 }
 
-/* fixes table styling */
-.cke_wysiwyg_div td {
-	border: 1px solid rgba(0, 0, 0, .2);
+.redactor_dropdown_box_wsmiley > ul > li:not(:last-child) {
+	margin-right: 3px !important;
+}
+
+.redactor_dropdown_box_fontcolor {
+	width: 192px !important;
+	
+	> a:not(:last-child) {
+		border: 2px solid rgba(255, 255, 255, 1);
+		float: left;
+		font-size: 0;
+		height: 20px;
+		padding: 0 !important;
+		margin: 0;
+		width: 20px;
+	}
+	
+	> a:last-child {
+		border: 2px solid rgba(255, 255, 255, 1);
+		border-bottom-width: 0;
+		clear: both;
+		display: block;
+		font-size: .85rem;
+		padding: 2px 4px;
+		text-align: center;
+	}
 }
 
 @media screen and (max-width: 800px), print {

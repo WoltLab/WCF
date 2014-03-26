@@ -370,6 +370,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.group.button.choose"><![CDATA[Choose User Group]]></item>
 		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
+		<item name="wcf.acp.group.option.admin.user.canDisableAvatar"><![CDATA[Can block avatar]]></item>
+		<item name="wcf.acp.group.option.admin.user.canDisableSignature"><![CDATA[Can block signature]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -1370,6 +1372,14 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
 		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting approval]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail"><![CDATA[Dear {@$username},
+
+Your password has been changed by an administrator.
+Your new password is: {$password}
+
+Login with your new password: {link controller='Login' isEmail=true}{/link}]]></item>
+		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account for Website: {@PAGE_TITLE|language}]]></item>
+		<item name="wcf.acp.user.sendNewPassword.workerTitle"><![CDATA[Sending New Passwords]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
@@ -1486,6 +1496,8 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} user{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[Export Email addresses]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[Send Email]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Send New Password ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to {#$count} user{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{#$count} User{if $count != 1}s{/if} marked]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Merge]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Approve]]></item>
@@ -1775,6 +1787,7 @@ Errors are:
 		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.global.noItems"><![CDATA[There are no items.]]></item>
 		<item name="wcf.global.button.showAll"><![CDATA[Show All]]></item>
+		<item name="wcf.global.reason"><![CDATA[Reason]]></item>
 	</category>
 	
 	<category name="wcf.global.form">
@@ -2091,7 +2104,7 @@ Errors are:
 		<item name="wcf.user.lostPassword.mail"><![CDATA[Dear {@$username},
 
 if you have lost your password you can request a new one using the link below.
-Request a new password: {link controller='NewPassword' isEmail=true}u={@$userID}&k={@$key}{/link}  
+Request a new password: {link controller='NewPassword' isEmail=true}u={@$userID}&k={@$key}{/link}
 
 If you have not lost your password, you can safely ignore this email.]]></item>
 		<item name="wcf.user.lostPassword.mail.sent"><![CDATA[You should receive an email shortly.]]></item>
@@ -2204,6 +2217,18 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.register.honeyPot.description"><![CDATA[Heads up! If you can see this, you are strongly encouraged <strong>NOT</strong> to fill in the next two input fields!]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Search for content by “{$user->username}”]]></item>
 		<item name="wcf.user.author"><![CDATA[Author]]></item>
+		<item name="wcf.user.moderate"><![CDATA[Moderate User]]></item>
+		<item name="wcf.user.ban"><![CDATA[Ban User]]></item>
+		<item name="wcf.user.ban.confirmMessage"><![CDATA[Do you really want to ban this user?]]></item>
+		<item name="wcf.user.ban.reason.description"><![CDATA[The reason will be displayed for the user when visiting the site.]]></item>
+		<item name="wcf.user.unban"><![CDATA[Unban User]]></item>
+		<item name="wcf.user.disableAvatar"><![CDATA[Block Avatar]]></item>
+		<item name="wcf.user.disableAvatar.confirmMessage"><![CDATA[Do you really want to block the avatar of this user?]]></item>
+		<item name="wcf.user.enableAvatar"><![CDATA[Unblock Avatar]]></item>
+		<item name="wcf.user.disableSignature"><![CDATA[Block Signature]]></item>
+		<item name="wcf.user.disableSignature.confirmMessage"><![CDATA[Do you really want to block the signature of this user?]]></item>
+		<item name="wcf.user.enableSignature"><![CDATA[Unblock Signature]]></item>
+		<item name="wcf.user.edit"><![CDATA[Edit User]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
