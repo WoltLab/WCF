@@ -49,7 +49,7 @@ RedactorPlugins.wbutton = {
 			break;
 			
 			case 'spoiler':
-				$iconName = 'fa-shield';
+				$iconName = 'fa-eye-slash';
 			break;
 			
 			case 'tt':

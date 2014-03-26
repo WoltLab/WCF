@@ -42,6 +42,27 @@ RedactorPlugins.wutil = {
 	},
 	
 	/**
+	 * Inserts content into the editor depending if it is in wysiwyg or plain mode. If 'plainValue' is
+	 * null or undefined, the value from 'html' will be taken instead.
+	 * 
+	 * @param	string		html
+	 * @param	string		plainValue
+	 */
+	insertDynamic: function(html, plainValue) {
+		if (plainValue === undefined || plainValue === null) {
+			// shortcut if both 'html' and 'html' are the same
+			plainValue = html;
+		}
+		
+		if (this.inWysiwygMode()) {
+			this.insertHtml(html);
+		}
+		else {
+			this.insertAtCaret(plainValue);
+		}
+	},
+	
+	/**
 	 * Sets an option value after initialization.
 	 */
 	setOption: function(key, value) {
@@ -99,6 +120,19 @@ RedactorPlugins.wutil = {
 			this.sync();
 			
 			this._convertFromHtml();
+		}
+	},
+	
+	/**
+	 * Resets the editor's contents.
+	 */
+	reset: function() {
+		if (this.inWysiwygMode()) {
+			this.$editor.empty();
+			this.sync();
+		}
+		else {
+			this.$source.val('');
 		}
 	}
 };

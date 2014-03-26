@@ -179,7 +179,7 @@ WCF.Message.Preview = Class.extend({
 	_click: function(event) {
 		var $message = this._getMessage();
 		if ($message === null) {
-			console.debug("[WCF.Message.Preview] Unable to access ckEditor instance of '" + this._messageFieldID + "'");
+			console.debug("[WCF.Message.Preview] Unable to access Redactor instance of '" + this._messageFieldID + "'");
 			return;
 		}
 		
@@ -225,7 +225,7 @@ WCF.Message.Preview = Class.extend({
 	},
 	
 	/**
-	 * Returns parsed message from ckEditor or null if editor was not accessible.
+	 * Returns parsed message from Redactor or null if editor was not accessible.
 	 * 
 	 * @return	string
 	 */
@@ -449,15 +449,7 @@ WCF.Message.SmileyCategories = Class.extend({
 	_proxy: null,
 	
 	/**
-	 * ckEditor element
-	 * @var	jQuery
-	 */
-	_ckEditor: null,
-	
-	/**
 	 * Initializes the smiley loader.
-	 * 
-	 * @param	string		ckEditorID
 	 */
 	init: function() {
 		this._cache = [ ];
@@ -649,6 +641,7 @@ WCF.Message.QuickReply = Class.extend({
 		this._container.toggle();
 		
 		if (this._container.is(':visible')) {
+			// TODO: Scrolling is anything but smooth, better use the init callback
 			this._scroll.scrollTo(this._container, true);
 			
 			WCF.Message.Submit.registerButton('text', this._container.find('.formSubmit button[data-type=save]'));
@@ -656,17 +649,15 @@ WCF.Message.QuickReply = Class.extend({
 			if (this._quoteManager) {
 				// check if message field is empty
 				var $empty = true;
-				if ($.browser.ckeditor) {
-					var self = this;
-					this._messageField.ckeditor(function() {
-						$empty = (!$.trim(this.getData()).length);
-						self._ckeditorCallback($empty);
-					});
-					
+				if ($.browser.redactor) {
+					if (this._messageField.data('redactor')) {
+						$empty = (!$.trim(this._messageField.redactor('getText')));
+						this._editorCallback($empty);
+					}
 				}
 				else {
 					$empty = (!this._messageField.val().length);
-					this._ckeditorCallback($empty);
+					this._editorCallback($empty);
 				}
 			}
 		}
@@ -678,13 +669,16 @@ WCF.Message.QuickReply = Class.extend({
 		}
 	},
 	
-	_ckeditorCallback: function(isEmpty) {
+	/**
+	 * Inserts quotes and focuses the editor.
+	 */
+	_editorCallback: function(isEmpty) {
 		if (isEmpty) {
 			this._quoteManager.insertQuotes(this._getClassName(), this._getObjectID(), $.proxy(this._insertQuotes, this));
 		}
 		
-		if ($.browser.ckeditor) {
-			this._messageField.ckeditorGet().ui.editor.focus();
+		if ($.browser.redactor) {
+			this._messageField.redactor('focus');
 		}
 		else {
 			this._messageField.focus();
@@ -710,18 +704,8 @@ WCF.Message.QuickReply = Class.extend({
 			return;
 		}
 		
-		if ($.browser.ckeditor) {
-			var $ckEditor = this._messageField.ckeditorGet();
-			
-			// work-around for a strange selection bug in Firefox: http://www.woltlab.com/forum/index.php/Thread/220522-Zitat-Fehler/
-			if ($ckEditor.getSelection().getStartElement() === null) {
-				// range is broken, set it to end of text: http://stackoverflow.com/a/16308194
-				var $range = $ckEditor.createRange();
-				$range.moveToPosition($range.root, CKEDITOR.POSITION_BEFORE_END);
-				$ckEditor.getSelection().selectRanges([ $range ]);
-			}
-			
-			$ckEditor.insertText(data.returnValues.template);
+		if ($.browser.redactor) {
+			this._messageField.redactor('insertDynamic', data.returnValues.template);
 		}
 		else {
 			this._messageField.val(data.returnValues.template);
@@ -737,10 +721,8 @@ WCF.Message.QuickReply = Class.extend({
 		}
 		
 		var $message = '';
-		
-		if ($.browser.ckeditor) {
-			var $ckEditor = this._messageField.ckeditorGet();
-			$message = $.trim($ckEditor.getData());
+		if ($.browser.redactor) {
+			$message = this._messageField.redactor('getText');
 		}
 		else {
 			$message = $.trim(this._messageField.val());
@@ -770,10 +752,10 @@ WCF.Message.QuickReply = Class.extend({
 		});
 		this._proxy.sendRequest();
 		
-		// show spinner and hide CKEditor
+		// show spinner and hide Redactor
 		var $messageBody = this._container.find('.messageQuickReplyContent .messageBody');
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
-		$messageBody.children('#cke_text').hide().end().next().hide();
+		$messageBody.children('.redactor_box').hide().end().next().hide();
 	},
 	
 	/**
@@ -805,9 +787,8 @@ WCF.Message.QuickReply = Class.extend({
 	_cancel: function() {
 		this._revertQuickReply(true);
 		
-		if ($.browser.ckeditor) {
-			// revert CKEditor
-			this._messageField.ckeditorGet().setData('');
+		if ($.browser.redactor) {
+			this._messageField.redactor('reset');
 		}
 		else {
 			this._messageField.val('');
@@ -829,9 +810,9 @@ WCF.Message.QuickReply = Class.extend({
 			$messageBody.children('small.innerError').remove();
 		}
 		
-		// display CKEditor
+		// display Redactor
 		$messageBody.children('.icon-spinner').remove();
-		$messageBody.children('#cke_text').show();
+		$messageBody.children('.redactor_box').show();
 		
 		// display form submit
 		$messageBody.next().show();
@@ -849,10 +830,8 @@ WCF.Message.QuickReply = Class.extend({
 		}
 		
 		var $message = '';
-		
-		if ($.browser.ckeditor) {
-			var $ckEditor = this._messageField.ckeditorGet();
-			$message = $ckEditor.getData();
+		if ($.browser.redactor) {
+			$message = this._messageField.redactor('getText');
 		}
 		else {
 			$message = this._messageField.val();
@@ -912,9 +891,8 @@ WCF.Message.QuickReply = Class.extend({
 				this._notification.show(undefined, 5000, WCF.Language.get($message));
 			}
 			
-			if ($.browser.ckeditor) {
-				// remove CKEditor contents
-				this._messageField.ckeditorGet().setData('');
+			if ($.browser.redactor) {
+				this._messageField.redactor('reset');
 			}
 			else {
 				this._messageField.val('');
