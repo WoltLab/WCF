@@ -90,6 +90,17 @@ RedactorPlugins.wbbcode = {
 	},
 	
 	/**
+	 * Overwrites $.Redactor.buildContent() to handle BBCode -> HTML on init
+	 */
+	buildContent: function() {
+		if (this.opts.textareamode) this.content = $.trim(this.$source.val());
+		else {
+			this._convertToHtml();
+			this.content = $.trim(this.$source.html());
+		}
+	},
+	
+	/**
 	 * Overwrites $.Redactor.toggle() to transform the source mode into a BBCode view.
 	 * 
 	 * @see		$.Redactor.toggle()

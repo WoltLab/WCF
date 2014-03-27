@@ -862,6 +862,10 @@ WCF.Message.QuickReply = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		if ($.browser.redactor) {
+			this._messageField.redactor('autosavePurge');
+		}
+		
 		// redirect to new page
 		if (data.returnValues.url) {
 			window.location = data.returnValues.url;
