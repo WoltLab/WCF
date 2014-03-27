@@ -57,7 +57,7 @@
 {event name='stylesheets'}
 
 <!-- Icons -->
-<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon.ico" />
+<link rel="icon" href="{@$__wcf->getPath()}images/favicon.ico" type="image/x-icon" />
 <link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png" />
 
 <noscript>
