@@ -72,11 +72,12 @@ class StyleImportForm extends AbstractForm {
 			$archive = new PackageArchive($this->source['tmp_name']);
 			$archive->openArchive();
 			
-			// check if the package includes a style
+			// check if the package is an application
 			if ($archive->getPackageInfo('isApplication')) {
 				throw new SystemException("Package is application");
 			}
 			
+			// check if the package includes a style
 			$containsStyle = false;
 			$installInstructions = $archive->getInstallInstructions();
 			foreach ($installInstructions as $instruction) {
