@@ -34,6 +34,14 @@ RedactorPlugins.wutil = {
 		
 		// prevent Redactor's own autosave
 		this.setOption('autosave', false);
+		
+		// disable autosave on destroy
+		var $mpDestroy = this.destroy;
+		var self = this;
+		this.destroy = function() {
+			self.autosaveDisable();
+			$mpDestroy.call(self);
+		};
 	},
 	
 	/**

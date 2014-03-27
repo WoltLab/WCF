@@ -1219,14 +1219,10 @@ WCF.Message.InlineEditor = Class.extend({
 	_cancel: function() {
 		var $container = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget');
 		
-		// remove ckEditor
-		try {
-			var $ckEditor = $('#' + this._messageEditorIDPrefix + $container.data('objectID')).ckeditorGet();
-			$ckEditor.destroy();
-		}
-		catch (e) {
-			// CKEditor might be not initialized yet, ignore
-		}
+		// remove editor
+		var $target = $('#' + this._messageEditorIDPrefix + $container.data('objectID'));
+		$target.redactor('autosavePurge');
+		$target.redactor('destroy');
 		
 		// restore message
 		var $messageBody = $container.find('.messageBody');

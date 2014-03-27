@@ -18,6 +18,13 @@ RedactorPlugins.wbbcode = {
 			this.dropdownShow(e, btnName);
 		}, this));
 		this.buttonAwesome('wsmiley', 'fa-smile-o');
+		
+		this.opts.initCallback = $.proxy(function() {
+			if (this.$source.val().length) {
+				this.toggle();
+				this.toggle();
+			}
+		}, this);
 	},
 	
 	/**
@@ -87,17 +94,6 @@ RedactorPlugins.wbbcode = {
 		__REDACTOR_SMILIES[smileyCode] = smileyPath;
 		
 		return true;
-	},
-	
-	/**
-	 * Overwrites $.Redactor.buildContent() to handle BBCode -> HTML on init
-	 */
-	buildContent: function() {
-		if (this.opts.textareamode) this.content = $.trim(this.$source.val());
-		else {
-			this._convertToHtml();
-			this.content = $.trim(this.$source.html());
-		}
 	},
 	
 	/**
