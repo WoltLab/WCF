@@ -668,7 +668,7 @@ class PackageInstallationDispatcher {
 			$packageDir->setName('packageDir');
 			$packageDir->setLabel(WCF::getLanguage()->get('wcf.acp.package.packageDir.input'));
 			
-			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(mb_substr(WCF_DIR, 0, -4)));
+			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(dirname(WCF_DIR)));
 			// check if there is already an application
 			$sql = "SELECT	COUNT(*) AS count
 				FROM	wcf".WCF_N."_package
