@@ -1,4 +1,12 @@
-CodeMirror.validate = (function() {
+(function(mod) {
+  if (typeof exports == "object" && typeof module == "object") // CommonJS
+    mod(require("../../lib/codemirror"));
+  else if (typeof define == "function" && define.amd) // AMD
+    define(["../../lib/codemirror"], mod);
+  else // Plain browser env
+    mod(CodeMirror);
+})(function(CodeMirror) {
+  "use strict";
   var GUTTER_ID = "CodeMirror-lint-markers";
   var SEVERITIES = /^(?:error|warning)$/;
 
@@ -52,9 +60,11 @@ CodeMirror.validate = (function() {
     this.onMouseOver = function(e) { onMouseOver(cm, e); };
   }
 
-  function parseOptions(options) {
+  function parseOptions(cm, options) {
     if (options instanceof Function) return {getAnnotations: options};
-    else if (!options || !options.getAnnotations) throw new Error("Required option 'getAnnotations' missing (lint addon)");
+    if (!options || options === true) options = {};
+    if (!options.getAnnotations) options.getAnnotations = cm.getHelper(CodeMirror.Pos(0, 0), "lint");
+    if (!options.getAnnotations) throw new Error("Required option 'getAnnotations' missing (lint addon)");
     return options;
   }
 
@@ -109,7 +119,7 @@ CodeMirror.validate = (function() {
     if (options.async)
       options.getAnnotations(cm, updateLinting, options);
     else
-      updateLinting(cm, options.getAnnotations(cm.getValue()));
+      updateLinting(cm, options.getAnnotations(cm.getValue(), options.options));
   }
 
   function updateLinting(cm, annotationsNotSorted) {
@@ -167,7 +177,7 @@ CodeMirror.validate = (function() {
     if (!/\bCodeMirror-lint-mark-/.test((e.target || e.srcElement).className)) return;
     for (var i = 0; i < nearby.length; i += 2) {
       var spans = cm.findMarksAt(cm.coordsChar({left: e.clientX + nearby[i],
-                                                top: e.clientY + nearby[i + 1]}));
+                                                top: e.clientY + nearby[i + 1]}, "client"));
       for (var j = 0; j < spans.length; ++j) {
         var span = spans[j], ann = span.__annotation;
         if (ann) return popupSpanTooltip(ann, e);
@@ -175,7 +185,7 @@ CodeMirror.validate = (function() {
     }
   }
 
-  CodeMirror.defineOption("lintWith", false, function(cm, val, old) {
+  CodeMirror.defineOption("lint", false, function(cm, val, old) {
     if (old && old != CodeMirror.Init) {
       clearMarks(cm);
       cm.off("change", onChange);
@@ -186,7 +196,7 @@ CodeMirror.validate = (function() {
     if (val) {
       var gutters = cm.getOption("gutters"), hasLintGutter = false;
       for (var i = 0; i < gutters.length; ++i) if (gutters[i] == GUTTER_ID) hasLintGutter = true;
-      var state = cm.state.lint = new LintState(cm, parseOptions(val), hasLintGutter);
+      var state = cm.state.lint = new LintState(cm, parseOptions(cm, val), hasLintGutter);
       cm.on("change", onChange);
       if (state.options.tooltips != false)
         CodeMirror.on(cm.getWrapperElement(), "mouseover", state.onMouseOver);
@@ -194,4 +204,4 @@ CodeMirror.validate = (function() {
       startLinting(cm);
     }
   });
-})();
+});

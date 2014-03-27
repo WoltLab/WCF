@@ -4,7 +4,7 @@
 	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/searchcursor.js"></script>
 	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/addon/search/search.js"></script>
 {/if}
-{if $codemirrorMode|isset}<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/{$codemirrorMode}/{$codemirrorMode}.js"></script>{/if}
+{if $codemirrorMode|isset}<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/{if $codemirrorMode == 'text/x-less'}css/css{else}{$codemirrorMode}/{$codemirrorMode}{/if}.js"></script>{/if}
 {event name='javascriptIncludes'}
 
 <script data-relocate="true">

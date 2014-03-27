@@ -556,7 +556,7 @@
 					</dd>
 				</dl>
 			</fieldset>
-			{include file='codemirror' codemirrorMode='less' codemirrorSelector='#individualLess, #overrideLess'}
+			{include file='codemirror' codemirrorMode='text/x-less' codemirrorSelector='#individualLess, #overrideLess'}
 			
 			{event name='syntaxFieldsets'}
 		</div>
