@@ -107,7 +107,7 @@ class TemplateAddForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		if (isset($_POST['tplName'])) $this->tplName = StringUtil::trim($_POST['tplName']);
-		if (isset($_POST['templateSource'])) $this->templateSource = $_POST['templateSource'];
+		if (isset($_POST['templateSource'])) $this->templateSource = StringUtil::unifyNewlines($_POST['templateSource']);
 		if (isset($_POST['templateGroupID'])) $this->templateGroupID = intval($_POST['templateGroupID']);
 		
 		// get package id for this template
