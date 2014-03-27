@@ -2478,7 +2478,6 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You did not provide any details yet.{else}There are no details visible to you.{/if}]]></item>
 		<item name="wcf.user.profile.content.recentActivity.noEntries"><![CDATA[There are no recent activities available yet.]]></item>
 		<item name="wcf.user.profile.followers"><![CDATA[{$user->username}’s Follower]]></item>
-		<item name="wcf.user.profile.userList.showAll"><![CDATA[Show All]]></item>
 		<item name="wcf.user.profile.following"><![CDATA[{$user->username} Follows]]></item>
 		<item name="wcf.user.profile.menu.about"><![CDATA[About Me]]></item>
 		<item name="wcf.user.profile.menu.recentActivity"><![CDATA[Recent Activity]]></item>
