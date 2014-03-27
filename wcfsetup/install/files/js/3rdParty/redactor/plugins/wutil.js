@@ -9,11 +9,31 @@ if (!RedactorPlugins) var RedactorPlugins = {};
  */
 RedactorPlugins.wutil = {
 	/**
+	 * autosave worker process
+	 * @var	WCF.PeriodicalExecuter
+	 */
+	_autosaveWorker: null,
+	
+	/**
 	 * Initializes the RedactorPlugins.wutil plugin.
 	 */
 	init: function() {
 		// convert HTML to BBCode upon submit
 		this.$source.parents('form').submit($.proxy(this.submit, this));
+		
+		if (this.getOption('wautosave').active) {
+			this.autosaveEnable();
+			
+			if (this.getOption('wautosave').saveOnInit || this.$source.data('saveOnInit')) {
+				this._saveTextToStorage();
+			}
+			else {
+				this.autosaveRestore();
+			}
+		}
+		
+		// prevent Redactor's own autosave
+		this.setOption('autosave', false);
 	},
 	
 	/**
@@ -49,24 +69,40 @@ RedactorPlugins.wutil = {
 	 * @param	string		plainValue
 	 */
 	insertDynamic: function(html, plainValue) {
-		if (plainValue === undefined || plainValue === null) {
-			// shortcut if both 'html' and 'html' are the same
-			plainValue = html;
-		}
-		
 		if (this.inWysiwygMode()) {
 			this.insertHtml(html);
 		}
 		else {
+			if (plainValue === undefined || plainValue === null) {
+				plainValue = html;
+			}
+			
 			this.insertAtCaret(plainValue);
 		}
 	},
 	
 	/**
 	 * Sets an option value after initialization.
+	 * 
+	 * @param	string		key
+	 * @param	mixed		value
 	 */
 	setOption: function(key, value) {
 		this.opts[key] = value;
+	},
+	
+	/**
+	 * Reads an option value, returns null if key is unknown.
+	 * 
+	 * @param	string		key
+	 * @return	mixed
+	 */
+	getOption: function(key) {
+		if (this.opts[key]) {
+			return this.opts[key];
+		}
+		
+		return null;
 	},
 	
 	/**
@@ -121,6 +157,8 @@ RedactorPlugins.wutil = {
 			
 			this._convertFromHtml();
 		}
+		
+		this.autosavePurge();
 	},
 	
 	/**
@@ -134,5 +172,84 @@ RedactorPlugins.wutil = {
 		else {
 			this.$source.val('');
 		}
+	},
+	
+	/**
+	 * Enables automatic saving every minute.
+	 * 
+	 * @param	string		key
+	 */
+	autosaveEnable: function(key) {
+		if (!this.getOption('wautosave').active) {
+			this.setOption('wautosave', {
+				active: true,
+				key: key
+			});
+		}
+		
+		if (this._autosaveWorker === null) {
+			var self = this;
+			this._autosaveWorker = new WCF.PeriodicalExecuter($.proxy(this._saveTextToStorage, this), 60 * 1000);
+		}
+		
+		return true;
+	},
+	
+	/**
+	 * Saves current editor text to local browser storage.
+	 */
+	_saveTextToStorage: function() {
+		localStorage.setItem(this.getOption('wautosave').key, this.getText());
+	},
+	
+	/**
+	 * Disables automatic saving.
+	 */
+	autosaveDisable: function() {
+		if (!this.getOption('wautosave').active) {
+			return false;
+		}
+		
+		this._autosaveWorker.stop();
+		this._autosaveWorker = null;
+		
+		this.setOption('wautosave', {
+			active: false,
+			key: ''
+		});
+		
+		return true;
+	},
+	
+	/**
+	 * Attempts to purge saved text.
+	 * 
+	 * @param	string		key
+	 */
+	autosavePurge: function() {
+		localStorage.removeItem(this.getOption('wautosave').key);
+	},
+	
+	/**
+	 * Attempts to restore a saved text.
+	 */
+	autosaveRestore: function() {
+		var $options = this.getOption('wautosave');
+		var $text = localStorage.getItem($options.key);
+		if ($text !== null) {
+			if (this.inWysiwygMode()) {
+				this.toggle(false);
+				this.$source.val($text);
+				this.toggle(false);
+				this.focusEnd();
+			}
+			else {
+				this.$source.val($text);
+			}
+			
+			return true;
+		}
+		
+		return false;
 	}
 };

@@ -11,6 +11,8 @@ $(function() {
 	var $callbackIdentifier = 'Redactor_' + $editorName;
 	
 	WCF.System.Dependency.Manager.setup($callbackIdentifier, function() {
+		var $textarea = $('#' + $editorName);
+		
 		//
 		// TODO: toolbar configuration / 'wysiwygToolbar.tpl'
 		//
@@ -21,9 +23,17 @@ $(function() {
 			plugins: [ 'wbbcode', 'wbutton',  'wfontcolor', 'wmonkeypatch', 'wutil' ]
 		};
 		
+		// autosave config
+		if ($textarea.data('autosave')) {
+			$config.wautosave = {
+				active: true,
+				key: $textarea.data('autosave')
+			}
+		}
+		
 		{event name='javascriptInit'}
 		
-		$('#' + $editorName).redactor($config);
+		$textarea.redactor($config);
 	});
 	
 	head.load([
