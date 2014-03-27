@@ -61,13 +61,33 @@ class PackageStartInstallForm extends AbstractForm {
 	public $queue = null;
 	
 	/**
+	 * location of the package uploaded via style import
+	 * @var	string
+	 */
+	public $stylePackageImportLocation = '';
+	
+	/**
+	 * @see	\wcf\page\IPage::readParameters()
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		$this->stylePackageImportLocation = WCF::getSession()->getVar('stylePackageImportLocation');
+		if ($this->stylePackageImportLocation) {
+			$_POST['t'] = WCF::getSession()->getSecurityToken();
+		}
+	}
+	
+	/**
 	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['downloadPackage'])) $this->downloadPackage = StringUtil::trim($_POST['downloadPackage']);
-		if (isset($_FILES['uploadPackage'])) $this->uploadPackage = $_FILES['uploadPackage'];
+		if (!$this->stylePackageImportLocation) {
+			if (isset($_POST['downloadPackage'])) $this->downloadPackage = StringUtil::trim($_POST['downloadPackage']);
+			if (isset($_FILES['uploadPackage'])) $this->uploadPackage = $_FILES['uploadPackage'];
+		}
 	}
 	
 	/**
@@ -76,7 +96,19 @@ class PackageStartInstallForm extends AbstractForm {
 	public function validate() {
 		parent::validate();
 		
-		if (!empty($this->uploadPackage['name'])) {
+		if ($this->stylePackageImportLocation) {
+			$this->archive = new PackageArchive($this->stylePackageImportLocation, $this->package);
+			
+			try {
+				$this->validateArchive('uploadPackage');
+			}
+			catch (UserInputException $e) {
+				WCF::getSession()->unregister('stylePackageImportLocation');
+				
+				throw $e;
+			}
+		}
+		else if (!empty($this->uploadPackage['name'])) {
 			$this->validateUploadPackage();
 		}
 		else if (!empty($this->downloadPackage)) {
@@ -207,6 +239,14 @@ class PackageStartInstallForm extends AbstractForm {
 		// obey foreign key
 		$packageID = ($this->package) ? $this->package->packageID : null;
 		
+		$archive = $this->downloadPackage;
+		if ($this->stylePackageImportLocation) {
+			$archive = $this->stylePackageImportLocation;
+		}
+		else if (!empty($this->uploadPackage['tmp_name'])) {
+			$archive = $this->uploadPackage['name'];
+		}
+		
 		// insert queue
 		$isApplication = $this->archive->getPackageInfo('isApplication');
 		$this->queue = PackageInstallationQueueEditor::create(array(
@@ -215,7 +255,7 @@ class PackageStartInstallForm extends AbstractForm {
 			'package' => $this->archive->getPackageInfo('name'),
 			'packageName' => $this->archive->getLocalizedPackageInfo('packageName'),
 			'packageID' => $packageID,
-			'archive' => (!empty($this->uploadPackage['tmp_name']) ? $this->uploadPackage['name'] : $this->downloadPackage),
+			'archive' => $archive,
 			'action' => ($this->package != null ? 'update' : 'install'),
 			'isApplication' => (!$isApplication ? '0' : '1')
 		));
@@ -233,7 +273,8 @@ class PackageStartInstallForm extends AbstractForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'package' => $this->package
+			'package' => $this->package,
+			'installingImportedStyle' => $this->stylePackageImportLocation != ''
 		));
 	}
 	

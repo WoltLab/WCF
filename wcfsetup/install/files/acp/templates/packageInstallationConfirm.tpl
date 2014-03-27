@@ -30,9 +30,9 @@
 {if $excludingPackages|count > 0}
 	<div class="error">{lang}wcf.acp.package.install.error.excludingPackages{/lang}
 		<ul>
-		{foreach from=$excludingPackages item=excludingPackage}
-			<li>{lang}wcf.acp.package.install.error.excludingPackages.excludingPackage{/lang}</li>
-		{/foreach}
+			{foreach from=$excludingPackages item=excludingPackage}
+				<li>{lang}wcf.acp.package.install.error.excludingPackages.excludingPackage{/lang}</li>
+			{/foreach}
 		</ul>
 	</div>
 {/if}
@@ -40,11 +40,15 @@
 {if $excludedPackages|count > 0}
 	<div class="error">{lang}wcf.acp.package.install.error.excludedPackages{/lang}
 		<ul>
-		{foreach from=$excludedPackages item=excludedPackage}
-			<li>{lang}wcf.acp.package.install.error.excludedPackages.excludedPackage{/lang}</li>
-		{/foreach}
+			{foreach from=$excludedPackages item=excludedPackage}
+				<li>{lang}wcf.acp.package.install.error.excludedPackages.excludedPackage{/lang}</li>
+			{/foreach}
 		</ul>
 	</div>
+{/if}
+
+{if $installingImportedStyle}
+	<p class="info">{lang}wcf.acp.package.install.installingImportedStyle{/lang}</p>
 {/if}
 
 <div class="container containerPadding marginTop">

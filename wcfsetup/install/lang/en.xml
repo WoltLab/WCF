@@ -928,6 +928,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.install.error.excludingPackages"><![CDATA[The following, already installed packages prohibit installing this package:]]></item>
 		<item name="wcf.acp.package.install.error.excludingPackages.excludingPackage"><![CDATA[“{$excludingPackage}” ({$excludingPackage->package}){if $excludingPackage->excludedPackageVersion} (excluded version: {$excludingPackage->excludedPackageVersion}){/if}]]></item>
 		<item name="wcf.acp.package.install.error.missingRequirements"><![CDATA[Unable to resolve requirements of this package.]]></item>
+		<item name="wcf.acp.package.install.installingImportedStyle"><![CDATA[The uploaded file is a package containg a style.]]></item>
 		<item name="wcf.acp.package.install.optionalPackage.missingRequirements"><![CDATA[Unable to install, some or all required packages are not installed.]]></item>
 		<item name="wcf.acp.package.install.step.prepare"><![CDATA[Preparing Installation …]]></item>
 		<item name="wcf.acp.package.install.title"><![CDATA[Installation]]></item>

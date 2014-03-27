@@ -24,6 +24,10 @@
 	<h1>{lang}{@$pageTitle}{/lang}</h1>
 </header>
 
+{if $errorField && $installingImportedStyle}
+	<p class="info">{lang}wcf.acp.package.install.installingImportedStyle{/lang}</p>
+{/if}
+
 {include file='formError'}
 
 <div class="contentNavigation">

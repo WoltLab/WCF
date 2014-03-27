@@ -63,6 +63,13 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	public $requirements = array();
 	
 	/**
+	 * true if the package to be installed was uploaded via the import style
+	 * form
+	 * @var	boolean
+	 */
+	public $installingImportedStyle = false;
+	
+	/**
 	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -79,6 +86,11 @@ class PackageInstallationConfirmPage extends AbstractPage {
 		}
 		else {
 			WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
+		}
+		
+		$this->installingImportedStyle = WCF::getSession()->getVar('stylePackageImportLocation') !== null;
+		if ($this->installingImportedStyle) {
+			WCF::getSession()->unregister('stylePackageImportLocation');
 		}
 	}
 	
@@ -149,7 +161,8 @@ class PackageInstallationConfirmPage extends AbstractPage {
 			'missingPackages' => $this->missingPackages,
 			'excludingPackages' => $this->packageInstallationDispatcher->getArchive()->getConflictedExcludingPackages(),
 			'excludedPackages' => $this->packageInstallationDispatcher->getArchive()->getConflictedExcludedPackages(),
-			'queue' => $this->queue
+			'queue' => $this->queue,
+			'installingImportedStyle' => $this->installingImportedStyle
 		));
 	}
 	
