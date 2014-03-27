@@ -803,6 +803,13 @@ class WCF {
 	}
 	
 	/**
+	 * @see	\wcf\system\request\RouteHandler::secureConnection()
+	 */
+	public function secureConnection() {
+		return RouteHandler::secureConnection();
+	}
+	
+	/**
 	 * Initialises the cronjobs.
 	 */
 	protected function initCronjobs() {

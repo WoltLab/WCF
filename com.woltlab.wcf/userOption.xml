@@ -247,7 +247,8 @@
 				<categoryname>settings.privacy.messaging</categoryname>
 				<optiontype>select</optiontype>
 				<editable>3</editable>
-				<selectoptions><![CDATA[1:wcf.user.access.registered
+				<selectoptions><![CDATA[0:wcf.user.access.everyone
+1:wcf.user.access.registered
 2:wcf.user.access.following
 3:wcf.user.access.nobody]]></selectoptions>
 				<defaultvalue>1</defaultvalue>

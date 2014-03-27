@@ -2,22 +2,24 @@
 	<legend><label for="recaptcha_response_field">{lang}wcf.recaptcha.title{/lang}</label></legend>
 	<small>{lang}wcf.recaptcha.description{/lang}</small>
 	
-	<dl class="wide reCaptcha{if $errorField == 'recaptchaString'} formError{/if}">
-		<script data-relocate="true">
-			//<![CDATA[
-			var RecaptchaOptions = {
-				lang: '{@$recaptchaLanguageCode}',
-				theme : 'custom'
-			}
-			//]]>
-		</script>
+	<dl class="wide reCaptcha{if $errorField|isset && $errorField == 'recaptchaString'} formError{/if}">
+		{if !$ajaxRecaptcha|isset || !$ajaxRecaptcha}
+			<script data-relocate="true">
+				//<![CDATA[
+				var RecaptchaOptions = {
+					lang: '{@$recaptchaLanguageCode}',
+					theme : 'custom'
+				}
+				//]]>
+			</script>
+		{/if}
 		<dt class="jsOnly">
 			<label for="recaptcha_response_field">reCAPTCHA</label>
 		</dt>
 		<dd class="jsOnly">
 			<div id="recaptcha_image" class="framed"></div>
 			<input type="text" id="recaptcha_response_field" name="recaptcha_response_field" class="medium marginTop" />
-			{if $errorField == 'recaptchaString'}
+			{if $errorField|isset && $errorField == 'recaptchaString'}
 				<small class="innerError">
 					{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
 					{if $errorType == 'false'}{lang}wcf.recaptcha.error.recaptchaString.false{/lang}{/if}
@@ -37,19 +39,30 @@
 			</ul>
 		</dd>
 		
-		<script data-relocate="true" src="http{if $recaptchaUseSSL}s{/if}://www.google.com/recaptcha/api/challenge?k={$recaptchaPublicKey}"></script>
-		<noscript>
-			<dd>
-				<iframe src="http{if $recaptchaUseSSL}s{/if}://www.google.com/recaptcha/api/noscript?k={$recaptchaPublicKey}" height="300" width="500" seamless="seamless"></iframe><br />
-				<textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
-				<input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
-			</dd>
-			{if $errorField == 'recaptchaString'}
-				<small class="innerError">
-					{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-					{if $errorType == 'false'}{lang}wcf.recaptcha.error.recaptchaString.false{/lang}{/if}
-				</small>
-			{/if}
-		</noscript>
+		{if !$ajaxRecaptcha|isset || !$ajaxRecaptcha}
+			<script data-relocate="true" src="http{if $recaptchaUseSSL}s{/if}://www.google.com/recaptcha/api/challenge?k={$recaptchaPublicKey}"></script>
+			<noscript>
+				<dd>
+					<iframe src="http{if $recaptchaUseSSL}s{/if}://www.google.com/recaptcha/api/noscript?k={$recaptchaPublicKey}" height="300" width="500" seamless="seamless"></iframe><br />
+					<textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+					<input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
+				</dd>
+				{if $errorField == 'recaptchaString'}
+					<small class="innerError">
+						{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+						{if $errorType == 'false'}{lang}wcf.recaptcha.error.recaptchaString.false{/lang}{/if}
+					</small>
+				{/if}
+			</noscript>
+		{else}
+			<script data-relocate="true">
+				//<![CDATA[
+				Recaptcha.create("{$recaptchaPublicKey}", "recaptcha_image", {
+					lang: '{@$recaptchaLanguageCode}',
+					theme : 'custom'
+				});
+				//]]>
+			</script>
+		{/if}
 	</dl>
 </fieldset>

@@ -30,7 +30,14 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractUserN
 	public function getMessage() {
 		// @todo: use cache or a single query to retrieve required data
 		$comment = new Comment($this->userNotificationObject->commentID);
-		$commentAuthor = new User($comment->userID);
+		if ($comment->userID) {
+			$commentAuthor = new User($comment->userID);
+		}
+		else {
+			$commentAuthor = new User(null, array(
+				'username' => $comment->username
+			));
+		}
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.message', array(
 			'author' => $this->author,
@@ -43,8 +50,15 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractUserN
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
 		$comment = new Comment($this->userNotificationObject->commentID);
-		$commentAuthor = new User($comment->userID);
 		$owner = new User($comment->objectID);
+		if ($comment->userID) {
+			$commentAuthor = new User($comment->userID);
+		}
+		else {
+			$commentAuthor = new User(null, array(
+				'username' => $comment->username
+			));
+		}
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.mail', array(
 			'response' => $this->userNotificationObject,

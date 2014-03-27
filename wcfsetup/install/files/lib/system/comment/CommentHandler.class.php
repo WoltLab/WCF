@@ -174,6 +174,19 @@ class CommentHandler extends SingletonFactory {
 			return;
 		}
 		
+		// flood control for guests is session based
+		if (!WCF::getUser()->userID) {
+			$lastCommentTime = WCF::getSession()->getVar('lastCommentTime');
+			
+			if ($lastCommentTime && $lastCommentTime + WCF::getSession()->getPermission('user.comment.floodControlTime') > TIME_NOW) {
+				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', array(
+					'lastCommentTime' => $lastCommentTime
+				)));
+			}
+			
+			return;
+		}
+		
 		// check for comments
 		$sql = "SELECT		time
 			FROM		wcf".WCF_N."_comment

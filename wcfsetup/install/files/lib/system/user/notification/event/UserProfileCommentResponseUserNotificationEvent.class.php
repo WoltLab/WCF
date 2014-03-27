@@ -29,7 +29,14 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractUserNotifi
 	public function getMessage() {
 		// @todo: use cache or a single query to retrieve required data
 		$comment = new Comment($this->userNotificationObject->commentID);
-		$user = new User($comment->objectID);
+		if ($comment->userID) {
+			$commentAuthor = new User($comment->userID);
+		}
+		else {
+			$commentAuthor = new User(null, array(
+				'username' => $comment->username
+			));
+		}
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message', array(
 			'author' => $this->author,

@@ -1,5 +1,8 @@
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Comment{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+{if !$__wcf->user->userID}
+	<script type="text/javascript" src="http{if $__wcf->secureConnection()}s{/if}://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+{/if}
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {

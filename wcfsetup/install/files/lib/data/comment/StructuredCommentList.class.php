@@ -91,7 +91,10 @@ class StructuredCommentList extends CommentList {
 				$this->responseIDs[] = $responseID;
 				$responseIDs[$responseID] = $comment->commentID;
 			}
-			$userIDs[] = $comment->userID;
+
+			if ($comment->userID) {
+				$userIDs[] = $comment->userID;
+			}
 			
 			$comment = new StructuredComment($comment);
 			$comment->setIsDeletable($this->commentManager->canDeleteComment($comment->getDecoratedObject()));
@@ -113,7 +116,9 @@ class StructuredCommentList extends CommentList {
 				$commentID = $responseIDs[$response->responseID];
 				$this->objects[$commentID]->addResponse($response);
 				
-				$userIDs[] = $response->userID;
+				if ($response->userID) {
+					$userIDs[] = $response->userID;
+				}
 			}
 		}
 		
@@ -123,12 +128,12 @@ class StructuredCommentList extends CommentList {
 			
 			$users = UserProfile::getUserProfiles($userIDs);
 			foreach ($this->objects as $comment) {
-				if (isset($users[$comment->userID])) {
+				if ($comment->userID && isset($users[$comment->userID])) {
 					$comment->setUserProfile($users[$comment->userID]);
 				}
 				
 				foreach ($comment as $response) {
-					if (isset($users[$response->userID])) {
+					if ($response->userID && isset($users[$response->userID])) {
 						$response->setUserProfile($users[$response->userID]);
 					}
 				}

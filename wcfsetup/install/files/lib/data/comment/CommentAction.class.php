@@ -12,12 +12,14 @@ use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\like\LikeHandler;
+use wcf\system\recaptcha\RecaptchaHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\MessageUtil;
+use wcf\util\UserUtil;
 
 /**
  * Executes comment-related actions.
@@ -33,7 +35,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('loadComments');
+	protected $allowGuestAccess = array('addComment', 'addResponse', 'loadComments', 'getGuestDialog');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
@@ -69,6 +71,12 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @var	\wcf\data\comment\response\CommentResponse
 	 */
 	public $createdResponse = null;
+
+	/**
+	 * errors occuring durch the validation of addComment or addResponse
+	 * @var	array
+	 */
+	public $validationErrors = array();
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::delete()
@@ -174,6 +182,10 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		CommentHandler::enforceFloodControl();
 		
 		$this->readInteger('objectID', false, 'data');
+		
+		$this->validateUsername();
+		$this->validateRecaptcha();
+		
 		$this->validateMessage();
 		$objectType = $this->validateObjectType();
 		
@@ -190,13 +202,19 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function addComment() {
+		if (!empty($this->validationErrors)) {
+			return array(
+				'errors' => $this->validationErrors
+			);
+		}
+		
 		// create comment
 		$this->createdComment = CommentEditor::create(array(
 			'objectTypeID' => $this->parameters['data']['objectTypeID'],
 			'objectID' => $this->parameters['data']['objectID'],
 			'time' => TIME_NOW,
-			'userID' => WCF::getUser()->userID,
-			'username' => WCF::getUser()->username,
+			'userID' => WCF::getUser()->userID ?: null,
+			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
 			'message' => $this->parameters['data']['message'],
 			'responses' => 0,
 			'responseIDs' => serialize(array())
@@ -207,7 +225,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		
 		// fire activity event
 		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->parameters['data']['objectTypeID']);
-		if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.recentActivityEvent')) {
+		if ($this->createdComment->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.recentActivityEvent')) {
 			UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.recentActivityEvent', $this->createdComment->commentID);
 		}
 		
@@ -220,6 +238,17 @@ class CommentAction extends AbstractDatabaseObjectAction {
 				
 				UserNotificationHandler::getInstance()->fireEvent('comment', $objectType->objectType.'.notification', $notificationObject, array($userID));
 			}
+		}
+		
+		if (!$this->createdComment->userID) {
+			// save user name is session
+			WCF::getSession()->register('username', $this->createdComment->username);
+			
+			// save last comment time for flood control
+			WCF::getSession()->register('lastCommentTime', $this->createdComment->time);
+			
+			// unmark recaptcha as done for furture requests
+			WCF::getSession()->unregister('recaptchaDone');
 		}
 		
 		return array(
@@ -236,10 +265,12 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		$this->readInteger('objectID', false, 'data');
 		$this->validateMessage();
 		
+		$this->validateUsername();
+		$this->validateRecaptcha();
+		
 		// validate comment id
 		$this->validateCommentID();
 		
-		// validate object type id
 		$objectType = $this->validateObjectType();
 		
 		// validate object id and permissions
@@ -255,12 +286,18 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function addResponse() {
+		if (!empty($this->validationErrors)) {
+			return array(
+				'errors' => $this->validationErrors
+			);
+		}
+		
 		// create response
 		$this->createdResponse = CommentResponseEditor::create(array(
 			'commentID' => $this->comment->commentID,
 			'time' => TIME_NOW,
-			'userID' => WCF::getUser()->userID,
-			'username' => WCF::getUser()->username,
+			'userID' => WCF::getUser()->userID ?: null,
+			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
 			'message' => $this->parameters['data']['message']
 		));
 		
@@ -283,7 +320,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		
 		// fire activity event
 		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->comment->objectTypeID);
-		if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.recentActivityEvent')) {
+		if ($this->createdResponse->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.recentActivityEvent')) {
 			UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.response.recentActivityEvent', $this->createdResponse->responseID);
 		}
 		
@@ -303,6 +340,17 @@ class CommentAction extends AbstractDatabaseObjectAction {
 					UserNotificationHandler::getInstance()->fireEvent('commentResponseOwner', $objectType->objectType.'.response.notification', $notificationObject, array($userID));
 				}
 			}
+		}
+		
+		if (!$this->createdResponse->userID) {
+			// save user name is session
+			WCF::getSession()->register('username', $this->createdResponse->username);
+			
+			// save last comment time for flood control
+			WCF::getSession()->register('lastCommentTime', $this->createdResponse->time);
+			
+			// unmark recaptcha as done for furture requests
+			WCF::getSession()->unregister('recaptchaDone');
 		}
 		
 		return array(
@@ -474,6 +522,48 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
+	 * Validates the 'getGuestDialog' action.
+	 */
+	public function validateGetGuestDialog() {
+		if (WCF::getUser()->userID) {
+			throw new PermissionDeniedException();
+		}
+		
+		CommentHandler::enforceFloodControl();
+		
+		$this->readInteger('objectID', false, 'data');
+		$objectType = $this->validateObjectType();
+		
+		// validate object id and permissions
+		$this->commentProcessor = $objectType->getProcessor();
+		if (!$this->commentProcessor->canAdd($this->parameters['data']['objectID'])) {
+			throw new PermissionDeniedException();
+		}
+		
+		// validate message already at this point to make sure that the
+		// message is valid when submitting the dialog to avoid having to
+		// go back to the message to fix it
+		$this->validateMessage();
+	}
+	
+	/**
+	 * Returns the dialog for guests when they try to write a comment letting
+	 * them enter a username and solving a captcha.
+	 * 
+	 * @return	array
+	 */
+	public function getGuestDialog() {
+		RecaptchaHandler::getInstance()->assignVariables();
+		
+		return array(
+			'template' => WCF::getTPL()->fetch('commentAddGuestDialog', 'wcf', array(
+				'ajaxRecaptcha' => true,
+				'username' => WCF::getSession()->getVar('username')
+			))
+		);
+	}
+	
+	/**
 	 * Renders a comment.
 	 * 
 	 * @param	\wcf\data\comment\Comment	$comment
@@ -485,8 +575,10 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		$comment->setIsEditable($this->commentProcessor->canEditComment($comment->getDecoratedObject()));
 		
 		// set user profile
-		$userProfile = UserProfile::getUserProfile($comment->userID);
-		$comment->setUserProfile($userProfile);
+		if ($comment->userID) {
+			$userProfile = UserProfile::getUserProfile($comment->userID);
+			$comment->setUserProfile($userProfile);
+		}
 		
 		WCF::getTPL()->assign(array(
 			'commentList' => array($comment)
@@ -506,8 +598,10 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		$response->setIsEditable($this->commentProcessor->canEditResponse($response->getDecoratedObject()));
 		
 		// set user profile
-		$userProfile = UserProfile::getUserProfile($response->userID);
-		$response->setUserProfile($userProfile);
+		if ($response->userID) {
+			$userProfile = UserProfile::getUserProfile($response->userID);
+			$response->setUserProfile($userProfile);
+		}
 		
 		// render response
 		WCF::getTPL()->assign(array(
@@ -565,6 +659,49 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		}
 		if ($this->response === null || !$this->response->responseID) {
 			throw new UserInputException('responseID');
+		}
+	}
+	
+	/**
+	 * Validates the username parameter.
+	 */
+	protected function validateUsername() {
+		if (WCF::getUser()->userID) return;
+		
+		try {
+			$this->readString('username', false, 'data');
+			
+			if (!UserUtil::isValidUsername($this->parameters['data']['username'])) {
+				throw new UserInputException('username', 'notValid');
+			}
+			if (!UserUtil::isAvailableUsername($this->parameters['data']['username'])) {
+				throw new UserInputException('username', 'notUnique');
+			}
+		}
+		catch (UserInputException $e) {
+			if ($e->getType() == 'empty') {
+				$this->validationErrors['username'] = WCF::getLanguage()->get('wcf.global.form.error.empty');
+			}
+			else {
+				$this->validationErrors['username'] = WCF::getLanguage()->get('wcf.user.username.error.'.$e->getType());
+			}
+		}
+	}
+
+	/**
+	 * Validates the recaptcha challenge.
+	 */
+	protected function validateRecaptcha() {
+		if (WCF::getUser()->userID || !MODULE_SYSTEM_RECAPTCHA || WCF::getSession()->getVar('recaptchaDone')) return;
+		
+		$this->readString('recaptchaChallenge');
+		$this->readString('recaptchaResponse');
+		
+		try {
+			RecaptchaHandler::getInstance()->validate($this->parameters['recaptchaChallenge'], $this->parameters['recaptchaResponse']);
+		}
+		catch (UserInputException $e) {
+			$this->validationErrors['recaptcha'] = WCF::getLanguage()->get('wcf.recaptcha.error.recaptchaString.false');
 		}
 	}
 	
