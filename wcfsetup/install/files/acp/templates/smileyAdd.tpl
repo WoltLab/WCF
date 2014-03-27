@@ -126,7 +126,11 @@
 					{/if}
 				</dd>
 			</dl>
+			
+			{event name='dataFields'}
 		</fieldset>
+		
+		{event name='fieldsets'}
 	</div>
 	
 	<div class="formSubmit">
