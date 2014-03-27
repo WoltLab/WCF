@@ -693,7 +693,8 @@ class PackageInstallationDispatcher {
 		else {
 			$document = PackageInstallationFormManager::getForm($this->queue, 'packageDir');
 			$document->handleRequest();
-			$packageDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($document->getValue('packageDir')));
+			$packageDir = FileUtil::addTrailingSlash(FileUtil::getRealPath(FileUtil::unifyDirSeparator($document->getValue('packageDir'))));
+			if ($packageDir === '/') $packageDir = '';
 			
 			if ($packageDir !== null) {
 				// validate package dir
