@@ -430,7 +430,7 @@
 	display: block;
 	line-height: 1.5;
 	
-	> div:not(.messageFooter) {
+	> div:not(.messageFooter):not(.redactor_box) {
 		overflow: hidden;
 		padding-bottom: @wcfGapMedium;
 	}
@@ -464,7 +464,7 @@
 	.linearGradientNative(~"90deg, @{messageFooterNoteGradientColor} 0%, transparent 40%");
 }
 
-.messageHeader + .messageBody > div:first-child,
+.messageHeader + .messageBody > div:first-child:not(.redactor_box),
 .messageBody > div:not(.messageFooter):not(:first-child) {
 	border-top: 1px dotted @wcfContainerBorderColor;
 	padding: @wcfGapMedium 0;
@@ -916,6 +916,47 @@ li:nth-child(2n+1) .message {
 	
 	ol {
 		list-style-type: decimal;
+	}
+}
+
+.redactor_toolbar {
+	background-color: @wcfButtonBackgroundColor !important;
+	
+	&:after {
+		display: inline !important;
+	}
+	
+	> li {
+		&:last-child,
+		&.separator {
+			border-right: 1px solid @wcfButtonBorderColor;
+		}
+		
+		> a {
+			background-color: @wcfButtonBackgroundColor;
+			color: rgba(51, 51, 51, 1) !important;
+			
+			.textShadow(@wcfButtonBackgroundColor);
+			
+			&> i:before {
+				color: rgba(51, 51, 51, 1) !important;
+			}
+			
+			&:hover {
+				background-color: rgba(204, 204, 204, 1) !important;
+				color: rgba(51, 51, 51, 1) !important;
+				
+				.textShadow(@wcfButtonHoverBackgroundColor);
+				
+				> i:before {
+					color: rgba(51, 51, 51, 1) !important;
+				}
+			}
+			
+			&.re-icon:before {
+				content: "";
+			}
+		}
 	}
 }
 

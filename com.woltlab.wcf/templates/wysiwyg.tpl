@@ -12,24 +12,22 @@ $(function() {
 	
 	WCF.System.Dependency.Manager.setup($callbackIdentifier, function() {
 		var $textarea = $('#' + $editorName);
+		var $buttons = [ ];
 		
-		//
-		// TODO: toolbar configuration / 'wysiwygToolbar.tpl'
-		//
+		{include file='wysiwygToolbar'}
 		
+		var $autosave = $textarea.data('autosave');
 		var $config = {
+			buttons: $buttons,
 			linebreaks: true,
 			minHeight: 200,
-			plugins: [ 'wbbcode', 'wbutton',  'wfontcolor', 'wmonkeypatch', 'wutil' ]
-		};
-		
-		// autosave config
-		if ($textarea.data('autosave')) {
-			$config.wautosave = {
-				active: true,
-				key: $textarea.data('autosave')
+			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor' ],
+			wautosave: {
+				active: ($autosave) ? true : false,
+				key: ($autosave) ? $autosave : '',
+				saveOnInit: {if !$errorField|empty}true{else}false{/if}
 			}
-		}
+		};
 		
 		{event name='javascriptInit'}
 		

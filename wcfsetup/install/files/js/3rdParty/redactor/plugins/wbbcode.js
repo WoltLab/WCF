@@ -14,7 +14,8 @@ RedactorPlugins.wbbcode = {
 	init: function() {
 		this._createSmileyDropdown();
 		
-		this.buttonAdd('wsmiley', 'Smiley', $.proxy(function(btnName, $button, btnObject, e) {
+		
+		this.buttonReplace('smiley', 'wsmiley', 'Smiley', $.proxy(function(btnName, $button, btnObject, e) {
 			this.dropdownShow(e, btnName);
 		}, this));
 		this.buttonAwesome('wsmiley', 'fa-smile-o');

@@ -259,5 +259,28 @@ RedactorPlugins.wutil = {
 		}
 		
 		return false;
+	},
+	
+	/**
+	 * Replaces one button with a new one.
+	 * 
+	 * @param	string		target
+	 * @param	string		key
+	 * @param	string		title
+	 * @param	object		callback
+	 * @param	object		dropdown
+	 * @return	jQuery
+	 */
+	buttonReplace: function(target, key, title, callback, dropdown) {
+		var $target = this.buttonGet(target);
+		
+		var $button = this.buttonAddAfter(target, key, title, callback, dropdown);
+		if ($target.parent().hasClass('separator')) {
+			$button.parent().addClass('separator');
+		}
+		
+		$target.parent().remove();
+		
+		return $button;
 	}
 };
