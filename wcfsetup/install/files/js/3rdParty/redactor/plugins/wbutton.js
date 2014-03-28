@@ -27,7 +27,7 @@ RedactorPlugins.wbutton = {
 		var $faIcons = {
 			'alignment': 'align-left',
 			'deleted': 'strikethrough',
-			'html': 'file-o',
+			'html': 'square-o',
 			'image': 'picture-o',
 			'orderedlist': 'list-ol',
 			'smiley': 'smile-o',

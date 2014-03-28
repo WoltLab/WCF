@@ -905,6 +905,16 @@ li:nth-child(2n+1) .message {
 
 /* redactor fixes */
 .redactor_editor {
+	padding: 10px !important;
+	
+	& + textarea {
+		background-color: rgba(255, 255, 255, 1) !important;
+		border: 1px solid rgba(238, 238, 238, 1) !important;
+		color: @wcfColor !important;
+		padding: 10px !important;
+		z-index: 1 !important;
+	}
+	
 	ul,
 	ol {
 		.nativeList;
@@ -938,11 +948,16 @@ li:nth-child(2n+1) .message {
 			
 			.textShadow(@wcfButtonBackgroundColor);
 			
-			&> i:before {
-				color: rgba(51, 51, 51, 1) !important;
+			&> i {
+				height: 14px;
+				width: 12px;
+				
+				&:before {
+					color: rgba(51, 51, 51, 1) !important;
+				}
 			}
 			
-			&:hover {
+			&:not(.redactor_button_disabled):hover {
 				background-color: rgba(204, 204, 204, 1) !important;
 				color: rgba(51, 51, 51, 1) !important;
 				

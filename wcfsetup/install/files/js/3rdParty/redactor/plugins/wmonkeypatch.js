@@ -33,6 +33,15 @@ RedactorPlugins.wmonkeypatch = {
 				$mpBuildEventKeydown.call(self, e);
 			}
 		};
+		
+		var $mpToggleCode = this.toggleCode;
+		this.toggleCode = function(direct) {
+			var $height = self.normalize(self.$editor.css('height'));
+			
+			$mpToggleCode.call(self, direct);
+			
+			self.$source.height($height);
+		};
 	},
 	
 	/**

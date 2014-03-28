@@ -107,10 +107,14 @@ RedactorPlugins.wbbcode = {
 		if (this.opts.visual) {
 			this.toggleCode(direct);
 			this._convertFromHtml();
+			
+			this.buttonGet('html').children('i').removeClass('fa-square-o').addClass('fa-square');
 		}
 		else {
 			this._convertToHtml();
 			this.toggleVisual();
+			
+			this.buttonGet('html').children('i').removeClass('fa-square').addClass('fa-square-o');
 		}
 	},
 	
