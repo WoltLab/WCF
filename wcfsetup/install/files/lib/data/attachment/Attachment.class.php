@@ -4,6 +4,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\system\request\IRouteController;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 
 /**
  * Represents an attachment.
@@ -197,7 +198,7 @@ class Attachment extends DatabaseObject implements IRouteController {
 	 */
 	public static function getStorage() {
 		if (ATTACHMENT_STORAGE) {
-			return ATTACHMENT_STORAGE;
+			return FileUtil::addTrailingSlash(ATTACHMENT_STORAGE);
 		}
 		
 		return WCF_DIR . 'attachments/';
