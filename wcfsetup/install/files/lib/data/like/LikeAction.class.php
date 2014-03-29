@@ -131,6 +131,10 @@ class LikeAction extends AbstractDatabaseObjectAction {
 	 * @see	\wcf\data\like\LikeAction::validateLike()
 	 */
 	public function validateDislike() {
+		if (!LIKE_ENABLE_DISLIKE) {
+			throw new PermissionDeniedException();
+		}
+		
 		$this->validateLike();
 	}
 	
