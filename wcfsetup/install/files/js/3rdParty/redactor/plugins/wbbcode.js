@@ -181,7 +181,7 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/<img [^>]*?class="smiley" alt="([^"]+?)".*?>/gi, '$1'); // chrome, ie
 		
 		// [img]
-		html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1 style="float: (left|right)".*?>/gi, "[img='$2',$3][/img]");
+		html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1 style="float: (left|right)[^"]*".*?>/gi, "[img='$2',$3][/img]");
 		html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?>/gi, '[img]$2[/img]');
 		
 		// [quote]
