@@ -127,7 +127,7 @@ RedactorPlugins.wbbcode = {
 				return $html;
 			}
 			
-			return $html + '<br>';;
+			return $html + '<br>';
 		});
 		this.sync();
 	},
@@ -137,6 +137,10 @@ RedactorPlugins.wbbcode = {
 	 */
 	_convertFromHtml: function() {
 		var html = this.$source.val();
+		
+		// drop line break right before/after a <pre> tag (used by [code]-BBCode)
+		html = html.replace(/<br>\n<pre>\n/g, '');
+		html = html.replace(/<\/pre>\n<br>\n/g, '');
 		
 		// drop <br>, they are pointless because the editor already adds a newline after them
 		html = html.replace(/<br>/g, '');
@@ -258,12 +262,25 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/&gt;/g, '>');
 		html = html.replace(/&amp;/g, '&');
 		
-		// Restore (and )
+		// Restore ( and )
 		html = html.replace(/%28/g, '(');
 		html = html.replace(/%29/g, ')');
 		
 		// Restore %20
 		html = html.replace(/%20/g, ' ');
+		
+		// cache source code tags to preserve leading tabs
+		var $cachedCodes = { };
+		for (var $i = 0, $length = __REDACTOR_SOURCE_BBCODES.length; $i < $length; $i++) {
+			var $bbcode = __REDACTOR_SOURCE_BBCODES[$i];
+			
+			var $regExp = new RegExp('\\[' + $bbcode + '([\\S\\s]+?)\\[\\/' + $bbcode + '\\]', 'gi');
+			html = html.replace($regExp, function(match) {
+				var $key = match.hashCode();
+				$cachedCodes[$key] = match.replace(/\$/g, '$$$$');
+				return '@@' + $key + '@@';
+			});
+		}
 		
 		// trim leading tabs
 		var $tmp = html.split("\n");
@@ -271,6 +288,14 @@ RedactorPlugins.wbbcode = {
 			$tmp[$i] = $tmp[$i].replace(/^\s*/, '');
 		}
 		html = $tmp.join("\n");
+		
+		// insert codes
+		if ($.getLength($cachedCodes)) {
+			for (var $key in $cachedCodes) {
+				var $regex = new RegExp('@@' + $key + '@@', 'g');
+				html = html.replace($regex, $cachedCodes[$key]);
+			}
+		}
 		
 		this.$source.val(html);
 	},
@@ -304,7 +329,7 @@ RedactorPlugins.wbbcode = {
 		for (var $i = 0, $length = __REDACTOR_SOURCE_BBCODES.length; $i < $length; $i++) {
 			var $bbcode = __REDACTOR_SOURCE_BBCODES[$i];
 			
-			var $regExp = new RegExp('\\[' + $bbcode + '(.+?)\\[\\/' + $bbcode + '\\]', 'gi');
+			var $regExp = new RegExp('\\[' + $bbcode + '([\\S\\s]+?)\\[\\/' + $bbcode + '\\]', 'gi');
 			data = data.replace($regExp, function(match) {
 				var $key = match.hashCode();
 				$cachedCodes[$key] = match.replace(/\$/g, '$$$$');
@@ -412,6 +437,9 @@ RedactorPlugins.wbbcode = {
 				data = data.replace($regex, $cachedCodes[$key]);
 			}
 		}
+		
+		// preserve leading whitespaces in [code] tags
+		data = data.replace(/\[code\][\S\s]*?\[\/code\]/, '<pre>$&</pre>');
 		
 		this.$source.val(data);
 	}

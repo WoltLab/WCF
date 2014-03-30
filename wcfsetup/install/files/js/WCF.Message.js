@@ -1291,6 +1291,7 @@ WCF.Message.InlineEditor = Class.extend({
 		// hide message options
 		this._container[this._activeElementID].find('.messageOptions').addClass('forceHidden');
 		
+		// TODO: support redactor here, in particular update the quote manager first
 		if ($.browser.ckeditor) {
 			new WCF.PeriodicalExecuter($.proxy(function(pe) {
 				pe.stop();
@@ -1332,9 +1333,8 @@ WCF.Message.InlineEditor = Class.extend({
 		var $objectID = $container.data('objectID');
 		var $message = '';
 		
-		if ($.browser.ckeditor) {
-			var $ckEditor = $('#' + this._messageEditorIDPrefix + $objectID).ckeditorGet();
-			$message = $ckEditor.getData();
+		if ($.browser.redactor) {
+			$message = $('#' + this._messageEditorIDPrefix + $objectID).redactor('getText');
 		}
 		else {
 			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
@@ -1365,9 +1365,8 @@ WCF.Message.InlineEditor = Class.extend({
 		var $objectID = $container.data('objectID');
 		var $message = '';
 		
-		if ($.browser.ckeditor) {
-			var $ckEditor = $('#' + this._messageEditorIDPrefix + $objectID).ckeditorGet();
-			$message = $ckEditor.getData();
+		if ($.browser.redactor) {
+			$message = $('#' + this._messageEditorIDPrefix + $objectID).redactor('getText');
 		}
 		else {
 			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
@@ -1401,9 +1400,12 @@ WCF.Message.InlineEditor = Class.extend({
 		// show unrelated content
 		$messageBody.find('.jsInlineEditorHideContent').show();
 		
+		/*
+		 * TODO: the quote manager does not support redactor yet
 		if (this._quoteManager) {
 			this._quoteManager.clearAlternativeCKEditor();
 		}
+		*/
 	},
 	
 	/**
@@ -1424,9 +1426,8 @@ WCF.Message.InlineEditor = Class.extend({
 		this._container[this._activeElementID].find('.messageOptions').removeClass('forceHidden');
 		
 		// remove editor
-		if ($.browser.ckeditor) {
-			var $ckEditor = $('#' + this._messageEditorIDPrefix + $container.data('objectID')).ckeditorGet();
-			$ckEditor.destroy();
+		if ($.browser.redactor) {
+			$('#' + this._messageEditorIDPrefix + $container.data('objectID')).redactor('destroy');
 		}
 		
 		$content.empty();
@@ -1440,9 +1441,12 @@ WCF.Message.InlineEditor = Class.extend({
 		
 		this._notification.show();
 		
+		/*
+		 * TODO: the quote manager does not support redactor yet
 		if (this._quoteManager) {
 			this._quoteManager.clearAlternativeCKEditor();
 		}
+		*/
 	},
 	
 	/**

@@ -60,6 +60,10 @@ RedactorPlugins.wmonkeypatch = {
 		this.modalTemplatesInit();
 	},
 	
+	cleanRemoveSpaces: function(html, buffer) {
+		return html;
+	},
+	
 	/**
 	 * Overwrites $.Redactor.inlineRemoveStyle() to drop empty <inline> elements.
 	 * 
