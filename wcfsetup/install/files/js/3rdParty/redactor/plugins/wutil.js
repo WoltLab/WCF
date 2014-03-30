@@ -282,5 +282,24 @@ RedactorPlugins.wutil = {
 		$target.parent().remove();
 		
 		return $button;
-	}
+	},
+	
+	/**
+	 * Removes the unicode zero-width space (0x200B).
+	 * 
+	 * @param	string		string
+	 * @return	string
+	 */
+	removeZeroWidthSpace: function(string) {
+		var $string = '';
+		
+		for (var $i = 0, $length = string.length; $i < $length; $i++) {
+			var $byte = string.charCodeAt($i).toString(16);
+			if ($byte != '200b') {
+				$string += string[$i];
+			}
+		}
+		
+		return $string;
+	},
 };

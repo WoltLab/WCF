@@ -233,5 +233,46 @@ RedactorPlugins.wmonkeypatch = {
 			marginLeft: -1 * Math.round($dimensions.width / 2) + 'px',
 			marginTop: -1 * Math.round($dimensions.height / 2) + 'px'
 		});
-	}
+	},
+	
+	/**
+	 * Overwrites $.Redactor.inlineEachNodes(), the original method compares "selectionHtml"
+	 * and "parentHtml" to check if the callback should be invoked. In some cases the "parentHtml"
+	 * may contain a trailing unicode zero-width space and the comparision will fail, even though
+	 * the "entire" node is selected.
+	 * 
+	 * @see	$.Redactor.inlineEachNodes()
+	 */
+	inlineEachNodes: function(callback)
+	{
+		var range = this.getRange(),
+			node = this.getElement(),
+			nodes = this.getNodes(),
+			collapsed;
+
+		if (range.collapsed || range.startContainer === range.endContainer && node)
+		{
+			nodes = $(node);
+			collapsed = true;
+		}
+
+		$.each(nodes, $.proxy(function(i, node)
+		{
+			if (!collapsed && node.tagName !== 'INLINE')
+			{
+				var selectionHtml = this.getSelectionText();
+				var parentHtml = $(node).parent().text();
+				// if parentHtml contains a trailing 0x200B, the comparison will most likely fail
+				var selected = this.removeZeroWidthSpace(selectionHtml) == this.removeZeroWidthSpace(parentHtml);
+
+				if (selected && node.parentNode.tagName === 'INLINE' && !$(node.parentNode).hasClass('redactor_editor'))
+				{
+					node = node.parentNode;
+				}
+				else return;
+			}
+			callback.call(this, node);
+
+		}, this ) );
+	},
 }

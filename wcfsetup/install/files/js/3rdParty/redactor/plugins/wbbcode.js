@@ -119,25 +119,6 @@ RedactorPlugins.wbbcode = {
 		}
 	},
 	
-	/**
-	 * Removes the unicode zero width space (0x200B).
-	 * 
-	 * @param	string		string
-	 * @return	string
-	 */
-	_removeCrap: function(string) {
-		var $string = '';
-		
-		for (var $i = 0, $length = string.length; $i < $length; $i++) {
-			var $byte = string.charCodeAt($i).toString(16);
-			if ($byte != '200b') {
-				$string += string[$i];
-			}
-		}
-		
-		return $string;
-	},
-	
 	_convertParagraphs: function() {
 		this.$editor.find('p').replaceWith(function() {
 			var $html = $(this).html();
@@ -301,7 +282,7 @@ RedactorPlugins.wbbcode = {
 		var data = this.$source.val();
 		
 		// remove 0x200B (unicode zero width space)
-		data = this._removeCrap(data);
+		data = this.removeZeroWidthSpace(data);
 		
 		//if (!$pasted) {
 			// Convert & to its HTML entity.
