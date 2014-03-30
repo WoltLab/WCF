@@ -4136,10 +4136,12 @@
 
 			if ((range.collapsed || range.startContainer === range.endContainer) && el && !this.nodeTestBlocks(el))
 			{
+			console.debug("1");
 				$(el)[type](attr, value);
 			}
 			else
 			{
+			console.debug("2");
 				this.document.execCommand('fontSize', false, 4 );
 
 				var fonts = this.$editor.find('font');

@@ -105,6 +105,7 @@ RedactorPlugins.wbbcode = {
 	 */
 	toggle: function(direct) {
 		if (this.opts.visual) {
+			this._convertParagraphs();
 			this.toggleCode(direct);
 			this._convertFromHtml();
 			
@@ -137,21 +138,27 @@ RedactorPlugins.wbbcode = {
 		return $string;
 	},
 	
+	_convertParagraphs: function() {
+		this.$editor.find('p').replaceWith(function() {
+			var $html = $(this).html();
+			if ($html == '<br>') {
+				// an empty line is presented by <p><br></p> but in the textarea this equals only a single new line
+				return $html;
+			}
+			
+			return $html + '<br>';;
+		});
+		this.sync();
+	},
+	
 	/**
 	 * Converts source contents from HTML into BBCode.
 	 */
 	_convertFromHtml: function() {
 		var html = this.$source.val();
 		
-		if (html == '<br>' || html == '<p><br></p>') {
-			return "";
-		}
-		
-		// Convert <br> to line breaks.
-		html = html.replace(/<br><\/p>/gi,"\n");
-		html = html.replace(/<br(?=[ \/>]).*?>/gi, '\r\n');
-		html = html.replace(/<p>/gi,"");
-		html = html.replace(/<\/p>/gi,"\n");
+		// drop <br>, they are pointless because the editor already adds a newline after them
+		html = html.replace(/<br>/g, '');
 		html = html.replace(/&nbsp;/gi," ");
 		
 		// [email]
@@ -212,7 +219,9 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/<span style="font-size: ?(\d+)pt;?">([\s\S]*?)<\/span>/gi, "[size=$1]$2[/size]");
 		
 		// [font]
-		html = html.replace(/<span style="font-family: ?(.*?);?">([\s\S]*?)<\/span>/gi, "[font='$1']$2[/font]");
+		html = html.replace(/<span style="font-family: ?(.*?);?">([\s\S]*?)<\/span>/gi, function(match, fontFamily, text) {
+			return "[font='" + fontFamily.replace(/'/g, '') + "']" + text + "[/font]";
+		});
 		
 		// [align]
 		html = html.replace(/<div style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)<\/div>/gi, "[align=$1]$2[/align]");
@@ -275,6 +284,13 @@ RedactorPlugins.wbbcode = {
 		// Restore %20
 		html = html.replace(/%20/g, ' ');
 		
+		// trim leading tabs
+		var $tmp = html.split("\n");
+		for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
+			$tmp[$i] = $tmp[$i].replace(/^\s*/, '');
+		}
+		html = $tmp.join("\n");
+		
 		this.$source.val(html);
 	},
 	
@@ -295,9 +311,6 @@ RedactorPlugins.wbbcode = {
 			data = data.replace(/</g, '&lt;');
 			data = data.replace(/>/g, '&gt;');
 		//}
-		
-		// Convert line breaks to <br>.
-		data = data.replace(/(?:\r\n|\n|\r)/g, '<br>');
 		
 		/*if ($pasted) {
 			$pasted = false;
@@ -395,6 +408,21 @@ RedactorPlugins.wbbcode = {
 		
 		// remove "javascript:"
 		data = data.replace(/(javascript):/gi, '$1<span></span>:');
+		
+		// unify line breaks
+		data = data.replace(/(\r|\r\n)/, "\n");
+		
+		// convert line breaks into <p></p> or empty lines to <p><br></p>
+		var $tmp = data.split("\n");
+		data = '';
+		for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
+			var $line = $.trim($tmp[$i]);
+			if (!$line) {
+				$line = '<br>';
+			}
+			
+			data += '<p>' + $line + '</p>';
+		}
 		
 		// insert codes
 		if ($.getLength($cachedCodes)) {

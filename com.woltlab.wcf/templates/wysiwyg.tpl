@@ -19,9 +19,8 @@ $(function() {
 		var $autosave = $textarea.data('autosave');
 		var $config = {
 			buttons: $buttons,
-			linebreaks: true,
 			minHeight: 200,
-			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor' ],
+			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize' ],
 			wautosave: {
 				active: ($autosave) ? true : false,
 				key: ($autosave) ? $autosave : '',
@@ -39,6 +38,8 @@ $(function() {
 		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wbbcode.js',
 		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wbutton.js',
 		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontcolor.js',
+		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontfamily.js',
+		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontsize.js',
 		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wmonkeypatch.js',
 		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wutil.js'
 		{event name='javascriptFiles'}

@@ -14,9 +14,10 @@ RedactorPlugins.wfontcolor = {
 	init: function() {
 		this._createFontColorDropdown();
 		
-		this.buttonAdd('fontcolor', this.opts.curLang.fontcolor, $.proxy(function(btnName, $button, btnObject, e) {
+		this.buttonReplace('fontcolor', 'fontcolor', this.opts.curLang.fontcolor, $.proxy(function(btnName, $button, btnObject, e) {
 			this.dropdownShow(e, btnName);
-		}, this))
+		}, this));
+		//this.buttonAwesome('fontcolor', 'fa-font');
 	},
 	
 	/**
@@ -55,14 +56,19 @@ RedactorPlugins.wfontcolor = {
 	_onColorPick: function(event) {
 		event.preventDefault();
 		
-		this.bufferSet();
+		//this.bufferSet();
 		
-		this.$editor.focus();
-		this.inlineRemoveStyle('color');
+		//this.$editor.focus();
 		
-		var $type = $(event.currentTarget).data('color');
-		if ($type !== 'none') this.inlineSetStyle('color', $type);
-		if (this.opts.air) this.$air.fadeOut(100);
-		this.sync();
+		var $color = $(event.currentTarget).data('color');
+		if ($color === 'none') {
+			this.inlineRemoveStyle('color');
+		}
+		else {
+			this.inlineSetStyle('color', $color);
+		}
+		
+		/*if (this.opts.air) this.$air.fadeOut(100);
+		this.sync();*/
 	}
 };

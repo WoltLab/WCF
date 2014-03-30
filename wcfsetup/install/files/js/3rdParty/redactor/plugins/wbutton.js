@@ -24,14 +24,24 @@ RedactorPlugins.wbutton = {
 			this._addBBCodeButton(__REDACTOR_BUTTONS[$i]);
 		}
 		
+		// this list contains overrides for built-in buttons, if a button is not present
+		// Redactor's own icon will be used instead. This solves the problem of FontAwesome
+		// not providing an icon for everything we need (especially the core stuff)
 		var $faIcons = {
-			'alignment': 'align-left',
-			'deleted': 'strikethrough',
-			'html': 'square-o',
-			'image': 'picture-o',
-			'orderedlist': 'list-ol',
-			'smiley': 'smile-o',
-			'unorderedlist': 'list-ul'
+			'html': 'fa-square-o',
+			'bold': 'fa-bold',
+			'italic': 'fa-italic',
+			'underline': 'fa-underline',
+			'deleted': 'fa-strikethrough',
+			'subscript': 'fa-subscript',
+			'superscript': 'fa-superscript',
+			'orderedlist': 'fa-list-ol',
+			'unorderedlist': 'fa-list-ul',
+			'outdent': 'fa-outdent',
+			'indent': 'fa-indent',
+			'link': 'fa-link',
+			'alignment': 'fa-align-left',
+			'table': 'fa-table'
 		};
 		
 		var $buttons = this.getOption('buttons');
@@ -47,26 +57,29 @@ RedactorPlugins.wbutton = {
 			
 			// check if button does not exist
 			var $buttonObj = this.buttonGet($button);
-			var $className = ($faIcons[$button]) ? $faIcons[$button] : $button;
 			if ($buttonObj.length) {
-				this.buttonAwesome($button, 'fa-' + $className);
+				if ($faIcons[$button]) {
+					this.buttonAwesome($button, $faIcons[$button]);
+				}
 			}
 			else {
-				this._addCoreButton($button, $className, $lastButton);
+				this._addCoreButton($button, ($faIcons[$button] ? $faIcons[$button] : null), $lastButton);
 			}
 			
 			$lastButton = $button;
 		}
 	},
 	
-	_addCoreButton: function(buttonName, className, insertAfter) {
+	_addCoreButton: function(buttonName, faIcon, insertAfter) {
 		var $button = this.buttonBuild(buttonName, {
 			title: buttonName,
 			exec: buttonName
 		}, false);
 		$('<li />').append($button).insertAfter(this.buttonGet(insertAfter).parent());
 		
-		this.buttonAwesome(buttonName, 'fa-' + className);
+		if (faIcon !== null) {
+			this.buttonAwesome(buttonName, faIcon);
+		}
 	},
 	
 	/**

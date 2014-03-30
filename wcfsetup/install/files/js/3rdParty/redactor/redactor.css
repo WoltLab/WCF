@@ -188,6 +188,11 @@ body .redactor_box_fullscreen {
   background: none !important;
   box-shadow: none !important;
 }
+
+.redactor_editor p {
+  margin-bottom: 0 !important;
+}
+
 .redactor_editor iframe,
 .redactor_editor object,
 .redactor_editor hr {
@@ -685,7 +690,7 @@ body .redactor_air .redactor_toolbar {
 /*
 	MODAL
 */
-#redactor_modal_overlay {
+/*#redactor_modal_overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -780,7 +785,7 @@ body .redactor_air .redactor_toolbar {
 }
 #redactor_modal_close:hover {
   color: #000;
-}
+}*/
 .redactor_input {
   width: 99%;
   font-size: 14px;
