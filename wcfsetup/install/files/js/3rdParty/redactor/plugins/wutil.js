@@ -164,9 +164,13 @@ RedactorPlugins.wutil = {
 	 */
 	submit: function() {
 		if (this.inWysiwygMode()) {
-			this.sync();
+			this.toggle();
 			
-			this._convertFromHtml();
+			var $content = this.$source.val();
+			
+			this.toggle();
+			
+			this.$source.val($content);
 		}
 		
 		this.autosavePurge();
