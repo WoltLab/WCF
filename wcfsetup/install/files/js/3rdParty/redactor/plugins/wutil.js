@@ -148,9 +148,12 @@ RedactorPlugins.wutil = {
 	 */
 	getText: function() {
 		if (this.inWysiwygMode()) {
-			this.sync();
+			this.toggle();
 			
-			this._convertFromHtml();
+			var $content = this.$source.val();
+			
+			this.toggle();
+			return $content;
 		}
 		
 		return this.$source.val();
