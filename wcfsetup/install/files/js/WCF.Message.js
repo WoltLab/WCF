@@ -1238,7 +1238,7 @@ WCF.Message.InlineEditor = Class.extend({
 		this._activeElementID = '';
 		
 		if (this._quoteManager) {
-			this._quoteManager.clearAlternativeCKEditor();
+			this._quoteManager.clearAlternativeEditor();
 		}
 	},
 	
@@ -1291,21 +1291,18 @@ WCF.Message.InlineEditor = Class.extend({
 		// hide message options
 		this._container[this._activeElementID].find('.messageOptions').addClass('forceHidden');
 		
-		// TODO: support redactor here, in particular update the quote manager first
-		if ($.browser.ckeditor) {
+		var $element = $('#' + this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID'));
+		if ($.browser.redactor) {
 			new WCF.PeriodicalExecuter($.proxy(function(pe) {
 				pe.stop();
 				
-				var $ckEditor = $('#' + this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID'));
-				$ckEditor.ckeditor(function() { this.ui.editor.focus(); });
-				
 				if (this._quoteManager) {
-					this._quoteManager.setAlternativeCKEditor($ckEditor);
+					this._quoteManager.setAlternativeEditor($element);
 				}
 			}, this), 250);
 		}
 		else {
-			$('#' + this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID')).focus();
+			$element.focus();
 		}
 	},
 	
@@ -1321,7 +1318,7 @@ WCF.Message.InlineEditor = Class.extend({
 		$messageBody.find('.jsInlineEditorHideContent').show();
 		
 		if (this._quoteManager) {
-			this._quoteManager.clearAlternativeCKEditor();
+			this._quoteManager.clearAlternativeEditor();
 		}
 	},
 	
@@ -1400,12 +1397,9 @@ WCF.Message.InlineEditor = Class.extend({
 		// show unrelated content
 		$messageBody.find('.jsInlineEditorHideContent').show();
 		
-		/*
-		 * TODO: the quote manager does not support redactor yet
 		if (this._quoteManager) {
-			this._quoteManager.clearAlternativeCKEditor();
+			this._quoteManager.clearAlternativeEditor();
 		}
-		*/
 	},
 	
 	/**
@@ -1441,12 +1435,9 @@ WCF.Message.InlineEditor = Class.extend({
 		
 		this._notification.show();
 		
-		/*
-		 * TODO: the quote manager does not support redactor yet
 		if (this._quoteManager) {
-			this._quoteManager.clearAlternativeCKEditor();
+			this._quoteManager.clearAlternativeEditor();
 		}
-		*/
 	},
 	
 	/**
@@ -2116,18 +2107,6 @@ WCF.Message.Quote.Manager = Class.extend({
 	_buttons: { },
 	
 	/**
-	 * CKEditor element
-	 * @var	jQuery
-	 */
-	_ckEditor: null,
-	
-	/**
-	 * alternative CKEditor element
-	 * @var	jQuery
-	 */
-	_ckEditorAlternative: null,
-	
-	/**
 	 * number of stored quotes
 	 * @var	integer
 	 */
@@ -2138,6 +2117,18 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * @var	jQuery
 	 */
 	_dialog: null,
+	
+	/**
+	 * Redactor element
+	 * @var	jQuery
+	 */
+	_editorElement: null,
+	
+	/**
+	 * alternative Redactor element
+	 * @var	jQuery
+	 */
+	_editorElementAlternative: null,
 	
 	/**
 	 * form element
@@ -2191,19 +2182,19 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * Initializes the quote manager.
 	 * 
 	 * @param	integer		count
-	 * @param	string		ckEditorID
+	 * @param	string		elementID
 	 * @param	boolean		supportPaste
 	 * @param	array<string>	removeOnSubmit
 	 */
-	init: function(count, ckEditorID, supportPaste, removeOnSubmit) {
+	init: function(count, elementID, supportPaste, removeOnSubmit) {
 		this._buttons = {
 			insert: null,
 			remove: null
 		};
-		this._ckEditor = null;
-		this._ckEditorAlternative = null;
 		this._count = parseInt(count) || 0;
 		this._dialog = null;
+		this._editorElement = null;
+		this._editorElementAlternative = null;
 		this._form = null;
 		this._handlers = { };
 		this._hasTemplate = false;
@@ -2212,13 +2203,13 @@ WCF.Message.Quote.Manager = Class.extend({
 		this._showQuotes = null;
 		this._supportPaste = false;
 		
-		if (ckEditorID) {
-			this._ckEditor = $('#' + ckEditorID);
-			if (this._ckEditor.length) {
+		if (elementID) {
+			this._editorElement = $('#' + elementID);
+			if (this._editorElement.length) {
 				this._supportPaste = true;
 				
 				// get surrounding form-tag
-				this._form = this._ckEditor.parents('form:eq(0)');
+				this._form = this._editorElement.parents('form:eq(0)');
 				if (this._form.length) {
 					this._form.submit($.proxy(this._submit, this));
 					this._removeOnSubmit = removeOnSubmit || [ ];
@@ -2242,19 +2233,19 @@ WCF.Message.Quote.Manager = Class.extend({
 	},
 	
 	/**
-	 * Sets an alternative CKEditor instance on runtime.
+	 * Sets an alternative editor element on runtime.
 	 * 
-	 * @param	jQuery		ckEditor
+	 * @param	jQuery		element
 	 */
-	setAlternativeCKEditor: function(ckEditor) {
-		this._ckEditorAlternative = ckEditor;
+	setAlternativeEditor: function(element) {
+		this._editorElementAlternative = element;
 	},
 	
 	/**
-	 * Clears alternative CKEditor instance.
+	 * Clears alternative editor element.
 	 */
-	clearAlternativeCKEditor: function() {
-		this._ckEditorAlternative = null;
+	clearAlternativeEditor: function() {
+		this._editorElementAlternative = null;
 	},
 	
 	/**
@@ -2452,7 +2443,7 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * Inserts the selected quotes.
 	 */
 	_insertSelected: function() {
-		if (this._ckEditorAlternative === null) {
+		if (this._editorElementAlternative === null) {
 			var $api = $('.jsQuickReply:eq(0)').data('__api');
 			if ($api && !$api.getContainer().is(':visible')) {
 				this._insertQuotes = false;
@@ -2480,7 +2471,7 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * @param	object		inputElement
 	 */
 	_insertQuote: function(event, inputElement) {
-		if (event !== null && this._ckEditorAlternative === null) {
+		if (event !== null && this._editorElementAlternative === null) {
 			var $api = $('.jsQuickReply:eq(0)').data('__api');
 			if ($api && !$api.getContainer().is(':visible')) {
 				this._insertQuotes = false;
@@ -2495,38 +2486,18 @@ WCF.Message.Quote.Manager = Class.extend({
 		// build quote tag
 		$quote = "[quote='" + $message.attr('data-username') + "','" + $message.data('link') + "']" + $quote + "[/quote]";
 		
-		// insert into ckEditor
-		var $ckEditor = null;
-		if ($.browser.ckeditor) {
-			if (this._ckEditorAlternative === null) {
-				$ckEditor = this._ckEditor.ckeditorGet();
+		// insert into editor
+		if ($.browser.redactor) {
+			if (this._editorElementAlternative === null) {
+				this._editorElement.redactor('insertDynamic', $quote);
 			}
 			else {
-				$ckEditor = this._ckEditorAlternative.ckeditorGet();
+				this._editorElementAlternative.redactor('insertDynamic', $quote);
 			}
-		}
-		
-		if ($ckEditor !== null && $ckEditor.mode === 'wysiwyg') {
-			// in design mode
-			
-			// remove the link if the cursor is in a link element
-			$ckEditor.removeStyle(new CKEDITOR.style({
-				element: 'a',
-				type: CKEDITOR.STYLE_INLINE
-			}));
-			
-			$ckEditor.insertText($quote + "\n\n");
 		}
 		else {
-			// in source mode
-			var $textarea = null;
-			if (this._ckEditorAlternative === null) {
-				$textarea = ($.browser.ckeditor) ? this._ckEditor.next('.cke_editor_text').find('textarea') : this._ckEditor;
-			}
-			else {
-				$textarea = ($.browser.ckeditor) ? this._ckEditorAlternative.next('.cke_editor_text').find('textarea') : this._ckEditorAlternative;
-			}
-			
+			// plain textarea
+			var $textarea = (this._editorElementAlternative === null) ? this._editorElement : this._editorElementAlternative;
 			var $value = $textarea.val();
 			$quote += "\n\n";
 			if ($value.length == 0) {
