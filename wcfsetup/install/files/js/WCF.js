@@ -2903,6 +2903,19 @@ WCF.Date.Picker = {
 				}
 				$inputValue = $inputValue.replace(' ', 'T');
 				
+				if ($input.data('ignoreTimezone')) {
+					var $timezoneOffset = new Date().getTimezoneOffset();
+					var $timezone = ($timezoneOffset > 0) ? '-' : '+'; // -120 equals GMT+0200
+					$timezoneOffset = Math.abs($timezoneOffset);
+					var $hours = (Math.floor($timezoneOffset / 60)).toString();
+					var $minutes = ($timezoneOffset % 60).toString();
+					$timezone += ($hours.length == 2) ? $hours : '0' + $hours;
+					$timezone += ':';
+					$timezone += ($minutes.length == 2) ? $minutes : '0' + $minutes;
+					
+					$inputValue = $inputValue.replace(/[+-][0-9]{2}:[0-9]{2}$/, $timezone);
+				}
+				
 				$options = $.extend($options, {
 					altFieldTimeOnly: false,
 					altTimeFormat: 'HH:mm',
