@@ -43,18 +43,19 @@ if ($buttons.length && $buttons[$buttons.length -1] != 'separator') {
 	$buttons.push('separator');
 }
 
-{* TODO
-var $font = [ ];
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('font')}
-	$font.push('Font');
+	$buttons.push('fontfamily');
 {/if}
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('size')}
-	$font.push('FontSize');
+	$buttons.push('fontsize');
 {/if}
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('color')}
-	$font.push('TextColor');
+	$buttons.push('fontcolor');
 {/if}
-*}
+
+if ($buttons.length && $buttons[$buttons.length -1] != 'separator') {
+	$buttons.push('separator');
+}
 
 {if $__wcf->getBBCodeHandler()->isAvailableBBCode('url')}
 	$buttons.push('link');
