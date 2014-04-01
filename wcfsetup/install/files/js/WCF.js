@@ -3830,6 +3830,14 @@ WCF.TabMenu = {
 			if (!this._selectErroneousTab()) {
 				this.selectTabs();
 			}
+			
+			if ($.browser.mozilla && location.hash) {
+				var $target = $(location.hash);
+				if ($target.length && $target.hasClass('tabMenuContent')) {
+					var $offset = $target.offset();
+					window.scrollTo($offset.left, $offset.top);
+				}
+			}
 		}
 		
 		this._didInit = true;
