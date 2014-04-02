@@ -153,7 +153,16 @@ class SearchForm extends RecaptchaForm {
 		if (isset($_REQUEST['q'])) $this->query = StringUtil::trim($_REQUEST['q']);
 		if (isset($_REQUEST['username'])) $this->username = StringUtil::trim($_REQUEST['username']);
 		if (isset($_REQUEST['userID'])) $this->userID = intval($_REQUEST['userID']);
-		if (isset($_REQUEST['types']) && is_array($_REQUEST['types'])) $this->selectedObjectTypes = $_REQUEST['types'];
+		if (isset($_REQUEST['types']) && is_array($_REQUEST['types'])) {
+			$this->selectedObjectTypes = $_REQUEST['types'];
+			
+			// validate given values
+			foreach ($this->selectedObjectTypes as $objectTypeName) {
+				if (SearchEngine::getInstance()->getObjectType($objectTypeName) === null) {
+					throw new IllegalLinkException();
+				}
+			}
+		}
 		$this->submit = (!empty($_POST) || !empty($this->query) || !empty($this->username) || $this->userID);
 		
 		if (isset($_REQUEST['modify'])) {
