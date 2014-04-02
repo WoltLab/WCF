@@ -215,7 +215,8 @@ class PageMenuItemAddForm extends AbstractForm {
 			'menuItemLink' => ($this->menuItemController ? $this->menuItemParameters : $this->menuItemLink),
 			'menuPosition' => $this->menuPosition,
 			'parentMenuItem' => $this->parentMenuItem,
-			'showOrder' => $this->showOrder
+			'showOrder' => $this->showOrder,
+			'menuItem' => StringUtil::getRandomID()
 		))));
 		$this->objectAction->executeAction();
 		
@@ -234,6 +235,7 @@ class PageMenuItemAddForm extends AbstractForm {
 		// update i18n values
 		$menuItemEditor = new PageMenuItemEditor($menuItem);
 		$menuItemEditor->update($data);
+		PageMenuItemEditor::resetCache();
 		
 		// call saved event
 		$this->saved();
