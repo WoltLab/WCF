@@ -1,5 +1,13 @@
 {include file='header' pageTitle='wcf.acp.user.rank.'|concat:$action}
 
+<script data-relocate="true">
+	$(function() {
+		$('#customCssClassName').click(function() {
+			$(this).parents('li').find('input[type=radio]').click();
+		});
+	});
+</script>
+
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.user.rank.{$action}{/lang}</h1>
 </header>
