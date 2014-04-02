@@ -1092,6 +1092,11 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.smiley.smileyPath.description"><![CDATA[Der Smiley-Pfad wird relativ zu „{$__wcf->getPath()}“ interpretiert.]]></item>
 		<item name="wcf.acp.smiley.smileyPath.error.notFound"><![CDATA[Es wurde keine Datei unter dem angegebenen Pfad gefunden]]></item>
 		<item name="wcf.acp.smiley.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.acp.smiley.smileyFile"><![CDATA[Smiley-Datei]]></item>
+		<item name="wcf.acp.smiley.fileUpload"><![CDATA[Smiley hochladen]]></item>
+		<item name="wcf.acp.smiley.fileUpload.description"><![CDATA[Laden Sie hier die Bilddatei des Smileys hoch.]]></item>
+		<item name="wcf.acp.smiley.fileUpload.error.noImage"><![CDATA[Bei der hochgeladenen Datei handelt es sich um keine Bilddatei.]]></item>
+		<item name="wcf.acp.smiley.fileUpload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 	</category>
 	
 	<category name="wcf.acp.style">

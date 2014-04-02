@@ -81,6 +81,18 @@ class SmileyAddForm extends AbstractForm {
 	public $categoryNodeTree = null;
 	
 	/**
+	 * data of the uploaded smiley file
+	 * @var	array()
+	 */
+	public $fileUpload = array();
+	
+	/**
+	 * temporary name of the uploaded smiley file
+	 * @var	string
+	 */
+	public $uploadedFilename = '';
+	
+	/**
 	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
@@ -96,7 +108,8 @@ class SmileyAddForm extends AbstractForm {
 			'smileyCode' => $this->smileyCode,
 			'aliases' => $this->aliases,
 			'smileyPath' => $this->smileyPath,
-			'categoryNodeList' => $this->categoryNodeTree->getIterator()
+			'categoryNodeList' => $this->categoryNodeTree->getIterator(),
+			'uploadedFilename' => $this->uploadedFilename
 		));
 	}
 	
@@ -133,6 +146,8 @@ class SmileyAddForm extends AbstractForm {
 		if (isset($_POST['smileyCode'])) $this->smileyCode = StringUtil::trim($_POST['smileyCode']);
 		if (isset($_POST['aliases'])) $this->aliases = StringUtil::unifyNewlines(StringUtil::trim($_POST['aliases']));
 		if (isset($_POST['smileyPath'])) $this->smileyPath = FileUtil::removeLeadingSlash(StringUtil::trim($_POST['smileyPath']));
+		if (isset($_POST['uploadedFilename'])) $this->uploadedFilename = StringUtil::trim($_POST['uploadedFilename']);
+		if (isset($_FILES['fileUpload'])) $this->fileUpload = $_FILES['fileUpload'];
 	}
 	
 	/**
@@ -150,7 +165,8 @@ class SmileyAddForm extends AbstractForm {
 				'showOrder' => $this->showOrder,
 				'categoryID' => $this->categoryID ?: null,
 				'packageID' => 1
-			))
+			)),
+			'fileLocation' => $this->uploadedFilename ? WCF_DIR.'images/smilies/tmp/'.$this->uploadedFilename : ''
 		));
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
@@ -172,6 +188,7 @@ class SmileyAddForm extends AbstractForm {
 		$this->showOrder = 0;
 		$this->smileyPath = '';
 		$this->aliases = '';
+		$this->uploadedFilename = '';
 		
 		I18nHandler::getInstance()->reset();
 		
@@ -186,6 +203,35 @@ class SmileyAddForm extends AbstractForm {
 	 */
 	public function validate() {
 		parent::validate();
+		
+		if ($this->uploadedFilename) {
+			if (!file_exists(WCF_DIR.'images/smilies/tmp/'.$this->uploadedFilename)) {
+				throw new UserInputException('fileUpload', 'uploadFailed');
+			}
+		}
+		else if (!empty($this->fileUpload['name'])) {
+			if (!getimagesize($this->fileUpload['tmp_name'])) {
+				throw new UserInputException('fileUpload', 'noImage');
+			}
+			
+			do {
+				$this->uploadedFilename = StringUtil::getRandomID().'.'.mb_strtolower(mb_substr($this->fileUpload['name'], mb_strrpos($this->fileUpload['name'], '.') + 1));
+			}
+			while (file_exists(WCF_DIR.'images/smilies/tmp/'.$this->uploadedFilename));
+			
+			if (!@move_uploaded_file($this->fileUpload['tmp_name'], WCF_DIR.'images/smilies/tmp/'.$this->uploadedFilename)) {
+				throw new UserInputException('fileUpload', 'uploadFailed');
+			}
+		}
+		else {
+			if (empty($this->smileyPath)) {
+				throw new UserInputException('smileyPath');
+			}
+			
+			if (!is_file(WCF_DIR.$this->smileyPath)) {
+				throw new UserInputException('smileyPath', 'notFound');
+			}
+		}
 		
 		// validate title
 		if (!I18nHandler::getInstance()->validateValue('smileyTitle')) {
@@ -206,14 +252,6 @@ class SmileyAddForm extends AbstractForm {
 		
 		if (empty($this->smileyCode)) {
 			throw new UserInputException('smileyCode');
-		}
-		
-		if (empty($this->smileyPath)) {
-			throw new UserInputException('smileyPath');
-		}
-		
-		if (!is_file(WCF_DIR.$this->smileyPath)) {
-			throw new UserInputException('smileyPath', 'notFound');
 		}
 		
 		// validate smiley code and aliases against existing smilies

@@ -38,6 +38,46 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 	protected $requireACP = array('delete', 'update', 'updatePosition');
 	
 	/**
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
+	 */
+	public function create() {
+		$smiley = parent::create();
+		
+		if (!empty($this->parameters['fileLocation'])) {
+			$smileyFilename = 'smiley'.$smiley->smileyID.'.'.mb_strtolower(mb_substr($this->parameters['fileLocation'], mb_strrpos($this->parameters['fileLocation'], '.') + 1));
+			@rename($this->parameters['fileLocation'], WCF_DIR.'images/smilies/'.$smileyFilename);
+			
+			$smileyEditor = new SmileyEditor($smiley);
+			$smileyEditor->update(array(
+				'smileyPath' => 'images/smilies/'.$smileyFilename
+			));
+			
+			$smiley = new Smiley($smiley->smileyID);
+		}
+		
+		return $smiley;
+	}
+	
+	/**
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::update()
+	 */
+	public function update() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		if (count($this->objects) == 1 && !empty($this->parameters['fileLocation'])) {
+			$smiley = reset($this->objects);
+			$smileyFilename = 'smiley'.$smiley->smileyID.'.'.mb_strtolower(mb_substr($this->parameters['fileLocation'], mb_strrpos($this->parameters['fileLocation'], '.') + 1));
+			@rename($this->parameters['fileLocation'], WCF_DIR.'images/smilies/'.$smileyFilename);
+			
+			$this->parameters['data']['smileyPath'] = 'images/smilies/'.$smileyFilename;
+		}
+		
+		parent::update();
+	}
+	
+	/**
 	 * @see	\wcf\data\ISortableAction::validateUpdatePosition()
 	 */
 	public function validateUpdatePosition() {
@@ -68,7 +108,7 @@ class SmileyAction extends AbstractDatabaseObjectAction implements ISortableActi
 		foreach ($this->parameters['data']['structure'][0] as $smileyID) {
 			$smiley = $smileyList->search($smileyID);
 			if ($smiley === null) continue;
-				
+			
 			$editor = new SmileyEditor($smiley);
 			$editor->update(array('showOrder' => $i++));
 		}

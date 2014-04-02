@@ -23,7 +23,7 @@
 	{/hascontent}
 </div>
 
-<form method="post" action="{if $action == 'add'}{link controller='SmileyAdd'}{/link}{else}{link controller='SmileyEdit' id=$smiley->smileyID}{/link}{/if}">
+<form method="post" action="{if $action == 'add'}{link controller='SmileyAdd'}{/link}{else}{link controller='SmileyEdit' id=$smiley->smileyID}{/link}{/if}" enctype="multipart/form-data">
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.global.form.data{/lang}</legend>
@@ -96,6 +96,47 @@
 				</dd>
 			</dl>
 			
+			<dl{if $errorField == 'showOrder'} class="formError"{/if}>
+				<dt><label for="showOrder">{lang}wcf.acp.smiley.showOrder{/lang}</label></dt>
+				<dd>
+					<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" min="0" class="short" />
+					
+					{if $errorField == 'showOrder'}
+						<small class="innerError">
+							{lang}wcf.acp.smiley.showOrder.error.{@$errorType}{/lang}
+						</small>
+					{/if}
+				</dd>
+			</dl>
+			
+			{event name='dataFields'}
+		</fieldset>
+		
+		<fieldset>
+			<legend>{lang}wcf.acp.smiley.smileyFile{/lang}</legend>
+			
+			<dl{if $errorField == 'fileUpload'} class="formError"{/if}>
+				<dt><label for="fileUpload">{lang}wcf.acp.smiley.fileUpload{/lang}</label></dt>
+				<dd>
+					{if $uploadedFilename}
+						<img src="{@$__wcf->getPath()}images/smilies/tmp/{$uploadedFilename}" alt="" />
+						<input type="hidden" name="uploadedFilename" value="{$uploadedFilename}" />
+					{/if}
+					<input type="file" id="fileUpload" name="fileUpload" value="" />
+					
+					{if $errorField == 'fileUpload'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.smiley.fileUpload.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.smiley.fileUpload.description{/lang}</small>
+				</dd>
+			</dl>
+			
 			<dl{if $errorField == 'smileyPath'} class="formError"{/if}>
 				<dt><label for="smileyPath">{lang}wcf.acp.smiley.smileyPath{/lang}</label></dt>
 				<dd>
@@ -114,20 +155,7 @@
 				</dd>
 			</dl>
 			
-			<dl{if $errorField == 'showOrder'} class="formError"{/if}>
-				<dt><label for="showOrder">{lang}wcf.acp.smiley.showOrder{/lang}</label></dt>
-				<dd>
-					<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" min="0" class="short" />
-					
-					{if $errorField == 'showOrder'}
-						<small class="innerError">
-							{lang}wcf.acp.smiley.showOrder.error.{@$errorType}{/lang}
-						</small>
-					{/if}
-				</dd>
-			</dl>
-			
-			{event name='dataFields'}
+			{event name='smileyFileFields'}
 		</fieldset>
 		
 		{event name='fieldsets'}
