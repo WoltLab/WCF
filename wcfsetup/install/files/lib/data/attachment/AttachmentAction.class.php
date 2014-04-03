@@ -145,10 +145,13 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			
 			// get image data
 			if (($imageData = $file->getImageData()) !== null) {
-				$data['isImage'] = 1;
 				$data['width'] = $imageData['width'];
 				$data['height'] = $imageData['height'];
 				$data['fileType'] = $imageData['mimeType'];
+				
+				if (preg_match('~^image/(gif|jpe?g|png)$~i', $data['fileType'])) {
+					$data['isImage'] = 1;
+				}
 			}
 			
 			// create attachment
