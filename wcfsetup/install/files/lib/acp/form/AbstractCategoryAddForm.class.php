@@ -282,6 +282,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		// reset values
 		$this->parentCategoryID = 0;
 		$this->showOrder = 0;
+		$this->additionalData = array();
 		
 		$this->saved();
 		
