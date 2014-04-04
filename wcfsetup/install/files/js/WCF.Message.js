@@ -3299,7 +3299,7 @@ WCF.Message.UserMention = Class.extend({
 		var $range = this._ckEditor.getSelection().getRanges()[0];
 		
 		// remove the beginning of the username
-		$range.setStart($range.startContainer, $range.startOffset - this._mentionStart.length);
+		$range.setStart($range.startContainer, $range.startOffset - (this._mentionStart.length + 1));
 		$range.deleteContents();
 		
 		// insert username
@@ -3310,7 +3310,7 @@ WCF.Message.UserMention = Class.extend({
 		else if (username.indexOf(' ') !== -1) {
 			username = "'" + username + "'";
 		}
-		this._ckEditor.insertText(username);
+		this._ckEditor.insertText('@' + username);
 		
 		// add whitespace after username
 		var $element = CKEDITOR.dom.element.createFromHtml('<span class="wcfUserMentionTemporary">&nbsp;</span>');
@@ -3318,11 +3318,6 @@ WCF.Message.UserMention = Class.extend({
 		$(this._ckEditor.document.$).find('span.wcfUserMentionTemporary').replaceWith(function() {
 			return $(this).html();
 		});
-		
-		// the @-sign and the entered username are now in seperate text
-		// nodes which causes issues if the user changes the text
-		$range.endContainer.$.nodeValue += $range.endContainer.$.nextSibling.nodeValue;
-		$($range.endContainer.$.nextSibling).remove();
 		
 		// make sure that the range in Firefox is that same as in the
 		// other browsers
