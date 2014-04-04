@@ -46,7 +46,7 @@
 	<!-- !!! WARNING: keep all three update sections below in sync !!! -->
 	
 	<instructions type="update" fromversion="2.0.4">
-		<instruction type="acpTemplate">acptemplates.tar</instruction>
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
@@ -55,7 +55,7 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="2.0.4 pl 1">
-		<instruction type="acpTemplate">acptemplates.tar</instruction>
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
@@ -64,7 +64,7 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="2.0.4 pl 2">
-		<instruction type="acpTemplate">acptemplates.tar</instruction>
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
