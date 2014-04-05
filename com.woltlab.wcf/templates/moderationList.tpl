@@ -66,7 +66,7 @@
 {include file='userNotice'}
 
 <div class="contentNavigation">
-	{pages print=true assign=pagesLinks controller='ModerationList' link="id=$definitionID&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+	{pages print=true assign=pagesLinks controller='ModerationList' link="definitionID=$definitionID&assignedUserID=$assignedUserID&status=$status&pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
 	
 	{hascontent}
 		<nav>
