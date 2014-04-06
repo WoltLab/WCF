@@ -35,6 +35,8 @@
 			{if ENABLE_BENCHMARK}{include file='benchmark'}{/if}
 			
 			{event name='copyright'}
+			
+			{event name='footerCopyright'}
 		</div>
 	</div>
 </footer>
