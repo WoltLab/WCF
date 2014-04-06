@@ -36,7 +36,7 @@
 			
 			{event name='copyright'}
 			
-			{event name='footerCopyright'}
+			{include file='footerCopyright'}
 		</div>
 	</div>
 </footer>
