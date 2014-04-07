@@ -30,7 +30,13 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	 * @return	array
 	 */
 	protected function getAvailableGroups() {
-		return UserGroup::getAccessibleGroups(array(), array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS));
+		$userGroups = UserGroup::getAccessibleGroups(array(), array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS));
+		
+		uasort($userGroups, function(UserGroup $groupA, UserGroup $groupB) {
+			return strcmp($groupA->getName(), $groupB->getName());
+		});
+		
+		return $userGroups;
 	}
 	
 	/**
