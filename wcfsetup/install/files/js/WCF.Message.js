@@ -1118,7 +1118,9 @@ WCF.Message.InlineEditor = Class.extend({
 		
 		// force closing dropdown to avoid displaying the dropdown after
 		// triple clicks
-		this._dropdowns[this._container[$containerID].data('objectID')].removeClass('dropdownOpen');
+		if (this._dropdowns[this._container[$containerID].data('objectID')]) {
+			this._dropdowns[this._container[$containerID].data('objectID')].removeClass('dropdownOpen');
+		}
 		
 		if (event !== null) {
 			event.stopPropagation();
