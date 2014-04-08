@@ -2,7 +2,7 @@
 namespace wcf\system\package;
 use wcf\data\package\Package;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\exception\SystemException;
+use wcf\system\package\validation\PackageValidationException;
 use wcf\system\io\Tar;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -134,7 +134,7 @@ class PackageArchive {
 	public function openArchive() {
 		// check whether archive exists and is a TAR archive
 		if (!file_exists($this->archive)) {
-			throw new SystemException("unable to find package file '".$this->archive."'");
+			throw new PackageValidationException(PackageValidationException::FILE_NOT_FOUND, array('archive' => $this->archive));
 		}
 		
 		// open archive and read package information
@@ -149,7 +149,7 @@ class PackageArchive {
 		// search package.xml in package archive
 		// throw error message if not found
 		if ($this->tar->getIndexByFilename(self::INFO_FILE) === false) {
-			throw new SystemException("package information file '".(self::INFO_FILE)."' not found in '".$this->archive."'");
+			throw new PackageValidationException(PackageValidationException::MISSING_PACKAGE_XML, array('archive' => $this->archive));
 		}
 		
 		// extract package.xml, parse XML
@@ -170,7 +170,7 @@ class PackageArchive {
 		$packageName = $package->getAttribute('name');
 		if (!Package::isValidPackageName($packageName)) {
 			// package name is not a valid package identifier
-			throw new SystemException("'".$packageName."' is not a valid package name.");
+			throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, array('packageName' => $packageName));
 		}
 		
 		$this->packageInfo['name'] = $packageName;
@@ -209,7 +209,7 @@ class PackageArchive {
 				
 				case 'version':
 					if (!Package::isValidVersion($element->nodeValue)) {
-						throw new SystemException("package version '".$element->nodeValue."' is invalid");
+						throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_VERSION, array('packageVersion' => $element->nodeValue));
 					}
 					
 					$this->packageInfo['version'] = $element->nodeValue;
@@ -235,7 +235,7 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:requiredpackages/ns:requiredpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
+				throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, array('packageName' => $element->nodeValue));
 			}
 			
 			// read attributes
@@ -252,7 +252,7 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:optionalpackages/ns:optionalpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
+				throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, array('packageName' => $element->nodeValue));
 			}
 			
 			// read attributes
@@ -269,7 +269,7 @@ class PackageArchive {
 		$elements = $xpath->query('child::ns:excludedpackages/ns:excludedpackage', $package);
 		foreach ($elements as $element) {
 			if (!Package::isValidPackageName($element->nodeValue)) {
-				throw new SystemException("'".$element->nodeValue."' is not a valid package name.");
+				throw new PackageValidationException(PackageValidationException::INVALID_PACKAGE_NAME, array('packageName' => $element->nodeValue));
 			}
 			
 			// read attributes
@@ -738,7 +738,10 @@ class PackageArchive {
 		// search the requested tar archive in our package archive.
 		// throw error message if not found.
 		if (($fileIndex = $this->tar->getIndexByFilename($filename)) === false) {
-			throw new SystemException("tar archive '".$filename."' not found in '".$this->archive."'.");
+			throw new PackageValidationException(PackageValidationException::FILE_NOT_FOUND, array(
+				'archive' => $this->archive,
+				'targetArchive' => $filename
+			));
 		}
 		
 		// requested tar archive was found
