@@ -91,7 +91,7 @@ class StructuredCommentList extends CommentList {
 				$this->responseIDs[] = $responseID;
 				$responseIDs[$responseID] = $comment->commentID;
 			}
-
+			
 			if ($comment->userID) {
 				$userIDs[] = $comment->userID;
 			}

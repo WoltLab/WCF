@@ -357,6 +357,7 @@
 		<item name="wcf.acp.group.option.user.profileComment.canAddComment"><![CDATA[Kann Pinnwand-Kommentare erstellen]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canEditComment"><![CDATA[Kann eigene Pinnwand-Kommentare bearbeiten]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canDeleteComment"><![CDATA[Kann eigene Pinnwand-Kommentare löschen]]></item>
+		<item name="wcf.acp.group.option.user.profileComment.canDeleteCommentInOwnProfile"><![CDATA[Kann Kommentare an der eigenen Pinnwand löschen]]></item>
 		<item name="wcf.acp.group.option.mod.profileComment.canEditComment"><![CDATA[Kann Pinnwand-Kommentare bearbeiten]]></item>
 		<item name="wcf.acp.group.option.mod.profileComment.canDeleteComment"><![CDATA[Kann Pinnwand-Kommentare löschen]]></item>
 		<item name="wcf.acp.group.option.mod.profileComment.canModerateComment"><![CDATA[Kann Pinnwand-Kommentare moderieren]]></item>

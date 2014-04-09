@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\comment\manager;
+use wcf\data\comment\response\CommentResponse;
+use wcf\data\comment\Comment;
 use wcf\data\user\UserProfile;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -93,5 +95,29 @@ class UserProfileCommentManager extends AbstractCommentManager {
 	/**
 	 * @see	\wcf\system\comment\manager\ICommentManager::updateCounter()
 	 */
-	public function updateCounter($objectID, $value) { }
+	public function updateCounter($objectID, $value) {
+		// does nothing
+	}
+	
+	/**
+	 * @see	\wcf\system\comment\manager\ICommentManager::canDeleteComment()
+	 */
+	public function canDeleteComment(Comment $comment) {
+		if ($comment->objectID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.profileComment.canDeleteCommentInOwnProfile')) {
+			return true;
+		}
+		
+		return parent::canDeleteComment($comment);
+	}
+	
+	/**
+	 * @see	\wcf\system\comment\manager\ICommentManager::canDeleteResponse()
+	 */
+	public function canDeleteResponse(CommentResponse $response) {
+		if ($response->getComment()->objectID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.profileComment.canDeleteCommentInOwnProfile')) {
+			return true;
+		}
+		
+		return parent::canDeleteResponse($response);
+	}
 }
