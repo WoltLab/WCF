@@ -14,11 +14,21 @@
 	$(function() {
 		var $spoilerBox = $('.jsSpoilerBox').removeClass('jsSpoilerBox');
 		$spoilerBox.find('> header > .jsSpoilerToggle').click(function() {
-			$(this).toggleClass('active').parent().next().slideToggle({
+			var $spoilerToggle = $(this);
+			$spoilerToggle.toggleClass('active').parent().next().slideToggle({
 				complete: function() {
 					if ($(this).is(':visible')) {
 						WCF.DOMNodeInsertedHandler.execute();
 					}
+					
+					{if !$buttonTitle}
+						if ($(this).is(':visible')) {
+							$spoilerToggle.text('{lang}wcf.bbcode.spoiler.hide{/lang}');
+						}
+						else {
+							$spoilerToggle.text('{lang}wcf.bbcode.spoiler.show{/lang}');
+						}
+					{/if}
 				}
 			});
 		});
