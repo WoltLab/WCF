@@ -2,6 +2,8 @@
 namespace wcf\system\package\validation;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
+use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 
 /**
  * Recursively validates the package archive and it's delivered requirements.
@@ -50,38 +52,81 @@ class PackageValidationArchive implements \RecursiveIterator {
 	/**
 	 * Validates this package and it's delivered requirements.
 	 * 
+	 * @param	boolean		$deepInspection
 	 * @return	boolean
 	 */
-	public function validate() {
-		//
-		// step 1) try to read archive
-		//
+	public function validate($deepInspection = false, $requiredVersion = '') {
 		try {
+			// try to read archive
 			$this->archive->openArchive();
+			
+			// check if package is installable or suitable for an update
+			$this->validateInstructions($requiredVersion);
 		}
 		catch (\Exception $e) {
 			$this->exception = $e;
+			
+			return false;
 		}
 		
-		//
-		// step 2) traverse requirements
-		//
-		die("<pre>".print_r($this->archive->getOpenRequirements(), true));
-		
-		//
-		// step 3) check requirements against virtual package table
-		//
-		
-		/* TODO: do something */
-		
-		//
-		// step 4) check exclusions
-		//
-		
-		/* TODO: do something */
+		if ($deepInspection) {
+			try {
+				// check for exclusions
+				$this->validateExclusion();
+				
+				// traverse open requirements
+				foreach ($this->archive->getOpenRequirements() as $requirement) {
+					$archive = $this->archive->extractTar($requirement->file);
+						
+					$index = count($this->children);
+					$this->children[$index] = new PackageValidationArchive($archive);
+					if (!$this->children[$index]->validate(true)) {
+						return false;
+					}
+				}
+			}
+			catch (PackageValidationException $e) {
+				$this->exception = $e;
+				
+				return false;
+			}
+		}
 		
 		return true;
 		
+	}
+	
+	protected function validateInstructions($requiredVersion) {
+		$package = PackageCache::getInstance()->getPackageByIdentifier($this->archive->getPackageInfo('name'));
+		
+		// package is not installed yet
+		if ($package === null) {
+			if (empty($this->archive->getInstallInstructions())) {
+				throw new PackageValidationException(PackageValidationException::NO_INSTALL_PATH, array('packageName' => $this->archive->getPackageInfo('name')));
+			}
+		}
+		else {
+			// package is already installed, check update path
+			if (!$this->archive->isValidUpdate($package)) {
+				throw new PackageValidationException(PackageValidationException::NO_UPDATE_PATH, array(
+					'packageName' => $package->packageName,
+					'packageVersion' => $package->packageVersion,
+					'deliveredPackageVersion' => $this->archive->getPackageInfo('version')
+				));
+			}
+		}
+	}
+	
+	protected function validateExclusion() {
+		$excludingPackages = $this->archive->getConflictedExcludingPackages();
+		if (!empty($excludingPackages)) {
+			throw new PackageValidationException(PackageValidationException::EXCLUDING_PACKAGES, array('packages' => $excludingPackages));
+		}
+		
+		$excludedPackages = $this->archive->getConflictedExcludedPackages();
+		if (!empty($excludingPackages)) {
+			throw new PackageValidationException(PackageValidationException::EXCLUDED_PACKAGES, array('packages' => $excludedPackages));
+		}
 	}
 	
 	/**
@@ -95,7 +140,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 		}
 		
 		if ($this->exception instanceof PackageValidationException) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.package.validation.errorCode.' . $this->exception->getCode(), $this->exception->getDetails());
+			return $this->exception->getErrorMessage();
 		}
 		
 		return $this->exception->getMessage();

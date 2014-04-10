@@ -13,6 +13,7 @@ use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
+use wcf\system\package\validation\PackageValidationManager;
 
 /**
  * Shows the package install and update form.
@@ -136,6 +137,12 @@ class PackageStartInstallForm extends AbstractForm {
 			throw new UserInputException('uploadPackage', 'uploadFailed');
 		}
 		
+		if (PackageValidationManager::getInstance()->validate($this->uploadPackage['name'])) {
+			die("win");
+		}
+		else {
+			die("failed");
+		}
 		$this->archive = new PackageArchive($this->uploadPackage['name'], $this->package);
 		$this->validateArchive('uploadPackage');
 	}

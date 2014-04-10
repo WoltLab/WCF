@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\package\validation;
-use wcf\system\SingletonFactory;
 use wcf\data\package\Package;
+use wcf\system\SingletonFactory;
 
 /**
  * Manages recursive validation of package archives.

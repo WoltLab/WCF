@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\package\validation;
 use wcf\system\exception\SystemException;
+use wcf\system\package\PackageArchive;
+use wcf\system\WCF;
 
 /**
  * Represents exceptions occured during validation of a package archive. This exception
@@ -45,6 +47,30 @@ class PackageValidationException extends SystemException {
 	const INVALID_PACKAGE_VERSION = 4;
 	
 	/**
+	 * package contains no install instructions and an update is not possible, expects the detail 'packageName'
+	 * @var	integer
+	 */
+	const NO_INSTALL_PATH = 5;
+	
+	/**
+	 * package is already installed and cannot be updated using current archive, expects the details 'packageName', 'packageVersion' and 'deliveredPackageVersion'
+	 * @var	integer
+	 */
+	const NO_UPDATE_PATH = 6;
+	
+	/**
+	 * packages which exclude the current package, expects the detail 'packages' (list of \wcf\data\package\Package)
+	 * @var	integer
+	 */
+	const EXCLUDING_PACKAGES = 7;
+	
+	/**
+	 * packages which are excluded by current package, expects the detail 'packages' (list of \wcf\data\package\Package)
+	 * @var	integer
+	 */
+	const EXCLUDED_PACKAGES = 8;
+	
+	/**
 	 * Creates a new PackageArchiveValidationException.
 	 * 
 	 * @param	integer		$code
@@ -63,6 +89,15 @@ class PackageValidationException extends SystemException {
 	 */
 	public function getDetails() {
 		return $this->details;
+	}
+	
+	/**
+	 * Returns the readable error message.
+	 * 
+	 * @return	string
+	 */
+	public function getErrorMessage() {
+		return WCF::getLanguage()->getDynamicVariable('wcf.package.validation.errorCode.' . $this->getCode(), $this->getDetails());
 	}
 	
 	/**
@@ -90,6 +125,10 @@ class PackageValidationException extends SystemException {
 			
 			case self::INVALID_PACKAGE_VERSION:
 				return "package version '".$this->details['packageVersion']."' is invalid";
+			break;
+			
+			default:
+				return 'Using getMessage() is discouraged, please use getErrorMessage() instead';
 			break;
 		}
 	}
