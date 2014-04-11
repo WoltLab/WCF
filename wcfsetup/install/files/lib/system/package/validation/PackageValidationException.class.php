@@ -71,6 +71,12 @@ class PackageValidationException extends SystemException {
 	const EXCLUDED_PACKAGES = 8;
 	
 	/**
+	 * package version is lower than the request version, expects the details 'packageName', 'packageVersion' and 'deliveredPackageVersion'
+	 * @var	integer
+	 */
+	const INSUFFICIENT_VERSION = 9;
+	
+	/**
 	 * Creates a new PackageArchiveValidationException.
 	 * 
 	 * @param	integer		$code

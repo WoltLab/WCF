@@ -1,9 +1,8 @@
 <?php
 namespace wcf\system\package\validation;
-use wcf\system\package\PackageArchive;
-use wcf\system\WCF;
-use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
+use wcf\system\package\PackageArchive;
+use wcf\data\package\Package;
 
 /**
  * Recursively validates the package archive and it's delivered requirements.
@@ -50,12 +49,14 @@ class PackageValidationArchive implements \RecursiveIterator {
 	}
 	
 	/**
-	 * Validates this package and it's delivered requirements.
+	 * Validates this package and optionally it's delivered requirements. Unless you turn on
+	 * $deepInspection, this will only check if the archive is theoretically usable to install
+	 * or update. This means that neither exclusions nor dependencies will be checked. 
 	 * 
 	 * @param	boolean		$deepInspection
 	 * @return	boolean
 	 */
-	public function validate($deepInspection = false, $requiredVersion = '') {
+	public function validate($deepInspection, $requiredVersion = '') {
 		try {
 			// try to read archive
 			$this->archive->openArchive();
@@ -71,18 +72,31 @@ class PackageValidationArchive implements \RecursiveIterator {
 		
 		if ($deepInspection) {
 			try {
+				PackageValidationManager::getInstance()->addVirtualPackage($this->archive->getPackageInfo('name'), $this->archive->getPackageInfo('version'));
+				
 				// check for exclusions
-				$this->validateExclusion();
+				if (true || WCF_VERSION != '2.1.0 Alpha 1 (Typhoon)') {
+					$this->validateExclusion();
+				}
 				
 				// traverse open requirements
 				foreach ($this->archive->getOpenRequirements() as $requirement) {
+					if (empty($requirement['file'])) {
+						throw new PackageValidationException(PackageValidationException::MISSING_REQUIREMENT, array(
+							'packageName' => $requirement['name'],
+							'packageVersion' => $requirement['minversion']
+						));
+					}
+					
 					$archive = $this->archive->extractTar($requirement->file);
-						
+					
 					$index = count($this->children);
 					$this->children[$index] = new PackageValidationArchive($archive);
-					if (!$this->children[$index]->validate(true)) {
+					if (!$this->children[$index]->validate(true, $requirement['minversion'])) {
 						return false;
 					}
+					
+					PackageValidationManager::getInstance()->addVirtualPackage($this->archive->getPackageInfo('name'), $this->archive->getPackageInfo('version'));
 				}
 			}
 			catch (PackageValidationException $e) {
@@ -98,6 +112,15 @@ class PackageValidationArchive implements \RecursiveIterator {
 	
 	protected function validateInstructions($requiredVersion) {
 		$package = PackageCache::getInstance()->getPackageByIdentifier($this->archive->getPackageInfo('name'));
+		
+		// delivered package does not provide the minimum required version
+		if (Package::compareVersion($requiredVersion, $this->archive->getPackageInfo('version'), '>')) {
+			throw new PackageValidationException(PackageValidationException::INSUFFICIENT_VERSION,array(
+				'packageName' => $package->packageName,
+				'packageVersion' => $package->packageVersion,
+				'deliveredPackageVersion' => $this->archive->getPackageInfo('version')
+			));
+		}
 		
 		// package is not installed yet
 		if ($package === null) {

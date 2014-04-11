@@ -7,13 +7,13 @@ use wcf\form\AbstractForm;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\package\validation\PackageValidationManager;
 use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
-use wcf\system\package\validation\PackageValidationManager;
 
 /**
  * Shows the package install and update form.
@@ -137,7 +137,7 @@ class PackageStartInstallForm extends AbstractForm {
 			throw new UserInputException('uploadPackage', 'uploadFailed');
 		}
 		
-		if (PackageValidationManager::getInstance()->validate($this->uploadPackage['name'])) {
+		if (PackageValidationManager::getInstance()->validate($this->uploadPackage['name'], false)) {
 			die("win");
 		}
 		else {

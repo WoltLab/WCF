@@ -27,12 +27,16 @@ class PackageValidationManager extends SingletonFactory {
 	protected $virtualPackageList = array();
 	
 	/**
-	 * Validates given archive for existance and ability to be installed/updated
+	 * Validates given archive for existance and ability to be installed/updated. If you set the
+	 * second parameter $deepInspection to "false", the system will only check if the archive
+	 * looks fine, this is useful for a rough check during upload when a more detailed check will
+	 * be performed afterwards.
 	 * 
 	 * @param	string		$archive
+	 * @param	boolean		$deepInspection
 	 * @return	boolean
 	 */
-	public function validate($archive) {
+	public function validate($archive, $deepInspection = true) {
 		$this->virtualPackageList = array();
 		$this->packageValidationArchive = new PackageValidationArchive($archive);
 		
