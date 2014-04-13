@@ -3300,8 +3300,18 @@ WCF.Message.UserMention = Class.extend({
 	_setUsername: function(username) {
 		var $range = this._ckEditor.getSelection().getRanges()[0];
 		
-		// remove the beginning of the username
+		// remove the beginning of the username and the '@'
 		$range.setStart($range.startContainer, $range.startOffset - (this._mentionStart.length + 1));
+		
+		// if an existing mention is edited, remove the link around it
+		var $removedLink = false;
+		var $commonAncestor = $range.getCommonAncestor();
+		if ($commonAncestor.getText() == '@' + this._mentionStart) {
+			if ($commonAncestor.getParent() && $commonAncestor.getParent().getName() == 'a') {
+				$commonAncestor.replace($commonAncestor.getParent());
+				$range.setStart($commonAncestor);
+			}
+		}
 		$range.deleteContents();
 		
 		// insert username
@@ -3312,23 +3322,12 @@ WCF.Message.UserMention = Class.extend({
 		else if (username.indexOf(' ') !== -1) {
 			username = "'" + username + "'";
 		}
-		this._ckEditor.insertText('@' + username);
-		
-		// add whitespace after username
-		var $element = CKEDITOR.dom.element.createFromHtml('<span class="wcfUserMentionTemporary">&nbsp;</span>');
-		this._ckEditor.insertElement($element);
-		$(this._ckEditor.document.$).find('span.wcfUserMentionTemporary').replaceWith(function() {
-			return $(this).html();
-		});
-		
-		// make sure that the range in Firefox is that same as in the
-		// other browsers
-		if ($.browser.mozilla) {
-			$range.selectNodeContents(new CKEDITOR.dom.text($range.endContainer.$.nextSibling));
-			$range.setStart($range.startContainer, 1);
-			$range.select();
-		}
-		
+		var $usernameNode = new CKEDITOR.dom.text('@' + username);
+		$range.insertNode($usernameNode);
+		$range.selectNodeContents($usernameNode);
+		$range.collapse(false);
+		$range.select();
+
 		this._hideList();
 	},
 	
