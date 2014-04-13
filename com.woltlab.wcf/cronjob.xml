@@ -123,7 +123,22 @@
 		
 		<cronjob>
 			<classname><![CDATA[wcf\system\cronjob\ModerationQueueCronjob]]></classname>
-			<description><![CDATA[Moderation Queue Cleanup]]></description>
+			<description><![CDATA[Moderation queue cleanup]]></description>
+			<description language="de"><![CDATA[Löscht veraltete Einträge in der Moderation]]></description>
+			<startminute>0</startminute>
+			<starthour>1</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob>
+			<classname><![CDATA[wcf\system\cronjob\StatDailyBuilderCronjob]]></classname>
+			<description><![CDATA[Builds the daily statistics]]></description>
+			<description language="de"><![CDATA[Generiert die täglichen Statistiken]]></description>
 			<startminute>0</startminute>
 			<starthour>1</starthour>
 			<startdom>*</startdom>

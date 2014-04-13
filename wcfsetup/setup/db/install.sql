@@ -846,6 +846,16 @@ CREATE TABLE wcf1_spider (
 	UNIQUE KEY spiderIdentifier (spiderIdentifier)
 );
 
+DROP TABLE IF EXISTS wcf1_stat_daily;
+CREATE TABLE wcf1_stat_daily (
+	objectTypeID INT(10) NOT NULL,
+	date DATE NOT NULL,
+	counter INT(10) NOT NULL DEFAULT 0,
+	total INT(10) NOT NULL DEFAULT 0,
+	
+	UNIQUE KEY (objectTypeID, date)
+);
+
 DROP TABLE IF EXISTS wcf1_style;
 CREATE TABLE wcf1_style (
 	styleID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1533,6 +1543,8 @@ ALTER TABLE wcf1_tag ADD FOREIGN KEY (synonymFor) REFERENCES wcf1_tag (tagID) ON
 ALTER TABLE wcf1_tag_to_object ADD FOREIGN KEY (tagID) REFERENCES wcf1_tag (tagID) ON DELETE CASCADE;
 ALTER TABLE wcf1_tag_to_object ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_tag_to_object ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_stat_daily ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_search_index ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_search_index ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE SET NULL;

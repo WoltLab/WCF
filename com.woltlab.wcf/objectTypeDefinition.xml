@@ -143,5 +143,10 @@
 			<name>com.woltlab.wcf.rebuildData</name>
 			<interfacename><![CDATA[wcf\system\worker\IRebuildDataWorker]]></interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.statDailyHandler</name>
+			<interfacename><![CDATA[wcf\system\stat\IStatDailyHandler]]></interfacename>
+		</definition>
 	</import>
 </data>

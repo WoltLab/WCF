@@ -311,5 +311,18 @@
 			<nicevalue>100</nicevalue>
 		</type>
 		<!-- /rebuild data workers -->
+		
+		<!-- stat handlers -->
+		<type>
+			<name>com.woltlab.wcf.user</name>
+			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
+			<classname><![CDATA[wcf\system\stat\UserStatDailyHandler]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.attachment</name>
+			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
+			<classname><![CDATA[wcf\system\stat\AttachmentStatDailyHandler]]></classname>
+		</type>
+		<!-- /stat handlers -->
 	</import>
 </data>
