@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\moderation\queue;
+use wcf\data\moderation\queue\ModerationQueue;
+use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
@@ -37,12 +39,37 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 				AND objectID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
-				$objectTypeID,
-				$objectID
+			$objectTypeID,
+			$objectID
 		));
 		$row = $statement->fetchArray();
 		
 		return ($row['count'] == 0 ? false : true);
+	}
+	
+	/**
+	 * Returns true if the object with the given data has a pending report.
+	 * A pending report has a status other than done.
+	 * 
+	 * @param	string		$objectType
+	 * @param	integer		$objectID
+	 * @return	boolean
+	 */
+	public function hasPendingReport($objectType, $objectID) {
+		$objectTypeID = $this->getObjectTypeID($objectType);
+		
+		$sql = "SELECT	status
+			FROM	wcf".WCF_N."_moderation_queue
+			WHERE	objectTypeID = ?
+				AND objectID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$objectTypeID,
+			$objectID
+		));
+		$status = $statement->fetchColumn();
+		
+		return $status !== false && $status != ModerationQueue::STATUS_DONE;
 	}
 	
 	/**
@@ -104,5 +131,51 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 			$this->getProcessor($objectType)->getContainerID($objectID),
 			$additionalData
 		);
+	}
+	
+	/**
+	 * @see	\wcf\system\moderation\queue\AbstractModerationQueueManager::addEntry()
+	 */
+	protected function addEntry($objectTypeID, $objectID, $containerID = 0, array $additionalData = array()) {
+		$sql = "SELECT	queueID
+			FROM	wcf".WCF_N."_moderation_queue
+			WHERE	objectTypeID = ?
+				AND objectID = ?
+				AND status <> ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$objectTypeID,
+			$objectID,
+			ModerationQueue::STATUS_DONE
+		));
+		$row = $statement->fetchArray();
+		
+		if ($row === false) {
+			$objectAction = new ModerationQueueAction(array(), 'create', array(
+				'data' => array(
+					'objectTypeID' => $objectTypeID,
+					'objectID' => $objectID,
+					'containerID' => $containerID,
+					'userID' => (WCF::getUser()->userID ?: null),
+					'time' => TIME_NOW,
+					'additionalData' => serialize($additionalData)
+				)
+			));
+			$objectAction->executeAction();
+		}
+		else {
+			$objectAction = new ModerationQueueAction(array($row['queueID']), 'update', array(
+				'data' => array(
+					'status' => ModerationQueue::STATUS_OUTSTANDING,
+					'containerID' => $containerID,
+					'userID' => (WCF::getUser()->userID ?: null),
+					'time' => TIME_NOW,
+					'additionalData' => serialize($additionalData)
+				)
+			));
+			$objectAction->executeAction();
+		}
+		
+		ModerationQueueManager::getInstance()->resetModerationCount();
 	}
 }

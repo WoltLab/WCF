@@ -91,7 +91,7 @@ class ModerationQueueReportAction extends ModerationQueueAction {
 	 */
 	public function prepareReport() {
 		// content was already reported
-		$alreadyReported = (ModerationQueueReportManager::getInstance()->isAlreadyReported($this->parameters['objectType'], $this->parameters['objectID'])) ? 1 : 0;
+		$alreadyReported = (ModerationQueueReportManager::getInstance()->hasPendingReport($this->parameters['objectType'], $this->parameters['objectID'])) ? 1 : 0;
 		
 		WCF::getTPL()->assign(array(
 			'alreadyReported' => $alreadyReported,
@@ -119,7 +119,7 @@ class ModerationQueueReportAction extends ModerationQueueAction {
 	public function report() {
 		// if the specified content was already reported, e.g. a different user reported this
 		// item meanwhile, silently ignore it. Just display a success and the user is happy :)
-		if (!ModerationQueueReportManager::getInstance()->isAlreadyReported($this->parameters['objectType'], $this->parameters['objectID'])) {
+		if (!ModerationQueueReportManager::getInstance()->hasPendingReport($this->parameters['objectType'], $this->parameters['objectID'])) {
 			ModerationQueueReportManager::getInstance()->addReport(
 				$this->parameters['objectType'],
 				$this->parameters['objectID'],
