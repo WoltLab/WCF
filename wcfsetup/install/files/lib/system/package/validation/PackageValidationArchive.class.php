@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\package\validation;
+use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\system\package\PackageArchive;
-use wcf\data\package\Package;
 
 /**
  * Recursively validates the package archive and it's delivered requirements.
@@ -97,7 +97,9 @@ class PackageValidationArchive implements \RecursiveIterator {
 				PackageValidationManager::getInstance()->addVirtualPackage($this->archive->getPackageInfo('name'), $this->archive->getPackageInfo('version'));
 				
 				// check for exclusions
-				if (true || WCF_VERSION != '2.1.0 Alpha 1 (Typhoon)') {
+				// TODO: exclusions are not checked for testing purposes
+				//	 REMOVE THIS BEFORE *ANY* PUBLIC RELEASE
+				if (WCF_VERSION != '2.1.0 Alpha 1 (Typhoon)') {
 					$this->validateExclusion();
 				}
 				
@@ -138,6 +140,15 @@ class PackageValidationArchive implements \RecursiveIterator {
 		
 	}
 	
+	/**
+	 * Validates if the package has suitable install or update instructions. Setting $deepInspection
+	 * to true will cause every single instruction to be validated against the corresponding PIP.
+	 * 
+	 * Please be aware that unknown PIPs will be silently ignored and will not cause any error!
+	 * 
+	 * @param	string		$requiredVersion
+	 * @param	boolean		$deepInspection
+	 */
 	protected function validateInstructions($requiredVersion, $deepInspection) {
 		$package = $this->getPackage();
 		
@@ -157,7 +168,9 @@ class PackageValidationArchive implements \RecursiveIterator {
 				throw new PackageValidationException(PackageValidationException::NO_INSTALL_PATH, array('packageName' => $this->archive->getPackageInfo('name')));
 			}
 			
-			$this->validatePackageInstallationPlugins('install', $instructions);
+			if ($deepInspection) {
+				$this->validatePackageInstallationPlugins('install', $instructions);
+			}
 		}
 		else {
 			// package is already installed, check update path
@@ -169,11 +182,18 @@ class PackageValidationArchive implements \RecursiveIterator {
 				));
 			}
 			
-			$this->validatePackageInstallationPlugins('update', $this->archive->getUpdateInstructions());
+			if ($deepInspection) {
+				$this->validatePackageInstallationPlugins('update', $this->archive->getUpdateInstructions());
+			}
 		}
-		exit;
 	}
 	
+	/**
+	 * Validates install or update instructions against the corresponding PIP, unknown PIPs will be silently ignored.
+	 * 
+	 * @param	string		$type
+	 * @param	array<array>	$instructions
+	 */
 	protected function validatePackageInstallationPlugins($type, array $instructions) {
 		for ($i = 0, $length = count($instructions); $i < $length; $i++) {
 			$instruction = $instructions[$i];
@@ -187,6 +207,9 @@ class PackageValidationArchive implements \RecursiveIterator {
 		}
 	}
 	
+	/**
+	 * Validates if an installed package excludes the current package and vice versa.
+	 */
 	protected function validateExclusion() {
 		$excludingPackages = $this->archive->getConflictedExcludingPackages();
 		if (!empty($excludingPackages)) {
@@ -216,10 +239,21 @@ class PackageValidationArchive implements \RecursiveIterator {
 		return $this->exception->getMessage();
 	}
 	
+	/**
+	 * Returns the package archive object.
+	 * 
+	 * @return	\wcf\system\package\PackageArchive
+	 */
 	public function getArchive() {
 		return $this->archive;
 	}
 	
+	/**
+	 * Returns the package object based on the package archive's package identifier or null
+	 * if the package isn't already installed.
+	 * 
+	 * @return	\wcf\data\package\Package
+	 */
 	public function getPackage() {
 		if ($this->package === null) {
 			$this->package = PackageCache::getInstance()->getPackageByIdentifier($this->archive->getPackageInfo('name'));

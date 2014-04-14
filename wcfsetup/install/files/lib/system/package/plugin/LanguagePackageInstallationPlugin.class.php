@@ -4,6 +4,7 @@ use wcf\data\language\LanguageEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
 use wcf\util\XML;
 
@@ -251,4 +252,11 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @see	\wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin::findExistingItem()
 	 */
 	protected function findExistingItem(array $data) { }
+	
+	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 */
+	public static function isValid(PackageArchive $archive, $instruction) {
+		return true;
+	}
 }

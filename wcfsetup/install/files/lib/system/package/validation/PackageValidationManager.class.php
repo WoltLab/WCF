@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\package\validation;
-use wcf\data\package\Package;
-use wcf\system\SingletonFactory;
 use wcf\data\package\installation\plugin\PackageInstallationPluginList;
+use wcf\data\package\Package;
 use wcf\system\package\PackageArchive;
+use wcf\system\SingletonFactory;
 
 /**
  * Manages recursive validation of package archives.
@@ -117,11 +117,36 @@ class PackageValidationManager extends SingletonFactory {
 		return new \RecursiveIteratorIterator($packageValidationArchive, \RecursiveIteratorIterator::SELF_FIRST);
 	}
 	
+	/**
+	 * Recursively traverses the package validation archives and returns the first exception message.
+	 * 
+	 * @return	string
+	 */
+	public function getExceptionMessage() {
+		foreach ($this->getPackageValidationArchiveList() as $packageArchive) {
+			if ($packageArchive->getExceptionMessage()) {
+				return $packageArchive->getExceptionMessage();
+			}
+		}
+		
+		return '';
+	}
+	
+	/**
+	 * Validates an instruction against the corresponding package installation plugin.
+	 * 
+	 * Please be aware that unknown PIPs will silently ignored and cause no error.
+	 *  
+	 * @param	\wcf\data\package\PackageArchive	$archive
+	 * @param	string					$pip
+	 * @param	string					$instruction
+	 * @return	boolean
+	 */
 	public function validatePackageInstallationPluginInstruction(PackageArchive $archive, $pip, $instruction) {
 		if (isset($this->packageInstallationPlugins[$pip])) {
 			return call_user_func(array($this->packageInstallationPlugins[$pip], 'isValid'), $archive, $instruction);
 		}
-		echo "(default success)\n";
+		
 		return true;
 	}
 }
