@@ -137,14 +137,12 @@ class PackageStartInstallForm extends AbstractForm {
 			throw new UserInputException('uploadPackage', 'uploadFailed');
 		}
 		
-		if (PackageValidationManager::getInstance()->validate($this->uploadPackage['name'], false)) {
-			die("win");
+		if (!PackageValidationManager::getInstance()->validate($this->uploadPackage['name'], false)) {
+			// TODO: do something
+			die("validation failed");
 		}
-		else {
-			die("failed");
-		}
-		$this->archive = new PackageArchive($this->uploadPackage['name'], $this->package);
-		$this->validateArchive('uploadPackage');
+		
+		$this->package = PackageValidationManager::getInstance()->getPackageValidationArchive()->getPackage();
 	}
 	
 	/**
@@ -255,12 +253,12 @@ class PackageStartInstallForm extends AbstractForm {
 		}
 		
 		// insert queue
-		$isApplication = $this->archive->getPackageInfo('isApplication');
+		$isApplication = PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getPackageInfo('isApplication');
 		$this->queue = PackageInstallationQueueEditor::create(array(
 			'processNo' => $processNo,
 			'userID' => WCF::getUser()->userID,
-			'package' => $this->archive->getPackageInfo('name'),
-			'packageName' => $this->archive->getLocalizedPackageInfo('packageName'),
+			'package' => PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getPackageInfo('name'),
+			'packageName' => PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getLocalizedPackageInfo('packageName'),
 			'packageID' => $packageID,
 			'archive' => $archive,
 			'action' => ($this->package != null ? 'update' : 'install'),

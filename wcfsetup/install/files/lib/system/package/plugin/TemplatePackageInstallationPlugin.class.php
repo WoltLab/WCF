@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\application\Application;
 use wcf\data\package\Package;
+use wcf\system\package\PackageArchive;
 use wcf\system\package\TemplatesFileHandler;
 use wcf\system\WCF;
 
@@ -79,5 +80,26 @@ class TemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugi
 			// delete log entries
 			parent::uninstall();
 		}
+	}
+	
+	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 */
+	public static function isValid(PackageArchive $archive, $instruction) {
+		if (preg_match('~\.(tar(\.gz)?|tgz)$~', $instruction)) {
+			// check if file actually exists
+			try {
+				if ($archive->getTar()->getIndexByFilename($instruction) === false) {
+					return false;
+				}
+			}
+			catch (\SystemException $e) {
+				return false;
+			}
+			
+			return true;
+		}
+		
+		return false;
 	}
 }

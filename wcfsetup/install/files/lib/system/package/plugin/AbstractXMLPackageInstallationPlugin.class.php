@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -343,5 +344,26 @@ abstract class AbstractXMLPackageInstallationPlugin extends AbstractPackageInsta
 			// return the wanted showOrder level
 			return $showOrder;
 		}
+	}
+	
+	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 */
+	public static function isValid(PackageArchive $archive, $instruction) {
+		if (preg_match('~\.xml$~', $instruction)) {
+			// check if file actually exists
+			try {
+				if ($archive->getTar()->getIndexByFilename($instruction) === false) {
+					return false;
+				}
+			}
+			catch (\SystemException $e) {
+				return false;
+			}
+			
+			return true;
+		}
+		
+		return false;
 	}
 }

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\system\package\PackageArchive;
 
 /**
  * Every PackageInstallationPlugin has to implement this interface.
@@ -34,4 +35,14 @@ interface IPackageInstallationPlugin {
 	 * Executes the uninstallation of this plugin.
 	 */
 	public function uninstall();
+	
+	/**
+	 * Validates if the passed instruction is valid for this package installation plugin. If anything is
+	 * wrong with it, this method should return false.
+	 * 
+	 * @param	\wcf\system\package\PackageArchive	$packageArchive
+	 * @param	string					$instruction
+	 * @return	boolean
+	 */
+	public static function isValid(PackageArchive $packageArchive, $instruction);
 }

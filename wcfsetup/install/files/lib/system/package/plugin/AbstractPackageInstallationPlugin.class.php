@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\system\event\EventHandler;
+use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 
@@ -98,5 +99,12 @@ abstract class AbstractPackageInstallationPlugin implements IPackageInstallation
 			WHERE		packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->installation->getPackageID()));
+	}
+	
+	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 */
+	public static function isValid(PackageArchive $archive, $instruction) {
+		return true;
 	}
 }

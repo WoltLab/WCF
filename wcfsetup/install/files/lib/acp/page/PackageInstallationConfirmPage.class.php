@@ -9,6 +9,7 @@ use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
+use wcf\system\package\validation\PackageValidationManager;
 
 /**
  * Shows a confirmation page prior to start installing.
@@ -102,6 +103,19 @@ class PackageInstallationConfirmPage extends AbstractPage {
 		
 		$this->packageInstallationDispatcher = new PackageInstallationDispatcher($this->queue);
 		
+		// validate the package and all it's requirements
+		if (PackageValidationManager::getInstance()->validate($this->queue->archive, true)) {
+			die("success");
+		}
+		else {
+			/*echo "<pre>";
+			foreach (PackageValidationManager::getInstance()->getPackageValidationArchiveList() as $archive) {
+				echo '[' . $archive->getArchive()->getPackageInfo('name') . '] ' . $archive->getExceptionMessage() . "\n";
+			}
+			die("failed");*/
+			return;
+		}
+		
 		// get requirements
 		$this->requirements = $this->packageInstallationDispatcher->getArchive()->getRequirements();
 		$this->openRequirements = $this->packageInstallationDispatcher->getArchive()->getOpenRequirements();
@@ -157,10 +171,11 @@ class PackageInstallationConfirmPage extends AbstractPage {
 		
 		WCF::getTPL()->assign(array(
 			'archive' => $this->packageInstallationDispatcher->getArchive(),
-			'requiredPackages' => $this->requirements,
+			/*'requiredPackages' => $this->requirements,
 			'missingPackages' => $this->missingPackages,
 			'excludingPackages' => $this->packageInstallationDispatcher->getArchive()->getConflictedExcludingPackages(),
-			'excludedPackages' => $this->packageInstallationDispatcher->getArchive()->getConflictedExcludedPackages(),
+			'excludedPackages' => $this->packageInstallationDispatcher->getArchive()->getConflictedExcludedPackages(),*/
+			'packageValidationArchives' => PackageValidationManager::getInstance()->getPackageValidationArchiveList(),
 			'queue' => $this->queue,
 			'installingImportedStyle' => $this->installingImportedStyle
 		));

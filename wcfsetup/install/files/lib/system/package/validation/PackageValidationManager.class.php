@@ -2,6 +2,8 @@
 namespace wcf\system\package\validation;
 use wcf\data\package\Package;
 use wcf\system\SingletonFactory;
+use wcf\data\package\installation\plugin\PackageInstallationPluginList;
+use wcf\system\package\PackageArchive;
 
 /**
  * Manages recursive validation of package archives.
@@ -15,6 +17,12 @@ use wcf\system\SingletonFactory;
  */
 class PackageValidationManager extends SingletonFactory {
 	/**
+	 * list of known package installation plugins
+	 * @var	array<string>
+	 */
+	protected $packageInstallationPlugins = array();
+	
+	/**
 	 * package validation archive object
 	 * @var	\wcf\system\package\validation\PackageValidationArchive
 	 */
@@ -25,6 +33,17 @@ class PackageValidationManager extends SingletonFactory {
 	 * @var	array<string>
 	 */
 	protected $virtualPackageList = array();
+	
+	/**
+	 * @see	\wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		$pipList = new PackageInstallationPluginList();
+		$pipList->readObjects();
+		foreach ($pipList as $pip) {
+			$this->packageInstallationPlugins[$pip->pluginName] = $pip->className;
+		}
+	}
 	
 	/**
 	 * Validates given archive for existance and ability to be installed/updated. If you set the
@@ -40,7 +59,7 @@ class PackageValidationManager extends SingletonFactory {
 		$this->virtualPackageList = array();
 		$this->packageValidationArchive = new PackageValidationArchive($archive);
 		
-		return $this->packageValidationArchive->validate();
+		return $this->packageValidationArchive->validate($deepInspection);
 	}
 	
 	/**
@@ -78,11 +97,31 @@ class PackageValidationManager extends SingletonFactory {
 	 * @param	string		$package
 	 * @return	string
 	 */
-	public function geVirtualPackageVersion($package) {
+	public function getVirtualPackage($package) {
 		if (isset($this->virtualPackageList[$package])) {
 			return $this->virtualPackageList[$package];
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Returns the iteratable package archive list.
+	 * 
+	 * @return	\RecursiveIteratorIterator
+	 */
+	public function getPackageValidationArchiveList() {
+		$packageValidationArchive = new PackageValidationArchive('');
+		$packageValidationArchive->setChildren(array($this->packageValidationArchive));
+		
+		return new \RecursiveIteratorIterator($packageValidationArchive, \RecursiveIteratorIterator::SELF_FIRST);
+	}
+	
+	public function validatePackageInstallationPluginInstruction(PackageArchive $archive, $pip, $instruction) {
+		if (isset($this->packageInstallationPlugins[$pip])) {
+			return call_user_func(array($this->packageInstallationPlugins[$pip], 'isValid'), $archive, $instruction);
+		}
+		echo "(default success)\n";
+		return true;
 	}
 }

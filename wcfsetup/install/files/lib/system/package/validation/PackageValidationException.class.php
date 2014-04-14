@@ -77,6 +77,18 @@ class PackageValidationException extends SystemException {
 	const INSUFFICIENT_VERSION = 9;
 	
 	/**
+	 * requirement is set but neither installed nor provided, expects the details 'packageName' and 'packageVersion'
+	 * @var	integer
+	 */
+	const MISSING_REQUIREMENT = 10;
+	
+	/**
+	 * file reference for a package installation plugin is missing, expects the details 'pip', 'type' and 'value'
+	 * @var	integer
+	 */
+	const MISSING_INSTRUCTION_FILE = 11;
+	
+	/**
 	 * Creates a new PackageArchiveValidationException.
 	 * 
 	 * @param	integer		$code
@@ -103,7 +115,7 @@ class PackageValidationException extends SystemException {
 	 * @return	string
 	 */
 	public function getErrorMessage() {
-		return WCF::getLanguage()->getDynamicVariable('wcf.package.validation.errorCode.' . $this->getCode(), $this->getDetails());
+		return WCF::getLanguage()->getDynamicVariable('wcf.acp.package.validation.errorCode.' . $this->getCode(), $this->getDetails());
 	}
 	
 	/**

@@ -28,10 +28,28 @@ class PackageValidationArchive implements \RecursiveIterator {
 	protected $children = array();
 	
 	/**
+	 * nesting depth
+	 * @var	integer
+	 */
+	protected $depth = 0;
+	
+	/**
 	 * exception occured during validation
 	 * @var	\Exception
 	 */
 	protected $exception = null;
+	
+	/**
+	 * associated package object
+	 * @var	\wcf\data\package\Package
+	 */
+	protected $package = null;
+	
+	/**
+	 * parent package validation archive object
+	 * @var	\wcf\system\package\validation\PackageValidationArchive
+	 */
+	protected $parent = null;
 	
 	/**
 	 * children pointer
@@ -42,10 +60,14 @@ class PackageValidationArchive implements \RecursiveIterator {
 	/**
 	 * Creates a new package validation archive instance.
 	 * 
-	 * @param	string		$archive
+	 * @param	string								$archive
+	 * @param	\wcf\system\package\validation\PackageValidationArchive		$parent
+	 * @param	integer								$depth
 	 */
-	public function __construct($archive) {
+	public function __construct($archive, PackageValidationArchive $parent = null, $depth = 0) {
 		$this->archive = new PackageArchive($archive);
+		$this->parent = $parent;
+		$this->depth = $depth;
 	}
 	
 	/**
@@ -62,7 +84,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 			$this->archive->openArchive();
 			
 			// check if package is installable or suitable for an update
-			$this->validateInstructions($requiredVersion);
+			$this->validateInstructions($requiredVersion, $deepInspection);
 		}
 		catch (\Exception $e) {
 			$this->exception = $e;
@@ -81,22 +103,28 @@ class PackageValidationArchive implements \RecursiveIterator {
 				
 				// traverse open requirements
 				foreach ($this->archive->getOpenRequirements() as $requirement) {
-					if (empty($requirement['file'])) {
-						throw new PackageValidationException(PackageValidationException::MISSING_REQUIREMENT, array(
-							'packageName' => $requirement['name'],
-							'packageVersion' => $requirement['minversion']
-						));
+					$virtualPackageVersion = PackageValidationManager::getInstance()->getVirtualPackage($requirement['name']);
+					if ($virtualPackageVersion === null || Package::compareVersion($virtualPackageVersion, $requirement['minversion'], '<')) {
+						if (empty($requirement['file'])) {
+							throw new PackageValidationException(PackageValidationException::MISSING_REQUIREMENT, array(
+								'packageName' => $requirement['name'],
+								'packageVersion' => $requirement['minversion']
+							));
+						}
+						
+						$archive = $this->archive->extractTar($requirement['file']);
+						
+						$index = count($this->children);
+						$this->children[$index] = new PackageValidationArchive($archive, $this, $this->depth + 1);
+						if (!$this->children[$index]->validate(true, $requirement['minversion'])) {
+							return false;
+						}
+						
+						PackageValidationManager::getInstance()->addVirtualPackage(
+							$this->children[$index]->getArchive()->getPackageInfo('name'),
+							$this->children[$index]->getArchive()->getPackageInfo('version')
+						);
 					}
-					
-					$archive = $this->archive->extractTar($requirement->file);
-					
-					$index = count($this->children);
-					$this->children[$index] = new PackageValidationArchive($archive);
-					if (!$this->children[$index]->validate(true, $requirement['minversion'])) {
-						return false;
-					}
-					
-					PackageValidationManager::getInstance()->addVirtualPackage($this->archive->getPackageInfo('name'), $this->archive->getPackageInfo('version'));
 				}
 			}
 			catch (PackageValidationException $e) {
@@ -110,8 +138,8 @@ class PackageValidationArchive implements \RecursiveIterator {
 		
 	}
 	
-	protected function validateInstructions($requiredVersion) {
-		$package = PackageCache::getInstance()->getPackageByIdentifier($this->archive->getPackageInfo('name'));
+	protected function validateInstructions($requiredVersion, $deepInspection) {
+		$package = $this->getPackage();
 		
 		// delivered package does not provide the minimum required version
 		if (Package::compareVersion($requiredVersion, $this->archive->getPackageInfo('version'), '>')) {
@@ -124,9 +152,12 @@ class PackageValidationArchive implements \RecursiveIterator {
 		
 		// package is not installed yet
 		if ($package === null) {
-			if (empty($this->archive->getInstallInstructions())) {
+			$instructions = $this->archive->getInstallInstructions();
+			if (empty($instructions)) {
 				throw new PackageValidationException(PackageValidationException::NO_INSTALL_PATH, array('packageName' => $this->archive->getPackageInfo('name')));
 			}
+			
+			$this->validatePackageInstallationPlugins('install', $instructions);
 		}
 		else {
 			// package is already installed, check update path
@@ -135,6 +166,22 @@ class PackageValidationArchive implements \RecursiveIterator {
 					'packageName' => $package->packageName,
 					'packageVersion' => $package->packageVersion,
 					'deliveredPackageVersion' => $this->archive->getPackageInfo('version')
+				));
+			}
+			
+			$this->validatePackageInstallationPlugins('update', $this->archive->getUpdateInstructions());
+		}
+		exit;
+	}
+	
+	protected function validatePackageInstallationPlugins($type, array $instructions) {
+		for ($i = 0, $length = count($instructions); $i < $length; $i++) {
+			$instruction = $instructions[$i];
+			if (!PackageValidationManager::getInstance()->validatePackageInstallationPluginInstruction($this->archive, $instruction['pip'], $instruction['value'])) {
+				throw new PackageValidationException(PackageValidationException::MISSING_INSTRUCTION_FILE, array(
+					'pip' => $instruction['pip'],
+					'type' => $type,
+					'value' => $instruction['value']
 				));
 			}
 		}
@@ -147,7 +194,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 		}
 		
 		$excludedPackages = $this->archive->getConflictedExcludedPackages();
-		if (!empty($excludingPackages)) {
+		if (!empty($excludedPackages)) {
 			throw new PackageValidationException(PackageValidationException::EXCLUDED_PACKAGES, array('packages' => $excludedPackages));
 		}
 	}
@@ -167,6 +214,36 @@ class PackageValidationArchive implements \RecursiveIterator {
 		}
 		
 		return $this->exception->getMessage();
+	}
+	
+	public function getArchive() {
+		return $this->archive;
+	}
+	
+	public function getPackage() {
+		if ($this->package === null) {
+			$this->package = PackageCache::getInstance()->getPackageByIdentifier($this->archive->getPackageInfo('name'));
+		}
+		
+		return $this->package;
+	}
+	
+	/**
+	 * Returns nesting depth.
+	 * 
+	 * @return	integer
+	 */
+	public function getDepth() {
+		return $this->depth;
+	}
+	
+	/**
+	 * Sets the children of this package validation archive.
+	 * 
+	 * @param	array<\wcf\system\package\validation\PackageValidationArchive>		$children
+	 */
+	public function setChildren(array $children) {
+		$this->children = $children;
 	}
 	
 	/**

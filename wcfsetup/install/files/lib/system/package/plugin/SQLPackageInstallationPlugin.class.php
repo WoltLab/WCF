@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\system\exception\SystemException;
+use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationSQLParser;
 use wcf\system\WCF;
 
@@ -149,5 +150,26 @@ class SQLPackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		
 		// extract sql file to string
 		return $this->installation->getArchive()->getTar()->extractToString($fileindex);
+	}
+	
+	/**
+	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::isValid()
+	 */
+	public static function isValid(PackageArchive $archive, $instruction) {
+		if (preg_match('~\.sql$~', $instruction)) {
+			// check if file actually exists
+			try {
+				if ($archive->getTar()->getIndexByFilename($instruction) === false) {
+					return false;
+				}
+			}
+			catch (\SystemException $e) {
+				return false;
+			}
+			
+			return true;
+		}
+		
+		return false;
 	}
 }
