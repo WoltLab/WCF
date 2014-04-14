@@ -2,6 +2,7 @@
 namespace wcf\system\mail;
 use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
+use wcf\util\StringUtil;
 
 /**
  * Sends a Mail with a connection to a smtp server.
@@ -193,7 +194,15 @@ class SMTPMailSender extends MailSender {
 		
 		$this->write($header);
 		$this->write("");
-		$this->write($mail->getBody());
+		$lines = explode(Mail::$lineEnding, $mail->getBody());
+		foreach ($lines as $line) {
+			// 4.5.2 Transparency
+			// o  Before sending a line of mail text, the SMTP client checks the
+			//    first character of the line.  If it is a period, one additional
+			//    period is inserted at the beginning of the line.
+			if (StringUtil::startsWith($line, '.')) $line = '.'.$line;
+			$this->write($line);
+		}
 		$this->write(".");
 		
 		$this->getSMTPStatus();
