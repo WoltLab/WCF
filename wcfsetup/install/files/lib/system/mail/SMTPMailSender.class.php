@@ -7,7 +7,7 @@ use wcf\util\StringUtil;
 /**
  * Sends a Mail with a connection to a smtp server.
  * 
- * @author	Alexander Ebert
+ * @author	Tim Duesterhus, Alexander Ebert
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -74,8 +74,35 @@ class SMTPMailSender extends MailSender {
 		
 		// send ehlo
 		$this->write('EHLO '.$host);
-		$this->getSMTPStatus();
+		$extensions = explode(Mail::$lineEnding, $this->read());
+		$this->getSMTPStatus(array_shift($extensions));
 		if ($this->statusCode == 250) {
+			$extensions = array_map(function($element) {
+				return strtolower(substr($element, 4));
+			}, $extensions);
+			
+			if ($this->connection->hasTLSSupport() && in_array('starttls', $extensions)) {
+				$this->write('STARTTLS');
+				$this->getSMTPStatus();
+				
+				if ($this->statusCode != 220) {
+					throw new SystemException($this->formatError("cannot enable STARTTLS, though '".MAIL_SMTP_HOST.":".MAIL_SMTP_PORT."' advertised it"));
+				}
+				
+				if (!$this->connection->setTLS(true)) {
+					throw new SystemException('enabling TLS failed');
+				}
+				
+				// repeat EHLO
+				$this->write('EHLO '.$host);
+				$extensions = explode(Mail::$lineEnding, $this->read());
+				$this->getSMTPStatus(array_shift($extensions));
+				
+				if ($this->statusCode != 250) {
+					throw new SystemException($this->formatError("could not EHLO after enabling STARTTLS at '".MAIL_SMTP_HOST.":".MAIL_SMTP_PORT."'"));
+				}
+			}
+			
 			// do authentication
 			if (MAIL_SMTP_USER != '' || MAIL_SMTP_PASSWORD != '') {
 				$this->auth();
@@ -237,6 +264,7 @@ class SMTPMailSender extends MailSender {
 			$result .= $read;
 			if (substr($read, 3, 1) == " ") break;
 		}
+		
 		return $result;
 	}
 	

@@ -72,4 +72,26 @@ class RemoteFile extends File {
 	public function getErrorDesc() {
 		return $this->errorDesc;
 	}
+	
+	/**
+	 * Switches TLS support for this connection.
+	 * Usually used in combination with 'STARTTLS'
+	 * 
+	 * @param	boolean	$enable		Whether TLS support should be enabled
+	 * @return	boolean			True on success, false otherwise
+	 */
+	public function setTLS($enable) {
+		if (!$this->hasTLSSupport()) return false;
+		
+		return stream_socket_enable_crypto($this->resource, $enable, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+	}
+	
+	/**
+	 * Returns whether TLS support is available.
+	 * 
+	 * @return	boolean
+	 */
+	public function hasTLSSupport() {
+		return function_exists('stream_socket_enable_crypto');
+	}
 }
