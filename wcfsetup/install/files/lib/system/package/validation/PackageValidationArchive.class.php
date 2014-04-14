@@ -154,7 +154,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 		
 		// delivered package does not provide the minimum required version
 		if (Package::compareVersion($requiredVersion, $this->archive->getPackageInfo('version'), '>')) {
-			throw new PackageValidationException(PackageValidationException::INSUFFICIENT_VERSION,array(
+			throw new PackageValidationException(PackageValidationException::INSUFFICIENT_VERSION, array(
 				'packageName' => $package->packageName,
 				'packageVersion' => $package->packageVersion,
 				'deliveredPackageVersion' => $this->archive->getPackageInfo('version')
