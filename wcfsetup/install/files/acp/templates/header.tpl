@@ -121,7 +121,7 @@
 	</script>
 </head>
 
-<body id="tpl{$templateName|ucfirst}">
+<body id="tpl{$templateName|ucfirst}" class="wcfAcp">
 	<a id="top"></a>
 	
 	<header id="pageHeader" class="layoutFluid">
