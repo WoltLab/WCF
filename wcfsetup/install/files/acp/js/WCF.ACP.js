@@ -2388,10 +2388,11 @@ WCF.ACP.Stat.Chart = Class.extend({
 		
 		$.plot("#chart", $data, options);
 		
-		$("#chart").bind("plothover", function (event, pos, item) {
+		$("#chart").on("plothover", function(event, pos, item) {
 			if (item) {
 				$("#chartTooltip").html(item.series.xaxis.tickFormatter(item.datapoint[0], item.series.xaxis) + ', ' + WCF.String.addThousandsSeparator(item.datapoint[1]) + ' ' + item.series.label).css({top: item.pageY + 5, left: item.pageX + 5}).wcfFadeIn();
-			} else {
+			}
+			else {
 				$("#chartTooltip").hide();
 			}
 		});
