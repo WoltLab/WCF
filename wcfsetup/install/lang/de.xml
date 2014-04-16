@@ -564,6 +564,7 @@
 		<item name="wcf.acp.menu.link.tag.list"><![CDATA[Tags auflisten]]></item>
 		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[Datenimport]]></item>
 		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
+		<item name="wcf.acp.menu.link.log.stat"><![CDATA[Statistiken]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -1048,6 +1049,23 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.package"><![CDATA[Pakete]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.userGroupOption"><![CDATA[Berechtigungen]]></item>
+	</category>
+	
+	<category name="wcf.acp.stat">
+		<item name="wcf.acp.stat"><![CDATA[Statistiken]]></item>
+		<item name="wcf.acp.stat.settings"><![CDATA[Einstellungen]]></item>
+		<item name="wcf.acp.stat.period"><![CDATA[Zeitraum]]></item>
+		<item name="wcf.acp.stat.button.refresh"><![CDATA[Aktualisieren]]></item>
+		<item name="wcf.acp.stat.value"><![CDATA[Werte]]></item>
+		<item name="wcf.acp.stat.value.counter"><![CDATA[Einträge pro Tag]]></item>
+		<item name="wcf.acp.stat.value.total"><![CDATA[Gesamtanzahl]]></item>
+		<item name="wcf.acp.stat.types"><![CDATA[Daten]]></item>
+		<item name="wcf.acp.stat.timeFormat"><![CDATA[%d.%m.%Y]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.attachment"><![CDATA[Dateianhänge]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[Dateianhänge-Speicherbedarf (MB)]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Likes]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.dislike"><![CDATA[Dislikes]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">

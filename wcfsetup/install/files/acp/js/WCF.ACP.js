@@ -2310,3 +2310,90 @@ WCF.ACP.Import.Manager = Class.extend({
 		}
 	}
 });
+
+/**
+ * Namespace for stat-related classes.
+ */
+WCF.ACP.Stat = { };
+
+/**
+ * Shows the daily stat chart.
+ */
+WCF.ACP.Stat.Chart = Class.extend({
+	init: function() {
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		$('#statRefreshButton').click($.proxy(this._click, this));
+		
+		this._click();
+	},
+	
+	_click: function() {
+		var $objectTypeIDs = [ ];
+		$('input[name=objectTypeID]:checked').each(function() {
+			$objectTypeIDs.push($(this).val());
+		});
+		
+		this._proxy.setOption('data', {
+			className: 'wcf\\data\\stat\\daily\\StatDailyAction',
+			actionName: 'getData',
+			parameters: {
+				startDate: $('#startDateDatePicker').val(),
+				endDate: $('#endDateDatePicker').val(),
+				value: $('input[name=value]:checked').val(),
+				objectTypeIDs: $objectTypeIDs
+			}
+		});
+		this._proxy.sendRequest();
+	},
+	
+	_success: function(data) {
+		var options = {
+			series: {
+				lines: {
+					show: true
+				},
+				points: {
+					show: true
+				}
+			},
+			grid: {
+				hoverable: true
+			},
+			xaxis: {
+				mode: "time",
+				minTickSize: [1, "day"],
+				timeformat: WCF.Language.get('wcf.acp.stat.timeFormat')
+			},
+			yaxis: {
+				min: 0,
+				tickDecimals: 0,
+				tickFormatter: function(val) {
+					return WCF.String.addThousandsSeparator(val);
+				}
+			},
+		};
+		
+		var $data = [ ];
+		for (var $key in data.returnValues) {
+			var $row = data.returnValues[$key];
+			for (var $i = 0; $i < $row.data.length; $i++) {
+				$row.data[$i][0] *= 1000;
+			}
+			
+			$data.push($row);
+		}
+		
+		$.plot("#chart", $data, options);
+		
+		$("#chart").bind("plothover", function (event, pos, item) {
+			if (item) {
+				$("#chartTooltip").html(item.series.xaxis.tickFormatter(item.datapoint[0], item.series.xaxis) + ', ' + WCF.String.addThousandsSeparator(item.datapoint[1]) + ' ' + item.series.label).css({top: item.pageY + 5, left: item.pageX + 5}).wcfFadeIn();
+			} else {
+				$("#chartTooltip").hide();
+			}
+		});
+	}
+});

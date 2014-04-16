@@ -1,0 +1,64 @@
+{include file='header' pageTitle='wcf.acp.stat'}
+
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/flot/jquery.flot.js"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/flot/jquery.flot.time.js"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/flot/jquery.flot.resize.js"></script>
+<script data-relocate="true">
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.acp.stat.timeFormat': '{lang}wcf.acp.stat.timeFormat{/lang}'
+		});
+		
+		new WCF.ACP.Stat.Chart();
+	});
+</script>
+	
+<header class="boxHeadline">
+	<h1>{lang}wcf.acp.stat{/lang}</h1>
+</header>
+
+<div class="container containerPadding marginTop">
+	<fieldset>
+		<legend>{lang}wcf.acp.stat{/lang}</legend>
+		
+		<div id="chart" style="height: 400px"></div>
+	</fieldset>
+	
+	<fieldset>
+		<legend>{lang}wcf.acp.stat.settings{/lang}</legend>
+		
+		<dl>
+			<dt><label for="startDate">{lang}wcf.acp.stat.period{/lang}</label></dt>
+			<dd>
+				<input type="date" id="startDate" name="startDate" value="{$startDate}" data-placeholder="{lang}wcf.date.period.start{/lang}" />
+				&ndash;
+				<input type="date" id="endDate" name="endDate" value="{$endDate}" data-placeholder="{lang}wcf.date.period.end{/lang}" />
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt><label for="startDate">{lang}wcf.acp.stat.value{/lang}</label></dt>
+			<dd>
+				<label><input type="radio" name="value" value="counter" checked="checked" /> {lang}wcf.acp.stat.value.counter{/lang}</label>
+				<label><input type="radio" name="value" value="total" /> {lang}wcf.acp.stat.value.total{/lang}</label>
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt><label for="startDate">{lang}wcf.acp.stat.types{/lang}</label></dt>
+			<dd>
+				{foreach from=$availableObjectTypes item=objectType}
+					<label><input type="checkbox" name="objectTypeID" value="{@$objectType->objectTypeID}" {if $objectType->default}checked="checked" {/if}/> {lang}wcf.acp.stat.{@$objectType->objectType}{/lang}</label>
+				{/foreach}
+			</dd>
+		</dl>
+	</fieldset>
+</div>
+
+<div class="formSubmit">
+	<button class="buttonPrimary" id="statRefreshButton">{lang}wcf.acp.stat.button.refresh{/lang}</button>
+</div>
+
+<div id="chartTooltip" class="balloonTooltip" style="display: none"></div>
+
+{include file='footer'}

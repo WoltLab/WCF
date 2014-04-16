@@ -26,7 +26,7 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler {
 			FROM	" . $tableName . "
 			WHERE	" . $dateColumnName . " BETWEEN ? AND ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($date, $date + 86400));
+		$statement->execute(array($date, $date + 86399));
 		return $statement->fetchColumn();
 	}
 	
@@ -45,5 +45,12 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($date + 86400));
 		return $statement->fetchColumn();
+	}
+	
+	/**
+	 * @see \wcf\system\stat\IStatDailyHandler::getFormattedCounter()
+	 */
+	public function getFormattedCounter($counter) {
+		return $counter;
 	}
 }

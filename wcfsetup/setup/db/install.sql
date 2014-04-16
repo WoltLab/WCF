@@ -846,6 +846,7 @@ CREATE TABLE wcf1_spider (
 
 DROP TABLE IF EXISTS wcf1_stat_daily;
 CREATE TABLE wcf1_stat_daily (
+	statID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	objectTypeID INT(10) NOT NULL,
 	date DATE NOT NULL,
 	counter INT(10) NOT NULL DEFAULT 0,

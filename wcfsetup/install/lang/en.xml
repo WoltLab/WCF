@@ -563,6 +563,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.tag.list"><![CDATA[List Tags]]></item>
 		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[Data Import]]></item>
 		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[Rebuild Data]]></item>
+		<item name="wcf.acp.menu.link.log.stat"><![CDATA[Statistics]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -1040,6 +1041,23 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.package"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.userGroupOption"><![CDATA[Permissions]]></item>
+	</category>
+	
+	<category name="wcf.acp.stat">
+		<item name="wcf.acp.stat"><![CDATA[TODO: Statistiken]]></item>
+		<item name="wcf.acp.stat.settings"><![CDATA[TODO: Einstellungen]]></item>
+		<item name="wcf.acp.stat.period"><![CDATA[TODO: Zeitraum]]></item>
+		<item name="wcf.acp.stat.button.refresh"><![CDATA[TODO: Aktualisieren]]></item>
+		<item name="wcf.acp.stat.value"><![CDATA[TODO: Werte]]></item>
+		<item name="wcf.acp.stat.value.counter"><![CDATA[TODO: Einträge pro Tag]]></item>
+		<item name="wcf.acp.stat.value.total"><![CDATA[TODO: Gesamtanzahl]]></item>
+		<item name="wcf.acp.stat.types"><![CDATA[TODO: Daten]]></item>
+		<item name="wcf.acp.stat.timeFormat"><![CDATA[TODO: %d.%m.%Y]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.user"><![CDATA[TODO: Benutzer]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.attachment"><![CDATA[TODO: Dateianhänge]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[Dateianhänge-Speicherbedarf (MB)]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Likes]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.dislike"><![CDATA[Dislikes]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">

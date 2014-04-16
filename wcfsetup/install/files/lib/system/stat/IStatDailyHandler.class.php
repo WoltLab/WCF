@@ -19,4 +19,12 @@ interface IStatDailyHandler {
 	 * @return	array
 	 */
 	public function getData($date);
+	
+	/**
+	 * Returns a formatted counter value.
+	 * 
+	 * @param	integer		$counter
+	 * @return	mixed
+	 */
+	public function getFormattedCounter($counter);
 }

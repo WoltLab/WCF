@@ -129,6 +129,12 @@
 			<parent>wcf.acp.menu.link.log</parent>
 			<permissions>admin.system.canViewLog</permissions>
 		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.log.stat">
+			<controller><![CDATA[wcf\acp\page\StatPage]]></controller>
+			<parent>wcf.acp.menu.link.log</parent>
+			<permissions>admin.system.canViewLog</permissions>
+		</acpmenuitem>
 		<!-- /log -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.user">
