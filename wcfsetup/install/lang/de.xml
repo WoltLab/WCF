@@ -1924,13 +1924,13 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.filterByUser.allEntries"><![CDATA[Alle Einträge]]></item>
 		<item name="wcf.moderation.filterByUser.myself"><![CDATA[Ich ({$__wcf->getUser()->username})]]></item>
 		<item name="wcf.moderation.filterByUser.nobody"><![CDATA[Niemand]]></item>
-		<item name="wcf.moderation.outstandingItems"><![CDATA[Ausstehende Elemente]]></item>
-		<item name="wcf.moderation.doneItems"><![CDATA[Erledigte Elemente]]></item>
+		<item name="wcf.moderation.outstandingItems"><![CDATA[Ausstehende Einträge]]></item>
+		<item name="wcf.moderation.doneItems"><![CDATA[Erledigte Einträge]]></item>
 		<item name="wcf.moderation.lastChangeTime"><![CDATA[Letzte Änderung]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.moderation.noMoreItems"><![CDATA[Keine weiteren Einträge]]></item>
 		<item name="wcf.moderation.status"><![CDATA[Status]]></item>
-		<item name="wcf.moderation.status.all"><![CDATA[Alle Einträge]]></item>
+		<item name="wcf.moderation.status.outstanding"><![CDATA[Ausstehend]]></item>
 		<item name="wcf.moderation.status.done"><![CDATA[Erledigt]]></item>
 		<item name="wcf.moderation.time"><![CDATA[Datum]]></item>
 		<item name="wcf.moderation.title"><![CDATA[Titel]]></item>
