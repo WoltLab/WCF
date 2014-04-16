@@ -12,6 +12,8 @@ use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 use wcf\util\MessageUtil;
+use wcf\util\StringUtil;
+use wcf\data\IAttachmentMessageQuickReplyAction;
 
 /**
  * Manages quick replies and stored messages.
@@ -152,6 +154,9 @@ class QuickReplyManager extends SingletonFactory {
 		// check for message quote ids
 		$parameters['removeQuoteIDs'] = (isset($parameters['removeQuoteIDs']) && is_array($parameters['removeQuoteIDs'])) ? ArrayUtil::trim($parameters['removeQuoteIDs']) : array();
 		
+		// check for tmp hash (attachments)
+		$parameters['tmpHash'] = (isset($parameters['tmpHash'])) ? StringUtil::trim($parameters['tmpHash']) : '';
+		
 		EventHandler::getInstance()->fireAction($this, 'validateParameters');
 	}
 	
@@ -184,6 +189,11 @@ class QuickReplyManager extends SingletonFactory {
 		$parameters['data']['message'] = PreParser::getInstance()->parse($parameters['data']['message'], $this->allowedBBodes);
 		
 		$parameters['data'] = array_merge($this->additionalFields, $parameters['data']);
+		
+		// attachment support
+		if (MODULE_ATTACHMENT && $object instanceof IAttachmentMessageQuickReplyAction) {
+			$parameters['attachmentHandler'] = $object->getAttachmentHandler($this->container);
+		}
 		
 		// clean up
 		$this->additionalFields = array();

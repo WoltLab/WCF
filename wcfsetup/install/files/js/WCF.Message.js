@@ -772,7 +772,8 @@ WCF.Message.QuickReply = Class.extend({
 			},
 			lastPostTime: this._container.data('lastPostTime'),
 			pageNo: this._container.data('pageNo'),
-			removeQuoteIDs: (this._quoteManager === null ? [ ] : this._quoteManager.getQuotesMarkedForRemoval())
+			removeQuoteIDs: (this._quoteManager === null ? [ ] : this._quoteManager.getQuotesMarkedForRemoval()),
+			tmpHash: this._container.data('tmpHash') || ''
 		};
 		if (this._container.data('anchor')) {
 			$parameters.anchor = this._container.data('anchor');
