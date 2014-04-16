@@ -46,7 +46,7 @@
 		
 		<nav>
 			<ul>
-				<li{if $status == -1} class="active"{/if}><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status=-1&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.status.all{/lang}</a></li>
+				<li{if $status == -1} class="active"{/if}><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status=-1&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.status.outstanding{/lang}</a></li>
 				<li{if $status == 2} class="active"{/if}><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status=2&pageNo={@$pageNo}&sortField={@$sortField}&sortOrder={@$sortOrder}{/link}">{lang}wcf.moderation.status.done{/lang}</a></li>
 				
 				{event name='sidebarStatus'}
@@ -100,7 +100,7 @@
 			<tbody>
 				{foreach from=$objects item=entry}
 					<tr>
-						<td class="columnID">{#$entry->queueID}</td>
+						<td class="columnID">{@$entry->queueID}</td>
 						<td class="columnIcon"><p class="framed">{@$entry->getUserProfile()->getAvatar()->getImageTag(32)}</p></td>
 						<td class="columnText columnSubject">
 							<h3>
