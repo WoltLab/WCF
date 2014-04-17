@@ -46,12 +46,25 @@ $(function() {
 		{if $wysiwygEnableUpload}
 			$config.plugins.push('wupload');
 			$config.wattachment = {
+				attachments: [ ],
 				maxCount: {@$attachmentHandler->getMaxCount()},
 				objectType: '{@$attachmentObjectType}',
 				objectID: '{@$attachmentObjectID}',
 				parentObjectID: '{@$attachmentParentObjectID}',
 				tmpHash: '{$tmpHash|encodeJS}'
 			};
+			
+			{if $attachmentList|isset && !$attachmentList|empty}
+				{foreach from=$attachmentList item=attachment}
+					$config.wattachment.attachments.push({
+						attachmentID: {@$attachment->attachmentID},
+						filename: '{$attachment->filename|encodeJs}',
+						isImage: {if $attachment->isImage}true{else}false{/if},
+						tinyThumbnailUrl: '{if $attachment->tinyThumbnailType}{link controller='Attachment' object=$attachment}tiny=1{/link}{/if}',
+						url: '{link controller='Attachment' object=$attachment}{/link}'
+					});
+				{/foreach}
+			{/if}
 		{/if}
 		
 		{event name='javascriptInit'}

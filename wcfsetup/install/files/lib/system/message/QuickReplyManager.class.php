@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\message;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\data\IAttachmentMessageQuickReplyAction;
 use wcf\data\IMessage;
 use wcf\data\IMessageQuickReplyAction;
 use wcf\system\bbcode\PreParser;
@@ -13,7 +14,6 @@ use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
-use wcf\data\IAttachmentMessageQuickReplyAction;
 
 /**
  * Manages quick replies and stored messages.

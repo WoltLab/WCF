@@ -1212,6 +1212,7 @@ WCF.Message.InlineEditor = Class.extend({
 		
 		// hide unrelated content
 		$content.parent().children('.jsInlineEditorHideContent').hide();
+		$messageBody.children('.attachmentThumbnailList, .attachmentFileList').hide();
 		
 		this._cache = $content.detach();
 	},
@@ -1231,6 +1232,7 @@ WCF.Message.InlineEditor = Class.extend({
 		var $messageBody = $container.find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
 		$messageBody.children('div:eq(0)').html(this._cache);
+		$messageBody.children('.attachmentThumbnailList, .attachmentFileList').show();
 		
 		// show unrelated content
 		$messageBody.find('.jsInlineEditorHideContent').show();
@@ -1316,6 +1318,7 @@ WCF.Message.InlineEditor = Class.extend({
 		var $messageBody = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget').find('.messageBody');
 		$messageBody.children('span.icon-spinner').remove();
 		$messageBody.children('div:eq(0)').children().show();
+		$messageBody.children('.attachmentThumbnailList, .attachmentFileList').show();
 		
 		// show unrelated content
 		$messageBody.find('.jsInlineEditorHideContent').show();
@@ -1396,6 +1399,7 @@ WCF.Message.InlineEditor = Class.extend({
 		var $messageBody = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget').find('.messageBody');
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
 		$messageBody.children('div:eq(0)').children().hide();
+		$messageBody.children('.attachmentThumbnailList, .attachmentFileList').show();
 		
 		// show unrelated content
 		$messageBody.find('.jsInlineEditorHideContent').show();
@@ -1431,6 +1435,17 @@ WCF.Message.InlineEditor = Class.extend({
 		
 		// insert new message
 		$content.html('<div class="messageText">' + data.returnValues.message + '</div>');
+		
+		if (data.returnValues.attachmentList == undefined) {
+			$messageBody.children('.attachmentThumbnailList, .attachmentFileList').show();
+		}
+		else {
+			$messageBody.children('.attachmentThumbnailList, .attachmentFileList').remove();
+			
+			if (data.returnValues.attachmentList) {
+				$(data.returnValues.attachmentList).insertAfter($messageBody.children('div:eq(0)'));
+			}
+		}
 		
 		this._activeElementID = '';
 		
