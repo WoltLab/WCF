@@ -74,15 +74,19 @@ $(function() {
 	
 	head.load([
 		'{@$__wcf->getPath()}js/WCF.Attachment{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}',
-		'{@$__wcf->getPath()}js/3rdParty/redactor/redactor.js',
-		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wbbcode.js',
-		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wbutton.js',
-		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontcolor.js',
-		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontfamily.js',
-		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontsize.js',
-		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wmonkeypatch.js',
-		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wutil.js',
-		'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wupload.js'
+		'{@$__wcf->getPath()}js/3rdParty/redactor/redactor{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}',
+		{if !ENABLE_DEBUG_MODE}
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wcombined.min.js?v={@$__wcfVersion}',
+		{else}
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wbbcode.js?v={@$__wcfVersion}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wbutton.js?v={@$__wcfVersion}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontcolor.js?v={@$__wcfVersion}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontfamily.js?v={@$__wcfVersion}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontsize.js?v={@$__wcfVersion}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wmonkeypatch.js?v={@$__wcfVersion}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wutil.js?v={@$__wcfVersion}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wupload.js?v={@$__wcfVersion}'
+		{/if}
 		{event name='javascriptFiles'}
 	], function() {
 		WCF.System.Dependency.Manager.invoke($callbackIdentifier);
