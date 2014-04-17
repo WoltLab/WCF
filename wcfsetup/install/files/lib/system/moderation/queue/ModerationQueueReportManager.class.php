@@ -58,18 +58,19 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	public function hasPendingReport($objectType, $objectID) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
 		
-		$sql = "SELECT	status
+		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_moderation_queue
 			WHERE	objectTypeID = ?
-				AND objectID = ?";
+				AND objectID = ?
+				AND status <> ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			$objectTypeID,
-			$objectID
+			$objectID,
+			ModerationQueue::STATUS_DONE
 		));
-		$status = $statement->fetchColumn();
 		
-		return $status !== false && $status != ModerationQueue::STATUS_DONE;
+		return $statement->fetchColumn() > 0;
 	}
 	
 	/**
