@@ -153,6 +153,13 @@ class UserModerationQueueReportHandler extends AbstractModerationQueueHandler im
 	}
 	
 	/**
+	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::canRemoveContent()
+	 */
+	public function canRemoveContent(ModerationQueue $queue) {
+		return false;
+	}
+	
+	/**
 	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::removeContent()
 	 */
 	public function removeContent(ModerationQueue $queue, $message) {

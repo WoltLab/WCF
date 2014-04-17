@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\moderation\queue;
+use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -88,5 +89,12 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 			$queueAction = new ModerationQueueAction($queueIDs, 'delete');
 			$queueAction->executeAction();
 		}
+	}
+	
+	/**
+	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::canRemoveContent()
+	 */
+	public function canRemoveContent(ModerationQueue $queue) {
+		return true;
 	}
 }

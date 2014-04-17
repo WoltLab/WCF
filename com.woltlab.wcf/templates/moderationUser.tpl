@@ -3,11 +3,3 @@
 		{include file='userListItem'}
 	</ol>
 </div>
-
-<script data-relocate="true">
-	//<![CDATA[
-	$(function() {
-		$('#removeContent').hide();
-	});
-	//]]>
-</script>
