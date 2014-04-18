@@ -7029,8 +7029,15 @@ WCF.System.PageNavigation = {
 	
 	/**
 	 * Validates the page No input.
+	 *
+	 * @param	Event		event
 	 */
-	_keyUp: function() {
+	_keyUp: function(event) {
+		if (event.which == $.ui.keyCode.ENTER && !this._button.prop('disabled')) {
+			this._submit();
+			return;
+		}
+		
 		var $pageNo = parseInt(this._pageNo.val()) || 0;
 		if ($pageNo < 1 || $pageNo > this._pageNo.attr('max')) {
 			this._button.disable();
