@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\session;
 use wcf\data\acp\session\ACPSession;
+use wcf\system\WCF;
 
 /**
  * Represents a session.
@@ -28,5 +29,34 @@ class Session extends ACPSession {
 	 */
 	public static function supportsPersistentLogins() {
 		return true;
+	}
+	
+	/**
+	 * @see	\wcf\data\acp\session\ACPSession::supportsVirtualSessions()
+	 */
+	public static function supportsVirtualSessions() {
+		return false;
+	}
+	
+	/**
+	 * Returns the existing session object for given user id or null if there
+	 * is no such session.
+	 * 
+	 * @param	integer		$userID
+	 * @return	\wcf\data\session\Session
+	 */
+	public static function getSessionByUserID($userID) {
+		$sql = "SELECT	*
+			FROM	".static::getDatabaseTableName()."
+			WHERE	userID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($userID));
+		$row = $statement->fetchArray();
+		
+		if ($row === false) {
+			return null;
+		}
+		
+		return new static(null, $row);
 	}
 }

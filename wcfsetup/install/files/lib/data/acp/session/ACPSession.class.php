@@ -36,4 +36,14 @@ class ACPSession extends DatabaseObject {
 	public static function supportsPersistentLogins() {
 		return false;
 	}
+	
+	/**
+	 * Returns true if this session type supports virtual sessions (sharing the same
+	 * session among multiple clients).
+	 * 
+	 * @return	boolean
+	 */
+	public static function supportsVirtualSessions() {
+		return false;
+	}
 }

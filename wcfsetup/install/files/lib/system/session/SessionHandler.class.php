@@ -1,5 +1,8 @@
 <?php
 namespace wcf\system\session;
+use wcf\data\session\virtual\SessionVirtual;
+use wcf\data\session\virtual\SessionVirtualAction;
+use wcf\data\session\virtual\SessionVirtualEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\page\ITrackablePage;
@@ -75,6 +78,12 @@ class SessionHandler extends SingletonFactory {
 	protected $sessionEditorClassName = '';
 	
 	/**
+	 * virtual session support
+	 * @var	boolean
+	 */
+	protected $supportsVirtualSessions = false;
+	
+	/**
 	 * style id
 	 * @var	integer
 	 */
@@ -103,6 +112,19 @@ class SessionHandler extends SingletonFactory {
 	 * @var	boolean
 	 */
 	protected $variablesChanged = false;
+	
+	/**
+	 * virtual session object, null for guests
+	 * @var	\wcf\data\session\virtual\SessionVirtual
+	 */
+	protected $virtualSession = false;
+	
+	/**
+	 * @see	\wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		$this->supportsVirtualSessions = call_user_func(array($this->sessionClassName, 'supportsVirtualSessions'));
+	}
 	
 	/**
 	 * Provides access to session data.
@@ -297,13 +319,38 @@ class SessionHandler extends SingletonFactory {
 	 */
 	protected function getExistingSession($sessionID) {
 		$this->session = new $this->sessionClassName($sessionID);
-		if (!$this->session->sessionID || !$this->validate()) {
+		if (!$this->session->sessionID) {
 			$this->session = null;
 			return;
 		}
 		
-		// load user
 		$this->user = new User($this->session->userID);
+		$this->loadVirtualSession();
+		
+		if (!$this->validate()) {
+			$this->session = null;
+			$this->user = null;
+			$this->virtualSession = false;
+			
+			return;
+		}
+	}
+	
+	/**
+	 * Loads the virtual session object unless the user is not logged in or the session
+	 * does not support virtual sessions. If there is no virtual session yet, it will be
+	 * created on-the-fly.
+	 * 
+	 * @param	boolean		$forceReload
+	 */
+	protected function loadVirtualSession($forceReload = false) {
+		if ($this->virtualSession === false || $forceReload) {
+			$this->virtualSession = null;
+			if ($this->user->userID && $this->supportsVirtualSessions) {
+				$virtualSessionAction = new SessionVirtualAction(array(), 'create', array('sessionID' => $this->session->sessionID));
+				$this->virtualSession = $virtualSessionAction->executeAction();
+			}
+		}
 	}
 	
 	/**
@@ -313,12 +360,23 @@ class SessionHandler extends SingletonFactory {
 	 */
 	protected function validate() {
 		if (SESSION_VALIDATE_IP_ADDRESS) {
-			if ($this->session->ipAddress != UserUtil::getIpAddress()) {
+			if ($this->supportsVirtualSessions && ($this->virtualSession instanceof SessionVirtual)) {
+				if ($this->virtualSession->ipAddress != UserUtil::getIpAddress()) {
+					return false;
+				}
+			}
+			else if ($this->session->ipAddress != UserUtil::getIpAddress()) {
 				return false;
 			}
 		}
+		
 		if (SESSION_VALIDATE_USER_AGENT) {
-			if ($this->session->userAgent != UserUtil::getUserAgent()) {
+			if ($this->supportsVirtualSessions && ($this->virtualSession instanceof SessionVirtual)) {
+				if ($this->virtualSession->userAgent != UserUtil::getUserAgent()) {
+					return false;
+				}
+			}
+			else if ($this->session->userAgent != UserUtil::getUserAgent()) {
 				return false;
 			}
 		}
@@ -356,9 +414,7 @@ class SessionHandler extends SingletonFactory {
 			// create guest user
 			$this->user = new User(null);
 		}
-		
-		if ($this->user->userID != 0) {
-			// user is no guest
+		else if (!$this->supportsVirtualSessions) {
 			// delete all other sessions of this user
 			call_user_func(array($this->sessionEditorClassName, 'deleteUserSessions'), array($this->user->userID));
 		}
@@ -373,8 +429,10 @@ class SessionHandler extends SingletonFactory {
 			'requestURI' => UserUtil::getRequestURI(),
 			'requestMethod' => (!empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '')
 		);
+		
 		if ($spiderID !== null) $sessionData['spiderID'] = $spiderID;
 		$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), $sessionData);
+		$this->loadVirtualSession();
 	}
 	
 	/**
@@ -480,28 +538,50 @@ class SessionHandler extends SingletonFactory {
 	public function changeUser(User $user, $hideSession = false) {
 		$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
 		
-		if ($user->userID && !$hideSession) {
-			// user is not a guest, delete all other sessions of this user
-			$sql = "DELETE FROM	".$sessionTable."
-				WHERE		sessionID <> ?
-						AND userID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->sessionID, $user->userID));
-			
-			// reset session variables
-			$this->variables = array();
-			$this->variablesChanged = true;
+		$isNewSession = true;
+		if ($user->userID) {
+			if ($this->supportsVirtualSessions) {
+				// find existing session
+				$session = call_user_func(array($this->sessionClassName, 'getSessionByUserID'), $user->userID);
+				
+				if ($session !== null) {
+					// delete guest session
+					$sessionEditor = new $this->sessionEditorClassName($this->session);
+					$sessionEditor->delete();
+					
+					// inherit existing session
+					$this->session = $session;
+					$this->user = $user;
+					$this->loadVirtualSession(true);
+					
+					$isNewSession = false;
+				}
+			}
+			else if (!$hideSession) {
+				// user is not a guest, delete all other sessions of this user
+				$sql = "DELETE FROM	".$sessionTable."
+					WHERE		sessionID <> ?
+							AND userID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array($this->sessionID, $user->userID));
+				
+				// reset session variables
+				$this->variables = array();
+				$this->variablesChanged = true;
+			}
 		}
 		
-		// update user reference
-		$this->user = $user;
-		
-		if (!$hideSession) {
-			// update session
-			$sessionEditor = new $this->sessionEditorClassName($this->session);
-			$sessionEditor->update(array(
-				'userID' => $this->user->userID
-			));
+		if ($isNewSession) {	
+			// update user reference
+			$this->user = $user;
+			
+			if (!$hideSession) {
+				// update session
+				$sessionEditor = new $this->sessionEditorClassName($this->session);
+				$sessionEditor->update(array(
+					'userID' => $this->user->userID
+				));
+			}
 		}
 		
 		// reset caches
@@ -509,8 +589,6 @@ class SessionHandler extends SingletonFactory {
 		$this->languageIDs = null;
 		$this->languageID = $this->user->languageID;
 		$this->styleID = $this->user->styleID;
-		
-		// truncate session variables
 	}
 	
 	/**
@@ -541,6 +619,11 @@ class SessionHandler extends SingletonFactory {
 		// update session
 		$sessionEditor = new $this->sessionEditorClassName($this->session);
 		$sessionEditor->update($data);
+		
+		if ($this->virtualSession instanceof SessionVirtual) {
+			$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
+			$virtualSessionEditor->updateLastActivityTime();
+		}
 	}
 	
 	/**
@@ -554,6 +637,11 @@ class SessionHandler extends SingletonFactory {
 		$sessionEditor->update(array(
 			'lastActivityTime' => TIME_NOW
 		));
+		
+		if ($this->virtualSession instanceof SessionVirtual) {
+			$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
+			$virtualSessionEditor->updateLastActivityTime();
+		}
 	}
 	
 	/**
@@ -563,7 +651,7 @@ class SessionHandler extends SingletonFactory {
 		// clear storage
 		if ($this->user->userID) {
 			self::resetSessions(array($this->user->userID));
-				
+			
 			// update last activity time
 			if (!class_exists('\wcf\system\WCFACP', false)) {
 				$editor = new UserEditor($this->user);
@@ -575,8 +663,22 @@ class SessionHandler extends SingletonFactory {
 		$this->changeUser(new User(null), true);
 		
 		// remove session
-		$sessionEditor = new $this->sessionEditorClassName($this->session);
-		$sessionEditor->delete();
+		$deleteSession = true;
+		if ($this->supportsVirtualSessions && ($this->virtualSession instanceof SessionVirtual)) {
+			// delete the virtual session
+			$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
+			$virtualSessionEditor->delete();
+			
+			if (SessionVirtual::countVirtualSessions($this->session->sessionID)) {
+				// there are still remaining virtual sessions, do not delete master session
+				$deleteSession = false;
+			}
+		}
+		
+		if ($deleteSession) {
+			$sessionEditor = new $this->sessionEditorClassName($this->session);
+			$sessionEditor->delete();
+		}
 		
 		// disable update
 		$this->disableUpdate();

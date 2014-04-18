@@ -812,6 +812,16 @@ CREATE TABLE wcf1_session (
 	KEY packageID (lastActivityTime, spiderID)
 );
 
+DROP TABLE IF EXISTS wcf1_session_virtual;
+CREATE TABLE wcf1_session_virtual (
+	virtualSessionID INT(10) NOT NULL PRIMARY KEY,
+	sessionID CHAR(40) NOT NULL,
+	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
+	userAgent VARCHAR(255) NOT NULL DEFAULT '',
+	lastActivityTime INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY (sessionID, ipAddress, userAgent)
+);
+
 DROP TABLE IF EXISTS wcf1_sitemap;
 CREATE TABLE wcf1_sitemap (
 	sitemapID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1406,6 +1416,8 @@ ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) O
 
 ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (spiderID) REFERENCES wcf1_spider (spiderID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_session (sessionID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_sitemap ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
