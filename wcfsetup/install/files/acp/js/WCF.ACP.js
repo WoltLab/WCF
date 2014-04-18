@@ -1699,7 +1699,7 @@ WCF.ACP.Worker = Class.extend({
 		// update progress
 		this._dialog.find('progress').attr('value', data.progress).text(data.progress + '%').next('span').text(data.progress + '%');
 		
-		// worker is still busy with it's business, carry on
+		// worker is still busy with its business, carry on
 		if (data.progress < 100) {
 			// send request for next loop
 			this._proxy.setOption('data', {
@@ -1715,7 +1715,7 @@ WCF.ACP.Worker = Class.extend({
 		else {
 			// display continue button
 			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
-			$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).click(function() { window.location = data.proceedURL; });
+			$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).focus().click(function() { window.location = data.proceedURL; });
 			
 			this._dialog.wcfDialog('render');
 		}
