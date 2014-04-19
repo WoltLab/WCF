@@ -120,13 +120,6 @@ class SessionHandler extends SingletonFactory {
 	protected $virtualSession = false;
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
-	 */
-	protected function init() {
-		$this->supportsVirtualSessions = call_user_func(array($this->sessionClassName, 'supportsVirtualSessions'));
-	}
-	
-	/**
 	 * Provides access to session data.
 	 * 
 	 * @param	string		$key
@@ -149,6 +142,7 @@ class SessionHandler extends SingletonFactory {
 	public function load($sessionEditorClassName, $sessionID) {
 		$this->sessionEditorClassName = $sessionEditorClassName;
 		$this->sessionClassName = call_user_func(array($sessionEditorClassName, 'getBaseClass'));
+		$this->supportsVirtualSessions = call_user_func(array($this->sessionClassName, 'supportsVirtualSessions'));
 		
 		// try to get existing session
 		if (!empty($sessionID)) {
@@ -347,7 +341,7 @@ class SessionHandler extends SingletonFactory {
 		if ($this->virtualSession === false || $forceReload) {
 			$this->virtualSession = null;
 			if ($this->user->userID && $this->supportsVirtualSessions) {
-				$virtualSessionAction = new SessionVirtualAction(array(), 'create', array('sessionID' => $this->session->sessionID));
+				$virtualSessionAction = new SessionVirtualAction(array(), 'create', array('data' => array('sessionID' => $this->session->sessionID)));
 				$this->virtualSession = $virtualSessionAction->executeAction();
 			}
 		}
@@ -419,20 +413,36 @@ class SessionHandler extends SingletonFactory {
 			call_user_func(array($this->sessionEditorClassName, 'deleteUserSessions'), array($this->user->userID));
 		}
 		
-		// save session
-		$sessionData = array(
-			'sessionID' => $sessionID,
-			'userID' => $this->user->userID,
-			'ipAddress' => UserUtil::getIpAddress(),
-			'userAgent' => UserUtil::getUserAgent(),
-			'lastActivityTime' => TIME_NOW,
-			'requestURI' => UserUtil::getRequestURI(),
-			'requestMethod' => (!empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '')
-		);
+		$createNewSession = true;
+		if ($this->supportsVirtualSessions) {
+			// find existing session
+			$session = call_user_func(array($this->sessionClassName, 'getSessionByUserID'), $this->user->userID);
+			
+			if ($session !== null) {
+				// inherit existing session
+				$this->session = $session;
+				$this->loadVirtualSession(true);
+					
+				$createNewSession = false;
+			}
+		}
 		
-		if ($spiderID !== null) $sessionData['spiderID'] = $spiderID;
-		$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), $sessionData);
-		$this->loadVirtualSession();
+		if ($createNewSession) {
+			// save session
+			$sessionData = array(
+				'sessionID' => $sessionID,
+				'userID' => $this->user->userID,
+				'ipAddress' => UserUtil::getIpAddress(),
+				'userAgent' => UserUtil::getUserAgent(),
+				'lastActivityTime' => TIME_NOW,
+				'requestURI' => UserUtil::getRequestURI(),
+				'requestMethod' => (!empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '')
+			);
+			
+			if ($spiderID !== null) $sessionData['spiderID'] = $spiderID;
+			$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), $sessionData);
+			$this->loadVirtualSession(true);
+		}
 	}
 	
 	/**

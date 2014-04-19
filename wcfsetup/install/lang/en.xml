@@ -677,6 +677,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.session_validate_ip_address"><![CDATA[Validate IP address]]></item>
 		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Enabling this validation might cause troubles for users with rotating IP addresses.]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Validate user-agent]]></item>
+		<item name="wcf.acp.option.session_enable_virtualization"><![CDATA[Allow session sharing]]></item>
+		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Users can log-in from multiple devices (PC, tablet, smartphone, etc) concurrently, all devices will share the same session. Disabling this option will restrict users to be logged-in with only one device at once, causing every login to terminate sessions used by the user’s other devices. It is not recommended to disable this option and you should be well aware of the consequences if you decide to disable it.]]></item>
 		<item name="wcf.acp.option.show_clock"><![CDATA[Show current time in page footer]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Default timezone of your page]]></item>

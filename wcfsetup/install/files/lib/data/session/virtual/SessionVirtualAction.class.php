@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\session\virtual;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\util\UserUtil;
 
 /**
  * Executes virtual session-related actions.
@@ -26,12 +27,15 @@ class SessionVirtualAction extends AbstractDatabaseObjectAction {
 	 */
 	public function create() {
 		// try to find an existing virtual session
-		$virtualSession = call_user_func(array($this->className, 'getExistingSession'), $this->parameters['sessionID']);
+		$baseClass = call_user_func(array($this->className, 'getBaseClass'));
+		$virtualSession = call_user_func(array($baseClass, 'getExistingSession'), $this->parameters['data']['sessionID']);
 		if ($virtualSession !== null) {
 			return $virtualSession;
 		}
 		
-		if (!isset($this->parameters['lastActivityTime'])) $this->parameters['lastActivityTime'] = TIME_NOW;
+		if (!isset($this->parameters['data']['lastActivityTime'])) $this->parameters['data']['lastActivityTime'] = TIME_NOW;
+		if (!isset($this->parameters['data']['ipAddress'])) $this->parameters['data']['ipAddress'] = UserUtil::getIpAddress();
+		if (!isset($this->parameters['data']['userAgent'])) $this->parameters['data']['userAgent'] = UserUtil::getUserAgent();
 		
 		return parent::create();
 	}

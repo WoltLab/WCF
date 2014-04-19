@@ -137,6 +137,9 @@ final class UserUtil {
 	 * @return	string
 	 */
 	public static function convertIPv4To6($ip) {
+		// drop Window's scope id (confused PHP)
+		$ip = preg_replace('~%[^%]+$~', '', $ip);
+		
 		if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
 			// given ip is already ipv6
 			return $ip;
