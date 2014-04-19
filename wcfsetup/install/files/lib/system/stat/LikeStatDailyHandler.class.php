@@ -23,14 +23,15 @@ class LikeStatDailyHandler extends AbstractStatDailyHandler {
 		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_like
 			WHERE	time BETWEEN ? AND ?
-				AND likeValue";
+				AND likeValue = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($date, $date + 86399, $this->likeValue));
 		$counter = intval($statement->fetchColumn());
 		
 		$sql = "SELECT	COUNT(*)
 			FROM	wcf".WCF_N."_like
-			WHERE	time < ?";
+			WHERE	time < ?
+				AND likeValue = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($date + 86400, $this->likeValue));
 		$total = intval($statement->fetchColumn());

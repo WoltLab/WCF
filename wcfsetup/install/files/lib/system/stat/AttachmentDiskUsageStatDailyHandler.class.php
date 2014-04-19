@@ -17,14 +17,14 @@ class AttachmentDiskUsageStatDailyHandler extends AbstractStatDailyHandler {
 	 * @see \wcf\system\stat\IStatDailyHandler::getData()
 	 */
 	public function getData($date) {
-		$sql = "SELECT	SUM(filesize)
+		$sql = "SELECT	CEIL(SUM(filesize) / 1000)
 			FROM	wcf".WCF_N."_attachment
 			WHERE	uploadTime BETWEEN ? AND ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($date, $date + 86399));
 		$counter = intval($statement->fetchColumn());
 		
-		$sql = "SELECT	SUM(filesize)
+		$sql = "SELECT	CEIL(SUM(filesize) / 1000)
 			FROM	wcf".WCF_N."_attachment
 			WHERE	uploadTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -41,6 +41,6 @@ class AttachmentDiskUsageStatDailyHandler extends AbstractStatDailyHandler {
 	 * @see \wcf\system\stat\IStatDailyHandler::getFormattedCounter()
 	 */
 	public function getFormattedCounter($counter) {
-		return round($counter / 1000000); // return mb
+		return round($counter / 1000, 2); // return mb
 	}
 }
