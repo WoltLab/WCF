@@ -814,7 +814,7 @@ CREATE TABLE wcf1_session (
 
 DROP TABLE IF EXISTS wcf1_session_virtual;
 CREATE TABLE wcf1_session_virtual (
-	virtualSessionID INT(10) NOT NULL PRIMARY KEY,
+	virtualSessionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	sessionID CHAR(40) NOT NULL,
 	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
 	userAgent VARCHAR(255) NOT NULL DEFAULT '',
