@@ -42,16 +42,10 @@ WCF.Like = Class.extend({
 	_isBusy: false,
 	
 	/**
-	 * cached template for like details
+	 * cached grouped user lists for like details
 	 * @var	object
 	 */
 	_likeDetails: { },
-	
-	/**
-	 * dialog overlay for like details
-	 * @var	jQuery
-	 */
-	_likeDetailsDialog: null,
 	
 	/**
 	 * proxy object
@@ -61,6 +55,7 @@ WCF.Like = Class.extend({
 	
 	/**
 	 * shows the detailed summary of users who liked the object
+	 * @var	boolean
 	 */
 	_showSummary: true,
 	
@@ -77,7 +72,6 @@ WCF.Like = Class.extend({
 		this._enableDislikes = enableDislikes;
 		this._isBusy = false;
 		this._likeDetails = { };
-		this._likeDetailsDialog = null;
 		this._showSummary = showSummary;
 		this._allowForOwnContent = allowForOwnContent;
 		
@@ -248,30 +242,16 @@ WCF.Like = Class.extend({
 		var $containerID = (event === null) ? containerID : $(event.currentTarget).data('containerID');
 		
 		if (this._likeDetails[$containerID] === undefined) {
-			this._proxy.setOption('data', {
-				actionName: 'getLikeDetails',
-				className: 'wcf\\data\\like\\LikeAction',
-				parameters: {
-					data: {
-						containerID: $containerID,
-						objectID: this._containerData[$containerID].objectID,
-						objectType: this._containerData[$containerID].objectType
-					}
+			this._likeDetails[$containerID] = new WCF.User.List('wcf\\data\\like\\LikeAction', WCF.Language.get('wcf.like.details'), {
+				data: {
+					containerID: $containerID,
+					objectID: this._containerData[$containerID].objectID,
+					objectType: this._containerData[$containerID].objectType
 				}
 			});
-			this._proxy.sendRequest();
 		}
-		else {
-			if (this._likeDetailsDialog === null) {
-				this._likeDetailsDialog = $('<div>' + this._likeDetails[$containerID] + '</div>').hide().appendTo(document.body);
-				this._likeDetailsDialog.wcfDialog({
-					title: WCF.Language.get('wcf.like.details')
-				});
-			}
-			else {
-				this._likeDetailsDialog.html(this._likeDetails[$containerID]).wcfDialog('open');
-			}
-		}
+		
+		this._likeDetails[$containerID].open();
 	},
 	
 	/**
@@ -359,11 +339,6 @@ WCF.Like = Class.extend({
 				}
 				
 				this._isBusy = false;
-			break;
-			
-			case 'getLikeDetails':
-				this._likeDetails[$containerID] = data.returnValues.template;
-				this._showLikeDetails(null, $containerID);
 			break;
 		}
 	},

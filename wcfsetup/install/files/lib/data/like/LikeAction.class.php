@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\like;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IGroupedUserListAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\like\LikeHandler;
@@ -18,11 +19,11 @@ use wcf\system\WCF;
  * @subpackage	data.like
  * @category	Community Framework
  */
-class LikeAction extends AbstractDatabaseObjectAction {
+class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserListAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('getLikeDetails');
+	protected $allowGuestAccess = array('getGroupedUserList', 'getLikeDetails');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
@@ -201,5 +202,72 @@ class LikeAction extends AbstractDatabaseObjectAction {
 		if (!$this->objectTypeProvider->checkPermissions($this->likeableObject)) {
 			throw new PermissionDeniedException();
 		}
+	}
+	
+	/**
+	 * @see	\wcf\data\IGroupedUserListAction::validateGetGroupedUserList()
+	 */
+	public function validateGetGroupedUserList() {
+		$this->validateObjectParameters();
+		
+		$this->readInteger('pageNo');
+	}
+	
+	/**
+	 * @see	\wcf\data\IGroupedUserListAction::getGroupedUserList()
+	 */
+	public function getGroupedUserList() {
+		// fetch number of pages
+		$sql = "SELECT	COUNT(*)
+			FROM	wcf".WCF_N."_like
+			WHERE	objectID = ?
+				AND objectTypeID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$this->parameters['data']['objectID'],
+			$this->objectType->objectTypeID
+		));
+		$pageCount = ceil($statement->fetchColumn() / 20);
+		
+		$sql = "SELECT		userID, likeValue
+			FROM		wcf".WCF_N."_like
+			WHERE		objectID = ?
+					AND objectTypeID = ?
+			ORDER BY	likeValue DESC, time DESC";
+		$statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
+		$statement->execute(array(
+			$this->parameters['data']['objectID'],
+			$this->objectType->objectTypeID
+		));
+		$data = array(
+			Like::LIKE => array(),
+			Like::DISLIKE => array()
+		);
+		while ($row = $statement->fetchArray()) {
+			$data[$row['likeValue']][] = $row['userID'];
+		}
+		
+		$values = array();
+		if (!empty($data[Like::LIKE])) {
+			$values[Like::LIKE] = new GroupedUserList(WCF::getLanguage()->get('wcf.like.details.like'));
+			$values[Like::LIKE]->addUserIDs($data[Like::LIKE]);
+		}
+		if (!empty($data[Like::DISLIKE])) {
+			$values[Like::DISLIKE] = new GroupedUserList(WCF::getLanguage()->get('wcf.like.details.dislike'));
+			$values[Like::DISLIKE]->addUserIDs($data[Like::DISLIKE]);
+		}
+		
+		// load user profiles
+		GroupedUserList::loadUsers();
+		
+		WCF::getTPL()->assign(array(
+			'groupedUsers' => $values
+		));
+		
+		return array(
+			'containerID' => $this->parameters['data']['containerID'],
+			'pageCount' => $pageCount,
+			'template' => WCF::getTPL()->fetch('groupedUserList')
+		);
 	}
 }
