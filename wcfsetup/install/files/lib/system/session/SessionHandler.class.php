@@ -342,7 +342,8 @@ class SessionHandler extends SingletonFactory {
 			$this->virtualSession = null;
 			if ($this->user->userID && $this->supportsVirtualSessions) {
 				$virtualSessionAction = new SessionVirtualAction(array(), 'create', array('data' => array('sessionID' => $this->session->sessionID)));
-				$this->virtualSession = $virtualSessionAction->executeAction();
+				$returnValues = $virtualSessionAction->executeAction();
+				$this->virtualSession = $returnValues['returnValues'];
 			}
 		}
 	}

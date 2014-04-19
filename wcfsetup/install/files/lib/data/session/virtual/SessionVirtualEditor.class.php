@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\session\virtual;
 use wcf\data\DatabaseObjectEditor;
+use wcf\system\WCF;
 
 /**
  * Provides functions to edit virtual sessions.
@@ -25,5 +26,17 @@ class SessionVirtualEditor extends DatabaseObjectEditor {
 		$this->update(array(
 			'lastActivityTime' => TIME_NOW
 		));
+	}
+	
+	/**
+	 * Deletes the expired virtual sessions.
+	 * 
+	 * @param	integer		$timestamp
+	 */
+	public static function deleteExpiredSessions($timestamp) {
+		$sql = "DELETE FROM	".call_user_func(array(static::$baseClass, 'getDatabaseTableName'))."
+			WHERE		lastActivityTime < ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($timestamp));
 	}
 }

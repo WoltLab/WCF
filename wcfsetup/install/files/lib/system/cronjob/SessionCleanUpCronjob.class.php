@@ -2,6 +2,7 @@
 namespace wcf\system\cronjob;
 use wcf\data\acp\session\ACPSessionEditor;
 use wcf\data\cronjob\Cronjob;
+use wcf\data\session\virtual\SessionVirtualEditor;
 use wcf\data\session\SessionEditor;
 
 /**
@@ -23,5 +24,6 @@ class SessionCleanUpCronjob extends AbstractCronjob {
 		
 		ACPSessionEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
 		SessionEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
+		SessionVirtualEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
 	}
 }
