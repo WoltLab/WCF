@@ -310,6 +310,12 @@
 			<classname><![CDATA[wcf\system\worker\AttachmentRebuildDataWorker]]></classname>
 			<nicevalue>100</nicevalue>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.statDaily</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname><![CDATA[wcf\system\worker\StatDailyRebuildDataWorker]]></classname>
+			<nicevalue>110</nicevalue>
+		</type>
 		<!-- /rebuild data workers -->
 		
 		<!-- stat handlers -->
