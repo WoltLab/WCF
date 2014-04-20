@@ -51,7 +51,7 @@ class StatPage extends AbstractPage {
 		parent::readData();
 		
 		// set default values
-		$d = DateUtil::getDateTimeByTimestamp(TIME_NOW);
+		$d = DateUtil::getDateTimeByTimestamp(TIME_NOW - 86400);
 		$d->setTimezone(WCF::getUser()->getTimeZone());
 		$this->endDate = $d->format('Y-m-d');
 		$d->sub(new \DateInterval('P1M'));

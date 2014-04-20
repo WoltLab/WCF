@@ -1042,6 +1042,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.user.description"><![CDATA[Aktualisiert die Liste der Like-Benutzer]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Dateianhänge aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Erzeugt Vorschaubilder neu]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily"><![CDATA[Statistiken aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily.description"><![CDATA[Erzeugt die täglichen Statistiken neu]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">
@@ -1059,15 +1061,23 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.stat.period"><![CDATA[Zeitraum]]></item>
 		<item name="wcf.acp.stat.button.refresh"><![CDATA[Aktualisieren]]></item>
 		<item name="wcf.acp.stat.value"><![CDATA[Werte]]></item>
-		<item name="wcf.acp.stat.value.counter"><![CDATA[Einträge pro Tag]]></item>
+		<item name="wcf.acp.stat.value.counter"><![CDATA[Veränderung]]></item>
 		<item name="wcf.acp.stat.value.total"><![CDATA[Gesamtanzahl]]></item>
 		<item name="wcf.acp.stat.types"><![CDATA[Daten]]></item>
-		<item name="wcf.acp.stat.timeFormat"><![CDATA[%d.%m.%Y]]></item>
+		<item name="wcf.acp.stat.timeFormat.daily"><![CDATA[%d.%m.%y]]></item>
+		<item name="wcf.acp.stat.timeFormat.weekly"><![CDATA[%d.%m.%y]]></item>
+		<item name="wcf.acp.stat.timeFormat.monthly"><![CDATA[%b %Y]]></item>
+		<item name="wcf.acp.stat.timeFormat.yearly"><![CDATA[%Y]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[Dateianhänge-Speicherbedarf (MB)]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Likes]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.dislike"><![CDATA[Dislikes]]></item>
+		<item name="wcf.acp.stat.dateGrouping"><![CDATA[Zeiteinheit]]></item>
+		<item name="wcf.acp.stat.dateGrouping.daily"><![CDATA[Tag]]></item>
+		<item name="wcf.acp.stat.dateGrouping.weekly"><![CDATA[Woche]]></item>
+		<item name="wcf.acp.stat.dateGrouping.monthly"><![CDATA[Monat]]></item>
+		<item name="wcf.acp.stat.dateGrouping.yearly"><![CDATA[Jahr]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">
