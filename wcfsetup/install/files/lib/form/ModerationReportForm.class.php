@@ -21,7 +21,8 @@ class ModerationReportForm extends AbstractModerationForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'reportedContent' => ModerationQueueReportManager::getInstance()->getReportedContent($this->queue)
+			'reportedContent' => ModerationQueueReportManager::getInstance()->getReportedContent($this->queue),
+			'queueManager' => ModerationQueueReportManager::getInstance()
 		));
 	}
 }

@@ -59,6 +59,13 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 	}
 	
 	/**
+	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::canRemoveContent()
+	 */
+	public function canRemoveContent(ModerationQueue $queue) {
+		return $this->getProcessor(null, $queue->objectTypeID)->canRemoveContent($queue);
+	}
+	
+	/**
 	 * @see	\wcf\system\moderation\queue\IModerationQueueManager::removeContent()
 	 */
 	public function removeContent(ModerationQueue $queue, $message = '') {

@@ -61,6 +61,13 @@ interface IModerationQueueHandler {
 	public function removeContent(ModerationQueue $queue, $message);
 	
 	/**
+	 * Returns true if the affected content may be removed.
+	 * 
+	 * @return	boolean
+	 */
+	public function canRemoveContent(ModerationQueue $queue);
+	
+	/**
 	 * Removes queses from database, should only be called if the referenced
 	 * object is permanently deleted.
 	 * 

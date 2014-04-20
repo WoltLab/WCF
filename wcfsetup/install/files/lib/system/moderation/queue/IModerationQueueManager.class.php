@@ -64,6 +64,14 @@ interface IModerationQueueManager {
 	public function populate($objectTypeID, array $objects);
 	
 	/**
+	 * Returns whether the afftected content may be removed.
+	 * 
+	 * @param	\wcf\data\moderation\queue\ModerationQueue	$queue
+	 * @return	boolean
+	 */
+	public function canRemoveContent(ModerationQueue $queue);
+	
+	/**
 	 * Removes affected content. It is up to the processing object to use a
 	 * soft-delete or remove the content permanently.
 	 * 

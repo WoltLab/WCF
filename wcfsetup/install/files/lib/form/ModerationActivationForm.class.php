@@ -21,7 +21,8 @@ class ModerationActivationForm extends AbstractModerationForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'disabledContent' => ModerationQueueActivationManager::getInstance()->getDisabledContent($this->queue)
+			'disabledContent' => ModerationQueueActivationManager::getInstance()->getDisabledContent($this->queue),
+			'queueManager' => ModerationQueueActivationManager::getInstance()
 		));
 	}
 }
