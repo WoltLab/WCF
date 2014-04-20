@@ -2325,16 +2325,18 @@ WCF.ACP.Stat.Chart = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		$('#statRefreshButton').click($.proxy(this._click, this));
+		$('#statRefreshButton').click($.proxy(this._refresh, this));
 		
-		this._click();
+		this._refresh();
 	},
 	
-	_click: function() {
+	_refresh: function() {
 		var $objectTypeIDs = [ ];
 		$('input[name=objectTypeID]:checked').each(function() {
 			$objectTypeIDs.push($(this).val());
 		});
+		
+		if (!$objectTypeIDs.length) return;
 		
 		this._proxy.setOption('data', {
 			className: 'wcf\\data\\stat\\daily\\StatDailyAction',
@@ -2343,6 +2345,7 @@ WCF.ACP.Stat.Chart = Class.extend({
 				startDate: $('#startDateDatePicker').val(),
 				endDate: $('#endDateDatePicker').val(),
 				value: $('input[name=value]:checked').val(),
+				dateGrouping: $('input[name=dateGrouping]:checked').val(),
 				objectTypeIDs: $objectTypeIDs
 			}
 		});
@@ -2350,6 +2353,24 @@ WCF.ACP.Stat.Chart = Class.extend({
 	},
 	
 	_success: function(data) {
+		switch ($('input[name=dateGrouping]:checked').val()) {
+			case 'yearly':
+				var $minTickSize = [1, "year"];
+				var $timeFormat = WCF.Language.get('wcf.acp.stat.timeFormat.yearly');
+				break;
+			case 'monthly':
+				var $minTickSize = [1, "month"];
+				var $timeFormat = WCF.Language.get('wcf.acp.stat.timeFormat.monthly');
+				break;
+			case 'weekly':
+				var $minTickSize = [7, "day"];
+				var $timeFormat = WCF.Language.get('wcf.acp.stat.timeFormat.weekly');
+				break;
+			default:
+				var $minTickSize = [1, "day"];
+				var $timeFormat = WCF.Language.get('wcf.acp.stat.timeFormat.daily');
+		}
+		
 		var options = {
 			series: {
 				lines: {
@@ -2364,8 +2385,9 @@ WCF.ACP.Stat.Chart = Class.extend({
 			},
 			xaxis: {
 				mode: "time",
-				minTickSize: [1, "day"],
-				timeformat: WCF.Language.get('wcf.acp.stat.timeFormat')
+				minTickSize: $minTickSize,
+				timeformat: $timeFormat,
+				monthNames: WCF.Language.get('__monthsShort')
 			},
 			yaxis: {
 				min: 0,
@@ -2390,7 +2412,7 @@ WCF.ACP.Stat.Chart = Class.extend({
 		
 		$("#chart").on("plothover", function(event, pos, item) {
 			if (item) {
-				$("#chartTooltip").html(item.series.xaxis.tickFormatter(item.datapoint[0], item.series.xaxis) + ', ' + WCF.String.addThousandsSeparator(item.datapoint[1]) + ' ' + item.series.label).css({top: item.pageY + 5, left: item.pageX + 5}).wcfFadeIn();
+				$("#chartTooltip").html(item.series.xaxis.tickFormatter(item.datapoint[0], item.series.xaxis) + ', ' + WCF.String.formatNumeric(item.datapoint[1]) + ' ' + item.series.label).css({top: item.pageY + 5, left: item.pageX + 5}).wcfFadeIn();
 			}
 			else {
 				$("#chartTooltip").hide();

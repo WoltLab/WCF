@@ -46,6 +46,11 @@ class StatDailyAction extends AbstractDatabaseObjectAction {
 			$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
 			if ($objectType === null) throw new UserInputException('objectTypeIDs');
 		}
+		
+		// validate date grouping parameter
+		if (empty($this->parameters['dateGrouping'])) {
+			throw new UserInputException('objectTypeIDs');
+		}
 	}
 	
 	/**
@@ -56,10 +61,35 @@ class StatDailyAction extends AbstractDatabaseObjectAction {
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add('objectTypeID IN (?)', array($this->parameters['objectTypeIDs']));
 		$conditionBuilder->add('date BETWEEN ? AND ?', array($this->parameters['startDate'], $this->parameters['endDate']));
-		$sql = "SELECT		*
-			FROM		wcf".WCF_N."_stat_daily
-			".$conditionBuilder."
-			ORDER BY	date";
+		
+		if ($this->parameters['dateGrouping'] == 'yearly') {
+			$sql = "SELECT		MIN(date) AS date, SUM(counter) AS counter, MAX(total) AS total, objectTypeID
+				FROM		wcf".WCF_N."_stat_daily
+				".$conditionBuilder."
+				GROUP BY	EXTRACT(YEAR FROM date), objectTypeID
+				ORDER BY	date";
+		}
+		else if ($this->parameters['dateGrouping'] == 'monthly') {
+			$sql = "SELECT		MIN(date) AS date, SUM(counter) AS counter, MAX(total) AS total, objectTypeID
+				FROM		wcf".WCF_N."_stat_daily
+				".$conditionBuilder."
+				GROUP BY	EXTRACT(YEAR_MONTH FROM date), objectTypeID
+				ORDER BY	date";
+		}
+		else if ($this->parameters['dateGrouping'] == 'weekly') {
+			$sql = "SELECT		MIN(date) AS date, SUM(counter) AS counter, MAX(total) AS total, objectTypeID
+				FROM		wcf".WCF_N."_stat_daily
+				".$conditionBuilder."
+				GROUP BY	EXTRACT(YEAR FROM date), EXTRACT(WEEK FROM date), objectTypeID
+				ORDER BY	date";
+		}
+		else {
+			$sql = "SELECT		*
+				FROM		wcf".WCF_N."_stat_daily
+				".$conditionBuilder."
+				ORDER BY	date";
+		}
+		
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {

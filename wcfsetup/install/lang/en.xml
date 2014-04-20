@@ -1034,6 +1034,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.user.description"><![CDATA[Rebuilds the list of like users]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Rebuild Attachments]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Rebuilds attachment preview images]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily"><![CDATA[TODO: Statistiken aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily.description"><![CDATA[TODO: Erzeugt die täglichen Statistiken neu]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">
@@ -1051,15 +1053,23 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.stat.period"><![CDATA[TODO: Zeitraum]]></item>
 		<item name="wcf.acp.stat.button.refresh"><![CDATA[TODO: Aktualisieren]]></item>
 		<item name="wcf.acp.stat.value"><![CDATA[TODO: Werte]]></item>
-		<item name="wcf.acp.stat.value.counter"><![CDATA[TODO: Einträge pro Tag]]></item>
+		<item name="wcf.acp.stat.value.counter"><![CDATA[TODO: Veränderung]]></item>
 		<item name="wcf.acp.stat.value.total"><![CDATA[TODO: Gesamtanzahl]]></item>
 		<item name="wcf.acp.stat.types"><![CDATA[TODO: Daten]]></item>
-		<item name="wcf.acp.stat.timeFormat"><![CDATA[TODO: %d.%m.%Y]]></item>
+		<item name="wcf.acp.stat.timeFormat.daily"><![CDATA[TODO: %d.%m.%y]]></item>
+		<item name="wcf.acp.stat.timeFormat.weekly"><![CDATA[TODO: %d.%m.%y]]></item>
+		<item name="wcf.acp.stat.timeFormat.monthly"><![CDATA[TODO: %b %Y]]></item>
+		<item name="wcf.acp.stat.timeFormat.yearly"><![CDATA[TODO: %Y]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.user"><![CDATA[TODO: Benutzer]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment"><![CDATA[TODO: Dateianhänge]]></item>
-		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[Dateianhänge-Speicherbedarf (MB)]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[TODO: Dateianhänge-Speicherbedarf (MB)]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Likes]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.dislike"><![CDATA[Dislikes]]></item>
+		<item name="wcf.acp.stat.dateGrouping"><![CDATA[TODO: Zeiteinheit]]></item>
+		<item name="wcf.acp.stat.dateGrouping.daily"><![CDATA[TODO: Tag]]></item>
+		<item name="wcf.acp.stat.dateGrouping.weekly"><![CDATA[TODO: Woche]]></item>
+		<item name="wcf.acp.stat.dateGrouping.monthly"><![CDATA[TODO: Monat]]></item>
+		<item name="wcf.acp.stat.dateGrouping.yearly"><![CDATA[TODO: Jahr]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">

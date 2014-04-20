@@ -6,7 +6,10 @@
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
-			'wcf.acp.stat.timeFormat': '{lang}wcf.acp.stat.timeFormat{/lang}'
+			'wcf.acp.stat.timeFormat.daily': '{lang}wcf.acp.stat.timeFormat.daily{/lang}',
+			'wcf.acp.stat.timeFormat.weekly': '{lang}wcf.acp.stat.timeFormat.weekly{/lang}',
+			'wcf.acp.stat.timeFormat.monthly': '{lang}wcf.acp.stat.timeFormat.monthly{/lang}',
+			'wcf.acp.stat.timeFormat.yearly': '{lang}wcf.acp.stat.timeFormat.yearly{/lang}'
 		});
 		
 		new WCF.ACP.Stat.Chart();
@@ -37,7 +40,17 @@
 		</dl>
 		
 		<dl>
-			<dt><label for="startDate">{lang}wcf.acp.stat.value{/lang}</label></dt>
+			<dt><label>{lang}wcf.acp.stat.dateGrouping{/lang}</label></dt>
+			<dd>
+				<label><input type="radio" name="dateGrouping" value="daily" checked="checked" /> {lang}wcf.acp.stat.dateGrouping.daily{/lang}</label>
+				<label><input type="radio" name="dateGrouping" value="weekly" /> {lang}wcf.acp.stat.dateGrouping.weekly{/lang}</label>
+				<label><input type="radio" name="dateGrouping" value="monthly" /> {lang}wcf.acp.stat.dateGrouping.monthly{/lang}</label>
+				<label><input type="radio" name="dateGrouping" value="yearly" /> {lang}wcf.acp.stat.dateGrouping.yearly{/lang}</label>
+			</dd>
+		</dl>
+		
+		<dl>
+			<dt><label>{lang}wcf.acp.stat.value{/lang}</label></dt>
 			<dd>
 				<label><input type="radio" name="value" value="counter" checked="checked" /> {lang}wcf.acp.stat.value.counter{/lang}</label>
 				<label><input type="radio" name="value" value="total" /> {lang}wcf.acp.stat.value.total{/lang}</label>
@@ -45,7 +58,7 @@
 		</dl>
 		
 		<dl>
-			<dt><label for="startDate">{lang}wcf.acp.stat.types{/lang}</label></dt>
+			<dt><label>{lang}wcf.acp.stat.types{/lang}</label></dt>
 			<dd>
 				{foreach from=$availableObjectTypes item=objectType}
 					<label><input type="checkbox" name="objectTypeID" value="{@$objectType->objectTypeID}" {if $objectType->default}checked="checked" {/if}/> {lang}wcf.acp.stat.{@$objectType->objectType}{/lang}</label>
