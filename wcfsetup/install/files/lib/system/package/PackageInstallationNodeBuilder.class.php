@@ -87,8 +87,13 @@ class PackageInstallationNodeBuilder {
 		// required packages
 		$this->buildRequirementNodes();
 		
+		// register package version
+		self::$pendingPackages[$this->installation->getArchive()->getPackageInfo('name')] = $this->installation->getArchive()->getPackageInfo('version');
+		
 		// install package itself
-		$this->buildPackageNode();
+		if ($this->installation->queue->action == 'install') {
+			$this->buildPackageNode();
+		}
 		
 		// package installation plugins
 		$this->buildPluginNodes();
@@ -100,6 +105,10 @@ class PackageInstallationNodeBuilder {
 		
 		// child queues
 		$this->buildChildQueues();
+		
+		if ($this->installation->queue->action == 'update') {
+			$this->buildPackageNode();
+		}
 	}
 	
 	/**
@@ -421,8 +430,6 @@ class PackageInstallationNodeBuilder {
 				'requirements' => $this->requirements
 			))
 		));
-		
-		self::$pendingPackages[$this->installation->getArchive()->getPackageInfo('name')] = $this->installation->getArchive()->getPackageInfo('version');
 	}
 	
 	/**
@@ -548,6 +555,13 @@ class PackageInstallationNodeBuilder {
 	 * @return	string
 	 */
 	protected function buildPluginNodes() {
+		if (!empty($this->node)) {
+			$this->parentNode = $this->node;
+			$this->sequenceNo = 0;
+		}
+		
+		$this->node = $this->getToken();
+		
 		$pluginNodes = array();
 		
 		$this->emptyNode = true;
