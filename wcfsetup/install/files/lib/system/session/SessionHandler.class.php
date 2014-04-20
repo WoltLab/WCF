@@ -14,6 +14,7 @@ use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
@@ -545,54 +546,37 @@ class SessionHandler extends SingletonFactory {
 	 * 
 	 * @param	\wcf\data\userUser		$user
 	 * @param	boolean				$hideSession	if true, database won't be updated
+	 * @return	boolean
 	 */
 	public function changeUser(User $user, $hideSession = false) {
-		$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
-		
-		$isNewSession = true;
-		if ($user->userID) {
-			if ($this->supportsVirtualSessions) {
-				// find existing session
-				$session = call_user_func(array($this->sessionClassName, 'getSessionByUserID'), $user->userID);
-				
-				if ($session !== null) {
-					// delete guest session
-					$sessionEditor = new $this->sessionEditorClassName($this->session);
-					$sessionEditor->delete();
-					
-					// inherit existing session
-					$this->session = $session;
-					$this->user = $user;
-					$this->loadVirtualSession(true);
-					
-					$isNewSession = false;
-				}
-			}
-			else if (!$hideSession) {
-				// user is not a guest, delete all other sessions of this user
-				$sql = "DELETE FROM	".$sessionTable."
-					WHERE		sessionID <> ?
-							AND userID = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array($this->sessionID, $user->userID));
-				
-				// reset session variables
-				$this->variables = array();
-				$this->variablesChanged = true;
-			}
+		if ($this->supportsVirtualSessions) {
+			return $this->changeUserVirtual($user);
 		}
 		
-		if ($isNewSession) {	
-			// update user reference
-			$this->user = $user;
+		$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
+		
+		if ($user->userID && !$hideSession) {
+			// user is not a guest, delete all other sessions of this user
+			$sql = "DELETE FROM	".$sessionTable."
+				WHERE		sessionID <> ?
+						AND userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($this->sessionID, $user->userID));
 			
-			if (!$hideSession) {
-				// update session
-				$sessionEditor = new $this->sessionEditorClassName($this->session);
-				$sessionEditor->update(array(
-					'userID' => $this->user->userID
-				));
-			}
+			// reset session variables
+			$this->variables = array();
+			$this->variablesChanged = true;
+		}
+		
+		// update user reference
+		$this->user = $user;
+		
+		if (!$hideSession) {
+			// update session
+			$sessionEditor = new $this->sessionEditorClassName($this->session);
+			$sessionEditor->update(array(
+				'userID' => $this->user->userID
+			));
 		}
 		
 		// reset caches
@@ -600,6 +584,93 @@ class SessionHandler extends SingletonFactory {
 		$this->languageIDs = null;
 		$this->languageID = $this->user->languageID;
 		$this->styleID = $this->user->styleID;
+		
+		return true;
+	}
+	
+	/**
+	 * Changes the user stored in the session, this method is different from changeUser() because it
+	 * attempts to re-use sessions unless there are other virtual sessions for the same user (userID != 0).
+	 * In reverse, logging out attempts to re-use the current session or spawns a new session depending
+	 * on other virtual sessions.
+	 * 
+	 * @param	\wcf\data\user\User	$user
+	 */
+	protected function changeUserVirtual(User $user) {
+		$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
+		
+		switch ($user->userID) {
+			//
+			// user -> guest (logout)
+			//
+			case 0:
+				// delete virtual session
+				$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
+				$virtualSessionEditor->delete();
+				
+				// there are still other virtual sessions, create a new session
+				if (SessionVirtual::countVirtualSessions($this->session->sessionID)) {
+					// save session
+					$sessionData = array(
+						'sessionID' => StringUtil::getRandomID(),
+						'userID' => $user->userID,
+						'ipAddress' => UserUtil::getIpAddress(),
+						'userAgent' => UserUtil::getUserAgent(),
+						'lastActivityTime' => TIME_NOW,
+						'requestURI' => UserUtil::getRequestURI(),
+						'requestMethod' => (!empty($_SERVER['REQUEST_METHOD']) ? substr($_SERVER['REQUEST_METHOD'], 0, 7) : '')
+					);
+					
+					$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), $sessionData);
+					
+					HeaderUtil::setCookie('cookieHash', $this->session->sessionID);
+				}
+				else {
+					// this was the last virtual session, re-use current session
+					// update session
+					$sessionEditor = new $this->sessionEditorClassName($this->session);
+					$sessionEditor->update(array(
+						'userID' => $user->userID
+					));
+				}
+			break;
+			
+			//
+			// guest -> user (login)
+			//
+			default:
+				// find existing session for this user
+				$session = call_user_func(array($this->sessionClassName, 'getSessionByUserID'), $user->userID);
+				
+				// no session exists, re-use current session
+				if ($session === null) {
+					// update session
+					$sessionEditor = new $this->sessionEditorClassName($this->session);
+					$sessionEditor->update(array(
+						'userID' => $user->userID
+					));
+				}
+				else {
+					// delete guest session
+					$sessionEditor = new $this->sessionEditorClassName($this->session);
+					$sessionEditor->delete();
+					
+					// inherit existing session
+					$this->session = $session;
+				}
+			break;
+		}
+		
+		$this->user = $user;
+		$this->loadVirtualSession(true);
+		
+		// reset caches
+		$this->groupData = null;
+		$this->languageIDs = null;
+		$this->languageID = $this->user->languageID;
+		$this->styleID = $this->user->styleID;
+		
+		return false;
 	}
 	
 	/**
@@ -671,22 +742,10 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		// set user to guest
-		$this->changeUser(new User(null), true);
+		$deleteSession = $this->changeUser(new User(null), true);
 		
 		// remove session
-		$deleteSession = true;
-		if ($this->supportsVirtualSessions && ($this->virtualSession instanceof SessionVirtual)) {
-			// delete the virtual session
-			$virtualSessionEditor = new SessionVirtualEditor($this->virtualSession);
-			$virtualSessionEditor->delete();
-			
-			if (SessionVirtual::countVirtualSessions($this->session->sessionID)) {
-				// there are still remaining virtual sessions, do not delete master session
-				$deleteSession = false;
-			}
-		}
-		
-		if ($deleteSession) {
+		if ($deleteSession !== false) {
 			$sessionEditor = new $this->sessionEditorClassName($this->session);
 			$sessionEditor->delete();
 		}
