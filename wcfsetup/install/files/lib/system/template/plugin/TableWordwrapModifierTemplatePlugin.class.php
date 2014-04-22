@@ -29,7 +29,7 @@ class TableWordwrapModifierTemplatePlugin implements IModifierTemplatePlugin {
 		$substrings = explode(' ', $string);
 		
 		foreach ($substrings as $substring) {
-			if (!empty($result)) $result .= ' ';
+			if ($result !== '') $result .= ' ';
 			
 			$length = mb_strlen($substring);
 			if ($length > $width) {
