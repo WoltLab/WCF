@@ -238,6 +238,13 @@
 				<defaultvalue>1</defaultvalue>
 			</option>
 			
+			<option name="enable_pluginstore_widget">
+				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<!-- TODO: change this to "1" once the widget goes live -->
+				<defaultvalue>0</defaultvalue>
+			</option>
+			
 			<option name="module_system_recaptcha">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
