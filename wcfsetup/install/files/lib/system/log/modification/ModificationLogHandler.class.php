@@ -65,7 +65,14 @@ class ModificationLogHandler extends SingletonFactory {
 			throw new SystemException("Object type '".$objectType."' not found within definition 'com.woltlab.wcf.modifiableContent'");
 		}
 		
-		if ($userID === null) $userID = WCF::getUser()->userID;
+		if ($userID === null) {
+			if (WCF::getUser()->userID) {
+				$userID = WCF::getUser()->userID;
+			}
+			else if ($username === null) {
+				$username = 'System';
+			}
+		}
 		if ($username === null) {
 			if (WCF::getUser()->username) $username = WCF::getUser()->username;
 			else $username = '';
