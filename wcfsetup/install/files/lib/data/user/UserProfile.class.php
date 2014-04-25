@@ -770,6 +770,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		if (!$value) return '';
 		
 		$option = ViewableUserOption::getUserOption($name);
+		if (!$option->isVisible()) return '';
 		$option->setOptionValue($this->getDecoratedObject());
 		return $option->optionValue;
 	}
