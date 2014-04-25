@@ -1,7 +1,7 @@
 <!-- begin:parser_nonessential -->
 <div class="container containerPadding spoilerBox jsSpoilerBox">
 	<header class="jsOnly">
-		<a class="button jsSpoilerToggle">{if $buttonTitle}{$buttonTitle}{else}{lang}wcf.bbcode.spoiler.show{/lang}{/if}</a>
+		<a class="button jsSpoilerToggle">{if $buttonTitle}{@$buttonTitle}{else}{lang}wcf.bbcode.spoiler.show{/lang}{/if}</a>
 	</header>
 	
 	<div style="display: none">
