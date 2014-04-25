@@ -424,7 +424,9 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 			this._locationSearch = new WCF.Location.GoogleMaps.LocationSearch(locationSearchInputSelector, $.proxy(this._centerMap, this));
 		}
 		
-		this._markerClusterer = new MarkerClusterer(this._map, this._markers);
+		this._markerClusterer = new MarkerClusterer(this._map, this._markers, {
+			maxZoom: 17
+		});
 		
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
