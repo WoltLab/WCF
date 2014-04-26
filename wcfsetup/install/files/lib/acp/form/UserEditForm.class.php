@@ -276,7 +276,7 @@ class UserEditForm extends UserAddForm {
 				'signatureEnableHtml' => $this->signatureEnableHtml
 			)),
 			'groups' => $this->groupIDs,
-			'languages' => $this->visibleLanguages,
+			'languageIDs' => $this->visibleLanguages,
 			'options' => $saveOptions
 		);
 		
