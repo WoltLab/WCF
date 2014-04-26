@@ -271,7 +271,7 @@ class UserEditForm extends UserAddForm {
 				'disableSignatureReason' => $this->disableSignatureReason
 			)),
 			'groups' => $this->groupIDs,
-			'languages' => $this->visibleLanguages,
+			'languageIDs' => $this->visibleLanguages,
 			'options' => $saveOptions
 		);
 		$this->objectAction = new UserAction(array($this->userID), 'update', $data);
