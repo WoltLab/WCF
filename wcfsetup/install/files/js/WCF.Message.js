@@ -2962,6 +2962,8 @@ WCF.Message.Share.Page = Class.extend({
 	 * Fetches tweet count from Twitter.
 	 */
 	_fetchTwitter: function() {
+		if (window.location.protocol.match(/^https/)) return;
+		
 		this._fetchCount('http://urls.api.twitter.com/1/urls/count.json?url={pageURL}', $.proxy(function(data) {
 			if (data.count) {
 				this._ui.twitter.children('span.badge').show().text(data.count);
@@ -2973,6 +2975,8 @@ WCF.Message.Share.Page = Class.extend({
 	 * Fetches cumulative vote sum from Reddit.
 	 */
 	_fetchReddit: function() {
+		if (window.location.protocol.match(/^https/)) return;
+		
 		this._fetchCount('http://www.reddit.com/api/info.json?url={pageURL}', $.proxy(function(data) {
 			if (data.data.children.length) {
 				this._ui.reddit.children('span.badge').show().text(data.data.children[0].data.score);
