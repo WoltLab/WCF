@@ -1031,6 +1031,20 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.pageMenu.menuItemParameters"><![CDATA[Parameter]]></item>
 	</category>
 	
+	<category name="wcf.acp.pluginstore">
+		<item name="wcf.acp.pluginstore.api.error"><![CDATA[Fehler {@$status}): Der Server konnte die Anfrage nicht erfolgreich bearbeiten.]]></item>
+		<item name="wcf.acp.pluginstore.authorization"><![CDATA[Autorisierung erforderlich]]></item>
+		<item name="wcf.acp.pluginstore.authorization.credentials"><![CDATA[Zugangsdaten]]></item>
+		<item name="wcf.acp.pluginstore.authorization.credentials.description"><![CDATA[Geben Sie bitte Benutzername und Passwort für Ihr WoltLab.com-Benutzerkonto an.]]></item>
+		<item name="wcf.acp.pluginstore.authorization.credentials.rejected"><![CDATA[Ihre Zugangsdaten wurden vom Server abgewiesen, bitte überprüfen Sie Benutzername und Passwort!]]></item>
+		<item name="wcf.acp.pluginstore.authorization.username"><![CDATA[Benutzername]]></item>
+		<item name="wcf.acp.pluginstore.authorization.password"><![CDATA[Password]]></item>
+		<item name="wcf.acp.pluginstore.authorization.saveCredentials"><![CDATA[Zugangsdaten für aktuelle Sitzung speichern]]></item>
+		<item name="wcf.acp.pluginstore.purchasedItems.button.search"><![CDATA[Gekaufte Produkte (Plugin-Store)]]></item>
+		<item name="wcf.acp.pluginstore.purchasedItems"><![CDATA[Gekaufte Produkte (Plugin-Store)]]></item>
+		<item name="wcf.acp.pluginstore.purchasedItems.noResults"><![CDATA[Die Suche ergab keine Treffer, entweder haben Sie noch keine Produkte erworben oder diese sind nicht kompatibel.]]></item>
+	</category>
+	
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.description"><![CDATA[Für eine vollständige Aktualisierung aller Daten (z.B. nach einem Datenimport) führen Sie die Aktionen bitte in der hier angegebenen Reihenfolge durch.]]></item>

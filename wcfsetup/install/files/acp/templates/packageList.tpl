@@ -6,7 +6,11 @@
 		WCF.Language.addObject({
 			'wcf.acp.package.searchForUpdates': '{lang}wcf.acp.package.searchForUpdates{/lang}',
 			'wcf.acp.package.searchForUpdates.noResults': '{lang}wcf.acp.package.searchForUpdates.noResults{/lang}',
-			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}'
+			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}',
+			'wcf.acp.pluginstore.authorization': '{lang}wcf.acp.pluginstore.authorization{/lang}',
+			'wcf.acp.pluginstore.purchasedItems': '{lang}wcf.acp.pluginstore.purchasedItems{/lang}',
+			'wcf.acp.pluginstore.purchasedItems.button.search': '{lang}wcf.acp.pluginstore.purchasedItems.button.search{/lang}',
+			'wcf.acp.pluginstore.purchasedItems.noResults': '{lang}wcf.acp.pluginstore.purchasedItems.noResults{/lang}'
 		});
 		
 		{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage')}
@@ -22,6 +26,8 @@
 		{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage')}
 			new WCF.ACP.Package.Update.Search();
 		{/if}
+		
+		new WCF.ACP.PluginStore.PurchasedItems.Search([ {implode from=$wcfMajorReleases item=wcfMajorRelease}'{$wcfMajorRelease}'{/implode} ]);
 	});
 	//]]>
 </script>

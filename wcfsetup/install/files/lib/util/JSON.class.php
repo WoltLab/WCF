@@ -35,7 +35,7 @@ final class JSON {
 		$data = json_decode($json, $asArray);
 		
 		if ($data === null && self::getLastError() !== JSON_ERROR_NONE) {
-			throw new SystemException('Could not decode JSON "'.$json.'"');
+			throw new SystemException('Could not decode JSON (error '.self::getLastError().'): '.$json);
 		}
 		
 		return $data;

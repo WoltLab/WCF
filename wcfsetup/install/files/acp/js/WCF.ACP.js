@@ -1448,6 +1448,88 @@ WCF.ACP.Package.Update.Search = Class.extend({
 });
 
 /**
+ * Namespace for classes related to the WoltLab Plugin-Store.
+ */
+WCF.ACP.PluginStore = { };
+
+/**
+ * Namespace for classes handling items purchased in the WoltLab Plugin-Store.
+ */
+WCF.ACP.PluginStore.PurchasedItems = { };
+
+/**
+ * Searches for purchased items available for install but not yet installed.
+ */
+WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
+	_dialog: null,
+	_proxy: null,
+	_wcfMajorReleases: [ ],
+	
+	init: function(wcfMajorReleases) {
+		this._dialog = null;
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		this._wcfMajorReleases = wcfMajorReleases;
+		if (!this._wcfMajorReleases.length) {
+			console.debug("[WCF.ACP.PluginStore.PurchasedItems.Search] No suitable WCF major releases found, aborting.");
+			return;
+		}
+		
+		var $button = $('<li><a class="button"><span class="icon icon16 fa-shopping-cart" /> <span>' + WCF.Language.get('wcf.acp.pluginstore.purchasedItems.button.search') + '</span></a></li>');
+		$button.prependTo($('.contentNavigation:eq(0) > nav > ul')).click($.proxy(this._click, this));
+	},
+	
+	_click: function() {
+		this._proxy.setOption('data', {
+			actionName: 'searchForPurchasedItems',
+			className: 'wcf\\data\\package\\PackageAction',
+			parameters: {
+				wcfMajorReleases: this._wcfMajorReleases
+			}
+		});
+		this._proxy.sendRequest();
+	},
+	
+	_success: function(data, textStatus, jqXHR) {
+		if (data.returnValues.template) {
+			if (this._dialog === null) {
+				this._dialog = $('<div />').hide().appendTo(document.body);
+				this._dialog.html(data.returnValues.template).wcfDialog({
+					title: WCF.Language.get('wcf.acp.pluginstore.authorization')
+				});
+			}
+			else {
+				this._dialog.html(data.returnValues.template);
+				this._dialog.wcfDialog('open');
+			}
+			
+			this._dialog.find('button').click($.proxy(this._submit, this));
+		}
+		else if (data.returnValues.noResults) {
+			this._dialog.wcfDialog('option', 'title', 'Gekaufte Produkte (Plugin-Store)');
+			this._dialog.html(data.returnValues.noResults);
+			this._dialog.wcfDialog('open');
+		}
+	},
+	
+	_submit: function() {
+		this._dialog.wcfDialog('close');
+		
+		this._proxy.setOption('data', {
+			actionName: 'searchForPurchasedItems',
+			className: 'wcf\\data\\package\\PackageAction',
+			parameters: {
+				password: $('#pluginStorePassword').val(),
+				username: $('#pluginStoreUsername').val(),
+				wcfMajorReleases: this._wcfMajorReleases
+			}
+		});
+		this._proxy.sendRequest();
+	}
+});
+
+/**
  * Handles option selection.
  */
 WCF.ACP.Options = Class.extend({

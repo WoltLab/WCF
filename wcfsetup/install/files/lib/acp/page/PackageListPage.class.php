@@ -2,6 +2,7 @@
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
+use wcf\data\package\update\server\PackageUpdateServer;
 
 /**
  * Shows a list of all installed packages.
@@ -56,6 +57,12 @@ class PackageListPage extends SortablePage {
 	public $objectListClassName = 'wcf\data\package\PackageList';
 	
 	/**
+	 * list of WCF major releases covered by existing store update servers
+	 * @var	array<string>
+	 */
+	public $wcfMajorReleases = array();
+	
+	/**
 	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -65,13 +72,28 @@ class PackageListPage extends SortablePage {
 	}
 	
 	/**
+	 * @see	\wcf\page\IPage::readData()
+	 */
+	public function readData() {
+		parent::readData();
+		
+		$updateServers = PackageUpdateServer::getActiveUpdateServers();
+		foreach ($updateServers as $updateServer) {
+			if (preg_match('~^https?://store.woltlab.com/(maelstrom|typhoon)/$~', $updateServer->serverURL, $matches)) {
+				$this->wcfMajorReleases[] = $matches[1];
+			}
+		}
+	}
+	
+	/**
 	 * @see	\wcf\page\IPage::assignVariables()
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'packageID' => $this->packageID
+			'packageID' => $this->packageID,
+			'wcfMajorReleases' => $this->wcfMajorReleases
 		));
 	}
 	
