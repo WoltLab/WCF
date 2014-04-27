@@ -86,6 +86,16 @@ class RequestHandler extends SingletonFactory {
 		// build request
 		$this->buildRequest($application);
 		
+		// handle banned users
+		if (WCF::getUser()->userID && WCF::getUser()->banned && $this->activeRequest->getClassName() != 'wcf\action\LogoutAction') {
+			if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) {
+				throw new AJAXException(WCF::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'), AJAXException::INSUFFICIENT_PERMISSIONS);
+			}
+			else {
+				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'));
+			}
+		}
+		
 		// handle offline mode
 		if (!$isACPRequest && defined('OFFLINE') && OFFLINE) {
 			if (!WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode') && !$this->activeRequest->isAvailableDuringOfflineMode()) {
