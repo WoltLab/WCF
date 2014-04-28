@@ -1218,6 +1218,130 @@ WCF.ACP.Package.Search = Class.extend({
 	}
 });
 
+WCF.ACP.Package.Server = {
+	
+};
+
+WCF.ACP.Package.Server.Installation = Class.extend({
+	_proxy: null,
+	_selectedPackage: '',
+	
+	init: function() {
+		this._dialog = null;
+		this._selectedPackage = null;
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+	},
+	
+	bind: function() {
+		$('.jsButtonPackageInstall').removeClass('jsButtonPackageInstall').click($.proxy(this._click, this));
+	},
+	
+	/**
+	 * Prepares a package installation.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		var $button = $(event.currentTarget);
+		WCF.System.Confirmation.show($button.data('confirmMessage'), $.proxy(function(action) {
+			if (action === 'confirm') {
+				this._selectedPackage = $button.data('package');
+				this._selectedPackageVersion = $button.data('packageVersion');
+				this._prepareInstallation();
+			}
+		}, this));
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 */
+	_success: function(data) {
+		if (data.returnValues.queueID) {
+			if (this._dialog !== null) {
+				this._dialog.wcfDialog('close');
+			}
+			
+			var $installation = new WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false);
+			$installation.prepareInstallation();
+		}
+		else if (data.returnValues.template) {
+			if (this._dialog === null) {
+				this._dialog = $('<div>' + data.returnValues.template + '</div>').hide().appendTo(document.body);
+				this._dialog.wcfDialog({
+					title: WCF.Language.get('wcf.acp.package.update.unauthorized')
+				});
+			}
+			else {
+				this._dialog.html(data.returnValues.template).wcfDialog('open');
+			}
+			
+			this._dialog.find('.formSubmit > button').click($.proxy(this._submitAuthentication, this));
+		}
+	},
+	
+	/**
+	 * Submits authentication data for current update server.
+	 * 
+	 * @param	object		event
+	 */
+	_submitAuthentication: function(event) {
+		var $usernameField = $('#packageUpdateServerUsername');
+		var $passwordField = $('#packageUpdateServerPassword');
+		
+		// remove error messages if any
+		$usernameField.next('small.innerError').remove();
+		$passwordField.next('small.innerError').remove();
+		
+		var $continue = true;
+		if ($.trim($usernameField.val()) === '') {
+			$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($usernameField);
+			$continue = false;
+		}
+		
+		if ($.trim($passwordField.val()) === '') {
+			$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($passwordField);
+			$continue = false;
+		}
+		
+		if ($continue) {
+			this._prepareInstallation($(event.currentTarget).data('packageUpdateServerID'));
+		}
+	},
+	
+	/**
+	 * Prepares package installation.
+	 * 
+	 * @param	integer		packageUpdateServerID
+	 */
+	_prepareInstallation: function(packageUpdateServerID) {
+		var $parameters = {
+			'packages': { }
+		};
+		$parameters['packages'][this._selectedPackage] = this._selectedPackageVersion;
+		
+		if (packageUpdateServerID) {
+			$parameters.authData = {
+				packageUpdateServerID: packageUpdateServerID,
+				password: $.trim($('#packageUpdateServerPassword').val()),
+				saveCredentials: ($('#packageUpdateServerSaveCredentials:checked').length ? true : false),
+				username: $.trim($('#packageUpdateServerUsername').val())
+			};
+		}
+		
+		this._proxy.setOption('data', {
+			actionName: 'prepareInstallation',
+			className: 'wcf\\data\\package\\update\\PackageUpdateAction',
+			parameters: $parameters
+		});
+		this._proxy.sendRequest();
+	},
+})
+
 /**
  * Namespace for package update related classes.
  */
@@ -1504,12 +1628,21 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 				this._dialog.wcfDialog('open');
 			}
 			
-			this._dialog.find('button').click($.proxy(this._submit, this));
+			var $button = this._dialog.find('button').click($.proxy(this._submit, this));
+			this._dialog.find('input').keyup(function(event) {
+				if (event.which == $.ui.keyCode.ENTER) {
+					$button.trigger('click');
+					return false;
+				}
+			});
 		}
 		else if (data.returnValues.noResults) {
-			this._dialog.wcfDialog('option', 'title', 'Gekaufte Produkte (Plugin-Store)');
+			this._dialog.wcfDialog('option', 'title', WCF.Language.get('wcf.acp.pluginstore.purchasedItems'));
 			this._dialog.html(data.returnValues.noResults);
 			this._dialog.wcfDialog('open');
+		}
+		else if (data.returnValues.redirectURL) {
+			window.location = data.returnValues.redirectURL;
 		}
 	},
 	

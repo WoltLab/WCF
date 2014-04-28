@@ -6653,6 +6653,61 @@ WCF.System.Mobile.UX = {
 	}
 };
 
+WCF.System.Page.Multiple = Class.extend({
+	_cache: { },
+	_options: { },
+	_pageNo: 1,
+	_pages: 0,
+	
+	init: function(options) {
+		this._options = $.extend({
+			// elements
+			container: null,
+			pagination: null,
+			
+			// callbacks
+			loadItems: null
+		}, options);
+	},
+	
+	/**
+	 * Callback after page has changed.
+	 * 
+	 * @param	object		event
+	 * @param	object		data
+	 */
+	_showPage: function(event, data) {
+		if (data && data.activePage) {
+			if (!data.template) {
+				this._previousPageNo = this._pageNo;
+			}
+			
+			this._pageNo = data.activePage;
+		}
+		
+		if (this._cache[this._pageNo] || (data && data.template)) {
+			this._cache[this._previousPageNo] = this._list.children().detach();
+			
+			if (data && data.template) {
+				this._list.html(data.template);
+			}
+			else {
+				this._list.append(this._cache[this._pageNo]);
+			}
+		}
+		else {
+			this._loadItems();
+		}
+	},
+	
+	showPage: function(pageNo, template) {
+		this._showPage(null, {
+			activePage: pageNo,
+			template: template
+		});
+	}
+});
+
 /**
  * System notification overlays.
  * 

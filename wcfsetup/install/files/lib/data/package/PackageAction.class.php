@@ -46,10 +46,6 @@ class PackageAction extends AbstractDatabaseObjectAction {
 		$this->readString('password', true);
 		$this->readString('username', true);
 		
-		if (empty($this->parameters['wcfMajorReleases']) || !is_array($this->parameters['wcfMajorReleases'])) {
-			throw new UserInputException('wcfMajorReleases');
-		}
-		
 		if (empty($this->parameters['username'])) {
 			// check if user has already provided credentials
 			$sql = "SELECT	loginUsername, loginPassword
@@ -77,7 +73,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 		), array(
 			'username' => $this->parameters['username'],
 			'password' => $this->parameters['password'],
-			'wcfMajorReleases' => $this->parameters['wcfMajorReleases']
+			'wcfVersion' => WCF_VERSION
 		));
 		
 		$request->execute();
@@ -94,6 +90,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 				}
 				else {
 					WCF::getSession()->register('__pluginStoreProducts', $response['products']);
+					WCF::getSession()->register('__pluginStoreWcfMajorReleases', $response['wcfMajorReleases']);
 					
 					return array(
 						'redirectURL' => LinkHandler::getInstance()->getLink('PluginStorePurchasedItems')
