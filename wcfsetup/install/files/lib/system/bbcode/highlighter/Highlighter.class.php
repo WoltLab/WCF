@@ -227,12 +227,8 @@ abstract class Highlighter extends SingletonFactory {
 				if (isset($matches[2])) $comment = $matches[2];
 				else $comment = '';
 				
-				// strip slashes
-				$string = str_replace("\\\"", "\"", $string);
 				$hash = '';
 				if (!empty($comment)) {
-					$comment = str_replace("\\\"", "\"", $comment);
-						
 					// create hash
 					$hash = StringStack::pushToStringStack('<span class="hlComments">'.StringUtil::encodeHTML($comment).'</span>', 'highlighterComments');
 				}

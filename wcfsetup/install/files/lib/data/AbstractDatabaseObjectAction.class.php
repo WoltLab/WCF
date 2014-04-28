@@ -374,7 +374,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
-	 * Returns a single object and throws and exception if no or more than one object is given.
+	 * Returns a single object and throws an UserInputException if no or more than one object is given.
 	 * 
 	 * @return	\wcf\data\DatabaseObject
 	 */

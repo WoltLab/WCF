@@ -161,10 +161,8 @@ class PollManager extends SingletonFactory {
 		
 		// poll data
 		if (isset($_POST['pollEndTime'])) {
-			$endTime = StringUtil::trim($_POST['pollEndTime']);
-			$endTime = (!empty($endTime)) ? @strtotime($endTime . ':00') : '';
-			
-			$this->pollData['endTime'] = ($endTime) ?: 0;
+			$d = \DateTime::createFromFormat('Y-m-d H:i', $_POST['pollEndTime'], WCF::getUser()->getTimeZone());
+			$this->pollData['endTime'] = ($d !== false) ? $d->getTimestamp() : 0;
 		}
 		
 		if (isset($_POST['pollMaxVotes'])) $this->pollData['maxVotes'] = max(intval($_POST['pollMaxVotes']), 1); // force a minimum of 1

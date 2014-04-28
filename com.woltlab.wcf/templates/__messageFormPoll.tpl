@@ -40,7 +40,7 @@
 					<label for="pollEndTime">{lang}wcf.poll.endTime{/lang}</label>
 				</dt>
 				<dd>
-					<input type="datetime" name="pollEndTime" id="pollEndTime" value="{if $pollEndTime}{@'Y-m-d H:i'|gmdate:$pollEndTime}{/if}" class="medium" />
+					<input type="datetime" name="pollEndTime" id="pollEndTime" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium" data-ignore-timezone="true" />
 					{if $errorField == 'pollEndTime'}
 						<small class="innerError">
 							{lang}wcf.poll.endTime.error.{@$errorType}{/lang}
