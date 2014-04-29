@@ -1,13 +1,11 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\HTTPUnauthorizedException;
-use wcf\system\exception\UserInputException;
+use wcf\system\exception\SystemException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HTTPRequest;
 use wcf\util\JSON;
-use wcf\system\exception\SystemException;
-use wcf\system\request\LinkHandler;
 
 /**
  * Executes package-related actions.

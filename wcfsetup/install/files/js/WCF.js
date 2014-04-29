@@ -6653,6 +6653,8 @@ WCF.System.Mobile.UX = {
 	}
 };
 
+WCF.System.Page = { };
+
 WCF.System.Page.Multiple = Class.extend({
 	_cache: { },
 	_options: { },
