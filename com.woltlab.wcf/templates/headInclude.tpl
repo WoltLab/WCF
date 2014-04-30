@@ -40,16 +40,33 @@
 {/if}
 <script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+
+{if ENABLE_DEBUG_MODE}
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Like.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ACL.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Attachment.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ColorPicker.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Comment.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ImageViewer.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Location.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Poll.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Search.Message.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Tagging.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User.js?v={@$__wcfVersion}"></script>
+{else}
+<script data-relocate="true" src="{@$__wcf->getPath()js/WCF.Combined.min.js?v={@$__wcfVersion}"></script>
+{/if}
+
 <script data-relocate="true">
 	//<![CDATA[
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 	//]]>
 </script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Location{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath('wcf')}js/WCF.Like{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+
 {event name='javascriptInclude'}
 
 <!-- Stylesheets -->
