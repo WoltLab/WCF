@@ -27,7 +27,7 @@
 			new WCF.ACP.Package.Update.Search();
 		{/if}
 		
-		new WCF.ACP.PluginStore.PurchasedItems.Search([ {implode from=$wcfMajorReleases item=wcfMajorRelease}'{$wcfMajorRelease}'{/implode} ]);
+		new WCF.ACP.PluginStore.PurchasedItems.Search();
 	});
 	//]]>
 </script>

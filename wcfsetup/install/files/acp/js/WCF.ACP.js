@@ -1587,18 +1587,12 @@ WCF.ACP.PluginStore.PurchasedItems = { };
 WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 	_dialog: null,
 	_proxy: null,
-	_wcfMajorReleases: [ ],
 	
-	init: function(wcfMajorReleases) {
+	init: function() {
 		this._dialog = null;
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
-		this._wcfMajorReleases = wcfMajorReleases;
-		if (!this._wcfMajorReleases.length) {
-			console.debug("[WCF.ACP.PluginStore.PurchasedItems.Search] No suitable WCF major releases found, aborting.");
-			return;
-		}
 		
 		var $button = $('<li><a class="button"><span class="icon icon16 fa-shopping-cart" /> <span>' + WCF.Language.get('wcf.acp.pluginstore.purchasedItems.button.search') + '</span></a></li>');
 		$button.prependTo($('.contentNavigation:eq(0) > nav > ul')).click($.proxy(this._click, this));
@@ -1607,10 +1601,7 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 	_click: function() {
 		this._proxy.setOption('data', {
 			actionName: 'searchForPurchasedItems',
-			className: 'wcf\\data\\package\\PackageAction',
-			parameters: {
-				wcfMajorReleases: this._wcfMajorReleases
-			}
+			className: 'wcf\\data\\package\\PackageAction'
 		});
 		this._proxy.sendRequest();
 	},
@@ -1654,8 +1645,7 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 			className: 'wcf\\data\\package\\PackageAction',
 			parameters: {
 				password: $('#pluginStorePassword').val(),
-				username: $('#pluginStoreUsername').val(),
-				wcfMajorReleases: this._wcfMajorReleases
+				username: $('#pluginStoreUsername').val()
 			}
 		});
 		this._proxy.sendRequest();
