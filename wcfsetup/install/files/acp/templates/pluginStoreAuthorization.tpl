@@ -1,18 +1,18 @@
 {if $rejected}
-	<p class="error">{lang}wcf.acp.pluginstore.authorization.credentails.rejected{/lang}</p>
+	<p class="error">{lang}wcf.acp.pluginStore.authorization.credentails.rejected{/lang}</p>
 {/if}
 
 <fieldset{if $rejected} class="marginTop"{/if}>
-	<legend>{lang}wcf.acp.pluginstore.authorization.credentials{/lang}</legend>
-	<small>{lang}wcf.acp.pluginstore.authorization.credentails.description{/lang}</small>
+	<legend>{lang}wcf.acp.pluginStore.authorization.credentials{/lang}</legend>
+	<small>{lang}wcf.acp.pluginStore.authorization.credentials.description{/lang}</small>
 	
 	<dl>
-		<dt><label for="pluginStoreUsername">{lang}wcf.acp.pluginstore.authorization.username{/lang}</label></dt>
+		<dt><label for="pluginStoreUsername">{lang}wcf.acp.pluginStore.authorization.username{/lang}</label></dt>
 		<dd><input type="text" id="pluginStoreUsername" value="" class="long" /></dd>
 	</dl>
 	
 	<dl>
-		<dt><label for="pluginStorePassword">{lang}wcf.acp.pluginstore.authorization.password{/lang}</label></dt>
+		<dt><label for="pluginStorePassword">{lang}wcf.acp.pluginStore.authorization.password{/lang}</label></dt>
 		<dd><input type="password" id="pluginStorePassword" value="" class="long" /></dd>
 	</dl>
 </fieldset>

@@ -58,7 +58,7 @@
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Tagging.js?v={@$__wcfVersion}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User.js?v={@$__wcfVersion}"></script>
 {else}
-<script data-relocate="true" src="{@$__wcf->getPath()js/WCF.Combined.min.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Combined.min.js?v={@$__wcfVersion}"></script>
 {/if}
 
 <script data-relocate="true">
@@ -164,7 +164,6 @@
 		});
 		
 		WCF.Dropdown.init();
-
 		WCF.System.Mobile.UX.init();
 		
 		new WCF.Date.Time();

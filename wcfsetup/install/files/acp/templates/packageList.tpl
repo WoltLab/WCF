@@ -7,10 +7,10 @@
 			'wcf.acp.package.searchForUpdates': '{lang}wcf.acp.package.searchForUpdates{/lang}',
 			'wcf.acp.package.searchForUpdates.noResults': '{lang}wcf.acp.package.searchForUpdates.noResults{/lang}',
 			'wcf.acp.package.uninstallation.title': '{lang}wcf.acp.package.uninstallation.title{/lang}',
-			'wcf.acp.pluginstore.authorization': '{lang}wcf.acp.pluginstore.authorization{/lang}',
-			'wcf.acp.pluginstore.purchasedItems': '{lang}wcf.acp.pluginstore.purchasedItems{/lang}',
-			'wcf.acp.pluginstore.purchasedItems.button.search': '{lang}wcf.acp.pluginstore.purchasedItems.button.search{/lang}',
-			'wcf.acp.pluginstore.purchasedItems.noResults': '{lang}wcf.acp.pluginstore.purchasedItems.noResults{/lang}'
+			'wcf.acp.pluginStore.authorization': '{lang}wcf.acp.pluginStore.authorization{/lang}',
+			'wcf.acp.pluginStore.purchasedItems': '{lang}wcf.acp.pluginStore.purchasedItems{/lang}',
+			'wcf.acp.pluginStore.purchasedItems.button.search': '{lang}wcf.acp.pluginStore.purchasedItems.button.search{/lang}',
+			'wcf.acp.pluginStore.purchasedItems.noResults': '{lang}wcf.acp.pluginStore.purchasedItems.noResults{/lang}'
 		});
 		
 		{if $__wcf->session->getPermission('admin.system.package.canUninstallPackage')}

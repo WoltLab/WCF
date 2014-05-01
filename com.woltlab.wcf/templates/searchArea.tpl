@@ -27,7 +27,7 @@
 </aside>
 
 {if !OFFLINE || $__wcf->session->getPermission('admin.general.canViewPageDuringOfflineMode')}
-	<script data-relocate="true" src="{@$__wcf->getPath('wcf')}js/WCF.Search.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+	{*<script data-relocate="true" src="{@$__wcf->getPath('wcf')}js/WCF.Search.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>*}
 	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {

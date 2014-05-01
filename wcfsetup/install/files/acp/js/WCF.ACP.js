@@ -1594,7 +1594,7 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		var $button = $('<li><a class="button"><span class="icon icon16 fa-shopping-cart" /> <span>' + WCF.Language.get('wcf.acp.pluginstore.purchasedItems.button.search') + '</span></a></li>');
+		var $button = $('<li><a class="button"><span class="icon icon16 fa-shopping-cart" /> <span>' + WCF.Language.get('wcf.acp.pluginStore.purchasedItems.button.search') + '</span></a></li>');
 		$button.prependTo($('.contentNavigation:eq(0) > nav > ul')).click($.proxy(this._click, this));
 	},
 	
@@ -1611,7 +1611,7 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 			if (this._dialog === null) {
 				this._dialog = $('<div />').hide().appendTo(document.body);
 				this._dialog.html(data.returnValues.template).wcfDialog({
-					title: WCF.Language.get('wcf.acp.pluginstore.authorization')
+					title: WCF.Language.get('wcf.acp.pluginStore.authorization')
 				});
 			}
 			else {
@@ -1628,7 +1628,7 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 			});
 		}
 		else if (data.returnValues.noResults) {
-			this._dialog.wcfDialog('option', 'title', WCF.Language.get('wcf.acp.pluginstore.purchasedItems'));
+			this._dialog.wcfDialog('option', 'title', WCF.Language.get('wcf.acp.pluginStore.purchasedItems'));
 			this._dialog.html(data.returnValues.noResults);
 			this._dialog.wcfDialog('open');
 		}
