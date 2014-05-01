@@ -332,6 +332,35 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * Add users to given groups.
 	 */
+	public function removeFromGroups() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$groupIDs = $this->parameters['groups'];
+		
+		foreach ($this->objects as $userEditor) {
+			$userEditor->removeFromGroups($groupIDs);
+		}
+		
+		//reread objects
+		$this->objects = array();
+		UserEditor::resetCache();
+		$this->readObjects();
+		
+		if (MODULE_USER_RANK) {
+			$action = new UserProfileAction($this->objects, 'updateUserRank');
+			$action->executeAction();
+		}
+		if (MODULE_USERS_ONLINE) {
+			$action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
+			$action->executeAction();
+		}
+	}
+	
+	/**
+	 * Add users to given groups.
+	 */
 	public function addToGroups() {
 		if (empty($this->objects)) {
 			$this->readObjects();
