@@ -314,11 +314,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$action->executeAction();
 		}
 		
+		if (!empty($removeGroups)) {
+			$action = new UserAction($this->objects, 'removeFromGroups', array(
+				'groups' => $groupIDs
+			));
+			$action->executeAction();
+		}
+		
 		foreach ($this->objects as $userEditor) {
-			if (!empty($removeGroups)) {
-				$userEditor->removeFromGroups($removeGroups);
-			}
-			
 			if (!empty($userOptions)) {
 				$userEditor->updateUserOptions($userOptions);
 			}
@@ -330,7 +333,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * Add users to given groups.
+	 * Remove users from given groups.
 	 */
 	public function removeFromGroups() {
 		if (empty($this->objects)) {
