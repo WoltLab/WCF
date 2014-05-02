@@ -6660,6 +6660,7 @@ WCF.System.Page.Multiple = Class.extend({
 	_options: { },
 	_pageNo: 1,
 	_pages: 0,
+	_previousPageNo: 0,
 	
 	init: function(options) {
 		this._options = $.extend({
@@ -6670,6 +6671,17 @@ WCF.System.Page.Multiple = Class.extend({
 			// callbacks
 			loadItems: null
 		}, options);
+		
+		this._cache = { };
+		this._pageNo = 1;
+		this._pages = 0;
+		this._previousPageNo = 0;
+		
+		if (this._pagination.data('pages')) {
+			this._pagination.wcfPages({
+				maxPage: this._pagination.data('pages')
+			}).on('wcfpagesswitched', $.proxy(this._showPage, this));
+		}
 	},
 	
 	/**
@@ -6698,7 +6710,7 @@ WCF.System.Page.Multiple = Class.extend({
 			}
 		}
 		else {
-			this._loadItems();
+			this._options.loadItems();
 		}
 	},
 	
@@ -6707,6 +6719,10 @@ WCF.System.Page.Multiple = Class.extend({
 			activePage: pageNo,
 			template: template
 		});
+	},
+	
+	getPageNo: function() {
+		return this._pageNo;
 	}
 });
 

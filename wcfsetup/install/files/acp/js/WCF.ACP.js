@@ -1218,9 +1218,7 @@ WCF.ACP.Package.Search = Class.extend({
 	}
 });
 
-WCF.ACP.Package.Server = {
-	
-};
+WCF.ACP.Package.Server = { };
 
 WCF.ACP.Package.Server.Installation = Class.extend({
 	_proxy: null,
