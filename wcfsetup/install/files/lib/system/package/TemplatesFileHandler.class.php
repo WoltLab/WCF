@@ -15,6 +15,11 @@ use wcf\system\WCF;
  */
 class TemplatesFileHandler extends ACPTemplatesFileHandler {
 	/**
+	 * @see	\wcf\system\package\ACPTemplatesFileHandler::$supportsTemplateGroups
+	 */
+	protected $supportsTemplateGroups = true;
+	
+	/**
 	 * @see	\wcf\system\package\ACPTemplatesFileHandler::$tableName
 	 */
 	protected $tableName = 'template';
