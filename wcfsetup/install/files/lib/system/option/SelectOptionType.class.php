@@ -20,7 +20,6 @@ class SelectOptionType extends RadioButtonOptionType {
 	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
-		// get options
 		$options = $this->parseEnableOptions($option);
 		
 		WCF::getTPL()->assign(array(
@@ -38,8 +37,17 @@ class SelectOptionType extends RadioButtonOptionType {
 	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
-		$this->allowEmptyValue = true;
-		return $this->getFormElement($option, $value);
+		$options = $this->parseEnableOptions($option);
+		
+		WCF::getTPL()->assign(array(
+			'disableOptions' => $options['disableOptions'],
+			'enableOptions' => $options['enableOptions'],
+			'option' => $option,
+			'searchOption' => isset($_POST['searchOptions'][$option->optionName]),
+			'selectOptions' => $option->parseSelectOptions(),
+			'value' => $value
+		));
+		return WCF::getTPL()->fetch('selectSearchableOptionType');
 	}
 	
 	/**

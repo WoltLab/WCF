@@ -19,8 +19,7 @@ use wcf\util\DateUtil;
  */
 class BirthdayOptionType extends DateOptionType {
 	/**
-	 * input css class
-	 * @var	string
+	 * @see	\wcf\system\option\TextOptionType::$inputClass
 	 */
 	protected $inputClass = 'birthday';
 	
@@ -67,18 +66,28 @@ class BirthdayOptionType extends DateOptionType {
 	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
-		if (empty($value['ageFrom']) || empty($value['ageTo'])) return false;
+		if (empty($value['ageFrom']) && empty($value['ageTo'])) return false;
 		
 		$ageFrom = intval($value['ageFrom']);
 		$ageTo = intval($value['ageTo']);
 		if ($ageFrom < 0 || $ageFrom > 120) return false;
 		if ($ageTo < 0 || $ageTo > 120) return false;
-		if (!$ageFrom || !$ageTo) return false;
 		
 		$dateFrom = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P'.($ageTo + 1).'Y'))->add(new \DateInterval('P1D'));
 		$dateTo = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P'.$ageFrom.'Y'));
 		
-		$conditions->add("option_value.userOption".User::getUserOptionID('birthdayShowYear')." = ? AND option_value.userOption".$option->optionID." BETWEEN DATE(?) AND DATE(?)", array(1, $dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')));
+		$conditions->add('option_value.userOption'.User::getUserOptionID('birthdayShowYear').' = ?', array(1));
+		
+		if ($ageFrom && $ageTo) {
+			$conditions->add('option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', array($dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')));
+		}
+		else if ($ageFrom) {
+			$conditions->add('option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', array('1893-01-01', $dateTo->format('Y-m-d')));
+		}
+		else {
+			$conditions->add('option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', array($dateFrom->format('Y-m-d'), DateUtil::getDateTimeByTimestamp(TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d')));
+		}
+		
 		return true;
 	}
 }

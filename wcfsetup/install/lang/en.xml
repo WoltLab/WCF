@@ -2575,6 +2575,9 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
 		<item name="wcf.user.option.googlePlus.description"><![CDATA[21 digits Google Plus user ID]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Can Write Comments on My Wall]]></item>
+		
+		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[User's selection for “{lang}wcf.user.option.{$option->optionName}{/lang}”:]]></item>
+		<item name="wcf.user.option.searchTextOption"><![CDATA[“{lang}wcf.user.option.{$option->optionName}{/lang}” contains:]]></item>
 	</category>
 	
 	<category name="wcf.user.mail">
