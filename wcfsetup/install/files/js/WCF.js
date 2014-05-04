@@ -1630,7 +1630,10 @@ WCF.Clipboard = {
 			
 			// add 'unmark all'
 			$('<li class="dropdownDivider" />').appendTo($itemList);
-			$('<li><span>' + WCF.Language.get('wcf.clipboard.item.unmarkAll') + '</span></li>').appendTo($itemList).click($.proxy(function() {
+			var $foo = $typeName;
+			$('<li><span>' + WCF.Language.get('wcf.clipboard.item.unmarkAll') + '</span></li>').data('typeName', $typeName).appendTo($itemList).click($.proxy(function(event) {
+				var $typeName = $(event.currentTarget).data('typeName');
+				
 				this._proxy.setOption('data', {
 					action: 'unmarkAll',
 					type: $typeName
@@ -1649,6 +1652,7 @@ WCF.Clipboard = {
 					// call and restore success method
 					this._success(data, textStatus, jqXHR);
 					this._proxy.setOption('success', $.proxy(this._success, this));
+					this._loadMarkedItems();
 				}, this));
 				this._proxy.sendRequest();
 			}, this));

@@ -213,6 +213,64 @@
 }
 
 /* 3rd party login */
-.buttonGroup.thirdPartyLogin {
+.buttonList.thirdPartyLogin {
 	text-align: center;
+}
+
+.thirdPartyLoginButton {
+	border-radius: 3px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	color: #fff;
+	display: inline-block;
+	font-size: 0;
+	
+	&:hover {
+		color: #fff;
+		text-decoration: none;
+	}
+	
+	> .icon {
+		border-right: 1px solid rgba(0, 0, 0, 0.1);
+		color: #fff;
+		text-shadow: none;
+		padding: 4px 6px;
+	}
+	
+	> span:not(.icon) {
+		font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+		font-size: 1rem;
+		padding: 4px 12px;
+	}
+	
+	&.googleLoginButton {
+		background-color: rgb(221, 75, 57);
+		
+		&:hover {
+			background-color: rgb(202, 53, 35);
+		}
+	}
+	
+	&.facebookLoginButton {
+		background-color: rgb(59, 89, 152);
+		
+		&:hover {
+			background-color: rgb(48, 72, 123);
+		}
+	}
+	
+	&.twitterLoginButton {
+		background-color: rgb(85, 172, 238);
+		
+		&:hover {
+			background-color: rgb(48, 154, 234);
+		}
+	}
+	
+	&.githubLoginButton {
+		background-color: rgb(68, 68, 68);
+		
+		&:hover {
+			background-color: rgb(48, 48, 48);
+		}
+	}
 }
