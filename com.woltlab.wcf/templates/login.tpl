@@ -46,7 +46,7 @@
 			<dl{if $errorField == 'username'} class="formError"{/if}>
 				<dt><label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" required="required" class="long" />
+					<input type="text" id="username" name="username" value="{$username}" required="required" class="medium" />
 					{if $errorField == 'username'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -62,15 +62,17 @@
 			{if !REGISTER_DISABLED}
 				<dl>
 					<dt>{lang}wcf.user.login.action{/lang}</dt>
-					<dd><label><input type="radio" name="action" value="register" /> {lang}wcf.user.login.action.register{/lang}</label></dd>
-					<dd><label><input type="radio" name="action" value="login" checked="checked" /> {lang}wcf.user.login.action.login{/lang}</label></dd>
+					<dd>
+						<label><input type="radio" name="action" value="register" /> {lang}wcf.user.login.action.register{/lang}</label>
+						<label><input type="radio" name="action" value="login" checked="checked" /> {lang}wcf.user.login.action.login{/lang}</label>
+					</dd>
 				</dl>
 			{/if}
 			
 			<dl{if $errorField == 'password'} class="formError"{/if}>
 				<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 				<dd>
-					<input type="password" id="password" name="password" value="{$password}" class="long" />
+					<input type="password" id="password" name="password" value="{$password}" class="medium" />
 					{if $errorField == 'password'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
