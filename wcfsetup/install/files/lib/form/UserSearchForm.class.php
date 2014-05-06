@@ -172,6 +172,11 @@ class UserSearchForm extends UserOptionListForm {
 		// dynamic fields
 		$this->buildDynamicConditions();
 		
+		// if no conditions exists, no need to send query
+		if (!count($this->conditions->getParameters())) {
+			return;
+		}
+		
 		// do search
 		$statement = WCF::getDB()->prepareStatement($sql.$this->conditions, $this->maxResults);
 		$statement->execute($this->conditions->getParameters());

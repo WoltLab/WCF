@@ -17,6 +17,12 @@ use wcf\system\WCF;
  */
 class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 	/**
+	 * template type supports template groups
+	 * @var	boolean
+	 */
+	protected $supportsTemplateGroups = false;
+	
+	/**
 	 * name of the database table where the installed files are logged
 	 * @var	string
 	 */
@@ -39,6 +45,9 @@ class ACPTemplatesFileHandler extends PackageInstallationFileHandler {
 				$conditions->add('packageID <> ?', array($this->packageInstallation->getPackageID()));
 				$conditions->add('templateName IN (?)', array($files));
 				$conditions->add('application = ?', array($this->application));
+				if ($this->supportsTemplateGroups) {
+					$conditions->add("templateGroupID IS NULL");
+				}
 				
 				$sql = "SELECT	packageID, templateName
 					FROM	wcf".WCF_N."_".$this->tableName."

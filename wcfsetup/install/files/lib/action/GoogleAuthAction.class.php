@@ -68,7 +68,7 @@ class GoogleAuthAction extends AbstractAction {
 			
 			try {
 				// fetch userdata
-				$request = new HTTPRequest('https://www.googleapis.com/oauth2/v1/userinfo');
+				$request = new HTTPRequest('https://www.googleapis.com/plus/v1/people/me');
 				$request->addHeader('Authorization', 'Bearer '.$data['access_token']);
 				$request->execute();
 				$reply = $request->getReply();
@@ -114,15 +114,17 @@ class GoogleAuthAction extends AbstractAction {
 				
 				// save data for connection
 				if (WCF::getUser()->userID) {
-					WCF::getSession()->register('__googleUsername', $userData['name']);
+					WCF::getSession()->register('__googleUsername', $userData['displayName']);
 					WCF::getSession()->register('__googleData', $userData);
 					
 					HeaderUtil::redirect(LinkHandler::getInstance()->getLink('AccountManagement').'#3rdParty');
 				}
 				// save data and redirect to registration
 				else {
-					WCF::getSession()->register('__username', $userData['name']);
-					if (isset($userData['email'])) WCF::getSession()->register('__email', $userData['email']);
+					WCF::getSession()->register('__username', $userData['displayName']);
+					if (isset($userData['emails'][0]['value'])) {
+						WCF::getSession()->register('__email', $userData['emails'][0]['value']);
+					}
 					
 					WCF::getSession()->register('__googleData', $userData);
 					
@@ -145,7 +147,7 @@ class GoogleAuthAction extends AbstractAction {
 		// start auth by redirecting to google
 		$token = StringUtil::getRandomID();
 		WCF::getSession()->register('__googleInit', $token);
-		HeaderUtil::redirect("https://accounts.google.com/o/oauth2/auth?client_id=".rawurlencode(StringUtil::trim(GOOGLE_PUBLIC_KEY)). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=https://www.googleapis.com/auth/userinfo.profile+https://www.googleapis.com/auth/userinfo.email&response_type=code");
+		HeaderUtil::redirect("https://accounts.google.com/o/oauth2/auth?client_id=".rawurlencode(StringUtil::trim(GOOGLE_PUBLIC_KEY)). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=profile+email&response_type=code");
 		$this->executed();
 		exit;
 	}

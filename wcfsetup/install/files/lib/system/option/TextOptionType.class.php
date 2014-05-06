@@ -46,17 +46,30 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
-		return $this->getFormElement($option, $value);
+		WCF::getTPL()->assign(array(
+			'option' => $option,
+			'inputType' => $this->inputType,
+			'inputClass' => $this->inputClass,
+			'searchOption' => isset($_POST['searchOptions'][$option->optionName]),
+			'value' => $value
+		));
+		return WCF::getTPL()->fetch('textSearchableOptionType');
 	}
 	
 	/**
 	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
-		$value = StringUtil::trim($value);
-		if (empty($value)) return false;
+		if (!isset($_POST['searchOptions'][$option->optionName])) return false;
 		
-		$conditions->add("option_value.userOption".$option->optionID." LIKE ?", array('%'.addcslashes($value, '_%').'%'));
+		$value = StringUtil::trim($value);
+		if ($value == '') {
+			$conditions->add("option_value.userOption".$option->optionID." = ?", array(''));
+		}
+		else {
+			$conditions->add("option_value.userOption".$option->optionID." LIKE ?", array('%'.addcslashes($value, '_%').'%'));
+		}
+		
 		return true;
 	}
 	
@@ -86,7 +99,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 	 * 
 	 * @param	\wcf\data\option\Option		$option
 	 * @param	string				$newValue
-	 * @return					string
+	 * @return	string
 	 */
 	protected function getContent(Option $option, $newValue) {
 		if ($option->contentpattern) {

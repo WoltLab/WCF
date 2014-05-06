@@ -46,7 +46,7 @@
 			<dl{if $errorField == 'username'} class="formError"{/if}>
 				<dt><label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" required="required" class="long" />
+					<input type="text" id="username" name="username" value="{$username}" required="required" class="medium" />
 					{if $errorField == 'username'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -62,15 +62,17 @@
 			{if !REGISTER_DISABLED}
 				<dl>
 					<dt>{lang}wcf.user.login.action{/lang}</dt>
-					<dd><label><input type="radio" name="action" value="register" /> {lang}wcf.user.login.action.register{/lang}</label></dd>
-					<dd><label><input type="radio" name="action" value="login" checked="checked" /> {lang}wcf.user.login.action.login{/lang}</label></dd>
+					<dd>
+						<label><input type="radio" name="action" value="register" /> {lang}wcf.user.login.action.register{/lang}</label>
+						<label><input type="radio" name="action" value="login" checked="checked" /> {lang}wcf.user.login.action.login{/lang}</label>
+					</dd>
 				</dl>
 			{/if}
 			
 			<dl{if $errorField == 'password'} class="formError"{/if}>
 				<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 				<dd>
-					<input type="password" id="password" name="password" value="{$password}" class="long" />
+					<input type="password" id="password" name="password" value="{$password}" class="medium" />
 					{if $errorField == 'password'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -117,25 +119,25 @@
 							{content}
 								{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
 									<li id="githubAuth" class="3rdPartyAuth">
-										<a href="{link controller='GithubAuth'}{/link}" class="button small"><span class="icon icon16 icon-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
+										<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton"><span class="icon icon16 icon-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
 									</li>
 								{/if}
 								
 								{if TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== ''}
 									<li id="twitterAuth" class="3rdPartyAuth">
-										<a href="{link controller='TwitterAuth'}{/link}" class="button small"><span class="icon icon16 icon-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
+										<a href="{link controller='TwitterAuth'}{/link}" class="thirdPartyLoginButton twitterLoginButton"><span class="icon icon16 icon-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
 									</li>
 								{/if}
 								
 								{if FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== ''}
 									<li id="facebookAuth" class="3rdPartyAuth">
-										<a href="{link controller='FacebookAuth'}{/link}" class="button small"><span class="icon icon16 icon-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.login{/lang}</span></a>
+										<a href="{link controller='FacebookAuth'}{/link}" class="thirdPartyLoginButton facebookLoginButton"><span class="icon icon16 icon-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.login{/lang}</span></a>
 									</li>
 								{/if}
 								
 								{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
 									<li id="googleAuth" class="3rdPartyAuth">
-										<a href="{link controller='GoogleAuth'}{/link}" class="button small"><span class="icon icon16 icon-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
+										<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton"><span class="icon icon16 icon-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
 									</li>
 								{/if}
 								

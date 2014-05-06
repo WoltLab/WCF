@@ -30,6 +30,19 @@ class MultiSelectOptionType extends SelectOptionType {
 	}
 	
 	/**
+	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 */
+	public function getSearchFormElement(Option $option, $value) {
+		WCF::getTPL()->assign(array(
+			'option' => $option,
+			'searchOption' => isset($_POST['searchOptions'][$option->optionName]),
+			'selectOptions' => $option->parseSelectOptions(),
+			'value' => (!is_array($value) ? explode("\n", $value) : $value)
+		));
+		return WCF::getTPL()->fetch('multiSelectSearchableOptionType');
+	}
+	
+	/**
 	 * @see	\wcf\system\option\IOptionType::validate()
 	 */
 	public function validate(Option $option, $newValue) {
@@ -54,9 +67,10 @@ class MultiSelectOptionType extends SelectOptionType {
 	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
+		if (!isset($_POST['searchOptions'][$option->optionName])) return false;
+		
 		if (!is_array($value) || empty($value)) return false;
 		$value = ArrayUtil::trim($value);
-		if (empty($value)) return false;
 		
 		$conditions->add("option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', array_map('escapeString', $value)).'($|\n)'."'");
 		return true;

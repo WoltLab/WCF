@@ -69,6 +69,9 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableUse
 	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
 	 */
 	public function getSearchFormElement(Option $option, $value) {
+		$this->templateName = 'radioButtonSearchableOptionType';
+		WCF::getTPL()->assign('searchOption', empty($_POST) || isset($_POST['searchOptions'][$option->optionName]));
+		
 		return $this->getFormElement($option, $value);
 	}
 	
@@ -76,10 +79,9 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableUse
 	 * @see	\wcf\system\option\ISearchableUserOption::getCondition()
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
-		$value = StringUtil::trim($value);
-		if (!$value) return false;
+		if (!isset($_POST['searchOptions'][$option->optionName])) return false;
 		
-		$conditions->add("option_value.userOption".$option->optionID." = ?", array($value));
+		$conditions->add("option_value.userOption".$option->optionID." = ?", array(StringUtil::trim($value)));
 		return true;
 	}
 }
