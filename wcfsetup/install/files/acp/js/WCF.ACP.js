@@ -1509,6 +1509,8 @@ WCF.ACP.Package.Update.Manager = Class.extend({
 
 /**
  * Searches for available updates.
+ * 
+ * @param	boolean		bindOnExistingButtons
  */
 WCF.ACP.Package.Update.Search = Class.extend({
 	/**
@@ -1518,13 +1520,20 @@ WCF.ACP.Package.Update.Search = Class.extend({
 	_dialog: null,
 	
 	/**
-	 * initializes the WCF.ACP.Package.SearchForUpdates class.
+	 * Initializes the WCF.ACP.Package.SearchForUpdates class.
+	 * 
+	 * @param	boolean		bindOnExistingButtons
 	 */
-	init: function() {
+	init: function(bindOnExistingButtons) {
 		this._dialog = null;
 		
-		var $button = $('<li><a class="button"><span class="icon icon16 icon-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
-		$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav:not(.pageNavigation) > ul'));
+		if (bindOnExistingButtons === true) {
+			$('.jsButtonPackageUpdate').click($.proxy(this._click, this));
+		}
+		else {
+			var $button = $('<li><a class="button"><span class="icon icon16 icon-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
+			$button.click($.proxy(this._click, this)).prependTo($('.contentNavigation:eq(0) > nav:not(.pageNavigation) > ul'));
+		}
 	},
 	
 	/**

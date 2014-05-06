@@ -100,6 +100,9 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 				if (Package::compareVersion($product['lastVersion'], $package->packageVersion, '>')) {
 					$this->productData[$wcfMajorRelease][$packageUpdateID]['status'] = 'update';
 				}
+				else if (Package::compareVersion($product['lastVersion'], $package->packageVersion, '=')) {
+					$this->productData[$wcfMajorRelease][$packageUpdateID]['status'] = 'upToDate';
+				}
 			}
 		}
 	}

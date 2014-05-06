@@ -1,5 +1,20 @@
 {include file='header' pageTitle='wcf.acp.pluginStore.purchasedItems'}
 
+<script data-relocate="true">
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.acp.package.searchForUpdates': '{lang}wcf.acp.package.searchForUpdates{/lang}',
+			'wcf.acp.package.searchForUpdates.noResults': '{lang}wcf.acp.package.searchForUpdates.noResults{/lang}',
+			'wcf.acp.package.update.unauthorized': '{lang}wcf.acp.package.update.unauthorized{/lang}'
+		});
+		
+		var $installer = new WCF.ACP.Package.Server.Installation();
+		$installer.bind();
+		
+		new WCF.ACP.Package.Update.Search(true);
+	});
+</script>
+
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.pluginStore.purchasedItems{/lang}</h1>
 </header>
@@ -42,11 +57,13 @@
 						<tr>
 							<td class="columnIcon">
 								{if $product[status] == 'install'}
-									<a class="jsInstallPackage data-confirm-message="{*lang}wcf.acp.package.install.confirmMessage{/lang*}" data-package="{$product[package]}" data-package-version="{$product[version][available]}"><span class="icon icon16 fa-plus jsTooltip" title="{lang}wcf.acp.package.button.installPackage{/lang}"></span></a>
+									<a class="jsButtonPackageInstall" data-confirm-message="{lang}wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage{/lang}" data-package="{$product[package]}" data-package-version="{$product[version][available]}"><span class="icon icon16 fa-plus jsTooltip" title="{lang}wcf.acp.package.button.installPackage{/lang}"></span></a>
 								{else if $product[status] == 'update'}
-									<span class="icon icon16 fa-refresh"></span>
+									<a class="jsButtonPackageUpdate"><span class="icon icon16 fa-refresh jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.update{/lang}"></span></a>
+								{else if $product[status] == 'upToDate'}
+									<span class="icon icon16 fa-check green jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.upToDate{/lang}"></span>
 								{else}
-									<span class="icon icon16 fa-ban red"></span>
+									<span class="icon icon16 fa-ban red jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.unavailable{/lang}"></span>
 								{/if}
 							</td>
 							<td class="columnText"><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$product[pluginStoreURL]|rawurlencode}" class="externalURL">{$product[packageName]}</a></td>
