@@ -1592,9 +1592,21 @@ WCF.ACP.PluginStore.PurchasedItems = { };
  * Searches for purchased items available for install but not yet installed.
  */
 WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
+	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
 	_dialog: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
 	_proxy: null,
 	
+	/**
+	 * Initializes the WCF.ACP.PluginStore.PurchasedItems.Search class.
+	 */
 	init: function() {
 		this._dialog = null;
 		this._proxy = new WCF.Action.Proxy({
@@ -1605,6 +1617,9 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 		$button.prependTo($('.contentNavigation:eq(0) > nav > ul')).click($.proxy(this._click, this));
 	},
 	
+	/**
+	 * Handles clicks on the search button.
+	 */
 	_click: function() {
 		this._proxy.setOption('data', {
 			actionName: 'searchForPurchasedItems',
@@ -1613,7 +1628,15 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 		this._proxy.sendRequest();
 	},
 	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
 	_success: function(data, textStatus, jqXHR) {
+		// prompt for credentials
 		if (data.returnValues.template) {
 			if (this._dialog === null) {
 				this._dialog = $('<div />').hide().appendTo(document.body);
@@ -1635,15 +1658,20 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 			});
 		}
 		else if (data.returnValues.noResults) {
+			// there are no purchased products yet
 			this._dialog.wcfDialog('option', 'title', WCF.Language.get('wcf.acp.pluginStore.purchasedItems'));
 			this._dialog.html(data.returnValues.noResults);
 			this._dialog.wcfDialog('open');
 		}
 		else if (data.returnValues.redirectURL) {
+			// redirect to list of purchased products
 			window.location = data.returnValues.redirectURL;
 		}
 	},
 	
+	/**
+	 * Submits the user credentials.
+	 */
 	_submit: function() {
 		this._dialog.wcfDialog('close');
 		

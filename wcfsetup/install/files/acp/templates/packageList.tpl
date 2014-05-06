@@ -27,7 +27,9 @@
 			new WCF.ACP.Package.Update.Search();
 		{/if}
 		
-		new WCF.ACP.PluginStore.PurchasedItems.Search();
+		{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->session->getPermission('admin.system.package.canUninstallPackage')}
+			new WCF.ACP.PluginStore.PurchasedItems.Search();
+		{/if}
 	});
 	//]]>
 </script>

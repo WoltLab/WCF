@@ -29,15 +29,27 @@ class PluginStorePurchasedItemsPage extends AbstractPage {
 	public $neededPermissions = array('admin.system.package.canUpdatePackage', 'admin.system.package.canUninstallPackage');
 	
 	/**
-	 * list of purchased products grouped by WCF major release.
+	 * list of purchased products grouped by WCF major release
 	 * @var	array<array>
 	 */
 	public $products = array();
 	
+	/**
+	 * list of product data grouped by WCF major release
+	 * @var	array<array>
+	 */
 	public $productData = array();
 	
+	/**
+	 * list of installed update servers (Plugin-Store only)
+	 * @var	array<\wcf\data\package\update\server\PackageUpdateServer>
+	 */
 	public $updateServers = array();
 	
+	/**
+	 * list of supported WCF major releases (Plugin-Store)
+	 * @var	array<string>
+	 */
 	public $wcfMajorReleases = array();
 	
 	/**
