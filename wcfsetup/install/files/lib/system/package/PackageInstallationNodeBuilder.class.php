@@ -669,6 +669,17 @@ class PackageInstallationNodeBuilder {
 				}
 			}
 			
+			// check for exclusions
+			$excludedPackages = $archive->getConflictedExcludedPackages();
+			if (!empty($excludedPackages)) {
+				$isInstallable = false;
+			}
+			
+			$excludingPackages = $archive->getConflictedExcludingPackages();
+			if (!empty($excludingPackages)) {
+				$isInstallable = false;
+			}
+			
 			$packages[] = array(
 				'archive' => $fileName,
 				'isInstallable' => $isInstallable,
