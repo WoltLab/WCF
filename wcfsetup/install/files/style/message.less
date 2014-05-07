@@ -124,6 +124,49 @@
 			color: @wcfDimmedColor;
 		}
 	}
+	
+	.messageGroupInfo {
+		font-size: @wcfSmallFontSize;
+		
+		> li {
+			display: inline-block;
+			
+			&:not(:first-child)::before {
+				content: " - ";
+			}
+		}
+		
+		&.mobileOptimization {
+			> li {
+				&.messageGroupLastPoster,
+				&.messageGroupLastPostTime {
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.messageGroupList {
+		.messageGroupInfo.mobileOptimization {
+			> li {
+				&.messageGroupAuthor,
+				&.messageGroupTime {
+					display: none;
+				}
+				
+				&.messageGroupLastPoster,
+				&.messageGroupLastPostTime {
+					display: inline-block;
+				}
+				
+				&.messageGroupLastPoster::before {
+					display: none;
+				}
+			}
+		}
+	}
 }
 
 /* ### messages ### */
