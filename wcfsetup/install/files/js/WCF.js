@@ -2914,7 +2914,7 @@ WCF.Date.Picker = {
 				$inputValue = $inputValue.replace(' ', 'T');
 				
 				if ($input.data('ignoreTimezone')) {
-					var $timezoneOffset = new Date().getTimezoneOffset();
+					var $timezoneOffset = new Date($inputValue).getTimezoneOffset();
 					var $timezone = ($timezoneOffset > 0) ? '-' : '+'; // -120 equals GMT+0200
 					$timezoneOffset = Math.abs($timezoneOffset);
 					var $hours = (Math.floor($timezoneOffset / 60)).toString();
