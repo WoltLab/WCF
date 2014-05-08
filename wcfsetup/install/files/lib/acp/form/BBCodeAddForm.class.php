@@ -114,7 +114,7 @@ class BBCodeAddForm extends AbstractForm {
 		
 		if (isset($_POST['allowedChildren'])) $this->allowedChildren = StringUtil::trim($_POST['allowedChildren']);
 		if (isset($_POST['attributes'])) $this->attributes = $_POST['attributes'];
-		if (isset($_POST['bbcodeTag'])) $this->bbcodeTag = StringUtil::trim($_POST['bbcodeTag']);
+		if (isset($_POST['bbcodeTag'])) $this->bbcodeTag = StringUtil::toLowerCase(StringUtil::trim($_POST['bbcodeTag']));
 		if (isset($_POST['className'])) $this->className = StringUtil::trim($_POST['className']);
 		if (isset($_POST['htmlClose'])) $this->htmlClose = StringUtil::trim($_POST['htmlClose']);
 		if (isset($_POST['htmlOpen'])) $this->htmlOpen = StringUtil::trim($_POST['htmlOpen']);
