@@ -27,6 +27,18 @@ class TextareaOptionType extends TextOptionType {
 	}
 	
 	/**
+	 * @see	\wcf\system\option\ISearchableUserOption::getSearchFormElement()
+	 */
+	public function getSearchFormElement(Option $option, $value) {
+		WCF::getTPL()->assign(array(
+			'option' => $option,
+			'searchOption' => isset($_POST['searchOptions'][$option->optionName]),
+			'value' => $value
+		));
+		return WCF::getTPL()->fetch('textareaSearchableOptionType');
+	}
+	
+	/**
 	 * @see	\wcf\system\option\IOptionType::getData()
 	 */
 	public function getData(Option $option, $newValue) {
