@@ -234,101 +234,105 @@
 				</dl>
 			</fieldset>
 			
-			<div id="sendMailDiv">
-				<fieldset>
-					<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
-					
-					<dl{if $errorField == 'subject'} class="formError"{/if}>
-						<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
-						<dd>
-							<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
-							{if $errorField == 'subject'}
-								<small class="innerError">
-									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-								</small>
-							{/if}
-						</dd>
-					</dl>
-					
-					<dl{if $errorField == 'from'} class="formError"{/if}>
-						<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
-						<dd>
-							<input type="text" id="from" name="from" value="{$from}" class="medium" />
-							{if $errorField == 'from'}
-								<small class="innerError">
-									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-								</small>
-							{/if}
-							<small>{lang}wcf.acp.user.sendMail.from.description{/lang}</small>
-						</dd>
-					</dl>
-					
-					<dl{if $errorField == 'text'} class="formError"{/if}>
-						<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
-						<dd>
-							<textarea id="text" name="text" rows="15" cols="40">{$text}</textarea>
-							{if $errorField == 'text'}
-								<small class="innerError" class="long">
-									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-								</small>
-							{/if}
-						</dd>
-					</dl>
-					
-					<dl>
-						<dt></dt>
-						<dd>
-							<label for="enableHTML"><input type="checkbox" id="enableHTML" name="enableHTML" value="1"{if $enableHTML == 1} checked="checked"{/if}/> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
-						</dd>
-					</dl>
-				</fieldset>
-			</div>
+			{if $__wcf->session->getPermission('admin.user.canMailUser')}
+				<div id="sendMailDiv">
+					<fieldset>
+						<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
+
+						<dl{if $errorField == 'subject'} class="formError"{/if}>
+							<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
+							<dd>
+								<input type="text" id="subject" name="subject" value="{$subject}" class="long" />
+								{if $errorField == 'subject'}
+									<small class="innerError">
+										{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+									</small>
+								{/if}
+							</dd>
+						</dl>
+
+						<dl{if $errorField == 'from'} class="formError"{/if}>
+							<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
+							<dd>
+								<input type="text" id="from" name="from" value="{$from}" class="medium" />
+								{if $errorField == 'from'}
+									<small class="innerError">
+										{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+									</small>
+								{/if}
+								<small>{lang}wcf.acp.user.sendMail.from.description{/lang}</small>
+							</dd>
+						</dl>
+
+						<dl{if $errorField == 'text'} class="formError"{/if}>
+							<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
+							<dd>
+								<textarea id="text" name="text" rows="15" cols="40">{$text}</textarea>
+								{if $errorField == 'text'}
+									<small class="innerError" class="long">
+										{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+									</small>
+								{/if}
+							</dd>
+						</dl>
+
+						<dl>
+							<dt></dt>
+							<dd>
+								<label for="enableHTML"><input type="checkbox" id="enableHTML" name="enableHTML" value="1"{if $enableHTML == 1} checked="checked"{/if}/> {lang}wcf.acp.user.sendMail.enableHTML{/lang}</label>
+							</dd>
+						</dl>
+					</fieldset>
+				</div>
+
+				<div id="exportMailAddressDiv">
+					<fieldset>
+						<legend>{lang}wcf.acp.user.exportEmailAddress.format{/lang}</legend>
+
+						<dl>
+							<dt><label>{lang}wcf.acp.user.exportEmailAddress.fileType{/lang}</label></dt>
+							<dd>
+								<label><input type="radio" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label>
+								<label><input type="radio" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label>
+							</dd>
+						</dl>
+
+						<dl id="separatorDiv">
+							<dt><label for="separator">{lang}wcf.acp.user.exportEmailAddress.separator{/lang}</label></dt>
+							<dd>
+								<input type="text" id="separator" name="separator" value="{$separator}" class="medium" />
+							</dd>
+						</dl>
+
+						<dl id="textSeparatorDiv">
+							<dt><label for="textSeparator">{lang}wcf.acp.user.exportEmailAddress.textSeparator{/lang}</label></dt>
+							<dd>
+								<input type="text" id="textSeparator" name="textSeparator" value="{$textSeparator}" class="medium" />
+							</dd>
+						</dl>
+					</fieldset>
+				</div>
+			{/if}
 			
-			<div id="exportMailAddressDiv">
-				<fieldset>
-					<legend>{lang}wcf.acp.user.exportEmailAddress.format{/lang}</legend>
-					
-					<dl>
-						<dt><label>{lang}wcf.acp.user.exportEmailAddress.fileType{/lang}</label></dt>
-						<dd>
-							<label><input type="radio" name="fileType" value="csv" {if $fileType == 'csv'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.csv{/lang}</label>
-							<label><input type="radio" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label>
-						</dd>
-					</dl>
-					
-					<dl id="separatorDiv">
-						<dt><label for="separator">{lang}wcf.acp.user.exportEmailAddress.separator{/lang}</label></dt>
-						<dd>
-							<input type="text" id="separator" name="separator" value="{$separator}" class="medium" />
-						</dd>
-					</dl>
-					
-					<dl id="textSeparatorDiv">
-						<dt><label for="textSeparator">{lang}wcf.acp.user.exportEmailAddress.textSeparator{/lang}</label></dt>
-						<dd>
-							<input type="text" id="textSeparator" name="textSeparator" value="{$textSeparator}" class="medium" />
-						</dd>
-					</dl>
-				</fieldset>
-			</div>
-			
-			<div id="assignToGroupDiv">
-				<fieldset>
-					<legend>{lang}wcf.acp.user.groups{/lang}</legend>
-					
-					<dl>
-						<dt></dt>
-						<dd{if $errorField == 'assignToGroupIDs'} class="formError"{/if}>
-							{htmlCheckboxes options=$availableGroups name=assignToGroupIDs selected=$assignToGroupIDs}
-							{if $errorField == 'assignToGroupIDs'}
-								<small class="innerError">
-									{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-								</small>
-							{/if}
-						</dd>
-					</dl>
-				</fieldset>
-			</div>
+			{if $__wcf->session->getPermission('admin.user.canEditUser')}
+				<div id="assignToGroupDiv">
+					<fieldset>
+						<legend>{lang}wcf.acp.user.groups{/lang}</legend>
+
+						<dl>
+							<dt></dt>
+							<dd{if $errorField == 'assignToGroupIDs'} class="formError"{/if}>
+								{htmlCheckboxes options=$availableGroups name=assignToGroupIDs selected=$assignToGroupIDs}
+								{if $errorField == 'assignToGroupIDs'}
+									<small class="innerError">
+										{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
+									</small>
+								{/if}
+							</dd>
+						</dl>
+					</fieldset>
+				</div>
+			{/if}
 			
 			{event name='actionFieldsets'}
 		</div>
