@@ -39,7 +39,7 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
 	 */
 	public function addUserCondition(Condition $condition, UserList $userList) {
 		if ($condition->registrationDateEnd !== null) {
-			$userList->getConditionBuilder()->add('user_table.registrationDate <= ?', array(strtotime($condition->registrationDateEnd) + 24 * 3600 - 1));
+			$userList->getConditionBuilder()->add('user_table.registrationDate < ?', array(strtotime($condition->registrationDateEnd) + 86400));
 		}
 		if ($condition->registrationDateStart !== null) {
 			$userList->getConditionBuilder()->add('user_table.registrationDate >= ?', array(strtotime($condition->registrationDateStart)));
@@ -50,10 +50,10 @@ class UserRegistrationDateCondition extends AbstractSingleFieldCondition impleme
 	 * @see	\wcf\system\condition\IUserCondition::checkUser()
 	 */
 	public function checkUser(Condition $condition, User $user) {
-		if ($condition->registrationDateStart !== null && $user->registrationDate < $condition->registrationDateStart) {
+		if ($condition->registrationDateStart !== null && $user->registrationDate < strtotime($condition->registrationDateStart)) {
 			return false;
 		}
-		if ($condition->registrationDateEnd !== null && $user->registrationDate > $condition->registrationDateEnd) {
+		if ($condition->registrationDateEnd !== null && $user->registrationDate >= strtotime($condition->registrationDateEnd) + 86400) {
 			return false;
 		}
 		
