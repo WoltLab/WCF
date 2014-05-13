@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
+use wcf\data\user\User;
+use wcf\data\user\UserList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -35,7 +37,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	public function getSearchFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
 			'option' => $option,
-			'searchOption' => isset($_POST['searchOptions'][$option->optionName]),
+			'searchOption' => $value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName]),
 			'selectOptions' => $option->parseSelectOptions(),
 			'value' => (!is_array($value) ? explode("\n", $value) : $value)
 		));
@@ -74,5 +76,33 @@ class MultiSelectOptionType extends SelectOptionType {
 		
 		$conditions->add("option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', array_map('escapeString', $value)).'($|\n)'."'");
 		return true;
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 */
+	public function addCondition(UserList $userList, Option $option, $value) {
+		if (!is_array($value) || empty($value)) return false;
+		$value = ArrayUtil::trim($value);
+		
+		$userList->getConditionBuilder()->add("user_option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', array_map('escapeString', $value)).'($|\n)'."'");
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 */
+	public function checkUser(User $user, Option $option, $value) {
+		if (!is_array($value) || empty($value)) return false;
+		
+		$optionValues = explode('\n', $user->getUserOption($option->optionName));
+		
+		return count(array_diff($optionValues, $value)) > 0;
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 */
+	public function getConditionData(Option $option, $newValue) {
+		return $newValue;
 	}
 }

@@ -339,7 +339,7 @@ final class DateUtil {
 		if (isset($value[0])) $year = intval($value[0]);
 		if (isset($value[1])) $month = intval($value[1]);
 		if (isset($value[2])) $day = intval($value[2]);
-			
+		
 		// calc
 		if ($year) {
 			$age = self::format(null, 'Y') - $year;

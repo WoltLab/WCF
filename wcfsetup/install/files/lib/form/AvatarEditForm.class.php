@@ -6,6 +6,7 @@ use wcf\data\user\UserAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\menu\user\UserMenu;
+use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 
 /**
@@ -120,6 +121,10 @@ class AvatarEditForm extends AbstractForm {
 			'data' => array_merge($this->additionalFields, $data)
 		));
 		$this->objectAction->executeAction();
+		
+		// check if the user will be automatically added to new user groups
+		// because of the changed avatar
+		UserGroupAssignmentHandler::getInstance()->checkUsers(array(WCF::getUser()->userID));
 		
 		// reset gravatar cache
 		if ($this->avatarType == 'gravatar') {

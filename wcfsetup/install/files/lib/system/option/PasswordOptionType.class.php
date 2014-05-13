@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
+use wcf\data\user\User;
+use wcf\data\user\UserList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 
 /**
@@ -24,5 +26,26 @@ class PasswordOptionType extends TextOptionType {
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
 		return false;
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 */
+	public function addCondition(UserList $userList, Option $option, $value) {
+		// does nothing
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 */
+	public function checkUser(User $user, Option $option, $value) {
+		return false;
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 */
+	public function getConditionData(Option $option, $newValue) {
+		return $newValue;
 	}
 }

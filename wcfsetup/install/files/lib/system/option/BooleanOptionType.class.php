@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
+use wcf\data\user\User;
+use wcf\data\user\UserList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
@@ -61,5 +63,33 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 		
 		$conditions->add("option_value.userOption".$option->optionID." = ?", array(1));
 		return true;
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 */
+	public function addCondition(UserList $userList, Option $option, $value) {
+		$value = intval($value);
+		if (!$value) return;
+		
+		if ($ageFrom < 0 || $ageFrom > 120 || $ageTo < 0 || $ageTo > 120) return false;
+		
+		$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', array(1));
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 */
+	public function checkUser(User $user, Option $option, $value) {
+		if (!$value) return false;
+		
+		return $user->getUserOption($option->optionName);
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 */
+	public function getConditionData(Option $option, $newValue) {
+		return $newValue;
 	}
 }

@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
+use wcf\data\user\User;
+use wcf\data\user\UserList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -16,7 +18,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.option
  * @category	Community Framework
  */
-class TextOptionType extends AbstractOptionType implements ISearchableUserOption {
+class TextOptionType extends AbstractOptionType implements ISearchableConditionUserOption {
 	/**
 	 * input type
 	 * @var	string
@@ -50,7 +52,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 			'option' => $option,
 			'inputType' => $this->inputType,
 			'inputClass' => $this->inputClass,
-			'searchOption' => isset($_POST['searchOptions'][$option->optionName]),
+			'searchOption' => $value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName]),
 			'value' => $value
 		));
 		return WCF::getTPL()->fetch('textSearchableOptionType');
@@ -109,6 +111,39 @@ class TextOptionType extends AbstractOptionType implements ISearchableUserOption
 			}
 		}
 		
+		return $newValue;
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 */
+	public function addCondition(UserList $userList, Option $option, $value) {
+		$value = StringUtil::trim($value);
+		if ($value == '') {
+			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', array(''));
+		}
+		else {
+			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' LIKE ?', array('%'.addcslashes($value, '_%').'%'));
+		}
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 */
+	public function checkUser(User $user, Option $option, $value) {
+		$value = StringUtil::trim($value);
+		if ($value == '') {
+			return $user->getUserOption($option->optionName) == '';
+		}
+		else {
+			return mb_stripos($user->getUserOption($option->optionName), $value) !== false;
+		}
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 */
+	public function getConditionData(Option $option, $newValue) {
 		return $newValue;
 	}
 }

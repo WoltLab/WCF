@@ -510,7 +510,6 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 				if ($birthdayYear) {
 					return $year - $birthdayYear;
 				}
-				
 			}
 			
 			return 0;
@@ -524,14 +523,14 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 					$this->__age = 0;
 				}
 			}
-		
+			
 			return $this->__age;
 		}
 	}
 	
 	/**
 	 * Returns the formatted birthday of this user.
-	 *
+	 * 
 	 * @param	integer		$year
 	 * @return	string
 	 */

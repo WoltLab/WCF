@@ -148,5 +148,19 @@
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
+		
+		<cronjob>
+			<classname><![CDATA[wcf\system\cronjob\UserGroupAssignmentCronjob]]></classname>
+			<description><![CDATA[Automatically assigns users to user groups]]></description>
+			<description language="de"><![CDATA[Ordnet Benutzer automatisch Benutzergruppen zu]]></description>
+			<startminute>*/30</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<active>1</active>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
 	</import>
 </data>

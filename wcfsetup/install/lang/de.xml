@@ -374,6 +374,18 @@
 		<item name="wcf.acp.group.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDisableAvatar"><![CDATA[Kann Avatar sperren]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDisableSignature"><![CDATA[Kann Signatur sperren]]></item>
+		<item name="wcf.acp.group.option.admin.user.canManageGroupAssignment"><![CDATA[Kann automatische Gruppenzuordnungen verwalten]]></item>
+		<item name="wcf.acp.group.assignment.add"><![CDATA[Automatische Benutzergruppen-Zuordnung hinzufügen]]></item>
+		<item name="wcf.acp.group.assignment.button.add"><![CDATA[Automatische Zuordnung hinzufügen]]></item>
+		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatische Zuordnungen auflisten]]></item>
+		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Bedingungen]]></item>
+		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[Benutzer müssen die folgenden Bedingungen erfüllen um automatisch der Benutzergruppe hinzugefügt zu werden]]></item>
+		<item name="wcf.acp.group.assignment.delete.confirmMessage"><![CDATA[Wollen Sie diese automatische Benutzergruppen-Zuordnung wirklich löschen?]]></item>
+		<item name="wcf.acp.group.assignment.edit"><![CDATA[Automatische Benutzergruppen-Zuordnung bearbeiten]]></item>
+		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[Sie haben keine Bedingungen ausgewählt.]]></item>
+		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatische Benutzergruppen-Zuordnungen]]></item>
+		<item name="wcf.acp.group.assignment.userGroup"><![CDATA[Benutzergruppe]]></item>
+		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Automatische Zuordnung deaktivieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -565,6 +577,7 @@
 		<item name="wcf.acp.menu.link.maintenance.import"><![CDATA[Datenimport]]></item>
 		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.menu.link.log.stat"><![CDATA[Statistiken]]></item>
+		<item name="wcf.acp.menu.link.group.assignment"><![CDATA[Automatische Zuordnungen]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -1868,6 +1881,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.form.error.lessThan"><![CDATA[Der eingebene Wert muss kleiner sein als {#$lessThan}.]]></item>
 		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}Der eingebene Wert muss kleiner sein als {#$lessThan}.{/literal}]]></item>
 		<item name="wcf.global.form.error.multilingual"><![CDATA[Bitte füllen Sie dieses Eingabefeld für jede Sprache aus.]]></item>
+		<item name="wcf.global.form.error.noValidSelection"><![CDATA[Wählen Sie eine der angebotenen Optionen aus.]]></item>
 		<item name="wcf.global.form.error.securityToken"><![CDATA[Ihre Sitzung ist abgelaufen, bitte senden Sie das Formular erneut ab.]]></item>
 	</category>
 	
@@ -2476,6 +2490,44 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.avatar.upload.error.tooSmall"><![CDATA[Das Bild ist zu klein.]]></item>
 		<item name="wcf.user.avatar.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 		<item name="wcf.user.avatar.upload.success"><![CDATA[Der neue Avatar wurde erfolgreich gespeichert.]]></item>
+	</category>
+	
+	<category name="wcf.user.condition">
+		<item name="wcf.user.condition.activityPoints.greaterThan"><![CDATA[Punkte mehr als]]></item>
+		<item name="wcf.user.condition.activityPoints.greaterThan.error.lessThan"><![CDATA[Die Werte in „Punkte weniger als“ und „Punkte mehr als“ sind widersprüchlich.]]></item>
+		<item name="wcf.user.condition.activityPoints.lessThan"><![CDATA[Punkte weniger als]]></item>
+		<item name="wcf.user.condition.avatar"><![CDATA[Avatar]]></item>
+		<item name="wcf.user.condition.avatar.avatar"><![CDATA[Eigener Avatar]]></item>
+		<item name="wcf.user.condition.avatar.gravatar"><![CDATA[Gravatar]]></item>
+		<item name="wcf.user.condition.avatar.noAvatar"><![CDATA[Kein Avatar]]></item>
+		<item name="wcf.user.condition.conditionGroup.contents"><![CDATA[Inhalte]]></item>
+		<item name="wcf.user.condition.conditionGroup.general"><![CDATA[Allgemeine Daten]]></item>
+		<item name="wcf.user.condition.conditionGroup.userOptions"><![CDATA[Persönliche Daten]]></item>
+		<item name="wcf.user.condition.groupIDs"><![CDATA[in Benutzergruppen]]></item>
+		<item name="wcf.user.condition.groupIDs.description"><![CDATA[Benutzer müssen in den ausgewählten Benutzergruppen Mitglied sein.]]></item>
+		<item name="wcf.user.condition.integerProperty.error.maxValue"><![CDATA[Der Wert darf nicht kleiner sein {#$minValue}.]]></item>
+		<item name="wcf.user.condition.integerProperty.error.minValue"><![CDATA[Der Wert muss größer sein als {#$minValue}.]]></item>
+		<item name="wcf.user.condition.languages"><![CDATA[Sprachen]]></item>
+		<item name="wcf.user.condition.likesReceived.greaterThan"><![CDATA[Erhaltene Likes mehr als]]></item>
+		<item name="wcf.user.condition.likesReceived.greaterThan.error.lessThan"><![CDATA[Die Werte in „Erhaltene Likes weniger als“ und „Erhaltene Likes mehr als“ sind widersprüchlich.]]></item>
+		<item name="wcf.user.condition.likesReceived.lessThan"><![CDATA[Erhaltene Likes weniger als]]></item>
+		<item name="wcf.user.condition.notGroupIDs"><![CDATA[nicht in Benutzergruppen]]></item>
+		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Benutzer dürfen in den ausgewählten Benutzergruppen nicht Mitglied sein.]]></item>
+		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[Die ausgewählten Benutzergruppen in „in Benutzergruppen“ und „nicht in Benutzergruppen“ sind widersprüchlich.]]></item>
+		<item name="wcf.user.condition.registrationDate"><![CDATA[Registrierungsdatum]]></item>
+		<item name="wcf.user.condition.registrationDate.error.endBeforeStart"><![CDATA[Das Enddatum ist vor dem Startdatum.]]></item>
+		<item name="wcf.user.condition.registrationDate.error.endNotValid"><![CDATA[Das Startdatum ist ungültig.]]></item>
+		<item name="wcf.user.condition.registrationDate.error.startNotValid"><![CDATA[Das Enddatum ist ungültig.]]></item>
+		<item name="wcf.user.condition.registrationDateInterval.greaterThan"><![CDATA[mehr als X Tage registiert]]></item>
+		<item name="wcf.user.condition.registrationDateInterval.greaterThan.error.lessThan"><![CDATA[Die Werte in „weniger als X Tage registiert“ und „mehr als X Tage registiert“ sind widersprüchlich.]]></item>
+		<item name="wcf.user.condition.registrationDateInterval.lessThan"><![CDATA[weniger als X Tage registiert]]></item>
+		<item name="wcf.user.condition.state"><![CDATA[Zustand]]></item>
+		<item name="wcf.user.condition.state.isBanned"><![CDATA[Gesperrt]]></item>
+		<item name="wcf.user.condition.state.isBanned.error.conflict"><![CDATA[„Gesperrt“ und „Nicht gesperrt“ können nicht gleichzeitig ausgewählt werden.]]></item>
+		<item name="wcf.user.condition.state.isDisabled"><![CDATA[Nicht aktiviert]]></item>
+		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Aktiviert]]></item>
+		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[„Aktiviert“ und „Nicht aktiviert“ können nicht gleichzeitig ausgewählt werden.]]></item>
+		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Nicht gesperrt]]></item>
 	</category>
 	
 	<category name="wcf.user.notification">

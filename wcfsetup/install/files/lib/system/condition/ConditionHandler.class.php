@@ -1,0 +1,95 @@
+<?php
+namespace wcf\system\condition;
+use wcf\data\condition\ConditionAction;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\cache\builder\ConditionCacheBuilder;
+use wcf\system\exception\SystemException;
+use wcf\system\SingletonFactory;
+
+/**
+ * Handles general condition-related matters.
+ * 
+ * @author	Matthias Schmidt
+ * @copyright	2001-2014 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system.condition
+ * @category	Community Framework
+ */
+class ConditionHandler extends SingletonFactory {
+	/**
+	 * list of available conditions grouped by the id of the related condition
+	 * object type definition
+	 * @var	array
+	 */
+	protected $conditions = array();
+	
+	/**
+	 * Creates condition objects for the object with the given id and based
+	 * on the given condition object types.
+	 * 
+	 * @param	integer		$objectID
+	 * @param	array		$conditionObjectTypes
+	 */
+	public function createConditions($objectID, array $conditionObjectTypes) {
+		foreach ($conditionObjectTypes as $objectTypes) {
+			foreach ($objectTypes as $objectType) {
+				$conditionData = $objectType->getProcessor()->getData();
+				if ($conditionData !== null) {
+					$conditionAction = new ConditionAction(array(), 'create', array(
+						'data' => array(
+							'conditionData' => serialize($conditionData),
+							'objectID' => $objectID,
+							'objectTypeID' => $objectType->objectTypeID
+						)
+					));
+					$conditionAction->executeAction();
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Returns the conditions for the conditioned object with the given condition
+	 * object type definition and object id.
+	 * 
+	 * @param	string		$definitionName
+	 * @param	integer		$objectID
+	 * @return	array<\wcf\data\condition\Condition>
+	 */
+	public function getConditions($definitionName, $objectID) {
+		// validate definition
+		$definition = ObjectTypeCache::getInstance()->getDefinitionByName($definitionName);
+		if ($definition === null) {
+			throw new SystemException("Unknown object type definition with name '".$definitionName."'");
+		}
+		
+		if (!isset($this->conditions[$definition->definitionID])) {
+			$this->conditions[$definition->definitionID] = ConditionCacheBuilder::getInstance()->getData(array(
+				'definitionID' => $definition->definitionID
+			));
+		}
+		
+		if (isset($this->conditions[$definition->definitionID][$objectID])) {
+			return $this->conditions[$definition->definitionID][$objectID];
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Updates the conditions for the object with the given object id.
+	 * 
+	 * @param	integer						$objectID
+	 * @param	array<\wcf\data\condition\Condition>		$oldConditions
+	 * @param	array						$conditionObjectTypes
+	 */
+	public function updateConditions($objectID, array $oldConditions, array $conditionObjectTypes) {
+		// delete old conditions first
+		$conditionAction = new ConditionAction($oldConditions, 'delete');
+		$conditionAction->executeAction();
+		
+		// create new conditions
+		$this->createConditions($objectID, $conditionObjectTypes);
+	}
+}

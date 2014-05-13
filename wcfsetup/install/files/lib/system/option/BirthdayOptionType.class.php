@@ -2,6 +2,7 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\data\user\User;
+use wcf\data\user\UserList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -35,6 +36,13 @@ class BirthdayOptionType extends DateOptionType {
 		if ($timestamp > TIME_NOW) {
 			throw new UserInputException($option->optionName, 'validationFailed');
 		}
+	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::getData()
+	 */
+	public function getData(Option $option, $newValue) {
+		return $newValue;
 	}
 	
 	/**
@@ -89,5 +97,61 @@ class BirthdayOptionType extends DateOptionType {
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 */
+	public function addCondition(UserList $userList, Option $option, $value) {
+		$ageFrom = intval($value['ageFrom']);
+		$ageTo = intval($value['ageTo']);
+		
+		if ($ageFrom < 0 || $ageFrom > 120 || $ageTo < 0 || $ageTo > 120) return false;
+		
+		$dateFrom = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P'.($ageTo + 1).'Y'))->add(new \DateInterval('P1D'));
+		$dateTo = DateUtil::getDateTimeByTimestamp(TIME_NOW)->sub(new \DateInterval('P'.$ageFrom.'Y'));
+		
+		$userList->getConditionBuilder()->add('user_option_value.userOption'.User::getUserOptionID('birthdayShowYear').' = ?', array(1));
+		
+		if ($ageFrom && $ageTo) {
+			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', array($dateFrom->format('Y-m-d'), $dateTo->format('Y-m-d')));
+		}
+		else if ($ageFrom) {
+			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', array('1893-01-01', $dateTo->format('Y-m-d')));
+		}
+		else {
+			$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' BETWEEN DATE(?) AND DATE(?)', array($dateFrom->format('Y-m-d'), DateUtil::getDateTimeByTimestamp(TIME_NOW)->add(new \DateInterval('P1D'))->format('Y-m-d')));
+		}
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 */
+	public function checkUser(User $user, Option $option, $value) {
+		if (!$user->birthdayShowYear || !$user->birthday) return false;
+		
+		$ageFrom = intval($value['ageFrom']);
+		$ageTo = intval($value['ageTo']);
+		
+		$userAge = DateUtil::getAge($user->birthday);
+		
+		if ($ageFrom && $ageTo) {
+			return $userAge >= $ageFrom && $userAge <= $ageTo;
+		}
+		else if ($ageFrom) {
+			return $userAge >= $ageFrom;
+		}
+		else {
+			return $userAge <= $ageTo;
+		}
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 */
+	public function getConditionData(Option $option, $newValue) {
+		if (!$newValue['ageFrom'] && !$newValue['ageTo']) return null;
+		
+		return $newValue;
 	}
 }

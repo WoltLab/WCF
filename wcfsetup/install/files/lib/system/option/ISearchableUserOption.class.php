@@ -26,9 +26,9 @@ interface ISearchableUserOption {
 	/**
 	 * Returns a condition for search sql query.
 	 * 
-	 * @param	\wcf\system\database\condition\PreparedStatementConditionBuilder		$conditions
+	 * @param	\wcf\system\database\condition\PreparedStatementConditionBuilder	$conditions
 	 * @param	\wcf\data\option\Option							$option
-	 * @param	string									$value
+	 * @param	mixed									$value
 	 * @return	boolean
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value);

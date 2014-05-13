@@ -268,6 +268,14 @@ CREATE TABLE wcf1_comment_response (
 	KEY lastResponseTime (userID, time)
 );
 
+DROP TABLE IF EXISTS wcf1_condition;
+CREATE TABLE wcf1_condition (
+	conditionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	objectTypeID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL,
+	conditionData MEDIUMTEXT
+);
+
 DROP TABLE IF EXISTS wcf1_core_object;
 CREATE TABLE wcf1_core_object (
 	objectID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1088,6 +1096,14 @@ CREATE TABLE wcf1_user_group (
 	showOnTeamPage TINYINT(1) NOT NULL DEFAULT 0
 );
 
+DROP TABLE IF EXISTS wcf1_user_group_assignment;
+CREATE TABLE wcf1_user_group_assignment (
+	assignmentID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	groupID INT(10) NOT NULL,
+	title VARCHAR(255) NOT NULL,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0
+);
+
 DROP TABLE IF EXISTS wcf1_user_group_option;
 CREATE TABLE wcf1_user_group_option (
 	optionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1354,6 +1370,8 @@ ALTER TABLE wcf1_clipboard_item ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_o
 ALTER TABLE wcf1_clipboard_page ADD FOREIGN KEY (actionID) REFERENCES wcf1_clipboard_action (actionID) ON DELETE CASCADE;
 ALTER TABLE wcf1_clipboard_page ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_condition ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_core_object ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_cronjob ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
@@ -1440,6 +1458,8 @@ ALTER TABLE wcf1_template_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_p
 
 ALTER TABLE wcf1_user_collapsible_content ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_collapsible_content ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_group_assignment ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_group_option ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 

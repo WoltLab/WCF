@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
+use wcf\data\user\User;
+use wcf\data\user\UserList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -16,7 +18,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.option
  * @category	Community Framework
  */
-class RadioButtonOptionType extends AbstractOptionType implements ISearchableUserOption {
+class RadioButtonOptionType extends AbstractOptionType implements ISearchableConditionUserOption {
 	/**
 	 * name of the template that contains the form element of this option type
 	 * @var	string
@@ -70,7 +72,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableUse
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		$this->templateName = 'radioButtonSearchableOptionType';
-		WCF::getTPL()->assign('searchOption', empty($_POST) || isset($_POST['searchOptions'][$option->optionName]));
+		WCF::getTPL()->assign('searchOption', $value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName]));
 		
 		return $this->getFormElement($option, $value);
 	}
@@ -83,5 +85,26 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableUse
 		
 		$conditions->add("option_value.userOption".$option->optionID." = ?", array(StringUtil::trim($value)));
 		return true;
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::addCondition()
+	 */
+	public function addCondition(UserList $userList, Option $option, $value) {
+		$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', array(StringUtil::trim($value)));
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::checkUser()
+	 */
+	public function checkUser(User $user, Option $option, $value) {
+		return mb_strtolower($user->getUserOption($option->optionName)) == mb_strtolower(StringUtil::trim($value));
+	}
+	
+	/**
+	 * @see	\wcf\system\option\ISearchableConditionUserOption::getConditionData()
+	 */
+	public function getConditionData(Option $option, $newValue) {
+		return $newValue;
 	}
 }

@@ -32,7 +32,7 @@ class TextareaOptionType extends TextOptionType {
 	public function getSearchFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
 			'option' => $option,
-			'searchOption' => isset($_POST['searchOptions'][$option->optionName]),
+			'searchOption' => $value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName]),
 			'value' => $value
 		));
 		return WCF::getTPL()->fetch('textareaSearchableOptionType');

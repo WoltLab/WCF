@@ -148,5 +148,10 @@
 			<name>com.woltlab.wcf.statDailyHandler</name>
 			<interfacename><![CDATA[wcf\system\stat\IStatDailyHandler]]></interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.condition.userGroupAssignment</name>
+			<interfacename><![CDATA[wcf\system\condition\IUserCondition]]></interfacename>
+		</definition>
 	</import>
 </data>

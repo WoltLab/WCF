@@ -406,7 +406,7 @@ class OptionHandler implements IOptionHandler {
 		if (!$this->didInit) {
 			// get active options
 			$this->loadActiveOptions($this->categoryName);
-				
+			
 			// mark options as initialized
 			$this->didInit = true;
 		}

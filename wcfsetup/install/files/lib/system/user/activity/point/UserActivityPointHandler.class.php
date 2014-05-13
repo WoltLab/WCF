@@ -4,6 +4,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfileAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -83,6 +84,10 @@ class UserActivityPointHandler extends SingletonFactory {
 		
 		// update user ranks
 		$this->updateUserRanks(array($userID));
+		
+		// check if the user will be automatically added to new user groups
+		// because of the new activity points
+		UserGroupAssignmentHandler::getInstance()->checkUsers(array($userID));
 	}
 	
 	/**
@@ -133,6 +138,10 @@ class UserActivityPointHandler extends SingletonFactory {
 		// update activity points for given user ids
 		if ($updateUsers) {
 			$this->updateUsers($userIDs);
+			
+			// check if one of the user will be automatically added
+			// to new user groups because of the new activity points
+			UserGroupAssignmentHandler::getInstance()->checkUsers($userIDs);
 		}
 	}
 	

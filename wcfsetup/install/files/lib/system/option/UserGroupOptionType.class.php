@@ -12,5 +12,4 @@ use wcf\system\option\user\group\UserGroupsUserGroupOptionType;
  * @subpackage	system.option
  * @category	Community Framework
  */
-class UserGroupOptionType extends UserGroupsUserGroupOptionType {
-}
+class UserGroupOptionType extends UserGroupsUserGroupOptionType { }

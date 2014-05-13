@@ -5,6 +5,7 @@ use wcf\data\option\Option;
 use wcf\data\user\option\ViewableUserOption;
 use wcf\data\user\User;
 use wcf\system\exception\UserInputException;
+use wcf\system\option\ISearchableConditionUserOption;
 use wcf\system\option\OptionHandler;
 
 /**
@@ -24,25 +25,25 @@ class UserOptionHandler extends OptionHandler {
 	protected $cacheClass = 'wcf\system\cache\builder\UserOptionCacheBuilder';
 	
 	/**
-	 * true, if within registration process
+	 * true if within registration process
 	 * @var	boolean
 	 */
 	public $inRegistration = false;
 	
 	/**
-	 * true, if within edit mode
+	 * true if within edit mode
 	 * @var	boolean
 	 */
 	public $editMode = true;
 	
 	/**
-	 * true, if within search mode
+	 * true if within search mode
 	 * @var	boolean
 	 */
 	public $searchMode = false;
 	
 	/**
-	 * true, if empty options should be removed
+	 * true if empty options should be removed
 	 * @var	boolean
 	 */
 	public $removeEmptyOptions = false;
@@ -52,6 +53,12 @@ class UserOptionHandler extends OptionHandler {
 	 * @var	\wcf\data\user\User
 	 */
 	public $user = null;
+	
+	/**
+	 * true if the condition mode during search mode is enabled
+	 * @var	boolean
+	 */
+	public $conditionMode = false;
 	
 	/**
 	 * Shows empty options.
@@ -110,6 +117,37 @@ class UserOptionHandler extends OptionHandler {
 	 */
 	public function resetOptionValues() {
 		$this->optionValues = array();
+	}
+	
+	/**
+	 * Enables the condition mode.
+	 * 
+	 * @param	boolean		$enable
+	 */
+	public function enableConditionMode($enable = true) {
+		if (!$this->searchMode) {
+			$this->enableSearchMode();
+		}
+		
+		$this->conditionMode = $enable;
+	}
+	
+	/**
+	 * Returns the option values.
+	 * 
+	 * @return	array
+	 */
+	public function getOptionValues() {
+		return $this->optionValues;
+	}
+	
+	/**
+	 * Sets the option values.
+	 * 
+	 * @param	array		$values
+	 */
+	public function setOptionValues(array $values) {
+		$this->optionValues = $values;
 	}
 	
 	/**
@@ -178,6 +216,10 @@ class UserOptionHandler extends OptionHandler {
 		
 		// search mode
 		if ($this->searchMode && !$option->searchable) {
+			return false;
+		}
+		
+		if ($this->conditionMode && (!$this->getTypeObject($option->optionType) instanceof ISearchableConditionUserOption)) {
 			return false;
 		}
 		

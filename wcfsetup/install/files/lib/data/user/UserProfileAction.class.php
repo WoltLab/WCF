@@ -7,6 +7,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\user\UserOptionHandler;
+use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -271,6 +272,10 @@ class UserProfileAction extends UserAction {
 			
 			$userAction = new UserAction(array($this->userProfile->userID), 'update', $data);
 			$userAction->executeAction();
+			
+			// check if the user will be automatically added to new
+			// user groups because of the changed user options
+			UserGroupAssignmentHandler::getInstance()->checkUsers(array($this->userProfile->userID));
 			
 			// return parsed template
 			$user = new User($this->userProfile->userID);
