@@ -270,6 +270,21 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			
 			$adapter->loadFile($attachment->getLocation());
 			$updateData = array();
+			// remove / reset old thumbnails
+			if ($attachment->tinyThumbnailType) {
+				@unlink($attachment->getTinyThumbnailLocation());
+				$updateData['tinyThumbnailType'] = '';
+				$updateData['tinyThumbnailSize'] = 0;
+				$updateData['tinyThumbnailWidth'] = 0;
+				$updateData['tinyThumbnailHeight'] = 0;
+			}
+			if ($attachment->thumbnailType) {
+				@unlink($attachment->getThumbnailLocation());
+				$updateData['thumbnailType'] = '';
+				$updateData['thumbnailSize'] = 0;
+				$updateData['thumbnailWidth'] = 0;
+				$updateData['thumbnailHeight'] = 0;
+			}
 			
 			// create tiny thumbnail
 			$tinyThumbnailLocation = $attachment->getTinyThumbnailLocation();
