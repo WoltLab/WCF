@@ -3,8 +3,8 @@ namespace wcf\data\user\group\assignment;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
-use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
 use wcf\system\cache\builder\ConditionCacheBuilder;
+use wcf\system\cache\builder\UserGroupAssignmentCacheBuilder;
 
 /**
  * Executes user group assignment-related actions.
