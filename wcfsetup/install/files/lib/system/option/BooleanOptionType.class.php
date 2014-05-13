@@ -72,8 +72,6 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 		$value = intval($value);
 		if (!$value) return;
 		
-		if ($ageFrom < 0 || $ageFrom > 120 || $ageTo < 0 || $ageTo > 120) return false;
-		
 		$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', array(1));
 	}
 	
