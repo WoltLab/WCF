@@ -8,7 +8,8 @@ use wcf\system\exception\UserInputException;
 use wcf\util\ArrayUtil;
 
 /**
- * Condition implementation for the user group a user is a member or no member of.
+ * Condition implementation for all of the user groups a user has to be a member
+ * of and the user groups a user may not be a member of.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2014 WoltLab GmbH

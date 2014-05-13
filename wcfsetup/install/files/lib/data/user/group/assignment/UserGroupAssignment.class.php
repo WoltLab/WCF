@@ -43,7 +43,7 @@ class UserGroupAssignment extends DatabaseObject implements IRouteController {
 	}
 	
 	/**
-	 * Returns the user group the automatic assignement belongs to.
+	 * Returns the user group the automatic assignment belongs to.
 	 * 
 	 * @return	\wcf\data\user\group\UserGroup
 	 */
