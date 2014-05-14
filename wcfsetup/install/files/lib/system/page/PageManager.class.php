@@ -91,7 +91,7 @@ class PageManager extends SingletonFactory {
 			}
 		}
 		
-		sort($selection);
+		asort($selection);
 		
 		return $selection;
 	}
