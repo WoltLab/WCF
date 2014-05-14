@@ -153,5 +153,9 @@
 			<name>com.woltlab.wcf.condition.userGroupAssignment</name>
 			<interfacename><![CDATA[wcf\system\condition\IUserCondition]]></interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.page</name>
+		</definition>
 	</import>
 </data>

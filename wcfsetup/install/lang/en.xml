@@ -1998,6 +1998,39 @@ Errors are:
 		<item name="wcf.page.pagePosition"><![CDATA[Page {#$pageNo} of {#$pages}]]></item>
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[User Account]]></item>
 		<item name="wcf.page.javascriptDisabled"><![CDATA[Your browser has JavaScript disabled. If you would like to use all features of this site, it is mandatory to enable JavaScript.]]></item>
+		
+		<item name="wcf.page.com.woltlab.wcf.AccountManagementForm"><![CDATA[Account Management]]></item>
+		<item name="wcf.page.com.woltlab.wcf.AvatarEditForm"><![CDATA[Avatar Management]]></item>
+		<item name="wcf.page.com.woltlab.wcf.DisclaimerForm"><![CDATA[Disclaimer]]></item>
+		<item name="wcf.page.com.woltlab.wcf.EmailActivationForm"><![CDATA[New Email Address Verification]]></item>
+		<item name="wcf.page.com.woltlab.wcf.EmailNewActivationCodeForm"><![CDATA[New Email Activation Code Request]]></item>
+		<item name="wcf.page.com.woltlab.wcf.LoginForm"><![CDATA[Login]]></item>
+		<item name="wcf.page.com.woltlab.wcf.LostPasswordForm"><![CDATA[Lost Password]]></item>
+		<item name="wcf.page.com.woltlab.wcf.MailForm"><![CDATA[Mail Form]]></item>
+		<item name="wcf.page.com.woltlab.wcf.ModerationActivationForm"><![CDATA[Content Approval]]></item>
+		<item name="wcf.page.com.woltlab.wcf.ModerationReportForm"><![CDATA[Content Report]]></item>
+		<item name="wcf.page.com.woltlab.wcf.NewPasswordForm"><![CDATA[New Password Request]]></item>
+		<item name="wcf.page.com.woltlab.wcf.NotificationSettingsForm"><![CDATA[Notification Settings]]></item>
+		<item name="wcf.page.com.woltlab.wcf.RegisterActivationForm"><![CDATA[Complete Registration]]></item>
+		<item name="wcf.page.com.woltlab.wcf.RegisterForm"><![CDATA[Registration]]></item>
+		<item name="wcf.page.com.woltlab.wcf.RegisterNewActivationCodeForm"><![CDATA[New Activation Code Request]]></item>
+		<item name="wcf.page.com.woltlab.wcf.SearchForm"><![CDATA[Search]]></item>
+		<item name="wcf.page.com.woltlab.wcf.SettingsForm"><![CDATA[Settings]]></item>
+		<item name="wcf.page.com.woltlab.wcf.SignatureEditForm"><![CDATA[Signature Management]]></item>
+		<item name="wcf.page.com.woltlab.wcf.UserSearchForm"><![CDATA[Members Search]]></item>
+		<item name="wcf.page.com.woltlab.wcf.DashboardPage"><![CDATA[Dashboard]]></item>
+		<item name="wcf.page.com.woltlab.wcf.DeletedContentListPage"><![CDATA[Deleted Content]]></item>
+		<item name="wcf.page.com.woltlab.wcf.FollowingPage"><![CDATA[Followed Users]]></item>
+		<item name="wcf.page.com.woltlab.wcf.IgnoredUsersPage"><![CDATA[Blocked Users]]></item>
+		<item name="wcf.page.com.woltlab.wcf.MembersListPage"><![CDATA[Members]]></item>
+		<item name="wcf.page.com.woltlab.wcf.ModerationListPage"><![CDATA[Moderation]]></item>
+		<item name="wcf.page.com.woltlab.wcf.NotificationListPage"><![CDATA[Notifications]]></item>
+		<item name="wcf.page.com.woltlab.wcf.RecentActivityListPage"><![CDATA[Recent Activities]]></item>
+		<item name="wcf.page.com.woltlab.wcf.SearchResultPage"><![CDATA[Search Results]]></item>
+		<item name="wcf.page.com.woltlab.wcf.TaggedPage"><![CDATA[Content With Particular Tag]]></item>
+		<item name="wcf.page.com.woltlab.wcf.TeamPage"><![CDATA[Staff Members]]></item>
+		<item name="wcf.page.com.woltlab.wcf.UserPage"><![CDATA[User Profile]]></item>
+		<item name="wcf.page.com.woltlab.wcf.UsersOnlineListPage"><![CDATA[Users Online]]></item>
 	</category>
 	
 	<category name="wcf.poll">

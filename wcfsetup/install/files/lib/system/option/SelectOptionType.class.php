@@ -26,7 +26,7 @@ class SelectOptionType extends RadioButtonOptionType {
 			'disableOptions' => $options['disableOptions'],
 			'enableOptions' => $options['enableOptions'],
 			'option' => $option,
-			'selectOptions' => $option->parseSelectOptions(),
+			'selectOptions' => $this->getSelectOptions($option),
 			'value' => $value,
 			'allowEmptyValue' => ($this->allowEmptyValue || $option->allowEmptyValue)
 		));
@@ -44,7 +44,7 @@ class SelectOptionType extends RadioButtonOptionType {
 			'enableOptions' => $options['enableOptions'],
 			'option' => $option,
 			'searchOption' => ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName]),
-			'selectOptions' => $option->parseSelectOptions(),
+			'selectOptions' => $this->getSelectOptions($option),
 			'value' => $value
 		));
 		return WCF::getTPL()->fetch('selectSearchableOptionType');

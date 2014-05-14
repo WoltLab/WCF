@@ -25,7 +25,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	public function getFormElement(Option $option, $value) {
 		WCF::getTPL()->assign(array(
 			'option' => $option,
-			'selectOptions' => $option->parseSelectOptions(),
+			'selectOptions' => $this->getSelectOptions($option),
 			'value' => (!is_array($value) ? explode("\n", $value) : $value)
 		));
 		return WCF::getTPL()->fetch('multiSelectOptionType');
@@ -38,7 +38,7 @@ class MultiSelectOptionType extends SelectOptionType {
 		WCF::getTPL()->assign(array(
 			'option' => $option,
 			'searchOption' => $value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName]),
-			'selectOptions' => $option->parseSelectOptions(),
+			'selectOptions' => $this->getSelectOptions($option),
 			'value' => (!is_array($value) ? explode("\n", $value) : $value)
 		));
 		return WCF::getTPL()->fetch('multiSelectSearchableOptionType');
@@ -49,7 +49,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!is_array($newValue)) $newValue = array();
-		$options = $option->parseSelectOptions();
+		$options = $this->getSelectOptions($option);
 		foreach ($newValue as $value) {
 			if (!isset($options[$value])) {
 				throw new UserInputException($option->optionName, 'validationFailed');

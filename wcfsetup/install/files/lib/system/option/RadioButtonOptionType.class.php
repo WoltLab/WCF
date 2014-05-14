@@ -29,9 +29,6 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
-		// get options
-		$selectOptions = $option->parseSelectOptions();
-		
 		$availableOptions = $option->parseMultipleEnableOptions();
 		$options = array(
 			'disableOptions' => array(),
@@ -49,7 +46,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 			'disableOptions' => $options['disableOptions'],
 			'enableOptions' => $options['enableOptions'],
 			'option' => $option,
-			'selectOptions' => $selectOptions,
+			'selectOptions' => $this->getSelectOptions($option),
 			'value' => $value
 		));
 		return WCF::getTPL()->fetch($this->templateName);
@@ -60,7 +57,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	 */
 	public function validate(Option $option, $newValue) {
 		if (!empty($newValue)) {
-			$options = $option->parseSelectOptions();
+			$options = $this->getSelectOptions($option);
 			if (!isset($options[$newValue])) {
 				throw new UserInputException($option->optionName, 'validationFailed');
 			}
@@ -106,5 +103,15 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	 */
 	public function getConditionData(Option $option, $newValue) {
 		return $newValue;
+	}
+	
+	/**
+	 * Returns the select options for the given option.
+	 * 
+	 * @param	\wcf\dat\option\Option		$option
+	 * @return	array<string>
+	 */
+	protected function getSelectOptions(Option $option) {
+		return $option->parseSelectOptions();
 	}
 }
