@@ -1024,7 +1024,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.pageMenu.link.internal"><![CDATA[Internal link]]></item>
 		<item name="wcf.acp.pageMenu.list"><![CDATA[List Menu Items]]></item>
 		<item name="wcf.acp.pageMenu.menuItemController"><![CDATA[Controller]]></item>
-		<item name="wcf.acp.pageMenu.menuItemController.description"><![CDATA[PHP class name including namespace, e.g. “wcf\page\DashboardPage”.]]></item>
+		<item name="wcf.acp.pageMenu.menuItemController.description"><![CDATA[If a page is not available in the selection above, you can enter the related controller manually. Enter the PHP class name including namespace, e.g. “wcf\page\DashboardPage”.]]></item>
 		<item name="wcf.acp.pageMenu.menuItemController.error.notValid"><![CDATA[Unable to find the provided class name]]></item>
 		<item name="wcf.acp.pageMenu.menuItemLink"><![CDATA[Link]]></item>
 		<item name="wcf.acp.pageMenu.menuPosition"><![CDATA[Position]]></item>
@@ -1034,6 +1034,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.pageMenu.parentMenuItem"><![CDATA[Parent Menu Item]]></item>
 		<item name="wcf.acp.pageMenu.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.pageMenu.menuItemParameters"><![CDATA[Parameters]]></item>
+		<item name="wcf.acp.pageMenu.menuItemPage"><![CDATA[Page]]></item>
+		<item name="wcf.acp.pageMenu.menuItemPage.description"><![CDATA[Choose the internal page you want to link.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">

@@ -81,6 +81,12 @@ class PageMenuItemEditForm extends PageMenuItemAddForm {
 			$this->pageMenuItem = $this->menuItem->menuItem;
 			$this->parentMenuItem = $this->menuItem->parentMenuItem;
 			$this->showOrder = $this->menuItem->showOrder;
+			
+			foreach ($this->pageObjectTypes as $page) {
+				if ($page->className == $this->menuItemController) {
+					$this->menuItemPage = $page->objectTypeID;
+				}
+			}
 		}
 	}
 	

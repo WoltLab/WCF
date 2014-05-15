@@ -9,6 +9,8 @@
 		var $menuItemControllerContainer = $('#menuItemControllerContainer');
 		var $menuItemLinkContainer = $('#menuItemLinkContainer');
 		var $menuItemParametersContainer = $('#menuItemParametersContainer');
+		var $menuItemPageContainer = $('#menuItemPageContainer');
+		var $menuItemPage = $('#menuItemPage');
 		
 		function handleMenuPosition() {
 			if ($menuPosition.val() === 'header') {
@@ -21,22 +23,37 @@
 		
 		function handleIsInternalLink() {
 			if ($isInternalLink.is(':checked')) {
+				$menuItemPageContainer.show();
 				$menuItemControllerContainer.show();
 				$menuItemParametersContainer.show();
 				$menuItemLinkContainer.hide();
 			}
 			else {
+				$menuItemPageContainer.hide();
 				$menuItemControllerContainer.hide();
 				$menuItemParametersContainer.hide();
 				$menuItemLinkContainer.show();
 			}
 		}
 		
+		function handleMenuPage() {
+			if ($menuItemPage.val() != '0') {
+				$menuItemControllerContainer.addClass('disabled');
+				$menuItemControllerContainer.find('input').disable();
+			}
+			else {
+				$menuItemControllerContainer.removeClass('disabled');
+				$menuItemControllerContainer.find('input').enable();
+			}
+		}
+		
 		$menuPosition.change(handleMenuPosition);
 		$('input[name=isInternalLink]').change(handleIsInternalLink);
+		$menuItemPage.change(handleMenuPage);
 		
 		handleMenuPosition();
 		handleIsInternalLink();
+		handleMenuPage();
 	});
 	//]]>
 </script>
@@ -138,10 +155,32 @@
 				</dd>
 			</dl>
 			
+			<dl id="menuItemPageContainer"{if $errorField == 'menuItemPage'} class="formError"{/if}>
+				<dt><label for="menuItemPage">{lang}wcf.acp.pageMenu.menuItemPage{/lang}</label></dt>
+				<dd>
+					<select name="menuItemPage" id="menuItemPage">
+						<option value="0">{lang}wcf.global.noSelection{/lang}</option>
+						{htmlOptions options=$pages selected=$menuItemPage}
+					</select>
+					{if $errorField == 'menuItemPage'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{elseif $errorType == 'noValidSelection'}
+								{lang}wcf.global.form.error.noValidSelection{/lang}
+							{else}
+								{lang}wcf.acp.pageMenu.menuItemPage.error.{$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.pageMenu.menuItemPage.description{/lang}</small>
+				</dd>
+			</dl>
+			
 			<dl id="menuItemControllerContainer"{if $errorField == 'menuItemController'} class="formError"{/if}>
 				<dt><label for="menuItemController">{lang}wcf.acp.pageMenu.menuItemController{/lang}</label></dt>
 				<dd>
-					<input type="text" name="menuItemController" id="menuItemController" value="{$menuItemController}" class="long" />
+					<input type="text" name="menuItemController" id="menuItemController" value="{if !$pages[$menuItemPage]|isset}{$menuItemController}{/if}" class="long" />
 					{if $errorField == 'menuItemController'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

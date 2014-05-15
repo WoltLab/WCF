@@ -6,6 +6,7 @@ use wcf\data\page\menu\item\PageMenuItemList;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\page\PageManager;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -91,6 +92,18 @@ class PageMenuItemAddForm extends AbstractForm {
 	public $showOrder = 0;
 	
 	/**
+	 * available page object types
+	 * @var	array<\wcf\data\object\type\ObjectType>
+	 */
+	public $pageObjectTypes = array();
+	
+	/**
+	 * id of the page object type that belongs to the menu item's controller
+	 * @var	integer
+	 */
+	public $menuItemPage = 0;
+	
+	/**
 	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -100,6 +113,8 @@ class PageMenuItemAddForm extends AbstractForm {
 		I18nHandler::getInstance()->register('pageMenuItem');
 		
 		$this->readAvailableParentMenuItems();
+		
+		$this->pageObjectTypes = PageManager::getInstance()->getObjectTypes();
 	}
 	
 	/**
@@ -134,6 +149,7 @@ class PageMenuItemAddForm extends AbstractForm {
 		if (isset($_POST['isDisabled'])) $this->isDisabled = true;
 		if (isset($_POST['isInternalLink'])) $this->isInternalLink = (bool) $_POST['isInternalLink'];
 		if (isset($_POST['menuItemController'])) $this->menuItemController = StringUtil::trim($_POST['menuItemController']);
+		if (isset($_POST['menuItemPage'])) $this->menuItemPage = intval($_POST['menuItemPage']);
 		if (isset($_POST['menuItemParameters'])) $this->menuItemParameters = StringUtil::trim($_POST['menuItemParameters']);
 		if (isset($_POST['menuPosition'])) $this->menuPosition = StringUtil::trim($_POST['menuPosition']);
 		if (isset($_POST['parentMenuItem'])) $this->parentMenuItem = StringUtil::trim($_POST['parentMenuItem']);
@@ -156,8 +172,22 @@ class PageMenuItemAddForm extends AbstractForm {
 		
 		// validate menu item controller
 		if ($this->isInternalLink) {
-			if (empty($this->menuItemController)) {
-				throw new UserInputException('menuItemController');
+			if ($this->menuItemPage) {
+				$valid = false;
+				foreach ($this->pageObjectTypes as $page) {
+					if ($page->objectTypeID == $this->menuItemPage) {
+						$this->menuItemController = $page->className;
+						$valid = true;
+						break;
+					}
+				}
+				
+				if (!$valid) {
+					throw new UserInputException('menuItemPage', 'noValidSelection');
+				}
+			}
+			else if (empty($this->menuItemController)) {
+				throw new UserInputException('menuItemPage');
 			}
 			
 			if (!class_exists($this->menuItemController)) {
@@ -273,7 +303,9 @@ class PageMenuItemAddForm extends AbstractForm {
 			'menuItemController' => $this->menuItemController,
 			'menuItemParameters' => $this->menuItemParameters,
 			'menuItemLink' => $this->menuItemLink,
+			'menuItemPage' => $this->menuItemPage,
 			'menuPosition' => $this->menuPosition,
+			'pages' => PageManager::getInstance()->getSelection(),
 			'pageMenuItem' => $this->pageMenuItem,
 			'parentMenuItem' => $this->parentMenuItem,
 			'showOrder' => $this->showOrder
