@@ -7,6 +7,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -96,6 +97,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	const TYPE_INTEGER = 1;
 	const TYPE_STRING = 2;
 	const TYPE_BOOLEAN = 3;
+	const TYPE_JSON = 4;
 	
 	/**
 	 * Initialize a new DatabaseObject-related action.
@@ -425,6 +427,17 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	}
 	
 	/**
+	 * Reads a json-encoded value and validates it.
+	 * 
+	 * @param	string		$variableName
+	 * @param	boolean		$allowEmpty
+	 * @param	string		$arrayIndex
+	 */
+	protected function readJSON($variableName, $allowEmpty = false, $arrayIndex = '') {
+		$this->readValue($variableName, $allowEmpty, $arrayIndex, self::TYPE_JSON);
+	}
+	
+	/**
 	 * Reads a value and validates it. If you set $allowEmpty to true, no exception will
 	 * be thrown if the variable evaluates to 0 (integer) or '' (string). Furthermore the
 	 * variable will be always created with a sane value if it does not exist.
@@ -496,6 +509,29 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 					}
 					else {
 						$target[$variableName] = $target[$variableName] != 'false';
+					}
+				}
+			break;
+			
+			case self::TYPE_JSON:
+				if (!isset($target[$variableName])) {
+					if ($allowEmpty) {
+						$target[$variableName] = array();
+					}
+					else {
+						throw new UserInputException($variableName);
+					}
+				}
+				else {
+					try {
+						$target[$variableName] = JSON::decode($target[$variableName]);
+					}
+					catch (SystemException $e) {
+						throw new UserInputException($variableName);
+					}
+					
+					if (!$allowEmpty && empty($target[$variableName])) {
+						throw new UserInputException($variableName);
 					}
 				}
 			break;
