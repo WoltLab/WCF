@@ -39,7 +39,7 @@
 			<dl{if $errorField == 'username'} class="formError"{/if}>
 				<dt><label for="username">{lang}wcf.user.username{/lang}</label></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{@$username}" required="required" class="medium" />
+					<input type="text" id="username" name="username" value="{$username}" required="required" class="medium" />
 					{if $errorField == 'username'}
 						<small class="innerError">
 							{if $errorType == 'notFound'}{lang}wcf.user.username.error.notFound{/lang}{/if}
