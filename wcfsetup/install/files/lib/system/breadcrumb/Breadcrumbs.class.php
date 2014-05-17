@@ -31,7 +31,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 */
 	protected function init() {
 		// add main breadcrumbs entry
-		$this->add(new Breadcrumb(WCF::getLanguage()->get(PAGE_TITLE), PageMenu::getInstance()->getLandingPage()->getLink()));
+		$this->add(new Breadcrumb(WCF::getLanguage()->get(PAGE_TITLE), PageMenu::getInstance()->getLandingPage()->getProcessor()->getLink()));
 	}
 	
 	/**
