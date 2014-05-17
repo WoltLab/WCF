@@ -1644,7 +1644,7 @@ Errors are:
 		<item name="wcf.date.timezone.europe.helsinki"><![CDATA[(UTC+02:00) Helsinki, Kiev, Riga, Sofia, Tallinn, Vilnius]]></item>
 		<item name="wcf.date.timezone.asia.jerusalem"><![CDATA[(UTC+02:00) Jerusalem]]></item>
 		<item name="wcf.date.timezone.africa.cairo"><![CDATA[(UTC+02:00) Cairo]]></item>
-		<item name="wcf.date.timezone.europe.minsk"><![CDATA[(UTC+02:00) Kaliningrad, Minsk]]></item>
+		<item name="wcf.date.timezone.europe.minsk"><![CDATA[(UTC+03:00) Kaliningrad, Minsk]]></item>
 		<item name="wcf.date.timezone.asia.baghdad"><![CDATA[(UTC+03:00) Baghdad]]></item>
 		<item name="wcf.date.timezone.asia.kuwait"><![CDATA[(UTC+03:00) Kuwait, Riyadh]]></item>
 		<item name="wcf.date.timezone.africa.nairobi"><![CDATA[(UTC+03:00) Nairobi]]></item>

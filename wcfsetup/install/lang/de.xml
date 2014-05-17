@@ -1645,7 +1645,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.date.timezone.europe.helsinki"><![CDATA[(UTC+02:00) Helsinki, Kiew, Riga, Sofia, Tallinn, Wilna]]></item>
 		<item name="wcf.date.timezone.asia.jerusalem"><![CDATA[(UTC+02:00) Jerusalem]]></item>
 		<item name="wcf.date.timezone.africa.cairo"><![CDATA[(UTC+02:00) Kairo]]></item>
-		<item name="wcf.date.timezone.europe.minsk"><![CDATA[(UTC+02:00) Kaliningrad, Minsk]]></item>
+		<item name="wcf.date.timezone.europe.minsk"><![CDATA[(UTC+03:00) Kaliningrad, Minsk]]></item>
 		<item name="wcf.date.timezone.asia.baghdad"><![CDATA[(UTC+03:00) Bagdad]]></item>
 		<item name="wcf.date.timezone.asia.kuwait"><![CDATA[(UTC+03:00) Kuwait, Riad]]></item>
 		<item name="wcf.date.timezone.africa.nairobi"><![CDATA[(UTC+03:00) Nairobi]]></item>
