@@ -32,7 +32,12 @@ class ImageBBCode extends AbstractBBCode {
 		}
 		else if ($parser->getOutputType() == 'text/simplified-html') {
 			$src = StringUtil::decodeHTML($src);
-			return StringUtil::getAnchorTag($src);
+			$path = parse_url($src, PHP_URL_PATH);
+			if ($path !== false) {
+				return StringUtil::encodeHTML(basename($path));
+			}
+			
+			return '';
 		}
 	}
 }
