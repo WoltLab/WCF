@@ -188,6 +188,8 @@ function shuffle(array) {
 		jQuery.browser.mozilla = false;
 		jQuery.browser.msie = true;
 	}
+	
+	jQuery.browser.ckeditor = false;
 })();
 
 /**
@@ -1123,14 +1125,67 @@ WCF.Dropdown = {
 		
 		var $bottom = 'auto';
 		var $top = $dropdownOffsets.top + $dropdownDimensions.height + 7;
-		if ($top + $menuDimensions.height > $(window).height() + $(document).scrollTop()) {
-			$bottom = $(window).height() - $dropdownOffsets.top + 10;
-			$top = 'auto';
+		
+		if ($.browser.smartphone) {
+			var $align = 'bottom';
+			var $forceLimit = false;
+			var $windowHeight = $(window).height();
+			var $projectedBottom = $top + $menuDimensions.height;
 			
-			dropdownMenu.addClass('dropdownArrowBottom');
+			// dropdown exceeds bottom boundary, check if the difference is lower if we open it towards top
+			if ($projectedBottom > $windowHeight) {
+				var $projectedTop = $dropdownOffsets.top + 10 - $menuDimensions.height;
+				
+				// align upwards
+				if ($projectedTop >= 0) {
+					$align = 'top';
+				}
+				else {
+					$forceLimit = true;
+					
+					// check which direction (up or down) provides more space
+					var $differenceTop = Math.abs($projectedTop);
+					var $differenceBottom = Math.abs($projectedBottom - $windowHeight);
+					if ($differenceBottom <= $differenceTop) {
+						$align = 'bottom';
+					}
+					else {
+						$align = 'top';
+					}
+				}
+			}
+			
+			if ($align == 'top') {
+				$bottom = $(window).height() - $dropdownOffsets.top + 10;
+				$top = 'auto';
+				
+				if ($forceLimit) {
+					$top = 0;
+					dropdownMenu.children('ul.scrollableDropdownMenu').css('max-height', $bottom);
+				}
+				
+				dropdownMenu.addClass('dropdownArrowBottom');
+			}
+			else {
+				if ($forceLimit) {
+					$bottom = 0;
+					var $ul = dropdownMenu.children('ul.scrollableDropdownMenu');
+					$ul.css('max-height', Math.min($ul.css('max-height').replace(/px$/, ''), $windowHeight - $top));
+				}
+				
+				dropdownMenu.removeClass('dropdownArrowBottom');
+			}
 		}
 		else {
-			dropdownMenu.removeClass('dropdownArrowBottom');
+			if ($top + $menuDimensions.height > $(window).height() + $(document).scrollTop()) {
+				$bottom = $(window).height() - $dropdownOffsets.top + 10;
+				$top = 'auto';
+				
+				dropdownMenu.addClass('dropdownArrowBottom');
+			}
+			else {
+				dropdownMenu.removeClass('dropdownArrowBottom');
+			}
 		}
 		
 		if (!$wasHidden) {
