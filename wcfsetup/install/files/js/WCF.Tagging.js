@@ -96,10 +96,20 @@ WCF.Tagging.TagList = WCF.EditableItemList.extend({
 			data.label = data.label.substr(0, this._maxLength);
 		}
 		
-		var result = this._super(data);
-		$(this._itemList).find('.badge:not(tag)').addClass('tag');
+		if (WCF.inArray(data.label, this._data)) {
+			return true;
+		}
 		
-		return result;
+		var $listItem = $('<li class="badge tag">' + WCF.String.escapeHTML(data.label) + '</li>').data('objectID', data.objectID).data('label', data.label).appendTo(this._itemList);
+		$listItem.click($.proxy(this._click, this));
+		
+		if (this._search) {
+			this._search.addExcludedSearchValue(data.label);
+		}
+		
+		this._addItem(data.objectID, data.label);
+		
+		return true;
 	},
 	
 	/**
