@@ -33,102 +33,101 @@ final class DateUtil {
 	 * @var	array<string>
 	 */
 	protected static $availableTimezones = array(
-		'Pacific/Kwajalein', // (GMT-12:00) International Date Line West
-		'Pacific/Midway', // (GMT-11:00) Midway Island
-		'Pacific/Samoa', // (GMT-11:00) Samoa
-		'Pacific/Honolulu', // (GMT-10:00) Hawaii
-		'America/Anchorage', // (GMT-09:00) Alaska
-		'America/Tijuana', // (GMT-08:00) Tijuana, Baja California
-		'America/Los_Angeles', // (GMT-08:00) Pacific Time (US & Canada)
-		'America/Phoenix', // (GMT-07:00) Arizona
-		'America/Chihuahua', // (GMT-07:00) Chihuahua, Mazatlan
-		'America/Denver', // (GMT-07:00) Mountain Time (US & Canada)
-		'America/Chicago', // (GMT-06:00) Central Time (US & Canada)	
-		'America/Mexico_City', // (GMT-06:00) Mexico City, Monterrey
-		'America/Tegucigalpa', // (GMT-06:00) Central America
-		'America/Regina', // (GMT-06:00) Saskatchewan
-		'America/Bogota', // (GMT-05:00) Bogota, Lima
-		'America/New_York', // (GMT-05:00) Eastern Time (US & Canada)
-		'America/Indiana/Indianapolis', // (GMT-05:00) Indiana (East)
-		'America/Rio_Branco', // (GMT-05:00) Rio Branco
-		'America/Caracas', // (GMT-04:30) Caracas
-		'America/Asuncion', // UTC-04:00 Asuncion
-		'America/Halifax', // (GMT-04:00) Atlantic Time (Canada)
-		'America/Cuiaba', // UTC-04:00 Cuiaba
-		'America/La_Paz', // (GMT-04:00) Georgetown, La Paz, Manaus
-		'America/Santiago', // (GMT-04:00) Santiago
-		'America/St_Johns', // (GMT-03:30) Newfoundland
-		'America/Sao_Paulo', // (GMT-03:00) Brasilia
-		'America/Argentina/Buenos_Aires', // (GMT-03:00) Buenos Aires
-		'America/Cayenne', // UTC-03:00 Cayenne
-		'America/Godthab', // (GMT-03:00) Greenland
-		'America/Montevideo', // (GMT-03:00) Montevideo
-		'Atlantic/South_Georgia', // (GMT-02:00) Mid-Atlantic
-		'Atlantic/Azores', // (GMT-01:00) Azores
-		'Atlantic/Cape_Verde', // (GMT-01:00) Cape Verde Is.
-		'Africa/Casablanca', // (GMT) Casablanca
-		'Europe/London', // (GMT) Dublin, Lisbon, London
-		'Africa/Monrovia', // (GMT) Monrovia, Reykjavik
-		'Europe/Berlin', // (GMT+01:00) Amsterdam, Berlin, Rome, Stockholm, Vienna
-		'Europe/Belgrade', // (GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague
-		'Europe/Paris', // (GMT+01:00) Brussels, Copenhagen, Madrid, Paris
-		'Europe/Sarajevo', // (GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb
-		'Africa/Algiers', // (GMT+01:00) West Central Africa
-		'Africa/Windhoek', // (GMT+01:00) Windhoek
-		'Asia/Amman', // (GMT+02:00) Amman
-		'Europe/Athens', // (GMT+02:00) Athens, Bucharest, Istanbul
-		'Asia/Beirut', // (GMT+02:00) Beirut
-		'Asia/Damascus', // (GMT+02:00) Damascus
-		'Africa/Harare', // (GMT+02:00) Harare
-		'Europe/Helsinki', // (GMT+02:00) Helsinki, Kiev, Riga, Sofia, Tallinn, Vilnius
-		'Asia/Jerusalem', // (GMT+02:00) Jerusalem
-		'Africa/Cairo', // (GMT+02:00) Cairo
-		'Europe/Minsk', // (GMT+02:00) Minsk
-		'Asia/Baghdad', // (GMT+03:00) Baghdad
-		'Asia/Kuwait', // (GMT+03:00) Kuwait, Riyadh
-		'Africa/Nairobi', // (GMT+03:00) Nairobi
-		'Asia/Tehran', // (GMT+03:30) Tehran
-		'Asia/Muscat', // (GMT+04:00) Muscat
-		'Asia/Baku', // (GMT+04:00) Baku
-		'Asia/Yerevan', // (GMT+04:00) Yerevan
-		'Europe/Moscow', // (GMT+04:00) Moscow, Volgograd
-		'Indian/Mauritius', // UTC+04:00 Port Loius
-		'Asia/Tbilisi', // UTC+04:00 Tbilisi
-		'Asia/Kabul', // UTCU+04:30 Kabul
-		'Asia/Karachi', // (GMT+05:00) Karachi
-		'Asia/Yekaterinburg', // (GMT+05:00) Ekaterinburg
-		'Asia/Tashkent', // (GMT+05:00) Tashkent
-		'Asia/Kolkata', // (GMT+05:30) Calcutta, New Dehli
-		'Asia/Colombo', // (GMT+05:30) Sri Jayawardenepura
-		'Asia/Katmandu', // (GMT+05:45) Kathmandu
-		'Asia/Almaty', // (GMT+06:00) Almaty
-		'Asia/Dhaka', // (GMT+06:00) Dhaka
-		'Asia/Novosibirsk', // (GMT+06:00) Novosibirsk
-		'Asia/Rangoon', // (GMT+06:30) Yangon (Rangoon)
-		'Asia/Bangkok', // (GMT+07:00) Bangkok, Jakarta
-		'Asia/Krasnoyarsk', // (GMT+07:00) Krasnoyarsk
-		'Asia/Irkutsk', // (GMT+08:00) Irkutsk
-		'Asia/Kuala_Lumpur', // (GMT+08:00) Kuala Lumpur, Singapore
-		'Asia/Chongqing', // (GMT+08:00) Beijing, Chongqing, Hong Kong
-		'Australia/Perth', // (GMT+08:00) Perth
-		'Asia/Taipei', // (GMT+08:00) Taipei
-		'Asia/Ulaanbaatar', // (GMT+08:00) Ulaan Bataar
-		'Asia/Yakutsk', // (GMT+09:00) Yakutsk
-		'Asia/Tokyo', // (GMT+09:00) Tokyo
-		'Asia/Seoul', // (GMT+09:00) Seoul
-		'Australia/Adelaide', // (GMT+09:30) Adelaide
-		'Australia/Darwin', // (GMT+09:30) Darwin
-		'Australia/Brisbane', // (GMT+10:00) Brisbane
-		'Australia/Sydney', // (GMT+10:00) Canberra, Melbourne, Sydney
-		'Pacific/Guam', // (GMT+10:00) Guam, Port Moresby
-		'Australia/Hobart', // (GMT+10:00) Hobart
-		'Asia/Vladivostok', // (GMT+10:00) Vladivostok
-		'Asia/Magadan', // (GMT+11:00) Magadan
-		'Pacific/Noumea', // UTC+11:00 New Caledonia
-		'Pacific/Auckland', // (GMT+12:00) Auckland
-		'Pacific/Fiji', // (GMT+12:00) Fiji
-		'Asia/Kamchatka', // (GMT+12:00) Kamchatka
-		'Pacific/Tongatapu', // (GMT+13:00) Nukualofa
+		// there is not support for UTC-12:00 in php
+		// '...', // (UTC-12:00) International Date Line West
+		'Pacific/Samoa', // (UTC-11:00) Midway Island, American Samoa
+		'Pacific/Honolulu', // (UTC-10:00) Hawaii
+		'America/Anchorage', // (UTC-09:00) Alaska
+		'America/Los_Angeles', // (UTC-08:00) Pacific Time (US & Canada), Tijuana, Baja California
+		'America/Phoenix', // (UTC-07:00) Arizona
+		'America/Chihuahua', // (UTC-07:00) Chihuahua, Mazatlan
+		'America/Denver', // (UTC-07:00) Mountain Time (US & Canada)
+		'America/Chicago', // (UTC-06:00) Central Time (US & Canada)	
+		'America/Mexico_City', // (UTC-06:00) Mexico City, Monterrey
+		'America/Tegucigalpa', // (UTC-06:00) Central America
+		'America/Regina', // (UTC-06:00) Saskatchewan
+		'America/Bogota', // (UTC-05:00) Bogota, Lima
+		'America/New_York', // (UTC-05:00) Eastern Time (US & Canada)
+		'America/Indiana/Indianapolis', // (UTC-05:00) Indiana (East)
+		'America/Rio_Branco', // (UTC-05:00) Rio Branco
+		'America/Caracas', // (UTC-04:30) Caracas
+		'America/Asuncion', // (UTC-04:00) Asuncion
+		'America/Halifax', // (UTC-04:00) Atlantic Time (Canada)
+		'America/Cuiaba', // (UTC-04:00) Cuiaba
+		'America/La_Paz', // (UTC-04:00) Georgetown, La Paz, Manaus
+		'America/Santiago', // (UTC-04:00) Santiago
+		'America/St_Johns', // (UTC-03:30) Newfoundland
+		'America/Sao_Paulo', // (UTC-03:00) Brasilia
+		'America/Argentina/Buenos_Aires', // (UTC-03:00) Buenos Aires
+		'America/Cayenne', // (UTC-03:00) Cayenne
+		'America/Godthab', // (UTC-03:00) Greenland
+		'America/Montevideo', // (UTC-03:00) Montevideo
+		'Atlantic/South_Georgia', // (UTC-02:00) Mid-Atlantic
+		'Atlantic/Azores', // (UTC-01:00) Azores
+		'Atlantic/Cape_Verde', // (UTC-01:00) Cape Verde Is.
+		'Africa/Casablanca', // (UTC) Casablanca
+		'Europe/London', // (UTC) Dublin, Lisbon, London
+		'Africa/Monrovia', // (UTC) Monrovia, Reykjavik
+		'Europe/Berlin', // (UTC+01:00) Amsterdam, Berlin, Rome, Stockholm, Vienna
+		'Europe/Belgrade', // (UTC+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague
+		'Europe/Paris', // (UTC+01:00) Brussels, Copenhagen, Madrid, Paris
+		'Europe/Sarajevo', // (UTC+01:00) Sarajevo, Skopje, Warsaw, Zagreb
+		'Africa/Algiers', // (UTC+01:00) West Central Africa
+		'Africa/Windhoek', // (UTC+01:00) Windhoek
+		'Europe/Athens', // (UTC+02:00) Athens, Bucharest, Istanbul
+		'Asia/Beirut', // (UTC+02:00) Beirut
+		'Asia/Damascus', // (UTC+02:00) Damascus
+		'Africa/Harare', // (UTC+02:00) Harare, Pretoria
+		'Europe/Helsinki', // (UTC+02:00) Helsinki, Kiev, Riga, Sofia, Tallinn, Vilnius
+		'Asia/Jerusalem', // (UTC+02:00) Jerusalem
+		'Africa/Cairo', // (UTC+02:00) Cairo
+		'Asia/Amman', // (UTC+03:00) Amman
+		'Asia/Baghdad', // (UTC+03:00) Baghdad
+		'Europe/Minsk', // (UTC+03:00) Kaliningrad, Minsk
+		'Asia/Kuwait', // (UTC+03:00) Kuwait, Riyadh
+		'Africa/Nairobi', // (UTC+03:00) Nairobi
+		'Asia/Tehran', // (UTC+03:30) Tehran
+		'Asia/Muscat', // (UTC+04:00) Muscat
+		'Asia/Baku', // (UTC+04:00) Baku
+		'Asia/Yerevan', // (UTC+04:00) Yerevan
+		'Europe/Moscow', // (UTC+04:00) Moscow, Volgograd
+		'Indian/Mauritius', // (UTC+04:00) Port Loius
+		'Asia/Tbilisi', // (UTC+04:00) Tbilisi
+		'Asia/Kabul', // (UTC+04:30) Kabul
+		'Asia/Karachi', // (UTC+05:00) Karachi
+		'Asia/Tashkent', // (UTC+05:00) Tashkent
+		'Asia/Kolkata', // (UTC+05:30) Calcutta, New Dehli
+		'Asia/Colombo', // (UTC+05:30) Sri Jayawardenepura
+		'Asia/Katmandu', // (UTC+05:45) Kathmandu
+		'Asia/Almaty', // (UTC+06:00) Almaty
+		'Asia/Dhaka', // (UTC+06:00) Dhaka
+		'Asia/Yekaterinburg', // (UTC+06:00) Ekaterinburg
+		'Asia/Rangoon', // (UTC+06:30) Yangon (Rangoon)
+		'Asia/Bangkok', // (UTC+07:00) Bangkok, Jakarta
+		'Asia/Novosibirsk', // (UTC+07:00) Novosibirsk
+		'Asia/Krasnoyarsk', // (UTC+08:00) Krasnoyarsk
+		'Asia/Kuala_Lumpur', // (UTC+08:00) Kuala Lumpur, Singapore
+		'Asia/Chongqing', // (UTC+08:00) Beijing, Chongqing, Hong Kong
+		'Australia/Perth', // (UTC+08:00) Perth
+		'Asia/Taipei', // (UTC+08:00) Taipei
+		'Asia/Ulaanbaatar', // (UTC+08:00) Ulaan Bataar
+		'Asia/Irkutsk', // (UTC+09:00) Irkutsk
+		'Asia/Tokyo', // (UTC+09:00) Tokyo
+		'Asia/Seoul', // (UTC+09:00) Seoul
+		'Australia/Adelaide', // (UTC+09:30) Adelaide
+		'Australia/Darwin', // (UTC+09:30) Darwin
+		'Australia/Brisbane', // (UTC+10:00) Brisbane
+		'Australia/Sydney', // (UTC+10:00) Canberra, Melbourne, Sydney
+		'Pacific/Guam', // (UTC+10:00) Guam, Port Moresby
+		'Australia/Hobart', // (UTC+10:00) Hobart
+		'Asia/Yakutsk', // (UTC+10:00) Yakutsk
+		'Pacific/Noumea', // (UTC+11:00) New Caledonia
+		'Asia/Vladivostok', // (UTC+11:00) Vladivostok
+		'Pacific/Auckland', // (UTC+12:00) Auckland
+		'Pacific/Fiji', // (UTC+12:00) Fiji
+		'Asia/Magadan', // (UTC+12:00) Magadan
+		'Pacific/Tongatapu', // (UTC+13:00) Nukualofa
+		'Pacific/Apia', // (UTC+13:00) Samoa
 	);
 	
 	/**
