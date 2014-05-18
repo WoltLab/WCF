@@ -153,7 +153,7 @@ class LinkHandler extends SingletonFactory {
 			$parameters['title'] = trim($this->titleRegex->replace($parameters['title'], '-'), '-');
 			
 			// trim to 80 characters
-			$parameters['title'] = mb_substr($parameters['title'], 0, 80);
+			$parameters['title'] = rtrim(mb_substr($parameters['title'], 0, 80), '-');
 			
 			// encode title
 			if ($encodeTitle) $parameters['title'] = rawurlencode($parameters['title']);
