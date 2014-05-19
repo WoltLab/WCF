@@ -1936,18 +1936,24 @@ dl.inlineDataList {
 
 dl.dataList {
 	dt {
+		color: @wcfDimmedColor;
+		clear: both;
 		float: left;
-		overflow: hidden;
-		text-align: right;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		width: 35%;
-		word-wrap: normal;
+		margin-right: @wcfGapTiny;
+		text-align: left;
+		
+		&::after {
+			content: ":";
+		}
 	}
 	
 	dd {
-		text-align: left;
-		margin-left: 38%;
+		float: right;
+		text-align: right;
+		
+		&:not(:last-child) {
+			margin-bottom: 3px;
+		}
 	}
 }
 
