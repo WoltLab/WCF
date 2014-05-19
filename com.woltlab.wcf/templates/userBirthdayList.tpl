@@ -11,7 +11,7 @@
 								<h3><a href="{link controller='User' object=$user}{/link}">{$user->username}</a>{if MODULE_USER_RANK && $user->getUserTitle()} <span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>{/if}</h3> 
 							</div>
 							<ul class="dataList userFacts">
-								{$user->getBirthday($year)}
+								<li>{$user->getBirthday($year)}</li>
 							</ul>
 							
 							{include file='userInformationButtons'}
