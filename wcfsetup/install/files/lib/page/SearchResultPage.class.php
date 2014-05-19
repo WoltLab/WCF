@@ -2,10 +2,12 @@
 namespace wcf\page;
 use wcf\data\search\ISearchResultObject;
 use wcf\data\search\Search;
+use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\system\menu\page\PageMenu;
+use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchEngine;
 use wcf\system\WCF;
 
@@ -106,6 +108,9 @@ class SearchResultPage extends MultipleLinkPage {
 				PageMenu::getInstance()->setActiveMenuItem($activeMenuItem);
 			}
 		}
+		
+		// add breadcrumbs
+		WCF::getBreadcrumbs()->add(new Breadcrumb(WCF::getLanguage()->get('wcf.search.title'), LinkHandler::getInstance()->getLink('Search')));
 	}
 	
 	/**
