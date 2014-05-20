@@ -188,8 +188,6 @@ function shuffle(array) {
 		jQuery.browser.mozilla = false;
 		jQuery.browser.msie = true;
 	}
-	
-	jQuery.browser.ckeditor = false;
 })();
 
 /**
