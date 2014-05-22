@@ -3,6 +3,7 @@ namespace wcf\data\attachment;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\attachment\AttachmentHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -10,9 +11,8 @@ use wcf\system\image\ImageHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\upload\DefaultUploadFileValidationStrategy;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\ArrayUtil;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\util\FileUtil;
 
 /**
  * Executes attachment-related actions.
