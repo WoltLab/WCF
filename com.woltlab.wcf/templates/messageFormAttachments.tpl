@@ -46,6 +46,7 @@
 			'wcf.attachment.upload.error.uploadFailed': '{lang}wcf.attachment.upload.error.uploadFailed{/lang}',
 			'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}',
 			'wcf.attachment.insert': '{lang}wcf.attachment.insert{/lang}',
+			'wcf.attachment.insertAll': '{lang}wcf.attachment.insertAll{/lang}',
 			'wcf.attachment.delete.sure': '{lang}wcf.attachment.delete.sure{/lang}'
 		});
 		
