@@ -1,7 +1,7 @@
 <div id="attachments" class="jsOnly formAttachmentContent tabMenuContent container containerPadding">
 	<ul class="formAttachmentList clearfix"{if !$attachmentHandler->getAttachmentList()|count} style="display: none"{/if}>
 		{foreach from=$attachmentHandler->getAttachmentList() item=$attachment}
-			<li class="box48">
+			<li class="box48" data-object-id="{@$attachment->attachmentID}">
 				{if $attachment->tinyThumbnailType}
 					<img src="{link controller='Attachment' object=$attachment}tiny=1{/link}" alt="" class="attachmentTinyThumbnail" />
 				{else}

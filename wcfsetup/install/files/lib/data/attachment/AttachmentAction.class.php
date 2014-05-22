@@ -3,6 +3,7 @@ namespace wcf\data\attachment;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\attachment\AttachmentHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -10,6 +11,7 @@ use wcf\system\image\ImageHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\upload\DefaultUploadFileValidationStrategy;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\FileUtil;
 
 /**
@@ -26,7 +28,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('delete', 'upload');
+	protected $allowGuestAccess = array('delete', 'updatePosition', 'upload');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
@@ -314,5 +316,85 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 				$attachment->update($updateData);
 			}
 		}
+	}
+	
+	/**
+	 * Validates parameters to update the attachments show order.
+	 */
+	public function validateUpdatePosition() {
+		$this->readInteger('objectID', true);
+		$this->readString('objectType');
+		$this->readString('tmpHash', true);
+		
+		if (empty($this->parameters['objectID']) && empty($this->parameters['tmpHash'])) {
+			throw new UserInputException('objectID');
+		}
+		
+		// validate object type
+		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $this->parameters['objectType']);
+		if ($objectType === null) {
+			throw new UserInputException('objectType');
+		}
+		
+		if (!empty($this->parameters['objectID'])) {
+			// check upload permissions
+			if (!$objectType->getProcessor()->canUpload($this->parameters['objectID'])) {
+				throw new PermissionDeniedException();
+			}
+		}
+		
+		if (!isset($this->parameters['attachmentIDs']) || !is_array($this->parameters['attachmentIDs'])) {
+			throw new UserInputException('attachmentIDs');
+		}
+		
+		$this->parameters['attachmentIDs'] = ArrayUtil::toIntegerArray($this->parameters['attachmentIDs']);
+		
+		// check attachment ids
+		$attachmentIDs = array();
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("attachmentID IN (?)", array($this->parameters['attachmentIDs']));
+		$conditions->add("objectTypeID = ?", array($objectType->objectTypeID));
+		
+		if (!empty($this->parameters['objectID'])) {
+			$conditions->add("objectID = ?", array($this->parameters['objectID']));
+		}
+		else {
+			$conditions->add("tmpHash = ?", array($this->parameters['tmpHash']));
+		}
+		
+		$sql = "SELECT	attachmentID
+			FROM	wcf".WCF_N."_attachment
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		while ($row = $statement->fetchArray()) {
+			$attachmentIDs[] = $row['attachmentID'];
+		}
+		
+		foreach ($this->parameters['attachmentIDs'] as $attachmentID) {
+			if (!in_array($attachmentID, $attachmentIDs)) {
+				throw new UserInputException('attachmentIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Updates the attachments show order.
+	 */
+	public function updatePosition() {
+		$sql = "UPDATE	wcf".WCF_N."_attachment
+			SET	showOrder = ?
+			WHERE	attachmentID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		$showOrder = 1;
+		foreach ($this->parameters['attachmentIDs'] as $attachmentID) {
+			$statement->execute(array(
+				$showOrder++,
+				$attachmentID
+			));
+		}
+		WCF::getDB()->commitTransaction();
 	}
 }

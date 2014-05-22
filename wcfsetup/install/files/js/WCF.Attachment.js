@@ -55,6 +55,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		this._fileListSelector.find('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
 		
 		WCF.DOMNodeRemovedHandler.addCallback('WCF.Attachment.Upload', $.proxy(this._removeLimitError, this));
+		
+		this._makeSortable();
 	},
 	
 	/**
@@ -200,6 +202,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				var $deleteButton = $('<li><span class="icon icon16 icon-remove pointer jsTooltip jsDeleteButton" title="'+WCF.Language.get('wcf.global.button.delete')+'" data-object-id="'+data.returnValues.attachments[$internalFileID]['attachmentID']+'" data-confirm-message="'+WCF.Language.get('wcf.attachment.delete.sure')+'" /></li>');
 				$li.find('ul').append($deleteButton);
 				
+				$li.data('objectID', data.returnValues.attachments[$internalFileID].attachmentID);
+				
 				if (this._wysiwygContainerID) {
 					var $insertButton = $('<li><span class="icon icon16 icon-paste pointer jsTooltip jsButtonInsertAttachment" title="' + WCF.Language.get('wcf.attachment.insert') + '" data-object-id="' + data.returnValues.attachments[$internalFileID]['attachmentID'] + '" /></li>');
 					$insertButton.children('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
@@ -227,6 +231,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			// fix webkit rendering bug
 			$li.css('display', 'block');
 		}
+		
+		this._makeSortable();
 		
 		WCF.DOMNodeInsertedHandler.execute();
 	},
@@ -272,5 +278,50 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				$listItem.find('div > div').append($('<small class="innerError">' + (data.responseJSON && data.responseJSON.message ? data.responseJSON.message : WCF.Language.get('wcf.attachment.upload.error.uploadFailed')) + '</small>'));
 			}
 		});
+	},
+	
+	/**
+	 * Initializes sorting for uploaded attachments.
+	 */
+	_makeSortable: function() {
+		var $attachments = this._fileListSelector.children('li:not(.uploadFailed)');
+		if (!$attachments.length) {
+			return;
+		}
+		
+		$attachments.addClass('sortableAttachment').children('img').addClass('sortableNode');
+		
+		if (!this._fileListSelector.hasClass('sortableList')) {
+			this._fileListSelector.addClass('sortableList');
+			
+			var self = this;
+			new WCF.Sortable.List(this._fileListSelector.parent().wcfIdentify(), '', 0, {
+				axis: false,
+				items: 'li.sortableAttachment',
+				toleranceElement: null,
+				update: function(event, ui) {
+					var $attachmentIDs = [ ];
+					self._fileListSelector.children('li:not(.uploadFailed)').each(function(index, listItem) {
+						$attachmentIDs.push($(listItem).data('objectID'));
+					});
+					
+					if ($attachmentIDs.length) {
+						new WCF.Action.Proxy({
+							autoSend: true,
+							data: {
+								actionName: 'updatePosition',
+								className: 'wcf\\data\\attachment\\AttachmentAction',
+								parameters: {
+									attachmentIDs: $attachmentIDs,
+									objectID: self._objectID,
+									objectType: self._objectType,
+									tmpHash: self._tmpHash
+								}
+							}
+						});
+					}
+				}
+			}, true);
+		}
 	}
 });
