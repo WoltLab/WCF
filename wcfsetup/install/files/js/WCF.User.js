@@ -2492,6 +2492,16 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 		else if (data.actionName === 'saveSubscription' && this._dialog.is(':visible')) {
 			this._dialog.wcfDialog('close');
 			
+			// update icon
+			var $icon = $(this._buttonSelector + '[data-object-id=' + data.returnValues.objectID + '] > .icon');
+			if (data.returnValues.subscribe) {
+				$icon.removeClass('icon-bookmark-empty').addClass('icon-bookmark');
+			}
+			else {
+				$icon.removeClass('icon-bookmark').addClass('icon-bookmark-empty');
+			}
+			
+			// show notification
 			if (this._notification === null) {
 				this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success.edit'));
 			}

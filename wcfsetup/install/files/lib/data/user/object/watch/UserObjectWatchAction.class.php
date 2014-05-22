@@ -110,6 +110,11 @@ class UserObjectWatchAction extends AbstractDatabaseObjectAction {
 			// reset user storage
 			$this->objectType->getProcessor()->resetUserStorage(array(WCF::getUser()->userID));
 		}
+		
+		return array(
+			'objectID' => $this->parameters['objectID'],
+			'subscribe' => $this->parameters['subscribe']
+		);
 	}
 	
 	/**
