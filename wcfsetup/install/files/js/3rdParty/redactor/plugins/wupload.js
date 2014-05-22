@@ -37,7 +37,7 @@ RedactorPlugins.wupload = {
 		if ($options.attachments.length) {
 			for (var $i = 0; $i < $options.attachments.length; $i++) {
 				var $attachment = $options.attachments[$i];
-				var $listItem = $('<li class="box48" />');
+				var $listItem = $('<li class="box48" />').data('objectID', $attachment.attachmentID);
 				if ($attachment.tinyThumbnailUrl) {
 					$('<img src="' + $attachment.tinyThumbnailUrl + '" alt="" class="attachmentTinyThumbnail" />').appendTo($listItem);
 				}
