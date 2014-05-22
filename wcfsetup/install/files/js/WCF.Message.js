@@ -3169,6 +3169,20 @@ WCF.Message.UserMention = Class.extend({
 	 */
 	_getTextLineInFrontOfCaret: function() {
 		var $range = this._ckEditor.getSelection().getRanges()[0];
+
+		// in some cases, the start container is the div container instead
+		// of a text node; this is fixed by inserting text behind the cursor,
+		// selecting the text node before the inserted text and then remove
+		// the inserted text again
+		if ($.browser.mozilla && $range.startContainer.$.nodeType != 3) {
+			var $textNode = new CKEDITOR.dom.text('');
+			$range.insertNode($textNode);
+			$range.selectNodeContents($textNode);
+			$range.selectNodeContents($range.getPreviousEditableNode());
+			$textNode.remove();
+			$range.collapse(false);
+			$range.select();
+		}
 		
 		// if text is marked, user suggestions are disabled
 		if (!$range.collapsed) {
