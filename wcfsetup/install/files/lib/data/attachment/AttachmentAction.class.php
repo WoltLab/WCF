@@ -28,7 +28,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('delete', 'upload');
+	protected $allowGuestAccess = array('delete', 'updatePosition', 'upload');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
