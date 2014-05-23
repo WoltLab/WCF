@@ -2,6 +2,7 @@
 namespace wcf\form;
 use wcf\data\search\Search;
 use wcf\data\search\SearchAction;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
@@ -351,8 +352,20 @@ class SearchForm extends RecaptchaForm {
 		}
 		$this->saved();
 		
+		// get application
+		$application = 'wcf';
+		if (count($this->selectedObjectTypes) == 1) {
+			$objectType = SearchEngine::getInstance()->getObjectType(reset($this->selectedObjectTypes));
+			if ($tmp = ApplicationHandler::getInstance()->getAbbreviation($objectType->packageID)) {
+				$application = $tmp;
+			}
+		}
+		
 		// forward to result page
-		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', array('id' => $this->searchID), 'highlight='.urlencode($this->query)));
+		HeaderUtil::redirect(LinkHandler::getInstance()->getLink('SearchResult', array(
+			'id' => $this->searchID,
+			'application' => $application
+		), 'highlight='.urlencode($this->query)));
 		exit;
 	}
 	

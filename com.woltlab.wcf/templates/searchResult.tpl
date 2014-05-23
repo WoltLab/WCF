@@ -19,7 +19,7 @@
 
 <div class="contentNavigation">
 	{assign var=encodedHighlight value=$highlight|urlencode}
-	{pages print=true assign=pagesLinks controller='SearchResult' id=$searchID link="pageNo=%d&highlight=$encodedHighlight"}
+	{pages print=true application=$application assign=pagesLinks controller='SearchResult' id=$searchID link="pageNo=%d&highlight=$encodedHighlight"}
 	
 	{hascontent}
 		<nav>

@@ -2,6 +2,7 @@
 namespace wcf\page;
 use wcf\data\search\ISearchResultObject;
 use wcf\data\search\Search;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
@@ -170,7 +171,8 @@ class SearchResultPage extends MultipleLinkPage {
 			'alterable' => (!empty($this->searchData['alterable']) ? 1 : 0),
 			'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes(),
 			'resultListTemplateName' => $this->resultListTemplateName,
-			'resultListApplication' => $this->resultListApplication
+			'resultListApplication' => $this->resultListApplication,
+			'application' => ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID)
 		));
 	}
 	
