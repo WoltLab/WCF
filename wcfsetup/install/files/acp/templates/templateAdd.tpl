@@ -31,9 +31,7 @@
 					<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
 					<dd>
 						<select name="templateGroupID" id="templateGroupID">
-							{foreach from=$availableTemplateGroups item=availableTemplateGroup}
-								<option value="{@$availableTemplateGroup->templateGroupID}"{if $availableTemplateGroup->templateGroupID == $templateGroupID} selected="selected"{/if}>{$availableTemplateGroup->templateGroupName}</option>
-							{/foreach}
+							{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
 						</select>
 					</dd>
 				</dl>
