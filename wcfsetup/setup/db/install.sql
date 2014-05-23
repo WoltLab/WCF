@@ -837,6 +837,8 @@ CREATE TABLE wcf1_sitemap (
 	sitemapName VARCHAR(80) NOT NULL DEFAULT '',
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	showOrder INT(10) NOT NULL DEFAULT 0,
+	permissions TEXT NULL,
+	options TEXT NULL,
 	UNIQUE KEY sitemapName (packageID, sitemapName)
 );
 

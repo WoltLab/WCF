@@ -45,7 +45,9 @@ class SitemapPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		return array(
 			'sitemapName' => $data['attributes']['name'],
 			'className' => $data['elements']['classname'],
-			'showOrder' => $showOrder
+			'showOrder' => $showOrder,
+			'options' => (isset($data['elements']['options'])) ? $data['elements']['options'] : '',
+			'permissions' => (isset($data['elements']['permissions'])) ? $data['elements']['permissions'] : ''
 		);
 	}
 	

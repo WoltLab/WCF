@@ -38,7 +38,7 @@ class SitemapHandler extends SingletonFactory {
 		
 		if (!empty($this->cache)) {
 			foreach ($this->cache as $sitemap) {
-				$tree[] = $sitemap->sitemapName;
+				if ($sitemap->isAccessible()) $tree[] = $sitemap->sitemapName;
 			}
 		}
 		
@@ -52,17 +52,16 @@ class SitemapHandler extends SingletonFactory {
 	 */
 	public function getDefaultSitemapName() {
 		foreach ($this->cache as $sitemap) {
-			if ($sitemap->packageID == PACKAGE_ID) {
-				$sitemapName = $sitemap->sitemapName;
+			if ($sitemap->packageID == PACKAGE_ID && $sitemap->isAccessible()) {
+				return $sitemap->sitemapName;
 			}
 		}
 		
-		if (empty($sitemapName)) {
-			$sitemap = reset($this->cache);
-			$sitemapName = $sitemap->sitemapName;
+		foreach ($this->cache as $sitemap) {
+			if ($sitemap->isAccessible()) return $sitemap->sitemapName;
 		}
 		
-		return $sitemapName;
+		return '';
 	}
 	
 	/**
