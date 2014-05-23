@@ -135,6 +135,7 @@ class TemplateGroupAddForm extends AbstractForm {
 		
 		// reset values
 		$this->templateGroupName = $this->templateGroupFolderName = '';
+		$this->parentTemplateGroupID = 0;
 		
 		// show success
 		WCF::getTPL()->assign(array(
