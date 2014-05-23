@@ -580,6 +580,12 @@ WCF.Message.QuickReply = Class.extend({
 	_proxy: null,
 	
 	/**
+	 * collection of quick reply buttons
+	 * @var	jQuery
+	 */
+	_quickReplyButtons: null,
+	
+	/**
 	 * quote manager object
 	 * @var	WCF.Message.Quote.Manager
 	 */
@@ -620,7 +626,7 @@ WCF.Message.QuickReply = Class.extend({
 		
 		if (quoteManager) this._quoteManager = quoteManager;
 		
-		$('.jsQuickReply').data('__api', this).click($.proxy(this.click, this));
+		this._quickReplyButtons = $('.jsQuickReply').data('__api', this).click($.proxy(this.click, this));
 		
 		this._proxy = new WCF.Action.Proxy({
 			failure: $.proxy(this._failure, this),
@@ -641,6 +647,8 @@ WCF.Message.QuickReply = Class.extend({
 		this._container.toggle();
 		
 		if (this._container.is(':visible')) {
+			this._quickReplyButtons.hide();
+			
 			// TODO: Scrolling is anything but smooth, better use the init callback
 			this._scroll.scrollTo(this._container, true);
 			
@@ -817,6 +825,8 @@ WCF.Message.QuickReply = Class.extend({
 		
 		// display form submit
 		$messageBody.next().show();
+		
+		this._quickReplyButtons.show();
 	},
 	
 	/**

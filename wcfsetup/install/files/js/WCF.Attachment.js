@@ -10,6 +10,12 @@ WCF.Attachment = {};
  */
 WCF.Attachment.Upload = WCF.Upload.extend({
 	/**
+	 * reference to 'Insert All' button
+	 * @var	jQuery
+	 */
+	_insertAllButton: null,
+	
+	/**
 	 * object type of the object the uploaded attachments belong to
 	 * @var	string
 	 */
@@ -57,6 +63,9 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		WCF.DOMNodeRemovedHandler.addCallback('WCF.Attachment.Upload', $.proxy(this._removeLimitError, this));
 		
 		this._makeSortable();
+		
+		this._insertAllButton = $('<p class="button">' + WCF.Language.get('wcf.attachment.insertAll') + '</p>').appendTo(this._buttonSelector);
+		this._insertAllButton.click($.proxy(this._insertAll, this));
 	},
 	
 	/**
@@ -241,28 +250,24 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * Inserts an attachment into WYSIWYG editor contents.
 	 * 
 	 * @param	object		event
+	 * @param	integer		attachmentID
 	 */
-	_insert: function(event) {
-		var $attachmentID = $(event.currentTarget).data('objectID');
+	_insert: function(event, attachmentID) {
+		var $attachmentID = (event === null) ? attachmentID : $(event.currentTarget).data('objectID');
 		var $bbcode = '[attach=' + $attachmentID + '][/attach]';
 		
-		var $ckEditor = ($.browser.mobile) ? null : $('#' + this._wysiwygContainerID).ckeditorGet();
-		if ($ckEditor !== null && $ckEditor.mode === 'wysiwyg') {
-			// in design mode
-			$ckEditor.insertText($bbcode);
+		if ($.browser.redactor) {
+			$('#' + this._wysiwygContainerID).redactor('insertDynamic', $bbcode);
 		}
-		else {
-			// in source mode
-			var $textarea = ($.browser.mobile) ? $('#' + this._wysiwygContainerID) : $('#' + this._wysiwygContainerID).next('.cke_editor_text').find('textarea');
-			var $value = $textarea.val();
-			if ($value.length == 0) {
-				$textarea.val($bbcode);
-			}
-			else {
-				var $position = $textarea.getCaret();
-				$textarea.val( $value.substr(0, $position) + $bbcode + $value.substr($position) );
-			}
-		}
+	},
+	
+	/**
+	 * Inserts all attachments at once.
+	 */
+	_insertAll: function() {
+		this._fileListSelector.children('li:not(.uploadFailed)').each($.proxy(function(index, attachment) {
+			this._insert(null, $(attachment).data('objectID'));
+		}, this));
 	},
 	
 	/**
