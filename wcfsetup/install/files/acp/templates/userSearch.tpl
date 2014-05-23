@@ -219,6 +219,12 @@
 					<dd>
 						<label><input type="checkbox" name="columns[]" value="email" {if "email"|in_array:$columns}checked="checked" {/if}/> {lang}wcf.user.email{/lang}</label>
 						<label><input type="checkbox" name="columns[]" value="registrationDate" {if "registrationDate"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.registrationDate{/lang}</label>
+						<label><input type="checkbox" name="columns[]" value="lastActivityTime" {if "lastActivityTime"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.lastActivityTime{/lang}</label>
+						<label><input type="checkbox" name="columns[]" value="profileHits" {if "profileHits"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.profileHits{/lang}</label>
+						<label><input type="checkbox" name="columns[]" value="activityPoints" {if "activityPoints"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.user.activityPoint{/lang}</label>
+						{if MODULE_LIKE}
+							<label><input type="checkbox" name="columns[]" value="likesReceived" {if "likesReceived"|in_array:$columns}checked="checked"{/if}/> {lang}wcf.like.likesReceived{/lang}</label>
+						{/if}
 						{event name='searchDisplayColumns'}
 					</dd>
 				</dl>

@@ -33,10 +33,22 @@ class UserListPage extends SortablePage {
 	public $columnHeads = array();
 	
 	/**
-	 * list of available columns
+	 * list of selected columns
 	 * @var	array<string>
 	 */
-	public $columns = array('email', 'registrationDate');
+	public $columns = array('email', 'registrationDate', 'lastActivityTime', 'profileHits', 'activityPoints', 'likesReceived');
+	
+	/**
+	 * applies special CSS classes for selected columns
+	 * @var array
+	 */
+	public $columnStyling = array(
+		'registrationDate' => 'columnDate',
+		'lastActivityTime' => 'columnDate',
+		'profileHits' => 'columnDigits',
+		'activityPoints' => 'columnDigits',
+		'likesReceived' => 'columnDigits'
+	);
 	
 	/**
 	 * list of column values
@@ -104,7 +116,7 @@ class UserListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('email', 'userID', 'registrationDate', 'username');
+	public $validSortFields = array('email', 'userID', 'registrationDate', 'username', 'lastActivityTime', 'profileHits', 'activityPoints', 'likesReceived');
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -169,7 +181,8 @@ class UserListPage extends SortablePage {
 			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user')),
 			'url' => $this->url,
 			'columnHeads' => $this->columnHeads,
-			'columnValues' => $this->columnValues
+			'columnValues' => $this->columnValues,
+			'columnStyling' => $this->columnStyling
 		));
 	}
 	
@@ -269,6 +282,18 @@ class UserListPage extends SortablePage {
 							$this->columnValues[$user->userID][$column] = DateUtil::format(DateUtil::getDateTimeByTimestamp($user->{$column}), DateUtil::DATE_FORMAT);
 						break;
 						
+						case 'lastActivityTime':
+							if ($user->{$column}) {
+								$this->columnValues[$user->userID][$column] = DateUtil::format(DateUtil::getDateTimeByTimestamp($user->{$column}), DateUtil::DATE_FORMAT) . ' ' . DateUtil::format(DateUtil::getDateTimeByTimestamp($user->{$column}), DateUtil::TIME_FORMAT);
+							}
+						break;
+						
+						case 'profileHits':
+						case 'activityPoints':
+						case 'likesReceived':
+							$this->columnValues[$user->userID][$column] = StringUtil::formatInteger($user->{$column});
+						break;
+						
 						default:
 							if (isset($this->options[$column])) {
 								if ($this->options[$column]->outputClass) {
@@ -332,6 +357,15 @@ class UserListPage extends SortablePage {
 	 */
 	protected function readColumnsHeads() {
 		foreach ($this->columns as $column) {
+			if ($column == 'likesReceived') {
+				$this->columnHeads[$column] = 'wcf.like.likesReceived';
+				continue;
+			}
+			if ($column == 'activityPoints') {
+				$this->columnHeads[$column] = 'wcf.user.activityPoint';
+				continue;
+			}
+			
 			if (isset($this->options[$column]) && $column != 'email') {
 				$this->columnHeads[$column] = 'wcf.user.option.'.$column;
 			}
