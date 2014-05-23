@@ -43,5 +43,11 @@
 			<permissions>user.profile.canViewMembersList</permissions>
 			<options>module_members_list</options>
 		</pagemenuitem>
+		
+		<pagemenuitem name="wcf.page.privacyPolicy">
+			<controller><![CDATA[wcf\page\PrivacyPolicyPage]]></controller>
+			<position>footer</position>
+			<options>module_privacy_policy_page</options>
+		</pagemenuitem>
 	</import>
 </data>

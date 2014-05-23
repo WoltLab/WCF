@@ -251,6 +251,12 @@
 				<defaultvalue>1</defaultvalue>
 			</option>
 			
+			<option name="module_privacy_policy_page">
+				<categoryname>module.system</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
 			<option name="module_attachment">
 				<categoryname>module.content</categoryname>
 				<optiontype>boolean</optiontype>

@@ -556,6 +556,12 @@
 			<classname><![CDATA[wcf\page\NotificationListPage]]></classname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.PrivacyPolicyPage</name>
+			<definitionname>com.woltlab.wcf.page</definitionname>
+			<classname><![CDATA[wcf\page\PrivacyPolicyPage]]></classname>
+			<options>module_privacy_policy_page</options>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.RecentActivityListPage</name>
 			<definitionname>com.woltlab.wcf.page</definitionname>
 			<classname><![CDATA[wcf\page\RecentActivityListPage]]></classname>
