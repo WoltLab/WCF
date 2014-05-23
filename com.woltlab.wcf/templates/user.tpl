@@ -104,11 +104,13 @@
 				});
 			{/if}
 			
-			WCF.Language.addObject({
-				'wcf.moderation.report.reportContent': '{lang}wcf.user.profile.report{/lang}',
-				'wcf.moderation.report.success': '{lang}wcf.moderation.report.success{/lang}'
-			});
-			new WCF.Moderation.Report.Content('com.woltlab.wcf.user', '.jsReportUser');
+			{if $__wcf->session->getPermission('user.profile.canReportContent')}
+				WCF.Language.addObject({
+					'wcf.moderation.report.reportContent': '{lang}wcf.user.profile.report{/lang}',
+					'wcf.moderation.report.success': '{lang}wcf.moderation.report.success{/lang}'
+				});
+				new WCF.Moderation.Report.Content('com.woltlab.wcf.user', '.jsReportUser');
+			{/if}
 
 			{event name='javascriptInit'}
 		});
@@ -180,7 +182,9 @@
 				</li>
 			{/hascontent}
 			
-			<li class="jsReportUser jsOnly" data-object-id="{@$user->userID}"><a title="{lang}wcf.user.profile.report{/lang}" class="button jsTooltip"><span class="icon icon16 icon-warning-sign"></span> <span class="invisible">{lang}wcf.user.profile.report{/lang}</span></a></li>
+			{if $__wcf->session->getPermission('user.profile.canReportContent')}
+				<li class="jsReportUser jsOnly" data-object-id="{@$user->userID}"><a title="{lang}wcf.user.profile.report{/lang}" class="button jsTooltip"><span class="icon icon16 icon-warning-sign"></span> <span class="invisible">{lang}wcf.user.profile.report{/lang}</span></a></li>
+			{/if}
 			
 			{if $user->userID != $__wcf->user->userID && $user->isAccessible('canViewEmailAddress')}
 				<li><a class="button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}<li><a class="button jsTooltip" href="{link controller='Mail' object=$user}{/link}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
@@ -191,7 +195,7 @@
 			{if $isAccessible && $__wcf->user->userID != $user->userID && ($__wcf->session->getPermission('admin.user.canBanUser') || $__wcf->session->getPermission('admin.user.canDisableAvatar') || $__wcf->session->getPermission('admin.user.canDisableSignature') || ($__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')))}
 				<li class="dropdown">
 					{* todo: better icon? *}
-					<a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="button jsTooltip jsUserInlineEditor" title="{lang}wcf.user.moderate{/lang}"><span class="icon icon16 icon-lock"></span> <span class="invisible">{lang}{lang}wcf.acp.user.edit{/lang}{/lang}</span></a>
+					<a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="button jsTooltip jsUserInlineEditor" title="{lang}wcf.user.moderate{/lang}"><span class="icon icon16 fa-wrench"></span> <span class="invisible">{lang}wcf.acp.user.edit{/lang}</span></a>
 					<ul class="dropdownMenu"></ul>
 				</li>
 			{/if}

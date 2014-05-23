@@ -24,8 +24,10 @@
 			new WCF.Comment.Response.Like({if $__wcf->getUser()->userID && $__wcf->getSession()->getPermission('user.like.canLike')}1{else}0{/if}, {@LIKE_ENABLE_DISLIKE}, false, {@LIKE_ALLOW_FOR_OWN_CONTENT});
 		{/if}
 		
-		new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.comment', '.jsReportCommentComment');
-		new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.response', '.jsReportCommentResponse');
+		{if $__wcf->session->getPermission('user.profile.canReportContent')}
+			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.comment', '.jsReportCommentComment');
+			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.response', '.jsReportCommentResponse');
+		{/if}
 	});
 	//]]>
 </script>

@@ -68,6 +68,8 @@ class ModerationQueueReportAction extends ModerationQueueAction {
 	 * Validates parameters to prepare a report.
 	 */
 	public function validatePrepareReport() {
+		WCF::getSession()->checkPermissions(array('user.profile.canReportContent'));
+		
 		$this->readInteger('objectID');
 		$this->readString('objectType');
 		
@@ -108,6 +110,8 @@ class ModerationQueueReportAction extends ModerationQueueAction {
 	 * Validates parameters for reporting.
 	 */
 	public function validateReport() {
+		WCF::getSession()->checkPermissions(array('user.profile.canReportContent'));
+		
 		$this->readString('message');
 		
 		$this->validatePrepareReport();

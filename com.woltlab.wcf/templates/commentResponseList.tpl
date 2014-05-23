@@ -26,7 +26,9 @@
 				
 				<nav class="jsMobileNavigation buttonGroupNavigation">
 					<ul class="commentOptions">
-						<li class="jsReportCommentResponse jsOnly" data-object-id="{@$response->responseID}"><a title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip"><span class="icon icon16 icon-warning-sign"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+						{if $__wcf->session->getPermission('user.profile.canReportContent')}
+							<li class="jsReportCommentResponse jsOnly" data-object-id="{@$response->responseID}"><a title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip"><span class="icon icon16 icon-warning-sign"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+						{/if}
 						
 						{event name='commentOptions'}
 					</ul>
