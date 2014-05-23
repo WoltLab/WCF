@@ -508,6 +508,14 @@ pdf]]></defaultvalue>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 			</option>
+			<option name="user.profile.aboutMeMaxLength">
+				<categoryname>user.profile</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1000</defaultvalue>
+				<admindefaultvalue>10000</admindefaultvalue>
+				<minvalue>100</minvalue>
+				<maxvalue>65535</maxvalue>
+			</option>
 			
 			<option name="user.profile.avatar.canSeeAvatars">
 				<categoryname>user.profile.avatar</categoryname>

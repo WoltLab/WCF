@@ -385,6 +385,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatic User Group Assignments]]></item>
 		<item name="wcf.acp.group.assignment.userGroup"><![CDATA[User Group]]></item>
 		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Disable Automatic Assignment]]></item>
+		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[TODO: Maximallänge „Über mich“]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
