@@ -36,7 +36,7 @@ class UserListPage extends SortablePage {
 	 * list of selected columns
 	 * @var	array<string>
 	 */
-	public $columns = array('email', 'registrationDate', 'lastActivityTime', 'profileHits', 'activityPoints', 'likesReceived');
+	public $columns = array('email', 'registrationDate', 'lastActivityTime');
 	
 	/**
 	 * applies special CSS classes for selected columns
