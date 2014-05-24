@@ -42,7 +42,7 @@ class SessionVirtual extends DatabaseObject {
 			FROM	".static::getDatabaseTableName()."
 			WHERE	sessionID = ?
 				AND ipAddress = ?
-				AND userAGent = ?";
+				AND userAgent = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			$sessionID,
