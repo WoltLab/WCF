@@ -28,23 +28,21 @@ class ConditionHandler extends SingletonFactory {
 	 * Creates condition objects for the object with the given id and based
 	 * on the given condition object types.
 	 * 
-	 * @param	integer		$objectID
-	 * @param	array		$conditionObjectTypes
+	 * @param	integer						$objectID
+	 * @param	array<\wcf\data\object\type\ObjectType>		$conditionObjectTypes
 	 */
 	public function createConditions($objectID, array $conditionObjectTypes) {
-		foreach ($conditionObjectTypes as $objectTypes) {
-			foreach ($objectTypes as $objectType) {
-				$conditionData = $objectType->getProcessor()->getData();
-				if ($conditionData !== null) {
-					$conditionAction = new ConditionAction(array(), 'create', array(
-						'data' => array(
-							'conditionData' => serialize($conditionData),
-							'objectID' => $objectID,
-							'objectTypeID' => $objectType->objectTypeID
-						)
-					));
-					$conditionAction->executeAction();
-				}
+		foreach ($conditionObjectTypes as $objectType) {
+			$conditionData = $objectType->getProcessor()->getData();
+			if ($conditionData !== null) {
+				$conditionAction = new ConditionAction(array(), 'create', array(
+					'data' => array(
+						'conditionData' => serialize($conditionData),
+						'objectID' => $objectID,
+						'objectTypeID' => $objectType->objectTypeID
+					)
+				));
+				$conditionAction->executeAction();
 			}
 		}
 	}
@@ -74,7 +72,7 @@ class ConditionHandler extends SingletonFactory {
 			return $this->conditions[$definition->definitionID][$objectID];
 		}
 		
-		return null;
+		return array();
 	}
 	
 	/**
@@ -82,7 +80,7 @@ class ConditionHandler extends SingletonFactory {
 	 * 
 	 * @param	integer						$objectID
 	 * @param	array<\wcf\data\condition\Condition>		$oldConditions
-	 * @param	array						$conditionObjectTypes
+	 * @param	array<\wcf\data\object\type\ObjectType>		$conditionObjectTypes
 	 */
 	public function updateConditions($objectID, array $oldConditions, array $conditionObjectTypes) {
 		// delete old conditions first

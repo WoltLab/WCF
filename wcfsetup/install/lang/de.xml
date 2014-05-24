@@ -386,6 +386,8 @@
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatische Benutzergruppen-Zuordnungen]]></item>
 		<item name="wcf.acp.group.assignment.userGroup"><![CDATA[Benutzergruppe]]></item>
 		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Automatische Zuordnung deaktivieren]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.notice"><![CDATA[Hinweise]]></item>
+		<item name="wcf.acp.group.option.admin.content.notice.canManageNotice"><![CDATA[Kann Hinweise verwalten]]></item>
 		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximallänge „Über mich“]]></item>
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Kann Inhalte melden]]></item>
 	</category>
@@ -580,6 +582,31 @@
 		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.menu.link.log.stat"><![CDATA[Statistiken]]></item>
 		<item name="wcf.acp.menu.link.group.assignment"><![CDATA[Automatische Zuordnungen]]></item>
+		<item name="wcf.acp.menu.link.notice"><![CDATA[Hinweise]]></item>
+		<item name="wcf.acp.menu.link.notice.add"><![CDATA[Hinweis hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.notice.list"><![CDATA[Hinweise auflisten]]></item>
+	</category>
+	
+	<category name="wcf.acp.notice">
+		<item name="wcf.acp.notice.add"><![CDATA[Hinweis hinzufügen]]></item>
+		<item name="wcf.acp.notice.conditions"><![CDATA[Bedingungen]]></item>
+		<item name="wcf.acp.notice.conditions.description"><![CDATA[Werden keine Bedingungen ausgewählt, wird der Hinweis für jeden Benutzer auf allen Seiten angezeigt.]]></item>
+		<item name="wcf.acp.notice.conditions.page"><![CDATA[Seite]]></item>
+		<item name="wcf.acp.notice.conditions.page.description"><![CDATA[Die vom Benutzer aufgerufene Seite muss folgende Bedingungen erfüllen, damit der Hinweis angezeigt wird.]]></item>
+		<item name="wcf.acp.notice.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
+		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit der Hinweis angezeigt wird.]]></item>
+		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Wollen Sie diesen Hinweis wirklich löschen?]]></item>
+		<item name="wcf.acp.notice.edit"><![CDATA[Hinweis bearbeiten]]></item>
+		<item name="wcf.acp.notice.isDisabled"><![CDATA[Hinweis deaktivieren]]></item>
+		<item name="wcf.acp.notice.isDismissible"><![CDATA[Benutzer kann Hinweis ausblenden]]></item>
+		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[Ein einmal von einem Benutzer ausgeblender Hinweis wird bei erneutem Seitenaufruf nicht mehr angezeigt.]]></item>
+		<item name="wcf.acp.notice.list"><![CDATA[Hinweise]]></item>
+		<item name="wcf.acp.notice.notice"><![CDATA[Hinweis]]></item>
+		<item name="wcf.acp.notice.noticeUseHtml"><![CDATA[HTML im Hinweis verwenden]]></item>
+		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Ausgeblendete Hinweise erneut anzeigen]]></item>
+		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[Der Hinweis wird jenen Benutzern wieder angezeigt, die die ursprüngliche Version bereits ausgeblendet haben. Gästen, die den Hinweis bereits ausgeblendet haben, wird dieser nur in einer neuen Session erneut angezeigt.]]></item>
+		<item name="wcf.acp.notice.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Hinweise angezeigt werden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -2023,6 +2050,10 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.report.success"><![CDATA[Der Inhalt wurde den Moderatoren gemeldet.]]></item>
 	</category>
 	
+	<category name="wcf.notice">
+		<item name="wcf.notice.button.dismiss"><![CDATA[Hinweis dauerhaft ausblenden]]></item>
+	</category>
+	
 	<category name="wcf.page">
 		<item name="wcf.page.pageNo"><![CDATA[Seite {#$pageNo}]]></item>
 		<item name="wcf.page.offline"><![CDATA[Die Seite befindet sich zurzeit {if OFFLINE_MESSAGE != ''}aus folgenden Gründen im Wartungsmodus:{else}im Wartungsmodus.{/if}]]></item>
@@ -2031,6 +2062,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.page.pagePosition"><![CDATA[Seite {#$pageNo} von {#$pages}]]></item>
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[Benutzerkonto]]></item>
 		<item name="wcf.page.javascriptDisabled"><![CDATA[In Ihrem Webbrowser ist JavaScript deaktiviert. Um alle Funktionen dieser Webseite nutzen zu können, muss JavaScript aktiviert sein.]]></item>
+		<item name="wcf.page.requestedPage"><![CDATA[Aufgerufene Seite]]></item>
 		<item name="wcf.page.privacyPolicy"><![CDATA[Datenschutzerklärung]]></item>
 		<item name="wcf.page.privacyPolicy.text"><![CDATA[<h2>Datenschutz</h2>
     <p>Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, 

@@ -87,7 +87,13 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 		));
 		$returnValues = $this->objectAction->executeAction();
 		
-		ConditionHandler::getInstance()->updateConditions($this->assignment->assignmentID, $this->assignment->getConditions(), $this->conditions);
+		// transform conditions array into one-dimensional array
+		$conditions = array();
+		foreach ($this->conditions as $groupedObjectTypes) {
+			$conditions = array_merge($conditions, $groupedObjectTypes);
+		}
+		
+		ConditionHandler::getInstance()->updateConditions($this->assignment->assignmentID, $this->assignment->getConditions(), $conditions);
 		
 		$this->saved();
 		

@@ -157,5 +157,10 @@
 		<definition>
 			<name>com.woltlab.wcf.page</name>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.condition.notice</name>
+			<interfacename><![CDATA[wcf\system\condition\INoticeCondition]]></interfacename>
+		</definition>
 	</import>
 </data>

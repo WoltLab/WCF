@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserRegistrationDateCondition extends AbstractSingleFieldCondition implements IUserCondition {
+class UserRegistrationDateCondition extends AbstractSingleFieldCondition implements INoticeCondition, IUserCondition {
 	/**
 	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
 	 */
@@ -148,5 +148,14 @@ HTML;
 			
 			throw new UserInputException($this->fieldName, 'endBeforeStart');
 		}
+	}
+	
+	/**
+	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 */
+	public function showNotice(Condition $condition) {
+		if (!WCF::getUser()->userID) return;
+		
+		return $this->checkUser($condition, WCF::getUser());
 	}
 }

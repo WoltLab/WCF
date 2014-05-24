@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserIntegerPropertyCondition extends AbstractIntegerCondition implements IUserCondition {
+class UserIntegerPropertyCondition extends AbstractIntegerCondition implements INoticeCondition, IUserCondition {
 	/**
 	 * @see	\wcf\system\condition\AbstractIntegerCondition::$maxValueErrorMessage
 	 */
@@ -75,5 +75,14 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements I
 	 */
 	protected function getLabel($identifier) {
 		return WCF::getLanguage()->get('wcf.user.condition.'.$this->getDecoratedObject()->propertyname.'.'.$identifier);
+	}
+	
+	/**
+	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 */
+	public function showNotice(Condition $condition) {
+		if (!WCF::getUser()->userID) return;
+		
+		return $this->checkUser($condition, WCF::getUser());
 	}
 }

@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IUserCondition {
+class UserOptionsCondition extends AbstractMultipleFieldsCondition implements INoticeCondition, IUserCondition {
 	/**
 	 * user option handler object
 	 * @var	\wcf\system\option\user\UserOptionHandler
@@ -126,5 +126,14 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IU
 	 */
 	public function setData(Condition $condition) {
 		$this->optionHandler->setOptionValues($condition->conditionData['optionValues']);
+	}
+	
+	/**
+	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 */
+	public function showNotice(Condition $condition) {
+		if (!WCF::getUser()->userID) return;
+		
+		return $this->checkUser($condition, WCF::getUser());
 	}
 }

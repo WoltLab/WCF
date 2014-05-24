@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserStateCondition extends AbstractSingleFieldCondition implements IUserCondition {
+class UserStateCondition extends AbstractSingleFieldCondition implements INoticeCondition, IUserCondition {
 	/**
 	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
 	 */
@@ -190,5 +190,14 @@ HTML;
 			
 			throw new UserInputException('userisEnabled', 'conflict');
 		}
+	}
+	
+	/**
+	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 */
+	public function showNotice(Condition $condition) {
+		if (!WCF::getUser()->userID) return;
+		
+		return $this->checkUser($condition, WCF::getUser());
 	}
 }
