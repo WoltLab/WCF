@@ -215,6 +215,18 @@ class UserGroup extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns true if the current group is a moderator-group.
+	 * 
+	 * @reutn	boolean
+	 */
+	public function isModGroup() {
+		// workaround for WCF-Setup
+		if (!PACKAGE_ID && $this->groupID == 5) return true;
+		
+		return $this->getGroupOption('mod.general.canUseModeration');
+	}
+	
+	/**
 	 * Loads the group cache.
 	 */
 	protected static function getCache() {

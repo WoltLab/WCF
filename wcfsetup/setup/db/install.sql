@@ -1599,7 +1599,6 @@ INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (2, 'wcf.acp.
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (3, 'wcf.acp.group.group3', 3); -- Registered Users
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (4, 'wcf.acp.group.group4', 4); -- Administrators
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (5, 'wcf.acp.group.group5', 4); -- Moderators
-INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (6, 'wcf.acp.group.group6', 4); -- Super-Moderators
 
 -- default user group options
 INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder) VALUES (1, 'admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1);
@@ -1741,17 +1740,15 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('messageSid
 -- default priorities
 UPDATE wcf1_user_group SET priority = 10 WHERE groupID = 3;
 UPDATE wcf1_user_group SET priority = 1000 WHERE groupID = 4;
-UPDATE wcf1_user_group SET priority = 50 WHERE groupID = 5;
-UPDATE wcf1_user_group SET priority = 100 WHERE groupID = 6;
+UPDATE wcf1_user_group SET priority = 100 WHERE groupID = 5;
 
 -- default 'showOnTeamPage' setting
-UPDATE wcf1_user_group SET showOnTeamPage = 1 WHERE groupID IN (4, 5, 6);
+UPDATE wcf1_user_group SET showOnTeamPage = 1 WHERE groupID IN (4, 5);
 
 -- default ranks
 INSERT INTO wcf1_user_rank (groupID, requiredPoints, rankTitle, cssClassName) VALUES
 	(4, 0, 'wcf.user.rank.administrator', 'blue'),
 	(5, 0, 'wcf.user.rank.moderator', 'blue'),
-	(6, 0, 'wcf.user.rank.superModerator', 'blue'),
 	(3, 0, 'wcf.user.rank.user0', ''),
 	(3, 300, 'wcf.user.rank.user1', ''),
 	(3, 900, 'wcf.user.rank.user2', ''),

@@ -38,7 +38,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values
-		$optionName = $optionType = $defaultValue = $adminDefaultValue = $userDefaultValue = $validationPattern = $enableOptions = $permissions = $options = '';
+		$optionName = $optionType = $defaultValue = $adminDefaultValue = $modDefaultValue = $userDefaultValue = $validationPattern = $enableOptions = $permissions = $options = '';
 		$showOrder = null;
 		
 		// get values
@@ -46,6 +46,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if (isset($option['optiontype'])) $optionType = $option['optiontype'];
 		if (isset($option['defaultvalue'])) $defaultValue = $option['defaultvalue'];
 		if (isset($option['admindefaultvalue'])) $adminDefaultValue = $option['admindefaultvalue'];
+		if (isset($option['moddefaultvalue'])) $modDefaultValue = $option['moddefaultvalue'];
 		if (isset($option['userdefaultvalue'])) $userDefaultValue = $option['userdefaultvalue'];
 		if (isset($option['validationpattern'])) $validationPattern = $option['validationpattern'];
 		if (!empty($option['showorder'])) $showOrder = intval($option['showorder']);
@@ -97,16 +98,25 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			$groupOptionEditor = UserGroupOptionEditor::create($data);
 			$optionID = $groupOptionEditor->optionID;
 			
-			$groupIDs = $this->getGroupIDs();
+			$this->getGroupIDs();
 			$values = array();
-			foreach ($this->groupIDs['admin'] as $groupID) {
-				$values[$groupID] = ((isset($option['admindefaultvalue']) && $defaultValue != $adminDefaultValue) ? $adminDefaultValue : $defaultValue);
-			}
-			foreach ($this->groupIDs['registered'] as $groupID) {
-				$values[$groupID] = ((isset($option['userdefaultvalue']) && $defaultValue != $userDefaultValue) ? $userDefaultValue : $defaultValue);
-			}
-			foreach ($this->groupIDs['other'] as $groupID) {
+			foreach ($this->groupIDs['all'] as $groupID) {
 				$values[$groupID] = $defaultValue;
+			}
+			if (isset($option['userdefaultvalue'])) {
+				foreach ($this->groupIDs['registered'] as $groupID) {
+					$values[$groupID] = $userDefaultValue;
+				}
+			}
+			if (isset($option['moddefaultvalue'])) {
+				foreach ($this->groupIDs['mod'] as $groupID) {
+					$values[$groupID] = $modDefaultValue;
+				}
+			}
+			if (isset($option['admindefaultvalue'])) {
+				foreach ($this->groupIDs['admin'] as $groupID) {
+					$values[$groupID] = $adminDefaultValue;
+				}
 			}
 			
 			// save values
@@ -135,7 +145,8 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if ($this->groupIDs === null) {
 			$this->groupIDs = array(
 				'admin' => array(),
-				'other' => array(),
+				'mod' => array(),
+				'all' => array(),
 				'registered' => array()
 			);
 			
@@ -145,15 +156,16 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			$statement->execute();
 			while ($row = $statement->fetchArray()) {
 				$group = new UserGroup(null, $row);
-				if ($group->groupType == UserGroup::EVERYONE || $group->groupType == UserGroup::GUESTS) {
-					$this->groupIDs['other'][] = $group->groupID;
-				}
-				else {
+				$this->groupIDs['all'][] = $group->groupID;
+				
+				if ($group->groupType != UserGroup::EVERYONE && $group->groupType != UserGroup::GUESTS) {
+					$this->groupIDs['registered'][] = $group->groupID;
+					
+					if ($group->isModGroup()) {
+						$this->groupIDs['mod'][] = $group->groupID;
+					}
 					if ($group->isAdminGroup()) {
 						$this->groupIDs['admin'][] = $group->groupID;
-					}
-					else {
-						$this->groupIDs['registered'][] = $group->groupID;
 					}
 				}
 			}
