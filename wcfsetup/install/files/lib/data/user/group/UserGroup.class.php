@@ -221,7 +221,7 @@ class UserGroup extends DatabaseObject {
 	 */
 	public function isModGroup() {
 		// workaround for WCF-Setup
-		if (!PACKAGE_ID && $this->groupID == 5) return true;
+		if (!PACKAGE_ID && ($this->groupID == 5 || $this->groupID == 4)) return true;
 		
 		return $this->getGroupOption('mod.general.canUseModeration');
 	}
