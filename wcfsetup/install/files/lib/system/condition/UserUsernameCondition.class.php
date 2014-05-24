@@ -45,7 +45,7 @@ class UserUsernameCondition extends AbstractTextCondition implements INoticeCond
 	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
 	 */
 	public function showNotice(Condition $condition) {
-		if (!WCF::getUser()->userID) return;
+		if (!WCF::getUser()->userID) return false;
 		
 		return $this->checkUser($condition, WCF::getUser());
 	}
