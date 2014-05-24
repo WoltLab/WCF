@@ -493,6 +493,21 @@
 			<permissions>admin.attachment.canManageAttachment</permissions>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.notice">
+			<parent>wcf.acp.menu.link.content</parent>
+			<showorder>6</showorder>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.notice.list">
+			<controller><![CDATA[wcf\acp\page\NoticeListPage]]></controller>
+			<parent>wcf.acp.menu.link.notice</parent>
+			<permissions>admin.content.tag.canManageTag</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.notice.add">
+			<controller><![CDATA[wcf\acp\form\NoticeAddForm]]></controller>
+			<parent>wcf.acp.menu.link.notice</parent>
+			<permissions>admin.content.notice.canManageNotice</permissions>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.community">
 			<showorder>5</showorder>
 		</acpmenuitem>

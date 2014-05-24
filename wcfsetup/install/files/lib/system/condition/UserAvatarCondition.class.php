@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserAvatarCondition extends AbstractSelectCondition implements IUserCondition {
+class UserAvatarCondition extends AbstractSelectCondition implements INoticeCondition, IUserCondition {
 	/**
 	 * @see	wcf\system\condition\AbstractSelectCondition::$fieldName
 	 */
@@ -93,5 +93,14 @@ class UserAvatarCondition extends AbstractSelectCondition implements IUserCondit
 			self::AVATAR => 'wcf.user.condition.avatar.avatar',
 			self::GRAVATAR => 'wcf.user.condition.avatar.gravatar'
 		);
+	}
+	
+	/**
+	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 */
+	public function showNotice(Condition $condition) {
+		if (!WCF::getUser()->userID) return false;
+		
+		return $this->checkUser($condition, WCF::getUser());
 	}
 }

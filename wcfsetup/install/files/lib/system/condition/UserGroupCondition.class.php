@@ -5,6 +5,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 
 /**
@@ -18,7 +19,7 @@ use wcf\util\ArrayUtil;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserGroupCondition extends AbstractMultipleFieldsCondition implements IUserCondition {
+class UserGroupCondition extends AbstractMultipleFieldsCondition implements INoticeCondition, IUserCondition {
 	/**
 	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::$descriptions
 	 */
@@ -70,11 +71,11 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements IUse
 	 */
 	public function checkUser(Condition $condition, User $user) {
 		$groupIDs = $user->getGroupIDs();
-		if (!empty($condition->groupIDs) && count(array_diff($condition->groupIDs, $groupIDs))) {
+		if (!empty($condition->conditionData['groupIDs']) && count(array_diff($condition->conditionData['groupIDs'], $groupIDs))) {
 			return false;
 		}
 		
-		if (!empty($condition->notGroupIDs) && count(array_intersect($condition->notGroupIDs, $groupIDs))) {
+		if (!empty($condition->conditionData['notGroupIDs']) && count(array_intersect($condition->conditionData['notGroupIDs'], $groupIDs))) {
 			return false;
 		}
 		
@@ -149,7 +150,12 @@ HTML;
 	 */
 	protected function getUserGroups() {
 		if ($this->userGroups == null) {
-			$this->userGroups = UserGroup::getGroupsByType(array(UserGroup::OTHER));
+			$groupTypes = array(UserGroup::OTHER);
+			if ($this->includeguests) {
+				$groupTypes[] = UserGroup::GUESTS;
+			}
+			
+			$this->userGroups = UserGroup::getGroupsByType($groupTypes);
 			foreach ($this->userGroups as $key => $userGroup) {
 				if (!$userGroup->isAccessible()) {
 					unset($this->userGroups[$key]);
@@ -217,5 +223,12 @@ HTML;
 			
 			throw new UserInputException('notGroupIDs', 'groupIDsIntersection');
 		}
+	}
+	
+	/**
+	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 */
+	public function showNotice(Condition $condition) {
+		return $this->checkUser($condition, WCF::getUser());
 	}
 }

@@ -18,7 +18,7 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition implements IUserCondition {
+class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition implements INoticeCondition, IUserCondition {
 	/**
 	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::$languageItemPrefix
 	 */
@@ -85,5 +85,14 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
 	 */
 	protected function getLabel($identifier) {
 		return WCF::getLanguage()->get('wcf.user.condition.registrationDateInterval.'.$identifier);
+	}
+	
+	/**
+	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 */
+	public function showNotice(Condition $condition) {
+		if (!WCF::getUser()->userID) return false;
+		
+		return $this->checkUser($condition, WCF::getUser());
 	}
 }

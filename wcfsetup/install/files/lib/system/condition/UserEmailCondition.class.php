@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
+use wcf\system\WCF;
 
 /**
  * Condition implementation for the email address of a user.
@@ -14,7 +15,7 @@ use wcf\data\user\UserList;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserEmailCondition extends AbstractTextCondition implements IUserCondition {
+class UserEmailCondition extends AbstractTextCondition implements INoticeCondition, IUserCondition {
 	/**
 	 * @see	\wcf\system\condition\AbstractTextCondition::$fieldName
 	 */
@@ -37,5 +38,14 @@ class UserEmailCondition extends AbstractTextCondition implements IUserCondition
 	 */
 	public function checkUser(Condition $condition, User $user) {
 		return mb_strpos($user->email, $condition->email) !== false;
+	}
+	
+	/**
+	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 */
+	public function showNotice(Condition $condition) {
+		if (!WCF::getUser()->userID) return false;
+		
+		return $this->checkUser($condition, WCF::getUser());
 	}
 }

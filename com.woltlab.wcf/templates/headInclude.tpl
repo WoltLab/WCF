@@ -175,6 +175,7 @@
 		WCF.Date.Picker.init();
 		new WCF.User.ProfilePreview();
 		WCF.System.FlexibleMenu.init();
+		new WCF.Notice.Dismiss();
 		
 		{event name='javascriptInit'}
 		

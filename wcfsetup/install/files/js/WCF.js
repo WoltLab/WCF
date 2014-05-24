@@ -194,8 +194,6 @@ function shuffle(array) {
 		jQuery.browser.mozilla = false;
 		jQuery.browser.msie = true;
 	}
-	
-	jQuery.browser.ckeditor = false;
 })();
 
 /**
@@ -10751,6 +10749,136 @@ WCF.Category.NestedList = Class.extend({
 				}
 			}
 		}
+	}
+});
+
+/**
+ * Initializes WCF.Condition namespace.
+ */
+WCF.Condition = { };
+
+/**
+ * Handles displaying the a form element whose visibility depends on the selected
+ * page controllers.
+ */
+WCF.Condition.PageControllerDependence = Class.extend({
+	/**
+	 * select list with the available page controllers
+	 * @var	jQuery
+	 */
+	_pageControllerSelection: null,
+	
+	/**
+	 * ids of page object types that support the form element
+	 * @var	array<integer>
+	 */
+	_supportedPageObjectTypeIDs: [],
+	
+	/**
+	 * Initializes a new WCF.Condition.PageControllerDependence object.
+	 * 
+	 * @param	string			inputIdentifier
+	 * @param	array<integer>		supportedPageObjectTypeIDs
+	 */
+	init: function(inputIdentifier, supportedPageObjectTypeIDs) {
+		this._supportedPageObjectTypeIDs = supportedPageObjectTypeIDs;
+		
+		this._pageControllerSelection = $('#pageControllers').change($.proxy(this._checkVisibility, this));
+		this._pageControllerContainer = this._pageControllerSelection.parents('dl:eq(0)');
+		
+		this._input = $('#' + inputIdentifier);
+		this._inputContainer = this._input.parents('dl:eq(0)');
+		
+		this._checkVisibility();
+	},
+	
+	/**
+	 * Checks the visibility based on the selected page controllers.
+	 */
+	_checkVisibility: function() {
+		var $selectedPageIDs = this._pageControllerSelection.val() || [ ];
+		
+		var $display = true;
+		if ($selectedPageIDs.length) {
+			for (var $i = 0, $length = $selectedPageIDs.length; $i < $length; $i++) {
+				if (this._supportedPageObjectTypeIDs.indexOf(parseInt($selectedPageIDs[$i])) == -1) {
+					$display = false;
+					break;
+				}
+			}
+		}
+		else {
+			$display = false;
+		}
+		
+		if ($display) {
+			this._inputContainer.show();
+			this._input.enable();
+		}
+		else {
+			this._inputContainer.hide();
+			this._input.disable();
+		}
+	}
+});
+
+/**
+ * Initialize WCF.Notice namespace.
+ */
+WCF.Notice = { };
+
+/**
+ * Handles dismissing notices.
+ */
+WCF.Notice.Dismiss = Class.extend({
+	/**
+	 * list with notices
+	 * @var	jQuery
+	 */
+	_notices: { },
+	
+	/**
+	 * action proxy object
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes a new WCF.Notice.Dismiss object.
+	 */
+	init: function() {
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		var $dismissButtons = $('.jsDismissNoticeButton').click($.proxy(this._click, this));
+		
+		$dismissButtons.each($.proxy(function(index, element) {
+			this._notices[$(element).data('objectID')] = $(element).parent();
+		}, this));
+	},
+	
+	/**
+	 * Handles clicking on 
+	 */
+	_click: function(event) {
+		this._proxy.setOption('data', {
+			actionName: 'dismiss',
+			className: 'wcf\\data\\notice\\NoticeAction',
+			objectIDs: [ $(event.currentTarget).data('objectID') ]
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Handles successfull AJAX request.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		this._notices[data.returnValues.noticeID].wcfFadeOut();
 	}
 });
 

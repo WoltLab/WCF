@@ -18,7 +18,7 @@ use wcf\util\ArrayUtil;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserLanguageCondition extends AbstractSingleFieldCondition implements IUserCondition {
+class UserLanguageCondition extends AbstractSingleFieldCondition implements INoticeCondition, IUserCondition {
 	/**
 	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
 	 */
@@ -41,7 +41,7 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements IUse
 	 * @see	\wcf\system\condition\IUserCondition::checkUser()
 	 */
 	public function checkUser(Condition $condition, User $user) {
-		if (!empty($condition->languageIDs) && !in_array($user->languageID, $condition->languageIDs)) {
+		if (!empty($condition->conditionData['languageIDs']) && !in_array($user->languageID, $condition->languageIDs)) {
 			return false;
 		}
 		
@@ -107,5 +107,12 @@ class UserLanguageCondition extends AbstractSingleFieldCondition implements IUse
 				throw new UserInputException('languageIDs', 'noValidSelection');
 			}
 		}
+	}
+	
+	/**
+	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 */
+	public function showNotice(Condition $condition) {
+		return $this->checkUser($condition, WCF::getUser());
 	}
 }

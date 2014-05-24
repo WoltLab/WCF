@@ -491,6 +491,24 @@ CREATE TABLE wcf1_modification_log (
 	additionalData MEDIUMTEXT
 );
 
+DROP TABLE IF EXISTS wcf1_notice;
+CREATE TABLE wcf1_notice (
+	noticeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	noticeName VARCHAR(255) NOT NULL,
+	notice MEDIUMTEXT,
+	noticeUseHtml TINYINT(1) NOT NULL DEFAULT 0,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	isDismissible TINYINT(1) NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS wcf1_notice_dismissed;
+CREATE TABLE wcf1_notice_dismissed (
+	noticeID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	PRIMARY KEY (noticeID, userID)
+);
+
 DROP TABLE IF EXISTS wcf1_object_type;
 CREATE TABLE wcf1_object_type (
 	objectTypeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1589,6 +1607,9 @@ ALTER TABLE wcf1_poll_option ADD FOREIGN KEY (pollID) REFERENCES wcf1_poll (poll
 ALTER TABLE wcf1_poll_option_vote ADD FOREIGN KEY (pollID) REFERENCES wcf1_poll (pollID) ON DELETE CASCADE;
 ALTER TABLE wcf1_poll_option_vote ADD FOREIGN KEY (optionID) REFERENCES wcf1_poll_option (optionID) ON DELETE CASCADE;
 ALTER TABLE wcf1_poll_option_vote ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_notice_dismissed ADD FOREIGN KEY (noticeID) REFERENCES wcf1_notice (noticeID) ON DELETE CASCADE;
+ALTER TABLE wcf1_notice_dismissed ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 /* SQL_PARSER_OFFSET */
 

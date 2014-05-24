@@ -128,7 +128,13 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 		));
 		$returnValues = $this->objectAction->executeAction();
 		
-		ConditionHandler::getInstance()->createConditions($returnValues['returnValues']->assignmentID, $this->conditions);
+		// transform conditions array into one-dimensional array
+		$conditions = array();
+		foreach ($this->conditions as $groupedObjectTypes) {
+			$conditions = array_merge($conditions, $groupedObjectTypes);
+		}
+		
+		ConditionHandler::getInstance()->createConditions($returnValues['returnValues']->assignmentID, $conditions);
 		
 		$this->saved();
 		

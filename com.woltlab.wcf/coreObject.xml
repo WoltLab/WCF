@@ -49,5 +49,9 @@
 		<coreobject>
 			<objectname><![CDATA[wcf\system\moderation\queue\ModerationQueueManager]]></objectname>
 		</coreobject>
+		
+		<coreobject>
+			<objectname><![CDATA[wcf\system\notice\NoticeHandler]]></objectname>
+		</coreobject>
 	</import>
 </data>
