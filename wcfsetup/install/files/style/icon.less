@@ -1,10 +1,10 @@
 /* do NOT reference fonts directly, always make use of 'getFont.php' */
 @font-face {
 	font-family: 'FontAwesome';
-	src: url('../font/getFont.php?type=eot&v=4.0.3');
-	src: url('../font/getFont.php?type=eot&v=4.0.3#iefix') format('embedded-opentype'),
-		url('../font/getFont.php?type=woff&v=4.0.3') format('woff'),
-		url('../font/getFont.php?type=ttf&v=4.0.3') format('truetype');
+	src: url('../font/getFont.php?type=eot&v=4.1.0');
+	src: url('../font/getFont.php?type=eot&v=4.1.0#iefix') format('embedded-opentype'),
+		url('../font/getFont.php?type=woff&v=4.1.0') format('woff'),
+		url('../font/getFont.php?type=ttf&v=4.1.0') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -541,16 +541,87 @@ a > span.fa:not(.pointer) {
 @vk: "\f189";
 @weibo: "\f18a";
 @renren: "\f18b";
-@fa-var-pagelines: "\f18c";
-@fa-var-stack-exchange: "\f18d";
 @fa-var-arrow-circle-o-right: "\f18e";
 @fa-var-arrow-circle-o-left: "\f190";
+@fa-var-behance: "\f1b4";
+@fa-var-behance-square: "\f1b5";
+@fa-var-bomb: "\f1e2";
+@fa-var-building: "\f1ad";
+@fa-var-car: "\f1b9";
 @fa-var-caret-square-o-left: "\f191";
+@fa-var-child: "\f1ae";
+@fa-var-circle-o-notch: "\f1ce";
+@fa-var-circle-thin: "\f1db";
+@fa-var-codepen: "\f1cb";
+@fa-var-cube: "\f1b2";
+@fa-var-cubes: "\f1b3";
+@fa-var-database: "\f1c0";
+@fa-var-delicious: "\f1a5";
+@fa-var-deviantart: "\f1bd";
+@fa-var-digg: "\f1a6";
 @fa-var-dot-circle-o: "\f192";
-@fa-var-wheelchair: "\f193";
-@fa-var-vimeo-square: "\f194";
-@fa-var-try: "\f195";
+@fa-var-drupal: "\f1a9";
+@fa-var-envelope-square: "\f199";
+@fa-var-fax: "\f1ac";
+@fa-var-file-code-o: "\f1c9";
+@fa-var-file-excel-o: "\f1c3";
+@fa-var-file-pdf-o: "\f1c1";
+@fa-var-file-picture-o: "\f1c5";
+@fa-var-file-powerpoint-o: "\f1c4";
+@fa-var-file-sound-o: "\f1c7";
+@fa-var-file-video-o: "\f1c8";
+@fa-var-file-word-o: "\f1c2";
+@fa-var-file-zip-o: "\f1c6";
+@fa-var-ge: "\f1d1";
+@fa-var-git: "\f1d3";
+@fa-var-git-square: "\f1d2";
+@fa-var-google: "\f1a0";
+@fa-var-hacker-news: "\f1d4";
+@fa-var-header: "\f1dc";
+@fa-var-history: "\f1da";
+@fa-var-joomla: "\f1aa";
+@fa-var-jsfiddle: "\f1cc";
+@fa-var-language: "\f1ab";
+@fa-var-mortar-board: "\f19d";
+@fa-var-openid: "\f19b";
+@fa-var-pagelines: "\f18c";
+@fa-var-paragraph: "\f1dd";
+@fa-var-paw: "\f1b0";
+@fa-var-pied-piper-alt: "\f1a8";
+@fa-var-pied-piper-square: "\f1a7";
 @fa-var-plus-square-o: "\f196";
+@fa-var-qq: "\f1d6";
+@fa-var-rebel: "\f1d0";
+@fa-var-recycle: "\f1b8";
+@fa-var-reddit: "\f1a1";
+@fa-var-reddit-square: "\f1a2";
+@fa-var-send: "\f1d8";
+@fa-var-send-o: "\f1d9";
+@fa-var-share-alt: "\f1e0";
+@fa-var-share-alt-square: "\f1e1";
+@fa-var-slack: "\f198";
+@fa-var-sliders: "\f1de";
+@fa-var-soundcloud: "\f1be";
+@fa-var-space-shuttle: "\f197";
+@fa-var-spoon: "\f1b1";
+@fa-var-spotify: "\f1bc";
+@fa-var-stack-exchange: "\f18d";
+@fa-var-steam: "\f1b6";
+@fa-var-steam-square: "\f1b7";
+@fa-var-stumbleupon: "\f1a4";
+@fa-var-stumbleupon-circle: "\f1a3";
+@fa-var-support: "\f1cd";
+@fa-var-taxi: "\f1ba";
+@fa-var-tencent-weibo: "\f1d5";
+@fa-var-tree: "\f1bb";
+@fa-var-try: "\f195";
+@fa-var-university: "\f19c";
+@fa-var-vimeo-square: "\f194";
+@fa-var-vine: "\f1ca";
+@fa-var-weixin: "\f1d7";
+@fa-var-wheelchair: "\f193";
+@fa-var-wordpress: "\f19a";
+@fa-var-yahoo: "\f19e";
 
 /* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
    readers do not read off random characters that represent icons */
@@ -941,3 +1012,66 @@ a > span.fa:not(.pointer) {
 .fa-vimeo-square:before { content: @fa-var-vimeo-square; }
 .fa-turkish-lira:before, .fa-try:before { content: @fa-var-try; }
 .fa-plus-square-o:before { content: @fa-var-plus-square-o; }
+.fa-empire:before, .fa-ge:before { content: @fa-var-ge; }
+.fa-space-shuttle :before { content: @fa-var-space-shuttle; }
+.fa-slack:before { content: @fa-var-slack; }
+.fa-envelope-square:before { content: @fa-var-envelope-square; }
+.fa-wordpress:before { content: @fa-var-wordpress; }
+.fa-openid:before { content: @fa-var-openid; }
+.fa-institution:before, .fa-bank:before, .fa-university:before { content: @fa-var-university; }
+.fa-yahoo:before { content: @fa-var-yahoo; }
+.fa-google:before { content: @fa-var-google; }
+.fa-reddit:before { content: @fa-var-reddit; }
+.fa-reddit-square:before { content: @fa-var-reddit-square; }
+.fa-stumbleupon-circle:before { content: @fa-var-stumbleupon-circle; }
+.fa-stumbleupon:before { content: @fa-var-stumbleupon; }
+.fa-delicious:before { content: @fa-var-delicious; }
+.fa-digg:before { content: @fa-var-digg; }
+.fa-pied-piper-alt:before { content: @fa-var-pied-piper-alt; }
+.fa-drupal:before { content: @fa-var-drupal; }
+.fa-joomla:before { content: @fa-var-joomla; }
+.fa-language:before { content: @fa-var-language; }
+.fa-fax:before { content: @fa-var-fax; }
+.fa-building:before { content: @fa-var-building; }
+.fa-child:before { content: @fa-var-child; }
+.fa-paw:before { content: @fa-var-paw; }
+.fa-spoon:before { content: @fa-var-spoon; }
+.fa-cube:before { content: @fa-var-cube; }
+.fa-cubes:before { content: @fa-var-cubes; }
+.fa-behance:before { content: @fa-var-behance; }
+.fa-behance-square:before { content: @fa-var-behance-square; }
+.fa-steam:before { content: @fa-var-steam; }
+.fa-steam-square:before { content: @fa-var-steam-square; }
+.fa-recycle:before { content: @fa-var-recycle; }
+.fa-automobile:before, .fa-car:before { content: @fa-var-car; }
+.fa-cab:before, .fa-taxi:before { content: @fa-var-taxi; }
+.fa-tree:before { content: @fa-var-tree; }
+.fa-spotify:before { content: @fa-var-spotify; }
+.fa-deviantart:before { content: @fa-var-deviantart; }
+.fa-soundcloud:before { content: @fa-var-soundcloud; }
+.fa-database:before { content: @fa-var-database; }
+.fa-file-pdf-o:before { content: @fa-var-file-pdf-o; }
+.fa-file-word-o:before { content: @fa-var-file-word-o; }
+.fa-file-excel-o:before { content: @fa-var-file-excel-o; }
+.fa-file-powerpoint-o:before { content: @fa-var-file-powerpoint-o; }
+.fa-file-movie-o:before, .fa-file-video-o:before { content: @fa-var-file-video-o; }
+.fa-file-code-o:before { content: @fa-var-file-code-o; }
+.fa-vine:before { content: @fa-var-vine; }
+.fa-codepen:before { content: @fa-var-codepen; }
+.fa-jsfiddle:before { content: @fa-var-jsfiddle; }
+.fa-circle-o-notch:before { content: @fa-var-circle-o-notch; }
+.fa-ra:before, .fa-rebel:before { content: @fa-var-rebel; }
+.fa-git-square:before { content: @fa-var-git-square; }
+.fa-git:before { content: @fa-var-git; }
+.fa-hacker-news:before { content: @fa-var-hacker-news; }
+.fa-tencent-weibo:before { content: @fa-var-tencent-weibo; }
+.fa-qq:before { content: @fa-var-qq; }
+.fa-wechat:before, .fa-weixin:before { content: @fa-var-weixin; }
+.fa-history:before { content: @fa-var-history; }
+.fa-circle-thin:before { content: @fa-var-circle-thin; }
+.fa-header:before { content: @fa-var-header; }
+.fa-paragraph:before { content: @fa-var-paragraph; }
+.fa-sliders:before { content: @fa-var-sliders; }
+.fa-share-alt:before { content: @fa-var-share-alt; }
+.fa-share-alt-square:before { content: @fa-var-share-alt-square; }
+.fa-bomb:before { content: @fa-var-bomb; }
