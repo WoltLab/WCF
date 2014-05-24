@@ -500,7 +500,7 @@
 		<acpmenuitem name="wcf.acp.menu.link.notice.list">
 			<controller><![CDATA[wcf\acp\page\NoticeListPage]]></controller>
 			<parent>wcf.acp.menu.link.notice</parent>
-			<permissions>admin.content.tag.canManageTag</permissions>
+			<permissions>admin.content.notice.canManageNotice</permissions>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.notice.add">
 			<controller><![CDATA[wcf\acp\form\NoticeAddForm]]></controller>
