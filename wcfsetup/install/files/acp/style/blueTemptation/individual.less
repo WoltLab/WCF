@@ -70,6 +70,23 @@ body, .tabularBox, .dialogTitlebar {
 			}
 		}
 	}
+	
+	// rtl fix
+	html[dir='rtl'] {
+		.mainMenu {
+			> ul {
+				> li.active > a {
+					&::after {
+						.boxShadow(2px, 2px, @wcfNavigationHeaderBackgroundColor, 0);
+					}
+					
+					&::before {
+						.boxShadow(-2px, 2px, @wcfNavigationHeaderBackgroundColor, 0);
+					}
+				}
+			}
+		}
+	}
 }
 
 /* navigation header / footer */
@@ -581,6 +598,27 @@ button.active:hover {
 			}
 		}
 	}
+	
+	// rtl fix
+	html[dir='rtl'] {
+		.tabMenu {
+			> ul {
+				> li {
+					&.ui-state-active {
+						> a {
+							&::before {
+								.boxShadow(-2px, 1px, @wcfContainerBackgroundColor, 0);
+							}
+							
+							&::after {
+								.boxShadow(2px, 1px, @wcfContainerBackgroundColor, 0);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 /* ### inputs ### */
@@ -768,6 +806,21 @@ select[multiple]:focus {
 				width: 128px;
 				
 				.linearGradientNative(~"225deg, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%");
+			}
+		}
+	}
+	
+	// rtl fix
+	html[dir='rtl'] {
+		.messageList {
+			.messageGroupStarter {
+				> .message.messageSidebarOrientationLeft::before {
+					.linearGradientNative(~"225deg, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%");
+				}
+				
+				> .message.messageSidebarOrientationRight::before {
+					.linearGradientNative(~"135deg, rgba(255, 255, 255, .85) 0%, rgba(255, 255, 255, 0) 40%");
+				}
 			}
 		}
 	}
