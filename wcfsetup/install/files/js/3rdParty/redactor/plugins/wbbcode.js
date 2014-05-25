@@ -137,7 +137,9 @@ RedactorPlugins.wbbcode = {
 	 */
 	_convertFromHtml: function() {
 		var html = this.$source.val();
-		
+		console.clear();
+		console.debug("_convertFromHtml()");
+		console.debug(html);
 		// drop line break right before/after a <pre> tag (used by [code]-BBCode)
 		html = html.replace(/<br>\n<pre>\n/g, '');
 		html = html.replace(/<\/pre>\n<br>\n/g, '');
@@ -224,6 +226,11 @@ RedactorPlugins.wbbcode = {
 		// [table]
 		html = html.replace(/<table[^>]*>/gi, '[table]');
 		html = html.replace(/<\/table>/gi, '[/table]');
+		
+		// remove <tbody>
+		html = html.replace(/<tbody>([\s\S]*?)<\/tbody>/, function(match, p1) {
+			return $.trim(p1);
+		});
 		
 		// remove empty <tr>s
 		html = html.replace(/<tr><\/tr>/gi, '');
@@ -395,6 +402,11 @@ RedactorPlugins.wbbcode = {
 		data = data.replace(/\[list=(none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)\]/gi, '<ul style="list-style-type: $1">');
 		data = data.replace(/\[\/list]/gi, '</ul>');
 		
+		// trim whitespaces within [table]
+		data = data.replace(/\[table\]([\S\s]*?)\[\/table\]/gi, function(match, p1) {
+			return '[table]' + $.trim(p1) + '[/table]';
+		});
+		
 		// [table]
 		data = data.replace(/\[table\]/gi, '<table border="1" cellspacing="1" cellpadding="1" style="width: 500px;">');
 		data = data.replace(/\[\/table\]/gi, '</table>');
@@ -404,6 +416,11 @@ RedactorPlugins.wbbcode = {
 		// [td]
 		data = data.replace(/\[td\]/gi, '<td>');
 		data = data.replace(/\[\/td\]/gi, '</td>');
+		
+		// trim whitespaces within <td>
+		data = data.replace(/<td>([\S\s]*?)<\/td>/gi, function(match, p1) {
+			return '<td>' + $.trim(p1) + '</td>';
+		});
 		
 		// smileys
 		for (var smileyCode in __REDACTOR_SMILIES) {
@@ -423,11 +440,17 @@ RedactorPlugins.wbbcode = {
 		data = '';
 		for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
 			var $line = $.trim($tmp[$i]);
-			if (!$line) {
-				$line = '<br>';
-			}
 			
-			data += '<p>' + $line + '</p>';
+			if ($line.indexOf('<') === 0) {
+				data += $line;
+			}
+			else {
+				if (!$line) {
+					$line = '<br>';
+				}
+				
+				data += '<p>' + $line + '</p>';
+			}
 		}
 		
 		// insert codes

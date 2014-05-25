@@ -64,8 +64,12 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		
 		this._makeSortable();
 		
-		this._insertAllButton = $('<p class="button">' + WCF.Language.get('wcf.attachment.insertAll') + '</p>').appendTo(this._buttonSelector);
+		this._insertAllButton = $('<p class="button">' + WCF.Language.get('wcf.attachment.insertAll') + '</p>').hide().appendTo(this._buttonSelector);
 		this._insertAllButton.click($.proxy(this._insertAll, this));
+		
+		if (this._fileListSelector.children('li:not(.uploadFailed)').length) {
+			this._insertAllButton.show();
+		}
 	},
 	
 	/**
@@ -106,6 +110,10 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		var $target = $(event.target);
 		if ($target.is('li.box48') && $target.parent().wcfIdentify() === this._fileListSelector.wcfIdentify()) {
 			this._buttonSelector.next('small.innerError').remove();
+		}
+		
+		if (!this._fileListSelector.children('li:not(.uploadFailed)').length) {
+			this._insertAllButton.hide();
 		}
 	},
 	
@@ -242,6 +250,13 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		}
 		
 		this._makeSortable();
+		
+		if (this._fileListSelector.children('li:not(.uploadFailed)').length) {
+			this._insertAllButton.show();
+		}
+		else {
+			this._insertAllButton.hide();
+		}
 		
 		WCF.DOMNodeInsertedHandler.execute();
 	},
