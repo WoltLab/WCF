@@ -194,21 +194,77 @@ RedactorPlugins.wbbcode = {
 		// html = html.replace(/<blockquote>/gi, '[quote]');
 		// html = html.replace(/\n*<\/blockquote>/gi, '[/quote]');
 		
-		// [color]
-		html = html.replace(/<span style="color: ?rgb\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\);?">([\s\S]*?)<\/span>/gi, function(match, r, g, b, text) {
-			var $hex = ("0123456789ABCDEF".charAt((r - r % 16) / 16) + '' + "0123456789ABCDEF".charAt(r % 16)) + '' + ("0123456789ABCDEF".charAt((g - g % 16) / 16) + '' + "0123456789ABCDEF".charAt(g % 16)) + '' + ("0123456789ABCDEF".charAt((b - b % 16) / 16) + '' + "0123456789ABCDEF".charAt(b % 16));
+		// handle [color], [size] and [font]
+		var $components = html.split(/(<\/?span[^>]*>)/);
+		
+		var $buffer = [ ];
+		var $openElements = [ ];
+		var $result = '';
+		
+		for (var $i = 0; $i < $components.length; $i++) {
+			var $value = $components[$i];
 			
-			return "[color=#" + $hex + "]" + text + "[/color]";
-		});
-		html = html.replace(/<span style="color: ?(.*?);?">([\s\S]*?)<\/span>/gi, "[color=$1]$2[/color]");
+			if ($value == '</span>') {
+				var $opening = $openElements.pop();
+				var $tmp = $opening.start + $buffer.pop() + $opening.end;
+				
+				if ($buffer.length) {
+					$buffer[$buffer.length - 1] += $tmp;
+				}
+				else {
+					$result += $tmp;
+				}
+			}
+			else {
+				if ($value.match(/^<span style="([^"]+)">/)) {
+					var $style = RegExp.$1;
+					var $start;
+					var $end;
+					
+					if ($style.match(/^color: ?rgb\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\);?$/i)) {
+						var $r = RegExp.$1;
+						var $g = RegExp.$2;
+						var $b = RegExp.$3;
+						
+						var $hex = ("0123456789ABCDEF".charAt(($r - $r % 16) / 16) + '' + "0123456789ABCDEF".charAt($r % 16)) + '' + ("0123456789ABCDEF".charAt(($g - $g % 16) / 16) + '' + "0123456789ABCDEF".charAt($g % 16)) + '' + ("0123456789ABCDEF".charAt(($b - $b % 16) / 16) + '' + "0123456789ABCDEF".charAt($b % 16));
+						$start = '[color=#' + $hex + ']';
+						$end = '[/color]';
+					}
+					else if ($style.match(/^color: ?(.*?);?$/i)) {
+						$start = '[color=' + RegExp.$1 + ']';
+						$end = '[/color]';
+					}
+					else if ($style.match(/^font-size: ?(\d+)pt;?$/i)) {
+						$start = '[size=' + RegExp.$1 + ']';
+						$end = '[/size]';
+					}
+					else if ($style.match(/^font-family: ?(.*?);?$/)) {
+						$start = '[font=' + RegExp.$1.replace(/'/g, '') + ']';
+						$end = '[/font]';
+					}
+					else {
+						$start = '<span style="' + $style + '">';
+						$end = '</span>';
+					}
+					
+					$buffer[$buffer.length] = '';
+					$openElements[$buffer.length] = {
+						start: $start,
+						end: $end
+					};
+				}
+				else {
+					if ($buffer.length) {
+						$buffer[$buffer.length - 1] += $value;
+					}
+					else {
+						$result += $value;
+					}
+				}
+			}
+		}
 		
-		// [size]
-		html = html.replace(/<span style="font-size: ?(\d+)pt;?">([\s\S]*?)<\/span>/gi, "[size=$1]$2[/size]");
-		
-		// [font]
-		html = html.replace(/<span style="font-family: ?(.*?);?">([\s\S]*?)<\/span>/gi, function(match, fontFamily, text) {
-			return "[font='" + fontFamily.replace(/'/g, '') + "']" + text + "[/font]";
-		});
+		html = $result;
 		
 		// [align]
 		html = html.replace(/<div style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)<\/div>/gi, "[align=$1]$2[/align]");
