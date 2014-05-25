@@ -18,6 +18,7 @@ use wcf\util\HeaderUtil;
 use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
+use wcf\system\database\DatabaseException;
 
 /**
  * Handles sessions.
@@ -561,7 +562,7 @@ class SessionHandler extends SingletonFactory {
 				WHERE		sessionID <> ?
 						AND userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->sessionID, $user->userID));
+			//$statement->execute(array($this->sessionID, $user->userID));
 			
 			// reset session variables
 			$this->variables = array();
@@ -574,9 +575,33 @@ class SessionHandler extends SingletonFactory {
 		if (!$hideSession) {
 			// update session
 			$sessionEditor = new $this->sessionEditorClassName($this->session);
-			$sessionEditor->update(array(
-				'userID' => $this->user->userID
-			));
+			
+			try {
+				$sessionEditor->update(array(
+					'userID' => $this->user->userID
+				));
+			}
+			catch (DatabaseException $e) {
+				// MySQL error 23000 = unique key
+				// do not check against the message itself, some weird systems localize them
+				if ($e->getCode() == 23000) {
+					// user is not a guest, delete all other sessions of this user
+					$sql = "DELETE FROM	".$sessionTable."
+						WHERE		sessionID <> ?
+								AND userID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute(array($this->sessionID, $user->userID));
+						
+					// update session
+					$sessionEditor->update(array(
+						'userID' => $user->userID
+					));
+				}
+				else {
+					// not our business
+					throw $e;
+				}
+			}
 		}
 		
 		// reset caches
@@ -646,9 +671,30 @@ class SessionHandler extends SingletonFactory {
 				if ($session === null) {
 					// update session
 					$sessionEditor = new $this->sessionEditorClassName($this->session);
-					$sessionEditor->update(array(
-						'userID' => $user->userID
-					));
+					
+					try {
+						$sessionEditor->update(array(
+							'userID' => $user->userID
+						));
+					}
+					catch (DatabaseException $e) {
+						// MySQL error 23000 = unique key
+						// do not check against the message itself, some weird systems localize them
+						if ($e->getCode() == 23000) {
+							// find existing session for this user
+							$session = call_user_func(array($this->sessionClassName, 'getSessionByUserID'), $user->userID);
+							
+							// update session
+							$sessionEditor = new $this->sessionEditorClassName($this->session);
+							$sessionEditor->update(array(
+									'userID' => $user->userID
+							));
+						}
+						else {
+							// not our business
+							throw $e;
+						}
+					}
 				}
 				else {
 					// delete guest session
