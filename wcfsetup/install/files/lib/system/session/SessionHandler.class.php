@@ -8,6 +8,7 @@ use wcf\data\user\UserEditor;
 use wcf\page\ITrackablePage;
 use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
+use wcf\system\database\DatabaseException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\RequestHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
@@ -18,7 +19,6 @@ use wcf\util\HeaderUtil;
 use wcf\util\PasswordUtil;
 use wcf\util\StringUtil;
 use wcf\util\UserUtil;
-use wcf\system\database\DatabaseException;
 
 /**
  * Handles sessions.
