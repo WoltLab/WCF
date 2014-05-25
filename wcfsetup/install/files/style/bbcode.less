@@ -55,6 +55,15 @@
 	}
 }
 
+// rtl fix
+html[dir='rtl'] {
+	.codeBox {
+		> div {
+			.boxShadowNative(~"inset -4em 0 0 " @wcfContainerBackgroundColor ~", inset -4.1em 0 0" lighten(@wcfContainerBorderColor, 10%));
+		}
+	}
+}
+
 @media only screen and (max-width: 800px) {
 	.codeBox {
 		> div {
