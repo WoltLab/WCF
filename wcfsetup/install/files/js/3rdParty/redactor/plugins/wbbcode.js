@@ -137,9 +137,7 @@ RedactorPlugins.wbbcode = {
 	 */
 	_convertFromHtml: function() {
 		var html = this.$source.val();
-		console.clear();
-		console.debug("_convertFromHtml()");
-		console.debug(html);
+		
 		// drop line break right before/after a <pre> tag (used by [code]-BBCode)
 		html = html.replace(/<br>\n<pre>\n/g, '');
 		html = html.replace(/<\/pre>\n<br>\n/g, '');
