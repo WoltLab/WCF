@@ -48,6 +48,15 @@ class PHPInfoPage extends AbstractPage {
 		$info = preg_replace('%<table border="0" cellpadding="3" width="600">%', '<div class="tabularBox marginTop"><table class="table">', $info);
 		$info = str_replace('</table>', '</table></div>', $info);
 		
+		// fix display of disable_functions & disable_classes
+		$info = preg_replace_callback('%<td class="e">disable_(?P<t>functions|classes)</td><td class="v">(?P<l>.*?)</td><td class="v">(?P<m>.*?)</td>%s', function ($match) {
+			$ret = '<td class="e">disable_' . $match['t'] . '</td>';
+			$ret .= '<td class="v">' . str_replace(' ', ', ', rtrim(wordwrap(str_replace(',', ' ', $match['l'])))) . '</td>';
+			$ret .= '<td class="v">' . str_replace(' ', ', ', rtrim(wordwrap(str_replace(',', ' ', $match['m'])))) . '</td>';
+			
+			return $ret;
+		}, $info);
+		
 		WCF::getTPL()->assign(array(
 			'phpInfo' => $info
 		));
