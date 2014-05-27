@@ -54,7 +54,7 @@
 				<legend>{lang}wcf.global.form.data{/lang}</legend>
 				
 				<dl{if $errorField == 'groupName'} class="formError"{/if}>
-					<dt><label for="groupName">{lang}wcf.acp.label.group.groupName{/lang}</label></dt>
+					<dt><label for="groupName">{lang}wcf.global.title{/lang}</label></dt>
 					<dd>
 						<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="long" />
 						{if $errorField == 'groupName'}
