@@ -5,6 +5,7 @@ use wcf\data\label\group\LabelGroupAction;
 use wcf\form\AbstractForm;
 use wcf\system\acl\ACLHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
 /**
@@ -59,10 +60,20 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	public function save() {
 		AbstractForm::save();
 		
+		$this->groupName = 'wcf.acp.label.group'.$this->group->groupID;
+		if (I18nHandler::getInstance()->isPlainValue('groupName')) {
+			I18nHandler::getInstance()->remove($this->groupName);
+			$this->groupName = I18nHandler::getInstance()->getValue('groupName');
+		}
+		else {
+			I18nHandler::getInstance()->save('groupName', $this->groupName, 'wcf.acp.label', 1);
+		}
+		
 		// update label
 		$this->objectAction = new LabelGroupAction(array($this->groupID), 'update', array('data' => array_merge($this->additionalFields, array(
 			'forceSelection' => ($this->forceSelection ? 1 : 0),
-			'groupName' => $this->groupName
+			'groupName' => $this->groupName,
+			'showOrder' => $this->showOrder
 		))));
 		$this->objectAction->executeAction();
 		
@@ -92,8 +103,11 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 		parent::readData();
 		
 		if (empty($_POST)) {
+			I18nHandler::getInstance()->setOptions('groupName', 1, $this->group->groupName, 'wcf.acp.label.group\d+');
+			
 			$this->forceSelection = ($this->group->forceSelection ? true : false);
 			$this->groupName = $this->group->groupName;
+			$this->showOrder = $this->group->showOrder;
 		}
 	}
 	
@@ -102,6 +116,8 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+		
+		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
 		WCF::getTPL()->assign(array(
 			'action' => 'edit',

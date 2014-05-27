@@ -21,12 +21,12 @@ class LabelGroupListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
-	public $defaultSortField = 'groupName';
+	public $defaultSortField = 'showOrder';
 	
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('groupID', 'groupName');
+	public $validSortFields = array('groupID', 'groupName', 'showOrder');
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions

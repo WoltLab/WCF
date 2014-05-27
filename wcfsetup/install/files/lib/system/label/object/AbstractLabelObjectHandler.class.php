@@ -64,13 +64,15 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 			$data[$groupID] = $this->labelGroups[$groupID];
 		}
 		
+		uasort($data, array('\wcf\data\label\group\LabelGroup', 'sortLabelGroups'));
+		
 		return $data;
 	}
 	
 	/**
 	 * @see	\wcf\system\label\manager\ILabelObjectHandler::validateLabelIDs()
 	 */
-	public function validateLabelIDs(array $labelIDs, $optionName = '') {
+	public function validateLabelIDs(array $labelIDs, $optionName = '', $legacyReturnValue = true) {
 		$optionID = 0;
 		if (!empty($optionName)) {
 			$optionID = LabelHandler::getInstance()->getOptionID($optionName);
@@ -79,21 +81,31 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 			}
 		}
 		
+		$validationErrors = array();
 		$satisfiedGroups = array();
 		foreach ($labelIDs as $groupID => $labelID) {
 			// only one label per group is allowed
 			if (is_array($labelID)) {
-				return false;
+				$validationErrors[$groupID] = 'invalid';
+				continue;
 			}
 			
-			// label group id is unknown or label id is invalid for this group
-			if (!isset($this->labelGroups[$groupID]) || !$this->labelGroups[$groupID]->isValid($labelID)) {
-				return false;
+			// label group id is unknown
+			if (!isset($this->labelGroups[$groupID])) {
+				$validationErrors[0] = 'invalid';
+				continue;
+			}
+			
+			// label id is invalid for this group
+			if (!$this->labelGroups[$groupID]->isValid($labelID)) {
+				$validationErrors[$groupID] = 'invalid';
+				continue;
 			}
 			
 			// check permission
 			if ($optionID && !$this->labelGroups[$groupID]->getPermission($optionID)) {
-				return false;
+				$validationErrors[0] = 'invalid';
+				continue;
 			}
 			
 			$satisfiedGroups[] = $groupID;
@@ -107,11 +119,19 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 					continue;
 				}
 				
-				return false;
+				$validationErrors[$labelGroup->groupID] = 'missing';
+				continue;
 			}
 		}
 		
-		return true;
+		if ($legacyReturnValue) {
+			// WCF 2.0: boolean true/false
+			return (empty($validationErrors));
+		}
+		else {
+			// WCF 2.1+: detailed error report (empty array if validation passed)
+			return $validationErrors;
+		}
 	}
 	
 	/**

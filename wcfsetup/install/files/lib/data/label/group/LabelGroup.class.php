@@ -2,6 +2,7 @@
 namespace wcf\data\label\group;
 use wcf\data\DatabaseObject;
 use wcf\system\request\IRouteController;
+use wcf\system\WCF;
 
 /**
  * Represents a label group.
@@ -28,6 +29,30 @@ class LabelGroup extends DatabaseObject implements IRouteController {
 	 * @see	\wcf\data\ITitledObject::getTitle()
 	 */
 	public function getTitle() {
-		return $this->groupName;
+		return WCF::getLanguage()->get($this->groupName);
+	}
+	
+	/**
+	 * Returns label group title.
+	 * 
+	 * @return	string
+	 */
+	public function __toString() {
+		return $this->getTitle();
+	}
+	
+	/**
+	 * Callback for uasort() to sort label groups by show order and (if equal) group id.
+	 * 
+	 * @param	\wcf\data\DatabaseObject	$groupA
+	 * @param	\wcf\data\DatabaseObject	$groupB
+	 * @return	integer
+	 */
+	public static function sortLabelGroups(DatabaseObject $groupA, DatabaseObject $groupB) {
+		if ($groupA->showOrder == $groupB->showOrder) {
+			return ($groupA->groupID > $groupB->groupID) ? 1 : -1;
+		}
+		
+		return ($groupA->showOrder > $groupB->showOrder) ? 1 : -1;
 	}
 }

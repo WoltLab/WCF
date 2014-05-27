@@ -432,8 +432,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.label.group.edit"><![CDATA[Edit Label Group]]></item>
 		<item name="wcf.acp.label.group.error.notValid"><![CDATA[Chosen label group is invalid.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
-		<item name="wcf.acp.label.group.groupName"><![CDATA[Title]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Label Groups]]></item>
+		<item name="wcf.acp.label.group.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
 	</category>
@@ -1872,6 +1872,7 @@ Errors are:
 	
 	<category name="wcf.label">
 		<item name="wcf.label.all"><![CDATA[All]]></item>
+		<item name="wcf.label.error.missing"><![CDATA[You are required to select a label.]]></item>
 		<item name="wcf.label.error.notValid"><![CDATA[The label selection is invalid.]]></item>
 		<item name="wcf.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.label.labels"><![CDATA[Labels]]></item>

@@ -365,7 +365,8 @@ DROP TABLE IF EXISTS wcf1_label_group;
 CREATE TABLE wcf1_label_group (
 	groupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	groupName VARCHAR(80) NOT NULL,
-	forceSelection TINYINT(1) NOT NULL DEFAULT 0
+	forceSelection TINYINT(1) NOT NULL DEFAULT 0,
+	showOrder INT(10) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_label_group_to_object;

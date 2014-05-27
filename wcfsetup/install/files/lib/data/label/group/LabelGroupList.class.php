@@ -17,4 +17,9 @@ class LabelGroupList extends DatabaseObjectList {
 	 * @see	\wcf\data\DatabaseObjectList::$className
 	 */
 	public $className = 'wcf\data\label\group\LabelGroup';
+	
+	/**
+	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
+	 */
+	public $sqlOrderBy = 'label_group.showOrder ASC, label_group.groupID';
 }

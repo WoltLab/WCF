@@ -64,7 +64,7 @@
 						</td>
 						<td class="columnID">{@$label->labelID}</td>
 						<td class="columnTitle columnLabel"><a href="{link controller='LabelEdit' object=$label}{/link}" title="{$label}" class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if}">{$label}</a></td>
-						<td class="columnText columnGroup">{$label->groupName}</td>
+						<td class="columnText columnGroup">{lang}{$label->groupName}{/lang}</td>
 						
 						{event name='columns'}
 					</tr>

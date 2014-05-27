@@ -5,8 +5,10 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\ACLHandler;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
+use wcf\data\label\group\LabelGroupEditor;
 
 /**
  * Shows the label group add form.
@@ -66,12 +68,20 @@ class LabelGroupAddForm extends AbstractForm {
 	public $objectTypeID = 0;
 	
 	/**
+	 * show order
+	 * @var	integer
+	 */
+	public $showOrder = 0;
+	
+	/**
 	 * @see	\wcf\page\AbstractPage::readParameters()
 	 */
 	public function readParameters() {
 		parent::readParameters();
 		
 		$this->objectTypeID = ACLHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.label');
+		
+		I18nHandler::getInstance()->register('groupName');
 	}
 	
 	/**
@@ -80,9 +90,13 @@ class LabelGroupAddForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
+		I18nHandler::getInstance()->readValues();
+		
+		if (I18nHandler::getInstance()->isPlainValue('groupName')) $this->groupName = I18nHandler::getInstance()->getValue('groupName');
+		
 		if (isset($_POST['forceSelection'])) $this->forceSelection = true;
-		if (isset($_POST['groupName'])) $this->groupName = StringUtil::trim($_POST['groupName']);
 		if (isset($_POST['objectTypes']) && is_array($_POST['objectTypes'])) $this->objectTypes = $_POST['objectTypes'];
+		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
 	}
 	
 	/**
@@ -112,9 +126,19 @@ class LabelGroupAddForm extends AbstractForm {
 	public function validate() {
 		parent::validate();
 		
-		// validate class name
-		if (empty($this->groupName)) {
-			throw new UserInputException('groupName');
+		// validate group name
+		try {
+			if (!I18nHandler::getInstance()->validateValue('groupName')) {
+				if (I18nHandler::getInstance()->isPlainValue('groupName')) {
+					throw new UserInputException('groupName');
+				}
+				else {
+					throw new UserInputException('groupName', 'multilingual');
+				}
+			}
+		}
+		catch (UserInputException $e) {
+			$this->errorType[$e->getField()] = $e->getType();
 		}
 		
 		// validate object type relations
@@ -134,9 +158,20 @@ class LabelGroupAddForm extends AbstractForm {
 		// save label
 		$this->objectAction = new LabelGroupAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'forceSelection' => ($this->forceSelection ? 1 : 0),
-			'groupName' => $this->groupName
+			'groupName' => $this->groupName,
+			'showOrder' => $this->showOrder
 		))));
 		$returnValues = $this->objectAction->executeAction();
+		
+		if (!I18nHandler::getInstance()->isPlainValue('groupName')) {
+			I18nHandler::getInstance()->save('groupName', 'wcf.acp.label.group'.$returnValues['returnValues']->groupID, 'wcf.acp.label', 1);
+				
+			// update group name
+			$groupEditor = new LabelGroupEditor($returnValues['returnValues']);
+			$groupEditor->update(array(
+				'groupName' => 'wcf.acp.label.group'.$returnValues['returnValues']->groupID
+			));
+		}
 		
 		// save acl
 		ACLHandler::getInstance()->save($returnValues['returnValues']->groupID, $this->objectTypeID);
@@ -155,12 +190,15 @@ class LabelGroupAddForm extends AbstractForm {
 		$this->forceSelection = false;
 		$this->groupName = '';
 		$this->objectTypes = array();
+		$this->showOrder = 0;
 		$this->setObjectTypeRelations();
 		
 		// show success
 		WCF::getTPL()->assign(array(
 			'success' => true
 		));
+		
+		I18nHandler::getInstance()->reset();
 	}
 	
 	/**
@@ -170,13 +208,15 @@ class LabelGroupAddForm extends AbstractForm {
 		parent::assignVariables();
 		
 		ACLHandler::getInstance()->assignVariables($this->objectTypeID);
+		I18nHandler::getInstance()->assignVariables();
 		
 		WCF::getTPL()->assign(array(
 			'action' => 'add',
 			'forceSelection' => $this->forceSelection,
 			'groupName' => $this->groupName,
 			'labelObjectTypeContainers' => $this->labelObjectTypeContainers,
-			'objectTypeID' => $this->objectTypeID
+			'objectTypeID' => $this->objectTypeID,
+			'showOrder' => $this->showOrder
 		));
 	}
 	

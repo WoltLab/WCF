@@ -33,9 +33,9 @@ interface ILabelObjectHandler {
 	 * 
 	 * @param	array<integer>		$labelIDs
 	 * @param	array			$optionName
-	 * @return	boolean
+	 * @return	mixed
 	 */
-	public function validateLabelIDs(array $labelIDs, $optionName = '');
+	public function validateLabelIDs(array $labelIDs, $optionName = '', $legacyReturnValue = true);
 	
 	/**
 	 * Assigns labels to an object.
