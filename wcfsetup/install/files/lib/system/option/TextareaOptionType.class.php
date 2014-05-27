@@ -54,4 +54,27 @@ class TextareaOptionType extends TextOptionType {
 		
 		return $newValue;
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::compare()
+	 */
+	public function compare($value1, $value2) {
+		$value1 = explode("\n", StringUtil::unifyNewlines($value1));
+		$value2 = explode("\n", StringUtil::unifyNewlines($value2));
+		
+		// check if value1 contains more elements than value2
+		$diff = array_diff($value1, $value2);
+		if (!empty($diff)) {
+			return 1;
+		}
+		
+		// check if value1 contains less elements than value2
+		$diff = array_diff($value2, $value1);
+		if (!empty($diff)) {
+			return -1;
+		}
+		
+		// both lists are equal
+		return 0;
+	}
 }

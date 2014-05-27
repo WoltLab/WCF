@@ -51,4 +51,15 @@ class IntegerOptionType extends TextOptionType {
 			throw new UserInputException($option->optionName, 'tooHigh');
 		}
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::compare()
+	 */
+	public function compare($value1, $value2) {
+		if ($value1 == $value2) {
+			return 0;
+		}
+		
+		return ($value1 > $value2) ? 1 : -1;
+	}
 }

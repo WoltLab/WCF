@@ -44,4 +44,11 @@ abstract class AbstractOptionType implements IOptionType {
 	public function supportI18n() {
 		return $this->supportI18n;
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::compare()
+	 */
+	public function compare() {
+		return 0;
+	}
 }

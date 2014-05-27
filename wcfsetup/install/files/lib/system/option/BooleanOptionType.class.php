@@ -90,4 +90,15 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 	public function getConditionData(Option $option, $newValue) {
 		return $newValue;
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::compare()
+	 */
+	public function compare($value1, $value2) {
+		if ($value1 == $value2) {
+			return 0;
+		}
+		
+		return ($value1 === true) ? 1 : -1;
+	}
 }

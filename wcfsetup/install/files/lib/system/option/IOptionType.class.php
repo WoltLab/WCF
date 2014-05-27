@@ -55,4 +55,18 @@ interface IOptionType {
 	 * @return	boolean
 	 */
 	public function supportI18n();
+	
+	/**
+	 * Compares two values and returns a PHP-like comparison result.
+	 * 
+	 *   $value1 < $value2	=> -1
+	 *   $value1 == $value2	=> 0
+	 *   $value1 > $value2	=> 1
+	 * 
+	 * 
+	 * @param	mixed		$value1
+	 * @param	mixed		$value2
+	 * @return	integer
+	 */
+	public function compare($value1, $value2);
 }

@@ -121,4 +121,40 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 			}
 		}
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::compare()
+	 */
+	public function compare($value1, $value2) {
+		$value1 = explode(',', $value1);
+		$value2 = explode(',', $value2);
+		
+		// handle special 'all' value
+		if (in_array('all', $value1)) {
+			if (in_array('all', $value2)) {
+				return 0;
+			}
+			else {
+				return 1;
+			}
+		}
+		else if (in_array('all', $value2)) {
+			return -1;
+		}
+		
+		// check if value1 contains more BBCodes than value2
+		$diff = array_diff($value1, $value2);
+		if (!empty($diff)) {
+			return 1;
+		}
+		
+		// check if value1 contains less BBCodes than value2
+		$diff = array_diff($value2, $value1);
+		if (!empty($diff)) {
+			return -1;
+		}
+		
+		// both lists of BBCodes are equal
+		return 0;
+	}
 }

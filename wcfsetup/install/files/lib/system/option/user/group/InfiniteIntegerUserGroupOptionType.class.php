@@ -30,4 +30,22 @@ class InfiniteIntegerUserGroupOptionType extends IntegerUserGroupOptionType {
 			return parent::merge($defaultValue, $groupValue);
 		}
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::compare()
+	 */
+	public function compare($value1, $value2) {
+		if ($value1 == $value2) {
+			return 0;
+		}
+		
+		if ($value1 == -1) {
+			return 1;
+		}
+		else if ($value2 == -1) {
+			return -1;
+		}
+		
+		return parent::compare($value1, $value2);
+	}
 }

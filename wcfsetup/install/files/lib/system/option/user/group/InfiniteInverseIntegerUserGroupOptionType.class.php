@@ -29,4 +29,22 @@ class InfiniteInverseIntegerUserGroupOptionType extends InverseIntegerUserGroupO
 		
 		return min($defaultValue, $groupValue);
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::compare()
+	 */
+	public function compare($value1, $value2) {
+		if ($value1 == $value2) {
+			return 0;
+		}
+		
+		if ($value1 == -1) {
+			return 1;
+		}
+		else if ($value2 == -1) {
+			return -1;
+		}
+		
+		return ($value1 < $value2) ? 1 : -1;
+	}
 }

@@ -37,4 +37,15 @@ class FloatOptionType extends TextOptionType {
 		$newValue = str_replace(WCF::getLanguage()->get('wcf.global.decimalPoint'), '.', $newValue);
 		return floatval($newValue);
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::compare()
+	 */
+	public function compare($value1, $value2) {
+		if ($value1 == $value2) {
+			return 0;
+		}
+		
+		return ($value1 > $value2) ? 1 : -1;
+	}
 }

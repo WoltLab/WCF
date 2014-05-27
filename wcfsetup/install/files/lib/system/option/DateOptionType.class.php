@@ -38,4 +38,15 @@ class DateOptionType extends TextOptionType {
 			throw new UserInputException($option->optionName, 'validationFailed');
 		}
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::compare()
+	 */
+	public function compare($value1, $value2) {
+		if ($value1 == $value2) {
+			return 0;
+		}
+		
+		return (strtotime($value1) > strtotime($value2)) ? 1 : -1;
+	}
 }
