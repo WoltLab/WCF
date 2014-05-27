@@ -48,7 +48,7 @@ abstract class AbstractOptionType implements IOptionType {
 	/**
 	 * @see	\wcf\system\option\IOptionType::compare()
 	 */
-	public function compare() {
+	public function compare($value1, $value2) {
 		return 0;
 	}
 }

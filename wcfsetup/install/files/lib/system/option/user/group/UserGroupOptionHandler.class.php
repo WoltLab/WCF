@@ -4,6 +4,9 @@ use wcf\data\user\group\UserGroup;
 use wcf\system\exception\SystemException;
 use wcf\system\option\OptionHandler;
 use wcf\util\ClassUtil;
+use wcf\system\WCF;
+use wcf\system\exception\UserInputException;
+use wcf\data\option\Option;
 
 /**
  * Handles user group options.
@@ -26,6 +29,12 @@ class UserGroupOptionHandler extends OptionHandler {
 	 * @var	\wcf\data\user\group\UserGroup
 	 */
 	protected $group = null;
+	
+	/**
+	 * true if current user can edit every user group
+	 * @var	boolean
+	 */
+	protected $isAdmin = null;
 	
 	/**
 	 * Sets current user group.
@@ -67,6 +76,42 @@ class UserGroupOptionHandler extends OptionHandler {
 				if ($groupValue !== null) {
 					$this->optionValues[$option->optionName] = $groupValue;
 				}
+			}
+		}
+	}
+	
+	/**
+	 * Returns true if current user has the permissions to edit every user group.
+	 * 
+	 * @return	boolean
+	 */
+	protected function isAdmin() {
+		if ($this->isAdmin === null) {
+			$this->isAdmin = false;
+			
+			foreach (WCF::getUser()->getGroupIDs() as $groupID) {
+				if (UserGroup::getGroupByID($groupID)->isAdminGroup()) {
+					$this->isAdmin = true;
+					break;
+				}
+			}
+		}
+		
+		return $this->isAdmin;
+	}
+	
+	/**
+	 * @see	\wcf\system\option\OptionHandler::validateOption()
+	 */
+	protected function validateOption(Option $option) {
+		parent::validateOption($option);
+		
+		if (!$this->isAdmin()) {
+			// get type object
+			$typeObj = $this->getTypeObject($option->optionType);
+			
+			if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == 1) {
+				throw new UserInputException($option->optionName, 'exceedsOwnPermission');
 			}
 		}
 	}

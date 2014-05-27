@@ -80,8 +80,8 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 	 * @see	\wcf\system\option\IOptionType::compare()
 	 */
 	public function compare($value1, $value2) {
-		$value1 = explode(',', $value1);
-		$value2 = explode(',', $value2);
+		$value1 = ($value1) ? explode(',', $value1) : array();
+		$value2 = ($value2) ? explode(',', $value2) : array();
 		
 		// check if value1 contains more elements than value2
 		$diff = array_diff($value1, $value2);
