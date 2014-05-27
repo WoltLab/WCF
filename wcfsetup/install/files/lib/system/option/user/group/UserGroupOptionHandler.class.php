@@ -1,12 +1,12 @@
 <?php
 namespace wcf\system\option\user\group;
+use wcf\data\option\Option;
 use wcf\data\user\group\UserGroup;
 use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\system\option\OptionHandler;
 use wcf\util\ClassUtil;
 use wcf\system\WCF;
-use wcf\system\exception\UserInputException;
-use wcf\data\option\Option;
 
 /**
  * Handles user group options.
