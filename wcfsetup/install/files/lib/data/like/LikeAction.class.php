@@ -23,7 +23,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
-	protected $allowGuestAccess = array('getGroupedUserList', 'getLikeDetails');
+	protected $allowGuestAccess = array('getGroupedUserList', 'getLikeDetails', 'load');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
@@ -268,6 +268,50 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			'containerID' => $this->parameters['data']['containerID'],
 			'pageCount' => $pageCount,
 			'template' => WCF::getTPL()->fetch('groupedUserList')
+		);
+	}
+	
+	/**
+	 * Validates parameters to load likes.
+	 */
+	public function validateLoad() {
+		$this->readInteger('lastLikeTime', true);
+		$this->readInteger('userID');
+		$this->readInteger('likeValue');
+		$this->readString('likeType');
+	}
+	
+	/**
+	 * Loads a list of likes.
+	 *
+	 * @return	array
+	 */
+	public function load() {
+		$likeList = new ViewableLikeList();
+		if ($this->parameters['lastLikeTime']) {
+			$likeList->getConditionBuilder()->add("like_table.time < ?", array($this->parameters['lastLikeTime']));
+		}
+		if ($this->parameters['likeType'] == 'received') {
+			$likeList->getConditionBuilder()->add("like_table.objectUserID = ?", array($this->parameters['userID']));
+		}
+		else {
+			$likeList->getConditionBuilder()->add("like_table.userID = ?", array($this->parameters['userID']));
+		}
+		$likeList->getConditionBuilder()->add("like_table.likeValue = ?", array($this->parameters['likeValue']));
+		$likeList->readObjects();
+		$lastLikeTime = $likeList->getLastLikeTime();
+		if (!$lastLikeTime) {
+			return array();
+		}
+	
+		// parse template
+		WCF::getTPL()->assign(array(
+			'likeList' => $likeList
+		));
+	
+		return array(
+			'lastLikeTime' => $lastLikeTime,
+			'template' => WCF::getTPL()->fetch('userProfileLikeItem')
 		);
 	}
 }

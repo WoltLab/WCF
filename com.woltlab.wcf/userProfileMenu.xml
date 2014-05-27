@@ -3,7 +3,13 @@
 	<import>
 		<userprofilemenuitem name="about">
 			<classname><![CDATA[wcf\system\menu\user\profile\content\AboutUserProfileMenuContent]]></classname>
+			<showorder>3</showorder>
+		</userprofilemenuitem>
+		
+		<userprofilemenuitem name="likes">
+			<classname><![CDATA[wcf\system\menu\user\profile\content\LikesUserProfileMenuContent]]></classname>
 			<showorder>2</showorder>
+			<options>module_like</options>
 		</userprofilemenuitem>
 		
 		<userprofilemenuitem name="recentActivity">

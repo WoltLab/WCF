@@ -1606,6 +1606,164 @@ WCF.User.RecentActivityLoader = Class.extend({
 });
 
 /**
+ * Loads likes once the user scrolls to the very bottom.
+ * 
+ * @param	integer		userID
+ */
+WCF.User.LikeLoader = Class.extend({
+	/**
+	 * container object
+	 * @var	jQuery
+	 */
+	_container: null,
+	
+	/**
+	 * like type
+	 * @var string
+	 */
+	_likeType: 'received',
+	
+	/**
+	 * like value
+	 * @var integer
+	 */
+	_likeValue: 1,
+	
+	/**
+	 * button to load next events
+	 * @var	jQuery
+	 */
+	_loadButton: null,
+	
+	/**
+	 * 'no more entries' element
+	 * @var	jQuery
+	 */
+	_noMoreEntries: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * user id
+	 * @var	integer
+	 */
+	_userID: 0,
+	
+	/**
+	 * Initializes a new RecentActivityLoader object.
+	 * 
+	 * @param	integer		userID
+	 * @param	boolean		filteredByFollowedUsers
+	 */
+	init: function(userID) {
+		this._container = $('#likeList');
+		this._userID = userID;
+		
+		if (!this._userID) {
+			console.debug("[WCF.User.RecentActivityLoader] Invalid parameter 'userID' given.");
+			return;
+		}
+		
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		var $container = $('<li class="likeListMore recentActivitiesMore"><button class="small">' + WCF.Language.get('wcf.like.likes.more') + '</button><small>' + WCF.Language.get('wcf.like.likes.noMoreEntries') + '</small></li>').appendTo(this._container);
+		this._loadButton = $container.children('button').click($.proxy(this._click, this));
+		this._noMoreEntries = $container.children('small').hide();
+		
+		if (this._container.find('> li').length == 2) {
+			this._loadButton.hide();
+			this._noMoreEntries.show();
+		}
+		
+		$('#likeType .button').click($.proxy(this._clickLikeType, this));
+		$('#likeValue .button').click($.proxy(this._clickLikeValue, this));
+	},
+	
+	/**
+	 * Handles like type change.
+	 */
+	_clickLikeType: function(event) {
+		var $button = $(event.currentTarget);
+		if (this._likeType != $button.data('likeType')) {
+			this._likeType = $button.data('likeType');
+			$('#likeType .button').removeClass('active');
+			$button.addClass('active');
+			this._reload();
+		}
+	},
+	
+	/**
+	 * Handles like value change.
+	 */
+	_clickLikeValue: function(event) {
+		var $button = $(event.currentTarget);
+		if (this._likeValue != $button.data('likeValue')) {
+			this._likeValue = $button.data('likeValue');
+			$('#likeValue .button').removeClass('active');
+			$button.addClass('active');
+			this._reload();
+		}
+	},
+	
+	/**
+	 * Handles reload.
+	 */
+	_reload: function() {
+		this._container.find('> li:not(:first-child):not(:last-child)').remove();
+		this._container.data('lastLikeTime', 0);
+		this._click();
+	},
+	
+	/**
+	 * Loads next likes.
+	 */
+	_click: function() {
+		this._loadButton.enable();
+		
+		var $parameters = {
+			lastLikeTime: this._container.data('lastLikeTime'),
+			userID: this._userID,
+			likeType: this._likeType,
+			likeValue: this._likeValue
+		};
+		
+		this._proxy.setOption('data', {
+			actionName: 'load',
+			className: 'wcf\\data\\like\\LikeAction',
+			parameters: $parameters
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		if (data.returnValues.template) {
+			$(data.returnValues.template).insertBefore(this._loadButton.parent());
+			
+			this._container.data('lastLikeTime', data.returnValues.lastLikeTime);
+			this._noMoreEntries.hide();
+			this._loadButton.show().enable();
+		}
+		else {
+			this._noMoreEntries.show();
+			this._loadButton.hide();
+		}
+	}
+});
+
+/**
  * Loads user profile previews.
  * 
  * @see	WCF.Popover

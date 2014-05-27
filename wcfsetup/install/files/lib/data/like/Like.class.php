@@ -72,4 +72,22 @@ class Like extends DatabaseObject {
 	public static function getDatabaseTableAlias() {
 		return 'like_table';
 	}
+	
+	/**
+	 * Returns true, if like value is a like.
+	 * 
+	 * @return	boolean
+	 */
+	public function isLike() {
+		return ($this->likeValue == self::LIKE);
+	}
+	
+	/**
+	 * Returns true, if like value is a dislike.
+	 * 
+	 * @return	boolean
+	 */
+	public function isDislike() {
+		return ($this->likeValue == self::DISLIKE);
+	}
 }

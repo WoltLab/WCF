@@ -4,6 +4,7 @@ use wcf\data\like\object\ILikeObject;
 use wcf\data\like\ILikeObjectTypeProvider;
 use wcf\data\object\type\AbstractObjectTypeProvider;
 use wcf\system\comment\CommentHandler;
+use wcf\system\like\IViewableLikeProvider;
 
 /**
  * Object type provider for comments
@@ -15,7 +16,7 @@ use wcf\system\comment\CommentHandler;
  * @subpackage	data.comment
  * @category	Community Framework
  */
-class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider {
+class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILikeObjectTypeProvider, IViewableLikeProvider {
 	/**
 	 * @see	\wcf\data\object\type\AbstractObjectTypeProvider::$className
 	 */
@@ -39,5 +40,39 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILik
 		
 		$objectType = CommentHandler::getInstance()->getObjectType($comment->objectTypeID);
 		return CommentHandler::getInstance()->getCommentManager($objectType->objectType)->isAccessible($comment->objectID);
+	}
+	
+	/**
+	 * @see	\wcf\system\like\IViewableLikeProvider::prepare()
+	 */
+	public function prepare(array $likes) {
+		$commentIDs = array();
+		foreach ($likes as $like) {
+			$commentIDs[] = $like->objectID;
+		}
+	
+		// fetch comments
+		$commentList = new CommentList();
+		$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
+		$commentList->readObjects();
+		$comments = $commentList->getObjects();
+		
+		// group likes by object type id
+		$likeData = array();
+		foreach ($likes as $like) {
+			if (isset($comments[$like->objectID])) {
+				if (!isset($likeData[$comments[$like->objectID]->objectTypeID])) {
+					$likeData[$comments[$like->objectID]->objectTypeID] = array();
+				}
+				$likeData[$comments[$like->objectID]->objectTypeID][] = $like;
+			}
+		}
+	
+		foreach ($likeData as $objectTypeID => $likes) {
+			$objectType = CommentHandler::getInstance()->getObjectType($objectTypeID);
+			if (CommentHandler::getInstance()->getCommentManager($objectType->objectType) instanceof IViewableLikeProvider) {
+				CommentHandler::getInstance()->getCommentManager($objectType->objectType)->prepare($likes);
+			}
+		}
 	}
 }

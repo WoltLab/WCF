@@ -133,6 +133,24 @@
 	}
 }
 
+.likeList {
+	> li:first-child {
+		text-align: right;
+		
+		&:hover {
+			background-color: @wcfContainerBackgroundColor;
+		}
+		
+		> ul.buttonGroup {
+			display: inline-block;
+			
+			&:not(:first-child) {
+				margin-left: @wcfGapTiny;
+			}
+		}
+	}
+}
+
 /* dashboard boxes */
 .dashboardBoxSidebarButton {
 	padding-bottom: @wcfGapLarge !important;

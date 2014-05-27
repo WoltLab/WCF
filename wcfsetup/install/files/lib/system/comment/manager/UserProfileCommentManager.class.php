@@ -1,8 +1,13 @@
 <?php
 namespace wcf\system\comment\manager;
 use wcf\data\comment\response\CommentResponse;
+use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\Comment;
+use wcf\data\comment\CommentList;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileList;
+use wcf\system\like\IViewableLikeProvider;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -16,7 +21,7 @@ use wcf\system\WCF;
  * @subpackage	system.comment.manager
  * @category	Community Framework
  */
-class UserProfileCommentManager extends AbstractCommentManager {
+class UserProfileCommentManager extends AbstractCommentManager implements IViewableLikeProvider {
 	/**
 	 * @see	\wcf\system\comment\manager\AbstractCommentManager::$permissionAdd
 	 */
@@ -119,5 +124,103 @@ class UserProfileCommentManager extends AbstractCommentManager {
 		}
 		
 		return parent::canDeleteResponse($response);
+	}
+	
+	/**
+	 * @see	\wcf\system\like\IViewableLikeProvider::prepare()
+	 */
+	public function prepare(array $likes) {
+		$commentLikeObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.comment');
+		
+		$commentIDs = $responseIDs = array();
+		foreach ($likes as $like) {
+			if ($like->objectTypeID == $commentLikeObjectType->objectTypeID) {
+				$commentIDs[] = $like->objectID;
+			}
+			else {
+				$responseIDs[] = $like->objectID;
+			}
+		}
+		
+		// fetch response
+		$userIDs = $responses = array();
+		if (!empty($responseIDs)) {
+			$responseList = new CommentResponseList();
+			$responseList->getConditionBuilder()->add("comment_response.responseID IN (?)", array($responseIDs));
+			$responseList->readObjects();
+			$responses = $responseList->getObjects();
+			
+			foreach ($responses as $response) {
+				$commentIDs[] = $response->commentID;
+				$userIDs[] = $response->userID;
+			}
+		}
+		
+		// fetch comments
+		$commentList = new CommentList();
+		$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
+		$commentList->readObjects();
+		$comments = $commentList->getObjects();
+		
+		// fetch users
+		$users = array();
+		foreach ($comments as $comment) {
+			$userIDs[] = $comment->objectID;
+			$userIDs[] = $comment->userID;
+		}
+		if (!empty($userIDs)) {
+			$userList = new UserProfileList();
+			$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
+			$userList->readObjects();
+			$users = $userList->getObjects();
+		}
+		
+		// set message
+		foreach ($likes as $like) {
+			if ($like->objectTypeID == $commentLikeObjectType->objectTypeID) {
+				// comment like
+				if (isset($comments[$like->objectID])) {
+					$comment = $comments[$like->objectID];
+					
+					if (isset($users[$comment->objectID]) && isset($users[$comment->userID]) && !$users[$comment->objectID]->isProtected()) {
+						$like->setIsAccessible();
+						
+						// short output
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.likes.profileComment', array(
+							'commentAuthor' => $users[$comment->userID],
+							'user' => $users[$comment->objectID],
+							'like' => $like
+						));
+						$like->setTitle($text);
+						
+						// output
+						$like->setDescription($comment->getExcerpt());
+					}
+				}
+			}
+			else {
+				// response like
+				if (isset($responses[$like->objectID])) {
+					$response = $responses[$like->objectID];
+					$comment = $comments[$response->commentID];
+					
+					if (isset($users[$comment->objectID]) && isset($users[$comment->userID]) && isset($users[$response->userID]) && !$users[$comment->objectID]->isProtected()) {
+						$like->setIsAccessible();
+					
+						// short output
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.likes.profileCommentResponse', array(
+							'responseAuthor' => $users[$response->userID],
+							'commentAuthor' => $users[$comment->userID],
+							'user' => $users[$comment->objectID],
+							'like' => $like
+						));
+						$like->setTitle($text);
+					
+						// output
+						$like->setDescription($response->getExcerpt());
+					}
+				}
+			}
+		}
 	}
 }

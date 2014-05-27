@@ -1886,12 +1886,15 @@ Errors are:
 		<item name="wcf.like.button.like"><![CDATA[Like]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Dislike]]></item>
 		<item name="wcf.like.likesReceived"><![CDATA[Likes Received]]></item>
+		<item name="wcf.like.likesGiven"><![CDATA[Likes Given]]></item>
 		<item name="wcf.like.summary"><![CDATA[{literal}{if $others == 0}{@$users.slice(0, -1).join(", ")}{if $users.length > 1} and {/if}{@$users.slice(-1)[0]}{else}{@$users.join(", ")} and {if $others == 1}one{else}{#$others}{/if} other{if $others > 1}s{/if}{/if} like{if $users.length == 1}s{/if} this.{/literal}]]></item>
 		<item name="wcf.like.details"><![CDATA[Details]]></item>
 		<item name="wcf.like.details.like"><![CDATA[Likes]]></item>
 		<item name="wcf.like.details.dislike"><![CDATA[Dislikes]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment"><![CDATA[Comment]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
+		<item name="wcf.like.likes.more"><![CDATA[TODO: Weitere Likes]]></item>
+		<item name="wcf.like.likes.noMoreEntries"><![CDATA[TODO: Keine weiteren Likes]]></item>
 	</category>
 	
 	<category name="wcf.message">
@@ -2617,9 +2620,12 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.profile.content.wall.commentResponse"><![CDATA[Reply to wall comment]]></item>
 		<item name="wcf.user.profile.content.wall.noEntries"><![CDATA[There are no comments yet.]]></item>
 		<item name="wcf.user.profile.menu.wall"><![CDATA[Wall]]></item>
+		<item name="wcf.user.profile.menu.likes"><![CDATA[Likes]]></item>
 		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[Wrote a comment on <a href="{link controller='User' object=$user}{/link}#wall">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on <a href="{link controller='User' object=$user}{/link}#wall">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.user.profile.report"><![CDATA[Report User Profile]]></item>
+		<item name="wcf.user.profile.likes.profileComment"><![CDATA[TODO: Mag den Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
+		<item name="wcf.user.profile.likes.profileCommentResponse"><![CDATA[TODO: Mag die Antwort von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a> zum Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">
