@@ -130,6 +130,10 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	 * @see	\wcf\system\like\IViewableLikeProvider::prepare()
 	 */
 	public function prepare(array $likes) {
+		if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+			return;
+		}
+		
 		$commentLikeObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', 'com.woltlab.wcf.comment');
 		
 		$commentIDs = $responseIDs = array();
