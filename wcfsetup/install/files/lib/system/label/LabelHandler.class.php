@@ -314,13 +314,7 @@ class LabelHandler extends SingletonFactory {
 			$data[$groupID] = $this->labelGroups['groups'][$groupID];
 		}
 		
-		uasort($data, function($a, $b) {
-			if ($a->showOrder == $b->showOrder) {
-				return ($a->groupID > $b->groupID) ? 1 : -1;
-			}
-			
-			return ($a->showOrder > $b->showOrder) ? 1 : -1;
-		});
+		uasort($data, array('\wcf\data\label\group\LabelGroup', 'sortLabelGroups'));
 		
 		return $data;
 	}
