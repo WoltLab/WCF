@@ -112,6 +112,12 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		$allNewPackages = $this->parsePackageUpdateXML($reply['body']);
 		unset($request, $reply);
 		
+		// purge package list
+		$sql = "DELETE FROM	wcf".WCF_N."_package_update
+			WHERE		packageUpdateServerID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($updateServer->packageUpdateServerID));
+		
 		// save packages
 		if (!empty($allNewPackages)) {
 			$this->savePackageUpdates($allNewPackages, $updateServer->packageUpdateServerID);
@@ -283,69 +289,21 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * @param	integer		$packageUpdateServerID
 	 */
 	protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID) {
-		// find existing packages and delete them
-		// get existing packages
-		$existingPackages = array();
-		$packageUpdateList = new PackageUpdateList();
-		$packageUpdateList->getConditionBuilder()->add("package_update.packageUpdateServerID = ? AND package_update.package IN (?)", array($packageUpdateServerID, array_keys($allNewPackages)));
-		$packageUpdateList->readObjects();
-		$tmp = $packageUpdateList->getObjects();
-		
-		foreach ($tmp as $packageUpdate) {
-			$existingPackages[$packageUpdate->package] = $packageUpdate;
-		}
-		
-		// get existing versions
-		$existingPackageVersions = array();
-		if (!empty($existingPackages)) {
-			// get package update ids
-			$packageUpdateIDs = array();
-			foreach ($existingPackages as $packageUpdate) {
-				$packageUpdateIDs[] = $packageUpdate->packageUpdateID;
-			}
-			
-			// get version list
-			$versionList = new PackageUpdateVersionList();
-			$versionList->getConditionBuilder()->add("package_update_version.packageUpdateID IN (?)", array($packageUpdateIDs));
-			$versionList->readObjects();
-			$tmp = $versionList->getObjects();
-			
-			foreach ($tmp as $version) {
-				if (!isset($existingPackageVersions[$version->packageUpdateID])) $existingPackageVersions[$version->packageUpdateID] = array();
-				$existingPackageVersions[$version->packageUpdateID][$version->packageVersion] = $version;
-			}
-		}
-		
 		// insert updates
 		$excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = array();
 		foreach ($allNewPackages as $identifier => $packageData) {
-			if (isset($existingPackages[$identifier])) {
-				$packageUpdateID = $existingPackages[$identifier]->packageUpdateID;
-				
-				// update database entry
-				$packageUpdateEditor = new PackageUpdateEditor($existingPackages[$identifier]);
-				$packageUpdateEditor->update(array(
-					'packageName' => $packageData['packageName'],
-					'packageDescription' => $packageData['packageDescription'],
-					'author' => $packageData['author'],
-					'authorURL' => $packageData['authorURL'],
-					'isApplication' => $packageData['isApplication']
-				));
-			}
-			else {
-				// create new database entry
-				$packageUpdate = PackageUpdateEditor::create(array(
-					'packageUpdateServerID' => $packageUpdateServerID,
-					'package' => $identifier,
-					'packageName' => $packageData['packageName'],
-					'packageDescription' => $packageData['packageDescription'],
-					'author' => $packageData['author'],
-					'authorURL' => $packageData['authorURL'],
-					'isApplication' => $packageData['isApplication']
-				));
-				
-				$packageUpdateID = $packageUpdate->packageUpdateID;
-			}
+			// create new database entry
+			$packageUpdate = PackageUpdateEditor::create(array(
+				'packageUpdateServerID' => $packageUpdateServerID,
+				'package' => $identifier,
+				'packageName' => $packageData['packageName'],
+				'packageDescription' => $packageData['packageDescription'],
+				'author' => $packageData['author'],
+				'authorURL' => $packageData['authorURL'],
+				'isApplication' => $packageData['isApplication']
+			));
+			
+			$packageUpdateID = $packageUpdate->packageUpdateID;
 			
 			// register version(s) of this update package.
 			if (isset($packageData['versions'])) {
@@ -353,35 +311,19 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					if (isset($versionData['file'])) $packageFile = $versionData['file'];
 					else $packageFile = '';
 					
-					if (isset($existingPackageVersions[$packageUpdateID]) && isset($existingPackageVersions[$packageUpdateID][$packageVersion])) {
-						$packageUpdateVersionID = $existingPackageVersions[$packageUpdateID][$packageVersion]->packageUpdateVersionID;
-						
-						// update database entry
-						$versionEditor = new PackageUpdateVersionEditor($existingPackageVersions[$packageUpdateID][$packageVersion]);
-						$versionEditor->update(array(
-							'filename' => $packageFile,
-							'isAccessible' => ($versionData['isAccessible'] ? 1 : 0),
-							'isCritical' => ($versionData['isCritical'] ? 1 : 0),
-							'license' => (isset($versionData['license']['license']) ? $versionData['license']['license'] : ''),
-							'licenseURL' => (isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : ''),
-							'packageDate' => $versionData['packageDate']
-						));
-					}
-					else {
-						// create new database entry
-						$version = PackageUpdateVersionEditor::create(array(
-							'filename' => $packageFile,
-							'license' => (isset($versionData['license']['license']) ? $versionData['license']['license'] : ''),
-							'licenseURL' => (isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : ''),
-							'isAccessible' => ($versionData['isAccessible'] ? 1 : 0),
-							'isCritical' => ($versionData['isCritical'] ? 1 : 0),
-							'packageDate' => $versionData['packageDate'],
-							'packageUpdateID' => $packageUpdateID,
-							'packageVersion' => $packageVersion
-						));
-						
-						$packageUpdateVersionID = $version->packageUpdateVersionID;
-					}
+					// create new database entry
+					$version = PackageUpdateVersionEditor::create(array(
+						'filename' => $packageFile,
+						'license' => (isset($versionData['license']['license']) ? $versionData['license']['license'] : ''),
+						'licenseURL' => (isset($versionData['license']['license']) ? $versionData['license']['licenseURL'] : ''),
+						'isAccessible' => ($versionData['isAccessible'] ? 1 : 0),
+						'isCritical' => ($versionData['isCritical'] ? 1 : 0),
+						'packageDate' => $versionData['packageDate'],
+						'packageUpdateID' => $packageUpdateID,
+						'packageVersion' => $packageVersion
+					));
+					
+					$packageUpdateVersionID = $version->packageUpdateVersionID;
 					
 					// register requirement(s) of this update package version.
 					if (isset($versionData['requiredPackages'])) {
@@ -429,19 +371,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		}
 		
 		// save requirements, excluded packages and fromversions
-		// use multiple inserts to save some queries
+		// insert requirements
 		if (!empty($requirementInserts)) {
-			// clear records
-			$sql = "DELETE pur FROM	wcf".WCF_N."_package_update_requirement pur
-				LEFT JOIN	wcf".WCF_N."_package_update_version puv
-				ON		(puv.packageUpdateVersionID = pur.packageUpdateVersionID)
-				LEFT JOIN	wcf".WCF_N."_package_update pu
-				ON		(pu.packageUpdateID = puv.packageUpdateID)
-				WHERE		pu.packageUpdateServerID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($packageUpdateServerID));
-			
-			// insert requirements
 			$sql = "INSERT INTO	wcf".WCF_N."_package_update_requirement
 						(packageUpdateVersionID, package, minversion)
 				VALUES		(?, ?, ?)";
@@ -457,18 +388,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			WCF::getDB()->commitTransaction();
 		}
 		
+		// insert optionals
 		if (!empty($optionalInserts)) {
-			// clear records
-			$sql = "DELETE puo FROM	wcf".WCF_N."_package_update_optional puo
-				LEFT JOIN	wcf".WCF_N."_package_update_version puv
-				ON		(puv.packageUpdateVersionID = puo.packageUpdateVersionID)
-				LEFT JOIN	wcf".WCF_N."_package_update pu
-				ON		(pu.packageUpdateID = puv.packageUpdateID)
-				WHERE		pu.packageUpdateServerID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($packageUpdateServerID));
-				
-			// insert requirements
 			$sql = "INSERT INTO	wcf".WCF_N."_package_update_optional
 						(packageUpdateVersionID, package)
 				VALUES		(?, ?)";
@@ -483,18 +404,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			WCF::getDB()->commitTransaction();
 		}
 		
+		// insert excludes
 		if (!empty($excludedPackagesParameters)) {
-			// clear records
-			$sql = "DELETE pue FROM	wcf".WCF_N."_package_update_exclusion pue
-				LEFT JOIN	wcf".WCF_N."_package_update_version puv
-				ON		(puv.packageUpdateVersionID = pue.packageUpdateVersionID)
-				LEFT JOIN	wcf".WCF_N."_package_update pu
-				ON		(pu.packageUpdateID = puv.packageUpdateID)
-				WHERE		pu.packageUpdateServerID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($packageUpdateServerID));
-			
-			// insert excludes
 			$sql = "INSERT INTO	wcf".WCF_N."_package_update_exclusion
 						(packageUpdateVersionID, excludedPackage, excludedPackageVersion)
 				VALUES		(?, ?, ?)";
@@ -510,18 +421,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			WCF::getDB()->commitTransaction();
 		}
 		
+		// insert fromversions
 		if (!empty($fromversionInserts)) {
-			// clear records
-			$sql = "DELETE puf FROM	wcf".WCF_N."_package_update_fromversion puf
-				LEFT JOIN	wcf".WCF_N."_package_update_version puv
-				ON		(puv.packageUpdateVersionID = puf.packageUpdateVersionID)
-				LEFT JOIN	wcf".WCF_N."_package_update pu
-				ON		(pu.packageUpdateID = puv.packageUpdateID)
-				WHERE		pu.packageUpdateServerID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($packageUpdateServerID));
-			
-			// insert excludes
 			$sql = "INSERT INTO	wcf".WCF_N."_package_update_fromversion
 						(packageUpdateVersionID, fromversion)
 				VALUES		(?, ?)";

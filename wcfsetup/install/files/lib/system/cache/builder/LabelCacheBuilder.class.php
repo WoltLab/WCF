@@ -27,7 +27,6 @@ class LabelCacheBuilder extends AbstractCacheBuilder {
 		
 		// get label groups
 		$groupList = new LabelGroupList();
-		$groupList->sqlOrderBy = 'groupName';
 		$groupList->readObjects();
 		$groups = $groupList->getObjects();
 		foreach ($groups as &$group) {

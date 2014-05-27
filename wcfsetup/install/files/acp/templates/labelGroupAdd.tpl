@@ -18,6 +18,8 @@
 	{include file='aclPermissionJavaScript' containerID='groupPermissions' objectID=$groupID}
 {/if}
 
+{assign var=labelForceSelection value=$forceSelection}
+
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.label.group.{$action}{/lang}</h1>
 </header>
@@ -52,9 +54,9 @@
 				<legend>{lang}wcf.global.form.data{/lang}</legend>
 				
 				<dl{if $errorField == 'groupName'} class="formError"{/if}>
-					<dt><label for="groupName">{lang}wcf.acp.label.group.groupName{/lang}</label></dt>
+					<dt><label for="groupName">{lang}wcf.global.title{/lang}</label></dt>
 					<dd>
-						<input type="text" id="groupName" name="groupName" value="{$groupName}" autofocus="autofocus" class="long" />
+						<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus="autofocus" class="long" />
 						{if $errorField == 'groupName'}
 							<small class="innerError">
 								{if $errorType == 'empty'}
@@ -64,12 +66,20 @@
 								{/if}
 							</small>
 						{/if}
+						{include file='multipleLanguageInputJavascript' elementIdentifier='groupName' forceSelection=false}
 					</dd>
 				</dl>
 				
 				<dl>
-					<dt class="reversed"><label for="forceSelection">{lang}wcf.acp.label.group.forceSelection{/lang}</label></dt>
-					<dd><input type="checkbox" name="forceSelection" id="forceSelection" value="1"{if $forceSelection} checked="checked"{/if} /></dd>
+					<dt><label for="showOrder">{lang}wcf.acp.label.group.showOrder{/lang}</label></dt>
+					<dd>
+						<input type="number" min="0" id="showOrder" name="showOrder" class="tiny" value="{if $showOrder}{@$showOrder}{/if}" />
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt></dt>
+					<dd><label><input type="checkbox" name="forceSelection" id="forceSelection" value="1"{if $labelForceSelection} checked="checked"{/if} /> {lang}wcf.acp.label.group.forceSelection{/lang}</label></dd>
 				</dl>
 				
 				<dl id="groupPermissions">

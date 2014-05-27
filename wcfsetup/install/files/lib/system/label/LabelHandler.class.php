@@ -248,6 +248,22 @@ class LabelHandler extends SingletonFactory {
 			}
 		}
 		
+		// order label ids by label group
+		$labelGroups =& $this->labelGroups;
+		foreach ($data as &$labels) {
+			usort($labels, function($a, $b) use($labelGroups) {
+				$groupA = $labelGroups['groups'][$a->groupID];
+				$groupB = $labelGroups['groups'][$b->groupID];
+				
+				if ($groupA->showOrder == $groupB->showOrder) {
+					return ($groupA->groupID > $groupB->groupID) ? 1 : -1;
+				}
+				
+				return ($groupA->showOrder > $groupB->showOrder) ? 1 : -1;
+			});
+		}
+		unset($labels);
+		
 		return $data;
 	}
 	
@@ -297,6 +313,14 @@ class LabelHandler extends SingletonFactory {
 			
 			$data[$groupID] = $this->labelGroups['groups'][$groupID];
 		}
+		
+		uasort($data, function($a, $b) {
+			if ($a->showOrder == $b->showOrder) {
+				return ($a->groupID > $b->groupID) ? 1 : -1;
+			}
+			
+			return ($a->showOrder > $b->showOrder) ? 1 : -1;
+		});
 		
 		return $data;
 	}

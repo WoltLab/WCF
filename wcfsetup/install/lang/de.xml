@@ -435,8 +435,8 @@
 		<item name="wcf.acp.label.group.edit"><![CDATA[Labelgruppe bearbeiten]]></item>
 		<item name="wcf.acp.label.group.error.notValid"><![CDATA[Die gewählte Labelgruppe ist ungültig.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Label aus dieser Gruppe muss zwingend ausgewählt werden]]></item>
-		<item name="wcf.acp.label.group.groupName"><![CDATA[Gruppenname]]></item>
 		<item name="wcf.acp.label.group.list"><![CDATA[Labelgruppen]]></item>
+		<item name="wcf.acp.label.group.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
 	</category>
@@ -1929,6 +1929,7 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.label">
 		<item name="wcf.label.all"><![CDATA[Alle]]></item>
+		<item name="wcf.label.error.missing"><![CDATA[Sie müssen ein Label auswählen.]]></item>
 		<item name="wcf.label.error.notValid"><![CDATA[Die Labelauswahl ist ungültig.]]></item>
 		<item name="wcf.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.label.labels"><![CDATA[Labels]]></item>
