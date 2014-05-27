@@ -1,14 +1,13 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\label\group\LabelGroupAction;
+use wcf\data\label\group\LabelGroupEditor;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\ACLHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
-use wcf\data\label\group\LabelGroupEditor;
 
 /**
  * Shows the label group add form.
