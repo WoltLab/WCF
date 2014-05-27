@@ -21,16 +21,16 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
 	 * @see	\wcf\system\user\activity\event\IUserActivityEvent::prepare()
 	 */
 	public function prepare(array $events) {
-		$comments = $comentIDs = array();
+		$comments = $commentIDs = array();
 		
 		if (WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
 			foreach ($events as $event) {
-				$comentIDs[] = $event->objectID;
+				$commentIDs[] = $event->objectID;
 			}
 			
 			// fetch comments
 			$commentList = new CommentList();
-			$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($comentIDs));
+			$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
 			$commentList->readObjects();
 			$comments = $commentList->getObjects();
 			
