@@ -21,30 +21,31 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
 	 * @see	\wcf\system\user\activity\event\IUserActivityEvent::prepare()
 	 */
 	public function prepare(array $events) {
-		$comments = $commentIDs = array();
+		if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+			return;
+		}
 		
-		if (WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
-			foreach ($events as $event) {
-				$commentIDs[] = $event->objectID;
-			}
-			
-			// fetch comments
-			$commentList = new CommentList();
-			$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
-			$commentList->readObjects();
-			$comments = $commentList->getObjects();
-			
-			// fetch users
-			$userIDs = $users = array();
-			foreach ($comments as $comment) {
-				$userIDs[] = $comment->objectID;
-			}
-			if (!empty($userIDs)) {
-				$userList = new UserProfileList();
-				$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
-				$userList->readObjects();
-				$users = $userList->getObjects();
-			}
+		$comments = $commentIDs = array();
+		foreach ($events as $event) {
+			$commentIDs[] = $event->objectID;
+		}
+		
+		// fetch comments
+		$commentList = new CommentList();
+		$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
+		$commentList->readObjects();
+		$comments = $commentList->getObjects();
+		
+		// fetch users
+		$userIDs = $users = array();
+		foreach ($comments as $comment) {
+			$userIDs[] = $comment->objectID;
+		}
+		if (!empty($userIDs)) {
+			$userList = new UserProfileList();
+			$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
+			$userList->readObjects();
+			$users = $userList->getObjects();
 		}
 		
 		// set message
@@ -52,15 +53,17 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
 			if (isset($comments[$event->objectID])) {
 				// short output
 				$comment = $comments[$event->objectID];
-				if (isset($users[$comment->objectID]) && !$users[$comment->objectID]->isProtected()) {
-					$event->setIsAccessible();
-					
-					$user = $users[$comment->objectID];
-					$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.profileComment', array('user' => $user));
-					$event->setTitle($text);
-					
-					// output
-					$event->setDescription($comment->getExcerpt());
+				if (isset($users[$comment->objectID])) {
+					if (!$users[$comment->objectID]->isProtected()) {
+						$event->setIsAccessible();
+						
+						$user = $users[$comment->objectID];
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.profileComment', array('user' => $user));
+						$event->setTitle($text);
+						
+						// output
+						$event->setDescription($comment->getExcerpt());
+					}
 					continue;
 				}
 			}
