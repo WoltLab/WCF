@@ -160,7 +160,7 @@
 		
 		<definition>
 			<name>com.woltlab.wcf.condition.notice</name>
-			<interfacename><![CDATA[wcf\system\condition\INoticeCondition]]></interfacename>
+			<interfacename><![CDATA[wcf\system\condition\IContentCondition]]></interfacename>
 		</definition>
 	</import>
 </data>

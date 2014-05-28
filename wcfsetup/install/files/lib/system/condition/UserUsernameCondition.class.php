@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserUsernameCondition extends AbstractTextCondition implements INoticeCondition, IUserCondition {
+class UserUsernameCondition extends AbstractTextCondition implements IContentCondition, IUserCondition {
 	/**
 	 * @see	\wcf\system\condition\AbstractTextCondition::$fieldName
 	 */
@@ -42,9 +42,9 @@ class UserUsernameCondition extends AbstractTextCondition implements INoticeCond
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 * @see	\wcf\system\condition\IContentCondition::showContent()
 	 */
-	public function showNotice(Condition $condition) {
+	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;
 		
 		return $this->checkUser($condition, WCF::getUser());

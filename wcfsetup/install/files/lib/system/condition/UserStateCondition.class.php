@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserStateCondition extends AbstractSingleFieldCondition implements INoticeCondition, IUserCondition {
+class UserStateCondition extends AbstractSingleFieldCondition implements IContentCondition, IUserCondition {
 	/**
 	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
 	 */
@@ -193,9 +193,9 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 * @see	\wcf\system\condition\IContentCondition::showContent()
 	 */
-	public function showNotice(Condition $condition) {
+	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;
 		
 		return $this->checkUser($condition, WCF::getUser());

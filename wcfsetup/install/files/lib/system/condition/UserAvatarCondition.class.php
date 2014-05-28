@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserAvatarCondition extends AbstractSelectCondition implements INoticeCondition, IUserCondition {
+class UserAvatarCondition extends AbstractSelectCondition implements IContentCondition, IUserCondition {
 	/**
 	 * @see	wcf\system\condition\AbstractSelectCondition::$fieldName
 	 */
@@ -96,9 +96,9 @@ class UserAvatarCondition extends AbstractSelectCondition implements INoticeCond
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 * @see	\wcf\system\condition\IContentCondition::showContent()
 	 */
-	public function showNotice(Condition $condition) {
+	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;
 		
 		return $this->checkUser($condition, WCF::getUser());

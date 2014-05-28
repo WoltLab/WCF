@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserOptionsCondition extends AbstractMultipleFieldsCondition implements INoticeCondition, IUserCondition {
+class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IUserCondition {
 	/**
 	 * user option handler object
 	 * @var	\wcf\system\option\user\UserOptionHandler
@@ -129,9 +129,9 @@ class UserOptionsCondition extends AbstractMultipleFieldsCondition implements IN
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 * @see	\wcf\system\condition\IContentCondition::showContent()
 	 */
-	public function showNotice(Condition $condition) {
+	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;
 		
 		return $this->checkUser($condition, WCF::getUser());

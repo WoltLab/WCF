@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserEmailCondition extends AbstractTextCondition implements INoticeCondition, IUserCondition {
+class UserEmailCondition extends AbstractTextCondition implements IContentCondition, IUserCondition {
 	/**
 	 * @see	\wcf\system\condition\AbstractTextCondition::$fieldName
 	 */
@@ -41,9 +41,9 @@ class UserEmailCondition extends AbstractTextCondition implements INoticeConditi
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 * @see	\wcf\system\condition\IContentCondition::showContent()
 	 */
-	public function showNotice(Condition $condition) {
+	public function showContent(Condition $condition) {
 		if (!WCF::getUser()->userID) return false;
 		
 		return $this->checkUser($condition, WCF::getUser());
