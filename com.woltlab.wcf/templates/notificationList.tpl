@@ -24,7 +24,7 @@
 {include file='header' sidebarOrientation='left'}
 
 <header class="boxHeadline">
-	<h1>{lang}wcf.user.notification.notifications{/lang} <span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->getNotificationCount()}</span></h1>
+	<h1>{lang}wcf.user.notification.notifications{/lang} <span class="badge jsNotificationsBadge">{#$__wcf->getUserNotificationHandler()->countAllNotifications()}</span></h1>
 </header>
 
 {include file='userNotice'}
@@ -36,7 +36,7 @@
 		<nav>
 			<ul>
 				{content}
-					{if $notifications[notifications]}<li class="jsOnly"><a class="button jsMarkAllAsConfirmed"><span class="icon icon16 icon-remove"></span> <span>{lang}wcf.user.notification.markAllAsConfirmed{/lang}</span></a></li>{/if}
+					{if $__wcf->getUserNotificationHandler()->getNotificationCount()}<li class="jsOnly"><a class="button jsMarkAllAsConfirmed"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.user.notification.markAllAsConfirmed{/lang}</span></a></li>{/if}
 					
 					{event name='contentNavigationButtonsTop'}
 				{/content}
@@ -60,6 +60,8 @@
 						<div class="details">
 							<div class="containerHeadline">
 								<h3>
+									{if !$notification[confirmed]}<span class="badge label newContentBadge">{lang}wcf.message.new{/lang}</span>{/if}
+									
 									{if $notification[event]->getAuthor()->userID}
 										<a href="{link controller='User' object=$notification[event]->getAuthor()}{/link}" class="userLink" data-user-id="{@$notification[event]->getAuthor()->userID}">{$notification[event]->getAuthor()->username}</a>
 									{else}
@@ -71,11 +73,13 @@
 							
 							<p>{@$notification[event]->getMessage()}</p>
 							
-							<nav class="jsMobileNavigation buttonGroupNavigation">
-								<ul class="buttonList iconList jsOnly">
-									<li><a class="jsMarkAsConfirmed jsTooltip" title="{lang}wcf.user.notification.markAsConfirmed{/lang}"><span class="icon icon16 icon-remove"></span></a></li>
-								</ul>
-							</nav>
+							{if !$notification[confirmed]}
+								<nav class="jsMobileNavigation buttonGroupNavigation">
+									<ul class="buttonList iconList jsOnly">
+										<li><a class="jsMarkAsConfirmed jsTooltip" title="{lang}wcf.user.notification.markAsConfirmed{/lang}"><span class="icon icon16 fa-check"></span></a></li>
+									</ul>
+								</nav>
+							{/if}
 						</div>
 					</div>
 				</li>

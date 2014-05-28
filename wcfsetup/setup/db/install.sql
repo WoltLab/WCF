@@ -1208,6 +1208,7 @@ CREATE TABLE wcf1_user_notification_to_user (
 	notificationID INT(10) NOT NULL,
 	userID INT(10) NOT NULL,
 	mailNotified TINYINT(1) NOT NULL DEFAULT 0,
+	confirmed TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY notificationID (notificationID, userID)
 );
 

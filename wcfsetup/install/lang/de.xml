@@ -2718,10 +2718,10 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.mailNotificationType.instant"><![CDATA[Sofortige E-Mail-Benachrichtigung]]></item>
 		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Tägliche E-Mail-Benachrichtigung]]></item>
 		<item name="wcf.user.notification.markAllAsConfirmed"><![CDATA[Alle Benachrichtigungen verwerfen]]></item>
-		<item name="wcf.user.notification.markAllAsConfirmed.confirmMessage"><![CDATA[Wollen Sie wirklich alle Benachrichtigungen verwerfen?]]></item>
-		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Verwerfen]]></item>
-		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[Keine weiteren Benachrichtigungen]]></item>
-		<item name="wcf.user.notification.noNotifications"><![CDATA[Es sind keine neuen Benachrichtigungen vorhanden.]]></item>
+		<item name="wcf.user.notification.markAllAsConfirmed.confirmMessage"><![CDATA[Wollen Sie wirklich alle Benachrichtigungen als gelesen markieren?]]></item>
+		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Alls gelesen markieren]]></item>
+		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[Keine neuen Benachrichtigungen]]></item>
+		<item name="wcf.user.notification.noNotifications"><![CDATA[Sie haben keine Benachrichtigungen.]]></item>
 		<item name="wcf.user.notification.notifications"><![CDATA[Benachrichtigungen]]></item>
 		<item name="wcf.user.notification.showAll"><![CDATA[Alle Benachrichtigungen anzeigen]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user"><![CDATA[Benutzer-Profile]]></item>

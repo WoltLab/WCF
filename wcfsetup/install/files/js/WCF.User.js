@@ -1264,10 +1264,8 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 	 */
 	_addDefaultItems: function(dropdownMenu) {
 		this._addDivider(dropdownMenu);
-		if (this._container.data('count')) {
-			$('<li><a href="' + this._showAllLink + '">' + WCF.Language.get('wcf.user.notification.showAll') + '</a></li>').appendTo(dropdownMenu);
-			this._addDivider(dropdownMenu);
-		}
+		$('<li><a href="' + this._showAllLink + '">' + WCF.Language.get('wcf.user.notification.showAll') + '</a></li>').appendTo(dropdownMenu);
+		this._addDivider(dropdownMenu);
 		$('<li id="userNotificationsMarkAllAsConfirmed"><a>' + WCF.Language.get('wcf.user.notification.markAllAsConfirmed') + '</a></li>').click($.proxy(this._markAllAsConfirmed, this)).appendTo(dropdownMenu);
 	},
 	
@@ -1462,11 +1460,8 @@ WCF.Notification.List = Class.extend({
 					return;
 				}
 				
-				this._items[data.returnValues.notificationID].remove();
-				delete this._items[data.returnValues.notificationID];
-				
-				// reduce badge count
-				this._badge.html(data.returnValues.totalCount);
+				this._items[data.returnValues.notificationID].find('.newContentBadge').remove();
+				this._items[data.returnValues.notificationID].find('.jsMarkAsConfirmed').parents('nav:eq(0)').remove();
 				
 				// remove previous notification count
 				document.title = document.title.replace(/^\(([0-9]+)\) /, '');
@@ -1474,6 +1469,15 @@ WCF.Notification.List = Class.extend({
 				// update page title
 				if (data.returnValues.totalCount > 0) {
 					document.title = '(' + data.returnValues.totalCount + ') ' + document.title;
+				}
+				else {
+					var $listItem = $('.contentNavigation .jsMarkAllAsConfirmed').parent();
+					var $list = $listItem.parent();
+					$listItem.remove();
+					
+					if (!$list.children('li').length) {
+						$list.parents('nav:eq(0)').remove();
+					}
 				}
 			break;
 		}
