@@ -51,13 +51,43 @@ RedactorPlugins.wmonkeypatch = {
 			$mpModalInit.call(self, title, content, width, callback);
 		};
 		
+		// handle indent/outdent
+		var $mpButtonActiveObserver = this.buttonActiveObserver;
+		this.buttonActiveObserver = function(e, btnName) {
+			self.mpButtonActiveObserver(e, btnName);
+			
+			$mpButtonActiveObserver.call(self, e, btnName);
+		};
+		if (this.opts.activeButtons) {
+			this.$editor.off('mouseup.redactor keyup.redactor').on('mouseup.redactor keyup.redactor', $.proxy(this.buttonActiveObserver, this));
+		}
+		this.$toolbar.find('a.re-indent, a.re-outdent').addClass('redactor_button_disabled');
+		
 		this.setOption('modalOpenedCallback', $.proxy(this.modalOpenedCallback, this));
 		
 		this.modalTemplatesInit();
+		
+		window.dtdesign = this;
 	},
 	
 	cleanRemoveSpaces: function(html, buffer) {
 		return html;
+	},
+	
+	/**
+	 * Enable/Disable the 'Indent'/'Outdent' for lists/outside lists.
+	 * 
+	 * @param	object		e
+	 * @param	string		btnName
+	 */
+	mpButtonActiveObserver: function(e, btnName) {
+		var parent = this.getParent();
+		if (parent !== false && $(parent).closest('ul', this.$editor.get()[0]).length != 0) {
+			this.$toolbar.find('a.re-indent, a.re-outdent').removeClass('redactor_button_disabled');
+		}
+		else {
+			this.$toolbar.find('a.re-indent, a.re-outdent').addClass('redactor_button_disabled');
+		}
 	},
 	
 	/**
