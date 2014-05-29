@@ -41,7 +41,7 @@
 
 {if $objects|count}
 	<div class="container marginTop">
-		<ol class="containerList doubleColumned userList">
+		<ol class="containerList userList">
 			{foreach from=$objects item=user}
 				<li class="jsFollowing">
 					<div class="box48">

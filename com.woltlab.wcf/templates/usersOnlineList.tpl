@@ -199,7 +199,7 @@
 	</header>
 	
 	<div class="container marginTop">
-		<ol class="containerList doubleColumned userList">
+		<ol class="containerList userList">
 			{@$usersOnlineList}
 		</ol>
 	</div>
@@ -211,7 +211,7 @@
 	</header>
 	
 	<div class="container marginTop">
-		<ol class="containerList doubleColumned">
+		<ol class="containerList">
 			{@$guestsOnlineList}
 		</ol>
 	</div>
@@ -223,7 +223,7 @@
 	</header>
 	
 	<div class="container marginTop">
-		<ol class="containerList doubleColumned">
+		<ol class="containerList">
 			{@$robotsOnlineList}
 		</ol>
 	</div>

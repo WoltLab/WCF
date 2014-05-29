@@ -129,7 +129,7 @@
 
 {if $items}
 	<div class="container marginTop">
-		<ol class="containerList doubleColumned userList">
+		<ol class="containerList userList">
 			{foreach from=$objects item=user}
 				{include file='userListItem'}
 			{/foreach}
