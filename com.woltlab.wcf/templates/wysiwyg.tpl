@@ -36,6 +36,7 @@ $(function() {
 		var $config = {
 			buttons: $buttons,
 			minHeight: 200,
+			imageResizable: false,
 			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize' ],
 			wautosave: {
 				active: ($autosave) ? true : false,

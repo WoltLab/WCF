@@ -23,8 +23,9 @@ RedactorPlugins.wmonkeypatch = {
 		
 		var $mpIndentingStart = this.indentingStart;
 		this.indentingStart = function(cmd) {
-			$mpIndentingStart.call(self, cmd);
-			self.mpIndentingStart(cmd);
+			if (self.mpIndentingStart(cmd)) {
+				$mpIndentingStart.call(self, cmd);
+			}
 		};
 		
 		var $mpBuildEventKeydown = this.buildEventKeydown;
@@ -48,11 +49,6 @@ RedactorPlugins.wmonkeypatch = {
 			self.mpModalInit();
 			
 			$mpModalInit.call(self, title, content, width, callback);
-		};
-		
-		var $mpImageResizeControls = this.imageResizeControls;
-		this.imageResizeControls = function(image) {
-			return $mpImageResizeControls.call(self, image).hide();
 		};
 		
 		this.setOption('modalOpenedCallback', $.proxy(this.modalOpenedCallback, this));
@@ -98,19 +94,11 @@ RedactorPlugins.wmonkeypatch = {
 	 * @param	string		cmd
 	 */
 	mpIndentingStart: function(cmd) {
-		if (cmd === 'indent') {
-			var block = this.getBlock();
-			if (block.tagName === 'DIV' && block.getAttribute('data-tagblock') !== null) {
-				this.selectionSave();
-				
-				// drop the indention block again. bye bye block
-				block = $(block);
-				block.replaceWith(block.html());
-				
-				this.selectionRestore();
-				this.sync();
-			}
+		if (this.getBlock().tagName == 'LI') {
+			return true;
 		}
+		
+		return false;
 	},
 	
 	/**
