@@ -26,6 +26,9 @@ RedactorPlugins.wbbcode = {
 				this.toggle();
 			}
 		}, this);
+		
+		this.opts.pasteBeforeCallback = $.proxy(this._wPasteBeforeCallback, this);
+		this.opts.pasteAfterCallback = $.proxy(this._wPasteAfterCallback, this);
 	},
 	
 	/**
@@ -141,6 +144,28 @@ RedactorPlugins.wbbcode = {
 		// drop line break right before/after a <pre> tag (used by [code]-BBCode)
 		html = html.replace(/<br>\n<pre>\n/g, '');
 		html = html.replace(/<\/pre>\n<br>\n/g, '');
+		
+		html = html.replace(/<br>(?:\n<br>)+/g, function(match) {
+			var $count = match.match(/<br>/g);
+			return '@@@' + $count.length + '@@@';
+		});
+		html = html.replace(/\n@@@/g, '@@@');
+		html = html.replace(/@@@(\d+)@@@/g, function(match, times) {
+			var $tmp = '<br>';
+			for (var $i = 1; $i < times; $i++) {
+				$tmp += '\n<br>';
+			}
+			
+			return $tmp;
+		});
+		
+		// drop line break if there is a succeeding <br>
+		/*html = html.replace(/(<br>)?\n<br>/g, function(match, br) {
+			console.debug("br was matched:");
+			console.debug(match);
+			
+			return br ? match : '<br>';
+		});*/
 		
 		// drop <br>, they are pointless because the editor already adds a newline after them
 		html = html.replace(/<br>/g, '');
@@ -519,5 +544,56 @@ RedactorPlugins.wbbcode = {
 		data = data.replace(/\[code\][\S\s]*?\[\/code\]/, '<pre>$&</pre>');
 		
 		this.$source.val(data);
+	},
+	
+	/**
+	 * Converts certain HTML elements prior to paste in order to preserve formattings.
+	 * 
+	 * @param	string		html
+	 * @return	string
+	 */
+	_wPasteBeforeCallback: function(html) {
+		var $levels = {
+			1: 24,
+			2: 22,
+			3: 18,
+			4: 14,
+			5: 12,
+			6: 10
+		};
+		
+		// replace <h1> ... </h6> tags
+		html = html.replace(/<h([1-6])[^>]+>/g, function(match, level) {
+			return '[size=' + $levels[level] + ']';
+		});
+		html = html.replace(/<\/h[1-6]>/g, '[/size]');
+		
+		return html;
+	},
+	
+	/**
+	 * Restores and fixes formatting before inserting pasted HTML into the editor.
+	 * 
+	 * @param	string		html
+	 * @return	string
+	 */
+	_wPasteAfterCallback: function(html) {
+		// restore font size
+		html = html.replace(/\[size=(\d+)\]/g, '<p><inline style="font-size: $1pt">');
+		html = html.replace(/\[\/size\]/g, '</inline></p>');
+		
+		// replace <p /> with <p>...<br><br></p>
+		html = html.replace(/<p>([\s\S]*?)<\/p>/g, '<p>$1<br><br></p>');
+		
+		// drop <header />
+		html = html.replace(/<header[^>]*>/g, '');
+		html = html.replace(/<\/header>/g, '');
+		
+		html = html.replace(/<div>.*?<\/div>/g, '<p>$1<br></p>');
+		
+		// drop lonely divs
+		html = html.replace(/<\/?div>/g, '');
+		
+		return html;
 	}
 };
