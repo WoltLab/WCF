@@ -111,7 +111,7 @@ class SimpleMessageParser extends SingletonFactory {
 				(?:ftp|https?)://'.static::$illegalChars.'(?:\.'.static::$illegalChars.')*
 				|
 				www\.(?:'.static::$illegalChars.'\.)+
-				(?:[a-z]{2,4}(?=\b))
+				(?:[a-z]{2,63}(?=\b))			# tld
 			)
 			
 			(?::\d+)?					# port
