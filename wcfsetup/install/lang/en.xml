@@ -898,6 +898,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Default Map Position (Longitude)]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[TODO: „Benutzer online“-Darstellung für Benutzernamen verwenden]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[TODO: Enable Privacy Policy page]]></item>
+		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[TODO: Erklärung zum „Einsatz von Cookies“ aktivieren]]></item>
+		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[TODO: Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -2006,7 +2008,9 @@ Errors are:
 		<item name="wcf.page.javascriptDisabled"><![CDATA[Your browser has JavaScript disabled. If you would like to use all features of this site, it is mandatory to enable JavaScript.]]></item>
 		<item name="wcf.page.privacyPolicy"><![CDATA[Privacy Policy]]></item>
 		<item name="wcf.page.privacyPolicy.text"><![CDATA[TODO]]></item>
-		
+		<item name="wcf.page.cookiePolicy.info"><![CDATA[TODO: Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite erklären Sie sich damit einverstanden, dass wir Cookies setzen. <a href="{link controller='CookiePolicy'}{/link}">Weitere Informationen</a>]]></item>
+		<item name="wcf.page.cookiePolicy"><![CDATA[TODO: Einsatz von Cookies]]></item>
+		<item name="wcf.page.cookiePolicy.text"><![CDATA[TODO]]></item>
 		<item name="wcf.page.com.woltlab.wcf.AccountManagementForm"><![CDATA[Account Management]]></item>
 		<item name="wcf.page.com.woltlab.wcf.AvatarEditForm"><![CDATA[Avatar Management]]></item>
 		<item name="wcf.page.com.woltlab.wcf.DisclaimerForm"><![CDATA[Disclaimer]]></item>

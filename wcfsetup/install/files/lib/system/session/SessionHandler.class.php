@@ -122,6 +122,12 @@ class SessionHandler extends SingletonFactory {
 	protected $virtualSession = false;
 	
 	/**
+	 * true, if this is a new session
+	 * @var boolean
+	 */
+	protected $firstVisit = false;
+	
+	/**
 	 * Provides access to session data.
 	 * 
 	 * @param	string		$key
@@ -444,6 +450,7 @@ class SessionHandler extends SingletonFactory {
 			
 			if ($spiderID !== null) $sessionData['spiderID'] = $spiderID;
 			$this->session = call_user_func(array($this->sessionEditorClassName, 'create'), $sessionData);
+			$this->firstVisit = true;
 			$this->loadVirtualSession(true);
 		}
 	}
@@ -897,5 +904,14 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Returns true, if this is a new session.
+	 *
+	 * @return	boolean
+	 */
+	public function isFirstVisit() {
+		return $this->firstVisit;
 	}
 }

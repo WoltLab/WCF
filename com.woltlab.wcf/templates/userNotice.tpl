@@ -6,6 +6,10 @@
 		</div>
 	{/if}
 	
+	{if MODULE_COOKIE_POLICY_PAGE && $__wcf->session->isFirstVisit() && !$__wcf->user->userID}
+		<p class="info">{lang}wcf.page.cookiePolicy.info{/lang}</p>
+	{/if}
+	
 	{if $__wcf->session->getPermission('admin.system.package.canUpdatePackage') && $__wcf->getAvailableUpdates()}
 		<p class="info">{lang}wcf.global.availableUpdates{/lang}</p>
 	{/if}
