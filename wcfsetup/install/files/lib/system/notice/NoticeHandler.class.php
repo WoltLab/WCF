@@ -38,7 +38,7 @@ class NoticeHandler extends SingletonFactory {
 			$checkFailed = false;
 			$conditions = $notice->getConditions();
 			foreach ($conditions as $condition) {
-				if (!$condition->getObjectType()->getProcessor()->showNotice($condition)) {
+				if (!$condition->getObjectType()->getProcessor()->showContent($condition)) {
 					$checkFailed = true;
 					break;
 				}

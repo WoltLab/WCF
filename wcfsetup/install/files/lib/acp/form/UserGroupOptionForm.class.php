@@ -157,6 +157,10 @@ class UserGroupOptionForm extends AbstractForm {
 			catch (UserInputException $e) {
 				$this->errorType[$e->getField()] = $e->getType();
 			}
+			
+			if ($this->optionType->compare($optionValue, WCF::getSession()->getPermission($this->userGroupOption->optionName)) == 1) {
+				$this->errorType[$groupID] = 'exceedsOwnPermission';
+			}
 		}
 		
 		// add missing values for option type 'boolean'

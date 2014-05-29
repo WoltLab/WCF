@@ -19,7 +19,7 @@ use wcf\util\ArrayUtil;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class UserGroupCondition extends AbstractMultipleFieldsCondition implements INoticeCondition, IUserCondition {
+class UserGroupCondition extends AbstractMultipleFieldsCondition implements IContentCondition, IUserCondition {
 	/**
 	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::$descriptions
 	 */
@@ -226,9 +226,9 @@ HTML;
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 * @see	\wcf\system\condition\IContentCondition::showContent()
 	 */
-	public function showNotice(Condition $condition) {
+	public function showContent(Condition $condition) {
 		return $this->checkUser($condition, WCF::getUser());
 	}
 }

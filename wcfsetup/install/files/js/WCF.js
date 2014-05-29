@@ -8880,7 +8880,7 @@ WCF.EditableItemList = Class.extend({
 		
 		if (this._allowCustomInput) {
 			var self = this;
-			this._searchInput.keydown($.proxy(this._keyDown, this)).on('paste', function() {
+			this._searchInput.keydown($.proxy(this._keyDown, this)).keypress($.proxy(this._keyPress, this)).on('paste', function() {
 				setTimeout(function() { self._onPaste(); }, 100);
 			});
 		}
@@ -8895,9 +8895,22 @@ WCF.EditableItemList = Class.extend({
 	 * @param	object		event
 	 */
 	_keyDown: function(event) {
-		// 188 = [,]
-		if (event === null || event.which === 188 || event.which === $.ui.keyCode.ENTER) {
-			if (event !== null && event.which === $.ui.keyCode.ENTER && this._search) {
+		if (event === null) {
+			return this._keyPress(null);
+		}
+		
+		return true;
+	},
+	
+	/**
+	 * Handles the key press event.
+	 * 
+	 * @param	object		event
+	 */
+	_keyPress: function(event) {
+		// 44 = [,] (charCode != keyCode)
+		if (event === null || event.charCode === 44 || event.charCode === $.ui.keyCode.ENTER) {
+			if (event !== null && event.charCode === $.ui.keyCode.ENTER && this._search) {
 				if (this._search._itemIndex !== -1) {
 					return false;
 				}
@@ -8906,7 +8919,7 @@ WCF.EditableItemList = Class.extend({
 			var $value = $.trim(this._searchInput.val());
 			
 			// read everything left from caret position
-			if (event && event.which === 188) {
+			if (event && event.charCode === 44) {
 				$value = $value.substring(0, this._searchInput.getCaret());
 			}
 			
@@ -8920,7 +8933,7 @@ WCF.EditableItemList = Class.extend({
 			});
 			
 			// reset input
-			if (event && event.which === 188) {
+			if (event && event.charCode === 44) {
 				this._searchInput.val($.trim(this._searchInput.val().substr(this._searchInput.getCaret())));
 			}
 			else {

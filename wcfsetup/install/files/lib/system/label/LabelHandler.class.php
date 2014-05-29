@@ -268,18 +268,6 @@ class LabelHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Removes all previously assigned labels.
-	 * 
-	 * @param	integer		$objectTypeID
-	 * @param	integer		$objectID
-	 * @param	boolean		$validatePermissions
-	 * @see		\wcf\system\label\LabelHandler::setLabel()
-	 */
-	public function removeLabels($objectTypeID, $objectID, $validatePermissions = true) {
-		$this->setLabel(array(), $objectTypeID, $objectID, $validatePermissions);
-	}
-	
-	/**
 	 * Returns given label groups by id.
 	 * 
 	 * @param	array<integer>		$groupID

@@ -279,6 +279,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.category.user"><![CDATA[General Permissions]]></item>
 		<item name="wcf.acp.group.option.category.user.message"><![CDATA[Messages]]></item>
 		<item name="wcf.acp.group.option.category.user.message.comment"><![CDATA[Comments]]></item>
+		<item name="wcf.acp.group.option.error.exceedsOwnPermission"><![CDATA[You cannot grant user group permissions exceeding your own permissions.]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[The given value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[The given value is too low.{if $option->minvalue !== null} The minimum value is {#$option->minvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.showMembers"><![CDATA[Show Members]]></item>
@@ -2572,11 +2573,11 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.notification.mailNotificationType.none"><![CDATA[No Email Notification]]></item>
 		<item name="wcf.user.notification.mailNotificationType.instant"><![CDATA[Instant Email Notification]]></item>
 		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Daily Email Notification]]></item>
-		<item name="wcf.user.notification.markAllAsConfirmed"><![CDATA[Discard All Notifications]]></item>
-		<item name="wcf.user.notification.markAllAsConfirmed.confirmMessage"><![CDATA[Do you really want to discard all notifications?]]></item>
-		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Discard]]></item>
-		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[No more notifications]]></item>
-		<item name="wcf.user.notification.noNotifications"><![CDATA[There are no more notifications.]]></item>
+		<item name="wcf.user.notification.markAllAsConfirmed"><![CDATA[Mark All as Read]]></item>
+		<item name="wcf.user.notification.markAllAsConfirmed.confirmMessage"><![CDATA[Do you really want to mark all notifications as read?]]></item>
+		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Mark as Read]]></item>
+		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[No new notifications]]></item>
+		<item name="wcf.user.notification.noNotifications"><![CDATA[You have no notifications.]]></item>
 		<item name="wcf.user.notification.notifications"><![CDATA[Notifications]]></item>
 		<item name="wcf.user.notification.showAll"><![CDATA[Show All Notifications]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user"><![CDATA[User Profiles]]></item>

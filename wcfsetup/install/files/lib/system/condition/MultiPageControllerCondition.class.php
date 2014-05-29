@@ -15,7 +15,7 @@ use wcf\system\request\RequestHandler;
  * @subpackage	system.condition
  * @category	Community Framework
  */
-class MultiPageControllerCondition extends AbstractMultiSelectCondition implements INoticeCondition {
+class MultiPageControllerCondition extends AbstractMultiSelectCondition implements IContentCondition {
 	/**
 	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
 	 */
@@ -39,9 +39,9 @@ class MultiPageControllerCondition extends AbstractMultiSelectCondition implemen
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\INoticeCondition::showNotice()
+	 * @see	\wcf\system\condition\IContentCondition::showContent()
 	 */
-	public function showNotice(Condition $condition) {
+	public function showContent(Condition $condition) {
 		$requestClassName = RequestHandler::getInstance()->getActiveRequest()->getClassName();
 		$pageControllers = $condition->pageControllers;
 		foreach ($pageControllers as $objectTypeID) {

@@ -58,6 +58,11 @@
 					<dd>
 						{@$formElements[$group->groupID]}
 						
+						{if $errorType[$group->groupID]|isset}
+							<small class="innerError">
+								{lang}wcf.acp.group.option.error.{$errorType[$group->groupID]}{/lang}
+							</small>
+						{/if}
 						{hascontent}<small>{content}{lang __optional=true}wcf.acp.group.option.{@$userGroupOption->optionName}.description{/lang}{/content}</small>{/hascontent}
 					</dd>
 				</dl>

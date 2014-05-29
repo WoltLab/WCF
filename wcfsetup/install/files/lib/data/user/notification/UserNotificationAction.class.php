@@ -110,25 +110,16 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	 */
 	public function markAsConfirmed() {
 		if (!isset($this->parameters['alreadyConfirmed'])) {
-			$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
-				WHERE		notificationID = ?
-						AND userID = ?";
+			$sql = "UPDATE	wcf".WCF_N."_user_notification_to_user
+				SET	confirmed = ?
+				WHERE	notificationID = ?
+					AND userID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array(
+				1,
 				$this->parameters['notificationID'],
 				WCF::getUser()->userID
 			));
-			
-			// remove entirely read notifications
-			$sql = "SELECT	COUNT(*) as count
-				FROM	wcf".WCF_N."_user_notification_to_user
-				WHERE	notificationID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array($this->parameters['notificationID']));
-			$row = $statement->fetchArray();
-			if (!$row['count']) {
-				UserNotificationEditor::deleteAll(array($this->parameters['notificationID']));
-			}
 			
 			// reset notification count
 			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
@@ -150,10 +141,14 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	 */
 	public function markAllAsConfirmed() {
 		// remove notifications for this user
-		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
-			WHERE		userID = ?";
+		$sql = "UPDATE	wcf".WCF_N."_user_notification_to_user
+			SET	confirmed = ?
+			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(WCF::getUser()->userID));
+		$statement->execute(array(
+			1,
+			WCF::getUser()->userID
+		));
 		
 		// reset notification count
 		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
