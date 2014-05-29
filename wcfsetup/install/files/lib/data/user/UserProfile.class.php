@@ -785,7 +785,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		if ($this->userOnlineGroupID) {
 			$group = UserGroup::getGroupByID($this->userOnlineGroupID);
 			if ($group !== null && $group->userOnlineMarking && $group->userOnlineMarking != '%s') {
-				return sprintf($group->userOnlineMarking, $username);
+				return str_replace('%s', $username, $group->userOnlineMarking);
 			}
 		}
 		

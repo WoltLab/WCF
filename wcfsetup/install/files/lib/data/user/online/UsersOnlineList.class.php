@@ -118,7 +118,7 @@ class UsersOnlineList extends SessionList {
 			foreach (UserGroup::getGroupsByType() as $group) {
 				if ($group->userOnlineMarking != '%s') {
 					$priorities[] = $group->priority;
-					$this->usersOnlineMarkings[] = sprintf($group->userOnlineMarking, StringUtil::encodeHTML(WCF::getLanguage()->get($group->groupName)));
+					$this->usersOnlineMarkings[] = str_replace('%s', StringUtil::encodeHTML(WCF::getLanguage()->get($group->groupName)), $group->userOnlineMarking);
 				}
 			}
 			

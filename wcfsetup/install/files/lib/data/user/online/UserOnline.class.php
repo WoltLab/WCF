@@ -38,7 +38,7 @@ class UserOnline extends UserProfile {
 		$username = StringUtil::encodeHTML($this->username);
 		
 		if ($this->userOnlineMarking && $this->userOnlineMarking != '%s') {
-			$username = sprintf($this->userOnlineMarking, $username);
+			$username = str_replace('%s', $username, $this->userOnlineMarking);
 		}
 		
 		if ($this->canViewOnlineStatus == 3) {
