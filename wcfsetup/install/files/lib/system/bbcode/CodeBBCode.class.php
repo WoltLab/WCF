@@ -130,7 +130,8 @@ class CodeBBCode extends AbstractBBCode {
 				'startLineNumber' => $this->startLineNumber,
 				'content' => $highlightedContent,
 				'highlighter' => $className::getInstance(),
-				'filename' => $this->filename
+				'filename' => $this->filename,
+				'lines' => substr_count($content, "\n") + 1
 			));
 			return WCF::getTPL()->fetch('codeBBCodeTag');
 		}

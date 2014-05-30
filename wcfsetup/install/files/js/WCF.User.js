@@ -698,18 +698,27 @@ WCF.User.Profile.Editor = Class.extend({
 		var $values = { };
 		this._tab.find('input, textarea, select').each(function(index, element) {
 			var $element = $(element);
+			var $value = null;
 			
-			if ($element.getTagName() === 'input') {
-				var $type = $element.attr('type');
+			switch ($element.getTagName()) {
+				case 'input':
+					var $type = $element.attr('type');
+					
+					if (($type === 'radio' || $type === 'checkbox') && !$element.prop('checked')) {
+						return;
+					}
+				break;
 				
-				if (($type === 'radio' || $type === 'checkbox') && !$element.prop('checked')) {
-					return;
-				}
+				case 'textarea':
+					if ($element.data('redactor')) {
+						$value = $element.redactor('getText');
+					}
+				break;
 			}
 			
 			var $name = $element.attr('name');
 			if ($regExp.test($name)) {
-				$values[RegExp.$1] = $element.val();
+				$values[RegExp.$1] = ($value === null) ? $element.val() : $value;
 			}
 		});
 		
@@ -731,7 +740,7 @@ WCF.User.Profile.Editor = Class.extend({
 		this._actionName = 'restore';
 		this._buttons.beginEdit.show();
 		
-		this._destroyCKEditor();
+		this._destroyEditor();
 		
 		this._tab.html(this._cachedTemplate).children().css({ height: 'auto' });
 	},
@@ -769,7 +778,7 @@ WCF.User.Profile.Editor = Class.extend({
 	 * @param	boolean		disableCache
 	 */
 	_prepareEdit: function(data, disableCache) {
-		this._destroyCKEditor();
+		this._destroyEditor();
 		
 		// update template
 		var self = this;
@@ -788,7 +797,7 @@ WCF.User.Profile.Editor = Class.extend({
 		this._tab.find('.formSubmit > button[data-type=save]').click($.proxy(this._save, this));
 		this._tab.find('.formSubmit > button[data-type=restore]').click($.proxy(this._restore, this));
 		this._tab.find('input').keyup(function(event) {
-			if (event.which === 13) { // Enter
+			if (event.which === $.ui.keyCode.ENTER) {
 				self._save();
 				
 				event.preventDefault();
@@ -798,14 +807,14 @@ WCF.User.Profile.Editor = Class.extend({
 	},
 	
 	/**
-	 * Destroys all CKEditor instances within current tab.
+	 * Destroys all editor instances within current tab.
 	 */
-	_destroyCKEditor: function() {
-		// destroy all CKEditor instances
-		this._tab.find('textarea + .cke').each(function(index, container) {
-			var $instanceName = $(container).attr('id').replace(/cke_/, '');
-			if (CKEDITOR.instances[$instanceName]) {
-				CKEDITOR.instances[$instanceName].destroy();
+	_destroyEditor: function() {
+		// destroy all editor instances
+		this._tab.find('textarea').each(function(index, container) {
+			var $container = $(container);
+			if ($container.data('redactor')) {
+				$container.redactor('destroy');
 			}
 		});
 	}

@@ -1,4 +1,4 @@
-<div class="container codeBox {$highlighter|get_class|substr:30|lcfirst}">
+<div class="container codeBox {$highlighter|get_class|substr:30|lcfirst}{if $lines > 10} minimized{/if}">
 	<div>
 		<div>
 			<h3>{@$highlighter->getTitle()}{if $filename}: {@$filename}{/if}</h3>
@@ -17,4 +17,15 @@
 			{/foreach}
 		</ol>
 	</div>
+	
+	{if $lines > 10}
+		<span class="codeBoxExpand jsButtonCodeBoxExpand">{lang}wcf.bbcode.button.showAll{/lang}</span>
+		<script data-relocate="true">
+			$(function() {
+				$('.jsButtonCodeBoxExpand').removeClass('jsButtonCodeBoxExpand').click(function() {
+					$(this).parent().removeClass('minimized').end().remove();
+				});
+			});
+		</script>
+	{/if}
 </div>

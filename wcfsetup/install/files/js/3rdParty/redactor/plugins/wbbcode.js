@@ -353,7 +353,7 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/%29/g, ')');
 		
 		// Restore %20
-		html = html.replace(/%20/g, ' ');
+		//html = html.replace(/%20/g, ' ');
 		
 		// cache source code tags to preserve leading tabs
 		var $cachedCodes = { };
