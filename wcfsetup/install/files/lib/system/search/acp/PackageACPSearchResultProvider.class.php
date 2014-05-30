@@ -29,7 +29,7 @@ class PackageACPSearchResultProvider implements IACPSearchResultProvider {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("languageID = ?", array(WCF::getLanguage()->languageID));
 		$conditions->add("languageItem LIKE ?", array('wcf.acp.package.packageName.package%'));
-		$conditions->add("languageItemValue LIKE ?", array($query.'%'));
+		$conditions->add("languageItemValue LIKE ?", array('%'.$query.'%'));
 		
 		$sql = "SELECT		languageItem
 			FROM		wcf".WCF_N."_language_item

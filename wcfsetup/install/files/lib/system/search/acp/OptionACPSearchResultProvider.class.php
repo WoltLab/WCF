@@ -29,17 +29,8 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 		// search by language item
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("languageID = ?", array(WCF::getLanguage()->languageID));
-		$conditions->add("languageItemValue LIKE ?", array($query.'%'));
-		
-		// filter by language item
-		$languageItemsConditions = '';
-		$languageItemsParameters = array();
-		foreach (ACPSearchHandler::getInstance()->getAbbreviations('.acp.option.%') as $abbreviation) {
-			if (!empty($languageItemsConditions)) $languageItemsConditions .= " OR ";
-			$languageItemsConditions .= "languageItem LIKE ?";
-			$languageItemsParameters[] = $abbreviation;
-		}
-		$conditions->add("(".$languageItemsConditions.")", $languageItemsParameters);
+		$conditions->add("languageItem LIKE ?", array('wcf.acp.option.%'));
+		$conditions->add("languageItemValue LIKE ?", array('%'.$query.'%'));
 		
 		$sql = "SELECT		languageItem, languageItemValue
 			FROM		wcf".WCF_N."_language_item
