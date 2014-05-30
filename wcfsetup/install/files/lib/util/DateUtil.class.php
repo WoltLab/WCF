@@ -131,6 +131,26 @@ final class DateUtil {
 	);
 	
 	/**
+	 * first day of the week
+	 * 0=sunday
+	 * 1=monday
+	 * @var	integer
+	 */
+	private static $firstDayOfTheWeek = null;
+	
+	/**
+	 * order of the week days
+	 * @var	array<string>
+	 */
+	private static $weekDays = null;
+	
+	/**
+	 * order of the week days (short textual representation)
+	 * @var	array<string>
+	 */
+	private static $shortWeekDays = null;
+	
+	/**
 	 * Returns a formatted date.
 	 * 
 	 * @param	\DateTime			$time
@@ -364,6 +384,100 @@ final class DateUtil {
 		else {
 			throw new SystemException("Date '".$date."' is not a valid ISO-8601 date");
 		}
+	}
+	
+	/**
+	 * Returns the first day of the week.
+	 * 
+	 * @return	integer
+	 */
+	public static function getFirstDayOfTheWeek() {
+		if (self::$firstDayOfTheWeek === null) {
+			self::$firstDayOfTheWeek = intval(WCF::getLanguage()->get('wcf.date.firstDayOfTheWeek'));
+			if (self::$firstDayOfTheWeek != 1 && self::$firstDayOfTheWeek != 0) self::$firstDayOfTheWeek = 0;
+		}
+		
+		return self::$firstDayOfTheWeek;
+	}
+	
+	/**
+	 * Returns the order of the week days.
+	 * 
+	 * @return	array<string>
+	 */
+	public static function getWeekDays() {
+		if (self::$weekDays === null) {
+			if (self::getFirstDayOfTheWeek() == 1) {
+				self::$weekDays = array(
+					1 => 'monday',
+					2 => 'tuesday',
+					3 => 'wednesday',
+					4 => 'thursday',
+					5 => 'friday',
+					6 => 'saturday',
+					0 => 'sunday'
+				);
+			}
+			else {
+				self::$weekDays = array(
+					0 => 'sunday',
+					1 => 'monday',
+					2 => 'tuesday',
+					3 => 'wednesday',
+					4 => 'thursday',
+					5 => 'friday',
+					6 => 'saturday'
+				);
+			}
+		}
+		
+		return self::$weekDays;
+	}
+	
+	/**
+	 * Returns the order of the week days (short textual representation).
+	 * 
+	 * @return	array<string>
+	 */
+	public static function getShortWeekDays() {
+		if (self::$shortWeekDays === null) {
+			if (self::getFirstDayOfTheWeek() == 1) {
+				self::$shortWeekDays = array(
+					1 => 'mon',
+					2 => 'tue',
+					3 => 'wed',
+					4 => 'thu',
+					5 => 'fri',
+					6 => 'sat',
+					0 => 'sun'
+				);
+			}
+			else {
+				self::$shortWeekDays = array(
+					0 => 'sun',
+					1 => 'mon',
+					2 => 'tue',
+					3 => 'wed',
+					4 => 'thu',
+					5 => 'fri',
+					6 => 'sat'
+				);
+			}
+		}
+		
+		return self::$shortWeekDays;
+	}
+	
+	/**
+	 * Returns the number of weeks in the given year.
+	 * 
+	 * @param	integer		$year
+	 * @return	integer
+	 */
+	public static function getWeeksInYear($year) {
+		$date = new \DateTime();
+		$date->setISODate($year, 53, self::getFirstDayOfTheWeek());
+		return ($date->format('W') == 53 ? 53 : 52);
 	}
 	
 	private function __construct() { }
