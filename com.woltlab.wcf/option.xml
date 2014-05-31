@@ -543,7 +543,8 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<selectoptions>local:wcf.acp.option.jquery_source.local
 google:wcf.acp.option.jquery_source.google
 microsoft:wcf.acp.option.jquery_source.microsoft
-cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
+cloudflare:wcf.acp.option.jquery_source.cloudflare
+jsdelivr:wcf.acp.option.jquery_source.jsdelivr</selectoptions>
 			</option>
 			<!-- /general.system.jquery -->
 			

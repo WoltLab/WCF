@@ -24,6 +24,9 @@
 {elseif JQUERY_SOURCE == 'cloudflare'}
 <script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+{elseif JQUERY_SOURCE == 'jsdelivr'}
+<script data-relocate="true" src="//cdn.jsdelivr.net/jquery/2.1.0/jquery.min.js"></script>
+<script data-relocate="true" src="//cdn.jsdelivr.net/jquery.ui/1.10.4/jquery-ui.min.js"></script>
 {else}
 <script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"></script>
