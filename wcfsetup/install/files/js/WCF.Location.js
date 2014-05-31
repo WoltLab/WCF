@@ -130,6 +130,18 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 	},
 	
 	/**
+	 * Adds the event listener to a marker to show the associated info window.
+	 * 
+	 * @param	google.maps.Marker	marker
+	 * @param	google.maps.InfoWindow	infoWindow
+	 */
+	_addInfoWindowEventListener: function(marker, infoWindow) {
+		google.maps.event.addListener(marker, 'click', $.proxy(function() {
+			infoWindow.open(this._map, marker);
+		}, this));
+	},
+	
+	/**
 	 * Adds click listener to mobile sidebar toggle button to refresh map.
 	 */
 	_addSidebarMapListener: function() {
@@ -257,9 +269,7 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 			var $infoWindow = new google.maps.InfoWindow({
 				content: information
 			});
-			google.maps.event.addListener($marker, 'click', $.proxy(function() {
-				$infoWindow.open(this._map, $marker);
-			}, this));
+			this._addInfoWindowEventListener($marker, $infoWindow);
 			
 			// add info window object to marker object
 			$marker.infoWindow = $infoWindow;
@@ -428,6 +438,17 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 			maxZoom: 17
 		});
 		
+		this._markerSpiderfier = new OverlappingMarkerSpiderfier(this._map, {
+			keepSpiderfied: true,
+			markersWontHide: true,
+			markersWontMove: true
+		});
+		this._markerSpiderfier.addListener('click', $.proxy(function(marker) {
+			if (marker.infoWindow) {
+				marker.infoWindow.open(this._map, marker);
+			}
+		}, this));
+		
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false,
 			success: $.proxy(this._success, this)
@@ -436,6 +457,14 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 		this._previousNorthEast = null;
 		this._previousSouthWest = null;
 		google.maps.event.addListener(this._map, 'idle', $.proxy(this._loadMarkers, this));
+	},
+	
+	/**
+	 * @see	WCF.Location.GoogleMaps.Map.addMarker()
+	 */
+	_addInfoWindowEventListener: function(marker, infoWindow) {
+		// does nothing, is handled by the event listener of the marker
+		// spiderfier
 	},
 	
 	/**
@@ -509,6 +538,7 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 	addMarker: function(latitude, longitude, title, icon, information) {
 		var $marker = this._super(latitude, longitude, title, icon, information);
 		this._markerClusterer.addMarker($marker);
+		this._markerSpiderfier.addMarker($marker);
 		
 		return $marker;
 	}
