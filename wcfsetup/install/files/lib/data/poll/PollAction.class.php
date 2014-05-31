@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\poll;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\poll\option\PollOptionEditor;
 use wcf\data\poll\option\PollOptionList;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
@@ -7,6 +9,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
+
 
 /**
  * Executes poll-related actions.
@@ -301,6 +304,83 @@ class PollAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		return array(
 			'pageCount' => 1,
 			'template' => WCF::getTPL()->fetch('groupedUserList')
+		);
+	}
+	
+	/**
+	 * Copies a poll from one object id to another.
+	 */
+	public function copy() {
+		$sourceObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.poll', $this->parameters['sourceObjectType']);
+		$targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.poll', $this->parameters['targetObjectType']);
+		
+		//
+		// step 1) get data
+		//
+		
+		// get poll
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_poll
+			WHERE	objectTypeID = ?
+				AND objectID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$sourceObjectType->objectTypeID,
+			$this->parameters['sourceObjectID']
+		));
+		$row = $statement->fetchArray();
+		
+		if ($row === false) {
+			return array(
+				'pollID' => null
+			);
+		}
+		
+		// get options
+		$pollOptionList = new PollOptionList();
+		$pollOptionList->getConditionBuilder()->add("poll_option.pollID = ?", array($row['pollID']));
+		$pollOptionList->readObjects();
+		
+		//
+		// step 2) copy
+		//
+		
+		// cretae poll
+		$pollData = $row;
+		$pollData['objectTypeID'] = $targetObjectType->objectTypeID;
+		$pollData['objectID'] = $this->parameters['targetObjectID'];
+		unset($pollData['pollID']);
+		
+		$newPoll = PollEditor::create($pollData);
+		
+		// create options
+		$newOptionIDs = array();
+		foreach ($pollOptionList as $pollOption) {
+			$newOption = PollOptionEditor::create(array(
+				'pollID' => $newPoll->pollID,
+				'optionValue' => $pollOption->optionValue,
+				'votes' => $pollOption->votes,
+				'showOrder' => $pollOption->showOrder
+			));
+			
+			$newOptionIDs[$pollOption->optionID] = $newOption->optionID;
+		}
+		
+		// copy votes
+		WCF::getDB()->beginTransaction();
+		foreach ($newOptionIDs as $oldOptionID => $newOptionID) {
+			$sql = "INSERT INTO	wcf".WCF_N."_poll_option_vote
+						(pollID, optionID, userID)
+				SELECT		".$newPoll->pollID.", ".$newOptionID.", userID
+				FROM		wcf".WCF_N."_poll_option_vote
+				WHERE		optionID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($oldOptionID));
+		}
+		WCF::getDB()->commitTransaction();
+		
+		return array(
+			'pollID' => $newPoll->pollID
 		);
 	}
 }

@@ -7219,6 +7219,156 @@ WCF.System.KeepAlive = Class.extend({
 });
 
 /**
+ * Worker support for frontend based upon DatabaseObjectActions.
+ * 
+ * @param	string		className
+ * @param	string		title
+ * @param	object		parameters
+ * @param	object		callback
+ */
+WCF.System.Worker = Class.extend({
+	/**
+	 * worker aborted
+	 * @var	boolean
+	 */
+	_aborted: false,
+	
+	/**
+	 * DBOAction method name
+	 * @var	string
+	 */
+	_actionName: '',
+	
+	/**
+	 * callback invoked after worker completed
+	 * @var	object
+	 */
+	_callback: null,
+	
+	/**
+	 * DBOAction class name
+	 * @var	string
+	 */
+	_className: '',
+	
+	/**
+	 * dialog object
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * dialog title
+	 * @var	string
+	 */
+	_title: '',
+	
+	/**
+	 * Initializes a new worker instance.
+	 * 
+	 * @param	string		actionName
+	 * @param	string		className
+	 * @param	string		title
+	 * @param	object		parameters
+	 * @param	object		callback
+	 * @param	object		confirmMessage
+	 */
+	init: function(actionName, className, title, parameters, callback) {
+		this._aborted = false;
+		this._actionName = actionName;
+		this._callback = callback || null;
+		this._className = className;
+		this._dialog = null;
+		this._proxy = new WCF.Action.Proxy({
+			autoSend: true,
+			data: {
+				actionName: this._actionName,
+				className: this._className,
+				parameters: parameters || { }
+			},
+			showLoadingOverlay: false,
+			success: $.proxy(this._success, this)
+		});
+		this._title = title;
+	},
+	
+	/**
+	 * Handles response from server.
+	 * 
+	 * @param	object		data
+	 */
+	_success: function(data) {
+		// init binding
+		if (this._dialog === null) {
+			this._dialog = $('<div />').hide().appendTo(document.body);
+			this._dialog.wcfDialog({
+				closeConfirmMessage: WCF.Language.get('wcf.worker.abort.confirmMessage'),
+				closeViaModal: false,
+				onClose: $.proxy(function() {
+					this._aborted = true;
+					this._proxy.abortPrevious();
+					
+					window.location.reload();
+				}, this),
+				title: this._title
+			});
+		}
+		
+		if (this._aborted) {
+			return;
+		}
+		
+		if (data.returnValues.template) {
+			this._dialog.html(data.returnValues.template);
+		}
+		
+		// update progress
+		this._dialog.find('progress').attr('value', data.returnValues.progress).text(data.returnValues.progress + '%').next('span').text(data.returnValues.progress + '%');
+		
+		// worker is still busy with its business, carry on
+		if (data.returnValues.progress < 100) {
+			// send request for next loop
+			var $parameters = data.returnValues.parameters || { };
+			$parameters.loopCount = data.returnValues.loopCount;
+			
+			this._proxy.setOption('data', {
+				actionName: this._actionName,
+				className: this._className,
+				parameters: $parameters
+			});
+			this._proxy.sendRequest();
+		}
+		else if (this._callback !== null) {
+			this._callback(this, data);
+		}
+		else {
+			// exchange icon
+			this._dialog.find('.fa-spinner').removeClass('fa-spinner').addClass('fa-check green');
+			this._dialog.find('.boxHeadline h1').text(WCF.Language.get('wcf.global.worker.completed'));
+			
+			// display continue button
+			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
+			$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).focus().click(function() {
+				if (data.returnValues.redirectURL) {
+					window.location = data.returnValues.redirectURL;
+				}
+				else {
+					window.location.reload();
+				}
+			});
+			
+			this._dialog.wcfDialog('render');
+		}
+	}
+});
+
+/**
  * Default implementation for inline editors.
  * 
  * @param	string		elementSelector

@@ -397,4 +397,61 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 		}
 		WCF::getDB()->commitTransaction();
 	}
+	
+	/**
+	 * Copies attachments from one object id to another.
+	 */
+	public function copy() {
+		$sourceObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $this->parameters['sourceObjectType']);
+		$targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $this->parameters['targetObjectType']);
+		
+		$attachmentList = new AttachmentList();
+		$attachmentList->getConditionBuilder()->add("attachment.objectTypeID = ?", array($sourceObjectType->objectTypeID));
+		$attachmentList->getConditionBuilder()->add("attachment.objectID = ?", array($this->parameters['sourceObjectID']));
+		$attachmentList->readObjects();
+		
+		$newAttachmentIDs = array();
+		foreach ($attachmentList as $attachment) {
+			$newAttachment = AttachmentEditor::create(array(
+				'objectTypeID' => $targetObjectType->objectTypeID,
+				'objectID' => $this->parameters['targetObjectID'],
+				'userID' => $attachment->userID,
+				'filename' => $attachment->filename,
+				'filesize' => $attachment->filesize,
+				'fileType' => $attachment->fileType,
+				'fileHash' => $attachment->fileHash,
+				'isImage' => $attachment->isImage,
+				'width' => $attachment->width,
+				'height' => $attachment->height,
+				'tinyThumbnailType' => $attachment->tinyThumbnailType,
+				'tinyThumbnailSize' => $attachment->tinyThumbnailSize,
+				'tinyThumbnailWidth' => $attachment->tinyThumbnailWidth,
+				'tinyThumbnailHeight' => $attachment->tinyThumbnailHeight,
+				'thumbnailType' => $attachment->thumbnailType,
+				'thumbnailSize' => $attachment->thumbnailSize,
+				'thumbnailWidth' => $attachment->thumbnailWidth,
+				'thumbnailHeight' => $attachment->thumbnailHeight,
+				'downloads' => $attachment->downloads,
+				'lastDownloadTime' => $attachment->lastDownloadTime,
+				'uploadTime' => $attachment->uploadTime,
+				'showOrder' => $attachment->showOrder
+			));
+			
+			// copy attachment
+			@copy($attachment->getLocation(), $newAttachment->getLocation());
+			
+			if ($attachment->tinyThumbnailSize) {
+				@copy($attachment->getTinyThumbnailLocation(), $newAttachment->getTinyThumbnailLocation());
+			}
+			if ($attachment->thumbnailSize) {
+				@copy($attachment->getThumbnailLocation(), $newAttachment->getThumbnailLocation());
+			}
+			
+			$newAttachmentIDs[$attachment->attachmentID] = $newAttachment->attachmentID;
+		}
+		
+		return array(
+			'attachmentIDs' => $newAttachmentIDs
+		);
+	}
 }
