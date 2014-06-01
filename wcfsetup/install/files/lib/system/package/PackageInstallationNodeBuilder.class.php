@@ -555,6 +555,13 @@ class PackageInstallationNodeBuilder {
 	 * @return	string
 	 */
 	protected function buildPluginNodes() {
+		if (!empty($this->node)) {
+			$this->parentNode = $this->node;
+			$this->sequenceNo = 0;
+		}
+		
+		$this->node = $this->getToken();
+		
 		$pluginNodes = array();
 		
 		$this->emptyNode = true;
