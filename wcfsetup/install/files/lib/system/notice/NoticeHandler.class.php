@@ -35,18 +35,16 @@ class NoticeHandler extends SingletonFactory {
 	public function getVisibleNotices() {
 		$notices = array();
 		foreach ($this->notices as $notice) {
-			$checkFailed = false;
+			if ($notice->isDismissed()) continue;
+			
 			$conditions = $notice->getConditions();
 			foreach ($conditions as $condition) {
 				if (!$condition->getObjectType()->getProcessor()->showContent($condition)) {
-					$checkFailed = true;
-					break;
+					continue 2;
 				}
 			}
 			
-			if (!$checkFailed && !$notice->isDismissed()) {
-				$notices[$notice->noticeID] = $notice;
-			}
+			$notices[$notice->noticeID] = $notice;
 		}
 		
 		return $notices;
