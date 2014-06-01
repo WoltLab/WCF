@@ -2965,7 +2965,7 @@ WCF.Date.Picker = {
 				
 				// Date objects require a date and a time, thus
 				// add the current date to a time only-value
-				if (false && $input.data('timeOnly')) {
+				if ($input.data('timeOnly')) {
 					$dateComponents = $inputValue.split(':');
 					$date = new Date();
 					$date.setHours($dateComponents[0]);
