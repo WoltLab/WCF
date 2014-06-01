@@ -10,7 +10,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
 
-
 /**
  * Executes poll-related actions.
  * 

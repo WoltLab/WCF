@@ -1,19 +1,18 @@
 <?php
 namespace wcf\data\like;
+use wcf\data\like\object\LikeObjectEditor;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\User;
+use wcf\data\user\UserEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\like\LikeHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
+use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
-use wcf\data\like\object\LikeObjectEditor;
-use wcf\data\user\UserEditor;
-use wcf\data\user\User;
-use wcf\system\user\activity\point\UserActivityPointHandler;
-
 
 /**
  * Executes like-related actions.
