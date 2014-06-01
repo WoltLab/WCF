@@ -232,7 +232,7 @@
 									{if $__wcf->getSession()->getVar('__githubToken')}
 										<label><input type="checkbox" name="githubConnect" value="1"{if $githubConnect} checked="checked"{/if} /> {lang}wcf.user.3rdparty.github.connect{/lang}</label>
 									{else}
-										<a href="{link controller='GithubAuth'}{/link}" class="button small"><span class="icon icon16 icon-github"></span> <span>{lang}wcf.user.3rdparty.github.connect{/lang}</span></a>
+										<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton"><span class="icon icon16 icon-github"></span> <span>{lang}wcf.user.3rdparty.github.connect{/lang}</span></a>
 									{/if}
 								</dd>
 							</dl>
@@ -245,7 +245,7 @@
 									{if $__wcf->getSession()->getVar('__twitterData')}
 										<label><input type="checkbox" name="twitterConnect" value="1"{if $twitterConnect} checked="checked"{/if} /> {lang}wcf.user.3rdparty.twitter.connect{/lang}</label>
 									{else}
-										<a href="{link controller='TwitterAuth'}{/link}" class="button small"><span class="icon icon16 icon-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.connect{/lang}</span></a>
+										<a href="{link controller='TwitterAuth'}{/link}" class="thirdPartyLoginButton twitterLoginButton"><span class="icon icon16 icon-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.connect{/lang}</span></a>
 									{/if}
 								</dd>
 							</dl>
@@ -258,7 +258,7 @@
 									{if $__wcf->getSession()->getVar('__facebookData')}
 										<label><input type="checkbox" name="facebookConnect" value="1"{if $facebookConnect} checked="checked"{/if} /> {lang}wcf.user.3rdparty.facebook.connect{/lang}</label>
 									{else}
-										<a href="{link controller='FacebookAuth'}{/link}" class="button small"><span class="icon icon16 icon-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.connect{/lang}</span></a>
+										<a href="{link controller='FacebookAuth'}{/link}" class="thirdPartyLoginButton facebookLoginButton"><span class="icon icon16 icon-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.connect{/lang}</span></a>
 									{/if}
 								</dd>
 							</dl>
@@ -271,7 +271,7 @@
 									{if $__wcf->getSession()->getVar('__googleData')}
 										<label><input type="checkbox" name="googleConnect" value="1"{if $googleConnect} checked="checked"{/if} /> {lang}wcf.user.3rdparty.google.connect{/lang}</label>
 									{else}
-										<a href="{link controller='GoogleAuth'}{/link}" class="button small"><span class="icon icon16 icon-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
+										<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton"><span class="icon icon16 icon-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
 									{/if}
 								</dd>
 							</dl>
