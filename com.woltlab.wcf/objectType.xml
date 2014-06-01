@@ -604,6 +604,19 @@
 		</type>
 		
 		<type>
+			<name>com.woltlab.wcf.pointInTime.daysOfWeek</name>
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+			<classname><![CDATA[wcf\system\condition\DaysOfWeekCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.pointInTime</conditionobject>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.pointInTime.time</name>
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+			<classname><![CDATA[wcf\system\condition\TimeCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.pointInTime</conditionobject>
+		</type>
+		
+		<type>
 			<name>com.woltlab.wcf.user.username</name>
 			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
 			<classname><![CDATA[wcf\system\condition\UserUsernameCondition]]></classname>

@@ -128,6 +128,17 @@
 				{@$pageConditionObjectType->getProcessor()->getHtml()}
 			{/foreach}
 		</fieldset>
+		
+		<fieldset>
+			<legend>{lang}wcf.acp.notice.conditions.pointInTime{/lang}</legend>
+			<small>{lang}wcf.acp.notice.conditions.pointInTime.description{/lang}</small>
+			
+			{foreach from=$groupedConditionObjectTypes['com.woltlab.wcf.pointInTime'] item='pointInTimeConditionObjectType'}
+				{@$pointInTimeConditionObjectType->getProcessor()->getHtml()}
+			{/foreach}
+		</fieldset>
+		
+		{event name='conditionTypeFieldsets'}
 	</div>
 	
 	<header class="boxHeadline boxSubHeadline">

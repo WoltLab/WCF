@@ -2963,6 +2963,18 @@ WCF.Date.Picker = {
 				}
 				$inputValue = $inputValue.replace(' ', 'T');
 				
+				// Date objects require a date and a time, thus
+				// add the current date to a time only-value
+				if (false && $input.data('timeOnly')) {
+					$dateComponents = $inputValue.split(':');
+					$date = new Date();
+					$date.setHours($dateComponents[0]);
+					$date.setMinutes($dateComponents[1]);
+					$date.setSeconds(0);
+					
+					$inputValue = $date.toString();
+				}
+				
 				if ($input.data('ignoreTimezone')) {
 					var $timezoneOffset = new Date($inputValue).getTimezoneOffset();
 					var $timezone = ($timezoneOffset > 0) ? '-' : '+'; // -120 equals GMT+0200
@@ -2984,6 +2996,7 @@ WCF.Date.Picker = {
 					minuteText: WCF.Language.get('wcf.date.minute'),
 					showTime: false,
 					timeFormat: this._timeFormat,
+					timeOnly: $input.data('timeOnly') ? true : false,
 					yearRange: ($input.hasClass('birthday') ? '-100:+0' : '1900:2038')
 				});
 			}
@@ -3008,6 +3021,10 @@ WCF.Date.Picker = {
 			
 			// bug workaround: setDate creates the widget but unfortunately doesn't hide it...
 			$input.datepicker('widget').hide();
+			
+			if ($input.data('timeOnly')) {
+				$input.datepicker('widget').addClass('timeOnlyPicker');
+			}
 		}, this));
 	}
 };

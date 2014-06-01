@@ -593,6 +593,8 @@
 		<item name="wcf.acp.notice.conditions.description"><![CDATA[Werden keine Bedingungen ausgewählt, wird der Hinweis für jeden Benutzer auf allen Seiten angezeigt.]]></item>
 		<item name="wcf.acp.notice.conditions.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.notice.conditions.page.description"><![CDATA[Die vom Benutzer aufgerufene Seite muss folgende Bedingungen erfüllen, damit der Hinweis angezeigt wird.]]></item>
+		<item name="wcf.acp.notice.conditions.pointInTime"><![CDATA[Zeitpunkt]]></item>
+		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[Legen Sie den Zeitpunkt fest, zu dem der Hinweis angezeigt werden soll.]]></item>
 		<item name="wcf.acp.notice.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
 		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit der Hinweis angezeigt wird.]]></item>
 		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Wollen Sie diesen Hinweis wirklich löschen?]]></item>
@@ -1825,6 +1827,13 @@ Fehler sind beispielsweise:
 		<item name="wcf.date.period.start"><![CDATA[von]]></item>
 		<item name="wcf.date.period.end"><![CDATA[bis]]></item>
 		<item name="wcf.date.firstDayOfTheWeek"><![CDATA[1]]></item>
+		<item name="wcf.date.daysOfWeek"><![CDATA[Wochentage]]></item>
+		<item name="wcf.date.time"><![CDATA[Uhrzeit]]></item>
+		<item name="wcf.date.timezone"><![CDATA[Zeitzone]]></item>
+		<item name="wcf.date.timezone.user"><![CDATA[Zeitzone des Benutzers]]></item>
+		<item name="wcf.date.endTime.error.beforeStartTime"><![CDATA[Der Endzeitpunkt muss nach dem Startzeitpunkt liegen.]]></item>
+		<item name="wcf.date.startTime.error.notValid"><![CDATA[Der Startzeitpunkt ist ungültig.]]></item>
+		<item name="wcf.date.endTime.error.notValid"><![CDATA[Der Endzeitpunkt ist ungültig.]]></item>
 	</category>
 	
 	<category name="wcf.global">
