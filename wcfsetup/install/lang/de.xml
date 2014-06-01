@@ -2511,6 +2511,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.disableSignature.confirmMessage"><![CDATA[Wollen Sie die Signatur des Benutzers wirklich sperren?]]></item>
 		<item name="wcf.user.enableSignature"><![CDATA[Signatur entsperren]]></item>
 		<item name="wcf.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
+		<item name="wcf.user.birthdayToday"><![CDATA[Hat heute Geburtstag]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

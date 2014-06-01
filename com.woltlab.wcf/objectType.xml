@@ -674,6 +674,13 @@
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.user.birthday</name>
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserBirthdayCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.user.activityPoints</name>
 			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
 			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
