@@ -5,7 +5,7 @@ use wcf\system\WCF;
 use wcf\util\DateUtil;
 
 /**
- * Condition implementation for the day of the week.
+ * Condition implementation for the days of the week.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2014 WoltLab GmbH
@@ -15,6 +15,11 @@ use wcf\util\DateUtil;
  * @category	Community Framework
  */
 class DaysOfWeekCondition extends AbstractMultiSelectCondition implements IContentCondition {
+	/**
+	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::$label
+	 */
+	protected $description = 'wcf.global.multiSelect';
+	
 	/**
 	 * @see	wcf\system\condition\AbstractSelectCondition::$fieldName
 	 */
