@@ -22,30 +22,12 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
 	/**
 	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::$languageItemPrefix
 	 */
-	protected $labels = array(
-		'greaterThan' => 'wcf.user.condition.registrationDateInterval.greaterThan',
-		'lessThan' => 'wcf.user.condition.registrationDateInterval.lessThan'
-	);
-	
-	/**
-	 * @see	\wcf\system\condition\AbstractIntegerCondition::$languageItemPrefix
-	 */
-	protected $languageItemPrefix = 'wcf.user.condition.registrationDateInterval';
-	
-	/**
-	 * @see	\wcf\system\condition\AbstractIntegerCondition::$maxValueErrorMessage
-	 */
-	protected $maxValueErrorMessage = 'wcf.user.condition.integerProperty.error.maxValue';
+	protected $label = 'wcf.user.condition.registrationDateInterval';
 	
 	/**
 	 * @see	\wcf\system\condition\AbstractIntegerCondition::$minValue
 	 */
 	protected $minValue = 0;
-	
-	/**
-	 * @see	\wcf\system\condition\AbstractIntegerCondition::$minValueErrorMessage
-	 */
-	protected $minValueErrorMessage = 'wcf.user.condition.integerProperty.error.minValue';
 	
 	/**
 	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
@@ -78,13 +60,6 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
 	 */
 	protected function getIdentifier() {
 		return 'user_registrationDateInterval';
-	}
-	
-	/**
-	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::getLabel()
-	 */
-	protected function getLabel($identifier) {
-		return WCF::getLanguage()->get('wcf.user.condition.registrationDateInterval.'.$identifier);
 	}
 	
 	/**

@@ -1634,6 +1634,16 @@ Fehler sind beispielsweise:
 		<item name="wcf.comment.guestDialog.title"><![CDATA[TODO]]></item>
 	</category>
 	
+	<category name="wcf.condition">
+		<item name="wcf.condition.greaterThan"><![CDATA[mehr als]]></item>
+		<item name="wcf.condition.greaterThan.error.lessThan"><![CDATA[Der Minimalwert und der Maximalwert sind widersprüchlich.]]></item>
+		<item name="wcf.condition.greaterThan.error.maxValue"><![CDATA[Der Maximalwert darf nicht größer sein als {#$maxValue}.]]></item>
+		<item name="wcf.condition.greaterThan.error.minValue"><![CDATA[Der Maximalwert darf nicht kleiner sein als {#$minValue}.]]></item>
+		<item name="wcf.condition.lessThan"><![CDATA[weniger als]]></item>
+		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[Der Minimalwert darf nicht größer sein als {#$maxValue}.]]></item>
+		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[Der Minimalwert darf nicht kleiner sein als {#$minValue}.]]></item>
+	</category>
+	
 	<category name="wcf.dashboard">
 		<item name="wcf.dashboard.box.availableBoxes"><![CDATA[Deaktivierte Boxen]]></item>
 		<item name="wcf.dashboard.box.enabledBoxes"><![CDATA[Aktive Boxen]]></item>
@@ -2690,9 +2700,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 	</category>
 	
 	<category name="wcf.user.condition">
-		<item name="wcf.user.condition.activityPoints.greaterThan"><![CDATA[Punkte mehr als]]></item>
-		<item name="wcf.user.condition.activityPoints.greaterThan.error.lessThan"><![CDATA[Die Werte in „Punkte weniger als“ und „Punkte mehr als“ sind widersprüchlich.]]></item>
-		<item name="wcf.user.condition.activityPoints.lessThan"><![CDATA[Punkte weniger als]]></item>
+		<item name="wcf.user.condition.activityPoints"><![CDATA[Punkte]]></item>
 		<item name="wcf.user.condition.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.condition.avatar.avatar"><![CDATA[Eigener Avatar]]></item>
 		<item name="wcf.user.condition.avatar.gravatar"><![CDATA[Gravatar]]></item>
@@ -2702,12 +2710,8 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.condition.conditionGroup.userOptions"><![CDATA[Persönliche Daten]]></item>
 		<item name="wcf.user.condition.groupIDs"><![CDATA[in Benutzergruppen]]></item>
 		<item name="wcf.user.condition.groupIDs.description"><![CDATA[Benutzer müssen in den ausgewählten Benutzergruppen Mitglied sein.]]></item>
-		<item name="wcf.user.condition.integerProperty.error.maxValue"><![CDATA[Der Wert darf nicht kleiner sein {#$minValue}.]]></item>
-		<item name="wcf.user.condition.integerProperty.error.minValue"><![CDATA[Der Wert muss größer sein als {#$minValue}.]]></item>
 		<item name="wcf.user.condition.languages"><![CDATA[Sprachen]]></item>
-		<item name="wcf.user.condition.likesReceived.greaterThan"><![CDATA[Erhaltene Likes mehr als]]></item>
-		<item name="wcf.user.condition.likesReceived.greaterThan.error.lessThan"><![CDATA[Die Werte in „Erhaltene Likes weniger als“ und „Erhaltene Likes mehr als“ sind widersprüchlich.]]></item>
-		<item name="wcf.user.condition.likesReceived.lessThan"><![CDATA[Erhaltene Likes weniger als]]></item>
+		<item name="wcf.user.condition.likesReceived"><![CDATA[Erhaltene Likes]]></item>
 		<item name="wcf.user.condition.notGroupIDs"><![CDATA[nicht in Benutzergruppen]]></item>
 		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Benutzer dürfen in den ausgewählten Benutzergruppen nicht Mitglied sein.]]></item>
 		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[Die ausgewählten Benutzergruppen in „in Benutzergruppen“ und „nicht in Benutzergruppen“ sind widersprüchlich.]]></item>
@@ -2715,9 +2719,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.condition.registrationDate.error.endBeforeStart"><![CDATA[Das Enddatum ist vor dem Startdatum.]]></item>
 		<item name="wcf.user.condition.registrationDate.error.endNotValid"><![CDATA[Das Startdatum ist ungültig.]]></item>
 		<item name="wcf.user.condition.registrationDate.error.startNotValid"><![CDATA[Das Enddatum ist ungültig.]]></item>
-		<item name="wcf.user.condition.registrationDateInterval.greaterThan"><![CDATA[mehr als X Tage registiert]]></item>
-		<item name="wcf.user.condition.registrationDateInterval.greaterThan.error.lessThan"><![CDATA[Die Werte in „weniger als X Tage registiert“ und „mehr als X Tage registiert“ sind widersprüchlich.]]></item>
-		<item name="wcf.user.condition.registrationDateInterval.lessThan"><![CDATA[weniger als X Tage registiert]]></item>
+		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Tage seit Registierung]]></item>
 		<item name="wcf.user.condition.state"><![CDATA[Zustand]]></item>
 		<item name="wcf.user.condition.state.isBanned"><![CDATA[Gesperrt]]></item>
 		<item name="wcf.user.condition.state.isBanned.error.conflict"><![CDATA[„Gesperrt“ und „Nicht gesperrt“ können nicht gleichzeitig ausgewählt werden.]]></item>

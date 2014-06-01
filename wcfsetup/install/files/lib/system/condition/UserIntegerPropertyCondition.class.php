@@ -19,25 +19,6 @@ use wcf\system\WCF;
  */
 class UserIntegerPropertyCondition extends AbstractIntegerCondition implements IContentCondition, IUserCondition {
 	/**
-	 * @see	\wcf\system\condition\AbstractIntegerCondition::$maxValueErrorMessage
-	 */
-	protected $maxValueErrorMessage = 'wcf.user.condition.integerProperty.error.maxValue';
-	
-	/**
-	 * @see	\wcf\system\condition\AbstractIntegerCondition::$minValueErrorMessage
-	 */
-	protected $minValueErrorMessage = 'wcf.user.condition.integerProperty.error.minValue';
-	
-	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::__construct()
-	 */
-	public function __construct(DatabaseObject $object) {
-		parent::__construct($object);
-		
-		$this->languageItemPrefix = 'wcf.user.condition.'.$this->getDecoratedObject()->propertyname;
-	}
-	
-	/**
 	 * @see	\wcf\system\condition\IUserCondition::addUserCondition()
 	 */
 	public function addUserCondition(Condition $condition, UserList $userList) {
@@ -71,10 +52,10 @@ class UserIntegerPropertyCondition extends AbstractIntegerCondition implements I
 	}
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::getLabel()
+	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::getLabel()
 	 */
-	protected function getLabel($identifier) {
-		return WCF::getLanguage()->get('wcf.user.condition.'.$this->getDecoratedObject()->propertyname.'.'.$identifier);
+	protected function getLabel() {
+		return WCF::getLanguage()->get('wcf.user.condition.'.$this->getDecoratedObject()->propertyname);
 	}
 	
 	/**

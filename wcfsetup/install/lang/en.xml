@@ -1575,6 +1575,16 @@ Errors are:
 		<item name="wcf.comment.guestDialog.title"><![CDATA[TODO]]></item>
 	</category>
 	
+	<category name="wcf.condition">
+		<item name="wcf.condition.greaterThan"><![CDATA[greater than]]></item>
+		<item name="wcf.condition.greaterThan.error.lessThan"><![CDATA[The minimal value and the maximum value are conflicting.]]></item>
+		<item name="wcf.condition.greaterThanerror.maxValue"><![CDATA[The maximum value may not be greater than {#$maxValue}.]]></item>
+		<item name="wcf.condition.greaterThan.error.minValue"><![CDATA[The maximum value may not be less than {#$minValue}.]]></item>
+		<item name="wcf.condition.lessThan"><![CDATA[less than]]></item>
+		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[The minimal value may not be greater than {#$maxValue}.]]></item>
+		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[The minimal value may not be less than {#$minValue}.]]></item>
+	</category>
+	
 	<category name="wcf.dashboard">
 		<item name="wcf.dashboard.box.availableBoxes"><![CDATA[Disabled Boxes]]></item>
 		<item name="wcf.dashboard.box.enabledBoxes"><![CDATA[Active Boxes]]></item>
@@ -2510,9 +2520,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 	</category>
 	
 	<category name="wcf.user.condition">
-		<item name="wcf.user.condition.activityPoints.greaterThan"><![CDATA[Points Greater Than]]></item>
-		<item name="wcf.user.condition.activityPoints.greaterThan.error.lessThan"><![CDATA[The values in “Points Less Than“ and “Points Greater Than“ are conflicting.]]></item>
-		<item name="wcf.user.condition.activityPoints.lessThan"><![CDATA[Points Less Than]]></item>
+		<item name="wcf.user.condition.activityPoints"><![CDATA[Points]]></item>
 		<item name="wcf.user.condition.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.condition.avatar.avatar"><![CDATA[Own Avatar]]></item>
 		<item name="wcf.user.condition.avatar.gravatar"><![CDATA[Gravatar]]></item>
@@ -2522,12 +2530,8 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.condition.conditionGroup.userOptions"><![CDATA[Personal Data]]></item>
 		<item name="wcf.user.condition.groupIDs"><![CDATA[in User Groups]]></item>
 		<item name="wcf.user.condition.groupIDs.description"><![CDATA[Users have to be a member of the selected user groups.]]></item>
-		<item name="wcf.user.condition.integerProperty.error.maxValue"><![CDATA[The value may not be less than {#$minValue}.]]></item>
-		<item name="wcf.user.condition.integerProperty.error.minValue"><![CDATA[The value has to be greater than {#$minValue}.]]></item>
 		<item name="wcf.user.condition.languages"><![CDATA[Languages]]></item>
-		<item name="wcf.user.condition.likesReceived.greaterThan"><![CDATA[Likes Received Greater Than]]></item>
-		<item name="wcf.user.condition.likesReceived.greaterThan.error.lessThan"><![CDATA[The values in “Likes Received Less Than“ and “Likes Received Greater Than“ are conflicting.]]></item>
-		<item name="wcf.user.condition.likesReceived.lessThan"><![CDATA[Likes Received Less Than]]></item>
+		<item name="wcf.user.condition.likesReceived"><![CDATA[Likes Received]]></item>
 		<item name="wcf.user.condition.notGroupIDs"><![CDATA[not in User Groups]]></item>
 		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Users may not be a member of the selected user groups.]]></item>
 		<item name="wcf.user.condition.notGroupIDs.error.groupIDsIntersection"><![CDATA[The selected user groups in “in User Groups“ and “not in User Groups“ are conflicting.]]></item>
@@ -2535,9 +2539,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.condition.registrationDate.error.endBeforeStart"><![CDATA[The end date is prior to the start date.]]></item>
 		<item name="wcf.user.condition.registrationDate.error.endNotValid"><![CDATA[The start date is not valid.]]></item>
 		<item name="wcf.user.condition.registrationDate.error.startNotValid"><![CDATA[The end date is not valid.]]></item>
-		<item name="wcf.user.condition.registrationDateInterval.greaterThan"><![CDATA[registered less than X days ago]]></item>
-		<item name="wcf.user.condition.registrationDateInterval.greaterThan.error.lessThan"><![CDATA[The values in “registered less than X days ago“ and “registered more than X days ago“ are conflicting.]]></item>
-		<item name="wcf.user.condition.registrationDateInterval.lessThan"><![CDATA[registered more than X days ago]]></item>
+		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Days since registration]]></item>
 		<item name="wcf.user.condition.state"><![CDATA[State]]></item>
 		<item name="wcf.user.condition.state.isBanned"><![CDATA[Banned]]></item>
 		<item name="wcf.user.condition.state.isBanned.error.conflict"><![CDATA[You may not simultaneously select “Banned“ and “Not Banned“.]]></item>
