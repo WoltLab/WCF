@@ -191,14 +191,6 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	\wcf\system\Callback	$callback
 	 */
 	protected function compileStylesheet($filename, array $files, array $variables, $individualLess, Callback $callback) {
-		// escape variable values containing a forward slash
-		foreach ($variables as &$value) {
-			if (strpos($value, '/') !== false) {
-				$value = '~"'.$value.'"';
-			}
-		}
-		unset($value);
-		
 		// add options as LESS variables
 		if (PACKAGE_ID) {
 			foreach (Option::getOptions() as $constantName => $option) {
