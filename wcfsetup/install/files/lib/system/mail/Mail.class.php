@@ -169,7 +169,7 @@ class Mail {
 	}
 	
 	/**
-	 * Creates and returned the recipients list (TO, CC, BCC).
+	 * Creates and returns the recipients list (TO, CC, BCC).
 	 * 
 	 * @param	boolean		$withTo
 	 * @return	string
