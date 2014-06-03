@@ -18,7 +18,7 @@ class IntegerOptionType extends TextOptionType {
 	/**
 	 * @see	\wcf\system\option\TextOptionType::$inputClass
 	 */
-	protected $inputClass = 'medium';
+	protected $inputClass = 'short';
 	
 	/**
 	 * @see	\wcf\system\option\IOptionType::getFormElement()

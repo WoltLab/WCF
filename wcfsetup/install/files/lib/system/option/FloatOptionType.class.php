@@ -17,7 +17,7 @@ class FloatOptionType extends TextOptionType {
 	/**
 	 * @see	\wcf\system\option\TextOptionType::$inputClass
 	 */
-	protected $inputClass = 'medium';
+	protected $inputClass = 'short textRight';
 	
 	/**
 	 * @see	\wcf\system\option\IOptionType::getFormElement()
