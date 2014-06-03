@@ -49,7 +49,7 @@ class UserSearchForm extends UserOptionListForm {
 	 * user id
 	 * @var	integer
 	 */
-	public $userID = 0;
+	public $userID = null;
 	
 	/**
 	 * group ids
@@ -198,7 +198,7 @@ class UserSearchForm extends UserOptionListForm {
 		
 		if (isset($_POST['username'])) $this->username = StringUtil::trim($_POST['username']);
 		if (isset($_POST['email'])) $this->email = StringUtil::trim($_POST['email']);
-		if (isset($_POST['userID'])) $this->userID = intval($_POST['userID']);
+		if (!empty($_POST['userID'])) $this->userID = intval($_POST['userID']);
 		if (isset($_POST['groupIDs']) && is_array($_POST['groupIDs'])) $this->groupIDs = ArrayUtil::toIntegerArray($_POST['groupIDs']);
 		if (isset($_POST['languageIDs']) && is_array($_POST['languageIDs'])) $this->languageIDs = ArrayUtil::toIntegerArray($_POST['languageIDs']);
 		if (isset($_POST['invertGroupIDs'])) $this->invertGroupIDs = intval($_POST['invertGroupIDs']);

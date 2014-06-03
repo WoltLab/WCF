@@ -70,7 +70,7 @@
 				<dl>
 					<dt><label for="userID">{lang}wcf.user.userID{/lang}</label></dt>
 					<dd>
-						<input type="text" id="userID" name="userID" value="{$userID}" class="short" />
+						<input type="number" id="userID" name="userID" value="{$userID}" class="short" />
 					</dd>
 				</dl>
 				
