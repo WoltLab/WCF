@@ -355,7 +355,7 @@ class UserSearchForm extends UserOptionListForm {
 			$this->conditions->add("user_table.username LIKE ?", array('%'.addcslashes($this->username, '_%').'%'));
 		}
 		if (!empty($this->userID)) {
-			$this->conditions->add("user_table.userID LIKE ?", array('%'.$this->userID.'%'));
+			$this->conditions->add("user_table.userID = ?", array($this->userID));
 		}
 		if (!empty($this->email)) {
 			$this->conditions->add("user_table.email LIKE ?", array('%'.addcslashes($this->email, '_%').'%'));
