@@ -17,23 +17,30 @@
 			if (ev.data.type == 'html') {
 				var $value = ev.data.dataValue;
 				
-				// Convert <br> to line breaks.
-				$value = $value.replace(/<br><\/p>/gi,"\n\n");
-				$value = $value.replace(/<br>/gi, "\n");
-				$value = $value.replace(/<\/p>/gi,"\n\n");
-				$value = $value.replace(/&nbsp;/gi," ");
-				
-				// convert div-separated content into new lines
-				$value = $value.replace(/<div([^>])>/gi, '');
-				$value = $value.replace(/<\/div>/gi, "\n");
-				
-				// convert lists into new lines
-				$value = $value.replace(/<\/li>/gi, "\n");
-				// remove html tags
-				$value = $value.replace(/<[^>]+>/g, '');
-				
-				// fix multiple new lines
-				$value = $value.replace(/\n{3,}/gi,"\n\n");
+				// check if an URL with square brackets has been pasted in Firefox (Firefox violates the encoding rules)
+				// see https://bugzilla.mozilla.org/show_bug.cgi?id=473822
+				if ($.browser.mozilla && $value.match(/^http[\S]+$/i)) {
+					$value = $value.replace(/\[([^\]]+)\]=/g, '%5B$1%5D=');
+				}
+				else {
+					// Convert <br> to line breaks.
+					$value = $value.replace(/<br><\/p>/gi,"\n\n");
+					$value = $value.replace(/<br>/gi, "\n");
+					$value = $value.replace(/<\/p>/gi,"\n\n");
+					$value = $value.replace(/&nbsp;/gi," ");
+					
+					// convert div-separated content into new lines
+					$value = $value.replace(/<div([^>])>/gi, '');
+					$value = $value.replace(/<\/div>/gi, "\n");
+					
+					// convert lists into new lines
+					$value = $value.replace(/<\/li>/gi, "\n");
+					// remove html tags
+					$value = $value.replace(/<[^>]+>/g, '');
+					
+					// fix multiple new lines
+					$value = $value.replace(/\n{3,}/gi,"\n\n");
+				}
 				
 				ev.data.dataValue = $value;
 				
