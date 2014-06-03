@@ -668,6 +668,8 @@ debug:mail_debug_logfile_path,!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>25</defaultvalue>
+				<minvalue>0</minvalue>
+				<maxvalue>65535</maxvalue>
 			</option>
 			<option name="mail_smtp_user">
 				<categoryname>general.mail.send</categoryname>
@@ -725,11 +727,13 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<categoryname>message.attachment</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue><![CDATA[210]]></defaultvalue>
+				<minvalue>96</minvalue>
 			</option>
 			<option name="attachment_thumbnail_width">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue><![CDATA[280]]></defaultvalue>
+				<minvalue>96</minvalue>
 			</option>
 			
 			<!-- message.general -->
@@ -795,6 +799,7 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<categoryname>user.password</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue><![CDATA[8]]></defaultvalue>
+				<minvalue>0</minvalue>
 			</option>
 			<option name="register_password_must_contain_lower_case">
 				<categoryname>user.password</categoryname>
@@ -962,6 +967,7 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<categoryname>user.signature</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>150</defaultvalue>
+				<minvalue>0</minvalue>
 			</option>
 			<!-- /user.signature -->
 			
@@ -999,6 +1005,8 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<categoryname>user.list.members</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>30</defaultvalue>
+				<minvalue>5</minvalue>
+				<maxvalue>100</maxvalue>
 			</option>
 			<option name="members_list_default_sort_field">
 				<categoryname>user.list.members</categoryname>
@@ -1100,12 +1108,16 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<categoryname>dashboard.content.recentActivities</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>10</defaultvalue>
+				<minvalue>5</minvalue>
+				<maxvalue>100</maxvalue>
 			</option>
 			
 			<option name="recent_activity_sidebar_items">
 				<categoryname>dashboard.sidebar.recentActivities</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>5</defaultvalue>
+				<minvalue>5</minvalue>
+				<maxvalue>50</maxvalue>
 			</option>
 			<!-- /dashboard -->
 			
