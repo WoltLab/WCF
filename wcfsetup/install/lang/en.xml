@@ -611,6 +611,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Sending]]></item>
 		<item name="wcf.acp.option.category.general.page"><![CDATA[Page]]></item>
+		<item name="wcf.acp.option.category.general.page.seo"><![CDATA[TODO: Suchmaschinenoptimierung (SEO)]]></item>
 		<item name="wcf.acp.option.category.message"><![CDATA[Messages]]></item>
 		<item name="wcf.acp.option.category.message.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.module"><![CDATA[Module]]></item>
@@ -901,6 +902,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[TODO: Enable Privacy Policy page]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[TODO: Erklärung zum „Einsatz von Cookies“ aktivieren]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[TODO: Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
+		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[TODO: „index.php“ aus URLs entfernen]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[TODO]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

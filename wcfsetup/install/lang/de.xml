@@ -641,6 +641,7 @@
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Versand]]></item>
 		<item name="wcf.acp.option.category.general.page"><![CDATA[Seite]]></item>
+		<item name="wcf.acp.option.category.general.page.seo"><![CDATA[Suchmaschinenoptimierung (SEO)]]></item>
 		<item name="wcf.acp.option.category.message"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.option.category.message.general"><![CDATA[Allgemein]]></item>
 		<item name="wcf.acp.option.category.module"><![CDATA[Module]]></item>
@@ -930,6 +931,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[Datenschutzerklärung aktivieren]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Erklärung zum „Einsatz von Cookies“ aktivieren]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
+		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[„index.php“ aus URLs entfernen]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[TODO]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

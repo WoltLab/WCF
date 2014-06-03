@@ -301,7 +301,7 @@ class Route {
 			}
 		}
 		
-		if (!empty($link)) {
+		if (!empty($link) && ($this->isACP() || !URL_OMIT_INDEX_PHP)) {
 			$link = 'index.php/' . $link;
 		}
 		
