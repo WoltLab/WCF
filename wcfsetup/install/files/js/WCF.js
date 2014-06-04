@@ -6382,7 +6382,7 @@ WCF.System.FlexibleMenu = {
 	_registerTabMenus: function() {
 		// register tab menus
 		$('.tabMenuContainer:not(.jsFlexibleMenuEnabled)').each(function(index, tabMenuContainer) {
-			var $navigation = $(tabMenuContainer).children('nav');
+			var $navigation = $(tabMenuContainer).addClass('jsFlexibleMenuEnabled').children('nav');
 			if ($navigation.length && $navigation.find('> ul:eq(0) > li').length) {
 				WCF.System.FlexibleMenu.registerMenu($navigation.wcfIdentify());
 			}
