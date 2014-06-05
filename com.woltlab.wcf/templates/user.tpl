@@ -7,8 +7,6 @@
 	
 	<link rel="canonical" href="{link controller='User' object=$user}{/link}" />
 
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 	{event name='javascriptInclude'}
 	<script data-relocate="true">
 		//<![CDATA[

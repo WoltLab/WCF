@@ -1,6 +1,5 @@
 {if ($__wcf->getUser()->userID || $poll->canSeeResult() || $poll->canViewParticipants()) && !$__pollLoadedJavaScript|isset}
 	{assign var=__pollLoadedJavaScript value=true}
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Poll{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {

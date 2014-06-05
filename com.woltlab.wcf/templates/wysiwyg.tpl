@@ -75,7 +75,6 @@ $(function() {
 	});
 	
 	head.load([
-		'{@$__wcf->getPath()}js/WCF.Attachment{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}',
 		'{@$__wcf->getPath()}js/3rdParty/redactor/redactor{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}',
 		{if !ENABLE_DEBUG_MODE}
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wcombined.min.js?v={@$__wcfVersion}',

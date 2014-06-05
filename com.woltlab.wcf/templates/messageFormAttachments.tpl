@@ -34,7 +34,6 @@
 	{event name='fields'}
 </div>
 
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Attachment{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {

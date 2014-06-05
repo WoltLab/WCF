@@ -4,7 +4,6 @@
 	<title>{lang}wcf.user.lostPassword{/lang} - {PAGE_TITLE|language}</title>
 	{include file='headInclude'}
 	
-	<script data-relocate="true" src="{@$__wcf->getPath('wcf')}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {

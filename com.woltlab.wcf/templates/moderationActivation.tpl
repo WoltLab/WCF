@@ -5,7 +5,6 @@
 	
 	{include file='headInclude'}
 	
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
 	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
