@@ -1730,6 +1730,7 @@ WCF.Clipboard = {
 			window.location.href = $url;
 		}
 		
+		var $fireEvent = true;
 		if ($listItem.data('parameters').className && $listItem.data('parameters').actionName) {
 			if ($listItem.data('parameters').actionName === 'unmarkAll' || $listItem.data('parameters').objectIDs) {
 				var $confirmMessage = $listItem.data('internalData')['confirmMessage'];
@@ -1757,9 +1758,24 @@ WCF.Clipboard = {
 				}
 			}
 		}
+		else {
+			var $confirmMessage = $listItem.data('internalData')['confirmMessage'];
+			if ($confirmMessage) {
+				$fireEvent = false;
+				
+				WCF.System.Confirmation.show($confirmMessage, function(action) {
+					if (action === 'confirm') {
+						// fire event
+						$listItem.data('container').trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName'), $listItem.data('parameters') ]);
+					}
+				});
+			}
+		}
 		
-		// fire event
-		$listItem.data('container').trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName'), $listItem.data('parameters') ]);
+		if ($fireEvent) {
+			// fire event
+			$listItem.data('container').trigger('clipboardAction', [ $listItem.data('type'), $listItem.data('actionName'), $listItem.data('parameters') ]);
+		}
 	},
 	
 	/**

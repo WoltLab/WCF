@@ -1920,6 +1920,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.noSelection"><![CDATA[(Keine Auswahl)]]></item>
 		<item name="wcf.global.acp"><![CDATA[Administrationsoberfläche]]></item>
 		<item name="wcf.global.acp.short"><![CDATA[Administration]]></item>
+		<item name="wcf.global.worker.completed"><![CDATA[Aufgabe abgeschlossen]]></item>
 		<item name="wcf.global.worker.executing"><![CDATA[Aufgaben werden ausgeführt …]]></item>
 		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.global.noItems"><![CDATA[Es wurden keine Einträge gefunden.]]></item>
