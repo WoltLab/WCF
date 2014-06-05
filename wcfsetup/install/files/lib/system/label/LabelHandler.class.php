@@ -336,4 +336,20 @@ class LabelHandler extends SingletonFactory {
 		
 		return null;
 	}
+	
+	/**
+	 * Removes all assigned labels for given object ids.
+	 *
+	 * @param	integer			$objectTypeID
+	 * @param	array<integer>		$objectID
+	 */
+	public function removeLabels($objectTypeID, array $objectIDs) {
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("objectTypeID = ?", array($objectTypeID));
+		$conditions->add("objectID IN (?)", array($objectIDs));
+		$sql = "DELETE FROM	wcf".WCF_N."_label_object
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+	}
 }
