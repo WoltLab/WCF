@@ -1854,6 +1854,7 @@ Errors are:
 		<item name="wcf.global.noSelection"><![CDATA[(No Selection)]]></item>
 		<item name="wcf.global.acp"><![CDATA[Administration Control Panel]]></item>
 		<item name="wcf.global.acp.short"><![CDATA[Administration]]></item>
+		<item name="wcf.global.worker.completed"><![CDATA[Task completed]]></item>
 		<item name="wcf.global.worker.executing"><![CDATA[Executing …]]></item>
 		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.global.noItems"><![CDATA[There are no items.]]></item>
