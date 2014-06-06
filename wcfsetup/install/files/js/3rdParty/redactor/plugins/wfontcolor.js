@@ -12,12 +12,12 @@ RedactorPlugins.wfontcolor = {
 	 * Initializes the RedactorPlugins.wfontcolor plugin.
 	 */
 	init: function() {
-		this._createFontColorDropdown();
+		var $dropdown = this._createFontColorDropdown();
 		
 		this.buttonReplace('fontcolor', 'fontcolor', this.opts.curLang.fontcolor, $.proxy(function(btnName, $button, btnObject, e) {
 			this.dropdownShow(e, btnName);
 		}, this));
-		//this.buttonAwesome('fontcolor', 'fa-font');
+		this.buttonGet('fontcolor').data('dropdown', $dropdown);
 	},
 	
 	/**
@@ -36,16 +36,18 @@ RedactorPlugins.wfontcolor = {
 		for (var $i = 0, $length = $colors.length; $i < $length; $i++) {
 			var $color = $colors[$i];
 			
-			var $swatch = $('<a />').data('color', $color).css('background-color', $color);
+			var $swatch = $('<a href="#" />').data('color', $color).css('background-color', $color);
 			$dropdown.append($swatch);
 			$swatch.click($.proxy(this._onColorPick, this));
 		}
 		
-		var $elNone = $('<a />').html(this.opts.curLang.none).data('color', 'none');
+		var $elNone = $('<a href="#" />').html(this.opts.curLang.none).data('color', 'none');
 		$elNone.click($.proxy(this._onColorPick, this));
 		
 		$dropdown.append($elNone);
 		$(this.$toolbar).append($dropdown);
+		
+		return $dropdown;
 	},
 	
 	/**
@@ -56,10 +58,6 @@ RedactorPlugins.wfontcolor = {
 	_onColorPick: function(event) {
 		event.preventDefault();
 		
-		//this.bufferSet();
-		
-		//this.$editor.focus();
-		
 		var $color = $(event.currentTarget).data('color');
 		if ($color === 'none') {
 			this.inlineRemoveStyle('color');
@@ -67,8 +65,5 @@ RedactorPlugins.wfontcolor = {
 		else {
 			this.inlineSetStyle('color', $color);
 		}
-		
-		/*if (this.opts.air) this.$air.fadeOut(100);
-		this.sync();*/
 	}
 };
