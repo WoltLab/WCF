@@ -1667,6 +1667,10 @@ Fehler sind beispielsweise:
 		<item name="wcf.dashboard.box.com.woltlab.wcf.like.mostLikedMembers"><![CDATA[Mitglieder mit den meisten Likes]]></item>
 		<item name="wcf.dashboard.box.mostLikedMembers.likes"><![CDATA[{#$likedMember->likesReceived} Like{if $likedMember->likesReceived != 1}s{/if}]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysBirthdays"><![CDATA[Heutige Geburtstage]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysFollowingBirthdays"><![CDATA[Heutige Geburtstage von Nutzern, denen Sie folgen]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.usersOnlineSidebar"><![CDATA[Benutzer online]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.followingsOnlineSidebar"><![CDATA[Benutzer online, denen Sie folgen]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.staffOnlineSidebar"><![CDATA[Team-Mitglieder online]]></item>
 	</category>
 	
 	<category name="wcf.date">

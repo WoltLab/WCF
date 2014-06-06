@@ -45,5 +45,25 @@
 			<classname><![CDATA[wcf\system\dashboard\box\TodaysBirthdaysDashboardBox]]></classname>
 			<boxtype>sidebar</boxtype>
 		</dashboardbox>
+		
+		<dashboardbox name="com.woltlab.wcf.user.todaysFollowingBirthdays">
+			<classname><![CDATA[wcf\system\dashboard\box\TodaysFollowingBirthdaysDashboardBox]]></classname>
+			<boxtype>sidebar</boxtype>
+		</dashboardbox>
+		
+		<dashboardbox name="com.woltlab.wcf.user.usersOnlineSidebar">
+			<classname><![CDATA[wcf\system\dashboard\box\UsersOnlineSidebarDashboardBox]]></classname>
+			<boxtype>sidebar</boxtype>
+		</dashboardbox>
+		
+		<dashboardbox name="com.woltlab.wcf.user.followingsOnlineSidebar">
+			<classname><![CDATA[wcf\system\dashboard\box\FollowingsOnlineSidebarDashboardBox]]></classname>
+			<boxtype>sidebar</boxtype>
+		</dashboardbox>
+		
+		<dashboardbox name="com.woltlab.wcf.user.staffOnlineSidebar">
+			<classname><![CDATA[wcf\system\dashboard\box\StaffOnlineSidebarDashboardBox]]></classname>
+			<boxtype>sidebar</boxtype>
+		</dashboardbox>
 	</import>
 </data>
