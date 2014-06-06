@@ -12,12 +12,12 @@ RedactorPlugins.wfontcolor = {
 	 * Initializes the RedactorPlugins.wfontcolor plugin.
 	 */
 	init: function() {
-		this._createFontColorDropdown();
+		var $dropdown = this._createFontColorDropdown();
 		
 		this.buttonReplace('fontcolor', 'fontcolor', this.opts.curLang.fontcolor, $.proxy(function(btnName, $button, btnObject, e) {
 			this.dropdownShow(e, btnName);
 		}, this));
-		//this.buttonAwesome('fontcolor', 'fa-font');
+		this.buttonGet('fontcolor').data('dropdown', $dropdown);
 	},
 	
 	/**
@@ -46,6 +46,8 @@ RedactorPlugins.wfontcolor = {
 		
 		$dropdown.append($elNone);
 		$(this.$toolbar).append($dropdown);
+		
+		return $dropdown;
 	},
 	
 	/**
