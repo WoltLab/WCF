@@ -21,8 +21,7 @@
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
-		if (!$.browser.ckeditor) $('#smiliesTab, #smilies').remove();
-		WCF.TabMenu.init();
+		if (!$.browser.redactor) $('#smiliesTab, #smilies').remove();
 	});
 	//]]>
 </script>
