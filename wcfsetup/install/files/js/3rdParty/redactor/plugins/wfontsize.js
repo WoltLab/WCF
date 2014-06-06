@@ -19,8 +19,9 @@ RedactorPlugins.wfontsize = {
 			$dropdown['fontSize' + $i] = {
 				title: $fontSize,
 				className: 'wfontsize-' + $fontSize,
-				callback: function() {
-					self.inlineSetStyle('font-size', $fontSize + 'pt');
+				fontSize: $fontSize,
+				callback: function(name, button, object, event) {
+					self.inlineSetStyle('font-size', object.fontSize + 'pt');
 				}
 			};
 		}
