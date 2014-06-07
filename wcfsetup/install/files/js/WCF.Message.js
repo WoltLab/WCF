@@ -3335,11 +3335,8 @@ WCF.Message.UserMention = Class.extend({
 		// insert username
 		if (username.indexOf("'") !== -1) {
 			username = username.replace(/'/g, "''");
-			username = "'" + username + "'";
 		}
-		else if (username.indexOf(' ') !== -1) {
-			username = "'" + username + "'";
-		}
+		username = "'" + username + "'";
 		var $usernameNode = new CKEDITOR.dom.text('@' + username);
 		$range.insertNode($usernameNode);
 		$range.selectNodeContents($usernameNode);
