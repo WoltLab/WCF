@@ -170,7 +170,7 @@
 				<categoryname>profile.contact</categoryname>
 				<optiontype>text</optiontype>
 				<outputclass>wcf\system\option\user\GooglePlusUserOptionOutput</outputclass>
-				<validationpattern>^$|^\d{21}$|^\+[A-Za-z\d%öÖäÄüÜß]+$</validationpattern>
+				<validationpattern>^$|^\d{21}$|^\+\S[^/]+$</validationpattern>
 				<contentpattern>^https?://(?:plus|www).google(?:apis)?.com(?:/\w+/\w+(?:/\w)?)?/(\d{21}|\+\S[^/]+)$</contentpattern>
 				<searchable>1</searchable>
 				<visible>15</visible>
