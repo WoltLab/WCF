@@ -14,6 +14,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
+use wcf\system\event\EventHandler;
 
 /**
  * Executes user-related actions.
@@ -325,6 +326,41 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			
 			if (!empty($languageIDs)) {
 				$userEditor->addToLanguages($languageIDs);
+			}
+		}
+		
+		// handle user rename
+		if (count($this->objects) == 1 && !empty($this->parameters['data']['username'])) {
+			if ($this->objects[0]->username != $this->parameters['data']['username']) {
+				$userID = $this->objects[0]->userID;
+				$username = $this->parameters['data']['username'];
+				
+				WCF::getDB()->beginTransaction();
+				
+				// update comments
+				$sql = "UPDATE	wcf".WCF_N."_comment
+					SET	username = ?
+					WHERE	userID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array($username, $userID));
+				
+				$sql = "UPDATE	wcf".WCF_N."_comment_response
+					SET	username = ?
+					WHERE	userID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array($username, $userID));
+				
+				// modification log
+				$sql = "UPDATE	wcf".WCF_N."_modification_log
+					SET	username = ?
+					WHERE	userID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array($username, $userID));
+				
+				WCF::getDB()->commitTransaction();
+				
+				// fire event to handle other database tables
+				EventHandler::getInstance()->fireAction($this, 'rename');
 			}
 		}
 	}
