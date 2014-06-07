@@ -2660,3 +2660,77 @@ WCF.ACP.Stat.Chart = Class.extend({
 		});
 	}
 });
+
+/**
+ * Namespace for ACP ad management.
+ */
+WCF.ACP.Ad = { };
+
+/**
+ * Handles the location of an ad during ad creation/editing.
+ */
+WCF.ACP.Ad.LocationHandler = Class.extend({
+	/**
+	 * fieldset of the page conditions
+	 * @var	jQuery
+	 */
+	_pageConditions: null,
+	
+	/**
+	 * select element for the page controller condition
+	 * @var	jQuery
+	 */
+	_pageControllers: null,
+	
+	/**
+	 * Initializes a new WCF.ACP.Ad.LocationHandler object.
+	 */
+	init: function() {
+		this._pageConditions = $('#pageConditions');
+		this._pageControllers = $('#pageControllers');
+		
+		// hide the page controller element
+		this._pageControllers.parents('dl:eq(0)').hide();
+		
+		// fix the margin of a potentially next page condition element
+		this._pageControllers.parents('dl:eq(0)').next('dl').css('margin-top', 0);
+		
+		$('#objectTypeID').on('change', $.proxy(this._setPageController, this));
+		
+		this._setPageController();
+		
+		$('#adForm').submit($.proxy(this._submit, this));
+	},
+	
+	/**
+	 * Sets the page controller based on the selected ad location.
+	 */
+	_setPageController: function() {
+		var $option = $('#objectTypeID').find('option:checked');
+		
+		// check if the selected ad location is bound to a specific page
+		if ($option.data('page')) {
+			// select the related page
+			this._pageControllers.val([this._pageControllers.children('option[data-object-type="' + $option.data('page') + '"]').val()]).change();
+		}
+		else {
+			this._pageControllers.val([]).change();
+		}
+	},
+	
+	/**
+	 * Handles submitting the ad form.
+	 */
+	_submit: function() {
+		if (this._pageConditions.is(':hidden')) {
+			// remove hidden page condition form elements to avoid creation
+			// of these conditions
+			this._pageConditions.find('select, input').remove();
+		}
+		else {
+			// reset page controller conditions to avoid creation of
+			// unnecessary conditions
+			this._pageControllers.val([]);
+		}
+	}
+});

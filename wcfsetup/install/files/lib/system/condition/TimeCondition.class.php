@@ -21,7 +21,7 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 	 * end time
 	 * @var	string
 	 */
-	protected $endTime = '';
+	protected $endTime = '00:00';
 	
 	/**
 	 * @see	\wcf\system\condition\AbstractMultipleFieldsCondition::$label
@@ -35,7 +35,7 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 	 * start time
 	 * @var	string
 	 */
-	protected $startTime = '';
+	protected $startTime = '00:00';
 
 	/**
 	 * timezone used to evaluate the start/end time
@@ -118,8 +118,8 @@ HTML;
 	 * @see	\wcf\system\condition\ICondition::reset()
 	 */
 	public function reset() {
-		$this->endTime = '';
-		$this->startTime = '';
+		$this->endTime = '00:00';
+		$this->startTime = '00:00';
 		$this->timezone = 0;
 	}
 	
