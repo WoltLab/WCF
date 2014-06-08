@@ -1,7 +1,7 @@
 <ul class="sidebarBoxList">
 	{foreach from=$birthdayUserProfiles item=birthdayUserProfile}
-		<li class="box24">
-			<a href="{link controller='User' object=$birthdayUserProfile}{/link}" class="framed">{@$birthdayUserProfile->getAvatar()->getImageTag(24)}</a>
+		<li class="box32">
+			<a href="{link controller='User' object=$birthdayUserProfile}{/link}" class="framed">{@$birthdayUserProfile->getAvatar()->getImageTag(32)}</a>
 			
 			<div class="sidebarBoxHeadline">
 				<h3><a href="{link controller='User' object=$birthdayUserProfile}{/link}" class="userLink" data-user-id="{@$birthdayUserProfile->userID}">{$birthdayUserProfile->username}</a></h3>
@@ -11,7 +11,7 @@
 	{/foreach}
 </ul>
 
-{if $birthdayUserProfiles|count >= 1}
+{if $birthdayUserProfiles|count >= 5}
 	<a class="jsTodaysBirthdays button small more jsOnly">{lang}wcf.global.button.showAll{/lang}</a>
 	
 	<script data-relocate="true">

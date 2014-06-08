@@ -10978,6 +10978,11 @@ WCF.Condition.PageControllerDependence = Class.extend({
 		
 		this._pageControllerSelection = $('#pageControllers').change($.proxy(this._checkVisibility, this));
 		this._pageControllerContainer = this._pageControllerSelection.parents('dl:eq(0)');
+		this._fieldset = this._pageControllerContainer.parent('fieldset');
+		this._nextFieldset = this._fieldset.next('fieldset');
+		if (this._nextFieldset) {
+			this._nextFieldset.data('margin-top', this._nextFieldset.css('margin-top'));
+		}
 		
 		this._input = $('#' + inputIdentifier);
 		this._inputContainer = this._input.parents('dl:eq(0)');
@@ -11007,10 +11012,23 @@ WCF.Condition.PageControllerDependence = Class.extend({
 		if ($display) {
 			this._inputContainer.show();
 			this._input.enable();
+			this._fieldset.show();
+			
+			if (this._nextFieldset) {
+				this._nextFieldset.css('margin-top', this._nextFieldset.data('margin-top'));
+			}
 		}
 		else {
 			this._inputContainer.hide();
 			this._input.disable();
+			
+			if (!this._fieldset.children('dl:visible').length) {
+				this._fieldset.hide();
+				
+				if (this._nextFieldset) {
+					this._nextFieldset.css('margin-top', 0);
+				}
+			}
 		}
 	}
 });

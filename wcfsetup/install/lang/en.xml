@@ -15,6 +15,34 @@
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canSetLabel"><![CDATA[Can set labels]]></item>
 	</category>
 	
+	<category name="wcf.acp.ad">
+		<item name="wcf.acp.ad.ad"><![CDATA[Ads]]></item>
+		<item name="wcf.acp.ad.ad.description"><![CDATA[Ad HTML Code]]></item>
+		<item name="wcf.acp.ad.add"><![CDATA[Add Ad]]></item>
+		<item name="wcf.acp.ad.conditions"><![CDATA[Conditions]]></item>
+		<item name="wcf.acp.ad.conditions.description"><![CDATA[If you choose no conditions, the ad will be shown for every user.]]></item>
+		<item name="wcf.acp.ad.conditions.page"><![CDATA[Page]]></item>
+		<item name="wcf.acp.ad.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the ad to be shown.]]></item>
+		<item name="wcf.acp.ad.conditions.pointInTime"><![CDATA[Time]]></item>
+		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the ad is shown.]]></item>
+		<item name="wcf.acp.ad.conditions.user"><![CDATA[Active user]]></item>
+		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the ad.]]></item>
+		<item name="wcf.acp.ad.delete.confirmMessage"><![CDATA[Do you really want to delete this ad?]]></item>
+		<item name="wcf.acp.ad.edit"><![CDATA[Edit Ad]]></item>
+		<item name="wcf.acp.ad.isDisabled"><![CDATA[Disable Ad]]></item>
+		<item name="wcf.acp.ad.list"><![CDATA[Ads]]></item>
+		<item name="wcf.acp.ad.location"><![CDATA[Position]]></item>
+		<item name="wcf.acp.ad.location.category.com.woltlab.wcf.global"><![CDATA[global]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.logo"><![CDATA[Logo]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.header.content"><![CDATA[Content Area (top)]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.content"><![CDATA[Content Area (bottom)]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.top"><![CDATA[Sidebar (top)]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.bottom"><![CDATA[Sidebar (bottom)]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.bottom"><![CDATA[End of Page]]></item>
+		<item name="wcf.acp.ad.showOrder"><![CDATA[Order]]></item>
+		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Sets the order in which the ads are shown.]]></item>
+	</category>
+	
 	<category name="wcf.acp.application">
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie Settings]]></item>
 		<item name="wcf.acp.application.cookie.warning"><![CDATA[The setting below is used to establish a persistent login for your website; Keep in mind to update this value whenever the domain name changes. If you are unsure which value you need to provide, you can safely copy the value of “Domain”.]]></item>
@@ -385,8 +413,12 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatic User Group Assignments]]></item>
 		<item name="wcf.acp.group.assignment.userGroup"><![CDATA[User Group]]></item>
 		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Disable Automatic Assignment]]></item>
-		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[TODO: Maximallänge „Über mich“]]></item>
-		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[TODO: Kann Inhalte melden]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.notice"><![CDATA[Notices]]></item>
+		<item name="wcf.acp.group.option.admin.content.notice.canManageNotice"><![CDATA[Can manage notices]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.ad"><![CDATA[Ads]]></item>
+		<item name="wcf.acp.group.option.admin.content.ad.canManageAd"><![CDATA[Can manage ads]]></item>
+		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[“About Me” maximum length]]></item>
+		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Can report content]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -579,6 +611,36 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.maintenance.rebuildData"><![CDATA[Rebuild Data]]></item>
 		<item name="wcf.acp.menu.link.log.stat"><![CDATA[Statistics]]></item>
 		<item name="wcf.acp.menu.link.group.assignment"><![CDATA[Automatic Assignments]]></item>
+		<item name="wcf.acp.menu.link.notice"><![CDATA[Notices]]></item>
+		<item name="wcf.acp.menu.link.notice.add"><![CDATA[Add Notice]]></item>
+		<item name="wcf.acp.menu.link.notice.list"><![CDATA[List Notices]]></item>
+		<item name="wcf.acp.menu.link.ad"><![CDATA[Ad]]></item>
+		<item name="wcf.acp.menu.link.ad.add"><![CDATA[Add Ad]]></item>
+		<item name="wcf.acp.menu.link.ad.list"><![CDATA[List Ads]]></item>
+	</category>
+	
+	<category name="wcf.acp.notice">
+		<item name="wcf.acp.notice.add"><![CDATA[Add Notice]]></item>
+		<item name="wcf.acp.notice.conditions"><![CDATA[Conditions]]></item>
+		<item name="wcf.acp.notice.conditions.description"><![CDATA[If you choose no conditions, the notice will be shown for every user.]]></item>
+		<item name="wcf.acp.notice.conditions.page"><![CDATA[Page]]></item>
+		<item name="wcf.acp.notice.conditions.page.description"><![CDATA[The requested page has to fulfill the following conditions for the notice to be shown.]]></item>
+		<item name="wcf.acp.notice.conditions.pointInTime"><![CDATA[Time]]></item>
+		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[Sets the point in time at which the notice is shown.]]></item>
+		<item name="wcf.acp.notice.conditions.user"><![CDATA[Active user]]></item>
+		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the notice.]]></item>
+		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Do you really want to delete this notice?]]></item>
+		<item name="wcf.acp.notice.edit"><![CDATA[Edit Notices]]></item>
+		<item name="wcf.acp.notice.isDisabled"><![CDATA[Disable Notice]]></item>
+		<item name="wcf.acp.notice.isDismissible"><![CDATA[User can dismiss notice]]></item>
+		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[A notice one dismissed by a user will not be shown again for them.]]></item>
+		<item name="wcf.acp.notice.list"><![CDATA[Notices]]></item>
+		<item name="wcf.acp.notice.notice"><![CDATA[Notice]]></item>
+		<item name="wcf.acp.notice.noticeUseHtml"><![CDATA[Enable HTML code in notice]]></item>
+		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Dismissed notices will be shown again]]></item>
+		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[The notice will be shown again to users who dismissed the previous version. Guests who dismissed the notice will only see it in a new session.]]></item>
+		<item name="wcf.acp.notice.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Sets the order in which the notices are shown.]]></item>
 	</category>
 	
 	<category name="wcf.acp.option">
@@ -904,6 +966,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[TODO: Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[TODO: „index.php“ aus URLs entfernen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.module_ad"><![CDATA[Ads]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1608,6 +1671,10 @@ Errors are:
 		<item name="wcf.dashboard.box.com.woltlab.wcf.like.mostLikedMembers"><![CDATA[Most Liked Members]]></item>
 		<item name="wcf.dashboard.box.mostLikedMembers.likes"><![CDATA[{#$likedMember->likesReceived} Like{if $likedMember->likesReceived != 1}s{/if}]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysBirthdays"><![CDATA[Today’s Birthdays]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysFollowingBirthdays"><![CDATA[TODO: Heutige Geburtstage von Nutzern, denen Sie folgen]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.usersOnlineSidebar"><![CDATA[Users Online]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.followingsOnlineSidebar"><![CDATA[TODO: Benutzer online, denen Sie folgen]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.staffOnlineSidebar"><![CDATA[TODO: Team-Mitglieder online]]></item>
 	</category>
 	
 	<category name="wcf.date">
@@ -1781,6 +1848,13 @@ Errors are:
 		<item name="wcf.date.period.start"><![CDATA[from]]></item>
 		<item name="wcf.date.period.end"><![CDATA[to]]></item>
 		<item name="wcf.date.firstDayOfTheWeek"><![CDATA[0]]></item>
+		<item name="wcf.date.daysOfWeek"><![CDATA[Days of Week]]></item>
+		<item name="wcf.date.time"><![CDATA[Time]]></item>
+		<item name="wcf.date.timezone"><![CDATA[Timezone]]></item>
+		<item name="wcf.date.timezone.user"><![CDATA[Timezone of the user]]></item>
+		<item name="wcf.date.endTime.error.beforeStartTime"><![CDATA[The end time has to be after the start time.]]></item>
+		<item name="wcf.date.startTime.error.notValid"><![CDATA[The start time is invalid.]]></item>
+		<item name="wcf.date.endTime.error.notValid"><![CDATA[The end time is invalid.]]></item>
 	</category>
 	
 	<category name="wcf.global">
@@ -2551,6 +2625,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Approved]]></item>
 		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[You may not simultaneously select “Approved“ and “Awaiting Approval“.]]></item>
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Not Banned]]></item>
+		<item name="wcf.user.condition.usesMobileBrowser"><![CDATA[Uses mobile browser]]></item>
 	</category>
 	
 	<category name="wcf.user.notification">
@@ -2707,7 +2782,6 @@ If you do not want to receive further email notifications for this event, you ca
 	<category name="wcf.user.rank">
 		<item name="wcf.user.rank.administrator"><![CDATA[Administrator]]></item>
 		<item name="wcf.user.rank.moderator"><![CDATA[Moderator]]></item>
-		
 		<item name="wcf.user.rank.user0"><![CDATA[Beginner]]></item>
 		<item name="wcf.user.rank.user1"><![CDATA[Student]]></item>
 		<item name="wcf.user.rank.user2"><![CDATA[Intermediate]]></item>

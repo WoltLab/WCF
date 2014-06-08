@@ -111,6 +111,16 @@ CREATE TABLE wcf1_acp_template (
 	UNIQUE KEY applicationTemplate (application, templateName)
 );
 
+DROP TABLE IF EXISTS wcf1_ad;
+CREATE TABLE wcf1_ad (
+	adID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	objectTypeID INT(10) NOT NULL,
+	adName VARCHAR(255) NOT NULL,
+	ad MEDIUMTEXT,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	showOrder INT(10) NOT NULL DEFAULT 0
+);
+
 DROP TABLE IF EXISTS wcf1_application;
 CREATE TABLE wcf1_application (
 	packageID INT(10) NOT NULL PRIMARY KEY,
@@ -1372,6 +1382,8 @@ ALTER TABLE wcf1_acp_session_access_log ADD FOREIGN KEY (sessionLogID) REFERENCE
 ALTER TABLE wcf1_acp_session_log ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_acp_template ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_ad ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_application ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 

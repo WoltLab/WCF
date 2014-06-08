@@ -2,6 +2,15 @@
 				
 				{if $skipBreadcrumbs|empty}{include file='breadcrumbs' __microdata=false}{/if}
 				
+				{if MODULE_AD}
+					{hascontent}
+						<div class="marginTop">
+							{content}
+								{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.content')}
+							{/content}
+						</div>
+					{/hascontent}
+				{/if}
 			</section>
 			
 			{if $sidebarOrientation|isset && $sidebarOrientation == 'right'}
@@ -36,6 +45,8 @@
 			
 			{event name='copyright'}
 		</div>
+		
+		{if MODULE_AD}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.footer.bottom')}{/if}
 	</div>
 </footer>
 

@@ -674,6 +674,14 @@
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.user.mobileBrowser</name>
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserMobileBrowserCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		
+		<type>
 			<name>com.woltlab.wcf.user.birthday</name>
 			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
 			<classname><![CDATA[wcf\system\condition\UserBirthdayCondition]]></classname>
@@ -705,6 +713,152 @@
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>userOptions</conditiongroup>
 		</type>
-		<!-- /user group assignment conditions -->
+		<!-- /notice conditions -->
+		
+		<!-- ad locations -->
+		<type>
+			<name>com.woltlab.wcf.logo</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.global</categoryname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.header.content</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.global</categoryname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.footer.content</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.global</categoryname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.sidebar.top</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.global</categoryname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.sidebar.bottom</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.global</categoryname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.footer.bottom</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.global</categoryname>
+		</type>
+		<!-- /ad locations -->
+		
+		<!-- ad conditions -->
+		<type>
+			<name>com.woltlab.wcf.page.controller</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\MultiPageControllerCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.page</conditionobject>
+		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.pointInTime.daysOfWeek</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\DaysOfWeekCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.pointInTime</conditionobject>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.pointInTime.time</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\TimeCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.pointInTime</conditionobject>
+		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.user.username</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserUsernameCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.email</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserEmailCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.userGroup</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserGroupCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
+			<includeguests>1</includeguests>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.languages</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserLanguageCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.registrationDate</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserRegistrationDateCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.registrationDateInterval</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserRegistrationDateIntervalCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.avatar</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserAvatarCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.state</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserStateCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.mobileBrowser</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserMobileBrowserCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.user.activityPoints</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>activityPoints</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.likesReceived</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>likesReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.userOptions</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname><![CDATA[wcf\system\condition\UserOptionsCondition]]></classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>userOptions</conditiongroup>
+		</type>
+		<!-- /ad conditions -->
 	</import>
 </data>

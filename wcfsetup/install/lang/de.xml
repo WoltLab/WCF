@@ -15,6 +15,34 @@
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canSetLabel"><![CDATA[Kann Labels setzen]]></item>
 	</category>
 	
+	<category name="wcf.acp.ad">
+		<item name="wcf.acp.ad.ad"><![CDATA[Werbung]]></item>
+		<item name="wcf.acp.ad.ad.description"><![CDATA[HTML-Code der Werbung]]></item>
+		<item name="wcf.acp.ad.add"><![CDATA[Werbung hinzufügen]]></item>
+		<item name="wcf.acp.ad.conditions"><![CDATA[Bedingungen]]></item>
+		<item name="wcf.acp.ad.conditions.description"><![CDATA[Werden keine Bedingungen ausgewählt, wird die für jeden Benutzer angezeigt.]]></item>
+		<item name="wcf.acp.ad.conditions.page"><![CDATA[Seite]]></item>
+		<item name="wcf.acp.ad.conditions.page.description"><![CDATA[Die vom Benutzer aufgerufene Seite muss folgende Bedingungen erfüllen, damit die Werbung angezeigt wird.]]></item>
+		<item name="wcf.acp.ad.conditions.pointInTime"><![CDATA[Zeitpunkt]]></item>
+		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[Legen Sie den Zeitpunkt fest, zu dem die Werbung angezeigt werden soll.]]></item>
+		<item name="wcf.acp.ad.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
+		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit die Werbung angezeigt wird.]]></item>
+		<item name="wcf.acp.ad.delete.confirmMessage"><![CDATA[Wollen Sie diese Werbung wirklich löschen?]]></item>
+		<item name="wcf.acp.ad.edit"><![CDATA[Werbung bearbeiten]]></item>
+		<item name="wcf.acp.ad.isDisabled"><![CDATA[Werbung deaktivieren]]></item>
+		<item name="wcf.acp.ad.list"><![CDATA[Werbung]]></item>
+		<item name="wcf.acp.ad.location"><![CDATA[Position]]></item>
+		<item name="wcf.acp.ad.location.category.com.woltlab.wcf.global"><![CDATA[global]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.logo"><![CDATA[Logo]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.header.content"><![CDATA[Inhaltsbereich (oben)]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.content"><![CDATA[Inhaltsbereich (unten)]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.top"><![CDATA[Sidebar (oben)]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.bottom"><![CDATA[Sidebar (unten)]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.bottom"><![CDATA[Seitenende]]></item>
+		<item name="wcf.acp.ad.showOrder"><![CDATA[Reihenfolge]]></item>
+		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Werbung angezeigt werden.]]></item>
+	</category>
+	
 	<category name="wcf.acp.application">
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie-Einstellungen]]></item>
 		<item name="wcf.acp.application.cookie.warning"><![CDATA[Die folgenden Einstellungen stellen sicher, dass der Login gespeichert wird und ein automatischer Login möglich ist. Sie müssen diese Einstellungen anpassen, sollte sich die Domain geändert haben. Sollten Sie sich bei dem korrekten Wert nicht sicher sein, übernehmen Sie bitte die exakte Angabe im Feld „Domain“.]]></item>
@@ -388,6 +416,8 @@
 		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Automatische Zuordnung deaktivieren]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.notice"><![CDATA[Hinweise]]></item>
 		<item name="wcf.acp.group.option.admin.content.notice.canManageNotice"><![CDATA[Kann Hinweise verwalten]]></item>
+		<item name="wcf.acp.group.option.category.admin.content.ad"><![CDATA[Werbung]]></item>
+		<item name="wcf.acp.group.option.admin.content.ad.canManageAd"><![CDATA[Kann Werbung verwalten]]></item>
 		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximallänge „Über mich“]]></item>
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Kann Inhalte melden]]></item>
 	</category>
@@ -585,6 +615,9 @@
 		<item name="wcf.acp.menu.link.notice"><![CDATA[Hinweise]]></item>
 		<item name="wcf.acp.menu.link.notice.add"><![CDATA[Hinweis hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.notice.list"><![CDATA[Hinweise auflisten]]></item>
+		<item name="wcf.acp.menu.link.ad"><![CDATA[Werbung]]></item>
+		<item name="wcf.acp.menu.link.ad.add"><![CDATA[Werbung hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.ad.list"><![CDATA[Werbung auflisten]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -933,6 +966,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[„index.php“ aus URLs entfernen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.module_ad"><![CDATA[Werbung]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1667,6 +1701,10 @@ Fehler sind beispielsweise:
 		<item name="wcf.dashboard.box.com.woltlab.wcf.like.mostLikedMembers"><![CDATA[Mitglieder mit den meisten Likes]]></item>
 		<item name="wcf.dashboard.box.mostLikedMembers.likes"><![CDATA[{#$likedMember->likesReceived} Like{if $likedMember->likesReceived != 1}s{/if}]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysBirthdays"><![CDATA[Heutige Geburtstage]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysFollowingBirthdays"><![CDATA[Heutige Geburtstage von Nutzern, denen Sie folgen]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.usersOnlineSidebar"><![CDATA[Benutzer online]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.followingsOnlineSidebar"><![CDATA[Benutzer online, denen Sie folgen]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.staffOnlineSidebar"><![CDATA[Team-Mitglieder online]]></item>
 	</category>
 	
 	<category name="wcf.date">
@@ -2731,6 +2769,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Aktiviert]]></item>
 		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[„Aktiviert“ und „Nicht aktiviert“ können nicht gleichzeitig ausgewählt werden.]]></item>
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Nicht gesperrt]]></item>
+		<item name="wcf.user.condition.usesMobileBrowser"><![CDATA[Verwendet mobilen Browser]]></item>
 	</category>
 	
 	<category name="wcf.user.notification">

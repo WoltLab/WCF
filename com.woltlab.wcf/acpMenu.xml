@@ -508,6 +508,21 @@
 			<permissions>admin.content.notice.canManageNotice</permissions>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.ad">
+			<parent>wcf.acp.menu.link.content</parent>
+			<showorder>7</showorder>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.ad.list">
+			<controller><![CDATA[wcf\acp\page\AdListPage]]></controller>
+			<parent>wcf.acp.menu.link.ad</parent>
+			<permissions>admin.content.ad.canManageAd</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.ad.add">
+			<controller><![CDATA[wcf\acp\form\AdAddForm]]></controller>
+			<parent>wcf.acp.menu.link.ad</parent>
+			<permissions>admin.content.ad.canManageAd</permissions>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.community">
 			<showorder>5</showorder>
 		</acpmenuitem>

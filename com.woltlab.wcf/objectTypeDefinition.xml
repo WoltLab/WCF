@@ -162,5 +162,14 @@
 			<name>com.woltlab.wcf.condition.notice</name>
 			<interfacename><![CDATA[wcf\system\condition\IContentCondition]]></interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.adLocation</name>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.condition.ad</name>
+			<interfacename><![CDATA[wcf\system\condition\IContentCondition]]></interfacename>
+		</definition>
 	</import>
 </data>

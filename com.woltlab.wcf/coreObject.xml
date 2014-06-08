@@ -53,5 +53,9 @@
 		<coreobject>
 			<objectname><![CDATA[wcf\system\notice\NoticeHandler]]></objectname>
 		</coreobject>
+		
+		<coreobject>
+			<objectname><![CDATA[wcf\system\ad\AdHandler]]></objectname>
+		</coreobject>
 	</import>
 </data>
