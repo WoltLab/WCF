@@ -1,10 +1,10 @@
 <?php
 namespace wcf\system\dashboard\box;
-use wcf\data\dashboard\box\DashboardBox; 
+use wcf\data\dashboard\box\DashboardBox;
 use wcf\data\user\online\UsersOnlineList;
-use wcf\page\IPage; 
-use wcf\system\WCF;
+use wcf\page\IPage;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 
 /**
  * Lists all users who are online.
