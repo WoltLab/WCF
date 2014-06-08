@@ -9,12 +9,12 @@ use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
-use wcf\system\event\EventHandler;
 
 /**
  * Executes user-related actions.
