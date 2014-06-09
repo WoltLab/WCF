@@ -138,7 +138,7 @@ class StyleCompiler extends SingletonFactory {
 				// fix relative paths
 				$content = str_replace('../font/', '../../font/', $content);
 				$content = str_replace('../icon/', '../../icon/', $content);
-				$content = str_replace('../images/', '../../images/', $content);
+				$content = preg_replace('~\.\./images/(?!blueTemptation)~', '../../images/', $content);
 				
 				return "/* stylesheet for ACP, generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
 			})
