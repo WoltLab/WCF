@@ -6740,6 +6740,45 @@ WCF.System.Mobile.UX = {
 	}
 };
 
+/**
+ * Stores object references for global access.
+ */
+WCF.System.ObjectStore = {
+	/**
+	 * list of objects grouped by identifier
+	 * @var	object<array>
+	 */
+	_objects: { },
+	
+	/**
+	 * Adds a new object to the collection.
+	 * 
+	 * @param	string		identifier
+	 * @param	object		object
+	 */
+	add: function(identifier, obj) {
+		if (this._objects[identifier] === undefined) {
+			this._objects[identifier] = [ ];
+		}
+		
+		this._objects[identifier].push(obj);
+	},
+	
+	/**
+	 * Invokes a callback passing the matching objects as a parameter.
+	 * 
+	 * @param	string		identifier
+	 * @param	object		callback
+	 */
+	invoke: function(identifier, callback) {
+		if (this._objects[identifier]) {
+			for (var $i = 0; $i < this._objects[identifier].length; $i++) {
+				callback(this._objects[identifier][$i]);
+			}
+		}
+	}
+};
+
 WCF.System.Page = { };
 
 WCF.System.Page.Multiple = Class.extend({

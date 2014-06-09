@@ -1803,6 +1803,9 @@ WCF.User.ProfilePreview = WCF.Popover.extend({
 		this._proxy = new WCF.Action.Proxy({
 			showLoadingOverlay: false
 		});
+		
+		// register instance
+		WCF.System.ObjectStore.add('WCF.User.ProfilePreview', this);
 	},
 	
 	/**
@@ -1843,6 +1846,18 @@ WCF.User.ProfilePreview = WCF.Popover.extend({
 			});
 			this._proxy.sendRequest();
 		}
+	},
+	
+	/**
+	 * Purages a cached user profile.
+	 * 
+	 * @param	integer		userID
+	 */
+	purge: function(userID) {
+		delete this._userProfiles[userID];
+		
+		// purge content cache
+		this._data = { };
 	}
 });
 
@@ -1954,6 +1969,12 @@ WCF.User.Action.Follow = Class.extend({
 		
 		var $notification = new WCF.System.Notification();
 		$notification.show();
+		
+		// force rebuilding of popover cache
+		var self = this;
+		WCF.System.ObjectStore.invoke('WCF.User.ProfilePreview', function(profilePreview) {
+			profilePreview.purge(self._userID);
+		});
 	}
 });
 
@@ -2060,6 +2081,12 @@ WCF.User.Action.Ignore = Class.extend({
 		
 		var $notification = new WCF.System.Notification();
 		$notification.show();
+		
+		// force rebuilding of popover cache
+		var self = this;
+		WCF.System.ObjectStore.invoke('WCF.User.ProfilePreview', function(profilePreview) {
+			profilePreview.purge(self._userID);
+		});
 	}
 });
 
