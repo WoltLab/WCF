@@ -29,6 +29,7 @@ final class PasswordUtil {
 		'ipb3',		// Invision Power Board 3.x
 		'mybb1',	// MyBB 1.x
 		'phpbb3',	// phpBB 3.x
+		'phpass',	// phpass Portable Hashes
 		'smf1',		// Simple Machines Forum 1.x
 		'smf2',		// Simple Machines Forum 2.x
 		'vb3',		// vBulletin 3.x
@@ -42,6 +43,7 @@ final class PasswordUtil {
 		'joomla1',	// Joomla 1.x
 		'joomla2',	// Joomla 2.x
 		'joomla3',	// Joomla 3.x
+		'cryptMD5',
 	);
 	
 	/**
@@ -335,7 +337,6 @@ final class PasswordUtil {
 	protected static function mybb1($username, $password, $salt, $dbHash) {
 		return self::secureCompare($dbHash, md5(md5($salt) . md5($password)));
 	}
-	
 	/**
 	 * Validates the password hash for phpBB 3.x (phpbb3).
 	 * 
@@ -346,6 +347,19 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function phpbb3($username, $password, $salt, $dbHash) {
+		return self::phpass($username, $password, $salt, $dbHash);
+	}
+	
+	/**
+	 * Validates the password hash for phpass portable hashes (phpass).
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function phpass($username, $password, $salt, $dbHash) {
 		if (mb_strlen($dbHash) !== 34) {
 			return self::secureCompare(md5($password), $dbHash);
 		}
@@ -668,6 +682,23 @@ final class PasswordUtil {
 	 */
 	protected static function joomla3($username, $password, $salt, $dbHash) {
 		return self::joomla1($username, $password, $salt, $dbHash);
+	}
+	
+	/**
+	 * Validates the password hash for MD5 mode of crypt()
+	 * 
+	 * @param	string		$username
+	 * @param	string		$password
+	 * @param	string		$salt
+	 * @param	string		$dbHash
+	 * @return	boolean
+	 */
+	protected static function cryptMD5($username, $password, $salt, $dbHash) {
+		if (self::secureCompare($dbHash, self::getSaltedHash($password, $dbHash)) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	private function __construct() { }
