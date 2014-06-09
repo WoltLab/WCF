@@ -694,7 +694,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function cryptMD5($username, $password, $salt, $dbHash) {
-		if (self::secureCompare($dbHash, self::getSaltedHash($password, $dbHash)) {
+		if (self::secureCompare($dbHash, self::getSaltedHash($password, $dbHash))) {
 			return true;
 		}
 		
