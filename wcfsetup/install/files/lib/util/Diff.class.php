@@ -155,8 +155,12 @@ class Diff {
 			$y--;
 		}
 		
-		for ($i = 0; $i < $offsetStart; $i++) $lcs[$i] = $this->a[$i];
-		for ($i = 0; $i < $offsetEnd; $i++) $lcs[$lcsLength + $offsetStart + $i] = $this->a[$this->sizeA - 1 - ($offsetEnd - 1 - $i)];
+		for ($i = 0; $i < $offsetStart; $i++) {
+			$lcs[$i] = $this->a[$i];
+		}
+		for ($i = 0; $i < $offsetEnd; $i++) {
+			$lcs[$lcsLength + $offsetStart + $i] = $this->a[$this->sizeA - 1 - ($offsetEnd - 1 - $i)];
+		}
 		
 		return $lcs;
 	}
