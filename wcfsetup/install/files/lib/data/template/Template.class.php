@@ -46,18 +46,20 @@ class Template extends DatabaseObject {
 			$statement->execute(array($id));
 			$row = $statement->fetchArray();
 			
-			// get relative directory of the template the application
-			// belongs to
-			if ($row['application'] != 'wcf') {
-				$application = ApplicationHandler::getInstance()->getApplication($row['application']);
+			if ($row !== false) {
+				// get relative directory of the template the application
+				// belongs to
+				if ($row['application'] != 'wcf') {
+					$application = ApplicationHandler::getInstance()->getApplication($row['application']);
+				}
+				else {
+					$application = ApplicationHandler::getInstance()->getWCF();
+				}
+				$row['packageDir'] = PackageCache::getInstance()->getPackage($application->packageID)->packageDir;
 			}
 			else {
-				$application = ApplicationHandler::getInstance()->getWCF();
+				$row = array();
 			}
-			$row['packageDir'] = PackageCache::getInstance()->getPackage($application->packageID)->packageDir;
-			
-			// enforce data type 'array'
-			if ($row === false) $row = array();
 		}
 		else if ($object !== null) {
 			$row = $object->data;
