@@ -14,6 +14,7 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
+			{if $action == 'edit'}<li><a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" class="button"><span class="icon icon16 icon-exchange"></span> <span>{lang}wcf.acp.template.diff{/lang}</span></a></li>{/if}
 			<li><a href="{link controller='TemplateList'}{if $action == 'edit'}templateGroupID={@$template->templateGroupID}{/if}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.template.list{/lang}</span></a></li>
 			
 			{event name='contentNavigationButtons'}
@@ -31,9 +32,7 @@
 					<dt><label for="templateGroupID">{lang}wcf.acp.template.group{/lang}</label></dt>
 					<dd>
 						<select name="templateGroupID" id="templateGroupID">
-							{foreach from=$availableTemplateGroups item=availableTemplateGroup}
-								<option value="{@$availableTemplateGroup->templateGroupID}"{if $availableTemplateGroup->templateGroupID == $templateGroupID} selected="selected"{/if}>{$availableTemplateGroup->templateGroupName}</option>
-							{/foreach}
+							{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
 						</select>
 					</dd>
 				</dl>

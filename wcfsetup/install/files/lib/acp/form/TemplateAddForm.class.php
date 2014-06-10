@@ -3,7 +3,6 @@ namespace wcf\acp\form;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\template\group\TemplateGroup;
-use wcf\data\template\group\TemplateGroupList;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateAction;
 use wcf\form\AbstractForm;
@@ -218,10 +217,7 @@ class TemplateAddForm extends AbstractForm {
 	public function readData() {
 		parent::readData();
 		
-		$templateGroupList = new TemplateGroupList();
-		$templateGroupList->sqlOrderBy = "templateGroupName";
-		$templateGroupList->readObjects();
-		$this->availableTemplateGroups = $templateGroupList->getObjects();
+		$this->availableTemplateGroups = TemplateGroup::getSelectList();
 		
 		if (!count($_POST) && $this->copiedTemplate !== null) {
 			$this->tplName = $this->copiedTemplate->templateName;

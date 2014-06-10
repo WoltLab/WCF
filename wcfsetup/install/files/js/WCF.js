@@ -7119,6 +7119,99 @@ WCF.System.DisableScrolling = {
 };
 
 /**
+ * Puts an element into HTML 5 fullscreen mode.
+ */
+WCF.System.Fullscreen = {
+	/**
+	 * Puts the given element into full screen mode.
+	 * Note: This must be a raw HTMLElement, not a jQuery wrapped one.
+	 * Note: This must be called from an user triggered event listener for
+	 * 	security reasons.
+	 * 
+	 * @param	object		Element to show full screen.
+	 */
+	enterFullscreen: function (element) {
+		if (element.requestFullscreen) {
+			element.requestFullscreen();
+		}
+		else if (element.msRequestFullscreen) {
+			element.msRequestFullscreen();
+		}
+		else if (element.mozRequestFullScreen) {
+			element.mozRequestFullScreen();
+		}
+		else if (element.webkitRequestFullscreen) {
+			element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+		}
+	},
+	/**
+	 * Toggles full screen mode. Either calls `enterFullscreen` with the given
+	 * element, if full screen mode is not active. Calls `exitFullscreen`
+	 * otherwise.
+	 */
+	toggleFullscreen: function (element) {
+		if (this.getFullscreenElement() === null) {
+			this.enterFullscreen(element);
+		}
+		else {
+			this.exitFullscreen();
+		}
+	},
+	/**
+	 * Retrieves the element that is shown in full screen mode.
+	 * Returns null if either full screen mode is not supported or
+	 * if full screen mode is not active.
+	 * 
+	 * @return	object
+	 */
+	getFullscreenElement: function () {
+		if (document.fullscreenElement) {
+			return document.fullscreenElement;
+		}
+		else if (document.mozFullScreenElement) {
+			return document.mozFullScreenElement;
+		}
+		else if (document.webkitFullscreenElement) {
+			return document.webkitFullscreenElement;
+		}
+		else if (document.msFullscreenElement) {
+			return document.msFullscreenElement;
+		}
+		
+		return null;
+	},
+	/**
+	 * Exits full screen mode.
+	 */
+	exitFullscreen: function () {
+		if (document.exitFullscreen) {
+			document.exitFullscreen();
+		}
+		else if (document.msExitFullscreen) {
+			document.msExitFullscreen();
+		}
+		else if (document.mozCancelFullScreen) {
+			document.mozCancelFullScreen();
+		}
+		else if (document.webkitExitFullscreen) {
+			document.webkitExitFullscreen();
+		}
+	},
+	/**
+	 * Returns whether the full screen API is supported in this browser.
+	 * 
+	 * @return	boolean
+	 */
+	isSupported: function () {
+		if (document.documentElement.requestFullscreen || document.documentElement.msRequestFullscreen || document.documentElement.mozRequestFullScreen || document.documentElement.webkitRequestFullscreen) {
+			return true;
+		}
+		
+		return false;
+	}
+};
+
+/**
  * Provides the 'jump to page' overlay.
  */
 WCF.System.PageNavigation = {

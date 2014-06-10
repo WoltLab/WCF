@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupAction;
 use wcf\data\template\group\TemplateGroupList;
 use wcf\form\AbstractForm;
@@ -135,6 +136,7 @@ class TemplateGroupAddForm extends AbstractForm {
 		
 		// reset values
 		$this->templateGroupName = $this->templateGroupFolderName = '';
+		$this->parentTemplateGroupID = 0;
 		
 		// show success
 		WCF::getTPL()->assign(array(
@@ -148,10 +150,7 @@ class TemplateGroupAddForm extends AbstractForm {
 	public function readData() {
 		parent::readData();
 		
-		$templateGroupList = new TemplateGroupList();
-		$templateGroupList->sqlOrderBy = "templateGroupName";
-		$templateGroupList->readObjects();
-		$this->availableTemplateGroups = $templateGroupList->getObjects();
+		$this->availableTemplateGroups = TemplateGroup::getSelectList(array(), 1);
 	}
 	
 	/**
