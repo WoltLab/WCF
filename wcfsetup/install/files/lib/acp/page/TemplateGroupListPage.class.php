@@ -39,7 +39,7 @@ class TemplateGroupListPage extends SortablePage {
 	public $validSortFields = array('templateGroupID', 'templateGroupName', 'templateGroupFolderName', 'templates');
 	
 	/**
-	 * @see	\wcf\page\MultipleLinkPage::initObjectList
+	 * @see	\wcf\page\MultipleLinkPage::initObjectList()
 	 */
 	protected function initObjectList() {
 		parent::initObjectList();

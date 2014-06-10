@@ -1360,6 +1360,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.template.add"><![CDATA[Template hinzufügen]]></item>
 		<item name="wcf.acp.template.edit"><![CDATA[Template bearbeiten]]></item>
 		<item name="wcf.acp.template.copy"><![CDATA[Template kopieren]]></item>
+		<item name="wcf.acp.template.diff"><![CDATA[Unterschiede anzeigen]]></item>
+		<item name="wcf.acp.template.diff.compareWith"><![CDATA[Vergleichen mit]]></item>
 		<item name="wcf.acp.template.lastModificationTime"><![CDATA[Letzte Änderung]]></item>
 		<item name="wcf.acp.template.group.list"><![CDATA[Templategruppen]]></item>
 		<item name="wcf.acp.template.group.add"><![CDATA[Templategruppe hinzufügen]]></item>
@@ -1899,6 +1901,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.button.disabledI18n"><![CDATA[einsprachig]]></item>
 		<item name="wcf.global.button.edit"><![CDATA[Bearbeiten]]></item>
 		<item name="wcf.global.button.enable"><![CDATA[Aktivieren]]></item>
+		<item name="wcf.global.button.fullscreen"><![CDATA[Vollbildmodus]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Zurücksetzen]]></item>

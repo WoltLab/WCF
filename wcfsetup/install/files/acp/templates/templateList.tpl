@@ -109,9 +109,11 @@
 							<a href="{link controller='TemplateAdd'}copy={@$template->templateID}{/link}" title="{lang}wcf.acp.template.copy{/lang}" class="jsTooltip"><span class="icon icon16 icon-copy"></span></a>
 							
 							{if $template->templateGroupID}
+								<a href="{link controller='TemplateDiff' id=$template->templateID}{/link}" title="{lang}wcf.acp.template.diff{/lang}" class="jsTooltip"><span class="icon icon16 icon-exchange"></span></a>
 								<a href="{link controller='TemplateEdit' id=$template->templateID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
 								<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$template->templateID}" data-confirm-message="{lang}wcf.acp.template.delete.sure{/lang}"></span>
 							{else}
+								<span class="icon icon16 icon-exchange disabled" title="{lang}wcf.acp.template.diff{/lang}"></span>
 								<span class="icon icon16 icon-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
 								<span class="icon icon16 icon-remove disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}
