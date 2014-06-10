@@ -5684,6 +5684,12 @@ WCF.Search.Base = Class.extend({
 	_callback: null,
 	
 	/**
+	 * represents index of search string (relative to original caret position)
+	 * @var	integer
+	 */
+	_caretAt: -1,
+	
+	/**
 	 * class name
 	 * @var	string
 	 */
@@ -5771,6 +5777,7 @@ WCF.Search.Base = Class.extend({
 		}
 		
 		this._callback = (callback) ? callback : null;
+		this._caretAt = -1;
 		this._delay = 0;
 		this._excludedSearchValues = [];
 		if (excludedSearchValues) {
@@ -6019,6 +6026,8 @@ WCF.Search.Base = Class.extend({
 					if ($part != this._oldSearchString[$i]) {
 						// current part was changed
 						$searchString = $part;
+						this._caretAt = $i;
+						
 						break;
 					}
 				}
@@ -6117,25 +6126,18 @@ WCF.Search.Base = Class.extend({
 		if (this._commaSeperated) {
 			// auto-complete current part
 			var $result = $listItem.data('label');
-			for (var $i = 0, $length = this._oldSearchString.length; $i < $length; $i++) {
-				var $part = this._oldSearchString[$i];
-				if ($result.toLowerCase().indexOf($part.toLowerCase()) === 0) {
-					this._oldSearchString[$i] = $result;
-					this._searchInput.val(this._oldSearchString.join(', '));
-					
-					if ($.browser.webkit) {
-						// chrome won't display the new value until the textarea is rendered again
-						// this quick fix forces chrome to render it again, even though it changes nothing
-						this._searchInput.css({ display: 'block' });
-					}
-					
-					// set focus on input field again
-					var $position = this._searchInput.val().toLowerCase().indexOf($result.toLowerCase()) + $result.length;
-					this._searchInput.focus().setCaret($position);
-					
-					break;
-				}
+			this._oldSearchString[this._caretAt] = $result;
+			this._searchInput.val(this._oldSearchString.join(', '));
+			
+			if ($.browser.webkit) {
+				// chrome won't display the new value until the textarea is rendered again
+				// this quick fix forces chrome to render it again, even though it changes nothing
+				this._searchInput.css({ display: 'block' });
 			}
+			
+			// set focus on input field again
+			var $position = this._searchInput.val().toLowerCase().indexOf($result.toLowerCase()) + $result.length;
+			this._searchInput.focus().setCaret($position);
 		}
 		else {
 			if (this._callback === null) {
