@@ -31,16 +31,16 @@
 	opacity: 1;
 }
 
-.commentList input[type='text'] {
-	+ small {
-		color: @wcfDimmedColor;
-		opacity: 0;
-		
-		.transition(opacity, .1s);
-	}
+.commentList textarea {
+	/* fixes flicker when expanding */
+	line-height: 1.2em;
 	
-	&:focus + small {
-		opacity: 1;
+	/* controls textarea grow */
+	min-height: @wcfBaseFontSize;
+	max-height: @wcfBaseFontSize * 10;
+	
+	+ button {
+		margin-top: 3px;
 	}
 }
 

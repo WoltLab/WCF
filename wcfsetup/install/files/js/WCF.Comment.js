@@ -330,8 +330,8 @@ WCF.Comment.Handler = Class.extend({
 		// create UI
 		this._commentAdd = $('<li class="box32 jsCommentAdd"><span class="framed">' + this._userAvatar + '</span><div /></li>').prependTo(this._container);
 		var $inputContainer = this._commentAdd.children('div');
-		var $input = $('<input type="text" placeholder="' + WCF.Language.get('wcf.comment.add') + '" maxlength="65535" class="long" />').appendTo($inputContainer);
-		$('<small>' + WCF.Language.get('wcf.comment.description') + '</small>').appendTo($inputContainer);
+		var $input = $('<textarea placeholder="' + WCF.Language.get('wcf.comment.add') + '" maxlength="65535" class="long" />').appendTo($inputContainer).flexible();
+		$('<button class="small">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(this._save, this)).appendTo($inputContainer);
 		
 		$input.keyup($.proxy(this._keyUp, this));
 	},
@@ -343,23 +343,14 @@ WCF.Comment.Handler = Class.extend({
 	 * @param	jQuery		comment
 	 */
 	_initAddResponse: function(commentID, comment) {
-		var $placeholder = null;
-		if (!comment.data('responses') || this._loadNextResponses[commentID]) {
-			$placeholder = $('<li class="jsCommentShowAddResponse"><a>' + WCF.Language.get('wcf.comment.button.response.add') + '</a></li>').data('commentID', commentID).click($.proxy(this._showAddResponse, this)).appendTo(this._commentButtonList[commentID]);
-		}
+		var $placeholder = $('<li class="jsCommentShowAddResponse"><a>' + WCF.Language.get('wcf.comment.button.response.add') + '</a></li>').data('commentID', commentID).click($.proxy(this._showAddResponse, this)).appendTo(this._commentButtonList[commentID]);
 		
-		var $listItem = $('<div class="box32 commentResponseAdd jsCommentResponseAdd"><span class="framed">' + this._userAvatar + '</span><div /></div>');
-		if ($placeholder !== null) {
-			$listItem.hide();
-		}
-		else {
-			this._commentButtonList[commentID].parent().addClass('jsAddResponseActive');
-		}
+		var $listItem = $('<div class="box32 commentResponseAdd jsCommentResponseAdd"><span class="framed">' + this._userAvatar + '</span><div /></div>').hide();
 		$listItem.appendTo(this._commentButtonList[commentID].parent().show());
 		
 		var $inputContainer = $listItem.children('div');
-		var $input = $('<input type="text" placeholder="' + WCF.Language.get('wcf.comment.response.add') + '" maxlength="65535" class="long" />').data('commentID', commentID).appendTo($inputContainer);
-		$('<small>' + WCF.Language.get('wcf.comment.description') + '</small>').appendTo($inputContainer);
+		var $input = $('<textarea placeholder="' + WCF.Language.get('wcf.comment.response.add') + '" maxlength="65535" class="long" />').data('commentID', commentID).appendTo($inputContainer).flexible();
+		$('<button class="small">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(this._save, this)).appendTo($inputContainer);
 		
 		var self = this;
 		$input.keyup(function(event) { self._keyUp(event, true); });
@@ -413,7 +404,7 @@ WCF.Comment.Handler = Class.extend({
 		$placeholder.remove();
 		
 		var $responseInput = this._comments[$commentID].data('responseInput').show();
-		$responseInput.find('input').focus();
+		$responseInput.find('textarea').focus();
 		
 		$responseInput.parents('.commentOptionContainer').addClass('jsAddResponseActive');
 	},
@@ -425,19 +416,28 @@ WCF.Comment.Handler = Class.extend({
 	 * @param	boolean		isResponse
 	 */
 	_keyUp: function(event, isResponse) {
-		// ignore every key except for [Enter] and [Esc]
-		if (event.which !== 13 && event.which !== 27) {
+		if (event.which === $.ui.keyCode.ESCAPE) {
+			// cancel input
+			$(event.currentTarget).val('').trigger('blur', event).trigger('updateHeight');
+			
 			return;
 		}
-		
-		var $input = $(event.currentTarget);
-		
-		// cancel input
-		if (event.which === 27) {
-			$input.val('').trigger('blur', event);
-			return;
+		else if (event.which === $.ui.keyCode.ENTER && event.ctrlKey) {
+			this._save(null, isResponse, $(event.currentTarget));
+			
+			return false;
 		}
-		
+	},
+	
+	/**
+	 * Saves entered comment/response.
+	 * 
+	 * @param	object		event
+	 * @param	boolean		isResponse
+	 * @param	jQuery		input
+	 */
+	_save: function(event, isResponse, input) {
+		var $input = (event === null) ? input : $(event.currentTarget).prev('textarea');
 		var $value = $.trim($input.val());
 		
 		// ignore empty comments
@@ -561,7 +561,7 @@ WCF.Comment.Handler = Class.extend({
 					this._handleGuestDialogErrors(data.returnValues.errors);
 				}
 				else {
-					this._commentAdd.find('input').val('').blur();
+					this._commentAdd.find('textarea').val('').blur().trigger('updateHeight');
 					$(data.returnValues.template).insertAfter(this._commentAdd).wcfFadeIn();
 					
 					if (!WCF.User.userID) {
@@ -576,7 +576,7 @@ WCF.Comment.Handler = Class.extend({
 				}
 				else {
 					var $comment = this._comments[data.returnValues.commentID];
-					$comment.find('.jsCommentResponseAdd input').val('').blur();
+					$comment.find('.jsCommentResponseAdd textarea').val('').blur().trigger('updateHeight');
 					
 					var $responseList = $comment.find('ul.commentResponseList');
 					if (!$responseList.length) $responseList = $('<ul class="commentResponseList" />').insertBefore($comment.find('.commentOptionContainer'));
