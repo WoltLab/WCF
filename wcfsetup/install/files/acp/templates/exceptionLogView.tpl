@@ -104,7 +104,7 @@
 					{/if}
 					<dl>
 						<dt>{lang}wcf.acp.exceptionLog.exception.stacktrace{/lang}</dt>
-						<dd style="font-family: monospace; word-wrap: wrap-all; word-break: break-all;">
+						<dd class="monospace" style="word-wrap: wrap-all; word-break: break-all;">
 							<ul>
 								<li>{@"</li><li>"|implode:$exception[stacktrace]}</li>
 							</ul>

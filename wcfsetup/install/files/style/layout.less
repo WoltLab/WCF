@@ -2279,6 +2279,17 @@ ul.inlineDataList {
 	}
 }
 
+.sideBySide {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	
+	> * {
+		display: table-cell;
+		width: 50%;
+	}
+}
+
 /* print version */
 @media print {
 	* {

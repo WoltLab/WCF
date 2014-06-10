@@ -775,6 +775,17 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	}
 	
 	/**
+	 * Returns true, if the active user has access to the user option with the given name.
+	 *
+	 * @param	string		$name
+	 * @return	boolean
+	 */
+	public function isVisibleOption($name) {
+		$option = ViewableUserOption::getUserOption($name);
+		return $option->isVisible();
+	}
+	
+	/**
 	 * Returns the formatted username.
 	 *
 	 * @return	string

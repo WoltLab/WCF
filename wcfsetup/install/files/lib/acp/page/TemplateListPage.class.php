@@ -1,7 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\package\PackageCache;
-use wcf\data\template\group\TemplateGroupList;
+use wcf\data\template\group\TemplateGroup;
 use wcf\page\SortablePage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
@@ -109,10 +109,7 @@ class TemplateListPage extends SortablePage {
 		parent::readData();
 		
 		// get template groups
-		$templateGroupList = new TemplateGroupList();
-		$templateGroupList->sqlOrderBy = "templateGroupName";
-		$templateGroupList->readObjects();
-		$this->availableTemplateGroups = $templateGroupList->getObjects();
+		$this->availableTemplateGroups = TemplateGroup::getSelectList(array(), 1);
 		
 		// get applications
 		$applications = ApplicationHandler::getInstance()->getApplications();

@@ -29,28 +29,28 @@ class TemplateGroup extends DatabaseObject {
 	protected static $selectList = null;
 	
 	/**
-	 * Creates a select list.
+	 * Creates a select list of all template groups.
 	 * 
-	 * @param	array<intger>	$ignore
+	 * @param	array<integer>	$ignore		Array of template group ids that should be excluded with all of their children
+	 * @param	integer		$initialDepth	Specifies the initial indentation depth of the list
 	 * @return	array
 	 */
-	public static function getSelectList($ignore = array()) {
+	public static function getSelectList($ignore = array(), $initialDepth = 0) {
 		if (self::$templateGroupStructure === null) {
 			self::$templateGroupStructure = array();
 			
-			$sql = "SELECT		templateGroupID, templateGroupName, parentTemplatePackID
+			$sql = "SELECT		templateGroupID, templateGroupName, parentTemplateGroupID
 				FROM		wcf".WCF_N."_template_group
 				ORDER BY	templateGroupName ASC";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute();
 			while ($row = $statement->fetchArray()) {
-				self::$templateGroupStructure[$row['parentTemplatePackID']][] = new TemplateGroup(null, $row);
+				self::$templateGroupStructure[$row['parentTemplateGroupID'] ?: 0][] = new TemplateGroup(null, $row);
 			}
-			
 		}
 		
 		self::$selectList = array();
-		self::makeSelectList(0, 0, $ignore);
+		self::makeSelectList(0, $initialDepth, $ignore);
 		
 		return self::$selectList;
 	}
@@ -63,9 +63,9 @@ class TemplateGroup extends DatabaseObject {
 	 * @param	array		$ignore			list of template group ids to ignore in result
 	 */
 	protected static function makeSelectList($parentID = 0, $depth = 0, $ignore = array()) {
-		if (!isset(self::$templateGroupStructure[$parentID])) return;
+		if (!isset(self::$templateGroupStructure[$parentID ?: 0])) return;
 		
-		foreach (self::$templateGroupStructure[$parentID] as $templateGroup) {
+		foreach (self::$templateGroupStructure[$parentID ?: 0] as $templateGroup) {
 			if (!empty($ignore) && in_array($templateGroup->templateGroupID, $ignore)) continue;
 			
 			// we must encode html here because the htmloptions plugin doesn't do it
