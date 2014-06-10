@@ -316,7 +316,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			if (empty($templateGroupFolderName)) $templateGroupFolderName = 'generic'.mb_substr(StringUtil::getRandomID(), 0, 8);
 			$originalTemplateGroupFolderName = $templateGroupFolderName;
 			
-			// get unique template pack name
+			// get unique template group name
 			$i = 1;
 			while (true) {
 				$sql = "SELECT	COUNT(*) AS count
@@ -335,12 +335,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			while (true) {
 				$sql = "SELECT	COUNT(*) AS count
 					FROM	wcf".WCF_N."_template_group
-					WHERE	templateGroupFolderName = ?
-						AND parentTemplateGroupID = ?";
+					WHERE	templateGroupFolderName = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute(array(
-					FileUtil::addTrailingSlash($templateGroupFolderName),
-					0
+					FileUtil::addTrailingSlash($templateGroupFolderName)
 				));
 				$row = $statement->fetchArray();
 				if (!$row['count']) break;
