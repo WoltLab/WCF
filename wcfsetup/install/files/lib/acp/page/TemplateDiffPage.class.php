@@ -85,23 +85,23 @@ class TemplateDiffPage extends AbstractPage {
 		$templateGroupList = new TemplateGroupList();
 		$templateGroupList->readObjects();
 		
-		// build template group hierarchie (template groups that are parents of the template group of the selected template)
-		$this->templateGroupHierarchie = array();
+		// build template group hierarchy (template groups that are parents of the template group of the selected template)
+		$this->templateGroupHierarchy = array();
 		$templateGroup = $templateGroupList->search($this->template->templateGroupID);
 		while ($templateGroup !== null) {
-			$this->templateGroupHierarchie[$templateGroup->templateGroupID] = array('group' => $templateGroup, 'hasTemplate' => false);
+			$this->templateGroupHierarchy[$templateGroup->templateGroupID] = array('group' => $templateGroup, 'hasTemplate' => false);
 			$templateGroup = $templateGroupList->search($templateGroup->parentTemplateGroupID);
 		}
-		$this->templateGroupHierarchie[0] = array('group' => array(), 'hasTemplate' => false);
+		$this->templateGroupHierarchy[0] = array('group' => array(), 'hasTemplate' => false);
 		
-		// find matching templates in the hierarchie
+		// find matching templates in the hierarchy
 		$templateList = new TemplateList();
 		$templateList->getConditionBuilder()->add('templateName = ?', array($this->template->templateName));
 		$templateList->getConditionBuilder()->add('application = ?', array($this->template->application));
-		$templateList->getConditionBuilder()->add('(template.templateGroupID IN(?) OR template.templateGroupID IS NULL)', array(array_keys($this->templateGroupHierarchie)));
+		$templateList->getConditionBuilder()->add('(template.templateGroupID IN(?) OR template.templateGroupID IS NULL)', array(array_keys($this->templateGroupHierarchy)));
 		$templateList->readObjects();
 		foreach ($templateList as $template) {
-			$this->templateGroupHierarchie[($template->templateGroupID ?: 0)]['hasTemplate'] = $template->templateID;
+			$this->templateGroupHierarchy[($template->templateGroupID ?: 0)]['hasTemplate'] = $template->templateID;
 		}
 		
 		// a valid parent template was given, calculate diff
@@ -124,7 +124,7 @@ class TemplateDiffPage extends AbstractPage {
 			'parentID' => $this->parentID,
 			'parent' => $this->parent,
 			'diff' => $this->diff,
-			'templateGroupHierarchie' => array_reverse($this->templateGroupHierarchie, true)
+			'templateGroupHierarchy' => array_reverse($this->templateGroupHierarchy, true)
 		));
 	}
 }

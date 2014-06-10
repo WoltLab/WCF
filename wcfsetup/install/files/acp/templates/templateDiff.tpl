@@ -17,7 +17,7 @@
 					<select name="parentID" id="{lang}wcf.acp.template.group.default{/lang}ID">
 						<option value="0"></option>
 						{assign var=depth value=0}
-						{foreach from=$templateGroupHierarchie item='templateGroup' key='templateGroupID'}
+						{foreach from=$templateGroupHierarchy item='templateGroup' key='templateGroupID'}
 							<option{if $templateGroup[hasTemplate] !== false && $templateGroup[hasTemplate] != $templateID} value="{$templateGroup[hasTemplate]}"{if $parent->templateID == $templateGroup[hasTemplate]} selected="selected"{/if}{else} disabled="disabled"{/if}>{@'&nbsp;'|str_repeat:$depth * 4}{if $templateGroupID}{$templateGroup[group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}</option>
 							{assign var=depth value=$depth + 1}
 						{/foreach}
@@ -48,7 +48,7 @@
 			<div class="containerPadding">
 				<header class="boxHeadline boxSubHeadline">
 					<h1>
-						{if $parent->templateGroupID}{$templateGroupHierarchie[$parent->templateGroupID][group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}
+						{if $parent->templateGroupID}{$templateGroupHierarchy[$parent->templateGroupID][group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}
 					</h1>
 					<p>{lang}wcf.acp.template.lastModificationTime{/lang}: {@$parent->lastModificationTime|time}</p>
 				</header>
@@ -85,7 +85,7 @@
 			<div class="containerPadding">
 				<header class="boxHeadline boxSubHeadline">
 					<h1>
-						{if $template->templateGroupID}{$templateGroupHierarchie[$template->templateGroupID][group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}
+						{if $template->templateGroupID}{$templateGroupHierarchy[$template->templateGroupID][group]->templateGroupName}{else}{lang}wcf.acp.template.group.default{/lang}{/if}
 					</h1>
 					<p>{lang}wcf.acp.template.lastModificationTime{/lang}: {@$template->lastModificationTime|time}</p>
 				</header>
