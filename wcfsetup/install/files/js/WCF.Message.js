@@ -2935,7 +2935,7 @@ WCF.Message.Share.Page = Class.extend({
 /**
  * Handles user mention suggestions in Redactor instances.
  * 
- * Important: Objects of this class have to be created before the CKEditor
+ * Important: Objects of this class have to be created before Redactor
  * is initialized!
  */
 WCF.Message.UserMention = Class.extend({
@@ -2988,7 +2988,7 @@ WCF.Message.UserMention = Class.extend({
 	_redactor: null,
 	
 	/**
-	 * Initalizes user suggestions for the CKEditor with the given textarea id.
+	 * Initalizes user suggestions for Redactor with the given textarea id.
 	 * 
 	 * @param	string		wysiwygSelector
 	 */
