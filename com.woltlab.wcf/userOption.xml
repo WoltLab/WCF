@@ -169,8 +169,8 @@
 				<categoryname>profile.contact</categoryname>
 				<optiontype>text</optiontype>
 				<outputclass>wcf\system\option\user\GooglePlusUserOptionOutput</outputclass>
-				<validationpattern>^$|^[0-9]{21}$|^\+[a-zA-Z0-9]+$</validationpattern>
-				<contentpattern>^https?://(?:plus|www).google.com/([0-9]{21}|\+[a-zA-Z0-9]+)$</contentpattern>
+				<validationpattern>^$|^\d{21}$|^\+\S[^/]+$</validationpattern>
+				<contentpattern>^https?://(?:plus|www).google(?:apis)?.com(?:/\w+/\w+(?:/\w)?)?/(\d{21}|\+\S[^/]+)$</contentpattern>
 				<searchable>1</searchable>
 				<visible>15</visible>
 				<editable>3</editable>

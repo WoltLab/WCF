@@ -314,6 +314,7 @@
 				<optiontype>fileSize</optiontype>
 				<defaultvalue>1000000</defaultvalue>
 				<minvalue>10000</minvalue>
+				<options>module_attachment</options>
 			</option>
 			<option name="user.attachment.allowedExtensions">
 				<categoryname>user.message.attachment</categoryname>
@@ -327,12 +328,14 @@ zip
 txt
 pdf]]></defaultvalue>
 				<wildcard><![CDATA[*]]></wildcard>
+				<options>module_attachment</options>
 			</option>
 			<option name="user.attachment.maxCount">
 				<categoryname>user.message.attachment</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>10</defaultvalue>
 				<minvalue>1</minvalue>
+				<options>module_attachment</options>
 				<maxvalue>100</maxvalue>
 			</option>
 			
@@ -341,6 +344,7 @@ pdf]]></defaultvalue>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<options>module_attachment</options>
 			</option>
 			
 			<option name="admin.content.bbcode.canManageBBCode">
