@@ -989,12 +989,6 @@ WCF.Message.InlineEditor = Class.extend({
 	_activeElementID: '',
 	
 	/**
-	 * message cache
-	 * @var	string
-	 */
-	_cache: '',
-	
-	/**
 	 * list of messages
 	 * @var	object
 	 */
@@ -1057,7 +1051,6 @@ WCF.Message.InlineEditor = Class.extend({
 	 */
 	init: function(containerID, supportExtendedForm, quoteManager) {
 		this._activeElementID = '';
-		this._cache = '';
 		this._container = { };
 		this._containerID = parseInt(containerID);
 		this._dropdowns = { };
@@ -1218,13 +1211,11 @@ WCF.Message.InlineEditor = Class.extend({
 		var $messageBody = this._container[this._activeElementID].find('.messageBody');
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
 		
-		var $content = $messageBody.find('.messageText');
+		var $content = $messageBody.find('.messageText').hide();
 		
 		// hide unrelated content
 		$content.parent().children('.jsInlineEditorHideContent').hide();
 		$messageBody.children('.attachmentThumbnailList, .attachmentFileList').hide();
-		
-		this._cache = $content.detach();
 	},
 	
 	/**
@@ -1234,14 +1225,12 @@ WCF.Message.InlineEditor = Class.extend({
 		var $container = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget');
 		
 		// remove editor
-		var $target = $('#' + this._messageEditorIDPrefix + $container.data('objectID'));
-		$target.redactor('autosavePurge');
-		$target.redactor('destroy');
+		this._destroyEditor();
 		
 		// restore message
 		var $messageBody = $container.find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
-		$messageBody.children('div:eq(0)').html(this._cache);
+		$messageBody.find('.messageText').show();
 		$messageBody.children('.attachmentThumbnailList, .attachmentFileList').show();
 		
 		// show unrelated content
@@ -1437,14 +1426,9 @@ WCF.Message.InlineEditor = Class.extend({
 		this._container[this._activeElementID].find('.messageOptions').removeClass('forceHidden');
 		
 		// remove editor
-		if ($.browser.redactor) {
-			$('#' + this._messageEditorIDPrefix + $container.data('objectID')).redactor('destroy');
-		}
+		this._destroyEditor();
 		
-		$content.empty();
-		
-		// insert new message
-		$content.html('<div class="messageText">' + data.returnValues.message + '</div>');
+		$content.children('.messageText').html(data.returnValues.message).show();
 		
 		if (data.returnValues.attachmentList == undefined) {
 			$messageBody.children('.attachmentThumbnailList, .attachmentFileList').show();
@@ -1466,6 +1450,23 @@ WCF.Message.InlineEditor = Class.extend({
 		if (this._quoteManager) {
 			this._quoteManager.clearAlternativeEditor();
 		}
+	},
+	
+	/**
+	 * Destroies editor instance and removes it's DOM elements.
+	 */
+	_destroyEditor: function() {
+		var $container = this._container[this._activeElementID];
+		
+		// destroy editor
+		if ($.browser.redactor) {
+			var $target = $('#' + this._messageEditorIDPrefix + $container.data('objectID'));
+			$target.redactor('autosavePurge');
+			$target.redactor('destroy');
+		}
+		
+		// purge DOM elements
+		$container.find('.messageBody > div > .messageInlineEditor').remove();
 	},
 	
 	/**
