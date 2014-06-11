@@ -2503,7 +2503,7 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
-		<item name="wcf.user.option.googlePlus.description"><![CDATA[21 digits Google Plus user ID]]></item>
+		<item name="wcf.user.option.googlePlus.description"><![CDATA[21 digits Google Plus user ID, Google Plus username (+Username) or the URL of your Google Plus profile]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Can Write Comments on My Wall]]></item>
 	</category>
 	
