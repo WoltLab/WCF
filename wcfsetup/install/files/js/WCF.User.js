@@ -1569,8 +1569,17 @@ WCF.User.RecentActivityLoader = Class.extend({
 			success: $.proxy(this._success, this)
 		});
 		
-		this._loadButton = $('<li class="recentActivitiesMore"><button class="small">' + WCF.Language.get('wcf.user.recentActivity.more') + '</button></li>').appendTo(this._container);
-		this._loadButton = this._loadButton.children('button').click($.proxy(this._click, this));
+		if (this._container.children('li').length) {
+			this._loadButton = $('<li class="recentActivitiesMore"><button class="small">' + WCF.Language.get('wcf.user.recentActivity.more') + '</button></li>').appendTo(this._container);
+			this._loadButton = this._loadButton.children('button').click($.proxy(this._click, this));
+		}
+		else {
+			$('<li class="recentActivitiesMore"><small>' + WCF.Language.get('wcf.user.recentActivity.noMoreEntries') + '</small></li>').appendTo(this._container);
+		}
+		
+		if (WCF.User.userID) {
+			$('.jsRecentActivitySwitchContext').click($.proxy(this._switchContext, this));
+		}
 	},
 	
 	/**
@@ -1595,6 +1604,22 @@ WCF.User.RecentActivityLoader = Class.extend({
 			parameters: $parameters
 		});
 		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Switches recent activity context.
+	 */
+	_switchContext: function() {
+		new WCF.Action.Proxy({
+			autoSend: true,
+			data: {
+				actionName: 'switchContext',
+				className: 'wcf\\data\\user\\activity\\event\\UserActivityEventAction'
+			},
+			success: function() {
+				window.location.reload();
+			}
+		});
 	},
 	
 	/**

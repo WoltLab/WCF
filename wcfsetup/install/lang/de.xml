@@ -2681,6 +2681,8 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.recentActivityEvent.follow"><![CDATA[Folgen]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.recentActivityEvent"><![CDATA[Pinnwand-Kommentar]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.response.recentActivityEvent"><![CDATA[Pinnwand-Antwort]]></item>
+		<item name="wcf.user.recentActivity.scope.all"><![CDATA[Zeige Aktivitäten aller Benutzer]]></item>
+		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Zeige Aktivitäten von Benutzeren, denen Sie folgen]]></item>
 	</category>
 	
 	<category name="wcf.user.3rdparty">

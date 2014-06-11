@@ -3,6 +3,8 @@ namespace wcf\data\user\activity\event;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\WCF;
+use wcf\data\user\UserAction;
+use wcf\data\user\User;
 
 /**
  * Executes user activity event-related actions.
@@ -65,5 +67,19 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 			'lastEventTime' => $lastEventTime,
 			'template' => WCF::getTPL()->fetch('recentActivityListItem')
 		);
+	}
+	
+	/**
+	 * Does nothing.
+	 */
+	public function validateSwitchContext() { }
+	
+	public function switchContext() {
+		$userAction = new UserAction(array(WCF::getUser()), 'update', array(
+			'options' => array(
+				User::getUserOptionID('recentActivitiesFilterByFollowing') => (WCF::getUser()->recentActivitiesFilterByFollowing ? 0 : 1)
+			)
+		));
+		$userAction->executeAction();
 	}
 }

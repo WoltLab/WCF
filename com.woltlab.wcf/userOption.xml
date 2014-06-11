@@ -178,6 +178,11 @@
 			<!-- /profile -->
 			
 			<!-- settings -->
+			<option name="recentActivitiesFilterByFollowing">
+				<categoryname>hidden</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<option name="timezone">
 				<categoryname>settings.general.date</categoryname>
 				<optiontype>timezone</optiontype>

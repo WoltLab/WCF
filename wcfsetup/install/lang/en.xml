@@ -2536,6 +2536,8 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.recentActivityEvent.follow"><![CDATA[Follow]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.recentActivityEvent"><![CDATA[Wall Comment]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.response.recentActivityEvent"><![CDATA[Wall Reply]]></item>
+		<item name="wcf.user.recentActivity.scope.all"><![CDATA[All activities]]></item>
+		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Filter by followed users]]></item>
 	</category>
 	
 	<category name="wcf.user.3rdparty">
