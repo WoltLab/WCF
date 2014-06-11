@@ -2907,7 +2907,7 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
-		<item name="wcf.user.option.googlePlus.description"><![CDATA[21-stellige Google-Plus-ID]]></item>
+		<item name="wcf.user.option.googlePlus.description"><![CDATA[21-stellige Google-Plus-ID, Google-Plus Benutzername (+Benutzername) oder URL zum Google-Plus-Profil]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Kann Pinnwand-Kommentare schreiben]]></item>
 		
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[Auswahl des Benutzers bei „{lang}wcf.user.option.{$option->optionName}{/lang}“:]]></item>
