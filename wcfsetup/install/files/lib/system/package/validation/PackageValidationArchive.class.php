@@ -223,6 +223,15 @@ class PackageValidationArchive implements \RecursiveIterator {
 	}
 	
 	/**
+	 * Returns the occured exception.
+	 * 
+	 * @return	\Exception
+	 */
+	public function getException() {
+		return $this->exception;
+	}
+	
+	/**
 	 * Returns the exception message.
 	 * 
 	 * @return	string

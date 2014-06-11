@@ -133,6 +133,21 @@ class PackageValidationManager extends SingletonFactory {
 	}
 	
 	/**
+	 * Recursively traverses the package validation archives and returns the first exception.
+	 * 
+	 * @return	\Exception
+	 */
+	public function getException() {
+		foreach ($this->getPackageValidationArchiveList() as $packageArchive) {
+			if ($packageArchive->getException() !== null) {
+				return $packageArchive->getException();
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Validates an instruction against the corresponding package installation plugin.
 	 * 
 	 * Please be aware that unknown PIPs will silently ignored and cause no error.
