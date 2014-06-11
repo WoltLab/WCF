@@ -184,8 +184,12 @@
 				<li class="jsReportUser jsOnly" data-object-id="{@$user->userID}"><a title="{lang}wcf.user.profile.report{/lang}" class="button jsTooltip"><span class="icon icon16 icon-warning-sign"></span> <span class="invisible">{lang}wcf.user.profile.report{/lang}</span></a></li>
 			{/if}
 			
-			{if $user->userID != $__wcf->user->userID && $user->isAccessible('canViewEmailAddress')}
-				<li><a class="button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}<li><a class="button jsTooltip" href="{link controller='Mail' object=$user}{/link}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
+			{if $user->userID != $__wcf->user->userID}
+				{if $user->isAccessible('canViewEmailAddress') || $__wcf->session->getPermission('admin.general.canViewPrivateUserOptions')}
+					<li><a class="button jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
+				{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}
+					<li><a class="button jsTooltip" href="{link controller='Mail' object=$user}{/link}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 icon-envelope-alt"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
+				{/if}
 			{/if}
 			
 			{event name='buttons'}
