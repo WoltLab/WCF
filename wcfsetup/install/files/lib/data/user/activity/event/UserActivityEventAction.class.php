@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\user\activity\event;
-use wcf\data\user\UserAction;
 use wcf\data\user\User;
+use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\WCF;
