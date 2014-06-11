@@ -29,3 +29,8 @@
 		<button data-type="restore">{lang}wcf.global.button.cancel{/lang}</button>
 	</div>
 </div>
+<script data-relocate="true">
+	$(function() {
+		new WCF.Option.Handler();
+	});
+</script>

@@ -5479,6 +5479,165 @@ WCF.DOMNodeRemovedHandler = {
 	}
 };
 
+/**
+ * Namespace for option handlers.
+ */
+WCF.Option = { };
+
+/**
+ * Handles option selection.
+ */
+WCF.Option.Handler = Class.extend({
+	/**
+	 * Initializes the WCF.Option.Handler class.
+	 */
+	init: function() {
+		this._initOptions();
+		
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Option.Handler', $.proxy(this._initOptions));
+	},
+	
+	/**
+	 * Initializes all options.
+	 */
+	_initOptions: function() {
+		$('.jsEnablesOptions').each($.proxy(this._initOption, this));
+	},
+	
+	/**
+	 * Initializes an option.
+	 * 
+	 * @param	integer		index
+	 * @param	object		option
+	 */
+	_initOption: function(index, option) {
+		// execute action on init
+		this._change(option);
+		
+		// bind event listener
+		$(option).change($.proxy(this._handleChange, this));
+	},
+	
+	/**
+	 * Applies whenever an option is changed.
+	 * 
+	 * @param	object		event
+	 */
+	_handleChange: function(event) {
+		this._change($(event.target));
+	},
+	
+	/**
+	 * Enables or disables options on option value change.
+	 * 
+	 * @param	object		option
+	 */
+	_change: function(option) {
+		option = $(option);
+		
+		var $disableOptions = eval(option.data('disableOptions'));
+		var $enableOptions = eval(option.data('enableOptions'));
+		
+		// determine action by type
+		switch(option.getTagName()) {
+			case 'input':
+				switch(option.attr('type')) {
+					case 'checkbox':
+						this._execute(option.prop('checked'), $disableOptions, $enableOptions);
+					break;
+					
+					case 'radio':
+						if (option.prop('checked')) {
+							this._execute(true, $disableOptions, $enableOptions);
+						}
+					break;
+				}
+			break;
+			
+			case 'select':
+				var $value = option.val();
+				var $disableOptions = $enableOptions = [];
+				
+				if (option.data('disableOptions').length > 0) {
+					for (var $index in option.data('disableOptions')) {
+						var $item = option.data('disableOptions')[$index];
+						
+						if ($item.value == $value) {
+							$disableOptions.push($item.option);
+						}
+					}
+				}
+				
+				if (option.data('enableOptions').length > 0) {
+					for (var $index in option.data('enableOptions')) {
+						var $item = option.data('enableOptions')[$index];
+						
+						if ($item.value == $value) {
+							$enableOptions.push($item.option);
+						}
+					}
+				}
+				
+				this._execute(true, $disableOptions, $enableOptions);
+			break;
+		}
+	},
+	
+	/**
+	 * Enables or disables options.
+	 * 
+	 * @param	boolean		isActive
+	 * @param	array		disableOptions
+	 * @param	array		enableOptions
+	 */
+	_execute: function(isActive, disableOptions, enableOptions) {
+		if (disableOptions.length > 0) {
+			for (var $i = 0, $size = disableOptions.length; $i < $size; $i++) {
+				var $target = disableOptions[$i];
+				if ($.wcfIsset($target)) {
+					this._enableOption($target, !isActive);
+				}
+			}
+		}
+		
+		if (enableOptions.length > 0) {
+			for (var $i = 0, $size = enableOptions.length; $i < $size; $i++) {
+				var $target = enableOptions[$i];
+				if ($.wcfIsset($target)) {
+					this._enableOption($target, isActive);
+				}
+			}
+		}
+	},
+	
+	/**
+	 * Enables an option.
+	 * 
+	 * @param	string		target
+	 * @param	boolean		enable
+	 */
+	_enableOption: function(target, enable) {
+		var $targetElement = $('#' + $.wcfEscapeID(target));
+		var $tagName = $targetElement.getTagName();
+		
+		if ($tagName == 'select' || ($tagName == 'input' && ($targetElement.attr('type') == 'checkbox' || $targetElement.attr('type') == 'radio'))) {
+			if (enable) $targetElement.enable();
+			else $targetElement.disable();
+		}
+		else {
+			if (enable) $targetElement.removeAttr('readonly');
+			else $targetElement.attr('readonly', true);
+		}
+		
+		if (enable) {
+			$targetElement.closest('dl').removeClass('disabled');
+		}
+		else {
+			$targetElement.closest('dl').addClass('disabled');
+		}
+	}
+});
+
 WCF.PageVisibilityHandler = {
 	/**
 	 * list of callbacks

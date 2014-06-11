@@ -6,7 +6,7 @@
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
-		new WCF.ACP.Options();
+		new WCF.Option.Handler();
 		
 		{if $optionName}
 			var $option = $('#' + $.wcfEscapeID('{$optionName}'));
