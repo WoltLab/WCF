@@ -166,7 +166,7 @@ class UserOnline extends UserProfile {
 		}
 		
 		// ie
-		if (preg_match('~msie ([\d\.]+)|Trident\/\d{1,2}.\d{1,2}; rv:([0-9]*)~i', $this->userAgent, $match)) {
+		if (preg_match('~msie ([\d\.]+)|Trident\/\d{1,2}.\d{1,2}; .*rv:([0-9]*)~i', $this->userAgent, $match)) {
 			return 'Internet Explorer '.(isset($match[2]) ? $match[2] : $match[1]);
 		}
 		
