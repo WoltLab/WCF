@@ -137,11 +137,7 @@ class PackageStartInstallForm extends AbstractForm {
 			throw new UserInputException('uploadPackage', 'uploadFailed');
 		}
 		
-		if (!PackageValidationManager::getInstance()->validate($this->uploadPackage['name'], false)) {
-			// TODO: do something
-			die("validation failed: " . PackageValidationManager::getInstance()->getExceptionMessage());
-		}
-		
+		PackageValidationManager::getInstance()->validate($this->uploadPackage['name'], false);
 		$this->package = PackageValidationManager::getInstance()->getPackageValidationArchive()->getPackage();
 	}
 	
