@@ -10296,7 +10296,18 @@ $.widget('ui.wcfDialog', {
 			});
 			
 			if (this._content.height() < $contentHeight) {
+				$overflow = 'auto';
 				this._content.css('overflow', 'auto');
+			}
+		}
+		
+		// Firefox ignores padding-bottom for elements within an overflowing container
+		if ($.browser.mozilla && !$.browser.mobile) {
+			if ($overflow === 'auto') {
+				this._content.children('div').css('margin-bottom',  this._content.css('padding-bottom'));
+			}
+			else {
+				this._content.children('div').css('margin-bottom', false);
 			}
 		}
 	},
