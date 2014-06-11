@@ -313,6 +313,7 @@
 				<categoryname>user.message.attachment</categoryname>
 				<optiontype>fileSize</optiontype>
 				<defaultvalue>1000000</defaultvalue>
+				<minvalue>10000</minvalue>
 			</option>
 			<option name="user.attachment.allowedExtensions">
 				<categoryname>user.message.attachment</categoryname>
@@ -331,6 +332,8 @@ pdf]]></defaultvalue>
 				<categoryname>user.message.attachment</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>10</defaultvalue>
+				<minvalue>1</minvalue>
+				<maxvalue>100</maxvalue>
 			</option>
 			
 			<option name="admin.attachment.canManageAttachment">
