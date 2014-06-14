@@ -128,8 +128,10 @@ class TwitterAuthAction extends AbstractAction {
 					WCF::getSession()->register('__twitterData', $data);
 					
 					// we assume that bots won't register on twitter first
-					// todo: captcha
-					WCF::getSession()->register('recaptchaDone', true);
+					// thus no need for a captcha
+					if (REGISTER_CAPTCHA_TYPE) {
+						WCF::getSession()->register('noRegistrationCaptcha', true);
+					}
 					
 					WCF::getSession()->update();
 					HeaderUtil::redirect(LinkHandler::getInstance()->getLink('Register'));
