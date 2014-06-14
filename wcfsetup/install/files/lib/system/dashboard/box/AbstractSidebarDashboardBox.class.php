@@ -20,7 +20,7 @@ abstract class AbstractSidebarDashboardBox extends AbstractContentDashboardBox {
 	
 	/**
 	 * title link
-	 * @var string
+	 * @var	string
 	 */
 	public $titleLink = '';
 	
@@ -32,13 +32,13 @@ abstract class AbstractSidebarDashboardBox extends AbstractContentDashboardBox {
 		if (empty($template)) {
 			return '';
 		}
-	
+		
 		WCF::getTPL()->assign(array(
 			'box' => $this->box,
 			'template' => $template,
 			'titleLink' => $this->titleLink
 		));
-	
+		
 		return WCF::getTPL()->fetch($this->templateName);
 	}
 }

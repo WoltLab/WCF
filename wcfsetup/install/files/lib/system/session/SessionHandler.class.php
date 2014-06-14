@@ -122,8 +122,8 @@ class SessionHandler extends SingletonFactory {
 	protected $virtualSession = false;
 	
 	/**
-	 * true, if this is a new session
-	 * @var boolean
+	 * true if this is a new session
+	 * @var	boolean
 	 */
 	protected $firstVisit = false;
 	
@@ -907,8 +907,8 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns true, if this is a new session.
-	 *
+	 * Returns true if this is a new session.
+	 * 
 	 * @return	boolean
 	 */
 	public function isFirstVisit() {

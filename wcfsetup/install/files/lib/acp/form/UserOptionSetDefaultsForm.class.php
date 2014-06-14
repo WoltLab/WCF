@@ -84,7 +84,7 @@ class UserOptionSetDefaultsForm extends AbstractForm {
 			// get changed options
 			$sql = "SELECT	optionID, defaultValue
 				FROM	wcf".WCF_N."_user_option
-				WHERE	optionID IN (?".str_repeat(', ?', count($optionIDs) - 1).")"; 
+				WHERE	optionID IN (?".str_repeat(', ?', count($optionIDs) - 1).")";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($optionIDs);
 			$optionIDs = $optionValues = array();

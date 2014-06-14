@@ -44,7 +44,7 @@ final class FileUtil {
 			if (strpos($_SERVER['DOCUMENT_ROOT'], 'strato') !== false) {
 				// strato bugfix
 				// create tmp folder in document root automatically
-				if (!@file_exists($_SERVER['DOCUMENT_ROOT'].'/tmp')) { 
+				if (!@file_exists($_SERVER['DOCUMENT_ROOT'].'/tmp')) {
 					@mkdir($_SERVER['DOCUMENT_ROOT'].'/tmp/', 0777);
 					self::makeWritable($_SERVER['DOCUMENT_ROOT'].'/tmp/');
 				}
@@ -307,14 +307,14 @@ final class FileUtil {
 			if ($dir == '..') {
 				if (end($result) == '..') {
 					$result[] = '..';
-				} 
-				else { 
+				}
+				else {
 					$lastValue = array_pop($result);
 					if ($lastValue === '' || $lastValue === null) {
 						$result[] = '..';
 					}
 				}
-			} 
+			}
 			else if ($dir !== '' && $dir != '.') {
 				$result[] = $dir;
 			}

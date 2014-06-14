@@ -3,7 +3,7 @@ namespace wcf\system\stat;
 
 /**
  * Stat handler implementation for attachment stats.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -13,7 +13,7 @@ namespace wcf\system\stat;
  */
 class AttachmentStatDailyHandler extends AbstractStatDailyHandler {
 	/**
-	 * @see \wcf\system\stat\IStatDailyHandler::getData()
+	 * @see	\wcf\system\stat\IStatDailyHandler::getData()
 	 */
 	public function getData($date) {
 		return array(

@@ -272,7 +272,7 @@ class Zip extends File implements IArchive {
 		// read headers
 		$header = array();
 		$header = unpack('vminVersion/vgeneralPurposeBit/vcompression/vmtime/vmdate', $this->read(10));
-		if ($header['generalPurposeBit'] & 7 /* 3rd bit */) throw new SystemException('Data Descriptors are not supported'); 
+		if ($header['generalPurposeBit'] & 7 /* 3rd bit */) throw new SystemException('Data Descriptors are not supported');
 		$second = ($header['mtime'] & 31 /* 5 bits */) * 2;
 		$minute = ($header['mtime'] >> 5) & 63 /* 6 bits */;
 		$hour = ($header['mtime'] >> 11) & 31 /* 5 bits */;

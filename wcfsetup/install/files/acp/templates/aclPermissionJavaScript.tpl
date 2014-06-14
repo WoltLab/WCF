@@ -5,7 +5,7 @@
 	//<![CDATA[
 	$(function() {
 		{if $aclValues[$objectTypeID]|isset}
-			var initialPermissions = { 
+			var initialPermissions = {
 				returnValues: {
 					options: {
 						{foreach from=$aclValues[$objectTypeID][options] key='__optionID' item='__optionData'}

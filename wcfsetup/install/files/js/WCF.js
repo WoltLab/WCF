@@ -40,7 +40,7 @@
 						arguments[0] = key.replace(/ID$/, '-id');
 					}
 				break;
-			} 
+			}
 		}
 		
 		// call jQuery's own data method
@@ -1992,9 +1992,8 @@ WCF.LoadingOverlayHandler = {
 					
 					pe.stop();
 					self._pending = null;
-				}, 250); 
+				}, 250);
 			}
-			
 		}
 	},
 	
@@ -6696,7 +6695,7 @@ WCF.System.FlexibleMenu = {
 		$maximumWidth -= parseInt($container.css('padding-left').replace(/px$/, '')) + parseInt($container.css('padding-right').replace(/px$/, ''));
 		
 		// substract paddings from the actual list
-		$maximumWidth -= parseInt($container.children('ul:eq(0)').css('padding-left').replace(/px$/, '')) + parseInt($container.children('ul:eq(0)').css('padding-right').replace(/px$/, '')); 
+		$maximumWidth -= parseInt($container.children('ul:eq(0)').css('padding-left').replace(/px$/, '')) + parseInt($container.children('ul:eq(0)').css('padding-right').replace(/px$/, ''));
 		if ($currentWidth > $maximumWidth || (this._hasHiddenItems[containerID] && ($currentWidth > $maximumWidth - $dropdownWidth))) {
 			var $menuItems = $menuItems.filter(':not(.active):not(.ui-state-active):visible');
 			
@@ -7540,7 +7539,7 @@ WCF.System.PageNavigation = {
 	
 	/**
 	 * Validates the page No input.
-	 *
+	 * 
 	 * @param	Event		event
 	 */
 	_keyUp: function(event) {
@@ -8248,7 +8247,7 @@ WCF.Upload = Class.extend({
 			}
 			
 			var self = this;
-			$.ajax({ 
+			$.ajax({
 				type: 'POST',
 				url: this._options.url,
 				enctype: 'multipart/form-data',
@@ -8461,7 +8460,7 @@ WCF.Upload.Parallel = WCF.Upload.extend({
 	 */
 	_sendRequest: function(internalFileID, formData) {
 		var self = this;
-		$.ajax({ 
+		$.ajax({
 			type: 'POST',
 			url: this._options.url,
 			enctype: 'multipart/form-data',
@@ -11097,7 +11096,7 @@ $.widget('ui.wcfPages', {
 			$pageElement.addClass('break');
 		}
 		if (page != this.options.activePage) {
-			var $pageLink = $('<a>' + WCF.String.addThousandsSeparator(page) + '</a>'); 
+			var $pageLink = $('<a>' + WCF.String.addThousandsSeparator(page) + '</a>');
 			$pageElement.append($pageLink);
 			this._bindSwitchPage($pageLink, page);
 		}

@@ -107,7 +107,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 		if ($option->contentpattern) {
 			if (preg_match('~'.$option->contentpattern.'~', $newValue, $matches)) {
 				unset($matches[0]);
-				$newValue = implode('', $matches); 
+				$newValue = implode('', $matches);
 			}
 		}
 		

@@ -28,7 +28,7 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 	
 	/**
 	 * start timestamp
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $startDate = 0;
 	

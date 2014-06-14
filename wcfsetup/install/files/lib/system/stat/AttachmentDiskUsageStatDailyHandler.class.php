@@ -4,7 +4,7 @@ use wcf\system\WCF;
 
 /**
  * Stat handler implementation for attachment disk usage.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -14,7 +14,7 @@ use wcf\system\WCF;
  */
 class AttachmentDiskUsageStatDailyHandler extends AbstractStatDailyHandler {
 	/**
-	 * @see \wcf\system\stat\IStatDailyHandler::getData()
+	 * @see	\wcf\system\stat\IStatDailyHandler::getData()
 	 */
 	public function getData($date) {
 		$sql = "SELECT	CEIL(SUM(filesize) / 1000)
@@ -38,7 +38,7 @@ class AttachmentDiskUsageStatDailyHandler extends AbstractStatDailyHandler {
 	}
 	
 	/**
-	 * @see \wcf\system\stat\IStatDailyHandler::getFormattedCounter()
+	 * @see	\wcf\system\stat\IStatDailyHandler::getFormattedCounter()
 	 */
 	public function getFormattedCounter($counter) {
 		return round($counter / 1000, 2); // return mb

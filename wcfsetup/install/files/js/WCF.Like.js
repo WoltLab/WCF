@@ -193,7 +193,7 @@ WCF.Like = Class.extend({
 		}
 		badge.appendTo($widget);
 		
-		this._addWidget(containerID, $widget); 
+		this._addWidget(containerID, $widget);
 	},
 	
 	/**

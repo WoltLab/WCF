@@ -105,7 +105,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			
 			$processors[$comment->objectTypeID]->updateCounter($comment->objectID, -1 * ($comment->responses + 1));
 			$groupCommentIDs[$comment->objectTypeID][] = $comment->commentID;
-			$commentIDs[] = $comment->commentID; 
+			$commentIDs[] = $comment->commentID;
 		}
 		
 		if (!empty($groupCommentIDs)) {

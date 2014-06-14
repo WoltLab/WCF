@@ -63,7 +63,7 @@ class LanguageExportForm extends AbstractForm {
 	 * max package name length
 	 * @var	integer
 	 */
-	public $packageNameLength = 0; 
+	public $packageNameLength = 0;
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()

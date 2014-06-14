@@ -288,7 +288,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	
 	/**
 	 * Loads a list of likes.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function load() {

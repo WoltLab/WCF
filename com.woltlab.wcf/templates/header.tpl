@@ -80,7 +80,7 @@
 			
 			{if !$sidebarOrientation|isset || $sidebarOrientation == 'left'}
 				{@$__sidebar}
-			{/if} 
+			{/if}
 			
 			<section id="content" class="content">
 				{if MODULE_AD}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.header.content')}{/if}

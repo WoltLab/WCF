@@ -478,7 +478,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		foreach ($this->objects as $style) {
 			if ($style->isDefault) {
 				throw new UserInputException('objectIDs');
-			} 
+			}
 		}
 	}
 	

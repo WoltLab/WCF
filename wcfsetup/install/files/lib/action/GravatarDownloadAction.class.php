@@ -48,7 +48,7 @@ class GravatarDownloadAction extends AbstractAction {
 			throw new IllegalLinkException();
 		}
 		
-		if (!empty($_REQUEST['size'])) $this->size = intval($_REQUEST['size']); 
+		if (!empty($_REQUEST['size'])) $this->size = intval($_REQUEST['size']);
 	}
 	
 	/**

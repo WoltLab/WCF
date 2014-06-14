@@ -50,7 +50,7 @@ class CounterFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		$result = '';
 		if ($counter['print']) {
 			$result = $counter['count'];
-		} 
+		}
 		
 		if ($counter['direction'] == 'down') {
 			$counter['count'] -= $counter['skip'];

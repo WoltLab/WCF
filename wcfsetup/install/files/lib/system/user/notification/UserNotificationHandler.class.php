@@ -355,13 +355,13 @@ class UserNotificationHandler extends SingletonFactory {
 	
 	/**
 	 * Returns all events for given object type.
-	 *
+	 * 
 	 * @param	string		$objectType
 	 * @return	array<\wcf\system\user\notification\event\IUserNotificationEvent>
 	 */
 	public function getEvents($objectType) {
 		if (!isset($this->availableEvents[$objectType])) return array();
-	
+		
 		return $this->availableEvents[$objectType];
 	}
 	

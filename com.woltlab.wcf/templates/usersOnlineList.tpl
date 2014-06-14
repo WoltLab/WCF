@@ -126,7 +126,7 @@
 					<div class="details userInformation">
 						<div class="containerHeadline">
 							<h3><a href="{link controller='User' object=$user}{/link}">{@$user->getFormattedUsername()}</a>{if MODULE_USER_RANK && $user->getUserTitle()} <span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>{/if}</h3>
-							{@$locationData} 
+							{@$locationData}
 						</div>
 						
 						{@$sessionData}
@@ -148,7 +148,7 @@
 					<div class="details userInformation">
 						<div class="containerHeadline">
 							<h3>{if $user->getSpider()->spiderURL}<a href="{$user->getSpider()->spiderURL}" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}{if EXTERNAL_LINK_REL_NOFOLLOW} rel="nofollow"{/if}>{$user->getSpider()->spiderName}</a>{else}{$user->getSpider()->spiderName}{/if}</h3>
-							{@$locationData} 
+							{@$locationData}
 						</div>
 						
 						{@$sessionData}
@@ -168,7 +168,7 @@
 					<div class="details userInformation">
 						<div class="containerHeadline">
 							<h3>{lang}wcf.user.guest{/lang}</h3>
-							{@$locationData} 
+							{@$locationData}
 						</div>
 						
 						{@$sessionData}

@@ -13,7 +13,7 @@ use wcf\util\HeaderUtil;
 
 /**
  * Handles http requests.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -67,7 +67,7 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Handles a http request.
-	 *
+	 * 
 	 * @param	string		$application
 	 * @param	boolean		$isACPRequest
 	 */
@@ -110,7 +110,7 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Builds a new request.
-	 *
+	 * 
 	 * @param	string		$application
 	 */
 	protected function buildRequest($application) {
@@ -215,7 +215,7 @@ class RequestHandler extends SingletonFactory {
 	/**
 	 * Returns the class data for the active request or null if for the given
 	 * configuration no proper class exist.
-	 *
+	 * 
 	 * @param	string		$controller
 	 * @param	string		$pageType
 	 * @param	string		$application
@@ -245,7 +245,7 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the active request object.
-	 *
+	 * 
 	 * @return	\wcf\system\request\Request
 	 */
 	public function getActiveRequest() {
@@ -254,7 +254,7 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Returns true if the request is an acp request.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function isACPRequest() {
@@ -263,7 +263,7 @@ class RequestHandler extends SingletonFactory {
 	
 	/**
 	 * Returns true, if current host mismatches any known domain.
-	 *
+	 * 
 	 * @return	boolean
 	 */
 	public function inRescueMode() {

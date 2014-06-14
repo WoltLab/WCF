@@ -776,7 +776,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	
 	/**
 	 * Returns true, if the active user has access to the user option with the given name.
-	 *
+	 * 
 	 * @param	string		$name
 	 * @return	boolean
 	 */
@@ -787,7 +787,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 	
 	/**
 	 * Returns the formatted username.
-	 *
+	 * 
 	 * @return	string
 	 */
 	public function getFormattedUsername() {

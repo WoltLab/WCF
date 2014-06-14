@@ -4,7 +4,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
-use wcf\util\UserUtil; 
+use wcf\util\UserUtil;
 
 /**
  * Shows the user login form.

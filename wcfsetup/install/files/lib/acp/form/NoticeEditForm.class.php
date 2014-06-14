@@ -40,7 +40,7 @@ class NoticeEditForm extends NoticeAddForm {
 	
 	/**
 	 * 1 if the notice will be displayed for all users again
-	 * @var unknown
+	 * @var	integer
 	 */
 	public $resetIsDismissed = 0;
 	

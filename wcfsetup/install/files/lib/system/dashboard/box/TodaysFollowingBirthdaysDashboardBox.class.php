@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\dashboard\box;
-use wcf\data\dashboard\box\DashboardBox; 
+use wcf\data\dashboard\box\DashboardBox;
 use wcf\data\user\UserProfileList;
-use wcf\page\IPage; 
+use wcf\page\IPage;
 use wcf\system\user\UserBirthdayCache;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -22,13 +22,13 @@ class TodaysFollowingBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 	 * user profiles
 	 * @var	arra<\wcf\data\user\UserProfile>
 	 */
-	public $userProfiles = array(); 
+	public $userProfiles = array();
 	
 	/**
 	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
 	 */
 	public function init(DashboardBox $box, IPage $page) {
-		parent::init($box, $page); 
+		parent::init($box, $page);
 		
 		// get current date
 		$currentDay = DateUtil::format(null, 'm-d');
@@ -49,7 +49,7 @@ class TodaysFollowingBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 			}
 		}
 		
-		$this->fetched(); 
+		$this->fetched();
 	}
 	
 	/**
@@ -57,7 +57,7 @@ class TodaysFollowingBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 	 */
 	protected function render() {
 		if (empty($this->userProfiles)) {
-			return ''; 
+			return '';
 		}
 		
 		WCF::getTPL()->assign(array(

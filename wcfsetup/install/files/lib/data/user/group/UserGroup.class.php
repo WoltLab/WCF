@@ -172,7 +172,7 @@ class UserGroup extends DatabaseObject {
 		foreach ($groupIDs as $groupID) {
 			if (!in_array($groupID, self::$accessibleGroups)) {
 				return false;
-			} 
+			}
 		}
 		
 		return true;
