@@ -21,7 +21,7 @@ class CaptchaQuestionAction extends AbstractDatabaseObjectAction implements ITog
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
-	*/
+	 */
 	protected $permissionsUpdate = array('admin.captcha.canManageCaptchaQuestion');
 	
 	/**
