@@ -103,13 +103,13 @@ class AdEditForm extends AdAddForm {
 		AbstractForm::save();
 		
 		$this->objectAction = new AdAction(array($this->adObject), 'update', array(
-			'data' => array(
+			'data' => array_merge($this->additionalFields, array(
 				'ad' => $this->ad,
 				'adName' => $this->adName,
 				'isDisabled' => $this->isDisabled,
 				'objectTypeID' => $this->objectTypeID,
 				'showOrder' => $this->showOrder
-			)
+			))
 		));
 		$this->objectAction->executeAction();
 		

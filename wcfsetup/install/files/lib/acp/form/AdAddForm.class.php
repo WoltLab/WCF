@@ -162,13 +162,13 @@ class AdAddForm extends AbstractForm {
 		parent::save();
 		
 		$this->objectAction = new AdAction(array(), 'create', array(
-			'data' => array(
+			'data' => array_merge($this->additionalFields, array(
 				'ad' => $this->ad,
 				'adName' => $this->adName,
 				'isDisabled' => $this->isDisabled,
 				'objectTypeID' => $this->objectTypeID,
 				'showOrder' => $this->showOrder
-			)
+			))
 		));
 		$returnValues = $this->objectAction->executeAction();
 		

@@ -126,14 +126,14 @@ class NoticeEditForm extends NoticeAddForm {
 		AbstractForm::save();
 		
 		$this->objectAction = new NoticeAction(array($this->notice), 'update', array(
-			'data' => array(
+			'data' => array_merge($this->additionalFields, array(
 				'isDisabled' => $this->isDisabled,
 				'isDismissible' => $this->isDismissible,
 				'notice' => I18nHandler::getInstance()->isPlainValue('notice') ? I18nHandler::getInstance()->getValue('notice') : 'wcf.notice.notice.notice'.$this->notice->noticeID,
 				'noticeName' => $this->noticeName,
 				'noticeUseHtml' => $this->noticeUseHtml,
 				'showOrder' => $this->showOrder
-			)
+			))
 		));
 		$this->objectAction->executeAction();
 		
