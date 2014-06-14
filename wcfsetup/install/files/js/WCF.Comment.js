@@ -88,12 +88,6 @@ WCF.Comment.Handler = Class.extend({
 	 * @var	jQuery
 	 */
 	_guestDialog: null,
-
-	/**
-	 * true if the guest has to solve a recaptcha challenge to save the comment
-	 * @var	boolean
-	 */
-	_useRecaptcha: true,
 	
 	/**
 	 * Initializes the WCF.Comment.Handler class.
@@ -132,6 +126,8 @@ WCF.Comment.Handler = Class.extend({
 		
 		WCF.DOMNodeInsertedHandler.execute();
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.Comment.Handler', $.proxy(this._domNodeInserted, this));
+		
+		WCF.System.ObjectStore.add('WCF.Comment.Handler', this);
 	},
 	
 	/**
@@ -204,7 +200,6 @@ WCF.Comment.Handler = Class.extend({
 	 */
 	_loadResponses: function(event) {
 		this._loadResponsesExecute($(event.currentTarget).disable().data('commentID'), false);
-		
 	},
 	
 	/**
@@ -460,30 +455,18 @@ WCF.Comment.Handler = Class.extend({
 			this._commentData = $data;
 			
 			// check if guest dialog has already been loaded
-			if (this._guestDialog === null) {
-				this._proxy.setOption('data', {
-					actionName: 'getGuestDialog',
-					className: 'wcf\\data\\comment\\CommentAction',
-					parameters: {
-						data: {
-							message: $value,
-							objectID: this._container.data('objectID'),
-							objectTypeID: this._container.data('objectTypeID')
-						}
+			this._proxy.setOption('data', {
+				actionName: 'getGuestDialog',
+				className: 'wcf\\data\\comment\\CommentAction',
+				parameters: {
+					data: {
+						message: $value,
+						objectID: this._container.data('objectID'),
+						objectTypeID: this._container.data('objectTypeID')
 					}
-				});
-				this._proxy.sendRequest();
-			}
-			else {
-				// request a new recaptcha
-				if (this._useRecaptcha) {
-					Recaptcha.reload();
 				}
-				
-				this._guestDialog.find('input[type="submit"]').enable();
-				
-				this._guestDialog.wcfDialog('open');
-			}
+			});
+			this._proxy.sendRequest();
 		}
 		else {
 			this._proxy.setOption('data', {
@@ -557,8 +540,8 @@ WCF.Comment.Handler = Class.extend({
 	_success: function(data, textStatus, jqXHR) {
 		switch (data.actionName) {
 			case 'addComment':
-				if (data.returnValues.errors) {
-					this._handleGuestDialogErrors(data.returnValues.errors);
+				if (data.returnValues.guestDialog) {
+					this._createGuestDialog(data.returnValues.guestDialog, data.returnValues.useCaptcha);
 				}
 				else {
 					this._commentAdd.find('textarea').val('').blur().trigger('updateHeight');
@@ -571,8 +554,8 @@ WCF.Comment.Handler = Class.extend({
 			break;
 			
 			case 'addResponse':
-				if (data.returnValues.errors) {
-					this._handleGuestDialogErrors(data.returnValues.errors);
+				if (data.returnValues.guestDialog) {
+					this._createGuestDialog(data.returnValues.guestDialog, data.returnValues.useCaptcha);
 				}
 				else {
 					var $comment = this._comments[data.returnValues.commentID];
@@ -609,7 +592,7 @@ WCF.Comment.Handler = Class.extend({
 			break;
 			
 			case 'getGuestDialog':
-				this._createGuestDialog(data);
+				this._createGuestDialog(data.returnValues.template, data.returnValues.useCaptcha);
 			break;
 		}
 		
@@ -716,27 +699,29 @@ WCF.Comment.Handler = Class.extend({
 	},
 	
 	/**
-	 * Creates the guest dialog based on the given return data from the AJAX
-	 * request.
+	 * Creates the guest dialog using the given template.
 	 * 
-	 * @param	object		data
+	 * @param	string		template
+	 * @param	boolean		useCaptcha
 	 */
-	_createGuestDialog: function(data) {
-		this._guestDialog = $('<div id="commentAddGuestDialog" />').append(data.returnValues.template).hide().appendTo(document.body);
+	_createGuestDialog: function(template, useCaptcha) {
+		var $refreshGuestDialog = !!this._guestDialog;
+		if (!this._guestDialog) {
+			this._guestDialog = $('<div id="commentAddGuestDialog" />').hide().appendTo(document.body);
+		}
+		
+		this._guestDialog.html(template);
+		this._guestDialog.data('useCaptcha', useCaptcha);
 		
 		// bind submit event listeners
 		this._guestDialog.find('input[type="submit"]').click($.proxy(this._submit, this));
-
 		this._guestDialog.find('input[type="text"]').keydown($.proxy(this._keyDown, this));
-
-		// check if recaptcha is used
-		this._useRecaptcha = this._guestDialog.find('dl.reCaptcha').length > 0;
 		
 		this._guestDialog.wcfDialog({
 			'title': WCF.Language.get('wcf.comment.guestDialog.title')
 		});
 	},
-
+	
 	/**
 	 * Handles clicking enter in the input fields of the guest dialog by
 	 * submitting it.
@@ -748,40 +733,6 @@ WCF.Comment.Handler = Class.extend({
 			this._submit();
 		}
 	},
-
-	/**
-	 * Handles errors during creation of a comment or response due to the input
-	 * in the guest dialog.
-	 * 
-	 * @param	object		errors
-	 */
-	_handleGuestDialogErrors: function(errors) {
-		if (errors.username) {
-			var $usernameInput = this._guestDialog.find('input[name="username"]');
-			var $errorMessage = $usernameInput.next('.innerError');
-			if (!$errorMessage.length) {
-				$errorMessage = $('<small class="innerError" />').text(errors.username).insertAfter($usernameInput);
-			}
-			else {
-				$errorMessage.text(errors.username).show();
-			}
-		}
-		
-		if (errors.recaptcha) {
-			Recaptcha.reload();
-
-			var $recaptchaInput = this._guestDialog.find('input[name="recaptcha_response_field"]');
-			var $errorMessage = $recaptchaInput.next('.innerError');
-			if (!$errorMessage.length) {
-				$errorMessage = $('<small class="innerError" />').text(errors.recaptcha).insertAfter($recaptchaInput);
-			}
-			else {
-				$errorMessage.text(errors.recaptcha).show();
-			}
-		}
-
-		this._guestDialog.find('input[type="submit"]').enable();
-	},
 	
 	/**
 	 * Handles submitting the guest dialog.
@@ -789,70 +740,22 @@ WCF.Comment.Handler = Class.extend({
 	 * @param	Event		event
 	 */
 	_submit: function(event) {
-		var $submit = true;
-
-		this._guestDialog.find('input[type="submit"]').enable();
-
-		// validate username
-		var $usernameInput = this._guestDialog.find('input[name="username"]');
-		var $username = $usernameInput.val();
-		var $usernameErrorMessage = $usernameInput.next('.innerError');
-		if (!$username) {
-			$submit = false;
-			if (!$usernameErrorMessage.length) {
-				$usernameErrorMessage = $('<small class="innerError" />').text(WCF.Language.get('wcf.global.form.error.empty')).insertAfter($usernameInput);
-			}
-			else {
-				$usernameErrorMessage.text(WCF.Language.get('wcf.global.form.error.empty')).show();
-			}
-		}
-
-		// validate recaptcha
-		if (this._useRecaptcha) {
-			var $recaptchaInput = this._guestDialog.find('input[name="recaptcha_response_field"]');
-			var $recaptchaResponse = $recaptchaInput.val();
-			var $recaptchaErrorMessage = $recaptchaInput.next('.innerError');
-			if (!$recaptchaResponse) {
-				$submit = false;
-				if (!$recaptchaErrorMessage.length) {
-					$recaptchaErrorMessage = $('<small class="innerError" />').text(WCF.Language.get('wcf.global.form.error.empty')).insertAfter($recaptchaInput);
-				}
-				else {
-					$recaptchaErrorMessage.text(WCF.Language.get('wcf.global.form.error.empty')).show();
-				}
-			}
-		}
-
-		if ($submit) {
-			if ($usernameErrorMessage.length) {
-				$usernameErrorMessage.hide();
-			}
-
-			if (this._useRecaptcha && $recaptchaErrorMessage.length) {
-				$recaptchaErrorMessage.hide();
-			}
-
-			var $data = this._commentData;
-			$data.username = $username;
-
-			var $parameters = {
-				data: $data
-			};
-
-			if (this._useRecaptcha) {
-				$parameters.recaptchaChallenge = Recaptcha.get_challenge();
-				$parameters.recaptchaResponse = Recaptcha.get_response();
-			}
-			
-			this._proxy.setOption('data', {
-				actionName: this._commentData.commentID ? 'addResponse' : 'addComment',
-				className: 'wcf\\data\\comment\\CommentAction',
-				parameters: $parameters
-			});
-			this._proxy.sendRequest();
-
-			this._guestDialog.find('input[type="submit"]').disable();
-		}
+		var $requestData = {
+			actionName: this._commentData.commentID ? 'addResponse' : 'addComment',
+			className: 'wcf\\data\\comment\\CommentAction'
+		};
+		
+		var $data = this._commentData;
+		$data.username = this._guestDialog.find('input[name="username"]').val();
+		
+		$requestData.parameters = {
+			data: $data
+		};
+		
+		$requestData = $.extend(WCF.System.Captcha.getData('commentAdd'), $requestData);
+		
+		this._proxy.setOption('data', $requestData);
+		this._proxy.sendRequest();
 	},
 	
 	/**

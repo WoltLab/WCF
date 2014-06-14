@@ -9,12 +9,13 @@ use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileAction;
+use wcf\system\captcha\CaptchaHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\mail\Mail;
-use wcf\system\recaptcha\RecaptchaHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\Regex;
@@ -34,12 +35,6 @@ use wcf\util\UserRegistrationUtil;
  * @category	Community Framework
  */
 class RegisterForm extends UserAddForm {
-	/**
-	 * recaptcha challenge
-	 * @var	string
-	 */
-	public $challenge = '';
-	
 	/**
 	 * @see	\wcf\page\AbstractPage::$enableTracking
 	 */
@@ -64,16 +59,16 @@ class RegisterForm extends UserAddForm {
 	public $message = '';
 	
 	/**
-	 * recaptcha response
-	 * @var	string
+	 * captcha object type object
+	 * @var	\wcf\data\object\type\ObjectType
 	 */
-	public $response = '';
+	public $captchaObjectType = null;
 	
 	/**
-	 * enable recaptcha
-	 * @var	boolean
+	 * name of the captcha object type; if empty, captcha is disabled
+	 * @var	string
 	 */
-	public $useCaptcha = REGISTER_USE_CAPTCHA;
+	public $captchaObjectTypeName = REGISTER_CAPTCHA_TYPE;
 	
 	/**
 	 * field names
@@ -109,10 +104,6 @@ class RegisterForm extends UserAddForm {
 			exit;
 		}
 		
-		if (!MODULE_SYSTEM_RECAPTCHA || WCF::getSession()->getVar('recaptchaDone')) {
-			$this->useCaptcha = false;
-		}
-		
 		if (WCF::getSession()->getVar('__3rdPartyProvider')) {
 			$this->isExternalAuthentication = true;
 		}
@@ -140,8 +131,10 @@ class RegisterForm extends UserAddForm {
 		if (isset($_POST[$this->randomFieldNames['confirmPassword']])) $this->confirmPassword = $_POST[$this->randomFieldNames['confirmPassword']];
 		
 		$this->groupIDs = array();
-		if (isset($_POST['recaptcha_challenge_field'])) $this->challenge = StringUtil::trim($_POST['recaptcha_challenge_field']);
-		if (isset($_POST['recaptcha_response_field'])) $this->response = StringUtil::trim($_POST['recaptcha_response_field']);
+		
+		if ($this->captchaObjectType) {
+			$this->captchaObjectType->getProcessor()->readFormParameters();
+		}
 	}
 	
 	/**
@@ -157,9 +150,7 @@ class RegisterForm extends UserAddForm {
 	 */
 	public function validate() {
 		// validate captcha first
-		if ($this->useCaptcha) {
-			$this->validateCaptcha();
-		}
+		$this->validateCaptcha();
 		
 		parent::validate();
 		
@@ -173,6 +164,17 @@ class RegisterForm extends UserAddForm {
 	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
+		if ($this->captchaObjectTypeName) {
+			$this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName($this->captchaObjectTypeName);
+			if ($this->captchaObjectType === null) {
+				throw new SystemException("Unknown captcha object type with id '".$this->captchaObjectTypeName."'");
+			}
+			
+			if (!$this->captchaObjectType->getProcessor()->isAvailable()) {
+				$this->captchaObjectType = null;
+			}
+		}
+		
 		parent::readData();
 		
 		if (empty($_POST)) {
@@ -215,10 +217,9 @@ class RegisterForm extends UserAddForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		RecaptchaHandler::getInstance()->assignVariables();
 		WCF::getTPL()->assign(array(
+			'captchaObjectType' => $this->captchaObjectType,
 			'isExternalAuthentication' => $this->isExternalAuthentication,
-			'useCaptcha' => $this->useCaptcha,
 			'randomFieldNames' => $this->randomFieldNames
 		));
 	}
@@ -234,10 +235,9 @@ class RegisterForm extends UserAddForm {
 	 * Validates the captcha.
 	 */
 	protected function validateCaptcha() {
-		if ($this->useCaptcha) {
+		if ($this->captchaObjectType) {
 			try {
-				RecaptchaHandler::getInstance()->validate($this->challenge, $this->response);
-				$this->useCaptcha = false;
+				$this->captchaObjectType->getProcessor()->validate();
 			}
 			catch (UserInputException $e) {
 				$this->errorType[$e->getField()] = $e->getType();
@@ -487,9 +487,12 @@ class RegisterForm extends UserAddForm {
 			$mail->send();
 		}
 		
+		if ($this->captchaObjectType) {
+			$this->captchaObjectType->getProcessor()->reset();
+		}
+		
 		// login user
 		UserAuthenticationFactory::getInstance()->getUserAuthentication()->storeAccessData($user, $this->username, $this->password);
-		WCF::getSession()->unregister('recaptchaDone');
 		WCF::getSession()->unregister('registrationRandomFieldNames');
 		WCF::getSession()->unregister('registrationStartTime');
 		$this->saved();

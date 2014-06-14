@@ -6951,6 +6951,53 @@ WCF.System.ObjectStore = {
 	}
 };
 
+/**
+ * Stores captcha callbacks used for captchas in AJAX contexts.
+ */
+WCF.System.Captcha = {
+	/**
+	 * adds call
+	 * @var	object<function>
+	 */
+	_captchas: { },
+	
+	/**
+	 * Adds a callback for a certain captcha.
+	 * 
+	 * @param	string		captchaID
+	 * @param	function	callback
+	 */
+	addCallback: function(captchaID, callback) {
+		if (!$.isFunction(callback)) {
+			console.debug('[WCF.System.Captcha] Given callback is no function');
+			return;
+		}
+		
+		this._captchas[captchaID] = callback;
+	},
+	
+	/**
+	 * Returns the captcha data for the captcha with the given id.
+	 * 
+	 * @return	object
+	 */
+	getData: function(captchaID) {
+		if (this._captchas[captchaID] === undefined) {
+			console.debug('[WCF.System.Captcha] Unknow captcha id "' + captchaID + '"');
+			return;
+		}
+		
+		return this._captchas[captchaID]();
+	},
+	
+	/**
+	 * Removes the callback with the given captcha id.
+	 */
+	removeCallback: function(captchaID) {
+		delete this._captchas[captchaID];
+	}
+};
+
 WCF.System.Page = { };
 
 WCF.System.Page.Multiple = Class.extend({

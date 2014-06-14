@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * @subpackage	form
  * @category	Community Framework
  */
-class LostPasswordForm extends RecaptchaForm {
+class LostPasswordForm extends AbstractCaptchaForm {
 	const AVAILABLE_DURING_OFFLINE_MODE = true;
 	
 	/**
@@ -47,9 +47,9 @@ class LostPasswordForm extends RecaptchaForm {
 	public $user;
 	
 	/**
-	 * @see	\wcf\form\RecaptchaForm::$useCaptcha
+	 * @see	\wcf\form\CaptchaForm::$captchaObjectTypeName
 	 */
-	public $useCaptcha = LOST_PASSWORD_USE_CAPTCHA;
+	public $captchaObjectTypeName = LOST_PASSWORD_CAPTCHA_TYPE;
 	
 	/**
 	 * @see	\wcf\form\IForm::readFormParameters()

@@ -141,6 +141,18 @@
 		<item name="wcf.acp.cache.type.template"><![CDATA[Templates]]></item>
 	</category>
 	
+	<category name="wcf.acp.captcha">
+		<item name="wcf.acp.captcha.question.add"><![CDATA[Captcha-Frage hinzufügen]]></item>
+		<item name="wcf.acp.captcha.question.answers"><![CDATA[Antworten]]></item>
+		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[Geben Sie pro Zeile eine mögliche Antwort ein. Antworten, die mit „~“ beginnen und enden, werden als reguläre Ausdrücke interpretiert.]]></item>
+		<item name="wcf.acp.captcha.question.answers.error.regexNotValid"><![CDATA[Der reguläre Ausdruck „{$invalidRegex}“ ist ungültig.]]></item>
+		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[Wollen Sie diese Frage wirklich löschen?]]></item>
+		<item name="wcf.acp.captcha.question.edit"><![CDATA[Captcha-Frage bearbeiten]]></item>
+		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Fragen deaktivieren]]></item>
+		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha-Fragen]]></item>
+		<item name="wcf.acp.captcha.question.question"><![CDATA[Frage]]></item>
+	</category>
+	
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Cronjob hinzufügen]]></item>
@@ -420,6 +432,8 @@
 		<item name="wcf.acp.group.option.admin.content.ad.canManageAd"><![CDATA[Kann Werbung verwalten]]></item>
 		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximallänge „Über mich“]]></item>
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Kann Inhalte melden]]></item>
+		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Kann Captcha-Fragen verwalten]]></item>
+		<item name="wcf.acp.group.category.admin.display.captcha"><![CDATA[Captchas]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -618,6 +632,9 @@
 		<item name="wcf.acp.menu.link.ad"><![CDATA[Werbung]]></item>
 		<item name="wcf.acp.menu.link.ad.add"><![CDATA[Werbung hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.ad.list"><![CDATA[Werbung auflisten]]></item>
+		<item name="wcf.acp.menu.link.captcha"><![CDATA[Captchas]]></item>
+		<item name="wcf.acp.menu.link.captcha.question.add"><![CDATA[Frage hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[Fragen auflisten]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -881,9 +898,6 @@
 		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Aktivierung erfolgt durch Administrator]]></item>
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Benutzer aktiviert sich durch E-Mail-Bestätigung]]></item>
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[Keine Aktivierung notwendig]]></item>
-		<item name="wcf.acp.option.register_use_captcha"><![CDATA[reCAPTCHA in Registrierung aktivieren]]></item>
-		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[reCAPTCHA in „Kennwort vergessen“ aktivieren]]></item>
-		<item name="wcf.acp.option.profile_mail_use_captcha"><![CDATA[reCAPTCHA in „E-Mail an Benutzer schicken“ aktivieren]]></item>
 		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximale Höhe von Signatur-Bildern]]></item>
 		<item name="wcf.acp.option.user_title_max_length"><![CDATA[Maximale Länge des Benutzertitels]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reservierte Benutzertitel]]></item>
@@ -928,7 +942,6 @@
 		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Ergebnisse pro Seite]]></item>
 		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Standardsortierung]]></item>
 		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Standardreihenfolge]]></item>
-		<item name="wcf.acp.option.search_use_captcha"><![CDATA[reCAPTCHA in Suchfunktion aktivieren]]></item>
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximale Anzahl an Antworten]]></item>
@@ -967,6 +980,12 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[„index.php“ aus URLs entfernen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.option.module_ad"><![CDATA[Werbung]]></item>
+		<item name="wcf.acp.option.register_captcha_type"><![CDATA[Registierung]]></item>
+		<item name="wcf.acp.option.lost_password_captcha_type"><![CDATA[Kennwort vergessen]]></item>
+		<item name="wcf.acp.option.profile_mail_captcha_type"><![CDATA[E-Mail an Benutzer schicken]]></item>
+		<item name="wcf.acp.option.search_captcha_type"><![CDATA[Suche]]></item>
+		<item name="wcf.acp.option.message_captcha_type"><![CDATA[Nachrichten]]></item>
+		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1604,6 +1623,18 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.spoiler.hide"><![CDATA[Spoiler ausblenden]]></item>
 		<item name="wcf.bbcode.spoiler.show"><![CDATA[Spoiler anzeigen]]></item>
 		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Versteckter Text)]]></item>
+	</category>
+	
+	<category name="wcf.captcha">
+		<item name="wcf.captcha.useNoCaptcha"><![CDATA[(Kein Captcha)]]></item>
+		<item name="wcf.captcha.com.woltlab.wcf.recaptcha"><![CDATA[reCAPTCHA]]></item>
+		<item name="wcf.captcha.com.woltlab.wcf.captchaQuestion"><![CDATA[Frage]]></item>
+	</category>
+	
+	<category name="wcf.captcha.question">
+		<item name="wcf.captcha.question.answer.error.false"><![CDATA[Sie haben eine falsche Antwort angegeben.]]></item>
+		<item name="wcf.captcha.question.captcha"><![CDATA[Frage]]></item>
+		<item name="wcf.captcha.question.captcha.description"><![CDATA[Bitte beantworten Sie die untenstehende Frage bzw. lösen Sie die untenstehende Aufgabe.]]></item>
 	</category>
 	
 	<category name="wcf.category">

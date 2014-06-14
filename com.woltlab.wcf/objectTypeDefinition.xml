@@ -171,5 +171,10 @@
 			<name>com.woltlab.wcf.condition.ad</name>
 			<interfacename><![CDATA[wcf\system\condition\IContentCondition]]></interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.captcha</name>
+			<interfacename><![CDATA[wcf\system\captcha\ICaptchaHandler]]></interfacename>
+		</definition>
 	</import>
 </data>

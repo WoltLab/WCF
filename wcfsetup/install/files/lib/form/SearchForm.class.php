@@ -27,7 +27,7 @@ use wcf\util\StringUtil;
  * @subpackage	form
  * @category	Community Framework
  */
-class SearchForm extends RecaptchaForm {
+class SearchForm extends AbstractCaptchaForm {
 	/**
 	 * list of additional conditions
 	 * @var	array<string>
@@ -93,9 +93,9 @@ class SearchForm extends RecaptchaForm {
 	public $username = '';
 	
 	/**
-	 * @see	\wcf\form\RecaptchaForm::$useCaptcha
+	 * @see	\wcf\form\AbstractCaptchaForm::$captchaObjectTypeName
 	 */
-	public $useCaptcha = SEARCH_USE_CAPTCHA;
+	public $captchaObjectTypeName = SEARCH_CAPTCHA_TYPE;
 	
 	/**
 	 * parameters used for previous search
@@ -473,7 +473,7 @@ class SearchForm extends RecaptchaForm {
 	 */
 	public function getUserIDs() {
 		$userIDs = array();
-			
+		
 		// username
 		if (!empty($this->username)) {
 			$sql = "SELECT	userID

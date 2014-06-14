@@ -860,5 +860,18 @@
 			<conditiongroup>userOptions</conditiongroup>
 		</type>
 		<!-- /ad conditions -->
+		
+		<!-- captcha types -->
+		<type>
+			<name>com.woltlab.wcf.recaptcha</name>
+			<definitionname>com.woltlab.wcf.captcha</definitionname>
+			<classname><![CDATA[wcf\system\captcha\RecaptchaHandler]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.captchaQuestion</name>
+			<definitionname>com.woltlab.wcf.captcha</definitionname>
+			<classname><![CDATA[wcf\system\captcha\CaptchaQuestionHandler]]></classname>
+		</type>
+		<!-- captcha types -->
 	</import>
 </data>

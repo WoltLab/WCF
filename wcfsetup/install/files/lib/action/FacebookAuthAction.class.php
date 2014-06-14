@@ -116,6 +116,7 @@ class FacebookAuthAction extends AbstractAction {
 					WCF::getSession()->register('__facebookData', $userData);
 					
 					// we assume that bots won't register on facebook first
+					// todo: captcha
 					WCF::getSession()->register('recaptchaDone', true);
 					
 					WCF::getSession()->update();

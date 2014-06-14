@@ -98,7 +98,8 @@
 		</fieldset>
 		
 		{event name='fieldsets'}
-		{if $useCaptcha}{include file='recaptcha'}{/if}
+		
+		{include file='captcha'}
 		
 		{foreach from=$objectTypes key=objectTypeName item=objectType}
 			{if $objectType->isAccessible() && $objectType->getFormTemplateName()}
