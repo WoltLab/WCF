@@ -78,7 +78,7 @@
 			<category name="admin.template">
 				<parent>admin.display</parent>
 			</category>
-			<category name="admin.captcha">
+			<category name="admin.display.captcha">
 				<parent>admin.display</parent>
 			</category>
 			
