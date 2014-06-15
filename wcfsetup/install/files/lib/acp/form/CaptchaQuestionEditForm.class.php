@@ -2,7 +2,6 @@
 namespace wcf\acp\form;
 use wcf\data\captcha\question\CaptchaQuestion;
 use wcf\data\captcha\question\CaptchaQuestionAction;
-use wcf\data\captcha\question\CaptchaQuestionEditor;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;

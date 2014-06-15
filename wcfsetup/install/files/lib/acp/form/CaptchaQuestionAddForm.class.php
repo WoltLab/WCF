@@ -40,7 +40,7 @@ class CaptchaQuestionAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.display.canManageCaptchaQuestion');
+	public $neededPermissions = array('admin.captcha.canManageCaptchaQuestion');
 	
 	/**
 	 * @see	\wcf\page\IPage::assignVariables()
