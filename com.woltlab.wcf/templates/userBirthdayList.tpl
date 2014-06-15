@@ -15,7 +15,7 @@
 							</ul>
 							
 							{include file='userInformationButtons'}
-
+							
 							{include file='userInformationStatistics'}
 						</div>
 					</div>

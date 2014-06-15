@@ -41,7 +41,7 @@ class MostActiveMembersDashboardBox extends AbstractSidebarDashboardBox {
 		
 		$this->fetched();
 	}
-
+	
 	/**
 	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */

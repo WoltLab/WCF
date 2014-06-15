@@ -50,7 +50,7 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILik
 		foreach ($likes as $like) {
 			$commentIDs[] = $like->objectID;
 		}
-	
+		
 		// fetch comments
 		$commentList = new CommentList();
 		$commentList->getConditionBuilder()->add("comment.commentID IN (?)", array($commentIDs));
@@ -67,7 +67,7 @@ class LikeableCommentProvider extends AbstractObjectTypeProvider implements ILik
 				$likeData[$comments[$like->objectID]->objectTypeID][] = $like;
 			}
 		}
-	
+		
 		foreach ($likeData as $objectTypeID => $likes) {
 			$objectType = CommentHandler::getInstance()->getObjectType($objectTypeID);
 			if (CommentHandler::getInstance()->getCommentManager($objectType->objectType) instanceof IViewableLikeProvider) {

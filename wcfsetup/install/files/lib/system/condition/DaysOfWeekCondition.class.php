@@ -50,7 +50,7 @@ class DaysOfWeekCondition extends AbstractMultiSelectCondition implements IConte
 	public function showContent(Condition $condition) {
 		$date = DateUtil::getDateTimeByTimestamp(TIME_NOW);
 		$date->setTimezone(WCF::getUser()->getTimeZone());
-
+		
 		return in_array($date->format('w'), $condition->daysOfWeek);
 	}
 }

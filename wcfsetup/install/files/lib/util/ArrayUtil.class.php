@@ -157,7 +157,7 @@ final class ArrayUtil {
 			return $array;
 		}
 	}
-
+	
 	/**
 	 * Returns true when array1 has the same values as array2.
 	 * 
@@ -169,7 +169,7 @@ final class ArrayUtil {
 	public static function compare(array $array1, array $array2, Callback $callback = null) {
 		return static::compareHelper('value', $array1, $array2, $callback);
 	}
-
+	
 	/**
 	 * Returns true when array1 has the same keys as array2.
 	 * 
@@ -181,7 +181,7 @@ final class ArrayUtil {
 	public static function compareKey(array $array1, array $array2, Callback $callback = null) {
 		return static::compareHelper('key', $array1, $array2, $callback);
 	}
-
+	
 	/**
 	 * Compares array1 with array2 and returns true when they are identical.
 	 * 
@@ -193,7 +193,7 @@ final class ArrayUtil {
 	public static function compareAssoc(array $array1, array $array2, Callback $callback = null) {
 		return static::compareHelper('assoc', $array1, $array2, $callback);
 	}
-
+	
 	/**
 	 * Does the actual comparison of the above compare methods.
 	 * 

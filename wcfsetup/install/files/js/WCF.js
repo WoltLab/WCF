@@ -2879,18 +2879,18 @@ WCF.Date.Picker = {
 			'l': 'DD',
 			'z': 'o',
 			'S': '', // English ordinal suffix for the day of the month, 2 characters, will be discarded
-
+			
 			// month
 			'F': 'MM',
 			'm': 'mm',
 			'M': 'M',
 			'n': 'm',
-
+			
 			// year
 			'o': 'yy',
 			'Y': 'yy',
 			'y': 'y',
-
+			
 			// timestamp
 			'U': '@'
 		};

@@ -57,7 +57,7 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
 		foreach ($likes as $like) {
 			$responseIDs[] = $like->objectID;
 		}
-	
+		
 		// get objects type ids
 		$responses = array();
 		$conditionBuilder = new PreparedStatementConditionBuilder();
@@ -83,7 +83,7 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
 				$likeData[$responses[$like->objectID]][] = $like;
 			}
 		}
-	
+		
 		foreach ($likeData as $objectTypeID => $likes) {
 			$objectType = CommentHandler::getInstance()->getObjectType($objectTypeID);
 			if (CommentHandler::getInstance()->getCommentManager($objectType->objectType) instanceof IViewableLikeProvider) {

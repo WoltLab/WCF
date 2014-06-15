@@ -100,7 +100,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	public function clip($originX, $originY, $width, $height) {
 		$this->imagick->cropImage($width, $height, $originX, $originY);
 	}
-
+	
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::resize()
 	 */

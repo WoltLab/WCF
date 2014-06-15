@@ -66,7 +66,7 @@ class StatPage extends AbstractPage {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		WCF::getTPL()->assign(array(
 			'endDate' => $this->endDate,
 			'startDate' => $this->startDate,

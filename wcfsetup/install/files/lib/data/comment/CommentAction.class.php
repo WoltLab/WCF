@@ -77,7 +77,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @var	\wcf\data\comment\response\CommentResponse
 	 */
 	public $createdResponse = null;
-
+	
 	/**
 	 * errors occuring durch the validation of addComment or addResponse
 	 * @var	array

@@ -21,7 +21,7 @@ class SmileyCategoryListPage extends AbstractCategoryListPage {
 	 * @see	\wcf\acp\page\AbstractCategoryListPage::$activeMenuItem
 	 */
 	public $objectTypeName = 'com.woltlab.wcf.bbcode.smiley';
-
+	
 	/**
 	 * @see	\wcf\acp\page\AbstractCategoryListPage::$pageTitle
 	 */

@@ -16,13 +16,13 @@ class ViewableCommentList extends CommentList {
 	 * @see	\wcf\data\DatabaseObjectList::$decoratorClassName
 	 */
 	public $decoratorClassName = 'wcf\data\comment\ViewableComment';
-
+	
 	/**
 	 * Creates a new ViewableCommentList object.
 	 */
 	public function __construct() {
 		parent::__construct();
-	
+		
 		// get avatars
 		if (!empty($this->sqlSelects)) $this->sqlSelects .= ',';
 		$this->sqlSelects .= "user_avatar.*, user_table.*";

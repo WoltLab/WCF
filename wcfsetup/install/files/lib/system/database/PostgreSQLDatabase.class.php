@@ -35,7 +35,7 @@ class PostgreSQLDatabase extends Database {
 		// set connection character set
 		$this->setCharset();
 	}
-
+	
 	/**
 	 * Sets the charset of the database connection.
 	 */
@@ -63,7 +63,7 @@ class PostgreSQLDatabase extends Database {
 		$statement = self::fixQuery($statement);
 		return parent::prepareStatement($statement, $limit, $offset);
 	}
-
+	
 	/**
 	 * @see	\wcf\system\database\Database::getInsertID()
 	 */
