@@ -4,7 +4,22 @@
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
+		
 		new WCF.Option.Handler();
+		
+		{if $action == 'edit' && $group->groupType == 4 && $__wcf->session->getPermission('admin.user.canAddGroup')}
+			WCF.Language.addObject({
+				'wcf.acp.group.copy.confirmMessage': '{lang}wcf.acp.group.copy.confirmMessage{/lang}',
+				'wcf.acp.group.copy.copyACLOptions': '{lang}wcf.acp.group.copy.copyACLOptions{/lang}',
+				'wcf.acp.group.copy.copyACLOptions.description': '{lang}wcf.acp.group.copy.copyACLOptions.description{/lang}',
+				'wcf.acp.group.copy.copyMembers': '{lang}wcf.acp.group.copy.copyMembers{/lang}',
+				'wcf.acp.group.copy.copyMembers.description': '{lang}wcf.acp.group.copy.copyMembers.description{/lang}',
+				'wcf.acp.group.copy.copyUserGroupOptions': '{lang}wcf.acp.group.copy.copyUserGroupOptions{/lang}',
+				'wcf.acp.group.copy.copyUserGroupOptions.description': '{lang}wcf.acp.group.copy.copyUserGroupOptions.description{/lang}'
+			});
+			
+			new WCF.ACP.User.Group.Copy({@$groupID});
+		{/if}
 	});
 	//]]>
 </script>
@@ -26,17 +41,23 @@
 <div class="contentNavigation">
 	<nav>
 		<ul>
-			{if $action == 'edit' && $availableUserGroups|count > 1}
-				<li class="dropdown">
-					<a class="button dropdownToggle"><span class="icon icon16 icon-sort"></span> <span>{lang}wcf.acp.group.button.choose{/lang}</span></a>
-					<div class="dropdownMenu">
-						<ul class="scrollableDropdownMenu">
-							{foreach from=$availableUserGroups item='availableUserGroup'}
-								<li{if $availableUserGroup->groupID == $groupID} class="active"{/if}><a href="{link controller='UserGroupEdit' id=$availableUserGroup->groupID}{/link}">{$availableUserGroup->getName()}</a></li>
-							{/foreach}
-						</ul>
-					</div>
-				</li>
+			{if $action == 'edit'}
+				{if $availableUserGroups|count > 1}
+					<li class="dropdown">
+						<a class="button dropdownToggle"><span class="icon icon16 icon-sort"></span> <span>{lang}wcf.acp.group.button.choose{/lang}</span></a>
+						<div class="dropdownMenu">
+							<ul class="scrollableDropdownMenu">
+								{foreach from=$availableUserGroups item='availableUserGroup'}
+									<li{if $availableUserGroup->groupID == $groupID} class="active"{/if}><a href="{link controller='UserGroupEdit' id=$availableUserGroup->groupID}{/link}">{$availableUserGroup->getName()}</a></li>
+								{/foreach}
+							</ul>
+						</div>
+					</li>
+				{/if}
+				
+				{if $__wcf->session->getPermission('admin.user.canAddGroup') && $group->groupType == 4}
+					<li><a class="jsButtonUserGroupCopy button"><span class="icon icon16 icon-copy"></span> <span>{lang}wcf.acp.group.button.copy{/lang}</span></a></li>
+				{/if}
 			{/if}
 			
 			<li><a href="{link controller='UserGroupList'}{/link}" class="button"><span class="icon icon16 icon-list"></span> <span>{lang}wcf.acp.menu.link.group.list{/lang}</span></a></li>

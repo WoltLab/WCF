@@ -434,6 +434,14 @@
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Kann Inhalte melden]]></item>
 		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Kann Captcha-Fragen verwalten]]></item>
 		<item name="wcf.acp.group.category.admin.display.captcha"><![CDATA[Captchas]]></item>
+		<item name="wcf.acp.group.button.copy"><![CDATA[Benutzergruppe kopieren]]></item>
+		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[Wollen Sie diese Benutzergruppe wirklich kopieren?]]></item>
+		<item name="wcf.acp.group.copy.copyACLOptions"><![CDATA[Objekt-Berechtigungen kopieren]]></item>
+		<item name="wcf.acp.group.copy.copyACLOptions.description"><![CDATA[Berechtigungen, die für bestimmte Objekte wie Labelgruppen gesetzt wurden, werden auch für die neue Benutzergruppe übernommen.]]></item>
+		<item name="wcf.acp.group.copy.copyMembers"><![CDATA[Mitglieder kopieren]]></item>
+		<item name="wcf.acp.group.copy.copyMembers.description"><![CDATA[Mitglieder der kopierten Benutzergruppe werden automatisch auch Mitglied der neuen Benutzergruppe sein.]]></item>
+		<item name="wcf.acp.group.copy.copyUserGroupOptions"><![CDATA[Berechtigungen kopieren]]></item>
+		<item name="wcf.acp.group.copy.copyUserGroupOptions.description"><![CDATA[Die neue Benutzergruppe wird die gleichen Berechtigungen besitzen wie die kopierte Benutzergruppe.]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
