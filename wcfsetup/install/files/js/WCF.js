@@ -5493,7 +5493,7 @@ WCF.Option.Handler = Class.extend({
 	init: function() {
 		this._initOptions();
 		
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Option.Handler', $.proxy(this._initOptions));
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Option.Handler', $.proxy(this._initOptions, this));
 	},
 	
 	/**
