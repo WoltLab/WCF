@@ -3,7 +3,7 @@
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
-		new WCF.ACP.Options();
+		new WCF.Option.Handler();
 	});
 	//]]>
 </script>
