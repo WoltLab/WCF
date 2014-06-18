@@ -184,7 +184,6 @@ class RegisterForm extends UserAddForm {
 			}
 			if (WCF::getSession()->getVar('__email')) {
 				$this->email = $this->confirmEmail = WCF::getSession()->getVar('__email');
-				WCF::getSession()->unregister('__email');
 			}
 			
 			WCF::getSession()->register('registrationStartTime', TIME_NOW);
@@ -400,6 +399,8 @@ class RegisterForm extends UserAddForm {
 					}
 				break;
 			}
+			
+			WCF::getSession()->unregister('__email');
 			
 			// create fake password
 			$this->password = StringUtil::getRandomID();
