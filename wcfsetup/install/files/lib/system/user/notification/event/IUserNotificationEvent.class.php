@@ -68,6 +68,13 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	public function getAuthor();
 	
 	/**
+	 * Returns a list of authors for stacked notifications sorted by time.
+	 * 
+	 * @return	array<\wcf\data\user\UserProfile>
+	 */
+	public function getAuthors();
+	
+	/**
 	 * Returns true if this notification event is visible for the active user.
 	 * 
 	 * @return	boolean
@@ -75,11 +82,11 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	public function isVisible();
 	
 	/**
-	 * Returns a unique identifier of the event.
+	 * Sets a list of authors for stacked notifications.
 	 * 
-	 * @return	string
+	 * @param	array<\wcf\data\user\UserProfile>	$authors
 	 */
-	public function getEventHash();
+	public function setAuthors(array $authors);
 	
 	/**
 	 * Sets the object for the event.
@@ -97,4 +104,11 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * @param	\wcf\data\language\Language	$language
 	 */
 	public function setLanguage(Language $language);
+	
+	/**
+	 * Returns true if this notification event supports stacking.
+	 * 
+	 * @return	boolean
+	 */
+	public function isStackable();
 }

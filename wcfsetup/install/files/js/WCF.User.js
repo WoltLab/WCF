@@ -1394,9 +1394,11 @@ WCF.Notification.List = Class.extend({
 			this._items[$container.data('notificationID')] = $container;
 			
 			$container.find('.jsMarkAsConfirmed').data('notificationID', $container.data('notificationID')).click($.proxy(this._click, this));
-			$container.find('p').html(function(index, oldHTML) {
-				return '<a>' + oldHTML + '</a>';
-			}).children('a').data('notificationID', $container.data('notificationID')).click($.proxy(this._clickLink, this));
+			if (!$container.data('isGrouped')) {
+				$container.find('p').html(function(index, oldHTML) {
+					return '<a>' + oldHTML + '</a>';
+				}).children('a').data('notificationID', $container.data('notificationID')).click($.proxy(this._clickLink, this));
+			}
 		}, this));
 		
 		this._badge = $('.jsNotificationsBadge:eq(0)');

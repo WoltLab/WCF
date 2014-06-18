@@ -243,6 +243,16 @@
 		}
 		
 		&.notificationItem {
+			&.groupedNotificationItem > a {
+				> div:first-child {
+					padding: 4px 2px 2px;
+				}
+				
+				> div + div {
+					margin-left: 32px;
+				}
+			}
+			
 			> a {
 				white-space: normal;
 			}

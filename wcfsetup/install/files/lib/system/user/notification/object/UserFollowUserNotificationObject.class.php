@@ -39,4 +39,11 @@ class UserFollowUserNotificationObject extends DatabaseObjectDecorator implement
 	public function getAuthorID() {
 		return $this->userID;
 	}
+	
+	/**
+	 * @see	\wcf\data\DatabaseObjectDecorator::getObjectID()
+	 */
+	public function getObjectID() {
+		return $this->followUserID;
+	}
 }

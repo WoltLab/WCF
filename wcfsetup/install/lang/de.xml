@@ -2782,7 +2782,9 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.notification.button.confirmed"><![CDATA[OK]]></item>
 		<item name="wcf.user.notification.count"><![CDATA[if (data.returnValues.count == 0) { "Keine Benachrichtigungen" } else if (data.returnValues.count == 1) { "Eine Benachrichtigung" } else { data.returnValues.count + " Benachrichtigungen" }]]></item>
 		<item name="wcf.user.notification.follow.message"><![CDATA[„{$author->username}“ folgt Ihnen.]]></item>
+		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$count} weiteren{/if} folgen Ihnen.]]></item>
 		<item name="wcf.user.notification.follow.title"><![CDATA[Neuer Follower]]></item>
+		<item name="wcf.user.notification.follow.title.stacked"><![CDATA[{#$count} neue Follower]]></item>
 		<item name="wcf.user.notification.follow.mail"><![CDATA[{@$author->username} folgt Ihnen.]]></item>
 		<item name="wcf.user.notification.mail.disabled"><![CDATA[Die E-Mail-Benachrichtigung wurde erfolgreich abgeschaltet.]]></item>
 		<item name="wcf.user.notification.mail.footer"><![CDATA[Diese E-Mail ist eine automatische Benachrichtigung. BITTE ANTWORTEN SIE NICHT AUF DIESE E-MAIL.
@@ -2805,7 +2807,7 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.mailNotificationType.none"><![CDATA[Keine E-Mail-Benachrichtigung]]></item>
 		<item name="wcf.user.notification.mailNotificationType.instant"><![CDATA[Sofortige E-Mail-Benachrichtigung]]></item>
 		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Tägliche E-Mail-Benachrichtigung]]></item>
-		<item name="wcf.user.notification.markAllAsConfirmed"><![CDATA[Alle Benachrichtigungen verwerfen]]></item>
+		<item name="wcf.user.notification.markAllAsConfirmed"><![CDATA[Alle als gelesen markieren]]></item>
 		<item name="wcf.user.notification.markAllAsConfirmed.confirmMessage"><![CDATA[Wollen Sie wirklich alle Benachrichtigungen als gelesen markieren?]]></item>
 		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Alls gelesen markieren]]></item>
 		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[Keine neuen Benachrichtigungen]]></item>

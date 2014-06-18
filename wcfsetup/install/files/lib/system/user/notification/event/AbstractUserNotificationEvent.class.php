@@ -31,6 +31,18 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	protected $author = null;
 	
 	/**
+	 * list of authors for stacked notifications
+	 * @var	array<\wcf\data\user\UserProfile>
+	 */
+	protected $authors = array();
+	
+	/**
+	 * notification stacking support
+	 * @var	boolean
+	 */
+	protected $isStackable = false;
+	
+	/**
 	 * user notification
 	 * @var	\wcf\data\user\notification\UserNotification
 	 */
@@ -55,6 +67,13 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	protected $language = null;
 	
 	/**
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setAuthors()
+	 */
+	public function setAuthors(array $authors) {
+		$this->authors = $authors;
+	}
+	
+	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setObject()
 	 */
 	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array()) {
@@ -76,6 +95,13 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 */
 	public function getAuthor() {
 		return $this->author;
+	}
+	
+	/**
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getAuthors()
+	 */
+	public function getAuthors() {
+		return $this->authors;
 	}
 	
 	/**
@@ -124,13 +150,6 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	}
 	
 	/**
-	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEventHash()
-	 */
-	public function getEventHash() {
-		return StringUtil::getHash($this->packageID . '-'. $this->eventID . '-' . $this->userNotificationObject->getObjectID());
-	}
-	
-	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setLanguage()
 	 */
 	public function setLanguage(Language $language) {
@@ -145,5 +164,12 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	public function getLanguage() {
 		if ($this->language !== null) return $this->language;
 		return WCF::getLanguage();
+	}
+	
+	/**
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::isStackable()
+	 */
+	public function isStackable() {
+		return $this->isStackable;
 	}
 }
