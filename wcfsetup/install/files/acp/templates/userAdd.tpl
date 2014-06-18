@@ -46,7 +46,7 @@
 				{if MODULE_USER_SIGNATURE}
 					<li><a href="{@$__wcf->getAnchor('signatureManagement')}">{lang}wcf.user.signature{/lang}</a></li>
 				{/if}
-
+				
 				{if $action == 'edit'}
 					<li><a href="{@$__wcf->getAnchor('avatarForm')}">{lang}wcf.user.avatar{/lang}</a></li>
 				{/if}
@@ -417,7 +417,7 @@
 				</script>
 			</div>
 		{/if}
-
+		
 		{event name='tabMenuContent'}
 	</div>
 	

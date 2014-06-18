@@ -118,8 +118,8 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		
 		// even items become keys, odd items become values
 		$this->exceptions = call_user_func_array('array_merge', array_map(
-			function($v) { 
-				return array($v[0] => $v[1]); 
+			function($v) {
+				return array($v[0] => $v[1]);
 			}, 
 			array_chunk($contents, 2)
 		));

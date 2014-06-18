@@ -8,11 +8,11 @@ use wcf\data\comment\response\StructuredCommentResponse;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\captcha\CaptchaHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\like\LikeHandler;
-use wcf\system\recaptcha\RecaptchaHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
@@ -36,6 +36,12 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$allowGuestAccess
 	 */
 	protected $allowGuestAccess = array('addComment', 'addResponse', 'loadComments', 'getGuestDialog');
+	
+	/**
+	 * captcha object type used for comments
+	 * @var	\wcf\data\object\type\ObjectType
+	 */
+	public $captchaObjectType = null;
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$className
@@ -71,7 +77,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @var	\wcf\data\comment\response\CommentResponse
 	 */
 	public $createdResponse = null;
-
+	
 	/**
 	 * errors occuring durch the validation of addComment or addResponse
 	 * @var	array
@@ -99,7 +105,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			
 			$processors[$comment->objectTypeID]->updateCounter($comment->objectID, -1 * ($comment->responses + 1));
 			$groupCommentIDs[$comment->objectTypeID][] = $comment->commentID;
-			$commentIDs[] = $comment->commentID; 
+			$commentIDs[] = $comment->commentID;
 		}
 		
 		if (!empty($groupCommentIDs)) {
@@ -184,7 +190,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		$this->readInteger('objectID', false, 'data');
 		
 		$this->validateUsername();
-		$this->validateRecaptcha();
+		$this->validateCaptcha();
 		
 		$this->validateMessage();
 		$objectType = $this->validateObjectType();
@@ -203,8 +209,15 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 */
 	public function addComment() {
 		if (!empty($this->validationErrors)) {
+			if (!empty($this->parameters['data']['username'])) {
+				WCF::getSession()->register('username', $this->parameters['data']['username']);
+			}
+			WCF::getTPL()->assign('errorType', $this->validationErrors);
+			
+			$guestDialog = $this->getGuestDialog();
 			return array(
-				'errors' => $this->validationErrors
+				'useCaptcha' => $guestDialog['useCaptcha'],
+				'guestDialog' => $guestDialog['template']
 			);
 		}
 		
@@ -247,8 +260,10 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			// save last comment time for flood control
 			WCF::getSession()->register('lastCommentTime', $this->createdComment->time);
 			
-			// unmark recaptcha as done for furture requests
-			WCF::getSession()->unregister('recaptchaDone');
+			// reset captcha for future requests
+			if ($this->captchaObjectType) {
+				$this->captchaObjectType->getProcessor()->reset();
+			}
 		}
 		
 		return array(
@@ -266,7 +281,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		$this->validateMessage();
 		
 		$this->validateUsername();
-		$this->validateRecaptcha();
+		$this->validateCaptcha();
 		
 		// validate comment id
 		$this->validateCommentID();
@@ -287,8 +302,15 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 */
 	public function addResponse() {
 		if (!empty($this->validationErrors)) {
+			if (!empty($this->parameters['data']['username'])) {
+				WCF::getSession()->register('username', $this->parameters['data']['username']);
+			}
+			WCF::getTPL()->assign('errorType', $this->validationErrors);
+			
+			$guestDialog = $this->getGuestDialog();
 			return array(
-				'errors' => $this->validationErrors
+				'useCaptcha' => $guestDialog['useCaptcha'],
+				'guestDialog' => $guestDialog['template']
 			);
 		}
 		
@@ -349,8 +371,10 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			// save last comment time for flood control
 			WCF::getSession()->register('lastCommentTime', $this->createdResponse->time);
 			
-			// unmark recaptcha as done for furture requests
-			WCF::getSession()->unregister('recaptchaDone');
+			// reset captcha for future requests
+			if ($this->captchaObjectType) {
+				$this->captchaObjectType->getProcessor()->reset();
+			}
 		}
 		
 		return array(
@@ -553,11 +577,23 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function getGuestDialog() {
-		RecaptchaHandler::getInstance()->assignVariables();
+		if (MESSAGE_CAPTCHA_TYPE) {
+			$captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(MESSAGE_CAPTCHA_TYPE);
+			if ($captchaObjectType === null) {
+				throw new SystemException("Unknown captcha object type with name '".MESSAGE_CAPTCHA_TYPE."'");
+			}
+			
+			if (!$captchaObjectType->getProcessor()->isAvailable()) {
+				$captchaObjectType = null;
+			}
+		}
 		
 		return array(
+			'useCaptcha' => $captchaObjectType !== null,
 			'template' => WCF::getTPL()->fetch('commentAddGuestDialog', 'wcf', array(
-				'ajaxRecaptcha' => true,
+				'ajaxCaptcha' => true,
+				'captchaID' => 'commentAdd',
+				'captchaObjectType' => $captchaObjectType,
 				'username' => WCF::getSession()->getVar('username')
 			))
 		);
@@ -679,29 +715,39 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		catch (UserInputException $e) {
-			if ($e->getType() == 'empty') {
-				$this->validationErrors['username'] = WCF::getLanguage()->get('wcf.global.form.error.empty');
-			}
-			else {
-				$this->validationErrors['username'] = WCF::getLanguage()->get('wcf.user.username.error.'.$e->getType());
-			}
+			$this->validationErrors['username'] = $e->getType();
 		}
 	}
-
+	
 	/**
-	 * Validates the recaptcha challenge.
+	 * Validates the captcha challenge.
 	 */
-	protected function validateRecaptcha() {
-		if (WCF::getUser()->userID || !MODULE_SYSTEM_RECAPTCHA || WCF::getSession()->getVar('recaptchaDone')) return;
+	protected function validateCaptcha() {
+		if (WCF::getUser()->userID) return;
 		
-		$this->readString('recaptchaChallenge');
-		$this->readString('recaptchaResponse');
+		if (MESSAGE_CAPTCHA_TYPE) {
+			$this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(MESSAGE_CAPTCHA_TYPE);
+			if ($this->captchaObjectType === null) {
+				throw new SystemException("Unknown captcha object type with name '".MESSAGE_CAPTCHA_TYPE."'");
+			}
+			
+			if (!$this->captchaObjectType->getProcessor()->isAvailable()) {
+				$this->captchaObjectType = null;
+			}
+		}
+		
+		if ($this->captchaObjectType === null) return;
 		
 		try {
-			RecaptchaHandler::getInstance()->validate($this->parameters['recaptchaChallenge'], $this->parameters['recaptchaResponse']);
+			$this->captchaObjectType->getProcessor()->readFormParameters();
+			$this->captchaObjectType->getProcessor()->validate();
 		}
 		catch (UserInputException $e) {
-			$this->validationErrors['recaptcha'] = WCF::getLanguage()->get('wcf.recaptcha.error.recaptchaString.false');
+			$this->validationErrors = array_merge($this->validationErrors,
+				array(
+					$e->getField() => $e->getType()
+				)
+			);
 		}
 	}
 	

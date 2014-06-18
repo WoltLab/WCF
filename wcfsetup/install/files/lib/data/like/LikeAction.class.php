@@ -288,7 +288,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	
 	/**
 	 * Loads a list of likes.
-	 *
+	 * 
 	 * @return	array
 	 */
 	public function load() {
@@ -308,12 +308,12 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		if (!$lastLikeTime) {
 			return array();
 		}
-	
+		
 		// parse template
 		WCF::getTPL()->assign(array(
 			'likeList' => $likeList
 		));
-	
+		
 		return array(
 			'lastLikeTime' => $lastLikeTime,
 			'template' => WCF::getTPL()->fetch('userProfileLikeItem')

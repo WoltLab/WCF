@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class SelectOptionType extends RadioButtonOptionType {
-	protected $allowEmptyValue = false; 
+	protected $allowEmptyValue = false;
 	
 	/**
 	 * @see	\wcf\system\option\IOptionType::getFormElement()

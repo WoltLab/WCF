@@ -238,7 +238,7 @@
 				<div id="sendMailDiv">
 					<fieldset>
 						<legend>{lang}wcf.acp.user.sendMail.mail{/lang}</legend>
-
+						
 						<dl{if $errorField == 'subject'} class="formError"{/if}>
 							<dt><label for="subject">{lang}wcf.acp.user.sendMail.subject{/lang}</label></dt>
 							<dd>
@@ -250,7 +250,7 @@
 								{/if}
 							</dd>
 						</dl>
-
+						
 						<dl{if $errorField == 'from'} class="formError"{/if}>
 							<dt><label for="from">{lang}wcf.acp.user.sendMail.from{/lang}</label></dt>
 							<dd>
@@ -263,7 +263,7 @@
 								<small>{lang}wcf.acp.user.sendMail.from.description{/lang}</small>
 							</dd>
 						</dl>
-
+						
 						<dl{if $errorField == 'text'} class="formError"{/if}>
 							<dt><label for="text">{lang}wcf.acp.user.sendMail.text{/lang}</label></dt>
 							<dd>
@@ -275,7 +275,7 @@
 								{/if}
 							</dd>
 						</dl>
-
+						
 						<dl>
 							<dt></dt>
 							<dd>
@@ -284,11 +284,11 @@
 						</dl>
 					</fieldset>
 				</div>
-
+				
 				<div id="exportMailAddressDiv">
 					<fieldset>
 						<legend>{lang}wcf.acp.user.exportEmailAddress.format{/lang}</legend>
-
+						
 						<dl>
 							<dt><label>{lang}wcf.acp.user.exportEmailAddress.fileType{/lang}</label></dt>
 							<dd>
@@ -296,14 +296,14 @@
 								<label><input type="radio" name="fileType" value="xml" {if $fileType == 'xml'}checked="checked" {/if}/> {lang}wcf.acp.user.exportEmailAddress.fileType.xml{/lang}</label>
 							</dd>
 						</dl>
-
+						
 						<dl id="separatorDiv">
 							<dt><label for="separator">{lang}wcf.acp.user.exportEmailAddress.separator{/lang}</label></dt>
 							<dd>
 								<input type="text" id="separator" name="separator" value="{$separator}" class="medium" />
 							</dd>
 						</dl>
-
+						
 						<dl id="textSeparatorDiv">
 							<dt><label for="textSeparator">{lang}wcf.acp.user.exportEmailAddress.textSeparator{/lang}</label></dt>
 							<dd>
@@ -318,7 +318,7 @@
 				<div id="assignToGroupDiv">
 					<fieldset>
 						<legend>{lang}wcf.acp.user.groups{/lang}</legend>
-
+						
 						<dl>
 							<dt></dt>
 							<dd{if $errorField == 'assignToGroupIDs'} class="formError"{/if}>

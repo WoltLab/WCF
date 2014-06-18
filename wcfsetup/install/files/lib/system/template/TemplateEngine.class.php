@@ -201,7 +201,7 @@ class TemplateEngine extends SingletonFactory {
 							if (isset($this->v[$variable][$key])) {
 								$this->v[$variable][$key] .= $value[$key];
 							}
-							else { 
+							else {
 								$this->v[$variable][$key] = $value[$key];
 							}
 						}
@@ -240,7 +240,7 @@ class TemplateEngine extends SingletonFactory {
 							if (isset($this->v[$variable][$key])) {
 								$this->v[$variable][$key] = $value[$key] . $this->v[$variable][$key];
 							}
-							else { 
+							else {
 								$this->v[$variable][$key] = $value[$key];
 							}
 						}

@@ -13,6 +13,7 @@ use wcf\util\StringUtil;
  * @package	com.woltlab.wcf
  * @subpackage	form
  * @category	Community Framework
+ * @deprecated	since 2.1
  */
 abstract class RecaptchaForm extends AbstractForm {
 	/**

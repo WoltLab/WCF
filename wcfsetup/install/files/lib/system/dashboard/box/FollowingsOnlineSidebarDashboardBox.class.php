@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\dashboard\box;
-use wcf\data\dashboard\box\DashboardBox; 
+use wcf\data\dashboard\box\DashboardBox;
 use wcf\data\user\online\UsersOnlineList;
-use wcf\page\IPage; 
+use wcf\page\IPage;
 use wcf\system\WCF;
 
 /**
@@ -26,7 +26,7 @@ class FollowingsOnlineSidebarDashboardBox extends AbstractSidebarDashboardBox {
 	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
 	 */
 	public function init(DashboardBox $box, IPage $page) {
-		parent::init($box, $page); 
+		parent::init($box, $page);
 		
 		if (MODULE_USERS_ONLINE && count(WCF::getUserProfileHandler()->getFollowingUsers())) {
 			$this->usersOnlineList = new UsersOnlineList();
@@ -34,7 +34,7 @@ class FollowingsOnlineSidebarDashboardBox extends AbstractSidebarDashboardBox {
 			$this->usersOnlineList->readObjects();
 		}
 		
-		$this->fetched(); 
+		$this->fetched();
 	}
 	
 	/**
@@ -42,7 +42,7 @@ class FollowingsOnlineSidebarDashboardBox extends AbstractSidebarDashboardBox {
 	 */
 	protected function render() {
 		if (empty($this->usersOnlineList) || !count($this->usersOnlineList->getObjects())) {
-			return ''; 
+			return '';
 		}
 		
 		WCF::getTPL()->assign(array(

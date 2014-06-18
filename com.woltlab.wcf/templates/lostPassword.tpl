@@ -80,9 +80,9 @@
 		
 		{event name='fieldsets'}
 		
-		{if $useCaptcha}{include file='recaptcha'}{/if}
+		{include file='captcha'}
 	</div>
-		
+	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
 		{@SECURITY_TOKEN_INPUT_TAG}

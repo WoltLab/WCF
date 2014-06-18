@@ -21,11 +21,11 @@ use wcf\util\UserUtil;
  * @subpackage	form
  * @category	Community Framework
  */
-class MailForm extends RecaptchaForm {
+class MailForm extends AbstractCaptchaForm {
 	/**
-	 * @see	\wcf\form\RecaptchaForm::$useCaptcha
+	 * @see	\wcf\form\AbstractCaptchaForm::$captchaObjectTypeName
 	 */
-	public $useCaptcha = PROFILE_MAIL_USE_CAPTCHA;
+	public $captchaObjectTypeName = PROFILE_MAIL_CAPTCHA_TYPE;
 	
 	/**
 	 * recipient's user id

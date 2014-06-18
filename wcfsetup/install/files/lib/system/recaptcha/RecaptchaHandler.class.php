@@ -174,7 +174,8 @@ class RecaptchaHandler extends SingletonFactory {
 		WCF::getTPL()->assign(array(
 			'recaptchaLanguageCode' => $this->languageCode,
 			'recaptchaPublicKey' => $this->publicKey,
-			'recaptchaUseSSL' => RouteHandler::secureConnection()
+			'recaptchaUseSSL' => RouteHandler::secureConnection(),
+			'recaptchaLegacyMode' => true
 		));
 	}
 }

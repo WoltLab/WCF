@@ -199,7 +199,7 @@ class Mail {
 			$this->body .= self::$lineEnding;
 			
 			// wrap lines after 70 characters
-			$this->body .= wordwrap($this->getMessage(), 70); 
+			$this->body .= wordwrap($this->getMessage(), 70);
 			$this->body .= self::$lineEnding.self::$lineEnding;
 			$this->body .= '--'.$this->getBoundary().self::$lineEnding;
 			

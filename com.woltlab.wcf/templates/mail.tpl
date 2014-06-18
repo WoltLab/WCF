@@ -101,9 +101,7 @@
 		
 		{event name='fieldsets'}
 		
-		{if $useCaptcha}
-			{include file='recaptcha'}
-		{/if}
+		{include file='captcha'}
 	</div>
 	
 	<div class="formSubmit">

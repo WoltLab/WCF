@@ -46,7 +46,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		if ($userOptionCategory !== null) {
 			if ($userOptionCategory->packageID != $this->installation->getPackageID()) {
 				throw new SystemException("Cannot override existing category '".$category['categoryName']."'");
-			} 
+			}
 			
 			$categoryEditor = new UserOptionCategoryEditor($userOptionCategory);
 			$categoryEditor->update($data);

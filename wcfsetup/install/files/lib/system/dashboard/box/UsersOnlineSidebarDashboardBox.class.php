@@ -27,7 +27,7 @@ class UsersOnlineSidebarDashboardBox extends AbstractSidebarDashboardBox {
 	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
 	 */
 	public function init(DashboardBox $box, IPage $page) {
-		parent::init($box, $page); 
+		parent::init($box, $page);
 		
 		if (MODULE_USERS_ONLINE) {
 			$this->usersOnlineList = new UsersOnlineList();
@@ -37,7 +37,7 @@ class UsersOnlineSidebarDashboardBox extends AbstractSidebarDashboardBox {
 			$this->usersOnlineList->readObjects();
 		}
 		
-		$this->fetched(); 
+		$this->fetched();
 	}
 	
 	/**
@@ -45,7 +45,7 @@ class UsersOnlineSidebarDashboardBox extends AbstractSidebarDashboardBox {
 	 */
 	protected function render() {
 		if (empty($this->usersOnlineList) || !count($this->usersOnlineList->getObjects())) {
-			return ''; 
+			return '';
 		}
 		
 		$this->titleLink = LinkHandler::getInstance()->getLink('UsersOnlineList');

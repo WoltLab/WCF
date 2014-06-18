@@ -32,7 +32,7 @@ class BirthdayOptionType extends DateOptionType {
 		
 		if (empty($newValue)) return;
 		
-		$timestamp = @strtotime($newValue); 
+		$timestamp = @strtotime($newValue);
 		if ($timestamp > TIME_NOW) {
 			throw new UserInputException($option->optionName, 'validationFailed');
 		}

@@ -384,6 +384,21 @@
 			<parent>wcf.acp.menu.link.language.server</parent>
 			<permissions>admin.language.canManageLanguage</permissions>
 		</acpmenuitem>-->
+		
+		<acpmenuitem name="wcf.acp.menu.link.captcha">
+			<parent>wcf.acp.menu.link.display</parent>
+			<showorder>5</showorder>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.captcha.question.list">
+			<parent>wcf.acp.menu.link.captcha</parent>
+			<controller><![CDATA[wcf\acp\page\CaptchaQuestionListPage]]></controller>
+			<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.captcha.question.add">
+			<parent>wcf.acp.menu.link.captcha</parent>
+			<controller><![CDATA[wcf\acp\form\CaptchaQuestionAddForm]]></controller>
+			<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
+		</acpmenuitem>
 		<!-- /language -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.content">

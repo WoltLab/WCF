@@ -71,7 +71,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 		foreach ($this->objects as $cronjob) {
 			if (!$cronjob->isEditable()) {
 				throw new PermissionDeniedException();
-			} 
+			}
 		}
 	}
 	
@@ -84,7 +84,7 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 		foreach ($this->objects as $cronjob) {
 			if (!$cronjob->canBeDisabled()) {
 				throw new PermissionDeniedException();
-			} 
+			}
 		}
 	}
 	

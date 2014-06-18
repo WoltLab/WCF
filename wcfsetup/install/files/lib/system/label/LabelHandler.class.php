@@ -339,7 +339,7 @@ class LabelHandler extends SingletonFactory {
 	
 	/**
 	 * Removes all assigned labels for given object ids.
-	 *
+	 * 
 	 * @param	integer			$objectTypeID
 	 * @param	array<integer>		$objectID
 	 */

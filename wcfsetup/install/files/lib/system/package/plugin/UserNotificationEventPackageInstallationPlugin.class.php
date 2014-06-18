@@ -31,7 +31,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * preset event ids
-	 * @var array<integer>
+	 * @var	array<integer>
 	 */
 	protected $presetEventIDs = array();
 	
@@ -89,7 +89,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		if (empty($row)) {
 			$this->presetEventIDs[] = $result->eventID;
 		}
-
+		
 		return $result;
 	}
 	

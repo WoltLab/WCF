@@ -5,7 +5,7 @@ use wcf\system\SingletonFactory;
 
 /**
  * Manages the user birthday cache.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -16,13 +16,13 @@ use wcf\system\SingletonFactory;
 class UserBirthdayCache extends SingletonFactory {
 	/**
 	 * loaded months
-	 * @var array<integer>
+	 * @var	array<integer>
 	 */
 	protected $monthsLoaded = array();
 	
 	/**
 	 * user birthdays
-	 * @var array<integer>
+	 * @var	array<integer>
 	 */
 	protected $birthdays = array();
 	

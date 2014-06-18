@@ -5,7 +5,7 @@ use wcf\system\WCF;
 
 /**
  * Stat handler implementation for like stats.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -17,7 +17,7 @@ class LikeStatDailyHandler extends AbstractStatDailyHandler {
 	protected $likeValue = Like::LIKE;
 	
 	/**
-	 * @see \wcf\system\stat\IStatDailyHandler::getData()
+	 * @see	\wcf\system\stat\IStatDailyHandler::getData()
 	 */
 	public function getData($date) {
 		$sql = "SELECT	COUNT(*)

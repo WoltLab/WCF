@@ -23,7 +23,7 @@ use wcf\util\StringUtil;
  * @subpackage	form
  * @category	Community Framework
  */
-abstract class MessageForm extends RecaptchaForm {
+abstract class MessageForm extends AbstractCaptchaForm {
 	/**
 	 * name of the permission which contains the allowed BBCodes
 	 * @var	string

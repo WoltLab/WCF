@@ -157,14 +157,14 @@ class NoticeAddForm extends AbstractForm {
 		parent::save();
 		
 		$this->objectAction = new NoticeAction(array(), 'create', array(
-			'data' => array(
+			'data' => array_merge($this->additionalFields, array(
 				'isDisabled' => $this->isDisabled,
 				'isDismissible' => $this->isDismissible,
 				'notice' => I18nHandler::getInstance()->isPlainValue('notice') ? I18nHandler::getInstance()->getValue('notice') : '',
 				'noticeName' => $this->noticeName,
 				'noticeUseHtml' => $this->noticeUseHtml,
 				'showOrder' => $this->showOrder
-			)
+			))
 		));
 		$returnValues = $this->objectAction->executeAction();
 		

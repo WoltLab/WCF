@@ -9,6 +9,7 @@
 			'wcf.comment.button.response.add': '{lang}wcf.comment.button.response.add{/lang}',
 			'wcf.comment.delete.confirmMessage': '{lang}wcf.comment.delete.confirmMessage{/lang}',
 			'wcf.comment.description': '{lang}wcf.comment.description{/lang}',
+			'wcf.comment.guestDialog.title': '{lang}wcf.comment.guestDialog.title{/lang}',
 			'wcf.comment.more': '{lang}wcf.comment.more{/lang}',
 			'wcf.comment.response.add': '{lang}wcf.comment.response.add{/lang}',
 			'wcf.comment.response.more': '{lang}wcf.comment.response.more{/lang}',

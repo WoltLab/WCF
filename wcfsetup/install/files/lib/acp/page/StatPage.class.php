@@ -28,19 +28,19 @@ class StatPage extends AbstractPage {
 	
 	/**
 	 * start date (yyyy-mm-dd)
-	 * @var string
+	 * @var	string
 	 */
 	public $startDate = '';
 	
 	/**
 	 * end date (yyyy-mm-dd)
-	 * @var string
+	 * @var	string
 	 */
 	public $endDate = '';
 	
 	/**
 	 * available object type
-	 * @var array
+	 * @var	array
 	 */
 	public $availableObjectTypes = array();
 	
@@ -66,7 +66,7 @@ class StatPage extends AbstractPage {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-	
+		
 		WCF::getTPL()->assign(array(
 			'endDate' => $this->endDate,
 			'startDate' => $this->startDate,

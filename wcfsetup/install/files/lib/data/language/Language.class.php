@@ -140,7 +140,7 @@ class Language extends DatabaseObject {
 		
 		// search language file
 		$filename = WCF_DIR.'language/'.$this->languageID.'_'.$category.'.php';
-		if (!@file_exists($filename)) { 
+		if (!@file_exists($filename)) {
 			if ($this->editor === null) {
 				$this->editor = new LanguageEditor($this);
 			}

@@ -32,7 +32,7 @@ class UserOptionImporter extends AbstractImporter {
 	
 	/**
 	 * list of available user option categories
-	 * @var array<string>
+	 * @var	array<string>
 	 */
 	protected $categoryCache = null;
 	

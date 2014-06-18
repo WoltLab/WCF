@@ -4,7 +4,7 @@ use wcf\system\WCF;
 
 /**
  * Abstract implementation of a stat handler.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -32,7 +32,7 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler {
 	
 	/**
 	 * Counts the total number of rows.
-	 *
+	 * 
 	 * @param	integer		$date
 	 * @param	string		$tableName
 	 * @param	string		$dateColumnName
@@ -48,7 +48,7 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler {
 	}
 	
 	/**
-	 * @see \wcf\system\stat\IStatDailyHandler::getFormattedCounter()
+	 * @see	\wcf\system\stat\IStatDailyHandler::getFormattedCounter()
 	 */
 	public function getFormattedCounter($counter) {
 		return $counter;

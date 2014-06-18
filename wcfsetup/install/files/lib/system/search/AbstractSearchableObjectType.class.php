@@ -17,7 +17,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 abstract class AbstractSearchableObjectType extends AbstractObjectTypeProcessor implements ISearchableObjectType {
 	/**
 	 * active main menu item
-	 * @var string
+	 * @var	string
 	 */
 	protected $activeMenuItem = '';
 	

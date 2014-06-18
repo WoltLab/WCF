@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\dashboard\box;
-use wcf\data\dashboard\box\DashboardBox; 
+use wcf\data\dashboard\box\DashboardBox;
 use wcf\data\user\UserProfileList;
-use wcf\page\IPage; 
+use wcf\page\IPage;
 use wcf\system\cache\builder\MostLikedMembersCacheBuilder;
 use wcf\system\WCF;
 
@@ -21,13 +21,13 @@ class MostLikedMembersDashboardBox extends AbstractSidebarDashboardBox {
 	 * user profile list
 	 * @var	\wcf\data\user\UserProfileList
 	 */
-	public $userProfileList = null; 
+	public $userProfileList = null;
 	
 	/**
 	 * @see	\wcf\system\dashboard\box\IDashboardBox::init()
 	 */
 	public function init(DashboardBox $box, IPage $page) {
-		parent::init($box, $page); 
+		parent::init($box, $page);
 		
 		// get ids
 		$mostLikedMemberIDs = MostLikedMembersCacheBuilder::getInstance()->getData();
@@ -39,14 +39,14 @@ class MostLikedMembersDashboardBox extends AbstractSidebarDashboardBox {
 			$this->userProfileList->readObjects();
 		}
 		
-		$this->fetched(); 
+		$this->fetched();
 	}
 	
 	/**
 	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
-		if ($this->userProfileList == null) return ''; 
+		if ($this->userProfileList == null) return '';
 		
 		WCF::getTPL()->assign(array(
 			'mostLikedMembers' => $this->userProfileList

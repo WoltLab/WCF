@@ -6,7 +6,7 @@
 	{include file='headInclude'}
 	
 	<link rel="canonical" href="{link controller='User' object=$user}{/link}" />
-
+	
 	{event name='javascriptInclude'}
 	<script data-relocate="true">
 		//<![CDATA[
@@ -109,7 +109,7 @@
 				});
 				new WCF.Moderation.Report.Content('com.woltlab.wcf.user', '.jsReportUser');
 			{/if}
-
+			
 			{event name='javascriptInit'}
 		});
 		//]]>

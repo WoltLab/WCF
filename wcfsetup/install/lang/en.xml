@@ -140,6 +140,18 @@ Examples for medium ID detection:
 		<item name="wcf.acp.cache.type.template"><![CDATA[Templates]]></item>
 	</category>
 	
+	<category name="wcf.acp.captcha">
+		<item name="wcf.acp.captcha.question.add"><![CDATA[Add Captcha Question]]></item>
+		<item name="wcf.acp.captcha.question.answers"><![CDATA[Answers]]></item>
+		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[Enter one possible answer per line. Answers beginning and ending with “~” will be interpreted as regular expressions.]]></item>
+		<item name="wcf.acp.captcha.question.answers.error.regexNotValid"><![CDATA[The regular expression “{$invalidRegex}” is not valid.]]></item>
+		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[Do you really want to delete the question “{$question->question|language}”?]]></item>
+		<item name="wcf.acp.captcha.question.edit"><![CDATA[Edit Captcha Question]]></item>
+		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Disable Question]]></item>
+		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha Questions]]></item>
+		<item name="wcf.acp.captcha.question.question"><![CDATA[Question]]></item>
+	</category>
+	
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Add Cronjob]]></item>
@@ -419,6 +431,16 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.content.ad.canManageAd"><![CDATA[Can manage ads]]></item>
 		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[“About Me” maximum length]]></item>
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Can report content]]></item>
+		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Can manage captcha questions]]></item>
+		<item name="wcf.acp.group.option.category.admin.display.captcha"><![CDATA[Captchas]]></item>
+		<item name="wcf.acp.group.button.copy"><![CDATA[Copy User Group]]></item>
+		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[Do you really want to copy this user group?]]></item>
+		<item name="wcf.acp.group.copy.copyACLOptions"><![CDATA[Copy Object Permissions]]></item>
+		<item name="wcf.acp.group.copy.copyACLOptions.description"><![CDATA[Permissions set for certain objects like for label groups will also be set for the new user group.]]></item>
+		<item name="wcf.acp.group.copy.copyMembers"><![CDATA[Copy Members]]></item>
+		<item name="wcf.acp.group.copy.copyMembers.description"><![CDATA[Members of the copied user group will automatically be members of the new user group.]]></item>
+		<item name="wcf.acp.group.copy.copyUserGroupOptions"><![CDATA[Copy Permissions]]></item>
+		<item name="wcf.acp.group.copy.copyUserGroupOptions.description"><![CDATA[The new user group will have the same permissions as the copied user group.]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -617,6 +639,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.ad"><![CDATA[Ad]]></item>
 		<item name="wcf.acp.menu.link.ad.add"><![CDATA[Add Ad]]></item>
 		<item name="wcf.acp.menu.link.ad.list"><![CDATA[List Ads]]></item>
+		<item name="wcf.acp.menu.link.captcha"><![CDATA[Captchas]]></item>
+		<item name="wcf.acp.menu.link.captcha.question.add"><![CDATA[Add Question]]></item>
+		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[List Questions]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -880,9 +905,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Only administrators can approve]]></item>
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Approval through email confirmation]]></item>
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[No approval required]]></item>
-		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Enable reCAPTCHA protection during registration]]></item>
-		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[Enable reCAPTCHA protection for “Lost Password”]]></item>
-		<item name="wcf.acp.option.profile_mail_use_captcha"><![CDATA[Enable reCAPTCHA protection for “Send Email to User”]]></item>
 		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Height of Images in Signatures]]></item>
 		<item name="wcf.acp.option.user_title_max_length"><![CDATA[Maximum User Title Length]]></item>
 		<item name="wcf.acp.option.user_forbidden_titles"><![CDATA[Reserved User Titles]]></item>
@@ -928,7 +950,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.search_results_per_page"><![CDATA[Results Per Page]]></item>
 		<item name="wcf.acp.option.search_default_sort_field"><![CDATA[Default Sort Field]]></item>
 		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Default Sort Order]]></item>
-		<item name="wcf.acp.option.search_use_captcha"><![CDATA[Enable reCAPTCHA protection for search]]></item>
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Polls]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximum Number of Options]]></item>
@@ -967,6 +988,12 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[TODO: „index.php“ aus URLs entfernen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.option.module_ad"><![CDATA[Ads]]></item>
+		<item name="wcf.acp.option.register_captcha_type"><![CDATA[Registration]]></item>
+		<item name="wcf.acp.option.lost_password_captcha_type"><![CDATA[Lost Password]]></item>
+		<item name="wcf.acp.option.profile_mail_captcha_type"><![CDATA[Send Email to User]]></item>
+		<item name="wcf.acp.option.search_captcha_type"><![CDATA[Search]]></item>
+		<item name="wcf.acp.option.message_captcha_type"><![CDATA[Messages]]></item>
+		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1573,6 +1600,18 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.spoiler.hide"><![CDATA[Hide Spoiler]]></item>
 		<item name="wcf.bbcode.spoiler.show"><![CDATA[Show Spoiler]]></item>
 		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Hidden Content)]]></item>
+	</category>
+	
+	<category name="wcf.captcha">
+		<item name="wcf.captcha.useNoCaptcha"><![CDATA[(No Captcha)]]></item>
+		<item name="wcf.captcha.com.woltlab.wcf.recaptcha"><![CDATA[reCAPTCHA]]></item>
+		<item name="wcf.captcha.com.woltlab.wcf.captchaQuestion"><![CDATA[Question]]></item>
+	</category>
+	
+	<category name="wcf.captcha.question">
+		<item name="wcf.captcha.question.answer.error.false"><![CDATA[You have entered an incorrect answer.]]></item>
+		<item name="wcf.captcha.question.captcha"><![CDATA[Question]]></item>
+		<item name="wcf.captcha.question.captcha.description"><![CDATA[Please answer the question below or solve the problem below.]]></item>
 	</category>
 	
 	<category name="wcf.category">

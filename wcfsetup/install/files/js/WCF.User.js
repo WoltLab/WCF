@@ -1659,13 +1659,13 @@ WCF.User.LikeLoader = Class.extend({
 	
 	/**
 	 * like type
-	 * @var string
+	 * @var	string
 	 */
 	_likeType: 'received',
 	
 	/**
 	 * like value
-	 * @var integer
+	 * @var	integer
 	 */
 	_likeValue: 1,
 	

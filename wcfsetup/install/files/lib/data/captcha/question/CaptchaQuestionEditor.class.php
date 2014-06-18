@@ -1,0 +1,29 @@
+<?php
+namespace wcf\data\captcha\question;
+use wcf\data\DatabaseObjectEditor;
+use wcf\data\IEditableCachedObject;
+use wcf\system\cache\builder\CaptchaQuestionCacheBuilder;
+
+/**
+ * Provides functions to edit captcha questions.
+ * 
+ * @author	Matthias Schmidt
+ * @copyright	2001-2014 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	data.captcha.question
+ * @category	Community Framework
+ */
+class CaptchaQuestionEditor extends DatabaseObjectEditor implements IEditableCachedObject {
+	/**
+	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
+	 */
+	protected static $baseClass = 'wcf\data\captcha\question\CaptchaQuestion';
+	
+	/**
+	 * @see	\wcf\data\IEditableCachedObject::resetCache()
+	 */
+	public static function resetCache() {
+		CaptchaQuestionCacheBuilder::getInstance()->reset();
+	}
+}

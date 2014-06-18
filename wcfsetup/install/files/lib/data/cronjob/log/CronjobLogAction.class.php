@@ -30,7 +30,7 @@ class CronjobLogAction extends AbstractDatabaseObjectAction {
 	public function validateClearAll() {
 		WCF::getSession()->checkPermissions(array('admin.system.canManageCronjob'));
 	}
-
+	
 	/**
 	 * Deletes the entire cronjob log.
 	 */

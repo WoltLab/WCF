@@ -16,7 +16,7 @@ class PageMenuCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
-	public function rebuild(array $parameters) { 
+	public function rebuild(array $parameters) {
 		$data = array();
 		
 		$menuItemList = new PageMenuItemList();

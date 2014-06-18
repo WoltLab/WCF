@@ -45,11 +45,6 @@ class SignatureEditForm extends MessageForm {
 	public $signatureCache = null;
 	
 	/**
-	 * @see	\wcf\form\RecaptchaForm::$useCaptcha
-	 */
-	public $useCaptacha = false;
-	
-	/**
 	 * @see	\wcf\form\MessageForm::$allowedBBCodesPermission
 	 */
 	public $allowedBBCodesPermission = 'user.signature.allowedBBCodes';

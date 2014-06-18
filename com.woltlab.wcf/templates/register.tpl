@@ -234,13 +234,7 @@
 		
 		{event name='fieldsets'}
 		
-		{if $useCaptcha}
-			{if $errorType.recaptchaString|isset}
-				{assign var=errorField value='recaptchaString'}
-				{assign var=errorType value=$errorType.recaptchaString}
-			{/if}
-			{include file='recaptcha'}
-		{/if}
+		{include file='captcha'}
 	</div>
 	
 	<div class="formSubmit">

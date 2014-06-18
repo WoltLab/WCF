@@ -78,6 +78,9 @@
 			<category name="admin.template">
 				<parent>admin.display</parent>
 			</category>
+			<category name="admin.display.captcha">
+				<parent>admin.display</parent>
+			</category>
 			
 			<category name="admin.content">
 				<parent>admin</parent>
@@ -650,6 +653,13 @@ png]]></defaultvalue>
 			
 			<option name="admin.content.ad.canManageAd">
 				<categoryname>admin.content.ad</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+			</option>
+			
+			<option name="admin.captcha.canManageCaptchaQuestion">
+				<categoryname>admin.display.captcha</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>

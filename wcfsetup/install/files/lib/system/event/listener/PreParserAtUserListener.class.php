@@ -78,7 +78,7 @@ class PreParserAtUserListener implements IEventListener {
 			$usernames = array();
 			foreach ($matches[1] as $match) {
 				$username = self::getUsername($match);
-				if (!in_array($username, $usernames)) $usernames[] = $username; 
+				if (!in_array($username, $usernames)) $usernames[] = $username;
 			}
 			
 			if (!empty($usernames)) {
@@ -88,7 +88,7 @@ class PreParserAtUserListener implements IEventListener {
 				$userList->readObjects();
 				$users = array();
 				foreach ($userList as $user) {
-					$users[mb_strtolower($user->username)] = $user; 
+					$users[mb_strtolower($user->username)] = $user;
 				}
 				
 				$text = $userRegex->replace($text, new Callback(function ($matches) use ($users) {

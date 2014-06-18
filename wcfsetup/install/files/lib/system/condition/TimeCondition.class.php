@@ -36,7 +36,7 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 	 * @var	string
 	 */
 	protected $startTime = '00:00';
-
+	
 	/**
 	 * timezone used to evaluate the start/end time
 	 * @var	string
@@ -55,7 +55,7 @@ class TimeCondition extends AbstractMultipleFieldsCondition implements IContentC
 		if ($this->endTime) {
 			$data['endTime'] = $this->endTime;
 		}
-
+		
 		if (!empty($data) && $this->timezone) {
 			$data['timezone'] = $this->timezone;
 		}
@@ -101,7 +101,7 @@ HTML;
 			$fieldElement .= '<option value="'.$timezone.'"'.($this->timezone === $timezone ? ' selected="selected"' : '').'>'.WCF::getLanguage()->get('wcf.date.timezone.'.str_replace('/', '.', strtolower($timezone))).'</option>';
 		}
 		$fieldElement .= '</select>';
-
+		
 		return $fieldElement;
 	}
 	

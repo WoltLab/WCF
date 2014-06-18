@@ -2091,6 +2091,64 @@ WCF.ACP.User.BanHandler = {
 };
 
 /**
+ * Namespace for user group management.
+ */
+WCF.ACP.User.Group = { };
+
+/**
+ * Handles copying user groups.
+ */
+WCF.ACP.User.Group.Copy = Class.extend({
+	/**
+	 * id of the copied group
+	 * @var	integer
+	 */
+	_groupID: 0,
+	
+	/**
+	 * Initializes a new instance of WCF.ACP.User.Group.Copy.
+	 * 
+	 * @param	integer		groupID
+	 */
+	init: function(groupID) {
+		this._groupID = groupID;
+		
+		$('.jsButtonUserGroupCopy').click($.proxy(this._click, this));
+	},
+	
+	/**
+	 * Handles clicking on a 'copy user group' button.
+	 */
+	_click: function() {
+		var $template = $('<div />');
+		$template.append($('<dl class="wide marginTop"><dt /><dd><label><input type="checkbox" id="copyMembers" value="1" /> ' + WCF.Language.get('wcf.acp.group.copy.copyMembers') + '</label><small>' + WCF.Language.get('wcf.acp.group.copy.copyMembers.description') + '</small></dd></dl>'));
+		$template.append($('<dl class="wide marginTopSmall"><dt /><dd><label><input type="checkbox" id="copyUserGroupOptions" value="1" /> ' + WCF.Language.get('wcf.acp.group.copy.copyUserGroupOptions') + '</label><small>' + WCF.Language.get('wcf.acp.group.copy.copyUserGroupOptions.description') + '</small></dd></dl>'));
+		$template.append($('<dl class="wide marginTopSmall"><dt /><dd><label><input type="checkbox" id="copyACLOptions" value="1" /> ' + WCF.Language.get('wcf.acp.group.copy.copyACLOptions') + '</label><small>' + WCF.Language.get('wcf.acp.group.copy.copyACLOptions.description') + '</small></dd></dl>'));
+		
+		WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.group.copy.confirmMessage'), $.proxy(function(action) {
+			if (action === 'confirm') {
+				new WCF.Action.Proxy({
+					autoSend: true,
+					data: {
+						actionName: 'copy',
+						className: 'wcf\\data\\user\\group\\UserGroupAction',
+						objectIDs: [ this._groupID ],
+						parameters: {
+							copyACLOptions: $('#copyACLOptions').is(':checked'),
+							copyMembers: $('#copyMembers').is(':checked'),
+							copyUserGroupOptions: $('#copyUserGroupOptions').is(':checked')
+						}
+					},
+					success: function(data) {
+						window.location = data.returnValues.redirectURL;
+					}
+				});
+			}
+		}, this), '', $template);
+	}
+});
+
+/**
  * Generic implementation to enable users.
  */
 WCF.ACP.User.EnableHandler = {

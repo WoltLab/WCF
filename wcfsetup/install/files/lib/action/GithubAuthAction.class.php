@@ -148,7 +148,10 @@ class GithubAuthAction extends AbstractAction {
 					WCF::getSession()->register('__githubToken', $data['access_token']);
 					
 					// we assume that bots won't register on github first
-					WCF::getSession()->register('recaptchaDone', true);
+					// thus no need for a captcha
+					if (REGISTER_CAPTCHA_TYPE) {
+						WCF::getSession()->register('noRegistrationCaptcha', true);
+					}
 					
 					WCF::getSession()->update();
 					HeaderUtil::redirect(LinkHandler::getInstance()->getLink('Register'));

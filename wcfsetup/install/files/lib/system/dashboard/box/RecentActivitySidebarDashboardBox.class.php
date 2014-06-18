@@ -36,7 +36,7 @@ class RecentActivitySidebarDashboardBox extends AbstractSidebarDashboardBox {
 		// removes orphaned and non-accessable events
 		UserActivityEventHandler::validateEvents($this->eventList);
 		
-		$this->fetched(); 
+		$this->fetched();
 	}
 	
 	/**

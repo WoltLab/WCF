@@ -87,7 +87,7 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	 */
 	public function getData() {
 		$data = array();
-
+		
 		if (!empty($this->groupIDs)) {
 			$data['groupIDs'] = $this->groupIDs;
 		}

@@ -1,6 +1,6 @@
 <fieldset>
 	<legend><label for="overlayLanguageItemValue">{lang}wcf.acp.language.item.value{/lang}</label></legend>
-
+	
 	<dl class="wide">
 		<dd>
 			<textarea rows="5" cols="60" name="languageItemValue" id="overlayLanguageItemValue"{if $item->languageItemOriginIsSystem} readonly="readonly"{/if}>{$item->languageItemValue}</textarea>

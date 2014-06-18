@@ -40,7 +40,7 @@ class UserListPage extends SortablePage {
 	
 	/**
 	 * applies special CSS classes for selected columns
-	 * @var array
+	 * @var	array
 	 */
 	public $columnStyling = array(
 		'registrationDate' => 'columnDate',

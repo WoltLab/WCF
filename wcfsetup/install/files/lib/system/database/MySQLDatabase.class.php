@@ -40,7 +40,7 @@ class MySQLDatabase extends Database {
 			throw new DatabaseException("Connecting to MySQL server '".$this->host."' failed:\n".$e->getMessage(), $this);
 		}
 	}
-
+	
 	/**
 	 * @see	\wcf\system\database\Database::isSupported()
 	 */

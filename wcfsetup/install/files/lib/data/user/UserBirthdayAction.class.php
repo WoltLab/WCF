@@ -9,7 +9,7 @@ use wcf\system\WCF;
 
 /**
  * Shows a list of user birthdays.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -52,7 +52,7 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
 		$userList->readObjects();
 		foreach ($userList->getObjects() as $user) {
 			if (!$user->isProtected() && $user->getAge($year) >= 0) {
-				$users[] = $user; 
+				$users[] = $user;
 			}
 		}
 		

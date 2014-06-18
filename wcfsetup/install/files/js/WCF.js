@@ -40,7 +40,7 @@
 						arguments[0] = key.replace(/ID$/, '-id');
 					}
 				break;
-			} 
+			}
 		}
 		
 		// call jQuery's own data method
@@ -1992,9 +1992,8 @@ WCF.LoadingOverlayHandler = {
 					
 					pe.stop();
 					self._pending = null;
-				}, 250); 
+				}, 250);
 			}
-			
 		}
 	},
 	
@@ -2880,18 +2879,18 @@ WCF.Date.Picker = {
 			'l': 'DD',
 			'z': 'o',
 			'S': '', // English ordinal suffix for the day of the month, 2 characters, will be discarded
-
+			
 			// month
 			'F': 'MM',
 			'm': 'mm',
 			'M': 'M',
 			'n': 'm',
-
+			
 			// year
 			'o': 'yy',
 			'Y': 'yy',
 			'y': 'y',
-
+			
 			// timestamp
 			'U': '@'
 		};
@@ -5494,7 +5493,7 @@ WCF.Option.Handler = Class.extend({
 	init: function() {
 		this._initOptions();
 		
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Option.Handler', $.proxy(this._initOptions));
+		WCF.DOMNodeInsertedHandler.addCallback('WCF.Option.Handler', $.proxy(this._initOptions, this));
 	},
 	
 	/**
@@ -6696,7 +6695,7 @@ WCF.System.FlexibleMenu = {
 		$maximumWidth -= parseInt($container.css('padding-left').replace(/px$/, '')) + parseInt($container.css('padding-right').replace(/px$/, ''));
 		
 		// substract paddings from the actual list
-		$maximumWidth -= parseInt($container.children('ul:eq(0)').css('padding-left').replace(/px$/, '')) + parseInt($container.children('ul:eq(0)').css('padding-right').replace(/px$/, '')); 
+		$maximumWidth -= parseInt($container.children('ul:eq(0)').css('padding-left').replace(/px$/, '')) + parseInt($container.children('ul:eq(0)').css('padding-right').replace(/px$/, ''));
 		if ($currentWidth > $maximumWidth || (this._hasHiddenItems[containerID] && ($currentWidth > $maximumWidth - $dropdownWidth))) {
 			var $menuItems = $menuItems.filter(':not(.active):not(.ui-state-active):visible');
 			
@@ -6948,6 +6947,53 @@ WCF.System.ObjectStore = {
 				callback(this._objects[identifier][$i]);
 			}
 		}
+	}
+};
+
+/**
+ * Stores captcha callbacks used for captchas in AJAX contexts.
+ */
+WCF.System.Captcha = {
+	/**
+	 * adds call
+	 * @var	object<function>
+	 */
+	_captchas: { },
+	
+	/**
+	 * Adds a callback for a certain captcha.
+	 * 
+	 * @param	string		captchaID
+	 * @param	function	callback
+	 */
+	addCallback: function(captchaID, callback) {
+		if (!$.isFunction(callback)) {
+			console.debug('[WCF.System.Captcha] Given callback is no function');
+			return;
+		}
+		
+		this._captchas[captchaID] = callback;
+	},
+	
+	/**
+	 * Returns the captcha data for the captcha with the given id.
+	 * 
+	 * @return	object
+	 */
+	getData: function(captchaID) {
+		if (this._captchas[captchaID] === undefined) {
+			console.debug('[WCF.System.Captcha] Unknow captcha id "' + captchaID + '"');
+			return;
+		}
+		
+		return this._captchas[captchaID]();
+	},
+	
+	/**
+	 * Removes the callback with the given captcha id.
+	 */
+	removeCallback: function(captchaID) {
+		delete this._captchas[captchaID];
 	}
 };
 
@@ -7493,7 +7539,7 @@ WCF.System.PageNavigation = {
 	
 	/**
 	 * Validates the page No input.
-	 *
+	 * 
 	 * @param	Event		event
 	 */
 	_keyUp: function(event) {
@@ -8201,7 +8247,7 @@ WCF.Upload = Class.extend({
 			}
 			
 			var self = this;
-			$.ajax({ 
+			$.ajax({
 				type: 'POST',
 				url: this._options.url,
 				enctype: 'multipart/form-data',
@@ -8414,7 +8460,7 @@ WCF.Upload.Parallel = WCF.Upload.extend({
 	 */
 	_sendRequest: function(internalFileID, formData) {
 		var self = this;
-		$.ajax({ 
+		$.ajax({
 			type: 'POST',
 			url: this._options.url,
 			enctype: 'multipart/form-data',
@@ -11050,7 +11096,7 @@ $.widget('ui.wcfPages', {
 			$pageElement.addClass('break');
 		}
 		if (page != this.options.activePage) {
-			var $pageLink = $('<a>' + WCF.String.addThousandsSeparator(page) + '</a>'); 
+			var $pageLink = $('<a>' + WCF.String.addThousandsSeparator(page) + '</a>');
 			$pageElement.append($pageLink);
 			this._bindSwitchPage($pageLink, page);
 		}

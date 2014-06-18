@@ -147,6 +147,9 @@
 				<category name="security.antispam">
 					<parent>security</parent>
 				</category>
+					<category name="security.antispam.captcha">
+						<parent>security.antispam</parent>
+					</category>
 					<category name="security.antispam.recaptcha">
 						<parent>security.antispam</parent>
 						<options>module_system_recaptcha</options>
@@ -524,6 +527,41 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			</option>
 			<!-- /security.blacklist -->
 			
+			<!-- security.antispam -->
+			<option name="register_captcha_type">
+				<categoryname>security.antispam.captcha</categoryname>
+				<optiontype>captchaSelect</optiontype>
+				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
+				<allowemptyvalue>1</allowemptyvalue>
+			</option>
+			<option name="lost_password_captcha_type">
+				<categoryname>security.antispam.captcha</categoryname>
+				<optiontype>captchaSelect</optiontype>
+				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
+				<allowemptyvalue>1</allowemptyvalue>
+			</option>
+			<option name="profile_mail_captcha_type">
+				<categoryname>security.antispam.captcha</categoryname>
+				<optiontype>captchaSelect</optiontype>
+				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
+				<allowemptyvalue>1</allowemptyvalue>
+			</option>
+			<option name="search_captcha_type">
+				<categoryname>security.antispam.captcha</categoryname>
+				<optiontype>boolean</optiontype>
+				<optiontype>captchaSelect</optiontype>
+				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
+				<allowemptyvalue>1</allowemptyvalue>
+			</option>
+			<option name="message_captcha_type">
+				<categoryname>security.antispam.captcha</categoryname>
+				<optiontype>boolean</optiontype>
+				<optiontype>captchaSelect</optiontype>
+				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
+				<allowemptyvalue>1</allowemptyvalue>
+			</option>
+			<!-- /security.antispam -->
+			
 			<option name="recaptcha_publickey">
 				<categoryname>security.antispam.recaptcha</categoryname>
 				<optiontype>text</optiontype>
@@ -532,7 +570,6 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>6LfOlMYSAAAAADvo3s4puBAYDqI-6YK2ybe7BJE5</defaultvalue>
 				<showorder>1</showorder>
 			</option>
-			
 			<option name="recaptcha_privatekey">
 				<categoryname>security.antispam.recaptcha</categoryname>
 				<optiontype>text</optiontype>
@@ -932,27 +969,6 @@ no:!cache_source_memcached_host]]></enableoptions>
 			</option>
 			<!-- /user.3rdPartyAuth -->
 			
-			<!-- user.security -->
-			<option name="register_use_captcha">
-				<categoryname>security.antispam</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
-				<options>module_system_recaptcha</options>
-			</option>
-			<option name="lost_password_use_captcha">
-				<categoryname>security.antispam</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
-				<options>module_system_recaptcha</options>
-			</option>
-			<option name="profile_mail_use_captcha">
-				<categoryname>security.antispam</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
-				<options>module_system_recaptcha</options>
-			</option>
-			<!-- /user.security -->
-			
 			<!-- user.avatar -->
 			<option name="max_avatar_width">
 				<categoryname>user.avatar</categoryname>
@@ -1210,11 +1226,6 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<minvalue>5</minvalue>
 				<maxvalue>40</maxvalue>
 			</option>
-			<option name="search_use_captcha">
-				<categoryname>security.antispam</categoryname>
-				<optiontype>boolean</optiontype>
-				<options>module_system_recaptcha</options>
-			</option>
 			
 			<option name="search_default_sort_field">
 				<categoryname>message.search</categoryname>
@@ -1242,6 +1253,36 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<maxvalue>100</maxvalue>
 			</option>
 			<!-- /message.general.poll -->
+			
+			<!-- deprecated -->
+			<option name="register_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<options>module_system_recaptcha</options>
+				<hidden>1</hidden>
+			</option>
+			<option name="lost_password_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<options>module_system_recaptcha</options>
+				<hidden>1</hidden>
+			</option>
+			<option name="profile_mail_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue><![CDATA[1]]></defaultvalue>
+				<options>module_system_recaptcha</options>
+				<hidden>1</hidden>
+			</option>
+			<option name="search_use_captcha">
+				<categoryname>security.antispam</categoryname>
+				<optiontype>boolean</optiontype>
+				<options>module_system_recaptcha</options>
+				<hidden>1</hidden>
+			</option>
+			<!-- deprecated -->
 		</options>
 	</import>
 	

@@ -32,7 +32,7 @@ class ACPMenuCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
 	 */
-	public function rebuild(array $parameters) { 
+	public function rebuild(array $parameters) {
 		$data = array();
 		
 		// get "real" menu items
