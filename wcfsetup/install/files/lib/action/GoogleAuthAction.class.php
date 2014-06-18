@@ -128,7 +128,7 @@ class GoogleAuthAction extends AbstractAction {
 					
 					WCF::getSession()->register('__googleData', $userData);
 					
-					// we assume that bots won't register on facebook first
+					// we assume that bots won't register on google first
 					WCF::getSession()->register('recaptchaDone', true);
 					
 					WCF::getSession()->update();
