@@ -14,6 +14,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\mail\Mail;
 use wcf\system\user\notification\event\IUserNotificationEvent;
+use wcf\system\user\notification\object\IStackableUserNotificationObject;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
@@ -164,43 +165,29 @@ class UserNotificationHandler extends SingletonFactory {
 				'data' => array(
 					'eventID' => $event->eventID,
 					'authorID' => ($event->getAuthorID() ?: null),
-					'objectID' => $notificationObject->getObjectID(),
+					
+					'packageID' => $objectTypeObject->packageID,
 					'time' => TIME_NOW,
 					'additionalData' => serialize($additionalData)
 				),
 				'recipients' => $recipients
 			);
 			
-			if ($event->isStackable()) {
+			if ($event->isStackable() && $notificationObject instanceof IStackableUserNotificationObject) {
+				$data['data']['objectID'] = $notificationObject->getRelatedObjectID();
 				$data['notifications'] = $notifications;
 				
 				$action = new UserNotificationAction(array(), 'createStackable', $data);
 			}
 			else {
+				$data['data']['objectID'] = $notificationObject->getObjectID();
+				
 				$action = new UserNotificationAction(array(), 'createDefault', $data);
 			}
 			
 			$result = $action->executeAction();
 			$notifications = $result['returnValues'];
 			
-			/*
-			// create new notification
-			$action = new UserNotificationAction(array(), 'create', array(
-				'authorID' => ($event->getAuthorID() ?: null),
-				'data' => array(
-					'eventID' => $event->eventID,
-					'authorID' => ($event->getAuthorID() ?: null),
-					'objectID' => $notificationObject->getObjectID(),
-					'time' => TIME_NOW,
-					'additionalData' => serialize($additionalData)
-				),
-				'recipients' => $recipients
-			));
-			$result = $action->executeAction();
-			$notifications = $result['returnValues'];
-			*/
-			
-			// TODO: move -> DBOAction?
 			// send notifications
 			foreach ($recipients as $recipient) {
 				if ($recipient->mailNotificationType == 'instant') {

@@ -1,12 +1,11 @@
 <?php
 namespace wcf\data\user\notification;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
-use wcf\system\exception\UserInputException;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 
 /**
  * Executes user notification-related actions.
@@ -43,10 +42,46 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		return $notification;
 	}
 	
+	/**
+	 * Creates a simple notification without stacking support, applies to legacy notifications too.
+	 * 
+	 * @return	array<array>
+	 */
 	public function createDefault() {
-		die("createDefault");
+		foreach ($this->parameters['recipients'] as $recipient) {
+			$this->parameters['data']['userID'] = $recipient->userID;
+			$notification = $this->create();
+			
+			$notifications[$recipient->userID] = array(
+				'isNew' => true,
+				'object' => $notification
+			);
+		}
+		
+		// insert author
+		$sql = "INSERT INTO	wcf".WCF_N."_user_notification_author
+					(notificationID, authorID, time)
+			VALUES		(?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($notifications as $notificationData) {
+			$statement->execute(array(
+				$notificationData['object']->notificationID,
+				($this->parameters['authorID'] ?: null),
+				TIME_NOW
+			));
+		}
+		WCF::getDB()->commitTransaction();
+		
+		return $notifications;
 	}
 	
+	/**
+	 * Creates a notification or adds another author to an existing one.
+	 * 
+	 * @return	array<array>
+	 */
 	public function createStackable() {
 		// get existing notifications
 		$notificationList = new UserNotificationList();
@@ -77,9 +112,9 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// insert author
-		$sql = "INSERT INTO	wcf".WCF_N."_user_notification_author
-					(notificationID, authorID, time)
-			VALUES		(?, ?, ?)";
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_notification_author
+						(notificationID, authorID, time)
+			VALUES			(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		WCF::getDB()->beginTransaction();
@@ -162,7 +197,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	 */
 	public function markAllAsConfirmed() {
 		// remove notifications for this user
-		$sql = "UPDATE	wcf".WCF_N."_user_notification_to_user
+		$sql = "UPDATE	wcf".WCF_N."_user_notification
 			SET	confirmed = ?
 			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);

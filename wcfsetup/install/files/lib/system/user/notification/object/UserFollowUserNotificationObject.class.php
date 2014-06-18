@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\user\notification\object;
 use wcf\data\DatabaseObjectDecorator;
-use wcf\system\user\notification\object\IUserNotificationObject;
 
 /**
  * Represents a following user as a notification object.
@@ -13,7 +12,7 @@ use wcf\system\user\notification\object\IUserNotificationObject;
  * @subpackage	system.user.notification.object
  * @category	Community Framework
  */
-class UserFollowUserNotificationObject extends DatabaseObjectDecorator implements IUserNotificationObject {
+class UserFollowUserNotificationObject extends DatabaseObjectDecorator implements IStackableUserNotificationObject {
 	/**
 	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
@@ -41,9 +40,9 @@ class UserFollowUserNotificationObject extends DatabaseObjectDecorator implement
 	}
 	
 	/**
-	 * @see	\wcf\data\DatabaseObjectDecorator::getObjectID()
+	 * @see	\wcf\system\user\notification\object\IStackableUserNotificationObject::getRelatedObjectID()
 	 */
-	public function getObjectID() {
-		return $this->followUserID;
+	public function getRelatedObjectID() {
+		return $this->followUserID; 
 	}
 }

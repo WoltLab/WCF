@@ -1209,6 +1209,7 @@ CREATE TABLE wcf1_user_menu_item (
 DROP TABLE IF EXISTS wcf1_user_notification;
 CREATE TABLE wcf1_user_notification (
 	notificationID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	packageID INT(10) NOT NULL, -- DEPRECATED
 	eventID INT(10) NOT NULL,
 	objectID INT(10) NOT NULL DEFAULT 0,
 	authorID INT(10) NULL,
