@@ -1262,7 +1262,7 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 	init: function(showAllLink) {
 		this._favico = new Favico({
 			animation: 'none',
-			type: 'circle',// 'rectangle'
+			type: 'circle',
 		});
 		
 		this._noItems = 'wcf.user.notification.noMoreNotifications';
