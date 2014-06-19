@@ -128,7 +128,7 @@ class GoogleAuthAction extends AbstractAction {
 					
 					WCF::getSession()->register('__googleData', $userData);
 					
-					// we assume that bots won't register on facebook first
+					// we assume that bots won't register on google first
 					// thus no need for a captcha
 					if (REGISTER_CAPTCHA_TYPE) {
 						WCF::getSession()->register('noRegistrationCaptcha', true);
