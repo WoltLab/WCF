@@ -442,10 +442,11 @@ class Mail {
 	/**
 	 * Adds an attachment to this mail.
 	 * 
-	 * @param	string		$path
+	 * @param	string		$path		local path to file
+	 * @param	string		$name		filename
 	 */
-	public function addAttachment($path) {
-		$this->attachments[] = array('path' => $path, 'name' => basename($path));
+	public function addAttachment($path, $name = '') {
+		$this->attachments[] = array('path' => $path, 'name' => ($name ?: basename($path)));
 	}
 	
 	/**
