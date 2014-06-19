@@ -69,7 +69,7 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		if ($this->captchaObjectTypeName) {
+		if (!WCF::getUser()->userID && $this->captchaObjectTypeName) {
 			$this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName($this->captchaObjectTypeName);
 			if ($this->captchaObjectType === null) {
 				throw new SystemException("Unknown captcha object type with name '".$this->captchaObjectTypeName."'");
