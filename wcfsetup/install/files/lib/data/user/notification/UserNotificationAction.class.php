@@ -86,7 +86,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		// get existing notifications
 		$notificationList = new UserNotificationList();
 		$notificationList->getConditionBuilder()->add("eventID = ?", array($this->parameters['data']['eventID']));
-		$notificationList->getConditionBuilder()->add("objectID = ?", array($this->parameters['data']['objectID']));
+		$notificationList->getConditionBuilder()->add("eventHash = ?", array($this->parameters['data']['eventHash']));
 		$notificationList->getConditionBuilder()->add("userID IN (?)", array(array_keys($this->parameters['recipients'])));
 		$notificationList->getConditionBuilder()->add("confirmed = ?", array(0));
 		$notificationList->readObjects();
@@ -123,6 +123,21 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 				$notificationData['object']->notificationID,
 				($this->parameters['authorID'] ?: null),
 				TIME_NOW
+			));
+		}
+		WCF::getDB()->commitTransaction();
+		
+		// update trigger count
+		$sql = "UPDATE	wcf".WCF_N."_user_notification
+			SET	timesTriggered = timesTriggered + ?
+			WHERE	notificationID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($notifications as $notificationData) {
+			$statement->execute(array(
+				1,
+				$notificationData['object']->notificationID
 			));
 		}
 		WCF::getDB()->commitTransaction();

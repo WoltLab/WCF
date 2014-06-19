@@ -14,9 +14,9 @@ use wcf\system\request\LinkHandler;
  */
 class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
-	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::$isStackable
+	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::$stackable
 	 */
-	protected $isStackable = true;
+	protected $stackable = true;
 	
 	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
@@ -61,5 +61,12 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink('User', array('object' => $this->author));
+	}
+	
+	/**
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEventHash()
+	 */
+	public function getEventHash() {
+		return sha1($this->eventID . '-' . $this->userNotificationObject->followUserID);
 	}
 }

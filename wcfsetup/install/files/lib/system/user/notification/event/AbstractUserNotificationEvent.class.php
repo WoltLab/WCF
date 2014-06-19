@@ -6,7 +6,6 @@ use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Provides default a implementation for user notification events.
@@ -40,7 +39,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 * notification stacking support
 	 * @var	boolean
 	 */
-	protected $isStackable = false;
+	protected $stackable = false;
 	
 	/**
 	 * user notification
@@ -67,6 +66,12 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	protected $language = null;
 	
 	/**
+	 * notification trigger count
+	 * @var	integer
+	 */
+	protected $timesTriggered = 0;
+	
+	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setAuthors()
 	 */
 	public function setAuthors(array $authors) {
@@ -76,11 +81,12 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setObject()
 	 */
-	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array()) {
+	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array(), $timesTriggered = 0) {
 		$this->notification = $notification;
 		$this->userNotificationObject = $object;
 		$this->author = $author;
 		$this->additionalData = $additionalData;
+		$this->timesTriggered = $timesTriggered;
 	}
 	
 	/**
@@ -150,6 +156,13 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	}
 	
 	/**
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEventHash()
+	 */
+	public function getEventHash() {
+		return sha1($this->eventID . '-' . $this->userNotificationObject->getObjectID());
+	}
+	
+	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setLanguage()
 	 */
 	public function setLanguage(Language $language) {
@@ -170,6 +183,6 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::isStackable()
 	 */
 	public function isStackable() {
-		return $this->isStackable;
+		return $this->stackable;
 	}
 }

@@ -14,7 +14,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\mail\Mail;
 use wcf\system\user\notification\event\IUserNotificationEvent;
-use wcf\system\user\notification\object\IStackableUserNotificationObject;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
@@ -110,7 +109,7 @@ class UserNotificationHandler extends SingletonFactory {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID IN (?)", array($recipientIDs));
 		$conditions->add("eventID = ?", array($event->eventID));
-		$conditions->add("objectID = ?", array($notificationObject->getObjectID()));
+		$conditions->add("eventHash = ?", array($event->getEventHash()));
 		$conditions->add("confirmed = ?", array(0));
 		
 		$sql = "SELECT	notificationID, userID
@@ -123,34 +122,55 @@ class UserNotificationHandler extends SingletonFactory {
 			$notifications[$row['userID']] = $row['notificationID'];
 		}
 		
-		// skip recipients with outstanding notifications
-		if (!empty($notifications)) {
-			// filter by author
+		// check if event supports stacking and author should be added
+		if (!empty($notifications) && $event->isStackable()) {
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("notificationID IN (?)", array(array_values($notifications)));
 			if ($notificationObject->getAuthorID()) {
-				$conditions = new PreparedStatementConditionBuilder();
-				$conditions->add("notificationID IN (?)", array(array_values($notifications)));
 				$conditions->add("authorID = ?", array($notificationObject->getAuthorID()));
-				
-				$sql = "SELECT	notificationID
-					FROM	wcf".WCF_N."_user_notification_author
-					".$conditions;
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute($conditions->getParameters());
-				$notificationIDs = array();
-				while ($row = $statement->fetchArray()) {
-					$notificationIDs[] = $row['notificationID'];
-				}
-				
+			}
+			else {
+				$conditions->add("authorID IS NULL");
+			}
+			
+			$sql = "SELECT	notificationID
+				FROM	wcf".WCF_N."_user_notification_author
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			$notificationIDs = array();
+			while ($row = $statement->fetchArray()) {
+				$notificationIDs[] = $row['notificationID'];
+			}
+			
+			if (!empty($notificationIDs)) {
+				// filter array of existing notifications and remove values which do not have a notification from this author yet (inverse logic!)
 				foreach ($notifications as $userID => $notificationID) {
-					// do not skip recipients with a similar notification but authored by somebody else
 					if (!in_array($notificationID, $notificationIDs)) {
 						unset($notifications[$userID]);
 					}
 				}
+				
+				// update trigger count
+				$sql = "UPDATE	wcf".WCF_N."_user_notification
+					SET	timesTriggered = timesTriggered + ?
+					WHERE	notificationID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				
+				WCF::getDB()->beginTransaction();
+				foreach ($notificationIDs as $notificationID) {
+					$statement->execute(array(
+						1,
+						$notificationID
+					));
+				}
+				WCF::getDB()->commitTransaction();
 			}
-			
-			$recipientIDs = array_diff($recipientIDs, array_keys($notifications));
-			if (empty($recipientIDs)) return;
+		}
+		
+		$recipientIDs = array_diff($recipientIDs, array_keys($notifications));
+		if (empty($recipientIDs)) {
+			return;
 		}
 		
 		// get recipients
@@ -165,7 +185,8 @@ class UserNotificationHandler extends SingletonFactory {
 				'data' => array(
 					'eventID' => $event->eventID,
 					'authorID' => ($event->getAuthorID() ?: null),
-					
+					'objectID' => $notificationObject->getObjectID(),
+					'eventHash' => $event->getEventHash(),
 					'packageID' => $objectTypeObject->packageID,
 					'time' => TIME_NOW,
 					'additionalData' => serialize($additionalData)
@@ -173,15 +194,13 @@ class UserNotificationHandler extends SingletonFactory {
 				'recipients' => $recipients
 			);
 			
-			if ($event->isStackable() && $notificationObject instanceof IStackableUserNotificationObject) {
-				$data['data']['objectID'] = $notificationObject->getRelatedObjectID();
+			if ($event->isStackable()) {
 				$data['notifications'] = $notifications;
 				
 				$action = new UserNotificationAction(array(), 'createStackable', $data);
 			}
 			else {
-				$data['data']['objectID'] = $notificationObject->getObjectID();
-				
+				$data['data']['timesTriggered'] = 1;
 				$action = new UserNotificationAction(array(), 'createDefault', $data);
 			}
 			
@@ -277,7 +296,7 @@ class UserNotificationHandler extends SingletonFactory {
 		if (!$showConfirmedNotifications) $conditions->add("notification.confirmed = ?", array(0));
 		
 		$sql = "SELECT		notification.notificationID, notification_event.eventID, notification.authorID,
-					notification.moreAuthors, object_type.objectType, notification.objectID,
+					notification.timesTriggered, object_type.objectType, notification.objectID,
 					notification.additionalData,
 					notification.time".($showConfirmedNotifications ? ", notification.confirmed" : "")."
 			FROM		wcf".WCF_N."_user_notification notification
@@ -371,7 +390,8 @@ class UserNotificationHandler extends SingletonFactory {
 				$notificationObjects[$notificationID],
 				$objectTypes[$event['objectType']]['objects'][$event['objectID']],
 				(isset($authors[$event['authorID']]) ? $authors[$event['authorID']] : $unknownAuthor),
-				unserialize($event['additionalData'])
+				unserialize($event['additionalData']),
+				$event['timesTriggered']
 			);
 			
 			if (isset($authorToNotification[$notificationID])) {
