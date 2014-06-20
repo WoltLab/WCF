@@ -2138,6 +2138,7 @@ Errors are:
 		<item name="wcf.page.pagePosition"><![CDATA[Page {#$pageNo} of {#$pages}]]></item>
 		<item name="wcf.page.sitemap.userAccount"><![CDATA[User Account]]></item>
 		<item name="wcf.page.javascriptDisabled"><![CDATA[Your browser has JavaScript disabled. If you would like to use all features of this site, it is mandatory to enable JavaScript.]]></item>
+		<item name="wcf.page.requestedPage"><![CDATA[Requested Page]]></item>
 		<item name="wcf.page.privacyPolicy"><![CDATA[Privacy Policy]]></item>
 		<item name="wcf.page.privacyPolicy.text"><![CDATA[TODO]]></item>
 		<item name="wcf.page.cookiePolicy.info"><![CDATA[TODO: Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite erklären Sie sich damit einverstanden, dass wir Cookies setzen. <a href="{link controller='CookiePolicy'}{/link}">Weitere Informationen</a>]]></item>
@@ -2460,6 +2461,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.disableSignature.confirmMessage"><![CDATA[Do you really want to block the signature of this user?]]></item>
 		<item name="wcf.user.enableSignature"><![CDATA[Unblock Signature]]></item>
 		<item name="wcf.user.edit"><![CDATA[Edit User]]></item>
+		<item name="wcf.user.birthdayToday"><![CDATA[It is their birthday]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
