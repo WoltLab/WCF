@@ -345,7 +345,7 @@ WCF.Comment.Handler = Class.extend({
 		
 		var $inputContainer = $listItem.children('div');
 		var $input = $('<textarea placeholder="' + WCF.Language.get('wcf.comment.response.add') + '" maxlength="65535" class="long" />').data('commentID', commentID).appendTo($inputContainer).flexible();
-		$('<button class="small">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(this._save, this)).appendTo($inputContainer);
+		$('<button class="small">' + WCF.Language.get('wcf.global.button.submit') + '</button>').click($.proxy(function(event) { this._save(event, true); }, this)).appendTo($inputContainer);
 		
 		var self = this;
 		$input.keyup(function(event) { self._keyUp(event, true); });
