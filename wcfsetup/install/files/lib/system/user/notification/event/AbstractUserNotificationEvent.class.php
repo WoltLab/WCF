@@ -6,6 +6,7 @@ use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\WCF;
+use wcf\util\DateUtil;
 
 /**
  * Provides default a implementation for user notification events.
@@ -64,6 +65,12 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 * @var	\wcf\data\language\Language
 	 */
 	protected $language = null;
+	
+	/**
+	 * list of point of times for each period's end
+	 * @var	array<string>
+	 */
+	protected static $periods = array();
 	
 	/**
 	 * notification trigger count
@@ -184,5 +191,38 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 */
 	public function isStackable() {
 		return $this->stackable;
+	}
+	
+	/**
+	 * Returns the readable period matching this notification.
+	 * 
+	 * @return	string
+	 */
+	public function getPeriod() {
+		if (empty(self::$periods)) {
+			$date = DateUtil::getDateTimeByTimestamp(TIME_NOW);
+			$date->setTimezone(WCF::getUser()->getTimeZone());
+			$date->setTime(0, 0, 0);
+			
+			self::$periods[$date->getTimestamp()] = WCF::getLanguage()->get('wcf.date.period.today');
+			
+			// 1 day back
+			$date->modify('-1 day');
+			self::$periods[$date->getTimestamp()] = WCF::getLanguage()->get('wcf.date.period.yesterday');
+			
+			// 2-6 days back
+			for ($i = 0; $i < 6; $i++) {
+				$date->modify('-1 day');
+				self::$periods[$date->getTimestamp()] = DateUtil::format($date, 'l');
+			}
+		}
+		
+		foreach (self::$periods as $time => $period) {
+			if ($this->notification->time >= $time) {
+				return $period;
+			}
+		}
+		
+		return WCF::getLanguage()->get('wcf.date.period.older');
 	}
 }

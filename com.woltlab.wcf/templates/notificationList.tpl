@@ -46,9 +46,23 @@
 </div>
 
 {if $notifications[notifications]}
-	<div class="container marginTop">
-		<ul class="containerList" id="userNotificationItemList">
-			{foreach from=$notifications[notifications] item=$notification}
+	{assign var=lastPeriod value=''}
+	
+	{foreach from=$notifications[notifications] item=$notification}
+		{if $notification[event]->getPeriod() != $lastPeriod}
+			{if $lastPeriod}
+					</ul>
+				</div>
+			{/if}
+			{assign var=lastPeriod value=$notification[event]->getPeriod()}
+			
+			<header class="boxHeadline boxSubHeadline">
+				<h2>{$lastPeriod}</h2>
+			</header>
+			
+			<div class="container marginTop">
+				<ul class="containerList"{* id="userNotificationItemList"*}>
+		{/if}
 				<li class="jsNotificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}" data-notification-id="{@$notification[notificationID]}" data-link="{$notification[event]->getLink()}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}">
 					<div class="box48">
 						{if $notification[authors] < 2}
@@ -114,7 +128,7 @@
 						{/if}
 					</div>
 				</li>
-			{/foreach}
+	{/foreach}
 		</ul>
 	</div>
 	

@@ -1771,6 +1771,11 @@ Fehler sind beispielsweise:
 		<item name="wcf.date.interval.weeks.future"><![CDATA[In {if $weeks > 1}{#$weeks} Wochen{else}einer Woche{/if}]]></item>
 		<item name="wcf.date.interval.years.future"><![CDATA[In {if $years > 1}{#$years} Jahren{else}einem Jahr{/if}]]></item>
 		
+		<!-- variables for time periods -->
+		<item name="wcf.date.period.older"><![CDATA[Älter]]></item>
+		<item name="wcf.date.period.today"><![CDATA[Heute]]></item>
+		<item name="wcf.date.period.yesterday"><![CDATA[Gestern]]></item>
+		
 		<!-- variables for dynamic javascript datetime -->
 		<item name="wcf.date.relative.now"><![CDATA[Vor einem Moment]]></item>
 		<item name="wcf.date.relative.minutes"><![CDATA[{literal}Vor {if $minutes > 1}{#$minutes} Minuten{else}einer Minute{/if}{/literal}]]></item>
