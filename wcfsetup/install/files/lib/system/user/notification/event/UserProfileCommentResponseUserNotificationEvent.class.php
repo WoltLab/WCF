@@ -55,7 +55,7 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractUserNotifi
 		$authors = array_values($this->getAuthors());
 		$count = count($authors);
 		if ($count > 1) {
-			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.message.stacked', array(
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message.stacked', array(
 				'authors' => $authors,
 				'count' => $count,
 				'others' => max($count - 1, 0),
@@ -93,5 +93,12 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractUserNotifi
 		$user = new User($comment->objectID);
 		
 		return LinkHandler::getInstance()->getLink('User', array('object' => $user), '#wall');
+	}
+	
+	/**
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEventHash()
+	 */
+	public function getEventHash() {
+		return sha1($this->eventID . '-' . $this->userNotificationObject->commentID);
 	}
 }

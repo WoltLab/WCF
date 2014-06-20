@@ -56,6 +56,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractUserN
 		$count = count($authors);
 		if ($count > 1) {
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.message.stacked', array(
+				'author' => $commentAuthor,
 				'authors' => $authors,
 				'count' => $count,
 				'others' => max($count - 1, 0)
