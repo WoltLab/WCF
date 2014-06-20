@@ -17,9 +17,22 @@ use wcf\system\WCF;
  */
 class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
+	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::$stackable
+	 */
+	protected $stackable = true;
+	
+	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
 	 */
 	public function getTitle() {
+		$count = count($this->getAuthors());
+		if ($count > 1) {
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.title.stacked', array(
+				'count' => $count,
+				'timesTriggered' => $this->timesTriggered
+			));
+		}
+		
 		return $this->getLanguage()->get('wcf.user.notification.comment.title');
 	}
 	
@@ -27,6 +40,18 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getMessage()
 	 */
 	public function getMessage() {
+		$authors = array_values($this->getAuthors());
+		$count = count($authors);
+		
+		if ($count > 1) {
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.message.stacked', array(
+				'author' => $this->author,
+				'authors' => $authors,
+				'count' => $count,
+				'others' => max($count - 1, 0)
+			));
+		}
+		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.message', array(
 			'author' => $this->author
 		));
@@ -51,5 +76,12 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	 */
 	public function getLink() {
 		return LinkHandler::getInstance()->getLink('User', array('object' => WCF::getUser()), '#wall');
+	}
+	
+	/**
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEventHash()
+	 */
+	public function getEventHash() {
+		return sha1($this->eventID . '-' . $this->notification->userID);
 	}
 }

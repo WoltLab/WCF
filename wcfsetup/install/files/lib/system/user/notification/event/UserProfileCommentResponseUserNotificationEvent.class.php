@@ -17,9 +17,22 @@ use wcf\system\user\notification\event\AbstractUserNotificationEvent;
  */
 class UserProfileCommentResponseUserNotificationEvent extends AbstractUserNotificationEvent {
 	/**
+	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::$stackable
+	 */
+	protected $stackable = true;
+	
+	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
 	 */
 	public function getTitle() {
+		$count = count($this->getAuthors());
+		if ($count > 1) {
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.title.stacked', array(
+				'count' => $count,
+				'timesTriggered' => $this->timesTriggered
+			));
+		}
+		
 		return $this->getLanguage()->get('wcf.user.notification.commentResponse.title');
 	}
 	
@@ -29,6 +42,7 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractUserNotifi
 	public function getMessage() {
 		// @todo: use cache or a single query to retrieve required data
 		$comment = new Comment($this->userNotificationObject->commentID);
+		$owner = new User($comment->objectID);
 		if ($comment->userID) {
 			$commentAuthor = new User($comment->userID);
 		}
@@ -38,9 +52,20 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractUserNotifi
 			));
 		}
 		
+		$authors = array_values($this->getAuthors());
+		$count = count($authors);
+		if ($count > 1) {
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.message.stacked', array(
+				'authors' => $authors,
+				'count' => $count,
+				'others' => max($count - 1, 0),
+				'owner' => $owner
+			));
+		}
+		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message', array(
 			'author' => $this->author,
-			'owner' => $user
+			'owner' => $owner
 		));
 	}
 	
