@@ -116,6 +116,12 @@ class UserGroupOptionForm extends AbstractForm {
 		
 		// read accessible groups
 		$this->groups = UserGroup::getAccessibleGroups();
+		if ($this->userGroupOption->usersOnly) {
+			$guestGroup = UserGroup::getGroupByType(UserGroup::GUESTS);
+			if (isset($this->groups[$guestGroup->groupID])) {
+				unset($this->groups[$guestGroup->groupID]);
+			}
+		}
 		if (empty($this->groups)) {
 			throw new PermissionDeniedException();
 		}

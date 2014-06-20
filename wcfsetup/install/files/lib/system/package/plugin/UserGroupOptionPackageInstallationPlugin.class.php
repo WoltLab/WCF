@@ -39,6 +39,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
 		// default values
 		$optionName = $optionType = $defaultValue = $adminDefaultValue = $modDefaultValue = $userDefaultValue = $validationPattern = $enableOptions = $permissions = $options = '';
+		$usersOnly = 0;
 		$showOrder = null;
 		
 		// get values
@@ -54,6 +55,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if (isset($option['enableoptions'])) $enableOptions = $option['enableoptions'];
 		if (isset($option['permissions'])) $permissions = $option['permissions'];
 		if (isset($option['options'])) $options = $option['options'];
+		if (isset($option['usersonly'])) $usersOnly = $option['usersonly'];
 		
 		// collect additional tags and their values
 		$additionalData = array();
@@ -82,6 +84,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 			'enableOptions' => $enableOptions,
 			'permissions' => $permissions,
 			'options' => $options,
+			'usersOnly' => $usersOnly,
 			'additionalData' => serialize($additionalData)
 		);
 		

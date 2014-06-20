@@ -1157,6 +1157,7 @@ CREATE TABLE wcf1_user_group_option (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
+	usersOnly TINYINT(1) NOT NULL DEFAULT 0,
 	additionalData MEDIUMTEXT,
 	UNIQUE KEY optionName (optionName, packageID)
 );
@@ -1645,9 +1646,9 @@ INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (4, 'wcf.acp.
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (5, 'wcf.acp.group.group5', 4); -- Moderators
 
 -- default user group options
-INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder) VALUES (1, 'admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1);
-INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder) VALUES (2, 'admin.system.package.canInstallPackage', 'admin.system.package', 'boolean', '0', 1);
-INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder) VALUES (3, 'admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', 1);
+INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (1, 'admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1, 1);
+INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (2, 'admin.system.package.canInstallPackage', 'admin.system.package', 'boolean', '0', 1, 1);
+INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (3, 'admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', 1, 1);
 
 -- default user group option values
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (1, 1, '0');	-- Everyone

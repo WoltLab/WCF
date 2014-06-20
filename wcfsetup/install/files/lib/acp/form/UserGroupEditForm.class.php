@@ -59,7 +59,17 @@ class UserGroupEditForm extends UserGroupAddForm {
 		}
 		
 		$this->group = new UserGroupEditor($group);
+		
 		$this->optionHandler->setUserGroup($group);
+		$this->optionHandler->init();
+	}
+	
+	/**
+	 * @see	\wcf\acp\form\AbstractOptionListForm::initOptionHandler()
+	 */
+	protected function initOptionHandler() {
+		// does nothing, we call OptionHandler::init() after we set the
+		// user group
 	}
 	
 	/**
