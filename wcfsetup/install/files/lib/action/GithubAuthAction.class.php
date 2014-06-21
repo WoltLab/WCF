@@ -114,37 +114,25 @@ class GithubAuthAction extends AbstractAction {
 				}
 				// save data and redirect to registration
 				else {
-					WCF::getSession()->register('__githubData', $userData);
-					WCF::getSession()->register('__username', $userData['login']);
-					
-					// check whether user has entered a public email
-					if (isset($userData) && isset($userData['email']) && $userData['email'] !== null) {
-						WCF::getSession()->register('__email', $userData['email']);
-					}
-					// fetch emails via api
-					else {
-						try {
-							$request = new HTTPRequest('https://api.github.com/user/emails?access_token='.$data['access_token']);
-							$request->execute();
-							$reply = $request->getReply();
-							$emails = JSON::decode(StringUtil::trim($reply['body']));
-							
-							// handle future response as well a current response (see. http://developer.github.com/v3/users/emails/)
-							if (is_string($emails[0])) {
-								$email = $emails[0];
+					// fetch email address via api
+					try {
+						$request = new HTTPRequest('https://api.github.com/user/emails?access_token='.$data['access_token']);
+						$request->execute();
+						$reply = $request->getReply();
+						$emails = JSON::decode(StringUtil::trim($reply['body']));
+						
+						foreach ($emails as $tmp) {
+							if ($tmp['primary'] && $tmp['verified']) {
+								$userData['mailAddress'] = $tmp['email'];
+								WCF::getSession()->register('__email', $tmp['email']);
+								break;
 							}
-							else {
-								$email = $emails[0]['email'];
-								foreach ($emails as $tmp) {
-									if ($tmp['primary']) $email = $tmp['email'];
-									break;
-								}
-							}
-							WCF::getSession()->register('__email', $email);
 						}
-						catch (SystemException $e) { }
 					}
+					catch (SystemException $e) { }
 					
+					WCF::getSession()->register('__username', $userData['login']);
+					WCF::getSession()->register('__githubData', $userData);
 					WCF::getSession()->register('__githubToken', $data['access_token']);
 					
 					// we assume that bots won't register on github first
