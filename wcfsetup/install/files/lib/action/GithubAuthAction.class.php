@@ -118,7 +118,7 @@ class GithubAuthAction extends AbstractAction {
 					WCF::getSession()->register('__username', $userData['login']);
 					
 					// check whether user has entered a public email
-					if (isset($userData) && isset($userData['email']) && $userData['email'] !== null) {
+					if (isset($userData) && isset($userData['email']) && $userData['email'] != null) {
 						WCF::getSession()->register('__email', $userData['email']);
 					}
 					// fetch emails via api
