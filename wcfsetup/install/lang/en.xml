@@ -642,6 +642,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.menu.link.captcha.question.add"><![CDATA[Add Question]]></item>
 		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[List Questions]]></item>
+		<item name="wcf.acp.menu.link.log.authentication.failure"><![CDATA[TODO: Fehlgeschlagene Anmeldungen]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -994,6 +995,19 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.search_captcha_type"><![CDATA[Search]]></item>
 		<item name="wcf.acp.option.message_captcha_type"><![CDATA[Messages]]></item>
 		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
+		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[TODO: Benutzer-Authentifikation]]></item>
+		<item name="wcf.acp.option.enable_user_authentication_failure"><![CDATA[TODO: Fehlgeschlagene Ammeldeversuche protokollieren]]></item>
+		<item name="wcf.acp.option.enable_user_authentication_failure.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_timeout"><![CDATA[TODO: Zeitraum der Überwachung]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_timeout.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_captcha"><![CDATA[TODO: Captcha bei Anmeldung (IP)]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_captcha.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_block"><![CDATA[TODO: Blockierung der Anmeldung]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_block.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_user_captcha"><![CDATA[TODO: Captcha bei Anmeldung (Benutzer)]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_user_captcha.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_expiration"><![CDATA[TODO: Löschung von alten Protokolleinträgen]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[TODO]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1532,6 +1546,11 @@ Your new password is: {$password}
 Login with your new password: {link controller='Login' isEmail=true}{/link}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.workerTitle"><![CDATA[Sending New Passwords]]></item>
+		<item name="wcf.acp.user.authentication.failure.list"><![CDATA[TODO: Fehlgeschlagene Anmeldungen]]></item>
+		<item name="wcf.acp.user.authentication.failure.environment"><![CDATA[TODO: Umgebung]]></item>
+		<item name="wcf.acp.user.authentication.failure.environment.user"><![CDATA[TODO: Benutzer]]></item>
+		<item name="wcf.acp.user.authentication.failure.environment.admin"><![CDATA[TODO: Administration]]></item>
+		<item name="wcf.acp.user.authentication.failure.time"><![CDATA[TODO: Datum]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
@@ -2462,6 +2481,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.enableSignature"><![CDATA[Unblock Signature]]></item>
 		<item name="wcf.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.user.birthdayToday"><![CDATA[It is their birthday]]></item>
+		<item name="wcf.user.login.blocked"><![CDATA[TODO: Aufgrund einer hohen Anzahl von fehlgeschlagenen Anmeldeversuchen durch Ihre IP-Adresse steht Ihnen die Anmeldung aus Sicherheitsgründen vorübergehend nicht zur Verfügung. Bitte versuchen Sie es später erneut!]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

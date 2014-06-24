@@ -149,6 +149,8 @@
 		{/hascontent}
 		
 		{event name='fieldsets'}
+		
+		{include file='captcha'}
 	</div>
 	
 	<div class="formSubmit">
