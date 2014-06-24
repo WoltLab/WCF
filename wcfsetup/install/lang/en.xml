@@ -2787,6 +2787,7 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.profile.report"><![CDATA[Report User Profile]]></item>
 		<item name="wcf.user.profile.likes.profileComment"><![CDATA[TODO: Mag den Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
 		<item name="wcf.user.profile.likes.profileCommentResponse"><![CDATA[TODO: Mag die Antwort von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a> zum Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
+		<item name="wcf.user.profile.protected"><![CDATA[This member limits who may view their full profile information.]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">
