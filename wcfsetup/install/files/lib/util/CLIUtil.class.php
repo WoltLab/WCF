@@ -2,7 +2,6 @@
 namespace wcf\util;
 use phpline\internal\AnsiUtil;
 use wcf\system\CLIWCF;
-use Zend\Console\Adapter\Posix;
 
 /**
  * Provide convenience methods for use on command line interface.

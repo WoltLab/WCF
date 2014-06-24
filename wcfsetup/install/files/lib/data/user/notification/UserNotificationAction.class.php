@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\user\notification;
-use wcf\data\user\notification\UserNotificationEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\storage\UserStorageHandler;

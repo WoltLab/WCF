@@ -11,6 +11,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\like\LikeHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;

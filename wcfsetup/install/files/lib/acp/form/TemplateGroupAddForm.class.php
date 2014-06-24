@@ -2,7 +2,6 @@
 namespace wcf\acp\form;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupAction;
-use wcf\data\template\group\TemplateGroupList;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;

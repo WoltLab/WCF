@@ -4,7 +4,6 @@ use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Condition implementation for the username of a user.

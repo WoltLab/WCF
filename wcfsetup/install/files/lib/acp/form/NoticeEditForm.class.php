@@ -2,7 +2,6 @@
 namespace wcf\acp\form;
 use wcf\data\notice\Notice;
 use wcf\data\notice\NoticeAction;
-use wcf\data\notice\NoticeEditor;
 use wcf\form\AbstractForm;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\language\I18nHandler;

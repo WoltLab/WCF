@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\application;
-use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\data\DatabaseObject;
 use wcf\system\request\RouteHandler;
