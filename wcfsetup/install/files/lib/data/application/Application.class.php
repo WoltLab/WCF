@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\application;
 use wcf\data\package\PackageList;
+use wcf\data\package\Package;
 use wcf\data\DatabaseObject;
 use wcf\system\request\RouteHandler;
 use wcf\system\exception\SystemException;
@@ -72,7 +73,8 @@ class Application extends DatabaseObject {
 			$packageList->getConditionBuilder()->add('package.isApplication = ?', array(1));
 			$packageList->readObjects();
 			foreach ($packageList as $package) {
-				static::$directories[Package::getAbbreviation($package->package)] = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$package->packageDir));
+				$abbr = Package::getAbbreviation($package->package);
+				static::$directories[$abbr] = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$package->packageDir));
 			}
 		}
 		
