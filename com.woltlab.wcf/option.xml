@@ -1014,6 +1014,17 @@ no:!cache_source_memcached_host]]></enableoptions>
 			<!-- /user.3rdPartyAuth -->
 			
 			<!-- user.avatar -->
+			<option name="gravatar_default_type">
+				<categoryname>user.avatar</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue><![CDATA[404]]></defaultvalue>
+				<selectoptions><![CDATA[404:wcf.acp.option.gravatar_default_type.404
+identicon:wcf.acp.option.gravatar_default_type.identicon
+wavatar:wcf.acp.option.gravatar_default_type.wavatar
+monsterid:wcf.acp.option.gravatar_default_type.monsterid
+retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
+				<options>module_gravatar</options>
+			</option>
 			<option name="max_avatar_width">
 				<categoryname>user.avatar</categoryname>
 				<optiontype>integer</optiontype>
