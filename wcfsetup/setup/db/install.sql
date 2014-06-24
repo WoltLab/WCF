@@ -1095,6 +1095,19 @@ CREATE TABLE wcf1_user_activity_point (
 	KEY (objectTypeID)
 );
 
+DROP TABLE IF EXISTS wcf1_user_authentication_failure;
+CREATE TABLE wcf1_user_authentication_failure (
+	failureID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	environment ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+	userID INT(10),
+	username VARCHAR(255) NOT NULL DEFAULT '',
+	time INT(10) NOT NULL DEFAULT 0,
+	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
+	userAgent VARCHAR(255) NOT NULL DEFAULT '',
+	KEY (ipAddress, time),
+	KEY (time)
+);
+
 DROP TABLE IF EXISTS wcf1_user_avatar;
 CREATE TABLE wcf1_user_avatar (
 	avatarID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1578,6 +1591,8 @@ ALTER TABLE wcf1_user_activity_event ADD FOREIGN KEY (languageID) REFERENCES wcf
 
 ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_user_authentication_failure ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (ownerID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;

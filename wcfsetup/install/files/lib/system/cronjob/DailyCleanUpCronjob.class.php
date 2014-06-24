@@ -125,6 +125,16 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			(TIME_NOW - 86400)
 		));
 		
+		// clean up user authentication failure log
+		if (ENABLE_USER_AUTHENTICATION_FAILURE) {
+			$sql = "DELETE FROM	wcf".WCF_N."_user_authentication_failure
+				WHERE		time < ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array(
+				(TIME_NOW - 86400 * USER_AUTHENTICATION_FAILURE_EXPIRATION)
+			));
+		}
+		
 		// clean up error logs
 		$files = @glob(WCF_DIR.'log/*.txt');
 		if (is_array($files)) {

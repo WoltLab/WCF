@@ -1,8 +1,11 @@
 <?php
 namespace wcf\acp\form;
+use wcf\data\user\authentication\failure\UserAuthenticationFailure;
+use wcf\data\user\authentication\failure\UserAuthenticationFailureAction;
 use wcf\data\user\User;
-use wcf\form\AbstractForm;
+use wcf\form\AbstractCaptchaForm;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
@@ -12,6 +15,7 @@ use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
+use wcf\util\UserUtil;
 
 /**
  * Shows the acp login form.
@@ -23,7 +27,7 @@ use wcf\util\StringUtil;
  * @subpackage	acp.form
  * @category	Community Framework
  */
-class LoginForm extends AbstractForm {
+class LoginForm extends AbstractCaptchaForm {
 	/**
 	 * given login username
 	 * @var	string
@@ -40,13 +44,19 @@ class LoginForm extends AbstractForm {
 	 * user object
 	 * @var	\wcf\data\user\User
 	 */
-	public $user;
+	public $user = null;
 	
 	/**
 	 * given forward url
 	 * @var	string
 	 */
 	public $url = null;
+	
+	/**
+	 * @todo
+	 * @var unknown
+	 */
+	public $useCaptcha = false;
 	
 	/**
 	 * Creates a new LoginForm object.
@@ -76,6 +86,30 @@ class LoginForm extends AbstractForm {
 			// discard URL if it is not an absolute URL of local content
 			if (!ApplicationHandler::getInstance()->isInternalURL($this->url)) {
 				$this->url = '';
+			}
+		}
+		
+		// check authentication failures
+		if (ENABLE_USER_AUTHENTICATION_FAILURE) {
+			$failures = UserAuthenticationFailure::countIPFailures(UserUtil::getIpAddress());
+			if (USER_AUTHENTICATION_FAILURE_IP_BLOCK && $failures >= USER_AUTHENTICATION_FAILURE_IP_BLOCK) {
+				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.login.blocked'));
+			}
+			if (USER_AUTHENTICATION_FAILURE_IP_CAPTCHA && $failures >= USER_AUTHENTICATION_FAILURE_IP_CAPTCHA) {
+				$this->captchaObjectTypeName = REGISTER_CAPTCHA_TYPE;
+			}
+			else if (USER_AUTHENTICATION_FAILURE_USER_CAPTCHA) {
+				if (isset($_POST['username'])) {
+					$user = User::getUserByUsername(StringUtil::trim($_POST['username']));
+					if (!$user->userID) $user = User::getUserByEmail(StringUtil::trim($_POST['username']));
+					
+					if ($user->userID) {
+						$failures = UserAuthenticationFailure::countUserFailures($user->userID);
+						if (USER_AUTHENTICATION_FAILURE_USER_CAPTCHA && $failures >= USER_AUTHENTICATION_FAILURE_USER_CAPTCHA) {
+							$this->captchaObjectTypeName = REGISTER_CAPTCHA_TYPE;
+						}
+					}
+				}
 			}
 		}
 	}
@@ -109,6 +143,34 @@ class LoginForm extends AbstractForm {
 			}
 			else {
 				throw $e;
+			}
+		}
+	}
+	
+	/**
+	 * @see	\wcf\form\IForm::submit()
+	 */
+	public function submit() {
+		parent::submit();
+		
+		// save authentication failure
+		if (ENABLE_USER_AUTHENTICATION_FAILURE) {
+			if ($this->errorField == 'username' || $this->errorField == 'password') {
+				$action = new UserAuthenticationFailureAction(array(), 'create', array(
+					'data' => array(
+						'environment' => (RequestHandler::getInstance()->isACPRequest() ? 'admin' : 'user'),
+						'userID' => ($this->user !== null ? $this->user->userID : null),
+						'username' => $this->username,
+						'time' => TIME_NOW,
+						'ipAddress' => UserUtil::getIpAddress(),
+						'userAgent' => UserUtil::getUserAgent()
+					)
+				));
+				$action->executeAction();
+				
+				if ($this->captchaObjectType) {
+					$this->captchaObjectType->getProcessor()->reset();
+				}
 			}
 		}
 	}
