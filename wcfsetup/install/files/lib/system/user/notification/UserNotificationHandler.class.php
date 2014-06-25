@@ -143,14 +143,14 @@ class UserNotificationHandler extends SingletonFactory {
 				$notificationIDs[] = $row['notificationID'];
 			}
 			
-			if (!empty($notificationIDs)) {
-				// filter array of existing notifications and remove values which do not have a notification from this author yet (inverse logic!)
-				foreach ($notifications as $userID => $notificationID) {
-					if (!in_array($notificationID, $notificationIDs)) {
-						unset($notifications[$userID]);
-					}
+			// filter array of existing notifications and remove values which do not have a notification from this author yet (inverse logic!)
+			foreach ($notifications as $userID => $notificationID) {
+				if (!in_array($notificationID, $notificationIDs)) {
+					unset($notifications[$userID]);
 				}
-				
+			}
+			
+			if (!empty($notificationIDs)) {	
 				// update trigger count
 				$sql = "UPDATE	wcf".WCF_N."_user_notification
 					SET	timesTriggered = timesTriggered + ?
@@ -188,6 +188,7 @@ class UserNotificationHandler extends SingletonFactory {
 					'objectID' => $notificationObject->getObjectID(),
 					'eventHash' => $event->getEventHash(),
 					'packageID' => $objectTypeObject->packageID,
+					'mailNotified' => ($event->supportsEmailNotification() ? 0 : 1),
 					'time' => TIME_NOW,
 					'additionalData' => serialize($additionalData)
 				),
@@ -208,10 +209,12 @@ class UserNotificationHandler extends SingletonFactory {
 			$notifications = $result['returnValues'];
 			
 			// send notifications
-			foreach ($recipients as $recipient) {
-				if ($recipient->mailNotificationType == 'instant') {
-					if (isset($notifications[$recipient->userID]) && $notifications[$recipient->userID]['isNew']) {
-						$this->sendInstantMailNotification($notifications[$recipient->userID]['object'], $recipient, $event);
+			if ($event->supportsEmailNotification()) {
+				foreach ($recipients as $recipient) {
+					if ($recipient->mailNotificationType == 'instant') {
+						if (isset($notifications[$recipient->userID]) && $notifications[$recipient->userID]['isNew']) {
+							$this->sendInstantMailNotification($notifications[$recipient->userID]['object'], $recipient, $event);
+						}
 					}
 				}
 			}

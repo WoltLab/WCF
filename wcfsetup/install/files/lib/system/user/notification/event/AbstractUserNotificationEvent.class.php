@@ -225,4 +225,11 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 		
 		return WCF::getLanguage()->get('wcf.date.period.older');
 	}
+	
+	/**
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::supportsEmailNotification()
+	 */
+	public function supportsEmailNotification() {
+		return true;
+	}
 }

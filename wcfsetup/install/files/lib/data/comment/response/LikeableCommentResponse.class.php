@@ -1,7 +1,13 @@
 <?php
 namespace wcf\data\comment\response;
+use wcf\data\comment\Comment;
 use wcf\data\like\object\AbstractLikeObject;
+use wcf\data\like\Like;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\comment\CommentHandler;
+use wcf\system\user\notification\object\CommentResponseLikeUserNotificationObject;
+use wcf\system\user\notification\UserNotificationHandler;
+use wcf\system\WCF;
 
 /**
  * Likeable object implementation for comment reponses.
@@ -49,5 +55,24 @@ class LikeableCommentResponse extends AbstractLikeObject {
 	 */
 	public function getUserID() {
 		return $this->userID;
+	}
+	
+	/**
+	 * @see	\wcf\data\like\object\ILikeObject::sendNotification()
+	 */
+	public function sendNotification(Like $like) {
+		$comment = new Comment($this->object->commentID);
+		$objectType = CommentHandler::getInstance()->getObjectType($comment->objectTypeID);
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.like.notification')) {
+			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.response.like.notification');
+			if ($this->userID != WCF::getUser()->userID) {
+				$notificationObject = new CommentResponseLikeUserNotificationObject($like);
+				UserNotificationHandler::getInstance()->fireEvent('like', $objectType->objectType.'.response.like.notification', $notificationObject, array($this->userID), array(
+					'commentID' => $comment->commentID,
+					'commentUserID' => $comment->userID,
+					'objectID' => $comment->objectID,
+				));
+			}
+		}
 	}
 }

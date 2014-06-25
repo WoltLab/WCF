@@ -119,4 +119,11 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * @return	boolean
 	 */
 	public function isStackable();
+	
+	/**
+	 * Returns true if this notification event supports email notifications.
+	 * 
+	 * @return	boolean
+	 */
+	public function supportsEmailNotification();
 }

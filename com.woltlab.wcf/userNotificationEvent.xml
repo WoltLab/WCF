@@ -25,5 +25,18 @@
 			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentResponseOwnerUserNotificationEvent]]></classname>
 			<preset>1</preset>
 		</event>
+		
+		<event>
+			<name>like</name>
+			<objecttype>com.woltlab.wcf.user.profileComment.like.notification</objecttype>
+			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentUserNotificationEvent]]></classname>
+			<preset>1</preset>
+		</event>
+		<event>
+			<name>like</name>
+			<objecttype>com.woltlab.wcf.user.profileComment.like.response.notification</objecttype>
+			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentResponseUserNotificationEvent]]></classname>
+			<preset>1</preset>
+		</event>
 	</import>
 </data>

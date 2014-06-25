@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\like\object;
+use wcf\data\like\Like;
 use wcf\data\object\type\ObjectType;
 use wcf\data\IDatabaseObjectProcessor;
 use wcf\data\ITitledObject;
@@ -56,4 +57,11 @@ interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
 	 * @param	\wcf\data\object\type\ObjectType
 	 */
 	public function setObjectType(ObjectType $objectType);
+	
+	/**
+	 * Sends a notification for this like.
+	 * 
+	 * @param	\wcf\data\like\Like	$like
+	 */
+	public function sendNotification(Like $like);
 }
