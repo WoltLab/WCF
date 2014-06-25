@@ -8,8 +8,6 @@ use wcf\system\user\notification\object\CommentLikeUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 
-
-
 /**
  * Likeable object implementation for comments.
  * 

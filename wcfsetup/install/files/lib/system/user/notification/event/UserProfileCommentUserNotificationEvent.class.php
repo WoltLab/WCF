@@ -48,7 +48,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 				'author' => $this->author,
 				'authors' => $authors,
 				'count' => $count,
-				'others' => max($count - 1, 0)
+				'others' => $count - 1
 			));
 		}
 		

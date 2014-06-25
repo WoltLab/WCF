@@ -56,7 +56,7 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractUserNo
 				'authors' => $authors,
 				'commentUser' => $commentUser,
 				'count' => $count,
-				'others' => max($count - 1, 0),
+				'others' => $count - 1,
 				'owner' => $owner
 			));
 		}

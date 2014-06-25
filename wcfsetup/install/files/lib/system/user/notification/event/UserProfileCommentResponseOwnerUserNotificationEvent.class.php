@@ -59,7 +59,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractUserN
 				'author' => $commentAuthor,
 				'authors' => $authors,
 				'count' => $count,
-				'others' => max($count - 1, 0)
+				'others' => $count - 1
 			));
 		}
 		

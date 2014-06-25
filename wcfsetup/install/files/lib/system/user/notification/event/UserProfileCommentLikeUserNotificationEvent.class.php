@@ -53,7 +53,7 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractUserNotificati
 				'authors' => $authors,
 				'comment' => $this->userNotificationObject,
 				'count' => $count,
-				'others' => max($count - 1, 0),
+				'others' => $count - 1,
 				'owner' => $owner
 			));
 		}

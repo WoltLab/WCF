@@ -58,7 +58,7 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractUserNotifi
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message.stacked', array(
 				'authors' => $authors,
 				'count' => $count,
-				'others' => max($count - 1, 0),
+				'others' => $count - 1,
 				'owner' => $owner
 			));
 		}
