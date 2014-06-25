@@ -67,7 +67,7 @@ class GravatarDownloadAction extends AbstractAction {
 			}
 			
 			// try to download new version
-			$gravatarURL = sprintf(Gravatar::GRAVATAR_BASE, md5(mb_strtolower($this->user->email)), $this->size, '404');
+			$gravatarURL = sprintf(Gravatar::GRAVATAR_BASE, md5(mb_strtolower($this->user->email)), $this->size, GRAVATAR_DEFAULT_TYPE);
 			try {
 				$tmpFile = FileUtil::downloadFileFromHttp($gravatarURL, 'gravatar');
 				copy($tmpFile, WCF_DIR.$cachedFilename);

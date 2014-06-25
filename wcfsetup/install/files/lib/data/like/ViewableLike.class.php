@@ -1,9 +1,8 @@
 <?php
 namespace wcf\data\like;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
-use wcf\system\user\activity\event\UserActivityEventHandler;
-use wcf\data\object\type\ObjectTypeCache;
 
 /**
  * Provides methods for viewable likes.

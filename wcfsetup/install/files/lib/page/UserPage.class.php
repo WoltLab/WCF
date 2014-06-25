@@ -102,11 +102,6 @@ class UserPage extends AbstractPage {
 			throw new PermissionDeniedException();
 		}
 		
-		// check is Accessible
-		if ($this->user->isProtected()) {
-			throw new PermissionDeniedException();
-		}
-		
 		if (isset($_REQUEST['editOnInit'])) $this->editOnInit = true;
 	}
 	
@@ -185,7 +180,7 @@ class UserPage extends AbstractPage {
 	 */
 	public function show() {
 		// update profile hits
-		if ($this->user->userID != WCF::getUser()->userID && !WCF::getSession()->spiderID) {
+		if ($this->user->userID != WCF::getUser()->userID && !WCF::getSession()->spiderID && !$this->user->isProtected()) {
 			$editor = new UserEditor($this->user->getDecoratedObject());
 			$editor->updateCounters(array('profileHits' => 1));
 			

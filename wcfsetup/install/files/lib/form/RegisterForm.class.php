@@ -8,7 +8,6 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileAction;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;

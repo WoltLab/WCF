@@ -643,6 +643,7 @@
 		<item name="wcf.acp.menu.link.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.menu.link.captcha.question.add"><![CDATA[Frage hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[Fragen auflisten]]></item>
+		<item name="wcf.acp.menu.link.log.authentication.failure"><![CDATA[Fehlgeschlagene Anmeldungen]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -994,6 +995,26 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.search_captcha_type"><![CDATA[Suche]]></item>
 		<item name="wcf.acp.option.message_captcha_type"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
+		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[Benutzer-Authentifikation]]></item>
+		<item name="wcf.acp.option.enable_user_authentication_failure"><![CDATA[Fehlgeschlagene Ammeldeversuche protokollieren]]></item>
+		<item name="wcf.acp.option.enable_user_authentication_failure.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_timeout"><![CDATA[Zeitraum der Überwachung]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_timeout.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_captcha"><![CDATA[Captcha bei Anmeldung (IP)]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_captcha.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_block"><![CDATA[Blockierung der Anmeldung]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_block.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_user_captcha"><![CDATA[Captcha bei Anmeldung (Benutzer)]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_user_captcha.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_expiration"><![CDATA[Löschung von alten Protokolleinträgen]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.gravatar_default_type"><![CDATA[Standard Gravatar-Typ]]></item>
+		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[Der <a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url=https://de.gravatar.com/site/implement/images/#default-image">Standard-Gravatar-Typ</a>, wenn einer E-Mail kein Gravatar zugeordnet werden kann.]]></item>
+  		<item name="wcf.acp.option.gravatar_default_type.404"><![CDATA[Kein Standard-Gravatar]]></item>
+		<item name="wcf.acp.option.gravatar_default_type.identicon"><![CDATA[Identicon]]></item>
+		<item name="wcf.acp.option.gravatar_default_type.wavatar"><![CDATA[Wavatar]]></item>
+		<item name="wcf.acp.option.gravatar_default_type.monsterid"><![CDATA[Monster-ID]]></item>
+		<item name="wcf.acp.option.gravatar_default_type.retro"><![CDATA[Retro]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1562,6 +1583,11 @@ Ihr neues Kennwort lautet: {$password}
 Klicken Sie hier, um sich mit Ihrem neuen Kennwort anzumelden: {link controller='Login' isEmail=true}{/link}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[Neues Kennwort für Ihr Benutzerkonto auf der Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.workerTitle"><![CDATA[Neue Passwörter zusenden]]></item>
+		<item name="wcf.acp.user.authentication.failure.list"><![CDATA[Fehlgeschlagene Anmeldungen]]></item>
+		<item name="wcf.acp.user.authentication.failure.environment"><![CDATA[Umgebung]]></item>
+		<item name="wcf.acp.user.authentication.failure.environment.user"><![CDATA[Benutzer]]></item>
+		<item name="wcf.acp.user.authentication.failure.environment.admin"><![CDATA[Administration]]></item>
+		<item name="wcf.acp.user.authentication.failure.time"><![CDATA[Datum]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
@@ -2612,6 +2638,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.enableSignature"><![CDATA[Signatur entsperren]]></item>
 		<item name="wcf.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
 		<item name="wcf.user.birthdayToday"><![CDATA[Hat heute Geburtstag]]></item>
+		<item name="wcf.user.login.blocked"><![CDATA[Aufgrund einer hohen Anzahl von fehlgeschlagenen Anmeldeversuchen durch Ihre IP-Adresse steht Ihnen die Anmeldung aus Sicherheitsgründen vorübergehend nicht zur Verfügung. Bitte versuchen Sie es später erneut!]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
@@ -2925,6 +2952,7 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.profile.report"><![CDATA[Benutzerprofil melden]]></item>
 		<item name="wcf.user.profile.likes.profileComment"><![CDATA[Mag den Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
 		<item name="wcf.user.profile.likes.profileCommentResponse"><![CDATA[Mag die Antwort von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a> zum Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
+		<item name="wcf.user.profile.protected"><![CDATA[Der Benutzer hat den Zugriff auf sein vollständiges Profil eingeschränkt.]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">

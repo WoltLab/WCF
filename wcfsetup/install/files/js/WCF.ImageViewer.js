@@ -316,13 +316,13 @@ $.widget('ui.wcfImageViewer', {
 			if (this._items > 1 && this._slideshowEnabled) {
 				this.startSlideshow();
 			}
+			
+			this._isOpen = true;
+		
+			WCF.System.DisableScrolling.disable();
 		}
 		
 		this._bindListener();
-		
-		this._isOpen = true;
-		
-		WCF.System.DisableScrolling.disable();
 		
 		return true;
 	},
@@ -975,5 +975,11 @@ $.widget('ui.wcfImageViewer', {
 		
 		var $targetImageID = (data.returnValues.targetImageID ? data.returnValues.targetImageID : 0);
 		this._render($initialized, $targetImageID);
+		
+		if (!this._isOpen) {
+			this._isOpen = true;
+		
+			WCF.System.DisableScrolling.disable();
+		}
 	}
 });

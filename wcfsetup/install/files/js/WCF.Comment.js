@@ -652,28 +652,31 @@ WCF.Comment.Handler = Class.extend({
 	 * @param	object		data
 	 */
 	_edit: function(data) {
+		var $content;
 		if (data.returnValues.commentID) {
-			var $content = this._comments[data.returnValues.commentID].find('.commentContent:eq(0) .userMessage:eq(0)');
+			$content = this._comments[data.returnValues.commentID].find('.commentContent:eq(0) .userMessage:eq(0)');
 		}
 		else {
-			var $content = this._responses[data.returnValues.responseID].find('.commentContent:eq(0) .userMessage:eq(0)');
+			$content = this._responses[data.returnValues.responseID].find('.commentContent:eq(0) .userMessage:eq(0)');
 		}
 		
 		// replace content with input field
 		$content.html($.proxy(function(index, oldHTML) {
-			var $input = $('<input type="text" class="long" maxlength="65535" /><small>' + WCF.Language.get('wcf.comment.description') + '</small>').val(data.returnValues.message);
-			$input.data('__html', oldHTML).keyup($.proxy(this._saveEdit, this));
+			var $textarea = $('<textarea class="long" maxlength="65535" />').val(data.returnValues.message);
+			$textarea.data('__html', oldHTML).keyup($.proxy(this._keyUpEdit, this));
 			
 			if (data.returnValues.commentID) {
-				$input.data('commentID', data.returnValues.commentID);
+				$textarea.data('commentID', data.returnValues.commentID);
 			}
 			else {
-				$input.data('responseID', data.returnValues.responseID);
+				$textarea.data('responseID', data.returnValues.responseID);
 			}
 			
-			return $input;
+			return $textarea;
 		}, this));
-		$content.children('input').focus();
+		var $textarea = $content.children('textarea');
+		$('<button class="small">' + WCF.Language.get('wcf.global.button.submit') + '</button>').insertAfter($textarea).click($.proxy(this._saveEdit, this));
+		$textarea.focus().flexible();
 		
 		// hide elements
 		$content.parent().find('.containerHeadline:eq(0)').hide();
@@ -686,11 +689,12 @@ WCF.Comment.Handler = Class.extend({
 	 * @param	object		data
 	 */
 	_update: function(data) {
+		var $input;
 		if (data.returnValues.commentID) {
-			var $input = this._comments[data.returnValues.commentID].find('.commentContent:eq(0) .userMessage:eq(0) > input');
+			$input = this._comments[data.returnValues.commentID].find('.commentContent:eq(0) .userMessage:eq(0) > textarea');
 		}
 		else {
-			var $input = this._responses[data.returnValues.responseID].find('.commentContent:eq(0) .userMessage:eq(0) > input');
+			$input = this._responses[data.returnValues.responseID].find('.commentContent:eq(0) .userMessage:eq(0) > textarea');
 		}
 		
 		$input.data('__html', data.returnValues.message);
@@ -759,23 +763,32 @@ WCF.Comment.Handler = Class.extend({
 	},
 	
 	/**
+	 * Handles the keyup event for comments and responses during edit.
+	 * 
+	 * @param	object		event
+	 */
+	_keyUpEdit: function(event) {
+		if (event.which === $.ui.keyCode.ESCAPE) {
+			// cancel input
+			this._cancelEdit($(event.currentTarget));
+			return;
+		}
+		else if (event.which === $.ui.keyCode.ENTER && event.ctrlKey) {
+			this._saveEdit(event);
+			return false;
+		}
+	},
+	
+	/**
 	 * Saves editing of a comment or response.
 	 * 
 	 * @param	object		event
 	 */
 	_saveEdit: function(event) {
 		var $input = $(event.currentTarget);
-		
-		// abort with [Esc]
-		if (event.which === 27) {
-			this._cancelEdit($input);
-			return;
+		if ($input.is('button')) {
+			$input = $input.prev('textarea');
 		}
-		else if (event.which !== 13) {
-			// ignore everything except for [Enter]
-			return;
-		}
-		
 		var $message = $.trim($input.val());
 		
 		// ignore empty message
@@ -802,7 +815,7 @@ WCF.Comment.Handler = Class.extend({
 				data: $data
 			}
 		});
-		this._proxy.sendRequest()
+		this._proxy.sendRequest();
 	},
 	
 	/**

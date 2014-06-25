@@ -207,39 +207,43 @@
 
 {include file='userNotice'}
 
-<div class="contentNavigation">
-	{hascontent}
-		<nav>
+{if !$user->isProtected()}
+	<div class="contentNavigation">
+		{hascontent}
+			<nav>
+				<ul>
+					{content}
+						{event name='contentNavigationButtons'}
+					{/content}
+				</ul>
+			</nav>
+		{/hascontent}
+	</div>
+	
+	<section id="profileContent" class="marginTop tabMenuContainer" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
+		<nav class="tabMenu">
 			<ul>
-				{content}
-					{event name='contentNavigationButtons'}
-				{/content}
+				{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
+					{if $menuItem->getContentManager()->isVisible($userID)}
+						<li><a href="{$__wcf->getAnchor($menuItem->getIdentifier())}">{lang}wcf.user.profile.menu.{@$menuItem->menuItem}{/lang}</a></li>
+					{/if}
+				{/foreach}
 			</ul>
 		</nav>
-	{/hascontent}
-</div>
-
-<section id="profileContent" class="marginTop tabMenuContainer" data-active="{$__wcf->getUserProfileMenu()->getActiveMenuItem()->getIdentifier()}">
-	<nav class="tabMenu">
-		<ul>
-			{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
-				{if $menuItem->getContentManager()->isVisible($userID)}
-					<li><a href="{$__wcf->getAnchor($menuItem->getIdentifier())}">{lang}wcf.user.profile.menu.{@$menuItem->menuItem}{/lang}</a></li>
-				{/if}
-			{/foreach}
-		</ul>
-	</nav>
-	
-	{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
-		{if $menuItem->getContentManager()->isVisible($userID)}
-			<div id="{$menuItem->getIdentifier()}" class="container tabMenuContent" data-menu-item="{$menuItem->menuItem}">
-				{if $menuItem === $__wcf->getUserProfileMenu()->getActiveMenuItem()}
-					{@$profileContent}
-				{/if}
-			</div>
-		{/if}
-	{/foreach}
-</section>
+		
+		{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
+			{if $menuItem->getContentManager()->isVisible($userID)}
+				<div id="{$menuItem->getIdentifier()}" class="container tabMenuContent" data-menu-item="{$menuItem->menuItem}">
+					{if $menuItem === $__wcf->getUserProfileMenu()->getActiveMenuItem()}
+						{@$profileContent}
+					{/if}
+				</div>
+			{/if}
+		{/foreach}
+	</section>
+{else}
+	<p class="info">{lang}wcf.user.profile.protected{/lang}</p>
+{/if}
 
 {include file='footer'}
 

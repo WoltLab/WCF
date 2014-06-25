@@ -46,6 +46,22 @@ class UserGroupOptionHandler extends OptionHandler {
 	}
 	
 	/**
+	 * @see	\wcf\system\option\OptionHandler::checkOption()
+	 */
+	protected function checkOption(Option $option) {
+		if (parent::checkOption($option)) {
+			// check if permission is available for guests if group is guests
+			if ($this->group && $this->group->groupType == UserGroup::GUESTS && $option->usersOnly) {
+				return false;
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * @see	\wcf\system\option\OptionHandler::getClassName()
 	 */
 	protected function getClassName($type) {

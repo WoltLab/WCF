@@ -5,7 +5,6 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**

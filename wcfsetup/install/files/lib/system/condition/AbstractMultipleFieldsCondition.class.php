@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\condition;
-use wcf\data\object\type\AbstractObjectTypeProcessor;
 use wcf\system\WCF;
 
 /**

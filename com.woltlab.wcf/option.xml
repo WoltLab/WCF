@@ -141,6 +141,9 @@
 					<category name="security.general.session">
 						<parent>security.general</parent>
 					</category>
+					<category name="security.general.authentication">
+						<parent>security.general</parent>
+					</category>
 				<category name="security.blacklist">
 					<parent>security</parent>
 				</category>
@@ -481,7 +484,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			</option>
 			<!-- /general.system.proxy -->
 			
-			<!-- general.session -->
+			<!-- security.general.session -->
 			<option name="session_timeout">
 				<categoryname>security.general.session</categoryname>
 				<optiontype>integer</optiontype>
@@ -510,7 +513,48 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			<!-- /general.session -->
+			<!-- /security.general.session -->
+			
+			<!-- security.general.authentication -->
+			<option name="enable_user_authentication_failure">
+				<categoryname>security.general.authentication</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>user_authentication_failure_timeout,user_authentication_failure_ip_captcha,user_authentication_failure_ip_block,user_authentication_failure_user_captcha,user_authentication_failure_expiration</enableoptions>
+			</option>
+			<option name="user_authentication_failure_timeout">
+				<categoryname>security.general.authentication</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>7200</defaultvalue>
+				<minvalue>300</minvalue>
+				<maxvalue>86400</maxvalue>
+			</option>
+			<option name="user_authentication_failure_ip_captcha">
+				<categoryname>security.general.authentication</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>3</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<option name="user_authentication_failure_ip_block">
+				<categoryname>security.general.authentication</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>10</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<option name="user_authentication_failure_user_captcha">
+				<categoryname>security.general.authentication</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>3</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<option name="user_authentication_failure_expiration">
+				<categoryname>security.general.authentication</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>30</defaultvalue>
+				<minvalue>1</minvalue>
+				<maxvalue>365</maxvalue>
+			</option>
+			<!-- /security.general.authentication -->
 			
 			<!-- security.blacklist -->
 			<option name="blacklist_ip_addresses">
@@ -970,6 +1014,17 @@ no:!cache_source_memcached_host]]></enableoptions>
 			<!-- /user.3rdPartyAuth -->
 			
 			<!-- user.avatar -->
+			<option name="gravatar_default_type">
+				<categoryname>user.avatar</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue><![CDATA[404]]></defaultvalue>
+				<selectoptions><![CDATA[404:wcf.acp.option.gravatar_default_type.404
+identicon:wcf.acp.option.gravatar_default_type.identicon
+wavatar:wcf.acp.option.gravatar_default_type.wavatar
+monsterid:wcf.acp.option.gravatar_default_type.monsterid
+retro:wcf.acp.option.gravatar_default_type.retro]]></selectoptions>
+				<options>module_gravatar</options>
+			</option>
 			<option name="max_avatar_width">
 				<categoryname>user.avatar</categoryname>
 				<optiontype>integer</optiontype>

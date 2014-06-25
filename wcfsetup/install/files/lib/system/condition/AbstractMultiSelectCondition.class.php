@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\condition;
-use wcf\data\condition\Condition;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;

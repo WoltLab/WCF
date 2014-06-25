@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\page\ITrackablePage;
 use wcf\system\cache\builder\SpiderCacheBuilder;
+use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\database\DatabaseException;
 use wcf\system\exception\PermissionDeniedException;
@@ -128,6 +129,12 @@ class SessionHandler extends SingletonFactory {
 	protected $firstVisit = false;
 	
 	/**
+	 * list of names of permissions only available for users
+	 * @var	array<string>
+	 */
+	protected $usersOnlyPermissions = array();
+	
+	/**
 	 * Provides access to session data.
 	 * 
 	 * @param	string		$key
@@ -139,6 +146,13 @@ class SessionHandler extends SingletonFactory {
 		}
 		
 		return $this->session->{$key};
+	}
+	
+	/**
+	 * @see	\wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		$this->usersOnlyPermissions = UserGroupOptionCacheBuilder::getInstance()->getData(array(), 'usersOnlyOptions');
 	}
 	
 	/**
@@ -462,6 +476,12 @@ class SessionHandler extends SingletonFactory {
 	 * @return	mixed		permission value
 	 */
 	public function getPermission($permission) {
+		// check if a users only permission is checked for a guest and return
+		// false if that is the case
+		if (!$this->user->userID && in_array($permission, $this->usersOnlyPermissions)) {
+			return false;
+		}
+		
 		$this->loadGroupData();
 		
 		if (!isset($this->groupData[$permission])) return false;

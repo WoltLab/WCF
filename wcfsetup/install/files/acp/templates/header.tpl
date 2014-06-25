@@ -27,7 +27,7 @@
 	{event name='javascriptInclude'}
 	
 	<!-- Stylesheets -->
-	{@$__wcf->getStyleHandler()->getStylesheet()}
+	{@$__wcf->getStyleHandler()->getStylesheet(true)}
 	{event name='stylesheets'}
 	
 	<!-- Icons -->

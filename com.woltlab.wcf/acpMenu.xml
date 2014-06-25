@@ -135,6 +135,13 @@
 			<parent>wcf.acp.menu.link.log</parent>
 			<permissions>admin.system.canViewLog</permissions>
 		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.log.authentication.failure">
+			<controller><![CDATA[wcf\acp\page\UserAuthenticationFailureListPage]]></controller>
+			<parent>wcf.acp.menu.link.log</parent>
+			<permissions>admin.system.canViewLog</permissions>
+			<options>enable_user_authentication_failure</options>
+		</acpmenuitem>
 		<!-- /log -->
 		
 		<acpmenuitem name="wcf.acp.menu.link.user">

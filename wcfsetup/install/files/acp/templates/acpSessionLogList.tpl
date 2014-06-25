@@ -41,7 +41,7 @@
 			
 			<tbody>
 				{foreach from=$objects item=sessionLog}
-					<tr class="{if $sessionLog->active} activeContainer{/if}">
+					<tr>
 						<td class="columnID columnSessionLogID">{@$sessionLog->sessionLogID}</td>
 						<td class="columnTitle columnUsername"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->username}</a></td>
 						<td class="columnSmallText columnIpAddress"><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->getIpAddress()}</a>{if $sessionLog->hostname != $sessionLog->ipAddress}<br /><a href="{link controller='ACPSessionLog' id=$sessionLog->sessionLogID}{/link}">{$sessionLog->hostname}</a>{/if}</td>

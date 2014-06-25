@@ -2,6 +2,7 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\captcha\CaptchaHandler;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**

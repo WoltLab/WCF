@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\condition;
 use wcf\data\condition\Condition;
-use wcf\system\user\UserBirthdayCache;
 use wcf\system\WCF;
 use wcf\util\UserUtil;
 

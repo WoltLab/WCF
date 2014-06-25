@@ -21,4 +21,22 @@ class UserGroupOptionCacheBuilder extends OptionCacheBuilder {
 	 * @see	\wcf\system\cache\builder\OptionCacheBuilder::$tableName
 	 */
 	protected $tableName = 'user_group_option';
+	
+	/**
+	 * @see	\wcf\system\cache\builder\AbstractCacheBuilder::rebuild()
+	 */
+	public function rebuild(array $parameters) {
+		$data = parent::rebuild($parameters);
+		
+		$usersOnlyPermissions = array();
+		foreach ($data['options'] as $option) {
+			if ($option->usersOnly) {
+				$usersOnlyPermissions[] = $option->optionName;
+			}
+		}
+		
+		$data['usersOnlyOptions'] = $usersOnlyPermissions;
+		
+		return $data;
+	}
 }

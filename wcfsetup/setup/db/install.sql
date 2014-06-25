@@ -1095,6 +1095,19 @@ CREATE TABLE wcf1_user_activity_point (
 	KEY (objectTypeID)
 );
 
+DROP TABLE IF EXISTS wcf1_user_authentication_failure;
+CREATE TABLE wcf1_user_authentication_failure (
+	failureID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	environment ENUM('user', 'admin') NOT NULL DEFAULT 'user',
+	userID INT(10),
+	username VARCHAR(255) NOT NULL DEFAULT '',
+	time INT(10) NOT NULL DEFAULT 0,
+	ipAddress VARCHAR(39) NOT NULL DEFAULT '',
+	userAgent VARCHAR(255) NOT NULL DEFAULT '',
+	KEY (ipAddress, time),
+	KEY (time)
+);
+
 DROP TABLE IF EXISTS wcf1_user_avatar;
 CREATE TABLE wcf1_user_avatar (
 	avatarID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1157,6 +1170,7 @@ CREATE TABLE wcf1_user_group_option (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	permissions TEXT,
 	options TEXT,
+	usersOnly TINYINT(1) NOT NULL DEFAULT 0,
 	additionalData MEDIUMTEXT,
 	UNIQUE KEY optionName (optionName, packageID)
 );
@@ -1592,6 +1606,8 @@ ALTER TABLE wcf1_user_activity_event ADD FOREIGN KEY (languageID) REFERENCES wcf
 ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_activity_point ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_user_authentication_failure ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+
 ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (ownerID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
@@ -1659,9 +1675,9 @@ INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (4, 'wcf.acp.
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (5, 'wcf.acp.group.group5', 4); -- Moderators
 
 -- default user group options
-INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder) VALUES (1, 'admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1);
-INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder) VALUES (2, 'admin.system.package.canInstallPackage', 'admin.system.package', 'boolean', '0', 1);
-INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder) VALUES (3, 'admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', 1);
+INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (1, 'admin.general.canUseAcp', 'admin.general', 'boolean', '0', 1, 1);
+INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (2, 'admin.system.package.canInstallPackage', 'admin.system.package', 'boolean', '0', 1, 1);
+INSERT INTO wcf1_user_group_option (optionID, optionName, categoryName, optionType, defaultValue, showOrder, usersOnly) VALUES (3, 'admin.user.canEditGroup', 'admin.user.group', 'boolean', '0', 1, 1);
 
 -- default user group option values
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (1, 1, '0');	-- Everyone
