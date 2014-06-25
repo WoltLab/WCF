@@ -242,7 +242,7 @@
 		{/foreach}
 	</section>
 {else}
-	<p class="info">{lang}wcf.user.profile.proctected{/lang}</p>
+	<p class="info">{lang}wcf.user.profile.protected{/lang}</p>
 {/if}
 
 {include file='footer'}
