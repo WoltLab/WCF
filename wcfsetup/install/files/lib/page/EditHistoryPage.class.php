@@ -1,8 +1,8 @@
 <?php
 namespace wcf\page;
 use wcf\data\edit\history\entry\EditHistoryEntry;
+use wcf\data\edit\history\entry\EditHistoryEntryList;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\page\AbstractPage;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 use wcf\util\Diff;
@@ -19,6 +19,12 @@ use wcf\util\StringUtil;
  * @category	Community Framework
  */
 class EditHistoryPage extends AbstractPage {
+	/**
+	 * DatabaseObjectList object
+	 * @var \wcf\data\DatabaseObjectList
+	 */
+	public $objectList = null;
+
 	/**
 	 * left / old version id
 	 * @var	integer
@@ -74,8 +80,8 @@ class EditHistoryPage extends AbstractPage {
 	public $object = null;
 	
 	/**
-	* @see	\wcf\page\IPage::readParameters()
-	*/
+	 * @see	\wcf\page\IPage::readParameters()
+	 */
 	public function readParameters() {
 		parent::readParameters();
 		
@@ -114,6 +120,7 @@ class EditHistoryPage extends AbstractPage {
 		$this->object = $processor->getObjectByID($this->objectID);
 		$processor->checkPermissions($this->object);
 		$this->activeMenuItem = $processor->getActivePageMenuItem();
+		$this->object->addBreadcrumbs();
 		
 		if (!$this->new) {
 			$this->new = $this->object;
@@ -125,6 +132,12 @@ class EditHistoryPage extends AbstractPage {
 	*/
 	public function readData() {
 		parent::readData();
+		
+		$this->objectList = new EditHistoryEntryList();
+		$this->objectList->sqlOrderBy = "time DESC";
+		$this->objectList->getConditionBuilder()->add('objectTypeID = ?', array($this->objectTypeID));
+		$this->objectList->getConditionBuilder()->add('objectID = ?', array($this->objectID));
+		$this->objectList->readObjects();
 		
 		// valid IDs were given, calculate diff
 		if ($this->old) {
@@ -146,7 +159,8 @@ class EditHistoryPage extends AbstractPage {
 			'newID' => $this->newID,
 			'new' => $this->new,
 			'object' => $this->object,
-			'diff' => $this->diff
+			'diff' => $this->diff,
+			'objects' => $this->objectList
 		));
 	}
 }

@@ -35,4 +35,9 @@ interface IHistorySavingObject extends IDatabaseObjectProcessor, IUserContent {
 	 * @return	string
 	 */
 	public function getMessage();
+	
+	/**
+	 * Adds the object's breadcrumbs.
+	 */
+	public function addBreadcrumbs();
 }
