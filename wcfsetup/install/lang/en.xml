@@ -1711,7 +1711,7 @@ Errors are:
 	<category name="wcf.condition">
 		<item name="wcf.condition.greaterThan"><![CDATA[greater than]]></item>
 		<item name="wcf.condition.greaterThan.error.lessThan"><![CDATA[The minimal value and the maximum value are conflicting.]]></item>
-		<item name="wcf.condition.greaterThanerror.maxValue"><![CDATA[The maximum value may not be greater than {#$maxValue}.]]></item>
+		<item name="wcf.condition.greaterThan.error.maxValue"><![CDATA[The maximum value may not be greater than {#$maxValue}.]]></item>
 		<item name="wcf.condition.greaterThan.error.minValue"><![CDATA[The maximum value may not be less than {#$minValue}.]]></item>
 		<item name="wcf.condition.lessThan"><![CDATA[less than]]></item>
 		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[The minimal value may not be greater than {#$maxValue}.]]></item>
@@ -2159,6 +2159,10 @@ Errors are:
 		<item name="wcf.moderation.report.reportedBy"><![CDATA[Reported By]]></item>
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Reported Content]]></item>
 		<item name="wcf.moderation.report.success"><![CDATA[Content has been reported.]]></item>
+	</category>
+	
+	<category name="wcf.notice">
+		<item name="wcf.notice.button.dismiss"><![CDATA[TODO: Hinweis dauerhaft ausblenden]]></item>
 	</category>
 	
 	<category name="wcf.page">
