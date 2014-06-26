@@ -93,9 +93,9 @@ class SearchForm extends AbstractCaptchaForm {
 	public $username = '';
 	
 	/**
-	 * @see	\wcf\form\AbstractCaptchaForm::$captchaObjectTypeName
+	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
 	 */
-	public $captchaObjectTypeName = SEARCH_CAPTCHA_TYPE;
+	public $useCaptcha = SEARCH_USE_CAPTCHA;
 	
 	/**
 	 * parameters used for previous search

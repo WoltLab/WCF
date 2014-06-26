@@ -27,22 +27,10 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	 * name of the captcha object type; if empty, captcha is disabled
 	 * @var	string
 	 */
-	public $captchaObjectTypeName = '';
+	public $captchaObjectTypeName = CAPTCHA_TYPE;
 	
 	/**
-	 * challenge (legacy property from RecaptchaForm, do not use!)
-	 * @var	string
-	 */
-	public $challenge = '';
-	
-	/**
-	 * response (legacy property from RecaptchaForm, do not use!)
-	 * @var	string
-	 */
-	public $response = '';
-	
-	/**
-	 * true if recaptcha is used (legacy property from RecaptchaForm, do not use!)
+	 * true if recaptcha is used
 	 * @var	boolean
 	 */
 	public $useCaptcha = true;
@@ -54,22 +42,16 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'captchaObjectType' => $this->captchaObjectType
+			'captchaObjectType' => $this->captchaObjectType,
+			'useCaptcha' => $this->useCaptcha
 		));
-		
-		if (!$this->captchaObjectType) {
-			RecaptchaHandler::getInstance()->assignVariables();
-			WCF::getTPL()->assign(array(
-				'useCaptcha' => $this->useCaptcha
-			));
-		}
 	}
 	
 	/**
 	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		if (!WCF::getUser()->userID && $this->captchaObjectTypeName) {
+		if (!WCF::getUser()->userID && $this->useCaptcha && $this->captchaObjectTypeName) {
 			$this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName($this->captchaObjectTypeName);
 			if ($this->captchaObjectType === null) {
 				throw new SystemException("Unknown captcha object type with name '".$this->captchaObjectTypeName."'");
@@ -92,21 +74,6 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 		if ($this->captchaObjectType) {
 			$this->captchaObjectType->getProcessor()->readFormParameters();
 		}
-		else if ($this->useCaptcha) {
-			if (isset($_POST['recaptcha_challenge_field'])) $this->challenge = StringUtil::trim($_POST['recaptcha_challenge_field']);
-			if (isset($_POST['recaptcha_response_field'])) $this->response = StringUtil::trim($_POST['recaptcha_response_field']);
-		}
-	}
-	
-	/**
-	 * @see	\wcf\page\IPage::readParameters()
-	 */
-	public function readParameters() {
-		parent::readParameters();
-		
-		if ($this->captchaObjectType === null && (!MODULE_SYSTEM_RECAPTCHA || WCF::getUser()->userID || WCF::getSession()->getVar('recaptchaDone'))) {
-			$this->useCaptcha = false;
-		}
 	}
 	
 	/**
@@ -117,9 +84,6 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 		
 		if ($this->captchaObjectType) {
 			$this->captchaObjectType->getProcessor()->reset();
-		}
-		else {
-			WCF::getSession()->unregister('recaptchaDone');
 		}
 	}
 	
@@ -138,10 +102,6 @@ abstract class AbstractCaptchaForm extends AbstractForm {
 	protected function validateCaptcha() {
 		if ($this->captchaObjectType) {
 			$this->captchaObjectType->getProcessor()->validate();
-		}
-		else if ($this->useCaptcha) {
-			RecaptchaHandler::getInstance()->validate($this->challenge, $this->response);
-			$this->useCaptcha = false;
 		}
 	}
 }

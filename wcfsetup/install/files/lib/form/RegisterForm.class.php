@@ -58,16 +58,19 @@ class RegisterForm extends UserAddForm {
 	public $message = '';
 	
 	/**
-	 * captcha object type object
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @see	\wcf\form\AbstractCaptchaForm::$captchaObjectType
 	 */
 	public $captchaObjectType = null;
 	
 	/**
-	 * name of the captcha object type; if empty, captcha is disabled
-	 * @var	string
+	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
 	 */
-	public $captchaObjectTypeName = REGISTER_CAPTCHA_TYPE;
+	public $captchaObjectTypeName = CAPTCHA_TYPE;
+	
+	/**
+	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
+	 */
+	public $useCaptcha = REGISTER_USE_CAPTCHA;
 	
 	/**
 	 * field names
@@ -163,7 +166,7 @@ class RegisterForm extends UserAddForm {
 	 * @see	\wcf\page\IPage::readData()
 	 */
 	public function readData() {
-		if ($this->captchaObjectTypeName) {
+		if ($this->useCaptcha && $this->captchaObjectTypeName) {
 			$this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName($this->captchaObjectTypeName);
 			if ($this->captchaObjectType === null) {
 				throw new SystemException("Unknown captcha object type with id '".$this->captchaObjectTypeName."'");
