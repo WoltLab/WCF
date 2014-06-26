@@ -47,9 +47,9 @@ class LostPasswordForm extends AbstractCaptchaForm {
 	public $user;
 	
 	/**
-	 * @see	\wcf\form\CaptchaForm::$captchaObjectTypeName
+	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
 	 */
-	public $captchaObjectTypeName = LOST_PASSWORD_CAPTCHA_TYPE;
+	public $useCaptcha = LOST_PASSWORD_USE_CAPTCHA;
 	
 	/**
 	 * @see	\wcf\form\IForm::readFormParameters()

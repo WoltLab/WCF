@@ -53,8 +53,7 @@ class LoginForm extends AbstractCaptchaForm {
 	public $url = null;
 	
 	/**
-	 * @todo
-	 * @var unknown
+	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
 	 */
 	public $useCaptcha = false;
 	
@@ -82,7 +81,7 @@ class LoginForm extends AbstractCaptchaForm {
 		
 		if (!empty($_REQUEST['url'])) {
 			$this->url = StringUtil::trim($_REQUEST['url']);
-				
+			
 			// discard URL if it is not an absolute URL of local content
 			if (!ApplicationHandler::getInstance()->isInternalURL($this->url)) {
 				$this->url = '';
@@ -96,7 +95,7 @@ class LoginForm extends AbstractCaptchaForm {
 				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.login.blocked'));
 			}
 			if (USER_AUTHENTICATION_FAILURE_IP_CAPTCHA && $failures >= USER_AUTHENTICATION_FAILURE_IP_CAPTCHA) {
-				$this->captchaObjectTypeName = REGISTER_CAPTCHA_TYPE;
+				$this->useCaptcha = true;
 			}
 			else if (USER_AUTHENTICATION_FAILURE_USER_CAPTCHA) {
 				if (isset($_POST['username'])) {
@@ -106,7 +105,7 @@ class LoginForm extends AbstractCaptchaForm {
 					if ($user->userID) {
 						$failures = UserAuthenticationFailure::countUserFailures($user->userID);
 						if (USER_AUTHENTICATION_FAILURE_USER_CAPTCHA && $failures >= USER_AUTHENTICATION_FAILURE_USER_CAPTCHA) {
-							$this->captchaObjectTypeName = REGISTER_CAPTCHA_TYPE;
+							$this->useCaptcha = true;
 						}
 					}
 				}

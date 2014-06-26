@@ -578,10 +578,10 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function getGuestDialog() {
-		if (MESSAGE_CAPTCHA_TYPE) {
-			$captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(MESSAGE_CAPTCHA_TYPE);
+		if (CAPTCHA_TYPE) {
+			$captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(CAPTCHA_TYPE);
 			if ($captchaObjectType === null) {
-				throw new SystemException("Unknown captcha object type with name '".MESSAGE_CAPTCHA_TYPE."'");
+				throw new SystemException("Unknown captcha object type with name '".CAPTCHA_TYPE."'");
 			}
 			
 			if (!$captchaObjectType->getProcessor()->isAvailable()) {
@@ -726,10 +726,10 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	protected function validateCaptcha() {
 		if (WCF::getUser()->userID) return;
 		
-		if (MESSAGE_CAPTCHA_TYPE) {
-			$this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(MESSAGE_CAPTCHA_TYPE);
+		if (CAPTCHA_TYPE) {
+			$this->captchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(CAPTCHA_TYPE);
 			if ($this->captchaObjectType === null) {
-				throw new SystemException("Unknown captcha object type with name '".MESSAGE_CAPTCHA_TYPE."'");
+				throw new SystemException("Unknown captcha object type with name '".CAPTCHA_TYPE."'");
 			}
 			
 			if (!$this->captchaObjectType->getProcessor()->isAvailable()) {

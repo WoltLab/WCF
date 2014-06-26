@@ -571,41 +571,40 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			</option>
 			<!-- /security.blacklist -->
 			
-			<!-- security.antispam -->
-			<option name="register_captcha_type">
+			<!-- security.antispam.captcha -->
+			<option name="captcha_type">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>captchaSelect</optiontype>
 				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
 				<allowemptyvalue>1</allowemptyvalue>
 			</option>
-			<option name="lost_password_captcha_type">
-				<categoryname>security.antispam.captcha</categoryname>
-				<optiontype>captchaSelect</optiontype>
-				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
-				<allowemptyvalue>1</allowemptyvalue>
-			</option>
-			<option name="profile_mail_captcha_type">
-				<categoryname>security.antispam.captcha</categoryname>
-				<optiontype>captchaSelect</optiontype>
-				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
-				<allowemptyvalue>1</allowemptyvalue>
-			</option>
-			<option name="search_captcha_type">
+			<option name="register_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>boolean</optiontype>
-				<optiontype>captchaSelect</optiontype>
-				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
-				<allowemptyvalue>1</allowemptyvalue>
+				<defaultvalue>1</defaultvalue>
+				<options>captcha_type</options>
 			</option>
-			<option name="message_captcha_type">
+			<option name="lost_password_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>boolean</optiontype>
-				<optiontype>captchaSelect</optiontype>
-				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
-				<allowemptyvalue>1</allowemptyvalue>
+				<defaultvalue>1</defaultvalue>
+				<options>captcha_type</options>
 			</option>
-			<!-- /security.antispam -->
+			<option name="profile_mail_use_captcha">
+				<categoryname>security.antispam.captcha</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>captcha_type</options>
+			</option>
+			<option name="search_use_captcha">
+				<categoryname>security.antispam.captcha</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>captcha_type</options>
+			</option>
+			<!-- /security.antispam.captcha -->
 			
+			<!-- security.antispam.recaptcha -->
 			<option name="recaptcha_publickey">
 				<categoryname>security.antispam.recaptcha</categoryname>
 				<optiontype>text</optiontype>
@@ -622,6 +621,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>6LfOlMYSAAAAAKR3m_EFxmDv1xS8PCfeaSZ2LdG9</defaultvalue>
 				<showorder>2</showorder>
 			</option>
+			<!-- /security.antispam.recaptcha -->
 			
 			<!-- general.system.date -->
 			<option name="timezone">
@@ -1308,36 +1308,6 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 				<maxvalue>100</maxvalue>
 			</option>
 			<!-- /message.general.poll -->
-			
-			<!-- deprecated -->
-			<option name="register_use_captcha">
-				<categoryname>security.antispam</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
-				<options>module_system_recaptcha</options>
-				<hidden>1</hidden>
-			</option>
-			<option name="lost_password_use_captcha">
-				<categoryname>security.antispam</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
-				<options>module_system_recaptcha</options>
-				<hidden>1</hidden>
-			</option>
-			<option name="profile_mail_use_captcha">
-				<categoryname>security.antispam</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue><![CDATA[1]]></defaultvalue>
-				<options>module_system_recaptcha</options>
-				<hidden>1</hidden>
-			</option>
-			<option name="search_use_captcha">
-				<categoryname>security.antispam</categoryname>
-				<optiontype>boolean</optiontype>
-				<options>module_system_recaptcha</options>
-				<hidden>1</hidden>
-			</option>
-			<!-- deprecated -->
 		</options>
 	</import>
 	
