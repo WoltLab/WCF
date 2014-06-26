@@ -12,18 +12,21 @@
 			<objecttype>com.woltlab.wcf.user.profileComment.notification</objecttype>
 			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentUserNotificationEvent]]></classname>
 			<preset>1</preset>
+			<options>module_user_profile_wall</options>
 		</event>
 		<event>
 			<name>commentResponse</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.response.notification</objecttype>
 			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentResponseUserNotificationEvent]]></classname>
 			<preset>1</preset>
+			<options>module_user_profile_wall</options>
 		</event>
 		<event>
 			<name>commentResponseOwner</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.response.notification</objecttype>
 			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentResponseOwnerUserNotificationEvent]]></classname>
 			<preset>1</preset>
+			<options>module_user_profile_wall</options>
 		</event>
 	</import>
 </data>
