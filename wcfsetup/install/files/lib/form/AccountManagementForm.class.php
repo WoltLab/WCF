@@ -419,7 +419,7 @@ class AccountManagementForm extends AbstractForm {
 		if (GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== '') {
 			if ($this->googleConnect && WCF::getSession()->getVar('__googleData')) {
 				$googleData = WCF::getSession()->getVar('__googleData');
-				$updateParameters['authData'] = 'facebook:'.$googleData['id'];
+				$updateParameters['authData'] = 'google:'.$googleData['id'];
 				$success[] = 'wcf.user.3rdparty.google.connect.success';
 				
 				WCF::getSession()->unregister('__googleData');
