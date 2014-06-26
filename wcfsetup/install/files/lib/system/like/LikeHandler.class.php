@@ -285,7 +285,10 @@ class LikeHandler extends SingletonFactory {
 					'likeValue' => $likeValue
 				));
 				
-				if ($likeValue == Like::LIKE && $likeable->getUserID()) UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
+				if ($likeValue == Like::LIKE && $likeable->getUserID()) {
+					UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
+					$likeable->sendNotification($like);
+				}
 			}
 			else {
 				$likeEditor = new LikeEditor($like);
@@ -295,8 +298,13 @@ class LikeHandler extends SingletonFactory {
 				));
 				
 				if ($likeable->getUserID()) {
-					if ($likeValue == Like::DISLIKE) UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($likeable->getUserID() => 1));
-					else UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
+					if ($likeValue == Like::DISLIKE) {
+						UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', array($likeable->getUserID() => 1));
+					}
+					else {
+						UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
+						$likeable->sendNotification($like);
+					}
 				}
 			}
 			

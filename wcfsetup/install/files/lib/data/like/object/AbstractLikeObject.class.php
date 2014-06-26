@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\like\object;
+use wcf\data\like\Like;
 use wcf\data\object\type\ObjectType;
 use wcf\data\DatabaseObjectDecorator;
 
@@ -42,5 +43,12 @@ abstract class AbstractLikeObject extends DatabaseObjectDecorator implements ILi
 	 */
 	public function setObjectType(ObjectType $objectType) {
 		$this->objectType = $objectType;
+	}
+	
+	/**
+	 * @see	\wcf\data\like\object\ILikeObject::sendNotification()
+	 */
+	public function sendNotification(Like $like) {
+		// individual implementations can override this method to provide notifications
 	}
 }

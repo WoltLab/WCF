@@ -60,17 +60,21 @@
 				<legend>{lang}wcf.user.notification.{$eventCategory}{/lang}</legend>
 				
 				<dl>
-					{foreach from=$eventList item='event'}
+					{foreach from=$eventList item=event}
 						<dd>
 							<label><input type="checkbox" name="settings[{@$event->eventID}][enabled]" value="1"{if $settings[$event->eventID][enabled]} checked="checked"{/if} /> {lang}wcf.user.notification.{$event->objectType}.{$event->eventName}{/lang}</label>
 							{hascontent}<small>{content}{lang __optional=true}wcf.user.notification.{$event->objectType}.{$event->eventName}.description{/lang}{/content}</small>{/hascontent}
-							<small class="jsMailNotificationType">
-								<select name="settings[{@$event->eventID}][mailNotificationType]">
-									<option value="none">{lang}wcf.user.notification.mailNotificationType.none{/lang}</option>
-									<option value="instant"{if $settings[$event->eventID][mailNotificationType] == 'instant'} selected="selected"{/if}>{lang}wcf.user.notification.mailNotificationType.instant{/lang}</option>
-									<option value="daily"{if $settings[$event->eventID][mailNotificationType] == 'daily'} selected="selected"{/if}>{lang}wcf.user.notification.mailNotificationType.daily{/lang}</option>
-								</select>
-							</small>
+							{if $event->supportsEmailNotification()}
+								<small class="jsMailNotificationType">
+									<select name="settings[{@$event->eventID}][mailNotificationType]">
+										<option value="none">{lang}wcf.user.notification.mailNotificationType.none{/lang}</option>
+										<option value="instant"{if $settings[$event->eventID][mailNotificationType] == 'instant'} selected="selected"{/if}>{lang}wcf.user.notification.mailNotificationType.instant{/lang}</option>
+										<option value="daily"{if $settings[$event->eventID][mailNotificationType] == 'daily'} selected="selected"{/if}>{lang}wcf.user.notification.mailNotificationType.daily{/lang}</option>
+									</select>
+								</small>
+							{else}
+								<small class="jsMailNotificationType">{lang}wcf.user.notification.mailNotificationType.notSupported{/lang}</small>
+							{/if}
 						</dd>
 					{/foreach}
 				</dl>

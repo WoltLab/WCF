@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\user\notification;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -17,37 +19,130 @@ use wcf\system\WCF;
  */
 class UserNotificationAction extends AbstractDatabaseObjectAction {
 	/**
-	 * Adds notification recipients.
+	 * notification object
+	 * @var	\wcf\data\user\notification\UserNotification
 	 */
-	public function addRecipients() {
-		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_notification_to_user
-						(notificationID, userID, mailNotified)
-			VALUES			(?, ?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
-		foreach ($this->objects as $notification) {
-			foreach ($this->parameters['recipients'] as $recipient) {
-				$statement->execute(array($notification->notificationID, $recipient->userID, ($recipient->mailNotificationType == 'daily' ? 0 : 1)));
-			}
-		}
-	}
+	public $notification = null;
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::create()
 	 */
 	public function create() {
-		// create notification
 		$notification = parent::create();
 		
-		// save recpients
-		if (!empty($this->parameters['recipients'])) {
-			$action = new UserNotificationAction(array($notification), 'addRecipients', array(
-				'recipients' => $this->parameters['recipients']		
-			));
-			$action->executeAction();
-		}
+		$sql = "INSERT INTO	wcf".WCF_N."_user_notification_to_user
+					(notificationID, userID)
+			VALUES		(?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$notification->notificationID,
+			$notification->userID
+		));
 		
 		return $notification;
+	}
+	
+	/**
+	 * Creates a simple notification without stacking support, applies to legacy notifications too.
+	 * 
+	 * @return	array<array>
+	 */
+	public function createDefault() {
+		foreach ($this->parameters['recipients'] as $recipient) {
+			$this->parameters['data']['userID'] = $recipient->userID;
+			$notification = $this->create();
+			
+			$notifications[$recipient->userID] = array(
+				'isNew' => true,
+				'object' => $notification
+			);
+		}
+		
+		// insert author
+		$sql = "INSERT INTO	wcf".WCF_N."_user_notification_author
+					(notificationID, authorID, time)
+			VALUES		(?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($notifications as $notificationData) {
+			$statement->execute(array(
+				$notificationData['object']->notificationID,
+				($this->parameters['authorID'] ?: null),
+				TIME_NOW
+			));
+		}
+		WCF::getDB()->commitTransaction();
+		
+		return $notifications;
+	}
+	
+	/**
+	 * Creates a notification or adds another author to an existing one.
+	 * 
+	 * @return	array<array>
+	 */
+	public function createStackable() {
+		// get existing notifications
+		$notificationList = new UserNotificationList();
+		$notificationList->getConditionBuilder()->add("eventID = ?", array($this->parameters['data']['eventID']));
+		$notificationList->getConditionBuilder()->add("eventHash = ?", array($this->parameters['data']['eventHash']));
+		$notificationList->getConditionBuilder()->add("userID IN (?)", array(array_keys($this->parameters['recipients'])));
+		$notificationList->getConditionBuilder()->add("confirmed = ?", array(0));
+		$notificationList->readObjects();
+		$existingNotifications = array();
+		foreach ($notificationList as $notification) {
+			$existingNotifications[$notification->userID] = $notification;
+		}
+		
+		$notifications = array();
+		foreach ($this->parameters['recipients'] as $recipient) {
+			$notification = (isset($existingNotifications[$recipient->userID]) ? $existingNotifications[$recipient->userID] : null);
+			$isNew = ($notification === null);
+			
+			if ($notification === null) {
+				$this->parameters['data']['userID'] = $recipient->userID;
+				$notification = $this->create();
+			}
+			
+			$notifications[$recipient->userID] = array(
+				'isNew' => $isNew,
+				'object' => $notification
+			);
+		}
+		
+		// insert author
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_notification_author
+						(notificationID, authorID, time)
+			VALUES			(?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($notifications as $notificationData) {
+			$statement->execute(array(
+				$notificationData['object']->notificationID,
+				($this->parameters['authorID'] ?: null),
+				TIME_NOW
+			));
+		}
+		WCF::getDB()->commitTransaction();
+		
+		// update trigger count
+		$sql = "UPDATE	wcf".WCF_N."_user_notification
+			SET	timesTriggered = timesTriggered + ?
+			WHERE	notificationID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($notifications as $notificationData) {
+			$statement->execute(array(
+				1,
+				$notificationData['object']->notificationID
+			));
+		}
+		WCF::getDB()->commitTransaction();
+		
+		return $notifications;
 	}
 	
 	/**
@@ -68,14 +163,9 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 			'notifications' => $notifications
 		));
 		
-		$totalCount = UserNotificationHandler::getInstance()->getNotificationCount();
-		if (count($notifications) < $totalCount) {
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
-		}
-		
 		return array(
 			'template' => WCF::getTPL()->fetch('notificationListOustanding'),
-			'totalCount' => $totalCount
+			'totalCount' => UserNotificationHandler::getInstance()->getNotificationCount(true)
 		);
 	}
 	
@@ -84,21 +174,13 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	 */
 	public function validateMarkAsConfirmed() {
 		$this->readInteger('notificationID');
+		$this->notification = new UserNotification($this->parameters['notificationID']);
 		
-		$sql = "SELECT	COUNT(*) AS count
-			FROM	wcf".WCF_N."_user_notification_to_user
-			WHERE	notificationID = ?
-				AND userID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$this->parameters['notificationID'],
-			WCF::getUser()->userID
-		));
-		$row = $statement->fetchArray();
-		
-		// pretend it was marked as confirmed
-		if (!$row['count']) {
-			$this->parameters['alreadyConfirmed'] = true;
+		if (!$this->notification->notificationID) {
+			throw new UserInputException('notificationID');
+		}
+		else if ($this->notification->userID != WCF::getUser()->userID) {
+			throw new PermissionDeniedException();
 		}
 	}
 	
@@ -108,21 +190,11 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function markAsConfirmed() {
-		if (!isset($this->parameters['alreadyConfirmed'])) {
-			$sql = "UPDATE	wcf".WCF_N."_user_notification_to_user
-				SET	confirmed = ?
-				WHERE	notificationID = ?
-					AND userID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
-				1,
-				$this->parameters['notificationID'],
-				WCF::getUser()->userID
-			));
-			
-			// reset notification count
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
-		}
+		$notificationEditor = new UserNotificationEditor($this->notification);
+		$notificationEditor->markAsConfirmed();
+		
+		// reset notification count
+		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
 		
 		return array(
 			'notificationID' => $this->parameters['notificationID'],
@@ -140,7 +212,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	 */
 	public function markAllAsConfirmed() {
 		// remove notifications for this user
-		$sql = "UPDATE	wcf".WCF_N."_user_notification_to_user
+		$sql = "UPDATE	wcf".WCF_N."_user_notification
 			SET	confirmed = ?
 			WHERE	userID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);

@@ -3,7 +3,7 @@ namespace wcf\system\user\notification\object;
 use wcf\data\DatabaseObjectDecorator;
 
 /**
- * Represents a following user as a notification object.
+ * Notification object for comment response likes.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2014 WoltLab GmbH
@@ -12,11 +12,11 @@ use wcf\data\DatabaseObjectDecorator;
  * @subpackage	system.user.notification.object
  * @category	Community Framework
  */
-class UserFollowUserNotificationObject extends DatabaseObjectDecorator implements IStackableUserNotificationObject {
+class CommentResponseLikeUserNotificationObject extends DatabaseObjectDecorator implements IUserNotificationObject {
 	/**
 	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
-	protected static $baseClass = 'wcf\data\user\follow\UserFollow';
+	protected static $baseClass = 'wcf\data\like\Like';
 	
 	/**
 	 * @see	\wcf\system\user\notification\object\IUserNotificationObject::getTitle()
@@ -37,12 +37,5 @@ class UserFollowUserNotificationObject extends DatabaseObjectDecorator implement
 	 */
 	public function getAuthorID() {
 		return $this->userID;
-	}
-	
-	/**
-	 * @see	\wcf\system\user\notification\object\IStackableUserNotificationObject::getRelatedObjectID()
-	 */
-	public function getRelatedObjectID() {
-		return $this->followUserID; 
 	}
 }

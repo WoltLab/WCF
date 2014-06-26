@@ -68,11 +68,25 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	public function getAuthor();
 	
 	/**
+	 * Returns a list of authors for stacked notifications sorted by time.
+	 * 
+	 * @return	array<\wcf\data\user\UserProfile>
+	 */
+	public function getAuthors();
+	
+	/**
 	 * Returns true if this notification event is visible for the active user.
 	 * 
 	 * @return	boolean
 	 */
 	public function isVisible();
+	
+	/**
+	 * Sets a list of authors for stacked notifications.
+	 * 
+	 * @param	array<\wcf\data\user\UserProfile>	$authors
+	 */
+	public function setAuthors(array $authors);
 	
 	/**
 	 * Returns a unique identifier of the event.
@@ -88,8 +102,9 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * @param	\wcf\system\user\notification\object\IUserNotificationObject	$object
 	 * @param	\wcf\data\user\UserProfile					$author
 	 * @param	array<mixed>							$additionalData
+	 * @param	integer								$timesTriggered
 	 */
-	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array());
+	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array(), $timesTriggered = 0);
 	
 	/**
 	 * Sets the language for the event
@@ -97,4 +112,18 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * @param	\wcf\data\language\Language	$language
 	 */
 	public function setLanguage(Language $language);
+	
+	/**
+	 * Returns true if this notification event supports stacking.
+	 * 
+	 * @return	boolean
+	 */
+	public function isStackable();
+	
+	/**
+	 * Returns true if this notification event supports email notifications.
+	 * 
+	 * @return	boolean
+	 */
+	public function supportsEmailNotification();
 }
