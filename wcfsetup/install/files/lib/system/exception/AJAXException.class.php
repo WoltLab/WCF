@@ -69,7 +69,10 @@ class AJAXException extends LoggedException {
 			'returnValues' => $returnValues
 		);
 		
-		if (WCF::debugModeIsEnabled()) {
+		// include a stacktrace if:
+		// - debug mode is enabled
+		// - within ACP and a SystemException was thrown
+		if (WCF::debugModeIsEnabled(false) || WCF::debugModeIsEnabled() && self::INTERNAL_ERROR) {
 			$responseData['stacktrace'] = nl2br($stacktrace);
 		}
 		

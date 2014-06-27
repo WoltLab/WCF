@@ -676,11 +676,12 @@ class WCF {
 	/**
 	 * Returns true if the debug mode is enabled, otherwise false.
 	 * 
+	 * @param	boolean		$ignoreACP
 	 * @return	boolean
 	 */
-	public static function debugModeIsEnabled() {
+	public static function debugModeIsEnabled($ignoreACP = false) {
 		// ACP override
-		if (self::$overrideDebugMode) {
+		if (!$ignoreACP && self::$overrideDebugMode) {
 			return true;
 		}
 		else if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE) {
