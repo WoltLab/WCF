@@ -70,13 +70,17 @@ class RecentActivityDashboardBox extends AbstractContentDashboardBox {
 	 * @see	\wcf\system\dashboard\box\AbstractContentDashboardBox::render()
 	 */
 	protected function render() {
-		WCF::getTPL()->assign(array(
-			'canFilterByFollowedUsers' => $this->canFilterByFollowedUsers,
-			'eventList' => $this->eventList,
-			'lastEventTime' => $this->lastEventTime,
-			'filteredByFollowedUsers' => $this->filteredByFollowedUsers
-		));
+		if (count($this->eventList) || $this->filteredByFollowedUsers) {
+			WCF::getTPL()->assign(array(
+				'canFilterByFollowedUsers' => $this->canFilterByFollowedUsers,
+				'eventList' => $this->eventList,
+				'lastEventTime' => $this->lastEventTime,
+				'filteredByFollowedUsers' => $this->filteredByFollowedUsers
+			));
+			
+			return WCF::getTPL()->fetch('dashboardBoxRecentActivity');
+		}
 		
-		return WCF::getTPL()->fetch('dashboardBoxRecentActivity');
+		return '';
 	}
 }
