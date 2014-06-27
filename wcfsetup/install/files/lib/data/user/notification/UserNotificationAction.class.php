@@ -59,20 +59,22 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// insert author
-		$sql = "INSERT INTO	wcf".WCF_N."_user_notification_author
-					(notificationID, authorID, time)
-			VALUES		(?, ?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
-		WCF::getDB()->beginTransaction();
-		foreach ($notifications as $notificationData) {
-			$statement->execute(array(
-				$notificationData['object']->notificationID,
-				($this->parameters['authorID'] ?: null),
-				TIME_NOW
-			));
+		if ($this->parameters['authorID']) {
+			$sql = "INSERT INTO	wcf".WCF_N."_user_notification_author
+						(notificationID, authorID, time)
+				VALUES		(?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+			foreach ($notifications as $notificationData) {
+				$statement->execute(array(
+					$notificationData['object']->notificationID,
+					$this->parameters['authorID'],
+					TIME_NOW
+				));
+			}
+			WCF::getDB()->commitTransaction();
 		}
-		WCF::getDB()->commitTransaction();
 		
 		return $notifications;
 	}
@@ -112,20 +114,22 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// insert author
-		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_notification_author
-						(notificationID, authorID, time)
-			VALUES			(?, ?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
-		WCF::getDB()->beginTransaction();
-		foreach ($notifications as $notificationData) {
-			$statement->execute(array(
-				$notificationData['object']->notificationID,
-				($this->parameters['authorID'] ?: null),
-				TIME_NOW
-			));
+		if ($this->parameters['authorID']) {
+			$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_notification_author
+							(notificationID, authorID, time)
+				VALUES			(?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+			foreach ($notifications as $notificationData) {
+				$statement->execute(array(
+					$notificationData['object']->notificationID,
+					$this->parameters['authorID'],
+					TIME_NOW
+				));
+			}
+			WCF::getDB()->commitTransaction();
 		}
-		WCF::getDB()->commitTransaction();
 		
 		// update trigger count
 		$sql = "UPDATE	wcf".WCF_N."_user_notification
