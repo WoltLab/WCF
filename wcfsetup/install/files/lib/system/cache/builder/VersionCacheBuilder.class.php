@@ -6,6 +6,8 @@ use wcf\system\WCF;
 /**
  * Caches the versions for a certain package and object type.
  * 
+ * @deprecated	2.1 - will be removed with WCF 2.2
+ * 
  * @author	Jeffrey Reichardt
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

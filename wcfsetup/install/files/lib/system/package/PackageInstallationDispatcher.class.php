@@ -1082,8 +1082,10 @@ class PackageInstallationDispatcher {
 		}
 	}
 	
-	/*
+	/**
 	 * Restructure version tables.
+	 * 
+	 * @deprecated	2.1 - will be removed with WCF 2.2
 	 */
 	protected function restructureVersionTables() {
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.versionableObject');
