@@ -40,6 +40,8 @@ class PageMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 			throw new SystemException("Menu item '".$result['menuItem']."' neither has a link nor a controller given");
 		}
 		
+		$result['originIsSystem'] = 1;
+		
 		return $result;
 	}
 	

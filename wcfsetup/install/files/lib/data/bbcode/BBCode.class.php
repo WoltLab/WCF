@@ -95,4 +95,17 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 		
 		return in_array($bbcodeTag, $allowedBBCodeTags);
 	}
+	
+	/**
+	 * Returns true if this BBCode can be deleted.
+	 * 
+	 * @return	boolean
+	 */
+	public function canDelete() {
+		if ($this->originIsSystem) {
+			return false;
+		}
+		
+		return true;
+	}
 }

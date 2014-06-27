@@ -180,6 +180,7 @@ CREATE TABLE wcf1_bbcode (
 	isSourceCode TINYINT(1) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	showButton TINYINT(1) NOT NULL DEFAULT 0,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY bbcodeTag (bbcodeTag)
 );
 
@@ -761,6 +762,7 @@ CREATE TABLE wcf1_page_menu_item (
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	className VARCHAR(255) NOT NULL DEFAULT '',
 	isLandingPage TINYINT(1) NOT NULL DEFAULT 0,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY (packageID, menuItem)
 );
 
@@ -1312,6 +1314,7 @@ CREATE TABLE wcf1_user_option (
 	permissions TEXT,
 	options TEXT,
 	additionalData MEDIUMTEXT,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY optionName (optionName, packageID),
 	KEY categoryName (categoryName)
 );

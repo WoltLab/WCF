@@ -161,6 +161,19 @@ class PageMenuItemAction extends AbstractDatabaseObjectAction implements ISortab
 	}
 	
 	/**
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 */
+	public function validateDelete() {
+		parent::validateDelete();
+		
+		foreach ($this->objects as $pageMenuItem) {
+			if (!$pageMenuItem->canDelete()) {
+				throw new PermissionDeniedException();
+			}
+		}
+	}
+	
+	/**
 	 * @see	\wcf\data\IToggleAction::validateToggle()
 	 */
 	public function validateToggle() {

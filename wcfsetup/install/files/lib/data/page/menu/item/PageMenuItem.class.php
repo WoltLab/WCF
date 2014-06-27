@@ -104,7 +104,11 @@ class PageMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 	 * @return	boolean
 	 */
 	public function canDelete() {
-		return ($this->isLandingPage ? false : true);
+		if ($this->originIsSystem || $this->isLandingPage) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/**

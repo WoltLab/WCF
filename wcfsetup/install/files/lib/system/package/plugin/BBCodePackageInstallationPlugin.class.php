@@ -91,7 +91,8 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			'attributes' => (isset($data['elements']['attributes']) ? $data['elements']['attributes'] : array()),
 			'className' => (!empty($data['elements']['classname']) ? $data['elements']['classname'] : ''),
 			'isSourceCode' => (!empty($data['elements']['sourcecode']) ? 1 : 0),
-			'buttonLabel' => (isset($data['elements']['buttonlabel']) ? $data['elements']['buttonlabel'] : '')
+			'buttonLabel' => (isset($data['elements']['buttonlabel']) ? $data['elements']['buttonlabel'] : ''),
+			'originIsSystem' => 1
 		);
 		
 		if ($data['wysiwygIcon'] && $data['buttonLabel']) {

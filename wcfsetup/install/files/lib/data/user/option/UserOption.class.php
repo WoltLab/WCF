@@ -159,4 +159,17 @@ class UserOption extends Option {
 		
 		return false;
 	}
+	
+	/**
+	 * Returns true if this user option can be deleted.
+	 *
+	 * @return	boolean
+	 */
+	public function canDelete() {
+		if ($this->originIsSystem) {
+			return false;
+		}
+		
+		return true;
+	}
 }

@@ -5,6 +5,7 @@ use wcf\data\user\group\UserGroupEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -96,6 +97,19 @@ class BBCodeAction extends AbstractDatabaseObjectAction implements IToggleAction
 		}
 		
 		return $bbCode;
+	}
+	
+	/**
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::validateDelete()
+	 */
+	public function validateDelete() {
+		parent::validateDelete();
+		
+		foreach ($this->objects as $bbcode) {
+			if (!$bbcode->canDelete()) {
+				throw new PermissionDeniedException();
+			}
+		}
 	}
 	
 	/**

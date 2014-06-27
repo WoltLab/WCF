@@ -124,7 +124,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 			'isDisabled' => $isDisabled,
 			'permissions' => $permissions,
 			'options' => $options,
-			'additionalData' => serialize($additionalData)
+			'additionalData' => serialize($additionalData),
+			'originIsSystem' => 1
 		);
 		
 		// update option
