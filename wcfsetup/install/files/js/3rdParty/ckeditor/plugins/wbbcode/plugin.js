@@ -372,6 +372,9 @@
 			return "[url='" + url + "']" + text + "[/url]";
 		});
 		
+		// fix for editor sometimes placing the closing link tag after the line break instead of before
+		html = html.replace(/\r?\n\[\/url\]/, '[/url]\n');
+		
 		// [b]
 		html = html.replace(/<(?:b|strong)>/gi, '[b]');
 		html = html.replace(/<\/(?:b|strong)>/gi, '[/b]');
