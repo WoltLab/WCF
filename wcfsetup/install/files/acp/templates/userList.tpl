@@ -27,6 +27,9 @@
 			'wcf.acp.user.banReason': '{lang}wcf.acp.user.banReason{/lang}',
 			'wcf.acp.user.banReason.description': '{lang}wcf.acp.user.banReason.description{/lang}',
 			'wcf.acp.user.ban.sure': '{lang}wcf.acp.user.ban.sure{/lang}',
+			'wcf.acp.user.ban.expires': '{lang}wcf.acp.user.ban.expires{/lang}',
+			'wcf.acp.user.ban.expires.description': '{lang}wcf.acp.user.ban.expires.description{/lang}',
+			'wcf.acp.user.ban.neverExpires': '{lang}wcf.acp.user.ban.neverExpires{/lang}',
 			'wcf.acp.user.sendNewPassword.workerTitle': '{lang}wcf.acp.user.sendNewPassword.workerTitle{/lang}',
 			'wcf.acp.worker.abort.confirmMessage': '{lang}wcf.acp.worker.abort.confirmMessage{/lang}'
 		});

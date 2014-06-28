@@ -62,6 +62,12 @@ class UserEditForm extends UserAddForm {
 	public $banReason = '';
 	
 	/**
+	 * date when the ban expires
+	 * @var	string
+	 */
+	public $banExpires = '';
+	
+	/**
 	 * user avatar object
 	 * @var	\wcf\data\user\avatar\UserAvatar
 	 */
@@ -84,6 +90,12 @@ class UserEditForm extends UserAddForm {
 	 * @var	string
 	 */
 	public $disableAvatarReason = '';
+	
+	/**
+	 * date when the avatar will be enabled again
+	 * @var	string
+	 */
+	public $disableAvatarExpires = '';
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -121,11 +133,24 @@ class UserEditForm extends UserAddForm {
 		
 		if (!empty($_POST['banned'])) $this->banned = 1;
 		if (isset($_POST['banReason'])) $this->banReason = StringUtil::trim($_POST['banReason']);
+		if ($this->banned && !isset($_POST['banNeverExpires'])) {
+			if (isset($_POST['banExpires'])) $this->banExpires = StringUtil::trim($_POST['banExpires']);
+		}
+		else {
+			$this->banExpires = '';
+		}
+
 		if (isset($_POST['avatarType'])) $this->avatarType = $_POST['avatarType'];
 		
 		if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
 			if (!empty($_POST['disableAvatar'])) $this->disableAvatar = 1;
 			if (isset($_POST['disableAvatarReason'])) $this->disableAvatarReason = StringUtil::trim($_POST['disableAvatarReason']);
+			if ($this->disableAvatar && !isset($_POST['disableAvatarNeverExpires'])) {
+				if (isset($_POST['disableAvatarExpires'])) $this->disableAvatarExpires = StringUtil::trim($_POST['disableAvatarExpires']);
+			}
+			else {
+				$this->disableAvatarExpires = '';
+			}
 		}
 	}
 	
@@ -166,6 +191,7 @@ class UserEditForm extends UserAddForm {
 		$this->languageID = $this->user->languageID;
 		$this->banned = $this->user->banned;
 		$this->banReason = $this->user->banReason;
+		$this->banExpires = $this->user->banExpires;
 		$this->userTitle = $this->user->userTitle;
 		
 		$this->signature = $this->user->signature;
@@ -174,8 +200,10 @@ class UserEditForm extends UserAddForm {
 		$this->signatureEnableHtml = $this->user->signatureEnableHtml;
 		$this->disableSignature = $this->user->disableSignature;
 		$this->disableSignatureReason = $this->user->disableSignatureReason;
+		$this->disableSignatureExpires = $this->user->disableSignatureExpires;
 		$this->disableAvatar = $this->user->disableAvatar;
 		$this->disableAvatarReason = $this->user->disableAvatarReason;
+		$this->disableAvatarExpires = $this->user->disableAvatarExpires;
 		
 		if ($this->user->avatarID) $this->avatarType = 'custom';
 		else if (MODULE_GRAVATAR && $this->user->enableGravatar) $this->avatarType = 'gravatar';
@@ -198,7 +226,9 @@ class UserEditForm extends UserAddForm {
 			'avatarType' => $this->avatarType,
 			'disableAvatar' => $this->disableAvatar,
 			'disableAvatarReason' => $this->disableAvatarReason,
-			'userAvatar' => $this->userAvatar
+			'disableAvatarExpires' => $this->disableAvatarExpires,
+			'userAvatar' => $this->userAvatar,
+			'banExpires' => $this->banExpires
 		));
 	}
 	
@@ -238,11 +268,6 @@ class UserEditForm extends UserAddForm {
 			break;
 		}
 		
-		if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
-			$avatarData['disableAvatar'] = $this->disableAvatar;
-			$avatarData['disableAvatarReason'] = $this->disableAvatarReason;
-		}
-		
 		$this->additionalFields = array_merge($this->additionalFields, $avatarData);
 		
 		// add default groups
@@ -257,18 +282,13 @@ class UserEditForm extends UserAddForm {
 		
 		// save user
 		$saveOptions = $this->optionHandler->save();
-		$this->additionalFields['languageID'] = $this->languageID;
-		if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
-			$this->additionalFields['banned'] = $this->banned;
-			$this->additionalFields['banReason'] = $this->banReason;
-		}
+
 		$data = array(
 			'data' => array_merge($this->additionalFields, array(
 				'username' => $this->username,
 				'email' => $this->email,
 				'password' => $this->password,
-				'banned' => $this->banned,
-				'banReason' => $this->banReason,
+				'languageID' => $this->languageID,
 				'userTitle' => $this->userTitle,
 				'signature' => $this->signature,
 				'signatureEnableBBCodes' => $this->signatureEnableBBCodes,
@@ -279,10 +299,47 @@ class UserEditForm extends UserAddForm {
 			'languageIDs' => $this->visibleLanguages,
 			'options' => $saveOptions
 		);
+
+		// handle ban
+		if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
+			if ($this->banExpires) {
+				$this->banExpires = strtotime($this->banExpires);
+			}
+			else {
+				$this->banExpires = 0;
+			}
+			
+			$data['data']['banned'] = $this->banned;
+			$data['data']['banReason'] = $this->banReason;
+			$data['data']['banExpires'] = $this->banExpires;
+		}
 		
+		// handle disabled signature
 		if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
+			if ($this->disableSignatureExpires) {
+				$this->disableSignatureExpires = strtotime($this->disableSignatureExpires);
+			}
+			else {
+				$this->disableSignatureExpires = 0;
+			}
+			
 			$data['data']['disableSignature'] = $this->disableSignature;
 			$data['data']['disableSignatureReason'] = $this->disableSignatureReason;
+			$data['data']['disableSignatureExpires'] = $this->disableSignatureExpires;
+		}
+		
+		// handle disabled avatar
+		if (WCF::getSession()->getPermission('admin.user.canDisableAvatar')) {
+			if ($this->disableAvatarExpires) {
+				$this->disableAvatarExpires = strtotime($this->disableAvatarExpires);
+			}
+			else {
+				$this->disableAvatarExpires = 0;
+			}
+			
+			$data['data']['disableAvatar'] = $this->disableAvatar;
+			$data['data']['disableAvatarReason'] = $this->disableAvatarReason;
+			$data['data']['disableAvatarExpires'] = $this->disableAvatarExpires;
 		}
 		
 		$this->objectAction = new UserAction(array($this->userID), 'update', $data);

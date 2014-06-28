@@ -2776,6 +2776,12 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
  */
 WCF.User.InlineEditor = WCF.InlineEditor.extend({
 	/**
+	 * dialog object
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
 	 * list of permissions
 	 * @var	object
 	 */
@@ -2851,13 +2857,27 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 	 * @param	string		reason
 	 */
 	_executeReasonAction: function(userID, optionName, reason) {
+		var $optionName = this._dialog.data('optionName');
+		
+		this._dialog.find('.innerError').remove();
+		
+		var $banExpires = '';
+		if (!$('#' + $optionName + 'NeverExpires').is(':checked')) {
+			var $banExpires = $('#' + $optionName + 'ExpiresDatePicker').val();
+			if (!$banExpires) {
+				this._dialog.find('#' + $optionName + 'ExpiresSettings > dd > small').prepend($('<small class="innerError" />').text(WCF.Language.get('wcf.global.form.error.empty')));
+				return
+			}
+		}
+		
 		var $parameters = { };
-		$parameters[optionName + WCF.String.ucfirst('reason')] = reason;
+		$parameters[$optionName + 'Reason'] = $('#' + $optionName + 'Reason').val();
+		$parameters[$optionName + 'Expires'] = $banExpires;
 		
 		this._proxy.setOption('data', {
-			actionName: optionName,
+			actionName: $optionName,
 			className: 'wcf\\data\\user\\UserAction',
-			objectIDs: [ userID ],
+			objectIDs: [ this._dialog.data('userID') ],
 			parameters: $parameters
 		});
 		this._proxy.sendRequest();
@@ -2935,14 +2955,26 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 	 * @param	string		optionName
 	 */
 	_showReasonDialog: function(userID, optionName) {
-		var $languageItem = 'wcf.user.' + optionName + '.reason.description';
-		var $reasonDescription = WCF.Language.get($languageItem);
+		if (this._dialog) {
+			this._dialog.remove();
+		}
 		
-		WCF.System.Confirmation.show(WCF.Language.get('wcf.user.' + optionName + '.confirmMessage'), $.proxy(function(action) {
-			if (action === 'confirm') {
-				this._executeReasonAction(userID, optionName, $('#wcfSystemConfirmationContent').find('textarea').val());
-			}
-		}, this), { }, $('<fieldset><dl><dt>' + WCF.Language.get('wcf.global.reason') + '</dt><dd><textarea cols="40" rows="4" />' + ($reasonDescription != $languageItem ? '<small>' + $reasonDescription + '</small>' : '') + '</dd></dl></fieldset>'));
+		// create dialog
+		this._dialog = $('<div />').hide().appendTo(document.body);
+		this._dialog.append($('<fieldset><dl><dt><label for="' + optionName + 'Reason">' + WCF.Language.get('wcf.global.reason') + '</label></dt><dd><textarea id="' + optionName + 'Reason" cols="40" rows="3" />' + (WCF.Language.get('wcf.user.' + optionName + '.reason.description') != 'wcf.user.' + optionName + '.reason.description' ? '<small>' + WCF.Language.get('wcf.user.' + optionName + '.reason.description') + '</small>' : '') + '</dd></dl><dl><dt></dt><dd><label for="' + optionName + 'NeverExpires"><input type="checkbox" name="' + optionName + 'NeverExpires" id="' + optionName + 'NeverExpires" checked="checked" /> ' + WCF.Language.get('wcf.user.' + optionName + '.neverExpires') + '</label></dd></dl><dl id="' + optionName + 'ExpiresSettings" style="display: none;"><dt><label for="' + optionName + 'Expires">' + WCF.Language.get('wcf.user.' + optionName + '.expires') + '</label></dt><dd><input type="date" name="' + optionName + 'Expires" id="' + optionName + 'Expires" class="medium" min="' + new Date(TIME_NOW * 1000).toISOString() + '" data-ignore-timezone="true" /><small>' + WCF.Language.get('wcf.user.' + optionName + '.expires.description') + '</small></dd></dl></fieldset>'));
+		this._dialog.append($('<div class="formSubmit"><button class="buttonPrimary" accesskey="s">' + WCF.Language.get('wcf.global.button.submit') + '</button></div>'));
+		
+		this._dialog.data('optionName', optionName).data('userID', userID);
+		
+		this._dialog.find('#' + optionName + 'NeverExpires').change(function() {
+			$('#' + optionName + 'ExpiresSettings').toggle();
+		});
+		
+		this._dialog.find('button').click($.proxy(this._executeReasonAction, this));
+		
+		this._dialog.wcfDialog({
+			title: WCF.Language.get('wcf.user.' + optionName + '.confirmMessage')
+		});
 	},
 	
 	/**
@@ -2958,6 +2990,10 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 			for (var $property in $data.data) {
 				$element.data($property, $data.data[$property]);
 			}
+		}
+		
+		if (data.actionName == 'ban' || data.actionName == 'disableAvatar' || data.actionName == 'disableSignature') {
+			this._dialog.wcfDialog('close');
 		}
 	},
 	

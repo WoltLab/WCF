@@ -1988,7 +1988,6 @@ WCF.ACP.User.BanHandler = {
 	 * Initializes WCF.ACP.User.BanHandler on first use.
 	 */
 	init: function() {
-		this._dialog = $('<div />').hide().appendTo(document.body);
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
@@ -2048,19 +2047,57 @@ WCF.ACP.User.BanHandler = {
 	 * @param	array<integer>	userIDs
 	 */
 	ban: function(userIDs) {
-		WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.user.ban.sure'), $.proxy(function(action) {
-			if (action === 'confirm') {
-				this._proxy.setOption('data', {
-					actionName: 'ban',
-					className: 'wcf\\data\\user\\UserAction',
-					objectIDs: userIDs,
-					parameters: {
-						banReason: $('#userBanReason').val()
-					}
-				});
-				this._proxy.sendRequest();
+		if (this._dialog === null) {
+			// create dialog
+			this._dialog = $('<div />').hide().appendTo(document.body);
+			this._dialog.append($('<fieldset><dl><dt><label for="userBanReason">' + WCF.Language.get('wcf.acp.user.banReason') + '</label></dt><dd><textarea id="userBanReason" cols="40" rows="3" /><small>' + WCF.Language.get('wcf.acp.user.banReason.description') + '</small></dd></dl><dl><dt></dt><dd><label for="userBanNeverExpires"><input type="checkbox" name="userBanNeverExpires" id="userBanNeverExpires" checked="checked" /> ' + WCF.Language.get('wcf.acp.user.ban.neverExpires') + '</label></dd></dl><dl id="userBanExpiresSettings" style="display: none;"><dt><label for="userBanExpires">' + WCF.Language.get('wcf.acp.user.ban.expires') + '</label></dt><dd><input type="date" name="userBanExpires" id="userBanExpires" class="medium" min="' + new Date(TIME_NOW * 1000).toISOString() + '" data-ignore-timezone="true" /><small>' + WCF.Language.get('wcf.acp.user.ban.expires.description') + '</small></dd></dl></fieldset>'));
+			this._dialog.append($('<div class="formSubmit"><button class="buttonPrimary" accesskey="s">' + WCF.Language.get('wcf.global.button.submit') + '</button></div>'));
+			
+			this._dialog.find('#userBanNeverExpires').change(function() {
+				$('#userBanExpiresSettings').toggle();
+			});
+			
+			this._dialog.find('button').click($.proxy(this._submit, this));
+		}
+		else {
+			// reset dialog
+			$('#userBanReason').val('');
+			$('#userBanNeverExpires').prop('checked', true);
+			$('#userBanExpiresSettings').hide();
+			$('#userBanExpiresDatePicker, #userBanExpires').val('');
+		}
+		
+		this._dialog.data('userIDs', userIDs);
+		this._dialog.wcfDialog({
+			title: WCF.Language.get('wcf.acp.user.ban.sure')
+		});
+	},
+	
+	/**
+	 * Handles submitting the ban dialog.
+	 */
+	_submit: function() {
+		this._dialog.find('.innerError').remove();
+		
+		var $banExpires = '';
+		if (!$('#userBanNeverExpires').is(':checked')) {
+			var $banExpires = $('#userBanExpiresDatePicker').val();
+			if (!$banExpires) {
+				this._dialog.find('#userBanExpiresSettings > dd > small').prepend($('<small class="innerError" />').text(WCF.Language.get('wcf.global.form.error.empty')));
+				return
 			}
-		}, this), '', $('<fieldset><dl><dt><label for="userBanReason">' + WCF.Language.get('wcf.acp.user.banReason') + '</label></dt><dd><textarea id="userBanReason" cols="40" rows="3" /><small>' + WCF.Language.get('wcf.acp.user.banReason.description') + '</small></dd></dl></fieldset>'));
+		}
+		
+		this._proxy.setOption('data', {
+			actionName: 'ban',
+			className: 'wcf\\data\\user\\UserAction',
+			objectIDs: this._dialog.data('userIDs'),
+			parameters: {
+				banReason: $('#userBanReason').val(),
+				banExpires: $banExpires
+			}
+		});
+		this._proxy.sendRequest();
 	},
 	
 	/**
@@ -2087,6 +2124,10 @@ WCF.ACP.User.BanHandler = {
 		$notification.show();
 		
 		WCF.Clipboard.reload();
+		
+		if (data.actionName == 'ban') {
+			this._dialog.wcfDialog('close');
+		}
 	}
 };
 

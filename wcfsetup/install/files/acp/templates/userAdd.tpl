@@ -181,20 +181,49 @@
 						</dd>
 					</dl>
 					
+					<dl>
+						<dt></dt>
+						<dd><label><input type="checkbox" id="banNeverExpires" name="banNeverExpires" value="1" {if !$banExpires}checked="checked" {/if}/> {lang}wcf.acp.user.ban.neverExpires{/lang}</label></dd>
+					</dl>
+					
+					<dl id="banExpiresSetting">
+						<dt><label for="banExpires">{lang}wcf.acp.user.ban.expires{/lang}</label></dt>
+						<dd>
+							<input type="date" name="banExpires" id="banExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $banExpires} value="{$banExpires|date:'Y-m-d'}"{/if} class="medium" data-ignore-timezone="true" />
+							<small>{lang}wcf.acp.user.ban.expires.description{/lang}</small>
+						</dd>
+					</dl>
+					
 					{event name='banFields'}
 				</fieldset>
 				
 				<script data-relocate="true">
 					//<![CDATA[
-					$('#banned').change(function (event) {
+					$('#banned').change(function() {
 						if ($('#banned').is(':checked')) {
 							$('#banReason').attr('readonly', false);
+							$('#banNeverExpires, #banExpires').enable();
+							$('#banReason, #banNeverExpires, #banExpires').parents('dl').removeClass('disabled');
 						}
 						else {
 							$('#banReason').attr('readonly', true);
+							$('#banNeverExpires, #banExpires').disable();
+							$('#banReason, #banNeverExpires, #banExpires').parents('dl').addClass('disabled');
 						}
 					});
+					
 					$('#banned').change();
+					
+					$('#banNeverExpires').change(function() {
+						if ($('#banNeverExpires').is(':checked')) {
+							$('#banExpiresSetting').hide();
+						}
+						else {
+							$('#banExpiresSetting').show();
+						}
+					});
+					
+					$('#banNeverExpires').change();
 					//]]>
 				</script>
 			{/if}
@@ -279,6 +308,8 @@
 							<label><input id="signatureEnableHtml" name="signatureEnableHtml" type="checkbox" value="1"{if $signatureEnableHtml} checked="checked"{/if} /> {lang}wcf.message.settings.enableHtml{/lang}</label>
 						</dd>
 					</dl>
+					
+					{event name='signatureFields'}
 				</fieldset>
 				
 				{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
@@ -298,22 +329,55 @@
 								<textarea name="disableSignatureReason" id="disableSignatureReason" cols="40" rows="10">{$disableSignatureReason}</textarea>
 							</dd>
 						</dl>
+						
+						<dl>
+							<dt></dt>
+							<dd><label><input type="checkbox" id="disableSignatureNeverExpires" name="disableSignatureNeverExpires" value="1" {if !$disableSignatureExpires}checked="checked" {/if}/> {lang}wcf.acp.user.disableSignature.neverExpires{/lang}</label></dd>
+						</dl>
+						
+						<dl id="disableSignatureExpiresSetting">
+							<dt><label for="disableSignatureExpiresExpires">{lang}wcf.acp.user.disableSignature.expires{/lang}</label></dt>
+							<dd>
+								<input type="date" name="disableSignatureExpires" id="disableSignatureExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableSignatureExpires} value="{$disableSignatureExpires|date:'Y-m-d'}"{/if} class="medium" data-ignore-timezone="true" />
+								<small>{lang}wcf.acp.user.disableSignature.expires.description{/lang}</small>
+							</dd>
+						</dl>
+
+						{event name='disableSignatureFields'}
 					</fieldset>
 					
 					<script data-relocate="true">
 						//<![CDATA[
-						$('#disableSignature').change(function (event) {
+						$('#disableSignature').change(function() {
 							if ($('#disableSignature').is(':checked')) {
 								$('#disableSignatureReason').attr('readonly', false);
+								$('#disableSignatureNeverExpires, #disableSignatureExpires').enable();
+								$('#disableSignatureReason, #disableSignatureNeverExpires, #disableSignatureExpires').parents('dl').removeClass('disabled');
 							}
 							else {
 								$('#disableSignatureReason').attr('readonly', true);
+								$('#disableSignatureNeverExpires, #disableSignatureExpires').disable();
+								$('#disableSignatureReason, #disableSignatureNeverExpires, #disableSignatureExpires').parents('dl').addClass('disabled');
 							}
 						});
+						
 						$('#disableSignature').change();
+						
+						$('#disableSignatureNeverExpires').change(function() {
+							if ($('#disableSignatureNeverExpires').is(':checked')) {
+								$('#disableSignatureExpiresSetting').hide();
+							}
+							else {
+								$('#disableSignatureExpiresSetting').show();
+							}
+						});
+						
+						$('#disableSignatureNeverExpires').change();
 						//]]>
 					</script>
 				{/if}
+
+				{event name='signatureFieldsets'}
 			</div>
 		{/if}
 		
@@ -359,6 +423,8 @@
 							</dd>
 						</dl>
 					{/if}
+
+					{event name='avatarFields'}
 				</fieldset>
 				
 				{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}
@@ -378,21 +444,51 @@
 								<textarea name="disableAvatarReason" id="disableAvatarReason" cols="40" rows="10">{$disableAvatarReason}</textarea>
 							</dd>
 						</dl>
+						
+						<dl>
+							<dt></dt>
+							<dd><label><input type="checkbox" id="disableAvatarNeverExpires" name="disableAvatarNeverExpires" value="1" {if !$disableAvatarExpires}checked="checked" {/if}/> {lang}wcf.acp.user.disableAvatar.neverExpires{/lang}</label></dd>
+						</dl>
+						
+						<dl id="disableAvatarExpiresSetting">
+							<dt><label for="disableAvatarExpiresExpires">{lang}wcf.acp.user.disableAvatar.expires{/lang}</label></dt>
+							<dd>
+								<input type="date" name="disableAvatarExpires" id="disableAvatarExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableAvatarExpires} value="{$disableAvatarExpires|date:'Y-m-d'}"{/if} class="medium" />
+								<small>{lang}wcf.acp.user.disableAvatar.expires.description{/lang}</small>
+							</dd>
+						</dl>
+
+						{event name='disableAvatarFields'}
 					</fieldset>
 					
 					<script data-relocate="true">
-					//<![CDATA[
-					$(function() {
-						$('#disableAvatar').change(function (event) {
+						//<![CDATA[
+						$('#disableAvatar').change(function() {
 							if ($('#disableAvatar').is(':checked')) {
 								$('#disableAvatarReason').attr('readonly', false);
+								$('#disableAvatarNeverExpires, #disableAvatarExpires').enable();
+								$('#disableAvatarReason, #disableAvatarNeverExpires, #disableAvatarExpires').parents('dl').removeClass('disabled');
 							}
 							else {
 								$('#disableAvatarReason').attr('readonly', true);
+								$('#disableAvatarNeverExpires, #disableAvatarExpires').disable();
+								$('#disableAvatarReason, #disableAvatarNeverExpires, #disableAvatarExpires').parents('dl').addClass('disabled');
 							}
 						});
+						
 						$('#disableAvatar').change();
-					//]]>
+						
+						$('#disableAvatarNeverExpires').change(function() {
+							if ($('#disableAvatarNeverExpires').is(':checked')) {
+								$('#disableAvatarExpiresSetting').hide();
+							}
+							else {
+								$('#disableAvatarExpiresSetting').show();
+							}
+						});
+						
+						$('#disableAvatarNeverExpires').change();
+						//]]>
 					</script>
 				{/if}
 				
@@ -415,6 +511,8 @@
 					});
 					//]]>
 				</script>
+
+				{event name='avatarFieldsets'}
 			</div>
 		{/if}
 		

@@ -188,31 +188,48 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Validates the ban action.
 	 */
 	public function validateBan() {
-		WCF::getSession()->checkPermissions(array('admin.user.canBanUser'));
+		$this->validateUnban();
 		
-		$this->__validateAccessibleGroups();
+		$this->readString('banReason', true);
+		$this->readString('banExpires', true);
 	}
 	
 	/**
 	 * Validates the unban action.
 	 */
 	public function validateUnban() {
-		$this->validateBan();
+		WCF::getSession()->checkPermissions(array('admin.user.canBanUser'));
+		
+		$this->__validateAccessibleGroups();
 	}
 	
 	/**
 	 * Bans users.
 	 */
 	public function ban() {
+		$banExpires = $this->parameters['banExpires'];
+		if ($banExpires) {
+			$banExpires = strtotime($banExpires);
+		}
+		else {
+			$banExpires = 0;
+		}
+		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add('userID IN (?)', array($this->objectIDs));
+		
 		$sql = "UPDATE	wcf".WCF_N."_user
 			SET	banned = ?,
-				banReason = ?
+				banReason = ?,
+				banExpires = ?
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(
-			array_merge(array(1, $this->parameters['banReason']), $conditionBuilder->getParameters())
+			array_merge(array(
+				1,
+				$this->parameters['banReason'],
+				$banExpires
+			), $conditionBuilder->getParameters())
 		);
 		
 		$this->unmarkItems();
@@ -224,11 +241,18 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function unban() {
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add('userID IN (?)', array($this->objectIDs));
+		
 		$sql = "UPDATE	wcf".WCF_N."_user
-			SET	banned = 0
+			SET	banned = ?,
+				banExpires = ?
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute($conditionBuilder->getParameters());
+		$statement->execute(
+			array_merge(array(
+				0,
+				0
+			), $conditionBuilder->getParameters())
+		);
 	}
 	
 	/**
@@ -580,6 +604,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$this->validateEnableSignature();
 		
 		$this->readString('disableSignatureReason', true);
+		$this->readString('disableSignatureExpires', true);
 	}
 	
 	/**
@@ -590,10 +615,19 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$this->readObjects();
 		}
 		
+		$disableSignatureExpires = $this->parameters['disableSignatureExpires'];
+		if ($disableSignatureExpires) {
+			$disableSignatureExpires = strtotime($disableSignatureExpires);
+		}
+		else {
+			$disableSignatureExpires = 0;
+		}
+		
 		foreach ($this->objects as $userEditor) {
 			$userEditor->update(array(
 				'disableSignature' => 1,
-				'disableSignatureReason' => $this->parameters['disableSignatureReason']
+				'disableSignatureReason' => $this->parameters['disableSignatureReason'],
+				'disableSignatureExpires' => $disableSignatureExpires
 			));
 		}
 	}
@@ -637,6 +671,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$this->validateEnableAvatar();
 		
 		$this->readString('disableAvatarReason', true);
+		$this->readString('disableAvatarExpires', true);
 	}
 	
 	/**
@@ -646,11 +681,20 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (empty($this->objects)) {
 			$this->readObjects();
 		}
+
+		$disableAvatarExpires = $this->parameters['disableAvatarExpires'];
+		if ($disableAvatarExpires) {
+			$disableAvatarExpires = strtotime($disableAvatarExpires);
+		}
+		else {
+			$disableAvatarExpires = 0;
+		}
 		
 		foreach ($this->objects as $userEditor) {
 			$userEditor->update(array(
 				'disableAvatar' => 1,
-				'disableAvatarReason' => $this->parameters['disableAvatarReason']
+				'disableAvatarReason' => $this->parameters['disableAvatarReason'],
+				'disableAvatarExpires' => $disableAvatarExpires
 			));
 		}
 	}
