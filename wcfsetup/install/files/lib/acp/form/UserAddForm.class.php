@@ -264,7 +264,7 @@ class UserAddForm extends UserOptionListForm {
 				'signatureEnableHtml' => $this->signatureEnableHtml
 			)),
 			'groups' => $this->groupIDs,
-			'languages' => $this->visibleLanguages,
+			'languageIDs' => $this->visibleLanguages,
 			'options' => $saveOptions
 		);
 		

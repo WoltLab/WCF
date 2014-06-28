@@ -275,8 +275,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$userEditor->addToGroups($groupIDs, false, $addDefaultGroups);
 		
 		// insert visible languages
-		$languageIDs = (isset($this->parameters['languages'])) ? $this->parameters['languages'] : array();
-		$userEditor->addToLanguages($languageIDs, false);
+		if (!isset($this->parameters['languageIDs'])) {
+			// using the 'languages' key is deprecated since WCF 2.1, please use 'languageIDs' instead
+			$this->parameters['languageIDs'] = (!empty($this->parameters['languages'])) ? $this->parameters['languages'] : array();
+		}
+		$userEditor->addToLanguages($this->parameters['languageIDs'], false);
 		
 		if (PACKAGE_ID) {
 			// set default notifications

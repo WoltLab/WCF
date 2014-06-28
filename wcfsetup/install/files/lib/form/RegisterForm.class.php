@@ -438,7 +438,7 @@ class RegisterForm extends UserAddForm {
 				'password' => $this->password,
 			)),
 			'groups' => $this->groupIDs,
-			'languages' => $this->visibleLanguages,
+			'languageIDs' => $this->visibleLanguages,
 			'options' => $saveOptions,
 			'addDefaultGroups' => $addDefaultGroups
 		);
