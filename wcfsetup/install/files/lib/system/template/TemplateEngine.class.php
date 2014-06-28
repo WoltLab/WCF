@@ -428,12 +428,14 @@ class TemplateEngine extends SingletonFactory {
 			else {
 				// check for meta data
 				if (!empty($metaData['include'])) {
-					foreach ($metaData['include'] as $includedTemplate) {
-						$includedTemplateFilename = $this->getSourceFilename($includedTemplate, $application);
-						$includedMTime = @filemtime($includedTemplateFilename);
-						
-						if ($includedMTime >= $compileMTime) {
-							return false;
+					foreach ($metaData['include'] as $application => $includedTemplates) {
+						foreach ($includedTemplates as $includedTemplate) {
+							$includedTemplateFilename = $this->getSourceFilename($includedTemplate, $application);
+							$includedMTime = @filemtime($includedTemplateFilename);
+							
+							if ($includedMTime >= $compileMTime) {
+								return false;
+							}
 						}
 					}
 				}

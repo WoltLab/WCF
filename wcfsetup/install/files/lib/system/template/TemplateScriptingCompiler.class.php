@@ -708,7 +708,7 @@ class TemplateScriptingCompiler {
 	 * @param	array		$metaData
 	 * @return	string
 	 */
-	protected function compileIncludeTag($includeTag, $identifier, array &$metaData) {
+	protected function compileIncludeTag($includeTag, $identifier, array $metaData) {
 		$args = $this->parseTagArgs($includeTag, 'include');
 		$append = false;
 		
@@ -734,12 +734,6 @@ class TemplateScriptingCompiler {
 			unset($args['append']);
 		}
 		
-		$sandbox = 0;
-		if (isset($args['sandbox'])) {
-			$sandbox = $args['sandbox'];
-			unset($args['sandbox']);
-		}
-		
 		$once = false;
 		if (isset($args['once'])) {
 			$once = $args['once'];
@@ -752,12 +746,32 @@ class TemplateScriptingCompiler {
 			unset($args['application']);
 		}
 		
+		if (preg_match('~^\'(.*)\'$~', $application, $matches)) {
+			$application = $matches[1];
+		}
+		
+		$sandbox = false;
+		if (isset($args['sandbox'])) {
+			$sandbox = $args['sandbox'];
+			unset($args['sandbox']);
+		}
+		
+		$sandbox = ($sandbox === 'true' || $sandbox === true || $sandbox == 1);
+		if (!$sandbox && !empty($args)) {
+			$sandbox = true;
+		}
+		
 		$templateName = substr($file, 1, -1);
+		
 		// check for static includes
-		if ($sandbox === 'false' && $assignVar === false && $once === false) {
+		if (!$sandbox && $assignVar === false && $once === false) {
 			$phpCode = '';
-			if (!in_array($templateName, $this->staticIncludes)) {
-				$this->staticIncludes[] = $templateName;
+			if (!isset($this->staticIncludes[$application])) {
+				$this->staticIncludes[$application] = array();
+			}
+			
+			if (!in_array($templateName, $this->staticIncludes[$application])) {
+				$this->staticIncludes[$application][] = $templateName;
 			}
 			
 			// pass remaining tag args as variables
@@ -782,11 +796,12 @@ class TemplateScriptingCompiler {
 			}
 			if (!empty($phpCode)) $phpCode = "<?php\n".$phpCode."\n?>";
 			
-			$sourceFilename = WCF::getTPL()->getSourceFilename($templateName, $metaData['application']);
+			
+			$sourceFilename = WCF::getTPL()->getSourceFilename($templateName, $application);
 			$metaDataFilename = WCF::getTPL()->getMetaDataFilename($templateName);
 			
 			$data = $this->compileString($templateName, file_get_contents($sourceFilename), array(
-				'application' => $metaData['application'],
+				'application' => $application,
 				'data' => null,
 				'filename' => ''
 			), true);
@@ -807,7 +822,7 @@ class TemplateScriptingCompiler {
 			$phpCode .= "ob_start();\n";
 		}
 		
-		$phpCode .= '$this->includeTemplate('.$file.', '.$application.', array('.$argString.'), ('.$sandbox.' ? 1 : 0));'."\n";
+		$phpCode .= '$this->includeTemplate('.$file.', \''.$application.'\', array('.$argString.'), ('.$sandbox.' ? 1 : 0));'."\n";
 		
 		if ($assignVar !== false) {
 			$phpCode .= '$this->'.($append ? 'append' : 'assign').'('.$assignVar.', ob_get_clean());'."\n";
