@@ -25,12 +25,14 @@ class UserBanCronjob extends AbstractCronjob {
 			SET	banned = ?,
 				banExpires = ?
 			WHERE	banned = ?
+				AND banExpires <> ?
 				AND banExpires <= ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			0,
 			0,
 			1,
+			0,
 			TIME_NOW
 		));
 		
@@ -39,12 +41,14 @@ class UserBanCronjob extends AbstractCronjob {
 			SET	disableAvatar = ?,
 				disableAvatarExpires = ?
 			WHERE	disableAvatar = ?
+				AND disableAvatarExpires <> ?
 				AND disableAvatarExpires <= ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			0,
 			0,
 			1,
+			0,
 			TIME_NOW
 		));
 		
@@ -53,12 +57,14 @@ class UserBanCronjob extends AbstractCronjob {
 			SET	disableSignature = ?,
 				disableSignatureExpires = ?
 			WHERE	disableSignature = ?
+				AND disableSignatureExpires <> ?
 				AND disableSignatureExpires <= ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(
 			0,
 			0,
 			1,
+			0,
 			TIME_NOW
 		));
 	}
