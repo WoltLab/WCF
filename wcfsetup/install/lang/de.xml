@@ -1215,7 +1215,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.stat"><![CDATA[Statistiken]]></item>
 		<item name="wcf.acp.stat.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.acp.stat.period"><![CDATA[Zeitraum]]></item>
-		<item name="wcf.acp.stat.button.refresh"><![CDATA[Aktualisieren]]></item>
 		<item name="wcf.acp.stat.value"><![CDATA[Werte]]></item>
 		<item name="wcf.acp.stat.value.counter"><![CDATA[Veränderung]]></item>
 		<item name="wcf.acp.stat.value.total"><![CDATA[Gesamtanzahl]]></item>
@@ -1984,6 +1983,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.button.fullscreen"><![CDATA[Vollbildmodus]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Vorschau]]></item>
+		<item name="wcf.global.button.refresh"><![CDATA[Aktualisieren]]></item>
 		<item name="wcf.global.button.reset"><![CDATA[Zurücksetzen]]></item>
 		<item name="wcf.global.button.rss"><![CDATA[RSS-Feed]]></item>
 		<item name="wcf.global.button.save"><![CDATA[Speichern]]></item>
