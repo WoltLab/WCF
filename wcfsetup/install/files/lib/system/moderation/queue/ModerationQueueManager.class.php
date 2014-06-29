@@ -352,9 +352,11 @@ class ModerationQueueManager extends SingletonFactory {
 	public function resetModerationCount($userID = null) {
 		if ($userID === null) {
 			UserStorageHandler::getInstance()->resetAll('outstandingModerationCount');
+			UserStorageHandler::getInstance()->resetAll('moderationRead');
 		}
 		else {
 			UserStorageHandler::getInstance()->reset(array($userID), 'outstandingModerationCount');
+			UserStorageHandler::getInstance()->reset(array($userID), 'moderationRead');
 		}
 	}
 	
@@ -408,5 +410,22 @@ class ModerationQueueManager extends SingletonFactory {
 		}
 		
 		$this->resetModerationCount();
+	}
+	
+	/**
+	 * Returns true if the moderation-items are new
+	 * 
+	 * @return	boolean
+	 */
+	public function isNew() {
+		// load storage data
+		UserStorageHandler::getInstance()->loadStorage(array(WCF::getUser()->userID));
+		
+		// get read
+		$data = UserStorageHandler::getInstance()->getStorage(array(WCF::getUser()->userID), 'moderationRead');
+		
+		if ($data[WCF::getUser()->userID] == true) return false; 
+		
+		return true; 
 	}
 }
