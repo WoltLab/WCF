@@ -1342,6 +1342,7 @@ You can define the default sender in <em>System -&gt; Options -&gt; General -&gt
 		<item name="wcf.acp.user.rank.add"><![CDATA[Add User Rank]]></item>
 		<item name="wcf.acp.user.rank.cssClassName"><![CDATA[CSS Class Name]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[You can select a predefined appearance or provide an own <abbr title="Cascading Style Sheets">CSS</abbr> class name.]]></item>
+		<item name="wcf.acp.user.rank.cssClassName.error.notValid"><![CDATA[Chosen CSS class name is invalid.]]></item>
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Current Rank Image]]></item>
 		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Do you really want to delete the user rank “{$userRank->rankTitle|language}”?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Edit User Rank]]></item>
