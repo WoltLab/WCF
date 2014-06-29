@@ -1245,8 +1245,8 @@ WCF.Dropdown = {
 			return;
 		}
 		
-		this._dropdowns[containerID].removeClass('dropdownMenu');
-		this._menus[containerID].removeClass('dropdownMenu');
+		this._dropdowns[containerID].removeClass('dropdownOpen');
+		this._menus[containerID].removeClass('dropdownOpen');
 	},
 	
 	/**
@@ -7603,11 +7603,54 @@ WCF.System.KeepAlive = Class.extend({
 				},
 				failure: function() { pe.stop(); },
 				showLoadingOverlay: false,
+				success: function(data) {
+					WCF.System.PushNotification.executeCallbacks(data);
+				},
 				suppressErrors: true
 			});
 		}, (seconds * 1000));
 	}
 });
+
+/**
+ * System-wide handler for push notifications.
+ */
+WCF.System.PushNotification = {
+	/**
+	 * list of callbacks groupped by type
+	 * @var	object<array>
+	 */
+	_callbacks: { },
+	
+	/**
+	 * Adds a callback for a specific notification type.
+	 * 
+	 * @param	string		type
+	 * @param	object		callback
+	 */
+	addCallback: function(type, callback) {
+		if (this._callbacks[type] === undefined) {
+			this._callbacks[type] = [ ];
+		}
+		
+		this._callbacks[type].push(callback);
+	},
+	
+	/**
+	 * Executes all registered callbacks by type.
+	 * 
+	 * @param	object		data
+	 */
+	executeCallbacks: function(data) {
+		for (var $type in data.returnValues) {
+			if (this._callbacks[$type] !== undefined) {
+				for (var $i = 0; $i < this._callbacks[$type].length; $i++) {
+					this._callbacks[$type][$i](data.returnValues[$type]);
+				}
+			}
+		}
+	}
+}
 
 /**
  * Worker support for frontend based upon DatabaseObjectActions.
@@ -10103,12 +10146,7 @@ WCF.UserPanel = Class.extend({
 			$('' + data.returnValues.template).prependTo($dropdownMenu);
 			
 			// update badge
-			var $badge = this._container.find('.badge');
-			if (!$badge.length) {
-				$badge = $('<span class="badge badgeInverse" />').appendTo(this._container.children('.dropdownToggle'));
-				$badge.before(' ');
-			}
-			$badge.html(data.returnValues.totalCount);
+			this._updateBadge(data.returnValues.totalCount);
 			
 			this._after($dropdownMenu);
 		}
@@ -10116,6 +10154,25 @@ WCF.UserPanel = Class.extend({
 			$('<li><span>' + WCF.Language.get(this._noItems) + '</span></li>').prependTo($dropdownMenu);
 			
 			// remove badge
+			this._updateBadge(0);
+		}
+	},
+	
+	/**
+	 * Updates badge count.
+	 * 
+	 * @param	integer		count
+	 */
+	_updateBadge: function(count) {
+		if (count) {
+			var $badge = this._container.find('.badge');
+			if (!$badge.length) {
+				$badge = $('<span class="badge badgeInverse" />').appendTo(this._container.children('.dropdownToggle'));
+				$badge.before(' ');
+			}
+			$badge.html(count);
+		}
+		else {
 			this._container.find('.badge').remove();
 		}
 	},

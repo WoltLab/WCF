@@ -1277,6 +1277,8 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 		if (this._container.data('count')) {
 			this._favico.badge(this._container.data('count'));
 		}
+		
+		WCF.System.PushNotification.addCallback('userNotificationCount', $.proxy(this.updateUserNotificationCount, this));
 	},
 	
 	/**
@@ -1344,9 +1346,6 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 		switch (data.actionName) {
 			case 'markAllAsConfirmed':
 				$('.jsNotificationItem').remove();
-				
-				// remove notification count
-				this._favico.badge(0);
 			// fall through
 			case 'getOutstandingNotifications':
 				if (!data.returnValues || !data.returnValues.template) {
@@ -1367,6 +1366,35 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 				});
 			break;
 		}
+	},
+	
+	/**
+	 * @see	WCF.UserPanel._updateBadge()
+	 */
+	_updateBadge: function(count) {
+		this._super(count);
+		
+		this._favico.badge(count);
+	},
+	
+	/**
+	 * Updates user notification count.
+	 * 
+	 * @param	integer		count
+	 */
+	updateUserNotificationCount: function(count) {
+		// close dropdown
+		WCF.Dropdown.close('userNotifications');
+		
+		// revert dropdown to initial state
+		var $dropdownMenu = WCF.Dropdown.getDropdownMenu('userNotifications');
+		var $item = $dropdownMenu.find('.dropdownDivider:eq(0)');
+		$item.prevAll().remove();
+		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').insertBefore($item);
+		this._didLoad = false;
+		
+		// update badge
+		this._updateBadge(count);
 	}
 });
 
