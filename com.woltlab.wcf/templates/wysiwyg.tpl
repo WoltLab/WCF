@@ -35,6 +35,7 @@ $(function() {
 		var $autosave = $textarea.data('autosave');
 		var $config = {
 			buttons: $buttons,
+			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
 			minHeight: 200,
 			imageResizable: false,
 			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize' ],
@@ -76,6 +77,7 @@ $(function() {
 	
 	head.load([
 		'{@$__wcf->getPath()}js/3rdParty/redactor/redactor{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}',
+		{if $__wcf->getLanguage()->getFixedLanguageCode() != 'en'}'{@$__wcf->getPath()}js/3rdParty/redactor/languages/{@$__wcf->getLanguage()->getFixedLanguageCode()}.js?v={@$__wcfVersion}',{/if}
 		{if !ENABLE_DEBUG_MODE}
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wcombined.min.js?v={@$__wcfVersion}',
 		{else}
