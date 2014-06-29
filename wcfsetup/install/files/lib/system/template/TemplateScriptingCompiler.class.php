@@ -757,14 +757,16 @@ class TemplateScriptingCompiler {
 		}
 		
 		$sandbox = ($sandbox === 'true' || $sandbox === true || $sandbox == 1);
-		if (!$sandbox && !empty($args)) {
-			$sandbox = true;
+		
+		$staticInclude = true;
+		if ($sandbox || $assignVar === false || $once === false || !empty($args)) {
+			$staticInclude = false;
 		}
 		
 		$templateName = substr($file, 1, -1);
 		
 		// check for static includes
-		if (!$sandbox && $assignVar === false && $once === false) {
+		if ($staticInclude) {
 			$phpCode = '';
 			if (!isset($this->staticIncludes[$application])) {
 				$this->staticIncludes[$application] = array();
@@ -821,7 +823,7 @@ class TemplateScriptingCompiler {
 			$phpCode .= "ob_start();\n";
 		}
 		
-		$phpCode .= '$this->includeTemplate('.$file.', \''.$application.'\', array('.$argString.'), ('.$sandbox.' ? 1 : 0));'."\n";
+		$phpCode .= '$this->includeTemplate('.$file.', \''.$application.'\', array('.$argString.'), '.($sandbox ? 1 : 0).');'."\n";
 		
 		if ($assignVar !== false) {
 			$phpCode .= '$this->'.($append ? 'append' : 'assign').'('.$assignVar.', ob_get_clean());'."\n";
