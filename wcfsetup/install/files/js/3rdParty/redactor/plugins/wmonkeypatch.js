@@ -66,8 +66,6 @@ RedactorPlugins.wmonkeypatch = {
 		this.setOption('modalOpenedCallback', $.proxy(this.modalOpenedCallback, this));
 		
 		this.modalTemplatesInit();
-		
-		window.dtdesign = this;
 	},
 	
 	cleanRemoveSpaces: function(html, buffer) {

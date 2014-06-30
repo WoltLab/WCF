@@ -29,6 +29,13 @@ RedactorPlugins.wbbcode = {
 		
 		this.opts.pasteBeforeCallback = $.proxy(this._wPasteBeforeCallback, this);
 		this.opts.pasteAfterCallback = $.proxy(this._wPasteAfterCallback, this);
+		
+		var $mpSyncClean = this.syncClean;
+		var self = this;
+		this.syncClean = function(html) {
+			html = html.replace(/<p><br([^>]+)?><\/p>/g, '<p>@@@wcf_empty_line@@@</p>');
+			return $mpSyncClean.call(self, html);
+		};
 	},
 	
 	/**
@@ -110,7 +117,6 @@ RedactorPlugins.wbbcode = {
 	 */
 	toggle: function(direct) {
 		if (this.opts.visual) {
-			this._convertParagraphs();
 			this.toggleCode(direct);
 			this._convertFromHtml();
 			
@@ -124,54 +130,49 @@ RedactorPlugins.wbbcode = {
 		}
 	},
 	
-	_convertParagraphs: function() {
-		this.$editor.find('p').replaceWith(function() {
-			var $html = $(this).html();
-			if ($html == '<br>') {
-				// an empty line is presented by <p><br></p> but in the textarea this equals only a single new line
-				return $html;
-			}
-			
-			return $html + '<br>';
-		});
-		this.sync();
-	},
-	
 	/**
 	 * Converts source contents from HTML into BBCode.
 	 */
 	_convertFromHtml: function() {
 		var html = this.$source.val();
 		
-		// drop line break right before/after a <pre> tag (used by [code]-BBCode)
-		html = html.replace(/<br>\n<pre>\n/g, '');
-		html = html.replace(/<\/pre>\n<br>\n/g, '');
+		// drop all new lines
+		html = html.replace(/\r?\n/g, '');
 		
-		html = html.replace(/<br>(?:\n<br>)+/g, function(match) {
-			var $count = match.match(/<br>/g);
-			return '@@@' + $count.length + '@@@';
-		});
-		html = html.replace(/\n@@@/g, '@@@');
-		html = html.replace(/@@@(\d+)@@@/g, function(match, times) {
-			var $tmp = '<br>';
-			for (var $i = 1; $i < times; $i++) {
-				$tmp += '\n<br>';
+		// convert paragraphs into single lines
+		var $parts = html.split(/(<\/?p>)/);
+		var $tmp = '';
+		var $buffer = '';
+		for (var $i = 1; $i < $parts.length; $i++) {
+			var $part = $parts[$i];
+			if ($part == '<p>') {
+				continue;
 			}
-			
-			return $tmp;
-		});
+			else if ($part == '</p>') {
+				$buffer = $.trim($buffer);
+				if ($buffer != '@@@wcf_empty_line@@@') {
+					$buffer += "\n";
+				}
+				
+				$tmp += $buffer;
+				$buffer = '';
+			}
+			else {
+				$buffer += $part;
+			}
+		}
+		html = $tmp;
 		
-		// drop line break if there is a succeeding <br>
-		/*html = html.replace(/(<br>)?\n<br>/g, function(match, br) {
-			console.debug("br was matched:");
-			console.debug(match);
-			
-			return br ? match : '<br>';
-		});*/
+		html = html.replace(/@@@wcf_empty_line@@@/g, '\n');
+		html = html.replace(/\n\n$/, '\n');
+		
+		// convert all <br> into \n
+		html = html.replace(/<br>$/, '');
+		html = html.replace(/<br>/g, '\n');
 		
 		// drop <br>, they are pointless because the editor already adds a newline after them
 		html = html.replace(/<br>/g, '');
-		html = html.replace(/&nbsp;/gi," ");
+		html = html.replace(/&nbsp;/gi, " ");
 		
 		// [email]
 		html = html.replace(/<a [^>]*?href=(["'])mailto:(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[email=$2]$3[/email]');
@@ -397,20 +398,12 @@ RedactorPlugins.wbbcode = {
 		// remove 0x200B (unicode zero width space)
 		data = this.removeZeroWidthSpace(data);
 		
-		//if (!$pasted) {
-			// Convert & to its HTML entity.
-			data = data.replace(/&/g, '&amp;');
-			
-			// Convert < and > to their HTML entities.
-			data = data.replace(/</g, '&lt;');
-			data = data.replace(/>/g, '&gt;');
-		//}
+		// Convert & to its HTML entity.
+		data = data.replace(/&/g, '&amp;');
 		
-		/*if ($pasted) {
-			$pasted = false;
-			// skip
-			return data;
-		}*/
+		// Convert < and > to their HTML entities.
+		data = data.replace(/</g, '&lt;');
+		data = data.replace(/>/g, '&gt;');
 		
 		// cache source code tags
 		var $cachedCodes = { };
@@ -570,6 +563,14 @@ RedactorPlugins.wbbcode = {
 		});
 		html = html.replace(/<\/h[1-6]>/g, '[/size]');
 		
+		// convert block-level elements
+		html = html.replace(/<(article|header)[^>]+>/g, '<div>');
+		html = html.replace(/<\/(article|header)>/g, '</div>');
+		
+		// replace nested elements e.g. <div><p>...</p></div>
+		html = html.replace(/<(div|p)([^>]+)?><(div|p)([^>]+)?>/g, '<p>');
+		html = html.replace(/<\/(div|p)><\/(div|p)>/g, '</p>@@@wcf_break@@@');
+		
 		return html;
 	},
 	
@@ -580,21 +581,26 @@ RedactorPlugins.wbbcode = {
 	 * @return	string
 	 */
 	_wPasteAfterCallback: function(html) {
-		// restore font size
-		html = html.replace(/\[size=(\d+)\]/g, '<p><inline style="font-size: $1pt">');
-		html = html.replace(/\[\/size\]/g, '</inline></p>');
-		
-		// replace <p /> with <p>...<br><br></p>
-		html = html.replace(/<p>([\s\S]*?)<\/p>/g, '<p>$1<br><br></p>');
+		// replace <p /> with <p>...<br></p>
+		html = html.replace(/<p>([\s\S]*?)<\/p>/g, '<p>$1<br></p>');
 		
 		// drop <header />
 		html = html.replace(/<header[^>]*>/g, '');
 		html = html.replace(/<\/header>/g, '');
 		
-		html = html.replace(/<div>.*?<\/div>/g, '<p>$1<br></p>');
+		html = html.replace(/<div>.*?<\/div>/g, '<p>$1</p>');
 		
 		// drop lonely divs
 		html = html.replace(/<\/?div>/g, '');
+		
+		html = html.replace(/@@@wcf_break@@@/g, '<p><br></p>');
+		
+		// drop lonely <p> opening tags
+		html = html.replace(/<p><p>/g, '<p>');
+		
+		// restore font size
+		html = html.replace(/\[size=(\d+)\]/g, '<p><br></p><p><inline style="font-size: $1pt">');
+		html = html.replace(/\[\/size\]/g, '</inline></p><p><br></p>');
 		
 		return html;
 	}
