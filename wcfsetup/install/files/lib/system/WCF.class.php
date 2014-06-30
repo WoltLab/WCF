@@ -816,7 +816,7 @@ class WCF {
 	 * @return	string
 	 */
 	public function getAutosavePrefix() {
-		return substr(sha1(preg_replace('~^https~', 'http', WCF::getPath())), 0, 8);
+		return substr(sha1(preg_replace('~^https~', 'http', self::getPath())), 0, 8);
 	}
 	
 	/**
