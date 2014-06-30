@@ -35,6 +35,10 @@ $(function() {
 		var $autosave = $textarea.data('autosave');
 		var $config = {
 			buttons: $buttons,
+			convertImageLinks: false,
+			convertLinks: false,
+			convertVideoLinks: false,
+			direction: '{lang}wcf.global.pageDirection{/lang}',
 			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
 			minHeight: 200,
 			imageResizable: false,
