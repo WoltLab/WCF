@@ -41,7 +41,7 @@ $(function() {
 			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize' ],
 			wautosave: {
 				active: ($autosave) ? true : false,
-				key: ($autosave) ? $autosave : '',
+				key: ($autosave) ? '{@$__wcf->getAutosavePrefix()}_' + $autosave : '',
 				saveOnInit: {if !$errorField|empty}true{else}false{/if}
 			}
 		};

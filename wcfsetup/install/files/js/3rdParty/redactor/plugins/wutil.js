@@ -203,7 +203,6 @@ RedactorPlugins.wutil = {
 		}
 		
 		if (this._autosaveWorker === null) {
-			var self = this;
 			this._autosaveWorker = new WCF.PeriodicalExecuter($.proxy(this._saveTextToStorage, this), 60 * 1000);
 		}
 		
