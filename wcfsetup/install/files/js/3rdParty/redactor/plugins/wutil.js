@@ -148,12 +148,7 @@ RedactorPlugins.wutil = {
 	 */
 	getText: function() {
 		if (this.inWysiwygMode()) {
-			this.toggle();
-			
-			var $content = this.$source.val();
-			
-			this.toggle();
-			return $content;
+			this.wSync();
 		}
 		
 		return this.$source.val();
@@ -164,13 +159,7 @@ RedactorPlugins.wutil = {
 	 */
 	submit: function() {
 		if (this.inWysiwygMode()) {
-			this.toggle();
-			
-			var $content = this.$source.val();
-			
-			this.toggle();
-			
-			this.$source.val($content);
+			this.wSync();
 		}
 		
 		this.autosavePurge();
@@ -308,4 +297,11 @@ RedactorPlugins.wutil = {
 		
 		return $string;
 	},
+	
+	/**
+	 * Synchronizes editor's source textarea.
+	 */
+	wSync: function() {
+		this.$source.val(this.cleanHtml(this.$source.val()));
+	}
 };
