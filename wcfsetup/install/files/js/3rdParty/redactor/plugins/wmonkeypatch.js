@@ -51,6 +51,13 @@ RedactorPlugins.wmonkeypatch = {
 			$mpModalInit.call(self, title, content, width, callback);
 		};
 		
+		var $mpModalShowOnDesktop = this.modalShowOnDesktop;
+		this.modalShowOnDesktop = function() {
+			$mpModalShowOnDesktop.call(self);
+			
+			$(document.body).css('overflow', false);
+		};
+		
 		// handle indent/outdent
 		var $mpButtonActiveObserver = this.buttonActiveObserver;
 		this.buttonActiveObserver = function(e, btnName) {
