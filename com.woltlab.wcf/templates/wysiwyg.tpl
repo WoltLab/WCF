@@ -35,13 +35,17 @@ $(function() {
 		var $autosave = $textarea.data('autosave');
 		var $config = {
 			buttons: $buttons,
+			convertImageLinks: false,
+			convertLinks: false,
+			convertVideoLinks: false,
+			direction: '{lang}wcf.global.pageDirection{/lang}',
 			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
 			minHeight: 200,
 			imageResizable: false,
 			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize' ],
 			wautosave: {
 				active: ($autosave) ? true : false,
-				key: ($autosave) ? $autosave : '',
+				key: ($autosave) ? '{@$__wcf->getAutosavePrefix()}_' + $autosave : '',
 				saveOnInit: {if !$errorField|empty}true{else}false{/if}
 			}
 		};

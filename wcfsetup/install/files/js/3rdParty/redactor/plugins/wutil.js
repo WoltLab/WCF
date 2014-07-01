@@ -148,12 +148,7 @@ RedactorPlugins.wutil = {
 	 */
 	getText: function() {
 		if (this.inWysiwygMode()) {
-			this.toggle();
-			
-			var $content = this.$source.val();
-			
-			this.toggle();
-			return $content;
+			this.wSync();
 		}
 		
 		return this.$source.val();
@@ -164,13 +159,7 @@ RedactorPlugins.wutil = {
 	 */
 	submit: function() {
 		if (this.inWysiwygMode()) {
-			this.toggle();
-			
-			var $content = this.$source.val();
-			
-			this.toggle();
-			
-			this.$source.val($content);
+			this.wSync();
 		}
 		
 		this.autosavePurge();
@@ -203,7 +192,6 @@ RedactorPlugins.wutil = {
 		}
 		
 		if (this._autosaveWorker === null) {
-			var self = this;
 			this._autosaveWorker = new WCF.PeriodicalExecuter($.proxy(this._saveTextToStorage, this), 60 * 1000);
 		}
 		
@@ -309,4 +297,12 @@ RedactorPlugins.wutil = {
 		
 		return $string;
 	},
+	
+	/**
+	 * Synchronizes editor's source textarea.
+	 */
+	wSync: function() {
+		this.$source.val(this.cleanHtml(this.$source.val()));
+		this._convertFromHtml();
+	}
 };

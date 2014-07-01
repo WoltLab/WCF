@@ -10164,6 +10164,8 @@ WCF.UserPanel = Class.extend({
 	 * @param	integer		count
 	 */
 	_updateBadge: function(count) {
+		count = parseInt(count) || 0;
+		
 		if (count) {
 			var $badge = this._container.find('.badge');
 			if (!$badge.length) {

@@ -811,6 +811,15 @@ class WCF {
 	}
 	
 	/**
+	 * Returns a 8 character prefix for editor autosave.
+	 * 
+	 * @return	string
+	 */
+	public function getAutosavePrefix() {
+		return substr(sha1(preg_replace('~^https~', 'http', self::getPath())), 0, 8);
+	}
+	
+	/**
 	 * Initialises the cronjobs.
 	 */
 	protected function initCronjobs() {

@@ -380,7 +380,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 		
 		if (!empty($userIDs)) {
 			$userList = new UserProfileList();
-			$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
+			$userList->setObjectIDs($userIDs);
 			$userList->readObjects();
 			
 			foreach ($userList as $user) {
