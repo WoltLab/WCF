@@ -1372,6 +1372,8 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 	 * @see	WCF.UserPanel._updateBadge()
 	 */
 	_updateBadge: function(count) {
+		count = parseInt(count) || 0;
+		
 		this._super(count);
 		
 		this._favico.badge(count);
