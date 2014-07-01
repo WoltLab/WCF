@@ -133,14 +133,14 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 		
 		// update category
 		$this->objectAction = new CategoryAction(array($this->category), 'update', array(
-			'data' => array(
+			'data' => array_merge($this->additionalFields, array(
 				'additionalData' => serialize($this->additionalData),
 				'description' => $description,
 				'isDisabled' => $this->isDisabled,
 				'parentCategoryID' => $this->parentCategoryID,
 				'showOrder' => $this->showOrder,
 				'title' => $title
-			)
+			))
 		));
 		$this->objectAction->executeAction();
 		
