@@ -303,5 +303,6 @@ RedactorPlugins.wutil = {
 	 */
 	wSync: function() {
 		this.$source.val(this.cleanHtml(this.$source.val()));
+		this._convertFromHtml();
 	}
 };
