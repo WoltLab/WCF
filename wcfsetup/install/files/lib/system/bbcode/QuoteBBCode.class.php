@@ -3,6 +3,7 @@ namespace wcf\system\bbcode;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 
 /**
  * Parses the [quote] bbcode tag.
@@ -25,11 +26,23 @@ class QuoteBBCode extends AbstractBBCode {
 			if (!$externalQuoteLink) {
 				$quoteLink = preg_replace('~^https?://~', RouteHandler::getProtocol(), $quoteLink);
 			}
+			$quoteAuthor = (!empty($openingTag['attributes'][0]) ? $openingTag['attributes'][0] : '');
+			$quoteAuthorObject = null;
+			if ($quoteAuthor && !$externalQuoteLink) {
+				$quoteAuthorLC = mb_strtolower($quoteAuthor);
+				foreach (MessageEmbeddedObjectManager::getInstance()->getObjects('com.woltlab.wcf.quote') as $user) {
+					if (mb_strtolower($user->username) == $quoteAuthorLC) {
+						$quoteAuthorObject = $user;
+						break;
+					}
+				}
+			}
 			
 			WCF::getTPL()->assign(array(
 				'content' => $content,
 				'quoteLink' => $quoteLink,
-				'quoteAuthor' => (!empty($openingTag['attributes'][0]) ? $openingTag['attributes'][0] : ''),
+				'quoteAuthor' => $quoteAuthor,
+				'quoteAuthorObject' => $quoteAuthorObject,
 				'isExternalQuoteLink' => $externalQuoteLink
 			));
 			return WCF::getTPL()->fetch('quoteBBCodeTag');

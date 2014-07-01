@@ -81,4 +81,11 @@ interface IAttachmentObjectType {
 	 * @param	array<integer>		$objectIDs
 	 */
 	public function cacheObjects(array $objectIDs);
+	
+	/**
+	 * Loads the permissions for given attachments.
+	 *  
+	 * @param	array<\wcf\data\attachment\Attachment>		$attachments
+	 */
+	public function setPermissions(array $attachments);
 }

@@ -219,61 +219,141 @@ html[dir='rtl'] {
 
 /* Quote Box */
 .quoteBox {
-	background-color: @wcfContentBackgroundColor;
 	clear: both;
-	min-height: 28px;
-	margin-bottom: @wcfGapTiny;
-	position: relative;
 	
-	&.containerPadding {
-		padding-left: 54px;
-	}
-	
-	&::before {
-		content: "\f10d";
-		color: @wcfDimmedColor;
-		font-family: FontAwesome;
-		font-size: 28px;
-		position: absolute;
-		left: @wcfGapMedium;
-		top: @wcfGapSmall;
-	}
-	
-	> header {
-		padding-bottom: @wcfGapTiny;
-		border-bottom: 1px dotted @wcfContainerBorderColor;
-		margin-bottom: @wcfGapSmall;
+	> .container {
+		background-color: @wcfContentBackgroundColor;
+		min-height: 28px;
+		margin-bottom: @wcfGapTiny;
+		position: relative;
 		
-		> h3 {
-			font-weight: bold;
+		&.containerPadding {
+			padding-left: 54px;
+		}
+		
+		> header {
+			padding-bottom: @wcfGapTiny;
+			border-bottom: 1px dotted @wcfContainerBorderColor;
+			margin-bottom: @wcfGapSmall;
+			
+			> h3 {
+				font-weight: bold;
+			}
+		}
+		
+		> div {
+			&::before {
+				content: "\f10d";
+				color: @wcfDimmedColor;
+				font-family: FontAwesome;
+				font-size: 28px;
+				position: absolute;
+				left: @wcfGapMedium;
+				top: @wcfGapSmall;
+			}
+		}
+	}
+	
+	> .quoteAuthorAvatar {
+		float: left;
+		
+		+ .container {
+			margin-left: 90px;
+			padding-left: @wcfGapLarge;
+			
+			&::before,
+			&::after {
+				border-style: inset solid inset none;
+				border-width: 15px;
+				content: "";
+				display: block;
+				height: 0;
+				position: absolute;
+				top: 15px;
+				width: 0;
+			}
+			
+			&::before {
+				border-color: transparent @wcfContainerBorderColor transparent transparent;
+				left: -15px;
+				z-index: 100;
+			}
+			
+			&::after {
+				border-color: transparent @wcfContentBackgroundColor transparent transparent;
+				left: -14px;
+				z-index: 101;
+			}
+			
+			> div {
+				&::before {
+					display: none;
+				}
+			}
+		}
+		
+		> a {
+			display: inline-block;
 		}
 	}
 	
 	/* nested quotes */
 	.quoteBox {
-		background-image: none;
-		padding-left: @wcfGapLarge;
-		min-height: 0;
-		
-		&::before {
+		> .quoteAuthorAvatar {
 			display: none;
+		}
+		
+		> .container {
+			margin-left: 0;
+			padding-left: @wcfGapLarge;
+			min-height: 0;
+			
+			&::before,
+			&::after {
+				display: none;
+			}
+			
+			> div {
+				&::before {
+					display: none;
+				}
+			}
 		}
 	}
 }
 
 @media only screen and (max-width: 800px) {
 	.quoteBox {
-		&::before {
-			font-size: 14px;
-			left: @wcfGapSmall;
+		> .quoteAuthorAvatar {
+			display: none;
 		}
 		
-		&.containerPadding {
-			padding-left: 28px;
+		> .container {
+			margin-left: 0 !important;
+			
+			&.containerPadding {
+				padding-left: 28px;
+			}
+			
+			> div {
+				&::before {
+					display: block !important;
+					font-size: 14px;
+					left: @wcfGapSmall;
+				}
+			}
 		}
 		
 		.quoteBox {
-			padding-left: @wcfGapSmall;
+			> .container {
+				padding-left: @wcfGapSmall;
+				
+				> div {
+					&::before {
+						display: none !important;
+					}
+				}
+			}
 		}
 	}
 }

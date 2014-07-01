@@ -176,5 +176,14 @@
 			<name>com.woltlab.wcf.captcha</name>
 			<interfacename><![CDATA[wcf\system\captcha\ICaptchaHandler]]></interfacename>
 		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.message.embeddedObject</name>
+			<interfacename><![CDATA[wcf\system\message\embedded\object\IMessageEmbeddedObjectHandler]]></interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.message</name>
+		</definition>
 	</import>
 </data>

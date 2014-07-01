@@ -888,5 +888,18 @@
 			<classname><![CDATA[wcf\system\captcha\CaptchaQuestionHandler]]></classname>
 		</type>
 		<!-- captcha types -->
+		
+		<!-- embedded object handlers -->
+		<type>
+			<name>com.woltlab.wcf.quote</name>
+			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
+			<classname><![CDATA[wcf\system\message\embedded\object\QuoteMessageEmbeddedObjectHandler]]></classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.attachment</name>
+			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
+			<classname><![CDATA[wcf\system\message\embedded\object\AttachmentMessageEmbeddedObjectHandler]]></classname>
+		</type>
+		<!-- embedded object handlers -->
 	</import>
 </data>

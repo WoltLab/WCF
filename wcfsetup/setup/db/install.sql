@@ -470,6 +470,16 @@ CREATE TABLE wcf1_like_object (
 	UNIQUE KEY (objectTypeID, objectID)
 );
 
+DROP TABLE IF EXISTS wcf1_message_embedded_object;
+CREATE TABLE wcf1_message_embedded_object (
+	messageObjectTypeID INT(10) NOT NULL,
+	messageID INT(10) NOT NULL,
+	embeddedObjectTypeID INT(10) NOT NULL,
+	embeddedObjectID INT(10) NOT NULL,
+	
+	KEY (messageObjectTypeID, messageID)
+);
+
 DROP TABLE IF EXISTS wcf1_moderation_queue;
 CREATE TABLE wcf1_moderation_queue (
 	queueID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1619,6 +1629,9 @@ ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_u
 
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_message_embedded_object ADD FOREIGN KEY (messageObjectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+ALTER TABLE wcf1_message_embedded_object ADD FOREIGN KEY (embeddedObjectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_moderation_queue ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_moderation_queue ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;

@@ -16,6 +16,12 @@ use wcf\util\ArrayUtil;
  */
 abstract class AbstractAttachmentObjectType implements IAttachmentObjectType {
 	/**
+	 * cached objects
+	 * @var array<\wcf\data\DatabaseObject>
+	 */
+	protected $cachedObjects = array();
+	
+	/**
 	 * @see	\wcf\system\attachment\IAttachmentObjectType::getMaxSize()
 	 */
 	public function getMaxSize() {
@@ -47,11 +53,34 @@ abstract class AbstractAttachmentObjectType implements IAttachmentObjectType {
 	 * @see	\wcf\system\attachment\IAttachmentObjectType::getObject()
 	 */
 	public function getObject($objectID) {
+		if (isset($this->cachedObjects[$objectID])) return $this->cachedObjects[$objectID];
+		
 		return null;
+	}
+	
+	/**
+	 * @see	\wcf\system\attachment\IAttachmentObjectType::setCachedObjects()
+	 */
+	public function setCachedObjects(array $objects) {
+		foreach ($objects as $id => $object) {
+			$this->cachedObjects[$id] = $object;
+		}
 	}
 	
 	/**
 	 * @see	\wcf\system\attachment\IAttachmentObjectType::getObject()
 	 */
 	public function cacheObjects(array $objectIDs) {}
+	
+	/**
+	 * @see	\wcf\system\attachment\IAttachmentObjectType::setPermissions()
+	 */
+	public function setPermissions(array $attachments) {
+		foreach ($attachments as $attachment) {
+			$attachment->setPermissions(array(
+				'canDownload' => $this->canDownload($attachment->objectID),
+				'canViewPreview' => $this->canViewPreview($attachment->objectID)
+			));
+		}
+	}
 }

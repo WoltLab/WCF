@@ -3,6 +3,7 @@ namespace wcf\system\bbcode;
 use wcf\data\attachment\GroupedAttachmentList;
 use wcf\system\request\LinkHandler;
 use wcf\util\StringUtil;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 
 /**
  * Parses the [attach] bbcode tag.
@@ -18,12 +19,14 @@ class AttachmentBBCode extends AbstractBBCode {
 	/**
 	 * list of attachments
 	 * @var	\wcf\data\attachment\GroupedAttachmentList
+	 * @deprecated
 	 */
 	protected static $attachmentList = null;
 	
 	/**
 	 * active object id
 	 * @var	integer
+	 * @deprecated
 	 */
 	protected static $objectID = 0;
 	
@@ -37,18 +40,21 @@ class AttachmentBBCode extends AbstractBBCode {
 			$attachmentID = $openingTag['attributes'][0];
 		}
 		
-		// get attachment for active object
-		$attachments = array();
-		if (self::$attachmentList !== null) {
-			$attachments = self::$attachmentList->getGroupedObjects(self::$objectID);
+		// get embedded object
+		$attachment = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.attachment', $attachmentID);
+		if ($attachment === null) {
+			if (self::$attachmentList !== null) {
+				$attachments = self::$attachmentList->getGroupedObjects(self::$objectID);
+				if (isset($attachments[$attachmentID])) {
+					$attachment = $attachments[$attachmentID];
+					
+					// mark attachment as embedded
+					$attachment->markAsEmbedded();
+				}
+			}
 		}
 		
-		if (isset($attachments[$attachmentID])) {
-			$attachment = $attachments[$attachmentID];
-			
-			// mark attachment as embedded
-			$attachment->markAsEmbedded();
-			
+		if ($attachment !== null) {
 			if ($attachment->showAsImage() && $parser->getOutputType() == 'text/html') {
 				// image
 				$linkParameters = array(
@@ -84,6 +90,7 @@ class AttachmentBBCode extends AbstractBBCode {
 	 * Sets the attachment list.
 	 * 
 	 * @param	\wcf\data\attachment\GroupedAttachmentList	$attachments
+	 * @deprecated
 	 */
 	public static function setAttachmentList(GroupedAttachmentList $attachmentList) {
 		self::$attachmentList = $attachmentList;
@@ -93,6 +100,7 @@ class AttachmentBBCode extends AbstractBBCode {
 	 * Sets the active object id.
 	 * 
 	 * @param	integer		$objectID
+	 * @deprecated
 	 */
 	public static function setObjectID($objectID) {
 		self::$objectID = $objectID;
