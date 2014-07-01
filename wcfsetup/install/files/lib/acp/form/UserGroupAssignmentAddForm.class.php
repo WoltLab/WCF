@@ -120,11 +120,11 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 		parent::save();
 		
 		$this->objectAction = new UserGroupAssignmentAction(array(), 'create', array(
-			'data' => array(
+			'data' => array_merge($this->additionalFields, array(
 				'groupID' => $this->groupID,
 				'isDisabled' => $this->isDisabled,
 				'title' => $this->title
-			)
+			))
 		));
 		$returnValues = $this->objectAction->executeAction();
 		

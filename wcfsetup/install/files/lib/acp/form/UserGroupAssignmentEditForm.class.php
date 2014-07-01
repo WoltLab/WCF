@@ -79,11 +79,11 @@ class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 		AbstractForm::save();
 		
 		$this->objectAction = new UserGroupAssignmentAction(array($this->assignment), 'update', array(
-			'data' => array(
+			'data' => array_merge($this->additionalFields, array(
 				'groupID' => $this->groupID,
 				'isDisabled' => $this->isDisabled,
 				'title' => $this->title
-			)
+			))
 		));
 		$returnValues = $this->objectAction->executeAction();
 		
