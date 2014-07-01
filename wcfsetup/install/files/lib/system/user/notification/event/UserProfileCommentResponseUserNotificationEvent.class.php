@@ -48,7 +48,6 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getMessage()
 	 */
 	public function getMessage() {
-		// @todo: use cache or a single query to retrieve required data
 		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
 		$owner = CommentDataHandler::getInstance()->getUser($comment->objectID);
 		if ($comment->userID) {
@@ -96,7 +95,6 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getLink()
 	 */
 	public function getLink() {
-		// @todo: use cache or a single query to retrieve required data
 		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
 		$user = CommentDataHandler::getInstance()->getUser($comment->objectID);
 		

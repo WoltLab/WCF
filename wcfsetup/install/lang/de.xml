@@ -2924,7 +2924,7 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.message"><![CDATA[Hat eine Antwort zu Ihrem Kommentar an der Pinnwand von {$owner->username} verfasst.]]></item>
-		<item name="wcf.user.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$count} weitere{/if} haben auf Ihren Kommentar an der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a> geantwortet.]]></item>
+		<item name="wcf.user.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$count} weitere{/if} haben auf Ihren Kommentar an {if $owner->userID == $__wcf->getUser()->userID}<a href="{link controller='User' object=$owner}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if} geantwortet.]]></item>
 		<item name="wcf.user.notification.commentResponse.like.title"><![CDATA[Gefällt die Antwort auf einen Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.like.title.stacked"><![CDATA[{#$count} Benutzern gefällt Ihre Antwort auf einen Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[Gefällt Ihre Antwort auf einen Kommentar an {if $owner === null}Ihrer Pinnwand{else}der Pinnwand von {$owner->username}{/if}.]]></item>
@@ -2948,6 +2948,8 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[Neuer Kommentar an Ihrer Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar an Ihrer Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar von Ihnen]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Jemand gefällt Ihr Kommentar]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Jemand gefällt Ihre Antwort auf einen Kommentar]]></item>
 	</category>
 	
 	<category name="wcf.user.profile">

@@ -27,6 +27,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 	 */
 	protected function prepare() {
 		CommentDataHandler::getInstance()->cacheCommentID($this->userNotificationObject->commentID);
+		CommentDataHandler::getInstance()->cacheUserID($this->additionalData['userID']);
 	}
 	
 	/**
@@ -48,10 +49,9 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getMessage()
 	 */
 	public function getMessage() {
-		// @todo: use cache or a single query to retrieve required data
-		$comment = new Comment($this->userNotificationObject->commentID);
+		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
 		if ($comment->userID) {
-			$commentAuthor = new User($comment->userID);
+			$commentAuthor = CommentDataHandler::getInstance()->getUser($comment->userID);
 		}
 		else {
 			$commentAuthor = new User(null, array(
