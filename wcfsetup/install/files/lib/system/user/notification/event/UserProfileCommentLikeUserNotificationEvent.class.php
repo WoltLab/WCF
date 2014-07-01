@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\user\notification\event;
 use wcf\data\user\User;
+use wcf\system\comment\CommentDataHandler;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\notification\event\AbstractUserNotificationEvent;
 use wcf\system\WCF;
 
 /**
@@ -15,11 +15,18 @@ use wcf\system\WCF;
  * @subpackage	system.user.notification.event
  * @category	Community Framework
  */
-class UserProfileCommentLikeUserNotificationEvent extends AbstractUserNotificationEvent {
+class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent {
 	/**
 	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::$stackable
 	 */
 	protected $stackable = true;
+	
+	/**
+	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::prepare()
+	 */
+	protected function prepare() {
+		CommentDataHandler::getInstance()->cacheUserID($this->additionalData['objectID']);
+	}
 	
 	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
@@ -44,7 +51,7 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractUserNotificati
 		$count = count($authors);
 		$owner = null;
 		if ($this->additionalData['objectID'] != WCF::getUser()->userID) {
-			$owner = new User($this->additionalData['objectID']);
+			$owner = CommentDataHandler::getInstance()->getUser($this->additionalData['objectID']);
 		}
 		
 		if ($count > 1) {

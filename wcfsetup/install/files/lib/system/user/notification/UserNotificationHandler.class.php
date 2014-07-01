@@ -298,10 +298,7 @@ class UserNotificationHandler extends SingletonFactory {
 		$conditions->add("notification.userID = ?", array(WCF::getUser()->userID));
 		if (!$showConfirmedNotifications) $conditions->add("notification.confirmed = ?", array(0));
 		
-		$sql = "SELECT		notification.notificationID, notification_event.eventID, notification.authorID,
-					notification.timesTriggered, object_type.objectType, notification.objectID,
-					notification.additionalData,
-					notification.time".($showConfirmedNotifications ? ", notification.confirmed" : "")."
+		$sql = "SELECT		notification.*, notification_event.eventID, object_type.objectType
 			FROM		wcf".WCF_N."_user_notification notification
 			LEFT JOIN	wcf".WCF_N."_user_notification_event notification_event
 			ON		(notification_event.eventID = notification.eventID)
@@ -312,10 +309,8 @@ class UserNotificationHandler extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql, $limit, $offset);
 		$statement->execute($conditions->getParameters());
 		
-		$authorIDs = $events = $objectTypes = $eventIDs = $notificationIDs = array();
+		$authorIDs = $objectTypes = $eventIDs = $notificationObjects = array();
 		while ($row = $statement->fetchArray()) {
-			$events[] = $row;
-			
 			// cache object types
 			if (!isset($objectTypes[$row['objectType']])) {
 				$objectTypes[$row['objectType']] = array(
@@ -327,11 +322,12 @@ class UserNotificationHandler extends SingletonFactory {
 			
 			$objectTypes[$row['objectType']]['objectIDs'][] = $row['objectID'];
 			$eventIDs[] = $row['eventID'];
-			$notificationIDs[] = $row['notificationID'];
+			
+			$notificationObjects[$row['notificationID']] = new UserNotification(null, $row);
 		}
 		
 		// return an empty set if no notifications exist
-		if (empty($events)) {
+		if (empty($notificationObjects)) {
 			return array(
 				'count' => 0,
 				'notifications' => array()
@@ -340,7 +336,7 @@ class UserNotificationHandler extends SingletonFactory {
 		
 		// load authors
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("notificationID IN (?)", array($notificationIDs));
+		$conditions->add("notificationID IN (?)", array(array_keys($notificationObjects)));
 		$sql = "SELECT		notificationID, authorID
 			FROM		wcf".WCF_N."_user_notification_author
 			".$conditions."
@@ -376,30 +372,22 @@ class UserNotificationHandler extends SingletonFactory {
 		$eventList->readObjects();
 		$eventObjects = $eventList->getObjects();
 		
-		// load notification objects
-		$notificationList = new UserNotificationList();
-		$notificationList->getConditionBuilder()->add("user_notification.notificationID IN (?)", array($notificationIDs));
-		$notificationList->readObjects();
-		$notificationObjects = $notificationList->getObjects();
-		
 		// build notification data
 		$notifications = array();
-		foreach ($events as $event) {
-			$className = $eventObjects[$event['eventID']]->className;
-			$class = new $className($eventObjects[$event['eventID']]);
-			$notificationID = $event['notificationID'];
-			
+		foreach ($notificationObjects as $notification) {
+			$className = $eventObjects[$notification->eventID]->className;
+			$class = new $className($eventObjects[$notification->eventID]);
 			$class->setObject(
-				$notificationObjects[$notificationID],
-				$objectTypes[$event['objectType']]['objects'][$event['objectID']],
-				(isset($authors[$event['authorID']]) ? $authors[$event['authorID']] : $unknownAuthor),
-				unserialize($event['additionalData']),
-				$event['timesTriggered']
+				$notification,
+				$objectTypes[$notification->objectType]['objects'][$notification->objectID],
+				(isset($authors[$notification->authorID]) ? $authors[$notification->authorID] : $unknownAuthor),
+				$notification->additionalData,
+				$notification->timesTriggered
 			);
 			
-			if (isset($authorToNotification[$notificationID])) {
+			if (isset($authorToNotification[$notification->notificationID])) {
 				$eventAuthors = array();
-				foreach ($authorToNotification[$notificationID] as $userID) {
+				foreach ($authorToNotification[$notification->notificationID] as $userID) {
 					if (isset($authors[$userID])) {
 						$eventAuthors[$userID] = $authors[$userID];
 					}
@@ -412,12 +400,12 @@ class UserNotificationHandler extends SingletonFactory {
 			$data = array(
 				'authors' => count($class->getAuthors()),
 				'event' => $class,
-				'notificationID' => $event['notificationID'],
-				'time' => $event['time']
+				'notificationID' => $notification->notificationID,
+				'time' => $notification->time
 			);
 			
 			if ($showConfirmedNotifications) {
-				$data['confirmed'] = $event['confirmed'];
+				$data['confirmed'] = $notification->confirmed;
 			}
 			
 			$notifications[] = $data;

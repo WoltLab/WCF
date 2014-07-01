@@ -9,7 +9,7 @@ use wcf\system\WCF;
 use wcf\util\DateUtil;
 
 /**
- * Provides default a implementation for user notification events.
+ * Provides a default implementation for user notification events.
  * 
  * @author	Marcel Werk, Oliver Kliebisch
  * @copyright	2001-2014 WoltLab GmbH, Oliver Kliebisch

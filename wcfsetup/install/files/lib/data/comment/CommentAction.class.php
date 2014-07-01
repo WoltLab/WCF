@@ -250,7 +250,9 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			if ($userID != WCF::getUser()->userID) {
 				$notificationObject = new CommentUserNotificationObject($this->createdComment);
 				
-				UserNotificationHandler::getInstance()->fireEvent('comment', $objectType->objectType.'.notification', $notificationObject, array($userID));
+				UserNotificationHandler::getInstance()->fireEvent('comment', $objectType->objectType.'.notification', $notificationObject, array($userID), array(
+					'objectUserID' => $userID
+				));
 			}
 		}
 		
@@ -349,18 +351,28 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		
 		// fire notification event
 		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.notification')) {
+			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
+			$userID = $notificationObjectType->getOwnerID($this->comment->commentID);
+			
 			$notificationObject = new CommentResponseUserNotificationObject($this->createdResponse);
 			if ($this->comment->userID != WCF::getUser()->userID) {
-				UserNotificationHandler::getInstance()->fireEvent('commentResponse', $objectType->objectType.'.response.notification', $notificationObject, array($this->comment->userID));
+				UserNotificationHandler::getInstance()->fireEvent('commentResponse', $objectType->objectType.'.response.notification', $notificationObject, array($this->comment->userID), array(
+					'commentID' => $this->comment->commentID,
+					'objectID' => $this->comment->objectID,
+					'objectUserID' => $userID,
+					'userID' => $this->comment->userID
+				));
 			}
 			
 			// notify the container owner
 			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
-				$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
-				$userID = $notificationObjectType->getOwnerID($this->comment->commentID);
-				
 				if ($userID != $this->comment->userID && $userID != WCF::getUser()->userID) {
-					UserNotificationHandler::getInstance()->fireEvent('commentResponseOwner', $objectType->objectType.'.response.notification', $notificationObject, array($userID));
+					UserNotificationHandler::getInstance()->fireEvent('commentResponseOwner', $objectType->objectType.'.response.notification', $notificationObject, array($userID), array(
+						'commentID' => $this->comment->commentID,
+						'objectID' => $this->comment->objectID,
+						'objectUserID' => $userID,
+						'userID' => $this->comment->userID
+					));
 				}
 			}
 		}

@@ -1,9 +1,8 @@
 <?php
 namespace wcf\system\user\notification\event;
-use wcf\data\comment\Comment;
 use wcf\data\user\User;
+use wcf\system\comment\CommentDataHandler;
 use wcf\system\request\LinkHandler;
-use wcf\system\user\notification\event\AbstractUserNotificationEvent;
 
 /**
  * User notification event for profile commment responses.
@@ -15,11 +14,20 @@ use wcf\system\user\notification\event\AbstractUserNotificationEvent;
  * @subpackage	system.user.notification.event
  * @category	Community Framework
  */
-class UserProfileCommentResponseUserNotificationEvent extends AbstractUserNotificationEvent {
+class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent {
 	/**
 	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::$stackable
 	 */
 	protected $stackable = true;
+	
+	/**
+	 * @see	\wcf\system\user\notification\event\AbstractUserNotificationEvent::prepare()
+	 */
+	protected function prepare() {
+		CommentDataHandler::getInstance()->cacheCommentID($this->userNotificationObject->commentID);
+		CommentDataHandler::getInstance()->cacheUserID($this->additionalData['objectID']);
+		CommentDataHandler::getInstance()->cacheUserID($this->additionalData['userID']);
+	}
 	
 	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getTitle()
@@ -41,10 +49,10 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractUserNotifi
 	 */
 	public function getMessage() {
 		// @todo: use cache or a single query to retrieve required data
-		$comment = new Comment($this->userNotificationObject->commentID);
-		$owner = new User($comment->objectID);
+		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
+		$owner = CommentDataHandler::getInstance()->getUser($comment->objectID);
 		if ($comment->userID) {
-			$commentAuthor = new User($comment->userID);
+			$commentAuthor = CommentDataHandler::getInstance()->getUser($comment->userID);
 		}
 		else {
 			$commentAuthor = new User(null, array(
@@ -73,7 +81,7 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractUserNotifi
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$comment = new Comment($this->userNotificationObject->commentID);
+		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
 		$user = new User($comment->objectID);
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.mail', array(
@@ -89,8 +97,8 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractUserNotifi
 	 */
 	public function getLink() {
 		// @todo: use cache or a single query to retrieve required data
-		$comment = new Comment($this->userNotificationObject->commentID);
-		$user = new User($comment->objectID);
+		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
+		$user = CommentDataHandler::getInstance()->getUser($comment->objectID);
 		
 		return LinkHandler::getInstance()->getLink('User', array('object' => $user), '#wall');
 	}

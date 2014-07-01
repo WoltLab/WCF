@@ -70,7 +70,7 @@ class LikeableCommentResponse extends AbstractLikeObject {
 				UserNotificationHandler::getInstance()->fireEvent('like', $objectType->objectType.'.response.like.notification', $notificationObject, array($this->userID), array(
 					'commentID' => $comment->commentID,
 					'commentUserID' => $comment->userID,
-					'objectID' => $comment->objectID,
+					'objectID' => $comment->objectID
 				));
 			}
 		}
