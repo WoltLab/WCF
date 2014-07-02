@@ -1947,6 +1947,17 @@ Errors are:
 		<item name="wcf.date.endTime.error.notValid"><![CDATA[The end time is invalid.]]></item>
 	</category>
 	
+	<category name="wcf.edit">
+		<item name="wcf.edit.versions"><![CDATA[Versions]]></item>
+		<item name="wcf.edit.time"><![CDATA[Edit Time]]></item>
+		<item name="wcf.edit.reason"><![CDATA[Edit Reason]]></item>
+		<item name="wcf.edit.currentVersion"><![CDATA[Current]]></item>
+		<item name="wcf.edit.revert"><![CDATA[Revert]]></item>
+		<item name="wcf.edit.revert.sure"><![CDATA[Do you really want to revert to the version at {$edit->time|plainTime}, created by “{$edit->username}”?]]></item>
+		<item name="wcf.edit.reverted"><![CDATA[Reverted to the version at {$edit->time|plainTime}, created by “{$edit->username}”]]></item>
+		<item name="wcf.edit.button.compare"><![CDATA[Compare]]></item>
+	</category>
+	
 	<category name="wcf.global">
 		<item name="wcf.global.availableUpdates"><![CDATA[There are <a href="{link controller='PackageUpdate' isACP=true}{/link}">updates available</a> for installed packages.]]></item>
 		<item name="wcf.global.button.add"><![CDATA[Add]]></item>
