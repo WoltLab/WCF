@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\edit\history\entry;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
 
 /**
@@ -17,4 +18,23 @@ class EditHistoryEntryAction extends AbstractDatabaseObjectAction {
 	* @see	\wcf\data\AbstractDatabaseObjectAction::$className
 	*/
 	protected $className = 'wcf\data\edit\history\entry\EditHistoryEntryEditor';
+	
+	/**
+	 * Checks permissions to revert.
+	 */
+	public function validateRevert() {
+		$historyEntry = $this->getSingleObject();
+		
+		$objectType = ObjectTypeCache::getInstance()->getObjectType($historyEntry->objectTypeID);
+		$processor = $objectType->getProcessor();
+		$object = $this->getSingleObject()->getObject();
+		$processor->checkPermissions($object);
+	}
+	
+	/**
+	 * Reverts the objects back to this history entry.
+	 */
+	public function revert() {
+		$this->getSingleObject()->getObject()->revertVersion($this->getSingleObject()->getDecoratedObject());
+	}
 }
