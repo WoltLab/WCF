@@ -32,7 +32,7 @@
 		<event>
 			<name>like</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.like.notification</objecttype>
-			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentUserLikeNotificationEvent]]></classname>
+			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentLikeUserNotificationEvent]]></classname>
 			<preset>1</preset>
 		</event>
 		<event>
