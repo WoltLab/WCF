@@ -53,7 +53,7 @@
 				{foreach from=$objects item=edit}
 					<tr class="jsEditRow">
 						<td class="columnIcon">
-							<span class="icon icon16 icon-undo"></span>
+							<span class="icon icon16 icon-undo pointer jsRevertButton jsTooltip" title="{lang}wcf.edit.revert{/lang}" data-object-id="{@$edit->entryID}" data-confirm-message="{lang}wcf.edit.revert.sure{/lang}"></span>
 							<input type="radio" name="oldID" value="{@$edit->entryID}"{if $oldID == $edit->entryID} checked="checked"{/if} /> <input type="radio" name="newID" value="{@$edit->entryID}"{if $newID == $edit->entryID} checked="checked"{/if} />
 							{event name='rowButtons'}
 						</td>
@@ -69,24 +69,7 @@
 			<script data-relocate="true">
 				//<![CDATA[
 				$(function () {
-					$('input[name=newID]').on('change', function (event) {
-						var newID = $(this).val();
-						
-						$('input[name=oldID]').each(function (event) {
-							if ($(this).val() >= newID) $(this).disable();
-							else $(this).enable();
-						});
-					});
-					
-					$('input[name=oldID]').on('change', function (event) {
-						var oldID = $(this).val();
-						
-						$('input[name=newID]').each(function (event) {
-							if ($(this).val() <= oldID) $(this).disable();
-							else $(this).enable();
-						});
-					});
-					$('input:checked').trigger('change');
+					new WCF.Message.EditHistory($('input[name=oldID]'), $('input[name=newID]'), '.jsEditRow');
 				});
 				//]]>
 			</script>
