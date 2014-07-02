@@ -29,12 +29,6 @@ class MessageParser extends BBCodeParser {
 	protected $cachedCodes = array();
 	
 	/**
-	 * regular expression for source code tags
-	 * @var	string
-	 */
-	protected $sourceCodeRegEx = '';
-	
-	/**
 	 * currently parsed message
 	 * @var	string
 	 */
@@ -45,13 +39,6 @@ class MessageParser extends BBCodeParser {
 	 */
 	protected function init() {
 		parent::init();
-		
-		// handle source codes
-		$sourceCodeTags = array();
-		foreach ($this->bbcodes as $bbcode) {
-			if ($bbcode->isSourceCode) $sourceCodeTags[] = $bbcode->bbcodeTag;
-		}
-		if (!empty($sourceCodeTags)) $this->sourceCodeRegEx = implode('|', $sourceCodeTags);
 		
 		if (MODULE_SMILEY == 1) {
 			// get smilies

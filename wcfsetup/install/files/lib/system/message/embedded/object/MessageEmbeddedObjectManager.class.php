@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\message\embedded\object;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\bbcode\BBCodeParser;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -56,7 +57,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 */
 	public function registerObjects($messageObjectType, $messageID, $message) {
 		// remove [code] tags
-		$message = self::removeCodeTags($message);
+		$message = BBCodeParser::getInstance()->removeCodeTags($message);
 		
 		// delete existing assignments
 		$this->removeObjects($messageObjectType, array($messageID));
@@ -200,7 +201,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 */
 	public function parseTemporaryMessage($message) {
 		// remove [code] tags
-		$message = self::removeCodeTags($message);
+		$message = BBCodeParser::getInstance()->removeCodeTags($message);
 		
 		// set active message information
 		$this->activeMessageObjectTypeID = -1;
@@ -245,21 +246,5 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 		$this->getEmbeddedObjectHandlers();
 		
 		return $this->embeddedObjectHandlers[$objectTypeID];
-	}
-	
-	/**
-	 * Removes code bbcode occurrences in given message.
-	 * 
-	 * @param	string		$message
-	 * @return	string
-	 */
-	protected static function removeCodeTags($message) {
-		return preg_replace("~(\[code
-			(?:=
-				(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*)
-				(?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
-			)?\])
-			(.*?)
-			(?:\[/code\])~six", '', $message);
 	}
 }

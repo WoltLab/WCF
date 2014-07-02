@@ -52,11 +52,24 @@ class BBCodeParser extends SingletonFactory {
 	protected $textArray = array();
 	
 	/**
+	 * regular expression for source code tags
+	 * @var	string
+	 */
+	protected $sourceCodeRegEx = '';
+	
+	/**
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
 		// get bbcodes
 		$this->bbcodes = BBCodeCache::getInstance()->getBBCodes();
+		
+		// handle source codes
+		$sourceCodeTags = array();
+		foreach ($this->bbcodes as $bbcode) {
+			if ($bbcode->isSourceCode) $sourceCodeTags[] = $bbcode->bbcodeTag;
+		}
+		if (!empty($sourceCodeTags)) $this->sourceCodeRegEx = implode('|', $sourceCodeTags);
 	}
 	
 	/**
@@ -530,5 +543,25 @@ class BBCodeParser extends SingletonFactory {
 		}
 		
 		return $usedDisallowedBBCodes;
+	}
+	
+	/**
+	 * Removes code bbcode occurrences in given message.
+	 *
+	 * @param	string		$message
+	 * @return	string
+	 */
+	public function removeCodeTags($message) {
+		if (!empty($this->sourceCodeRegEx)) {
+			return preg_replace("~(\[(?:".$this->sourceCodeRegEx.")
+				(?:=
+					(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*)
+					(?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
+				)?\])
+				(.*?)
+				(?:\[/code\])~six", '', $message);
+		}
+		
+		return $message;
 	}
 }
