@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 
 /**
  * Parses the [quote] bbcode tag.

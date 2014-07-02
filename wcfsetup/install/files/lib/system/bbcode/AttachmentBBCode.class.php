@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\data\attachment\GroupedAttachmentList;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
 use wcf\util\StringUtil;
-use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 
 /**
  * Parses the [attach] bbcode tag.

@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\message\embedded\object;
 use wcf\data\attachment\AttachmentList;
-use wcf\util\ArrayUtil;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\util\ArrayUtil;
 
 /**
  * IMessageEmbeddedObjectHandler implementation for attachments.
