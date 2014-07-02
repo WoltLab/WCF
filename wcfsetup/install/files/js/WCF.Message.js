@@ -135,10 +135,14 @@ WCF.Message.EditHistory = Class.extend({
 	_initInputs: function() {
 		var self = this;
 		this._newIDInputs.change(function(event) {
-			var newID = $(this).val();
+			var newID = parseInt($(this).val())
+			if ($(this).val() === 'current') newID = Infinity;
 			
 			self._oldIDInputs.each(function(event) {
-				if ($(this).val() >= newID) {
+				var oldID = parseInt($(this).val())
+				if ($(this).val() === 'current') oldID = Infinity;
+				
+				if (oldID >= newID) {
 					$(this).disable();
 				}
 				else {
@@ -148,10 +152,14 @@ WCF.Message.EditHistory = Class.extend({
 		});
 		
 		this._oldIDInputs.change(function(event) {
-			var oldID = $(this).val();
+			var oldID = parseInt($(this).val());
+			if ($(this).val() === 'current') oldID = Infinity;
 			
 			self._newIDInputs.each(function(event) {
-				if ($(this).val() <= oldID) {
+				var newID = parseInt($(this).val())
+				if ($(this).val() === 'current') newID = Infinity;
+				
+				if (newID <= oldID) {
 					$(this).disable();
 				}
 				else {
