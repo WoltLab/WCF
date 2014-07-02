@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\edit\history\entry;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 
 /**
@@ -24,11 +25,32 @@ class EditHistoryEntry extends DatabaseObject {
 	protected static $databaseTableIndexName = 'entryID';
 	
 	/**
+	 * @see	\wcf\data\edit\history\entry\EntryHistoryEntry::getObject()
+	 */
+	protected $object = null;
+	
+	/**
 	 * Returns the message text of the history entry.
 	 * 
 	 * @return	string
 	 */
 	public function getMessage() {
 		return $this->message;
+	}
+	
+	/**
+	 * Returns the corresponding IHistorySavingObject
+	 * 
+	 * @return	\wcf\system\edit\IHistorySavingObject
+	 */
+	public function getObject() {
+		if ($this->object === null) {
+			$objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
+			$processor = $objectType->getProcessor();
+			
+			$this->object = $processor->getObjectByID($this->objectID);
+		}
+		
+		return $this->object;
 	}
 }
