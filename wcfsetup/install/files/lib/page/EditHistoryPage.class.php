@@ -124,6 +124,7 @@ class EditHistoryPage extends AbstractPage {
 		
 		if (!$this->new) {
 			$this->new = $this->object;
+			$this->newID = 'current';
 		}
 	}
 	
