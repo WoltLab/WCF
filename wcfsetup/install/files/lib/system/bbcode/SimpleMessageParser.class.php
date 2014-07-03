@@ -29,6 +29,18 @@ class SimpleMessageParser extends SingletonFactory {
 	protected $smilies = array();
 	
 	/**
+	 * cached URLs
+	 * @var array<string>
+	 */
+	protected $cachedURLs = array();
+	
+	/**
+	 * cached e-mails
+	 * @var array<string>
+	 */
+	protected $cachedEmails = array();
+	
+	/**
 	 * currently parsed message
 	 * @var	string
 	 */
@@ -67,9 +79,15 @@ class SimpleMessageParser extends SingletonFactory {
 	 */
 	public function parse($message, $parseURLs = true, $parseSmilies = true) {
 		$this->message = $message;
+		$this->cachedURLs = $this->cachedEmails = array();
 		
 		// call event
 		EventHandler::getInstance()->fireAction($this, 'beforeParsing');
+		
+		// parse urls
+		if ($parseURLs) {
+			$this->message = $this->parseURLs($this->message);
+		}
 		
 		// encode html
 		$this->message = StringUtil::encodeHTML($this->message);
@@ -79,7 +97,7 @@ class SimpleMessageParser extends SingletonFactory {
 		
 		// parse urls
 		if ($parseURLs) {
-			$this->message = $this->parseURLs($this->message);
+			$this->message = $this->insertCachedURLs($this->message);
 		}
 		
 		// parse smilies
@@ -134,30 +152,65 @@ class SimpleMessageParser extends SingletonFactory {
 			~ix';
 		
 		// parse urls
-		$text = preg_replace_callback($urlPattern, array($this, 'parseURLsCallback'), $text);
+		$text = preg_replace_callback($urlPattern, array($this, 'cacheURLsCallback'), $text);
 		
 		// parse emails
 		if (mb_strpos($text, '@') !== false) {
-			$text = preg_replace($emailPattern, '<a href="mailto:\\0">\\0</a>', $text);
+			$text = preg_replace_callback($emailPattern, array($this, 'cacheEmailsCallback'), $text);
 		}
 		
 		return $text;
 	}
 	
 	/**
-	 * Callback for preg_replace.
-	 * 
-	 * @see	\wcf\system\bbcode\SimpleMessageParser::parseURLs()
+	 * Returns the hash for an matched URL in the message.
+	 *
+	 * @param	array		$matches
+	 * @return	string
 	 */
-	protected function parseURLsCallback($matches) {
-		$url = StringUtil::decodeHTML($matches[0]);
-		
-		// add protocol if necessary
-		if (!preg_match("/[a-z]:\/\//si", $url)) {
-			$url = 'http://'.$url;
+	protected function cacheURLsCallback($matches) {
+		$hash = '@@'.StringUtil::getHash(uniqid(microtime()).$matches[0]).'@@';
+		$this->cachedURLs[$hash] = $matches[0];
+	
+		return $hash;
+	}
+	
+	/**
+	 * Returns the hash for an matched e-mail in the message.
+	 *
+	 * @param	array		$matches
+	 * @return	string
+	 */
+	protected function cacheEmailsCallback($matches) {
+		$hash = '@@'.StringUtil::getHash(uniqid(microtime()).$matches[0]).'@@';
+		$this->cachedEmails[$hash] = $matches[0];
+	
+		return $hash;
+	}
+	
+	/**
+	 * Reinserts cached URLs and e-mails.
+	 *
+	 * @param	string		$text
+	 * @return	string
+	 */
+	protected function insertCachedURLs($text) {
+		foreach ($this->cachedURLs as $hash => $url) {
+			// add protocol if necessary
+			if (!preg_match("/[a-z]:\/\//si", $url)) {
+				$url = 'http://'.$url;
+			}
+			
+			$text = str_replace($hash, StringUtil::getAnchorTag($url), $text);
 		}
 		
-		return StringUtil::getAnchorTag($url);
+		foreach ($this->cachedEmails as $hash => $email) {
+			$email = StringUtil::encodeHTML($email);
+				
+			$text = str_replace($hash, '<a href="mailto:'.$email.'">'.$email.'</a>', $text);
+		}
+	
+		return $text;
 	}
 	
 	/**
