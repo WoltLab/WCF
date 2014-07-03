@@ -1343,6 +1343,7 @@ Wenn Sie unter <em>System -&gt; Optionen -&gt; Allgemein -&gt; E-Mails</em> alle
 		<item name="wcf.acp.user.rank.add"><![CDATA[Benutzerrang hinzufügen]]></item>
 		<item name="wcf.acp.user.rank.cssClassName"><![CDATA[CSS-Klassen]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[Sie können aus den vorgegebenen Darstellungen wählen oder eine eigene Darstellung durch Angabe einer <abbr title="Cascading Style Sheets">CSS</abbr>-Klasse nutzen.]]></item>
+		<item name="wcf.acp.user.rank.cssClassName.error.notValid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Aktuelle Ranggrafik]]></item>
 		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Wollen Sie den Benutzerrang „{$userRank->rankTitle|language}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Benutzerrang bearbeiten]]></item>

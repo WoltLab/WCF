@@ -237,7 +237,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		parent::save();
 		
 		$this->objectAction = new CategoryAction(array(), 'create', array(
-			'data' => array(
+			'data' => array_merge($this->additionalFields, array(
 				'additionalData' => serialize($this->additionalData),
 				'description' => ($this->objectType->getProcessor()->hasDescription() && I18nHandler::getInstance()->isPlainValue('description')) ? I18nHandler::getInstance()->getValue('description') : '',
 				'isDisabled' => $this->isDisabled,
@@ -245,7 +245,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 				'parentCategoryID' => $this->parentCategoryID,
 				'showOrder' => $this->showOrder > 0 ? $this->showOrder : null,
 				'title' => I18nHandler::getInstance()->isPlainValue('title') ? I18nHandler::getInstance()->getValue('title') : ''
-			)
+			))
 		));
 		$this->objectAction->executeAction();
 		$returnValues = $this->objectAction->getReturnValues();
