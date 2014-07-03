@@ -553,13 +553,13 @@ class BBCodeParser extends SingletonFactory {
 	 */
 	public function removeCodeTags($message) {
 		if (!empty($this->sourceCodeRegEx)) {
-			return preg_replace("~(\[(?:".$this->sourceCodeRegEx.")
+			return preg_replace("~(\[(".$this->sourceCodeRegEx.")
 				(?:=
 					(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*)
 					(?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
 				)?\])
 				(.*?)
-				(?:\[/code\])~six", '', $message);
+				(?:\[/\\2\])~six", '', $message);
 		}
 		
 		return $message;
