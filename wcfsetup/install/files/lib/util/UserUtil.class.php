@@ -36,6 +36,11 @@ final class UserUtil {
 				return false;
 			}
 		}
+		// username must not be a valid e-mail
+		if (self::isValidEmail($name)) {
+			return false;
+		}
+		
 		return true;
 	}
 	
