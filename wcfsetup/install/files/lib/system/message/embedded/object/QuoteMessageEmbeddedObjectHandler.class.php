@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\message\embedded\object;
-use wcf\data\user\UserProfile;
 use wcf\data\user\UserList;
+use wcf\data\user\UserProfile;
 
 /**
  * IMessageEmbeddedObjectHandler implementation for quotes.

@@ -88,7 +88,7 @@ class Diff {
 		}
 		
 		// both arrays are the same
-		if ($offsetStart === $offsetEnd) {
+		if ($offsetStart === $this->sizeA && $offsetStart === $this->sizeB) {
 			return \SplFixedArray::fromArray($this->a);
 		}
 		
