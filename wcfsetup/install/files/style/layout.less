@@ -1337,7 +1337,8 @@ html[dir="rtl"] {
 			}
 		}
 		
-		&:not(:first-child) {
+		/* hide second breadcrumbs */
+		~ .breadcrumbs {
 			display: none;
 		}
 	}
