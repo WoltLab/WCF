@@ -121,6 +121,9 @@ class Language extends DatabaseObject {
 		if (!$staticItem) return '';
 		
 		if (isset($this->dynamicItems[$item])) {
+			// assign active language
+			$variables['__language'] = $this;
+			
 			return WCF::getTPL()->fetchString($this->dynamicItems[$item], $variables);
 		}
 		

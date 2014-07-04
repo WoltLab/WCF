@@ -21,6 +21,10 @@ class LanguageModifierTemplatePlugin implements IModifierTemplatePlugin {
 	 * @see	\wcf\system\template\IModifierTemplatePlugin::execute()
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
-		return WCF::getLanguage()->getDynamicVariable($tagArgs[0]);
+		if (($lang = $tplObj->get('__language')) === null) {
+			$lang = WCF::getLanguage();
+		}
+		
+		return $lang->getDynamicVariable($tagArgs[0]);
 	}
 }
