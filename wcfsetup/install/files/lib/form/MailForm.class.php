@@ -23,9 +23,9 @@ use wcf\util\UserUtil;
  */
 class MailForm extends AbstractCaptchaForm {
 	/**
-	 * @see	\wcf\form\AbstractCaptchaForm::$captchaObjectTypeName
+	 * @see	\wcf\form\AbstractCaptchaForm::$useCaptcha
 	 */
-	public $captchaObjectTypeName = PROFILE_MAIL_CAPTCHA_TYPE;
+	public $useCaptcha = PROFILE_MAIL_USE_CAPTCHA;
 	
 	/**
 	 * recipient's user id
