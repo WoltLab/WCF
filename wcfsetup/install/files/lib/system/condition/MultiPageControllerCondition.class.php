@@ -33,18 +33,10 @@ class MultiPageControllerCondition extends AbstractMultiSelectCondition implemen
 	protected $label = 'wcf.page.requestedPage';
 	
 	/**
-	 * @see	\wcf\system\condition\AbstractSingleFieldCondition::getFieldElement()
+	 * @see	\wcf\system\condition\AbstractSelectCondition::getOptionCode()
 	 */
-	protected function getFieldElement() {
-		$options = $this->getOptions();
-		
-		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple="multiple" size="'.(count($options) > 10 ? 10 : count($options)).'">';
-		foreach ($options as $value => $label) {
-			$fieldElement .= '<option value="'.$value.'" data-object-type="'.ObjectTypeCache::getInstance()->getObjectType($value)->objectType.'"'.(in_array($value, $this->fieldValue) ? ' selected="selected"' : '').'>'.WCF::getLanguage()->get($label).'</option>';
-		}
-		$fieldElement .= "</select>";
-		
-		return $fieldElement;
+	protected function getOptionCode($value, $label) {
+		return '<option value="'.$value.'" data-object-type="'.ObjectTypeCache::getInstance()->getObjectType($value)->objectType.'"'.(in_array($value, $this->fieldValue) ? ' selected="selected"' : '').'>'.WCF::getLanguage()->get($label).'</option>';
 	}
 	
 	/**

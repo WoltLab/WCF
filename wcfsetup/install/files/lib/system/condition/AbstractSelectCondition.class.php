@@ -53,12 +53,45 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition {
 		$options = $this->getOptions();
 		
 		$fieldElement = '<select name="'.$this->fieldName.'">';
-		foreach ($options as $value => $label) {
-			$fieldElement .= '<option value="'.$value.'"'.($this->fieldValue == $value ? ' selected="selected"' : '').'>'.WCF::getLanguage()->get($label).'</option>';
+		foreach ($options as $key => $value) {
+			if (is_array($value)) {
+				$fieldElement .= $this->getOptGroupCode($key, $value);
+			}
+			else {
+				$fieldElement .= $this->getOptionCode($key, $value);
+			}
 		}
 		$fieldElement .= "</select>";
 		
 		return $fieldElement;
+	}
+	
+	/**
+	 * Returns the html code for an opt group.
+	 * 
+	 * @param	string			$label
+	 * @param	array<string>		$options
+	 * @return	string
+	 */
+	protected function getOptGroupCode($label, array $options) {
+		$html = '<optgroup label="'.$label.'">';
+		foreach ($options as $key => $value) {
+			$html .= $this->getOptionCode($key, $value);
+		}
+		$html .= '</optgroup>';
+		
+		return $html;
+	}
+	
+	/**
+	 * Returns the html code for an option.
+	 * 
+	 * @param	string		$value
+	 * @param	string		$label
+	 * @return	string
+	 */
+	protected function getOptionCode($value, $label) {
+		return '<option value="'.$value.'"'.($this->fieldValue == $value ? ' selected="selected"' : '').'>'.WCF::getLanguage()->get($label).'</option>';
 	}
 	
 	/**
@@ -95,6 +128,12 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition {
 			$options = $this->getOptions();
 			
 			if (!isset($options[$this->fieldValue])) {
+				foreach ($options as $key => $value) {
+					if (is_array($value) && isset($value[$this->fieldValue])) {
+						return;
+					}
+				}
+				
 				$this->errorMessage = 'wcf.global.form.error.noValidSelection';
 				
 				throw new UserInputException($this->fieldName, 'noValidSelection');
