@@ -2,9 +2,7 @@
 namespace wcf\form;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\exception\SystemException;
-use wcf\system\recaptcha\RecaptchaHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a form using captcha.
