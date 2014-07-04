@@ -1025,6 +1025,59 @@ li:nth-child(2n+1) .message {
 	padding: 7px 14px 7px;
 }
 
+.redactorMessageOptions {
+	border: 1px solid rgba(238, 238, 238, 1);
+	border-top-width: 0;
+	
+	> nav {
+		> ul {
+			background-color: rgba(244, 244, 244, 1);
+			
+			> li {
+				display: inline-block;
+				
+				> a {
+					border-right: 1px solid rgba(238, 238, 238, 1);
+					border-bottom: 1px solid transparent;
+					color: rgba(51, 51, 51, 1);
+					display: block;
+					margin-bottom: -1px;
+					padding: 7px 14px 8px 14px;
+					text-decoration: none;
+					
+					-webkit-touch-callout: none;
+					-webkit-user-select: none;
+					-khtml-user-select: none;
+					-moz-user-select: none;
+					-ms-user-select: none;
+					user-select: none;
+					
+					&:hover {
+						background-color: @wcfButtonBackgroundColor;
+					}
+				}
+				
+				&.active {
+					> a {
+						background-color: rgba(255, 255, 255, 1);
+						
+						color: rgba(102, 102, 102, 1);
+						/*margin-bottom: -1px;
+						padding-bottom: 8px;*/
+					}
+				}
+			}
+		}
+	}
+	
+	> div {
+		background-color: rgba(255, 255, 255, 1);
+		border-top: 1px solid rgba(238, 238, 238, 1);
+		margin-top: -1px;
+		padding: 14px 7px;
+	}
+}
+
 .redactor_dropdown_box_wsmiley > ul > li:not(:last-child) {
 	margin-right: 3px !important;
 }
