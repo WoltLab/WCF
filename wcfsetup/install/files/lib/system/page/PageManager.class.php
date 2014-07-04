@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\page;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\package\PackageCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -82,16 +81,19 @@ class PageManager extends SingletonFactory {
 		
 		$selection = array();
 		foreach ($objectTypes as $objectType) {
-			$selection[$objectType->objectTypeID] = WCF::getLanguage()->get('wcf.page.'.$objectType->objectType);
-			
-			if ($application === null && substr($objectType->className, 0, 3) != 'wcf') {
-				$classNamePieces = explode('\\', $objectType->className);
-				
-				$selection[$objectType->objectTypeID] .= ' ('.PackageCache::getInstance()->getPackage(ApplicationHandler::getInstance()->getApplication($classNamePieces[0])->packageID).')';
+			$categoryName = WCF::getLanguage()->get('wcf.page.category.'.$objectType->categoryname);
+			if (!isset($selection[$categoryName])) {
+				$selection[$categoryName] = array();
 			}
+			
+			$selection[$categoryName][$objectType->objectTypeID] = WCF::getLanguage()->get('wcf.page.'.$objectType->objectType);
 		}
 		
-		asort($selection);
+		ksort($selection);
+		
+		foreach ($selection as &$subSelection) {
+			asort($subSelection);
+		}
 		
 		return $selection;
 	}

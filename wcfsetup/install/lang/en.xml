@@ -2188,6 +2188,9 @@ Errors are:
 		<item name="wcf.page.cookiePolicy.info"><![CDATA[TODO: Diese Seite verwendet Cookies. Durch die Nutzung unserer Seite erklären Sie sich damit einverstanden, dass wir Cookies setzen. <a href="{link controller='CookiePolicy'}{/link}">Weitere Informationen</a>]]></item>
 		<item name="wcf.page.cookiePolicy"><![CDATA[TODO: Einsatz von Cookies]]></item>
 		<item name="wcf.page.cookiePolicy.text"><![CDATA[TODO]]></item>
+		<item name="wcf.page.category.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
+		<item name="wcf.page.category.com.woltlab.wcf.other"><![CDATA[Other Pages]]></item>
+		<item name="wcf.page.category.com.woltlab.wcf.user"><![CDATA[Users]]></item>
 		<item name="wcf.page.com.woltlab.wcf.AccountManagementForm"><![CDATA[Account Management]]></item>
 		<item name="wcf.page.com.woltlab.wcf.AvatarEditForm"><![CDATA[Avatar Management]]></item>
 		<item name="wcf.page.com.woltlab.wcf.DisclaimerForm"><![CDATA[Disclaimer]]></item>

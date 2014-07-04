@@ -2327,6 +2327,9 @@ Fehler sind beispielsweise:
 <li><a href="http://support.apple.com/kb/ph11920" class="externalURL" rel="nofollow">Safari</a></li>
 <li><a href="http://windows.microsoft.com/de-DE/internet-explorer/delete-manage-cookies" class="externalURL" rel="nofollow">Windows Internet Explorer</a></li>
 </ul>]]></item>
+		<item name="wcf.page.category.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
+		<item name="wcf.page.category.com.woltlab.wcf.other"><![CDATA[Weitere Seiten]]></item>
+		<item name="wcf.page.category.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.page.com.woltlab.wcf.AccountManagementForm"><![CDATA[Benutzerkonto-Verwaltung]]></item>
 		<item name="wcf.page.com.woltlab.wcf.AvatarEditForm"><![CDATA[Avatar-Verwaltung]]></item>
 		<item name="wcf.page.com.woltlab.wcf.DisclaimerForm"><![CDATA[Disclaimer]]></item>
