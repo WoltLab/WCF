@@ -64,7 +64,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		
 		this._makeSortable();
 		
-		this._insertAllButton = $('<p class="button">' + WCF.Language.get('wcf.attachment.insertAll') + '</p>').hide().appendTo(this._buttonSelector);
+		this._insertAllButton = $('<p class="button jsButtonAttachmentInsertAll">' + WCF.Language.get('wcf.attachment.insertAll') + '</p>').hide().appendTo(this._buttonSelector);
 		this._insertAllButton.click($.proxy(this._insertAll, this));
 		
 		if (this._fileListSelector.children('li:not(.uploadFailed)').length) {

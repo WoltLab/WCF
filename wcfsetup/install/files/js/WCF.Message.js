@@ -787,6 +787,38 @@ WCF.Message.QuickReply = Class.extend({
 			$parameters.anchor = this._container.data('anchor');
 		}
 		
+		// check for additional settings
+		var $container = $('#redactorMessageOptions_settings');
+		if ($container.length) {
+			$parameters.settings = { };
+			$container.find('input, textarea, select').each(function(index, element) {
+				var $element = $(element);
+				switch ($element.getTagName()) {
+					case 'input':
+						switch ($element.prop('type')) {
+							case 'checkbox':
+							case 'radio':
+								if ($element.is(':checked')) {
+									$parameters.settings[$element.prop('name')] = $element.val();
+								}
+								else if ($element.data('submitEmpty')) {
+									$parameters.settings[$element.prop('name')] = 0;
+								}
+							break;
+							
+							default:
+								$parameters.settings[$element.prop('name')] = $element.val();
+							break;
+						}
+					break;
+					
+					default:
+						$parameters.settings[$element.prop('name')] = $element.val();
+					break;
+				}
+			});
+		}
+		
 		return $parameters;
 	},
 	

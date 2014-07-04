@@ -25,7 +25,7 @@ RedactorPlugins.wutil = {
 			this.autosaveEnable();
 			
 			if (this.getOption('wautosave').saveOnInit || this.$source.data('saveOnInit')) {
-				this._saveTextToStorage();
+				this.setOption('wAutosaveOnce', true);
 			}
 			else {
 				this.autosaveRestore();
@@ -176,6 +176,8 @@ RedactorPlugins.wutil = {
 		else {
 			this.$source.val('');
 		}
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'reset');
 	},
 	
 	/**

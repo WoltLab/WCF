@@ -23,13 +23,15 @@ RedactorPlugins.wupload = {
 		this.buttonAwesome('upload', 'fa-upload');
 		
 		this._initAttachments();
+		
+		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'reset', $.proxy(this._wUploadListener, this));
 	},
 	
 	/**
 	 * Initializes the attachments user interface.
 	 */
 	_initAttachments: function() {
-		this._attachmentsContainer = $('<div class="redactorAttachmentContainer" />').hide().appendTo(this.$box);
+		this._attachmentsContainer = $('#redactorMessageOptions_attachments');
 		var $attachmentList = $('<ul class="formAttachmentList clearfix" />').hide().appendTo(this._attachmentsContainer);
 		$('<dl class="wide"><dt></dt><dd><div data-max-size="{@$attachmentHandler->getMaxSize()}"></div><small>' + WCF.String.unescapeHTML(WCF.Language.get('wcf.attachment.upload.limits')) + '</small></dd></dl>').appendTo(this._attachmentsContainer);
 		
@@ -53,12 +55,18 @@ RedactorPlugins.wupload = {
 				
 				$listItem.appendTo($attachmentList);
 				
-				this._attachmentsContainer.show();
 				$attachmentList.show();
 			}
+			
+			this._showMessageOptionContainer(null, 'attachments');
 		}
 		
 		new WCF.Attachment.Upload(this._attachmentsContainer.find('> dl > dd > div'), this._attachmentsContainer.children('ul'), $options.objectType, $options.objectID, $options.tmpHash, $options.parentObjectID, $options.maxCount, this.$source.wcfIdentify());
 		new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', '.formAttachmentList > li');
+	},
+	
+	_wUploadListener: function(data) {
+		this._attachmentsContainer.children('.formAttachmentList').hide().empty();
+		this._attachmentsContainer.find('.jsButtonAttachmentInsertAll').hide();
 	}
 };

@@ -36,6 +36,11 @@ RedactorPlugins.wbbcode = {
 			html = html.replace(/<p><br([^>]+)?><\/p>/g, '<p>@@@wcf_empty_line@@@</p>');
 			return $mpSyncClean.call(self, html);
 		};
+		
+		if (this.getOption('wAutosaveOnce')) {
+			this._saveTextToStorage();
+			delete this.opts.wAutosaveOnce;
+		}
 	},
 	
 	/**
@@ -143,7 +148,7 @@ RedactorPlugins.wbbcode = {
 		var $parts = html.split(/(<\/?p>)/);
 		var $tmp = '';
 		var $buffer = '';
-		for (var $i = 1; $i < $parts.length; $i++) {
+		for (var $i = 0; $i < $parts.length; $i++) {
 			var $part = $parts[$i];
 			if ($part == '<p>') {
 				continue;
@@ -158,7 +163,12 @@ RedactorPlugins.wbbcode = {
 				$buffer = '';
 			}
 			else {
-				$buffer += $part;
+				if ($i == 0) {
+					$tmp += $part;
+				}
+				else {
+					$buffer += $part;
+				}
 			}
 		}
 		html = $tmp;
@@ -306,8 +316,8 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/<\/(ul|ol)>/gi, '[/list]');
 		
 		// [table]
-		html = html.replace(/<table[^>]*>/gi, '[table]');
-		html = html.replace(/<\/table>/gi, '[/table]');
+		html = html.replace(/<table[^>]*>/gi, '[table]\n');
+		html = html.replace(/<\/table>/gi, '[/table]\n');
 		
 		// remove <tbody>
 		html = html.replace(/<tbody>([\s\S]*?)<\/tbody>/, function(match, p1) {
@@ -317,15 +327,15 @@ RedactorPlugins.wbbcode = {
 		// remove empty <tr>s
 		html = html.replace(/<tr><\/tr>/gi, '');
 		// [tr]
-		html = html.replace(/<tr>/gi, '[tr]');
-		html = html.replace(/<\/tr>/gi, '[/tr]');
+		html = html.replace(/<tr>/gi, '[tr]\n');
+		html = html.replace(/<\/tr>/gi, '[/tr]\n');
 		
 		// [td]+[align]
 		html = html.replace(/<td style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)<\/td>/gi, "[td][align=$1]$2[/align][/td]");
 		
 		// [td]
-		html = html.replace(/<td>/gi, '[td]');
-		html = html.replace(/<\/td>/gi, '[/td]');
+		html = html.replace(/(\t)*<td>/gi, '[td]');
+		html = html.replace(/(\t)*<\/td>/gi, '[/td]\n');
 		
 		// cache redactor's selection markers
 		var $cachedMarkers = { };

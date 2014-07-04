@@ -249,6 +249,82 @@ RedactorPlugins.wmonkeypatch = {
 		this.$modal.children('.dialogContent').removeClass('dialogForm');
 	},
 	
+	tableInsert: function()
+	{
+		this.bufferSet(false);
+
+		var rows = $('#redactor_table_rows').val(),
+			columns = $('#redactor_table_columns').val(),
+			$table_box = $('<div></div>'),
+			tableId = Math.floor(Math.random() * 99999),
+			$table = $('<table id="table' + tableId + '"><tbody></tbody></table>'),
+			i, $row, z, $column;
+
+		for (i = 0; i < rows; i++)
+		{
+			$row = $('<tr></tr>');
+
+			for (z = 0; z < columns; z++)
+			{
+				$column = $('<td>' + this.opts.invisibleSpace + '</td>');
+
+				// set the focus to the first td
+				if (i === 0 && z === 0)
+				{
+					$column.append('<span id="selection-marker-1">' + this.opts.invisibleSpace + '</span>');
+				}
+
+				$($row).append($column);
+			}
+
+			$table.append($row);
+		}
+
+		$table_box.append($table);
+		var html = $table_box.html();
+
+		if (this.opts.linebreaks === false && this.browser('mozilla'))
+		{
+			html += '<p>' + this.opts.invisibleSpace + '</p>';
+		}
+
+		this.modalClose();
+		this.selectionRestore();
+
+		var current = this.getBlock() || this.getCurrent();
+
+		if (current && current.tagName != 'BODY')
+		{
+			// WoltLab fix for nested tables
+			if (current.tagName == 'TD') {
+				$(current).append(html);
+			}
+			else {
+				if (current.tagName == 'LI')
+				{
+					var current = $(current).closest('ul, ol');
+				}
+	
+				$(current).after(html);
+			}
+			// WoltLab fix for nested tables
+		}
+		else
+		{
+			this.insertHtmlAdvanced(html, false);
+		}
+
+		this.selectionRestore();
+
+		var table = this.$editor.find('#table' + tableId);
+		this.buttonActiveObserver();
+
+		table.find('span#selection-marker-1, inline#selection-marker-1').remove();
+		table.removeAttr('id');
+
+		this.sync();
+	},
+	
 	modalOpenedCallback: function() {
 		// handle positioning of form submit controls
 		var $heightDifference = 0;

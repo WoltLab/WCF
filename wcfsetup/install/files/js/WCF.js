@@ -7650,7 +7650,54 @@ WCF.System.PushNotification = {
 			}
 		}
 	}
-}
+};
+
+/**
+ * System-wide event system.
+ */
+WCF.System.Event = {
+	/**
+	 * list of event listeners grouped by identifier and action.
+	 * @var	object<object>
+	 */
+	_listeners: { },
+	
+	/**
+	 * Registers a new event listener.
+	 * 
+	 * @param	string		identifier
+	 * @param	string		action
+	 * @param	object		listener
+	 */
+	addListener: function(identifier, action, listener) {
+		if (typeof this._listeners[identifier] === 'undefined') {
+			this._listeners[identifier] = { };
+		}
+		
+		if (typeof this._listeners[identifier][action] === 'undefined') {
+			this._listeners[identifier][action] = [ ];
+		}
+		
+		this._listeners[identifier][action].push(listener);
+	},
+	
+	/**
+	 * Fires a new event and notifies all registered event listeners.
+	 * 
+	 * @param	string		identifier
+	 * @param	string		action
+	 * @param	object		data
+	 */
+	fireEvent: function(identifier, action, data) {
+		data = data || { };
+		
+		if (this._listeners[identifier] && this._listeners[identifier][action]) {
+			for (var $i = 0; $i < this._listeners[identifier][action].length; $i++) {
+				this._listeners[identifier][action][$i](data);
+			}
+		}
+	}
+};
 
 /**
  * Worker support for frontend based upon DatabaseObjectActions.

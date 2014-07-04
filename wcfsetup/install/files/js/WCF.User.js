@@ -2694,6 +2694,8 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 			var $objectID = $button.data('objectID');
 			this._buttons[$objectID] = $button.click($.proxy(this._click, this));
 		}, this));
+		
+		WCF.System.Event.addListener('com.woltlab.wcf.objectWatch', 'update', $.proxy(this._updateSubscriptionStatus, this));
 	},
 	
 	/**
@@ -2759,14 +2761,11 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 		else if (data.actionName === 'saveSubscription' && this._dialog.is(':visible')) {
 			this._dialog.wcfDialog('close');
 			
-			// update icon
-			var $icon = $(this._buttonSelector + '[data-object-id=' + data.returnValues.objectID + '] > .icon');
-			if (data.returnValues.subscribe) {
-				$icon.removeClass('icon-bookmark-empty').addClass('icon-bookmark');
-			}
-			else {
-				$icon.removeClass('icon-bookmark').addClass('icon-bookmark-empty');
-			}
+			this._updateSubscriptionStatus({
+				isSubscribed: data.returnValues.subscribe,
+				objectID: data.returnValues.objectID
+			});
+			
 			
 			// show notification
 			if (this._notification === null) {
@@ -2798,6 +2797,26 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 			}
 		});
 		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Updates subscription status and icon.
+	 * 
+	 * @param	object		data
+	 */
+	_updateSubscriptionStatus: function(data) {
+		var $button = $(this._buttonSelector + '[data-object-id=' + data.objectID + ']');
+		var $icon = $button.children('.icon');
+		if (data.isSubscribed) {
+			$icon.removeClass('icon-bookmark-empty').addClass('icon-bookmark');
+			$button.data('isSubscribed', true);
+		}
+		else {
+			$icon.removeClass('icon-bookmark').addClass('icon-bookmark-empty');
+			$button.data('isSubscribed', false);
+		}
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.objectWatch', 'updatedSubscription', data);
 	}
 });
 
