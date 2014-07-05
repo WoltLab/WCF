@@ -552,7 +552,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$action->executeAction();
 		
 		// send e-mail notification
-		if (!empty($this->parameters['skipNotification'])) {
+		if (empty($this->parameters['skipNotification'])) {
 			foreach ($this->objects as $user) {
 				$mail = new Mail(array($user->username => $user->email), $user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail.subject'), $user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail', array(
 					'username' => $user->username
