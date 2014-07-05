@@ -1566,6 +1566,11 @@ Login with your new password: {link controller='Login' isEmail=true}{/link}]]></
 		<item name="wcf.acp.user.authentication.failure.environment.user"><![CDATA[TODO: Benutzer]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment.admin"><![CDATA[TODO: Administration]]></item>
 		<item name="wcf.acp.user.authentication.failure.time"><![CDATA[TODO: Datum]]></item>
+		<item name="wcf.acp.user.activation.mail"><![CDATA[TODO: Hallo {@$username},
+
+Ihr Benutzerkonto auf der Website: {@PAGE_TITLE|language} wurde vom Administrator freigeschaltet.
+Sie können jetzt den vollen Funktionsumfang der Seite nutzen.]]></item>
+		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[TODO: Ihr Benutzerkonto auf der Website: {@PAGE_TITLE|language} wurde freigeschaltet]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">

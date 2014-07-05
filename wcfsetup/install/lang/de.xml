@@ -1597,6 +1597,11 @@ Klicken Sie hier, um sich mit Ihrem neuen Kennwort anzumelden: {link controller=
 		<item name="wcf.acp.user.authentication.failure.environment.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment.admin"><![CDATA[Administration]]></item>
 		<item name="wcf.acp.user.authentication.failure.time"><![CDATA[Datum]]></item>
+		<item name="wcf.acp.user.activation.mail"><![CDATA[Hallo {@$username},
+
+Ihr Benutzerkonto auf der Website: {@PAGE_TITLE|language} wurde vom Administrator freigeschaltet.
+Sie können jetzt den vollen Funktionsumfang der Seite nutzen.]]></item>
+		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[Ihr Benutzerkonto auf der Website: {@PAGE_TITLE|language} wurde freigeschaltet]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">

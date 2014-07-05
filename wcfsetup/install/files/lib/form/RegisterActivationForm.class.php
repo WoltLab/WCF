@@ -79,7 +79,7 @@ class RegisterActivationForm extends AbstractForm {
 		parent::save();
 		
 		// enable user
-		$this->objectAction = new UserAction(array($this->user), 'enable');
+		$this->objectAction = new UserAction(array($this->user), 'enable', array('skipNotification' => true));
 		$this->objectAction->executeAction();
 		$this->saved();
 		

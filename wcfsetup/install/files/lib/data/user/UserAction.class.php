@@ -12,6 +12,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\mail\Mail;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
@@ -549,6 +550,16 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			'addDefaultGroups' => false
 		));
 		$action->executeAction();
+		
+		// send e-mail notification
+		if (!empty($this->parameters['skipNotification'])) {
+			foreach ($this->objects as $user) {
+				$mail = new Mail(array($user->username => $user->email), $user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail.subject'), $user->getLanguage()->getDynamicVariable('wcf.acp.user.activation.mail', array(
+					'username' => $user->username
+				)));
+				$mail->send();
+			}
+		}
 		
 		$this->unmarkItems();
 	}
