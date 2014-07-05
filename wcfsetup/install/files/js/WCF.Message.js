@@ -449,42 +449,64 @@ WCF.Message.SmileyCategories = Class.extend({
 	_proxy: null,
 	
 	/**
-	 * Initializes the smiley loader.
+	 * wysiwyg editor selector
+	 * @var	string
 	 */
-	init: function() {
-		this._cache = [ ];
+	_wysiwygSelector: '',
+	
+	/**
+	 * Initializes the smiley loader.
+	 * 
+	 * @param	string		wysiwygSelector
+	 */
+	init: function(wysiwygSelector) {
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
+		this._wysiwygSelector = wysiwygSelector;
 		
-		$('#smilies').on('wcftabsbeforeactivate', $.proxy(this._click, this));
+		$('#smilies-' + this._wysiwygSelector).on('messagetabmenushow', $.proxy(this._click, this));
 		
 		// handle onload
-		var self = this;
+		/*var self = this;
 		new WCF.PeriodicalExecuter(function(pe) {
 			pe.stop();
 			
 			self._click({ }, { newTab: $('#smilies > .menu li.ui-state-active') });
-		}, 100);
+		}, 100);*/
 	},
 	
 	/**
 	 * Handles tab menu clicks.
 	 * 
 	 * @param	object		event
-	 * @param	object		ui
+	 * @param	object		data
 	 */
-	_click: function(event, ui) {
-		var $categoryID = parseInt($(ui.newTab).children('a').data('smileyCategoryID'));
+	_click: function(event, data, c) {
+		var $categoryID = parseInt(data.activeTab.tab.data('smileyCategoryID'));
 		
-		if ($categoryID && !WCF.inArray($categoryID, this._cache)) {
-			this._proxy.setOption('data', {
-				actionName: 'getSmilies',
-				className: 'wcf\\data\\smiley\\category\\SmileyCategoryAction',
-				objectIDs: [ $categoryID ]
-			});
-			this._proxy.sendRequest();
+		// ignore global category, will always be pre-loaded
+		if (!$categoryID) {
+			return;
 		}
+		
+		// smilies have already been loaded for this tab, ignore
+		if (data.activeTab.container.children('ul.smileyList').length) {
+			return;
+		}
+		
+		// cache exists
+		if (this._cache[$categoryID] !== undefined) {
+			data.activeTab.container.html(this._cache[$categoryID]);
+		}
+		
+		// load content
+		this._proxy.setOption('data', {
+			actionName: 'getSmilies',
+			className: 'wcf\\data\\smiley\\category\\SmileyCategoryAction',
+			objectIDs: [ $categoryID ]
+		});
+		this._proxy.sendRequest();
 	},
 	
 	/**
@@ -496,9 +518,9 @@ WCF.Message.SmileyCategories = Class.extend({
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		var $categoryID = parseInt(data.returnValues.smileyCategoryID);
-		this._cache.push($categoryID);
+		this._cache[$categoryID] = data.returnValues.template;
 		
-		$('#smilies-' + $categoryID).html(data.returnValues.template);
+		$('#smilies-' + this._wysiwygSelector + '-' + $categoryID).html(data.returnValues.template);
 	}
 });
 
@@ -3373,5 +3395,190 @@ WCF.Message.UserMention = Class.extend({
 			// ignore errors that are caused by pressing enter to
 			// often in a short period of time
 		}
+	}
+});
+
+/**
+ * Provides a specialized tab menu used for message options, integrates better into the editor.
+ */
+$.widget('wcf.messageTabMenu', {
+	/**
+	 * list of existing tabs and their containers
+	 * @var	array<object>
+	 */
+	_tabs: [ ],
+	
+	/**
+	 * list of tab names and their corresponding index
+	 * @var	object<string>
+	 */
+	_tabsByName: { },
+	
+	/**
+	 * widget options
+	 * @var	object<mixed>
+	 */
+	options: {
+		collapsible: true
+	},
+	
+	/**
+	 * Creates the message tab menu.
+	 */
+	_create: function() {
+		var $tabs = this.element.find('> nav > ul > li');
+		var $tabContainers = this.element.find('> div, > fieldset');
+		
+		if ($tabs.length != $tabContainers.length) {
+			console.debug("[wcf.messageTabMenu] Amount of tabs does not equal amount of tab containers, aborting.");
+			return;
+		}
+		
+		var $preselect = this.element.data('preselect');
+		this._tabs = [ ];
+		this._tabsByName = { };
+		for (var $i = 0; $i < $tabs.length; $i++) {
+			var $tab = $($tabs[$i]);
+			var $tabContainer = $($tabContainers[$i]);
+			
+			var $name = $tab.data('name');
+			if ($name === undefined) {
+				var $href = $tab.children('a').prop('href');
+				if ($href !== undefined) {
+					if ($href.match(/#([a-zA-Z_-]+)$/)) {
+						$name = RegExp.$1;
+					}
+				}
+				
+				if ($name === undefined) {
+					$name = $tab.wcfIdentify();
+					console.debug("[wcf.messageTabMenu] Missing name attribute, assuming generic ID '" + $name + "'");
+				}
+			}
+			
+			this._tabs.push({
+				container: $tabContainer,
+				name: $name,
+				tab: $tab
+			});
+			this._tabsByName[$name] = $i;
+			
+			var $anchor = $tab.children('a').data('index', $i).click($.proxy(this._showTab, this));
+			if ($preselect == $name) {
+				$anchor.trigger('click');
+			}
+		}
+		
+		if ($preselect === true) {
+			// pick the first available tab
+			this._tabs[0].tab.children('a').trigger('click');
+		}
+		
+		var $collapsible = this.element.data('collapsible');
+		if ($collapsible !== undefined) {
+			this.options.collapsible = $collapsible;
+		}
+	},
+	
+	/**
+	 * Destroys the message tab menu.
+	 */
+	destroy: function() {
+		$.Widget.prototype.destroy.apply(this, arguments);
+		
+		this.element.remove();
+	},
+	
+	/**
+	 * Shows a tab or collapses it if already open.
+	 * 
+	 * @param	object		event
+	 * @param	integer		index
+	 * @param	boolean		forceOpen
+	 */
+	_showTab: function(event, index, forceOpen) {
+		var $index = (event === null) ? index : $(event.currentTarget).data('index');
+		forceOpen = (!this.options.collapsible || forceOpen === true) ? true : false;
+		
+		var $target = null;
+		for (var $i = 0; $i < this._tabs.length; $i++) {
+			var $current = this._tabs[$i];
+			
+			if ($i == $index) {
+				if (!$current.tab.hasClass('active')) {
+					$current.tab.addClass('active');
+					$current.container.addClass('active');
+					$target = $current;
+					
+					continue;
+				}
+				else if (forceOpen === true) {
+					continue;
+				}
+			}
+			
+			$current.tab.removeClass('active');
+			$current.container.removeClass('active');
+		}
+		
+		if (event !== null) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+		
+		if ($target !== null) {
+			this._trigger('show', { }, {
+				activeTab: $target
+			});
+		}
+	},
+	
+	/**
+	 * Toggle a specific tab by either index or name property.
+	 * 
+	 * @param	mixed		index
+	 * @param	boolean		forceOpen
+	 */
+	showTab: function(index, forceOpen) {
+		if (!$.isNumeric(index)) {
+			if (this._tabsByName[index] !== undefined) {
+				index = this._tabsByName[index];
+			}
+		}
+		
+		if (this._tabs[index] === undefined) {
+			console.debug("[wcf.messageTabMenu] Cannot locate tab identified by '" + index + "'");
+			return;
+		}
+		
+		this._showTab(null, index, forceOpen);
+	},
+	
+	/**
+	 * Returns a tab by it's unique name.
+	 * 
+	 * @param	string		name
+	 * @return	jQuery
+	 */
+	getTab: function(name) {
+		if (this._tabsByName[name] !== undefined) {
+			return this._tabs[this._tabsByName[name]].tab;
+		}
+		
+		return null;
+	},
+	
+	/**
+	 * Returns a tab container by it's tab's unique name.
+	 * 
+	 * @param	string		name
+	 * @return	jQuery
+	 */
+	getContainer: function(name) {
+		if (this._tabsByName[name] !== undefined) {
+			return this._tabs[this._tabsByName[name]].container;
+		}
+		
+		return null;
 	}
 });

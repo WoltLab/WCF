@@ -3,17 +3,17 @@
 	{foreach from=$smileyCategories item=smileyCategory}
 		{assign var=__tabCount value=$__tabCount + 1}
 		{assign var='__smileyAnchor' value='smilies-'|concat:$smileyCategory->categoryID}
-		<li><a href="{$__wcf->getAnchor($__smileyAnchor)}" data-smiley-category-id="{@$smileyCategory->categoryID}">{$smileyCategory->title|language}</a></li>
+		<li data-name="smilies-{@$smileyCategory->categoryID}" data-smiley-category-id="{@$smileyCategory->categoryID}"><a>{$smileyCategory->title|language}</a></li>
 	{/foreach}
 {/capture}
 
-<div id="smilies" class="jsOnly smiliesContent tabMenuContent container containerPadding{if $__tabCount} tabMenuContainer{/if}">
+<div class="container containerPadding{if $__tabCount} messageTabMenu{/if}" data-preselect="true" data-collapsible="false" id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
 	{capture assign=__defaultSmilies}
 		{include file='__messageFormSmilies' smilies=$defaultSmilies}
 	{/capture}
 	
 	{if $__tabCount > 1}
-		<nav class="menu">
+		<nav class="jsOnly">
 			<ul>
 				{@$__categoryTabs}
 			</ul>
@@ -21,7 +21,7 @@
 		
 		{foreach from=$smileyCategories item=smileyCategory}
 			{if !$smileyCategory->isDisabled}
-				<div id="smilies-{@$smileyCategory->categoryID}" class="hidden">
+				<div id="smilies-{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}-{@$smileyCategory->categoryID}">
 					{if !$smileyCategory->categoryID}{@$__defaultSmilies}{/if}
 				</div>
 			{/if}
@@ -30,7 +30,7 @@
 		<script data-relocate="true">
 			//<![CDATA[
 			$(function() {
-				new WCF.Message.SmileyCategories();
+				new WCF.Message.SmileyCategories('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
 			});
 			//]]>
 		</script>

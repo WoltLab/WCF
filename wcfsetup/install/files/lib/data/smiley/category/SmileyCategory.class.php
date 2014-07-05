@@ -4,6 +4,7 @@ use wcf\data\category\AbstractDecoratedCategory;
 use wcf\data\smiley\SmileyCache;
 use wcf\data\ITraversableObject;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 
 /**
  * Represents a smiley category.
@@ -123,5 +124,14 @@ class SmileyCategory extends AbstractDecoratedCategory implements \Countable, IT
 		catch (SystemException $e) {
 			return null;
 		}
+	}
+	
+	/**
+	 * Returns the category's name.
+	 * 
+	 * @return	string
+	 */
+	public function __toString() {
+		return WCF::getLanguage()->get($this->title);
 	}
 }

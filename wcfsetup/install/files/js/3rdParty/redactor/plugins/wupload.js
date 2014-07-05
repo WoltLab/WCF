@@ -31,7 +31,7 @@ RedactorPlugins.wupload = {
 	 * Initializes the attachments user interface.
 	 */
 	_initAttachments: function() {
-		this._attachmentsContainer = $('#redactorMessageOptions_attachments');
+		this._attachmentsContainer = this._messageOptions[this.$source.wcfIdentify()].attachments.container;
 		var $attachmentList = $('<ul class="formAttachmentList clearfix" />').hide().appendTo(this._attachmentsContainer);
 		$('<dl class="wide"><dt></dt><dd><div data-max-size="{@$attachmentHandler->getMaxSize()}"></div><small>' + WCF.String.unescapeHTML(WCF.Language.get('wcf.attachment.upload.limits')) + '</small></dd></dl>').appendTo(this._attachmentsContainer);
 		

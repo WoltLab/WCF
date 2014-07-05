@@ -57,5 +57,9 @@
 		<coreobject>
 			<objectname><![CDATA[wcf\system\ad\AdHandler]]></objectname>
 		</coreobject>
+		
+		<coreobject>
+			<objectname><![CDATA[wcf\data\smiley\SmileyCache]]></objectname>
+		</coreobject>
 	</import>
 </data>

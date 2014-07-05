@@ -58,6 +58,13 @@ RedactorPlugins.wmonkeypatch = {
 			$(document.body).css('overflow', false);
 		};
 		
+		var $mpDestroy = this.destroy;
+		this.destroy = function() {
+			self.callback('destroy', false, { });
+			
+			$mpDestroy.call(self);
+		};
+		
 		// handle indent/outdent
 		var $mpButtonActiveObserver = this.buttonActiveObserver;
 		this.buttonActiveObserver = function(e, btnName) {

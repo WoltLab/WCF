@@ -1,4 +1,4 @@
-<div id="attachments" class="jsOnly formAttachmentContent tabMenuContent container containerPadding">
+<div class="jsOnly formAttachmentContent container containerPadding" id="attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
 	<ul class="formAttachmentList clearfix"{if !$attachmentHandler->getAttachmentList()|count} style="display: none"{/if}>
 		{foreach from=$attachmentHandler->getAttachmentList() item=$attachment}
 			<li class="box48" data-object-id="{@$attachment->attachmentID}">
@@ -49,7 +49,7 @@
 			'wcf.attachment.delete.sure': '{lang}wcf.attachment.delete.sure{/lang}'
 		});
 		
-		new WCF.Attachment.Upload($('#attachments > dl > dd > div'), $('#attachments > ul'), '{@$attachmentObjectType}', '{@$attachmentObjectID}', '{$tmpHash|encodeJS}', '{@$attachmentParentObjectID}', {@$attachmentHandler->getMaxCount()}, '{@$wysiwygContainerID}');
+		new WCF.Attachment.Upload($('#attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if} > dl > dd > div'), $('#attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if} > ul'), '{@$attachmentObjectType}', '{@$attachmentObjectID}', '{$tmpHash|encodeJS}', '{@$attachmentParentObjectID}', {@$attachmentHandler->getMaxCount()}, '{@$wysiwygContainerID}');
 		new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', '.formAttachmentList > li');
 	});
 	//]]>

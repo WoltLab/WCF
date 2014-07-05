@@ -9,22 +9,22 @@ if (!RedactorPlugins) var RedactorPlugins = {};
  */
 RedactorPlugins.woptions = {
 	/**
-	 * list of message option elements
+	 * list of message option elements grouped by instance
 	 * @var	object<object>
 	 */
 	_messageOptions: { },
 	
 	/**
-	 * message option container
-	 * @var	jQuery
+	 * message option container per instance
+	 * @var	object<jQuery>
 	 */
-	_messageOptionContainer: null,
+	_messageOptionContainer: { },
 	
 	/**
-	 * navigation container
-	 * @var	jQuery
+	 * navigation container per instance
+	 * @var	object<jQuery>
 	 */
-	_messageOptionNavigation: null,
+	_messageOptionNavigation: { },
 	
 	/**
 	 * Initializes the RedactorPlugins.woptions plugin.
@@ -35,22 +35,24 @@ RedactorPlugins.woptions = {
 			return;
 		}
 		
-		this._messageOptionContainer = $('<div id="redactorMessageOptions" class="redactorMessageOptions" />').appendTo(this.$box);
-		this._messageOptionNavigation = $('<nav><ul /></nav>').appendTo(this._messageOptionContainer).children('ul');
+		var $instanceID = this.$source.wcfIdentify();
+		this.$box.wrap('<div class="redactorContainer" />')
+		this._messageOptionContainer[$instanceID] = $('<div id="redactorMessageOptions" class="redactorMessageOptions" />').insertAfter(this.$box);
+		this._messageOptionNavigation[$instanceID] = $('<nav><ul /></nav>').appendTo(this._messageOptionContainer[$instanceID]).children('ul');
+		this._messageOptions[$instanceID] = { };
 		
 		for (var $i = 0; $i < $options.length; $i++) {
 			var $container = $options[$i];
 			
-			var $listItem = $('<li><a>' + $container.title + '</a></li>').appendTo(this._messageOptionNavigation);
+			var $listItem = $('<li><a>' + $container.title + '</a></li>').appendTo(this._messageOptionNavigation[$instanceID]);
 			$listItem.data('containerID', $container.containerID).click($.proxy(this._showMessageOptionContainer, this));
 			
-			var $tabContainer = $('<div class="redactorMessageOptionContainer" id="redactorMessageOptions_' + $container.containerID + '" />').hide().appendTo(this._messageOptionContainer);
-			
+			var $tabContainer = $('<div class="redactorMessageOptionContainer redactorMessageOptions_' + $container.containerID + '" />').hide().appendTo(this._messageOptionContainer[$instanceID]);
 			for (var $j = 0; $j < $container.items.length; $j++) {
 				$($container.items[$j]).appendTo($tabContainer);
 			}
 			
-			this._messageOptions[$container.containerID] = {
+			this._messageOptions[$instanceID][$container.containerID] = {
 				container: $tabContainer,
 				listItem: $listItem
 			};
@@ -69,14 +71,16 @@ RedactorPlugins.woptions = {
 	 */
 	_showMessageOptionContainer: function(event, containerID) {
 		var $containerID = (event === null) ? containerID : $(event.currentTarget).data('containerID');
-		if (this._messageOptions[$containerID].listItem.hasClass('active')) {
-			this._messageOptions[$containerID].listItem.removeClass('active');
-			this._messageOptions[$containerID].container.hide();
+		var $instanceID = this.$source.wcfIdentify();
+		
+		if (this._messageOptions[$instanceID][$containerID].listItem.hasClass('active')) {
+			this._messageOptions[$instanceID][$containerID].listItem.removeClass('active');
+			this._messageOptions[$instanceID][$containerID].container.hide();
 			
 			return;
 		}
 		
-		$.each(this._messageOptions, function(containerID, elements) {
+		$.each(this._messageOptions[$instanceID], function(containerID, elements) {
 			if (containerID == $containerID) {
 				elements.listItem.addClass('active');
 				elements.container.show();

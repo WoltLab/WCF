@@ -12,13 +12,13 @@ RedactorPlugins.wbbcode = {
 	 * Initializes the RedactorPlugins.wbbcode plugin.
 	 */
 	init: function() {
-		var $dropdown = this._createSmileyDropdown();
+		/*var $dropdown = this._createSmileyDropdown();
 		
 		this.buttonReplace('smiley', 'wsmiley', 'Smiley', $.proxy(function(btnName, $button, btnObject, e) {
 			this.dropdownShow(e, btnName);
 		}, this));
 		this.buttonGet('wsmiley').data('dropdown', $dropdown);
-		this.buttonAwesome('wsmiley', 'fa-smile-o');
+		this.buttonAwesome('wsmiley', 'fa-smile-o');*/
 		
 		this.opts.initCallback = $.proxy(function() {
 			if (this.$source.val().length) {

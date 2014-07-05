@@ -67,14 +67,6 @@ if ($buttons.length && $buttons[$buttons.length -1] != 'separator') {
 	$buttons.push('table');
 {/if}
 
-{if $wysiwygEnableUpload}
-	$buttons.push('upload');
-{/if}
-
-{if MODULE_SMILEY && (!$permissionCanUseSmilies|isset || $__wcf->getSession()->getPermission($permissionCanUseSmilies)) && $defaultSmilies|isset && $defaultSmilies|count}
-	$buttons.push('smiley');
-{/if}
-
 if ($buttons.length && $buttons[$buttons.length -1] != 'separator') {
 	$buttons.push('separator');
 }

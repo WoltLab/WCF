@@ -29,6 +29,7 @@ $(function() {
 	WCF.System.Dependency.Manager.setup($callbackIdentifier, function() {
 		var $textarea = $('#' + $editorName);
 		var $buttons = [ ];
+		var __wysiwygMessageOptions = (typeof $wysiwygMessageOptions === 'undefined') ? [ ] : $wysiwygMessageOptions;
 		
 		{include file='wysiwygToolbar'}
 		
@@ -42,16 +43,22 @@ $(function() {
 			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
 			minHeight: 200,
 			imageResizable: false,
-			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize' ],
+			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize', 'woptions' ],
 			wautosave: {
 				active: ($autosave) ? true : false,
 				key: ($autosave) ? '{@$__wcf->getAutosavePrefix()}_' + $autosave : '',
 				saveOnInit: {if !$errorField|empty}true{else}false{/if}
-			}
+			},
+			wMessageOptions: [ ]
 		};
 		
 		{if $wysiwygEnableUpload}
 			$config.plugins.push('wupload');
+			$config.wMessageOptions.push({
+				containerID: 'attachments',
+				title: '{lang}wcf.attachment.attachments{/lang}',
+				items: [ ]
+			});
 			$config.wattachment = {
 				attachments: [ ],
 				maxCount: {@$attachmentHandler->getMaxCount()},
@@ -76,6 +83,22 @@ $(function() {
 		
 		{event name='javascriptInit'}
 		
+		if (__wysiwygMessageOptions.length) {
+			$config.wMessageOptions.push({
+				containerID: 'settings',
+				title: '{lang}wcf.message.settings{/lang}',
+				items: __wysiwygMessageOptions
+			});
+		}
+		
+		if (false && $.getLength(__REDACTOR_SMILIES)) {
+			$config.wMessageOptions.push({
+				containerID: 'smilies',
+				title: '{lang}wcf.message.smilies{/lang}',
+				items: [ ]
+			});
+		}
+		
 		$textarea.redactor($config);
 	});
 	
@@ -92,7 +115,8 @@ $(function() {
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontsize.js?v={@$__wcfVersion}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wmonkeypatch.js?v={@$__wcfVersion}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wutil.js?v={@$__wcfVersion}',
-			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wupload.js?v={@$__wcfVersion}'
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wupload.js?v={@$__wcfVersion}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/woptions.js?v={@$__wcfVersion}'
 		{/if}
 		{event name='javascriptFiles'}
 	], function() {
