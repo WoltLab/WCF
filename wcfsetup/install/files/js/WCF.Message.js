@@ -3169,7 +3169,12 @@ WCF.Message.UserMention = Class.extend({
 	 */
 	_getTextLineInFrontOfCaret: function() {
 		var $range = this._ckEditor.getSelection().getRanges()[0];
-
+		
+		// if text is marked, user suggestions are disabled
+		if (!$range || !$range.collapsed) {
+			return '';
+		}
+		
 		// in some cases, the start container is the div container instead
 		// of a text node; this is fixed by inserting text behind the cursor,
 		// selecting the text node before the inserted text and then remove
@@ -3178,15 +3183,26 @@ WCF.Message.UserMention = Class.extend({
 			var $textNode = new CKEDITOR.dom.text('');
 			$range.insertNode($textNode);
 			$range.selectNodeContents($textNode);
-			$range.selectNodeContents($range.getPreviousEditableNode());
-			$textNode.remove();
-			$range.collapse(false);
 			$range.select();
-		}
-		
-		// if text is marked, user suggestions are disabled
-		if (!$range.collapsed) {
-			return '';
+			
+			var $previousNode = $range.getPreviousNode();
+			
+			// if the previous node is a line break, there is no text
+			// before the cursor in the current line
+			if ($previousNode === null || $previousNode.$.nodeName == 'BR') {
+				$textNode.remove();
+				return '';
+			}
+			
+			// find previous text node, do not use CKEDITOR.dom.range.getPreviousEditableNode()
+			// as is might return the div container itself
+			while ($previousNode && $previousNode.$.nodeType != 3) {
+				$previousNode = $previousNode.getPrevious();
+			}
+			
+			$range.selectNodeContents($previousNode);
+			$range.collapse(false);
+			$textNode.remove();
 		}
 		
 		var $text = $range.startContainer.getText().substr(0, $range.startOffset);
