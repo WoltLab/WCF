@@ -21,10 +21,10 @@ RedactorPlugins.wfontcolor = {
 	},
 	
 	/**
-	 * Creates the color dropdown.
+	 * Creates the font color dropdown.
 	 */
 	_createFontColorDropdown: function() {
-		var $dropdown = $('<div class="redactor_dropdown redactor_dropdown_box_fontcolor" style="display: none;">');
+		var $dropdown = $('<div class="redactor_dropdown redactor_dropdown_box_fontcolor dropdownMenu" style="display: none;">');
 		var $colors = [
 			'#000000', '#800000', '#8B4513', '#2F4F4F', '#008080', '#000080', '#4B0082', '#696969',
 			'#B22222', '#A52A2A', '#DAA520', '#006400', '#40E0D0', '#0000CD', '#800080', '#808080',
@@ -33,18 +33,23 @@ RedactorPlugins.wfontcolor = {
 			'#FFF0F5', '#FAEBD7', '#FFFFE0', '#F0FFF0', '#F0FFFF', '#F0F8FF', '#E6E6FA', '#FFFFFF'
 		];
 		
+		var $container = $('<li class="redactorColorPallet" />');
 		for (var $i = 0, $length = $colors.length; $i < $length; $i++) {
 			var $color = $colors[$i];
 			
 			var $swatch = $('<a href="#" />').data('color', $color).css('background-color', $color);
-			$dropdown.append($swatch);
+			$container.append($swatch);
 			$swatch.click($.proxy(this._onColorPick, this));
 		}
 		
 		var $elNone = $('<a href="#" />').html(this.opts.curLang.none).data('color', 'none');
 		$elNone.click($.proxy(this._onColorPick, this));
 		
+		$dropdown.append($container);
+		$dropdown.append($('<li class="dropdownDivider" />'));
 		$dropdown.append($elNone);
+		$elNone.wrap('<li />');
+		
 		$(this.$toolbar).append($dropdown);
 		
 		return $dropdown;

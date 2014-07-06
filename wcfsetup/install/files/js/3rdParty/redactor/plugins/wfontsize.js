@@ -8,44 +8,50 @@ if (!RedactorPlugins) var RedactorPlugins = {};
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 RedactorPlugins.wfontsize = {
+	/**
+	 * Initializes the RedactorPlugins.wfontsize plugin.
+	 */
 	init: function () {
+		var $dropdown = this._createFontSizeDropdown();
+		
+		this.buttonReplace('fontsize', 'wfontsize', this.opts.curLang.fontsize, $.proxy(function(btnName, $button, btnObject, e) {
+			this.dropdownShow(e, btnName);
+		}, this));
+		this.buttonGet('wfontsize').addClass('re-fontsize').data('dropdown', $dropdown);
+	},
+	
+	/**
+	 * Creates the font size dropdown.
+	 */
+	_createFontSizeDropdown: function() {
+		var $dropdown = $('<div class="redactor_dropdown redactor_dropdown_box_wfontsize dropdownMenu" style="display: none;">');
 		var $fontSizes = [ 8, 10, 12, 14, 18, 24, 36 ];
-		
-		var $dropdown = { };
 		var self = this;
-		for (var $i = 0, $length = $fontSizes.length; $i < $length; $i++) {
+		for (var $i = 0; $i < $fontSizes.length; $i++) {
 			var $fontSize = $fontSizes[$i];
-			
-			$dropdown['fontSize' + $i] = {
-				title: $fontSize,
-				className: 'wfontsize-' + $fontSize,
-				fontSize: $fontSize,
-				callback: function(name, button, object, event) {
-					self.inlineSetStyle('font-size', object.fontSize + 'pt');
-				}
-			};
-		}
-		
-		$dropdown['separator'] = { name: 'separator' };
-		$dropdown['remove'] = {
-			title: 'remove font size',
-			callback: function() {
-				this.inlineRemoveStyle('font-size');
-			}
-		};
-		
-		this.buttonReplace('fontsize', 'wfontsize', 'Change font size', false, $dropdown);
-		this.buttonGet('wfontsize').addClass('re-fontsize');
-		
-		// modify dropdown to reflect each font family
-		$dropdown = this.$toolbar.find('.redactor_dropdown_box_wfontsize');
-		for (var $i = 0, $length = $fontSizes.length; $i < $length; $i++) {
-			var $fontSize = $fontSizes[$i];
-			
-			var $listItem = $dropdown.children('a.wfontsize-' + $fontSize).removeClass('wfontsize-' + $fontSizes).css('font-size', $fontSize + 'pt');
+			var $listItem = $('<li><a href="#">' + $fontSize + '</a></li>').appendTo($dropdown);
+			var $item = $listItem.children('a').data('fontSize', $fontSize).css('font-size', $fontSize + 'pt');
 			if ($fontSize > 18) {
-				$listItem.css('line-height', '1em');
+				$item.css('line-height', '1em');
 			}
+			
+			$item.click(function() {
+				event.preventDefault();
+				
+				self.inlineSetStyle('font-size', $(this).data('fontSize') + 'pt');
+			});
 		}
+		
+		$('<li class="dropdownDivider" />').appendTo($dropdown);
+		var $listItem = $('<li><a href="#">None</a></li>').appendTo($dropdown);
+		$listItem.children('a').click(function() {
+			event.preventDefault();
+			
+			self.inlineRemoveStyle('font-size');
+		});
+		
+		$(this.$toolbar).append($dropdown);
+		
+		return $dropdown;
 	}
 };

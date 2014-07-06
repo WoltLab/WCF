@@ -1,5 +1,5 @@
 {if !$wysiwygEnableUpload|isset}{assign var=wysiwygEnableUpload value=false}{/if}
-<link rel="stylesheet" type="text/css" href="{@$__wcf->getPath()}js/3rdParty/redactor/redactor.css" />
+{*<link rel="stylesheet" type="text/css" href="{@$__wcf->getPath()}js/3rdParty/redactor/redactor.css" />*}
 <script data-relocate="true">
 var __REDACTOR_ICON_PATH = '{@$__wcf->getPath()}icon/';
 var __REDACTOR_BUTTONS = [ {implode from=$__wcf->getBBCodeHandler()->getButtonBBCodes() item=__bbcode}{ icon: '{$__bbcode->wysiwygIcon}', label: '{$__bbcode->buttonLabel|language}', name: '{$__bbcode->bbcodeTag}' }{/implode} ];

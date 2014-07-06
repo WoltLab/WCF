@@ -41,6 +41,49 @@ RedactorPlugins.wbbcode = {
 			this._saveTextToStorage();
 			delete this.opts.wAutosaveOnce;
 		}
+		
+		// we do not support table heads
+		var $tableButton = this.buttonGet('table');
+		if ($tableButton.length) {
+			var $addHead = $tableButton.data('dropdown').children('a.redactor_dropdown_add_head');
+			
+			// drop divider
+			$addHead.prev().remove();
+			
+			// drop 'delete head'
+			$addHead.next().remove();
+			
+			// drop 'add head'
+			$addHead.remove();
+			
+			// toggle dropdown options
+			$tableButton.click($.proxy(this._tableButtonClick, this));
+		}
+	},
+	
+	/**
+	 * Toggles features within the table dropdown.
+	 * 
+	 * @param	object		event
+	 */
+	_tableButtonClick: function(event) {
+		var $button = $(event.currentTarget);
+		if (!$button.hasClass('dropact')) {
+			return;
+		}
+		
+		var $current = this.getBlock() || this.getCurrent();
+		var $dropdown = $button.data('dropdown');
+		
+		// within table
+		$dropdown.children('li').show();
+		var $insertTable = $dropdown.find('> li > .redactor_dropdown_insert_table').parent();
+		if ($current.tagName == 'TD') {
+			$insertTable.hide().next().hide();
+		}
+		else {
+			$insertTable.nextAll().hide();
+		}
 	},
 	
 	/**
@@ -334,7 +377,7 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/<td style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)<\/td>/gi, "[td][align=$1]$2[/align][/td]");
 		
 		// [td]
-		html = html.replace(/(\t)*<td>/gi, '[td]');
+		html = html.replace(/(\t)*<td>(\t)*/gi, '[td]');
 		html = html.replace(/(\t)*<\/td>/gi, '[/td]\n');
 		
 		// cache redactor's selection markers
@@ -503,7 +546,13 @@ RedactorPlugins.wbbcode = {
 		
 		// trim whitespaces within <td>
 		data = data.replace(/<td>([\S\s]*?)<\/td>/gi, function(match, p1) {
-			return '<td>' + $.trim(p1) + '</td>';
+			var $tdContent = $.trim(p1);
+			if (!$tdContent.length) {
+				// unicode zero-width space
+				$tdContent = '&#8203;';
+			}
+			
+			return '<td>' + $tdContent + '</td>';
 		});
 		
 		// smileys

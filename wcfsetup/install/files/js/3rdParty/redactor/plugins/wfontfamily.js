@@ -8,7 +8,23 @@ if (!RedactorPlugins) var RedactorPlugins = {};
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 RedactorPlugins.wfontfamily = {
+	/**
+	 * Initializes the RedactorPlugins.wfontsize plugin.
+	 */
 	init: function () {
+		var $dropdown = this._createFontFamilyDropdown();
+		
+		this.buttonReplace('fontfamily', 'wfontfamily', this.opts.curLang.fontfamily, $.proxy(function(btnName, $button, btnObject, e) {
+			this.dropdownShow(e, btnName);
+		}, this));
+		this.buttonGet('wfontfamily').addClass('re-fontfamily').data('dropdown', $dropdown);
+	},
+	
+	/**
+	 * Creates the font family dropdown.
+	 */
+	_createFontFamilyDropdown: function() {
+		var $dropdown = $('<div class="redactor_dropdown redactor_dropdown_box_wfontfamily dropdownMenu" style="display: none;">');
 		var $fonts = {
 			'Arial': "Arial, Helvetica, sans-serif",
 			'Comic Sans MS': "Comic Sans MS, cursive",
@@ -20,38 +36,27 @@ RedactorPlugins.wfontfamily = {
 			'Trebuchet MS': "Trebuchet MS, Helvetica, sans-serif",
 			'Verdana': "Verdana, Geneva, sans-serif"
 		};
-		
-		var $dropdown = { };
-		var $i = 0;
 		var self = this;
-		$.each($fonts, function(title, value) {
-			$dropdown['fontFamily' + $i] = {
-				title: title,
-				className: 'wfontfamily-' + $i,
-				callback: function() {
-					self.inlineSetStyle('font-family', value);
-				}
-			};
+		$.each($fonts, function(title, fontFamily) {
+			var $listItem = $('<li><a href="#">' + title + '</a></li>').appendTo($dropdown);
+			var $item = $listItem.children('a').data('fontFamily', fontFamily).css('font-family', fontFamily);
+			$item.click(function() {
+				event.preventDefault();
+				
+				self.inlineSetStyle('font-family', $(this).data('fontFamily'));
+			});
+		});
+		
+		$('<li class="dropdownDivider" />').appendTo($dropdown);
+		var $listItem = $('<li><a href="#">None</a></li>').appendTo($dropdown);
+		$listItem.children('a').click(function() {
+			event.preventDefault();
 			
-			$i++;
+			self.inlineRemoveStyle('font-family');
 		});
-		$dropdown['separator'] = { name: 'separator' };
-		$dropdown['remove'] = {
-			title: 'remove font',
-			callback: function() {
-				this.inlineRemoveStyle('font-family');
-			}
-		};
 		
-		this.buttonReplace('fontfamily', 'wfontfamily', 'Change font family', false, $dropdown);
-		this.buttonGet('wfontfamily').addClass('re-fontfamily');
+		$(this.$toolbar).append($dropdown);
 		
-		// modify dropdown to reflect each font family
-		$dropdown = this.$toolbar.find('.redactor_dropdown_box_wfontfamily');
-		$i = 0;
-		$.each($fonts, function(title, value) {
-			$dropdown.children('.wfontfamily-' + $i).removeClass('wfontfamily-' + $i).css('font-family', value);
-			$i++;
-		});
+		return $dropdown;
 	}
 };
