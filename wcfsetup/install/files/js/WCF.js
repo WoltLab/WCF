@@ -2137,6 +2137,10 @@ WCF.Action.Proxy = Class.extend({
 		if (this._lastRequest !== null) {
 			this._lastRequest.abort();
 			this._lastRequest = null;
+			
+			if (this.options.showLoadingOverlay || this._showLoadingOverlayOnce) {
+				WCF.LoadingOverlayHandler.hide();
+			}
 		}
 	},
 	
