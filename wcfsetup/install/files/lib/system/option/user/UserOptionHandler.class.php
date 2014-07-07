@@ -7,6 +7,7 @@ use wcf\data\user\User;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\ISearchableConditionUserOption;
 use wcf\system\option\OptionHandler;
+use wcf\util\DateUtil;
 
 /**
  * Handles user options.
@@ -188,6 +189,18 @@ class UserOptionHandler extends OptionHandler {
 		if ($option->required && empty($this->optionValues[$option->optionName])) {
 			throw new UserInputException($option->optionName);
 		}
+		
+		if (REGISTER_MIN_USER_AGE) {
+			if ($this->inRegistration && $option->optionName == 'birthday') {
+				if (empty($this->optionValues[$option->optionName])) {
+					throw new UserInputException($option->optionName);
+				}
+				
+				if (DateUtil::getAge($this->optionValues[$option->optionName]) < REGISTER_MIN_USER_AGE) {
+					throw new UserInputException($option->optionName, 'birthdayTooYoung');
+				}
+			}
+		}
 	}
 	
 	/**
@@ -210,7 +223,7 @@ class UserOptionHandler extends OptionHandler {
 		}
 		
 		// in registration
-		if ($this->inRegistration && !$option->askDuringRegistration && !$option->required) {
+		if ($this->inRegistration && !$option->askDuringRegistration && !$option->required && ($option->optionName != 'birthday' || !REGISTER_MIN_USER_AGE)) {
 			return false;
 		}
 		

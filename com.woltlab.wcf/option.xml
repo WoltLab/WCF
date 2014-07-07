@@ -945,6 +945,12 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="register_min_user_age">
+				<categoryname>user.register</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
 			
 			<option name="register_disabled">
 				<categoryname>user.register</categoryname>

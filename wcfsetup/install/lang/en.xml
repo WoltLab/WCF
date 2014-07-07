@@ -897,6 +897,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.register_username_min_length"><![CDATA[Minimum Username Length]]></item>
 		<item name="wcf.acp.option.register_username_max_length"><![CDATA[Maximum Username Length]]></item>
 		<item name="wcf.acp.option.register_username_force_ascii"><![CDATA[Require ASCII characters for usernames]]></item>
+		<item name="wcf.acp.option.register_min_user_age"><![CDATA[TODO: Mindestalter]]></item>
 		<item name="wcf.acp.option.register_disabled"><![CDATA[Disable registration]]></item>
 		<item name="wcf.acp.option.register_disabled.description"><![CDATA[Disables registration for all users, new users may be created through an administrator.]]></item>
 		<item name="wcf.acp.option.register_enable_disclaimer"><![CDATA[Enable disclaimer]]></item>
@@ -2340,6 +2341,7 @@ Errors are:
 		<item name="wcf.user.option.error.tooLong"><![CDATA[Entered text is too long.]]></item>
 		<item name="wcf.user.option.error.tooShort"><![CDATA[Entered text is too short.]]></item>
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[Entered text is invalid.]]></item>
+		<item name="wcf.user.option.error.birthdayTooYoung"><![CDATA[TODO: Sie sind zu jung. Für eine Anmeldung auf dieser Seite müssen Sie mindestens {#REGISTER_MIN_USER_AGE} Jahre alt sein.]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[Your user account has been banned{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
 		<item name="wcf.user.access.everyone"><![CDATA[Everyone]]></item>
 		<item name="wcf.user.access.following"><![CDATA[Users I’m following]]></item>
