@@ -46,10 +46,13 @@
 .re-aligncenter:before { content: "\e61e"; }
 .re-gallery:before { content: "\e61f"; }
 
-/* redactor fixes */
 .redactor_box {
 	border: 1px solid @wcfContainerBorderColor;
 	font-size: 0;
+	
+	& + .messageTabMenu {
+		padding: 0;
+	}
 }
 
 .redactor_editor {
@@ -114,7 +117,7 @@
 			display: block;
 			font-size: 14px;
 			outline: none;
-			padding: 9px 10px;
+			padding: 6px 10px;
 			text-decoration: none;
 			
 			.textShadow(@wcfButtonBackgroundColor);
