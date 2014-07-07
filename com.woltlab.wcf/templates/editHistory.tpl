@@ -16,7 +16,42 @@
 
 {include file='userNotice'}
 
-<pre>{$diff}</pre>
+{if $diff}
+<div><div>
+{assign var='prevType' value=''}
+{foreach from=$diff->getRawDiff() item='line'}
+{if $line[0] !== $prevType}
+	</div>
+	
+	{* unmodified, after deletion needs a "fake" insertion *}
+	{if $line[0] === ' ' && $prevType === '-'}<div class="containerPadding"></div>{/if}
+	
+	{* unmodified and deleted start a new container *}
+	{if $line[0] === ' ' || $line[0] === '-'}</div>{/if}
+	
+	{* adding, without deleting needs a "fake" deletion *}
+	{if $line[0] === '+' && $prevType !== '-'}
+		</div>
+		<div class="container marginTop sideBySide">
+			<div class="containerPadding">
+			</div>
+	{/if}
+	
+	{if $line[0] === ' '}
+		<div class="container marginTop">
+	{/if}
+	{if $line[0] === '-'}
+		<div class="container marginTop sideBySide">
+	{/if}
+	<div class="containerPadding"{if $line[0] === '+'} style="color: green;"{elseif $line[0] === '-'} style="color: red;"{/if}>
+{/if}
+{if $line[0] === ' '}{$line[1]}<br />{/if}
+{if $line[0] === '-'}{$line[1]}<br />{/if}
+{if $line[0] === '+'}{$line[1]}<br />{/if}
+{assign var='prevType' value=$line[0]}
+{/foreach}
+</div></div>
+{/if}
 
 <form action="{link controller='EditHistory'}{/link}" method="get">
 	<div class="tabularBox tabularBoxTitle marginTop">
@@ -40,7 +75,7 @@
 				<tr>
 					<td class="columnIcon">
 						<span class="icon icon16 icon-undo disabled"></span>
-						<input type="radio" name="oldID" value="current"{if $oldID == 'current'} checked="checked"{/if} /> <input type="radio" name="newID" value="current"{if $newID == 'current'} checked="checked"{/if} />
+						<input type="radio" name="oldID" value="current"{if $oldID === 'current'} checked="checked"{/if} /> <input type="radio" name="newID" value="current"{if $newID === 'current'} checked="checked"{/if} />
 						{event name='rowButtons'}
 					</td>
 					<td class="columnID"><strong>{lang}wcf.edit.currentVersion{/lang}</strong></td>
