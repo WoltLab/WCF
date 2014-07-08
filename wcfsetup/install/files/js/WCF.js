@@ -7716,7 +7716,7 @@ WCF.System.Event = {
 	removeListener: function(identifier, action, uuid) {
 		if (this._listeners[identifier] && this._listeners[identifier][action]) {
 			for (var $i = 0; $i < this._listeners[identifier][action].length; $i++) {
-				if (this._listeners[identifier][action][$i].uuid = uuid) {
+				if (this._listeners[identifier][action][$i].uuid == uuid) {
 					this._listeners[identifier][action].splice($i, 1);
 					
 					return true;
