@@ -1,4 +1,4 @@
-<dl class="plain inlineDataList">
+<dl class="plain dataList">
 	<dt>{lang}wcf.user.members{/lang}</dt>
 	<dd>{#$dashboardStats[members]}</dd>
 	

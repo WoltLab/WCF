@@ -1,4 +1,4 @@
-<dl class="plain inlineDataList userStats">
+<dl class="plain {if !$__userStatsClassname|empty}{@$__userStatsClassname}{else}inlineDataList{/if} userStats">
 	{event name='statistics'}
 	
 	{if MODULE_LIKE && $user->likesReceived}
