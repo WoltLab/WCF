@@ -1,4 +1,4 @@
-<fieldset id="settings" class="settingsContent tabMenuContent container containerPadding">
+<fieldset id="settings_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}" class="settingsContent tabMenuContent container containerPadding">
 	<dl class="wide">
 		{if $__wcf->getSession()->getPermission($permissionCanUseBBCodes)}
 			<dt></dt>

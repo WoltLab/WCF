@@ -157,6 +157,12 @@ class QuickReplyManager extends SingletonFactory {
 		// check for tmp hash (attachments)
 		$parameters['tmpHash'] = (isset($parameters['tmpHash'])) ? StringUtil::trim($parameters['tmpHash']) : '';
 		
+		// message settings
+		$parameters['data'] = array_merge($parameters['data'], MessageFormSettingsHandler::getSettings($parameters));
+		
+		$parameters['data']['enableHtml'] = 0;
+		$parameters['data']['showSignature'] = (WCF::getUser()->userID ? WCF::getUser()->showSignature : 0);
+		
 		EventHandler::getInstance()->fireAction($this, 'validateParameters');
 	}
 	
@@ -176,17 +182,16 @@ class QuickReplyManager extends SingletonFactory {
 		
 		$tableIndexName = call_user_func(array($this->container, 'getDatabaseTableIndexName'));
 		$parameters['data'][$tableIndexName] = $parameters['objectID'];
-		$parameters['data']['enableSmilies'] = WCF::getSession()->getPermission('user.message.canUseSmilies');
-		$parameters['data']['enableHtml'] = 0;
-		$parameters['data']['enableBBCodes'] = WCF::getSession()->getPermission('user.message.canUseBBCodes');
-		$parameters['data']['showSignature'] = (WCF::getUser()->userID ? WCF::getUser()->showSignature : 0);
 		$parameters['data']['time'] = TIME_NOW;
 		$parameters['data']['userID'] = WCF::getUser()->userID ?: null;
 		$parameters['data']['username'] = WCF::getUser()->username;
 		
 		// pre-parse message text
 		$parameters['data']['message'] = MessageUtil::stripCrap($parameters['data']['message']);
-		$parameters['data']['message'] = PreParser::getInstance()->parse($parameters['data']['message'], $this->allowedBBodes);
+		if ($parameters['data']['preParse']) {
+			$parameters['data']['message'] = PreParser::getInstance()->parse($parameters['data']['message'], $this->allowedBBodes);
+		}
+		unset($parameters['data']['preParse']);
 		
 		$parameters['data'] = array_merge($this->additionalFields, $parameters['data']);
 		

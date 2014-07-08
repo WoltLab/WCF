@@ -730,6 +730,19 @@ $.extend(WCF, {
 				element.css($property, '');
 			}
 		}
+	},
+	
+	/**
+	 * Returns a RFC4122 version 4 compilant UUID.
+	 * 
+	 * @see		http://stackoverflow.com/a/2117523
+	 * @return	string
+	 */
+	getUUID: function() {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+			return v.toString(16);
+		});
 	}
 });
 
@@ -7672,6 +7685,7 @@ WCF.System.Event = {
 	 * @param	string		identifier
 	 * @param	string		action
 	 * @param	object		listener
+	 * @return	string
 	 */
 	addListener: function(identifier, action, listener) {
 		if (typeof this._listeners[identifier] === 'undefined') {
@@ -7682,7 +7696,52 @@ WCF.System.Event = {
 			this._listeners[identifier][action] = [ ];
 		}
 		
-		this._listeners[identifier][action].push(listener);
+		var $uuid = WCF.getUUID();
+		this._listeners[identifier][action].push({
+			callback: listener,
+			uuid: $uuid
+		});
+		
+		return $uuid;
+	},
+	
+	/**
+	 * Removes a listener, requires the uuid returned by addListener().
+	 * 
+	 * @param	string		identifier
+	 * @param	string		action
+	 * @param	string		uuid
+	 * @return	boolean
+	 */
+	removeListener: function(identifier, action, uuid) {
+		if (this._listeners[identifier] && this._listeners[identifier][action]) {
+			for (var $i = 0; $i < this._listeners[identifier][action].length; $i++) {
+				if (this._listeners[identifier][action][$i].uuid = uuid) {
+					this._listeners[identifier][action].splice($i, 1);
+					
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	},
+	
+	/**
+	 * Removes all registered event listeners for given identifier and action.
+	 * 
+	 * @param	string		identifier
+	 * @param	string		action
+	 * @return	boolean
+	 */
+	removeAllListeners: function(identifier, action) {
+		if (this._listeners[identifier] && this._listeners[identifier][action]) {
+			delete this._listeners[identifier][action];
+			
+			return true;
+		}
+		
+		return false;
 	},
 	
 	/**
@@ -7697,7 +7756,7 @@ WCF.System.Event = {
 		
 		if (this._listeners[identifier] && this._listeners[identifier][action]) {
 			for (var $i = 0; $i < this._listeners[identifier][action].length; $i++) {
-				this._listeners[identifier][action][$i](data);
+				this._listeners[identifier][action][$i].callback(data);
 			}
 		}
 	}

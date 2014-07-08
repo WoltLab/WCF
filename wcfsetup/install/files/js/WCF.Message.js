@@ -809,37 +809,7 @@ WCF.Message.QuickReply = Class.extend({
 			$parameters.anchor = this._container.data('anchor');
 		}
 		
-		// check for additional settings
-		var $container = $('#redactorMessageOptions_settings');
-		if ($container.length) {
-			$parameters.settings = { };
-			$container.find('input, textarea, select').each(function(index, element) {
-				var $element = $(element);
-				switch ($element.getTagName()) {
-					case 'input':
-						switch ($element.prop('type')) {
-							case 'checkbox':
-							case 'radio':
-								if ($element.is(':checked')) {
-									$parameters.settings[$element.prop('name')] = $element.val();
-								}
-								else if ($element.data('submitEmpty')) {
-									$parameters.settings[$element.prop('name')] = 0;
-								}
-							break;
-							
-							default:
-								$parameters.settings[$element.prop('name')] = $element.val();
-							break;
-						}
-					break;
-					
-					default:
-						$parameters.settings[$element.prop('name')] = $element.val();
-					break;
-				}
-			});
-		}
+		WCF.System.Event.fireEvent('com.woltlab.wcf.messageOptionsInline', 'submit_' + this._messageField.wcfIdentify(), $parameters.data);
 		
 		return $parameters;
 	},
@@ -1396,17 +1366,21 @@ WCF.Message.InlineEditor = Class.extend({
 			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
 		}
 		
+		var $parameters = {
+			containerID: this._containerID,
+			data: {
+				message: $message
+			},
+			objectID: $objectID
+		};
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.messageOptionsInline', 'submit_' + this._messageEditorIDPrefix + $objectID, $parameters);
+		
 		this._proxy.setOption('data', {
 			actionName: 'save',
 			className: this._getClassName(),
 			interfaceName: 'wcf\\data\\IMessageInlineEditorAction',
-			parameters: {
-				containerID: this._containerID,
-				data: {
-					message: $message
-				},
-				objectID: $objectID
-			}
+			parameters: $parameters
 		});
 		this._proxy.sendRequest();
 		
@@ -1521,6 +1495,9 @@ WCF.Message.InlineEditor = Class.extend({
 		
 		// purge DOM elements
 		$container.find('.messageBody > div > .messageInlineEditor').remove();
+		
+		// remove event listeners
+		WCF.System.Event.removeAllListeners('com.woltlab.wcf.messageOptionsInline', 'submit_' + this._messageEditorIDPrefix + $container.data('objectID'));
 	},
 	
 	/**
@@ -3469,7 +3446,7 @@ $.widget('wcf.messageTabMenu', {
 			}
 		}
 		
-		if ($preselect === true) {
+		if ($preselect === true && this._tabs.length) {
 			// pick the first available tab
 			this._tabs[0].tab.children('a').trigger('click');
 		}
