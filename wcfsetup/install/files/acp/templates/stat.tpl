@@ -15,7 +15,7 @@
 		new WCF.ACP.Stat.Chart();
 	});
 </script>
-	
+
 <header class="boxHeadline">
 	<h1>{lang}wcf.acp.stat{/lang}</h1>
 </header>
@@ -56,15 +56,21 @@
 				<label><input type="radio" name="value" value="total" /> {lang}wcf.acp.stat.value.total{/lang}</label>
 			</dd>
 		</dl>
+	</fieldset>
+	
+	<fieldset>
+		<legend>{lang}wcf.acp.stat.types{/lang}</legend>
 		
-		<dl>
-			<dt><label>{lang}wcf.acp.stat.types{/lang}</label></dt>
-			<dd>
-				{foreach from=$availableObjectTypes item=objectType}
-					<label><input type="checkbox" name="objectTypeID" value="{@$objectType->objectTypeID}" {if $objectType->default}checked="checked" {/if}/> {lang}wcf.acp.stat.{@$objectType->objectType}{/lang}</label>
-				{/foreach}
-			</dd>
-		</dl>
+		{foreach from=$availableObjectTypes key=categoryName item=objectTypes}
+			<dl>
+				<dt><label>{lang}wcf.acp.stat.category.{@$categoryName}{/lang}</label></dt>
+				<dd>
+					{foreach from=$objectTypes item=objectType}
+						<label><input type="checkbox" name="objectTypeID" value="{@$objectType->objectTypeID}" {if $objectType->default}checked="checked" {/if}/> {lang}wcf.acp.stat.{@$objectType->objectType}{/lang}</label>
+					{/foreach}
+				</dd>
+			</dl>
+		{/foreach}
 	</fieldset>
 </div>
 

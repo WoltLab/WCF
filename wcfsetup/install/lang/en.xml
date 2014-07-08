@@ -1182,27 +1182,30 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	</category>
 	
 	<category name="wcf.acp.stat">
-		<item name="wcf.acp.stat"><![CDATA[TODO: Statistiken]]></item>
-		<item name="wcf.acp.stat.settings"><![CDATA[TODO: Einstellungen]]></item>
-		<item name="wcf.acp.stat.period"><![CDATA[TODO: Zeitraum]]></item>
-		<item name="wcf.acp.stat.value"><![CDATA[TODO: Werte]]></item>
+		<item name="wcf.acp.stat"><![CDATA[Statistics]]></item>
+		<item name="wcf.acp.stat.settings"><![CDATA[Settings]]></item>
+		<item name="wcf.acp.stat.period"><![CDATA[Period]]></item>
+		<item name="wcf.acp.stat.value"><![CDATA[Values]]></item>
 		<item name="wcf.acp.stat.value.counter"><![CDATA[TODO: Veränderung]]></item>
 		<item name="wcf.acp.stat.value.total"><![CDATA[TODO: Gesamtanzahl]]></item>
-		<item name="wcf.acp.stat.types"><![CDATA[TODO: Daten]]></item>
+		<item name="wcf.acp.stat.types"><![CDATA[Data]]></item>
 		<item name="wcf.acp.stat.timeFormat.daily"><![CDATA[TODO: %d.%m.%y]]></item>
 		<item name="wcf.acp.stat.timeFormat.weekly"><![CDATA[TODO: %d.%m.%y]]></item>
 		<item name="wcf.acp.stat.timeFormat.monthly"><![CDATA[TODO: %b %Y]]></item>
 		<item name="wcf.acp.stat.timeFormat.yearly"><![CDATA[TODO: %Y]]></item>
-		<item name="wcf.acp.stat.com.woltlab.wcf.user"><![CDATA[TODO: Benutzer]]></item>
-		<item name="wcf.acp.stat.com.woltlab.wcf.attachment"><![CDATA[TODO: Dateianhänge]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.user"><![CDATA[Users]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[TODO: Dateianhänge-Speicherbedarf (MB)]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Likes]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.dislike"><![CDATA[Dislikes]]></item>
-		<item name="wcf.acp.stat.dateGrouping"><![CDATA[TODO: Zeiteinheit]]></item>
-		<item name="wcf.acp.stat.dateGrouping.daily"><![CDATA[TODO: Tag]]></item>
-		<item name="wcf.acp.stat.dateGrouping.weekly"><![CDATA[TODO: Woche]]></item>
-		<item name="wcf.acp.stat.dateGrouping.monthly"><![CDATA[TODO: Monat]]></item>
-		<item name="wcf.acp.stat.dateGrouping.yearly"><![CDATA[TODO: Jahr]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.userProfileComment"><![CDATA[Wall Comments]]></item>
+		<item name="wcf.acp.stat.dateGrouping"><![CDATA[Time Unit]]></item>
+		<item name="wcf.acp.stat.dateGrouping.daily"><![CDATA[Day]]></item>
+		<item name="wcf.acp.stat.dateGrouping.weekly"><![CDATA[Week]]></item>
+		<item name="wcf.acp.stat.dateGrouping.monthly"><![CDATA[Month]]></item>
+		<item name="wcf.acp.stat.dateGrouping.yearly"><![CDATA[Year]]></item>
+		<item name="wcf.acp.stat.category.com.woltlab.wcf.general"><![CDATA[General Data]]></item>
+		<item name="wcf.acp.stat.category.com.woltlab.wcf.user"><![CDATA[User Data]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">
@@ -1724,12 +1727,12 @@ Errors are:
 	
 	<category name="wcf.condition">
 		<item name="wcf.condition.greaterThan"><![CDATA[greater than]]></item>
-		<item name="wcf.condition.greaterThan.error.lessThan"><![CDATA[The minimal value and the maximum value are conflicting.]]></item>
-		<item name="wcf.condition.greaterThan.error.maxValue"><![CDATA[The maximum value may not be greater than {#$maxValue}.]]></item>
-		<item name="wcf.condition.greaterThan.error.minValue"><![CDATA[The maximum value may not be less than {#$minValue}.]]></item>
+		<item name="wcf.condition.greaterThan.error.lessThan"><![CDATA[The “less than” value and the “greater than” value are conflicting.]]></item>
+		<item name="wcf.condition.greaterThan.error.maxValue"><![CDATA[The “greater than” value may not be greater than {#$maxValue}.]]></item>
+		<item name="wcf.condition.greaterThan.error.minValue"><![CDATA[The “greater than” value may not be less than {#$minValue}.]]></item>
 		<item name="wcf.condition.lessThan"><![CDATA[less than]]></item>
-		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[The minimal value may not be greater than {#$maxValue}.]]></item>
-		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[The minimal value may not be less than {#$minValue}.]]></item>
+		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[The “less than” value may not be greater than {#$maxValue}.]]></item>
+		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[The “less than” value may not be less than {#$minValue}.]]></item>
 	</category>
 	
 	<category name="wcf.dashboard">

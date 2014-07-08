@@ -68,11 +68,9 @@ WCF.Poll.Management = Class.extend({
 		this._resize();
 		
 		// update size on tab select
-		var $tabMenuContent = this._container.parents('.tabMenuContent:eq(0)');
-		var $tabMenuContentID = $tabMenuContent.wcfIdentify();
 		var self = this;
-		$tabMenuContent.parents('.tabMenuContainer:eq(0)').on('wcftabsactivate', function(event, ui) {
-			if (ui.newPanel.wcfIdentify() == $tabMenuContentID) {
+		this._container.closest('.messageTabMenu').on('messagetabmenushow', function(event, data) {
+			if (data.activeTab.name == 'poll') {
 				self._resize();
 			}
 		});

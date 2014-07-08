@@ -300,7 +300,7 @@ class PageMenuItemAddForm extends AbstractForm {
 			'availableParentMenuItems' => $this->availableParentMenuItems,
 			'isDisabled' => $this->isDisabled,
 			'isInternalLink' => $this->isInternalLink,
-			'menuItemController' => $this->menuItemController,
+			'menuItemController' => $this->menuItemPage ? '' : $this->menuItemController,
 			'menuItemParameters' => $this->menuItemParameters,
 			'menuItemLink' => $this->menuItemLink,
 			'menuItemPage' => $this->menuItemPage,

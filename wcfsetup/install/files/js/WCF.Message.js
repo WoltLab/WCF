@@ -482,7 +482,7 @@ WCF.Message.SmileyCategories = Class.extend({
 	 * @param	object		event
 	 * @param	object		data
 	 */
-	_click: function(event, data, c) {
+	_click: function(event, data) {
 		var $categoryID = parseInt(data.activeTab.tab.data('smileyCategoryID'));
 		
 		// ignore global category, will always be pre-loaded

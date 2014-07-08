@@ -1229,11 +1229,14 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[Dateianhänge-Speicherbedarf (MB)]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Likes]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.dislike"><![CDATA[Dislikes]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.userProfileComment"><![CDATA[Benutzerprofil-Pinnwand]]></item>
 		<item name="wcf.acp.stat.dateGrouping"><![CDATA[Zeiteinheit]]></item>
 		<item name="wcf.acp.stat.dateGrouping.daily"><![CDATA[Tag]]></item>
 		<item name="wcf.acp.stat.dateGrouping.weekly"><![CDATA[Woche]]></item>
 		<item name="wcf.acp.stat.dateGrouping.monthly"><![CDATA[Monat]]></item>
 		<item name="wcf.acp.stat.dateGrouping.yearly"><![CDATA[Jahr]]></item>
+		<item name="wcf.acp.stat.category.com.woltlab.wcf.general"><![CDATA[Allgemeine Daten]]></item>
+		<item name="wcf.acp.stat.category.com.woltlab.wcf.user"><![CDATA[Benutzer-Daten]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">
@@ -1756,12 +1759,12 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.condition">
 		<item name="wcf.condition.greaterThan"><![CDATA[mehr als]]></item>
-		<item name="wcf.condition.greaterThan.error.lessThan"><![CDATA[Der Minimalwert und der Maximalwert sind widersprüchlich.]]></item>
-		<item name="wcf.condition.greaterThan.error.maxValue"><![CDATA[Der Maximalwert darf nicht größer sein als {#$maxValue}.]]></item>
-		<item name="wcf.condition.greaterThan.error.minValue"><![CDATA[Der Maximalwert darf nicht kleiner sein als {#$minValue}.]]></item>
+		<item name="wcf.condition.greaterThan.error.lessThan"><![CDATA[Der „weniger als“-Wert und der „mehr als“-Wert sind widersprüchlich.]]></item>
+		<item name="wcf.condition.greaterThan.error.maxValue"><![CDATA[Der „mehr als“-Wert darf nicht größer sein als {#$maxValue}.]]></item>
+		<item name="wcf.condition.greaterThan.error.minValue"><![CDATA[Der „mehr als“-Wert darf nicht kleiner sein als {#$minValue}.]]></item>
 		<item name="wcf.condition.lessThan"><![CDATA[weniger als]]></item>
-		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[Der Minimalwert darf nicht größer sein als {#$maxValue}.]]></item>
-		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[Der Minimalwert darf nicht kleiner sein als {#$minValue}.]]></item>
+		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[Der „weniger als“-Wert darf nicht größer sein als {#$maxValue}.]]></item>
+		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[Der „weniger als“-Wert darf nicht kleiner sein als {#$minValue}.]]></item>
 	</category>
 	
 	<category name="wcf.dashboard">
