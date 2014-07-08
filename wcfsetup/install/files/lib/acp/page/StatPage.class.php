@@ -58,7 +58,14 @@ class StatPage extends AbstractPage {
 		$this->startDate = $d->format('Y-m-d');
 		
 		// get object types
-		$this->availableObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.statDailyHandler');
+		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.statDailyHandler');
+		foreach ($objectTypes as $objectType) {
+			if (!isset($this->availableObjectTypes[$objectType->categoryname])) {
+				$this->availableObjectTypes[$objectType->categoryname] = array();
+			}
+			
+			$this->availableObjectTypes[$objectType->categoryname][] = $objectType;
+		}
 	}
 	
 	/**

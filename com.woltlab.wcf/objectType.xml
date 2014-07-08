@@ -339,26 +339,31 @@
 			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
 			<classname><![CDATA[wcf\system\stat\UserStatDailyHandler]]></classname>
 			<default>1</default>
+			<categoryname>com.woltlab.wcf.general</categoryname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.attachment</name>
 			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
 			<classname><![CDATA[wcf\system\stat\AttachmentStatDailyHandler]]></classname>
+			<categoryname>com.woltlab.wcf.general</categoryname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.attachment.diskUsage</name>
 			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
 			<classname><![CDATA[wcf\system\stat\AttachmentDiskUsageStatDailyHandler]]></classname>
+			<categoryname>com.woltlab.wcf.general</categoryname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.like</name>
 			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
 			<classname><![CDATA[wcf\system\stat\LikeStatDailyHandler]]></classname>
+			<categoryname>com.woltlab.wcf.general</categoryname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.dislike</name>
 			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
 			<classname><![CDATA[wcf\system\stat\DislikeStatDailyHandler]]></classname>
+			<categoryname>com.woltlab.wcf.general</categoryname>
 		</type>
 		<!-- /stat handlers -->
 		
