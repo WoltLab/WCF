@@ -898,6 +898,7 @@
 		<item name="wcf.acp.option.register_username_min_length"><![CDATA[Minimale Benutzernamenlänge]]></item>
 		<item name="wcf.acp.option.register_username_max_length"><![CDATA[Maximale Benutzernamenlänge]]></item>
 		<item name="wcf.acp.option.register_username_force_ascii"><![CDATA[Benutzernamen auf ASCII-Zeichen beschränken]]></item>
+		<item name="wcf.acp.option.register_min_user_age"><![CDATA[Mindestalter]]></item>
 		<item name="wcf.acp.option.register_disabled"><![CDATA[Registrierung deaktivieren]]></item>
 		<item name="wcf.acp.option.register_disabled.description"><![CDATA[Schaltet die Registrierung für neue Benutzer gänzlich ab. Neue Benutzer können nur noch manuell durch den Administrator angelegt werden.]]></item>
 		<item name="wcf.acp.option.register_enable_disclaimer"><![CDATA[Nutzungsbedingungen aktivieren]]></item>
@@ -2479,6 +2480,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.option.error.tooLong"><![CDATA[Der eingegebene Text ist zu lang.]]></item>
 		<item name="wcf.user.option.error.tooShort"><![CDATA[Der eingegebene Text ist zu kurz.]]></item>
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[Sie haben einen ungültigen Inhalt eingegeben.]]></item>
+		<item name="wcf.user.option.error.birthdayTooYoung"><![CDATA[Sie sind zu jung. Für eine Anmeldung auf dieser Seite müssen Sie mindestens {#REGISTER_MIN_USER_AGE} Jahre alt sein.]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[Ihr Benutzeraccount wurde gesperrt{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
 		<item name="wcf.user.access.everyone"><![CDATA[Jeder]]></item>
 		<item name="wcf.user.access.following"><![CDATA[Benutzer, denen ich folge]]></item>
