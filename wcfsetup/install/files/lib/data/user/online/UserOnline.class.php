@@ -86,8 +86,8 @@ class UserOnline extends UserProfile {
 	 */
 	public function getBrowser() {
 		// WCF
-		if (preg_match('~(?:WoltLab Community Framework)/([\d\.]+)~i', $this->userAgent, $match)) {
-			  return 'WCF '.$match[1];
+		if (preg_match('~WoltLab Community Framework/([\d\.]+)~i', $this->userAgent, $match)) {
+			  return 'WoltLab Community Framework '.$match[1];
 		}
 		
 		// lunascape
