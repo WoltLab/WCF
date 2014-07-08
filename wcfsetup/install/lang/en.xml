@@ -1198,12 +1198,14 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[TODO: Dateianhänge-Speicherbedarf (MB)]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Likes]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.dislike"><![CDATA[Dislikes]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.userProfileComment"><![CDATA[Wall Comments]]></item>
 		<item name="wcf.acp.stat.dateGrouping"><![CDATA[Time Unit]]></item>
 		<item name="wcf.acp.stat.dateGrouping.daily"><![CDATA[Day]]></item>
 		<item name="wcf.acp.stat.dateGrouping.weekly"><![CDATA[Week]]></item>
 		<item name="wcf.acp.stat.dateGrouping.monthly"><![CDATA[Month]]></item>
 		<item name="wcf.acp.stat.dateGrouping.yearly"><![CDATA[Year]]></item>
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.general"><![CDATA[General Data]]></item>
+		<item name="wcf.acp.stat.category.com.woltlab.wcf.user"><![CDATA[User Data]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">
