@@ -1724,12 +1724,12 @@ Errors are:
 	
 	<category name="wcf.condition">
 		<item name="wcf.condition.greaterThan"><![CDATA[greater than]]></item>
-		<item name="wcf.condition.greaterThan.error.lessThan"><![CDATA[The minimal value and the maximum value are conflicting.]]></item>
-		<item name="wcf.condition.greaterThan.error.maxValue"><![CDATA[The maximum value may not be greater than {#$maxValue}.]]></item>
-		<item name="wcf.condition.greaterThan.error.minValue"><![CDATA[The maximum value may not be less than {#$minValue}.]]></item>
+		<item name="wcf.condition.greaterThan.error.lessThan"><![CDATA[The “less than” value and the “greater than” value are conflicting.]]></item>
+		<item name="wcf.condition.greaterThan.error.maxValue"><![CDATA[The “greater than” value may not be greater than {#$maxValue}.]]></item>
+		<item name="wcf.condition.greaterThan.error.minValue"><![CDATA[The “greater than” value may not be less than {#$minValue}.]]></item>
 		<item name="wcf.condition.lessThan"><![CDATA[less than]]></item>
-		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[The minimal value may not be greater than {#$maxValue}.]]></item>
-		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[The minimal value may not be less than {#$minValue}.]]></item>
+		<item name="wcf.condition.lessThan.error.maxValue"><![CDATA[The “less than” value may not be greater than {#$maxValue}.]]></item>
+		<item name="wcf.condition.lessThan.error.minValue"><![CDATA[The “less than” value may not be less than {#$minValue}.]]></item>
 	</category>
 	
 	<category name="wcf.dashboard">

@@ -79,6 +79,11 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition {
 			$errorMessage = '';
 			switch ($this->errorMessage) {
 				case 'wcf.condition.greaterThan.error.maxValue':
+					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, array(
+						'maxValue' => $this->maxValue - 1
+					));
+				break;
+				
 				case 'wcf.condition.lessThan.error.maxValue':
 					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, array(
 						'maxValue' => $this->maxValue
@@ -86,9 +91,14 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition {
 				break;
 				
 				case 'wcf.condition.greaterThan.error.minValue':
-				case 'wcf.condition.lessThan.error.minValue':
 					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, array(
 						'minValue' => $this->minValue
+					));
+				break;
+				
+				case 'wcf.condition.lessThan.error.minValue':
+					$errorMessage = WCF::getLanguage()->getDynamicVariable($this->errorMessage, array(
+						'minValue' => $this->minValue + 1
 					));
 				break;
 				
@@ -111,8 +121,8 @@ abstract class AbstractIntegerCondition extends AbstractSingleFieldCondition {
 		$lessThanPlaceHolder = WCF::getLanguage()->get('wcf.condition.lessThan');
 		
 		return <<<HTML
-<input type="number" name="greaterThan_{$this->getIdentifier()}" value="{$this->greaterThan}" placeholder="{$greaterThanPlaceHolder}"{$this->getMinMaxAttributes('greaterThan')} />
-<input type="number" name="lessThan_{$this->getIdentifier()}" value="{$this->lessThan}" placeholder="{$lessThanPlaceHolder}"{$this->getMinMaxAttributes('lessThan')} />
+<input type="number" name="greaterThan_{$this->getIdentifier()}" value="{$this->greaterThan}" placeholder="{$greaterThanPlaceHolder}"{$this->getMinMaxAttributes('greaterThan')} class="medium" />
+<input type="number" name="lessThan_{$this->getIdentifier()}" value="{$this->lessThan}" placeholder="{$lessThanPlaceHolder}"{$this->getMinMaxAttributes('lessThan')} class="medium" />
 HTML;
 	}
 	
@@ -155,7 +165,7 @@ HTML;
 			$attributes .= ' min="'.($this->getMinValue() + ($type == 'lessThan' ? 1 : 0)).'"';
 		}
 		if ($this->getMaxValue() !== null) {
-			$attributes .= ' max="'.($this->getMaxValue() - ($type == 'lessThan' ? 1 : 0)).'"';
+			$attributes .= ' max="'.($this->getMaxValue() - ($type == 'greaterThan' ? 1 : 0)).'"';
 		}
 		
 		return $attributes;
@@ -214,19 +224,19 @@ HTML;
 				throw new UserInputException('lessThan', 'minValue');
 			}
 			else if ($this->getMaxValue() !== null && $this->lessThan > $this->getMaxValue()) {
-				$this->errorMessages['lessThan'] = 'wcf.condition.lessThan.error.maxValue';
+				$this->errorMessage = 'wcf.condition.lessThan.error.maxValue';
 				
 				throw new UserInputException('lessThan', 'maxValue');
 			}
 		}
 		if ($this->greaterThan !== null) {
 			if ($this->getMinValue() !== null && $this->greaterThan < $this->getMinValue()) {
-				$this->errorMessages['greaterThan'] = 'wcf.condition.greaterThan.error.minValue';
+				$this->errorMessage = 'wcf.condition.greaterThan.error.minValue';
 				
 				throw new UserInputException('greaterThan', 'minValue');
 			}
 			else if ($this->getMaxValue() !== null && $this->greaterThan >= $this->getMaxValue()) {
-				$this->errorMessages['greaterThan'] = 'wcf.condition.greaterThan.error.maxValue';
+				$this->errorMessage = 'wcf.condition.greaterThan.error.maxValue';
 				
 				throw new UserInputException('greaterThan', 'maxValue');
 			}
