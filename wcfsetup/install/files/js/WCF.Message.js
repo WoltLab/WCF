@@ -78,6 +78,162 @@ WCF.Message.BBCode.CodeViewer = Class.extend({
 });
 
 /**
+ * Provides the dynamic parts of the edit history interface.
+ */
+WCF.Message.EditHistory = Class.extend({
+	/**
+	 * jQuery object containing the radio buttons for the oldID
+	 * @var	object
+	 */
+	_oldIDInputs: null,
+	
+	/**
+	 * jQuery object containing the radio buttons for the oldID
+	 * @var	object
+	 */
+	_newIDInputs: null,
+	
+	/**
+	 * selector for the version rows
+	 * @var	string
+	 */
+	_containerSelector: '',
+	
+	/**
+	 * selector for the revert button
+	 * @var	string
+	 */
+	_buttonSelector: '.jsRevertButton',
+	
+	/**
+	 * Initializes the edit history interface.
+	 * 
+	 * @param	object	oldIDInputs
+	 * @param	object	newIDInputs
+	 * @param	string	containerSelector
+	 * @param	string	buttonSelector
+	 */
+	init: function(oldIDInputs, newIDInputs, containerSelector, buttonSelector) {
+		this._oldIDInputs = oldIDInputs;
+		this._newIDInputs = newIDInputs;
+		this._containerSelector = containerSelector;
+		this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsRevertButton';
+		
+		this.proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		this._initInputs();
+		this._initElements();
+	},
+	
+	/**
+	 * Initializes the radio buttons.
+	 * Force the "oldID" to be lower than the "newID"
+	 * 'current' is interpreted as Infinity.
+	 */
+	_initInputs: function() {
+		var self = this;
+		this._newIDInputs.change(function(event) {
+			var newID = parseInt($(this).val())
+			if ($(this).val() === 'current') newID = Infinity;
+			
+			self._oldIDInputs.each(function(event) {
+				var oldID = parseInt($(this).val())
+				if ($(this).val() === 'current') oldID = Infinity;
+				
+				if (oldID >= newID) {
+					$(this).disable();
+				}
+				else {
+					$(this).enable();
+				}
+			});
+		});
+		
+		this._oldIDInputs.change(function(event) {
+			var oldID = parseInt($(this).val());
+			if ($(this).val() === 'current') oldID = Infinity;
+			
+			self._newIDInputs.each(function(event) {
+				var newID = parseInt($(this).val())
+				if ($(this).val() === 'current') newID = Infinity;
+				
+				if (newID <= oldID) {
+					$(this).disable();
+				}
+				else {
+					$(this).enable();
+				}
+			});
+		});
+		this._oldIDInputs.filter(':checked').change();
+		this._newIDInputs.filter(':checked').change();
+	},
+	
+	/**
+	 * Initializes available element containers.
+	 */
+	_initElements: function() {
+		var self = this;
+		$(this._containerSelector).each(function(index, container) {
+			var $container = $(container);
+			$container.find(self._buttonSelector).click($.proxy(self._click, self));
+		});
+	},
+	
+	/**
+	 * Sends AJAX request.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		var $target = $(event.currentTarget);
+		event.preventDefault();
+		
+		if ($target.data('confirmMessage')) {
+			var self = this;
+			
+			WCF.System.Confirmation.show($target.data('confirmMessage'), function(action) {
+				if (action === 'cancel') return;
+				
+				self._sendRequest($target);
+			});
+		}
+		else {
+			this._sendRequest($target);
+		}
+	},
+	
+	
+	/**
+	 * Sends the request
+	 * 
+	 * @param	jQuery	object
+	 */
+	_sendRequest: function(object) {
+		this.proxy.setOption('data', {
+			actionName: 'revert',
+			className: 'wcf\\data\\edit\\history\\entry\\EditHistoryEntryAction',
+			objectIDs: [ $(object).data('objectID') ]
+		});
+		
+		this.proxy.sendRequest();
+	},
+	
+	/**
+	 * Reloads the page to show the new versions.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	object		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		window.location.reload(true);
+	}
+});
+
+/**
  * Prevents multiple submits of the same form by disabling the submit button.
  */
 WCF.Message.FormGuard = Class.extend({

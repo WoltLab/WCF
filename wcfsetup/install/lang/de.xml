@@ -843,6 +843,9 @@
 		<item name="wcf.acp.option.show_signature_default_value"><![CDATA[Signatur anzeigen [Vorgabewert]]]></item>
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Buttons zum Teilen von Inhalten anzeigen]]></item>
 		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Anzahl der Teilungen anzeigen]]></item>
+		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Bearbeitungen]]></item>
+		<iten name="wcf.acp.option.edit_history_expiration"><![CDATA[Speicherzeit]]></item>
+		<iten name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Zeitraum, nachdem alte Einträge aus dem Bearbeitungsverlauf entfernt werden [Zeitraum in Tagen]]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
 		<item name="wcf.acp.option.github_public_key.description"><![CDATA[Sie können Ihre Client ID und Ihr Client Secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a> anfordern. Die Callback URL ist: {link controller="GithubAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
@@ -1977,6 +1980,17 @@ Fehler sind beispielsweise:
 		<item name="wcf.date.endTime.error.beforeStartTime"><![CDATA[Der Endzeitpunkt muss nach dem Startzeitpunkt liegen.]]></item>
 		<item name="wcf.date.startTime.error.notValid"><![CDATA[Der Startzeitpunkt ist ungültig.]]></item>
 		<item name="wcf.date.endTime.error.notValid"><![CDATA[Der Endzeitpunkt ist ungültig.]]></item>
+	</category>
+	
+	<category name="wcf.edit">
+		<item name="wcf.edit.versions"><![CDATA[Versionen]]></item>
+		<item name="wcf.edit.time"><![CDATA[Änderungszeitpunkt]]></item>
+		<item name="wcf.edit.reason"><![CDATA[Änderungsgrund]]></item>
+		<item name="wcf.edit.currentVersion"><![CDATA[Aktuell]]></item>
+		<item name="wcf.edit.revert"><![CDATA[Wiederherstellen]]></item>
+		<item name="wcf.edit.revert.sure"><![CDATA[Möchten Sie die Version von „{$edit->username}“ vom {$edit->time|plainTime} wirklich wiederherstellen?]]></item>
+		<item name="wcf.edit.reverted"><![CDATA[Wiederhergestellt auf Version von „{$edit->username}“ vom {$edit->time|plainTime}]]></item>
+		<item name="wcf.edit.button.compare"><![CDATA[Vergleichen]]></item>
 	</category>
 	
 	<category name="wcf.global">

@@ -350,6 +350,21 @@ CREATE TABLE wcf1_dashboard_option (
 	UNIQUE KEY dashboardOption (objectTypeID, boxID)
 );
 
+DROP TABLE IF EXISTS wcf1_edit_history_entry;
+CREATE TABLE wcf1_edit_history_entry (
+	entryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	objectTypeID INT(10) NOT NULL,
+	objectID INT(10) NOT NULL,
+	userID INT(10),
+	username VARCHAR(255) NOT NULL DEFAULT '',
+	time INT(10) NOT NULL DEFAULT 0, -- time the version was created, displayed to the user
+	insertionTime INT(10) NOT NULL DEFAULT 0, -- time the version was inserted into the edit history, used for clean up
+	message MEDIUMTEXT,
+	editReason TEXT,
+	
+	KEY (objectTypeID, objectID)
+);
+
 DROP TABLE IF EXISTS wcf1_event_listener;
 CREATE TABLE wcf1_event_listener (
 	listenerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1461,6 +1476,9 @@ ALTER TABLE wcf1_core_object ADD FOREIGN KEY (packageID) REFERENCES wcf1_package
 ALTER TABLE wcf1_cronjob ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_cronjob_log ADD FOREIGN KEY (cronjobID) REFERENCES wcf1_cronjob (cronjobID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_event_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
