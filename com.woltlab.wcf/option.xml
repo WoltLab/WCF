@@ -184,6 +184,9 @@
 						<parent>message.general</parent>
 						<options>module_poll</options>
 					</category>
+					<category name="message.general.edit">
+						<parent>message.general</parent>
+					</category>
 				
 				<category name="message.attachment">
 					<parent>message</parent>
@@ -850,6 +853,15 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /message.general -->
+			
+			<!-- message.general.edit -->
+			<option name="edit_history_expiration">
+				<categoryname>message.general.edit</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>90</defaultvalue>
+				<minvalue>0</minvalue>
+			</option>
+			<!-- /message.general.edit -->
 			
 			<!-- message.general.share -->
 			<option name="enable_share_buttons">

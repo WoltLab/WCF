@@ -58,10 +58,10 @@ class EditHistoryManager extends SingletonFactory {
 	public function add($objectType, $objectID, $message, $time, $userID, $username, $editReason) {
 		// save new entry
 		$sql = "INSERT INTO	wcf".WCF_N."_edit_history_entry
-					(objectTypeID, objectID, message, time, userID, username, editReason)
-			VALUES		(?, ?, ?, ?, ?, ?, ?)";
+					(objectTypeID, objectID, message, time, insertionTime, userID, username, editReason)
+			VALUES		(?, ?, ?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->getObjectTypeID($objectType), $objectID, $message, $time, $userID, $username, $editReason));
+		$statement->execute(array($this->getObjectTypeID($objectType), $objectID, $message, $time, TIME_NOW, $userID, $username, $editReason));
 	}
 	
 	/**

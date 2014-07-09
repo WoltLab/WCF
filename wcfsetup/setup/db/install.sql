@@ -357,7 +357,8 @@ CREATE TABLE wcf1_edit_history_entry (
 	objectID INT(10) NOT NULL,
 	userID INT(10),
 	username VARCHAR(255) NOT NULL DEFAULT '',
-	time INT(10) NOT NULL DEFAULT 0,
+	time INT(10) NOT NULL DEFAULT 0, -- time the version was created, displayed to the user
+	insertionTime INT(10) NOT NULL DEFAULT 0, -- time the version was inserted into the edit history, used for clean up
 	message MEDIUMTEXT,
 	editReason TEXT,
 	
