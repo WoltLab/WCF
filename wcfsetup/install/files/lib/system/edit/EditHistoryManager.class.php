@@ -63,4 +63,24 @@ class EditHistoryManager extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->getObjectTypeID($objectType), $objectID, $message, $time, $userID, $username, $editReason));
 	}
+	
+	/**
+	* Deletes edit history entries.
+	* 
+	* @param	string		$objectType
+	* @param	array<integer>	$objectIDs
+	*/
+	public function delete($objectType, array $objectIDs) {
+		$objectTypeID = $this->getObjectTypeID($objectType);
+		
+		$sql = "DELETE FROM	wcf".WCF_N."_edit_history_entry
+			WHERE		objectTypeID = ?
+				AND	objectID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		WCF::getDB()->beginTransaction();
+		foreach ($objectIDs as $objectID) {
+			$statement->execute(array($objectTypeID, $objectID));
+		}
+		WCF::getDB()->commitTransaction();
+	}
 }
