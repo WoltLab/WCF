@@ -194,7 +194,7 @@ Examples for medium ID detection:
 	</category>
 	
 	<category name="wcf.acp.dashboard">
-		<item name="wcf.acp.dashboard.list"><![CDATA[Dashboard Management]]></item>
+		<item name="wcf.acp.dashboard.list"><![CDATA[TODO: Dashboard-Seiten konfigurieren]]></item>
 		<item name="wcf.acp.dashboard.option"><![CDATA[Configure Dashboard Boxes]]></item>
 		<item name="wcf.acp.dashboard.box.sort"><![CDATA[Sort boxes to determine show order. You can enable or disable boxes by moving them between the boxes “Active Boxes” and “Disabled Boxes”.]]></item>
 	</category>
@@ -616,7 +616,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
 		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[List Smiley Categories]]></item>
 		<item name="wcf.acp.menu.link.dashboard"><![CDATA[Dashboard]]></item>
-		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[Configuration]]></item>
+		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[TODO: Seiten konfigurieren]]></item>
 		<item name="wcf.acp.menu.link.activityPoint"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[List User Ranks]]></item>
