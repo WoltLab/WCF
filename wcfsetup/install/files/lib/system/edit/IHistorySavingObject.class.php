@@ -5,15 +5,15 @@ use wcf\data\IDatabaseObjectProcessor;
 use wcf\data\IUserContent;
 
 /**
-* Represents an object that saves it's edit history.
-* 
-* @author	Tim Duesterhus
-* @copyright	2001-2014 WoltLab GmbH
-* @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
-* @package	com.woltlab.wcf
-* @subpackage	system.edit
-* @category	Community Framework
-*/
+ * Represents an object that saves it's edit history.
+ * 
+ * @author	Tim Duesterhus
+ * @copyright	2001-2014 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	com.woltlab.wcf
+ * @subpackage	system.edit
+ * @category	Community Framework
+ */
 interface IHistorySavingObject extends IDatabaseObjectProcessor, IUserContent {
 	/**
 	 * Reverts the object's text to the given EditHistoryEntry.
