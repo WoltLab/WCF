@@ -372,7 +372,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Can rename own user]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Can see members list]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUserProfile"><![CDATA[Can see user profiles]]></item>
-		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Can see users online list]]></item>
+		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Can see users online lists]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseBBCodes"><![CDATA[Can use BBCodes within signature]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseHtml"><![CDATA[Can use HTML within signature]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseSmilies"><![CDATA[Can use Smilies within signature]]></item>

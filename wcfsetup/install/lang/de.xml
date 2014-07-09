@@ -373,7 +373,7 @@
 		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Kann Benutzernamen ändern]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Kann Mitglieder-Liste sehen]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUserProfile"><![CDATA[Kann Benutzerprofile sehen]]></item>
-		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Kann Benutzer-Online-Liste sehen]]></item>
+		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Kann Benutzer-Online-Listen sehen]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseBBCodes"><![CDATA[Kann BBCodes in der Signatur verwenden]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseHtml"><![CDATA[Kann HTML in der Signatur verwenden]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseSmilies"><![CDATA[Kann Smileys in der Signatur verwenden]]></item>
