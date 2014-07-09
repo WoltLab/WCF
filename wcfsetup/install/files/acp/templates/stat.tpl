@@ -9,7 +9,8 @@
 			'wcf.acp.stat.timeFormat.daily': '{lang}wcf.acp.stat.timeFormat.daily{/lang}',
 			'wcf.acp.stat.timeFormat.weekly': '{lang}wcf.acp.stat.timeFormat.weekly{/lang}',
 			'wcf.acp.stat.timeFormat.monthly': '{lang}wcf.acp.stat.timeFormat.monthly{/lang}',
-			'wcf.acp.stat.timeFormat.yearly': '{lang}wcf.acp.stat.timeFormat.yearly{/lang}'
+			'wcf.acp.stat.timeFormat.yearly': '{lang}wcf.acp.stat.timeFormat.yearly{/lang}',
+			'wcf.acp.stat.noData': '{lang}wcf.acp.stat.noData{/lang}'
 		});
 		
 		new WCF.ACP.Stat.Chart();

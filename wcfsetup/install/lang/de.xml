@@ -1237,6 +1237,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.stat.dateGrouping.yearly"><![CDATA[Jahr]]></item>
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.general"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.user"><![CDATA[Benutzer-Daten]]></item>
+		<item name="wcf.acp.stat.noData"><![CDATA[Es liegen keine Daten für den ausgewählten Zeitraum vor.]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">

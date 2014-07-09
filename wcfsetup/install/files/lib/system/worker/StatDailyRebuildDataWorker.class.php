@@ -73,6 +73,8 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 			$d->add(new \DateInterval('P'.($this->loopCount * $this->limit).'D'));
 		}
 		for ($i = 0; $i < $this->limit; $i++) {
+			if ($d->getTimestamp() > TIME_NOW) break;
+			
 			// get object types
 			foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.statDailyHandler') as $objectType) {
 				$data = $objectType->getProcessor()->getData($d->getTimestamp());
