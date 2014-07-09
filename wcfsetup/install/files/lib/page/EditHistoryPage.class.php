@@ -56,12 +56,6 @@ class EditHistoryPage extends AbstractPage {
 	public $diff = null;
 	
 	/**
-	 * object type id of the requested object
-	 * @var	integer
-	 */
-	public $objectTypeID = 0;
-	
-	/**
 	 * object type of the requested object
 	 * @var	\wcf\data\object\type\ObjectType
 	 */
@@ -105,17 +99,16 @@ class EditHistoryPage extends AbstractPage {
 			}
 			
 			$this->objectID = $this->old->objectID;
-			$this->objectTypeID = $this->old->objectTypeID;
+			$this->objectType = ObjectTypeCache::getInstance()->getObjectType($this->old->objectTypeID);
 		}
-		else if (isset($_REQUEST['objectID']) && isset($_REQUEST['objectTypeID'])) {
+		else if (isset($_REQUEST['objectID']) && isset($_REQUEST['objectType'])) {
 			$this->objectID = intval($_REQUEST['objectID']);
-			$this->objectTypeID = intval($_REQUEST['objectTypeID']);
+			$this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.edit.historySavingObject', $_REQUEST['objectType']);
 		}
 		else {
 			throw new IllegalLinkException();
 		}
 		
-		$this->objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
 		if (!$this->objectType) throw new IllegalLinkException();
 		$processor = $this->objectType->getProcessor();
 		$this->object = $processor->getObjectByID($this->objectID);
@@ -137,7 +130,7 @@ class EditHistoryPage extends AbstractPage {
 		
 		$this->objectList = new EditHistoryEntryList();
 		$this->objectList->sqlOrderBy = "time DESC";
-		$this->objectList->getConditionBuilder()->add('objectTypeID = ?', array($this->objectTypeID));
+		$this->objectList->getConditionBuilder()->add('objectTypeID = ?', array($this->objectType->objectTypeID));
 		$this->objectList->getConditionBuilder()->add('objectID = ?', array($this->objectID));
 		$this->objectList->readObjects();
 		
@@ -162,7 +155,9 @@ class EditHistoryPage extends AbstractPage {
 			'new' => $this->new,
 			'object' => $this->object,
 			'diff' => $this->diff,
-			'objects' => $this->objectList
+			'objects' => $this->objectList,
+			'objectID' => $this->objectID,
+			'objectType' => $this->objectType
 		));
 	}
 }
