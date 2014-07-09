@@ -785,7 +785,13 @@ WCF.Message.QuickReply = Class.extend({
 		// show spinner and hide Redactor
 		var $messageBody = this._container.find('.messageQuickReplyContent .messageBody');
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
-		$messageBody.children('.redactor_box').hide().end().next().hide();
+		var $redactorBox = $messageBody.children('.redactor_box').hide();
+		
+		// hide message tabs
+		$redactorBox.next().hide();
+		
+		// hide form submit
+		$messageBody.next().hide();
 	},
 	
 	/**
@@ -845,7 +851,7 @@ WCF.Message.QuickReply = Class.extend({
 		
 		// display Redactor
 		$messageBody.children('.icon-spinner').remove();
-		$messageBody.children('.redactor_box').show();
+		$messageBody.children('.redactor_box').show().next().show();
 		
 		// display form submit
 		$messageBody.next().show();
@@ -1340,7 +1346,7 @@ WCF.Message.InlineEditor = Class.extend({
 	_revertEditor: function() {
 		var $messageBody = this._container[this._activeElementID].removeClass('jsInvalidQuoteTarget').find('.messageBody');
 		$messageBody.children('span.icon-spinner').remove();
-		$messageBody.children('div:eq(0)').children().show();
+		$messageBody.children('div:eq(0)').children(':not(.messageText)').show();
 		$messageBody.children('.attachmentThumbnailList, .attachmentFileList').show();
 		
 		// show unrelated content
