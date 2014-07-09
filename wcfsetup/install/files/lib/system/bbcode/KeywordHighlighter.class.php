@@ -95,7 +95,7 @@ class KeywordHighlighter extends SingletonFactory {
 	 */
 	protected function parseKeywords($keywordString) {
 		// convert encoding if necessary
-		if (!StringUtil::isASCII($keywordString) && !StringUtil::isUTF8($keywordString)) {
+		if (!StringUtil::isUTF8($keywordString)) {
 			$keywordString = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $keywordString);
 		}
 		

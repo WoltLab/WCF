@@ -746,7 +746,7 @@ class WCF {
 		}
 		
 		$path = str_replace('/index.php', '', str_replace($scriptName, '', $_SERVER['REQUEST_URI']));
-		if (!StringUtil::isASCII($path) && !StringUtil::isUTF8($path)) {
+		if (!StringUtil::isUTF8($path)) {
 			$path = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $path);
 		}
 		$path = FileUtil::removeLeadingSlash($path);
