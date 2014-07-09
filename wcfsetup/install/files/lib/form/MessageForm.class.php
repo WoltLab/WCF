@@ -44,7 +44,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	
 	/**
 	 * object type for attachments, if left blank, attachment support is disabled
-	 * @var	integer
+	 * @var	string
 	 */
 	public $attachmentObjectType = '';
 	
