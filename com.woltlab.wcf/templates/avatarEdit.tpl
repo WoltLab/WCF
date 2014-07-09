@@ -126,8 +126,7 @@
 				'wcf.user.avatar.upload.error.tooLarge': '{lang}wcf.user.avatar.upload.error.tooLarge{/lang}',
 				'wcf.user.avatar.upload.error.uploadFailed': '{lang}wcf.user.avatar.upload.error.uploadFailed{/lang}',
 				'wcf.user.avatar.upload.error.badImage': '{lang}wcf.user.avatar.upload.error.badImage{/lang}',
-				'wcf.user.avatar.upload.success': '{lang}wcf.user.avatar.upload.success{/lang}',
-				'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}'
+				'wcf.user.avatar.upload.success': '{lang}wcf.user.avatar.upload.success{/lang}'
 			});
 			
 			{if !$__wcf->user->disableAvatar}
