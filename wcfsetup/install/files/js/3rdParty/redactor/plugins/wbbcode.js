@@ -13,10 +13,15 @@ RedactorPlugins.wbbcode = {
 	 */
 	init: function() {
 		this.opts.initCallback = $.proxy(function() {
-			if (this.$source.val().length) {
+			// use stored editor contents
+			var $content = $.trim(this.getOption('wOriginalValue'));
+			if ($content.length) {
 				this.toggle();
+				this.$source.val($content);
 				this.toggle();
 			}
+			
+			delete this.opts.wOriginalValue;
 		}, this);
 		
 		this.opts.pasteBeforeCallback = $.proxy(this._wPasteBeforeCallback, this);
