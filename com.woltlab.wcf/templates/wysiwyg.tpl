@@ -30,7 +30,8 @@ $(function() {
 				active: ($autosave) ? true : false,
 				key: ($autosave) ? '{@$__wcf->getAutosavePrefix()}_' + $autosave : '',
 				saveOnInit: {if !$errorField|empty}true{else}false{/if}
-			}
+			},
+			wOriginalValue: $textarea.val()
 		};
 		
 		{event name='javascriptInit'}

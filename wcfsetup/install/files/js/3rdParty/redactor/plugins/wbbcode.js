@@ -12,19 +12,16 @@ RedactorPlugins.wbbcode = {
 	 * Initializes the RedactorPlugins.wbbcode plugin.
 	 */
 	init: function() {
-		/*var $dropdown = this._createSmileyDropdown();
-		
-		this.buttonReplace('smiley', 'wsmiley', 'Smiley', $.proxy(function(btnName, $button, btnObject, e) {
-			this.dropdownShow(e, btnName);
-		}, this));
-		this.buttonGet('wsmiley').data('dropdown', $dropdown);
-		this.buttonAwesome('wsmiley', 'fa-smile-o');*/
-		
 		this.opts.initCallback = $.proxy(function() {
-			if (this.$source.val().length) {
+			// use stored editor contents
+			var $content = $.trim(this.getOption('wOriginalValue'));
+			if ($content.length) {
 				this.toggle();
+				this.$source.val($content);
 				this.toggle();
 			}
+			
+			delete this.opts.wOriginalValue;
 		}, this);
 		
 		this.opts.pasteBeforeCallback = $.proxy(this._wPasteBeforeCallback, this);
@@ -84,33 +81,6 @@ RedactorPlugins.wbbcode = {
 		else {
 			$insertTable.nextAll().hide();
 		}
-	},
-	
-	/**
-	 * Creates the smiley dropdown.
-	 */
-	_createSmileyDropdown: function() {
-		var $dropdown = $('<div class="redactor_dropdown redactor_dropdown_box_wsmiley" style="display: none; width: 195px;" />');
-		var $list = $('<ul class="smileyList" />').appendTo($dropdown);
-		
-		for (var $smileyCode in __REDACTOR_SMILIES) {
-			var $insertLink = $('<li><img src="' + __REDACTOR_SMILIES[$smileyCode] + '" class="smiley" /></li>').data('smileyCode', $smileyCode);
-			$insertLink.appendTo($list).click($.proxy(this._onSmileyPick, this));
-		}
-		
-		$(this.$toolbar).append($dropdown);
-		
-		return $dropdown;
-	},
-	
-	/**
-	 * Inserts smiley on click.
-	 * 
-	 * @param	object		event
-	 */
-	_onSmileyPick: function(event) {
-		var $smileyCode = $(event.currentTarget).data('smileyCode');
-		this.insertSmiley($smileyCode, __REDACTOR_SMILIES[$smileyCode], false);
 	},
 	
 	/**
