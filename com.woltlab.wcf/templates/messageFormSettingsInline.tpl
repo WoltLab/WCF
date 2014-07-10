@@ -1,4 +1,6 @@
 <fieldset id="settings_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}" class="container containerPadding">
+	{event name='beforeSettings'}
+	
 	<dl class="wide">
 		{if $__wcf->getSession()->getPermission('user.message.canUseBBCodes')}
 			<dt></dt>
@@ -24,6 +26,8 @@
 		
 		{event name='settings'}
 	</dl>
+	
+	{event name='afterSettings'}
 </fieldset>
 <script data-relocate="true">
 	$(function() {

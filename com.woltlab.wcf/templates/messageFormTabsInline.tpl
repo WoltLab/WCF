@@ -1,7 +1,7 @@
 {assign var=smileyCategories value=$__wcf->getSmileyCache()->getCategories()}
 {if !$permissionCanUseSmilies|isset}{assign var=permissionCanUseSmilies value='user.message.canUseSmilies'}{/if}
 {if !$wysiwygContainerID|isset}{assign var=wysiwygContainerID value='text'}{/if}
-<div class="messageTabMenu">
+<div class="messageTabMenu"{if $preselectTabMenu|isset} data-preselect="{$preselectTabMenu}"{/if}>
 	<nav class="messageTabMenuNavigation jsOnly">
 		<ul>
 			{if MODULE_SMILEY && $__wcf->getSession()->getPermission($permissionCanUseSmilies) && $smileyCategories|count}<li data-name="smilies"><a>{lang}wcf.message.smilies{/lang}</a></li>{/if}
