@@ -12,6 +12,8 @@ namespace wcf\page;
  * @category	Community Framework
  */
 class PrivacyPolicyPage extends AbstractPage {
+	const AVAILABLE_DURING_OFFLINE_MODE = true;
+	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededModules
 	 */
