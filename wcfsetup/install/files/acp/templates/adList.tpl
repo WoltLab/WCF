@@ -41,7 +41,6 @@
 						</span>
 						
 						<a href="{link controller='AdEdit' object=$ad}{/link}">{$ad->adName}</a>
-						<p><small>{$ad->getLocation()}</small></p>
 					</span>
 				</li>
 			{/foreach}
