@@ -33,7 +33,7 @@
 				<li class="sortableNode sortableNoNesting jsAd" data-object-id="{@$ad->adID}">
 					<span class="sortableNodeLabel">
 						<span class="statusDisplay sortableButtonContainer">
-							<span class="icon icon16 icon-check{if $ad->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $ad->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$ad->adID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
+							<span class="icon icon16 icon-check{if $ad->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $ad->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$ad->adID}"></span>
 							<a href="{link controller='AdEdit' object=$ad}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
 							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$ad->adID}" data-confirm-message="{lang}wcf.acp.ad.delete.confirmMessage{/lang}"></span>
 							
