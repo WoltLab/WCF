@@ -155,7 +155,11 @@ class QuickReplyManager extends SingletonFactory {
 		$parameters['removeQuoteIDs'] = (isset($parameters['removeQuoteIDs']) && is_array($parameters['removeQuoteIDs'])) ? ArrayUtil::trim($parameters['removeQuoteIDs']) : array();
 		
 		// check for tmp hash (attachments)
-		$parameters['tmpHash'] = (isset($parameters['tmpHash'])) ? StringUtil::trim($parameters['tmpHash']) : '';
+		$parameters['tmpHash'] = '';
+		if (isset($parameters['data']['tmpHash'])) {
+			$parameters['tmpHash'] = StringUtil::trim($parameters['data']['tmpHash']);
+			unset($parameters['data']['tmpHash']);
+		}
 		
 		// message settings
 		$parameters['data'] = array_merge($parameters['data'], MessageFormSettingsHandler::getSettings($parameters));

@@ -70,6 +70,31 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		if (this._fileListSelector.children('li:not(.uploadFailed)').length) {
 			this._insertAllButton.show();
 		}
+		
+		if (this._wysiwygContainerID) {
+			WCF.System.Event.addListener('com.woltlab.wcf.messageOptionsInline', 'submit_' + this._wysiwygContainerID, $.proxy(this._submitInline, this));
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'reset', $.proxy(this._reset, this));
+		}
+	},
+	
+	/**
+	 * Adds parameters for the inline editor.
+	 * 
+	 * @param	object		data
+	 */
+	_submitInline: function(data) {
+		if (this._tmpHash) {
+			data.tmpHash = this._tmpHash;
+		}
+	},
+	
+	/**
+	 * Resets the attachment container.
+	 */
+	_reset: function() {
+		this._fileListSelector.hide().empty();
+		this._insertAllButton.hide();
+		this._validateLimit();
 	},
 	
 	/**

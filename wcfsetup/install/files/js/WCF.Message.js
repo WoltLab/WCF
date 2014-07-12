@@ -135,11 +135,11 @@ WCF.Message.EditHistory = Class.extend({
 	_initInputs: function() {
 		var self = this;
 		this._newIDInputs.change(function(event) {
-			var newID = parseInt($(this).val())
+			var newID = parseInt($(this).val());
 			if ($(this).val() === 'current') newID = Infinity;
 			
 			self._oldIDInputs.each(function(event) {
-				var oldID = parseInt($(this).val())
+				var oldID = parseInt($(this).val());
 				if ($(this).val() === 'current') oldID = Infinity;
 				
 				if (oldID >= newID) {
@@ -156,7 +156,7 @@ WCF.Message.EditHistory = Class.extend({
 			if ($(this).val() === 'current') oldID = Infinity;
 			
 			self._newIDInputs.each(function(event) {
-				var newID = parseInt($(this).val())
+				var newID = parseInt($(this).val());
 				if ($(this).val() === 'current') newID = Infinity;
 				
 				if (newID <= oldID) {
@@ -827,8 +827,8 @@ WCF.Message.QuickReply = Class.extend({
 		if (this._container.is(':visible')) {
 			this._quickReplyButtons.hide();
 			
-			// TODO: Scrolling is anything but smooth, better use the init callback
-			this._scroll.scrollTo(this._container, true);
+			var self = this;
+			window.setTimeout(function() { self._scroll.scrollTo(self._container, true); }, 100);
 			
 			WCF.Message.Submit.registerButton('text', this._container.find('.formSubmit button[data-type=save]'));
 			
@@ -964,8 +964,7 @@ WCF.Message.QuickReply = Class.extend({
 			},
 			lastPostTime: this._container.data('lastPostTime'),
 			pageNo: this._container.data('pageNo'),
-			removeQuoteIDs: (this._quoteManager === null ? [ ] : this._quoteManager.getQuotesMarkedForRemoval()),
-			tmpHash: this._container.data('tmpHash') || ''
+			removeQuoteIDs: (this._quoteManager === null ? [ ] : this._quoteManager.getQuotesMarkedForRemoval())
 		};
 		if (this._container.data('anchor')) {
 			$parameters.anchor = this._container.data('anchor');
@@ -1489,6 +1488,8 @@ WCF.Message.InlineEditor = Class.extend({
 				if (this._quoteManager) {
 					this._quoteManager.setAlternativeEditor($element);
 				}
+				
+				new WCF.Effect.Scroll().scrollTo(this._container[this._activeElementID], true);
 			}, this), 250);
 		}
 		else {

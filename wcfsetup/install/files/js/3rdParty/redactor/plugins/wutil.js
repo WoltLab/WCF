@@ -177,7 +177,7 @@ RedactorPlugins.wutil = {
 			this.$source.val('');
 		}
 		
-		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'reset');
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'reset', { wysiwygContainerID: this.$source.wcfIdentify() });
 	},
 	
 	/**
