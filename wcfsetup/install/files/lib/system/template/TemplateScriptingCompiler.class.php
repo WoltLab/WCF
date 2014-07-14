@@ -759,7 +759,7 @@ class TemplateScriptingCompiler {
 		$sandbox = ($sandbox === 'true' || $sandbox === true || $sandbox == 1);
 		
 		$staticInclude = true;
-		if ($sandbox || $assignVar === false || $once === false || !empty($args)) {
+		if ($sandbox || $assignVar !== false || $once !== false || strpos($application, '$') !== false) {
 			$staticInclude = false;
 		}
 		
@@ -823,7 +823,10 @@ class TemplateScriptingCompiler {
 			$phpCode .= "ob_start();\n";
 		}
 		
-		$phpCode .= '$this->includeTemplate('.$file.', \''.$application.'\', array('.$argString.'), '.($sandbox ? 1 : 0).');'."\n";
+		if (strpos($application, '$') === false) {
+			$application = "'" . $application . "'";
+		}
+		$phpCode .= '$this->includeTemplate('.$file.', '.$application.', array('.$argString.'), '.($sandbox ? 1 : 0).');'."\n";
 		
 		if ($assignVar !== false) {
 			$phpCode .= '$this->'.($append ? 'append' : 'assign').'('.$assignVar.', ob_get_clean());'."\n";
