@@ -3029,6 +3029,12 @@ WCF.Message.UserMention = Class.extend({
 	_mentionStart: '',
 	
 	/**
+	 * delay timer to only send requests after user paused typing
+	 * @var	WCF.PeriodicalExecuter
+	 */
+	_timer: null,
+	
+	/**
 	 * Initalizes user suggestions for the CKEditor with the given textarea id.
 	 * 
 	 * @param	string		editorID
@@ -3044,6 +3050,7 @@ WCF.Message.UserMention = Class.extend({
 		}
 		
 		this._textarea = $('#' + editorID);
+		this._timer = null;
 		
 		// get associated (ready) CKEditor object and add event listeners
 		CKEDITOR.on('instanceReady', $.proxy(function(event) {
@@ -3060,6 +3067,7 @@ WCF.Message.UserMention = Class.extend({
 		}, this));
 		
 		this._proxy = new WCF.Action.Proxy({
+			autoAbortPrevious: true,
 			success: $.proxy(this._success, this)
 		});
 	},
@@ -3246,10 +3254,21 @@ WCF.Message.UserMention = Class.extend({
 		}
 		
 		if (this._dropdownMenu.is(':visible')) {
-			if (event.data.keyCode === 13) { // enter
-				this._dropdownMenu.children('li').eq(this._itemIndex).trigger('click');
+			if (event.data.keyCode === $.ui.keyCode.ENTER) {
+				var $itemIndex = this._itemIndex;
+				this._hideList();
+				
+				this._dropdownMenu.children('li').eq($itemIndex).trigger('click');
 				
 				event.cancel();
+			}
+		}
+		else if (event.data.keyCode === $.ui.keyCode.ENTER || event.data.keyCode === $.ui.keyCode.HOME || event.data.keyCode === $.ui.keyCode.PAGE_DOWN || event.data.keyCode === $.ui.keyCode.PAGE_UP || event.data.keyCode === $.ui.keyCode.DOWN || event.data.keyCode === $.ui.keyCode.UP) {
+			// line change, thus abort searches from previous line
+			this._proxy.abortPrevious();
+			if (this._timer !== null) {
+				this._timer.stop();
+				this._timer = null;
 			}
 		}
 	},
@@ -3310,13 +3329,22 @@ WCF.Message.UserMention = Class.extend({
 				if (!$match.index || $currentText[$match.index - 1].match(/\s/)) {
 					this._mentionStart = $match[1];
 					
-					this._proxy.setOption('data', {
-						actionName: 'getSearchResultList',
-						className: this._className,
-						interfaceName: 'wcf\\data\\ISearchAction',
-						parameters: this._getParameters()
-					});
-					this._proxy.sendRequest();
+					if (this._timer !== null) {
+						this._timer.stop();
+					}
+					
+					this._timer = new WCF.PeriodicalExecuter($.proxy(function() {
+						this._proxy.setOption('data', {
+							actionName: 'getSearchResultList',
+							className: this._className,
+							interfaceName: 'wcf\\data\\ISearchAction',
+							parameters: this._getParameters()
+						});
+						this._proxy.sendRequest();
+						
+						this._timer.stop();
+						this._timer = null;
+					}, this), 500);
 				}
 			}
 			else {
@@ -3332,6 +3360,8 @@ WCF.Message.UserMention = Class.extend({
 	 * Replaces the started mentioning with a chosen username.
 	 */
 	_setUsername: function(username) {
+		this._proxy.abortPrevious();
+		
 		var $range = this._ckEditor.getSelection().getRanges()[0];
 		
 		// remove the beginning of the username and the '@'
@@ -3358,7 +3388,7 @@ WCF.Message.UserMention = Class.extend({
 		$range.selectNodeContents($usernameNode);
 		$range.collapse(false);
 		$range.select();
-
+		
 		this._hideList();
 	},
 	
