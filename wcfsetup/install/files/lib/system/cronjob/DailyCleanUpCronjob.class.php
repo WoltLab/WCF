@@ -125,6 +125,16 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			(TIME_NOW - 86400)
 		));
 		
+		// clean up expired edit history entries
+		if (EDIT_HISTORY_EXPIRATION) {
+			$sql = "DELETE FROM	wcf".WCF_N."_edit_history_entry
+				WHERE		insertionTime < ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array(
+					(TIME_NOW - 86400 * EDIT_HISTORY_EXPIRATION)
+				));
+		}
+		
 		// clean up user authentication failure log
 		if (ENABLE_USER_AUTHENTICATION_FAILURE) {
 			$sql = "DELETE FROM	wcf".WCF_N."_user_authentication_failure

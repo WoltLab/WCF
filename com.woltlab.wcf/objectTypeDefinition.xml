@@ -95,6 +95,11 @@
 		</definition>
 		
 		<definition>
+			<name>com.woltlab.wcf.edit.historySavingObject</name>
+			<interfacename><![CDATA[wcf\system\edit\IHistorySavingObjectTypeProvider]]></interfacename>
+		</definition>
+		
+		<definition>
 			<name>com.woltlab.wcf.comment.commentableContent</name>
 			<interfacename><![CDATA[wcf\system\comment\manager\ICommentManager]]></interfacename>
 		</definition>

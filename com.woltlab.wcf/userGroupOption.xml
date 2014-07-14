@@ -734,6 +734,14 @@ png]]></defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
+			
+			<!-- todo: find better category -->
+			<option name="user.tag.canViewTag">
+				<categoryname>user.message</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_tagging</options>
+			</option>
 		</options>
 	</import>
 </data>

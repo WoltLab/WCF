@@ -58,7 +58,7 @@
 					{foreach from=$objects item='question'}
 						<tr class="jsQuestionRow">
 							<td class="columnIcon">
-								<span class="icon icon16 icon-check{if $question->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $question->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$question->questionID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
+								<span class="icon icon16 icon-check{if $question->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $question->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$question->questionID}"></span>
 								<a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
 								<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$question->questionID}" data-confirm-message="{lang}wcf.acp.captcha.question.delete.confirmMessage{/lang}"></span>
 								

@@ -2612,6 +2612,10 @@ WCF.ACP.Stat.Chart = Class.extend({
 				$("#chartTooltip").hide();
 			}
 		});
+		
+		if (!$data.length) {
+			$('#chart').append('<p style="position: absolute; font-size: 1.2rem; text-align: center; top: 50%; margin-top: -20px; width: 100%">' + WCF.Language.get('wcf.acp.stat.noData') + '</p>');
+		}
 	}
 });
 

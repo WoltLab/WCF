@@ -1,5 +1,5 @@
 {if !$usersOnlineShowRecord|isset}{assign var='usersOnlineShowRecord' value=true}{/if}
-{if MODULE_USERS_ONLINE && $usersOnlineList->stats[total]}
+{if MODULE_USERS_ONLINE && $__wcf->session->getPermission('user.profile.canViewUsersOnlineList') && $usersOnlineList->stats[total]}
 	<li class="box32 usersOnlineInfoBox">
 		<span class="icon icon32 icon-user"></span>
 		

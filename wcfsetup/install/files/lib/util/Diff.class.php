@@ -66,8 +66,8 @@ class Diff {
 		$this->a = $a;
 		$this->b = $b;
 		
-		$this->sizeA = count($a);
-		$this->sizeB = count($b);
+		$this->sizeA = count($this->a);
+		$this->sizeB = count($this->b);
 	}
 	
 	/**
@@ -87,8 +87,20 @@ class Diff {
 			$offsetEnd++;
 		}
 		
-		// both arrays are the same
-		if ($offsetStart === $this->sizeA && $offsetStart === $this->sizeB) {
+		// B starts with A
+		if ($offsetStart === $this->sizeA) {
+			return \SplFixedArray::fromArray($this->a);
+		}
+		// A starts with B
+		if ($offsetStart === $this->sizeB) {
+			return \SplFixedArray::fromArray($this->b);
+		}
+		// A ends with B
+		if ($offsetEnd === $this->sizeB) {
+			return \SplFixedArray::fromArray($this->b);
+		}
+		// B ends with A
+		if ($offsetEnd === $this->sizeA) {
 			return \SplFixedArray::fromArray($this->a);
 		}
 		

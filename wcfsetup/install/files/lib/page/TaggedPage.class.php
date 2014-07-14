@@ -23,6 +23,11 @@ class TaggedPage extends MultipleLinkPage {
 	public $neededModules = array('MODULE_TAGGING');
 	
 	/**
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 */
+	public $neededPermissions = array('user.tag.canViewTag');
+	
+	/**
 	 * tag id
 	 * @var	integer
 	 */

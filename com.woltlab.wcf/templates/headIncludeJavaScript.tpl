@@ -79,6 +79,7 @@
 		'wcf.global.button.save': '{lang}wcf.global.button.save{/lang}',
 		'wcf.global.button.search': '{lang}wcf.global.button.search{/lang}',
 		'wcf.global.button.submit': '{lang}wcf.global.button.submit{/lang}',
+		'wcf.global.button.upload': '{lang}wcf.global.button.upload{/lang}',
 		'wcf.global.confirmation.cancel': '{lang}wcf.global.confirmation.cancel{/lang}',
 		'wcf.global.confirmation.confirm': '{lang}wcf.global.confirmation.confirm{/lang}',
 		'wcf.global.confirmation.title': '{lang}wcf.global.confirmation.title{/lang}',

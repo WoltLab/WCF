@@ -1,7 +1,7 @@
 {include file='documentHeader'}
 
 <head>
-	<title>{lang}wcf.global.error.title{/lang} - {PAGE_TITLE|language}</title>
+	<title>{PAGE_TITLE|language}</title>
 	
 	{include file='headInclude'}
 </head>

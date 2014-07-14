@@ -195,7 +195,7 @@
 	</category>
 	
 	<category name="wcf.acp.dashboard">
-		<item name="wcf.acp.dashboard.list"><![CDATA[Dashboard-Konfiguration]]></item>
+		<item name="wcf.acp.dashboard.list"><![CDATA[Dashboard-Seiten konfigurieren]]></item>
 		<item name="wcf.acp.dashboard.option"><![CDATA[Dashboard-Boxen konfigurieren]]></item>
 		<item name="wcf.acp.dashboard.box.sort"><![CDATA[Sie können die Boxen durch Ziehen und Loslassen mit der Maus sortieren. Boxen können aktiviert bzw. deaktiviert werden, indem Sie die gewünschte Box in „Aktive Boxen“ bzw. „Deaktivierte Boxen“ verschieben.]]></item>
 	</category>
@@ -373,7 +373,7 @@
 		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Kann Benutzernamen ändern]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Kann Mitglieder-Liste sehen]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUserProfile"><![CDATA[Kann Benutzerprofile sehen]]></item>
-		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Kann Benutzer-Online-Liste sehen]]></item>
+		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Kann Benutzer-Online-Listen sehen]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseBBCodes"><![CDATA[Kann BBCodes in der Signatur verwenden]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseHtml"><![CDATA[Kann HTML in der Signatur verwenden]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseSmilies"><![CDATA[Kann Smileys in der Signatur verwenden]]></item>
@@ -617,7 +617,7 @@
 		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Smiley-Kategorie hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[Smiley-Kategorien auflisten]]></item>
 		<item name="wcf.acp.menu.link.dashboard"><![CDATA[Dashboard]]></item>
-		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[Konfiguration]]></item>
+		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[Seiten konfigurieren]]></item>
 		<item name="wcf.acp.menu.link.activityPoint"><![CDATA[Aktivitätspunkte]]></item>
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[Benutzerränge auflisten]]></item>
@@ -843,6 +843,9 @@
 		<item name="wcf.acp.option.show_signature_default_value"><![CDATA[Signatur anzeigen [Vorgabewert]]]></item>
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Buttons zum Teilen von Inhalten anzeigen]]></item>
 		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Anzahl der Teilungen anzeigen]]></item>
+		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Bearbeitungen]]></item>
+		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Speicherzeit]]></item>
+		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Zeitraum, nachdem alte Einträge aus dem Bearbeitungsverlauf entfernt werden [Zeitraum in Tagen]]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
 		<item name="wcf.acp.option.github_public_key.description"><![CDATA[Sie können Ihre Client ID und Ihr Client Secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a> anfordern. Die Callback URL ist: {link controller="GithubAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
@@ -1229,7 +1232,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[Dateianhänge-Speicherbedarf (MB)]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Likes]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.dislike"><![CDATA[Dislikes]]></item>
-		<item name="wcf.acp.stat.com.woltlab.wcf.userProfileComment"><![CDATA[Benutzerprofil-Pinnwand]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.userProfileComment"><![CDATA[Pinnwand-Kommentare]]></item>
 		<item name="wcf.acp.stat.dateGrouping"><![CDATA[Zeiteinheit]]></item>
 		<item name="wcf.acp.stat.dateGrouping.daily"><![CDATA[Tag]]></item>
 		<item name="wcf.acp.stat.dateGrouping.weekly"><![CDATA[Woche]]></item>
@@ -1237,6 +1240,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.stat.dateGrouping.yearly"><![CDATA[Jahr]]></item>
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.general"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.user"><![CDATA[Benutzer-Daten]]></item>
+		<item name="wcf.acp.stat.noData"><![CDATA[Es liegen keine Daten für den ausgewählten Zeitraum vor.]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">
@@ -1754,7 +1758,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.comment.response.add"><![CDATA[Antworten …]]></item>
 		<item name="wcf.comment.response.more"><![CDATA[{literal}{if $count == 1}Eine weitere Antwort{else}{#$count} weitere Antworten{/if}{/literal}]]></item>
 		<item name="wcf.comment.button.response.add"><![CDATA[Antworten]]></item>
-		<item name="wcf.comment.guestDialog.title"><![CDATA[TODO]]></item>
+		<item name="wcf.comment.guestDialog.title"><![CDATA[Gastkommentar]]></item>
 	</category>
 	
 	<category name="wcf.condition">
@@ -1976,6 +1980,17 @@ Fehler sind beispielsweise:
 		<item name="wcf.date.endTime.error.beforeStartTime"><![CDATA[Der Endzeitpunkt muss nach dem Startzeitpunkt liegen.]]></item>
 		<item name="wcf.date.startTime.error.notValid"><![CDATA[Der Startzeitpunkt ist ungültig.]]></item>
 		<item name="wcf.date.endTime.error.notValid"><![CDATA[Der Endzeitpunkt ist ungültig.]]></item>
+	</category>
+	
+	<category name="wcf.edit">
+		<item name="wcf.edit.versions"><![CDATA[Versionen]]></item>
+		<item name="wcf.edit.time"><![CDATA[Änderungszeitpunkt]]></item>
+		<item name="wcf.edit.reason"><![CDATA[Änderungsgrund]]></item>
+		<item name="wcf.edit.currentVersion"><![CDATA[Aktuell]]></item>
+		<item name="wcf.edit.revert"><![CDATA[Wiederherstellen]]></item>
+		<item name="wcf.edit.revert.sure"><![CDATA[Möchten Sie die Version von „{$edit->username}“ vom {$edit->time|plainTime} wirklich wiederherstellen?]]></item>
+		<item name="wcf.edit.reverted"><![CDATA[Wiederhergestellt auf Version von „{$edit->username}“ vom {$edit->time|plainTime}]]></item>
+		<item name="wcf.edit.button.compare"><![CDATA[Vergleichen]]></item>
 	</category>
 	
 	<category name="wcf.global">

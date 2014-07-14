@@ -62,6 +62,7 @@ class StatDailyAction extends AbstractDatabaseObjectAction {
 		$conditionBuilder->add('objectTypeID IN (?)', array($this->parameters['objectTypeIDs']));
 		$conditionBuilder->add('date BETWEEN ? AND ?', array($this->parameters['startDate'], $this->parameters['endDate']));
 		
+		$limit = 0;
 		if ($this->parameters['dateGrouping'] == 'yearly') {
 			$sql = "SELECT		MIN(date) AS date, SUM(counter) AS counter, MAX(total) AS total, objectTypeID
 				FROM		wcf".WCF_N."_stat_daily
@@ -82,15 +83,17 @@ class StatDailyAction extends AbstractDatabaseObjectAction {
 				".$conditionBuilder."
 				GROUP BY	EXTRACT(YEAR FROM date), EXTRACT(WEEK FROM date), objectTypeID
 				ORDER BY	date";
+			$limit = 260;
 		}
 		else {
 			$sql = "SELECT		*
 				FROM		wcf".WCF_N."_stat_daily
 				".$conditionBuilder."
 				ORDER BY	date";
+			$limit = 365;
 		}
 		
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement = WCF::getDB()->prepareStatement($sql, $limit);
 		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
 			$value = $row['counter'];

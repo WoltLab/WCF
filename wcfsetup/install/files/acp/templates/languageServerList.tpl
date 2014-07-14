@@ -19,7 +19,7 @@
 	<nav>
 		<ul>
 			<li><a href="{link controller='LanguageServerAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
-				
+			
 			{event name='contentNavigationButtonsTop'}
 		</ul>
 	</nav>
@@ -46,7 +46,7 @@
 				{foreach from=$languageServers item=languageServer}
 					<tr class="jsLanguageServerRow">
 						<td class="columnIcon">
-							<span class="icon icon16 icon-check{if $languageServer->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$languageServer->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$languageServer->languageServerID}" data-disable-message="{lang}wcf.global.button.disable{/lang}" data-enable-message="{lang}wcf.global.button.enable{/lang}"></span>
+							<span class="icon icon16 icon-check{if $languageServer->isDisabled}-empty{/if} jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$languageServer->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$languageServer->languageServerID}"></span>
 							<a href="{link controller='LanguageServerEdit' id=$languageServer->languageServerID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 icon-pencil"></span></a>
 							
 							<span class="icon icon16 icon-remove jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$languageServer->languageServerID}" data-confirm-message="{lang}wcf.acp.languageServer.delete.sure{/lang}"></span>
@@ -71,7 +71,7 @@
 		<nav>
 			<ul>
 				<li><a href="{link controller='LanguageServerAdd'}{/link}" class="button"><span class="icon icon16 icon-plus"></span> <span>{lang}wcf.acp.languageServer.add{/lang}</span></a></li>
-					
+				
 				{event name='contentNavigationButtonsBottom'}
 			</ul>
 		</nav>

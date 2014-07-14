@@ -194,7 +194,7 @@ Examples for medium ID detection:
 	</category>
 	
 	<category name="wcf.acp.dashboard">
-		<item name="wcf.acp.dashboard.list"><![CDATA[Dashboard Management]]></item>
+		<item name="wcf.acp.dashboard.list"><![CDATA[TODO: Dashboard-Seiten konfigurieren]]></item>
 		<item name="wcf.acp.dashboard.option"><![CDATA[Configure Dashboard Boxes]]></item>
 		<item name="wcf.acp.dashboard.box.sort"><![CDATA[Sort boxes to determine show order. You can enable or disable boxes by moving them between the boxes “Active Boxes” and “Disabled Boxes”.]]></item>
 	</category>
@@ -372,7 +372,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Can rename own user]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Can see members list]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewUserProfile"><![CDATA[Can see user profiles]]></item>
-		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Can see users online list]]></item>
+		<item name="wcf.acp.group.option.user.profile.canViewUsersOnlineList"><![CDATA[Can see users online lists]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseBBCodes"><![CDATA[Can use BBCodes within signature]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseHtml"><![CDATA[Can use HTML within signature]]></item>
 		<item name="wcf.acp.group.option.user.signature.canUseSmilies"><![CDATA[Can use Smilies within signature]]></item>
@@ -616,7 +616,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
 		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[List Smiley Categories]]></item>
 		<item name="wcf.acp.menu.link.dashboard"><![CDATA[Dashboard]]></item>
-		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[Configuration]]></item>
+		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[TODO: Seiten konfigurieren]]></item>
 		<item name="wcf.acp.menu.link.activityPoint"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[List User Ranks]]></item>
@@ -842,6 +842,9 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.show_signature_default_value"><![CDATA[Show signatures [default value]]]></item>
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Show content share button]]></item>
 		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Show number of shares]]></item>
+		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Edits]]></item>
+		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Storage time]]></item>
+		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Items in the edit history will be discarded if they are older than the given period. [time in days]]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
 		<item name="wcf.acp.option.github_public_key.description"><![CDATA[You can obtain both your Client ID and Client Secret at <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a>. The Callback URL is: {link controller="GithubAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
@@ -1206,6 +1209,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.stat.dateGrouping.yearly"><![CDATA[Year]]></item>
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.general"><![CDATA[General Data]]></item>
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.user"><![CDATA[User Data]]></item>
+		<item name="wcf.acp.stat.noData"><![CDATA[TODO: Es liegen keine Daten für den ausgewählten Zeitraum vor.]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">
@@ -1722,7 +1726,7 @@ Errors are:
 		<item name="wcf.comment.response.add"><![CDATA[Reply …]]></item>
 		<item name="wcf.comment.response.more"><![CDATA[{literal}{if $count == 1}One more reply{else}{#$count} more replies{/if}{/literal}]]></item>
 		<item name="wcf.comment.button.response.add"><![CDATA[Reply]]></item>
-		<item name="wcf.comment.guestDialog.title"><![CDATA[TODO]]></item>
+		<item name="wcf.comment.guestDialog.title"><![CDATA[Guest Comment]]></item>
 	</category>
 	
 	<category name="wcf.condition">
@@ -1944,6 +1948,17 @@ Errors are:
 		<item name="wcf.date.endTime.error.beforeStartTime"><![CDATA[The end time has to be after the start time.]]></item>
 		<item name="wcf.date.startTime.error.notValid"><![CDATA[The start time is invalid.]]></item>
 		<item name="wcf.date.endTime.error.notValid"><![CDATA[The end time is invalid.]]></item>
+	</category>
+	
+	<category name="wcf.edit">
+		<item name="wcf.edit.versions"><![CDATA[Versions]]></item>
+		<item name="wcf.edit.time"><![CDATA[Edit Time]]></item>
+		<item name="wcf.edit.reason"><![CDATA[Edit Reason]]></item>
+		<item name="wcf.edit.currentVersion"><![CDATA[Current]]></item>
+		<item name="wcf.edit.revert"><![CDATA[Revert]]></item>
+		<item name="wcf.edit.revert.sure"><![CDATA[Do you really want to revert to the version at {$edit->time|plainTime}, created by “{$edit->username}”?]]></item>
+		<item name="wcf.edit.reverted"><![CDATA[Reverted to the version at {$edit->time|plainTime}, created by “{$edit->username}”]]></item>
+		<item name="wcf.edit.button.compare"><![CDATA[Compare]]></item>
 	</category>
 	
 	<category name="wcf.global">

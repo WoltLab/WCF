@@ -32,11 +32,7 @@
 	<fieldset>
 		<legend>{lang}wcf.tagging.tags{/lang}</legend>
 		
-		<ul class="tagList">
-			{foreach from=$tags item=__tag}
-				<li><a href="{link controller='Tagged' object=$__tag}objectType={@$objectType}{/link}" rel="tag" style="font-size: {@$__tag->getSize()}%;">{$__tag->name}</a></li>
-			{/foreach}
-		</ul>
+		{include file='tagCloudBox' taggableObjectType=$objectType}
 	</fieldset>
 {/capture}
 

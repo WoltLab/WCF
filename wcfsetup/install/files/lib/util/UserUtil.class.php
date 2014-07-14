@@ -107,7 +107,7 @@ final class UserUtil {
 	public static function getUserAgent() {
 		if (isset($_SERVER['HTTP_USER_AGENT'])) {
 			$userAgent = $_SERVER['HTTP_USER_AGENT'];
-			if (!StringUtil::isASCII($userAgent) && !StringUtil::isUTF8($userAgent)) {
+			if (!StringUtil::isUTF8($userAgent)) {
 				$userAgent = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $userAgent);
 			}
 			
@@ -263,7 +263,7 @@ final class UserUtil {
 		}
 		
 		// fix encoding
-		if (!StringUtil::isASCII($REQUEST_URI) && !StringUtil::isUTF8($REQUEST_URI)) {
+		if (!StringUtil::isUTF8($REQUEST_URI)) {
 			$REQUEST_URI = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $REQUEST_URI);
 		}
 		

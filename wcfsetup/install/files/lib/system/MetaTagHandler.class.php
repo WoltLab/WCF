@@ -26,12 +26,6 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	protected $indexToObject = null;
 	
 	/**
-	 * regex object
-	 * @var	\wcf\system\Regex;
-	 */
-	protected $regex = null;
-	
-	/**
 	 * list of meta tags
 	 * @var	array
 	 */
@@ -41,8 +35,6 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected function init() {
-		$this->regex = new Regex('^https?://');
-		
 		// set default tags
 		$this->addTag('description', 'description', WCF::getLanguage()->get(META_DESCRIPTION));
 		$this->addTag('keywords', 'keywords', WCF::getLanguage()->get(META_KEYWORDS));
@@ -58,10 +50,6 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	 * @param	boolean		$isProperty
 	 */
 	public function addTag($identifier, $name, $value, $isProperty = false) {
-		if (!$this->regex->match($value)) {
-			$value = StringUtil::encodeHTML($value);
-		}
-		
 		if (!isset($this->objects[$identifier])) {
 			$this->indexToObject[] = $identifier;
 		}
@@ -104,7 +92,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 	public function current() {
 		$tag = $this->objects[$this->indexToObject[$this->index]];
 		
-		return '<meta ' . ($tag['isProperty'] ? 'property' : 'name') . '="' . $tag['name'] . '" content="' . $tag['value'] . '" />';
+		return '<meta ' . ($tag['isProperty'] ? 'property' : 'name') . '="' . $tag['name'] . '" content="' . StringUtil::encodeHTML($tag['value']) . '" />';
 	}
 	
 	/**
@@ -138,4 +126,3 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 		return isset($this->indexToObject[$this->index]);
 	}
 }
-
