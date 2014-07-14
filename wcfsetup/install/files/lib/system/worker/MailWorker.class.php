@@ -62,8 +62,13 @@ class MailWorker extends AbstractWorker {
 		if ($this->mailData['action'] == '') {
 			$this->conditions->add("user.userID IN (?)", array($this->mailData['userIDs']));
 		}
-		else if ($this->mailData['action'] == 'group') {
-			$this->conditions->add("user.userID IN (SELECT userID FROM wcf".WCF_N."_user_to_group WHERE groupID IN (?))", array($this->mailData['groupIDs']));
+		else {
+			$this->conditions->add("user.activationCode = ?", array(0));
+			$this->conditions->add("user.banned = ?", array(0));
+			
+			if ($this->mailData['action'] == 'group') {
+				$this->conditions->add("user.userID IN (SELECT userID FROM wcf".WCF_N."_user_to_group WHERE groupID IN (?))", array($this->mailData['groupIDs']));
+			}
 		}
 		
 		$sql = "SELECT	COUNT(*) AS count
