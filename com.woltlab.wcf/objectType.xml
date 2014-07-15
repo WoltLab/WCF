@@ -216,6 +216,12 @@
 			<classname><![CDATA[wcf\system\user\notification\object\type\UserProfileCommentResponseLikeUserNotificationObjectType]]></classname>
 			<category>com.woltlab.wcf.user</category>
 		</type>
+		
+		<type>
+			<name>com.woltlab.wcf.moderation.queue</name>
+			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
+			<classname><![CDATA[wcf\system\comment\manager\ModerationQueueCommentManager]]></classname>
+		</type>
 		<!-- /comments -->
 		
 		<!-- moderation -->

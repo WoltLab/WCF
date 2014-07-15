@@ -630,7 +630,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		}
 		
 		WCF::getTPL()->assign(array(
-			'commentList' => array($comment)
+			'commentList' => array($comment),
+			'commentManager' => $this->commentProcessor
 		));
 		return WCF::getTPL()->fetch('commentList');
 	}
@@ -654,7 +655,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		
 		// render response
 		WCF::getTPL()->assign(array(
-			'responseList' => array($response)
+			'responseList' => array($response),
+			'commentManager' => $this->commentProcessor
 		));
 		return WCF::getTPL()->fetch('commentResponseList');
 	}

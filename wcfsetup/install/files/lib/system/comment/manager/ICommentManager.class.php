@@ -106,4 +106,18 @@ interface ICommentManager {
 	 * @param	integer		$value
 	 */
 	public function updateCounter($objectID, $value);
+	
+	/**
+	 * Returns true, if this comment type supports likes.
+	 * 
+	 * @return	boolean
+	 */
+	public function supportsLike();
+	
+	/**
+	 * Returns true, if this comment type supports reports.
+	 *
+	 * @return	boolean
+	 */
+	public function supportsReport();
 }

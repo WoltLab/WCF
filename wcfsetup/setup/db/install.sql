@@ -507,7 +507,7 @@ CREATE TABLE wcf1_moderation_queue (
 	-- internal
 	assignedUserID INT(10) NULL,
 	status TINYINT(1) NOT NULL DEFAULT 0,
-	comment TEXT,
+	comments SMALLINT(5) NOT NULL DEFAULT 0,
 	lastChangeTime INT(10) NOT NULL DEFAULT 0,
 	
 	-- additional data, e.g. message if reporting content

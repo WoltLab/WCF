@@ -160,4 +160,18 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	public function getCommentsPerPage() {
 		return $this->commentsPerPage;
 	}
+	
+	/**
+	 * @see	\wcf\system\comment\manager\ICommentManager::supportsLike()
+	 */
+	public function supportsLike() {
+		return true;
+	}
+	
+	/**
+	 * @see	\wcf\system\comment\manager\ICommentManager::supportsReport()
+	 */
+	public function supportsReport() {
+		return true;
+	}
 }

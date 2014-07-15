@@ -2171,7 +2171,6 @@ Fehler sind beispielsweise:
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.assignedUser"><![CDATA[Zugewiesener Benutzer]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Niemand]]></item>
-		<item name="wcf.moderation.comment"><![CDATA[Kommentar (intern)]]></item>
 		<item name="wcf.moderation.filterByType"><![CDATA[Typ]]></item>
 		<item name="wcf.moderation.filterByUser"><![CDATA[Zugewiesener Benutzer]]></item>
 		<item name="wcf.moderation.filterByUser.allEntries"><![CDATA[Alle Einträge]]></item>
@@ -2210,7 +2209,7 @@ Fehler sind beispielsweise:
 	</category>
 	
 	<category name="wcf.moderation.report">
-		<item name="wcf.moderation.report"><![CDATA[Meldung bearbeiten]]></item>
+		<item name="wcf.moderation.report"><![CDATA[Meldung]]></item>
 		<item name="wcf.moderation.report.alreadyReported"><![CDATA[Dieser Inhalt wurde bereits gemeldet.]]></item>
 		<item name="wcf.moderation.report.details"><![CDATA[Informationen]]></item>
 		<item name="wcf.moderation.report.reason"><![CDATA[Grund der Meldung]]></item>

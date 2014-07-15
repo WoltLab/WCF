@@ -171,4 +171,13 @@ class StructuredCommentList extends CommentList {
 	public function getMinCommentTime() {
 		return $this->minCommentTime;
 	}
+	
+	/**
+	 * Returns the comment manager object.
+	 * 
+	 * @return	\wcf\system\comment\manager\ICommentManager
+	 */
+	public function getCommentManager() {
+		return $this->commentManager;
+	}
 }

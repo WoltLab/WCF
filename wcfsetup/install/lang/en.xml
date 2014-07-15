@@ -2139,7 +2139,6 @@ Errors are:
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.assignedUser"><![CDATA[Assigned User]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Nobody]]></item>
-		<item name="wcf.moderation.comment"><![CDATA[Comment (internal)]]></item>
 		<item name="wcf.moderation.filterByType"><![CDATA[Type]]></item>
 		<item name="wcf.moderation.filterByUser"><![CDATA[Assigned User]]></item>
 		<item name="wcf.moderation.filterByUser.allEntries"><![CDATA[All Items]]></item>
@@ -2178,7 +2177,7 @@ Errors are:
 	</category>
 	
 	<category name="wcf.moderation.report">
-		<item name="wcf.moderation.report"><![CDATA[Edit Report]]></item>
+		<item name="wcf.moderation.report"><![CDATA[Report]]></item>
 		<item name="wcf.moderation.report.alreadyReported"><![CDATA[This content has already been reported.]]></item>
 		<item name="wcf.moderation.report.details"><![CDATA[Information]]></item>
 		<item name="wcf.moderation.report.reason"><![CDATA[Reason]]></item>

@@ -1,5 +1,7 @@
 <?php
 namespace wcf\form;
+use wcf\data\user\UserProfile;
+use wcf\data\user\User;
 use wcf\system\moderation\queue\ModerationQueueReportManager;
 use wcf\system\WCF;
 
@@ -20,9 +22,12 @@ class ModerationReportForm extends AbstractModerationForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
+		$reportUser = UserProfile::getUserProfile($this->queue->userID);
+		if ($reportUser === null) $reportUser = new UserProfile(new User(null, array()));
 		WCF::getTPL()->assign(array(
 			'reportedContent' => ModerationQueueReportManager::getInstance()->getReportedContent($this->queue),
-			'queueManager' => ModerationQueueReportManager::getInstance()
+			'queueManager' => ModerationQueueReportManager::getInstance(),
+			'reportUser' => $reportUser
 		));
 	}
 }

@@ -4,12 +4,13 @@ use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\system\breadcrumb\Breadcrumb;
+use wcf\system\comment\CommentHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Provides an abstract form for moderation queue processing.
@@ -27,12 +28,6 @@ abstract class AbstractModerationForm extends AbstractForm {
 	 * @var	integer
 	 */
 	public $assignedUserID = 0;
-	
-	/**
-	 * comment
-	 * @var	string
-	 */
-	public $comment = '';
 	
 	/**
 	 * data used for moderation queue update
@@ -63,6 +58,24 @@ abstract class AbstractModerationForm extends AbstractForm {
 	public $queueID = 0;
 	
 	/**
+	 * comment object type id
+	 * @var	integer
+	 */
+	public $commentObjectTypeID = 0;
+	
+	/**
+	 * comment manager object
+	 * @var	\wcf\system\comment\manager\ICommentManager
+	 */
+	public $commentManager = null;
+	
+	/**
+	 * list of comments
+	 * @var	\wcf\data\comment\StructuredCommentList
+	 */
+	public $commentList = null;
+	
+	/**
 	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -85,8 +98,6 @@ abstract class AbstractModerationForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['comment'])) $this->comment = StringUtil::trim($_POST['comment']);
-		
 		// verify assigned user id
 		if (isset($_POST['assignedUserID'])) {
 			$this->assignedUserID = intval($_POST['assignedUserID']);
@@ -107,13 +118,16 @@ abstract class AbstractModerationForm extends AbstractForm {
 		
 		if (empty($_POST)) {
 			$this->assignedUserID = $this->queue->assignedUserID;
-			$this->comment = $this->queue->comment;
 		}
 		
 		WCF::getBreadcrumbs()->add(new Breadcrumb(
 			WCF::getLanguage()->get('wcf.moderation.moderation'),
 			LinkHandler::getInstance()->getLink('ModerationList')
 		));
+		
+		$this->commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue');
+		$this->commentManager = CommentHandler::getInstance()->getObjectType($this->commentObjectTypeID)->getProcessor();
+		$this->commentList = CommentHandler::getInstance()->getCommentList($this->commentManager, $this->commentObjectTypeID, $this->queueID);
 	}
 	
 	/**
@@ -124,8 +138,14 @@ abstract class AbstractModerationForm extends AbstractForm {
 		
 		WCF::getTPL()->assign(array(
 			'assignedUserID' => $this->assignedUserID,
-			'comment' => $this->comment,
-			'queue' => $this->queue
+			'queue' => $this->queue,
+			'queueID' => $this->queueID,
+			'commentCanAdd' => true,
+			'commentList' => $this->commentList,
+			'commentObjectTypeID' => $this->commentObjectTypeID,
+			'lastCommentTime' => ($this->commentList ? $this->commentList->getMinCommentTime() : 0),
+			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'com.woltlab.wcf.ModerationForm'),
+			'sidebarName' => 'com.woltlab.wcf.ModerationForm'
 		));
 	}
 	
@@ -137,7 +157,6 @@ abstract class AbstractModerationForm extends AbstractForm {
 		
 		$this->data = array(
 			'assignedUserID' => ($this->assignedUserID ?: null),
-			'comment' => $this->comment
 		);
 		if ($this->queue->status != ModerationQueue::STATUS_DONE) {
 			if ($this->assignedUserID) {
