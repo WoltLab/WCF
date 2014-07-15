@@ -461,7 +461,8 @@
 	padding: @wcfGapTiny @wcfGapSmall;
 		
 	@messageFooterNoteGradientColor: fade(@wcfContainerBorderColor, 20%);
-	.linearGradientNative(~"90deg, @{messageFooterNoteGradientColor} 0%, transparent 40%");
+	@messageFooterNoteGradientColor2: fade(@messageFooterNoteGradientColor, 0%);
+	.linearGradientNative(~"90deg, @{messageFooterNoteGradientColor} 0%, @{messageFooterNoteGradientColor2} 40%");
 }
 
 .messageHeader + .messageBody > div:first-child,
