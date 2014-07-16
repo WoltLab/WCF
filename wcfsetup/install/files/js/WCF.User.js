@@ -2677,11 +2677,20 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 	_notification: null,
 	
 	/**
-	 * WCF.User.ObjectWatch.Subscribe object.
+	 * reload page on unsubscribe
+	 * @var	boolean
 	 */
-	init: function() {
+	_reloadOnUnsubscribe: false,
+	
+	/**
+	 * WCF.User.ObjectWatch.Subscribe object.
+	 * 
+	 * @param	boolean		reloadOnUnsubscribe
+	 */
+	init: function(reloadOnUnsubscribe) {
 		this._buttons = { };
 		this._notification = null;
+		this._reloadOnUnsubscribe = (reloadOnUnsubscribe === true);
 		
 		// initialize proxy
 		this._proxy = new WCF.Action.Proxy({
@@ -2814,6 +2823,11 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 		else {
 			$icon.removeClass('icon-bookmark').addClass('icon-bookmark-empty');
 			$button.data('isSubscribed', false);
+			
+			if (this._reloadOnUnsubscribe) {
+				window.location.reload();
+				return;
+			}
 		}
 		
 		WCF.System.Event.fireEvent('com.woltlab.wcf.objectWatch', 'updatedSubscription', data);
