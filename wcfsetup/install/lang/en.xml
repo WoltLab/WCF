@@ -647,6 +647,12 @@ Examples for medium ID detection:
 	
 	<category name="wcf.acp.notice">
 		<item name="wcf.acp.notice.add"><![CDATA[Add Notice]]></item>
+		<item name="wcf.acp.notice.cssClassName"><![CDATA[Appearance]]></item>
+		<item name="wcf.acp.notice.cssClassName.description"><![CDATA[Choose one of the predefined appearances or select a custom appearance by provinding an own CSS class name.]]></item>
+		<item name="wcf.acp.notice.cssClassName.error"><![CDATA[Error Message]]></item>
+		<item name="wcf.acp.notice.cssClassName.error.notValid"><![CDATA[The entered CSS class name is invalid.]]></item>
+		<item name="wcf.acp.notice.cssClassName.info"><![CDATA[Information]]></item>
+		<item name="wcf.acp.notice.cssClassName.warning"><![CDATA[Warning]]></item>
 		<item name="wcf.acp.notice.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.notice.conditions.description"><![CDATA[If you choose no conditions, the notice will be shown for every user.]]></item>
 		<item name="wcf.acp.notice.conditions.page"><![CDATA[Page]]></item>
@@ -657,6 +663,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[The active user has to fulfill the following conditions to see the notice.]]></item>
 		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Do you really want to delete this notice?]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Edit Notices]]></item>
+		<item name="wcf.acp.notice.example"><![CDATA[Example text of a notice]]></item>
 		<item name="wcf.acp.notice.isDisabled"><![CDATA[Disable Notice]]></item>
 		<item name="wcf.acp.notice.isDismissible"><![CDATA[User can dismiss notice]]></item>
 		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[A notice one dismissed by a user will not be shown again for them.]]></item>
@@ -2040,6 +2047,7 @@ Errors are:
 		<item name="wcf.global.noItems"><![CDATA[There are no items.]]></item>
 		<item name="wcf.global.button.showAll"><![CDATA[Show All]]></item>
 		<item name="wcf.global.reason"><![CDATA[Reason]]></item>
+		<item name="wcf.global.settings"><![CDATA[Settings]]></item>
 	</category>
 	
 	<category name="wcf.global.form">

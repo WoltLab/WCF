@@ -22,9 +22,8 @@
 		<p class="warning">{lang}wcf.user.register.needActivation{/lang}</p>
 	{/if}
 	
-	{* todo: styling/visual appearence *}
 	{foreach from=$__wcf->getNoticeHandler()->getVisibleNotices() item='notice'}
-		<p class="info notice{if $notice->isDismissible} noticeDismissible{/if}">
+		<p class="{$notice->cssClassName} notice{if $notice->isDismissible} noticeDismissible{/if}">
 			{if $notice->isDismissible}
 				<span class="icon icon16 icon-remove pointer jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}" style="float: right;"></span>
 			{/if}

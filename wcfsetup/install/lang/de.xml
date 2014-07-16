@@ -648,6 +648,12 @@
 	
 	<category name="wcf.acp.notice">
 		<item name="wcf.acp.notice.add"><![CDATA[Hinweis hinzufügen]]></item>
+		<item name="wcf.acp.notice.cssClassName"><![CDATA[Darstellung]]></item>
+		<item name="wcf.acp.notice.cssClassName.description"><![CDATA[Wählen Sie eine vorgegeben Darstellungsmöglichkeiten aus oder wählen Sie eine eigene Darstellung durch Angabe einer CSS-Klasse.]]></item>
+		<item name="wcf.acp.notice.cssClassName.error"><![CDATA[Fehlermeldung]]></item>
+		<item name="wcf.acp.notice.cssClassName.error.notValid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
+		<item name="wcf.acp.notice.cssClassName.info"><![CDATA[Information]]></item>
+		<item name="wcf.acp.notice.cssClassName.warning"><![CDATA[Warnung]]></item>
 		<item name="wcf.acp.notice.conditions"><![CDATA[Bedingungen]]></item>
 		<item name="wcf.acp.notice.conditions.description"><![CDATA[Werden keine Bedingungen ausgewählt, wird der Hinweis für jeden Benutzer auf allen Seiten angezeigt.]]></item>
 		<item name="wcf.acp.notice.conditions.page"><![CDATA[Seite]]></item>
@@ -658,6 +664,7 @@
 		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit der Hinweis angezeigt wird.]]></item>
 		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Wollen Sie diesen Hinweis wirklich löschen?]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Hinweis bearbeiten]]></item>
+		<item name="wcf.acp.notice.example"><![CDATA[Beispieltext für einen Hinweis]]></item>
 		<item name="wcf.acp.notice.isDisabled"><![CDATA[Hinweis deaktivieren]]></item>
 		<item name="wcf.acp.notice.isDismissible"><![CDATA[Benutzer kann Hinweis ausblenden]]></item>
 		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[Ein einmal von einem Benutzer ausgeblender Hinweis wird bei erneutem Seitenaufruf nicht mehr angezeigt.]]></item>
@@ -2072,6 +2079,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.noItems"><![CDATA[Es wurden keine Einträge gefunden.]]></item>
 		<item name="wcf.global.button.showAll"><![CDATA[Alle anzeigen]]></item>
 		<item name="wcf.global.reason"><![CDATA[Begründung]]></item>
+		<item name="wcf.global.settings"><![CDATA[Einstellungen]]></item>
 	</category>
 	
 	<category name="wcf.global.form">

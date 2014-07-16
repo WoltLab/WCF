@@ -7,6 +7,7 @@ use wcf\form\AbstractForm;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -25,6 +26,30 @@ class NoticeAddForm extends AbstractForm {
 	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.notice.add';
+	
+	/**
+	 * list pf pre-defined CSS class names
+	 * @var	array<string>
+	 */
+	public $availableCssClassNames = array(
+		'info',
+		'warning',
+		'error',
+		
+		'custom'
+	);
+	
+	/**
+	 * name of the chosen CSS class name
+	 * @var	string
+	 */
+	public $cssClassName = '';
+	
+	/**
+	 * custom CSS class name
+	 * @var	string
+	 */
+	public $customCssClassName = '';
 	
 	/**
 	 * grouped notice condition object types
@@ -77,6 +102,9 @@ class NoticeAddForm extends AbstractForm {
 		
 		WCF::getTPL()->assign(array(
 			'action' => 'add',
+			'availableCssClassNames' => $this->availableCssClassNames,
+			'cssClassName' => $this->cssClassName,
+			'customCssClassName' => $this->customCssClassName,
 			'isDisabled' => $this->isDisabled,
 			'isDismissible' => $this->isDismissible,
 			'groupedConditionObjectTypes' => $this->groupedConditionObjectTypes,
@@ -121,6 +149,8 @@ class NoticeAddForm extends AbstractForm {
 		
 		I18nHandler::getInstance()->readValues();
 		
+		if (isset($_POST['cssClassName'])) $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
+		if (isset($_POST['customCssClassName'])) $this->customCssClassName = StringUtil::trim($_POST['customCssClassName']);
 		if (isset($_POST['isDisabled'])) $this->isDisabled = 1;
 		if (isset($_POST['isDismissible'])) $this->isDismissible = 1;
 		if (isset($_POST['noticeName'])) $this->noticeName = StringUtil::trim($_POST['noticeName']);
@@ -158,6 +188,7 @@ class NoticeAddForm extends AbstractForm {
 		
 		$this->objectAction = new NoticeAction(array(), 'create', array(
 			'data' => array_merge($this->additionalFields, array(
+				'cssClassName' => $this->cssClassName == 'custom' ? $this->customCssClassName : $this->cssClassName,
 				'isDisabled' => $this->isDisabled,
 				'isDismissible' => $this->isDismissible,
 				'notice' => I18nHandler::getInstance()->isPlainValue('notice') ? I18nHandler::getInstance()->getValue('notice') : '',
@@ -196,6 +227,8 @@ class NoticeAddForm extends AbstractForm {
 		$this->saved();
 		
 		// reset values
+		$this->cssClassName = '';
+		$this->customCssClassName = '';
 		$this->isDisabled = 0;
 		$this->isDismissible = 0;
 		$this->noticeName = '';
@@ -226,6 +259,22 @@ class NoticeAddForm extends AbstractForm {
 			}
 			else {
 				throw new UserInputException('notice', 'multilingual');
+			}
+		}
+		
+		// validate class name
+		if (empty($this->cssClassName)) {
+			throw new UserInputException('cssClassName');
+		}
+		else if (!in_array($this->cssClassName, $this->availableCssClassNames)) {
+			throw new UserInputException('cssClassName', 'notValid');
+		}
+		else if ($this->cssClassName == 'custom') {
+			if (empty($this->cssClassName)) {
+				throw new UserInputException('cssClassName');
+			}
+			if (!Regex::compile('^-?[_a-zA-Z]+[_a-zA-Z0-9-]+$')->match($this->customCssClassName)) {
+				throw new UserInputException('cssClassName', 'notValid');
 			}
 		}
 		

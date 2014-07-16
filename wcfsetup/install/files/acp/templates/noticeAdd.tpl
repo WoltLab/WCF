@@ -4,6 +4,22 @@
 	//<![CDATA[
 	$(function() {
 		WCF.TabMenu.init();
+		
+		$('input[name=cssClassName]').change(function() {
+			var $val = $('input[name=cssClassName]:checked').val();
+			if (!$val || $val === 'custom') {
+				$('#cssClassNameExample').hide();
+			}
+			else {
+				$('#cssClassNameExample').show().removeClass('{implode from=$availableCssClassNames item=className glue=' '}{$className}{/implode}').addClass($val);
+			}
+		});
+		
+		$('input[name=cssClassName]:eq(0)').change();
+		
+		$('#customCssClassName').click(function() {
+			$(this).parents('li').find('input[type=radio]').click();
+		});
 	});
 	//]]>
 </script>
@@ -76,17 +92,48 @@
 			</dl>
 			
 			<dl>
-				<dt></dt>
+				<dt><label for="showOrder">{lang}wcf.acp.notice.showOrder{/lang}</label></dt>
 				<dd>
-					<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked="checked"{/if} /> {lang}wcf.acp.notice.isDisabled{/lang}</label>
+					<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="tiny" min="0" />
+					<small>{lang}wcf.acp.notice.showOrder.description{/lang}</small>
+				</dd>
+			</dl>
+			
+			{event name='dataFields'}
+		</fieldset>
+		
+		<fieldset>
+			<legend>{lang}wcf.global.settings{/lang}</legend>
+			
+			<dl>
+				<dt><label for="cssClassName">{lang}wcf.acp.notice.cssClassName{/lang}</label></dt>
+				<dd>
+					{foreach from=$availableCssClassNames item=className}
+						{if $className == 'custom'}
+							<label><input type="radio" name="cssClassName" value="custom"{if $cssClassName == 'custom'} checked="checked"{/if} /> <span><input type="text" id="customCssClassName" name="customCssClassName" value="{$customCssClassName}" class="medium" /></span></label>
+						{else}
+							<label><input type="radio" name="cssClassName" value="{$className}"{if $cssClassName == $className} checked="checked"{/if} /> <span>{lang}wcf.acp.notice.cssClassName.{$className}{/lang}</span></label>
+						{/if}
+					{/foreach}
+					{if $errorField == 'cssClassName'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.acp.notice.cssClassName.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if}
+					<small>{lang}wcf.acp.notice.cssClassName.description{/lang}</small>
+					
+					<p class="info" id="cssClassNameExample">{lang}wcf.acp.notice.example{/lang}</p>
 				</dd>
 			</dl>
 			
 			<dl>
-				<dt><label for="position">{lang}wcf.acp.notice.showOrder{/lang}</label></dt>
+				<dt></dt>
 				<dd>
-					<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="tiny" min="0" />
-					<small>{lang}wcf.acp.notice.showOrder.description{/lang}</small>
+					<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked="checked"{/if} /> {lang}wcf.acp.notice.isDisabled{/lang}</label>
 				</dd>
 			</dl>
 			
@@ -108,7 +155,7 @@
 				</dl>
 			{/if}
 			
-			{event name='dataFields'}
+			{event name='settingsFields'}
 		</fieldset>
 		
 		{event name='fieldsets'}
