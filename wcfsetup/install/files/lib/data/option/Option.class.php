@@ -184,4 +184,13 @@ class Option extends DatabaseObject {
 	public function modifySelectOptions($selectOptions) {
 		$this->data['selectOptions'] = $selectOptions;
 	}
+	
+	/**
+	 * Allows modifications of hidden option.
+	 * 
+	 * @param	string		$hiddenOption
+	 */
+	public function modifyHiddenOption($hiddenOption) {
+		$this->data['hidden'] = $hiddenOption;
+	}
 }
