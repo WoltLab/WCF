@@ -19,31 +19,31 @@ use wcf\system\WCF;
 class MessageEmbeddedObjectManager extends SingletonFactory {
 	/**
 	 * caches message to embedded object assignments
-	 * @var array
+	 * @var	array
 	 */
 	protected $messageEmbeddedObjects = array();
 	
 	/**
 	 * caches embedded objects
-	 * @var array
+	 * @var	array
 	 */
 	protected $embeddedObjects = array();
 	
 	/**
 	 * object type of the active message
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $activeMessageObjectTypeID = null;
 	
 	/**
 	 * id of the active message
-	 * @var integer
+	 * @var	integer
 	 */
 	protected $activeMessageID = null;
 	
 	/**
 	 * list of embedded object handlers
-	 * @var array
+	 * @var	array
 	 */
 	protected $embeddedObjectHandlers = null;
 	
@@ -107,7 +107,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	
 	/**
 	 * Loads the embedded objects for given messages.
-	 *
+	 * 
 	 * @param	string			$messageObjectType
 	 * @param	array<integer>		$messageIDs
 	 */
@@ -152,7 +152,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	}
 	
 	/**
-	 * Gets all embedded objects of a specific type.
+	 * Returns all embedded objects of a specific type.
 	 * 
 	 * @param	string		$embeddedObjectType
 	 * @return	array
@@ -180,7 +180,6 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 */
 	public function getObject($embeddedObjectType, $objectID) {
 		$embeddedObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message.embeddedObject', $embeddedObjectType);
-		$returnValue = array();
 		if (!empty($this->messageEmbeddedObjects[$this->activeMessageObjectTypeID][$this->activeMessageID][$embeddedObjectTypeID])) {
 			foreach ($this->messageEmbeddedObjects[$this->activeMessageObjectTypeID][$this->activeMessageID][$embeddedObjectTypeID] as $embeddedObjectID) {
 				if ($embeddedObjectID == $objectID) {
@@ -238,7 +237,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	
 	/**
 	 * Returns a specific embedded object handler.
-	 *
+	 * 
 	 * @param	integer		$objectTypeID
 	 * @return	object
 	 */
