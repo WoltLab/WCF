@@ -126,4 +126,12 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * @return	boolean
 	 */
 	public function supportsEmailNotification();
+	
+	/**
+	 * Validates if the related object is still accessible, in case this check fails
+	 * the event should take the appropriate actions to resolve this.
+	 * 
+	 * @return	boolean
+	 */
+	public function checkAccess();
 }

@@ -5,7 +5,6 @@ use wcf\data\user\notification\event\recipient\UserNotificationEventRecipientLis
 use wcf\data\user\notification\event\UserNotificationEventList;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\notification\UserNotificationAction;
-use wcf\data\user\notification\UserNotificationList;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
@@ -384,6 +383,10 @@ class UserNotificationHandler extends SingletonFactory {
 				$notification->additionalData,
 				$notification->timesTriggered
 			);
+			
+			if (!$class->checkAccess()) {
+				continue;
+			}
 			
 			if (isset($authorToNotification[$notification->notificationID])) {
 				$eventAuthors = array();

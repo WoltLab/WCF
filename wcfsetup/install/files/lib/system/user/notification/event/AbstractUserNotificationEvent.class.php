@@ -232,4 +232,11 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	public function supportsEmailNotification() {
 		return true;
 	}
+	
+	/**
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::checkAccess()
+	 */
+	public function checkAccess() {
+		return true;
+	}
 }
