@@ -29,7 +29,7 @@
 				<span class="icon icon16 icon-remove pointer jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}" style="float: right;"></span>
 			{/if}
 			
-			{if $notice->noticeUseHtml}{@$notice->notice|language}{else}{$notice->notice|language}{/if}
+			{if $notice->noticeUseHtml}{@$notice->notice|language}{else}{@$notice->notice|language|htmlspecialchars|nl2br}{/if}
 		</p>
 	{/foreach}
 	
