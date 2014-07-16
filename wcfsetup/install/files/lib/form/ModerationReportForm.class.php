@@ -1,7 +1,7 @@
 <?php
 namespace wcf\form;
-use wcf\data\user\UserProfile;
 use wcf\data\user\User;
+use wcf\data\user\UserProfile;
 use wcf\system\moderation\queue\ModerationQueueReportManager;
 use wcf\system\WCF;
 
