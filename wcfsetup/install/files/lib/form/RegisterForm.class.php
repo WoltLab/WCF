@@ -317,8 +317,8 @@ class RegisterForm extends UserAddForm {
 							$registerVia3rdParty = true;
 						}
 						
-						if (isset($githubData['bio'])) $saveOptions[User::getUserOptionID('aboutMe')] = $githubData['bio'];
-						if (isset($githubData['location'])) $saveOptions[User::getUserOptionID('location')] = $githubData['location'];
+						if (isset($githubData['bio']) && User::getUserOptionID('aboutMe') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $githubData['bio'];
+						if (isset($githubData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $githubData['location'];
 					}
 				break;
 				case 'twitter':
@@ -329,8 +329,8 @@ class RegisterForm extends UserAddForm {
 						
 						WCF::getSession()->unregister('__twitterData');
 						
-						if (isset($twitterData['description'])) $saveOptions[User::getUserOptionID('aboutMe')] = $twitterData['description'];
-						if (isset($twitterData['location'])) $saveOptions[User::getUserOptionID('location')] = $twitterData['location'];
+						if (isset($twitterData['description']) && User::getUserOptionID('aboutMe') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $twitterData['description'];
+						if (isset($twitterData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $twitterData['location'];
 					}
 				break;
 				case 'facebook':
@@ -345,15 +345,15 @@ class RegisterForm extends UserAddForm {
 							$registerVia3rdParty = true;
 						}
 						
-						if (isset($facebookData['gender'])) $saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
+						if (isset($facebookData['gender']) && User::getUserOptionID('gender') !== null) $saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
 						
-						if (isset($facebookData['birthday'])) {
+						if (isset($facebookData['birthday']) && User::getUserOptionID('birthday') !== null) {
 							list($month, $day, $year) = explode('/', $facebookData['birthday']);
 							$saveOptions[User::getUserOptionID('birthday')] = $year.'-'.$month.'-'.$day;
 						}
-						if (isset($facebookData['bio'])) $saveOptions[User::getUserOptionID('aboutMe')] = $facebookData['bio'];
-						if (isset($facebookData['location'])) $saveOptions[User::getUserOptionID('location')] = $facebookData['location']['name'];
-						if (isset($facebookData['website'])) {
+						if (isset($facebookData['bio']) && User::getUserOptionID('bio') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $facebookData['bio'];
+						if (isset($facebookData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $facebookData['location']['name'];
+						if (isset($facebookData['website']) && User::getUserOptionID('website') !== null) {
 							$urls = preg_split('/[\s,;]/', $facebookData['website'], -1, PREG_SPLIT_NO_EMPTY);
 							if (!empty($urls)) {
 								if (!Regex::compile('^https?://')->match($urls[0])) {
@@ -382,7 +382,7 @@ class RegisterForm extends UserAddForm {
 							$registerVia3rdParty = true;
 						}
 						
-						if (isset($googleData['gender'])) {
+						if (isset($googleData['gender']) && User::getUserOptionID('gender') !== null) {
 							switch ($googleData['gender']) {
 								case 'male':
 									$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_MALE;
@@ -392,8 +392,8 @@ class RegisterForm extends UserAddForm {
 								break;
 							}
 						}
-						if (isset($googleData['birthday'])) $saveOptions[User::getUserOptionID('birthday')] = $googleData['birthday'];
-						if (isset($googleData['placesLived'])) {
+						if (isset($googleData['birthday']) && User::getUserOptionID('birthday') !== null) $saveOptions[User::getUserOptionID('birthday')] = $googleData['birthday'];
+						if (isset($googleData['placesLived']) && User::getUserOptionID('location') !== null) {
 							// save primary location
 							$saveOptions[User::getUserOptionID('location')] = current(array_map(
 								function ($element) { return $element['value']; },

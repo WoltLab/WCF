@@ -158,6 +158,11 @@ class ApplicationHandler extends SingletonFactory {
 			}
 		}
 		
+		// relative urls contain no protocol, including implied
+		if (!preg_match('~^([a-z]+)?://~', $url)) {
+			return true;
+		}
+		
 		return false;
 	}
 	

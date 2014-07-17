@@ -579,6 +579,45 @@ class UserNotificationHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Removes notifications, this method should only be invoked for delete objects.
+	 * 
+	 * @param	string		$objectType
+	 * @param	array<integer>	$objectIDs
+	 */
+	public function removeNotifications($objectType, array $objectIDs) {
+		// check given object type
+		$objectTypeObj = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.notification.objectType', $objectType);
+		if ($objectTypeObj === null) {
+			throw new SystemException("Unknown object type ".$objectType." given");
+		}
+		
+		// get event ids
+		$sql = "SELECT	eventID
+			FROM	wcf".WCF_N."_user_notification_event
+			WHERE	objectTypeID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			$objectTypeObj->objectTypeID
+		));
+		
+		$eventIDs = array();
+		while ($row = $statement->fetchArray()) {
+			$eventIDs[] = $row['eventID'];
+		}
+		
+		if (!empty($eventIDs)) {
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("eventID IN (?)", array($eventIDs));
+			$conditions->add("objectID IN (?)", array($objectIDs));
+			
+			$sql = "DELETE FROM	wcf".WCF_N."_user_notification
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+		}
+	}
+	
+	/**
 	 * Marks notifications as confirmed
 	 * 
 	 * @param	string		$eventName
