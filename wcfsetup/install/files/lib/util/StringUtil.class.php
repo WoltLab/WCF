@@ -190,14 +190,14 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function formatDouble($double, $maxDecimals = 0) {
+		// round
+		$double = round($double, ($maxDecimals > 2 ? $maxDecimals : 2));
+		
 		// consider as integer, if no decimal places found
 		if (!$maxDecimals && preg_match('~^(-?\d+)(?:\.(?:0*|00[0-4]\d*))?$~', $double, $match)) {
 			return self::formatInteger($match[1]);
 		}
-		
-		// round
-		$double = round($double, ($maxDecimals > 2 ? $maxDecimals : 2));
-		
+				
 		// remove last 0
 		if ($maxDecimals < 2 && substr($double, -1) == '0') $double = substr($double, 0, -1);
 		
