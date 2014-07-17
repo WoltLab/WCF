@@ -83,7 +83,7 @@ class Notice extends DatabaseObject implements IRouteController {
 				}
 				else {
 					$dismissedNoticeIDs = @unserialize($dismissedNotices[WCF::getUser()->userID]);
-					$this->isDismissed = isset($dismissedNoticeIDs[$this->noticeID]);
+					$this->isDismissed = in_array($this->noticeID, $dismissedNoticeIDs);
 				}
 			}
 			else {
