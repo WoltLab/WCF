@@ -49,4 +49,16 @@ class ACPTemplateEngine extends TemplateEngine {
 		// template groups are not supported by the acp template engine
 		$this->templateGroupID = 0;
 	}
+	
+	/**
+	 * @see	\wcf\system\template\TemplateEngine::getTemplateListenerCode()
+	 */
+	public function getTemplateListenerCode($templateName, $eventName) {
+		// skip template listeners within WCF ACP
+		if (defined('PACKAGE_ID') && PACKAGE_ID == 1) {
+			return '';
+		}
+		
+		return parent::getTemplateListenerCode($templateName, $eventName);
+	}
 }
