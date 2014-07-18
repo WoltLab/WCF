@@ -251,7 +251,7 @@ class LabelHandler extends SingletonFactory {
 		// order label ids by label group
 		$labelGroups =& $this->labelGroups;
 		foreach ($data as &$labels) {
-			usort($labels, function($a, $b) use($labelGroups) {
+			uasort($labels, function($a, $b) use($labelGroups) {
 				$groupA = $labelGroups['groups'][$a->groupID];
 				$groupB = $labelGroups['groups'][$b->groupID];
 				
