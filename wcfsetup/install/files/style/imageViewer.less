@@ -136,7 +136,7 @@
 		opacity: 1;
 	}
 	
-	&.maximized {
+	&.maximized:not(.wcfImageViewerMobile) {
 		> header {
 			top: -100px;
 		}
@@ -149,6 +149,98 @@
 		
 		> footer {
 			bottom: -100px;
+		}
+	}
+	
+	&.wcfImageViewerStatic > header > div {
+		> h1,
+		> h2,
+		> h3 {
+			margin-left: 0 !important;
+		}
+	}
+	
+	&.wcfImageViewerMobile {
+		> header,
+		> footer {
+			background-color: rgba(0, 0, 0, 1);
+			opacity: 1;
+			position: absolute;
+			visibility: visible;
+			z-index: 402;
+		}
+		
+		&.maximized {
+			> header,
+			> footer {
+				opacity: 0;
+				visibility: hidden;
+				
+				transition: visibility 0s linear .5s, opacity .5s linear;
+			}
+			
+			> div > ul > li.pointer {
+				opacity: 0;
+			}
+		}
+		
+		> div {
+			bottom: 0;
+			top: 0;
+			
+			> ul {
+				> li {
+					background-color: rgba(224, 224, 224, 1);
+					border-radius: 30px;
+					margin-top: -24px;
+					opacity: 0;
+					position: absolute;
+					top: 50%;
+					
+					.transition(opacity, .3s);
+					
+					&.pointer {
+						opacity: 1;
+					}
+					
+					&.wcfImageViewerSlideshowButtonPrevious {
+						left: 10px;
+						
+						> span {
+							left: -3px;
+							position: relative;
+							top: 2px;
+						}
+					}
+					
+					&.wcfImageViewerSlideshowButtonNext {
+						right: 10px;
+						
+						> span {
+							position: relative;
+							right: -1px;
+							top: 2px;
+						}
+					}
+					
+					&.wcfImageViewerSlideshowButtonToggle,
+					&.wcfImageViewerSlideshowButtonEnlarge,
+					&.wcfImageViewerSlideshowButtonFull {
+						display: none;
+					}
+				}
+			}
+		}
+		
+		> footer {
+			> .wcfImageViewerButtonPrevious,
+			> .wcfImageViewerButtonNext {
+				display: none;
+			}
+			
+			> div {
+				margin: 0;
+			}
 		}
 	}
 	
@@ -167,8 +259,6 @@
 		height: 100px;
 		padding: 1rem;
 		top: 0;
-		
-		.transition(top, .3s);
 		
 		> div {
 			> h1,
@@ -267,8 +357,18 @@
 				opacity: 1;
 			}
 		}
+	}
+	
+	&:not(.wcfImageViewerMobile) {
+		> header {
+			.transition(top, .3s);
+		}
 		
-		> ul {
+		> footer {
+			.transition(bottom, .3s);
+		}
+		
+		> div > ul {
 			background-color: rgba(0, 0, 0, 1);
 			border: 1px solid @wcfImageViewerBorderColor;
 			border-bottom-width: 0;
@@ -330,8 +430,6 @@
 		bottom: 0;
 		height: 100px;
 		padding: 10px;
-		
-		.transition(bottom, .3s);
 		
 		&:hover > div > ul > li > img {
 			filter: none;
