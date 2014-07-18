@@ -1,6 +1,5 @@
 /**
- * ImageViewer for WCF.
- * Based upon "Slimbox 2" by Christophe Beyls 2007-2012, http://www.digitalia.be/software/slimbox2, MIT-style license.
+ * Enhanced image viewer for WCF.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2014 WoltLab GmbH
@@ -8,21 +7,21 @@
  */
 WCF.ImageViewer = Class.extend({
 	/**
-	 * Initializes the ImageViewer for every a-tag with the attribute rel = imageviewer.
+	 * trigger element to mimic a slideshow button
+	 * @var	jQuery
+	 */
+	_triggerElement: null,
+	
+	/**
+	 * Initializes the WCF.ImageViewer class.
 	 */
 	init: function() {
-		// navigation buttons
-		$('<span class="icon icon16 icon-chevron-left jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.previous') + '" />').appendTo($('#lbPrevLink'));
-		$('<span class="icon icon16 icon-chevron-right jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.next') + '" />').appendTo($('#lbNextLink'));
-		
-		// close and enlarge icons
-		$('<span class="icon icon32 icon-remove jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.close') + '" />').appendTo($('#lbCloseLink'));
-		var $buttonEnlarge = $('<span class="icon icon32 icon-resize-full jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.enlarge') + '" id="lbEnlarge" />').insertAfter($('#lbCloseLink'));
-		
-		// handle enlarge button
-		$buttonEnlarge.click($.proxy(this._enlarge, this));
-		
-		this._initImageViewer();
+		this._triggerElement = $('<span class="wcfImageViewerTriggerElement" />').data('disableSlideshow', true).hide().appendTo(document.body);
+		this._triggerElement.wcfImageViewer({
+			enableSlideshow: 0,
+			imageSelector: '.jsImageViewerEnabled',
+			staticViewer: true
+		});
 		
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.ImageViewer', $.proxy(this._domNodeInserted, this));
 		WCF.DOMNodeInsertedHandler.execute();
@@ -33,39 +32,29 @@ WCF.ImageViewer = Class.extend({
 	 */
 	_domNodeInserted: function() {
 		this._initImageSizeCheck();
-		this._initImageViewer();
+		this._rebuildImageViewer();
 	},
 	
 	/**
-	 * Initializes the image viewer for all links with class ".jsImageViewer"
+	 * Rebuilds the image viewer.
 	 */
-	_initImageViewer: function() {
-		// disable ImageViewer on touch devices identifying themselves as 'mobile'
-		if ($.browser.touch && /[Mm]obile/.test(navigator.userAgent)) {
-			// Apple always appends mobile regardless if it is an iPad or iP(hone|od)
-			if (!/iPad/.test(navigator.userAgent)) {
-				return;
-			}
-		}
-		
+	_rebuildImageViewer: function() {
 		var $links = $('a.jsImageViewer');
 		if ($links.length) {
-			$links.removeClass('jsImageViewer').slimbox({
-				counterText: WCF.Language.get('wcf.imageViewer.counter'),
-				loop: true
-			});
+			$links.removeClass('jsImageViewer').addClass('jsImageViewerEnabled').click($.proxy(this._click, this));
 		}
 	},
 	
 	/**
-	 * Redirects to image for full view.
+	 * Handles click on an image with image viewer support.
+	 * 
+	 * @param	object		event
 	 */
-	_enlarge: function() {
-		var $url = $('#lbImage').css('backgroundImage');
-		if ($url) {
-			$url = $url.replace(/^url\((["']?)(.*)\1\)$/, '$2');
-			window.location = $url;
-		}
+	_click: function(event) {
+		event.preventDefault();
+		event.stopPropagation();
+		
+		this._triggerElement.wcfImageViewer('open', null, $(event.currentTarget).wcfIdentify());
 	},
 	
 	/**
@@ -165,6 +154,12 @@ $.widget('ui.wcfImageViewer', {
 	_images: [ ],
 	
 	/**
+	 * true if image viewer uses the mobile-optimized UI
+	 * @var	boolean
+	 */
+	_isMobile: false,
+	
+	/**
 	 * true if image viewer is open
 	 * @var	boolean
 	 */
@@ -260,7 +255,11 @@ $.widget('ui.wcfImageViewer', {
 		speed: 5, // time in seconds
 		
 		// ajax
-		className: '' // must be an instance of \wcf\data\IImageViewerAction
+		className: '', // must be an instance of \wcf\data\IImageViewerAction
+		
+		// alternative mode - static view
+		imageSelector: '',
+		staticViewer: false
 	},
 	
 	/**
@@ -274,6 +273,7 @@ $.widget('ui.wcfImageViewer', {
 		this._disableSlideshow = (this.element.data('disableSlideshow'));
 		this._eventNamespace = this.element.wcfIdentify();
 		this._images = [ ];
+		this._isMobile = false;
 		this._isOpen = false;
 		this._items = -1;
 		this._maxDimensions = {
@@ -298,28 +298,50 @@ $.widget('ui.wcfImageViewer', {
 	 * Opens the image viewer.
 	 * 
 	 * @param	object		event
+	 * @param	string		targetImageElementID
 	 * @return	boolean
 	 */
-	open: function(event) {
+	open: function(event, targetImageElementID) {
 		if (event) event.preventDefault();
 		
 		if (this._isOpen) {
 			return false;
 		}
 		
-		if (this._images.length === 0) {
-			this._loadNextImages(true);
-		}
-		else {
-			this._render(false, this.element.data('targetImageID'));
-			
-			if (this._items > 1 && this._slideshowEnabled) {
-				this.startSlideshow();
-			}
+		if (this.options.staticViewer) {
+			var $images = this._getStaticImages();
+			this._initUI();
+			this._createThumbnails($images, true);
+			this._render(true, undefined, targetImageElementID);
 			
 			this._isOpen = true;
-		
+			
 			WCF.System.DisableScrolling.disable();
+			
+			// switch to fullscreen mode on smartphones
+			if ($.browser.touch) {
+				setTimeout($.proxy(function() {
+					if (this._isMobile && !this._container.hasClass('maximized')) {
+						this._toggleView();
+					}
+				}, this), 500);
+			}
+		}
+		else {
+			if (this._images.length === 0) {
+				this._loadNextImages(true);
+			}
+			else {
+				this._render(false, this.element.data('targetImageID'));
+				
+				if (this._items > 1 && this._slideshowEnabled) {
+					this.startSlideshow();
+				}
+				
+				this._isOpen = true;
+			
+				WCF.System.DisableScrolling.disable();
+			}
 		}
 		
 		this._bindListener();
@@ -489,8 +511,9 @@ $.widget('ui.wcfImageViewer', {
 	 * 
 	 * @param	boolean		initialized
 	 * @param	integer		targetImageID
+	 * @param	string		targetImageElementID
 	 */
-	_render: function(initialized, targetImageID) {
+	_render: function(initialized, targetImageID, targetImageElementID) {
 		this._container.addClass('open');
 		
 		var $thumbnail = null;
@@ -500,7 +523,7 @@ $.widget('ui.wcfImageViewer', {
 			this._thumbnailWidth = $thumbnail.outerWidth(true);
 			this._thumbnailContainerWidth = this._ui.imageList.parent().innerWidth();
 			
-			if (this._items > 1 && this.options.enableSlideshow && !targetImageID) {
+			if (this._items > 1 && this.options.enableSlideshow && !targetImageID && !targetImageElementID) {
 				this.startSlideshow();
 			}
 		}
@@ -515,6 +538,20 @@ $.widget('ui.wcfImageViewer', {
 					return false;
 				}
 			}, this));
+		}
+		else if (targetImageElementID !== null) {
+			var $i = 0;
+			$(this.options.imageSelector).each(function(index, element) {
+				if ($(element).wcfIdentify() == targetImageElementID) {
+					$i = index;
+					
+					return false;
+				}
+			});
+			
+			var $item = this._ui.imageList.children('li:eq(' + $i + ')');
+			$item.trigger('click');
+			this.moveToImage($item.data('index'));
 		}
 		else if ($thumbnail !== null) {
 			$thumbnail.trigger('click');
@@ -590,17 +627,21 @@ $.widget('ui.wcfImageViewer', {
 		this._renderImage($newImageIndex, $image, $dimensions);
 		
 		// user
-		var $link = this._ui.header.find('> div > a').prop('href', $image.user.link).prop('title', $image.user.username);
-		$link.children('img').prop('src', $image.user.avatarURL);
+		if (!this.options.staticViewer) {
+			var $link = this._ui.header.find('> div > a').prop('href', $image.user.link).prop('title', $image.user.username);
+			$link.children('img').prop('src', $image.user.avatarURL);
+		}
 		
 		// meta data
 		var $title = WCF.String.escapeHTML($image.image.title);
 		if ($image.image.link) $title = '<a href="' + $image.image.link + '">' + $image.image.title + '</a>';
 		this._ui.header.find('> div > h1').html($title);
 		
-		var $seriesTitle = ($image.series && $image.series.title ? WCF.String.escapeHTML($image.series.title) : '');
-		if ($image.series.link) $seriesTitle = '<a href="' + $image.series.link + '">' + $seriesTitle + '</a>';
-		this._ui.header.find('> div > h2').html($seriesTitle);
+		if (!this.options.staticViewer) {
+			var $seriesTitle = ($image.series && $image.series.title ? WCF.String.escapeHTML($image.series.title) : '');
+			if ($image.series.link) $seriesTitle = '<a href="' + $image.series.link + '">' + $seriesTitle + '</a>';
+			this._ui.header.find('> div > h2').html($seriesTitle);
+		}
 		
 		this._ui.header.find('> div > h3').text(WCF.Language.get('wcf.imageViewer.seriesIndex').replace(/{x}/, $image.listItem.data('index') + 1).replace(/{y}/, this._items));
 		
@@ -628,6 +669,10 @@ $.widget('ui.wcfImageViewer', {
 		this._ui.imageContainer.removeClass('loading');
 		this._ui.images[activeImageIndex].addClass('active');
 		
+		if (this.options.staticViewer) {
+			this._renderImage(activeImageIndex, null);
+		}
+		
 		this.startSlideshow();
 	},
 	
@@ -644,7 +689,7 @@ $.widget('ui.wcfImageViewer', {
 			imageData = this._images[this._active];
 			
 			containerDimensions = {
-				height: $(window).height() - (this._container.hasClass('maximized') ? 0 : 200),
+				height: $(window).height() - (this._container.hasClass('maximized') || this._container.hasClass('wcfImageViewerMobile') ? 0 : 200),
 				width: this._ui.imageContainer.innerWidth()
 			};
 		}
@@ -653,7 +698,15 @@ $.widget('ui.wcfImageViewer', {
 		containerDimensions.height -= 22;
 		containerDimensions.width -= 20;
 		
-		this._ui.images[targetIndex].prop('src', imageData.image.url);
+		var $image = this._ui.images[targetIndex].prop('src', imageData.image.url);
+		
+		if (this.options.staticViewer && !imageData.height && $image.get(0).complete) {
+			var $img = new Image();
+			$img.src = imageData.image.url;
+			
+			imageData.image.height = $img.height;
+			imageData.image.width = $img.width;
+		}
 		
 		var $height = imageData.image.height;
 		var $width = imageData.image.width;
@@ -695,7 +748,7 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._didInit = true;
 		
-		this._container = $('<div class="wcfImageViewer" />').appendTo(document.body);
+		this._container = $('<div class="wcfImageViewer' + (this.options.staticViewer ? ' wcfImageViewerStatic' : '') + '" />').appendTo(document.body);
 		var $imageContainer = $('<div><img class="active" /><img /></div>').appendTo(this._container);
 		var $imageList = $('<footer><span class="wcfImageViewerButtonPrevious icon icon-double-angle-left" /><div><ul /></div><span class="wcfImageViewerButtonNext icon icon-double-angle-right" /></footer>').appendTo(this._container);
 		var $slideshowContainer = $('<ul />').appendTo($imageContainer);
@@ -708,7 +761,7 @@ $.widget('ui.wcfImageViewer', {
 		this._ui = {
 			buttonNext: $imageList.children('span.wcfImageViewerButtonNext'),
 			buttonPrevious: $imageList.children('span.wcfImageViewerButtonPrevious'),
-			header: $('<header><div class="box64"><a class="framed jsTooltip"><img /></a><h1 /><h2 /><h3 /></div></header>').appendTo(this._container),
+			header: $('<header><div' + (this.options.staticViewer ? '>' : ' class="box64"><a class="framed jsTooltip"><img /></a>' ) + '<h1 /><h2 /><h3 /></div></header>').appendTo(this._container),
 			imageContainer: $imageContainer,
 			images: [
 				$imageContainer.children('img:eq(0)').on('webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd', function() { $(this).removeClass('animateTransformation'); }),
@@ -745,7 +798,56 @@ $.widget('ui.wcfImageViewer', {
 		// close button
 		$('<span class="wcfImageViewerButtonClose icon icon48 icon-remove pointer jsTooltip" title="' + WCF.Language.get('wcf.global.button.close') + '" />').appendTo(this._ui.header).click($.proxy(this.close, this));
 		
+		WCF.DOMNodeInsertedHandler.execute();
+		
+		enquire.register('screen and (max-width: 800px)', {
+			match: $.proxy(this._enableMobileView, this),
+			unmatch: $.proxy(this._disableMobileView, this)
+		});
+		
 		return true;
+	},
+	
+	/**
+	 * Enables the mobile-optimized UI.
+	 */
+	_enableMobileView: function() {
+		this._container.addClass('wcfImageViewerMobile');
+		
+		var self = this;
+		this._ui.imageContainer.swipe({
+			swipeLeft: function(event) {
+				if (self._container.hasClass('maximized')) {
+					self._nextImage(event);
+				}
+			},
+			swipeRight: function(event) {
+				if (self._container.hasClass('maximized')) {
+					self._previousImage(event);
+				}
+			},
+			tap: function(event, element) {
+				// tap fires before click, prevent conflicts
+				switch (element.tagName) {
+					case 'DIV':
+					case 'IMG':
+						self._toggleView();
+					break;
+				}
+			}
+		});
+		
+		this._isMobile = true;
+	},
+	
+	/**
+	 * Disables the mobile-optimized UI.
+	 */
+	_disableMobileView: function() {
+		this._container.removeClass('wcfImageViewerMobile');
+		this._ui.imageContainer.swipe('destroy');
+		
+		this._isMobile = false;
 	},
 	
 	/**
@@ -811,6 +913,11 @@ $.widget('ui.wcfImageViewer', {
 			
 			this.stopSlideshow(true);
 			this.showImage(this._active + 1);
+			
+			if (event) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
 		}
 	},
 	
@@ -825,6 +932,11 @@ $.widget('ui.wcfImageViewer', {
 			
 			this.stopSlideshow(true);
 			this.showImage(this._active - 1);
+			
+			if (event) {
+				event.preventDefault();
+				event.stopPropagation();
+			}
 		}
 	},
 	
@@ -916,6 +1028,11 @@ $.widget('ui.wcfImageViewer', {
 	 * @param	array<object>	images
 	 */
 	_createThumbnails: function(images) {
+		if (this.options.staticViewer) {
+			this._images = [ ];
+			this._ui.imageList.empty();
+		}
+		
 		for (var $i = 0, $length = images.length; $i < $length; $i++) {
 			var $image = images[$i];
 			
@@ -925,14 +1042,62 @@ $.widget('ui.wcfImageViewer', {
 			if ($img.get(0).complete) {
 				// thumbnail is read from cache
 				$listItem.removeClass('loading');
+				
+				// fix dimensions
+				if (this.options.staticViewer) {
+					this._fixThumbnailDimensions($img);
+				}
 			}
 			else {
-				$img.on('load', function() { $(this).parent().removeClass('loading'); });
+				var self = this;
+				$img.on('load', function() {
+					var $img = $(this);
+					$img.parent().removeClass('loading');
+					
+					if (self.options.staticViewer) {
+						self._fixThumbnailDimensions($img);
+					}
+				});
 			}
 			
 			$image.listItem = $listItem;
 			this._images.push($image);
 		}
+	},
+	
+	/**
+	 * Fixes thumbnail dimensions within static mode.
+	 * 
+	 * @param	jQuery		image
+	 */
+	_fixThumbnailDimensions: function(image) {
+		var $image = new Image();
+		$image.src = image.prop('src');
+		
+		var $height = $image.height;
+		var $width = $image.width;
+		
+		// quadratic, scale to 80x80
+		if ($height == $width) {
+			$height = $width = 80;
+		}
+		else if ($height < $width) {
+			// landscape, use width as reference
+			var $scale = 80 / $width;
+			$width = 80;
+			$height *= $scale;
+		}
+		else {
+			// portrait, use height as reference
+			var $scale = 80 / $height;
+			$height = 80;
+			$width *= $scale;
+		}
+		
+		image.css({
+			height: $height + 'px',
+			width: $width + 'px'
+		});
 	},
 	
 	/**
@@ -955,6 +1120,37 @@ $.widget('ui.wcfImageViewer', {
 		});
 		this._proxy.setOption('showLoadingOverlay', false);
 		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Builds the list of static images and returns it.
+	 * 
+	 * @return	array<object>
+	 */
+	_getStaticImages: function() {
+		var $images = [ ];
+		
+		$(this.options.imageSelector).each(function(index, link) {
+			var $link = $(link);
+			
+			$images.push({
+				image: {
+					fullURL: $link.prop('href'),
+					link: '',
+					title: $link.prop('title'),
+					url: $link.prop('href'),
+				},
+				series: null,
+				thumbnail: {
+					url: $link.children('img').prop('src')
+				},
+				user: null
+			});
+		});
+		
+		this._items = $images.length;
+		
+		return $images;
 	},
 	
 	/**
