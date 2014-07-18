@@ -15,7 +15,8 @@
 $types = array(
 	'eot' => 'application/vnd.ms-fontobject',
 	'woff' => 'application/x-woff', // best supported, but this is not the right one according to http://www.w3.org/TR/WOFF/#appendix-b
-	'ttf' => 'application/octet-stream'
+	'ttf' => 'application/octet-stream',
+	'svg' => 'image/svg+xml'
 );
 
 if (!empty($_GET['type'])) {
