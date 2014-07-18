@@ -149,6 +149,14 @@ class UserGroupOptionForm extends AbstractForm {
 	public function validate() {
 		parent::validate();
 		
+		$isAdmin = false;
+		foreach (WCF::getUser()->getGroupIDs() as $groupID) {
+			if (UserGroup::getGroupByID($groupID)->isAdminGroup()) {
+				$isAdmin = true;
+				break;
+			}
+		}
+		
 		// validate option values
 		foreach ($this->values as $groupID => &$optionValue) {
 			if (!isset($this->groups[$groupID])) {
@@ -164,7 +172,7 @@ class UserGroupOptionForm extends AbstractForm {
 				$this->errorType[$e->getField()] = $e->getType();
 			}
 			
-			if ($this->optionType->compare($optionValue, WCF::getSession()->getPermission($this->userGroupOption->optionName)) == 1) {
+			if (!$isAdmin && $this->optionType->compare($optionValue, WCF::getSession()->getPermission($this->userGroupOption->optionName)) == 1) {
 				$this->errorType[$groupID] = 'exceedsOwnPermission';
 			}
 		}
