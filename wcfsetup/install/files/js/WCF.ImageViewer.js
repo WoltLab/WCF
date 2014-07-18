@@ -1,6 +1,5 @@
 /**
- * ImageViewer for WCF.
- * Based upon "Slimbox 2" by Christophe Beyls 2007-2012, http://www.digitalia.be/software/slimbox2, MIT-style license.
+ * Enhanced image viewer for WCF.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2014 WoltLab GmbH
@@ -8,21 +7,21 @@
  */
 WCF.ImageViewer = Class.extend({
 	/**
-	 * Initializes the ImageViewer for every a-tag with the attribute rel = imageviewer.
+	 * trigger element to mimic a slideshow button
+	 * @var	jQuery
+	 */
+	_triggerElement: null,
+	
+	/**
+	 * Initializes the WCF.ImageViewer class.
 	 */
 	init: function() {
-		// navigation buttons
-		$('<span class="icon icon16 icon-chevron-left jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.previous') + '" />').appendTo($('#lbPrevLink'));
-		$('<span class="icon icon16 icon-chevron-right jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.next') + '" />').appendTo($('#lbNextLink'));
-		
-		// close and enlarge icons
-		$('<span class="icon icon32 icon-remove jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.close') + '" />').appendTo($('#lbCloseLink'));
-		var $buttonEnlarge = $('<span class="icon icon32 icon-resize-full jsTooltip" title="' + WCF.Language.get('wcf.imageViewer.enlarge') + '" id="lbEnlarge" />').insertAfter($('#lbCloseLink'));
-		
-		// handle enlarge button
-		$buttonEnlarge.click($.proxy(this._enlarge, this));
-		
-		this._initImageViewer();
+		this._triggerElement = $('<span class="wcfImageViewerTriggerElement" />').data('disableSlideshow', true).hide().appendTo(document.body);
+		this._triggerElement.wcfImageViewer({
+			enableSlideshow: 0,
+			imageSelector: '.jsImageViewerEnabled',
+			staticViewer: true
+		});
 		
 		WCF.DOMNodeInsertedHandler.addCallback('WCF.ImageViewer', $.proxy(this._domNodeInserted, this));
 		WCF.DOMNodeInsertedHandler.execute();
@@ -33,39 +32,29 @@ WCF.ImageViewer = Class.extend({
 	 */
 	_domNodeInserted: function() {
 		this._initImageSizeCheck();
-		this._initImageViewer();
+		this._rebuildImageViewer();
 	},
 	
 	/**
-	 * Initializes the image viewer for all links with class ".jsImageViewer"
+	 * Rebuilds the image viewer.
 	 */
-	_initImageViewer: function() {
-		// disable ImageViewer on touch devices identifying themselves as 'mobile'
-		if ($.browser.touch && /[Mm]obile/.test(navigator.userAgent)) {
-			// Apple always appends mobile regardless if it is an iPad or iP(hone|od)
-			if (!/iPad/.test(navigator.userAgent)) {
-				return;
-			}
-		}
-		
+	_rebuildImageViewer: function() {
 		var $links = $('a.jsImageViewer');
 		if ($links.length) {
-			$links.removeClass('jsImageViewer').slimbox({
-				counterText: WCF.Language.get('wcf.imageViewer.counter'),
-				loop: true
-			});
+			$links.removeClass('jsImageViewer').addClass('jsImageViewerEnabled').click($.proxy(this._click, this));
 		}
 	},
 	
 	/**
-	 * Redirects to image for full view.
+	 * Handles click on an image with image viewer support.
+	 * 
+	 * @param	object		event
 	 */
-	_enlarge: function() {
-		var $url = $('#lbImage').css('backgroundImage');
-		if ($url) {
-			$url = $url.replace(/^url\((["']?)(.*)\1\)$/, '$2');
-			window.location = $url;
-		}
+	_click: function(event) {
+		event.preventDefault();
+		event.stopPropagation();
+		
+		this._triggerElement.wcfImageViewer('open', null, $(event.currentTarget).wcfIdentify());
 	},
 	
 	/**
@@ -105,57 +94,6 @@ WCF.ImageViewer = Class.extend({
 				$image.parent().slimbox();
 			}
 		}
-	}
-});
-
-/**
- * Enhanced image viewer for WCF.
- * 
- * @author	Alexander Ebert
- * @copyright	2001-2014 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- */
-WCF.ImageViewer = Class.extend({
-	/**
-	 * trigger element to mimic a slideshow button
-	 * @var	jQuery
-	 */
-	_triggerElement: null,
-	
-	/**
-	 * Initializes the WCF.ImageViewer class.
-	 */
-	init: function() {
-		this._triggerElement = $('<span class="wcfImageViewerTriggerElement" />').data('disableSlideshow', true).hide().appendTo(document.body);
-		this._triggerElement.wcfImageViewer({
-			enableSlideshow: 0,
-			imageSelector: '.jsImageViewerEnabled',
-			staticViewer: true
-		});
-		
-		this._rebuildImageViewer();
-	},
-	
-	/**
-	 * Rebuilds the image viewer.
-	 */
-	_rebuildImageViewer: function() {
-		var $links = $('a.jsImageViewer');
-		if ($links.length) {
-			$links.removeClass('jsImageViewer').addClass('jsImageViewerEnabled').click($.proxy(this._click, this));
-		}
-	},
-	
-	/**
-	 * Handles click on an image with image viewer support.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		event.preventDefault();
-		event.stopPropagation();
-		
-		this._triggerElement.wcfImageViewer('open', null, $(event.currentTarget).wcfIdentify());
 	}
 });
 
