@@ -24,7 +24,8 @@ class UserNotificationEditor extends DatabaseObjectEditor {
 	 */
 	public function markAsConfirmed() {
 		$this->update(array(
-			'confirmed' => 1
+			'confirmed' => 1,
+			'mailNotified' => 1
 		));
 		
 		// delete notification_to_user assignment (mimic legacy notification system)

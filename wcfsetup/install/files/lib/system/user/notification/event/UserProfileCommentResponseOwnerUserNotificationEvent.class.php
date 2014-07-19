@@ -80,7 +80,9 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
+		$authors = array_values($this->getAuthors());
 		$comment = new Comment($this->userNotificationObject->commentID);
+		$count = count($authors);
 		$owner = new User($comment->objectID);
 		if ($comment->userID) {
 			$commentAuthor = new User($comment->userID);
@@ -88,6 +90,19 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 		else {
 			$commentAuthor = new User(null, array(
 				'username' => $comment->username
+			));
+		}
+		
+		if ($count > 1) {
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.mail', array(
+				'author' => $this->author,
+				'authors' => $authors,
+				'commentAuthor' => $commentAuthor,
+				'count' => $count,
+				'notificationType' => $notificationType,
+				'others' => $count - 1,
+				'owner' => $owner,
+				'response' => $this->userNotificationObject
 			));
 		}
 		

@@ -63,11 +63,15 @@ class CommentDataHandler extends SingletonFactory {
 	 */
 	public function getComment($commentID) {
 		if (!empty($this->commentIDs)) {
-			$commentList = new CommentList();
-			$commentList->setObjectIDs($this->commentIDs);
-			$commentList->readObjects();
-			$this->comments = $commentList->getObjects();
-			$this->commentIDs = array();
+			$this->commentIDs = array_diff($this->commentIDs, array_keys($this->comments));
+			
+			if (!empty($this->commentIDs)) {
+				$commentList = new CommentList();
+				$commentList->setObjectIDs($this->commentIDs);
+				$commentList->readObjects();
+				$this->comments = $commentList->getObjects();
+				$this->commentIDs = array();
+			}
 		}
 		
 		if (isset($this->comments[$commentID])) {

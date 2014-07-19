@@ -2,7 +2,8 @@
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\user\notification\event\UserNotificationEventList;
-use wcf\data\user\notification\UserNotificationList;
+use wcf\data\user\notification\UserNotification;
+use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfile;
@@ -31,14 +32,14 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		
 		// get user ids
 		$userIDs = array();
-		$sql = "SELECT	DISTINCT notification_to_user.userID
-			FROM	wcf".WCF_N."_user_notification_to_user notification_to_user,
-				wcf".WCF_N."_user_notification notification
-			WHERE	notification.notificationID = notification_to_user.notificationID
-				AND notification_to_user.mailNotified = 0
-				AND notification.time < ".(TIME_NOW - 3600 * 23);
-		$statement = WCF::getDB()->prepareStatement($sql, 250);
-		$statement->execute();
+		$sql = "SELECT	DISTINCT userID
+			FROM	wcf".WCF_N."_user_notification
+			WHERE	mailNotified = 0
+				AND time < ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array(
+			TIME_NOW - 3600 * 23
+		));
 		while ($row = $statement->fetchArray()) {
 			$userIDs[] = $row['userID'];
 		}
@@ -52,16 +53,11 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		
 		// get notifications
 		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("notification.notificationID = notification_to_user.notificationID");
-		$conditions->add("notification_to_user.userID IN (?)", array($userIDs));
-		$conditions->add("notification_to_user.mailNotified = ?", array(0));
+		$conditions->add("notification.userID IN (?)", array($userIDs));
+		$conditions->add("notification.mailNotified = ?", array(0));
 		
-		$sql = "SELECT		notification_to_user.notificationID, notification_event.eventID,
-					object_type.objectType, notification.objectID,
-					notification.additionalData, notification.authorID,
-					notification.time, notification_to_user.userID
-			FROM		wcf".WCF_N."_user_notification_to_user notification_to_user,
-					wcf".WCF_N."_user_notification notification
+		$sql = "SELECT		notification.*, notification_event.eventID, object_type.objectType
+			FROM		wcf".WCF_N."_user_notification notification
 			LEFT JOIN	wcf".WCF_N."_user_notification_event notification_event
 			ON		(notification_event.eventID = notification.eventID)
 			LEFT JOIN	wcf".WCF_N."_object_type object_type
@@ -75,36 +71,60 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("userID IN (?)", array($userIDs));
 		$conditions->add("mailNotified = ?", array(0));
-		$sql = "UPDATE	wcf".WCF_N."_user_notification_to_user
+		$sql = "UPDATE	wcf".WCF_N."_user_notification
 			SET	mailNotified = 1
 			".$conditions;
 		$statement2 = WCF::getDB()->prepareStatement($sql);
 		$statement2->execute($conditions->getParameters());
 		
 		// collect data
-		$authorIDs = $eventsToUser = $objectTypes = $eventIDs = $notificationIDs = array();
+		$eventsToUser = $objectTypes = $eventIDs = $notificationObjects = array();
 		$availableObjectTypes = UserNotificationHandler::getInstance()->getAvailableObjectTypes();
 		while ($row = $statement->fetchArray()) {
 			if (!isset($eventsToUser[$row['userID']])) $eventsToUser[$row['userID']] = array();
-			$eventsToUser[$row['userID']][] = $row;
+			$eventsToUser[$row['userID']][] = $row['notificationID'];
 			
 			// cache object types
 			if (!isset($objectTypes[$row['objectType']])) {
 				$objectTypes[$row['objectType']] = array(
-					'objectType' => $availableObjectTypes[$row['objectType']],
+					'objectType' => $this->availableObjectTypes[$row['objectType']],
 					'objectIDs' => array(),
 					'objects' => array()
 				);
 			}
-			
+				
 			$objectTypes[$row['objectType']]['objectIDs'][] = $row['objectID'];
 			$eventIDs[] = $row['eventID'];
-			$notificationIDs[] = $row['notificationID'];
+				
+			$notificationObjects[$row['notificationID']] = new UserNotification(null, $row);
+		}
+		
+		// load authors
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("notificationID IN (?)", array(array_keys($notificationObjects)));
+		$sql = "SELECT		notificationID, authorID
+			FROM		wcf".WCF_N."_user_notification_author
+			".$conditions."
+			ORDER BY	time ASC";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		$authorIDs = $authorToNotification = array();
+		while ($row = $statement->fetchArray()) {
+			if (!$row['authorID']) {
+				continue;
+			}
+			
+			if (!isset($authorToNotification[$row['notificationID']])) {
+				$authorToNotification[$row['notificationID']] = array();
+			}
+			
 			$authorIDs[] = $row['authorID'];
+			$authorToNotification[$row['notificationID']][] = $row['authorID'];
 		}
 		
 		// load authors
 		$authors = UserProfile::getUserProfiles($authorIDs);
+		$unknownAuthor = new UserProfile(new User(null, array('userID' => null, 'username' => WCF::getLanguage()->get('wcf.user.guest'))));
 		
 		// load objects associated with each object type
 		foreach ($objectTypes as $objectType => $objectData) {
@@ -117,12 +137,6 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		$eventList->readObjects();
 		$eventObjects = $eventList->getObjects();
 		
-		// load notification objects
-		$notificationList = new UserNotificationList();
-		$notificationList->getConditionBuilder()->add("user_notification.notificationID IN (?)", array($notificationIDs));
-		$notificationList->readObjects();
-		$notificationObjects = $notificationList->getObjects();
-		
 		foreach ($eventsToUser as $userID => $events) {
 			if (!isset($users[$userID])) continue;
 			$user = $users[$userID];
@@ -132,17 +146,31 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 				'user' => $user
 			))."\n\n";
 			
-			foreach ($events as $event) {
-				$className = $eventObjects[$event['eventID']]->className;
-				$class = new $className($eventObjects[$event['eventID']]);
+			foreach ($events as $notificationID) {
+				$notification = $notificationObjects[$notificationID];
 				
+				$className = $eventObjects[$notification->eventID]->className;
+				$class = new $className($eventObjects[$notification->eventID]);
 				$class->setObject(
-					$notificationObjects[$event['notificationID']],
-					$objectTypes[$event['objectType']]['objects'][$event['objectID']],
-					$authors[$event['authorID']],
-					unserialize($event['additionalData'])
+					$notification,
+					$objectTypes[$notification->objectType]['objects'][$notification->objectID],
+					(isset($authors[$notification->authorID]) ? $authors[$notification->authorID] : $unknownAuthor),
+					$notification->additionalData,
+					$notification->timesTriggered
 				);
 				$class->setLanguage($user->getLanguage());
+				
+				if (isset($authorToNotification[$notification->notificationID])) {
+					$eventAuthors = array();
+					foreach ($authorToNotification[$notification->notificationID] as $userID) {
+						if (isset($authors[$userID])) {
+							$eventAuthors[$userID] = $authors[$userID];
+						}
+					}
+					if (!empty($eventAuthors)) {
+						$class->setAuthors($eventAuthors);
+					}
+				}
 				
 				if ($message != '') $message .= "\n\n";
 				$message .= $class->getEmailMessage('daily');

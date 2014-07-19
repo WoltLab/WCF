@@ -61,7 +61,20 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
+		$authors = array_values($this->getAuthors());
+		$count = count($authors);
 		$user = new User($this->userNotificationObject->objectID);
+		
+		if ($count > 1) {
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.mail.stacked', array(
+				'author' => $this->author,
+				'authors' => $authors,
+				'count' => $count,
+				'others' => $count - 1,
+				'owner' => $user,
+				'notificationType' => $notificationType
+			));
+		}
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.mail', array(
 			'comment' => $this->userNotificationObject,

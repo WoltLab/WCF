@@ -50,14 +50,6 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 	public function getMessage() {
 		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
 		$owner = CommentDataHandler::getInstance()->getUser($comment->objectID);
-		if ($comment->userID) {
-			$commentAuthor = CommentDataHandler::getInstance()->getUser($comment->userID);
-		}
-		else {
-			$commentAuthor = new User(null, array(
-				'username' => $comment->username
-			));
-		}
 		
 		$authors = array_values($this->getAuthors());
 		$count = count($authors);
@@ -80,13 +72,27 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
+		$authors = array_values($this->getAuthors());
 		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
-		$user = new User($comment->objectID);
+		$count = count($authors);
+		$owner = CommentDataHandler::getInstance()->getUser($comment->objectID);
+		
+		if ($count > 1) {
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.mail.stacked', array(
+				'author' => $this->author,
+				'authors' => $authors,
+				'count' => $count,
+				'notificationType' => $notificationType,
+				'others' => $count - 1,
+				'owner' => $owner,
+				'response' => $this->userNotificationObject
+			));
+		}
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.mail', array(
 			'response' => $this->userNotificationObject,
 			'author' => $this->author,
-			'owner' => $user,
+			'owner' => $owner,
 			'notificationType' => $notificationType
 		));
 	}
