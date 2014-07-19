@@ -79,12 +79,12 @@ class EditHistoryPage extends AbstractPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['oldID']) && isset($_REQUEST['newID'])) {
+		if (isset($_REQUEST['oldID'])) {
 			$this->oldID = intval($_REQUEST['oldID']);
 			$this->old = new EditHistoryEntry($this->oldID);
 			if (!$this->old->entryID) throw new IllegalLinkException();
 			
-			if ($_REQUEST['newID'] !== 'current') {
+			if (isset($_REQUEST['newID']) && $_REQUEST['newID'] !== 'current') {
 				$this->newID = intval($_REQUEST['newID']);
 				$this->new = new EditHistoryEntry($this->newID);
 				if (!$this->new->entryID) throw new IllegalLinkException();
@@ -135,7 +135,7 @@ class EditHistoryPage extends AbstractPage {
 		$this->objectList->readObjects();
 		
 		// valid IDs were given, calculate diff
-		if ($this->old) {
+		if ($this->old && $this->new) {
 			$a = explode("\n", StringUtil::unifyNewlines($this->old->getMessage()));
 			$b = explode("\n", StringUtil::unifyNewlines($this->new->getMessage()));
 			$this->diff = new Diff($a, $b);
