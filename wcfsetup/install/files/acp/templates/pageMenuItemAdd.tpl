@@ -202,12 +202,14 @@
 				</dd>
 			</dl>
 			
-			<dl>
-				<dt></dt>
-				<dd>
-					<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked="checked"{/if} /> <span>{lang}wcf.acp.pageMenu.isDisabled{/lang}</span></label>
-				</dd>
-			</dl>
+			{if $action == 'add' || !$menuItem->isLandingPage}
+				<dl>
+					<dt></dt>
+					<dd>
+						<label><input type="checkbox" name="isDisabled" id="isDisabled" value="1"{if $isDisabled} checked="checked"{/if} /> <span>{lang}wcf.acp.pageMenu.isDisabled{/lang}</span></label>
+					</dd>
+				</dl>
+			{/if}
 			
 			{event name='advancedFields'}
 		</fieldset>
