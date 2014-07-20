@@ -2816,7 +2816,7 @@ If you do not want to receive further email notifications for this event, you ca
 {@$comment->message} 
 ---------------------------------
 {/if}{link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
-		<item name="wcf.user.notification.comment.mail.stacked"><![CDATA[if $count < 4}{@$authors[0]->username}{if $count == 2} and {else}, {/if}{@$authors[1]->username}{if $count == 3} and {@$authors[2]->username}{/if}{else}{@$authors[0]->username} and {#$others} others{/if} wrote comments on your wall:
+		<item name="wcf.user.notification.comment.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count == 2} and {else}, {/if}{@$authors[1]->username}{if $count == 3} and {@$authors[2]->username}{/if}{else}{@$authors[0]->username} and {#$others} others{/if} wrote comments on your wall:
 {link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} new replies (Wall)]]></item>
