@@ -87,15 +87,15 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			// cache object types
 			if (!isset($objectTypes[$row['objectType']])) {
 				$objectTypes[$row['objectType']] = array(
-					'objectType' => $this->availableObjectTypes[$row['objectType']],
+					'objectType' => $availableObjectTypes[$row['objectType']],
 					'objectIDs' => array(),
 					'objects' => array()
 				);
 			}
-				
+			
 			$objectTypes[$row['objectType']]['objectIDs'][] = $row['objectID'];
 			$eventIDs[] = $row['eventID'];
-				
+			
 			$notificationObjects[$row['notificationID']] = new UserNotification(null, $row);
 		}
 		
