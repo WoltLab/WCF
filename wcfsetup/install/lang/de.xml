@@ -1142,6 +1142,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte beachten Sie das unten stehende Prüfungsergebnis.]]></item>
 		
 		<!-- TODO: most error codes are still missing, they will be added during testing -->
+		<item name="wcf.acp.package.validation.errorCode.5"><![CDATA[Das Paket „{lang}{$packageName}{/lang}“ enthält keine gültigen Installations-Anweisungen.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.6"><![CDATA[Das Paket „{lang}{$packageName}{/lang}“ (installierte Version: „{$packageVersion}“) soll auf Version „{$deliveredPackageVersion}“ aktualisiert werden, ein Update wird jedoch nicht unterstützt.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.8"><![CDATA[Dieses Paket ist inkompatibel mit den folgenden, installierten Paketen: <ul class="nativeList">{foreach from=$packages item=package}<li>„{$package}“ ({$package->package})</li>{/foreach}</ul>]]></item>
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Benötigt das Paket „{$packageName}“ in Version „{$packageVersion}“ oder höher, dies ist aber weder installiert noch wird es mitgeliefert.]]></item>
