@@ -16,8 +16,6 @@ use wcf\system\mail\Mail;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
-use wcf\util\JSON;
-use wcf\system\exception\SystemException;
 
 /**
  * Executes user-related actions.
