@@ -262,6 +262,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @return	User
 	 */
 	public function create() {
+		if (!isset($this->parameters['data']['socialNetworkPrivacySettings'])) {
+			$this->parameters['data']['socialNetworkPrivacySettings'] = '';
+		}
+		
 		$user = parent::create();
 		$userEditor = new UserEditor($user);
 		
