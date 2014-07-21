@@ -15,6 +15,7 @@
 	</script>
 	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>
 	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch.min.js?v={@$__wcfVersion}"></script>
 	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.min.js?v={@$__wcfVersion}"></script>
 	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js?v={@$__wcfVersion}"></script>
 	<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.js?v={@$__wcfVersion}"></script>
