@@ -39,10 +39,11 @@
 				'wcf.message.share.facebook': '{lang}wcf.message.share.facebook{/lang}',
 				'wcf.message.share.google': '{lang}wcf.message.share.google{/lang}',
 				'wcf.message.share.reddit': '{lang}wcf.message.share.reddit{/lang}',
-				'wcf.message.share.twitter': '{lang}wcf.message.share.twitter{/lang}'
+				'wcf.message.share.twitter': '{lang}wcf.message.share.twitter{/lang}',
+				'wcf.message.share.privacy': '{lang}wcf.message.share.privacy{/lang}'
 			});
-			
-			new WCF.Message.Share.Page({if SHARE_BUTTONS_SHOW_COUNT}true{else}false{/if});
+			var $privacySettings = { {implode from=$__wcf->getUser()->getSocialNetworkPrivacySettings() key=provider item=value}'{$provider}': {if $value}true{else}false{/if}{/implode} };
+			new WCF.Message.Share.Page({if SHARE_BUTTONS_SHOW_COUNT}true{else}false{/if}, $privacySettings);
 		});
 		//]]>
 	</script>

@@ -16,6 +16,8 @@ use wcf\system\mail\Mail;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
+use wcf\util\JSON;
+use wcf\system\exception\SystemException;
 
 /**
  * Executes user-related actions.
@@ -743,5 +745,60 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				'disableAvatar' => 0
 			));
 		}
+	}
+	
+	/**
+	 * Validates parameters to retrieve the social network privacy settings.
+	 */
+	public function validateGetSocialNetworkPrivacySettings() { /* does nothing */ }
+	
+	/**
+	 * Returns the social network privacy settings.
+	 * 
+	 * @return	array<string>
+	 */
+	public function getSocialNetworkPrivacySettings() {
+		$settings = @unserialize(WCF::getUser()->socialNetworkPrivacySettings);
+		if (!is_array($settings)) {
+			$settings = array(
+				'facebook' => false,
+				'google' => false,
+				'reddit' => false,
+				'twitter' => false
+			);
+		}
+		
+		WCF::getTPL()->assign(array(
+			'settings' => $settings
+		));
+		
+		return array(
+			'template' => WCF::getTPL()->fetch('shareButtonsPrivacySettings')
+		);
+	}
+	
+	public function validateSaveSocialNetworkPrivacySettings() {
+		$this->readBoolean('facebook', true);
+		$this->readBoolean('google', true);
+		$this->readBoolean('reddit', true);
+		$this->readBoolean('twitter', true);
+	}
+	
+	public function saveSocialNetworkPrivacySettings() {
+		$settings = array(
+			'facebook' => $this->parameters['facebook'],
+			'google' => $this->parameters['google'],
+			'reddit' => $this->parameters['reddit'],
+			'twitter' => $this->parameters['twitter']
+		);
+		
+		$userEditor = new UserEditor(WCF::getUser());
+		$userEditor->update(array(
+			'socialNetworkPrivacySettings' => serialize($settings)
+		));
+		
+		return array(
+			'settings' => $settings
+		);
 	}
 }

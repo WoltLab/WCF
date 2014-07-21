@@ -2976,13 +2976,20 @@ WCF.Message.Share.Content = Class.extend({
  * Provides buttons to share a page through multiple social community sites.
  * 
  * @param	boolean		fetchObjectCount
+ * @param	object		privacySettings
  */
 WCF.Message.Share.Page = Class.extend({
 	/**
-	 * list of share buttons
-	 * @var	object
+	 * dialog overlay
+	 * @var	jQuery
 	 */
-	_ui: { },
+	_dialog: null,
+	
+	/**
+	 * true if share count should be fetched
+	 * @var	boolean
+	 */
+	_fetchObjectCount: false,
 	
 	/**
 	 * page description
@@ -2997,32 +3004,216 @@ WCF.Message.Share.Page = Class.extend({
 	_pageURL: '',
 	
 	/**
+	 * list of privacy settings per social media site
+	 */
+	_privacySettings: { },
+	
+	/**
+	 * list of provider links and share callback
+	 * @var	object<object>
+	 */
+	_provider: { },
+	
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
 	 * Initializes the WCF.Message.Share.Page class.
 	 * 
 	 * @param	boolean		fetchObjectCount
+	 * @param	object		privacySettings
 	 */
-	init: function(fetchObjectCount) {
+	init: function(fetchObjectCount, privacySettings) {
+		this._dialog = null;
+		this._fetchObjectCount = (fetchObjectCount === true) ? true : false;
 		this._pageDescription = encodeURIComponent($('meta[property="og:title"]').prop('content'));
 		this._pageURL = encodeURIComponent($('meta[property="og:url"]').prop('content'));
+		this._privacySettings = $.extend({
+			facebook: false,
+			google: false,
+			twitter: false,
+			reddit: false
+		}, privacySettings || { });
+		this._proxy = null;
 		
+		this._initProvider();
+	},
+	
+	/**
+	 * Initializes all social media providers.
+	 */
+	_initProvider: function() {
 		var $container = $('.messageShareButtons');
-		this._ui = {
-			facebook: $container.find('.jsShareFacebook'),
-			google: $container.find('.jsShareGoogle'),
-			reddit: $container.find('.jsShareReddit'),
-			twitter: $container.find('.jsShareTwitter')
+		var self = this;
+		this._provider = {
+			facebook: {
+				fetch: function() { self._fetchFacebook(); },
+				link: $container.find('.jsShareFacebook'),
+				share: function() { self._share('facebook', 'https://www.facebook.com/sharer.php?u={pageURL}&t={text}', true); }
+			},
+			google: {
+				fetch: undefined,
+				link: $container.find('.jsShareGoogle'),
+				share: function() { self._share('google', 'https://plus.google.com/share?url={pageURL}', true); }
+			},
+			reddit: {
+				fetch: function() { self._fetchReddit(); },
+				link:$container.find('.jsShareReddit'),
+				share: function() { self._share('reddit', 'https://ssl.reddit.com/submit?url={pageURL}', true); }
+			},
+			twitter: {
+				fetch: function() { self._fetchTwitter(); },
+				link: $container.find('.jsShareTwitter'),
+				share: function() { self._share('twitter', 'https://twitter.com/share?url={pageURL}&text={text}', false); }
+			}
 		};
 		
-		this._ui.facebook.children('a').click($.proxy(this._shareFacebook, this));
-		this._ui.google.children('a').click($.proxy(this._shareGoogle, this));
-		this._ui.reddit.children('a').click($.proxy(this._shareReddit, this));
-		this._ui.twitter.children('a').click($.proxy(this._shareTwitter, this));
+		$.each(this._provider, function(provider, data) {
+			if (self._privacySettings[provider]) {
+				if (self._fetchObjectCount && data.fetch) {
+					data.fetch();
+				}
+			}
+			else {
+				data.link.addClass('disabled');
+			}
+			
+			data.link.data('provider', provider).click($.proxy(self._click, self));
+		});
 		
-		if (fetchObjectCount === true) {
-			this._fetchFacebook();
-			this._fetchTwitter();
-			this._fetchReddit();
+		if (WCF.User.userID) {
+			var $openSettings = $('<li class="jsShowPrivacySettings"><a><span class="icon icon32 fa-gear jsTooltip" title="' + WCF.Language.get('wcf.message.share.privacy') + '" /></a></li>');
+			$openSettings.appendTo($container.children('ul')).children('a').click($.proxy(this._openPrivacySettings, this));
 		}
+	},
+	
+	/**
+	 * Handles clicks on a social media provider link.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		var $link = $(event.currentTarget);
+		var $provider = $link.data('provider');
+		
+		if ($link.hasClass('disabled')) {
+			if (WCF.User.userID) {
+				this._openPrivacySettings();
+			}
+			else {
+				// guest => enable button
+				$link.removeClass('disabled');
+			}
+		}
+		else {
+			this._provider[$provider].share();
+		}
+	},
+	
+	/**
+	 * Opens the privacy settings dialog.
+	 */
+	_openPrivacySettings: function() {
+		if (this._proxy === null) {
+			this._proxy = new WCF.Action.Proxy({
+				success: $.proxy(this._success, this)
+			});
+		}
+		
+		this._proxy.setOption('data', {
+			actionName: 'getSocialNetworkPrivacySettings',
+			className: 'wcf\\data\\user\\UserAction'
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		switch (data.actionName) {
+			case 'getSocialNetworkPrivacySettings':
+				this._renderDialog(data);
+			break;
+			
+			case 'saveSocialNetworkPrivacySettings':
+				this._updatePrivacySettings(data);
+			break;
+		}
+	},
+	
+	/**
+	 * Renders the settings dialog.
+	 * 
+	 * @param	object		data
+	 */
+	_renderDialog: function(data) {
+		if (this._dialog === null) {
+			this._dialog = $('<div />').hide().appendTo(document.body);
+			this._dialog.html(data.returnValues.template);
+			this._dialog.wcfDialog({
+				title: WCF.Language.get('wcf.message.share.privacy')
+			});
+		}
+		else {
+			this._dialog.html(data.returnValues.template);
+			this._dialog.wcfDialog('open');
+		}
+		
+		this._dialog.find('input[type=submit]').click($.proxy(this._save, this));
+	},
+	
+	/**
+	 * Saves settings.
+	 */
+	_save: function() {
+		this._proxy.setOption('data', {
+			actionName: 'saveSocialNetworkPrivacySettings',
+			className: 'wcf\\data\\user\\UserAction',
+			parameters: {
+				facebook: (this._dialog.find('input[name=facebook]').is(':checked')),
+				google: (this._dialog.find('input[name=google]').is(':checked')),
+				reddit: (this._dialog.find('input[name=reddit]').is(':checked')),
+				twitter: (this._dialog.find('input[name=twitter]').is(':checked'))
+			}
+		});
+		this._proxy.sendRequest();
+		
+		this._dialog.wcfDialog('close');
+	},
+	
+	/**
+	 * Updates the internal privacy settings.
+	 * 
+	 * @param	object		data
+	 */
+	_updatePrivacySettings: function(data) {
+		this._privacySettings = $.extend(this._privacySettings, data.returnValues.settings);
+		
+		var self = this;
+		$.each(data.returnValues.settings, function(provider, status) {
+			self._privacySettings[provider] = (status) ? true : false;
+			
+			if (status) {
+				self._provider[provider].link.removeClass('disabled');
+				
+				if (self._fetchObjectCount && self._provider[provider].fetch) {
+					self._provider[provider].fetch();
+				}
+			}
+			else {
+				self._provider[provider].link.addClass('disabled');
+			}
+		});
+		
+		new WCF.System.Notification().show();
 	},
 	
 	/**
@@ -3034,34 +3225,6 @@ WCF.Message.Share.Page = Class.extend({
 	 */
 	_share: function(objectName, url, appendURL) {
 		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription + (appendURL ? " " + this._pageURL : "")), 'height=600,width=600');
-	},
-	
-	/**
-	 * Shares current page with Facebook.
-	 */
-	_shareFacebook: function() {
-		this._share('facebook', 'https://www.facebook.com/sharer.php?u={pageURL}&t={text}', true);
-	},
-	
-	/**
-	 * Shares current page with Google Plus.
-	 */
-	_shareGoogle: function() {
-		this._share('google', 'https://plus.google.com/share?url={pageURL}', true);
-	},
-	
-	/**
-	 * Shares current page with Reddit.
-	 */
-	_shareReddit: function() {
-		this._share('reddit', 'https://ssl.reddit.com/submit?url={pageURL}', true);
-	},
-	
-	/**
-	 * Shares current page with Twitter.
-	 */
-	_shareTwitter: function() {
-		this._share('twitter', 'https://twitter.com/share?url={pageURL}&text={text}', false);
 	},
 	
 	/**
@@ -3094,7 +3257,7 @@ WCF.Message.Share.Page = Class.extend({
 	_fetchFacebook: function() {
 		this._fetchCount('https://graph.facebook.com/?id={pageURL}', $.proxy(function(data) {
 			if (data.shares) {
-				this._ui.facebook.children('span.badge').show().text(data.shares);
+				this._provider.facebook.link.children('span.badge').show().text(data.shares);
 			}
 		}, this));
 	},
@@ -3107,7 +3270,7 @@ WCF.Message.Share.Page = Class.extend({
 		
 		this._fetchCount('http://urls.api.twitter.com/1/urls/count.json?url={pageURL}', $.proxy(function(data) {
 			if (data.count) {
-				this._ui.twitter.children('span.badge').show().text(data.count);
+				this._provider.twitter.link.children('span.badge').show().text(data.count);
 			}
 		}, this));
 	},
@@ -3120,7 +3283,7 @@ WCF.Message.Share.Page = Class.extend({
 		
 		this._fetchCount('http://www.reddit.com/api/info.json?url={pageURL}', $.proxy(function(data) {
 			if (data.data.children.length) {
-				this._ui.reddit.children('span.badge').show().text(data.data.children[0].data.score);
+				this._provider.reddit.link.children('span.badge').show().text(data.data.children[0].data.score);
 			}
 		}, this), 'jsonp');
 	}

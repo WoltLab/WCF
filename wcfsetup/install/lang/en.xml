@@ -2134,6 +2134,8 @@ Errors are:
 		<item name="wcf.message.share.permalink.html"><![CDATA[HTML]]></item>
 		<item name="wcf.message.share.reddit"><![CDATA[Reddit]]></item>
 		<item name="wcf.message.share.twitter"><![CDATA[Twitter]]></item>
+		<item name="wcf.message.share.privacy"><![CDATA[Privacy Settings]]></item>
+		<item name="wcf.message.share.privacy.description"><![CDATA[Displaying the number of shares is only available for enabled providers, data will be fetched directly using your browser.]]></item>
 		<item name="wcf.message.smilies"><![CDATA[Smilies]]></item>
 		<item name="wcf.message.button.extendedReply"><![CDATA[More Options]]></item>
 		<item name="wcf.message.button.extendedEdit"><![CDATA[More Options]]></item>
