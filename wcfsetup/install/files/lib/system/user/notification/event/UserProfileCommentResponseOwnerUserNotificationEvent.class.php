@@ -38,7 +38,7 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 		if ($count > 1) {
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.title.stacked', array(
 				'count' => $count,
-				'timesTriggered' => $this->timesTriggered
+				'timesTriggered' => $this->notification->timesTriggered
 			));
 		}
 		

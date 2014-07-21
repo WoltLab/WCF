@@ -2945,19 +2945,19 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.comment.title"><![CDATA[Neuer Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.message"><![CDATA[Hat einen Kommentar an Ihrer Pinnwand verfasst.]]></item>
-		<item name="wcf.user.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere{/if} haben Kommentare an <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a> verfasst.]]></item>
+		<item name="wcf.user.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Kommentare an <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a> verfasst..]]></item>
 		<item name="wcf.user.notification.comment.like.title"><![CDATA[Gefällt ein Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.like.title.stacked"><![CDATA[{#$count} Benutzern gefällt Ihr Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.like.message"><![CDATA[Gefällt Ihr Kommentar an {if $owner === null}Ihrer Pinnwand{else}der Pinnwand von {$owner->username}{/if}.]]></item>
 		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weiteren{/if} gefällt Ihr Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if}.]]></item>
-		<item name="wcf.user.notification.comment.mail"><![CDATA[{@$author->username} hat einen Kommentar an Ihrer Pinnwand verfasst:
+		<item name="wcf.user.notification.comment.mail"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->username}{/if} hat einen Kommentar an Ihrer Pinnwand verfasst:
 {if $notificationType == 'instant'}
 ---------------------------------
 {@$comment->message} 
 ---------------------------------
-{/if}{link controller='User' object=$owner isEmail=true}{/link}#wall]]></item>
-		<item name="wcf.user.notification.comment.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count == 2} und {else}, {/if}{@$authors[1]->username}{if $count == 3} und {@$authors[2]->username}{/if}{else}{@$authors[0]->username} und {#$others} weitere{/if} haben Kommentare an Ihrer Pinnwand verfasst:
-{link controller='User' object=$owner isEmail=true}{/link}#wall]]></item>
+{/if}{link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
+		<item name="wcf.user.notification.comment.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->username}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->username}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->username}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Kommentare an Ihrer Pinnwand verfasst:
+{link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.message"><![CDATA[Hat eine Antwort zu Ihrem Kommentar an der Pinnwand von {$owner->username} verfasst.]]></item>
@@ -2966,7 +2966,7 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.commentResponse.like.title.stacked"><![CDATA[{#$count} Benutzern gefällt Ihre Antwort auf einen Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[Gefällt Ihre Antwort auf einen Kommentar an {if $owner === null}Ihrer Pinnwand{else}der Pinnwand von {$owner->username}{/if}.]]></item>
 		<item name="wcf.user.notification.commentResponse.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weiteren{/if} gefällt Ihre Antwort auf einen Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if}.]]></item>
-		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{@$author->username} hat eine Antwort zu Ihrem Kommentar an der Pinnwand von "{@$owner->username}" verfasst:
+		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->username}{/if} hat eine Antwort zu Ihrem Kommentar an der Pinnwand von "{@$owner->username}" verfasst:
 {if $notificationType == 'instant'}
 ---------------------------------
 {@$response->message} 

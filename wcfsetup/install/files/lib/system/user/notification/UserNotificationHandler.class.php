@@ -142,7 +142,8 @@ class UserNotificationHandler extends SingletonFactory {
 				$notificationIDs[] = $row['notificationID'];
 			}
 			
-			// filter array of existing notifications and remove values which do not have a notification from this author yet (inverse logic!)
+			// filter array of existing notifications and remove values which
+			// do not have a notification from this author yet (inverse logic!)
 			foreach ($notifications as $userID => $notificationID) {
 				if (!in_array($notificationID, $notificationIDs)) {
 					unset($notifications[$userID]);
@@ -152,7 +153,8 @@ class UserNotificationHandler extends SingletonFactory {
 			if (!empty($notificationIDs)) {	
 				// update trigger count
 				$sql = "UPDATE	wcf".WCF_N."_user_notification
-					SET	timesTriggered = timesTriggered + ?
+					SET	timesTriggered = timesTriggered + ?,
+						guestTimesTriggered = guestTimesTriggered + ?
 					WHERE	notificationID = ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				
@@ -160,6 +162,7 @@ class UserNotificationHandler extends SingletonFactory {
 				foreach ($notificationIDs as $notificationID) {
 					$statement->execute(array(
 						1,
+						$notificationObject->getAuthorID() ? 0 : 1,
 						$notificationID
 					));
 				}
@@ -236,7 +239,7 @@ class UserNotificationHandler extends SingletonFactory {
 			if (WCF::getUser()->userID) {
 				// load storage data
 				UserStorageHandler::getInstance()->loadStorage(array(WCF::getUser()->userID));
-					
+				
 				// get ids
 				$data = UserStorageHandler::getInstance()->getStorage(array(WCF::getUser()->userID), 'userNotificationCount');
 				
@@ -344,15 +347,14 @@ class UserNotificationHandler extends SingletonFactory {
 		$statement->execute($conditions->getParameters());
 		$authorIDs = $authorToNotification = array();
 		while ($row = $statement->fetchArray()) {
-			if (!$row['authorID']) {
-				continue;
+			if ($row['authorID']) {
+				$authorIDs[] = $row['authorID'];
 			}
 			
 			if (!isset($authorToNotification[$row['notificationID']])) {
 				$authorToNotification[$row['notificationID']] = array();
 			}
 			
-			$authorIDs[] = $row['authorID'];
 			$authorToNotification[$row['notificationID']][] = $row['authorID'];
 		}
 		
@@ -380,8 +382,7 @@ class UserNotificationHandler extends SingletonFactory {
 				$notification,
 				$objectTypes[$notification->objectType]['objects'][$notification->objectID],
 				(isset($authors[$notification->authorID]) ? $authors[$notification->authorID] : $unknownAuthor),
-				$notification->additionalData,
-				$notification->timesTriggered
+				$notification->additionalData
 			);
 			
 			if (!$class->checkAccess()) {
@@ -391,7 +392,10 @@ class UserNotificationHandler extends SingletonFactory {
 			if (isset($authorToNotification[$notification->notificationID])) {
 				$eventAuthors = array();
 				foreach ($authorToNotification[$notification->notificationID] as $userID) {
-					if (isset($authors[$userID])) {
+					if (!$userID) {
+						$eventAuthors[0] = $unknownAuthor;
+					}
+					else if (isset($authors[$userID])) {
 						$eventAuthors[$userID] = $authors[$userID];
 					}
 				}

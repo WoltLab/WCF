@@ -1260,6 +1260,7 @@ CREATE TABLE wcf1_user_notification (
 	eventHash VARCHAR(40) NOT NULL DEFAULT '',
 	authorID INT(10) NULL,
 	timesTriggered INT(10) NOT NULL DEFAULT 0,
+	guestTimesTriggered INT(10) NOT NULL DEFAULT 0,
 	userID INT(10) NOT NULL,
 	time INT(10) NOT NULL DEFAULT 0,
 	mailNotified TINYINT(1) NOT NULL DEFAULT 0,
@@ -1272,7 +1273,7 @@ CREATE TABLE wcf1_user_notification (
 DROP TABLE IF EXISTS wcf1_user_notification_author;
 CREATE TABLE wcf1_user_notification_author (
 	notificationID INT(10) NOT NULL,
-	authorID INT(10) NOT NULL,
+	authorID INT(10),
 	time INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY (notificationID, authorID)
 );
