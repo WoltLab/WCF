@@ -51,14 +51,19 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
 		$owner = CommentDataHandler::getInstance()->getUser($comment->objectID);
 		
-		$authors = array_values($this->getAuthors());
-		$count = count($authors);
-		if ($count > 1) {
+		$authors = $this->getAuthors();
+		if (count($authors) > 1) {
+			if (isset($authors[0])) {
+				unset($authors[0]);
+			}
+			$count = count($authors);
+			
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message.stacked', array(
-				'authors' => $authors,
+				'authors' => array_values($authors),
 				'count' => $count,
 				'others' => $count - 1,
-				'owner' => $owner
+				'owner' => $owner,
+				'guestTimesTriggered' => $this->notification->guestTimesTriggered
 			));
 		}
 		
@@ -72,20 +77,25 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$authors = array_values($this->getAuthors());
 		$comment = CommentDataHandler::getInstance()->getComment($this->userNotificationObject->commentID);
-		$count = count($authors);
 		$owner = CommentDataHandler::getInstance()->getUser($comment->objectID);
 		
-		if ($count > 1) {
+		$authors = $this->getAuthors();
+		if (count($authors) > 1) {
+			if (isset($authors[0])) {
+				unset($authors[0]);
+			}
+			$count = count($authors);
+			
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.mail.stacked', array(
 				'author' => $this->author,
-				'authors' => $authors,
+				'authors' => array_values($authors),
 				'count' => $count,
 				'notificationType' => $notificationType,
 				'others' => $count - 1,
 				'owner' => $owner,
-				'response' => $this->userNotificationObject
+				'response' => $this->userNotificationObject,
+				'guestTimesTriggered' => $this->notification->guestTimesTriggered
 			));
 		}
 		
