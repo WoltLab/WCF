@@ -347,11 +347,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$action->executeAction();
 		}
 		
+		if (!empty($removeGroups)) {
+			$action = new UserAction($this->objects, 'removeFromGroups', array(
+				'groups' => $groupIDs
+			));
+			$action->executeAction();
+		}
+		
 		foreach ($this->objects as $userEditor) {
-			if (!empty($removeGroups)) {
-				$userEditor->removeFromGroups($removeGroups);
-			}
-			
 			if (!empty($userOptions)) {
 				$userEditor->updateUserOptions($userOptions);
 			}
@@ -394,6 +397,35 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				// fire event to handle other database tables
 				EventHandler::getInstance()->fireAction($this, 'rename');
 			}
+		}
+	}
+	
+	/**
+	 * Remove users from given groups.
+	 */
+	public function removeFromGroups() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$groupIDs = $this->parameters['groups'];
+		
+		foreach ($this->objects as $userEditor) {
+			$userEditor->removeFromGroups($groupIDs);
+		}
+		
+		//reread objects
+		$this->objects = array();
+		UserEditor::resetCache();
+		$this->readObjects();
+		
+		if (MODULE_USER_RANK) {
+			$action = new UserProfileAction($this->objects, 'updateUserRank');
+			$action->executeAction();
+		}
+		if (MODULE_USERS_ONLINE) {
+			$action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
+			$action->executeAction();
 		}
 	}
 	
