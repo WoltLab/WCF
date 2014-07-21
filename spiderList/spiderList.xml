@@ -72,9 +72,9 @@
 		<name>ArchitextSpider</name>
 		<url>http://www.robotstxt.org/wc/active/html/architext.html</url>
 	</spider>
-	<spider ident="ia_archiver">
+	<spider ident="archive.org_bot">
 		<name>Archive.org</name>
-		<url>http://www.archive.org/about/exclude.php</url>
+		<url>https://archive.org/details/archive.org_bot</url>
 	</spider>
 	<spider ident="arks/1.0">
 		<name>arks</name>
@@ -788,6 +788,10 @@
 	</spider>
 	<spider ident="Nederland.zoek">
 		<name>Nederland.zoek</name>
+	</spider>
+	<spider ident="NerdyBot">
+		<name>NerdyBot</name>
+		<url>http://nerdybot.com/</url>
 	</spider>
 	<spider ident="NetCarta CyberPilot Pro">
 		<name>NetCarta WebMap</name>
