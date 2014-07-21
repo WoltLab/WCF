@@ -32,7 +32,7 @@ final class JSON {
 	 */
 	public static function decode($json, $asArray = true) {
 		// decodes JSON
-		$data = json_decode($json, $asArray);
+		$data = @json_decode($json, $asArray);
 		
 		if ($data === null && self::getLastError() !== JSON_ERROR_NONE) {
 			throw new SystemException('Could not decode JSON "'.$json.'"');
