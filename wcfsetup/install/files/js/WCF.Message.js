@@ -3224,7 +3224,7 @@ WCF.Message.Share.Page = Class.extend({
 	 * @param	boolean		appendURL
 	 */
 	_share: function(objectName, url, appendURL) {
-		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription + (appendURL ? " " + this._pageURL : "")), 'height=600,width=600');
+		window.open(url.replace(/{pageURL}/, this._pageURL).replace(/{text}/, this._pageDescription + (appendURL ? " " + this._pageURL : "")), objectName, 'height=600,width=600');
 	},
 	
 	/**
