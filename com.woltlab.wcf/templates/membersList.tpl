@@ -80,6 +80,7 @@
 							<option value="registrationDate"{if $sortField == 'registrationDate'} selected="selected"{/if}>{lang}wcf.user.registrationDate{/lang}</option>
 							<option value="activityPoints"{if $sortField == 'activityPoints'} selected="selected"{/if}>{lang}wcf.user.activityPoint{/lang}</option>
 							<option value="likesReceived"{if $sortField == 'likesReceived'} selected="selected"{/if}>{lang}wcf.like.likesReceived{/lang}</option>
+							<option value="lastActivityTime"{if $sortField == 'lastActivityTime'} selected="selected"{/if}>{lang}wcf.user.usersOnline.lastActivity{/lang}</option>
 							{event name='sortField'}
 						</select>
 						<select name="sortOrder">
