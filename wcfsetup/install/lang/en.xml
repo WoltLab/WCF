@@ -2769,6 +2769,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.notification.follow.message"><![CDATA[“{$author->username}” follows you.]]></item>
 		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} others{/if} follow you.]]></item>
 		<item name="wcf.user.notification.follow.mail"><![CDATA[{@$author->username} follows you.]]></item>
+		<item name="wcf.user.notification.follow.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count == 2} and {else}, {/if}{@$authors[1]->username}{if $count == 3} and {@$authors[2]->username}{/if}{else}{@$authors[0]->username} and {#$others} others{/if} follow you.]]></item>
 		<item name="wcf.user.notification.follow.title"><![CDATA[New Follower]]></item>
 		<item name="wcf.user.notification.follow.title.stacked"><![CDATA[{#$count} new followers]]></item>
 		<item name="wcf.user.notification.mail.disabled"><![CDATA[Email notification has been disabled.]]></item>
