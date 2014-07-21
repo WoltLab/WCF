@@ -73,12 +73,6 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	protected static $periods = array();
 	
 	/**
-	 * notification trigger count
-	 * @var	integer
-	 */
-	protected $timesTriggered = 0;
-	
-	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setAuthors()
 	 */
 	public function setAuthors(array $authors) {
@@ -88,12 +82,11 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setObject()
 	 */
-	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array(), $timesTriggered = 0) {
+	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array()) {
 		$this->notification = $notification;
 		$this->userNotificationObject = $object;
 		$this->author = $author;
 		$this->additionalData = $additionalData;
-		$this->timesTriggered = $timesTriggered;
 	}
 	
 	/**

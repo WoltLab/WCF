@@ -29,7 +29,7 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 		if ($count > 1) {
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.title.stacked', array(
 				'count' => $count,
-				'timesTriggered' => $this->timesTriggered
+				'timesTriggered' => $this->notification->timesTriggered
 			));
 		}
 		
@@ -40,15 +40,19 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getMessage()
 	 */
 	public function getMessage() {
-		$authors = array_values($this->getAuthors());
-		$count = count($authors);
-		
-		if ($count > 1) {
+		$authors = $this->getAuthors();
+		if (count($authors) > 1) {
+			if (isset($authors[0])) {
+				unset($authors[0]);
+			}
+			$count = count($authors);
+			
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.message.stacked', array(
 				'author' => $this->author,
-				'authors' => $authors,
+				'authors' => array_values($authors),
 				'count' => $count,
-				'others' => $count - 1
+				'others' => $count - 1,
+				'guestTimesTriggered' => $this->notification->guestTimesTriggered
 			));
 		}
 		
@@ -61,18 +65,23 @@ class UserProfileCommentUserNotificationEvent extends AbstractUserNotificationEv
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
-		$authors = array_values($this->getAuthors());
-		$count = count($authors);
 		$user = new User($this->userNotificationObject->objectID);
 		
-		if ($count > 1) {
+		$authors = $this->getAuthors();
+		if (count($authors) > 1) {
+			if (isset($authors[0])) {
+				unset($authors[0]);
+			}
+			$count = count($authors);
+			
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.mail.stacked', array(
 				'author' => $this->author,
-				'authors' => $authors,
+				'authors' => array_values($authors),
 				'count' => $count,
 				'others' => $count - 1,
 				'owner' => $user,
-				'notificationType' => $notificationType
+				'notificationType' => $notificationType,
+				'guestTimesTriggered' => $this->notification->guestTimesTriggered
 			));
 		}
 		
