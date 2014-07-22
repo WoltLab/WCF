@@ -265,7 +265,8 @@ class PackageInstallationScheduler {
 			
 			// check install instructions
 			if ($validateInstallInstructions) {
-				if (empty($archive->getInstallInstructions())) {
+				$installInstructions = $archive->getInstallInstructions();
+				if (empty($installInstructions)) {
 					throw new SystemException("Package '" . $archive->getLocalizedPackageInfo('packageName')  . "' (" . $archive->getPackageInfo('name') . ") does not contain valid installation instructions.");
 				}
 			}
