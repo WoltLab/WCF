@@ -463,4 +463,22 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 			'forceFrontend' => true
 		));
 	}
+	
+	public function getSocialNetworkPrivacySettings() {
+		$settings = false;
+		if ($this->userID && WCF::getUser()->socialNetworkPrivacySettings) {
+			$settings = @unserialize(WCF::getUser()->socialNetworkPrivacySettings);
+		}
+		
+		if ($settings === false) {
+			$settings = array(
+				'facebook' => false,
+				'google' => false,
+				'reddit' => false,
+				'twitter' => false
+			);
+		}
+		
+		return $settings;
+	}
 }

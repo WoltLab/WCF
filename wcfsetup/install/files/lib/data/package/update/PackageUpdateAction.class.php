@@ -494,7 +494,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		$scheduler = new PackageInstallationScheduler($this->parameters['packages']);
 		
 		try {
-			$scheduler->buildPackageInstallationStack();
+			$scheduler->buildPackageInstallationStack(($queueType == 'install'));
 		}
 		catch (PackageUpdateUnauthorizedException $e) {
 			return array(

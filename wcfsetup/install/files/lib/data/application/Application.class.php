@@ -3,8 +3,9 @@ namespace wcf\data\application;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\data\DatabaseObject;
-use wcf\system\request\RouteHandler;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\request\RouteHandler;
 use wcf\util\FileUtil;
 
 /**
@@ -44,6 +45,15 @@ class Application extends DatabaseObject {
 	 * @var	array<string>
 	 */
 	protected static $directories = null;
+	
+	/**
+	 * Returns the abbreviation of the application.
+	 * 
+	 * @return	string
+	 */
+	public function getAbbreviation() {
+		return ApplicationHandler::getInstance()->getAbbreviation($this->packageID);
+	}
 	
 	/**
 	 * Returns absolute page URL.

@@ -18,8 +18,8 @@ abstract class AbstractSharedUserNotificationEvent extends AbstractUserNotificat
 	/**
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::setObject()
 	 */
-	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array(), $timesTriggered = 0) {
-		parent::setObject($notification, $object, $author, $additionalData, $timesTriggered);
+	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array()) {
+		parent::setObject($notification, $object, $author, $additionalData);
 		
 		$this->prepare();
 	}

@@ -128,6 +128,13 @@ class RecaptchaHandler extends SingletonFactory {
 				// this should be better than block users until server is back.
 				// - RouL
 				break;
+				
+			case self::ERROR_INVALID_COOKIE:
+				// do not throw a system exception, if validation fails
+				// while javascript is disabled. Otherwise, bots may produce
+				// a lot of log entries.
+				throw new UserInputException('recaptchaString', 'false');
+				break;
 			
 			default:
 				throw new SystemException('reCAPTCHA returned the following error: '.$response);

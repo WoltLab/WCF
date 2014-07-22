@@ -723,6 +723,10 @@
 	<spider ident="MediaFox">
 		<name>MediaFox</name>
 	</spider>
+	<spider ident="memorybot">
+		<name>Memorybot</name>
+		<url>http://archivethe.net/en/index.php/about/internet_memory1</url>
+	</spider>
 	<spider ident="mercator">
 		<name>Mercator</name>
 		<url>http://research.compaq.com/SRC/mercator/</url>

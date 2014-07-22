@@ -9,7 +9,7 @@
 						{if $errorType[username] == 'empty'}
 							{lang}wcf.global.form.error.empty{/lang}
 						{else}
-							{lang}wcf.user.username.error.$errorType[username]{/lang}
+							{lang}wcf.user.username.error.{$errorType[username]}{/lang}
 						{/if}
 					</small>
 				{/if}

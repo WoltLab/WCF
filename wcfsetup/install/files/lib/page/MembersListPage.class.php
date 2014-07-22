@@ -62,7 +62,7 @@ class MembersListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('username', 'registrationDate', 'activityPoints', 'likesReceived');
+	public $validSortFields = array('username', 'registrationDate', 'activityPoints', 'likesReceived', 'lastActivityTime');
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName

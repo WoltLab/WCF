@@ -53,6 +53,19 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getEmailMessage()
 	 */
 	public function getEmailMessage($notificationType = 'instant') {
+		$authors = array_values($this->getAuthors());
+		$count = count($authors);
+		
+		if ($count > 1) {
+			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.mail.stacked', array(
+				'author' => $this->author,
+				'authors' => $authors,
+				'count' => $count,
+				'others' => $count - 1,
+				'notificationType' => $notificationType
+			));
+		}
+		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.follow.mail', array('author' => $this->author));
 	}
 	

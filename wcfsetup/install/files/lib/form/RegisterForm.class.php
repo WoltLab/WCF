@@ -414,7 +414,7 @@ class RegisterForm extends UserAddForm {
 		}
 		
 		$this->additionalFields['languageID'] = $this->languageID;
-		$this->additionalFields['registrationIpAddress'] = WCF::getSession()->ipAddress;
+		if (LOG_IP_ADDRESS) $this->additionalFields['registrationIpAddress'] = WCF::getSession()->ipAddress;
 		
 		// generate activation code
 		$addDefaultGroups = true;

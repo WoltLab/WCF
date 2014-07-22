@@ -891,34 +891,27 @@ li:nth-child(2n+1) .message {
 		}
 	}
 	
-	.jsShareFacebook {
+	.jsShareFacebook:not(.disabled) {
 		> a > .icon {
 			color: rgb(59, 89, 152);
 		}
 	}
 	
-	.jsShareTwitter {
+	.jsShareTwitter:not(.disabled) {
 		> a > .icon {
 			color: rgb(64, 153, 255);
 		}
 	}
 	
-	.jsShareGoogle {
+	.jsShareGoogle:not(.disabled) {
 		> a > .icon {
 			color: rgb(211, 72, 54);
 		}
 	}
 	
-	.jsShareReddit {
-		> a > img {
-			width: 24px;
-			height: 24px;
-			margin: 0 4px 4px;
-			box-shadow: 0 1px 0 rgba(255, 255, 255, .8);
-			border-radius: 3px;
-			
-			/* smooth fixes */
-			background-color: rgba(255, 255, 255, .8);
+	.jsShareReddit:not(.disabled) {
+		> a > .icon {
+			color: rgb(95, 153, 207);
 		}
 	}
 }

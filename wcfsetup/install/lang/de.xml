@@ -1142,6 +1142,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte beachten Sie das unten stehende Prüfungsergebnis.]]></item>
 		
 		<!-- TODO: most error codes are still missing, they will be added during testing -->
+		<item name="wcf.acp.package.validation.errorCode.5"><![CDATA[Das Paket „{lang}{$packageName}{/lang}“ enthält keine gültigen Installations-Anweisungen.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.6"><![CDATA[Das Paket „{lang}{$packageName}{/lang}“ (installierte Version: „{$packageVersion}“) soll auf Version „{$deliveredPackageVersion}“ aktualisiert werden, ein Update wird jedoch nicht unterstützt.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.8"><![CDATA[Dieses Paket ist inkompatibel mit den folgenden, installierten Paketen: <ul class="nativeList">{foreach from=$packages item=package}<li>„{$package}“ ({$package->package})</li>{/foreach}</ul>]]></item>
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Benötigt das Paket „{$packageName}“ in Version „{$packageVersion}“ oder höher, dies ist aber weder installiert noch wird es mitgeliefert.]]></item>
@@ -2166,6 +2167,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.message.share.permalink.html"><![CDATA[HTML]]></item>
 		<item name="wcf.message.share.reddit"><![CDATA[Reddit]]></item>
 		<item name="wcf.message.share.twitter"><![CDATA[Twitter]]></item>
+		<item name="wcf.message.share.privacy"><![CDATA[Einstellungen zum Teilen]]></item>
+		<item name="wcf.message.share.privacy.description"><![CDATA[Die Anzahl der Teilungen auf der jeweiligen Plattform werden nur bei aktivierten Anbietern ermittelt, diese Angaben werden durch Ihren Browser direkt vom Anbieter abgefragt.]]></item>
 		<item name="wcf.message.smilies"><![CDATA[Smileys]]></item>
 		<item name="wcf.message.button.extendedReply"><![CDATA[Erweiterte Antwort]]></item>
 		<item name="wcf.message.button.extendedEdit"><![CDATA[Erweiterte Bearbeitung]]></item>
@@ -2911,6 +2914,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.notification.follow.title"><![CDATA[Neuer Follower]]></item>
 		<item name="wcf.user.notification.follow.title.stacked"><![CDATA[{#$count} neue Follower]]></item>
 		<item name="wcf.user.notification.follow.mail"><![CDATA[{@$author->username} folgt Ihnen.]]></item>
+		<item name="wcf.user.notification.follow.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count == 2} und {else}, {/if}{@$authors[1]->username}{if $count == 3} und {@$authors[2]->username}{/if}{else}{@$authors[0]->username} und {#$others} weiteren{/if} folgen Ihnen.]]></item>
 		<item name="wcf.user.notification.mail.disabled"><![CDATA[Die E-Mail-Benachrichtigung wurde erfolgreich abgeschaltet.]]></item>
 		<item name="wcf.user.notification.mail.footer"><![CDATA[Diese E-Mail ist eine automatische Benachrichtigung. BITTE ANTWORTEN SIE NICHT AUF DIESE E-MAIL.
 		
@@ -2945,51 +2949,47 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.comment.title"><![CDATA[Neuer Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.message"><![CDATA[Hat einen Kommentar an Ihrer Pinnwand verfasst.]]></item>
-		<item name="wcf.user.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere{/if} haben Kommentare an <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a> verfasst.]]></item>
-		<item name="wcf.user.notification.comment.like.title"><![CDATA[Gefällt ein Kommentar (Pinnwand)]]></item>
-		<item name="wcf.user.notification.comment.like.title.stacked"><![CDATA[{#$count} Benutzern gefällt Ihr Kommentar (Pinnwand)]]></item>
-		<item name="wcf.user.notification.comment.like.message"><![CDATA[Gefällt Ihr Kommentar an {if $owner === null}Ihrer Pinnwand{else}der Pinnwand von {$owner->username}{/if}.]]></item>
-		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weiteren{/if} gefällt Ihr Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if}.]]></item>
-		<item name="wcf.user.notification.comment.mail"><![CDATA[{@$author->username} hat einen Kommentar an Ihrer Pinnwand verfasst:
+		<item name="wcf.user.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Kommentare an <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a> verfasst.]]></item>
+		<item name="wcf.user.notification.comment.mail"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->username}{/if} hat einen Kommentar an Ihrer Pinnwand verfasst:
 {if $notificationType == 'instant'}
 ---------------------------------
 {@$comment->message} 
 ---------------------------------
-{/if}{link controller='User' object=$owner isEmail=true}{/link}#wall]]></item>
-		<item name="wcf.user.notification.comment.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count == 2} und {else}, {/if}{@$authors[1]->username}{if $count == 3} und {@$authors[2]->username}{/if}{else}{@$authors[0]->username} und {#$others} weitere{/if} haben Kommentare an Ihrer Pinnwand verfasst:
-{link controller='User' object=$owner isEmail=true}{/link}#wall]]></item>
+{/if}{link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
+		<item name="wcf.user.notification.comment.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->username}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->username}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->username}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Kommentare an Ihrer Pinnwand verfasst:
+{link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
+		<item name="wcf.user.notification.comment.like.title"><![CDATA[Gefällt ein Kommentar (Pinnwand)]]></item>
+		<item name="wcf.user.notification.comment.like.title.stacked"><![CDATA[{#$count} Benutzern gefällt Ihr Kommentar (Pinnwand)]]></item>
+		<item name="wcf.user.notification.comment.like.message"><![CDATA[Gefällt Ihr Kommentar an {if $owner === null}Ihrer Pinnwand{else}der Pinnwand von {$owner->username}{/if}.]]></item>
+		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weiteren{/if} gefällt Ihr Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if}.]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.message"><![CDATA[Hat eine Antwort zu Ihrem Kommentar an der Pinnwand von {$owner->username} verfasst.]]></item>
-		<item name="wcf.user.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere{/if} haben auf Ihren Kommentar an {if $owner->userID == $__wcf->getUser()->userID}<a href="{link controller='User' object=$owner}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if} geantwortet.]]></item>
-		<item name="wcf.user.notification.commentResponse.like.title"><![CDATA[Gefällt die Antwort auf einen Kommentar (Pinnwand)]]></item>
-		<item name="wcf.user.notification.commentResponse.like.title.stacked"><![CDATA[{#$count} Benutzern gefällt Ihre Antwort auf einen Kommentar (Pinnwand)]]></item>
-		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[Gefällt Ihre Antwort auf einen Kommentar an {if $owner === null}Ihrer Pinnwand{else}der Pinnwand von {$owner->username}{/if}.]]></item>
-		<item name="wcf.user.notification.commentResponse.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weiteren{/if} gefällt Ihre Antwort auf einen Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if}.]]></item>
-		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{@$author->username} hat eine Antwort zu Ihrem Kommentar an der Pinnwand von "{@$owner->username}" verfasst:
+		<item name="wcf.user.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben auf Ihren Kommentar an {if $owner->userID == $__wcf->getUser()->userID}<a href="{link controller='User' object=$owner}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if} geantwortet.]]></item>
+		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->username}{/if} hat eine Antwort zu Ihrem Kommentar an der Pinnwand von "{@$owner->username}" verfasst:
 {if $notificationType == 'instant'}
 ---------------------------------
 {@$response->message} 
 ---------------------------------
-{/if}{link controller='User' object=$owner isEmail=true}{/link}#wall]]></item>
-		<item name="wcf.user.notification.commentResponse.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count == 2} und {else}, {/if}{@$authors[1]->username}{if $count == 3} und {@$authors[2]->username}{/if}{else}{@$authors[0]->username} und {#$others} weitere{/if} haben auf Ihren Kommentar an {if $owner->userID == $__wcf->getUser()->userID}Ihrer Pinnwand{else}der Pinnwand von {$owner->username}{/if} geantwortet:
-{link controller='User' object=$owner isEmail=true}{/link}#wall]]></item>
+{/if}{link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
+		<item name="wcf.user.notification.commentResponse.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->username}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->username}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->username}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben auf Ihren Kommentar an {if $owner->userID == $__wcf->getUser()->userID}Ihrer Pinnwand{else}der Pinnwand von {$owner->username}{/if} geantwortet:
+{link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
+		<item name="wcf.user.notification.commentResponse.like.title"><![CDATA[Gefällt die Antwort auf einen Kommentar (Pinnwand)]]></item>
+		<item name="wcf.user.notification.commentResponse.like.title.stacked"><![CDATA[{#$count} Benutzern gefällt Ihre Antwort auf einen Kommentar (Pinnwand)]]></item>
+		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[Gefällt Ihre Antwort auf einen Kommentar an {if $owner === null}Ihrer Pinnwand{else}der Pinnwand von {$owner->username}{/if}.]]></item>
+		<item name="wcf.user.notification.commentResponse.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weiteren{/if} gefällt Ihre Antwort auf einen Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if}.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[Hat eine Antwort zum Kommentar von {$commentAuthor->username} an Ihrer Pinnwand verfasst.]]></item>
-		<item name="wcf.user.notification.commentResponseOwner.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere{/if} haben auf den Kommentar von {if $author->userID}<a href="{link controller='User' object=$author}{/link}" class="userLink" data-user-id="{@$author->userID}">{$author->username}</a>{else}{$author->username}{/if} an <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a> geantwortet.]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben auf den Kommentar von {if $author->userID}<a href="{link controller='User' object=$author}{/link}" class="userLink" data-user-id="{@$author->userID}">{$author->username}</a>{else}{$author->username}{/if} an <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a> geantwortet.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail"><![CDATA[{@$author->username} hat eine Antwort zum Kommentar von "{@$commentAuthor->username}" an Ihrer Pinnwand verfasst:
 {if $notificationType == 'instant'}
 ---------------------------------
 {@$response->message} 
 ---------------------------------
 {/if}{link controller='User' object=$owner isEmail=true}{/link}#wall]]></item>
-		<item name="wcf.user.notification.commentResponseOwner.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count == 2} und {else}, {/if}{@$authors[1]->username}{if $count == 3} und {@$authors[2]->username}{/if}{else}{@$authors[0]->username} und {#$others} weitere{/if} haben auf den Kommentar von {$author->username} an Ihrer Pinnwand geantwortet:
-{if $notificationType == 'instant'}
----------------------------------
-{@$response->message} 
----------------------------------
-{/if}{link controller='User' object=$owner isEmail=true}{/link}#wall]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.mail.stacked"><![CDATA[{if $count < 4}{@$authors[0]->username}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->username}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->username}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->username}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben auf den Kommentar von {$author->username} an Ihrer Pinnwand geantwortet:
+{link controller='User' object=$owner isEmail=true}{/link}#wall]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[Neuer Kommentar an Ihrer Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar an Ihrer Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar von Ihnen]]></item>

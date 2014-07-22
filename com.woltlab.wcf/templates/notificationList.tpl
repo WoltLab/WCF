@@ -105,15 +105,17 @@
 										{if !$notification[confirmed]}<span class="badge label newContentBadge">{lang}wcf.message.new{/lang}</span>{/if}
 										
 										{$notification[event]->getTitle()}
-									</h3> 
+									</h3>
 									<small>{@$notification[time]|time}</small>
 								</div>
 								
 								<p>{@$notification[event]->getMessage()}</p>
 								
-								<ul style="margin-top: 4px">
+								<ul class="marginTopTiny">
 									{foreach from=$notification[event]->getAuthors() item=author}
-										<li style="display: inline-block" class="jsTooltip" title="{$author->username}"><a href="{link controller='User' object=$author}{/link}" class="framed">{@$author->getAvatar()->getImageTag(24)}</a></li>
+										{if $author->userID}
+											<li style="display: inline-block" class="jsTooltip" title="{$author->username}"><a href="{link controller='User' object=$author}{/link}" class="framed">{@$author->getAvatar()->getImageTag(24)}</a></li>
+										{/if}
 									{/foreach}
 								</ul>
 								

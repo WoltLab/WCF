@@ -262,6 +262,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @return	User
 	 */
 	public function create() {
+		if (!isset($this->parameters['data']['socialNetworkPrivacySettings'])) {
+			$this->parameters['data']['socialNetworkPrivacySettings'] = '';
+		}
+		
 		$user = parent::create();
 		$userEditor = new UserEditor($user);
 		
@@ -343,11 +347,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$action->executeAction();
 		}
 		
+		if (!empty($removeGroups)) {
+			$action = new UserAction($this->objects, 'removeFromGroups', array(
+				'groups' => $groupIDs
+			));
+			$action->executeAction();
+		}
+		
 		foreach ($this->objects as $userEditor) {
-			if (!empty($removeGroups)) {
-				$userEditor->removeFromGroups($removeGroups);
-			}
-			
 			if (!empty($userOptions)) {
 				$userEditor->updateUserOptions($userOptions);
 			}
@@ -390,6 +397,35 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				// fire event to handle other database tables
 				EventHandler::getInstance()->fireAction($this, 'rename');
 			}
+		}
+	}
+	
+	/**
+	 * Remove users from given groups.
+	 */
+	public function removeFromGroups() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$groupIDs = $this->parameters['groups'];
+		
+		foreach ($this->objects as $userEditor) {
+			$userEditor->removeFromGroups($groupIDs);
+		}
+		
+		//reread objects
+		$this->objects = array();
+		UserEditor::resetCache();
+		$this->readObjects();
+		
+		if (MODULE_USER_RANK) {
+			$action = new UserProfileAction($this->objects, 'updateUserRank');
+			$action->executeAction();
+		}
+		if (MODULE_USERS_ONLINE) {
+			$action = new UserProfileAction($this->objects, 'updateUserOnlineMarking');
+			$action->executeAction();
 		}
 	}
 	
@@ -743,5 +779,60 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				'disableAvatar' => 0
 			));
 		}
+	}
+	
+	/**
+	 * Validates parameters to retrieve the social network privacy settings.
+	 */
+	public function validateGetSocialNetworkPrivacySettings() { /* does nothing */ }
+	
+	/**
+	 * Returns the social network privacy settings.
+	 * 
+	 * @return	array<string>
+	 */
+	public function getSocialNetworkPrivacySettings() {
+		$settings = @unserialize(WCF::getUser()->socialNetworkPrivacySettings);
+		if (!is_array($settings)) {
+			$settings = array(
+				'facebook' => false,
+				'google' => false,
+				'reddit' => false,
+				'twitter' => false
+			);
+		}
+		
+		WCF::getTPL()->assign(array(
+			'settings' => $settings
+		));
+		
+		return array(
+			'template' => WCF::getTPL()->fetch('shareButtonsPrivacySettings')
+		);
+	}
+	
+	public function validateSaveSocialNetworkPrivacySettings() {
+		$this->readBoolean('facebook', true);
+		$this->readBoolean('google', true);
+		$this->readBoolean('reddit', true);
+		$this->readBoolean('twitter', true);
+	}
+	
+	public function saveSocialNetworkPrivacySettings() {
+		$settings = array(
+			'facebook' => $this->parameters['facebook'],
+			'google' => $this->parameters['google'],
+			'reddit' => $this->parameters['reddit'],
+			'twitter' => $this->parameters['twitter']
+		);
+		
+		$userEditor = new UserEditor(WCF::getUser());
+		$userEditor->update(array(
+			'socialNetworkPrivacySettings' => serialize($settings)
+		));
+		
+		return array(
+			'settings' => $settings
+		);
 	}
 }

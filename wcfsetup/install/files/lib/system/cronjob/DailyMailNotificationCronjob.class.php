@@ -87,15 +87,15 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			// cache object types
 			if (!isset($objectTypes[$row['objectType']])) {
 				$objectTypes[$row['objectType']] = array(
-					'objectType' => $this->availableObjectTypes[$row['objectType']],
+					'objectType' => $availableObjectTypes[$row['objectType']],
 					'objectIDs' => array(),
 					'objects' => array()
 				);
 			}
-				
+			
 			$objectTypes[$row['objectType']]['objectIDs'][] = $row['objectID'];
 			$eventIDs[] = $row['eventID'];
-				
+			
 			$notificationObjects[$row['notificationID']] = new UserNotification(null, $row);
 		}
 		
@@ -110,15 +110,14 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 		$statement->execute($conditions->getParameters());
 		$authorIDs = $authorToNotification = array();
 		while ($row = $statement->fetchArray()) {
-			if (!$row['authorID']) {
-				continue;
+			if ($row['authorID']) {
+				$authorIDs[] = $row['authorID'];
 			}
 			
 			if (!isset($authorToNotification[$row['notificationID']])) {
 				$authorToNotification[$row['notificationID']] = array();
 			}
 			
-			$authorIDs[] = $row['authorID'];
 			$authorToNotification[$row['notificationID']][] = $row['authorID'];
 		}
 		
@@ -155,15 +154,17 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 					$notification,
 					$objectTypes[$notification->objectType]['objects'][$notification->objectID],
 					(isset($authors[$notification->authorID]) ? $authors[$notification->authorID] : $unknownAuthor),
-					$notification->additionalData,
-					$notification->timesTriggered
+					$notification->additionalData
 				);
 				$class->setLanguage($user->getLanguage());
 				
 				if (isset($authorToNotification[$notification->notificationID])) {
 					$eventAuthors = array();
 					foreach ($authorToNotification[$notification->notificationID] as $userID) {
-						if (isset($authors[$userID])) {
+						if (!$userID) {
+							$eventAuthors[0] = $unknownAuthor;
+						}
+						else if (isset($authors[$userID])) {
 							$eventAuthors[$userID] = $authors[$userID];
 						}
 					}

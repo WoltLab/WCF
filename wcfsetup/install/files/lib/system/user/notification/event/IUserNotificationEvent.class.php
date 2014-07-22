@@ -102,9 +102,8 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * @param	\wcf\system\user\notification\object\IUserNotificationObject	$object
 	 * @param	\wcf\data\user\UserProfile					$author
 	 * @param	array<mixed>							$additionalData
-	 * @param	integer								$timesTriggered
 	 */
-	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array(), $timesTriggered = 0);
+	public function setObject(UserNotification $notification, IUserNotificationObject $object, UserProfile $author, array $additionalData = array());
 	
 	/**
 	 * Sets the language for the event

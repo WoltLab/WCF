@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\template;
+use wcf\system\application\ApplicationHandler;
 
 /**
  * Loads and displays template in the ACP.
@@ -40,6 +41,13 @@ class ACPTemplateEngine extends TemplateEngine {
 		if (empty($compileDir)) $compileDir = WCF_DIR.'acp/templates/compiled/';
 		
 		self::deleteCompiledTemplates($compileDir);
+	}
+	
+	/**
+	 * @see	\wcf\system\template\TemplateEngine::getCompiledFilename()
+	 */
+	public function getCompiledFilename($templateName, $application) {
+		return $this->compileDir.$this->templateGroupID.'_'.ApplicationHandler::getInstance()->getActiveApplication()->getAbbreviation().'_'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**

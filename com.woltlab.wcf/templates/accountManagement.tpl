@@ -276,9 +276,9 @@
 								</dd>
 							</dl>
 						{/if}
+						
+						{event name='3rdpartyFields'}
 					{/if}
-					
-					{event name='3rdpartyFields'}
 				{/content}
 			</fieldset>
 		{/hascontent}
