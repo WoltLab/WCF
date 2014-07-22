@@ -330,6 +330,7 @@
 		<item name="wcf.acp.group.option.admin.template.canManageTemplate"><![CDATA[Kann Templates verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.style.canManageStyle"><![CDATA[Kann Stile verwalten]]></item>
 		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[Inhalte]]></item>
+		<item name="wcf.acp.group.option.admin.content.canBulkRevertContentChanges"><![CDATA[Kann Änderungen der letzten Tage zurücksetzen]]></item>
 		<item name="wcf.acp.group.option.category.admin.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[Benutzerprofilfelder]]></item>
@@ -1479,6 +1480,10 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.merge.destination"><![CDATA[Ziel]]></item>
 		<item name="wcf.acp.user.merge.destination.description"><![CDATA[Die ausgewählten Benutzer werden in dieses Benutzerkonto zusammengefügt.]]></item>
 		<item name="wcf.acp.user.merge.markedUsers"><![CDATA[Folgende Benutzer zusammenfügen]]></item>
+		<item name="wcf.acp.user.revertChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
+		<item name="wcf.acp.user.revertChanges.timeframe"><![CDATA[Zeitraum]]></item>
+		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Zeitraum in dem Änderungen des Benutzers zurückgesetzt werden sollen. Inhalte werden auf die neuste Version, welche entweder älter als der angebene Zeitraum ist oder welche von einem anderen Nutzer stammt, zurückgesetzt. [Zeitraum in Tagen]]]></item>
+		<item name="wcf.acp.user.revertChanges.markedUsers"><![CDATA[Änderungen folgender Nutzer zurücksetzen]]></item>
 		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Aktion]]></item>
 		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Bedingungen]]></item>
@@ -1754,6 +1759,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Wollen Sie wirklich {if $count == 1}einem{else}{#$count}{/if} Benutzer ein neues Kennwort zusenden?]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Benutzer markiert]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Zusammenfügen]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Aktivieren]]></item>
 	</category>
 	

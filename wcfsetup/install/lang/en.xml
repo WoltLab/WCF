@@ -329,6 +329,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.admin.template.canManageTemplate"><![CDATA[Can manage templates]]></item>
 		<item name="wcf.acp.group.option.admin.style.canManageStyle"><![CDATA[Can manage styles]]></item>
 		<item name="wcf.acp.group.option.category.admin.content"><![CDATA[Content]]></item>
+		<item name="wcf.acp.group.option.admin.content.canBulkRevertContentChanges"><![CDATA[Can bulk revert content changes]]></item>
 		<item name="wcf.acp.group.option.category.admin.community"><![CDATA[Community]]></item>
 		<item name="wcf.acp.group.option.category.mod.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.group.option.category.admin.user.option"><![CDATA[User Profile Fields]]></item>
@@ -1447,6 +1448,10 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.merge.destination"><![CDATA[Destination]]></item>
 		<item name="wcf.acp.user.merge.destination.description"><![CDATA[The selected users will be merged into this user account.]]></item>
 		<item name="wcf.acp.user.merge.markedUsers"><![CDATA[Merge the following users]]></item>
+		<item name="wcf.acp.user.revertChanges"><![CDATA[Revert Changes To Contents]]></item>
+		<item name="wcf.acp.user.revertChanges.timeframe"><![CDATA[Timeframe]]></item>
+		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Changes made in this timeframe will be reverted to the newest version that is either older than the given timeframe or made by an unrelated user [time in days]]]></item>
+		<item name="wcf.acp.user.revertChanges.markedUsers"><![CDATA[Revert changes by the following users]]></item>
 		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Bulk Processing]]></item>
 		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Actions]]></item>
 		<item name="wcf.acp.user.bulkProcessing.conditions"><![CDATA[Conditions]]></item>
@@ -1721,6 +1726,7 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to {#$count} user{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{#$count} User{if $count != 1}s{/if} marked]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Merge]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.revertContentChanges"><![CDATA[Revert Changes To Contents]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Approve]]></item>
 	</category>
 	

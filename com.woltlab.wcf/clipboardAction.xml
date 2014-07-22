@@ -64,5 +64,13 @@
 				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
 			</pages>
 		</action>
+		
+		<action name="revertContentChanges">
+			<actionclassname><![CDATA[wcf\system\clipboard\action\UserContentClipboardAction]]></actionclassname>
+			<showorder>9</showorder>
+			<pages>
+				<page><![CDATA[wcf\acp\page\UserListPage]]></page>
+			</pages>
+		</action>
 	</import>
 </data>

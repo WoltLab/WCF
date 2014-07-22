@@ -695,6 +695,14 @@ png]]></defaultvalue>
 			</option>
 			<!-- /user.profileComment -->
 			
+			<option name="admin.content.canBulkRevertContentChanges">
+				<categoryname>admin.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			
 			<option name="admin.content.label.canManageLabel">
 				<categoryname>admin.content.label</categoryname>
 				<optiontype>boolean</optiontype>
