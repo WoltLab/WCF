@@ -58,10 +58,12 @@ class PackageInstallationScheduler {
 	
 	/**
 	 * Builds the stack of package installations / updates.
+	 * 
+	 * @param	boolean		$validateInstallInstructions
 	 */
-	public function buildPackageInstallationStack() {
+	public function buildPackageInstallationStack($validateInstallInstructions = false) {
 		foreach ($this->selectedPackages as $package => $version) {
-			$this->tryToInstallPackage($package, $version, true);
+			$this->tryToInstallPackage($package, $version, true, $validateInstallInstructions);
 		}
 	}
 	
@@ -71,8 +73,9 @@ class PackageInstallationScheduler {
 	 * @param	string		$package		package identifier
 	 * @param	string		$minversion		preferred package version
 	 * @param	boolean		$installOldVersion	true, if you want to install the package in the given minversion and not in the newest version
+	 * @param	boolean		$validateInstallInstructions
 	 */
-	protected function tryToInstallPackage($package, $minversion = '', $installOldVersion = false) {
+	protected function tryToInstallPackage($package, $minversion = '', $installOldVersion = false, $validateInstallInstructions = false) {
 		// check virtual package version
 		if (isset($this->virtualPackageVersions[$package])) {
 			if (!empty($minversion) && Package::compareVersion($this->virtualPackageVersions[$package], $minversion, '<')) {
@@ -86,7 +89,7 @@ class PackageInstallationScheduler {
 				}
 				
 				// install newer version
-				$this->installPackage($package, ($installOldVersion ? $minversion : ''), $stackPosition);
+				$this->installPackage($package, ($installOldVersion ? $minversion : ''), $stackPosition, $validateInstallInstructions);
 			}
 		}
 		else {
@@ -94,7 +97,7 @@ class PackageInstallationScheduler {
 			$packageID = PackageCache::getInstance()->getPackageID($package);
 			if ($packageID === null) {
 				// package is missing -> install
-				$this->installPackage($package, ($installOldVersion ? $minversion : ''));
+				$this->installPackage($package, ($installOldVersion ? $minversion : ''), -1, $validateInstallInstructions);
 			}
 			else {
 				$package = PackageCache::getInstance()->getPackage($packageID);
@@ -111,8 +114,9 @@ class PackageInstallationScheduler {
 	 * @param	string		$package	package identifier
 	 * @param	string		$version	package version
 	 * @param	integer		$stackPosition
+	 * @param	boolean		$validateInstallInstructions
 	 */
-	protected function installPackage($package, $version = '', $stackPosition = -1) {
+	protected function installPackage($package, $version = '', $stackPosition = -1, $validateInstallInstructions = false) {
 		// get package update versions
 		$packageUpdateVersions = PackageUpdateDispatcher::getInstance()->getPackageUpdateVersions($package, $version);
 		
@@ -120,7 +124,7 @@ class PackageInstallationScheduler {
 		$this->resolveRequirements($packageUpdateVersions[0]['packageUpdateVersionID']);
 		
 		// download package
-		$download = $this->downloadPackage($package, $packageUpdateVersions);
+		$download = $this->downloadPackage($package, $packageUpdateVersions, $validateInstallInstructions);
 		
 		// add to stack
 		$data = array(
@@ -202,9 +206,10 @@ class PackageInstallationScheduler {
 	 * 
 	 * @param	string		$package		package identifier
 	 * @param	array		$packageUpdateVersions	package update versions
+	 * @param	boolean		$validateInstallInstructions
 	 * @return	string		tmp filename of a downloaded package
 	 */
-	protected function downloadPackage($package, $packageUpdateVersions) {
+	protected function downloadPackage($package, $packageUpdateVersions, $validateInstallInstructions = false) {
 		// get download from cache
 		if ($filename = $this->getCachedDownload($package, $packageUpdateVersions[0]['package'])) {
 			return $filename;
@@ -257,6 +262,14 @@ class PackageInstallationScheduler {
 			// test package
 			$archive = new PackageArchive($filename);
 			$archive->openArchive();
+			
+			// check install instructions
+			if ($validateInstallInstructions) {
+				if (empty($archive->getInstallInstructions())) {
+					throw new SystemException("Package '" . $archive->getLocalizedPackageInfo('packageName')  . "' (" . $archive->getPackageInfo('name') . ") does not contain valid installation instructions.");
+				}
+			}
+			
 			$archive->getTar()->close();
 			
 			// cache download in session
