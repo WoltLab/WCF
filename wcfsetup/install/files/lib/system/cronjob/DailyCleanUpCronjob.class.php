@@ -128,7 +128,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		// clean up expired edit history entries
 		if (EDIT_HISTORY_EXPIRATION) {
 			$sql = "DELETE FROM	wcf".WCF_N."_edit_history_entry
-				WHERE		insertionTime < ?";
+				WHERE		obsoletedAt < ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute(array(
 					(TIME_NOW - 86400 * EDIT_HISTORY_EXPIRATION)

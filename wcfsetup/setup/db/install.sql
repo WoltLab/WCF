@@ -358,11 +358,13 @@ CREATE TABLE wcf1_edit_history_entry (
 	userID INT(10),
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	time INT(10) NOT NULL DEFAULT 0, -- time the version was created, displayed to the user
-	insertionTime INT(10) NOT NULL DEFAULT 0, -- time the version was inserted into the edit history, used for clean up
+	obsoletedAt INT(10) NOT NULL DEFAULT 0, -- time the version was inserted into the edit history, used for clean up
+	obsoletedByUserID INT(10),
 	message MEDIUMTEXT,
 	editReason TEXT,
 	
-	KEY (objectTypeID, objectID)
+	KEY (objectTypeID, objectID),
+	KEY (obsoletedAt, obsoletedByUserID)
 );
 
 DROP TABLE IF EXISTS wcf1_event_listener;
@@ -1482,6 +1484,7 @@ ALTER TABLE wcf1_cronjob_log ADD FOREIGN KEY (cronjobID) REFERENCES wcf1_cronjob
 
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (obsoletedByUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_event_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
