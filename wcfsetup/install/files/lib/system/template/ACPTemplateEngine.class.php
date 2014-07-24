@@ -47,7 +47,12 @@ class ACPTemplateEngine extends TemplateEngine {
 	 * @see	\wcf\system\template\TemplateEngine::getCompiledFilename()
 	 */
 	public function getCompiledFilename($templateName, $application) {
-		return $this->compileDir.$this->templateGroupID.'_'.ApplicationHandler::getInstance()->getActiveApplication()->getAbbreviation().'_'.$this->languageID.'_'.$templateName.'.php';
+		$abbreviation = 'wcf';
+		if (PACKAGE_ID) {
+			$abbreviation = ApplicationHandler::getInstance()->getActiveApplication()->getAbbreviation();
+		}
+		
+		return $this->compileDir.$this->templateGroupID.'_'.$abbreviation.'_'.$this->languageID.'_'.$templateName.'.php';
 	}
 	
 	/**
