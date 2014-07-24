@@ -74,7 +74,16 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		if (this._wysiwygContainerID) {
 			WCF.System.Event.addListener('com.woltlab.wcf.messageOptionsInline', 'submit_' + this._wysiwygContainerID, $.proxy(this._submitInline, this));
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'reset', $.proxy(this._reset, this));
+			WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'upload_' + this._wysiwygContainerID, $.proxy(this._editorUpload, this));
 		}
+	},
+	
+	_editorUpload: function(data) {
+		// show tab
+		var $tabMenuContainer = this._fileListSelector.closest('.messageTabMenu')
+		$tabMenuContainer.messageTabMenu('showTab', 'attachments', true);
+		
+		this._upload(undefined, [ data.file ]);
 	},
 	
 	/**
@@ -145,9 +154,9 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	/**
 	 * @see	WCF.Upload._upload()
 	 */
-	_upload: function() {
+	_upload: function(event, files) {
 		if (this._validateLimit()) {
-			this._super();
+			this._super(event, files);
 		}
 		
 		if (this._fileUpload) {

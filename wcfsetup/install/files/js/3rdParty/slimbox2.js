@@ -78,6 +78,8 @@
 		
 		// WoltLab modifications	BEGIN
 		if (activeImage == -1) {
+			WCF.System.DisableScrolling.disable();
+			
 			middle = win.scrollTop() + (win.height() / 2);
 			centerWidth = options.initialWidth;
 			centerHeight = options.initialHeight;
@@ -85,9 +87,7 @@
 			compatibleOverlay = ie6 || (overlay.currentStyle && (overlay.currentStyle.position != "fixed"));
 			if (compatibleOverlay) overlay.style.position = "absolute";
 			$(overlay).css("opacity", options.overlayOpacity).fadeIn(options.overlayFadeDuration);
-		
-			WCF.System.DisableScrolling.disable();
-		
+			
 			position();
 			setup(1);
 		}

@@ -25,7 +25,7 @@ $(function() {
 			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
 			minHeight: 200,
 			imageResizable: false,
-			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize' ],
+			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize', 'wupload' ],
 			wautosave: {
 				active: ($autosave) ? true : false,
 				key: ($autosave) ? '{@$__wcf->getAutosavePrefix()}_' + $autosave : '',
@@ -33,6 +33,15 @@ $(function() {
 			},
 			wOriginalValue: $textarea.val()
 		};
+		
+		{if MODULE_ATTACHMENT && !$attachmentHandler|empty && $attachmentHandler->canUpload()}
+			WCF.Language.addObject({
+				'wcf.attachment.dragAndDrop.dropHere': '{lang}wcf.attachment.dragAndDrop.dropHere{/lang}',
+				'wcf.attachment.dragAndDrop.dropNow': '{lang}wcf.attachment.dragAndDrop.dropNow{/lang}'
+			});
+			
+			$config.plugins.push('wupload');
+		{/if}
 		
 		{event name='javascriptInit'}
 		
@@ -52,6 +61,7 @@ $(function() {
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontsize.js?v={@$__wcfVersion}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wmonkeypatch.js?v={@$__wcfVersion}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wutil.js?v={@$__wcfVersion}',
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wupload.js?v={@$__wcfVersion}'
 		{/if}
 		{event name='javascriptFiles'}
 	], function() {

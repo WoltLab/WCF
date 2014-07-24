@@ -8396,9 +8396,12 @@ WCF.Upload = Class.extend({
 	
 	/**
 	 * Callback for file uploads.
+	 * 
+	 * @param	object		event
+	 * @param	array<File>	files
 	 */
-	_upload: function() {
-		var $files = this._fileUpload.prop('files');
+	_upload: function(event, files) {
+		var $files = files || this._fileUpload.prop('files');
 		if ($files.length) {
 			var $fd = new FormData();
 			var $uploadID = this._createUploadMatrix($files);
