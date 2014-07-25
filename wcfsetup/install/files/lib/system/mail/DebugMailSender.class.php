@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\mail;
 use wcf\system\io\File;
+use wcf\util\FileUtil;
 
 /**
  * DebugMailSender is a debug implementation of mailsender which writes emails in
@@ -27,7 +28,7 @@ class DebugMailSender extends MailSender {
 	 */
 	public function sendMail(Mail $mail) {
 		if ($this->log === null) {
-			$this->log = new File(MAIL_DEBUG_LOGFILE_PATH.'mail.log', 'ab');
+			$this->log = new File(FileUtil::addTrailingSlash(MAIL_DEBUG_LOGFILE_PATH).'mail.log', 'ab');
 		}
 		
 		$this->log->write($this->printMail($mail));
