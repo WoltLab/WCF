@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.0.7</version> <!-- codename: maelstrom -->
-		<date>2014-06-05</date>
+		<version>2.0.8</version> <!-- codename: maelstrom -->
+		<date>2014-07-27</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -43,29 +43,25 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<!-- Attention: Keep all three update blocks below in sync -->
+	<!-- Attention: The file PIPs below will deliver everything to work around non-updated files in early WCF 2.0 versions -->
 	
-	<instructions type="update" fromversion="2.0.6">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
+	<instructions type="update" fromversion="2.0.7">
+		<instruction type="acpTemplate">acptemplates.tar</instruction>
+		<instruction type="file">files.tar</instruction>
+		<instruction type="template">templates.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
+		
+		<instruction type="userOption">userOption.xml</instruction>
+		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="2.0.6 pl 1">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
+	<instructions type="update" fromversion="2.0.7 pl 1">
+		<instruction type="acpTemplate">acptemplates.tar</instruction>
+		<instruction type="file">files.tar</instruction>
+		<instruction type="template">templates.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
-	</instructions>
-	
-	<instructions type="update" fromversion="2.0.6 pl 2">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
 		
-		<instruction type="language">language/*.xml</instruction>
+		<instruction type="userOption">userOption.xml</instruction>
+		<instruction type="userGroupOption">userGroupOption.xml</instruction>
 	</instructions>
 </package>
