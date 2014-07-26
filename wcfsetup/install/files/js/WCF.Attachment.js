@@ -10,6 +10,12 @@ WCF.Attachment = {};
  */
 WCF.Attachment.Upload = WCF.Upload.extend({
 	/**
+	 * list of upload ids which should be automatically inserted
+	 * @var	array<integer>
+	 */
+	_autoInsert: [ ],
+	
+	/**
 	 * reference to 'Insert All' button
 	 * @var	jQuery
 	 */
@@ -51,6 +57,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	init: function(buttonSelector, fileListSelector, objectType, objectID, tmpHash, parentObjectID, maxUploads, wysiwygContainerID) {
 		this._super(buttonSelector, fileListSelector, 'wcf\\data\\attachment\\AttachmentAction', { multiple: true, maxUploads: maxUploads });
 		
+		this._autoInsert = [ ];
 		this._objectType = objectType;
 		this._objectID = objectID;
 		this._tmpHash = tmpHash;
@@ -78,12 +85,27 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		}
 	},
 	
+	/**
+	 * Handles drag & drop uploads and clipboard paste.
+	 * 
+	 * @param	object		data
+	 */
 	_editorUpload: function(data) {
+		var $uploadID;
+		
 		// show tab
 		var $tabMenuContainer = this._fileListSelector.closest('.messageTabMenu')
 		$tabMenuContainer.messageTabMenu('showTab', 'attachments', true);
 		
-		this._upload(undefined, [ data.file ]);
+		if (data.file) {
+			$uploadID = this._upload(undefined, data.file);
+		}
+		else {
+			$uploadID = this._upload(undefined, undefined, data.blob);
+		}
+		
+		this._autoInsert.push($uploadID);
+		data.uploadID = $uploadID;
 	},
 	
 	/**
@@ -154,9 +176,11 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	/**
 	 * @see	WCF.Upload._upload()
 	 */
-	_upload: function(event, files) {
+	_upload: function(event, file, blob) {
+		var $uploadID;
+		
 		if (this._validateLimit()) {
-			this._super(event, files);
+			$uploadID = this._super(event, file, blob);
 		}
 		
 		if (this._fileUpload) {
@@ -165,6 +189,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			this._removeButton();
 			this._createButton();
 		}
+		
+		return $uploadID;
 	},
 	
 	/**
@@ -281,6 +307,17 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			
 			// fix webkit rendering bug
 			$li.css('display', 'block');
+			
+			if (WCF.inArray(uploadID, this._autoInsert)) {
+				this._autoInsert.splice(this._autoInsert.indexOf(uploadID), 1);
+				
+				if (!$li.hasClass('uploadFailed')) {
+					WCF.System.Event.fireEvent('com.woltlab.wcf.attachment', 'autoInsert_' + this._wysiwygContainerID, {
+						attachment: '[attach=' + data.returnValues.attachments[$internalFileID].attachmentID + '][/attach]',
+						uploadID: uploadID
+					});
+				}
+			}
 		}
 		
 		this._makeSortable();
@@ -303,10 +340,9 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 */
 	_insert: function(event, attachmentID) {
 		var $attachmentID = (event === null) ? attachmentID : $(event.currentTarget).data('objectID');
-		var $bbcode = '[attach=' + $attachmentID + '][/attach]';
 		
 		if ($.browser.redactor) {
-			$('#' + this._wysiwygContainerID).redactor('insertDynamic', $bbcode);
+			$('#' + this._wysiwygContainerID).redactor('insertAttachment', $attachmentID);
 		}
 	},
 	

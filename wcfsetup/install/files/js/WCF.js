@@ -758,6 +758,36 @@ $.extend(WCF, {
 			var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
 			return v.toString(16);
 		});
+	},
+	
+	/**
+	 * Converts a base64 encoded file into a native Blob.
+	 * 
+	 * @param	string		base64data
+	 * @param	string		contentType
+	 * @param	integer		sliceSize
+	 * @return	Blob
+	 */
+	base64toBlob: function(base64data, contentType, sliceSize) {
+		contentType = contentType || '';
+		sliceSize = sliceSize || 512;
+		
+		var $byteCharacters = atob(base64data);
+		var $byteArrays = [ ];
+		
+		for (var $offset = 0; $offset < $byteCharacters.length; $offset += sliceSize) {
+			var $slice = $byteCharacters.slice($offset, $offset + sliceSize);
+			
+			var $byteNumbers = new Array($slice.length);
+			for (var $i = 0; $i < $slice.length; $i++) {
+				$byteNumbers[$i] = $slice.charCodeAt($i);
+			}
+			
+			var $byteArray = new Uint8Array($byteNumbers);
+			$byteArrays.push($byteArray);
+		}
+		
+		return new Blob($byteArrays, { type: contentType });
 	}
 });
 
@@ -8398,23 +8428,59 @@ WCF.Upload = Class.extend({
 	 * Callback for file uploads.
 	 * 
 	 * @param	object		event
-	 * @param	array<File>	files
+	 * @param	File		file
+	 * @param	Blob		blob
+	 * @return	integer
 	 */
-	_upload: function(event, files) {
-		var $files = files || this._fileUpload.prop('files');
+	_upload: function(event, file, blob) {
+		var $uploadID = null;
+		var $files = [ ];
+		if (file) {
+			$files.push(file);
+		}
+		else if (blob) {
+			var $ext = '';
+			switch (blob.type) {
+				case 'image/png':
+					$ext = '.png';
+				break;
+				
+				case 'image/jpeg':
+					$ext = '.jpg';
+				break;
+				
+				case 'image/gif':
+					$ext = '.gif';
+				break;
+			}
+			
+			$files.push({
+				name: 'pasted-from-clipboard' + $ext
+			});
+		}
+		else {
+			$files = this._fileUpload.prop('files');
+		}
+		
 		if ($files.length) {
 			var $fd = new FormData();
-			var $uploadID = this._createUploadMatrix($files);
+			$uploadID = this._createUploadMatrix($files);
 			
 			// no more files left, abort
 			if (!this._uploadMatrix[$uploadID].length) {
-				return;
+				return null;
 			}
 			
 			for (var $i = 0, $length = $files.length; $i < $length; $i++) {
 				if (this._uploadMatrix[$uploadID][$i]) {
 					var $internalFileID = this._uploadMatrix[$uploadID][$i].data('internalFileID');
-					$fd.append('__files[' + $internalFileID + ']', $files[$i]);
+					
+					if (blob) {
+						$fd.append('__files[' + $internalFileID + ']', blob, $files[$i].name);
+					}
+					else {
+						$fd.append('__files[' + $internalFileID + ']', $files[$i]);
+					}
 				}
 			}
 			
@@ -8448,6 +8514,8 @@ WCF.Upload = Class.extend({
 				}
 			});
 		}
+		
+		return $uploadID;
 	},
 	
 	/**

@@ -41,6 +41,7 @@ $(function() {
 			});
 			
 			$config.plugins.push('wupload');
+			$config.wAttachmentUrl = '{link controller='Attachment' id=987654321}thumbnail=1{/link}';
 		{/if}
 		
 		{event name='javascriptInit'}

@@ -31,6 +31,8 @@ RedactorPlugins.wupload = {
 			
 			$(document).on('dragend', function(event) { event.preventDefault(); });
 		}
+		
+		WCF.System.Event.addListener('com.woltlab.wcf.attachment', 'autoInsert_' + this.$source.wcfIdentify(), $.proxy(this.insertPastedImageAttachment, this));
 	},
 	
 	/**
@@ -143,5 +145,39 @@ RedactorPlugins.wupload = {
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'upload_' + $containerID, { file: event.dataTransfer.files[0] });
 		}
+	},
+	
+	/**
+	 * Overwrites $.Redactor.pasteClipboardUploadMozilla() to upload files as attachments.
+	 * 
+	 * @see		$.Redactor.pasteClipboardUploadMozilla()
+	 */
+	pasteClipboardUploadMozilla: function() {
+		this.$editor.find('img[data-mozilla-paste-image]').each($.proxy(function(index, image) {
+			var $image = $(image);
+			var $src = $image.prop('src').split(',');
+			var $contentType = $src[0].split(';')[0].split(':')[1];
+			var $data = $src[1]; // raw base64
+			
+			var $eventData = {
+				blob: WCF.base64toBlob($data, $contentType),
+				uploadID: null
+			};
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'upload_' + this.$source.wcfIdentify(), $eventData);
+			
+			// drop image
+			$image.replaceWith('<span class="redactor-pastedImageFromClipboard-' + $eventData.uploadID + '" />');
+		}, this));
+	},
+	
+	/**
+	 * Inserts the attachment at the placeholder location.
+	 * 
+	 * @param	object		data
+	 */
+	insertPastedImageAttachment: function(data) {
+		var $placeholder = this.$editor.find('span.redactor-pastedImageFromClipboard-' + data.uploadID);
+		$placeholder.before(data.attachment);
+		$placeholder.remove();
 	}
 };

@@ -235,6 +235,9 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/<img [^>]*?alt="([^"]+?)" class="smiley".*?>/gi, '$1'); // firefox
 		html = html.replace(/<img [^>]*?class="smiley" alt="([^"]+?)".*?>/gi, '$1'); // chrome, ie
 		
+		// attachments
+		html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment" data-attachment-id="(\d+)".*?>/gi, '[attach=$1][/attach]');
+		
 		// [img]
 		html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1 style="float: (left|right)[^"]*".*?>/gi, "[img='$2',$3][/img]");
 		html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?>/gi, '[img]$2[/img]');
@@ -525,6 +528,14 @@ RedactorPlugins.wbbcode = {
 			return '<td>' + $tdContent + '</td>';
 		});
 		
+		// attachments
+		var $attachmentUrl = this.getOption('wAttachmentUrl');
+		if ($attachmentUrl) {
+			data = data.replace(/\[attach=(\d+)\]\[\/attach\]/, function(match, attachmentID) {
+				return '<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment" data-attachment-id="' + attachmentID + '" />';
+			});
+		}
+		
 		// smileys
 		for (var smileyCode in __REDACTOR_SMILIES) {
 			$smileyCode = smileyCode.replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -631,6 +642,32 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/\[size=(\d+)\]/g, '<p><br></p><p><inline style="font-size: $1pt">');
 		html = html.replace(/\[\/size\]/g, '</inline></p><p><br></p>');
 		
+		// handle pasting of images in Firefox
+		html = html.replace(/<img([^>]+)>/g, function(match, content) {
+			match = match.replace(/data-mozilla-paste-image="0"/, 'data-mozilla-paste-image="0" style="display:none"');
+			return match;
+		});
+		
 		return html;
+	},
+	
+	/**
+	 * Inserts an attachment with live preview.
+	 * 
+	 * @param	integer		attachmentID
+	 */
+	insertAttachment: function(attachmentID) {
+		var $attachmentUrl = this.getOption('wAttachmentUrl');
+		var $bbcode = '[attach=' + attachmentID + '][/attach]';
+		
+		if ($attachmentUrl) {
+			this.insertDynamic(
+				'<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment" data-attachment-id="' + attachmentID + '" />',
+				$bbcode
+			);
+		}
+		else {
+			this.insertDynamic($bbcode);
+		}
 	}
 };
