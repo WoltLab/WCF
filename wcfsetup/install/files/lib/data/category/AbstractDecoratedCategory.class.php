@@ -2,6 +2,7 @@
 namespace wcf\data\category;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\category\CategoryHandler;
+use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Abstract implementation of a decorated category.
@@ -36,6 +37,17 @@ abstract class AbstractDecoratedCategory extends DatabaseObjectDecorator {
 	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */
 	protected static $baseClass = 'wcf\data\category\Category';
+	
+	/**
+	 * @see	\wcf\data\IPermissionObject::checkPermissions()
+	 */
+	public function checkPermissions(array $permissions) {
+		foreach ($permissions as $permission) {
+			if (!$this->getPermission($permission)) {
+				throw new PermissionDeniedException();
+			}
+		}
+	}
 	
 	/**
 	 * @see	\wcf\data\category\Category::getChildCategories()
