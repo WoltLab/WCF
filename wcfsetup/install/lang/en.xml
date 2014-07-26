@@ -484,7 +484,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.label.group"><![CDATA[Label Group]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Add Label Group]]></item>
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Availability]]></item>
-		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group “{$group->groupName}”?]]></item>
+		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group “{$group->groupName|language}”?]]></item>
 		<item name="wcf.acp.label.group.edit"><![CDATA[Edit Label Group]]></item>
 		<item name="wcf.acp.label.group.error.notValid"><![CDATA[Chosen label group is invalid.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
