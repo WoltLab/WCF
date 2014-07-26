@@ -643,7 +643,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.menu.link.captcha.question.add"><![CDATA[Add Question]]></item>
 		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[List Questions]]></item>
-		<item name="wcf.acp.menu.link.log.authentication.failure"><![CDATA[TODO: Fehlgeschlagene Anmeldungen]]></item>
+		<item name="wcf.acp.menu.link.log.authentication.failure"><![CDATA[Failed Login-Attempts]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1197,16 +1197,16 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.stat.settings"><![CDATA[Settings]]></item>
 		<item name="wcf.acp.stat.period"><![CDATA[Period]]></item>
 		<item name="wcf.acp.stat.value"><![CDATA[Values]]></item>
-		<item name="wcf.acp.stat.value.counter"><![CDATA[TODO: Veränderung]]></item>
-		<item name="wcf.acp.stat.value.total"><![CDATA[TODO: Gesamtanzahl]]></item>
+		<item name="wcf.acp.stat.value.counter"><![CDATA[Change]]></item>
+		<item name="wcf.acp.stat.value.total"><![CDATA[Total]]></item>
 		<item name="wcf.acp.stat.types"><![CDATA[Data]]></item>
-		<item name="wcf.acp.stat.timeFormat.daily"><![CDATA[TODO: %d.%m.%y]]></item>
-		<item name="wcf.acp.stat.timeFormat.weekly"><![CDATA[TODO: %d.%m.%y]]></item>
-		<item name="wcf.acp.stat.timeFormat.monthly"><![CDATA[TODO: %b %Y]]></item>
-		<item name="wcf.acp.stat.timeFormat.yearly"><![CDATA[TODO: %Y]]></item>
+		<item name="wcf.acp.stat.timeFormat.daily"><![CDATA[%Y-%m-%d]]></item>
+		<item name="wcf.acp.stat.timeFormat.weekly"><![CDATA[%Y-%m-%d]]></item>
+		<item name="wcf.acp.stat.timeFormat.monthly"><![CDATA[%b %Y]]></item>
+		<item name="wcf.acp.stat.timeFormat.yearly"><![CDATA[%Y]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment"><![CDATA[Attachments]]></item>
-		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[TODO: Dateianhänge-Speicherbedarf (MB)]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[Attachments storage usage (MB)]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Likes]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.dislike"><![CDATA[Dislikes]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.userProfileComment"><![CDATA[Wall Comments]]></item>
@@ -1217,7 +1217,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.stat.dateGrouping.yearly"><![CDATA[Year]]></item>
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.general"><![CDATA[General Data]]></item>
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.user"><![CDATA[User Data]]></item>
-		<item name="wcf.acp.stat.noData"><![CDATA[TODO: Es liegen keine Daten für den ausgewählten Zeitraum vor.]]></item>
+		<item name="wcf.acp.stat.noData"><![CDATA[There is no data available for the set period.]]></item>
 	</category>
 	
 	<category name="wcf.acp.updateServer">
@@ -1581,10 +1581,10 @@ Your new password is: {$password}
 Login with your new password: {link controller='Login' isEmail=true}{/link}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.workerTitle"><![CDATA[Sending New Passwords]]></item>
-		<item name="wcf.acp.user.authentication.failure.list"><![CDATA[TODO: Fehlgeschlagene Anmeldungen]]></item>
-		<item name="wcf.acp.user.authentication.failure.environment"><![CDATA[TODO: Umgebung]]></item>
-		<item name="wcf.acp.user.authentication.failure.environment.user"><![CDATA[TODO: Benutzer]]></item>
-		<item name="wcf.acp.user.authentication.failure.environment.admin"><![CDATA[TODO: Administration]]></item>
+		<item name="wcf.acp.user.authentication.failure.list"><![CDATA[Failed Login-Attempts]]></item>
+		<item name="wcf.acp.user.authentication.failure.environment"><![CDATA[Environment]]></item>
+		<item name="wcf.acp.user.authentication.failure.environment.user"><![CDATA[User]]></item>
+		<item name="wcf.acp.user.authentication.failure.environment.admin"><![CDATA[Administration]]></item>
 		<item name="wcf.acp.user.authentication.failure.time"><![CDATA[TODO: Datum]]></item>
 		<item name="wcf.acp.user.activation.mail"><![CDATA[TODO: Hallo {@$username},
 
