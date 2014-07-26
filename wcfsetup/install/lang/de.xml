@@ -27,7 +27,7 @@
 		<item name="wcf.acp.ad.conditions.pointInTime.description"><![CDATA[Legen Sie den Zeitpunkt fest, zu dem die Werbung angezeigt werden soll.]]></item>
 		<item name="wcf.acp.ad.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
 		<item name="wcf.acp.ad.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit die Werbung angezeigt wird.]]></item>
-		<item name="wcf.acp.ad.delete.confirmMessage"><![CDATA[Wollen Sie diese Werbung wirklich löschen?]]></item>
+		<item name="wcf.acp.ad.delete.confirmMessage"><![CDATA[Wollen Sie die Werbung „{$ad->adName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.ad.edit"><![CDATA[Werbung bearbeiten]]></item>
 		<item name="wcf.acp.ad.isDisabled"><![CDATA[Werbung deaktivieren]]></item>
 		<item name="wcf.acp.ad.list"><![CDATA[Werbung]]></item>
@@ -421,7 +421,7 @@
 		<item name="wcf.acp.group.assignment.button.list"><![CDATA[Automatische Zuordnungen auflisten]]></item>
 		<item name="wcf.acp.group.assignment.conditions"><![CDATA[Bedingungen]]></item>
 		<item name="wcf.acp.group.assignment.conditions.description"><![CDATA[Benutzer müssen die folgenden Bedingungen erfüllen um automatisch der Benutzergruppe hinzugefügt zu werden]]></item>
-		<item name="wcf.acp.group.assignment.delete.confirmMessage"><![CDATA[Wollen Sie diese automatische Benutzergruppen-Zuordnung wirklich löschen?]]></item>
+		<item name="wcf.acp.group.assignment.delete.confirmMessage"><![CDATA[Wollen Sie die automatische Benutzergruppen-Zuordnung „{$assignment->title}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.group.assignment.edit"><![CDATA[Automatische Benutzergruppen-Zuordnung bearbeiten]]></item>
 		<item name="wcf.acp.group.assignment.error.noConditions"><![CDATA[Sie haben keine Bedingungen ausgewählt.]]></item>
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatische Benutzergruppen-Zuordnungen]]></item>
@@ -663,7 +663,7 @@
 		<item name="wcf.acp.notice.conditions.pointInTime.description"><![CDATA[Legen Sie den Zeitpunkt fest, zu dem der Hinweis angezeigt werden soll.]]></item>
 		<item name="wcf.acp.notice.conditions.user"><![CDATA[Aktiver Benutzer]]></item>
 		<item name="wcf.acp.notice.conditions.user.description"><![CDATA[Der aktive Benutzer muss die folgenden Bedingungen erfüllen, damit der Hinweis angezeigt wird.]]></item>
-		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Wollen Sie diesen Hinweis wirklich löschen?]]></item>
+		<item name="wcf.acp.notice.delete.confirmMessage"><![CDATA[Wollen Sie den Hinweis „{$notice->noticeName}“ wirklich löschen?]]></item>
 		<item name="wcf.acp.notice.edit"><![CDATA[Hinweis bearbeiten]]></item>
 		<item name="wcf.acp.notice.example"><![CDATA[Beispieltext für einen Hinweis]]></item>
 		<item name="wcf.acp.notice.isDisabled"><![CDATA[Hinweis deaktivieren]]></item>
