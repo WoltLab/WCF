@@ -68,9 +68,9 @@ RedactorPlugins.wmonkeypatch = {
 		// handle indent/outdent
 		var $mpButtonActiveObserver = this.buttonActiveObserver;
 		this.buttonActiveObserver = function(e, btnName) {
-			self.mpButtonActiveObserver(e, btnName);
-			
 			$mpButtonActiveObserver.call(self, e, btnName);
+			
+			self.mpButtonActiveObserver(e, btnName);
 		};
 		if (this.opts.activeButtons) {
 			this.$editor.off('mouseup.redactor keyup.redactor').on('mouseup.redactor keyup.redactor', $.proxy(this.buttonActiveObserver, this));
@@ -102,11 +102,22 @@ RedactorPlugins.wmonkeypatch = {
 	 */
 	mpButtonActiveObserver: function(e, btnName) {
 		var parent = this.getParent();
-		if (parent !== false && $(parent).closest('ul', this.$editor.get()[0]).length != 0) {
+		parent = (parent === false) ? null : $(parent);
+		
+		if (parent && parent.closest('ul', this.$editor.get()[0]).length != 0) {
 			this.$toolbar.find('a.re-indent, a.re-outdent').removeClass('redactor_button_disabled');
 		}
 		else {
 			this.$toolbar.find('a.re-indent, a.re-outdent').addClass('redactor_button_disabled');
+		}
+		
+		if (parent && parent.closest('inline.inlineCode', this.$editor.get()[0]).length != 0) {
+			this.$toolbar.find('a.re-__wcf_tt').addClass('redactor_act');
+			console.debug("adding");
+		}
+		else {
+			console.debug("removing");
+			this.$toolbar.find('a.re-__wcf_tt').removeClass('redactor_act');
 		}
 	},
 	

@@ -246,7 +246,7 @@ RedactorPlugins.wbbcode = {
 		// html = html.replace(/<blockquote>/gi, '[quote]');
 		// html = html.replace(/\n*<\/blockquote>/gi, '[/quote]');
 		
-		// handle [color], [size] and [font]
+		// handle [color], [size], [font] and [tt]
 		var $components = html.split(/(<\/?span[^>]*>)/);
 		
 		var $buffer = [ ];
@@ -303,6 +303,13 @@ RedactorPlugins.wbbcode = {
 					$openElements[$buffer.length] = {
 						start: $start,
 						end: $end
+					};
+				}
+				else if ($value.match(/^<span class="inlineCode">/)) {
+					$buffer[$buffer.length] = '';
+					$openElements[$buffer.length] = {
+						start: '[tt]',
+						end: '[/tt]'
 					};
 				}
 				else {
@@ -583,6 +590,9 @@ RedactorPlugins.wbbcode = {
 				var $regex = new RegExp('@@' + $key + '@@', 'g');
 				data = data.replace($regex, $cachedCodes[$key]);
 			}
+			
+			// [tt]
+			data = data.replace(/\[tt\](.*?)\[\/tt\]/gi, '<span class="inlineCode">$1</span>');
 		}
 		
 		// preserve leading whitespaces in [code] tags
