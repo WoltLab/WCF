@@ -3,7 +3,7 @@ namespace wcf\system\user\notification\object;
 use wcf\data\DatabaseObjectDecorator;
 
 /**
- * Notification object for comment likes.
+ * User notification object implementation for likes.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2014 WoltLab GmbH
@@ -12,7 +12,7 @@ use wcf\data\DatabaseObjectDecorator;
  * @subpackage	system.user.notification.object
  * @category	Community Framework
  */
-class CommentLikeUserNotificationObject extends DatabaseObjectDecorator implements IUserNotificationObject {
+class LikeUserNotificationObject extends DatabaseObjectDecorator implements IUserNotificationObject {
 	/**
 	 * @see	\wcf\data\DatabaseObjectDecorator::$baseClass
 	 */

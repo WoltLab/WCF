@@ -1,8 +1,9 @@
 <?php
 namespace wcf\system\user\notification\object\type;
+use wcf\system\WCF;
 
 /**
- * Represents a comment response notification object type for likes.
+ * User notification object type implementation for likes.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2014 WoltLab GmbH
@@ -11,19 +12,19 @@ namespace wcf\system\user\notification\object\type;
  * @subpackage	system.user.notification.object.type
  * @category	Community Framework
  */
-class UserProfileCommentResponseLikeUserNotificationObjectType extends AbstractUserNotificationObjectType {
+class LikeUserNotificationObjectType extends AbstractUserNotificationObjectType {
 	/**
 	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$decoratorClassName
 	 */
-	protected static $decoratorClassName = 'wcf\system\user\notification\object\CommentResponseUserNotificationObject';
+	protected static $decoratorClassName = 'wcf\system\user\notification\object\LikeUserNotificationObject';
 	
 	/**
 	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectClassName
 	 */
-	protected static $objectClassName = 'wcf\data\comment\response\CommentResponse';
+	protected static $objectClassName = 'wcf\data\like\Like';
 	
 	/**
 	 * @see	\wcf\system\user\notification\object\type\AbstractUserNotificationObjectType::$objectListClassName
 	 */
-	protected static $objectListClassName = 'wcf\data\comment\response\CommentResponseList';
+	protected static $objectListClassName = 'wcf\data\like\LikeList';
 }

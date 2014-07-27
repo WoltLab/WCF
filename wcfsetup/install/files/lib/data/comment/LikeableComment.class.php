@@ -4,7 +4,7 @@ use wcf\data\like\object\AbstractLikeObject;
 use wcf\data\like\Like;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\comment\CommentHandler;
-use wcf\system\user\notification\object\CommentLikeUserNotificationObject;
+use wcf\system\user\notification\object\LikeUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 
@@ -64,7 +64,7 @@ class LikeableComment extends AbstractLikeObject {
 		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.like.notification')) {
 			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.like.notification');
 			if ($this->userID != WCF::getUser()->userID) {
-				$notificationObject = new CommentLikeUserNotificationObject($like);
+				$notificationObject = new LikeUserNotificationObject($like);
 				UserNotificationHandler::getInstance()->fireEvent('like', $objectType->objectType.'.like.notification', $notificationObject, array($this->userID), array(
 					'objectID' => $this->object->objectID,
 					'objectOwnerID' => $this->userID

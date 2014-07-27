@@ -207,13 +207,13 @@
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.like.notification</name>
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
-			<classname><![CDATA[wcf\system\user\notification\object\type\UserProfileCommentLikeUserNotificationObjectType]]></classname>
+			<classname><![CDATA[wcf\system\user\notification\object\type\LikeUserNotificationObjectType]]></classname>
 			<category>com.woltlab.wcf.user</category>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.response.like.notification</name>
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
-			<classname><![CDATA[wcf\system\user\notification\object\type\UserProfileCommentResponseLikeUserNotificationObjectType]]></classname>
+			<classname><![CDATA[wcf\system\user\notification\object\type\LikeUserNotificationObjectType]]></classname>
 			<category>com.woltlab.wcf.user</category>
 		</type>
 		
