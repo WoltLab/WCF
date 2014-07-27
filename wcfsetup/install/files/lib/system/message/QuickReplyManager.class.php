@@ -98,7 +98,7 @@ class QuickReplyManager extends SingletonFactory {
 	 * @param	integer		$objectID
 	 */
 	public function removeMessage($type, $objectID) {
-		WCF::getSession()->unregister('quickReply-'.$this->type.'-'.$objectID);
+		WCF::getSession()->unregister('quickReply-'.$type.'-'.$objectID);
 	}
 	
 	/**
