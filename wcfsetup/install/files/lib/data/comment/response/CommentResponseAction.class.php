@@ -7,6 +7,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\like\LikeHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
@@ -106,6 +107,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
+		$likeObjectIDs = array();
 		foreach ($responseIDs as $objectTypeID => $objectIDs) {
 			// remove activity events
 			$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
@@ -118,6 +120,13 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 				UserNotificationHandler::getInstance()->deleteNotifications('commentResponse', $objectType->objectType.'.response.notification', array(), $objectIDs);
 				UserNotificationHandler::getInstance()->deleteNotifications('commentResponseOwner', $objectType->objectType.'.response.notification', array(), $objectIDs);
 			}
+			
+			$likeObjectIDs = array_merge($likeObjectIDs, $objectIDs);
+		}
+		
+		// remove likes
+		if (!empty($likeObjectIDs)) {
+			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment.response', $likeObjectIDs);
 		}
 		
 		return $count;
