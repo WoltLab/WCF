@@ -95,8 +95,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		var $uploadID;
 		
 		// show tab
-		var $tabMenuContainer = this._fileListSelector.closest('.messageTabMenu')
-		$tabMenuContainer.messageTabMenu('showTab', 'attachments', true);
+		this._fileListSelector.closest('.messageTabMenu').messageTabMenu('showTab', 'attachments', true);
 		
 		if (data.file) {
 			$uploadID = this._upload(undefined, data.file);
