@@ -614,6 +614,23 @@ class UserNotificationHandler extends SingletonFactory {
 			$conditions->add("eventID IN (?)", array($eventIDs));
 			$conditions->add("objectID IN (?)", array($objectIDs));
 			
+			$sql = "SELECT	userID
+				FROM	wcf".WCF_N."_user_notification
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			
+			$userIDs = array();
+			while ($userID = $statement->fetchColumn()) {
+				$userIDs[] = $userID;
+			}
+			
+			// reset number of notifications
+			if (!empty($userIDs)) {
+				UserStorageHandler::getInstance()->reset($userIDs, 'userNotificationCount');
+			}
+			
+			// delete notifications
 			$sql = "DELETE FROM	wcf".WCF_N."_user_notification
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
