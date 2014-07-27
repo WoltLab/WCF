@@ -319,7 +319,9 @@ RedactorPlugins.wbbcode = {
 		html = $result;
 		
 		// [align]
-		html = html.replace(/<div style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)<\/div>/gi, "[align=$1]$2[/align]");
+		html = html.replace(/<(div|p) style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)\n/gi, function(match, tag, alignment, content) {
+			return '[align=' + alignment + ']' + $.trim(content) + '[/align]';
+		});
 		
 		// [*]
 		html = html.replace(/<li>/gi, '[*]');
