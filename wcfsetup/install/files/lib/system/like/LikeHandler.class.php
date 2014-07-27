@@ -15,6 +15,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\database\DatabaseException;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
+use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -417,10 +418,11 @@ class LikeHandler extends SingletonFactory {
 	/**
 	 * Removes all likes for given objects.
 	 * 
-	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @param	string			$objectType
+	 * @param	array<integer>		$objectIDs
+	 * @param	array<string>		$notificationObjectTypes
 	 */
-	public function removeLikes($objectType, array $objectIDs) {
+	public function removeLikes($objectType, array $objectIDs, array $notificationObjectTypes = array()) {
 		$objectTypeObj = $this->getObjectType($objectType);
 		
 		// get like objects
@@ -456,6 +458,16 @@ class LikeHandler extends SingletonFactory {
 			$likeData = array();
 			foreach ($likeList as $like) {
 				$likeData[$like->likeID] = $like->userID;
+			}
+			
+			// delete like notifications
+			if (!empty($notificationObjectTypes)) {
+				foreach ($notificationObjectTypes as $notificationObjectType) {
+					UserNotificationHandler::getInstance()->removeNotifications($notificationObjectType, $likeList->getObjectIDs());
+				}
+			}
+			else if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType.'.notification')) {
+				UserNotificationHandler::getInstance()->removeNotifications($objectType.'.notification', $likeList->getObjectIDs());
 			}
 			
 			// revoke activity points

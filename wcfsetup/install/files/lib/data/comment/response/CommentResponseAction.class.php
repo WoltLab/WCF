@@ -108,6 +108,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 		}
 		
 		$likeObjectIDs = array();
+		$notificationObjectTypes = array();
 		foreach ($responseIDs as $objectTypeID => $objectIDs) {
 			// remove activity events
 			$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
@@ -122,11 +123,15 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 			}
 			
 			$likeObjectIDs = array_merge($likeObjectIDs, $objectIDs);
+			
+			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.like.notification')) {
+				$notificationObjectTypes[] = $objectType->objectType.'.response.like.notification';
+			}
 		}
 		
 		// remove likes
 		if (!empty($likeObjectIDs)) {
-			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment.response', $likeObjectIDs);
+			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment.response', $likeObjectIDs, $notificationObjectTypes);
 		}
 		
 		return $count;

@@ -111,6 +111,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		
 		if (!empty($groupCommentIDs)) {
 			$likeObjectIDs = array();
+			$notificationObjectTypes = array();
 			foreach ($groupCommentIDs as $objectTypeID => $objectIDs) {
 				// remove activity events
 				$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
@@ -125,10 +126,14 @@ class CommentAction extends AbstractDatabaseObjectAction {
 				if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
 					UserNotificationHandler::getInstance()->deleteNotifications('comment', $objectType->objectType.'.notification', array(), $objectIDs);
 				}
+				
+				if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.like.notification')) {
+					$notificationObjectTypes[] = $objectType->objectType.'.like.notification';
+				}
 			}
 			
 			// remove likes
-			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment', $likeObjectIDs);
+			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment', $likeObjectIDs, $notificationObjectTypes);
 		}
 		
 		// delete responses
