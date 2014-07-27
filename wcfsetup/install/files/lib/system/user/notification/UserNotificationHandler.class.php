@@ -627,7 +627,7 @@ class UserNotificationHandler extends SingletonFactory {
 			
 			// reset number of notifications
 			if (!empty($userIDs)) {
-				UserStorageHandler::getInstance()->reset($userIDs, 'userNotificationCount');
+				UserStorageHandler::getInstance()->reset(array_unique($userIDs), 'userNotificationCount');
 			}
 			
 			// delete notifications
