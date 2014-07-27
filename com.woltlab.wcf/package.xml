@@ -46,9 +46,9 @@
 	<!-- Attention: The file PIPs below will deliver everything to work around non-updated files in early WCF 2.0 versions -->
 	
 	<instructions type="update" fromversion="2.0.7">
-		<instruction type="acpTemplate">acptemplates.tar</instruction>
-		<instruction type="file">files.tar</instruction>
-		<instruction type="template">templates.tar</instruction>
+		<instruction type="acpTemplate" run="standalone">acptemplates.tar</instruction>
+		<instruction type="file" run="standalone">files.tar</instruction>
+		<instruction type="template" run="standalone">templates.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
 		
 		<instruction type="userOption">userOption.xml</instruction>
@@ -56,9 +56,9 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="2.0.7 pl 1">
-		<instruction type="acpTemplate">acptemplates.tar</instruction>
-		<instruction type="file">files.tar</instruction>
-		<instruction type="template">templates.tar</instruction>
+		<instruction type="acpTemplate" run="standalone">acptemplates.tar</instruction>
+		<instruction type="file" run="standalone">files.tar</instruction>
+		<instruction type="template" run="standalone">templates.tar</instruction>
 		<instruction type="language">language/*.xml</instruction>
 		
 		<instruction type="userOption">userOption.xml</instruction>
