@@ -57,7 +57,6 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.like.message.stacked', array(
 				'author' => $this->author,
 				'authors' => $authors,
-				'comment' => $this->userNotificationObject,
 				'count' => $count,
 				'others' => $count - 1,
 				'owner' => $owner
@@ -66,7 +65,6 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.like.message', array(
 			'author' => $this->author,
-			'comment' => $this->userNotificationObject,
 			'owner' => $owner
 		));
 	}

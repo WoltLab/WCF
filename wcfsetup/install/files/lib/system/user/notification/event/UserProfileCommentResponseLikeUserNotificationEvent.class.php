@@ -70,7 +70,6 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.like.message', array(
 			'author' => $this->author,
-			'comment' => $this->userNotificationObject,
 			'owner' => $owner
 		));
 	}
