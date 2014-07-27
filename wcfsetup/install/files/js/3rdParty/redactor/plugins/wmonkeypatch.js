@@ -77,6 +77,13 @@ RedactorPlugins.wmonkeypatch = {
 		}
 		this.$toolbar.find('a.re-indent, a.re-outdent').addClass('redactor_button_disabled');
 		
+		var $mpImageResizeControls = this.imageResizeControls;
+		this.imageResizeControls = function($image) {
+			if (!$image.data('attachmentID')) {
+				$mpImageResizeControls.call(self, $image);
+			}
+		};
+		
 		this.setOption('modalOpenedCallback', $.proxy(this.modalOpenedCallback, this));
 		this.setOption('dropdownShowCallback', $.proxy(this.dropdownShowCallback, this));
 		
