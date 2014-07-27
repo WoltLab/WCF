@@ -304,6 +304,7 @@ RedactorPlugins.wutil = {
 	 * Synchronizes editor's source textarea.
 	 */
 	wSync: function() {
+		this.sync();
 		this.$source.val(this.cleanHtml(this.$source.val()));
 		this._convertFromHtml();
 	}

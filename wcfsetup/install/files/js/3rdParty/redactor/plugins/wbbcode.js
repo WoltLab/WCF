@@ -531,8 +531,16 @@ RedactorPlugins.wbbcode = {
 		// attachments
 		var $attachmentUrl = this.getOption('wAttachmentUrl');
 		if ($attachmentUrl) {
-			data = data.replace(/\[attach=(\d+)\]\[\/attach\]/, function(match, attachmentID) {
-				return '<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment" data-attachment-id="' + attachmentID + '" />';
+			var $imageAttachmentIDs = this._getImageAttachmentIDs();
+			
+			data = data.replace(/\[attach=(\d+)\]\[\/attach\]/g, function(match, attachmentID) {
+				attachmentID = parseInt(attachmentID);
+				
+				if (WCF.inArray(attachmentID, $imageAttachmentIDs)) {
+					return '<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment" data-attachment-id="' + attachmentID + '" />';
+				}
+				
+				return match;
 			});
 		}
 		
@@ -657,10 +665,13 @@ RedactorPlugins.wbbcode = {
 	 * @param	integer		attachmentID
 	 */
 	insertAttachment: function(attachmentID) {
+		attachmentID = parseInt(attachmentID);
 		var $attachmentUrl = this.getOption('wAttachmentUrl');
 		var $bbcode = '[attach=' + attachmentID + '][/attach]';
 		
-		if ($attachmentUrl) {
+		var $imageAttachmentIDs = this._getImageAttachmentIDs();
+		
+		if ($attachmentUrl && WCF.inArray(attachmentID, $imageAttachmentIDs)) {
 			this.insertDynamic(
 				'<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment" data-attachment-id="' + attachmentID + '" />',
 				$bbcode
@@ -669,5 +680,27 @@ RedactorPlugins.wbbcode = {
 		else {
 			this.insertDynamic($bbcode);
 		}
+	},
+	
+	/**
+	 * Returns a list of attachments representing an image.
+	 * 
+	 * @return	array<integer>
+	 */
+	_getImageAttachmentIDs: function() {
+		// WCF.Attachment.Upload may have no been initialized yet, fallback to static data
+		var $imageAttachmentIDs = this.getOption('wAttachmentImageIDs') || [ ];
+		if ($imageAttachmentIDs.length) {
+			delete this.opts.wAttachmentImageIDs;
+			
+			return $imageAttachmentIDs;
+		}
+		
+		var $data = {
+			imageAttachmentIDs: [ ]
+		};
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'getImageAttachments_' + this.$source.wcfIdentify(), $data);
+		
+		return $data.imageAttachmentIDs;
 	}
 };
