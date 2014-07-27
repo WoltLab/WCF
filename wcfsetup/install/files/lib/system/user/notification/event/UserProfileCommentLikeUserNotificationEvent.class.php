@@ -80,7 +80,14 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getLink()
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('User', array('object' => WCF::getUser()), '#wall');
+		$owner = WCF::getUser();
+		if ($this->additionalData['objectID'] != WCF::getUser()->userID) {
+			$owner = CommentDataHandler::getInstance()->getUser($this->additionalData['objectID']);
+		}
+		
+		return LinkHandler::getInstance()->getLink('User', array(
+			'object' => $owner
+		), '#wall');
 	}
 	
 	/**
