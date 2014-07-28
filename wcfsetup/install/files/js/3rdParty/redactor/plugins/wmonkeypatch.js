@@ -113,10 +113,8 @@ RedactorPlugins.wmonkeypatch = {
 		
 		if (parent && parent.closest('inline.inlineCode', this.$editor.get()[0]).length != 0) {
 			this.$toolbar.find('a.re-__wcf_tt').addClass('redactor_act');
-			console.debug("adding");
 		}
 		else {
-			console.debug("removing");
 			this.$toolbar.find('a.re-__wcf_tt').removeClass('redactor_act');
 		}
 	},
@@ -145,6 +143,67 @@ RedactorPlugins.wmonkeypatch = {
 		});
 		// WoltLab modifications END
 		
+		this.selectionRestore();
+		this.sync();
+	},
+	
+	/**
+	 * Overwrites $.Redactor.inlineMethods() to fix calls to inlineSetClass().
+	 * 
+	 * @see		$.Redactor.inlineMethods()
+	 * @param	string		type
+	 * @param	string		attr
+	 * @param	string		value
+	 */
+	inlineMethods: function(type, attr, value) {
+		this.bufferSet();
+		this.selectionSave();
+
+		var range = this.getRange();
+		var el = this.getElement();
+
+		if ((range.collapsed || range.startContainer === range.endContainer) && el && !this.nodeTestBlocks(el))
+		{
+			$(el)[type](attr, value);
+		}
+		else
+		{
+			var cmd, arg = value;
+			switch (attr)
+			{
+				case 'font-size':
+					cmd = 'fontSize';
+					arg = 4;
+				break;
+				case 'font-family':
+					cmd = 'fontName';
+				break;
+				case 'color':
+					cmd = 'foreColor';
+				break;
+				case 'background-color':
+					cmd = 'backColor';
+				break;
+			}
+			
+			// WoltLab modifications START
+			if (type === 'addClass') {
+				cmd = 'fontSize';
+				arg = 4;
+			}
+			// WoltLab modifications END
+
+			this.document.execCommand(cmd, false, arg);
+
+			var fonts = this.$editor.find('font');
+			$.each(fonts, $.proxy(function(i, s)
+			{
+				this.inlineSetMethods(type, s, attr, value);
+
+			}, this));
+
+		}
+
 		this.selectionRestore();
 		this.sync();
 	},

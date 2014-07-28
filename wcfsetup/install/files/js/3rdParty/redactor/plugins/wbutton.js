@@ -113,8 +113,22 @@ RedactorPlugins.wbutton = {
 	_insertBBCode: function(buttonName, buttonDOM, buttonObj, event) {
 		var $bbcode = this._bbcodes[buttonName];
 		var $selectedHtml = this.getSelectionHtml();
-		this.insertHtml('[' + $bbcode + ']' + $selectedHtml + '[/' + $bbcode + ']');
 		
-		this.sync();
+		if ($bbcode === 'tt') {
+			var $parent = (this.getParent()) ? $(this.getParent()) : null;
+			if ($parent && $parent.closest('inline.inlineCode', this.$editor.get()[0]).length) {
+				this.inlineRemoveClass('inlineCode');
+			}
+			else {
+				this.inlineSetClass('inlineCode');
+			}
+		}
+		else {
+			this.insertHtml('[' + $bbcode + ']' + $selectedHtml + '[/' + $bbcode + ']');
+			this.sync();
+		}
+		
+		event.preventDefault();
+		return false;
 	}
 };
