@@ -65,6 +65,13 @@ RedactorPlugins.wmonkeypatch = {
 			$mpDestroy.call(self);
 		};
 		
+		var $mpSync = this.sync;
+		this.sync = function(e, forceSync) {
+			if (forceSync === true) {
+				$mpSync.call(self, e);
+			}
+		};
+		
 		// handle indent/outdent
 		var $mpButtonActiveObserver = this.buttonActiveObserver;
 		this.buttonActiveObserver = function(e, btnName) {
@@ -77,11 +84,28 @@ RedactorPlugins.wmonkeypatch = {
 		}
 		this.$toolbar.find('a.re-indent, a.re-outdent').addClass('redactor_button_disabled');
 		
+		// image editing
 		var $mpImageResizeControls = this.imageResizeControls;
 		this.imageResizeControls = function($image) {
 			if (!$image.data('attachmentID')) {
 				$mpImageResizeControls.call(self, $image);
 			}
+			
+			return false;
+		};
+		
+		var $mpImageEdit = this.imageEdit;
+		this.imageEdit = function(image) {
+			$mpImageEdit.call(self, image);
+			
+			$('#redactor_image_source').val($(image).prop('src'));
+		};
+		
+		var $mpImageSave = this.imageSave;
+		this.imageSave = function(el) {
+			$(el).prop('src', $('#redactor_image_source').val());
+			
+			$mpImageSave.call(self, el);
 		};
 		
 		this.setOption('modalOpenedCallback', $.proxy(this.modalOpenedCallback, this));
@@ -229,7 +253,7 @@ RedactorPlugins.wmonkeypatch = {
 			'<fieldset>'
 				+ '<dl>'
 					+ '<dt><label for="redactor_file_link">' + this.opts.curLang.image_web_link + '</label></dt>'
-					+ '<dd><input type="text" name="redactor_file_link" id="redactor_file_link" class="long"  /></dd>'
+					+ '<dd><input type="text" name="redactor_image_source" id="redactor_image_source" class="long"  /></dd>'
 				+ '</dl>'
 				+ '<dl>'
 					+ '<dt><label for="redactor_form_image_align">' + this.opts.curLang.image_position + '</label></dt>'
@@ -370,8 +394,7 @@ RedactorPlugins.wmonkeypatch = {
 	 * 
 	 * @see	$.Redactor.inlineEachNodes()
 	 */
-	inlineEachNodes: function(callback)
-	{
+	inlineEachNodes: function(callback) {
 		var range = this.getRange(),
 			node = this.getElement(),
 			nodes = this.getNodes(),
@@ -402,4 +425,4 @@ RedactorPlugins.wmonkeypatch = {
 
 		}, this ) );
 	}
-}
+};

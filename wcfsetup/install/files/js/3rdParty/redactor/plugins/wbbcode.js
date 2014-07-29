@@ -135,6 +135,7 @@ RedactorPlugins.wbbcode = {
 	 */
 	toggle: function(direct) {
 		if (this.opts.visual) {
+			this.sync(undefined, true);
 			this.toggleCode(direct);
 			this._convertFromHtml();
 			
