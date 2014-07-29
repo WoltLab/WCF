@@ -424,5 +424,34 @@ RedactorPlugins.wmonkeypatch = {
 			callback.call(this, node);
 
 		}, this ) );
+	},
+	
+	/**
+	 * Overwrites $.Redactor.imageCallbackLink() to provide proper image insert behavior.
+	 * 
+	 * @see	$.Redactor.imageCallbackLink()
+	 */
+	imageCallbackLink: function() {
+		var $src = $.trim($('#redactor_image_source').val());
+		if ($src.length) {
+			var $float = '';
+			var $alignment = $('#redactor_form_image_align').val();
+			switch ($alignment) {
+				case 'left':
+					$float = ' style="float: left;"';
+				break;
+				
+				case 'right':
+					$float = ' style="float: right;"';
+				break;
+			}
+			
+			var $data = '<img id="image-marker" src="' + $src + '"' + $float + ' />';
+			
+			this.imageInsert($data, true);
+		}
+		else {
+			this.modalClose();
+		}
 	}
 };
