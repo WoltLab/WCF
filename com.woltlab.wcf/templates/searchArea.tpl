@@ -7,7 +7,7 @@
 
 <aside id="search" class="searchBar dropdown" data-disable-auto-focus="true">
 	<form method="post" action="{@$__searchFormLink}">
-		<input type="search" name="q" placeholder="{@$__searchInputPlaceholder}" autocomplete="off" required="required" value="" class="dropdownToggle" data-toggle="search" />
+		<input type="search" name="q" placeholder="{@$__searchInputPlaceholder}" autocomplete="off" required="required" value="{if $query|isset}{$query}{/if}" class="dropdownToggle" data-toggle="search" />
 		
 		<ul class="dropdownMenu">
 			{hascontent}
