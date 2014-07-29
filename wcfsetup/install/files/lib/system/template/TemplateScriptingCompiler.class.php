@@ -759,7 +759,7 @@ class TemplateScriptingCompiler {
 		$sandbox = ($sandbox === 'true' || $sandbox === true || $sandbox == 1);
 		
 		$staticInclude = true;
-		if ($sandbox || $assignVar !== false || $once !== false || strpos($application, '$') !== false) {
+		if ($sandbox || $assignVar !== false || $once !== false || strpos($application, '$') !== false || strpos($file, '$') !== false) {
 			$staticInclude = false;
 		}
 		
