@@ -234,10 +234,20 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					VALUES			".substr(str_repeat('(?, ?, ?, ?'. ($packageID ? ', ?' : '') .'), ', $repeat), 0, -2);
 				
 				if ($updateExistingItems) {
-					$sql .= " ON DUPLICATE KEY
-					UPDATE			languageUseCustomValue = IF(languageItemValue = VALUES(languageItemValue), languageUseCustomValue, 0),
-								languageItemValue = IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)),
-								languageCategoryID = VALUES(languageCategoryID)";
+					if ($packageID) {
+						// do not update anything if language item is owned by a different package
+						$sql .= "	ON DUPLICATE KEY
+								UPDATE			languageUseCustomValue = IF(packageID = ".$packageID.", IF(languageItemValue = VALUES(languageItemValue), languageUseCustomValue, 0), languageUseCustomValue),
+											languageItemValue = IF(packageID = ".$packageID.", IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)), languageItemValue),
+											languageCategoryID = IF(packageID = ".$packageID.", VALUES(languageCategoryID), languageCategoryID)";
+					}
+					else {
+						// skip package id check during WCFSetup
+						$sql .= "	ON DUPLICATE KEY
+								UPDATE			languageUseCustomValue = IF(languageItemValue = VALUES(languageItemValue), languageUseCustomValue, 0),
+											languageItemValue = IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)),
+											languageCategoryID = VALUES(languageCategoryID)";
+					}
 				}
 				
 				$statement = WCF::getDB()->prepareStatement($sql);
