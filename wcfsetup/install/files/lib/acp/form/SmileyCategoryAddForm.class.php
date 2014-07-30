@@ -26,4 +26,9 @@ class SmileyCategoryAddForm extends AbstractCategoryAddForm {
 	 * @see	\wcf\acp\form\AbstractCategoryAddForm::$pageTitle
 	 */
 	public $pageTitle = 'wcf.acp.smiley.category.add';
+	
+	/**
+	 * @see	wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_SMILEY');
 }

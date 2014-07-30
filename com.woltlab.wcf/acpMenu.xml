@@ -414,6 +414,7 @@
 		
 		<acpmenuitem name="wcf.acp.menu.link.smiley">
 			<parent>wcf.acp.menu.link.content</parent>
+			<options>module_smiley</options>
 			<showorder>1</showorder>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.smiley.list">
@@ -489,6 +490,7 @@
 		
 		<acpmenuitem name="wcf.acp.menu.link.tag">
 			<parent>wcf.acp.menu.link.content</parent>
+			<options>module_tagging</options>
 			<showorder>4</showorder>
 		</acpmenuitem>
 		
@@ -532,6 +534,7 @@
 		
 		<acpmenuitem name="wcf.acp.menu.link.ad">
 			<parent>wcf.acp.menu.link.content</parent>
+			<options>module_ad</options>
 			<showorder>7</showorder>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.ad.list">

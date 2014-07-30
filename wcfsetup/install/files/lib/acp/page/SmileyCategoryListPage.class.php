@@ -26,4 +26,9 @@ class SmileyCategoryListPage extends AbstractCategoryListPage {
 	 * @see	\wcf\acp\page\AbstractCategoryListPage::$pageTitle
 	 */
 	public $pageTitle = 'wcf.acp.smiley.category.list';
+	
+	/**
+	 * @see	wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_SMILEY');
 }

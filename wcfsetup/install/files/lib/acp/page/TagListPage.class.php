@@ -26,6 +26,11 @@ class TagListPage extends SortablePage {
 	public $neededPermissions = array('admin.content.tag.canManageTag');
 	
 	/**
+	 * @see	wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_TAGGING');
+	
+	/**
 	 * @see	\wcf\page\SortablePage::$defaultSortField
 	 */
 	public $defaultSortField = 'name';

@@ -24,6 +24,11 @@ class AdListPage extends MultipleLinkPage {
 	public $neededPermissions = array('admin.content.ad.canManageAd');
 	
 	/**
+	 * @see	wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_AD');
+	
+	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\ad\AdList';
