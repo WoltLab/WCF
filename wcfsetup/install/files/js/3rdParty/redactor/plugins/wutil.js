@@ -307,5 +307,23 @@ RedactorPlugins.wutil = {
 		this.sync(undefined, true);
 		this.$source.val(this.cleanHtml(this.$source.val()));
 		this._convertFromHtml();
+	},
+	
+	/**
+	 * Returns source textarea object.
+	 * 
+	 * @return	jQuery
+	 */
+	getSource: function() {
+		return this.$source;
+	},
+	
+	/**
+	 * Returns editor instance name.
+	 * 
+	 * @return	string
+	 */
+	getName: function() {
+		return this.$source.wcfIdentify();
 	}
 };
