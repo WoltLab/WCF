@@ -24,6 +24,11 @@ class UserRankListPage extends SortablePage {
 	public $neededPermissions = array('admin.user.rank.canManageRank');
 	
 	/**
+	 * @see	wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_USER_RANK');
+	
+	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName
 	 */
 	public $objectListClassName = 'wcf\data\user\rank\UserRankList';

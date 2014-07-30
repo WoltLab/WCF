@@ -32,6 +32,11 @@ class UserRankAddForm extends AbstractForm {
 	public $neededPermissions = array('admin.user.rank.canManageRank');
 	
 	/**
+	 * @see	wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_USER_RANK');
+	
+	/**
 	 * rank group id
 	 * @var	integer
 	 */
