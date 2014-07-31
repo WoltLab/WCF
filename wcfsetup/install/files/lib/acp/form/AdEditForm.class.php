@@ -126,7 +126,7 @@ class AdEditForm extends AdAddForm {
 			}
 		}
 		
-		ConditionHandler::getInstance()->updateConditions($this->notice->noticeID, $this->notice->getConditions(), $conditions);
+		ConditionHandler::getInstance()->updateConditions($this->adObject->adID, $this->adObject->getConditions(), $conditions);
 		
 		$this->saved();
 		
