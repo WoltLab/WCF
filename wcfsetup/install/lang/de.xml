@@ -2912,6 +2912,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[„Aktiviert“ und „Nicht aktiviert“ können nicht gleichzeitig ausgewählt werden.]]></item>
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Nicht gesperrt]]></item>
 		<item name="wcf.user.condition.usesMobileBrowser"><![CDATA[Verwendet mobilen Browser]]></item>
+		<item name="wcf.user.condition.notUseMobileBrowser"><![CDATA[Verwendet keinen mobilen Browser]]></item>
 	</category>
 	
 	<category name="wcf.user.notification">
