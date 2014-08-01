@@ -2,7 +2,6 @@
 namespace wcf\system\event\listener;
 use wcf\data\bbcode\BBCode;
 use wcf\data\user\UserList;
-use wcf\system\event\IEventListener;
 use wcf\system\request\LinkHandler;
 use wcf\system\Callback;
 use wcf\system\Regex;
@@ -20,9 +19,9 @@ use wcf\util\StringStack;
  */
 class PreParserAtUserListener implements IEventListener {
 	/**
-	 * @see	\wcf\system\event\IEventListener::execute()
+	 * @see	\wcf\system\event\listener\IEventListener::execute()
 	 */
-	public function execute($eventObj, $className, $eventName) {
+	public function execute($eventObj, $className, $eventName, array &$parameters) {
 		if (!$eventObj->text) return;
 		
 		// check if needed url BBCode is allowed
