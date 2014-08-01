@@ -2839,6 +2839,12 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
  */
 WCF.User.InlineEditor = WCF.InlineEditor.extend({
 	/**
+	 * data of additional options
+	 * @var	object
+	 */
+	_additionalOptions: { },
+	
+	/**
 	 * dialog object
 	 * @var	jQuery
 	 */
@@ -2851,6 +2857,15 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 	_permissions: { },
 	
 	/**
+	 * @see	WCF.InlineEditor.init()
+	 */
+	init: function(elementSelector) {
+		this._super(elementSelector);
+		
+		WCF.System.ObjectStore.add('WCF.User.InlineEditor', this);
+	},
+	
+	/**
 	 * @see	WCF.InlineEditor._execute()
 	 */
 	_execute: function(elementID, optionName) {
@@ -2860,48 +2875,53 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 		
 		var $data = { };
 		var $element = $('#' + elementID);
-		switch (optionName) {
-			case 'unban':
-			case 'enableAvatar':
-			case 'enableSignature':
-				switch (optionName) {
-					case 'unban':
-						$data.banned = 0;
-					break;
+		if (this._additionalOptions[optionName] !== undefined) {
+			this._additionalOptions[optionName].callback(elementID);
+		}
+		else {
+			switch (optionName) {
+				case 'unban':
+				case 'enableAvatar':
+				case 'enableSignature':
+					switch (optionName) {
+						case 'unban':
+							$data.banned = 0;
+						break;
+						
+						case 'enableAvatar':
+							$data.disableAvatar = 0;
+						break;
+						
+						case 'enableSignature':
+							$data.disableSignature = 0;
+						break;
+					}
 					
-					case 'enableAvatar':
-						$data.disableAvatar = 0;
-					break;
+					this._proxy.setOption('data', {
+						actionName: optionName,
+						className: 'wcf\\data\\user\\UserAction',
+						objectIDs: [ $element.data('objectID') ]
+					});
+					this._proxy.sendRequest();
+				break;
+				
+				case 'ban':
+				case 'disableAvatar':
+				case 'disableSignature':
+					if (optionName == 'ban') {
+						$data.banned = 1;
+					}
+					else {
+						$data[optionName] = 1;
+					}
 					
-					case 'enableSignature':
-						$data.disableSignature = 0;
-					break;
-				}
+					this._showReasonDialog($element.data('objectID'), optionName);
+				break;
 				
-				this._proxy.setOption('data', {
-					actionName: optionName,
-					className: 'wcf\\data\\user\\UserAction',
-					objectIDs: [ $element.data('objectID') ]
-				});
-				this._proxy.sendRequest();
-			break;
-			
-			case 'ban':
-			case 'disableAvatar':
-			case 'disableSignature':
-				if (optionName == 'ban') {
-					$data.banned = 1;
-				}
-				else {
-					$data[optionName] = 1;
-				}
-				
-				this._showReasonDialog($element.data('objectID'), optionName);
-			break;
-			
-			case 'advanced':
-				window.location = this._getTriggerElement($element).attr('href');
-			break;
+				case 'advanced':
+					window.location = this._getTriggerElement($element).attr('href');
+				break;
+			}
 		}
 		
 		if ($.getLength($data)) {
@@ -2982,14 +3002,18 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 			
 			// disabling signature
 			{ label: WCF.Language.get('wcf.user.disableSignature'), optionName: 'disableSignature' },
-			{ label: WCF.Language.get('wcf.user.enableSignature'), optionName: 'enableSignature' },
-			
-			// divider
-			{ optionName: 'divider' },
-			
-			// overlay
-			{ label: WCF.Language.get('wcf.user.edit'), optionName: 'advanced' }
+			{ label: WCF.Language.get('wcf.user.enableSignature'), optionName: 'enableSignature' }
 		];
+		
+		for (var $optionName in this._additionalOptions) {
+			this._options.push({ label: this._additionalOptions[$optionName].label, optionName: $optionName });
+		}
+		
+		// divider
+		this._options.push({ optionName: 'divider' });
+		
+		// redirect to ACP
+		this._options.push({ label: WCF.Language.get('wcf.user.edit'), optionName: 'advanced' });
 	},
 	
 	/**
@@ -3066,6 +3090,10 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 	_validate: function(elementID, optionName) {
 		var $user = $('#' + elementID);
 		
+		if (this._additionalOptions[optionName] !== undefined) {
+			return true;
+		}
+		
 		switch (optionName) {
 			case 'ban':
 			case 'unban':
@@ -3115,6 +3143,29 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 		}
 		
 		return false;
+	},
+	
+	/**
+	 * Adds an additional option.
+	 * 
+	 * @param	string		label
+	 * @param	string		optionName
+	 * @param	function	callback
+	 */
+	addOption: function(label, optionName, callback) {
+		if (!$.isFunction(callback)) {
+			console.debug('[WCF.User.InlineEditor] Missing callback');
+		}
+		if (this._additionalOptions[optionName] !== undefined) {
+			console.debug('[WCF.User.InlineEditor] Additional option with name "' + optionName + "' already exists");
+		}
+		
+		this._additionalOptions[optionName] = {
+			callback: callback,
+			label: label
+		};
+		
+		this._setOptions();
 	},
 	
 	/**
