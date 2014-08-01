@@ -36,7 +36,7 @@ class UserListPage extends SortablePage {
 	 * list of selected columns
 	 * @var	array<string>
 	 */
-	public $columns = array('email', 'registrationDate', 'lastActivityTime');
+	public $columns = array('registrationDate', 'lastActivityTime');
 	
 	/**
 	 * applies special CSS classes for selected columns
@@ -116,7 +116,7 @@ class UserListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('email', 'userID', 'registrationDate', 'username', 'lastActivityTime', 'profileHits', 'activityPoints', 'likesReceived');
+	public $validSortFields = array('userID', 'registrationDate', 'username', 'lastActivityTime', 'profileHits', 'activityPoints', 'likesReceived');
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -146,6 +146,11 @@ class UserListPage extends SortablePage {
 		// add options to valid sort fields
 		$this->validSortFields = array_merge($this->validSortFields, array_keys($this->options));
 		
+		// avoid leaking mail adresses by sorting
+		if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+			$this->validSortFields[] = 'email';
+		}
+		
 		parent::validateSortField();
 	}
 	
@@ -154,6 +159,11 @@ class UserListPage extends SortablePage {
 	 */
 	public function readData() {
 		parent::readData();
+		
+		// add email column for authorized users
+		if (WCF::getSession()->getPermission('admin.user.canEditMailAddress')) {
+			array_unshift($this->columns, 'email');
+		}
 		
 		// get marked users
 		$this->markedUsers = WCF::getSession()->getVar('markedUsers');
