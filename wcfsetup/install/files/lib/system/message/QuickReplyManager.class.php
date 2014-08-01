@@ -194,7 +194,8 @@ class QuickReplyManager extends SingletonFactory {
 		}
 		
 		$message = $object->create();
-		EventHandler::getInstance()->fireAction($this, 'createdMessage', array('message' => $message));
+		$eventParameters = array('message' => $message);
+		EventHandler::getInstance()->fireAction($this, 'createdMessage', $eventParameters);
 		
 		if ($message instanceof IMessage && !$message->isVisible()) {
 			return array(
