@@ -3,7 +3,6 @@ namespace wcf\system\event\listener;
 use wcf\data\acp\session\access\log\ACPSessionAccessLogEditor;
 use wcf\data\acp\session\log\ACPSessionLog;
 use wcf\data\acp\session\log\ACPSessionLogEditor;
-use wcf\system\event\IEventListener;
 use wcf\system\WCF;
 use wcf\util\UserUtil;
 
@@ -19,9 +18,9 @@ use wcf\util\UserUtil;
  */
 class SessionAccessLogListener implements IEventListener {
 	/**
-	 * @see	\wcf\system\event\IEventListener::execute()
+	 * @see	\wcf\system\event\listener\IEventListener::execute()
 	 */
-	public function execute($eventObj, $className, $eventName) {
+	public function execute($eventObj, $className, $eventName, array &$parameters) {
 		if (WCF::getUser()->userID && WCF::getSession()->getPermission('admin.general.canUseAcp') && !defined(get_class($eventObj).'::DO_NOT_LOG')) {
 			// try to find existing session log
 			$sql = "SELECT	sessionLogID

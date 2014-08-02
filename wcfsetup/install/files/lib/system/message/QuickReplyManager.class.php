@@ -51,18 +51,6 @@ class QuickReplyManager extends SingletonFactory {
 	public $type = '';
 	
 	/**
-	 * additional fields
-	 * @var	array
-	 */
-	public $additionalFields = array();
-	
-	/**
-	 * the message that just was created
-	 * @var	\wcf\data\DatabaseObject
-	 */
-	public $message = null;
-	
-	/**
 	 * Returns a stored message from session.
 	 * 
 	 * @param	string		$type
@@ -182,7 +170,8 @@ class QuickReplyManager extends SingletonFactory {
 	 * @return	array
 	 */
 	public function createMessage(IMessageQuickReplyAction $object, array &$parameters, $containerActionClassName, $sortOrder, $templateName, $application = 'wcf') {
-		EventHandler::getInstance()->fireAction($this, 'createMessage');
+		$additionalFields = array();
+		EventHandler::getInstance()->fireAction($this, 'createMessage', $additionalFields);
 		
 		$tableIndexName = call_user_func(array($this->container, 'getDatabaseTableIndexName'));
 		$parameters['data'][$tableIndexName] = $parameters['objectID'];
@@ -197,22 +186,16 @@ class QuickReplyManager extends SingletonFactory {
 		}
 		unset($parameters['data']['preParse']);
 		
-		$parameters['data'] = array_merge($this->additionalFields, $parameters['data']);
+		$parameters['data'] = array_merge($additionalFields, $parameters['data']);
 		
 		// attachment support
 		if (MODULE_ATTACHMENT && $object instanceof IAttachmentMessageQuickReplyAction) {
 			$parameters['attachmentHandler'] = $object->getAttachmentHandler($this->container);
 		}
 		
-		// clean up
-		$this->additionalFields = array();
-		
-		$this->message = $object->create();
-		EventHandler::getInstance()->fireAction($this, 'createdMessage');
-		$message = $this->message;
-		
-		// clean up
-		$this->message = null;
+		$message = $object->create();
+		$eventParameters = array('message' => $message);
+		EventHandler::getInstance()->fireAction($this, 'createdMessage', $eventParameters);
 		
 		if ($message instanceof IMessage && !$message->isVisible()) {
 			return array(
