@@ -6,6 +6,16 @@ var __REDACTOR_SOURCE_BBCODES = [ {implode from=$__wcf->getBBCodeHandler()->getS
 </script>
 <script data-relocate="true">
 $(function() {
+	WCF.Language.addObject({
+		'wcf.attachment.dragAndDrop.dropHere': '{lang}wcf.attachment.dragAndDrop.dropHere{/lang}',
+		'wcf.attachment.dragAndDrop.dropNow': '{lang}wcf.attachment.dragAndDrop.dropNow{/lang}',
+		'wcf.bbcode.quote.edit': '{lang}wcf.bbcode.quote.edit{/lang}',
+		'wcf.bbcode.quote.edit.author': '{lang}wcf.bbcode.quote.edit.author{/lang}',
+		'wcf.bbcode.quote.edit.link': '{lang}wcf.bbcode.quote.edit.link{/lang}',
+		'wcf.bbcode.quote.title.clickToSet': '{lang}wcf.bbcode.quote.title.clickToSet{/lang}',
+		'wcf.bbcode.quote.title.javascript': '{lang}wcf.bbcode.quote.title.javascript{/lang}'
+	});
+	
 	var $editorName = '{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}';
 	var $callbackIdentifier = 'Redactor_' + $editorName;
 	
@@ -18,6 +28,7 @@ $(function() {
 		var $autosave = $textarea.data('autosave');
 		var $config = {
 			buttons: $buttons,
+			convertDivs: false,
 			convertImageLinks: false,
 			convertLinks: false,
 			convertVideoLinks: false,
@@ -35,11 +46,6 @@ $(function() {
 		};
 		
 		{if MODULE_ATTACHMENT && !$attachmentHandler|empty && $attachmentHandler->canUpload()}
-			WCF.Language.addObject({
-				'wcf.attachment.dragAndDrop.dropHere': '{lang}wcf.attachment.dragAndDrop.dropHere{/lang}',
-				'wcf.attachment.dragAndDrop.dropNow': '{lang}wcf.attachment.dragAndDrop.dropNow{/lang}'
-			});
-			
 			$config.plugins.push('wupload');
 			$config.wAttachmentUrl = '{link controller='Attachment' id=987654321}thumbnail=1{/link}';
 		{/if}

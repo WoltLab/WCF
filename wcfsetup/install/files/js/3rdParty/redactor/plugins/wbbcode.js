@@ -27,6 +27,8 @@ RedactorPlugins.wbbcode = {
 		this.opts.pasteBeforeCallback = $.proxy(this._wPasteBeforeCallback, this);
 		this.opts.pasteAfterCallback = $.proxy(this._wPasteAfterCallback, this);
 		
+		this.opts.keydownCallback = $.proxy(this._wKeydownCallback, this);
+		
 		var $mpSyncClean = this.syncClean;
 		var self = this;
 		this.syncClean = function(html) {
@@ -144,6 +146,7 @@ RedactorPlugins.wbbcode = {
 		else {
 			this._convertToHtml();
 			this.toggleVisual();
+			this._observeQuotes();
 			
 			this.buttonGet('html').children('i').removeClass('fa-square').addClass('fa-square-o');
 		}
@@ -244,8 +247,18 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?>/gi, '[img]$2[/img]');
 		
 		// [quote]
-		// html = html.replace(/<blockquote>/gi, '[quote]');
-		// html = html.replace(/\n*<\/blockquote>/gi, '[/quote]');
+		html = html.replace(/<blockquote class="quoteBox" cite="([^"]+)?" data-author="([^"]+)?">/gi, function(match, link, author) {
+			if (link) {
+				return "[quote='" + author + "','" + link + "']";
+			}
+			else if (author) {
+				return "[quote='" + author + "']";
+			}
+			
+			return "[quote]";
+		});
+		html = html.replace(/<\/blockquote>/gi, '[/quote]');
+		html = html.replace(/<header data-ignore="true">.*?<\/header>/gi, '');
 		
 		// handle [color], [size], [font] and [tt]
 		var $components = html.split(/(<\/?span[^>]*>)/);
@@ -414,6 +427,11 @@ RedactorPlugins.wbbcode = {
 		}
 		html = $tmp.join("\n");
 		
+		// trim whitespaces within quote tags
+		html = html.replace(/\[quote([^\]]+)?\](.*?)\[\/quote\]/, function(match, attributes, content) {
+			return '[quote' + attributes + ']' + $.trim(content) + '[/quote]';
+		});
+		
 		// insert codes
 		if ($.getLength($cachedCodes)) {
 			for (var $key in $cachedCodes) {
@@ -485,10 +503,6 @@ RedactorPlugins.wbbcode = {
 		data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
 		data = data.replace(/\[img='?([^"]*?)'?,'?(left|right)'?\]\[\/img\]/gi,'<img src="$1" style="float: $2" />');
 		data = data.replace(/\[img='?([^"]*?)'?\]\[\/img\]/gi,'<img src="$1" />');
-		
-		// [quote]
-		// data = data.replace(/\[quote\]/gi, '<blockquote>');
-		// data = data.replace(/\[\/quote\]/gi, '</blockquote>');
 		
 		// [size]
 		data = data.replace(/\[size=(\d+)\](.*?)\[\/size\]/gi,'<span style="font-size: $1pt">$2</span>');
@@ -598,6 +612,53 @@ RedactorPlugins.wbbcode = {
 		
 		// preserve leading whitespaces in [code] tags
 		data = data.replace(/\[code\][\S\s]*?\[\/code\]/, '<pre>$&</pre>');
+		
+		// [quote]
+		var $unquoteString = function(quotedString) {
+			return quotedString.replace(/^['"]/, '').replace(/['"]$/, '');
+		};
+		
+		data = data.replace(/\[quote([^\]]+)?\]/gi, function(match, attributes) {
+			var $quote = '<blockquote class="quoteBox" cite="" data-author="">';
+			
+			if (attributes) {
+				attributes = attributes.substr(1);
+				attributes = attributes.split(',');
+				var $author = '';
+				var $link = '';
+				
+				switch (attributes.length) {
+					case 1:
+						$author = attributes[0];
+					break;
+					
+					case 2:
+						$author = attributes[0];
+						$link = attributes[1];
+					break;
+				}
+				
+				$author = WCF.String.escapeHTML($unquoteString($.trim($author)));
+				$link = WCF.String.escapeHTML($unquoteString($.trim($link)));
+				
+				$quote = '<blockquote class="quoteBox" cite="' + $link + '" data-author="' + $author + '">';
+				$quote += '<div class="container containerPadding">'
+						+ '<header data-ignore="true">'
+							+ '<h3>'
+								+ ($link ? '<a href="' + $link + '">' : '') + WCF.Language.get('wcf.bbcode.quote.title.javascript', { quoteAuthor: WCF.String.unescapeHTML($author) }) + ($link ? '</a>' : '')
+							+ '</h3>'
+							+ '<a class="redactorQuoteEdit"></a>'
+						+ '</header>';
+			}
+			
+			$quote += '<div>';
+			
+			return $quote;
+		});
+		data = data.replace(/\[\/quote\]/gi, '</div></div></blockquote>');
+		
+		data = data.replace(/<p><blockquote/gi, '<blockquote');
+		data = data.replace(/<\/blockquote><\/p>/, '</blockquote>');//<p>' + this.getOption('invisibleSpace') + '</p>');
 		
 		this.$source.val(data);
 	},
@@ -715,5 +776,126 @@ RedactorPlugins.wbbcode = {
 		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'getImageAttachments_' + this.$source.wcfIdentify(), $data);
 		
 		return $data.imageAttachmentIDs;
+	},
+	
+	_wKeydownCallback: function(event) {
+		if (event.which === this.keyCode.DOWN) {
+			var $parent = this.getParent();
+			var $quote = ($parent) ? $($parent).closest('blockquote.quoteBox', this.$editor.get()[0]) : { length: 0 };
+			
+			if ($parent && $quote.length) {
+				this.insertAfterLastElement($(parent)[0], $quote[0]);
+			}
+			
+			return false;
+		}
+		
+		return true;
+	},
+	
+	_observeQuotes: function() {
+		this.$editor.find('.redactorQuoteEdit:not(.jsRedactorQuoteEdit)').addClass('jsRedactorQuoteEdit').click($.proxy(this._observeQuotesClick, this));
+	},
+	
+	_observeQuotesClick: function(event) {
+		var $header = $(event.currentTarget).closest('header');
+		var $tooltip = $('<span class="redactor-link-tooltip" />');
+		
+		$('<a href="#">' + WCF.Language.get('wcf.bbcode.quote.edit') + '</a>').click($.proxy(function(e) {
+			e.preventDefault();
+			
+			this._openQuoteEditOverlay($(event.currentTarget).closest('blockquote.quoteBox'));
+			$('.redactor-link-tooltip').remove();
+		}, this)).appendTo($tooltip);
+		
+		var $offset = $header.offset();
+		$tooltip.css({
+			left: $offset.left + 'px',
+			top: ($offset.top + 20) + 'px'
+		});
+		
+		$('.redactor-link-tooltip').remove();
+		$tooltip.appendTo(document.body);
+	},
+	
+	_openQuoteEditOverlay: function(quote) {
+		this.modalInit(WCF.Language.get('wcf.bbcode.quote.edit'), this.opts.modal_quote, 300, $.proxy(function() {
+			$('#redactorQuoteAuthor').val(quote.data('author'));
+			
+			// do not use prop() here, an empty cite attribute would yield the page URL instead
+			$('#redactorQuoteLink').val(quote.attr('cite'));
+			
+			$('#redactorEditQuote').click($.proxy(function() {
+				var $author = $('#redactorQuoteAuthor').val();
+				quote.data('author', $author);
+				quote.attr('data-author', $author);
+				quote.prop('cite', WCF.String.escapeHTML($('#redactorQuoteLink').val()));
+				
+				this._updateQuoteHeader(quote);
+				
+				this.modalClose();
+			}, this));
+		}, this));
+	},
+	
+	_updateQuoteHeader: function(quote) {
+		var $author = quote.data('author');
+		var $link = quote.attr('cite');
+		if ($link) $link = WCF.String.escapeHTML($link);
+		
+		quote.find('> div > header > h3').empty().append(this._buildQuoteHeader($author, $link));	
+	},
+	
+	insertQuoteBBCode: function(author, link) {
+		if (this.inWysiwygMode()) {
+			var $html = '<blockquote class="quoteBox" cite="' + $link + '" data-author="' + $author + '">'
+					+ '<div class="container containerPadding">'
+						+ '<header data-ignore="true">'
+							+ '<h3>'
+								+ this._buildQuoteHeader(author, link)
+							+ '</h3>'
+							+ '<a class="redactorQuoteEdit"></a>'
+						+ '</header>';
+						+ '<div id="redactorInsertedQuote">' + this.opts.invisibleSpace + '</div>'
+					+ '</div>'
+				+ '</blockquote>';
+			
+			this.insertHtml($html);
+		}
+		else {
+			var $bbcode = '[quote][/quote]';
+			if (author) {
+				if (link) {
+					$bbcode = "[quote='" + author + "','" + link + "']";
+				}
+				else {
+					$bbcode = "[quote='" + author + "'][/quote]";
+				}
+			}
+			
+			this.insertAtCaret($bbcode);
+		}
+	},
+	
+	_buildQuoteHeader: function(author, link) {
+		var $header = '';
+		// author is empty, check if link was provided and use it instead
+		if (!author && link) {
+			author = link;
+			link = '';
+		}
+		
+		if (author) {
+			if (link) $header += '<a href="' + link + '">';
+			
+			$header += WCF.Language.get('wcf.bbcode.quote.title.javascript', { quoteAuthor: WCF.String.unescapeHTML(author) });
+			
+			if (link) $header += '</a>';
+		}
+		else {
+			$header = '<small>' + WCF.Language.get('wcf.bbcode.quote.title.clickToSet') + '</small>';
+		}
+		
+		return $header;
 	}
 };

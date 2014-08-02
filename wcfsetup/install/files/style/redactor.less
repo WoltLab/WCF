@@ -104,6 +104,20 @@
 			vertical-align: top;
 		}
 	}
+	
+	blockquote > div > header {
+		position: relative;
+		
+		> .redactorQuoteEdit {
+			bottom: -7px;
+			left: -14px;
+			right: -14px;
+			top: -14px;
+			padding-top: 14px;
+			padding-left: 14px;
+			position: absolute;
+		}
+	}
 }
 
 .redactor_toolbar {
@@ -349,5 +363,21 @@
 	&.active {
 		background-color: #CEF6CE;
 		border-color: #04B404;
+	}
+}
+
+.redactor-link-tooltip {
+	background-color: @wcfTooltipBackgroundColor;
+	border-radius: 6px;
+	color: @wcfTooltipColor;
+	font-size: @wcfSmallFontSize;
+	padding: 5px 10px 7px;
+	position: absolute;
+	z-index: 800;
+	
+	.boxShadow(0, 3px, rgba(0, 0, 0, .3), 7px);
+	
+	> a {
+		color: @wcfTooltipColor;
 	}
 }

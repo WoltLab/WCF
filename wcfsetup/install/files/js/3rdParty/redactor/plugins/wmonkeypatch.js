@@ -308,39 +308,21 @@ RedactorPlugins.wmonkeypatch = {
 			+ '</div>'
 		);
 		
-		$.extend( this.opts, {
-			modal_file: String()
-			+ '<section id="redactor-modal-file-insert">'
-				+ '<div id="redactor-progress" class="redactor-progress-inline" style="display: none;"><span></span></div>'
-				+ '<form id="redactorUploadFileForm" method="post" action="" enctype="multipart/form-data">'
-					+ '<label>' + this.opts.curLang.filename + '</label>'
-					+ '<input type="text" id="redactor_filename" class="redactor_input" />'
-					+ '<div style="margin-top: 7px;">'
-						+ '<input type="file" id="redactor_file" name="' + this.opts.fileUploadParam + '" />'
-					+ '</div>'
-				+ '</form>'
-			+ '</section>',
-			// img edit
-			
-			// img
-
-			// link
-			
-			// table
-			
-			modal_video: String()
-			+ '<section id="redactor-modal-video-insert">'
-				+ '<form id="redactorInsertVideoForm">'
-					+ '<label>' + this.opts.curLang.video_html_code + '</label>'
-					+ '<textarea id="redactor_insert_video_area" style="width: 99%; height: 160px;"></textarea>'
-				+ '</form>'
-			+ '</section>'
-			+ '<footer>'
-				+ '<button class="redactor_modal_btn redactor_btn_modal_close">' + this.opts.curLang.cancel + '</button>'
-				+ '<button id="redactor_insert_video_btn" class="redactor_modal_btn redactor_modal_action_btn">' + this.opts.curLang.insert + '</button>'
-			+ '</footer>'
-
-		});
+		this.setOption('modal_quote',
+			'<fieldset>'
+				+ '<dl>'
+					+ '<dt><label for="redactorQuoteAuthor">' + WCF.Language.get('wcf.bbcode.quote.edit.author') + '</label></dt>'
+					+ '<dd><input type="text" id="redactorQuoteAuthor" class="long" /></dd>'
+				+ '</dl>'
+				+ '<dl>'
+					+ '<dt><label for="redactorQuoteLink">' + WCF.Language.get('wcf.bbcode.quote.edit.link') + '</label></dt>'
+					+ '<dd><input type="text" id="redactorQuoteLink" class="long" /></dd>'
+				+ '</dl>'
+			+ '</fieldset>'
+			+ '<div class="formSubmit">'
+				+ '<button id="redactorEditQuote">' + this.opts.curLang.save + '</button>'
+			+ '</div>'
+		);
 	},
 	
 	mpModalInit: function() {
@@ -453,5 +435,19 @@ RedactorPlugins.wmonkeypatch = {
 		else {
 			this.modalClose();
 		}
-	}
+	},
+	
+	observeLinks: function() {
+		this.$editor.find('a:not(.redactorQuoteEdit)').on('click', $.proxy(this.linkObserver, this));
+		
+		this.$editor.on('click.redactor', $.proxy(function(e)
+		{
+			this.linkObserverTooltipClose(e);
+		}, this));
+		
+		$(document).on('click.redactor', $.proxy(function(e)
+		{
+			this.linkObserverTooltipClose(e);
+		}, this));
+	},
 };
