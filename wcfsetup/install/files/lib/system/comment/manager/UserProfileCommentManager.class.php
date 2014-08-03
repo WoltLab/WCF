@@ -6,7 +6,6 @@ use wcf\data\comment\Comment;
 use wcf\data\comment\CommentList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
-use wcf\data\user\UserProfileList;
 use wcf\system\like\IViewableLikeProvider;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -177,10 +176,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 			}
 		}
 		if (!empty($userIDs)) {
-			$userList = new UserProfileList();
-			$userList->getConditionBuilder()->add("user_table.userID IN (?)", array($userIDs));
-			$userList->readObjects();
-			$users = $userList->getObjects();
+			$users = UserProfile::getUserProfiles(array_unique($userIDs));
 		}
 		
 		// set message
