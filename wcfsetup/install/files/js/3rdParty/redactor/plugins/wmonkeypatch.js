@@ -484,7 +484,7 @@ RedactorPlugins.wmonkeypatch = {
 	mpBuildEventKeydownBackspace: function(event, current, parent) {
 		var $value = $.trim((current.textContent) ? current.textContent : current.innerText);
 		
-		if ($value == '' && parent.parentNode.tagName == 'BLOCKQUOTE') {
+		if ($value == '' && parent.parentNode && parent.parentNode.tagName == 'BLOCKQUOTE') {
 			var $parentNode = parent.parentNode.parentNode;
 			$(parent.parentNode).remove();
 			this.selectionStart($parentNode);

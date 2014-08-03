@@ -858,25 +858,39 @@ RedactorPlugins.wbbcode = {
 	 * @param	boolean		insertQuote
 	 */
 	_openQuoteEditOverlay: function(quote, insertQuote) {
-		this.modalInit(WCF.Language.get('wcf.bbcode.quote.' + (insertQuote ? 'insert' : 'edit')), this.opts.modal_quote, 300, $.proxy(function() {
-			if (!insertQuote) {
-				$('#redactorQuoteAuthor').val(quote.data('author'));
-				
-				// do not use prop() here, an empty cite attribute would yield the page URL instead
-				$('#redactorQuoteLink').val(quote.attr('cite'));
-			}
-			
-			$('#redactorEditQuote').click($.proxy(function() {
-				var $author = $('#redactorQuoteAuthor').val();
-				quote.data('author', $author);
-				quote.attr('data-author', $author);
-				quote.prop('cite', WCF.String.escapeHTML($('#redactorQuoteLink').val()));
-				
-				this._updateQuoteHeader(quote);
-				
-				this.modalClose();
+		if (insertQuote) {
+			this.modalInit(WCF.Language.get('wcf.bbcode.quote.insert'), this.opts.modal_quote, 300, $.proxy(function() {
+				$('#redactorEditQuote').click($.proxy(function() {
+					var $author = $('#redactorQuoteAuthor').val();
+					var $link = WCF.String.escapeHTML($('#redactorQuoteLink').val())
+					
+					this.insertQuoteBBCode($author, $link);
+					
+					this.modalClose();
+				}, this));
 			}, this));
-		}, this));
+		}
+		else {
+			this.modalInit(WCF.Language.get('wcf.bbcode.quote.edit'), this.opts.modal_quote, 300, $.proxy(function() {
+				if (!insertQuote) {
+					$('#redactorQuoteAuthor').val(quote.data('author'));
+					
+					// do not use prop() here, an empty cite attribute would yield the page URL instead
+					$('#redactorQuoteLink').val(quote.attr('cite'));
+				}
+				
+				$('#redactorEditQuote').click($.proxy(function() {
+					var $author = $('#redactorQuoteAuthor').val();
+					quote.data('author', $author);
+					quote.attr('data-author', $author);
+					quote.prop('cite', WCF.String.escapeHTML($('#redactorQuoteLink').val()));
+					
+					this._updateQuoteHeader(quote);
+					
+					this.modalClose();
+				}, this));
+			}, this));
+		}
 	},
 	
 	/**
@@ -900,19 +914,25 @@ RedactorPlugins.wbbcode = {
 	 */
 	insertQuoteBBCode: function(author, link) {
 		if (this.inWysiwygMode()) {
-			var $html = '<blockquote class="quoteBox" cite="' + $link + '" data-author="' + $author + '">'
+			var $html = '<blockquote class="quoteBox" cite="' + link + '" data-author="' + author + '" id="redactorInsertedQuote">'
 					+ '<div class="container containerPadding">'
 						+ '<header data-ignore="true">'
 							+ '<h3>'
 								+ this._buildQuoteHeader(author, link)
 							+ '</h3>'
 							+ '<a class="redactorQuoteEdit"></a>'
-						+ '</header>';
-						+ '<div id="redactorInsertedQuote">' + this.opts.invisibleSpace + '</div>'
+						+ '</header>'
 					+ '</div>'
 				+ '</blockquote>';
 			
 			this.insertHtml($html);
+			
+			var $quote = $('#redactorInsertedQuote');
+			var $container = $('<div>' + this.opts.invisibleSpace + '</div>').insertAfter($quote.find('> div > header'));
+			$quote.removeAttr('id');
+			
+			this.selectionStart($container[0]);
+			this._observeQuotes();
 		}
 		else {
 			var $bbcode = '[quote][/quote]';
