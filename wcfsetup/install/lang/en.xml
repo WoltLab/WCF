@@ -2115,8 +2115,8 @@ Errors are:
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
 		<item name="wcf.like.likes.more"><![CDATA[TODO: Weitere Likes]]></item>
 		<item name="wcf.like.likes.noMoreEntries"><![CDATA[TODO: Keine weiteren Likes]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[TODO: Mag den Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[TODO: Mag die Antwort von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a> zum Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[TODO: Mag den Kommentar {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">von {$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[TOOD: Mag die Antwort {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">von {$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{else}eines Gasts{/if}{if $like->isDislike()} nicht{/if}.]]></item>
 	</category>
 	
 	<category name="wcf.message">

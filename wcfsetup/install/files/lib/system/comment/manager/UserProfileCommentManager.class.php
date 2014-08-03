@@ -186,12 +186,12 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 				if (isset($comments[$like->objectID])) {
 					$comment = $comments[$like->objectID];
 					
-					if (isset($users[$comment->objectID]) && isset($users[$comment->userID]) && !$users[$comment->objectID]->isProtected()) {
+					if (isset($users[$comment->objectID]) && !$users[$comment->objectID]->isProtected()) {
 						$like->setIsAccessible();
 						
 						// short output
 						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment', array(
-							'commentAuthor' => $users[$comment->userID],
+							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'user' => $users[$comment->objectID],
 							'like' => $like
 						));
@@ -208,13 +208,13 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 					$response = $responses[$like->objectID];
 					$comment = $comments[$response->commentID];
 					
-					if (isset($users[$comment->objectID]) && isset($users[$comment->userID]) && isset($users[$response->userID]) && !$users[$comment->objectID]->isProtected()) {
+					if (isset($users[$comment->objectID]) && !$users[$comment->objectID]->isProtected()) {
 						$like->setIsAccessible();
 					
 						// short output
 						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment.response', array(
-							'responseAuthor' => $users[$response->userID],
-							'commentAuthor' => $users[$comment->userID],
+							'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
+							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'user' => $users[$comment->objectID],
 							'like' => $like
 						));

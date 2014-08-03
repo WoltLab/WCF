@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\like;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\like\IViewableLikeProvider;
 
@@ -39,7 +40,7 @@ class ViewableLikeList extends LikeList {
 		$userIDs = array();
 		$likeGroups = array();
 		foreach ($this->objects as &$like) {
-			$userIDs[] = $like->objectUserID;
+			$userIDs[] = $like->userID;
 			$like = new ViewableLike($like);
 			
 			if (!isset($likeGroups[$like->objectTypeID])) {
@@ -60,7 +61,7 @@ class ViewableLikeList extends LikeList {
 			
 			$users = UserProfile::getUserProfiles($userIDs);
 			foreach ($this->objects as $like) {
-				$like->setUserProfile($users[$like->objectUserID]);
+				$like->setUserProfile($users[$like->userID]);
 			}
 		}
 		
