@@ -118,8 +118,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 			
 			// delete notifications
 			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.notification')) {
-				UserNotificationHandler::getInstance()->deleteNotifications('commentResponse', $objectType->objectType.'.response.notification', array(), $objectIDs);
-				UserNotificationHandler::getInstance()->deleteNotifications('commentResponseOwner', $objectType->objectType.'.response.notification', array(), $objectIDs);
+				UserNotificationHandler::getInstance()->removeNotifications($objectType->objectType.'.response.notification',$objectIDs);
 			}
 			
 			$likeObjectIDs = array_merge($likeObjectIDs, $objectIDs);
