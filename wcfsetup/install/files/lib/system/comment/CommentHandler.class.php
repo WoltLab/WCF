@@ -144,7 +144,7 @@ class CommentHandler extends SingletonFactory {
 		}
 		// delete notifications
 		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.notification')) {
-			UserNotificationHandler::getInstance()->removeNotifications('comment', $objectTypeObj->objectType.'.notification', array(), $commentIDs);
+			UserNotificationHandler::getInstance()->removeNotifications($objectTypeObj->objectType.'.notification', $commentIDs);
 		}
 		
 		if (!empty($responseIDs)) {
@@ -157,8 +157,7 @@ class CommentHandler extends SingletonFactory {
 			}
 			// delete notifications (for responses)
 			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.response.notification')) {
-				UserNotificationHandler::getInstance()->removeNotifications('commentResponse', $objectTypeObj->objectType.'.response.notification', array(), $responseIDs);
-				UserNotificationHandler::getInstance()->removeNotifications('commentResponseOwner', $objectTypeObj->objectType.'.response.notification', array(), $responseIDs);
+				UserNotificationHandler::getInstance()->removeNotifications($objectTypeObj->objectType.'.response.notification', $responseIDs);
 			}
 		}
 		
