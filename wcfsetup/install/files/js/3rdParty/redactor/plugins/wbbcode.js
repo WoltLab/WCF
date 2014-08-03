@@ -429,7 +429,7 @@ RedactorPlugins.wbbcode = {
 		
 		// trim whitespaces within quote tags
 		html = html.replace(/\[quote([^\]]+)?\](.*?)\[\/quote\]/, function(match, attributes, content) {
-			return '[quote' + attributes + ']' + $.trim(content) + '[/quote]';
+			return '[quote' + (attributes || '') + ']' + $.trim(content) + '[/quote]';
 		});
 		
 		// insert codes
@@ -439,7 +439,6 @@ RedactorPlugins.wbbcode = {
 				html = html.replace($regex, $cachedCodes[$key]);
 			}
 		}
-		
 		this.$source.val(html);
 	},
 	
@@ -618,14 +617,13 @@ RedactorPlugins.wbbcode = {
 			return quotedString.replace(/^['"]/, '').replace(/['"]$/, '');
 		};
 		
-		data = data.replace(/\[quote([^\]]+)?\]/gi, function(match, attributes) {
-			var $quote = '<blockquote class="quoteBox" cite="" data-author="">';
+		data = data.replace(/\[quote([^\]]+)?\]/gi, $.proxy(function(match, attributes) {
+			var $author = '';
+			var $link = '';
 			
 			if (attributes) {
 				attributes = attributes.substr(1);
 				attributes = attributes.split(',');
-				var $author = '';
-				var $link = '';
 				
 				switch (attributes.length) {
 					case 1:
@@ -640,21 +638,20 @@ RedactorPlugins.wbbcode = {
 				
 				$author = WCF.String.escapeHTML($unquoteString($.trim($author)));
 				$link = WCF.String.escapeHTML($unquoteString($.trim($link)));
-				
-				$quote = '<blockquote class="quoteBox" cite="' + $link + '" data-author="' + $author + '">';
-				$quote += '<div class="container containerPadding">'
-						+ '<header data-ignore="true">'
-							+ '<h3>'
-								+ ($link ? '<a href="' + $link + '">' : '') + WCF.Language.get('wcf.bbcode.quote.title.javascript', { quoteAuthor: WCF.String.unescapeHTML($author) }) + ($link ? '</a>' : '')
-							+ '</h3>'
-							+ '<a class="redactorQuoteEdit"></a>'
-						+ '</header>';
 			}
 			
-			$quote += '<div>';
-			
+			var $quote = '<blockquote class="quoteBox" cite="' + $link + '" data-author="' + $author + '">'
+				+ '<div class="container containerPadding">'
+					+ '<header data-ignore="true">'
+						+ '<h3>'
+							+ this._buildQuoteHeader($author, $link)
+						+ '</h3>'
+						+ '<a class="redactorQuoteEdit"></a>'
+					+ '</header>'
+					+ '<div>';
+			console.debug($quote);
 			return $quote;
-		});
+		}, this));
 		data = data.replace(/\[\/quote\]/gi, '</div></div></blockquote>');
 		
 		data = data.replace(/<p><blockquote/gi, '<blockquote');
@@ -866,7 +863,7 @@ RedactorPlugins.wbbcode = {
 			var $bbcode = '[quote][/quote]';
 			if (author) {
 				if (link) {
-					$bbcode = "[quote='" + author + "','" + link + "']";
+					$bbcode = "[quote='" + author + "','" + link + "'][/quote]";
 				}
 				else {
 					$bbcode = "[quote='" + author + "'][/quote]";
