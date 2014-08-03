@@ -321,7 +321,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	}
 	
 	/**
-	 * Copies a poll from one object id to another.
+	 * Copies likes from one object id to another.
 	 */
 	public function copy() {
 		$sourceObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', $this->parameters['sourceObjectType']);
