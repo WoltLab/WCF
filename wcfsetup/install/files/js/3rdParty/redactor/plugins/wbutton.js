@@ -112,20 +112,31 @@ RedactorPlugins.wbutton = {
 	 */
 	_insertBBCode: function(buttonName, buttonDOM, buttonObj, event) {
 		var $bbcode = this._bbcodes[buttonName];
-		var $selectedHtml = this.getSelectionHtml();
+		var $eventData = {
+			buttonName: buttonName,
+			buttonDOM: buttonDOM,
+			buttonObj: buttonObj,
+			event: event,
+			cancel: false
+		};
 		
-		if ($bbcode === 'tt') {
-			var $parent = (this.getParent()) ? $(this.getParent()) : null;
-			if ($parent && $parent.closest('inline.inlineCode', this.$editor.get()[0]).length) {
-				this.inlineRemoveClass('inlineCode');
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'insertBBCode_' + $bbcode + '_' + this.$source.wcfIdentify(), $eventData);
+		
+		if ($eventData.cancel === false) {
+			var $selectedHtml = this.getSelectionHtml();
+			
+			if ($bbcode === 'tt') {
+				var $parent = (this.getParent()) ? $(this.getParent()) : null;
+				if ($parent && $parent.closest('inline.inlineCode', this.$editor.get()[0]).length) {
+					this.inlineRemoveClass('inlineCode');
+				}
+				else {
+					this.inlineSetClass('inlineCode');
+				}
 			}
 			else {
-				this.inlineSetClass('inlineCode');
+				this.insertHtml('[' + $bbcode + ']' + $selectedHtml + '[/' + $bbcode + ']');
 			}
-		}
-		else {
-			this.insertHtml('[' + $bbcode + ']' + $selectedHtml + '[/' + $bbcode + ']');
-			this.sync();
 		}
 		
 		event.preventDefault();

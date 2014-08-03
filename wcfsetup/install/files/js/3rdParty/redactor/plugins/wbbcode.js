@@ -58,6 +58,13 @@ RedactorPlugins.wbbcode = {
 			// toggle dropdown options
 			$tableButton.click($.proxy(this._tableButtonClick, this));
 		}
+		
+		// handle 'insert quote' button
+		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'insertBBCode_quote_' + this.$source.wcfIdentify(), $.proxy(function(data) {
+			data.cancel = true;
+			
+			this._handleInsertQuote();
+		}, this));
 	},
 	
 	/**
@@ -830,7 +837,7 @@ RedactorPlugins.wbbcode = {
 		$('<a href="#">' + WCF.Language.get('wcf.bbcode.quote.edit') + '</a>').click($.proxy(function(e) {
 			e.preventDefault();
 			
-			this._openQuoteEditOverlay($(event.currentTarget).closest('blockquote.quoteBox'));
+			this._openQuoteEditOverlay($(event.currentTarget).closest('blockquote.quoteBox'), false);
 			$('.redactor-link-tooltip').remove();
 		}, this)).appendTo($tooltip);
 		
@@ -848,13 +855,16 @@ RedactorPlugins.wbbcode = {
 	 * Opens the quote source edit dialog.
 	 * 
 	 * @param	jQuery		quote
+	 * @param	boolean		insertQuote
 	 */
-	_openQuoteEditOverlay: function(quote) {
-		this.modalInit(WCF.Language.get('wcf.bbcode.quote.edit'), this.opts.modal_quote, 300, $.proxy(function() {
-			$('#redactorQuoteAuthor').val(quote.data('author'));
-			
-			// do not use prop() here, an empty cite attribute would yield the page URL instead
-			$('#redactorQuoteLink').val(quote.attr('cite'));
+	_openQuoteEditOverlay: function(quote, insertQuote) {
+		this.modalInit(WCF.Language.get('wcf.bbcode.quote.' + (insertQuote ? 'insert' : 'edit')), this.opts.modal_quote, 300, $.proxy(function() {
+			if (!insertQuote) {
+				$('#redactorQuoteAuthor').val(quote.data('author'));
+				
+				// do not use prop() here, an empty cite attribute would yield the page URL instead
+				$('#redactorQuoteLink').val(quote.attr('cite'));
+			}
 			
 			$('#redactorEditQuote').click($.proxy(function() {
 				var $author = $('#redactorQuoteAuthor').val();
@@ -946,5 +956,9 @@ RedactorPlugins.wbbcode = {
 		}
 		
 		return $header;
+	},
+	
+	_handleInsertQuote: function() {
+		this._openQuoteEditOverlay(null, true);
 	}
 };

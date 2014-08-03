@@ -108,6 +108,16 @@ RedactorPlugins.wmonkeypatch = {
 			$mpImageSave.call(self, el);
 		};
 		
+		// backspace
+		var $mpBuildEventKeydownBackspace = this.buildEventKeydownBackspace;
+		this.buildEventKeydownBackspace = function(e, current, parent) {
+			if ($mpBuildEventKeydownBackspace.call(self, e, current, parent) !== false) {
+				return self.mpBuildEventKeydownBackspace(e, current, parent);
+			}
+			
+			return false;
+		};
+		
 		this.setOption('modalOpenedCallback', $.proxy(this.modalOpenedCallback, this));
 		this.setOption('dropdownShowCallback', $.proxy(this.dropdownShowCallback, this));
 		
@@ -140,6 +150,13 @@ RedactorPlugins.wmonkeypatch = {
 		}
 		else {
 			this.$toolbar.find('a.re-__wcf_tt').removeClass('redactor_act');
+		}
+		
+		if (parent && parent.closest('blockquote.quoteBox', this.$editor.get()[0]).length != 0) {
+			this.$toolbar.find('a.re-__wcf_quote').addClass('redactor_button_disabled');
+		}
+		else {
+			this.$toolbar.find('a.re-__wcf_quote').removeClass('redactor_button_disabled');
 		}
 	},
 	
@@ -437,6 +454,11 @@ RedactorPlugins.wmonkeypatch = {
 		}
 	},
 	
+	/**
+	 * Overwrites $.Redactor.observeLinks() to prevent quote headers being recognized as ordinary URLs.
+	 * 
+	 * @see	$.Redactor.observeLinks()
+	 */
 	observeLinks: function() {
 		this.$editor.find('a:not(.redactorQuoteEdit)').on('click', $.proxy(this.linkObserver, this));
 		
@@ -450,4 +472,24 @@ RedactorPlugins.wmonkeypatch = {
 			this.linkObserverTooltipClose(e);
 		}, this));
 	},
+	
+	/**
+	 * Handles deletion of quotes in design mode.
+	 * 
+	 * @param	object		event
+	 * @param	object		current
+	 * @param	object		parent
+	 * @return	boolean
+	 */
+	mpBuildEventKeydownBackspace: function(event, current, parent) {
+		var $value = $.trim((current.textContent) ? current.textContent : current.innerText);
+		
+		if ($value == '' && parent.parentNode.tagName == 'BLOCKQUOTE') {
+			var $parentNode = parent.parentNode.parentNode;
+			$(parent.parentNode).remove();
+			this.selectionStart($parentNode);
+			
+			return false;
+		}
+	}
 };
