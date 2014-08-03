@@ -2115,6 +2115,8 @@ Errors are:
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
 		<item name="wcf.like.likes.more"><![CDATA[TODO: Weitere Likes]]></item>
 		<item name="wcf.like.likes.noMoreEntries"><![CDATA[TODO: Keine weiteren Likes]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[TODO: Mag den Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[TODO: Mag die Antwort von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a> zum Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
 	</category>
 	
 	<category name="wcf.message">
@@ -2888,8 +2890,6 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[Wrote a comment on <a href="{link controller='User' object=$user}{/link}#wall">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on <a href="{link controller='User' object=$user}{/link}#wall">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.user.profile.report"><![CDATA[Report User Profile]]></item>
-		<item name="wcf.user.profile.likes.profileComment"><![CDATA[TODO: Mag den Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
-		<item name="wcf.user.profile.likes.profileCommentResponse"><![CDATA[TODO: Mag die Antwort von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a> zum Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> an der <a href="{link controller='User' object=$user}{/link}#wall">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
 		<item name="wcf.user.profile.protected"><![CDATA[This member limits who may view their full profile information.]]></item>
 	</category>
 	
