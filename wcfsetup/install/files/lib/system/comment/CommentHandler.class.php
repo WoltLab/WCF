@@ -136,7 +136,12 @@ class CommentHandler extends SingletonFactory {
 		$responseIDs = $responseList->getObjectIDs();
 		
 		// delete likes
-		LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment', $commentIDs);
+		$notificationObjectTypes = array();
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.like.notification')) {
+			$notificationObjectTypes[] = $objectTypeObj->objectType.'.like.notification';
+		}
+		
+		LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment', $commentIDs, $notificationObjectTypes);
 		
 		// delete activity events
 		if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.recentActivityEvent')) {
@@ -149,7 +154,12 @@ class CommentHandler extends SingletonFactory {
 		
 		if (!empty($responseIDs)) {
 			// delete likes (for responses)
-			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment.response', $responseIDs);
+			$notificationObjectTypes = array();
+			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.response.like.notification')) {
+				$notificationObjectTypes[] = $objectTypeObj->objectType.'.response.like.notification';
+			}
+			
+			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment.response', $responseIDs, $notificationObjectTypes);
 			
 			// delete activity events (for responses)
 			if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.response.recentActivityEvent')) {
