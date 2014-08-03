@@ -1,7 +1,7 @@
 <div class="container codeBox {$highlighter|get_class|substr:30|lcfirst}{if $lines > 10} minimized{/if}">
 	<div>
 		<div>
-			<h3>{@$highlighter->getTitle()}{if $filename}: {@$filename}{/if}</h3>
+			<h3>{@$highlighter->getTitle()}{if $filename}: {$filename}{/if}</h3>
 		</div>
 		
 		<ol start="{$startLineNumber}">
