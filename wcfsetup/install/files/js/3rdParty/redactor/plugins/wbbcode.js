@@ -158,6 +158,8 @@ RedactorPlugins.wbbcode = {
 	_convertFromHtml: function() {
 		var html = this.$source.val();
 		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
+		
 		// drop all new lines
 		html = html.replace(/\r?\n/g, '');
 		
@@ -384,6 +386,8 @@ RedactorPlugins.wbbcode = {
 			return '@@' + $key + '@@';
 		});
 		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'convertFromHtml', { html: html });
+		
 		// Remove remaining tags.
 		html = html.replace(/<[^>]+>/g, '');
 		
@@ -432,6 +436,8 @@ RedactorPlugins.wbbcode = {
 			return '[quote' + (attributes || '') + ']' + $.trim(content) + '[/quote]';
 		});
 		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertFromHtml', { html: html });
+		
 		// insert codes
 		if ($.getLength($cachedCodes)) {
 			for (var $key in $cachedCodes) {
@@ -439,6 +445,7 @@ RedactorPlugins.wbbcode = {
 				html = html.replace($regex, $cachedCodes[$key]);
 			}
 		}
+		
 		this.$source.val(html);
 	},
 	
@@ -447,6 +454,8 @@ RedactorPlugins.wbbcode = {
 	 */
 	_convertToHtml: function() {
 		var data = this.$source.val();
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertToHtml', { data: data });
 		
 		// remove 0x200B (unicode zero width space)
 		data = this.removeZeroWidthSpace(data);
@@ -649,13 +658,15 @@ RedactorPlugins.wbbcode = {
 						+ '<a class="redactorQuoteEdit"></a>'
 					+ '</header>'
 					+ '<div>';
-			console.debug($quote);
+			
 			return $quote;
 		}, this));
 		data = data.replace(/\[\/quote\]/gi, '</div></div></blockquote>');
 		
 		data = data.replace(/<p><blockquote/gi, '<blockquote');
-		data = data.replace(/<\/blockquote><\/p>/, '</blockquote>');//<p>' + this.getOption('invisibleSpace') + '</p>');
+		data = data.replace(/<\/blockquote><\/p>/, '</blockquote>');
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 		
 		this.$source.val(data);
 	},
@@ -689,6 +700,8 @@ RedactorPlugins.wbbcode = {
 		// replace nested elements e.g. <div><p>...</p></div>
 		html = html.replace(/<(div|p)([^>]+)?><(div|p)([^>]+)?>/g, '<p>');
 		html = html.replace(/<\/(div|p)><\/(div|p)>/g, '</p>@@@wcf_break@@@');
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforePaste', { html: html });
 		
 		return html;
 	},
@@ -726,6 +739,8 @@ RedactorPlugins.wbbcode = {
 			match = match.replace(/data-mozilla-paste-image="0"/, 'data-mozilla-paste-image="0" style="display:none"');
 			return match;
 		});
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterPaste', { html: html });
 		
 		return html;
 	},
@@ -775,6 +790,12 @@ RedactorPlugins.wbbcode = {
 		return $data.imageAttachmentIDs;
 	},
 	
+	/**
+	 * Handles down key for quote boxes.
+	 * 
+	 * @param	object		event
+	 * @return	boolean
+	 */
 	_wKeydownCallback: function(event) {
 		if (event.which === this.keyCode.DOWN) {
 			var $parent = this.getParent();
@@ -790,10 +811,18 @@ RedactorPlugins.wbbcode = {
 		return true;
 	},
 	
+	/**
+	 * Initializes source editing for quotes.
+	 */
 	_observeQuotes: function() {
 		this.$editor.find('.redactorQuoteEdit:not(.jsRedactorQuoteEdit)').addClass('jsRedactorQuoteEdit').click($.proxy(this._observeQuotesClick, this));
 	},
 	
+	/**
+	 * Handles clicks on the 'edit quote' link.
+	 * 
+	 * @param	object		event
+	 */
 	_observeQuotesClick: function(event) {
 		var $header = $(event.currentTarget).closest('header');
 		var $tooltip = $('<span class="redactor-link-tooltip" />');
@@ -815,6 +844,11 @@ RedactorPlugins.wbbcode = {
 		$tooltip.appendTo(document.body);
 	},
 	
+	/**
+	 * Opens the quote source edit dialog.
+	 * 
+	 * @param	jQuery		quote
+	 */
 	_openQuoteEditOverlay: function(quote) {
 		this.modalInit(WCF.Language.get('wcf.bbcode.quote.edit'), this.opts.modal_quote, 300, $.proxy(function() {
 			$('#redactorQuoteAuthor').val(quote.data('author'));
@@ -835,6 +869,11 @@ RedactorPlugins.wbbcode = {
 		}, this));
 	},
 	
+	/**
+	 * Updates the quote's source.
+	 * 
+	 * @param	jQuery		quote
+	 */
 	_updateQuoteHeader: function(quote) {
 		var $author = quote.data('author');
 		var $link = quote.attr('cite');
@@ -843,6 +882,12 @@ RedactorPlugins.wbbcode = {
 		quote.find('> div > header > h3').empty().append(this._buildQuoteHeader($author, $link));	
 	},
 	
+	/**
+	 * Inserts the quote BBCode.
+	 * 
+	 * @param	string		author
+	 * @param	string		link
+	 */
 	insertQuoteBBCode: function(author, link) {
 		if (this.inWysiwygMode()) {
 			var $html = '<blockquote class="quoteBox" cite="' + $link + '" data-author="' + $author + '">'
@@ -874,6 +919,13 @@ RedactorPlugins.wbbcode = {
 		}
 	},
 	
+	/**
+	 * Builds the quote source HTML.
+	 * 
+	 * @param	string		author
+	 * @param	string		link
+	 * @return	string
+	 */
 	_buildQuoteHeader: function(author, link) {
 		var $header = '';
 		// author is empty, check if link was provided and use it instead
