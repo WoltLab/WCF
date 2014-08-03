@@ -156,7 +156,9 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 			
 			foreach ($responses as $response) {
 				$commentIDs[] = $response->commentID;
-				$userIDs[] = $response->userID;
+				if ($response->userID) {
+					$userIDs[] = $response->userID;
+				}
 			}
 		}
 		
@@ -170,7 +172,9 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 		$users = array();
 		foreach ($comments as $comment) {
 			$userIDs[] = $comment->objectID;
-			$userIDs[] = $comment->userID;
+			if ($comment->userID) {
+				$userIDs[] = $comment->userID;
+			}
 		}
 		if (!empty($userIDs)) {
 			$userList = new UserProfileList();
@@ -210,7 +214,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 					
 					if (isset($users[$comment->objectID]) && !$users[$comment->objectID]->isProtected()) {
 						$like->setIsAccessible();
-					
+						
 						// short output
 						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment.response', array(
 							'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
@@ -219,7 +223,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 							'like' => $like
 						));
 						$like->setTitle($text);
-					
+						
 						// output
 						$like->setDescription($response->getExcerpt());
 					}
