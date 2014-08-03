@@ -339,6 +339,9 @@ WCF.Like = Class.extend({
 				this._containerData[$containerID].likes = parseInt(data.returnValues.likes);
 				this._containerData[$containerID].dislikes = parseInt(data.returnValues.dislikes);
 				this._containerData[$containerID].users = data.returnValues.users;
+				$.each(this._containerData[$containerID].users, function(userID, userData) {
+					userData.username = WCF.String.escapeHTML(userData.username);
+				});
 				
 				// update label
 				this._updateBadge($containerID);
