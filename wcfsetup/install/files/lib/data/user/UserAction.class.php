@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\user;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserEditor;
@@ -8,6 +7,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
 use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
@@ -135,15 +135,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		// delete profile comments
 		if (!empty($this->objectIDs)) {
-			$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.comment.commentableContent', 'com.woltlab.wcf.user.profileComment');
-			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('objectTypeID = ?', array($objectType->objectTypeID));
-			$conditionBuilder->add('objectID IN (?)', array($this->objectIDs));
-			
-			$sql = "DELETE FROM	wcf".WCF_N."_comment
-				".$conditionBuilder;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditionBuilder->getParameters());
+			CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.user.profileComment', $this->objectIDs);
 		}
 		
 		$returnValue = parent::delete();
