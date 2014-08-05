@@ -491,5 +491,14 @@ RedactorPlugins.wmonkeypatch = {
 			
 			return false;
 		}
-	}
+	},
+	
+	/**
+	 * Overwrites $.Redactor.cleanGetTabs() to prevent HTML indentation.
+	 * 
+	 * @see	$.Redactor.cleanGetTabs()
+	 */
+	cleanGetTabs: function() {
+		return '';
+	},
 };

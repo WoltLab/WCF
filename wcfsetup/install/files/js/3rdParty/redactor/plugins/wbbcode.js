@@ -171,15 +171,15 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/\r?\n/g, '');
 		
 		// convert paragraphs into single lines
-		var $parts = html.split(/(<\/?p>)/);
+		var $parts = html.split(/(<\/?(?:div|p)>)/);
 		var $tmp = '';
 		var $buffer = '';
 		for (var $i = 0; $i < $parts.length; $i++) {
 			var $part = $parts[$i];
-			if ($part == '<p>') {
+			if ($part == '<p>' || $part == '<div>') {
 				continue;
 			}
-			else if ($part == '</p>') {
+			else if ($part == '</p>' || $part == '</div>') {
 				$buffer = $.trim($buffer);
 				if ($buffer != '@@@wcf_empty_line@@@') {
 					$buffer += "\n";
@@ -189,7 +189,7 @@ RedactorPlugins.wbbcode = {
 				$buffer = '';
 			}
 			else {
-				if ($i == 0) {
+				if ($i == 0 || $i + 1 == $parts.length) {
 					$tmp += $part;
 				}
 				else {
@@ -197,6 +197,12 @@ RedactorPlugins.wbbcode = {
 				}
 			}
 		}
+		
+		if ($buffer) {
+			$tmp += $buffer;
+			$buffer = '';
+		}
+		
 		html = $tmp;
 		
 		html = html.replace(/@@@wcf_empty_line@@@/g, '\n');
@@ -209,6 +215,24 @@ RedactorPlugins.wbbcode = {
 		// drop <br>, they are pointless because the editor already adds a newline after them
 		html = html.replace(/<br>/g, '');
 		html = html.replace(/&nbsp;/gi, " ");
+		
+		// [quote]
+		html = html.replace(/<blockquote class="quoteBox" cite="([^"]+)?" data-author="([^"]+)?">\n?<div[^>]+>\n?<header>[\s\S]*?<\/header>/gi, function(match, link, author, innerContent) {
+			var $quote;
+			
+			if (link) {
+				$quote = "[quote='" + author + "','" + link + "']";
+			}
+			else if (author) {
+				$quote = "[quote='" + author + "']";
+			}
+			else {
+				$quote = "[quote]";
+			}
+			
+			return $quote;
+		});
+		html = html.replace(/(?:\n*)<\/blockquote>/gi, '[/quote]\n');
 		
 		// [email]
 		html = html.replace(/<a [^>]*?href=(["'])mailto:(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[email=$2]$3[/email]');
@@ -254,20 +278,6 @@ RedactorPlugins.wbbcode = {
 		// [img]
 		html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1 style="float: (left|right)[^"]*".*?>/gi, "[img='$2',$3][/img]");
 		html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?>/gi, '[img]$2[/img]');
-		
-		// [quote]
-		html = html.replace(/<blockquote class="quoteBox" cite="([^"]+)?" data-author="([^"]+)?">/gi, function(match, link, author) {
-			if (link) {
-				return "[quote='" + author + "','" + link + "']";
-			}
-			else if (author) {
-				return "[quote='" + author + "']";
-			}
-			
-			return "[quote]";
-		});
-		html = html.replace(/<\/blockquote>/gi, '[/quote]');
-		html = html.replace(/<header data-ignore="true">.*?<\/header>/gi, '');
 		
 		// handle [color], [size], [font] and [tt]
 		var $components = html.split(/(<\/?span[^>]*>)/);
@@ -431,18 +441,6 @@ RedactorPlugins.wbbcode = {
 			});
 		}
 		
-		// trim leading tabs
-		var $tmp = html.split("\n");
-		for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
-			$tmp[$i] = $tmp[$i].replace(/^\s*/, '');
-		}
-		html = $tmp.join("\n");
-		
-		// trim whitespaces within quote tags
-		html = html.replace(/\[quote([^\]]+)?\](.*?)\[\/quote\]/, function(match, attributes, content) {
-			return '[quote' + (attributes || '') + ']' + $.trim(content) + '[/quote]';
-		});
-		
 		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertFromHtml', { html: html });
 		
 		// insert codes
@@ -594,7 +592,19 @@ RedactorPlugins.wbbcode = {
 		data = data.replace(/(javascript):/gi, '$1<span></span>:');
 		
 		// unify line breaks
-		data = data.replace(/(\r|\r\n)/, "\n");
+		data = data.replace(/(\r|\r\n)/g, "\n");
+		
+		// extract [quote] bbcodes to prevent line break handling below
+		var $cachedQuotes = { };
+		data = data.replace(/\[quote.*?\][\S\s]*?\[\/quote\]/gi, function(match) {
+			var $key = match.hashCode();
+			$cachedQuotes[$key] = match.replace(/\$/g, '$$$$');
+			return '@@' + $key + '@@';
+		});
+		
+		// add newlines before and after [quote] tags
+		data = data.replace(/(\[quote.*?\])/gi, '$1\n');
+		data = data.replace(/(\[\/quote\])/gi, '\n$1');
 		
 		// convert line breaks into <p></p> or empty lines to <p><br></p>
 		var $tmp = data.split("\n");
@@ -628,50 +638,69 @@ RedactorPlugins.wbbcode = {
 		// preserve leading whitespaces in [code] tags
 		data = data.replace(/\[code\][\S\s]*?\[\/code\]/, '<pre>$&</pre>');
 		
-		// [quote]
-		var $unquoteString = function(quotedString) {
-			return quotedString.replace(/^['"]/, '').replace(/['"]$/, '');
-		};
-		
-		data = data.replace(/\[quote([^\]]+)?\]/gi, $.proxy(function(match, attributes) {
-			var $author = '';
-			var $link = '';
+		// insert quotes
+		if ($.getLength($cachedQuotes)) {
+			// [quote]
+			var $unquoteString = function(quotedString) {
+				return quotedString.replace(/^['"]/, '').replace(/['"]$/, '');
+			};
 			
-			if (attributes) {
-				attributes = attributes.substr(1);
-				attributes = attributes.split(',');
-				
-				switch (attributes.length) {
-					case 1:
-						$author = attributes[0];
-					break;
+			var self = this;
+			var $transformQuote = function(quote) {
+				return quote.replace(/\[quote([^\]]+)?\]([\S\s]*)\[\/quote\]?/gi, $.proxy(function(match, attributes, innerContent) {
+					var $author = '';
+					var $link = '';
 					
-					case 2:
-						$author = attributes[0];
-						$link = attributes[1];
-					break;
-				}
-				
-				$author = WCF.String.escapeHTML($unquoteString($.trim($author)));
-				$link = WCF.String.escapeHTML($unquoteString($.trim($link)));
+					if (attributes) {
+						attributes = attributes.substr(1);
+						attributes = attributes.split(',');
+						
+						switch (attributes.length) {
+							case 1:
+								$author = attributes[0];
+							break;
+							
+							case 2:
+								$author = attributes[0];
+								$link = attributes[1];
+							break;
+						}
+						
+						$author = WCF.String.escapeHTML($unquoteString($.trim($author)));
+						$link = WCF.String.escapeHTML($unquoteString($.trim($link)));
+					}
+					
+					var $quote = '<blockquote class="quoteBox" cite="' + $link + '" data-author="' + $author + '">'
+						+ '<div class="container containerPadding">'
+							+ '<header>'
+								+ '<h3>'
+									+ self._buildQuoteHeader($author, $link)
+								+ '</h3>'
+								+ '<a class="redactorQuoteEdit"></a>'
+							+ '</header>';
+					
+					var $lines = innerContent.split('\n');
+					var $tmp = '';
+					for (var $i = 0; $i < $lines.length; $i++) {
+						$tmp += '<div>' + $lines[$i] + '</div>';
+					}
+					
+					if (!$tmp) {
+						$tmp = '<div>' + this.opts.invisibleSpace + '</div>';
+					}
+					
+					$quote += $tmp;
+					$quote += '</blockquote>';
+					
+					return $quote;
+				}, this));
+			};
+			
+			for (var $key in $cachedQuotes) {
+				var $regex = new RegExp('@@' + $key + '@@', 'g');
+				data = data.replace($regex, $transformQuote($cachedQuotes[$key]));
 			}
-			
-			var $quote = '<blockquote class="quoteBox" cite="' + $link + '" data-author="' + $author + '">'
-				+ '<div class="container containerPadding">'
-					+ '<header data-ignore="true">'
-						+ '<h3>'
-							+ this._buildQuoteHeader($author, $link)
-						+ '</h3>'
-						+ '<a class="redactorQuoteEdit"></a>'
-					+ '</header>'
-					+ '<div>';
-			
-			return $quote;
-		}, this));
-		data = data.replace(/\[\/quote\]/gi, '</div></div></blockquote>');
-		
-		data = data.replace(/<p><blockquote/gi, '<blockquote');
-		data = data.replace(/<\/blockquote><\/p>/, '</blockquote>');
+		}
 		
 		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 		
@@ -798,7 +827,7 @@ RedactorPlugins.wbbcode = {
 	},
 	
 	/**
-	 * Handles down key for quote boxes.
+	 * Handles up/down key for quote boxes.
 	 * 
 	 * @param	object		event
 	 * @return	boolean
@@ -810,6 +839,30 @@ RedactorPlugins.wbbcode = {
 			
 			if ($parent && $quote.length) {
 				this.insertAfterLastElement($(parent)[0], $quote[0]);
+			}
+			
+			return false;
+		}
+		else if (event.which === $.ui.keyCode.UP) {
+			var $parent = this.getParent();
+			var $quote = ($parent) ? $($parent).closest('blockquote.quoteBox', this.$editor.get()[0]) : { length: 0 };
+			
+			if ($parent && $quote.length) {
+				var $previousElement = $quote.prev();
+				if ($previousElement.length === 0) {
+					var $node = $(this.opts.emptyHtml);
+					$node.insertBefore($quote);
+					this.selectionStart($node);
+				}
+				else {
+					if ($previousElement[0].tagName === 'BLOCKQUOTE') {
+						// set focus to quote text rather than the element itself
+						this.selectionEnd($previousElement.find('> div > div'));
+					}
+					else {
+						this.selectionEnd($previousElement);
+					}
+				}
 			}
 			
 			return false;
@@ -916,7 +969,7 @@ RedactorPlugins.wbbcode = {
 		if (this.inWysiwygMode()) {
 			var $html = '<blockquote class="quoteBox" cite="' + link + '" data-author="' + author + '" id="redactorInsertedQuote">'
 					+ '<div class="container containerPadding">'
-						+ '<header data-ignore="true">'
+						+ '<header>'
 							+ '<h3>'
 								+ this._buildQuoteHeader(author, link)
 							+ '</h3>'
