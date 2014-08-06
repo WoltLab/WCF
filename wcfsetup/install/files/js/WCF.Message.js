@@ -3354,7 +3354,6 @@ WCF.Message.UserMention = Class.extend({
 		this._redactor = this._textarea.redactor('getObject');
 		
 		this._redactor.setOption('keyupCallback', $.proxy(this._keyup, this));
-		this._redactor.setOption('wkeydownCallback', $.proxy(this._keydown, this));
 		
 		this._dropdown = this._textarea.redactor('getEditor');
 		this._dropdownMenu = $('<ul class="dropdownMenu userSuggestionList" />').appendTo(this._textarea.parent());
@@ -3363,6 +3362,8 @@ WCF.Message.UserMention = Class.extend({
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
+		
+		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + wysiwygSelector, $.proxy(this._keydown, this));
 	},
 	
 	/**
@@ -3537,37 +3538,40 @@ WCF.Message.UserMention = Class.extend({
 	/**
 	 * Handles the keydown event to check if the user starts mentioning someone.
 	 * 
-	 * @param	object		event
+	 * @param	object		data
 	 */
-	_keydown: function(event) {
+	_keydown: function(data) {
 		if (this._redactor.inPlainMode()) {
-			return true;
+			return;
 		}
 		
 		if (this._dropdownMenu.is(':visible')) {
-			switch (event.which) {
+			switch (data.event.which) {
 				case $.ui.keyCode.ENTER:
-					event.preventDefault();
+					data.cancel = true;
+					data.event.preventDefault();
 					
 					this._dropdownMenu.children('li').eq(this._itemIndex).trigger('click');
 					
-					return false;
+					return;
 				break;
 				
 				case $.ui.keyCode.UP:
-					event.preventDefault();
+					data.cancel = true;
+					data.event.preventDefault();
 					
 					this._selectItem(this._itemIndex - 1);
 					
-					return false;
+					return;
 				break;
 				
 				case $.ui.keyCode.DOWN:
-					event.preventDefault();
+					data.cancel = true;
+					data.event.preventDefault();
 					
 					this._selectItem(this._itemIndex + 1);
 					
-					return false;
+					return;
 				break;
 			}
 		}

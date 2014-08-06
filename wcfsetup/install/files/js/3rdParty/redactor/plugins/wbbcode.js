@@ -12,6 +12,8 @@ RedactorPlugins.wbbcode = {
 	 * Initializes the RedactorPlugins.wbbcode plugin.
 	 */
 	init: function() {
+		var $identifier = this.$source.wcfIdentify();
+		
 		this.opts.initCallback = $.proxy(function() {
 			// use stored editor contents
 			var $content = $.trim(this.getOption('wOriginalValue'));
@@ -26,8 +28,6 @@ RedactorPlugins.wbbcode = {
 		
 		this.opts.pasteBeforeCallback = $.proxy(this._wPasteBeforeCallback, this);
 		this.opts.pasteAfterCallback = $.proxy(this._wPasteAfterCallback, this);
-		
-		this.opts.keydownCallback = $.proxy(this._wKeydownCallback, this);
 		
 		var $mpSyncClean = this.syncClean;
 		var self = this;
@@ -60,11 +60,14 @@ RedactorPlugins.wbbcode = {
 		}
 		
 		// handle 'insert quote' button
-		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'insertBBCode_quote_' + this.$source.wcfIdentify(), $.proxy(function(data) {
+		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'insertBBCode_quote_' + $identifier, $.proxy(function(data) {
 			data.cancel = true;
 			
 			this._handleInsertQuote();
 		}, this));
+		
+		// handle keydown
+		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + $identifier, $.proxy(this._wKeydownCallback, this));
 	},
 	
 	/**
@@ -829,27 +832,69 @@ RedactorPlugins.wbbcode = {
 	/**
 	 * Handles up/down key for quote boxes.
 	 * 
-	 * @param	object		event
-	 * @return	boolean
+	 * @param	object		data
 	 */
-	_wKeydownCallback: function(event) {
-		if (event.which === this.keyCode.DOWN) {
-			var $parent = this.getParent();
-			var $quote = ($parent) ? $($parent).closest('blockquote.quoteBox', this.$editor.get()[0]) : { length: 0 };
-			
-			if ($parent && $quote.length) {
-				this.insertAfterLastElement($(parent)[0], $quote[0]);
-			}
-			
-			return false;
+	_wKeydownCallback: function(data) {
+		if (data.event.which !== $.ui.keyCode.DOWN && data.event.which !== $.ui.keyCode.UP) {
+			return;
 		}
-		else if (event.which === $.ui.keyCode.UP) {
-			var $parent = this.getParent();
-			var $quote = ($parent) ? $($parent).closest('blockquote.quoteBox', this.$editor.get()[0]) : { length: 0 };
+		
+		var $current = $(this.getCurrent());
+		var $parent = this.getParent();
+		$parent = ($parent) ? $($parent) : $parent;
+		var $quote = ($parent) ? $parent.closest('blockquote.quoteBox', this.$editor.get()[0]) : { length: 0 };
+		console.clear();
+		console.debug($current);
+		console.debug($parent);
+		switch (data.event.which) {
+			// arrow down
+			case $.ui.keyCode.DOWN:
+				if ($parent) {
+					if ($quote.length) {
+						var $container = $current.closest('div', $quote[0]);
+						if (!$container.next().length) {
+							this.insertingAfterLastElement($quote);
+							console.debug("case#0");
+							
+							data.cancel = true;
+						}
+						else {
+							console.debug("case#1");
+						}
+					}
+					else if ($parent.next('blockquote.quoteBox').length) {
+						this.selectionStart($parent.next().find('> div > div:first'));
+						console.debug("case#2");
+						data.cancel = true;
+					}
+					else {
+						console.debug("case#3");
+					}
+				}
+				else if ($current.next('blockquote.quoteBox').length) {
+					this.selectionStart($current.next().find('> div > div:first'));
+					console.debug("case#4");
+					data.cancel = true;
+				}
+				else {
+					console.debug("case#5");
+				}
+			break;
 			
-			if ($parent && $quote.length) {
+			// arrow up
+			case $.ui.keyCode.UP:
+				if (!$parent || !$quote.length) {
+					return;
+				}
+				
+				var $container = $current.closest('div', $quote[0]);
+				if ($container.prev('div').length) {
+					return;
+				}
+				
 				var $previousElement = $quote.prev();
 				if ($previousElement.length === 0) {
+					console.debug("case#1");
 					var $node = $(this.opts.emptyHtml);
 					$node.insertBefore($quote);
 					this.selectionStart($node);
@@ -857,18 +902,21 @@ RedactorPlugins.wbbcode = {
 				else {
 					if ($previousElement[0].tagName === 'BLOCKQUOTE') {
 						// set focus to quote text rather than the element itself
-						this.selectionEnd($previousElement.find('> div > div'));
+						this.selectionEnd($previousElement.find('> div > div:last'));
 					}
 					else {
+						// focus is wrong if the previous element is empty (e.g. only a newline present)
+						if ($.trim($previousElement.html()) == '') {
+							$previousElement.html(this.opts.invisibleSpace);
+						}
+						
 						this.selectionEnd($previousElement);
 					}
 				}
-			}
-			
-			return false;
+				
+				data.cancel = true;
+			break;
 		}
-		
-		return true;
 	},
 	
 	/**
@@ -915,7 +963,7 @@ RedactorPlugins.wbbcode = {
 			this.modalInit(WCF.Language.get('wcf.bbcode.quote.insert'), this.opts.modal_quote, 300, $.proxy(function() {
 				$('#redactorEditQuote').click($.proxy(function() {
 					var $author = $('#redactorQuoteAuthor').val();
-					var $link = WCF.String.escapeHTML($('#redactorQuoteLink').val())
+					var $link = WCF.String.escapeHTML($('#redactorQuoteLink').val());
 					
 					this.insertQuoteBBCode($author, $link);
 					

@@ -20,6 +20,7 @@ RedactorPlugins.wmonkeypatch = {
 	 */
 	init: function() {
 		var self = this;
+		var $identifier = this.$source.wcfIdentify();
 		
 		var $mpIndentingStart = this.indentingStart;
 		this.indentingStart = function(cmd) {
@@ -28,11 +29,21 @@ RedactorPlugins.wmonkeypatch = {
 			}
 		};
 		
+		// keydown w/ event aborting through callback
 		var $mpBuildEventKeydown = this.buildEventKeydown;
 		this.buildEventKeydown = function(e) {
-			if (self.callback('wkeydown', e) !== false) {
-				$mpBuildEventKeydown.call(self, e);
+			var $eventData = {
+				cancel: false,
+				event: e
+			};
+			
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'keydown_' + $identifier, $eventData);
+			
+			if ($eventData.cancel !== true) {
+				return $mpBuildEventKeydown.call(self, e);
 			}
+			
+			return false;
 		};
 		
 		var $mpToggleCode = this.toggleCode;
