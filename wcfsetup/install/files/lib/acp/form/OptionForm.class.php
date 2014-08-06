@@ -55,7 +55,7 @@ class OptionForm extends AbstractOptionListForm {
 	public function readParameters() {
 		if (isset($_REQUEST['id'])) $this->categoryID = intval($_REQUEST['id']);
 		$this->category = new OptionCategory($this->categoryID);
-		if (!isset($this->category->categoryID)) {
+		if (!$this->category->categoryID) {
 			throw new IllegalLinkException();
 		}
 		$this->categoryName = $this->category->categoryName;
