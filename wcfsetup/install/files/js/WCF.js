@@ -2148,6 +2148,10 @@ WCF.Action.Proxy = Class.extend({
 			autoAbortPrevious: false
 		}, options);
 		
+		if (!URL_LEGACY_MODE) {
+			this.options.url = this.options.url.replace(/^index\.php\/(.*?)\/\?/, '?$1/&');
+		}
+		
 		this.confirmationDialog = null;
 		this.loading = null;
 		this._showLoadingOverlayOnce = false;

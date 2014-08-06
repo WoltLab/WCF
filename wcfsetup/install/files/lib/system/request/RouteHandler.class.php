@@ -35,7 +35,7 @@ class RouteHandler extends SingletonFactory {
 	 * current path info component
 	 * @var	string
 	 */
-	protected static $pathInfo = '';
+	protected static $pathInfo = null;
 	
 	/**
 	 * HTTP protocol, either 'http://' or 'https://'
@@ -260,26 +260,48 @@ class RouteHandler extends SingletonFactory {
 	 * @return	string
 	 */
 	public static function getPathInfo() {
-		if (empty(self::$pathInfo)) {
-			if (isset($_SERVER['PATH_INFO'])) {
-				self::$pathInfo = $_SERVER['PATH_INFO'];
+		if (self::$pathInfo === null) {
+			self::$pathInfo = '';
+			
+			// WCF 2.0: index.php/Foo/Bar/
+			if (URL_LEGACY_MODE) {
+				if (isset($_SERVER['PATH_INFO'])) {
+					self::$pathInfo = $_SERVER['PATH_INFO'];
+				}
+				else if (isset($_SERVER['ORIG_PATH_INFO'])) {
+					self::$pathInfo = $_SERVER['ORIG_PATH_INFO'];
+						
+					// in some configurations ORIG_PATH_INFO contains the path to the file
+					// if the intended PATH_INFO component is empty
+					if (!empty(self::$pathInfo)) {
+						if (isset($_SERVER['SCRIPT_NAME']) && (self::$pathInfo == $_SERVER['SCRIPT_NAME'])) {
+							self::$pathInfo = '';
+						}
+						
+						if (isset($_SERVER['PHP_SELF']) && (self::$pathInfo == $_SERVER['PHP_SELF'])) {
+							self::$pathInfo = '';
+						}
+						
+						if (isset($_SERVER['SCRIPT_URL']) && (self::$pathInfo == $_SERVER['SCRIPT_URL'])) {
+							self::$pathInfo = '';
+						}
+					}
+				}
 			}
-			else if (isset($_SERVER['ORIG_PATH_INFO'])) {
-				self::$pathInfo = $_SERVER['ORIG_PATH_INFO'];
-					
-				// in some configurations ORIG_PATH_INFO contains the path to the file
-				// if the intended PATH_INFO component is empty
-				if (!empty(self::$pathInfo)) {
-					if (isset($_SERVER['SCRIPT_NAME']) && (self::$pathInfo == $_SERVER['SCRIPT_NAME'])) {
-						self::$pathInfo = '';
+			else {
+				// WCF 2.1: ?Foo/Bar/
+				if (!empty($_SERVER['QUERY_STRING'])) {
+					$pos = mb_strpos($_SERVER['QUERY_STRING'], '&');
+					$route = '';
+					if ($pos === false) {
+						$route = $_SERVER['QUERY_STRING'];
+					}
+					else {
+						$route = mb_substr($_SERVER['QUERY_STRING'], 0, $pos);
 					}
 					
-					if (isset($_SERVER['PHP_SELF']) && (self::$pathInfo == $_SERVER['PHP_SELF'])) {
-						self::$pathInfo = '';
-					}
-					
-					if (isset($_SERVER['SCRIPT_URL']) && (self::$pathInfo == $_SERVER['SCRIPT_URL'])) {
-						self::$pathInfo = '';
+					if (mb_strpos($route, '=') === false) {
+						self::$pathInfo = $route;
 					}
 				}
 			}

@@ -301,12 +301,20 @@ class Route {
 			}
 		}
 		
-		if (!empty($link) && ($this->isACP() || !URL_OMIT_INDEX_PHP)) {
-			$link = 'index.php/' . $link;
+		if (URL_LEGACY_MODE) {
+			if (!empty($link) && ($this->isACP() || !URL_OMIT_INDEX_PHP)) {
+				$link = 'index.php/' . $link;
+			}
+		}
+		else {
+			if (!empty($link)) {
+				$link = '?' . $link;
+			}
 		}
 		
 		if (!empty($components)) {
-			$link .= '?' . http_build_query($components, '', '&');
+			if (strpos($link, '?') === false) $link .= '?';
+			$link .= http_build_query($components, '', '&');
 		}
 		
 		return $link;

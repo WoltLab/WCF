@@ -11,6 +11,7 @@
 		var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 		var TIME_NOW = {@TIME_NOW};
+		var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
 		//]]>
 	</script>
 	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>

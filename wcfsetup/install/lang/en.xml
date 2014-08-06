@@ -999,6 +999,12 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[TODO: Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[TODO: „index.php“ aus URLs entfernen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.url_legacy_mode"><![CDATA[Enable link compatibility mode]]></item>
+		<item name="wcf.acp.option.url_legacy_mode.description"><![CDATA[Enabling this option forces the system to use WoltLab Community Framework 2.0-compilant URLs and should only be used to ensure compatibility with legacy URLs:
+<ul class="nativeList">
+	<li>WCF 2.0: „index.php/Thread/123-Title/“</li>
+	<li>WCF 2.1+: „?Thread/123-Title/“</li>
+</ul>]]></item>
 		<item name="wcf.acp.option.module_ad"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha Type]]></item>
 		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Enable Captcha protection during registration]]></item>

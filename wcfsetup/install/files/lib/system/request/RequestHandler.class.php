@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\request;
-use wcf\system\application\AbstractApplication;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
@@ -169,10 +168,12 @@ class RequestHandler extends SingletonFactory {
 						// build URL, e.g. http://example.net/forum/
 						$url = FileUtil::addTrailingSlash(RouteHandler::getProtocol() . $applicationObject->domainName . RouteHandler::getPath());
 						
-						// add path info, e.g. index.php/Board/2/
-						$pathInfo = RouteHandler::getPathInfo();
-						if (!empty($pathInfo)) {
-							$url .= 'index.php' . $pathInfo;
+						if (URL_LEGACY_MODE) {
+							// add path info, e.g. index.php/Board/2/
+							$pathInfo = RouteHandler::getPathInfo();
+							if (!empty($pathInfo)) {
+								$url .= 'index.php' . $pathInfo;
+							}
 						}
 						
 						// query string, e.g. ?foo=bar
