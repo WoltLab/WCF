@@ -203,7 +203,7 @@ class Route {
 	protected function getParts($requestURL) {
 		$urlParts = preg_split('~(\/|\-|\_|\.)~', $requestURL);
 		foreach ($urlParts as $index => $part) {
-			if (empty($part)) {
+			if (!mb_strlen($part)) {
 				unset($urlParts[$index]);
 			}
 		}

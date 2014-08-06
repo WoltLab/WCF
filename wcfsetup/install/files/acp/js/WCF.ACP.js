@@ -2669,7 +2669,7 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 		// check if the selected ad location is bound to a specific page
 		if ($option.data('page')) {
 			// select the related page
-			this._pageControllers.val([this._pageControllers.children('option[data-object-type="' + $option.data('page') + '"]').val()]).change();
+			this._pageControllers.val([this._pageControllers.find('option[data-object-type="' + $option.data('page') + '"]').val()]).change();
 		}
 		else {
 			this._pageControllers.val([]).change();
