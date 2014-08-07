@@ -876,7 +876,9 @@ WCF.Dropdown = {
 			this._dropdowns[$containerID] = $dropdown;
 			this._menus[$containerID] = $dropdownMenu;
 			
-			$dropdownMenu.attr('data-source', $containerID);
+			if (!$container.match(/^wcf\d+$/)) {
+				$dropdownMenu.attr('data-source', $containerID);
+			}
 		}
 		
 		button.data('target', $containerID);
