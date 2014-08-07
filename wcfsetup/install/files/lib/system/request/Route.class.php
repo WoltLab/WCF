@@ -301,8 +301,8 @@ class Route {
 			}
 		}
 		
-		if (URL_LEGACY_MODE) {
-			if (!empty($link) && ($this->isACP() || !URL_OMIT_INDEX_PHP)) {
+		if (URL_LEGACY_MODE && !$this->isACP()) {
+			if (!empty($link) && !URL_OMIT_INDEX_PHP) {
 				$link = 'index.php/' . $link;
 			}
 		}

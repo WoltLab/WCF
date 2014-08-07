@@ -66,7 +66,7 @@ class LoginForm extends AbstractCaptchaForm {
 		}
 		else if (PACKAGE_ID == 1 && PACKAGE_ID != ApplicationHandler::getInstance()->getPrimaryApplication()->packageID) {
 			$application = ApplicationHandler::getInstance()->getPrimaryApplication();
-			HeaderUtil::redirect(RouteHandler::getProtocol() . $application->domainName . $application->domainPath . 'acp/index.php/Login/');
+			HeaderUtil::redirect(RouteHandler::getProtocol() . $application->domainName . $application->domainPath . 'acp/?Login/');
 			exit;
 		}
 		

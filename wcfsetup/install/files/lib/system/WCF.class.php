@@ -737,26 +737,36 @@ class WCF {
 	 * @return	string
 	 */
 	public static function getRequestURI() {
-		// resolve path and query components
-		$scriptName = $_SERVER['SCRIPT_NAME'];
-		$pathInfo = RouteHandler::getPathInfo();
-		if (empty($pathInfo)) {
-			// bug fix if URL omits script name and path
-			$scriptName = substr($scriptName, 0, strrpos($scriptName, '/'));
+		if (URL_LEGACY_MODE) {
+			// resolve path and query components
+			$scriptName = $_SERVER['SCRIPT_NAME'];
+			$pathInfo = RouteHandler::getPathInfo();
+			if (empty($pathInfo)) {
+				// bug fix if URL omits script name and path
+				$scriptName = substr($scriptName, 0, strrpos($scriptName, '/'));
+			}
+			
+			$path = str_replace('/index.php', '', str_replace($scriptName, '', $_SERVER['REQUEST_URI']));
+			if (!StringUtil::isUTF8($path)) {
+				$path = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $path);
+			}
+			$path = FileUtil::removeLeadingSlash($path);
+			$baseHref = self::getTPL()->get('baseHref');
+			
+			if (!empty($path) && mb_strpos($path, '?') !== 0) {
+				$baseHref .= 'index.php/';
+			}
+			
+			return $baseHref . $path;
 		}
-		
-		$path = str_replace('/index.php', '', str_replace($scriptName, '', $_SERVER['REQUEST_URI']));
-		if (!StringUtil::isUTF8($path)) {
-			$path = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $path);
+		else {
+			$queryString = $_SERVER['QUERY_STRING'];
+			if (!StringUtil::isUTF8($queryString)) {
+				$queryString = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $queryString);
+			}
+			
+			return self::getTPL()->get('baseHref') . ($queryString ? '?' . $queryString : '');
 		}
-		$path = FileUtil::removeLeadingSlash($path);
-		$baseHref = self::getTPL()->get('baseHref');
-		
-		if (!empty($path) && mb_strpos($path, '?') !== 0) {
-			$baseHref .= 'index.php/';
-		}
-		
-		return $baseHref . $path;
 	}
 	
 	/**
