@@ -118,7 +118,7 @@ class InstallPackageAction extends AbstractDialogAction {
 				$application = $statement->fetchObject('wcf\data\application\Application');
 				
 				// build redirect location
-				$location = $application->getPageURL() . 'acp/?PackageList/' . SID_ARG_1ST;
+				$location = $application->getPageURL() . 'acp/?PackageList/' . SID_ARG_2ND_NOT_ENCODED;
 				
 				WCF::resetZendOpcache();
 				
