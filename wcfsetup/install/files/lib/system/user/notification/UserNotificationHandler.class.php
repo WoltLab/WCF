@@ -385,10 +385,6 @@ class UserNotificationHandler extends SingletonFactory {
 				$notification->additionalData
 			);
 			
-			if (!$class->checkAccess()) {
-				continue;
-			}
-			
 			if (isset($authorToNotification[$notification->notificationID])) {
 				$eventAuthors = array();
 				foreach ($authorToNotification[$notification->notificationID] as $userID) {
@@ -416,6 +412,13 @@ class UserNotificationHandler extends SingletonFactory {
 			}
 			
 			$notifications[] = $data;
+		}
+		
+		// check access
+		foreach ($notifications as $index => $notificationData) {
+			if (!$notificationData['event']->checkAccess()) {
+				unset($notifications[$index]);
+			}
 		}
 		
 		return array(

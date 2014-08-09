@@ -52,7 +52,7 @@ class EventHandler extends SingletonFactory {
 	 * Loads all registered actions of the active package.
 	 */
 	protected function loadActions() {
-		$environment = (class_exists('wcf\system\WCFACP', false) ? 'admin' : 'user');
+		$environment = ((class_exists('wcf\system\WCFACP', false) || class_exists('wcf\system\CLIWCF', false)) ? 'admin' : 'user');
 		$cache = EventListenerCacheBuilder::getInstance()->getData();
 		
 		if (isset($cache['actions'][$environment])) {
