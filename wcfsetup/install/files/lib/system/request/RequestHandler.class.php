@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\request;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\cache\builder\ControllerCacheBuilder;
 use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
@@ -26,6 +27,12 @@ class RequestHandler extends SingletonFactory {
 	 * @var	\wcf\system\request\Request
 	 */
 	protected $activeRequest = null;
+	
+	/**
+	 * list of known controllers grouped by application and type
+	 * @var	array<array>
+	 */
+	protected $controllers = null;
 	
 	/**
 	 * true, if current domain mismatch any known domain
@@ -61,6 +68,16 @@ class RequestHandler extends SingletonFactory {
 		else {
 			// when using cli, no rescue mode is provided
 			$this->inRescueMode = false;
+		}
+		
+		if (class_exists('wcf\system\WCFACP', false)) {
+			$this->isACPRequest = true;
+		}
+		
+		if (PACKAGE_ID) {
+			$this->controllers = ControllerCacheBuilder::getInstance()->getData(array(
+				'environment' => ($this->isACPRequest ? 'admin' : 'user')
+			));
 		}
 	}
 	
@@ -223,10 +240,23 @@ class RequestHandler extends SingletonFactory {
 	 * @return	array
 	 */
 	protected function getClassData($controller, $pageType, $application) {
-		$className = $application.'\\'.($this->isACPRequest() ? 'acp\\' : '').$pageType.'\\'.ucfirst($controller).ucfirst($pageType);
-		if ($application != 'wcf' && !class_exists($className)) {
-			$className = 'wcf\\'.($this->isACPRequest() ? 'acp\\' : '').$pageType.'\\'.ucfirst($controller).ucfirst($pageType);
+		$className = false;
+		
+		if ($this->controllers !== null) {
+			$className = $this->lookupController($controller, $pageType, $application);
+			if ($className === false && $application != 'wcf') {
+				$className = $this->lookupController($controller, $pageType, 'wcf');
+			}
 		}
+		
+		// controller is either unknown or within WCFSetup
+		if ($className === false) {
+			$className = $application.'\\'.($this->isACPRequest() ? 'acp\\' : '').$pageType.'\\'.ucfirst($controller).ucfirst($pageType);
+			if ($application != 'wcf' && !class_exists($className)) {
+				$className = 'wcf\\'.($this->isACPRequest() ? 'acp\\' : '').$pageType.'\\'.ucfirst($controller).ucfirst($pageType);
+			}
+		}
+		
 		if (!class_exists($className)) {
 			return null;
 		}
@@ -242,6 +272,25 @@ class RequestHandler extends SingletonFactory {
 			'controller' => $controller,
 			'pageType' => $pageType
 		);
+	}
+	
+	/**
+	 * Lookups a controller from the list of known controllers using a case-insensitive search.
+	 * 
+	 * @param	string		$controller
+	 * @param	string		$pageType
+	 * @param	string		$application
+	 * @return	boolean
+	 */
+	protected function lookupController($controller, $pageType, $application) {
+		if (isset($this->controllers[$application]) && isset($this->controllers[$application][$pageType])) {
+			$ciController = mb_strtolower($controller);
+			if (isset($this->controllers[$application][$pageType][$ciController])) {
+				return $this->controllers[$application][$pageType][$ciController];
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
