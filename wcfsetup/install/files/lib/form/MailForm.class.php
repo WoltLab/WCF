@@ -78,6 +78,8 @@ class MailForm extends AbstractCaptchaForm {
 		if (WCF::getUser()->userID && $this->user->isIgnoredUser(WCF::getUser()->userID)) {
 			throw new PermissionDeniedException();
 		}
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('Mail', array('object' => $this->user->getDecoratedObject()));
 	}
 	
 	/**

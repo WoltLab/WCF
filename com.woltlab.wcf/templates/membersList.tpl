@@ -68,7 +68,7 @@
 	</fieldset>
 		
 	<div>
-		<form method="get" action="{if $searchID}{link controller='MembersList' id=$searchID}{/link}{else}{link controller='MembersList'}{/link}{/if}">
+		<form method="post" action="{if $searchID}{link controller='MembersList' id=$searchID}{/link}{else}{link controller='MembersList'}{/link}{/if}">
 			<fieldset>
 				<legend><label for="sortField">{lang}wcf.user.members.sort{/lang}</label></legend>
 				

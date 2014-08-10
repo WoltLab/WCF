@@ -91,7 +91,7 @@
 			</script>
 		{/if}
 		
-		<form method="get" action="{link controller='DataImport'}{/link}">
+		<form method="post" action="{link controller='DataImport'}{/link}">
 			<div class="container containerPadding marginTop">
 				<fieldset>
 					<legend>{lang}wcf.acp.dataImport.selectExporter{/lang}</legend>

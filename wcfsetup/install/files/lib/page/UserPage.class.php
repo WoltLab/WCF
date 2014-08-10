@@ -103,6 +103,8 @@ class UserPage extends AbstractPage {
 		}
 		
 		if (isset($_REQUEST['editOnInit'])) $this->editOnInit = true;
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('User', array('object' => $this->user));
 	}
 	
 	/**

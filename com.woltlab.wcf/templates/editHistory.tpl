@@ -53,7 +53,7 @@
 </div></div>
 {/if}
 
-<form action="{link controller='EditHistory'}{/link}" method="get">
+<form action="{link controller='EditHistory'}{/link}" method="post">
 	<div class="tabularBox tabularBoxTitle marginTop">
 		<header>
 			{assign var='versionCount' value=$objects|count}

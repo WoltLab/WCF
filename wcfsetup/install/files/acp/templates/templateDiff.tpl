@@ -6,7 +6,7 @@
 
 {include file='formError'}
 
-<form method="get" action="{link controller='TemplateDiff'}{/link}">
+<form method="post" action="{link controller='TemplateDiff'}{/link}">
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.acp.template.group{/lang}</legend>
