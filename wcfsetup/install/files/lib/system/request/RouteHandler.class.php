@@ -264,7 +264,7 @@ class RouteHandler extends SingletonFactory {
 			self::$pathInfo = '';
 			
 			// WCF 2.0: index.php/Foo/Bar/
-			if (URL_LEGACY_MODE) {
+			if (URL_LEGACY_MODE && !RequestHandler::getInstance()->isACPRequest()) {
 				if (isset($_SERVER['PATH_INFO'])) {
 					self::$pathInfo = $_SERVER['PATH_INFO'];
 				}

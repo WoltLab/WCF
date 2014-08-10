@@ -85,7 +85,10 @@ class WCFACP extends WCF {
 					$pageURL = $application->getPageURL();
 				}
 				
-				$path = $pageURL . 'acp/?Login/' . SID_ARG_2ND . '&url=' . rawurlencode(RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . WCF::getSession()->requestURI);
+				// drop session id
+				$redirectURI = preg_replace('~[&\?]s=[a-f0-9]{40}(&|$)~', '', WCF::getSession()->requestURI);
+				
+				$path = $pageURL . 'acp/?Login/' . SID_ARG_2ND_NOT_ENCODED . '&url=' . rawurlencode(RouteHandler::getProtocol() . $_SERVER['HTTP_HOST'] . $redirectURI);
 				
 				HeaderUtil::redirect($path);
 				exit;

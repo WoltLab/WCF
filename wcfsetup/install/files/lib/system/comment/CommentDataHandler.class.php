@@ -69,7 +69,7 @@ class CommentDataHandler extends SingletonFactory {
 				$commentList = new CommentList();
 				$commentList->setObjectIDs($this->commentIDs);
 				$commentList->readObjects();
-				$this->comments = $commentList->getObjects();
+				$this->comments += $commentList->getObjects();
 				$this->commentIDs = array();
 			}
 		}

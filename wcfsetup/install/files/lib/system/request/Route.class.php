@@ -314,6 +314,8 @@ class Route {
 		
 		if (!empty($components)) {
 			if (strpos($link, '?') === false) $link .= '?';
+			else $link .= '&';
+			
 			$link .= http_build_query($components, '', '&');
 		}
 		
