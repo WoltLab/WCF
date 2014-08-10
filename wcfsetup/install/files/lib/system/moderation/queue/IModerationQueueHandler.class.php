@@ -74,4 +74,13 @@ interface IModerationQueueHandler {
 	 * @param	array<integer>		$objectIDs
 	 */
 	public function removeQueues(array $objectIDs);
+	
+	/**
+	 * Returns true, if given user is affected by given queue entry.
+	 * 
+	 * @param	\wcf\data\moderation\queue\ModerationQueue	$queue
+	 * @param	integer						$userID
+	 * @return	boolean
+	 */
+	public function isAffectedUser(ModerationQueue $queue, $userID);
 }

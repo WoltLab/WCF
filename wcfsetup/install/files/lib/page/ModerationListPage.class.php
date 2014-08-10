@@ -68,7 +68,7 @@ class ModerationListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('assignedUsername', 'lastChangeTime', 'queueID', 'time', 'username');
+	public $validSortFields = array('assignedUsername', 'lastChangeTime', 'queueID', 'time', 'username', 'comments');
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()

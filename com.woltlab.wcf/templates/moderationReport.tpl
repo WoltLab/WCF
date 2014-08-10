@@ -15,6 +15,11 @@
 			});
 			
 			new WCF.Moderation.Report.Management({@$queue->queueID}, '{link controller='ModerationList'}{/link}');
+			
+			new WCF.Search.User('#assignedUsername');
+			$('#assignedUsername').click(function() {
+				$(this).parents('li').find('input[type=radio]').click();
+			});
 		});
 		//]]>
 	</script>
@@ -31,11 +36,27 @@
 				<dt>{lang}wcf.moderation.assignedUser{/lang}</dt>
 				<dd>
 					<ul>
-						{if $assignedUserID && ($assignedUserID != $__wcf->getUser()->userID)}
+						{if $assignedUserID && $assignedUserID != -1 && $assignedUserID != $__wcf->getUser()->userID}
 							<li><label><input type="radio" name="assignedUserID" value="{@$assignedUserID}" checked="checked" /> {$queue->assignedUsername}</label></li>
 						{/if}
 						<li><label><input type="radio" name="assignedUserID" value="{@$__wcf->getUser()->userID}"{if $assignedUserID == $__wcf->getUser()->userID} checked="checked"{/if} /> {$__wcf->getUser()->username}</label></li>
 						<li><label><input type="radio" name="assignedUserID" value="0"{if !$assignedUserID} checked="checked"{/if} /> {lang}wcf.moderation.assignedUser.nobody{/lang}</label></li>
+						<li>
+							<label><input type="radio" name="assignedUserID" value="-1"{if $assignedUserID == -1} checked="checked"{/if} />
+								<input type="text" id="assignedUsername" name="assignedUsername" value="{$assignedUsername}" />
+								{if $errorField == 'assignedUsername'}
+									<small class="innerError">
+										{if $errorType == 'empty'}
+											{lang}wcf.global.form.error.empty{/lang}
+										{elseif $errorType == 'notAffected'}
+											{lang}wcf.moderation.assignedUser.error.{@$errorType}{/lang}
+										{else}
+											{lang username=$assignedUsername}wcf.user.username.error.{@$errorType}{/lang}
+										{/if}
+									</small>
+								{/if}
+							</label>
+						</li>
 					</ul>
 				</dd>
 			</dl>

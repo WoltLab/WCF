@@ -2,6 +2,8 @@
 namespace wcf\system\moderation\queue;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
+use wcf\data\user\UserProfile;
+use wcf\data\user\User;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
@@ -96,5 +98,13 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	 */
 	public function canRemoveContent(ModerationQueue $queue) {
 		return true;
+	}
+	
+	/**
+	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::isAffectedUser()
+	 */
+	public function isAffectedUser(ModerationQueue $queue, $userID) {
+		$user = new UserProfile(new User($userID));
+		return $user->getPermission('mod.general.canUseModeration');
 	}
 }
