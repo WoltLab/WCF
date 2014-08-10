@@ -291,17 +291,12 @@ class RouteHandler extends SingletonFactory {
 			else {
 				// WCF 2.1: ?Foo/Bar/
 				if (!empty($_SERVER['QUERY_STRING'])) {
-					$pos = mb_strpos($_SERVER['QUERY_STRING'], '&');
-					$route = '';
-					if ($pos === false) {
-						$route = $_SERVER['QUERY_STRING'];
-					}
-					else {
-						$route = mb_substr($_SERVER['QUERY_STRING'], 0, $pos);
-					}
-					
-					if (mb_strpos($route, '=') === false) {
-						self::$pathInfo = $route;
+					parse_str($_SERVER['QUERY_STRING'], $parts);
+					foreach ($parts as $key => $value) {
+						if ($value === '') {
+							self::$pathInfo = $key;
+							break;
+						}
 					}
 				}
 			}
