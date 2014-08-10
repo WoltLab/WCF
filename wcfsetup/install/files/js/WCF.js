@@ -8385,6 +8385,10 @@ WCF.Upload = Class.extend({
 			url: 'index.php/AJAXUpload/?t=' + SECURITY_TOKEN + SID_ARG_2ND
 		}, options || { });
 		
+		if (!URL_LEGACY_MODE) {
+			this._options.url = this._options.url.replace(/^index\.php\/(.*?)\/\?/, '?$1/&');
+		}
+		
 		// check for ajax upload support
 		var $xhr = new XMLHttpRequest();
 		this._supportsAJAXUpload = ($xhr && ('upload' in $xhr) && ('onprogress' in $xhr.upload));
