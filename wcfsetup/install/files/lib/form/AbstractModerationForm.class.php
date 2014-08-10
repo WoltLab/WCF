@@ -11,6 +11,10 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
+use wcf\system\exception\UserInputException;
+use wcf\data\user\User;
+use wcf\data\object\type\ObjectTypeCache;
 
 /**
  * Provides an abstract form for moderation queue processing.
@@ -28,6 +32,12 @@ abstract class AbstractModerationForm extends AbstractForm {
 	 * @var	integer
 	 */
 	public $assignedUserID = 0;
+	
+	/**
+	 * assigned user's name
+	 * @var string
+	 */
+	public $assignedUsername = '';
 	
 	/**
 	 * data used for moderation queue update
@@ -98,15 +108,44 @@ abstract class AbstractModerationForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
+		if (isset($_POST['assignedUsername'])) $this->assignedUsername = StringUtil::trim($_POST['assignedUsername']);
+		
 		// verify assigned user id
 		if (isset($_POST['assignedUserID'])) {
 			$this->assignedUserID = intval($_POST['assignedUserID']);
-			if ($this->assignedUserID) {
+			if ($this->assignedUserID && $this->assignedUserID != -1) {
 				if ($this->assignedUserID != WCF::getUser()->userID && $this->assignedUserID != $this->queue->assignedUserID) {
 					// user id is either faked or changed during viewing, use database value instead
 					$this->assignedUserID = $this->queue->assignedUserID;
 				}
 			}
+		}
+	}
+	
+	/**
+	 * @see	\wcf\form\IForm::validate()
+	 */
+	public function validate() {
+		parent::validate();
+		
+		if ($this->assignedUserID == -1) {
+			if (empty($this->assignedUsername)) {
+				throw new UserInputException('assignedUsername');
+			}
+			
+			$assignedUser = User::getUserByUsername($this->assignedUsername);
+			if (!$assignedUser->userID) {
+				throw new UserInputException('assignedUsername', 'notFound');
+			}
+			
+			// get handler
+			$objectType = ObjectTypeCache::getInstance()->getObjectType($this->queue->objectTypeID);
+			if (!$objectType->getProcessor()->isAffectedUser($this->queue->getDecoratedObject(), $assignedUser->userID)) {
+				throw new UserInputException('assignedUsername', 'notAffected');
+			}
+			
+			$this->assignedUserID = $assignedUser->userID;
+			$this->assignedUsername = '';
 		}
 	}
 	
@@ -145,7 +184,8 @@ abstract class AbstractModerationForm extends AbstractForm {
 			'commentObjectTypeID' => $this->commentObjectTypeID,
 			'lastCommentTime' => ($this->commentList ? $this->commentList->getMinCommentTime() : 0),
 			'sidebarCollapsed' => UserCollapsibleContentHandler::getInstance()->isCollapsed('com.woltlab.wcf.collapsibleSidebar', 'com.woltlab.wcf.ModerationForm'),
-			'sidebarName' => 'com.woltlab.wcf.ModerationForm'
+			'sidebarName' => 'com.woltlab.wcf.ModerationForm',
+			'assignedUsername' => $this->assignedUsername
 		));
 	}
 	
