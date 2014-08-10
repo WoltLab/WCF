@@ -61,7 +61,7 @@ class LikeableCommentResponseProvider extends AbstractObjectTypeProvider impleme
 		// get objects type ids
 		$responses = array();
 		$conditionBuilder = new PreparedStatementConditionBuilder();
-		$conditionBuilder->add('comment_response.responseID IN (?)', $responseIDs);
+		$conditionBuilder->add('comment_response.responseID IN (?)', array($responseIDs));
 		$sql = "SELECT		comment.objectTypeID, comment_response.responseID
 			FROM		wcf".WCF_N."_comment_response comment_response
 			LEFT JOIN	wcf".WCF_N."_comment comment
