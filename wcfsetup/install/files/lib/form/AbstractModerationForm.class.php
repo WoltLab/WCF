@@ -3,18 +3,18 @@ namespace wcf\form;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ViewableModerationQueue;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\User;
 use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\comment\CommentHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
-use wcf\system\exception\UserInputException;
-use wcf\data\user\User;
-use wcf\data\object\type\ObjectTypeCache;
 
 /**
  * Provides an abstract form for moderation queue processing.

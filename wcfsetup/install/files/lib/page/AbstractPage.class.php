@@ -64,7 +64,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	/**
 	 * needed permissions to view this page
 	 * @var	array<string>
-	*/
+	 */
 	public $neededPermissions = array();
 	
 	/**
