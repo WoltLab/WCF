@@ -197,6 +197,8 @@
 				/* Prevent "Back navigation caching" (http://msdn.microsoft.com/en-us/library/ie/dn265017%28v=vs.85%29.aspx) */
 			};
 		}
+		
+		$('form[method=get]').attr('method', 'post');
 	});
 	//]]>
 </script>

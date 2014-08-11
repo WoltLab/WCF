@@ -27,7 +27,7 @@
 {include file='formError'}
 
 {if !$logFiles|empty}
-	<form method="get" action="{link controller='ExceptionLogView'}{/link}">
+	<form method="post" action="{link controller='ExceptionLogView'}{/link}">
 		<div class="container containerPadding marginTop">
 			<fieldset><legend>{lang}wcf.acp.exceptionLog.search{/lang}</legend>
 				<dl>

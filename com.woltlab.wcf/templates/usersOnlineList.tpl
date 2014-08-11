@@ -32,7 +32,7 @@
 
 {capture assign='sidebar'}
 	<div>
-		<form method="get" action="{link controller='UsersOnlineList'}{/link}">
+		<form method="post" action="{link controller='UsersOnlineList'}{/link}">
 			<fieldset>
 				<legend><label for="sortField">{lang}wcf.user.members.sort{/lang}</label></legend>
 				

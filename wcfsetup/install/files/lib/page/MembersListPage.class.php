@@ -4,8 +4,10 @@ use wcf\data\search\Search;
 use wcf\system\dashboard\DashboardHandler;
 use wcf\system\database\PostgreSQLDatabase;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\request\LinkHandler;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * Shows members page.
@@ -104,6 +106,11 @@ class MembersListPage extends SortablePage {
 			if (!$this->search->searchID || $this->search->userID != WCF::getUser()->userID || $this->search->searchType != 'users') {
 				throw new IllegalLinkException();
 			}
+		}
+		
+		if (!empty($_POST)) {
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('MembersList', array(), 'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder));
+			exit;
 		}
 	}
 	

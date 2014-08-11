@@ -2,8 +2,8 @@
 namespace wcf\system\moderation\queue;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueAction;
-use wcf\data\user\UserProfile;
 use wcf\data\user\User;
+use wcf\data\user\UserProfile;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;

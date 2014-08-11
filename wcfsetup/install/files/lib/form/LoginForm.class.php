@@ -101,5 +101,10 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 			if (mb_strpos($this->url, '?') !== false) $this->url .= SID_ARG_2ND_NOT_ENCODED;
 			else $this->url .= SID_ARG_1ST;
 		}
+		
+		// drop index.php
+		if (!URL_LEGACY_MODE) {
+			$this->url = preg_replace('~index\.php~', '', $this->url);
+		}
 	}
 }

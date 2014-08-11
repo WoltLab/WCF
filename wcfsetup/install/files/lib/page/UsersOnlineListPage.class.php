@@ -6,6 +6,7 @@ use wcf\system\dashboard\DashboardHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\collapsible\content\UserCollapsibleContentHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * Shows page which lists all users who are online.
@@ -68,6 +69,11 @@ class UsersOnlineListPage extends SortablePage {
 		if (WCF::getSession()->getPermission('admin.user.canViewIpAddress')) {
 			$this->validSortFields[] = 'ipAddress';
 			$this->validSortFields[] = 'userAgent';
+		}
+		
+		if (!empty($_POST)) {
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('UsersOnlineList', array(), 'sortField=' . $this->sortField . '&sortOrder=' . $this->sortOrder));
+			exit;
 		}
 	}
 	

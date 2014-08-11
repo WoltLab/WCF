@@ -7,6 +7,7 @@ use wcf\system\menu\acp\ACPMenu;
 use wcf\system\menu\page\PageMenu;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * Abstract implementation of a page which fires the default event actions of a
@@ -25,18 +26,6 @@ use wcf\system\WCF;
  */
 abstract class AbstractPage implements IPage, ITrackablePage {
 	/**
-	 * name of the template for the called page
-	 * @var	string
-	 */
-	public $templateName = '';
-	
-	/**
-	 * enables template usage
-	 * @var	string
-	 */
-	public $useTemplate = true;
-	
-	/**
 	 * name of the active menu item
 	 * @var	string
 	 */
@@ -47,6 +36,18 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	 * @var	string
 	 */
 	public $action = '';
+	
+	/**
+	 * canonical URL of this page
+	 * @var	string
+	 */
+	public $canonicalURL = '';
+	
+	/**
+	 * enables the tracking of this page
+	 * @var	boolean
+	 */
+	public $enableTracking = false;
 	
 	/**
 	 * indicates if you need to be logged in to access this page
@@ -67,10 +68,16 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	public $neededPermissions = array();
 	
 	/**
-	 * enables the tracking of this page
-	 * @var	boolean
+	 * name of the template for the called page
+	 * @var	string
 	 */
-	public $enableTracking = false;
+	public $templateName = '';
+	
+	/**
+	 * enables template usage
+	 * @var	string
+	 */
+	public $useTemplate = true;
 	
 	/**
 	 * @see	\wcf\form\IPage::__run()
@@ -164,6 +171,63 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		// check if active user is logged in
 		if ($this->loginRequired && !WCF::getUser()->userID) {
 			throw new PermissionDeniedException();
+		}
+		
+		// check if current request URL matches the canonical URL
+		if ($this->canonicalURL && empty($_POST)) {
+			$canoncialURL = parse_url($this->canonicalURL);
+			$requestURL = parse_url(WCF::getRequestURI());
+			
+			$redirect = false;
+			if ($canoncialURL['path'] != $requestURL['path']) {
+				$redirect = true;
+			}
+			else if (isset($canoncialURL['query'])) {
+				parse_str($canoncialURL['query'], $cQueryString);
+				parse_str($requestURL['query'], $rQueryString);
+				
+				foreach ($cQueryString as $key => $value) {
+					if (!isset($rQueryString[$key]) || $rQueryString[$key] != $value) {
+						$redirect = true;
+						break;
+					}
+				}
+			}
+			
+			if ($redirect) {
+				$redirectURL = $this->canonicalURL;
+				if (!empty($requestURL['query'])) {
+					$queryString = $requestURL['query'];
+					parse_str($requestURL['query'], $rQueryString);
+					
+					if (!empty($canoncialURL['query'])) {
+						parse_str($canoncialURL['query'], $cQueryString);
+						
+						// clean query string
+						foreach ($cQueryString as $key => $value) {
+							if (isset($rQueryString[$key])) {
+								unset($rQueryString[$key]);
+							}
+						}
+					}
+					
+					// drop route data from query
+					if (!URL_LEGACY_MODE) {
+						foreach ($rQueryString as $key => $value) {
+							if ($value === '') {
+								unset($rQueryString[$key]);
+							}
+						}
+					}
+					
+					if (!empty($rQueryString)) {
+						$redirectURL .= (mb_strpos($redirectURL, '?') === false ? '?' : '&') . http_build_query($rQueryString, '', '&');
+					}
+				}
+				
+				HeaderUtil::redirect($redirectURL);
+				exit;
+			}
 		}
 		
 		// sets the active menu item

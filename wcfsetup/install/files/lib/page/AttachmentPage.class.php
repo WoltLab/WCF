@@ -4,6 +4,7 @@ use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileReader;
 
@@ -72,6 +73,12 @@ class AttachmentPage extends AbstractPage {
 		}
 		if (isset($_REQUEST['tiny']) && $this->attachment->tinyThumbnailType) $this->tiny = intval($_REQUEST['tiny']);
 		if (isset($_REQUEST['thumbnail']) && $this->attachment->thumbnailType) $this->thumbnail = intval($_REQUEST['thumbnail']);
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('Attachment', array(
+			'object' => $this->attachment,
+			'thumbnail' => $this->thumbnail,
+			'tiny' => $this->tiny
+		));
 	}
 	
 	/**
