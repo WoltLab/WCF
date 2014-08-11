@@ -66,7 +66,7 @@ class SQLParser {
 					$columns = $indices = array();
 					
 					// find columns
-					if (preg_match_all("~(?:\(|,)\s*(\w+)\s+(\w+)(?:\s*\((\s*(?:\d+(?:\s*,\s*\d+)?|'[^']*'(?:\s*,\s*'[^']*')*))\))?(?:\s+UNSIGNED)?(?:\s+(NOT NULL|NULL))?(?:\s+DEFAULT\s+(\d+.\d+|\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\s+(AUTO_INCREMENT))?(?:\s+(UNIQUE|PRIMARY)(?: KEY)?)?~i", $query, $matches)) {
+					if (preg_match_all("~(?:\(|,)\s*(\w+)\s+(\w+)(?:\s*\((\s*(?:\d+(?:\s*,\s*\d+)?|'[^']*'(?:\s*,\s*'[^']*')*))\s*\))?(?:\s+UNSIGNED)?(?:\s+(NOT NULL|NULL))?(?:\s+DEFAULT\s+(\d+.\d+|\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\s+(AUTO_INCREMENT))?(?:\s+(UNIQUE|PRIMARY)(?: KEY)?)?~i", $query, $matches)) {
 						for ($i = 0, $j = count($matches[0]); $i < $j; $i++) {
 							$columName = strtoupper($matches[1][$i]);
 							if ($columName == 'UNIQUE' || $columName == 'KEY' || $columName == 'PRIMARY' || $columName == 'FULLTEXT') continue;
@@ -124,7 +124,7 @@ class SQLParser {
 					$this->executeAddForeignKeyStatement($match[1], ($match[2] ?: self::getGenericIndexName($match[1], $match[3], 'fk')), array('columns' => $match[3], 'referencedTable' => $match[4], 'referencedColumns' => $match[5], 'operation' => $match[6], 'action' => $match[7]));
 				}
 				// add/change column
-				else if (preg_match("~^ALTER\s+TABLE\s+(\w+)\s+(?:(ADD)\s+(?:COLUMN\s+)?|(CHANGE)\s+(?:COLUMN\s+)?(\w+)\s+)(\w+)\s+(\w+)(?:\s*\((\s*(?:\d+(?:\s*,\s*\d+)?|'[^']*'(?:\s*,\s*'[^']*')*))\))?(?:\s+UNSIGNED)?(?:\s+(NOT NULL|NULL))?(?:\s+DEFAULT\s+(-?\d+.\d+|-?\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\s+(AUTO_INCREMENT))?(?:\s+(UNIQUE|PRIMARY)(?: KEY)?)?~is", $query, $match)) {
+				else if (preg_match("~^ALTER\s+TABLE\s+(\w+)\s+(?:(ADD)\s+(?:COLUMN\s+)?|(CHANGE)\s+(?:COLUMN\s+)?(\w+)\s+)(\w+)\s+(\w+)(?:\s*\((\s*(?:\d+(?:\s*,\s*\d+)?|'[^']*'(?:\s*,\s*'[^']*')*))\s*\))?(?:\s+UNSIGNED)?(?:\s+(NOT NULL|NULL))?(?:\s+DEFAULT\s+(-?\d+.\d+|-?\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\s+(AUTO_INCREMENT))?(?:\s+(UNIQUE|PRIMARY)(?: KEY)?)?~is", $query, $match)) {
 					$columnType = strtolower($match[6]);
 					$columnData = array(
 						'type' => $columnType,
