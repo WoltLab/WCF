@@ -1005,6 +1005,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	<li>WCF 2.0: „index.php/Thread/123-Title/“</li>
 	<li>WCF 2.1+: „?Thread/123-Title/“</li>
 </ul>]]></item>
+		<item name="wcf.acp.option.url_to_lowercase"><![CDATA[Force lower-case links]]></item>
+		<item name="wcf.acp.option.url_to_lowercase.description"><![CDATA[Links will no longer contain uppercase letters turning links like “Thread/1-Hello-I-am-John-Doe/” into “thread/1-hello-i-am-john-doe/”.]]></item>
 		<item name="wcf.acp.option.module_ad"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha Type]]></item>
 		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Enable Captcha protection during registration]]></item>

@@ -155,11 +155,15 @@ class LinkHandler extends SingletonFactory {
 			// trim to 80 characters
 			$parameters['title'] = rtrim(mb_substr($parameters['title'], 0, 80), '-');
 			
+			if (URL_TO_LOWERCASE) {
+				$parameters['title'] = mb_strtolower($parameters['title']);
+			}
+			
 			// encode title
 			if ($encodeTitle) $parameters['title'] = rawurlencode($parameters['title']);
 		}
 		
-		$parameters['controller'] = $controller;
+		$parameters['controller'] = (URL_TO_LOWERCASE) ? mb_strtolower($controller) : $controller;
 		$routeURL = RouteHandler::getInstance()->buildRoute($parameters, $isACP);
 		if (!$isRaw && !empty($url)) {
 			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';

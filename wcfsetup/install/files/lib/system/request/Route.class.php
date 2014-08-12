@@ -269,7 +269,7 @@ class Route {
 			}
 			else if (!RequestHandler::getInstance()->isACPRequest()) {
 				$landingPage = PageMenu::getInstance()->getLandingPage();
-				if ($landingPage !== null && ($landingPage->getController() == $components['controller'])) {
+				if ($landingPage !== null && strcasecmp($landingPage->getController(), $components['controller']) == 0) {
 					$ignoreController = true;
 				}
 			}
