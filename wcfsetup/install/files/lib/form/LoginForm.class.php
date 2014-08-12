@@ -93,7 +93,7 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	 * Gets the redirect url.
 	 */
 	protected function checkURL() {
-		if (empty($this->url) || mb_strpos($this->url, '?Login/') !== false) {
+		if (empty($this->url) || mb_stripos($this->url, '?Login/') !== false) {
 			$this->url = LinkHandler::getInstance()->getLink();
 		}
 		// append missing session id

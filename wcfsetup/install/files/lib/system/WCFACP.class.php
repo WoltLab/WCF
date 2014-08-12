@@ -64,7 +64,7 @@ class WCFACP extends WCF {
 		// this is a work-around since neither RequestHandler
 		// nor RouteHandler are populated right now
 		$pathInfo = RouteHandler::getPathInfo();
-		if (empty($pathInfo) || !preg_match('~^/?(ACPCaptcha|Login|Logout)/~', $pathInfo)) {
+		if (empty($pathInfo) || !preg_match('~^/?(ACPCaptcha|Login|Logout)/~i', $pathInfo)) {
 			if (WCF::getUser()->userID == 0) {
 				// work-around for AJAX-requests within ACP
 				if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
