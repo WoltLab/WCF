@@ -80,7 +80,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	public $useTemplate = true;
 	
 	/**
-	 * @see	\wcf\form\IPage::__run()
+	 * @see	\wcf\page\IPage::__run()
 	 */
 	public final function __construct() { }
 	
