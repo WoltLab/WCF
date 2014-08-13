@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\moderation\queue;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
-use wcf\data\object\type\ObjectTypeCache;
 
 /**
  * Represents a moderation queue entry.
