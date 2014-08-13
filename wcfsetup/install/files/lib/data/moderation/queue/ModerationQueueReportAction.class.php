@@ -44,7 +44,7 @@ class ModerationQueueReportAction extends ModerationQueueAction {
 		// mark content as deleted
 		ModerationQueueReportManager::getInstance()->removeContent($this->queue->getDecoratedObject(), $this->parameters['message']);
 		
-		$this->queue->markAsDone();
+		$this->queue->markAsConfirmed();
 	}
 	
 	/**
@@ -61,7 +61,7 @@ class ModerationQueueReportAction extends ModerationQueueAction {
 	 * Removes this report by marking it as done without further processing.
 	 */
 	public function removeReport() {
-		$this->queue->markAsDone();
+		$this->queue->markAsRejected();
 	}
 	
 	/**

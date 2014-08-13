@@ -9,17 +9,17 @@
 		//<![CDATA[
 		$(function() {
 			WCF.Language.addObject({
+				'wcf.moderation.assignedUser': '{lang}wcf.moderation.assignedUser{/lang}',
+				'wcf.moderation.assignedUser.change': '{lang}wcf.moderation.assignedUser.change{/lang}',
+				'wcf.moderation.assignedUser.error.notAffected': '{lang}wcf.moderation.assignedUser.error.notAffected{/lang}',
 				'wcf.moderation.report.removeContent.confirmMessage': '{lang}wcf.moderation.report.removeContent.confirmMessage{/lang}',
 				'wcf.moderation.report.removeContent.reason': '{lang}wcf.moderation.report.removeContent.reason{/lang}',
-				'wcf.moderation.report.removeReport.confirmMessage': '{lang}wcf.moderation.report.removeReport.confirmMessage{/lang}'
+				'wcf.moderation.report.removeReport.confirmMessage': '{lang}wcf.moderation.report.removeReport.confirmMessage{/lang}',
+				'wcf.moderation.status.outstanding': '{lang}wcf.moderation.status.outstanding{/lang}',
+				'wcf.moderation.status.processing': '{lang}wcf.moderation.status.processing{/lang}'
 			});
 			
 			new WCF.Moderation.Report.Management({@$queue->queueID}, '{link controller='ModerationList'}{/link}');
-			
-			new WCF.Search.User('#assignedUsername');
-			$('#assignedUsername').click(function() {
-				$(this).parents('li').find('input[type=radio]').click();
-			});
 		});
 		//]]>
 	</script>
@@ -27,61 +27,7 @@
 
 <body id="tpl{$templateName|ucfirst}">
 
-{capture assign='sidebar'}
-	<form method="post" action="{link controller='ModerationReport' id=$queue->queueID}{/link}">
-		<fieldset>
-			<legend>{lang}wcf.moderation.report.details{/lang}</legend>
-			
-			<dl>
-				<dt>{lang}wcf.moderation.assignedUser{/lang}</dt>
-				<dd>
-					<ul>
-						{if $assignedUserID && $assignedUserID != -1 && $assignedUserID != $__wcf->getUser()->userID}
-							<li><label><input type="radio" name="assignedUserID" value="{@$assignedUserID}" checked="checked" /> {$queue->assignedUsername}</label></li>
-						{/if}
-						<li><label><input type="radio" name="assignedUserID" value="{@$__wcf->getUser()->userID}"{if $assignedUserID == $__wcf->getUser()->userID} checked="checked"{/if} /> {$__wcf->getUser()->username}</label></li>
-						<li><label><input type="radio" name="assignedUserID" value="0"{if !$assignedUserID} checked="checked"{/if} /> {lang}wcf.moderation.assignedUser.nobody{/lang}</label></li>
-						<li>
-							<label><input type="radio" name="assignedUserID" value="-1"{if $assignedUserID == -1} checked="checked"{/if} />
-								<input type="text" id="assignedUsername" name="assignedUsername" value="{$assignedUsername}" />
-								{if $errorField == 'assignedUsername'}
-									<small class="innerError">
-										{if $errorType == 'empty'}
-											{lang}wcf.global.form.error.empty{/lang}
-										{elseif $errorType == 'notAffected'}
-											{lang}wcf.moderation.assignedUser.error.{@$errorType}{/lang}
-										{else}
-											{lang username=$assignedUsername}wcf.user.username.error.{@$errorType}{/lang}
-										{/if}
-									</small>
-								{/if}
-							</label>
-						</li>
-					</ul>
-				</dd>
-			</dl>
-			{if $queue->assignedUser}
-				<dl>
-					<dt></dt>
-					<dd><a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-user-id="{@$assignedUserID}">{$queue->assignedUsername}</a></dd>
-				</dl>
-			{/if}
-			
-			{event name='detailsFields'}
-			
-			<div class="formSubmit">
-				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" />
-				{@SECURITY_TOKEN_INPUT_TAG}
-			</div>
-		</fieldset>
-		
-		{event name='fieldsets'}
-	</form>
-	
-	{event name='boxes'}
-{/capture}
-
-{include file='header' sidebarOrientation='right'}
+{include file='header'}
 
 <header class="boxHeadline">
 	<h1>{lang}wcf.moderation.report{/lang}: {$queue->getTitle()}</h1>
@@ -92,6 +38,24 @@
 			<dd>{@$queue->lastChangeTime|time}</dd>
 		</dl>
 	{/if}
+	
+	<dl class="plain inlineDataList" id="moderationAssignedUserContainer">
+		<dt>{lang}wcf.moderation.assignedUser{/lang}</dt>
+		<dd>
+			<span>
+				{if $queue->assignedUserID}
+					<a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-user-id="{@$assignedUserID}">{$queue->assignedUsername}</a>
+				{else}
+					{lang}wcf.moderation.assignedUser.nobody{/lang}
+				{/if}
+			</span>
+		</dd>
+	</dl>
+	
+	<dl class="plain inlineDataList" id="moderationStatusContainer">
+		<dt>{lang}wcf.moderation.status{/lang}</dt>
+		<dd>{$queue->getStatus()}</dd>
+	</dl>
 </header>
 
 {include file='userNotice'}

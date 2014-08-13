@@ -33,6 +33,12 @@ WCF.Moderation.Management = Class.extend({
 	_confirmationTemplate: { },
 	
 	/**
+	 * dialog overlay
+	 * @var	jQuery
+	 */
+	_dialog: null,
+	
+	/**
 	 * language item pattern
 	 * @var	string
 	 */
@@ -73,15 +79,19 @@ WCF.Moderation.Management = Class.extend({
 			return;
 		}
 		
+		this._dialog = null;
 		this._queueID = queueID;
 		this._redirectURL = redirectURL;
 		this._languageItem = languageItem;
 		
 		this._proxy = new WCF.Action.Proxy({
+			failure: $.proxy(this._failure, this),
 			success: $.proxy(this._success, this)
 		});
 		
 		$(this._buttonSelector).click($.proxy(this._click, this));
+		
+		$('<a>' + WCF.Language.get('wcf.moderation.assignedUser.change') + '</a>').click($.proxy(this._clickAssignedUser, this)).insertAfter($('#moderationAssignedUserContainer > dd > span'));
 	},
 	
 	/**
@@ -129,6 +139,18 @@ WCF.Moderation.Management = Class.extend({
 	},
 	
 	/**
+	 * Handles clicks on the assign user link.
+	 */
+	_clickAssignedUser: function() {
+		this._proxy.setOption('data', {
+			actionName: 'getAssignUserForm',
+			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
+			objectIDs: [ this._queueID ]
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
 	 * Handles successful AJAX requests.
 	 * 
 	 * @param	object		data
@@ -136,11 +158,112 @@ WCF.Moderation.Management = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
-		var $notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'));
-		var self = this;
-		$notification.show(function() {
-			window.location = self._redirectURL;
+		switch (data.actionName) {
+			case 'getAssignUserForm':
+				if (this._dialog === null) {
+					this._dialog = $('<div />').hide().appendTo(document.body);
+					this._dialog.html(data.returnValues.template).wcfDialog({
+						title: WCF.Language.get('wcf.moderation.assignedUser')
+					});
+				}
+				else {
+					this._dialog.html(data.returnValues.template).wcfDialog('open');
+				}
+				
+				this._dialog.find('button[data-type=submit]').click($.proxy(this._assignUser, this));
+			break;
+			
+			case 'assignUser':
+				var $span = $('#moderationAssignedUserContainer > dd > span').empty();
+				if (data.returnValues.userID) {
+					$('<a href="' + data.returnValues.link + '" data-user-id="' + data.returnValues.userID + '" class="userLink">' + WCF.String.escapeHTML(data.returnValues.username) + '</a>').appendTo($span);
+				}
+				else {
+					$span.append(data.returnValues.username)
+				}
+				
+				$span.append(' ');
+				
+				if (data.returnValues.newStatus) {
+					$('#moderationStatusContainer > dd').text(WCF.Language.get('wcf.moderation.status.' + data.returnValues.newStatus));
+				}
+				
+				this._dialog.wcfDialog('close');
+				
+				new WCF.System.Notification().show();
+			break;
+			
+			default:
+				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'));
+				var self = this;
+				$notification.show(function() {
+					window.location = self._redirectURL;
+				});
+			break;
+		}
+	},
+	
+	/**
+	 * Handles errorneus AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	jQuery		jqXHR
+	 * @param	string		textStatus
+	 * @param	string		errorThrown
+	 */
+	_failure: function(data, jqXHR, textStatus, errorThrown) {
+		if (data.returnValues && data.returnValues.fieldName && data.returnValues.fieldName == 'assignedUsername') {
+			this._dialog.find('small.innerError').remove();
+			
+			var $errorString = '';
+			switch (data.returnValues.errorType) {
+				case 'empty':
+					$errorString = WCF.Language.get('wcf.global.form.error.empty');
+				break;
+				
+				case 'notAffected':
+					$errorString = WCF.Language.get('wcf.moderation.assignedUser.error.notAffected');
+				break;
+				
+				default:
+					$errorString = WCF.Language.get('wcf.user.username.error.' + data.returnValues.errorType, { username: this._dialog.find('#assignedUsername').val() });
+				break;
+			}
+			
+			$('<small class="innerError">' + $errorString + '</small>').insertAfter(this._dialog.find('#assignedUsername'));
+			
+			return false;
+		}
+		
+		return true;
+	},
+	
+	/**
+	 * Submits the assign user form.
+	 */
+	_assignUser: function() {
+		var $assignedUserID = this._dialog.find('input[name=assignedUserID]:checked').val();
+		var $assignedUsername = '';
+		if ($assignedUserID == -1) {
+			$assignedUsername = $.trim(this._dialog.find('#assignedUsername').val());
+		}
+		
+		if ($assignedUserID == -1 && $assignedUsername.length == 0) {
+			this._dialog.find('small.innerError').remove();
+			$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter(this._dialog.find('#assignedUsername'));
+			return;
+		}
+		
+		this._proxy.setOption('data', {
+			actionName: 'assignUser',
+			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
+			objectIDs: [ this._queueID ],
+			parameters: {
+				assignedUserID: $assignedUserID,
+				assignedUsername: $assignedUsername
+			}
 		});
+		this._proxy.sendRequest();
 	}
 });
 

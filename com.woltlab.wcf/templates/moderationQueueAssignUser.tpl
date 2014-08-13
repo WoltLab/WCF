@@ -1,0 +1,42 @@
+<fieldset>
+	<dl>
+		<dt>{lang}wcf.moderation.assignedUser{/lang}</dt>
+		<dd>
+			<ul>
+				{if $assignedUser && $assignedUser->userID != $__wcf->getUser()->userID}
+					<li><label><input type="radio" name="assignedUserID" value="{@$assignedUser->userID}" checked="checked" /> {$assignedUser->username}</label></li>
+				{/if}
+				<li><label><input type="radio" name="assignedUserID" value="{@$__wcf->getUser()->userID}"{if $assignedUser && $assignedUser->userID == $__wcf->getUser()->userID} checked="checked"{/if} /> {$__wcf->getUser()->username}</label></li>
+				<li><label><input type="radio" name="assignedUserID" value="0"{if !$assignedUser} checked="checked"{/if} /> {lang}wcf.moderation.assignedUser.nobody{/lang}</label></li>
+				<li>
+					<label><input type="radio" name="assignedUserID" value="-1"{if !$assignedUser} checked="checked"{/if} />
+						<input type="text" id="assignedUsername" name="assignedUsername" value="{if $assignedUser}{$assignedUser->username}{/if}" />
+						{*if $errorField == 'assignedUsername'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{elseif $errorType == 'notAffected'}
+									{lang}wcf.moderation.assignedUser.error.{@$errorType}{/lang}
+								{else}
+									{lang username=$assignedUsername}wcf.user.username.error.{@$errorType}{/lang}
+								{/if}
+							</small>
+						{/if*}
+					</label>
+				</li>
+			</ul>
+		</dd>
+	</dl>
+	
+	<div class="formSubmit">
+		<button data-type="submit">{lang}wcf.global.button.submit{/lang}</button>
+	</div>
+</fieldset>
+<script>
+	$(function() {
+		new WCF.Search.User('#assignedUsername');
+		$('#assignedUsername').click(function() {
+			$(this).parents('li').find('input[type=radio]').click();
+		});
+	});
+</script>

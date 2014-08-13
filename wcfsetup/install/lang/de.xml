@@ -2204,6 +2204,8 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.assignedUser"><![CDATA[Zugewiesener Benutzer]]></item>
+		<item name="wcf.moderation.assignedUser.change"><![CDATA[(Ändern)]]></item>
+		<item name="wcf.moderation.assignedUser.error.notAffected"><![CDATA[Dieser Benutzer hat unzureichende Zugriffsrechte]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Niemand]]></item>
 		<item name="wcf.moderation.filterByType"><![CDATA[Typ]]></item>
 		<item name="wcf.moderation.filterByUser"><![CDATA[Zugewiesener Benutzer]]></item>
@@ -2217,7 +2219,12 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.noMoreItems"><![CDATA[Keine weiteren Einträge]]></item>
 		<item name="wcf.moderation.status"><![CDATA[Status]]></item>
 		<item name="wcf.moderation.status.outstanding"><![CDATA[Ausstehend]]></item>
+		<item name="wcf.moderation.status.processing"><![CDATA[In Bearbeitung]]></item>
 		<item name="wcf.moderation.status.done"><![CDATA[Erledigt]]></item>
+		<item name="wcf.moderation.status.confirmed.com.woltlab.wcf.moderation.activation"><![CDATA[Inhalt wurde freigeschaltet]]></item>
+		<item name="wcf.moderation.status.confirmed.com.woltlab.wcf.moderation.report"><![CDATA[Meldung berechtigt, Inhalt wurde gelöscht]]></item>
+		<item name="wcf.moderation.status.rejected.com.woltlab.wcf.moderation.activation"><![CDATA[Freischaltung wurde abgelehnt]]></item>
+		<item name="wcf.moderation.status.rejected.com.woltlab.wcf.moderation.report"><![CDATA[Meldung unberechtigt]]></item>
 		<item name="wcf.moderation.time"><![CDATA[Datum]]></item>
 		<item name="wcf.moderation.title"><![CDATA[Titel]]></item>
 		<item name="wcf.moderation.type"><![CDATA[Typ]]></item>

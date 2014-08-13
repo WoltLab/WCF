@@ -21,9 +21,32 @@ class ModerationQueueEditor extends DatabaseObjectEditor {
 	
 	/**
 	 * Marks this entry as done.
+	 * 
+	 * @deprecated	2.1 - Please use markAsConfirmed() or markAsRejected()
 	 */
 	public function markAsDone() {
 		$this->update(array('status' => ModerationQueue::STATUS_DONE));
+		
+		// reset moderation count
+		ModerationQueueManager::getInstance()->resetModerationCount();
+	}
+	
+	/**
+	 * Marks this entry as confirmed, e.g. report was justified and content was deleted or
+	 * content was approved.
+	 */
+	public function markAsConfirmed() {
+		$this->update(array('status' => ModerationQueue::STATUS_CONFIRMED));
+		
+		// reset moderation count
+		ModerationQueueManager::getInstance()->resetModerationCount();
+	}
+	
+	/**
+	 * Marks this entry as rejected, e.g. report was unjustified or content approval was denied.
+	 */
+	public function markAsRejected() {
+		$this->update(array('status' => ModerationQueue::STATUS_REJECTED));
 		
 		// reset moderation count
 		ModerationQueueManager::getInstance()->resetModerationCount();

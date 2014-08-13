@@ -42,7 +42,7 @@ class ModerationQueueActivationAction extends ModerationQueueAction {
 		// enable content
 		ModerationQueueActivationManager::getInstance()->enableContent($this->queue->getDecoratedObject());
 		
-		$this->queue->markAsDone();
+		$this->queue->markAsConfirmed();
 	}
 	
 	/**
@@ -60,6 +60,6 @@ class ModerationQueueActivationAction extends ModerationQueueAction {
 		// mark content as deleted
 		ModerationQueueActivationManager::getInstance()->removeContent($this->queue->getDecoratedObject(), $this->parameters['message']);
 		
-		$this->queue->markAsDone();
+		$this->queue->markAsRejected();
 	}
 }

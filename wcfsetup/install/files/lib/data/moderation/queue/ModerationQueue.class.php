@@ -2,6 +2,7 @@
 namespace wcf\data\moderation\queue;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
+use wcf\data\object\type\ObjectTypeCache;
 
 /**
  * Represents a moderation queue entry.
@@ -28,6 +29,8 @@ class ModerationQueue extends DatabaseObject {
 	const STATUS_OUTSTANDING = 0;
 	const STATUS_PROCESSING = 1;
 	const STATUS_DONE = 2;
+	const STATUS_REJECTED = 3;
+	const STATUS_CONFIRMED = 4;
 	
 	/**
 	 * @see	\wcf\data\IStorableObject::__get()
@@ -84,5 +87,36 @@ class ModerationQueue extends DatabaseObject {
 	 */
 	public function isDone() {
 		return ($this->status == self::STATUS_DONE);
+	}
+	
+	/**
+	 * Returns status text.
+	 * 
+	 * @param	integer		$status
+	 * @return	string
+	 */
+	public function getStatus($status = null) {
+		$status = ($status === null) ? $this->status : $status;
+		switch ($status) {
+			case self::STATUS_OUTSTANDING:
+				return WCF::getLanguage()->get('wcf.moderation.status.outstanding');
+			break;
+			
+			case self::STATUS_PROCESSING:
+				return WCF::getLanguage()->get('wcf.moderation.status.processing');
+			break;
+			
+			case self::STATUS_DONE:
+				return WCF::getLanguage()->get('wcf.moderation.status.done');
+			break;
+			
+			case self::STATUS_REJECTED:
+			case self::STATUS_CONFIRMED:
+				$objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
+				$definition = ObjectTypeCache::getInstance()->getDefinition($objectType->definitionID);
+				
+				return WCF::getLanguage()->get('wcf.moderation.status.' . ($status == self::STATUS_REJECTED ? 'rejected' : 'confirmed') . '.' . $definition->definitionName);
+			break;
+		}
 	}
 }
