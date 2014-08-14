@@ -8,7 +8,7 @@
 	<link rel="canonical" href="{link controller='Dashboard'}{/link}" />
 </head>
 
-<body id="tpl{$templateName|ucfirst}">
+<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
 {if $__boxSidebar|isset && $__boxSidebar}
 	{capture assign='sidebar'}

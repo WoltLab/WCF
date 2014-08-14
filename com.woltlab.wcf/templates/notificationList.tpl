@@ -17,7 +17,7 @@
 	</script>
 </head>
 
-<body id="tpl{$templateName|ucfirst}">
+<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
 {include file='userMenuSidebar'}
 

@@ -74,6 +74,12 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 	public $templateName = '';
 	
 	/**
+	 * abbreviation of the application the template belongs to
+	 * @var	string
+	 */
+	public $templateNameApplication = '';
+	
+	/**
 	 * enables template usage
 	 * @var	string
 	 */
@@ -263,10 +269,16 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 			// assign guessed template name
 			WCF::getTPL()->assign('templateName', $this->templateName);
 		}
+		if (empty($this->templateNameApplication)) {
+			$this->templateNameApplication = array_shift($classParts);
+			
+			// assign guessed template application
+			WCF::getTPL()->assign('templateNameApplication', $this->templateNameApplication);
+		}
 		
 		if ($this->useTemplate) {
 			// show template
-			WCF::getTPL()->display($this->templateName, array_shift($classParts));
+			WCF::getTPL()->display($this->templateName, $this->templateNameApplication);
 		}
 	}
 	

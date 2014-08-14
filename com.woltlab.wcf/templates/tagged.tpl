@@ -14,7 +14,7 @@
 	<link rel="canonical" href="{link controller='Tagged' object=$tag}objectType={@$objectType}{if $pageNo > 1}&pageNo={@$pageNo}{/if}{/link}" />
 </head>
 
-<body id="tpl{$templateName|ucfirst}">
+<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
 
 {capture assign='sidebar'}
 	<fieldset>
