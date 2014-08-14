@@ -158,6 +158,7 @@ final class HeaderUtil {
 			'message' => $message,
 			'wait' => $delay,
 			'templateName' => 'redirect',
+			'templateNameApplication' => 'wcf',
 			'status' => $status
 		));
 		WCF::getTPL()->display('redirect');

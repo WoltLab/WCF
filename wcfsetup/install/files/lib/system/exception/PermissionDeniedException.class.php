@@ -32,7 +32,8 @@ class PermissionDeniedException extends UserException {
 			'file' => $this->getFile(),
 			'line' => $this->getLine(),
 			'stacktrace' => $this->getTraceAsString(),
-			'templateName' => 'permissionDenied'
+			'templateName' => 'permissionDenied',
+			'templateNameApplication' => 'wcf'
 		));
 		WCF::getTPL()->display('permissionDenied');
 	}
