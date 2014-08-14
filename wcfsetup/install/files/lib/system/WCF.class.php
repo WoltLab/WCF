@@ -814,13 +814,6 @@ class WCF {
 	}
 	
 	/**
-	 * @see	\wcf\system\request\RouteHandler::secureConnection()
-	 */
-	public function secureConnection() {
-		return RouteHandler::secureConnection();
-	}
-	
-	/**
 	 * Returns a 8 character prefix for editor autosave.
 	 * 
 	 * @return	string

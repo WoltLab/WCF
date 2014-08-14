@@ -1,6 +1,3 @@
-{if !$__wcf->user->userID}
-	<script data-relocate="true" src="http{if $__wcf->secureConnection()}s{/if}://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
-{/if}
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {

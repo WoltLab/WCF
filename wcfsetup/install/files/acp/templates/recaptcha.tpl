@@ -51,10 +51,10 @@
 			</dd>
 			
 			{if !$ajaxCaptcha|isset || !$ajaxCaptcha}
-				<script data-relocate="true" src="http{if $recaptchaUseSSL}s{/if}://www.google.com/recaptcha/api/challenge?k={$recaptchaPublicKey}"></script>
+				<script data-relocate="true" src="//www.google.com/recaptcha/api/challenge?k={$recaptchaPublicKey}"></script>
 				<noscript>
 					<dd>
-						<iframe src="http{if $recaptchaUseSSL}s{/if}://www.google.com/recaptcha/api/noscript?k={$recaptchaPublicKey}" height="300" width="500" seamless="seamless"></iframe><br />
+						<iframe src="//www.google.com/recaptcha/api/noscript?k={$recaptchaPublicKey}" height="300" width="500" seamless="seamless"></iframe><br />
 						<textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
 						<input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
 					</dd>
@@ -76,16 +76,18 @@
 			{else}
 				<script data-relocate="true">
 					//<![CDATA[
-					Recaptcha.create("{$recaptchaPublicKey}", "recaptcha_image", {
-						lang: '{@$recaptchaLanguageCode}',
-						theme : 'custom'
-					});
-					
-					WCF.System.Captcha.addCallback('{$captchaID}', function() {
-						return {
-							recaptcha_challenge_field: Recaptcha.get_challenge(),
-							recaptcha_response_field: Recaptcha.get_response()
-						};
+					$.getScript('//www.google.com/recaptcha/api/js/recaptcha_ajax.js', function() {
+						Recaptcha.create("{$recaptchaPublicKey}", "recaptcha_image", {
+							lang: '{@$recaptchaLanguageCode}',
+							theme : 'custom'
+						});
+						
+						WCF.System.Captcha.addCallback('{$captchaID}', function() {
+							return {
+								recaptcha_challenge_field: Recaptcha.get_challenge(),
+								recaptcha_response_field: Recaptcha.get_response()
+							};
+						});
 					});
 					//]]>
 				</script>
