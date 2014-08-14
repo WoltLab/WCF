@@ -1,4 +1,4 @@
-{include file='header' templateName='permissionDenied'}
+{include file='header' templateName='permissionDenied' templateNameApplication='wcf'}
 
 <p class="error">{lang}wcf.global.error.permissionDenied{/lang}</p>
 

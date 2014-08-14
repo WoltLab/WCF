@@ -1,4 +1,4 @@
-{include file='header' templateName='userException'}
+{include file='header' templateName='userException' templateNameApplication='wcf'}
 
 <p id="errorMessage" class="error">
 	{@$message}

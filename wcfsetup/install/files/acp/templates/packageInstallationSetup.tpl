@@ -1,4 +1,4 @@
-{include file='header' templateName='packageInstallationSetup'}
+{include file='header' templateName='packageInstallationSetup' templateNameApplication='wcf'}
 
 <script data-relocate="true">
 	//<![CDATA[

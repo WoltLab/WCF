@@ -1,4 +1,4 @@
-{include file='header' templateName='success'}
+{include file='header' templateName='success' templateNameApplication='wcf'}
 
 <p class="success">{lang}{@$message}{/lang}</p>
 
