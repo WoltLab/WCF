@@ -7,6 +7,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 define('PACKAGE_ID', 0);
+define('LAST_UPDATE_TIME', TIME_NOW);
 
 define('COOKIE_PREFIX', 'wcf_');
 define('COOKIE_PATH', '');
