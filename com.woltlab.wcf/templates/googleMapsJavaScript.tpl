@@ -1,6 +1,6 @@
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/markerClusterer{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/markerClusterer{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true" src="//maps.google.com/maps/api/js?sensor=false&amp;language={@$__wcf->language->getFixedLanguageCode()}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/oms.min.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/oms.min.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {

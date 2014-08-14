@@ -22,28 +22,28 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 {else}
-<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>
-<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"></script>
+<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@LAST_UPDATE_TIME}"></script>
 {/if}
 {if JQUERY_SOURCE != 'local'}
 <script>
 	//<![CDATA[
 	if (!window.jQuery) {
-		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"><\/script>');
-		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"><\/script>');
+		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@LAST_UPDATE_TIME}"><\/script>');
+		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@LAST_UPDATE_TIME}"><\/script>');
 	}
 	//]]>
 </script>
 {/if}
 
-<script src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
-<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@$__wcfVersion}"></script>
+<script src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
 
 {if ENABLE_DEBUG_MODE}
-<script src="{@$__wcf->getPath()}js/WCF.js?v={@$__wcfVersion}"></script>
+<script src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
 {else}
-<script src="{@$__wcf->getPath()}js/WCF.Combined.min.js?v={@$__wcfVersion}"></script>
+<script src="{@$__wcf->getPath()}js/WCF.Combined.min.js?v={@LAST_UPDATE_TIME}"></script>
 {/if}
 
 <script data-relocate="true">
@@ -131,20 +131,20 @@
 </script>
 
 {if ENABLE_DEBUG_MODE}
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Like.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ACL.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Attachment.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ColorPicker.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Comment.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ImageViewer.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Location.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Poll.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Search.Message.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Tagging.js?v={@$__wcfVersion}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Like.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ACL.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Attachment.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ColorPicker.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Comment.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.ImageViewer.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Location.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Poll.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Search.Message.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Tagging.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User.js?v={@LAST_UPDATE_TIME}"></script>
 {/if}
 
 {event name='javascriptInclude'}

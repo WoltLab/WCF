@@ -568,7 +568,7 @@ class WCF {
 		self::getTPL()->registerPrefilter(array('event', 'hascontent', 'lang'));
 		self::getTPL()->assign(array(
 			'__wcf' => $this,
-			'__wcfVersion' => mb_substr(sha1(WCF_VERSION), 0, 8)
+			'__wcfVersion' => mb_substr(sha1(WCF_VERSION), 0, 8) // @deprecated since 2.1, use LAST_UPDATE_TIME
 		));
 	}
 	

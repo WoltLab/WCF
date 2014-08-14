@@ -1,6 +1,6 @@
 {include file='header' pageTitle="wcf.acp.language.item.list"}
 
-<script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Language.js?v={@$__wcfVersion}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Language.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {

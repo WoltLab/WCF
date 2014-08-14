@@ -14,13 +14,13 @@
 		var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
 		//]]>
 	</script>
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@$__wcfVersion}"></script>
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@$__wcfVersion}"></script>
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch.min.js?v={@$__wcfVersion}"></script>
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.min.js?v={@$__wcfVersion}"></script>
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js?v={@$__wcfVersion}"></script>
-	<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.js?v={@$__wcfVersion}"></script>
-	<script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?v={@$__wcfVersion}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@LAST_UPDATE_TIME}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@LAST_UPDATE_TIME}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch.min.js?v={@LAST_UPDATE_TIME}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable.min.js?v={@LAST_UPDATE_TIME}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker.min.js?v={@LAST_UPDATE_TIME}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
+	<script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.js?v={@LAST_UPDATE_TIME}"></script>
 	<script data-relocate="true">
 		//<![CDATA[
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');

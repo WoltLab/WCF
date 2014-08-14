@@ -164,6 +164,16 @@ class PackageInstallationDispatcher {
 		
 		// perform post-install/update actions
 		if ($node == '') {
+			// update "last update time" option
+			$sql = "UPDATE	wcf".WCF_N."_option
+				SET	optionValue = ?
+				WHERE	optionName = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array(
+				TIME_NOW,
+				'last_update_time'
+			));
+			
 			// update options.inc.php
 			OptionEditor::resetCache();
 			

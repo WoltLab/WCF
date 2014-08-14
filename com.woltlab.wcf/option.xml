@@ -220,6 +220,13 @@
 		</categories>
 		
 		<options>
+			<option name="last_update_time">
+				<categoryname>general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<hidden>1</hidden>
+			</option>
+			
 			<option name="module_master_password">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>

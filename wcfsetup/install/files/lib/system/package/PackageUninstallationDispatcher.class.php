@@ -109,7 +109,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 		
 		if ($pip instanceof SQLPackageInstallationPlugin || $pip instanceof ObjectTypePackageInstallationPlugin) {
 			$this->requireRestructureVersionTables = true;
-		}		
+		}
 		
 		$pip->uninstall();
 	}
