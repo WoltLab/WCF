@@ -19,7 +19,7 @@
 				'wcf.moderation.status.processing': '{lang}wcf.moderation.status.processing{/lang}'
 			});
 			
-			new WCF.Moderation.Report.Management({@$queue->queueID}, '{link controller='ModerationList'}{/link}');
+			new WCF.Moderation.Report.Management({@$queue->queueID}, '{link controller='ModerationList' encode=false}{/link}');
 		});
 		//]]>
 	</script>

@@ -11,7 +11,7 @@
 			});
 			
 			var $queues = [ {implode from=$queue item=item}'{@$item}'{/implode} ];
-			new WCF.ACP.Import.Manager($queues, '{link controller='RebuildData'}{/link}');
+			new WCF.ACP.Import.Manager($queues, '{link controller='RebuildData' encode=false}{/link}');
 		{/if}
 		
 		$('.jsImportSection').change(function(event) {
