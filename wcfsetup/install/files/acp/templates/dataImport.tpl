@@ -122,7 +122,8 @@
 			
 			<div class="formSubmit">
 				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s" />
-				{@SID_INPUT_TAG}
+				<input type="hidden" name="sourceSelection" value="1" />
+				{@SECURITY_TOKEN_INPUT_TAG}
 			</div>
 		</form>
 	{/if}

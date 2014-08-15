@@ -191,6 +191,15 @@ class DataImportForm extends AbstractForm {
 	}
 	
 	/**
+	 * @see	\wcf\form\IForm::submit()
+	 */
+	public function submit() {
+		if (!isset($_POST['sourceSelection'])) {
+			parent::submit();
+		}
+	}
+	
+	/**
 	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
