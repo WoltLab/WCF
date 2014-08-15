@@ -43,7 +43,7 @@
 							'wcf.user.notification.showAll': '{lang}wcf.user.notification.showAll{/lang}'
 						});
 						
-						new WCF.Notification.UserPanel('{link controller='NotificationList'}{/link}');
+						new WCF.Notification.UserPanel('{link controller='NotificationList' encode=false}{/link}');
 					});
 					//]]>
 				</script>
@@ -200,7 +200,7 @@
 							'wcf.moderation.showDeletedContent': '{lang}wcf.moderation.showDeletedContent{/lang}'
 						});
 						
-						new WCF.Moderation.UserPanel('{link controller='ModerationList'}{/link}', '{link controller='DeletedContentList'}{/link}');
+						new WCF.Moderation.UserPanel('{link controller='ModerationList' encode=false}{/link}', '{link controller='DeletedContentList' encode=false}{/link}');
 					});
 					//]]>
 				</script>
