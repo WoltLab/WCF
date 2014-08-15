@@ -1,5 +1,5 @@
 {if $rejected}
-	<p class="error">{lang}wcf.acp.pluginStore.authorization.credentails.rejected{/lang}</p>
+	<p class="error">{lang}wcf.acp.pluginStore.authorization.credentials.rejected{/lang}</p>
 {/if}
 
 <fieldset{if $rejected} class="marginTop"{/if}>
