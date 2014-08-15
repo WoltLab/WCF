@@ -191,6 +191,13 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	\wcf\system\Callback	$callback
 	 */
 	protected function compileStylesheet($filename, array $files, array $variables, $individualLess, Callback $callback) {
+		foreach ($variables as &$value) {
+			if (StringUtil::startsWith($value, '../')) {
+				$value = '~"'.$value.'"';
+			}
+		}
+		unset($value);
+		
 		// add options as LESS variables
 		if (PACKAGE_ID) {
 			foreach (Option::getOptions() as $constantName => $option) {

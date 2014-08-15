@@ -2,6 +2,7 @@
 namespace wcf\data\style;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 
 /**
  * Represents the active user style.
@@ -31,10 +32,10 @@ class ActiveStyle extends DatabaseObjectDecorator {
 		}
 		
 		if ($this->imagePath && file_exists(WCF_DIR.$this->imagePath.$image)) {
-			return WCF::getPath().$this->imagePath.$image;
+			return FileUtil::getRealPath(WCF::getPath().$this->imagePath.$image);
 		}
 		
-		return WCF::getPath().'images/'.$image;
+		return FileUtil::getRealPath(WCF::getPath().'images/'.$image);
 	}
 	
 	/**
