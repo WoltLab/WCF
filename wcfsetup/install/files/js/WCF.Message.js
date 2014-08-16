@@ -3263,14 +3263,6 @@ WCF.Message.UserMention = Class.extend({
 				event.cancel();
 			}
 		}
-		else if (event.data.keyCode === $.ui.keyCode.ENTER || event.data.keyCode === $.ui.keyCode.HOME || event.data.keyCode === $.ui.keyCode.PAGE_DOWN || event.data.keyCode === $.ui.keyCode.PAGE_UP || event.data.keyCode === $.ui.keyCode.DOWN || event.data.keyCode === $.ui.keyCode.UP) {
-			// line change, thus abort searches from previous line
-			this._proxy.abortPrevious();
-			if (this._timer !== null) {
-				this._timer.stop();
-				this._timer = null;
-			}
-		}
 	},
 	
 	/**
@@ -3309,6 +3301,13 @@ WCF.Message.UserMention = Class.extend({
 		if (this._ckEditor.mode !== 'wysiwyg') {
 			return true;
 		}
+		
+		// abort previous search requests
+		if (this._timer !== null) {
+			this._timer.stop();
+			this._timer = null;
+		}
+		this._proxy.abortPrevious();
 		
 		// ignore enter key up event
 		if (event.data.$.keyCode === 13) {
@@ -3360,6 +3359,10 @@ WCF.Message.UserMention = Class.extend({
 	 * Replaces the started mentioning with a chosen username.
 	 */
 	_setUsername: function(username) {
+		if (this._timer !== null) {
+			this._timer.stop();
+			this._timer = null;
+		}
 		this._proxy.abortPrevious();
 		
 		var $range = this._ckEditor.getSelection().getRanges()[0];
