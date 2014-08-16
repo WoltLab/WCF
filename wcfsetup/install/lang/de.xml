@@ -2240,6 +2240,9 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.showAll"><![CDATA[Alle Einträge anzeigen]]></item>
 		<item name="wcf.moderation.showDeletedContent"><![CDATA[Gelöschte Inhalte anzeigen]]></item>
 		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[Gelöschte Inhalte]]></item>
+		<item name="wcf.moderation.comments"><![CDATA[Kommentare]]></item>
+		<item name="wcf.moderation.comments.description"><![CDATA[Diese Kommentare sind intern und nur für Moderatoren einsehbar]]></item>
+		<item name="wcf.moderation.jumpToContent"><![CDATA[Zum Inhalt gehen]]></item>
 	</category>
 	
 	<category name="wcf.moderation.activation">

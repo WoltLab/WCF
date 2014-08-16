@@ -2238,6 +2238,9 @@ Errors are:
 		<item name="wcf.moderation.showAll"><![CDATA[Show All Items]]></item>
 		<item name="wcf.moderation.showDeletedContent"><![CDATA[Show Deleted Content]]></item>
 		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[Deleted Content]]></item>
+		<item name="wcf.moderation.comments"><![CDATA[Comments]]></item>
+		<item name="wcf.moderation.comments.description"><![CDATA[All comments are internal and will not be exposed to non-moderators]]></item>
+		<item name="wcf.moderation.jumpToContent"><![CDATA[Go to Related Content]]></item>
 	</category>
 	
 	<category name="wcf.moderation.activation">
