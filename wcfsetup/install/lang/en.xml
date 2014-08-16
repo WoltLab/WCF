@@ -194,7 +194,7 @@ Examples for medium ID detection:
 	</category>
 	
 	<category name="wcf.acp.dashboard">
-		<item name="wcf.acp.dashboard.list"><![CDATA[TODO: Dashboard-Seiten konfigurieren]]></item>
+		<item name="wcf.acp.dashboard.list"><![CDATA[Configure Dashboard Pages]]></item>
 		<item name="wcf.acp.dashboard.option"><![CDATA[Configure Dashboard Boxes]]></item>
 		<item name="wcf.acp.dashboard.box.sort"><![CDATA[Sort boxes to determine show order. You can enable or disable boxes by moving them between the boxes “Active Boxes” and “Disabled Boxes”.]]></item>
 	</category>
@@ -617,7 +617,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.smiley.category.add"><![CDATA[Add Smiley Category]]></item>
 		<item name="wcf.acp.menu.link.smiley.category.list"><![CDATA[List Smiley Categories]]></item>
 		<item name="wcf.acp.menu.link.dashboard"><![CDATA[Dashboard]]></item>
-		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[TODO: Seiten konfigurieren]]></item>
+		<item name="wcf.acp.menu.link.dashboard.list"><![CDATA[Configure Dashboard Pages]]></item>
 		<item name="wcf.acp.menu.link.activityPoint"><![CDATA[Activity Points]]></item>
 		<item name="wcf.acp.menu.link.user.rank"><![CDATA[User Ranks]]></item>
 		<item name="wcf.acp.menu.link.user.rank.list"><![CDATA[List User Ranks]]></item>
@@ -707,7 +707,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Sending]]></item>
 		<item name="wcf.acp.option.category.general.page"><![CDATA[Page]]></item>
-		<item name="wcf.acp.option.category.general.page.seo"><![CDATA[TODO: Suchmaschinenoptimierung (SEO)]]></item>
+		<item name="wcf.acp.option.category.general.page.seo"><![CDATA[Search Engine Optimization (SEO)]]></item>
 		<item name="wcf.acp.option.category.message"><![CDATA[Messages]]></item>
 		<item name="wcf.acp.option.category.message.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.module"><![CDATA[Module]]></item>
@@ -908,7 +908,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.register_username_min_length"><![CDATA[Minimum Username Length]]></item>
 		<item name="wcf.acp.option.register_username_max_length"><![CDATA[Maximum Username Length]]></item>
 		<item name="wcf.acp.option.register_username_force_ascii"><![CDATA[Require ASCII characters for usernames]]></item>
-		<item name="wcf.acp.option.register_min_user_age"><![CDATA[TODO: Mindestalter]]></item>
+		<item name="wcf.acp.option.register_min_user_age"><![CDATA[Minimum Age]]></item>
 		<item name="wcf.acp.option.register_disabled"><![CDATA[Disable registration]]></item>
 		<item name="wcf.acp.option.register_disabled.description"><![CDATA[Disables registration for all users, new users may be created through an administrator.]]></item>
 		<item name="wcf.acp.option.register_enable_disclaimer"><![CDATA[Enable disclaimer]]></item>
@@ -993,12 +993,12 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_enable_double_click_zoom"><![CDATA[Enable Zoom by Double-Clicking]]></item>
 		<item name="wcf.acp.option.google_maps_default_latitude"><![CDATA[Default Map Position (Latitude)]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Default Map Position (Longitude)]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[TODO: „Benutzer online“-Darstellung für Benutzernamen verwenden]]></item>
-		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[TODO: Enable Privacy Policy page]]></item>
-		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[TODO: Erklärung zum „Einsatz von Cookies“ aktivieren]]></item>
-		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[TODO: Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
-		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[TODO: „index.php“ aus URLs entfernen]]></item>
-		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[Apply “Users Online” markings for usernames]]></item>
+		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[Enable Privacy Policy Page]]></item>
+		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Enable explanation on “Cookie Usage”]]></item>
+		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Displays a notice on cookie usage according to EU Directive 2009/136/EG upon first visit.]]></item>
+		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Remove “index.php” component from URLs]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Removing the “index.php” from URLs requires a rewrite module installed on your webserver and an appropriate configuration. This option will not work without any prior configuration applied by you!]]></item>
 		<item name="wcf.acp.option.url_legacy_mode"><![CDATA[Enable link compatibility mode]]></item>
 		<item name="wcf.acp.option.url_legacy_mode.description"><![CDATA[Enabling this option forces the system to use WoltLab Community Framework 2.0-compilant URLs and should only be used to ensure compatibility with legacy URLs:
 <ul class="nativeList">
@@ -1014,19 +1014,19 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.profile_mail_use_captcha"><![CDATA[Enable Captcha protection for “Send Email to User”]]></item>
 		<item name="wcf.acp.option.search_use_captcha"><![CDATA[Enable Captcha protection for search]]></item>
 		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
-		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[TODO: Benutzer-Authentifikation]]></item>
-		<item name="wcf.acp.option.enable_user_authentication_failure"><![CDATA[TODO: Fehlgeschlagene Ammeldeversuche protokollieren]]></item>
-		<item name="wcf.acp.option.enable_user_authentication_failure.description"><![CDATA[TODO]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_timeout"><![CDATA[TODO: Zeitraum der Überwachung]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_timeout.description"><![CDATA[TODO]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_ip_captcha"><![CDATA[TODO: Captcha bei Anmeldung (IP)]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_ip_captcha.description"><![CDATA[TODO]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_ip_block"><![CDATA[TODO: Blockierung der Anmeldung]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_ip_block.description"><![CDATA[TODO]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_user_captcha"><![CDATA[TODO: Captcha bei Anmeldung (Benutzer)]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_user_captcha.description"><![CDATA[TODO]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_expiration"><![CDATA[TODO: Löschung von alten Protokolleinträgen]]></item>
-		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[User Authentication]]></item>
+		<item name="wcf.acp.option.enable_user_authentication_failure"><![CDATA[Log failed login attempts]]></item>
+		<item name="wcf.acp.option.enable_user_authentication_failure.description"><![CDATA[]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_timeout"><![CDATA[Grace Period]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_timeout.description"><![CDATA[Failed login attempts are not put into consideration if they happened more than the configured amount of seconds ago.]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_captcha"><![CDATA[Captcha After Failed Attempts (IP)]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_captcha.description"><![CDATA[Once there have been more than the configured amount of failed attempts from the same IP address, the user will be forced so solve a captcha.]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_block"><![CDATA[Block from Login (IP)]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_ip_block.description"><![CDATA[Once there have been more than the configured amount of failed attempts from the same IP address, the IP addresses will be temporarily blocked from logging in.]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_user_captcha"><![CDATA[Captcha After Failed Attempts (User)]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_user_captcha.description"><![CDATA[Once there have been more than the configured amount of failled attempts for the same user account, a captcha will be enforced regardless of the IP address.]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_expiration"><![CDATA[Prune Log Entries]]></item>
+		<item name="wcf.acp.option.user_authentication_failure_expiration.description"><![CDATA[Logs of failed login attempts will be automatically pruned after the configured amount of days, raising the limit will provide a longer history in expense for increased database storage usage.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type"><![CDATA[Default Gravatar Type]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[The <a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url=https://de.gravatar.com/site/implement/images/#default-image">default Gravatar type</a> used if no matching Gravatar was found.]]></item>
   		<item name="wcf.acp.option.gravatar_default_type.404"><![CDATA[No default Gravatar]]></item>
@@ -1221,8 +1221,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.user.description"><![CDATA[Rebuilds the list of like users]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Rebuild Attachments]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Rebuilds attachment preview images]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily"><![CDATA[TODO: Statistiken aktualisieren]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily.description"><![CDATA[TODO: Erzeugt die täglichen Statistiken neu]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily"><![CDATA[Rebuild Statistics]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.statDaily.description"><![CDATA[Rebuilds the daily statistics]]></item>
 	</category>
 	
 	<category name="wcf.acp.search">
@@ -1627,12 +1627,12 @@ Login with your new password: {link controller='Login' isEmail=true}{/link}]]></
 		<item name="wcf.acp.user.authentication.failure.environment"><![CDATA[Environment]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment.admin"><![CDATA[Administration]]></item>
-		<item name="wcf.acp.user.authentication.failure.time"><![CDATA[TODO: Datum]]></item>
-		<item name="wcf.acp.user.activation.mail"><![CDATA[TODO: Hallo {@$username},
+		<item name="wcf.acp.user.authentication.failure.time"><![CDATA[Date]]></item>
+		<item name="wcf.acp.user.activation.mail"><![CDATA[Dear {@$username},
 
-Ihr Benutzerkonto auf der Website: {@PAGE_TITLE|language} wurde vom Administrator freigeschaltet.
-Sie können jetzt den vollen Funktionsumfang der Seite nutzen.]]></item>
-		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[TODO: Ihr Benutzerkonto auf der Website: {@PAGE_TITLE|language} wurde freigeschaltet]]></item>
+your account on the website: {@PAGE_TITLE|language} has been approved by an administrator.
+You can now fully access the website.]]></item>
+		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[Your account on the website: {@PAGE_TITLE|language} has been approved]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
@@ -1821,10 +1821,10 @@ Errors are:
 		<item name="wcf.dashboard.box.com.woltlab.wcf.like.mostLikedMembers"><![CDATA[Most Liked Members]]></item>
 		<item name="wcf.dashboard.box.mostLikedMembers.likes"><![CDATA[{#$likedMember->likesReceived} Like{if $likedMember->likesReceived != 1}s{/if}]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysBirthdays"><![CDATA[Today’s Birthdays]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysFollowingBirthdays"><![CDATA[TODO: Heutige Geburtstage von Nutzern, denen Sie folgen]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.todaysFollowingBirthdays"><![CDATA[Today’s Birthdays of Users you Follow]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.usersOnlineSidebar"><![CDATA[Users Online]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.followingsOnlineSidebar"><![CDATA[TODO: Benutzer online, denen Sie folgen]]></item>
-		<item name="wcf.dashboard.box.com.woltlab.wcf.user.staffOnlineSidebar"><![CDATA[TODO: Team-Mitglieder online]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.followingsOnlineSidebar"><![CDATA[Users Online you Follow]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.user.staffOnlineSidebar"><![CDATA[Staff-Members Online]]></item>
 	</category>
 	
 	<category name="wcf.date">
@@ -2155,10 +2155,10 @@ Errors are:
 		<item name="wcf.like.details.dislike"><![CDATA[Dislikes]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment"><![CDATA[Comment]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
-		<item name="wcf.like.likes.more"><![CDATA[TODO: Weitere Likes]]></item>
-		<item name="wcf.like.likes.noMoreEntries"><![CDATA[TODO: Keine weiteren Likes]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[TODO: Mag den Kommentar {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">von {$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{link controller='User' object=$user}#wall{/link}">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[TODO: Mag die Antwort {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">von {$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{link controller='User' object=$user}#wall{/link}">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
+		<item name="wcf.like.likes.more"><![CDATA[More Likes]]></item>
+		<item name="wcf.like.likes.noMoreEntries"><![CDATA[There are no more likes]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[{if $like->isDislike()}Dislikes{else}Likes{/if} the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{link controller='User' object=$user}#wall{/link}">{$user->username}’s wall</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[{if $like->isDislike()}Dislikes{else}Likes{/if} the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{link controller='User' object=$user}#wall{/link}">{$user->username}’s wall</a>.]]></item>
 	</category>
 	
 	<category name="wcf.message">
@@ -2268,7 +2268,7 @@ Errors are:
 	</category>
 	
 	<category name="wcf.notice">
-		<item name="wcf.notice.button.dismiss"><![CDATA[TODO: Hinweis dauerhaft ausblenden]]></item>
+		<item name="wcf.notice.button.dismiss"><![CDATA[Permanently dismiss this notice]]></item>
 	</category>
 	
 	<category name="wcf.page">
@@ -2347,7 +2347,7 @@ Errors are:
 		<item name="wcf.poll.resultsRequireVote.description"><![CDATA[Results are invisible unless the poll ended or the user voted.]]></item>
 		<item name="wcf.poll.sortByVotes"><![CDATA[Sort result by votes]]></item>
 		<item name="wcf.poll.totalVotes"><![CDATA[A total of {#$poll->votes} vote{if $poll->votes != 1}s{/if}]]></item>
-		<item name="wcf.poll.endTimeInfo"><![CDATA[TODO: Umfrage endet am {@$poll->endTime|plainTime}]]></item>
+		<item name="wcf.poll.endTimeInfo"><![CDATA[Poll ends on {@$poll->endTime|plainTime}]]></item>
 	</category>
 	
 	<category name="wcf.recaptcha">
@@ -2432,7 +2432,7 @@ Errors are:
 		<item name="wcf.user.option.error.tooLong"><![CDATA[Entered text is too long.]]></item>
 		<item name="wcf.user.option.error.tooShort"><![CDATA[Entered text is too short.]]></item>
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[Entered text is invalid.]]></item>
-		<item name="wcf.user.option.error.birthdayTooYoung"><![CDATA[TODO: Sie sind zu jung. Für eine Anmeldung auf dieser Seite müssen Sie mindestens {#REGISTER_MIN_USER_AGE} Jahre alt sein.]]></item>
+		<item name="wcf.user.option.error.birthdayTooYoung"><![CDATA[You’re not old enough. To register with this website you must be at least {#REGISTER_MIN_USER_AGE} years old.]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[Your user account has been banned{if $__wcf->user->banReason}: {@$__wcf->user->banReason|htmlspecialchars|nl2br}{else}.{/if}]]></item>
 		<item name="wcf.user.access.everyone"><![CDATA[Everyone]]></item>
 		<item name="wcf.user.access.following"><![CDATA[Users I’m following]]></item>
@@ -2616,7 +2616,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.enableSignature"><![CDATA[Unblock Signature]]></item>
 		<item name="wcf.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.user.birthdayToday"><![CDATA[It is their birthday]]></item>
-		<item name="wcf.user.login.blocked"><![CDATA[TODO: Aufgrund einer hohen Anzahl von fehlgeschlagenen Anmeldeversuchen durch Ihre IP-Adresse steht Ihnen die Anmeldung aus Sicherheitsgründen vorübergehend nicht zur Verfügung. Bitte versuchen Sie es später erneut!]]></item>
+		<item name="wcf.user.login.blocked"><![CDATA[There have been too  many failed login attempts originating from your ip address, your login attempts will be temporarily rejected for security reasons. Please try again later!]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
