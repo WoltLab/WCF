@@ -10102,6 +10102,10 @@ WCF.Language.Chooser = Class.extend({
 				this._dropdown.children('.dropdownToggle').empty().append($item.html());
 			}
 		}
+		else if (languageID === 0) {
+			var $dropdownToggle = $('<div><span class="icon icon24 fa-question" /></div> <div><h3>' + WCF.Language.get('wcf.global.language.noSelection') + '</h3></div>');
+			this._dropdown.children('.dropdownToggle').empty().append($dropdownToggle);
+		}
 		
 		WCF.Dropdown.init();
 	},
