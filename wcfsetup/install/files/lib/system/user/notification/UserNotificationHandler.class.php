@@ -421,19 +421,23 @@ class UserNotificationHandler extends SingletonFactory {
 			$notifications[] = $data;
 		}
 		
+		// check access
+		foreach ($notifications as $index => $notificationData) {
+			if (!$notificationData['event']->checkAccess()) {
+				if ($notificationData['event']->deleteNoAccessNotification()) {
+					$deleteNotifications[] = $notificationObjects[$notificationData['notificationID']];
+				}
+				
+				unset($notifications[$index]);
+			}
+		}
+		
 		if (!empty($deleteNotifications)) {
 			$notificationAction = new UserNotificationAction($deleteNotifications, 'delete');
 			$notificationAction->executeAction();
 			
 			// reset notification counter
 			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
-		}
-		
-		// check access
-		foreach ($notifications as $index => $notificationData) {
-			if (!$notificationData['event']->checkAccess()) {
-				unset($notifications[$index]);
-			}
 		}
 		
 		return array(

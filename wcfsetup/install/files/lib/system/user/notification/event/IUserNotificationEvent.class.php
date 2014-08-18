@@ -133,4 +133,12 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * @return	boolean
 	 */
 	public function checkAccess();
+	
+	/**
+	 * Returns true if a notification should be deleted if the related object
+	 * is not accessible.
+	 * 
+	 * @return	boolean
+	 */
+	public function deleteNoAccessNotification();
 }

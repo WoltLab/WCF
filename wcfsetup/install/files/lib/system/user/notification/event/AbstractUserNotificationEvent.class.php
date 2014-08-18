@@ -232,4 +232,11 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	public function checkAccess() {
 		return true;
 	}
+	
+	/**
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::deleteNoAccessNotification()
+	 */
+	public function deleteNoAccessNotification() {
+		return true;
+	}
 }
