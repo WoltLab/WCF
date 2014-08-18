@@ -590,6 +590,7 @@ final class StringUtil {
 	 * @return	boolean
 	 */
 	public static function executeWordFilter($word, $filter) {
+		$filter = self::trim($filter);
 		$word = mb_strtolower($word);
 		
 		if ($filter != '') {
