@@ -47,7 +47,13 @@ class AbstractUserNotificationObjectType extends AbstractObjectTypeProcessor imp
 		foreach ($objectIDs as $objectID) {
 			// append empty objects for unknown ids
 			if (!isset($objects[$objectID])) {
-				$objects[$objectID] = new static::$decoratorClassName(new static::$objectClassName(null, array($indexName => $objectID)));
+				// '__unknownNotificationObject' tells the notification API
+				// that the object does not exist anymore so that the related
+				// notification can be deleted automatically
+				$objects[$objectID] = new static::$decoratorClassName(new static::$objectClassName(null, array(
+					'__unknownNotificationObject' => true,
+					$indexName => $objectID
+				)));
 			}
 		}
 		

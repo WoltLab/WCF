@@ -375,12 +375,19 @@ class UserNotificationHandler extends SingletonFactory {
 		
 		// build notification data
 		$notifications = array();
+		$deleteNotifications = array();
 		foreach ($notificationObjects as $notification) {
+			$object = $objectTypes[$notification->objectType]['objects'][$notification->objectID];
+			if ($object->__unknownNotificationObject) {
+				$deleteNotifications[] = $notification;
+				continue;
+			}
+			
 			$className = $eventObjects[$notification->eventID]->className;
 			$class = new $className($eventObjects[$notification->eventID]);
 			$class->setObject(
 				$notification,
-				$objectTypes[$notification->objectType]['objects'][$notification->objectID],
+				$object,
 				(isset($authors[$notification->authorID]) ? $authors[$notification->authorID] : $unknownAuthor),
 				$notification->additionalData
 			);
@@ -412,6 +419,14 @@ class UserNotificationHandler extends SingletonFactory {
 			}
 			
 			$notifications[] = $data;
+		}
+		
+		if (!empty($deleteNotifications)) {
+			$notificationAction = new UserNotificationAction($deleteNotifications, 'delete');
+			$notificationAction->executeAction();
+			
+			// reset notification counter
+			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
 		}
 		
 		// check access
