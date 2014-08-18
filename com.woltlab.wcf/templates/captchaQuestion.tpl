@@ -5,7 +5,7 @@
 		<legend>{lang}wcf.captcha.question.captcha{/lang}</legend>
 		<small>{lang}wcf.captcha.question.captcha.description{/lang}</small>
 		
-		<dl{if (($errorType|isset && $errorType|is_array && $errorType[captchaAnswer]|isset) || ($errorField|isset && $errorField == 'captchaAnswer'))} class="formError"{/if}>
+		<dl class="condensed{if (($errorType|isset && $errorType|is_array && $errorType[captchaAnswer]|isset) || ($errorField|isset && $errorField == 'captchaAnswer'))} formError{/if}">
 			<dt><label for="captchaAnswer">{lang}{$captchaQuestionObject->question}{/lang}</label></dt>
 			<dd>
 				<input type="text" id="captchaAnswer" name="captchaAnswer" class="medium" />

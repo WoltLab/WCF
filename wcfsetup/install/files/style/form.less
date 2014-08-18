@@ -139,6 +139,23 @@ dl:not(.plain) {
 			color: @wcfDimmedColor;
 		}
 	}
+	
+	&.condensed {
+		> dt {
+			float: none;
+			margin-bottom: @wcfGapTiny;
+			text-align: left;
+			width: auto !important;
+			
+			&:empty {
+				margin-bottom: 0;
+			}
+		}
+		
+		> dd {
+			margin-left: 0 !important;
+		}
+	}
 }
 
 @media only screen and (max-width: 1024px) {
