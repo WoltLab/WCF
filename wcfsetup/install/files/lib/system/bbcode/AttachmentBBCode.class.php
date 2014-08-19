@@ -55,7 +55,7 @@ class AttachmentBBCode extends AbstractBBCode {
 		}
 		
 		if ($attachment !== null) {
-			if ($attachment->showAsImage() && $parser->getOutputType() == 'text/html') {
+			if ($attachment->showAsImage() && $attachment->canViewPreview() && $parser->getOutputType() == 'text/html') {
 				// image
 				$linkParameters = array(
 					'object' => $attachment
