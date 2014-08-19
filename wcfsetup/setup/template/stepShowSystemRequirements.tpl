@@ -17,6 +17,17 @@
 	</fieldset>
 	
 	<fieldset>
+		<legend>{lang}wcf.global.systemRequirements.memoryLimit{/lang}</legend>
+		<dl>
+			<dt>{lang}wcf.global.systemRequirements.element.required{/lang} 128 M</dt>
+			<dd>
+				{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.memoryLimit.result}red{else}green{/if}">{$system.memoryLimit.value}</span>
+				{if !$system.memoryLimit.result}<small>{lang}wcf.global.systemRequirements.memoryLimit.description{/lang}</small>{/if}
+			</dd>
+		</dl>
+	</fieldset>
+	
+	<fieldset>
 		<legend>{lang}wcf.global.systemRequirements.sql{/lang}</legend>
 		<dl>
 			<dt>{lang}wcf.global.systemRequirements.element.required{/lang} {lang}wcf.global.systemRequirements.active{/lang}</dt>
@@ -36,17 +47,6 @@
 </header>
 
 <div class="container containerPadding marginTop">
-	<fieldset>
-		<legend>{lang}wcf.global.systemRequirements.memoryLimit{/lang}</legend>
-		<dl>
-			<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang} &gt; 64 M</dt>
-			<dd>
-				{lang}wcf.global.systemRequirements.element.yours{/lang} <span class="badge {if !$system.memoryLimit.result}yellow{else}green{/if}">{$system.memoryLimit.value}</span>
-				{if !$system.memoryLimit.result}<small>{lang}wcf.global.systemRequirements.memoryLimit.description{/lang}</small>{/if}
-			</dd>
-		</dl>
-	</fieldset>
-	
 	<fieldset>
 		<legend>{lang}wcf.global.systemRequirements.uploadMaxFilesize{/lang}</legend>
 		<dl>
@@ -72,7 +72,7 @@
 
 <form method="post" action="install.php">
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result} disabled="disabled"{/if} accesskey="s"/>
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.memoryLimit.result} disabled="disabled"{/if} accesskey="s"/>
 		<input type="hidden" name="step" value="{@$nextStep}" />
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}" />
 		<input type="hidden" name="languageCode" value="{@$languageCode}" />
