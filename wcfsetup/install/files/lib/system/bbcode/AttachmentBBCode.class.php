@@ -49,7 +49,7 @@ class AttachmentBBCode extends AbstractBBCode {
 			// mark attachment as embedded
 			$attachment->markAsEmbedded();
 			
-			if ($attachment->showAsImage() && $parser->getOutputType() == 'text/html') {
+			if ($attachment->showAsImage() && $attachment->canViewPreview() && $parser->getOutputType() == 'text/html') {
 				// image
 				$linkParameters = array(
 					'object' => $attachment
