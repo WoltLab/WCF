@@ -134,6 +134,20 @@ class UserImporter extends AbstractImporter {
 			}
 		}
 		
+		$languageIDs = array();
+		if (isset($additionalData['languages'])) {
+			foreach ($additionalData['languages'] as $languageCode) {
+				$language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
+				if ($language !== null) $languageIDs[] = $language->languageID;
+			}
+		}
+		if (empty($languageIDs)) {
+			$languageIDs[] = LanguageFactory::getInstance()->getDefaultLanguageID();
+		}
+		
+		// assign an interface language
+		$data['languageID'] = reset($languageIDs);
+		
 		// create user
 		$user = UserEditor::create($data);
 		$userEditor = new UserEditor($user);
@@ -170,16 +184,6 @@ class UserImporter extends AbstractImporter {
 						(userID, languageID)
 			VALUES			(?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$languageIDs = array();
-		if (isset($additionalData['languages'])) {
-			foreach ($additionalData['languages'] as $languageCode) {
-				$language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
-				if ($language !== null) $languageIDs[] = $language->languageID;
-			}
-		}
-		if (empty($languageIDs)) {
-			$languageIDs[] = LanguageFactory::getInstance()->getDefaultLanguageID();
-		}
 		foreach ($languageIDs as $languageID) {
 			$statement->execute(array(
 				$user->userID,
