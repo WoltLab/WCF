@@ -44,6 +44,12 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	protected $permissions = null;
 	
 	/**
+	 * fallback return value used in Category::getPermission()
+	 * @var boolean
+	 */
+	protected $defaultPermission = false;
+	
+	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableIndexName
 	 */
 	protected static $databaseTableIndexName = 'categoryID';
@@ -160,7 +166,7 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 			return $this->getParentCategory()->getPermission($permission);
 		}
 		
-		return false;
+		return $this->defaultPermission;
 	}
 	
 	/**
