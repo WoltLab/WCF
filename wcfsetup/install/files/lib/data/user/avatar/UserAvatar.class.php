@@ -93,7 +93,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 			}
 		}
 		
-		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" style="width: '.$width.'px; height: '.$height.'px" alt="'.WCF::getLanguage()->get('wcf.user.avatar.alt').'" />';
+		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" style="width: '.$width.'px; height: '.$height.'px" alt="'.WCF::getLanguage()->get('wcf.user.avatar.alt').'" class="userAvatarImage" />';
 	}
 	
 	/**
