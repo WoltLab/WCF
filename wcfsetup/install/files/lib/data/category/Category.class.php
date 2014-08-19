@@ -166,6 +166,10 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 			return $this->getParentCategory()->getPermission($permission);
 		}
 		
+		if ($this->getObjectType()->defaultpermission !== null) {
+			return $this->getObjectType()->defaultpermission ? true : false;
+		}
+		
 		return $this->defaultPermission;
 	}
 	
