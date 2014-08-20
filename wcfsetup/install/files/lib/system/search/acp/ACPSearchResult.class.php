@@ -19,6 +19,12 @@ class ACPSearchResult {
 	protected $link = '';
 	
 	/**
+	 * item subtitle
+	 * @var	string
+	 */
+	protected $subtitle = '';
+	
+	/**
 	 * item title
 	 * @var	string
 	 */
@@ -29,10 +35,12 @@ class ACPSearchResult {
 	 * 
 	 * @param	string		$title
 	 * @param	string		$link
+	 * @param	string		$subtitle
 	 */
-	public function __construct($title, $link) {
+	public function __construct($title, $link, $subtitle = '') {
 		$this->title = $title;
 		$this->link = $link;
+		$this->subtitle = $subtitle;
 	}
 	
 	/**
@@ -51,6 +59,15 @@ class ACPSearchResult {
 	 */
 	public function getTitle() {
 		return $this->title;
+	}
+	
+	/**
+	 * Returns the item subtitle.
+	 * 
+	 * @return	string
+	 */
+	public function getSubtitle() {
+		return $this->subtitle;
 	}
 	
 	/**

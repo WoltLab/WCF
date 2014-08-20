@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\search\acp;
+use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -60,6 +61,8 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
 		$statement->execute($conditions->getParameters());
 		
+		$optionCategories = OptionCacheBuilder::getInstance()->getData(array(), 'categories');
+		
 		while ($option = $statement->fetchObject('wcf\data\option\Option')) {
 			// category is not accessible
 			if (!$this->isValid($option->categoryName)) {
@@ -72,7 +75,17 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 			}
 			
 			$link = LinkHandler::getInstance()->getLink('Option', array('id' => $this->getCategoryID($this->getTopCategory($option->categoryName)->parentCategoryName)), 'optionName='.$option->optionName.'#'.$this->getCategoryName($option->categoryName));
-			$results[] = new ACPSearchResult($languageItems[$option->optionName], $link);
+			$categoryName = $option->categoryName;
+			$parentCategories = array();
+			while (isset($optionCategories[$categoryName])) {
+				array_unshift($parentCategories, 'wcf.acp.option.category.'.$optionCategories[$categoryName]->categoryName);
+				
+				$categoryName = $optionCategories[$categoryName]->parentCategoryName;
+			}
+			
+			$results[] = new ACPSearchResult($languageItems[$option->optionName], $link, WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', array(
+				'pieces' => $parentCategories
+			)));
 		}
 		
 		return $results;

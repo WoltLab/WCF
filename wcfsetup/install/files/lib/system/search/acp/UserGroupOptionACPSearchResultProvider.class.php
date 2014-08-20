@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\search\acp;
+use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -62,6 +63,8 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
 		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
 		$statement->execute($conditions->getParameters());
 		
+		$optionCategories = UserGroupOptionCacheBuilder::getInstance()->getData(array(), 'categories');
+		
 		while ($userGroupOption = $statement->fetchObject('wcf\data\user\group\option\UserGroupOption')) {
 			// category is not accessible
 			if (!$this->isValid($userGroupOption->categoryName)) {
@@ -74,7 +77,17 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
 			}
 			
 			$link = LinkHandler::getInstance()->getLink('UserGroupOption', array('id' => $userGroupOption->optionID));
-			$results[] = new ACPSearchResult($languageItems[$userGroupOption->optionName], $link);
+			$categoryName = $userGroupOption->categoryName;
+			$parentCategories = array();
+			while (isset($optionCategories[$categoryName])) {
+				array_unshift($parentCategories, 'wcf.acp.group.option.category.'.$optionCategories[$categoryName]->categoryName);
+				
+				$categoryName = $optionCategories[$categoryName]->parentCategoryName;
+			}
+			
+			$results[] = new ACPSearchResult($languageItems[$userGroupOption->optionName], $link, WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', array(
+				'pieces' => $parentCategories
+			)));
 		}
 		
 		return $results;

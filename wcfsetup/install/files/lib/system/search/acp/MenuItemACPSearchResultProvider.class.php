@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\search\acp;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\menu\acp\ACPMenu;
 use wcf\system\WCF;
 
 /**
@@ -65,7 +66,16 @@ class MenuItemACPSearchResultProvider extends AbstractACPSearchResultProvider im
 				continue;
 			}
 			
-			$results[] = new ACPSearchResult($languageItems[$menuItem->menuItem], $menuItem->getLink());
+			$parentMenuItem = $menuItem->parentMenuItem;
+			$parentMenuItems = array();
+			while ($parentMenuItem && isset(ACPMenu::getInstance()->menuItems[$parentMenuItem])) {
+				array_unshift($parentMenuItems, $parentMenuItem);
+				
+				$parentMenuItem = ACPMenu::getInstance()->menuItemList[$parentMenuItem]->parentMenuItem;
+			}
+			$results[] = new ACPSearchResult($languageItems[$menuItem->menuItem], $menuItem->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', array(
+				'pieces' => $parentMenuItems
+			)));
 		}
 		
 		return $results;
