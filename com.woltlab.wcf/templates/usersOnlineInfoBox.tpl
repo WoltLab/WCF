@@ -9,11 +9,13 @@
 				<p>{lang}wcf.user.usersOnline.detail{/lang}{if $usersOnlineShowRecord && USERS_ONLINE_RECORD} - {lang}wcf.user.usersOnline.record{/lang}{/if}</p>
 			</div>
 			
-			<ul class="dataList">
-				{foreach from=$usersOnlineList->getObjects() item=userOnline}
-					<li><a href="{link controller='User' object=$userOnline->getDecoratedObject()}{/link}" class="userLink" data-user-id="{@$userOnline->userID}">{@$userOnline->getFormattedUsername()}</a></li>
-				{/foreach}
-			</ul>
+			{if $usersOnlineList|count}
+				<ul class="dataList">
+					{foreach from=$usersOnlineList->getObjects() item=userOnline}
+						<li><a href="{link controller='User' object=$userOnline->getDecoratedObject()}{/link}" class="userLink" data-user-id="{@$userOnline->userID}">{@$userOnline->getFormattedUsername()}</a></li>
+					{/foreach}
+				</ul>
+			{/if}
 			
 			{if USERS_ONLINE_ENABLE_LEGEND && $usersOnlineList->getUsersOnlineMarkings()|count}
 				<div class="usersOnlineLegend">
