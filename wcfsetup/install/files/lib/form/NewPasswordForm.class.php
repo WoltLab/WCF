@@ -80,8 +80,12 @@ class NewPasswordForm extends AbstractForm {
 		if (!$this->user->userID) {
 			throw new UserInputException('userID', 'notValid');
 		}
-		if (!$this->user->lostPasswordKey) {
+		if (!$this->lostPasswordKey) {
 			throw new UserInputException('lostPasswordKey');
+		}
+		
+		if (!$this->user->lostPasswordKey) {
+			throw new UserInputException('lostPasswordKey', 'notValid');
 		}
 		
 		if ($this->user->lostPasswordKey != $this->lostPasswordKey) {
