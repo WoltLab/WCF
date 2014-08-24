@@ -3,6 +3,9 @@ namespace wcf\system\event\listener;
 
 /**
  * EventListeners can be registered for a specific event in many controller objects.
+ * NOTE: This class will be aliased to \wcf\system\event\listener\IEventListener in
+ *       a future version. It is named IParameterizedEventListener for backwards
+ *       compatibility reasons only.
  * 
  * @author	Tim Duesterhus, Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
@@ -11,7 +14,7 @@ namespace wcf\system\event\listener;
  * @subpackage	system.event.listener
  * @category	Community Framework
  */
-interface IEventListener {
+interface IParameterizedEventListener {
 	/**
 	 * Executes this action.
 	 * 

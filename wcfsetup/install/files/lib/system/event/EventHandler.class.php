@@ -1,7 +1,7 @@
 <?php
 namespace wcf\system\event;
 use wcf\system\cache\builder\EventListenerCacheBuilder;
-use wcf\system\event\listener\IEventListener;
+use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\event\IEventListener as ILegacyEventListener;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
@@ -110,10 +110,10 @@ class EventHandler extends SingletonFactory {
 								if (!class_exists($action['listenerClassName'])) {
 									throw new SystemException("Unable to find class '".$action['listenerClassName']."'");
 								}
-								if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\listener\IEventListener')) {
+								if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\listener\IParameterizedEventListener')) {
 									// legacy event listeners
 									if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\IEventListener')) {
-										throw new SystemException("'".$action['listenerClassName']."' does not implement 'wcf\system\event\listener\IEventListener'");
+										throw new SystemException("'".$action['listenerClassName']."' does not implement 'wcf\system\event\listener\IParameterizedEventListener'");
 									}
 								}
 								
@@ -130,7 +130,7 @@ class EventHandler extends SingletonFactory {
 		
 		// execute actions
 		foreach ($this->inheritedActionsObjects[$name] as $actionObj) {
-			if ($actionObj instanceof IEventListener) {
+			if ($actionObj instanceof IParameterizedEventListener) {
 				$actionObj->execute($eventObj, $className, $eventName, $parameters);
 				
 				if (!is_array($parameters)) {
@@ -193,10 +193,10 @@ class EventHandler extends SingletonFactory {
 					if (!class_exists($action['listenerClassName'])) {
 						throw new SystemException("Unable to find class '".$action['listenerClassName']."'");
 					}
-					if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\listener\IEventListener')) {
+					if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\listener\IParameterizedEventListener')) {
 						// legacy event listeners
 						if (!ClassUtil::isInstanceOf($action['listenerClassName'], 'wcf\system\event\IEventListener')) {
-							throw new SystemException("'".$action['listenerClassName']."' does not implement 'wcf\system\event\listener\IEventListener'");
+							throw new SystemException("'".$action['listenerClassName']."' does not implement 'wcf\system\event\listener\IParameterizedEventListener'");
 						}
 					}
 					
@@ -210,7 +210,7 @@ class EventHandler extends SingletonFactory {
 		
 		// execute actions
 		foreach ($this->actionsObjects[$name] as $actionObj) {
-			if ($actionObj instanceof IEventListener) {
+			if ($actionObj instanceof IParameterizedEventListener) {
 				$actionObj->execute($eventObj, $className, $eventName, $parameters);
 				
 				if (!is_array($parameters)) {

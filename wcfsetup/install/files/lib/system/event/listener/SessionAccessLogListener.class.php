@@ -16,9 +16,9 @@ use wcf\util\UserUtil;
  * @subpackage	system.event.listener
  * @category	Community Framework
  */
-class SessionAccessLogListener implements IEventListener {
+class SessionAccessLogListener implements IParameterizedEventListener {
 	/**
-	 * @see	\wcf\system\event\listener\IEventListener::execute()
+	 * @see	\wcf\system\event\listener\IParameterizedEventListener::execute()
 	 */
 	public function execute($eventObj, $className, $eventName, array &$parameters) {
 		if (WCF::getUser()->userID && WCF::getSession()->getPermission('admin.general.canUseAcp') && !defined(get_class($eventObj).'::DO_NOT_LOG')) {

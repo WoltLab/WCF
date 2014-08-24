@@ -17,9 +17,9 @@ use wcf\util\StringStack;
  * @subpackage	system.event.listener
  * @category	Community Framework
  */
-class PreParserAtUserListener implements IEventListener {
+class PreParserAtUserListener implements IParameterizedEventListener {
 	/**
-	 * @see	\wcf\system\event\listener\IEventListener::execute()
+	 * @see	\wcf\system\event\listener\IParameterizedEventListener::execute()
 	 */
 	public function execute($eventObj, $className, $eventName, array &$parameters) {
 		if (!$eventObj->text) return;
