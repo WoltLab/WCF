@@ -243,10 +243,7 @@ RedactorPlugins.wutil = {
 		var $text = localStorage.getItem($options.key);
 		if ($text !== null) {
 			if (this.inWysiwygMode()) {
-				this.toggle(false);
-				this.$source.val($text);
-				this.toggle(false);
-				this.focusEnd();
+				this.setOption('wOriginalValue', $text);
 			}
 			else {
 				this.$source.val($text);
