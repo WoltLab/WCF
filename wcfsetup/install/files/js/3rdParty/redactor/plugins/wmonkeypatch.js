@@ -166,7 +166,7 @@ RedactorPlugins.wmonkeypatch = {
 		if (parent && parent.closest('blockquote.quoteBox', this.$editor.get()[0]).length != 0) {
 			this.$toolbar.find('a.re-__wcf_quote').addClass('redactor_button_disabled');
 		}
-		else {
+		else if (this.opts.visual) {
 			this.$toolbar.find('a.re-__wcf_quote').removeClass('redactor_button_disabled');
 		}
 	},

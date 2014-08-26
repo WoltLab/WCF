@@ -616,6 +616,9 @@ RedactorPlugins.wbbcode = {
 		data = data.replace(/(\[quote.*?\])/gi, '$1\n');
 		data = data.replace(/(\[\/quote\])/gi, '\n$1');
 		
+		// drop trailing line breaks
+		data = data.replace(/\n*$/, '');
+		
 		// convert line breaks into <p></p> or empty lines to <p><br></p>
 		var $tmp = data.split("\n");
 		data = '';
@@ -689,14 +692,18 @@ RedactorPlugins.wbbcode = {
 								+ '<a class="redactorQuoteEdit"></a>'
 							+ '</header>';
 					
-					var $lines = innerContent.split('\n');
+					innerContent = $.trim(innerContent);
 					var $tmp = '';
-					for (var $i = 0; $i < $lines.length; $i++) {
-						$tmp += '<div>' + $lines[$i] + '</div>';
-					}
 					
-					if (!$tmp) {
-						$tmp = '<div>' + this.opts.invisibleSpace + '</div>';
+					if (innerContent.length) {
+						var $lines = innerContent.split('\n');
+						
+						for (var $i = 0; $i < $lines.length; $i++) {
+							$tmp += '<div>' + $lines[$i] + '</div>';
+						}
+					}
+					else {
+						$tmp = '<div>' + self.opts.invisibleSpace + '</div>';
 					}
 					
 					$quote += $tmp;
@@ -1030,6 +1037,8 @@ RedactorPlugins.wbbcode = {
 			
 			this.selectionStart($container[0]);
 			this._observeQuotes();
+			
+			this.$toolbar.find('a.re-__wcf_quote').addClass('redactor_button_disabled');
 		}
 		else {
 			var $bbcode = '[quote]';
