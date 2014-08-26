@@ -843,9 +843,7 @@ RedactorPlugins.wbbcode = {
 		var $parent = this.getParent();
 		$parent = ($parent) ? $($parent) : $parent;
 		var $quote = ($parent) ? $parent.closest('blockquote.quoteBox', this.$editor.get()[0]) : { length: 0 };
-		console.clear();
-		console.debug($current);
-		console.debug($parent);
+		
 		switch (data.event.which) {
 			// arrow down
 			case $.ui.keyCode.DOWN:
@@ -854,30 +852,20 @@ RedactorPlugins.wbbcode = {
 						var $container = $current.closest('div', $quote[0]);
 						if (!$container.next().length) {
 							this.insertingAfterLastElement($quote);
-							console.debug("case#0");
 							
 							data.cancel = true;
-						}
-						else {
-							console.debug("case#1");
 						}
 					}
 					else if ($parent.next('blockquote.quoteBox').length) {
 						this.selectionStart($parent.next().find('> div > div:first'));
-						console.debug("case#2");
+						
 						data.cancel = true;
-					}
-					else {
-						console.debug("case#3");
 					}
 				}
 				else if ($current.next('blockquote.quoteBox').length) {
 					this.selectionStart($current.next().find('> div > div:first'));
-					console.debug("case#4");
+					
 					data.cancel = true;
-				}
-				else {
-					console.debug("case#5");
 				}
 			break;
 			
@@ -894,7 +882,6 @@ RedactorPlugins.wbbcode = {
 				
 				var $previousElement = $quote.prev();
 				if ($previousElement.length === 0) {
-					console.debug("case#1");
 					var $node = $(this.opts.emptyHtml);
 					$node.insertBefore($quote);
 					this.selectionStart($node);
@@ -1012,8 +999,10 @@ RedactorPlugins.wbbcode = {
 	 * 
 	 * @param	string		author
 	 * @param	string		link
+	 * @param	string		html
+	 * @param	string		plainText
 	 */
-	insertQuoteBBCode: function(author, link) {
+	insertQuoteBBCode: function(author, link, html, plainText) {
 		if (this.inWysiwygMode()) {
 			var $html = '<blockquote class="quoteBox" cite="' + link + '" data-author="' + author + '" id="redactorInsertedQuote">'
 					+ '<div class="container containerPadding">'
@@ -1029,22 +1018,25 @@ RedactorPlugins.wbbcode = {
 			this.insertHtml($html);
 			
 			var $quote = $('#redactorInsertedQuote');
-			var $container = $('<div>' + this.opts.invisibleSpace + '</div>').insertAfter($quote.find('> div > header'));
+			var $container = $('<div>' + (html ? html : this.opts.invisibleSpace) + '</div>').insertAfter($quote.find('> div > header'));
 			$quote.removeAttr('id');
 			
 			this.selectionStart($container[0]);
 			this._observeQuotes();
 		}
 		else {
-			var $bbcode = '[quote][/quote]';
+			var $bbcode = '[quote]';
 			if (author) {
 				if (link) {
-					$bbcode = "[quote='" + author + "','" + link + "'][/quote]";
+					$bbcode = "[quote='" + author + "','" + link + "']";
 				}
 				else {
-					$bbcode = "[quote='" + author + "'][/quote]";
+					$bbcode = "[quote='" + author + "']";
 				}
 			}
+			
+			if (plainText) $bbcode += plainText;
+			$bbcode += '[/quote]';
 			
 			this.insertAtCaret($bbcode);
 		}

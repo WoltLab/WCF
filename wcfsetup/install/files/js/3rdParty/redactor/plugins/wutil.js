@@ -325,5 +325,12 @@ RedactorPlugins.wutil = {
 	 */
 	getName: function() {
 		return this.$source.wcfIdentify();
+	},
+	
+	/**
+	 * Sets the selection after the last direct children of the editor.
+	 */
+	selectionEndOfEditor: function() {
+		this.selectionEnd(this.$editor.children(':last')[0]);
 	}
 };

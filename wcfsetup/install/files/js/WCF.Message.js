@@ -891,7 +891,11 @@ WCF.Message.QuickReply = Class.extend({
 		}
 		
 		if ($.browser.redactor) {
-			this._messageField.redactor('insertDynamic', data.returnValues.template);
+			var $html = WCF.String.unescapeHTML(data.returnValues.template);
+			$html = this._messageField.redactor('transformQuote', $html);
+			
+			this._messageField.redactor('selectionEndOfEditor');
+			this._messageField.redactor('insertDynamic', $html, data.returnValues.template);
 		}
 		else {
 			this._messageField.val(data.returnValues.template);
@@ -2706,19 +2710,19 @@ WCF.Message.Quote.Manager = Class.extend({
 		var $quote = $.trim($listItem.children('div.jsFullQuote').text());
 		var $message = $listItem.parents('article.message');
 		
-		// build quote tag
-		$quote = "[quote='" + $message.attr('data-username') + "','" + $message.data('link') + "']" + $quote + "[/quote]";
-		
 		// insert into editor
 		if ($.browser.redactor) {
 			if (this._editorElementAlternative === null) {
-				this._editorElement.redactor('insertDynamic', $quote);
+				this._editorElement.redactor('insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);// $quote);
 			}
 			else {
-				this._editorElementAlternative.redactor('insertDynamic', $quote);
+				this._editorElementAlternative.redactor('insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);// $quote);
 			}
 		}
 		else {
+			// build quote tag
+			$quote = "[quote='" + $message.attr('data-username') + "','" + $message.data('link') + "']" + $quote + "[/quote]";
+			
 			// plain textarea
 			var $textarea = (this._editorElementAlternative === null) ? this._editorElement : this._editorElementAlternative;
 			var $value = $textarea.val();
