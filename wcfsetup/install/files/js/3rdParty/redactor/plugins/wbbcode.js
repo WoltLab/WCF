@@ -170,6 +170,13 @@ RedactorPlugins.wbbcode = {
 		
 		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
 		
+		// revert conversion of special characters
+		html = html.replace(/&trade;/gi, '\u2122');
+		html = html.replace(/&copy;/gi, '\u00a9');
+		html = html.replace(/&hellip;/gi, '\u2026');
+		html = html.replace(/&mdash;/gi, '\u2014');
+		html = html.replace(/&dash;/gi, '\u2010');
+		
 		// drop all new lines
 		html = html.replace(/\r?\n/g, '');
 		
