@@ -279,8 +279,8 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/<\/sup>/gi, '[/sup]');
 		
 		// smileys
-		html = html.replace(/<img [^>]*?alt="([^"]+?)" class="smiley".*?>/gi, '$1'); // firefox
-		html = html.replace(/<img [^>]*?class="smiley" alt="([^"]+?)".*?>/gi, '$1'); // chrome, ie
+		html = html.replace(/<img [^>]*?alt="([^"]+?)" class="smiley".*?> ?/gi, '$1 '); // firefox
+		html = html.replace(/<img [^>]*?class="smiley" alt="([^"]+?)".*?> ?/gi, '$1 '); // chrome, ie
 		
 		// attachments
 		html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment" data-attachment-id="(\d+)".*?>/gi, '[attach=$1][/attach]');
