@@ -170,7 +170,7 @@ RedactorPlugins.wutil = {
 	 */
 	reset: function() {
 		if (this.inWysiwygMode()) {
-			this.$editor.empty();
+			this.$editor.html('<p>' + this.opts.invisibleSpace + '</p>');
 			this.sync();
 		}
 		else {
