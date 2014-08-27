@@ -542,7 +542,21 @@ WCF.User.Profile.TabMenu = Class.extend({
 				success: $.proxy(this._success, this)
 			});
 			
-			this._profileContent.bind('wcftabsbeforeactivate', $.proxy(this._loadContent, this));
+			this._profileContent.on('wcftabsbeforeactivate', $.proxy(this._loadContent, this));
+			
+			// check which tab is selected
+			this._profileContent.find('> nav.tabMenu > ul > li').each($.proxy(function(index, listItem) {
+				var $listItem = $(listItem);
+				if ($listItem.hasClass('ui-state-active')) {
+					if (index) {
+						this._loadContent(null, {
+							newPanel: $('#' + $listItem.attr('aria-controls'))
+						});
+					}
+					
+					return false;
+				}
+			}, this));
 		}
 	},
 	
@@ -2583,7 +2597,6 @@ WCF.User.List = Class.extend({
 		if (this._cache[this._pageNo]) {
 			var $dialogCreated = false;
 			if (this._dialog === null) {
-				//this._dialog = $('<div id="userList' + this._className.hashCode() + '" style="min-width: 600px;" />').hide().appendTo(document.body);
 				this._dialog = $('<div id="userList' + this._className.hashCode() + '" />').hide().appendTo(document.body);
 				$dialogCreated = true;
 			}
@@ -2599,7 +2612,7 @@ WCF.User.List = Class.extend({
 				this._dialog.find('.jsPagination').wcfPages({
 					activePage: this._pageNo,
 					maxPage: this._pageCount
-				}).bind('wcfpagesswitched', $.proxy(this._showPage, this));
+				}).on('wcfpagesswitched', $.proxy(this._showPage, this));
 			}
 			
 			// show dialog
