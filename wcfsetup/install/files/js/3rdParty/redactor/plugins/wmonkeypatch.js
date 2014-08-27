@@ -482,6 +482,31 @@ RedactorPlugins.wmonkeypatch = {
 	},
 	
 	/**
+	 * Overwrites $.Redactor.observeImages() to prevent smileys being recognized as ordinary images.
+	 * 
+	 * @see	$.Redactor.observeImages()
+	 */
+	observeImages: function() {
+		if (this.opts.observeImages === false) return false;
+
+		this.$editor.find('img:not(.smiley)').each($.proxy(function(i, elem)
+		{
+			if (this.browser('msie')) $(elem).attr('unselectable', 'on');
+
+			var parent = $(elem).parent();
+			if (!parent.hasClass('royalSlider') && !parent.hasClass('fotorama'))
+			{
+				this.imageResize(elem);
+			}
+
+		}, this));
+
+		// royalSlider and fotorama
+		this.$editor.find('.fotorama, .royalSlider').on('click', $.proxy(this.editGallery, this));
+
+	},
+	
+	/**
 	 * Handles deletion of quotes in design mode.
 	 * 
 	 * @param	object		event
