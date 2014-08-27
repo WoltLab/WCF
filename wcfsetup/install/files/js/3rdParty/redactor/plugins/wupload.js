@@ -12,6 +12,7 @@ RedactorPlugins.wupload = {
 	_wUploadDropArea: { },
 	_timer: null,
 	_isDragging: false,
+	_isFile: false,
 	
 	/**
 	 * Initializes the RedactorPlugins.wupload plugin.
@@ -49,9 +50,12 @@ RedactorPlugins.wupload = {
 		
 		// IE and WebKit set 'Files', Firefox sets 'application/x-moz-file' for files being dragged
 		if (event.dataTransfer.types[0] !== 'Files' && event.dataTransfer.types[0] !== 'application/x-moz-file') {
+			this._isFile = false;
+			
 			return;
 		}
 		
+		this._isFile = true;
 		event.preventDefault();
 		
 		if (!this._isDragging) {
@@ -96,6 +100,10 @@ RedactorPlugins.wupload = {
 	 * @param	string		containerID
 	 */
 	_revertDropArea: function(event, containerID) {
+		if (!this._isFile) {
+			return;
+		}
+		
 		var $containerID = containerID || this.$source.wcfIdentify();
 		this._wUploadDropArea[$containerID].removeClass('active').text(WCF.Language.get('wcf.attachment.dragAndDrop.dropHere'));
 		
@@ -111,6 +119,10 @@ RedactorPlugins.wupload = {
 	 * a delay of 100ms before the dragging will be checked again to prevent flicker.
 	 */
 	_dragLeave: function() {
+		if (!this._isDragging || !this._isFile) {
+			return;
+		}
+		
 		if (this._timer === null) {
 			var self = this;
 			this._timer = new WCF.PeriodicalExecuter(function(pe) {
@@ -134,6 +146,10 @@ RedactorPlugins.wupload = {
 	 * @param	object		event
 	 */
 	_drop: function(event) {
+		if (!this._isFile) {
+			return;
+		}
+		
 		event = event.originalEvent || event;
 		
 		if (event.dataTransfer && event.dataTransfer.files.length == 1) {

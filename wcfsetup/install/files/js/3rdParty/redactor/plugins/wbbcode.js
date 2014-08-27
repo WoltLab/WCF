@@ -627,6 +627,10 @@ RedactorPlugins.wbbcode = {
 			
 			if ($line.indexOf('<') === 0) {
 				data += $line;
+				
+				if (!$line.match(/>$/)) {
+					data += '<br>';
+				}
 			}
 			else {
 				if (!$line) {
