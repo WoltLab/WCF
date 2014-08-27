@@ -5,7 +5,7 @@
 {capture assign='__messageFormSettingsInlineContent'}{include file='messageFormSettingsInline'}{/capture}
 {assign var='__messageFormSettingsInlineContent' value=$__messageFormSettingsInlineContent|trim}
 
-<div class="messageTabMenu"{if $preselectTabMenu|isset} data-preselect="{$preselectTabMenu}"{/if}>
+<div class="messageTabMenu"{if $preselectTabMenu|isset} data-preselect="{$preselectTabMenu}"{/if} data-wysiwyg-container-id="{$wysiwygContainerID}">
 	<nav class="messageTabMenuNavigation jsOnly">
 		<ul>
 			{if MODULE_SMILEY && $__wcf->getSession()->getPermission($permissionCanUseSmilies) && $smileyCategories|count}<li data-name="smilies"><a>{lang}wcf.message.smilies{/lang}</a></li>{/if}

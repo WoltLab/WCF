@@ -622,14 +622,6 @@ WCF.Message.SmileyCategories = Class.extend({
 		this._wysiwygSelector = wysiwygSelector;
 		
 		$('#smilies-' + this._wysiwygSelector).on('messagetabmenushow', $.proxy(this._click, this));
-		
-		// handle onload
-		/*var self = this;
-		new WCF.PeriodicalExecuter(function(pe) {
-			pe.stop();
-			
-			self._click({ }, { newTab: $('#smilies > .menu li.ui-state-active') });
-		}, 100);*/
 	},
 	
 	/**
@@ -682,6 +674,8 @@ WCF.Message.SmileyCategories = Class.extend({
 
 /**
  * Handles smiley clicks.
+ * 
+ * @param	string		wysiwygSelector
  */
 WCF.Message.Smilies = Class.extend({
 	/**
@@ -690,6 +684,10 @@ WCF.Message.Smilies = Class.extend({
 	 */
 	_redactor: null,
 	
+	/**
+	 * wysiwyg container id
+	 * @var	string
+	 */
 	_wysiwygSelector: '',
 	
 	/**
@@ -703,8 +701,7 @@ WCF.Message.Smilies = Class.extend({
 		WCF.System.Dependency.Manager.register('Redactor_' + this._wysiwygSelector, $.proxy(function() {
 			this._redactor = $('#' + this._wysiwygSelector).redactor('getObject');
 			
-			// add smiley click handler
-			$(document).on('click', '.jsSmiley', $.proxy(this._smileyClick, this));
+			$('.messageTabMenu[data-wysiwyg-container-id=' + this._wysiwygSelector + ']').on('click', '.jsSmiley', $.proxy(this._smileyClick, this));
 		}, this));
 	},
 	
