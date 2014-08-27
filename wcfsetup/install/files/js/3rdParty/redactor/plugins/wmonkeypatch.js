@@ -151,19 +151,23 @@ RedactorPlugins.wmonkeypatch = {
 		
 		var self = this;
 		var $editor = this.$editor.get()[0];
-		var $toggleButtons = function(searchFor, buttonSelector, inverse, className) {
+		var $toggleButtons = function(searchFor, buttonSelector, inverse, className, skipInSourceMode) {
 			var $buttons = self.$toolbar.find(buttonSelector);
 			if (parent && parent.closest(searchFor, $editor).length != 0) {
 				$buttons[(inverse ? 'removeClass' : 'addClass')](className);
 			}
 			else {
+				if (skipInSourceMode && !self.opts.visual) {
+					return;
+				}
+				
 				$buttons[(inverse ? 'addClass' : 'removeClass')](className);
 			}
 		};
 		
 		$toggleButtons('ul', 'a.re-indent, a.re-outdent', true, 'redactor_button_disabled');
 		$toggleButtons('inline.inlineCode', 'a.re-__wcf_tt', false, 'redactor_act');
-		$toggleButtons('blockquote.quoteBox', 'a.re-__wcf_quote', false, 'redactor_button_disabled');
+		$toggleButtons('blockquote.quoteBox', 'a.re-__wcf_quote', false, 'redactor_button_disabled', true);
 		$toggleButtons('sub', 'a.re-subscript', false, 'redactor_act');
 		$toggleButtons('sup', 'a.re-superscript', false, 'redactor_act');
 	},
