@@ -329,5 +329,24 @@ RedactorPlugins.wutil = {
 	 */
 	selectionEndOfEditor: function() {
 		this.selectionEnd(this.$editor.children(':last')[0]);
+	},
+	
+	/**
+	 * Replaces the current content with the provided value.
+	 * 
+	 * @param	string		value
+	 */
+	replaceText: function(value) {
+		var $wasInWysiwygMode = false;
+		if (this.inWysiwygMode()) {
+			this.toggle();
+			$wasInWysiwygMode = true;
+		}
+		
+		this.$source.val(value);
+		
+		if ($wasInWysiwygMode) {
+			this.toggle();
+		}
 	}
 };
