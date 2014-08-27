@@ -628,7 +628,7 @@ RedactorPlugins.wbbcode = {
 			if ($line.indexOf('<') === 0) {
 				data += $line;
 				
-				if (!$line.match(/>$/)) {
+				if (!$line.match(/>$/) || $line.match(/<span[^>]+>.*?<\/span>$/)) {
 					data += '<br>';
 				}
 			}
