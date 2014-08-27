@@ -2154,7 +2154,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.like.button.like"><![CDATA[Gefällt mir]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Gefällt mir nicht]]></item>
 		<item name="wcf.like.likesReceived"><![CDATA[Erhaltene Likes]]></item>
-		<item name="wcf.like.likesReceived.showDetails"><![CDATA[Erhaltene Likes anzeigen]]></item>
+		<item name="wcf.like.showLikesReceived"><![CDATA[Erhaltene Likes von „{$user->username}“ anzeigen]]></item>
 		<item name="wcf.like.likesGiven"><![CDATA[Vergebene Likes]]></item>
 		<item name="wcf.like.summary"><![CDATA[{literal}{if $others == 0}{@$users.slice(0, -1).join(", ")}{if $users.length > 1} und {/if}{@$users.slice(-1)[0]}{else}{@$users.join(", ")} und {if $others == 1}einem{else}{#$others}{/if} weiteren{/if} gefällt das.{/literal}]]></item>
 		<item name="wcf.like.details"><![CDATA[Details]]></item>
@@ -2682,7 +2682,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.signature.current"><![CDATA[Aktuelle Signatur]]></item>
 		<item name="wcf.user.signature.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->signature} Ihre derzeitige Signatur gesperrt und{/if} Ihnen die weitere Nutzungsberechtigung der Signatur-Funktion {if !$__wcf->user->disableSignatureReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableSignatureReason}{/if}]]></item>
 		<item name="wcf.user.activityPoint"><![CDATA[Punkte]]></item>
-		<item name="wcf.user.activityPoint.showDetails"><![CDATA[Zeige Details]]></item>
+		<item name="wcf.user.activityPoint.showActivityPoints"><![CDATA[Punkte von „{$user->username}“ anzeigen]]></item>
 		<item name="wcf.user.activityPoint.objects"><![CDATA[Anzahl]]></item>
 		<item name="wcf.user.activityPoint.objectType"><![CDATA[Art]]></item>
 		<item name="wcf.user.activityPoint.pointsPerObject"><![CDATA[Punkte]]></item>

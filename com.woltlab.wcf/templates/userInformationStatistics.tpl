@@ -2,7 +2,7 @@
 	{event name='statistics'}
 	
 	{if MODULE_LIKE && $user->likesReceived}
-		<dt><a href="{link controller='User' object=$user}{/link}#likes" class="jsTooltip" title="{lang}wcf.like.likesReceived.showDetails{/lang}">{lang}wcf.like.likesReceived{/lang}</a></dt>
+		<dt><a href="{link controller='User' object=$user}{/link}#likes" class="jsTooltip" title="{lang}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a></dt>
 		<dd>{#$user->likesReceived}</dd>
 	{/if}
 	

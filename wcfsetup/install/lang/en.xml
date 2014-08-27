@@ -2152,7 +2152,7 @@ Errors are:
 		<item name="wcf.like.button.like"><![CDATA[Like]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Dislike]]></item>
 		<item name="wcf.like.likesReceived"><![CDATA[Likes Received]]></item>
-		<item name="wcf.like.likesReceived.showDetails"><![CDATA[Show Likes Received]]></item>
+		<item name="wcf.like.showLikesReceived"><![CDATA[Show Likes Received by “{$user->username}”]]></item>
 		<item name="wcf.like.likesGiven"><![CDATA[Likes Given]]></item>
 		<item name="wcf.like.summary"><![CDATA[{literal}{if $others == 0}{@$users.slice(0, -1).join(", ")}{if $users.length > 1} and {/if}{@$users.slice(-1)[0]}{else}{@$users.join(", ")} and {if $others == 1}one{else}{#$others}{/if} other{if $others > 1}s{/if}{/if} like{if $users.length == 1}s{/if} this.{/literal}]]></item>
 		<item name="wcf.like.details"><![CDATA[Details]]></item>
@@ -2570,7 +2570,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.signature.current"><![CDATA[Current Signature]]></item>
 		<item name="wcf.user.signature.error.disabled"><![CDATA[Your signature has been disabled{if $__wcf->user->disableSignatureReason}: {$__wcf->user->disableSignatureReason}{else}.{/if}]]></item>
 		<item name="wcf.user.activityPoint"><![CDATA[Points]]></item>
-		<item name="wcf.user.activityPoint.showDetails"><![CDATA[Show Details]]></item>
+		<item name="wcf.user.activityPoint.showActivityPoints"><![CDATA[Show Points of “{$user->username}”]]></item>
 		<item name="wcf.user.activityPoint.objects"><![CDATA[Count]]></item>
 		<item name="wcf.user.activityPoint.objectType"><![CDATA[Type]]></item>
 		<item name="wcf.user.activityPoint.pointsPerObject"><![CDATA[Points]]></item>
