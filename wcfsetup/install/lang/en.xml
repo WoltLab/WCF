@@ -1966,7 +1966,7 @@ Errors are:
 	</category>
 	
 	<category name="wcf.search">
-		<item name="wcf.search.author"><![CDATA[Search By Author]]></item>
+		<item name="wcf.search.author"><![CDATA[Search by Author]]></item>
 		<item name="wcf.search.extended"><![CDATA[More Options]]></item>
 		<item name="wcf.search.general"><![CDATA[General Search Terms]]></item>
 		<item name="wcf.search.matchExactly"><![CDATA[Exact match]]></item>
