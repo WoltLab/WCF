@@ -1816,7 +1816,6 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfGapLarg
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationHeaderBackgroundColor', '@wcfContentBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationFooterBackgroundColor', '@wcfContainerAccentBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuBackgroundColor', '@wcfContainerAccentBackgroundColor');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuHoverBackgroundColor', '@wcfContainerAccentBackgroundColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuColor', '@wcfColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfMainMenuActiveColor', '@wcfLinkColor');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfUserPanelHoverBackgroundColor', 'rgba(60, 60, 60, 1)');
