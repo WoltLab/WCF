@@ -10287,7 +10287,7 @@ WCF.UserPanel = Class.extend({
 		this._container.addClass('dropdown');
 		this._link = this._container.children('a').remove();
 		
-		var $button = $('<a class="dropdownToggle">' + this._link.html() + '</a>').appendTo(this._container).click($.proxy(this._click, this));
+		var $button = $('<a href="' + this._link.attr('href') + '" class="dropdownToggle">' + this._link.html() + '</a>').appendTo(this._container).click($.proxy(this._click, this));
 		var $dropdownMenu = $('<ul class="dropdownMenu" />').appendTo(this._container);
 		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').appendTo($dropdownMenu);
 		
@@ -10319,8 +10319,12 @@ WCF.UserPanel = Class.extend({
 	
 	/**
 	 * Handles clicks on the dropdown item.
+	 * 
+	 * @param	object		event
 	 */
-	_click: function() {
+	_click: function(event) {
+		event.preventDefault();
+		
 		if (this._didLoad) {
 			return;
 		}
