@@ -2726,6 +2726,7 @@ WCF.User.ObjectWatch.Subscribe = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
+		event.preventDefault();
 		var $button = $(event.currentTarget);
 		
 		this._proxy.setOption('data', {

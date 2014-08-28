@@ -9935,7 +9935,9 @@ WCF.Sitemap = Class.extend({
 	/**
 	 * Handles clicks on the sitemap icon.
 	 */
-	_click: function() {
+	_click: function(event) {
+		event.preventDefault();
+		
 		if (this._dialog === null) {
 			this._dialog = $('<div id="sitemapDialog" />').appendTo(document.body);
 			
@@ -10159,7 +10161,7 @@ WCF.Style.Chooser = Class.extend({
 	 * Initializes the style chooser class.
 	 */
 	init: function() {
-		$('<li class="styleChooser"><a>' + WCF.Language.get('wcf.style.changeStyle') + '</a></li>').appendTo($('#footerNavigation > ul.navigationItems')).click($.proxy(this._showDialog, this));
+		$('<li class="styleChooser"><a href="#">' + WCF.Language.get('wcf.style.changeStyle') + '</a></li>').appendTo($('#footerNavigation > ul.navigationItems')).click($.proxy(this._showDialog, this));
 		
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
@@ -10170,6 +10172,8 @@ WCF.Style.Chooser = Class.extend({
 	 * Displays the style chooser dialog.
 	 */
 	_showDialog: function() {
+		event.preventDefault();
+		
 		if (this._dialog === null) {
 			this._dialog = $('<div id="styleChooser" />').hide().appendTo(document.body);
 			this._loadDialog();
