@@ -5305,30 +5305,36 @@ WCF.Effect.BalloonTooltip = Class.extend({
 			$arrow.css('top', $tooltipDimensions.height);
 		}
 		
+		$property = (WCF.Language.get('wcf.global.pageDirection') == 'rtl' ? 'right' : 'left');
+		
 		// calculate left offset
 		switch ($alignment) {
 			case 'center':
 				var $left = Math.round($elementOffsets.left - $tooltipHalfWidth + ($elementDimensions.width / 2));
 				
-				$arrow.css({
-					left: ($tooltipDimensionsInner.width / 2 - $arrowWidth / 2) + "px"
-				});
+				$arrow.css($property, ($tooltipDimensionsInner.width / 2 - $arrowWidth / 2) + 'px');
 			break;
 			
 			case 'left':
 				var $left = $elementOffsets.left;
 				
-				$arrow.css({
-					left: "5px"
-				});
+				if ($property === 'right') {
+					$arrow.css($property, ($tooltipDimensionsInner.width - $arrowWidth - 5) + 'px');
+				}
+				else {
+					$arrow.css($property, '5px');
+				}
 			break;
 			
 			case 'right':
 				var $left = $elementOffsets.left + $elementDimensions.width - $tooltipDimensions.width;
 				
-				$arrow.css({
-					left: ($tooltipDimensionsInner.width - $arrowWidth - 5) + "px"
-				});
+				if ($property === 'right') {
+					$arrow.css($property, '5px');
+				}
+				else {
+					$arrow.css($property, ($tooltipDimensionsInner.width - $arrowWidth - 5) + 'px');
+				}
 			break;
 		}
 		
@@ -9141,7 +9147,7 @@ WCF.Popover = Class.extend({
 			width: 450
 		};
 		this._defaultOrientation = {
-			x: 'right',
+			x: (WCF.Language.get('wcf.global.pageDirection') === 'rtl' ? 'left' : 'right'),
 			y: 'top'
 		};
 		this._delay = {
