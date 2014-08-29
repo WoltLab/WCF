@@ -387,6 +387,7 @@ WCF.Moderation.Report.Content = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
+		event.preventDefault();
 		this._objectID = $(event.currentTarget).data('objectID');
 		
 		this._proxy.setOption('data', {
