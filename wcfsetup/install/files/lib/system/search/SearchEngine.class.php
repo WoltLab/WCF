@@ -138,10 +138,9 @@ class SearchEngine extends SingletonFactory {
 					INNER JOIN	(
 								SELECT		objectID
 										".($relevanceCalc ? ','.$relevanceCalc : '')."
-								FROM		wcf".WCF_N."_search_index
+								FROM		".SearchIndexManager::getTableName($objectTypeName)."
 								WHERE		".($fulltextCondition !== null ? $fulltextCondition : '')."
 										".(($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '').$searchIndexCondition : '')."
-										AND objectTypeID = ".$objectType->objectTypeID."
 								".(!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY '.$orderBy : '')."
 								LIMIT		1000
 							) search_index

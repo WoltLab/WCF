@@ -5,6 +5,7 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -229,6 +230,9 @@ class InstallPackageAction extends AbstractDialogAction {
 	 * Clears resources after successful installation.
 	 */
 	protected function finalize() {
+		// create search index tables
+		SearchIndexManager::createSearchIndexTables();
+		
 		CacheHandler::getInstance()->flushAll();
 	}
 }
