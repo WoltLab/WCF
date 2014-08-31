@@ -3,6 +3,8 @@ namespace wcf\system\search;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\object\type\ObjectTypeList;
+use wcf\data\package\Package;
+use wcf\data\package\PackageList;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -23,6 +25,12 @@ class SearchIndexManager extends SingletonFactory {
 	 * @var	array
 	 */
 	protected $availableObjectTypes = array();
+	
+	/**
+	 * list of application packages
+	 * @var	array<\wcf\data\package\Package>
+	 */
+	protected static $packages = array();
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -162,7 +170,7 @@ class SearchIndexManager extends SingletonFactory {
 	 * @return	boolean
 	 */
 	protected static function createSearchIndexTable(ObjectType $objectType) {
-		$tableName = self::getTableName($objectType->objectType);
+		$tableName = self::getTableName($objectType);
 		
 		// check if table already exists
 		$sql = "SELECT	COUNT(*) AS count
@@ -219,10 +227,38 @@ class SearchIndexManager extends SingletonFactory {
 	/**
 	 * Returns the database table name for the object type's search index.
 	 * 
-	 * @param	string		$objectType
+	 * @param	mixed				$objectType
+	 * @param	\wcf\data\package\Package	$package
 	 * @return	string
 	 */
-	public static function getTableName($objectType) {
-		return 'wcf'.WCF_N.'_search_index_'.substr(sha1($objectType), 0, 8);
+	public static function getTableName($objectType, $package = null) {
+		if (is_string($objectType)) {
+			$objectType = self::getInstance()->getObjectType($objectType);
+		}
+		
+		if ($objectType->searchindex) {
+			$tableName = $objectType->searchindex;
+			
+			if (!empty($tableName)) {
+				if (empty(self::$packages)) {
+					$packageList = new PackageList();
+					$packageList->getConditionBuilder()->add('package.isApplication = ?', array(1));
+					$packageList->readObjects();
+					
+					self::$packages = $packageList->getObjects();
+				}
+				
+				// replace app1_ with app{WCF_N}_ in the table name
+				foreach (self::$packages as $package) {
+					$abbreviation = Package::getAbbreviation($package->package);
+					
+					$tableName = str_replace($abbreviation.'1_', $abbreviation.WCF_N.'_', $tableName);
+				}
+				
+				return $tableName;
+			}
+		}
+		
+		return 'wcf'.WCF_N.'_search_index_'.substr(sha1($objectType->objectType), 0, 8);
 	}
 }
