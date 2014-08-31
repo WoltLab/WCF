@@ -183,7 +183,7 @@
 		<ul id="profileButtonContainer" class="buttonGroup">
 			{hascontent}
 				<li class="dropdown">
-					<a class="button dropdownToggle jsTooltip" title="{lang}wcf.user.searchUserContent{/lang}"><span class="icon icon16 icon-search"></span> <span class="invisible">{lang}wcf.user.searchUserContent{/lang}</span></a>
+					<a href="#" class="button dropdownToggle jsTooltip" title="{lang}wcf.user.searchUserContent{/lang}"><span class="icon icon16 icon-search"></span> <span class="invisible">{lang}wcf.user.searchUserContent{/lang}</span></a>
 					<ul class="dropdownMenu">
 						{content}
 							{event name='quickSearchItems'}
@@ -193,7 +193,7 @@
 			{/hascontent}
 			
 			{if $__wcf->session->getPermission('user.profile.canReportContent')}
-				<li class="jsReportUser jsOnly" data-object-id="{@$user->userID}"><a title="{lang}wcf.user.profile.report{/lang}" class="button jsTooltip"><span class="icon icon16 icon-warning-sign"></span> <span class="invisible">{lang}wcf.user.profile.report{/lang}</span></a></li>
+				<li class="jsReportUser jsOnly" data-object-id="{@$user->userID}"><a href="#" title="{lang}wcf.user.profile.report{/lang}" class="button jsTooltip"><span class="icon icon16 icon-warning-sign"></span> <span class="invisible">{lang}wcf.user.profile.report{/lang}</span></a></li>
 			{/if}
 			
 			{if $user->userID != $__wcf->user->userID}

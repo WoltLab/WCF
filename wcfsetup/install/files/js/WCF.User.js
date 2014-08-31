@@ -237,6 +237,7 @@ WCF.User.Profile.ActivityPointList = {
 	 * @param	object		event
 	 */
 	_click: function(event) {
+		event.preventDefault();
 		var $userID = $(event.currentTarget).data('userID');
 		
 		if (this._cache[$userID] === undefined) {
@@ -335,14 +336,15 @@ WCF.User.Profile.Follow = Class.extend({
 	 * Creates the (un-)follow button
 	 */
 	_createButton: function () {
-		this._button = $('<li id="followUser"><a class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'follow')+'"><span class="icon icon16 icon-plus"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'follow')+'</span></a></li>').prependTo($('#profileButtonContainer'));
+		this._button = $('<li id="followUser"><a href="#" class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'follow')+'"><span class="icon icon16 icon-plus"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._following ? 'un' : '')+'follow')+'</span></a></li>').prependTo($('#profileButtonContainer'));
 		this._button.click($.proxy(this._execute, this));
 	},
 	
 	/**
 	 * Follows or unfollows an user.
 	 */
-	_execute: function () {
+	_execute: function (event) {
+		event.preventDefault();
 		var $actionName = (this._following) ? 'unfollow' : 'follow';
 		this._proxy.setOption('data', {
 			'actionName': $actionName,
@@ -438,7 +440,8 @@ WCF.User.Profile.IgnoreUser = Class.extend({
 	/**
 	 * Handle clicks, might cause 'ignore' or 'unignore' to be triggered.
 	 */
-	_click: function() {
+	_click: function(event) {
+		event.preventDefault();
 		var $action = (this._isIgnoredUser) ? 'unignore' : 'ignore';
 		
 		this._proxy.setOption('data', {
@@ -474,7 +477,7 @@ WCF.User.Profile.IgnoreUser = Class.extend({
 	 */
 	_updateButton: function() {
 		if (this._button === null) {
-			this._button = $('<li id="ignoreUser"><a class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._isIgnoredUser ? 'un' : '')+'ignore')+'"><span class="icon icon16 icon-ban-circle"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._isIgnoredUser ? 'un' : '')+'ignore')+'</span></a></li>').prependTo($('#profileButtonContainer'));
+			this._button = $('<li id="ignoreUser"><a href="#" class="button jsTooltip" title="'+WCF.Language.get('wcf.user.button.'+(this._isIgnoredUser ? 'un' : '')+'ignore')+'"><span class="icon icon16 icon-ban-circle"></span> <span class="invisible">'+WCF.Language.get('wcf.user.button.'+(this._isIgnoredUser ? 'un' : '')+'ignore')+'</span></a></li>').prependTo($('#profileButtonContainer'));
 		}
 		
 		this._button.find('.button').data('tooltip', WCF.Language.get('wcf.user.button.' + (this._isIgnoredUser ? 'un' : '') + 'ignore'));
@@ -2004,6 +2007,7 @@ WCF.User.Action.Follow = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
+		event.preventDefault();
 		var link = $(event.target);
 		if (!link.is('a')) {
 			link = link.closest('a');
@@ -2116,6 +2120,7 @@ WCF.User.Action.Ignore = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
+		event.preventDefault();
 		var link = $(event.target);
 		if (!link.is('a')) {
 			link = link.closest('a');

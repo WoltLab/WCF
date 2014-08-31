@@ -76,7 +76,7 @@
 							{/if}
 							
 							{if MESSAGE_SIDEBAR_ENABLE_ACTIVITY_POINTS && $userProfile->activityPoints}
-								<dt><a class="activityPointsDisplay jsTooltip" title="{lang user=$userProfile}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{@$userProfile->userID}">{lang}wcf.user.activityPoint{/lang}</a></dt>
+								<dt><a href="#" class="activityPointsDisplay jsTooltip" title="{lang user=$userProfile}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{@$userProfile->userID}">{lang}wcf.user.activityPoint{/lang}</a></dt>
 								<dd>{#$userProfile->activityPoints}</dd>
 							{/if}
 							{event name='userCredits'}
