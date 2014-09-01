@@ -39,6 +39,12 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	protected $objectType = '';
 	
 	/**
+	 * required permission for assigned users
+	 * @var string
+	 */
+	protected $requiredPermission = 'mod.general.canUseModeration';
+	
+	/**
 	 * @see	\wcf\system\moderation\queue\IModerationQueueHandler::identifyOrphans()
 	 */
 	public function identifyOrphans(array $queues) {
@@ -105,6 +111,6 @@ abstract class AbstractModerationQueueHandler implements IModerationQueueHandler
 	 */
 	public function isAffectedUser(ModerationQueue $queue, $userID) {
 		$user = new UserProfile(new User($userID));
-		return $user->getPermission('mod.general.canUseModeration');
+		return $user->getPermission($this->requiredPermission);
 	}
 }
