@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\category;
+use wcf\data\user\User;
 use wcf\data\IPermissionObject;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\category\CategoryHandler;
@@ -38,10 +39,18 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	protected $parentCategory = null;
 	
 	/**
-	 * acl permissions for the active user of this category
+	 * acl permissions of this category for the active user
+	 * @deprecated
 	 * @var	array<boolean>
 	 */
 	protected $permissions = null;
+	
+	/**
+	 * acl permissions of this category grouped by the id of the user they
+	 * belong to
+	 * @var	array
+	 */
+	protected $userPermissions = array();
 	
 	/**
 	 * fallback return value used in Category::getPermission()
@@ -153,17 +162,25 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 	/**
 	 * @see	\wcf\data\IPermissionObject::getPermission()
 	 */
-	public function getPermission($permission) {
-		if ($this->permissions === null) {
-			$this->permissions = CategoryPermissionHandler::getInstance()->getPermissions($this);
+	public function getPermission($permission, User $user = null) {
+		if ($user === null) {
+			$user = WCF::getUser();
 		}
 		
-		if (isset($this->permissions[$permission])) {
-			return $this->permissions[$permission];
+		if (!isset($this->userPermissions[$user->userID])) {
+			$this->userPermissions[$user->userID] = CategoryPermissionHandler::getInstance()->getPermissions($this, $user);
+			
+			if ($user->userID == WCF::getUser()->userID) {
+				$this->permissions = $this->userPermissions[$user->userID];
+			}
+		}
+		
+		if (isset($this->userPermissions[$user->userID][$permission])) {
+			return $this->userPermissions[$user->userID][$permission];
 		}
 		
 		if ($this->getParentCategory()) {
-			return $this->getParentCategory()->getPermission($permission);
+			return $this->getParentCategory()->getPermission($permission, $user);
 		}
 		
 		if ($this->getObjectType()->defaultpermission !== null) {
