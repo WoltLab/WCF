@@ -66,7 +66,7 @@
 	</script>
 {/if}
 
-<header class="box48 boxHeadline">
+<header class="boxHeadline">
 	<h1>{@$objectType->getProcessor()->getLanguageVariable('list')}</h1>
 </header>
 
