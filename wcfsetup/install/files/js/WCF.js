@@ -3114,9 +3114,9 @@ WCF.Date.Picker = {
 			
 			// format default date
 			if ($inputValue) {
+				$inputValue = new Date($inputValue);
 				if (!$hasTime) {
 					// drop timezone for date-only input
-					$inputValue = new Date($inputValue);
 					$inputValue.setMinutes($inputValue.getMinutes() + $inputValue.getTimezoneOffset());
 				}
 				
