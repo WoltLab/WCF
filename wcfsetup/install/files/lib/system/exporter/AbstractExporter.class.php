@@ -181,4 +181,21 @@ abstract class AbstractExporter implements IExporter {
 		
 		return true;
 	}
+	
+	/**
+	 * Gets the max value of a specific column.
+	 * 
+	 * @param	string		$tableName
+	 * @param	string		$columnName
+	 * @return	integer
+	 */
+	protected function __getMaxID($tableName, $columnName) {
+		$sql = "SELECT	MAX(".$columnName.") AS maxID
+			FROM	".$tableName;
+		$statement = $this->database->prepareStatement($sql);
+		$statement->execute();
+		$row = $statement->fetchArray();
+		if ($row !== false) return $row['maxID'];
+		return 0;
+	} 
 }
