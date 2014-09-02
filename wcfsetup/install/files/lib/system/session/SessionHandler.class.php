@@ -10,6 +10,7 @@ use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\database\DatabaseException;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\RequestHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
@@ -577,6 +578,8 @@ class SessionHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function changeUser(User $user, $hideSession = false) {
+		EventHandler::getInstance()->fireAction($this, 'beforeChangeUser');
+		
 		if ($this->supportsVirtualSessions) {
 			return $this->changeUserVirtual($user);
 		}
