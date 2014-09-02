@@ -2618,7 +2618,7 @@ Sie können Ihr Kennwort unter folgender Adresse jederzeit ändern:
 		<item name="wcf.user.newPassword.success"><![CDATA[Sie erhalten in Kürze eine E-Mail mit Ihrem neuen Kennwort.]]></item>
 		<item name="wcf.user.accountManagement"><![CDATA[Benutzerkonto-Verwaltung]]></item>
 		<item name="wcf.user.accountManagement.warning"><![CDATA[Sie bearbeiten Ihr eigenes Benutzerkonto. Unbedachte Änderungen können dazu führen, dass Sie sich nicht mehr anmelden können. Bitte seien Sie entsprechend vorsichtig!]]></item>
-		<item name="wcf.user.accountManagement.password.description"><![CDATA[Bitte geben Sie zur Bestätigung Ihr Kennwort ein!]]></item>
+		<item name="wcf.user.accountManagement.password.description"><![CDATA[Bitte geben Sie zur Bestätigung Ihr <u>bisheriges</u> Kennwort ein!]]></item>
 		<item name="wcf.user.newPassword"><![CDATA[Neues Kennwort]]></item>
 		<item name="wcf.user.changeUsername"><![CDATA[Benutzernamen ändern]]></item>
 		<item name="wcf.user.changeUsername.description"><![CDATA[Sie können Ihren Benutzernamen nur einmal alle {$renamePeriod} Tage ändern. Änderungen von Groß- auf Kleinschreibung und umgekehrt sind jederzeit möglich.
