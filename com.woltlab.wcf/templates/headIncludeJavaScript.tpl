@@ -13,17 +13,17 @@
 	//]]>
 </script>
 {if JQUERY_SOURCE == 'google'}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {elseif JQUERY_SOURCE == 'microsoft'}
-<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.0.min.js"></script>
-<script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.4/jquery-ui.min.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.0{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.4/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {elseif JQUERY_SOURCE == 'cloudflare'}
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
 {else}
-<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@LAST_UPDATE_TIME}"></script>
-<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/3rdParty/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
 {/if}
 {if JQUERY_SOURCE != 'local'}
 <script>
