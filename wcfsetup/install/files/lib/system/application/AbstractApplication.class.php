@@ -43,7 +43,11 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	 * @see	\wcf\system\SingletonFactory::init()
 	 */
 	protected final function init() {
-		if (empty($this->abbreviation) || $this->abbreviation == 'wcf') {
+		if (empty($this->abbreviation)) {
+			$classParts = explode('\\', get_called_class());
+			$this->abbreviation = $classParts[0];
+		}
+		else if ($this->abbreviation == 'wcf') {
 			throw new SystemException("Unable to determine application, abbreviation is missing");
 		}
 		

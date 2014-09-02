@@ -30,13 +30,6 @@ class SmileyCategoryType extends AbstractCategoryType {
 	protected $maximumNestingLevel = 0;
 	
 	/**
-	 * @see	\wcf\system\category\ICategoryType::getApplication()
-	 */
-	public function getApplication() {
-		return 'wcf';
-	}
-	
-	/**
 	 * @see	\wcf\system\category\ICategoryType::canAddCategory()
 	 */
 	public function canAddCategory() {
