@@ -34,12 +34,14 @@
 			<objecttype>com.woltlab.wcf.user.profileComment.like.notification</objecttype>
 			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentLikeUserNotificationEvent]]></classname>
 			<preset>1</preset>
+			<options>module_like</options>
 		</event>
 		<event>
 			<name>like</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.response.like.notification</objecttype>
 			<classname><![CDATA[wcf\system\user\notification\event\UserProfileCommentResponseLikeUserNotificationEvent]]></classname>
 			<preset>1</preset>
+			<options>module_like</options>
 		</event>
 	</import>
 </data>
