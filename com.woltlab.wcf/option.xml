@@ -54,6 +54,9 @@
 					<category name="general.system.image">
 						<parent>general.system</parent>
 					</category>
+					<category name="general.system.search">
+						<parent>general.system</parent>
+					</category>
 					<category name="general.system.date">
 						<parent>general.system</parent>
 					</category>
@@ -454,6 +457,15 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				</selectoptions>
 			</option>
 			<!-- /general.system.image -->
+			
+			<!-- general.system.search -->
+			<option name="search_engine">
+				<categoryname>general.system.search</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue><![CDATA[mysql]]></defaultvalue>
+				<selectoptions><![CDATA[mysql:wcf.acp.option.search_engine.mysql]]></selectoptions>
+			</option>
+			<!-- /general.system.search -->
 			
 			<!-- general.system.cookie -->
 			<option name="cookie_prefix">

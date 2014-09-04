@@ -231,7 +231,7 @@ class InstallPackageAction extends AbstractDialogAction {
 	 */
 	protected function finalize() {
 		// create search index tables
-		SearchIndexManager::createSearchIndexTables();
+		SearchIndexManager::getInstance()->createSearchIndices();
 		
 		CacheHandler::getInstance()->flushAll();
 	}

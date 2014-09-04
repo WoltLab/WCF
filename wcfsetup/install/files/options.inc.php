@@ -36,3 +36,4 @@ define('ENABLE_BENCHMARK', 0);
 define('EXTERNAL_LINK_TARGET_BLANK', 0);
 define('URL_LEGACY_MODE', 0);
 define('URL_TO_LOWERCASE', 1);
+define('SEARCH_ENGINE', 'mysql');
