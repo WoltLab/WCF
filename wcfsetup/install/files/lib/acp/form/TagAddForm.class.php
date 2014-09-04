@@ -32,6 +32,11 @@ class TagAddForm extends AbstractForm {
 	public $neededPermissions = array('admin.content.tag.canManageTag');
 	
 	/**
+	 * @see	wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_TAGGING');
+	
+	/**
 	 * list of available languages
 	 * @var	array
 	 */

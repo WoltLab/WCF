@@ -39,6 +39,11 @@ class SmileyAddForm extends AbstractForm {
 	public $neededPermissions = array('admin.content.smiley.canManageSmiley');
 	
 	/**
+	 * @see	wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_SMILEY');
+	
+	/**
 	 * primary smiley code
 	 * @var	string
 	 */

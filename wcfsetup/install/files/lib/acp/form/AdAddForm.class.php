@@ -26,6 +26,16 @@ class AdAddForm extends AbstractForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.ad.add';
 	
 	/**
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 */
+	public $neededPermissions = array('admin.content.ad.canManageAd');
+	
+	/**
+	 * @see	wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_AD');
+	
+	/**
 	 * html code of the ad
 	 * @var	string
 	 */
@@ -60,11 +70,6 @@ class AdAddForm extends AbstractForm {
 	 * @var	array<string>
 	 */
 	public $locations = array();
-	
-	/**
-	 * @see	\wcf\page\AbstractPage::$neededPermissions
-	 */
-	public $neededPermissions = array('admin.content.ad.canManageAd');
 	
 	/**
 	 * id of the selected location's object type
