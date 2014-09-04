@@ -47,6 +47,9 @@ class ModerationQueueCommentManager extends AbstractCommentManager {
 		$editor->updateCounters(array(
 			'comments' => $value
 		));
+		$editor->update(array(
+			'lastChangeTime' => TIME_NOW
+		));
 	}
 	
 	/**
