@@ -190,8 +190,7 @@ abstract class DatabaseObject implements IStorableObject {
 		if (property_exists($className, 'databaseTableName') && !empty(static::$databaseTableName)) {
 			$tableName = static::$databaseTableName;
 		} else {
-			$tableName = strtolower(implode('_', preg_split('/(?=\p{Lu})/u', array_pop($classParts), -1, PREG_SPLIT_NO_EMPTY)));
-			// Lu is the unicode character class for capitalized chars
+			$tableName = strtolower(implode('_', preg_split('/(?=[A-Z])/', array_pop($classParts), -1, PREG_SPLIT_NO_EMPTY)));
 		}
 		return $tableName;
 	}
@@ -223,7 +222,7 @@ abstract class DatabaseObject implements IStorableObject {
 			$indexName = static::$databaseTableIndexName;
 		}
 		else {
-			$classNameParts = preg_split('/(?=\p{Lu})/u', array_pop($classParts), -1, PREG_SPLIT_NO_EMPTY);
+			$classNameParts = preg_split('/(?=[A-Z])/', array_pop($classParts), -1, PREG_SPLIT_NO_EMPTY);
 			$indexName = strtolower(array_pop($classNameParts)) . 'ID';
 		}
 		return $indexName;
