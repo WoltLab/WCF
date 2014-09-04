@@ -64,6 +64,7 @@
 
 <header class="boxHeadline boxSubHeadline">
 	<h2>{lang}wcf.moderation.report.reportedContent{/lang}</h2>
+	<p>{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</p>
 </header>
 
 <div class="marginTop">
