@@ -186,10 +186,11 @@ abstract class DatabaseObject implements IStorableObject {
 	 */
 	private static final function doTableNameGuessing() {
 		$className = get_called_class();
-		$classParts = explode('\\', $className);
 		if (property_exists($className, 'databaseTableName') && !empty(static::$databaseTableName)) {
 			$tableName = static::$databaseTableName;
-		} else {
+		}
+		else {
+			$classParts = explode('\\', $className);
 			$tableName = strtolower(implode('_', preg_split('/(?=[A-Z])/', array_pop($classParts), -1, PREG_SPLIT_NO_EMPTY)));
 		}
 		return $tableName;
@@ -217,11 +218,11 @@ abstract class DatabaseObject implements IStorableObject {
 	 */
 	public static function getDatabaseTableIndexName() {
 		$className = get_called_class();
-		$classParts = explode('\\', $className);
 		if (property_exists($className, 'databaseTableIndexName') && !empty(static::$databaseTableIndexName)) {
 			$indexName = static::$databaseTableIndexName;
 		}
 		else {
+			$classParts = explode('\\', $className);
 			$classNameParts = preg_split('/(?=[A-Z])/', array_pop($classParts), -1, PREG_SPLIT_NO_EMPTY);
 			$indexName = strtolower(array_pop($classNameParts)) . 'ID';
 		}
