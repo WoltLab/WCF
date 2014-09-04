@@ -136,10 +136,10 @@ abstract class DatabaseObject implements IStorableObject {
 	 * 
 	 * Example:
 	 * wcf\data\event\EventListener would be automatically guessed to
-	 * wcf_<WCF_N>_event_listener
+	 * wcf<WCF_N>_event_listener
 	 *
 	 * @see	\wcf\data\IStorableObject::getDatabaseTableName()
-	 * @return string <app_abbreviation>_<WCF_N>_<table_name>
+	 * @return string <app_abbreviation><WCF_N>_<table_name>
 	 */
 	public static function getDatabaseTableName() {
 		$classParts = explode('\\', get_called_class());
