@@ -175,69 +175,22 @@ class PackageStartInstallForm extends AbstractForm {
 			if (!file_exists($this->downloadPackage)) {
 				throw new UserInputException('downloadPackage', 'downloadFailed');
 			}
-			
-			$this->archive = new PackageArchive($this->downloadPackage, $this->package);
 		}
 		
-		$this->validateArchive('downloadPackage');
-	}
-	
-	/**
-	 * Validates the package archive.
-	 * 
-	 * @param	string		$type		upload or download package
-	 */
-	protected function validateArchive($type) {
-		// try to open the archive
-		try {
-			// TODO: Exceptions thrown within openArchive() are discarded, resulting in
-			// the meaningless message 'not a valid package'
-			$this->archive->openArchive();
-		}
-		catch (SystemException $e) {
-			throw new UserInputException($type, 'noValidPackage');
+		if (!PackageValidationManager::getInstance()->validate($this->downloadPackage, false)) {
+			$exception = PackageValidationManager::getInstance()->getException();
+			if ($exception instanceof PackageValidationException) {
+				switch ($exception->getCode()) {
+					case PackageValidationException::INVALID_PACKAGE_NAME:
+					case PackageValidationException::MISSING_PACKAGE_XML:
+						throw new UserInputException('downloadPackage', 'noValidPackage');
+					break;
+				}
+			}
 		}
 		
-		// validate php requirements
-		$errors = PackageInstallationDispatcher::validatePHPRequirements($this->archive->getPhpRequirements());
-		if (!empty($errors)) {
-			WCF::getTPL()->assign('phpRequirements', $errors);
-			throw new UserInputException($type, 'phpRequirements');
-		}
+		$this->package = PackageValidationManager::getInstance()->getPackageValidationArchive()->getPackage();
 		
-		// try to find existing package
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_package
-			WHERE	package = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->archive->getPackageInfo('name')));
-		$row = $statement->fetchArray();
-		if ($row !== false) {
-			$this->package = new Package(null, $row);
-		}
-		
-		// check update or install support
-		if ($this->package !== null) {
-			WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
-			$this->activeMenuItem = 'wcf.acp.menu.link.package';
-			
-			if (!$this->archive->isValidUpdate($this->package)) {
-				throw new UserInputException($type, 'noValidUpdate');
-			}
-		}
-		else {
-			WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
-			
-			if (!$this->archive->isValidInstall()) {
-				throw new UserInputException($type, 'noValidInstall');
-			}
-			else if ($this->archive->isAlreadyInstalled()) {
-				throw new UserInputException($type, 'uniqueAlreadyInstalled');
-			}
-			else if ($this->archive->getPackageInfo('isApplication') && $this->archive->hasUniqueAbbreviation()) {
-				throw new UserInputException($type, 'noUniqueAbbrevation');
-			}
-		}
 	}
 	
 	/**
