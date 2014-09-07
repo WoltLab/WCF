@@ -72,7 +72,7 @@ class NoticeAddForm extends AbstractForm {
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
-	public $neededPermissions = array('admin.content.notice.canManageNotice');
+	public $neededPermissions = array('admin.notice.canManageNotice');
 	
 	/**
 	 * name of the notice

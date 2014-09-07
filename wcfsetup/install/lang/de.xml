@@ -296,7 +296,6 @@
 		<item name="wcf.acp.group.option.admin.user.accessibleGroups.description"><![CDATA[Mitglieder dieser Benutzergruppe haben auf diese Gruppen Zugriff. Zusätzlich muss angegeben werden, ob z.B. die Benutzergruppe bearbeitet werden darf.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddGroup"><![CDATA[Kann neue Benutzergruppen erstellen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canAddUser"><![CDATA[Kann neue Benutzer erstellen]]></item>
-		<item name="wcf.acp.group.option.admin.user.canAddUser.description"><![CDATA[Ist bei „Zugängliche Benutzergruppen“ eine Option aktiviert, kann diese Gruppe beim Erstellen des Benutzers zugewiesen werden.]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDeleteGroup"><![CDATA[Kann Benutzergruppen löschen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canDeleteUser"><![CDATA[Kann Benutzer löschen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditGroup"><![CDATA[Kann Benutzergruppen bearbeiten]]></item>
@@ -427,14 +426,11 @@
 		<item name="wcf.acp.group.assignment.list"><![CDATA[Automatische Benutzergruppen-Zuordnungen]]></item>
 		<item name="wcf.acp.group.assignment.userGroup"><![CDATA[Benutzergruppe]]></item>
 		<item name="wcf.acp.group.assignment.isDisabled"><![CDATA[Automatische Zuordnung deaktivieren]]></item>
-		<item name="wcf.acp.group.option.category.admin.content.notice"><![CDATA[Hinweise]]></item>
-		<item name="wcf.acp.group.option.admin.content.notice.canManageNotice"><![CDATA[Kann Hinweise verwalten]]></item>
-		<item name="wcf.acp.group.option.category.admin.content.ad"><![CDATA[Werbung]]></item>
-		<item name="wcf.acp.group.option.admin.content.ad.canManageAd"><![CDATA[Kann Werbung verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.notice.canManageNotice"><![CDATA[Kann Hinweise verwalten]]></item>
+		<item name="wcf.acp.group.option.admin.ad.canManageAd"><![CDATA[Kann Werbung verwalten]]></item>
 		<item name="wcf.acp.group.option.user.profile.aboutMeMaxLength"><![CDATA[Maximallänge „Über mich“]]></item>
 		<item name="wcf.acp.group.option.user.profile.canReportContent"><![CDATA[Kann Inhalte melden]]></item>
 		<item name="wcf.acp.group.option.admin.captcha.canManageCaptchaQuestion"><![CDATA[Kann Captcha-Fragen verwalten]]></item>
-		<item name="wcf.acp.group.option.category.admin.display.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.group.button.copy"><![CDATA[Benutzergruppe kopieren]]></item>
 		<item name="wcf.acp.group.copy.confirmMessage"><![CDATA[Wollen Sie diese Benutzergruppe wirklich kopieren?]]></item>
 		<item name="wcf.acp.group.copy.copyACLOptions"><![CDATA[Objekt-Berechtigungen kopieren]]></item>
@@ -821,8 +817,6 @@
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentifizierung-Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Ihren Authentifizierung-Code finden Sie in Ihrem Kundenkonto auf woltlab.com.]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[WoltLab-Nachrichten auf der Startseite der Administrationsoberfläche anzeigen]]></item>
-		<item name="wcf.acp.option.module_system_recaptcha"><![CDATA[Sicherheitsabfragen („reCAPTCHA“)]]></item>
-		<item name="wcf.acp.option.module_system_recaptcha.description"><![CDATA[Aktiviert Sicherheitsabfragen, um das automatisierte Absenden von Formularen durch so genannte Bots zu verhindern.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public-API-Key]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[Einen eigenen API-Key für die Nutzung der reCAPTCHA-Funktion können Sie auf der Website von <a href="https://www.google.com/recaptcha/admin/create" class="externalURL">reCAPTCHA</a> beantragen.]]></item>

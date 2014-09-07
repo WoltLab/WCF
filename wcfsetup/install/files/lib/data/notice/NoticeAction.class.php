@@ -26,12 +26,12 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.content.notice.canManageNotice');
+	protected $permissionsDelete = array('admin.notice.canManageNotice');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.content.notice.canManageNotice');
+	protected $permissionsUpdate = array('admin.notice.canManageNotice');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP

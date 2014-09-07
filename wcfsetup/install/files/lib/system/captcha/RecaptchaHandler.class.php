@@ -39,7 +39,7 @@ class RecaptchaHandler implements ICaptchaHandler {
 	 * @see	\wcf\system\captcha\ICaptchaHandler::isAvailable()
 	 */
 	public function isAvailable() {
-		return MODULE_SYSTEM_RECAPTCHA && RECAPTCHA_PUBLICKEY && RECAPTCHA_PRIVATEKEY;
+		return RECAPTCHA_PUBLICKEY && RECAPTCHA_PRIVATEKEY;
 	}
 	
 	/**
