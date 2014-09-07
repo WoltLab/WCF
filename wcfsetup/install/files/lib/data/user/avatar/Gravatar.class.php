@@ -4,6 +4,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Represents a gravatar.
@@ -69,6 +70,17 @@ class Gravatar extends DefaultAvatar {
 	 */
 	public function getURL($size = null) {
 		if ($size === null) $size = $this->size;
+		else {
+			switch ($size) {
+				case 16:
+				case 24:
+					$size = 32;
+					break;
+				case 48:
+					$size = 96;
+					break;
+			}
+		}
 		
 		if (!isset($this->url[$size])) {
 			// try to use cached gravatar
@@ -102,6 +114,30 @@ class Gravatar extends DefaultAvatar {
 		catch (SystemException $e) {
 			return false;
 		}
+	}
+	
+	/**
+	 * @see	\wcf\data\user\avatar\IUserAvatar::getImageTag()
+	 */
+	public function getImageTag($size = null) {
+		if ($size === null) $size = $this->size;
+	
+		$retinaSize = null;
+		switch ($size) {
+			case 16:
+				$retinaSize = 32;
+				break;
+			case 24:
+			case 32:
+			case 48:
+				$retinaSize = 96;
+				break;
+			case 96:
+				$retinaSize = 128;
+				break;
+		}
+		
+		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" '.($retinaSize !== null ? ('srcset="'.StringUtil::encodeHTML($this->getURL($retinaSize)).' 2x" ') : '').'style="width: '.$size.'px; height: '.$size.'px" alt="'.WCF::getLanguage()->get('wcf.user.avatar.alt').'" class="userAvatarImage" />';
 	}
 	
 	/**
