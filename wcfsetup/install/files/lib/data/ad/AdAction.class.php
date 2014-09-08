@@ -20,12 +20,12 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsDelete
 	 */
-	protected $permissionsDelete = array('admin.content.ad.canManageAd');
+	protected $permissionsDelete = array('admin.ad.canManageAd');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$permissionsUpdate
 	 */
-	protected $permissionsUpdate = array('admin.content.ad.canManageAd');
+	protected $permissionsUpdate = array('admin.ad.canManageAd');
 	
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP

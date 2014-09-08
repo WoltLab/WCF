@@ -4,7 +4,7 @@ use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\cache\CacheHandler;
-use wcf\system\io\File;
+use wcf\system\io\AtomicWriter;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -118,29 +118,23 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	 * Rebuilds the option file.
 	 */
 	public static function rebuild() {
-		$buffer = '';
+		$writer = new AtomicWriter(WCF_DIR.'options.inc.php');
 		
 		// file header
-		$buffer .= "<?php\n/**\n* generated at ".gmdate('r')."\n*/\n";
+		$writer->write("<?php\n/**\n* generated at ".gmdate('r')."\n*/\n");
 		
 		// get all options
 		$options = Option::getOptions();
 		foreach ($options as $optionName => $option) {
-			$buffer .= "if (!defined('".$optionName."')) define('".$optionName."', ".(($option->optionType == 'boolean' || $option->optionType == 'integer') ? intval($option->optionValue) : "'".addcslashes($option->optionValue, "'\\")."'").");\n";
+			$writer->write("if (!defined('".$optionName."')) define('".$optionName."', ".(($option->optionType == 'boolean' || $option->optionType == 'integer') ? intval($option->optionValue) : "'".addcslashes($option->optionValue, "'\\")."'").");\n");
 		}
 		unset($options);
 		
 		// file footer
-		$buffer .= "\n";
+		$writer->write("\n");
+		$writer->flush();
+		$writer->close();
 		
-		// open file
-		$file = new File(WCF_DIR.'options.inc.php');
-		
-		// write buffer
-		$file->write($buffer);
-		
-		// close file
-		$file->close();
 		FileUtil::makeWritable(WCF_DIR.'options.inc.php');
 	}
 }

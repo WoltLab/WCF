@@ -81,10 +81,25 @@
 		</acpmenuitem>
 		<!-- /cronjobs -->
 		
+		<acpmenuitem name="wcf.acp.menu.link.captcha">
+			<parent>wcf.acp.menu.link.system</parent>
+			<showorder>4</showorder>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.captcha.question.list">
+			<parent>wcf.acp.menu.link.captcha</parent>
+			<controller><![CDATA[wcf\acp\page\CaptchaQuestionListPage]]></controller>
+			<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.captcha.question.add">
+			<parent>wcf.acp.menu.link.captcha</parent>
+			<controller><![CDATA[wcf\acp\form\CaptchaQuestionAddForm]]></controller>
+			<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
+		</acpmenuitem>
+		
 		<!-- maintenance -->
 		<acpmenuitem name="wcf.acp.menu.link.maintenance">
 			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>4</showorder>
+			<showorder>5</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.maintenance.cache">
@@ -109,7 +124,7 @@
 		<!-- log -->
 		<acpmenuitem name="wcf.acp.menu.link.log">
 			<parent>wcf.acp.menu.link.system</parent>
-			<showorder>5</showorder>
+			<showorder>6</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.log.session">
@@ -277,14 +292,40 @@
 		</acpmenuitem>
 		<!-- /user options -->
 		
+		<acpmenuitem name="wcf.acp.menu.link.notice">
+			<parent>wcf.acp.menu.link.user</parent>
+			<showorder>5</showorder>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.notice.list">
+			<controller><![CDATA[wcf\acp\page\NoticeListPage]]></controller>
+			<parent>wcf.acp.menu.link.notice</parent>
+			<permissions>admin.notice.canManageNotice</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.notice.add">
+			<controller><![CDATA[wcf\acp\form\NoticeAddForm]]></controller>
+			<parent>wcf.acp.menu.link.notice</parent>
+			<permissions>admin.notice.canManageNotice</permissions>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.display">
 			<showorder>3</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.dashboard">
+			<parent>wcf.acp.menu.link.display</parent>
+			<showorder>1</showorder>
+		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.dashboard.list">
+			<parent>wcf.acp.menu.link.dashboard</parent>
+			<controller><![CDATA[wcf\acp\page\DashboardListPage]]></controller>
+			<permissions>admin.content.dashboard.canEditDashboard</permissions>
 		</acpmenuitem>
 		
 		<!-- style -->
 		<acpmenuitem name="wcf.acp.menu.link.style">
 			<parent>wcf.acp.menu.link.display</parent>
-			<showorder>1</showorder>
+			<showorder>2</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.style.list">
@@ -309,7 +350,7 @@
 		<!-- page menu -->
 		<acpmenuitem name="wcf.acp.menu.link.pageMenu">
 			<parent>wcf.acp.menu.link.display</parent>
-			<showorder>2</showorder>
+			<showorder>3</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.pageMenu.list">
@@ -328,7 +369,7 @@
 		<!-- template -->
 		<acpmenuitem name="wcf.acp.menu.link.template">
 			<parent>wcf.acp.menu.link.display</parent>
-			<showorder>3</showorder>
+			<showorder>4</showorder>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.template.list">
 			<controller><![CDATA[wcf\acp\page\TemplateListPage]]></controller>
@@ -355,7 +396,7 @@
 		<!-- language -->
 		<acpmenuitem name="wcf.acp.menu.link.language">
 			<parent>wcf.acp.menu.link.display</parent>
-			<showorder>4</showorder>
+			<showorder>5</showorder>
 		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.language.list">
@@ -391,22 +432,23 @@
 			<parent>wcf.acp.menu.link.language.server</parent>
 			<permissions>admin.language.canManageLanguage</permissions>
 		</acpmenuitem>-->
-		
-		<acpmenuitem name="wcf.acp.menu.link.captcha">
-			<parent>wcf.acp.menu.link.display</parent>
-			<showorder>5</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.captcha.question.list">
-			<parent>wcf.acp.menu.link.captcha</parent>
-			<controller><![CDATA[wcf\acp\page\CaptchaQuestionListPage]]></controller>
-			<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.captcha.question.add">
-			<parent>wcf.acp.menu.link.captcha</parent>
-			<controller><![CDATA[wcf\acp\form\CaptchaQuestionAddForm]]></controller>
-			<permissions>admin.captcha.canManageCaptchaQuestion</permissions>
-		</acpmenuitem>
 		<!-- /language -->
+		
+		<acpmenuitem name="wcf.acp.menu.link.ad">
+			<parent>wcf.acp.menu.link.display</parent>
+			<options>module_ad</options>
+			<showorder>6</showorder>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.ad.list">
+			<controller><![CDATA[wcf\acp\page\AdListPage]]></controller>
+			<parent>wcf.acp.menu.link.ad</parent>
+			<permissions>admin.ad.canManageAd</permissions>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.ad.add">
+			<controller><![CDATA[wcf\acp\form\AdAddForm]]></controller>
+			<parent>wcf.acp.menu.link.ad</parent>
+			<permissions>admin.ad.canManageAd</permissions>
+		</acpmenuitem>
 		
 		<acpmenuitem name="wcf.acp.menu.link.content">
 			<showorder>4</showorder>
@@ -517,49 +559,8 @@
 			<permissions>admin.attachment.canManageAttachment</permissions>
 		</acpmenuitem>
 		
-		<acpmenuitem name="wcf.acp.menu.link.notice">
-			<parent>wcf.acp.menu.link.content</parent>
-			<showorder>6</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.notice.list">
-			<controller><![CDATA[wcf\acp\page\NoticeListPage]]></controller>
-			<parent>wcf.acp.menu.link.notice</parent>
-			<permissions>admin.content.notice.canManageNotice</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.notice.add">
-			<controller><![CDATA[wcf\acp\form\NoticeAddForm]]></controller>
-			<parent>wcf.acp.menu.link.notice</parent>
-			<permissions>admin.content.notice.canManageNotice</permissions>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.ad">
-			<parent>wcf.acp.menu.link.content</parent>
-			<options>module_ad</options>
-			<showorder>7</showorder>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.ad.list">
-			<controller><![CDATA[wcf\acp\page\AdListPage]]></controller>
-			<parent>wcf.acp.menu.link.ad</parent>
-			<permissions>admin.content.ad.canManageAd</permissions>
-		</acpmenuitem>
-		<acpmenuitem name="wcf.acp.menu.link.ad.add">
-			<controller><![CDATA[wcf\acp\form\AdAddForm]]></controller>
-			<parent>wcf.acp.menu.link.ad</parent>
-			<permissions>admin.content.ad.canManageAd</permissions>
-		</acpmenuitem>
-		
 		<acpmenuitem name="wcf.acp.menu.link.community">
 			<showorder>5</showorder>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.dashboard">
-			<parent>wcf.acp.menu.link.community</parent>
-		</acpmenuitem>
-		
-		<acpmenuitem name="wcf.acp.menu.link.dashboard.list">
-			<parent>wcf.acp.menu.link.dashboard</parent>
-			<controller><![CDATA[wcf\acp\page\DashboardListPage]]></controller>
-			<permissions>admin.content.dashboard.canEditDashboard</permissions>
 		</acpmenuitem>
 	</import>
 </data>

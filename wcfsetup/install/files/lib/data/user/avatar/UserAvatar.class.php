@@ -19,7 +19,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	 * needed avatar thumbnail sizes
 	 * @var	array<integer>
 	 */
-	public static $avatarThumbnailSizes = array(16, 24, 32, 48, 96, 128);
+	public static $avatarThumbnailSizes = array(32, 96, 128);
 	
 	/**
 	 * @see	\wcf\data\DatabaseObject::$databaseTableName
@@ -54,6 +54,16 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	 * @return	string
 	 */
 	public function getFilename($size = null) {
+		switch ($size) {
+			case 16:
+			case 24:
+				$size = 32;
+				break;
+			case 48:
+				$size = 96;
+				break;
+		}
+		
 		return substr($this->fileHash, 0, 2) . '/' . ($this->avatarID) . '-' . $this->fileHash . ($size !== null ? ('-' . $size) : '') . '.' . $this->avatarExtension;
 	}
 	
@@ -93,7 +103,22 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 			}
 		}
 		
-		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" style="width: '.$width.'px; height: '.$height.'px" alt="'.WCF::getLanguage()->get('wcf.user.avatar.alt').'" class="userAvatarImage" />';
+		$retinaSize = null;
+		switch ($size) {
+			case 16:
+				$retinaSize = 32;
+				break;
+			case 24:
+			case 32:
+			case 48:
+				$retinaSize = 96;
+				break;
+			case 96:
+				$retinaSize = 128;
+				break;
+		}
+		
+		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" '.($retinaSize !== null ? ('srcset="'.StringUtil::encodeHTML($this->getURL($retinaSize)).' 2x" ') : '').'style="width: '.$width.'px; height: '.$height.'px" alt="'.WCF::getLanguage()->get('wcf.user.avatar.alt').'" class="userAvatarImage" />';
 	}
 	
 	/**

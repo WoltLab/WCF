@@ -63,6 +63,7 @@
 
 <header class="boxHeadline boxSubHeadline">
 	<h2>{lang}wcf.moderation.activation.content{/lang}</h2>
+	<p>{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</p>
 </header>
 
 <div class="marginTop">
