@@ -80,7 +80,7 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 		if ($this->searchIndexManager === null) {
 			$className = '';
 			if (SEARCH_ENGINE != 'mysql') {
-				$className = 'wcf\system\search\\'.SEARCH_ENGINE.'\\'.ucfirst(SEARCH_ENGINE).'SearchEngine';
+				$className = 'wcf\system\search\\'.SEARCH_ENGINE.'\\'.ucfirst(SEARCH_ENGINE).'SearchIndexManager';
 				if (!class_exists($className)) {
 					$className = '';
 				}
@@ -100,15 +100,15 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	/**
 	 * @see	\wcf\system\search\ISearchIndexManager::add()
 	 */
-	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '', array $additionalData = array()) {
-		$this->getSearchIndexManager()->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData, $additionalData);
+	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
+		$this->getSearchIndexManager()->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
 	/**
 	 * @see	\wcf\system\search\ISearchIndexManager::update()
 	 */
-	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '', array $additionalData = array()) {
-		$this->getSearchIndexManager()->update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData, $additionalData);
+	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
+		$this->getSearchIndexManager()->update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
 	/**
@@ -130,6 +130,27 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	 */
 	public function createSearchIndices() {
 		$this->getSearchIndexManager()->createSearchIndices();
+	}
+	
+	/**
+	 * @see	\wcf\system\search\ISearchIndexManager::supportsBulkInsert()
+	 */
+	public function supportsBulkInsert() {
+		return $this->getSearchIndexManager()->supportsBulkInsert();
+	}
+	
+	/**
+	 * @see	\wcf\system\search\ISearchIndexManager::beginBulkOperation()
+	 */
+	public function beginBulkOperation() {
+		$this->getSearchIndexManager()->beginBulkOperation();
+	}
+	
+	/**
+	 * @see	\wcf\system\search\ISearchIndexManager::commitBulkOperation()
+	 */
+	public function commitBulkOperation() {
+		$this->getSearchIndexManager()->commitBulkOperation();
 	}
 	
 	/**

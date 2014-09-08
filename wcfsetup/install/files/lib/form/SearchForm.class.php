@@ -115,12 +115,6 @@ class SearchForm extends AbstractCaptchaForm {
 	public $searchIndexCondition = null;
 	
 	/**
-	 * class name for $searchIndexCondition object
-	 * @var	string
-	 */
-	public $searchIndexConditionClassName = 'wcf\system\database\util\PreparedStatementConditionBuilder';
-	
-	/**
 	 * search hash to modify existing search
 	 * @var	string
 	 */
@@ -419,7 +413,8 @@ class SearchForm extends AbstractCaptchaForm {
 		
 		// default conditions
 		$userIDs = $this->getUserIDs();
-		$this->searchIndexCondition = new $this->searchIndexConditionClassName(false);
+		$conditionBuilderClassName = SearchEngine::getInstance()->getConditionBuilderClassName();
+		$this->searchIndexCondition = new $conditionBuilderClassName(false);
 		
 		// user ids
 		if (!empty($userIDs)) {

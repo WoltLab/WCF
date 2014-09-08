@@ -14,6 +14,32 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  */
 interface ISearchEngine {
 	/**
+	 * Returns the condition builder class name required to provide conditions for getInnerJoin().
+	 * 
+	 * @return	string
+	 */
+	public function getConditionBuilderClassName();
+	
+	/**
+	 * Returns the inner join query and the condition parameters. This method is allowed to return NULL
+	 * for the 'fulltextCondition' index instead of a PreparedStatementConditionBuilder instance:
+	 * 
+	 * array(
+	 * 	'fulltextCondition' => $fulltextCondition || null,
+	 * 	'sql' => $sql
+	 * );
+	 * 
+	 * @param	string								$objectTypeName
+	 * @param	string								$q
+	 * @param	boolean								$subjectOnly
+	 * @param	\wcf\system\database\util\PreparedStatementConditionBuilder	$searchIndexCondition
+	 * @param	string								$orderBy
+	 * @param	integer								$limit
+	 * @return	array
+	 */
+	public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000);
+	
+	/**
 	 * Searches for the given string and returns the data of the found messages.
 	 *
 	 * @param	string								$q

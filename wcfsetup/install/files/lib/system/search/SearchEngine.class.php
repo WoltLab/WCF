@@ -2,6 +2,7 @@
 namespace wcf\system\search;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
 /**
@@ -94,5 +95,24 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	 */
 	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = array(), $orderBy = 'time DESC', $limit = 1000) {
 		return $this->getSearchEngine()->search($q, $objectTypes, $subjectOnly, $searchIndexCondition, $additionalConditions, $orderBy, $limit);
+	}
+	
+	/**
+	 * @see	\wcf\system\search\ISearchEngine::getInnerJoin()
+	 */
+	public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000) {
+		$conditionBuilderClassName = $this->getConditionBuilderClassName();
+		if ($searchIndexCondition !== null && !($searchIndexCondition instanceof $conditionBuilderClassName)) {
+			throw new SystemException("Search engine '" . SEARCH_ENGINE . "' requires a different condition builder, please use 'SearchEngine::getInstance()->getConditionBuilderClassName()'!");
+		}
+		
+		return $this->getSearchEngine()->getInnerJoin($objectTypeName, $q, $subjectOnly, $searchIndexCondition, $orderBy, $limit);
+	}
+	
+	/**
+	 * @see	\wcf\system\search\ISearchEngine::getConditionBuilderClassName()
+	 */
+	public function getConditionBuilderClassName() {
+		return $this->getSearchEngine()->getConditionBuilderClassName();
 	}
 }

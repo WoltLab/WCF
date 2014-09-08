@@ -4,10 +4,9 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\database\DatabaseException;
 use wcf\system\exception\SystemException;
 use wcf\system\search\AbstractSearchEngine;
+use wcf\system\search\SearchEngine;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
-use wcf\system\search\SearchEngine;
 
 /**
  * Search engine using MySQL's FULLTEXT index.
@@ -24,86 +23,49 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 	 * MySQL's minimum word length for fulltext indices
 	 * @var	integer
 	 */
-	protected static $ftMinWordLen = null;
+	protected $ftMinWordLen = null;
 	
 	/**
 	 * @see	\wcf\system\search\ISearchEngine::search()
 	 */
 	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = array(), $orderBy = 'time DESC', $limit = 1000) {
-		// handle sql types
-		$fulltextCondition = null;
-		$relevanceCalc = '';
-		if (!empty($q)) {
-			$q = $this->parseSearchQuery($q);
-			
-			$fulltextCondition = new PreparedStatementConditionBuilder(false);
-			switch (WCF::getDB()->getDBType()) {
-				case 'wcf\system\database\MySQLDatabase':
-					$fulltextCondition->add("MATCH (subject".(!$subjectOnly ? ', message, metaData' : '').") AGAINST (? IN BOOLEAN MODE)", array($q));
-				break;
-				
-				case 'wcf\system\database\PostgreSQLDatabase':
-					// replace * with :*
-					$q = str_replace('*', ':*', $q);
-					
-					$fulltextCondition->add("fulltextIndex".($subjectOnly ? "SubjectOnly" : '')." @@ to_tsquery(?)", array($q));
-				break;
-				
-				default:
-					throw new SystemException("your database type doesn't support fulltext search");
-				break;
-			}
-			
-			if ($orderBy == 'relevance ASC' || $orderBy == 'relevance DESC') {
-				switch (WCF::getDB()->getDBType()) {
-					case 'wcf\system\database\MySQLDatabase':
-						$relevanceCalc = "MATCH (subject".(!$subjectOnly ? ', message, metaData' : '').") AGAINST ('".escapeString($q)."') + (5 / (1 + POW(LN(1 + (".TIME_NOW." - time) / 2592000), 2))) AS relevance";
-					break;
-					
-					case 'wcf\system\database\PostgreSQLDatabase':
-						$relevanceCalc = "ts_rank_cd(fulltextIndex".($subjectOnly ? "SubjectOnly" : '').", '".escapeString($q)."') AS relevance";
-					break;
-				}
-			}
-		}
-		
 		// build search query
 		$sql = '';
 		$parameters = array();
 		foreach ($objectTypes as $objectTypeName) {
 			$objectType = SearchEngine::getInstance()->getObjectType($objectTypeName);
-			if (!empty($sql)) $sql .= "\nUNION\n";
+			
+			if (!empty($sql)) $sql .= "\nUNION ALL\n";
 			$additionalConditionsConditionBuilder = (isset($additionalConditions[$objectTypeName]) ? $additionalConditions[$objectTypeName] : null);
-			if (($specialSQL = $objectType->getSpecialSQLQuery($fulltextCondition, $searchIndexCondition, $additionalConditionsConditionBuilder, $orderBy))) {
-				$sql .= "(".$specialSQL.")";
-			}
-			else {
-				$sql .= "(
-						SELECT		".$objectType->getIDFieldName()." AS objectID,
-								".$objectType->getSubjectFieldName()." AS subject,
-								".$objectType->getTimeFieldName()." AS time,
-								".$objectType->getUsernameFieldName()." AS username,
-								'".$objectTypeName."' AS objectType
-								".($relevanceCalc ? ',search_index.relevance' : '')."
-						FROM		".$objectType->getTableName()."
-						INNER JOIN	(
-									SELECT		objectID
-											".($relevanceCalc ? ','.$relevanceCalc : '')."
-									FROM		".SearchIndexManager::getTableName($objectTypeName)."
-									WHERE		".($fulltextCondition !== null ? $fulltextCondition : '')."
-											".(($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '').$searchIndexCondition : '')."
-									".(!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY '.$orderBy : '')."
-									LIMIT		1000
-								) search_index
-						ON		(".$objectType->getIDFieldName()." = search_index.objectID)
-						".$objectType->getJoins()."
-						".(isset($additionalConditions[$objectTypeName]) ? $additionalConditions[$objectTypeName] : '')."
-					)";
+			
+			$query = $objectType->getOuterSQLQuery($q, $searchIndexCondition, $additionalConditionsConditionBuilder);
+			if (empty($query)) {
+				$query = "SELECT	".$objectType->getIDFieldName()." AS objectID,
+							".$objectType->getSubjectFieldName()." AS subject,
+							".$objectType->getTimeFieldName()." AS time,
+							".$objectType->getUsernameFieldName()." AS username,
+							'".$objectTypeName."' AS objectType
+							".($orderBy == 'relevance ASC' || $orderBy == 'relevance DESC' ? ',search_index.relevance' : '')."
+					FROM		".$objectType->getTableName()."
+					INNER JOIN	(
+								{WCF_SEARCH_INNER_JOIN}
+							) search_index
+					ON		(".$objectType->getIDFieldName()." = search_index.objectID)
+					".$objectType->getJoins()."
+					".(isset($additionalConditions[$objectTypeName]) ? $additionalConditions[$objectTypeName] : '');
 			}
 			
-			if ($fulltextCondition !== null) $parameters = array_merge($parameters, $fulltextCondition->getParameters());
+			if (mb_strpos($query, '{WCF_SEARCH_INNER_JOIN}')) {
+				$innerJoin = $this->getInnerJoin($objectTypeName, $q, $subjectOnly, $searchIndexCondition, $orderBy, $limit);
+				
+				$query = str_replace('{WCF_SEARCH_INNER_JOIN}', $innerJoin['sql'], $query);
+				if ($innerJoin['fulltextCondition'] !== null) $parameters = array_merge($parameters, $innerJoin['fulltextCondition']->getParameters());
+			}
+			
 			if ($searchIndexCondition !== null) $parameters = array_merge($parameters, $searchIndexCondition->getParameters());
 			if (isset($additionalConditions[$objectTypeName])) $parameters = array_merge($parameters, $additionalConditions[$objectTypeName]->getParameters());
+			
+			$sql .= $query;
 		}
 		if (empty($sql)) {
 			throw new SystemException('no object types given');
@@ -128,102 +90,41 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 	}
 	
 	/**
-	 * Manipulates the search term (< and > used as quotation marks):
-	 * 
-	 * - <test foo> becomes <+test* +foo*>
-	 * - <test -foo bar> becomes <+test* -foo* +bar*>
-	 * - <test "foo bar"> becomes <+test* +"foo bar">
-	 * 
-	 * @see	http://dev.mysql.com/doc/refman/5.5/en/fulltext-boolean.html
-	 * 
-	 * @param	string		$query
+	 * @see	\wcf\system\search\ISearchEngine::getInnerJoin()
 	 */
-	protected function parseSearchQuery($query) {
-		$query = StringUtil::trim($query);
-		
-		// expand search terms with a * unless they're encapsulated with quotes
-		$inQuotes = false;
-		$previousChar = $tmp = '';
-		$controlCharacterOrSpace = false;
-		$chars = array('+', '-', '*');
-		$ftMinWordLen = self::getFulltextMinimumWordLength();
-		for ($i = 0, $length = mb_strlen($query); $i < $length; $i++) {
-			$char = mb_substr($query, $i, 1);
+	public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000) {
+		$fulltextCondition = null;
+		$relevanceCalc = '';
+		if (!empty($q)) {
+			$q = $this->parseSearchQuery($q);
 			
-			if ($inQuotes) {
-				if ($char == '"') {
-					$inQuotes = false;
-				}
-			}
-			else {
-				if ($char == '"') {
-					$inQuotes = true;
-				}
-				else {
-					if ($char == ' ' && !$controlCharacterOrSpace) {
-						$controlCharacterOrSpace = true;
-						$tmp .= '*';
-					}
-					else if (in_array($char, $chars)) {
-						$controlCharacterOrSpace = true;
-					}
-					else {
-						$controlCharacterOrSpace = false;
-					}
-				}
-			}
+			$fulltextCondition = new PreparedStatementConditionBuilder(false);
+			$fulltextCondition->add("MATCH (subject".(!$subjectOnly ? ', message, metaData' : '').") AGAINST (? IN BOOLEAN MODE)", array($q));
 			
-			/*
-			 * prepend a plus sign (logical AND) if ALL these conditions are given:
-			 *
-			 * 1) previous character:
-			 *   - is empty (start of string)
-			 *   - is a space (MySQL uses spaces to separate words)
-			 *
-			 * 2) not within quotation marks
-			 *
-			 * 3) current char:
-			 *   - is NOT +, - or *
-			 */
-			if (($previousChar == '' || $previousChar == ' ') && !$inQuotes && !in_array($char, $chars)) {
-				// check if the term is shorter than MySQL's ft_min_word_len
-				
-				if ($i + $ftMinWordLen <= $length) {
-					$term = '';// $char;
-					for ($j = $i, $innerLength = $ftMinWordLen + $i; $j < $innerLength; $j++) {
-						$currentChar = mb_substr($query, $j, 1);
-						if ($currentChar == '"' || $currentChar == ' ' || in_array($currentChar, $chars)) {
-							break;
-						}
-						
-						$term .= $currentChar;
-					}
-					
-					if (mb_strlen($term) == $ftMinWordLen) {
-						$tmp .= '+';
-					}
-				}
+			if ($orderBy == 'relevance ASC' || $orderBy == 'relevance DESC') {
+				$relevanceCalc = "MATCH (subject".(!$subjectOnly ? ', message, metaData' : '').") AGAINST ('".escapeString($q)."') + (5 / (1 + POW(LN(1 + (".TIME_NOW." - time) / 2592000), 2))) AS relevance";
 			}
-			
-			$tmp .= $char;
-			$previousChar = $char;
 		}
 		
-		// handle last char
-		if (!$inQuotes && !$controlCharacterOrSpace) {
-			$tmp .= '*';
-		}
+		$sql = "SELECT		objectID
+					".($relevanceCalc ? ','.$relevanceCalc : '')."
+			FROM		".SearchIndexManager::getTableName($objectTypeName)."
+			WHERE		".($fulltextCondition !== null ? $fulltextCondition : '')."
+					".(($searchIndexCondition !== null && $searchIndexCondition->__toString()) ? ($fulltextCondition !== null ? "AND " : '').$searchIndexCondition : '')."
+			".(!empty($orderBy) && $fulltextCondition === null ? 'ORDER BY '.$orderBy : '')."
+			LIMIT		1000";
 		
-		return $tmp;
+		return array(
+			'fulltextCondition' => $fulltextCondition,
+			'sql' => $sql
+		);
 	}
 	
 	/**
-	 * Returns MySQL's minimum word length for fulltext indices.
-	 * 
-	 * @return	integer
+	 * @see	\wcf\system\search\AbstractSearchEngine::getFulltextMinimumWordLength()
 	 */
-	protected static function getFulltextMinimumWordLength() {
-		if (self::$ftMinWordLen === null) {
+	protected function getFulltextMinimumWordLength() {
+		if ($this->ftMinWordLen === null) {
 			$sql = "SHOW VARIABLES LIKE ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
@@ -236,9 +137,9 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 				$row = array('Value' => 4);
 			}
 			
-			self::$ftMinWordLen = $row['Value'];
+			$this->ftMinWordLen = $row['Value'];
 		}
 		
-		return self::$ftMinWordLen;
+		return $this->ftMinWordLen;
 	}
 }

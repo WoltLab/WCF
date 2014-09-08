@@ -24,9 +24,8 @@ interface ISearchIndexManager {
 	 * @param	string		$username
 	 * @param	integer		$languageID
 	 * @param	string		$metaData
-	 * @param	array<mixed>	$additionalData
 	 */
-	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '', array $additionalData = array());
+	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
 	
 	/**
 	 * Updates the search index.
@@ -40,9 +39,8 @@ interface ISearchIndexManager {
 	 * @param	string		$username
 	 * @param	integer		$languageID
 	 * @param	string		$metaData
-	 * @param	array<mixed>	$additionalData
 	 */
-	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '', array $additionalData = array());
+	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '');
 	
 	/**
 	 * Deletes search index entries.
@@ -63,4 +61,14 @@ interface ISearchIndexManager {
 	 * Creates the search index for all searchable objects.
 	 */
 	public function createSearchIndices();
+	
+	/**
+	 * Begins the bulk operation.
+	 */
+	public function beginBulkOperation();
+	
+	/**
+	 * Commits the bulk operation.
+	 */
+	public function commitBulkOperation();
 }

@@ -46,4 +46,18 @@ abstract class AbstractSearchIndexManager extends SingletonFactory implements IS
 	 * @return	boolean
 	 */
 	abstract protected function createSearchIndex(ObjectType $objectType);
+	
+	/**
+	 * @see	\wcf\system\search\ISearchIndexManager::beginBulkOperation()
+	 */
+	public function beginBulkOperation() {
+		// does nothing
+	}
+	
+	/**
+	 * @see	\wcf\system\search\ISearchIndexManager::commitBulkOperation()
+	 */
+	public function commitBulkOperation() {
+		// does nothing
+	}
 }

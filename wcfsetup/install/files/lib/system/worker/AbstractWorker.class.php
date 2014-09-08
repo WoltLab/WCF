@@ -76,4 +76,11 @@ abstract class AbstractWorker implements IWorker {
 	public function getParameters() {
 		return $this->parameters;
 	}
+	
+	/**
+	 * @see	\wcf\system\worker\IWorker::finalize()
+	 */
+	public function finalize() {
+		// does nothing
+	}
 }

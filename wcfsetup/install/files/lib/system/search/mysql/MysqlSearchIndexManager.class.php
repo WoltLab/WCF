@@ -19,7 +19,7 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 	/**
 	 * @see	\wcf\system\search\ISearchIndexManager::add()
 	 */
-	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '', array $additionalData = array()) {
+	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
 		if ($languageID === null) $languageID = 0;
 		
 		// save new entry
@@ -33,12 +33,12 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 	/**
 	 * @see	\wcf\system\search\ISearchIndexManager::update()
 	 */
-	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '', array $additionalData = array()) {
+	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
 		// delete existing entry
 		$this->delete($objectType, array($objectID));
 		
 		// save new entry
-		$this->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData, $additionalData);
+		$this->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
 	/**
