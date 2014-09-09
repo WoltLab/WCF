@@ -117,7 +117,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		this._fileListSelector.children('li').each(function(index, attachment) {
 			var $attachment = $(attachment);
 			if ($attachment.children('img.attachmentTinyThumbnail').length) {
-				data.imageAttachmentIDs.push($attachment.data('objectID'));
+				data.imageAttachmentIDs.push(parseInt($attachment.data('objectID')));
 			}
 		});
 	},
