@@ -2,8 +2,8 @@
 namespace wcf\system\search\mysql;
 use wcf\data\object\type\ObjectType;
 use wcf\system\search\AbstractSearchIndexManager;
-use wcf\system\WCF;
 use wcf\system\search\SearchIndexManager;
+use wcf\system\WCF;
 
 /**
  * Search engine using MySQL's FULLTEXT index.

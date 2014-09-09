@@ -3,9 +3,9 @@ namespace wcf\system\worker;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
-use wcf\system\search\SearchIndexManager;
 
 /**
  * Abstract implementation of rebuild data worker.
