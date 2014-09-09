@@ -40,6 +40,13 @@ interface ISearchEngine {
 	public function getInnerJoin($objectTypeName, $q, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, $orderBy = 'time DESC', $limit = 1000);
 	
 	/**
+	 * Removes engine-specific special characters from a string.
+	 * 
+	 * @param	string		$string
+	 */
+	public function removeSpecialCharacters($string);
+	
+	/**
 	 * Searches for the given string and returns the data of the found messages.
 	 *
 	 * @param	string								$q

@@ -26,6 +26,11 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 	protected $ftMinWordLen = null;
 	
 	/**
+	 * @see	\wcf\system\search\AbstractSearchEngine::$specialCharacters
+	 */
+	protected $specialCharacters = array('(', ')', '@', '+', '-', '"', '<', '>', '~', '*');
+	
+	/**
 	 * @see	\wcf\system\search\ISearchEngine::search()
 	 */
 	public function search($q, array $objectTypes, $subjectOnly = false, PreparedStatementConditionBuilder $searchIndexCondition = null, array $additionalConditions = array(), $orderBy = 'time DESC', $limit = 1000) {

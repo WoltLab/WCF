@@ -115,4 +115,11 @@ class SearchEngine extends SingletonFactory implements ISearchEngine {
 	public function getConditionBuilderClassName() {
 		return $this->getSearchEngine()->getConditionBuilderClassName();
 	}
+	
+	/**
+	 * @see	\wcf\system\search\ISearchEngine::removeSpecialCharacters()
+	 */
+	public function removeSpecialCharacters($string) {
+		return $this->getSearchEngine()->removeSpecialCharacters($string);
+	}
 }

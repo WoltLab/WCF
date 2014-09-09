@@ -22,6 +22,12 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
 	protected $conditionBuilderClassName = 'wcf\system\database\util\PreparedStatementConditionBuilder';
 	
 	/**
+	 * list of engine-specific special characters
+	 * @var	array<string>
+	 */
+	protected $specialCharacters = array();
+	
+	/**
 	 * @see	\wcf\system\search\ISearchEngine::getConditionBuilderClassName()
 	 */
 	public function getConditionBuilderClassName() {
@@ -123,4 +129,15 @@ abstract class AbstractSearchEngine extends SingletonFactory implements ISearchE
 	 * @return	integer
 	 */
 	abstract protected function getFulltextMinimumWordLength();
+	
+	/**
+	 * @see	\wcf\system\search\ISearchEngine::removeSpecialCharacters()
+	 */
+	public function removeSpecialCharacters($string) {
+		if (!empty($this->specialCharacters)) {
+			return str_replace($this->specialCharacters, '', $string);
+		}
+		
+		return $string;
+	}
 }
