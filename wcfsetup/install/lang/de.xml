@@ -1677,6 +1677,8 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 	
 	<category name="wcf.bbcode">
 		<item name="wcf.bbcode.button.code"><![CDATA[Code]]></item>
+		<item name="wcf.bbcode.button.fontFamily"><![CDATA[Schriftart]]></item>
+		<item name="wcf.bbcode.button.fontSize"><![CDATA[Schriftgröße]]></item>
 		<item name="wcf.bbcode.button.inlineCode"><![CDATA[Inline-Code]]></item>
 		<item name="wcf.bbcode.button.quote"><![CDATA[Zitat]]></item>
 		<item name="wcf.bbcode.button.showAll"><![CDATA[Alles anzeigen]]></item>
@@ -1701,6 +1703,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.quote.edit"><![CDATA[Zitat bearbeiten]]></item>
 		<item name="wcf.bbcode.quote.edit.author"><![CDATA[Autor]]></item>
 		<item name="wcf.bbcode.quote.edit.link"><![CDATA[Quelle]]></item>
+		<item name="wcf.bbcode.quote.insert"><![CDATA[Zitat einfügen]]></item>
 		<item name="wcf.bbcode.quote.title"><![CDATA[{@$quoteAuthor} schrieb:]]></item>
 		<item name="wcf.bbcode.quote.title.clickToSet"><![CDATA[(Klicken um eine Quelle anzugeben)]]></item>
 		<item name="wcf.bbcode.quote.title.javascript"><![CDATA[{literal}{$quoteAuthor} schrieb:{/literal}]]></item>

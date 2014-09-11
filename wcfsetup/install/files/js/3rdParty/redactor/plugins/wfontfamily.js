@@ -14,7 +14,7 @@ RedactorPlugins.wfontfamily = {
 	init: function () {
 		var $dropdown = this._createFontFamilyDropdown();
 		
-		this.buttonReplace('fontfamily', 'wfontfamily', this.opts.curLang.fontfamily, $.proxy(function(btnName, $button, btnObject, e) {
+		this.buttonReplace('fontfamily', 'wfontfamily', WCF.Language.get('wcf.bbcode.button.fontFamily'), $.proxy(function(btnName, $button, btnObject, e) {
 			this.dropdownShow(e, btnName);
 		}, this));
 		this.buttonGet('wfontfamily').addClass('re-fontfamily').data('dropdown', $dropdown);
