@@ -364,7 +364,7 @@ WCF.Message.Preview = Class.extend({
 	_getParameters: function(message) {
 		// collect message form options
 		var $options = { };
-		$('#settings').find('input[type=checkbox]').each(function(index, checkbox) {
+		$('#settings_' + this._messageFieldID).find('input[type=checkbox]').each(function(index, checkbox) {
 			var $checkbox = $(checkbox);
 			if ($checkbox.is(':checked')) {
 				$options[$checkbox.prop('name')] = $checkbox.prop('value');

@@ -1031,6 +1031,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.retro"><![CDATA[Retro]]></item>
 		<item name="wcf.acp.option.search_engine"><![CDATA[Suche]]></item>
 		<item name="wcf.acp.option.search_engine.mysql"><![CDATA[MySQL FULLTEXT (Standard)]]></item>
+		<item name="wcf.acp.option.enable_pluginstore_widget"><![CDATA[Empfohlene Produkte aus dem WoltLab® Plugin-Store auf der Startseite der Administrationsoberfläche anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
