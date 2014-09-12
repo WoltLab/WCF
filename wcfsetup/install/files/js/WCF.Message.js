@@ -893,6 +893,7 @@ WCF.Message.QuickReply = Class.extend({
 			
 			this._messageField.redactor('selectionEndOfEditor');
 			this._messageField.redactor('insertDynamic', $html, data.returnValues.template);
+			this._messageField.redactor('fixQuoteContent');
 		}
 		else {
 			this._messageField.val(data.returnValues.template);
