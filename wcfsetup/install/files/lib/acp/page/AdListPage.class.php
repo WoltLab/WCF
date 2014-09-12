@@ -26,7 +26,7 @@ class AdListPage extends MultipleLinkPage {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_AD');
+	public $neededModules = array('MODULE_WCF_AD');
 	
 	/**
 	 * @see	\wcf\page\MultipleLinkPage::$objectListClassName

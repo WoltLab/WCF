@@ -33,7 +33,7 @@ class AdAddForm extends AbstractForm {
 	/**
 	 * @see	wcf\page\AbstractPage::$neededModules
 	 */
-	public $neededModules = array('MODULE_AD');
+	public $neededModules = array('MODULE_WCF_AD');
 	
 	/**
 	 * html code of the ad

@@ -357,7 +357,7 @@
 				<defaultvalue>1</defaultvalue>
 			</option>
 			
-			<option name="module_ad">
+			<option name="module_wcf_ad">
 				<categoryname>module.display</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>

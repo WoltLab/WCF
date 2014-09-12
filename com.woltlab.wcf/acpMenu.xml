@@ -436,7 +436,8 @@
 		
 		<acpmenuitem name="wcf.acp.menu.link.ad">
 			<parent>wcf.acp.menu.link.display</parent>
-			<options>module_ad</options>
+			<!-- do NOT use 'module_ad', the ACP checkbox is incorrectly recognized by adblockers -->
+			<options>module_wcf_ad</options>
 			<showorder>6</showorder>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.ad.list">
