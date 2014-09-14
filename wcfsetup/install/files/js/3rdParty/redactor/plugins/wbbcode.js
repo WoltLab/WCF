@@ -1031,7 +1031,7 @@ RedactorPlugins.wbbcode = {
 					$('#redactorQuoteAuthor').val(quote.data('author'));
 					
 					// do not use prop() here, an empty cite attribute would yield the page URL instead
-					$('#redactorQuoteLink').val(quote.attr('cite'));
+					$('#redactorQuoteLink').val(WCF.String.unescapeHTML(quote.attr('cite')));
 				}
 				
 				$('#redactorEditQuote').click($.proxy(function() {
@@ -1084,25 +1084,6 @@ RedactorPlugins.wbbcode = {
 		$bbcode += '[/quote]';
 		
 		if (this.inWysiwygMode()) {
-			/*var $html = '<blockquote class="quoteBox" cite="' + link + '" data-author="' + author + '" id="redactorInsertedQuote">'
-					+ '<div class="container containerPadding">'
-						+ '<header>'
-							+ '<h3>'
-								+ this._buildQuoteHeader(author, link)
-							+ '</h3>'
-							+ '<a class="redactorQuoteEdit"></a>'
-						+ '</header>'
-					+ '</div>'
-				+ '</blockquote>';
-			
-			this.insertHtml($html);
-			
-			var $quote = $('#redactorInsertedQuote');
-			var $container = $('<div>' + (html ? html : this.opts.invisibleSpace) + '</div>').insertAfter($quote.find('> div > header'));
-			$quote.removeAttr('id');
-			
-			this.selectionStart($container[0]);*/
-			
 			$bbcode = this.convertToHtml($bbcode);
 			this.insertHtml($bbcode);
 			

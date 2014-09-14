@@ -382,11 +382,13 @@ RedactorPlugins.wmonkeypatch = {
 		}
 		
 		// fix position
-		var $dimensions = this.$modal.getDimensions('outer');
-		this.$modal.css({
-			marginLeft: -1 * Math.round($dimensions.width / 2) + 'px',
-			marginTop: -1 * Math.round($dimensions.height / 2) + 'px'
-		});
+		if (!this.isMobile()) {
+			var $dimensions = this.$modal.getDimensions('outer');
+			this.$modal.css({
+				marginLeft: -1 * Math.round($dimensions.width / 2) + 'px',
+				marginTop: -1 * Math.round($dimensions.height / 2) + 'px'
+			});
+		}
 	},
 	
 	dropdownShowCallback: function(data) {
