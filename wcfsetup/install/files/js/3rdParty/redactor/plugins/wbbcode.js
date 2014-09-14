@@ -230,6 +230,9 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/<blockquote class="quoteBox" cite="([^"]+)?" data-author="([^"]+)?">\n?<div[^>]+>\n?<header>[\s\S]*?<\/header>/gi, function(match, link, author, innerContent) {
 			var $quote;
 			
+			author = WCF.String.unescapeHTML(author);
+			link = WCF.String.unescapeHTML(link);
+			
 			if (link) {
 				$quote = "[quote='" + author + "','" + link + "']";
 			}
@@ -242,7 +245,7 @@ RedactorPlugins.wbbcode = {
 			
 			return $quote;
 		});
-		html = html.replace(/(?:\n*)<\/blockquote>/gi, '[/quote]\n');
+		html = html.replace(/(?:\n*)<\/blockquote>\n?/gi, '[/quote]\n');
 		
 		// [email]
 		html = html.replace(/<a [^>]*?href=(["'])mailto:(.+?)\1.*?>([\s\S]+?)<\/a>/gi, '[email=$2]$3[/email]');
@@ -609,12 +612,29 @@ RedactorPlugins.wbbcode = {
 		data = data.replace(/(\r|\r\n)/g, "\n");
 		
 		// extract [quote] bbcodes to prevent line break handling below
-		var $cachedQuotes = { };
-		data = data.replace(/\[quote.*?\][\S\s]*?\[\/quote\]/gi, function(match) {
-			var $key = match.hashCode();
-			$cachedQuotes[$key] = match.replace(/\$/g, '$$$$');
-			return '@@' + $key + '@@';
-		});
+		var $cachedQuotes = [ ];
+		var $knownQuotes = [ ];
+		for (var $i = 0; $i < 5; $i++) {
+			var $foundQuotes = false;
+			
+			data = data.replace(/\[quote.*?\]((?!\[quote)[\s\S])*?\[\/quote\]/gi, function(match) {
+				var $key = match.hashCode();
+				$cachedQuotes.push({
+					hashCode: $key,
+					content: match.replace(/\$/g, '$$$$')
+				});
+				$knownQuotes.push($key.toString());
+				
+				$foundQuotes = true;
+				
+				return '@@' + $key + '@@';
+			});
+			
+			// we found no more quotes
+			if (!$foundQuotes) {
+				break;
+			}
+		}
 		
 		// add newlines before and after [quote] tags
 		data = data.replace(/(\[quote.*?\])/gi, '$1\n');
@@ -660,7 +680,7 @@ RedactorPlugins.wbbcode = {
 		data = data.replace(/\[code\][\S\s]*?\[\/code\]/, '<pre>$&</pre>');
 		
 		// insert quotes
-		if ($.getLength($cachedQuotes)) {
+		if ($cachedQuotes.length) {
 			// [quote]
 			var $unquoteString = function(quotedString) {
 				return quotedString.replace(/^['"]/, '').replace(/['"]$/, '');
@@ -710,6 +730,13 @@ RedactorPlugins.wbbcode = {
 							if ($line.length === 0) {
 								$line = self.opts.invisibleSpace;
 							}
+							else if ($line.match(/^@@([0-9\-]+)@@$/)) {
+								if (WCF.inArray(RegExp.$1, $knownQuotes)) {
+									// prevent quote being nested inside a <div> block
+									$tmp += $line;
+									continue;
+								}
+							}
 							
 							$tmp += '<div>' + $line + '</div>';
 						}
@@ -725,9 +752,11 @@ RedactorPlugins.wbbcode = {
 				}, this));
 			};
 			
-			for (var $key in $cachedQuotes) {
-				var $regex = new RegExp('@@' + $key + '@@', 'g');
-				data = data.replace($regex, $transformQuote($cachedQuotes[$key]));
+			// reinsert quotes in reverse order, adding the most outer quotes first
+			for (var $i = $cachedQuotes.length - 1; $i >= 0; $i--) {
+				var $cachedQuote = $cachedQuotes[$i];
+				var $regex = new RegExp('@@' + $cachedQuote.hashCode + '@@', 'g');
+				data = data.replace($regex, $transformQuote($cachedQuote.content));
 			}
 		}
 		
@@ -873,25 +902,31 @@ RedactorPlugins.wbbcode = {
 		switch (data.event.which) {
 			// arrow down
 			case $.ui.keyCode.DOWN:
-				if ($parent) {
-					if ($quote.length) {
-						var $container = $current.closest('div', $quote[0]);
-						if (!$container.next().length) {
-							this.insertingAfterLastElement($quote);
-							
-							data.cancel = true;
-						}
-					}
-					else if ($parent.next('blockquote.quoteBox').length) {
+				if ($current.next('blockquote.quoteBox').length) {
+					this.selectionStart($current.next().find('> div > div:first'));
+					
+					data.cancel = true;
+				}
+				else if ($parent) {
+					if ($parent.next('blockquote.quoteBox').length) {
 						this.selectionStart($parent.next().find('> div > div:first'));
 						
 						data.cancel = true;
 					}
-				}
-				else if ($current.next('blockquote.quoteBox').length) {
-					this.selectionStart($current.next().find('> div > div:first'));
-					
-					data.cancel = true;
+					else if ($quote.length) {
+						var $container = $current.closest('div', $quote[0]);
+						if (!$container.next().length) {
+							// check if there is an element after the quote
+							if ($quote.next().length) {
+								this.setSelectionStart($quote.next());
+							}
+							else {
+								this.insertingAfterLastElement($quote);
+							}
+							
+							data.cancel = true;
+						}
+					} 
 				}
 			break;
 			
@@ -902,8 +937,14 @@ RedactorPlugins.wbbcode = {
 				}
 				
 				var $container = $current.closest('div', $quote[0]);
-				if ($container.prev('div').length) {
+				var $prev = $container.prev();
+				if ($prev[0].tagName === 'DIV') {
 					return;
+				}
+				else if ($prev[0].tagName === 'BLOCKQUOTE') {
+					// set focus to quote text rather than the element itself
+					return;
+					//this.selectionEnd($prev.find('> div > div:last'));
 				}
 				
 				var $previousElement = $quote.prev();
