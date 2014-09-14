@@ -538,4 +538,14 @@ RedactorPlugins.wmonkeypatch = {
 	cleanGetTabs: function() {
 		return '';
 	},
+	
+	/**
+	 * Overwrites $.Redactor.cleanRemoveEmptyTags() to prevent empty tags being discarded, they
+	 * are required to properly transform HTML -> BBCode.
+	 * 
+	 * @see	$.Redactor.cleanRemoveEmptyTags()
+	 */
+	cleanRemoveEmptyTags: function(html) {
+		return html;
+	}
 };

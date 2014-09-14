@@ -302,8 +302,7 @@ RedactorPlugins.wutil = {
 	 */
 	wSync: function() {
 		this.sync(undefined, true);
-		this.$source.val(this.cleanHtml(this.$source.val()));
-		this._convertFromHtml();
+		this.$source.val(this.convertFromHtml(this.cleanHtml(this.$source.val())));
 	},
 	
 	/**
