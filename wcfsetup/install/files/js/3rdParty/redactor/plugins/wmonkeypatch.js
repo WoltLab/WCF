@@ -46,6 +46,23 @@ RedactorPlugins.wmonkeypatch = {
 			return false;
 		};
 		
+		// keyup w/ event aborting through callback
+		var $mpBuildEventKeyup = this.buildEventKeyup;
+		this.buildEventKeyup = function(e) {
+			var $eventData = {
+				cancel: false,
+				event: e
+			};
+			
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'keyup_' + $identifier, $eventData);
+			
+			if ($eventData.cancel !== true) {
+				return $mpBuildEventKeyup.call(self, e);
+			}
+			
+			return false;
+		};
+		
 		var $mpToggleCode = this.toggleCode;
 		this.toggleCode = function(direct) {
 			var $height = self.normalize(self.$editor.css('height'));

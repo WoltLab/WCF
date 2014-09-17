@@ -889,11 +889,10 @@ WCF.Message.QuickReply = Class.extend({
 		
 		if ($.browser.redactor) {
 			var $html = WCF.String.unescapeHTML(data.returnValues.template);
-			$html = this._messageField.redactor('transformQuote', $html);
+			$html = this._messageField.redactor('convertToHtml', $html);
 			
 			this._messageField.redactor('selectionEndOfEditor');
 			this._messageField.redactor('insertDynamic', $html, data.returnValues.template);
-			this._messageField.redactor('fixQuoteContent');
 		}
 		else {
 			this._messageField.val(data.returnValues.template);

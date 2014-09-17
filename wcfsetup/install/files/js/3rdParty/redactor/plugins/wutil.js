@@ -331,6 +331,114 @@ RedactorPlugins.wutil = {
 	},
 	
 	/**
+	 * Returns true if current selection is just a caret or false if selection spans content.
+	 * 
+	 * @param	Range		range
+	 * @return	boolean
+	 */
+	isCaret: function(range) {
+		var $range = (range) ? range : this.getRange();
+		
+		return $range.collapsed;
+	},
+	
+	/**
+	 * Returns true if current selection is just a caret and it is the last possible offset
+	 * within the given element.
+	 * 
+	 * @param	Element		element
+	 * @return	boolean
+	 */
+	isEndOfElement: function(element) {
+		var $range = this.getRange();
+		
+		// range is not a plain caret
+		if (!this.isCaret($range)) {
+			console.debug("case#1");
+			return false;
+		}
+		
+		if ($range.endContainer.nodeType === Element.TEXT_NODE) {
+			// caret is not at the end
+			if ($range.endOffset < $range.endContainer.length) {
+				console.debug("case#2");
+				return false;
+			}
+		}
+		
+		// range is not within the provided element
+		if (!this.isNodeWithin($range.endContainer, element)) {
+			console.debug("case#3");
+			return false;
+		}
+		
+		var $current = $range.endContainer;
+		while ($current !== element) {
+			// end of range is not the last element
+			if ($current.nextSibling) {
+				console.debug("case#4");
+				return false;
+			}
+			
+			$current = $current.parentNode;
+		}
+		
+		return true;
+	},
+	
+	/**
+	 * Returns true if the provided node is a direct or indirect child of the target element. This
+	 * method works similar to jQuery's $.contains() but works recursively.
+	 * 
+	 * @param	Element		node
+	 * @param	Element		element
+	 * @return	boolean
+	 */
+	isNodeWithin: function(node, element) {
+		var $node = $(node);
+		while ($node[0] !== this.$editor[0]) {
+			if ($node[0] === element) {
+				return true;
+			}
+			
+			$node = $node.parent();
+		}
+		
+		return false;
+	},
+	
+	/**
+	 * Returns true if the given node equals the provided tagName or contains it.
+	 * 
+	 * @param	Element		node
+	 * @param	string		tagName
+	 * @return	boolean
+	 */
+	containsTag: function(node, tagName) {
+		switch (node.nodeType) {
+			case Element.ELEMENT_NODE:
+				if (node.tagName === tagName) {
+					return true;
+				}
+				
+			// fall through
+			case Element.DOCUMENT_FRAGMENT_NODE:
+				for (var $i = 0; $i < node.childNodes.length; $i++) {
+					if (this.containsTag(node.childNodes[$i], tagName)) {
+						return true;
+					}
+				}
+				
+				return false;
+			break;
+			
+			default:
+				return false;
+			break;
+		}
+	},
+	
+	/**
 	 * Replaces the current content with the provided value.
 	 * 
 	 * @param	string		value

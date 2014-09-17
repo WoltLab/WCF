@@ -68,6 +68,7 @@ RedactorPlugins.wbbcode = {
 		
 		// handle keydown
 		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + $identifier, $.proxy(this._wKeydownCallback, this));
+		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keyup_' + $identifier, $.proxy(this._wKeyupCallback, this));
 	},
 	
 	/**
@@ -227,11 +228,11 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/&nbsp;/gi, " ");
 		
 		// [quote]
-		html = html.replace(/<blockquote class="quoteBox" cite="([^"]+)?" data-author="([^"]+)?">\n?<div[^>]+>\n?<header>[\s\S]*?<\/header>/gi, function(match, link, author, innerContent) {
+		html = html.replace(/<blockquote class="quoteBox" cite="([^"]+)?" data-author="([^"]+)?">\n?<div[^>]+>\n?<header(?:[^>]*?)>[\s\S]*?<\/header>/gi, function(match, link, author, innerContent) {
 			var $quote;
 			
-			author = WCF.String.unescapeHTML(author);
-			link = WCF.String.unescapeHTML(link);
+			if (author) author = WCF.String.unescapeHTML(author);
+			if (link) link = WCF.String.unescapeHTML(link);
 			
 			if (link) {
 				$quote = "[quote='" + author + "','" + link + "']";
@@ -419,7 +420,7 @@ RedactorPlugins.wbbcode = {
 		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'convertFromHtml', { html: html });
 		
 		// Remove remaining tags.
-		html = html.replace(/<[^>]+>/g, '');
+		html = html.replace(/<[^(<|>)]+>/g, '');
 		
 		// insert redactor's selection markers
 		if ($.getLength($cachedMarkers)) {
@@ -660,6 +661,13 @@ RedactorPlugins.wbbcode = {
 				if (!$line) {
 					$line = '<br>';
 				}
+				else if ($line.match(/^@@([0-9\-]+)@@$/)) {
+					if (WCF.inArray(RegExp.$1, $knownQuotes)) {
+						// prevent quote being nested inside a <p> block
+						data += $line;
+						continue;
+					}
+				}
 				
 				data += '<p>' + $line + '</p>';
 			}
@@ -713,7 +721,7 @@ RedactorPlugins.wbbcode = {
 					
 					var $quote = '<blockquote class="quoteBox" cite="' + $link + '" data-author="' + $author + '">'
 						+ '<div class="container containerPadding">'
-							+ '<header>'
+							+ '<header contenteditable="false">'
 								+ '<h3>'
 									+ self._buildQuoteHeader($author, $link)
 								+ '</h3>'
@@ -885,13 +893,22 @@ RedactorPlugins.wbbcode = {
 	},
 	
 	/**
-	 * Handles up/down key for quote boxes.
+	 * Handles up/down/delete/backspace key for quote boxes.
 	 * 
 	 * @param	object		data
 	 */
 	_wKeydownCallback: function(data) {
-		if (data.event.which !== $.ui.keyCode.DOWN && data.event.which !== $.ui.keyCode.UP) {
-			return;
+		switch (data.event.which) {
+			case $.ui.keyCode.BACKSPACE:
+			case $.ui.keyCode.DELETE:
+			case $.ui.keyCode.DOWN:
+			case $.ui.keyCode.UP:
+				// handle keys
+			break;
+			
+			default:
+				return;
+			break;
 		}
 		
 		var $current = $(this.getCurrent());
@@ -900,6 +917,65 @@ RedactorPlugins.wbbcode = {
 		var $quote = ($parent) ? $parent.closest('blockquote.quoteBox', this.$editor.get()[0]) : { length: 0 };
 		
 		switch (data.event.which) {
+			// backspace key
+			case $.ui.keyCode.BACKSPACE:
+				if (this.isCaret()) {
+					if ($quote.length) {
+						// check if quote is empty
+						var $isEmpty = true;
+						$quote.find('div > div').each(function() {
+							if ($(this).text().replace(/\u200B/, '').length) {
+								$isEmpty = false;
+								return false;
+							}
+						});
+						
+						if ($isEmpty) {
+							// expand selection and prevent delete
+							var $selection = window.getSelection();
+							if ($selection.rangeCount) $selection.removeAllRanges();
+							
+							var $quoteRange = document.createRange();
+							$quoteRange.selectNode($quote[0]);
+							$selection.addRange($quoteRange);
+							
+							data.cancel = true;
+						}
+					}
+				}
+				else {
+					// check if selection contains a quote, turn on buffer if true
+					var $contents = this.getRange().cloneContents();
+					if (this.containsTag($contents, 'BLOCKQUOTE')) {
+						this.bufferSet();
+					}
+				}
+			break;
+			
+			// delete key
+			case $.ui.keyCode.DELETE:
+				if (this.isCaret()) {
+					if (this.isEndOfElement($current[0]) && $current.next('blockquote').length) {
+						// expand selection and prevent delete
+						var $selection = window.getSelection();
+						if ($selection.rangeCount) $selection.removeAllRanges();
+						
+						var $quoteRange = document.createRange();
+						$quoteRange.selectNode($current.next()[0]);
+						$selection.addRange($quoteRange);
+						
+						data.cancel = true;
+					}
+				}
+				else {
+					// check if selection contains a quote, turn on buffer if true
+					var $contents = this.getRange().cloneContents();
+					if (this.containsTag($contents, 'BLOCKQUOTE')) {
+						this.bufferSet();
+					}
+				}
+			break;
+			
 			// arrow down
 			case $.ui.keyCode.DOWN:
 				if ($current.next('blockquote.quoteBox').length) {
@@ -971,6 +1047,25 @@ RedactorPlugins.wbbcode = {
 				data.cancel = true;
 			break;
 		}
+	},
+	
+	/**
+	 * Handles quote deletion.
+	 * 
+	 * @param	object		data
+	 */
+	_wKeyupCallback: function(data) {
+		if (data.event.which !== $.ui.keyCode.BACKSPACE && data.event.which !== $.ui.keyCode.DELETE) {
+			return;
+		}
+		
+		// check for empty <blockquote>
+		this.$editor.find('blockquote').each(function(index, blockquote) {
+			var $blockquote = $(blockquote);
+			if (!$blockquote.find('> div > header').length) {
+				$blockquote.remove();
+			}
+		});
 	},
 	
 	/**
