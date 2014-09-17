@@ -30,11 +30,11 @@ class MediaBBCode extends AbstractBBCode {
 		if ($parser->getOutputType() == 'text/simplified-html') {
 			foreach (BBCodeMediaProvider::getCache() as $provider) {
 				if ($provider->matches($content)) {
-					return StringUtil::getAnchorTag(StringUtil::decodeHTML($content));
+					return StringUtil::getAnchorTag($content);
 				}
 			}
 		}
 		
-		return $content;
+		return StringUtil::encodeHTML($content);
 	}
 }

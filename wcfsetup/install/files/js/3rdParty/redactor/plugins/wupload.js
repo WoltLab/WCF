@@ -49,9 +49,21 @@ RedactorPlugins.wupload = {
 		}
 		
 		// IE and WebKit set 'Files', Firefox sets 'application/x-moz-file' for files being dragged
-		if (event.dataTransfer.types[0] !== 'Files' && event.dataTransfer.types[0] !== 'application/x-moz-file') {
-			this._isFile = false;
-			
+		// and Safari just provides 'Files' along with a huge list of other stuff
+		this._isFile = false;
+		if (event.dataTransfer.types[0] === 'application/x-moz-file') {
+			this._isFile = true;
+		}
+		else {
+			for (var $i = 0; $i < event.dataTransfer.types.length; $i++) {
+				if (event.dataTransfer.types[$i] === 'Files') {
+					this._isFile = true;
+					break;
+				}
+			}
+		}
+		
+		if (!this._isFile) {
 			return;
 		}
 		
@@ -152,14 +164,19 @@ RedactorPlugins.wupload = {
 		
 		event = event.originalEvent || event;
 		
-		if (event.dataTransfer && event.dataTransfer.files.length == 1) {
+		if (event.dataTransfer && event.dataTransfer.files.length) {
 			event.preventDefault();
 			
 			// reset overlay
 			var $containerID = this.$source.wcfIdentify();
 			this._revertDropArea(undefined, $containerID);
 			
-			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'upload_' + $containerID, { file: event.dataTransfer.files[0] });
+			for (var $i = 0; $i < event.dataTransfer.files.length; $i++) {
+				var $file = event.dataTransfer.files[$i];
+				if ($file.type) {
+					WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'upload_' + $containerID, { file: $file });
+				}
+			}
 		}
 	},
 	

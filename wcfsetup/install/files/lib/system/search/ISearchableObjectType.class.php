@@ -116,15 +116,15 @@ interface ISearchableObjectType {
 	public function getFormTemplateName();
 	
 	/**
-	 * Provides the option to replace the default search index SQL query by an own version. 
+	 * Replaces the outer SQL query with a custom version. Querying the search index requires the
+	 * placeholder {WCF_SEARCH_INNER_JOIN} within an empty INNER JOIN() statement.
 	 * 
-	 * @param	\wcf\system\database\util\PreparedStatementConditionBuilder	$fulltextCondition
+	 * @param	string								$q
 	 * @param	\wcf\system\database\util\PreparedStatementConditionBuilder	$searchIndexConditions
 	 * @param	\wcf\system\database\util\PreparedStatementConditionBuilder	$additionalConditions
-	 * @param	string								$orderBy
 	 * @return	string
 	 */
-	public function getSpecialSQLQuery(PreparedStatementConditionBuilder &$fulltextCondition = null, PreparedStatementConditionBuilder &$searchIndexConditions = null, PreparedStatementConditionBuilder &$additionalConditions = null, $orderBy = 'time DESC');
+	public function getOuterSQLQuery($q, PreparedStatementConditionBuilder &$searchIndexConditions = null, PreparedStatementConditionBuilder &$additionalConditions = null);
 	
 	/**
 	 * Returns the name of the active main menu item.

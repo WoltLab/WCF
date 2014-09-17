@@ -26,10 +26,13 @@ class AttachmentMessageEmbeddedObjectHandler extends AbstractMessageEmbeddedObje
 				if ($parsedAttachmentID) $attachmentIDs[] = $parsedAttachmentID;
 			}
 			
-			$attachmentList = new AttachmentList();
-			$attachmentList->getConditionBuilder()->add("attachment.attachmentID IN (?)", array($attachmentIDs));
-			$attachmentList->readObjectIDs();
-			return $attachmentList->getObjectIDs();
+			if (!empty($attachmentIDs)) {
+				$attachmentList = new AttachmentList();
+				$attachmentList->getConditionBuilder()->add("attachment.attachmentID IN (?)", array($attachmentIDs));
+				$attachmentList->readObjectIDs();
+				
+				return $attachmentList->getObjectIDs();
+			}
 		}
 		
 		return false;

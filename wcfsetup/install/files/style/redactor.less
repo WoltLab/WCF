@@ -55,19 +55,22 @@
 		padding: 0;
 	}
 	
-	& + .innerError {
+	& + .innerError,
+	> .innerError {
 		border-radius: 0;
 		box-shadow: none;
 		display: block;
-		margin-top: -1px;
+		margin: -1px;
 	}
 }
 
 .redactor_editor {
 	font-size: 1rem;
+	max-height: 500px;
 	padding: 10px;
 	position: relative;
 	outline: none;
+	overflow: auto;
 	
 	& + textarea {
 		border-width: 0;

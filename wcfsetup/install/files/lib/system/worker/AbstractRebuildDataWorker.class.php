@@ -3,6 +3,7 @@ namespace wcf\system\worker;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
 
@@ -71,6 +72,8 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	public function execute() {
 		$this->objectList->readObjects();
 		
+		SearchIndexManager::getInstance()->beginBulkOperation();
+		
 		EventHandler::getInstance()->fireAction($this, 'execute');
 	}
 	
@@ -96,5 +99,12 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 		$this->objectList = new $this->objectListClassName();
 		$this->objectList->sqlLimit = $this->limit;
 		$this->objectList->sqlOffset = $this->limit * $this->loopCount;
+	}
+	
+	/**
+	 * @see	\wcf\system\worker\IWorker::finalize()
+	 */
+	public function finalize() {
+		SearchIndexManager::getInstance()->commitBulkOperation();
 	}
 }

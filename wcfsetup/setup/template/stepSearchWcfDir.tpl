@@ -97,6 +97,7 @@
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.global.wcfDir.dir{/lang}</legend>
+			<small>{lang}wcf.global.wcfDir.dir.info{/lang}</small>
 			
 			<dl>
 				<dt><label for="wcfDir">{lang}wcf.global.wcfDir.dir{/lang}</label></dt>

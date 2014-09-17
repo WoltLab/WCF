@@ -364,7 +364,7 @@ WCF.Message.Preview = Class.extend({
 	_getParameters: function(message) {
 		// collect message form options
 		var $options = { };
-		$('#settings').find('input[type=checkbox]').each(function(index, checkbox) {
+		$('#settings_' + this._messageFieldID).find('input[type=checkbox]').each(function(index, checkbox) {
 			var $checkbox = $(checkbox);
 			if ($checkbox.is(':checked')) {
 				$options[$checkbox.prop('name')] = $checkbox.prop('value');
@@ -889,7 +889,7 @@ WCF.Message.QuickReply = Class.extend({
 		
 		if ($.browser.redactor) {
 			var $html = WCF.String.unescapeHTML(data.returnValues.template);
-			$html = this._messageField.redactor('transformQuote', $html);
+			$html = this._messageField.redactor('convertToHtml', $html);
 			
 			this._messageField.redactor('selectionEndOfEditor');
 			this._messageField.redactor('insertDynamic', $html, data.returnValues.template);
@@ -2710,10 +2710,10 @@ WCF.Message.Quote.Manager = Class.extend({
 		// insert into editor
 		if ($.browser.redactor) {
 			if (this._editorElementAlternative === null) {
-				this._editorElement.redactor('insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);// $quote);
+				this._editorElement.redactor('insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);
 			}
 			else {
-				this._editorElementAlternative.redactor('insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);// $quote);
+				this._editorElementAlternative.redactor('insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);
 			}
 		}
 		else {

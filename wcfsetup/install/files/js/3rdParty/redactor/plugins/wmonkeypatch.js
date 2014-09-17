@@ -46,6 +46,23 @@ RedactorPlugins.wmonkeypatch = {
 			return false;
 		};
 		
+		// keyup w/ event aborting through callback
+		var $mpBuildEventKeyup = this.buildEventKeyup;
+		this.buildEventKeyup = function(e) {
+			var $eventData = {
+				cancel: false,
+				event: e
+			};
+			
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'keyup_' + $identifier, $eventData);
+			
+			if ($eventData.cancel !== true) {
+				return $mpBuildEventKeyup.call(self, e);
+			}
+			
+			return false;
+		};
+		
 		var $mpToggleCode = this.toggleCode;
 		this.toggleCode = function(direct) {
 			var $height = self.normalize(self.$editor.css('height'));
@@ -382,11 +399,13 @@ RedactorPlugins.wmonkeypatch = {
 		}
 		
 		// fix position
-		var $dimensions = this.$modal.getDimensions('outer');
-		this.$modal.css({
-			marginLeft: -1 * Math.round($dimensions.width / 2) + 'px',
-			marginTop: -1 * Math.round($dimensions.height / 2) + 'px'
-		});
+		if (!this.isMobile()) {
+			var $dimensions = this.$modal.getDimensions('outer');
+			this.$modal.css({
+				marginLeft: -1 * Math.round($dimensions.width / 2) + 'px',
+				marginTop: -1 * Math.round($dimensions.height / 2) + 'px'
+			});
+		}
 	},
 	
 	dropdownShowCallback: function(data) {
@@ -538,4 +557,14 @@ RedactorPlugins.wmonkeypatch = {
 	cleanGetTabs: function() {
 		return '';
 	},
+	
+	/**
+	 * Overwrites $.Redactor.cleanRemoveEmptyTags() to prevent empty tags being discarded, they
+	 * are required to properly transform HTML -> BBCode.
+	 * 
+	 * @see	$.Redactor.cleanRemoveEmptyTags()
+	 */
+	cleanRemoveEmptyTags: function(html) {
+		return html;
+	}
 };

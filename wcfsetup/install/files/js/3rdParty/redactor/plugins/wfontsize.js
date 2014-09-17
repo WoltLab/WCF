@@ -14,7 +14,7 @@ RedactorPlugins.wfontsize = {
 	init: function () {
 		var $dropdown = this._createFontSizeDropdown();
 		
-		this.buttonReplace('fontsize', 'wfontsize', this.opts.curLang.fontsize, $.proxy(function(btnName, $button, btnObject, e) {
+		this.buttonReplace('fontsize', 'wfontsize', WCF.Language.get('wcf.bbcode.button.fontSize'), $.proxy(function(btnName, $button, btnObject, e) {
 			this.dropdownShow(e, btnName);
 		}, this));
 		this.buttonGet('wfontsize').addClass('re-fontsize').data('dropdown', $dropdown);

@@ -133,7 +133,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.cache.list.size"><![CDATA[Size]]></item>
 		<item name="wcf.acp.cache.source.type.DiskCacheSource"><![CDATA[Filesystem]]></item>
 		<item name="wcf.acp.cache.source.type.MemcachedCacheSource"><![CDATA[Memcached]]></item>
-		<item name="wcf.acp.cache.source.type.NoCacheSource"><![CDATA[None (caching disabled)]]></item>
 		<item name="wcf.acp.cache.type.data"><![CDATA[Data]]></item>
 		<item name="wcf.acp.cache.type.language"><![CDATA[Languages]]></item>
 		<item name="wcf.acp.cache.type.style"><![CDATA[Styles]]></item>
@@ -367,7 +366,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximimum File Size]]></item>
 		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Can change email address]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserTitle"><![CDATA[Can edit own user title]]></item>
-		<item name="wcf.acp.group.option.user.profile.canMail"><![CDATA[Can see email addresses]]></item>
+		<item name="wcf.acp.group.option.user.profile.canMail"><![CDATA[Can send emails to other users]]></item>
 		<item name="wcf.acp.group.option.user.profile.canQuit"><![CDATA[Can quit own user account]]></item>
 		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Can rename own user]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Can see members list]]></item>
@@ -691,7 +690,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.cache_source_type.description"><![CDATA[Caching methods different from “Filesystem” require special extensions or services running on your machine.]]></item>
 		<item name="wcf.acp.option.cache_source_type.disk"><![CDATA[Filesystem (default)]]></item>
 		<item name="wcf.acp.option.cache_source_type.memcached"><![CDATA[Memcached]]></item>
-		<item name="wcf.acp.option.cache_source_type.no"><![CDATA[Disable caching (not recommended)]]></item>
 		<item name="wcf.acp.option.category.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.cache"><![CDATA[Cache]]></item>
 		<item name="wcf.acp.option.category.general.cache.general"><![CDATA[General]]></item>
@@ -704,6 +702,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.http"><![CDATA[HTTP]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy"><![CDATA[Proxy-Server]]></item>
 		<item name="wcf.acp.option.category.general.system.proxy.description"><![CDATA[Optionally provide a Proxy-Server for outgoing connections.]]></item>
+		<item name="wcf.acp.option.category.general.system.search"><![CDATA[Search]]></item>
+		<item name="wcf.acp.option.category.general.system.search.description"><![CDATA[Changing the backend requires a rebuild of the search indices available on the page “Rebuild Data”.]]></item>
 		<item name="wcf.acp.option.category.general.mail"><![CDATA[Emails]]></item>
 		<item name="wcf.acp.option.category.general.mail.general"><![CDATA[General]]></item>
 		<item name="wcf.acp.option.category.general.mail.send"><![CDATA[Sending]]></item>
@@ -820,7 +820,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Show WoltLab news on the administration control panel’s start page.]]></item>
+		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Show WoltLab news on the administration control panel’s start page]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request an own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin/create" class="externalURL">reCAPTCHA website</a>.]]></item>
@@ -1006,7 +1006,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 </ul>]]></item>
 		<item name="wcf.acp.option.url_to_lowercase"><![CDATA[Force lower-case links]]></item>
 		<item name="wcf.acp.option.url_to_lowercase.description"><![CDATA[Links will no longer contain uppercase letters turning links like “Thread/1-Hello-I-am-John-Doe/” into “thread/1-hello-i-am-john-doe/”.]]></item>
-		<item name="wcf.acp.option.module_ad"><![CDATA[Ads]]></item>
+		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha Type]]></item>
 		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Enable Captcha protection during registration]]></item>
 		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[Enable Captcha protection for “Lost Password”]]></item>
@@ -1033,6 +1033,9 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.wavatar"><![CDATA[Wavatar]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.monsterid"><![CDATA[Monster id]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.retro"><![CDATA[Retro]]></item>
+		<item name="wcf.acp.option.search_engine"><![CDATA[Search Engine]]></item>
+		<item name="wcf.acp.option.search_engine.mysql"><![CDATA[MySQL FULLTEXT (default)]]></item>
+		<item name="wcf.acp.option.enable_pluginstore_widget"><![CDATA[Show recommended products from the WoltLab® Plugin-Store on the administration control panel’s start page]]></item>
 		<item name="wcf.acp.option.category.general.payment"><![CDATA[TODO: Zahlungsoptionen]]></item>
 		<item name="wcf.acp.option.category.general.payment.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.option.available_payment_methods"><![CDATA[TODO: Unterstützte Zahlungsmethoden]]></item>
@@ -1720,6 +1723,8 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	
 	<category name="wcf.bbcode">
 		<item name="wcf.bbcode.button.code"><![CDATA[Code]]></item>
+		<item name="wcf.bbcode.button.fontFamily"><![CDATA[Font Family]]></item>
+		<item name="wcf.bbcode.button.fontSize"><![CDATA[Font Size]]></item>
 		<item name="wcf.bbcode.button.inlineCode"><![CDATA[Inline-Code]]></item>
 		<item name="wcf.bbcode.button.quote"><![CDATA[Quote]]></item>
 		<item name="wcf.bbcode.button.showAll"><![CDATA[Show All]]></item>
@@ -1744,6 +1749,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.quote.edit"><![CDATA[Edit Quote]]></item>
 		<item name="wcf.bbcode.quote.edit.author"><![CDATA[Author]]></item>
 		<item name="wcf.bbcode.quote.edit.link"><![CDATA[Source]]></item>
+		<item name="wcf.bbcode.quote.insert"><![CDATA[Insert Quote]]></item>
 		<item name="wcf.bbcode.quote.title"><![CDATA[{@$quoteAuthor} wrote:]]></item>
 		<item name="wcf.bbcode.quote.title.clickToSet"><![CDATA[(Click to set source)]]></item>
 		<item name="wcf.bbcode.quote.title.javascript"><![CDATA[{literal}{$quoteAuthor} wrote:{/literal}]]></item>
@@ -1879,7 +1885,7 @@ Errors are:
 		<item name="wcf.date.shortDateTimeFormat"><![CDATA[%date%]]></item>
 		
 		<item name="wcf.date.interval.days.past"><![CDATA[{if $days > 1}{#$days} days{else}A day{/if} ago]]></item>
-		<item name="wcf.date.interval.full.past"><![CDATA[{if $years}{if $years > 1}{#$years} years{else}A year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{#$months} months{else}{if $firstElement == 'months'}A{else}a{/if} month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}{if $firstElement == 'weeks'}A{else}a{/if} week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}{if $firstElement == 'days'}A{else}a{/if} day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}{if $firstElement == 'hours'}An{else}an{/if} hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}{if $firstElement == 'minutes'}A{else}a{/if} minute{/if}{/if} ago]]></item>
+		<item name="wcf.date.interval.full.past"><![CDATA[{if $years}{if $years > 1}{#$years} years{else}A year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{if $months > 1}{#$months} months{else}{if $firstElement == 'months'}A{else}a{/if} month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}{if $firstElement == 'weeks'}A{else}a{/if} week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}{if $firstElement == 'days'}A{else}a{/if} day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}{if $firstElement == 'hours'}An{else}an{/if} hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}{if $firstElement == 'minutes'}A{else}a{/if} minute{/if}{/if} ago]]></item>
 		<item name="wcf.date.interval.hours.past"><![CDATA[{if $hours > 1}{#$hours} hours{else}An hour{/if} ago]]></item>
 		<item name="wcf.date.interval.minutes.past"><![CDATA[{if $minutes > 1}{#$minutes} minutes{else}A minute{/if} ago]]></item>
 		<item name="wcf.date.interval.months.past"><![CDATA[{if $months > 1}{#$months} months{else}A Month{/if} ago]]></item>

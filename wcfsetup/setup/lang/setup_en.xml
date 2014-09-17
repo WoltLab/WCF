@@ -41,6 +41,7 @@
 		<item name="wcf.global.wcfDir.description"><![CDATA[All files of <b>WoltLab Community Framework</b> will be extracted into the installation-folder.]]></item>
 		<item name="wcf.global.wcfDir.dir"><![CDATA[Installation Directory]]></item>
 		<item name="wcf.global.wcfDir.dir.description"><![CDATA[If you are unsure, keep the name which the system suggests and run the standard installation.]]></item>
+		<item name="wcf.global.wcfDir.dir.info"><![CDATA[This is <u>not</u> the installation directory for {$setupPackageName}! It is recommended to keep the suggested path.]]></item>
 		<item name="wcf.global.wcfDir.error.invalid"><![CDATA[The given directory is not valid.]]></item>
 		<item name="wcf.global.wcfDir.error.invalidDirectory"><![CDATA[The installer has found a previous installation of <b>WoltLab Community Framework</b> in the “{$wcfDir}” directory.<br />Please enter an alternative installation directory to continue installation.]]></item>
 		<item name="wcf.global.wcfDir.url"><![CDATA[Installation Address (URL)]]></item>

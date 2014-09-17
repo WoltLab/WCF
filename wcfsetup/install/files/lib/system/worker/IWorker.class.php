@@ -57,4 +57,9 @@ interface IWorker {
 	 * @return	string
 	 */
 	public function getProceedURL();
+	
+	/**
+	 * Executes actions after worker has been executed.
+	 */
+	public function finalize();
 }

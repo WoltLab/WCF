@@ -1,13 +1,10 @@
 <?php
 namespace wcf\system\search;
-use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\object\type\ObjectTypeList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
-use wcf\system\WCF;
 
 /**
  * Manages the search index.
@@ -19,7 +16,7 @@ use wcf\system\WCF;
  * @subpackage	system.search
  * @category	Community Framework
  */
-class SearchIndexManager extends SingletonFactory {
+class SearchIndexManager extends SingletonFactory implements ISearchIndexManager {
 	/**
 	 * list of available object types
 	 * @var	array
@@ -31,6 +28,12 @@ class SearchIndexManager extends SingletonFactory {
 	 * @var	array<\wcf\data\package\Package>
 	 */
 	protected static $packages = array();
+	
+	/**
+	 * search index manager object
+	 * @var	\wcf\system\search\ISearchIndexManager
+	 */
+	protected $searchIndexManager = null;
 	
 	/**
 	 * @see	\wcf\system\SingletonFactory::init()
@@ -69,159 +72,85 @@ class SearchIndexManager extends SingletonFactory {
 	}
 	
 	/**
-	 * Adds a new entry.
+	 * Returns the search index manager object.
 	 * 
-	 * @param	string		$objectType
-	 * @param	integer		$objectID
-	 * @param	string		$message
-	 * @param	string		$subject
-	 * @param	integer		$time
-	 * @param	integer		$userID
-	 * @param	string		$username
-	 * @param	integer		$languageID
-	 * @param	string		$metaData
+	 * @return	\wcf\system\search\ISearchIndexManager
+	 */
+	protected function getSearchIndexManager() {
+		if ($this->searchIndexManager === null) {
+			$className = '';
+			if (SEARCH_ENGINE != 'mysql') {
+				$className = 'wcf\system\search\\'.SEARCH_ENGINE.'\\'.ucfirst(SEARCH_ENGINE).'SearchIndexManager';
+				if (!class_exists($className)) {
+					$className = '';
+				}
+			}
+			
+			// fallback to MySQL
+			if (empty($className)) {
+				$className = 'wcf\system\search\mysql\MysqlSearchIndexManager';
+			}
+			
+			$this->searchIndexManager = call_user_func(array($className, 'getInstance'));
+		}
+		
+		return $this->searchIndexManager;
+	}
+	
+	/**
+	 * @see	\wcf\system\search\ISearchIndexManager::add()
 	 */
 	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
-		if ($languageID === null) $languageID = 0;
-		
-		// save new entry
-		$sql = "REPLACE INTO	" . self::getTableName($objectType) . "
-					(objectID, subject, message, time, userID, username, languageID, metaData)
-			VALUES		(?, ?, ?, ?, ?, ?, ?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($objectID, $subject, $message, $time, $userID, $username, $languageID, $metaData));
+		$this->getSearchIndexManager()->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
 	/**
-	 * Updates the search index.
-	 * 
-	 * @param	string		$objectType
-	 * @param	integer		$objectID
-	 * @param	string		$message
-	 * @param	string		$subject
-	 * @param	integer		$time
-	 * @param	integer		$userID
-	 * @param	string		$username
-	 * @param	integer		$languageID
-	 * @param	string		$metaData
+	 * @see	\wcf\system\search\ISearchIndexManager::update()
 	 */
 	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
-		// delete existing entry
-		$this->delete($objectType, array($objectID));
-		
-		// save new entry
-		$this->add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
+		$this->getSearchIndexManager()->update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
 	/**
-	 * Deletes search index entries.
-	 * 
-	 * @param	string		$objectType
-	 * @param	array<integer>	$objectIDs
+	 * @see	\wcf\system\search\ISearchIndexManager::delete()
 	 */
 	public function delete($objectType, array $objectIDs) {
-		$sql = "DELETE FROM	" . self::getTableName($objectType) . "
-			WHERE		objectID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		WCF::getDB()->beginTransaction();
-		foreach ($objectIDs as $objectID) {
-			$statement->execute(array($objectID));
-		}
-		WCF::getDB()->commitTransaction();
+		$this->getSearchIndexManager()->delete($objectType, $objectIDs);
 	}
 	
 	/**
-	 * Resets the search index.
-	 * 
-	 * @param	string		$objectType
+	 * @see	\wcf\system\search\ISearchIndexManager::reset()
 	 */
 	public function reset($objectType) {
-		$sql = "TRUNCATE TABLE " . self::getTableName($objectType);
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute();
+		$this->getSearchIndexManager()->reset($objectType);
 	}
 	
 	/**
-	 * Creates the search index tables for all registered, searchable object types.
+	 * @see	\wcf\system\search\ISearchIndexManager::createSearchIndices()
 	 */
-	public static function createSearchIndexTables() {
-		// get definition id
-		$sql = "SELECT	definitionID
-			FROM	wcf".WCF_N."_object_type_definition
-			WHERE	definitionName = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('com.woltlab.wcf.searchableObjectType'));
-		$row = $statement->fetchArray();
-		
-		$objectTypeList = new ObjectTypeList();
-		$objectTypeList->getConditionBuilder()->add("object_type.definitionID = ?", array($row['definitionID']));
-		$objectTypeList->readObjects();
-		
-		foreach ($objectTypeList as $objectType) {
-			self::createSearchIndexTable($objectType);
-		}
+	public function createSearchIndices() {
+		$this->getSearchIndexManager()->createSearchIndices();
 	}
 	
 	/**
-	 * Creates the search index table for given object type. Returns true if the
-	 * table was created, otherwise false.
-	 * 
-	 * @param	\wcf\data\object\type\ObjectType	$objectType
-	 * @return	boolean
+	 * @see	\wcf\system\search\ISearchIndexManager::supportsBulkInsert()
 	 */
-	protected static function createSearchIndexTable(ObjectType $objectType) {
-		$tableName = self::getTableName($objectType);
-		
-		// check if table already exists
-		$sql = "SELECT	COUNT(*) AS count
-			FROM	wcf".WCF_N."_package_installation_sql_log
-			WHERE	sqlTable = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($tableName));
-		$row = $statement->fetchArray();
-		if ($row['count']) {
-			// table already exists
-			return false;
-		}
-		
-		$columns = array(
-			array('name' => 'objectID', 'data' => array('length' => 10, 'notNull' => true, 'type' => 'int')),
-			array('name' => 'subject', 'data' => array('default' => '', 'length' => 255, 'notNull' => true, 'type' => 'varchar')),
-			array('name' => 'message', 'data' => array('type' => 'mediumtext')),
-			array('name' => 'metaData', 'data' => array('type' => 'mediumtext')),
-			array('name' => 'time', 'data' => array('default' => 0, 'length' => 10, 'notNull' => true, 'type' => 'int')),
-			array('name' => 'userID', 'data' => array('default' => '', 'length' => 10, 'type' => 'int')),
-			array('name' => 'username', 'data' => array('default' => '', 'length' => 255,'notNull' => true, 'type' => 'varchar')),
-			array('name' => 'languageID', 'data' => array('default' => 0, 'length' => 10, 'notNull' => true, 'type' => 'int'))
-		);
-		
-		$indices = array(
-			array('name' => 'objectAndLanguage', 'data' => array('columns' => 'objectID, languageID', 'type' => 'UNIQUE')),
-			array('name' => 'fulltextIndex', 'data' => array('columns' => 'subject, message, metaData', 'type' => 'FULLTEXT')),
-			array('name' => 'fulltextIndexSubjectOnly', 'data' => array('columns' => 'subject', 'type' => 'FULLTEXT')),
-			array('name' => 'language', 'data' => array('columns' => 'languageID', 'type' => 'KEY')),
-			array('name' => 'user', 'data' => array('columns' => 'userID, time', 'type'=> 'KEY'))
-		);
-		
-		WCF::getDB()->getEditor()->createTable($tableName, $columns, $indices);
-		
-		// add comment
-		$sql = "ALTER TABLE	".$tableName."
-			COMMENT		= ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(' Search index for ' . $objectType->objectType));
-		
-		// log table
-		$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log
-					(packageID, sqlTable)
-			VALUES		(?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(
-			$objectType->packageID,
-			$tableName
-		));
-		
-		return true;
+	public function supportsBulkInsert() {
+		return $this->getSearchIndexManager()->supportsBulkInsert();
+	}
+	
+	/**
+	 * @see	\wcf\system\search\ISearchIndexManager::beginBulkOperation()
+	 */
+	public function beginBulkOperation() {
+		$this->getSearchIndexManager()->beginBulkOperation();
+	}
+	
+	/**
+	 * @see	\wcf\system\search\ISearchIndexManager::commitBulkOperation()
+	 */
+	public function commitBulkOperation() {
+		$this->getSearchIndexManager()->commitBulkOperation();
 	}
 	
 	/**

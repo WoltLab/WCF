@@ -3,7 +3,6 @@ namespace wcf\form;
 use wcf\data\search\Search;
 use wcf\data\search\SearchAction;
 use wcf\system\application\ApplicationHandler;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
@@ -414,7 +413,8 @@ class SearchForm extends AbstractCaptchaForm {
 		
 		// default conditions
 		$userIDs = $this->getUserIDs();
-		$this->searchIndexCondition = new PreparedStatementConditionBuilder(false);
+		$conditionBuilderClassName = SearchEngine::getInstance()->getConditionBuilderClassName();
+		$this->searchIndexCondition = new $conditionBuilderClassName(false);
 		
 		// user ids
 		if (!empty($userIDs)) {
