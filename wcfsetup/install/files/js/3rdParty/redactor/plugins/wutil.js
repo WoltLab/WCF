@@ -445,6 +445,7 @@ RedactorPlugins.wutil = {
 	 */
 	replaceText: function(value) {
 		var $wasInWysiwygMode = false;
+		var $offsetTop = $(document).scrollTop();
 		if (this.inWysiwygMode()) {
 			this.toggle();
 			$wasInWysiwygMode = true;
@@ -454,6 +455,9 @@ RedactorPlugins.wutil = {
 		
 		if ($wasInWysiwygMode) {
 			this.toggle();
+			
+			// restore scrolling since editor receives the focus
+			$(document).scrollTop($offsetTop);
 		}
 	}
 };
