@@ -50,9 +50,20 @@ RedactorPlugins.wupload = {
 		
 		// IE and WebKit set 'Files', Firefox sets 'application/x-moz-file' for files being dragged
 		// and Safari just provides 'Files' along with a huge list of other stuff
-		if (event.dataTransfer.types[0] !== 'application/x-moz-file' && event.dataTransfer.types.indexOf('Files') === -1) {
-			this._isFile = false;
-			
+		this._isFile = false;
+		if (event.dataTransfer.types[0] === 'application/x-moz-file') {
+			this._isFile = true;
+		}
+		else {
+			for (var $i = 0; $i < event.dataTransfer.types.length; $i++) {
+				if (event.dataTransfer.types[$i] === 'Files') {
+					this._isFile = true;
+					break;
+				}
+			}
+		}
+		
+		if (!this._isFile) {
 			return;
 		}
 		
