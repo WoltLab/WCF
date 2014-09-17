@@ -19,6 +19,8 @@ class HourlyCleanUpCronjob extends AbstractCronjob {
 	 * @see	\wcf\system\cronjob\ICronjob::execute()
 	 */
 	public function execute(Cronjob $cronjob) {
+		parent::execute($cronjob);
+		
 		// disable expired paid subscriptions
 		if (MODULE_PAID_SUBSCRIPTION) {
 			$subscriptionUser = new PaidSubscriptionUserList();
