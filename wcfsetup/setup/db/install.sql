@@ -794,6 +794,48 @@ CREATE TABLE wcf1_page_menu_item (
 	UNIQUE KEY (packageID, menuItem)
 );
 
+DROP TABLE IF EXISTS wcf1_paid_subscription;
+CREATE TABLE wcf1_paid_subscription (
+	subscriptionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(255) NOT NULL DEFAULT '',
+	description TEXT,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	cost DECIMAL(10,2) NOT NULL DEFAULT 0,
+	currency VARCHAR(3) NOT NULL DEFAULT 'EUR',
+	subscriptionLength SMALLINT(3) NOT NULL DEFAULT 0,
+	subscriptionLengthUnit ENUM('', 'D', 'M', 'Y') NOT NULL DEFAULT '',
+	isRecurring TINYINT(1) NOT NULL DEFAULT 0,
+	groupIDs TEXT,
+	excludedSubscriptionIDs TEXT
+);
+
+DROP TABLE IF EXISTS wcf1_paid_subscription_user;
+CREATE TABLE wcf1_paid_subscription_user (
+	subscriptionUserID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	subscriptionID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	startDate INT(10) NOT NULL DEFAULT 0,
+	endDate INT(10) NOT NULL DEFAULT 0,
+	isActive TINYINT(1) NOT NULL DEFAULT 1,
+	
+	UNIQUE KEY (subscriptionID, userID),
+	KEY (isActive)
+);
+
+DROP TABLE IF EXISTS wcf1_paid_subscription_transaction_log;
+CREATE TABLE wcf1_paid_subscription_transaction_log (
+	logID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	subscriptionUserID INT(10),
+	userID INT(10),
+	subscriptionID INT(10),
+	paymentMethodObjectTypeID INT(10) NOT NULL,
+	logTime INT(10) NOT NULL DEFAULT 0,
+	transactionID VARCHAR(255) NOT NULL DEFAULT '',
+	transactionDetails MEDIUMTEXT,
+	logMessage VARCHAR(255) NOT NULL DEFAULT ''
+);
+
 DROP TABLE IF EXISTS wcf1_poll;
 CREATE TABLE wcf1_poll (
 	pollID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1517,6 +1559,14 @@ ALTER TABLE wcf1_package_update_requirement ADD FOREIGN KEY (packageUpdateVersio
 ALTER TABLE wcf1_package_update_optional ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update_version ADD FOREIGN KEY (packageUpdateID) REFERENCES wcf1_package_update (packageUpdateID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_paid_subscription_user ADD FOREIGN KEY (subscriptionID) REFERENCES wcf1_paid_subscription (subscriptionID) ON DELETE CASCADE;
+ALTER TABLE wcf1_paid_subscription_user ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (subscriptionUserID) REFERENCES wcf1_paid_subscription_user (subscriptionUserID) ON DELETE SET NULL;
+ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (subscriptionID) REFERENCES wcf1_paid_subscription (subscriptionID) ON DELETE SET NULL;
+ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (paymentMethodObjectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_page_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 

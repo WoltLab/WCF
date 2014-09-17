@@ -299,3 +299,24 @@
 #userNotificationItemList > .groupedNotificationItem p > a {
 	font-weight: bold;
 }
+
+.paidSubscriptionTeaserList {
+	max-height: 74px;
+	overflow: hidden;
+	
+	> li {
+		float: left;
+		margin-bottom: 7px;
+		padding-right: 7px;
+		white-space: nowrap;
+		width: 300px;
+		word-wrap: normal;
+		
+		.containerHeadline {
+			> h3 {
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+		}
+	}
+}

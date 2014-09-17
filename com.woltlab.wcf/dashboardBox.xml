@@ -6,6 +6,11 @@
 			<boxtype>content</boxtype>
 		</dashboardbox>
 		
+		<dashboardbox name="com.woltlab.wcf.paidSubscriptions">
+			<classname><![CDATA[wcf\system\dashboard\box\PaidSubscriptionsDashboardBox]]></classname>
+			<boxtype>content</boxtype>
+		</dashboardbox>
+		
 		<dashboardbox name="com.woltlab.wcf.user.recentActivitySidebar">
 			<classname><![CDATA[wcf\system\dashboard\box\RecentActivitySidebarDashboardBox]]></classname>
 			<boxtype>sidebar</boxtype>
@@ -63,6 +68,11 @@
 		
 		<dashboardbox name="com.woltlab.wcf.user.staffOnlineSidebar">
 			<classname><![CDATA[wcf\system\dashboard\box\StaffOnlineSidebarDashboardBox]]></classname>
+			<boxtype>sidebar</boxtype>
+		</dashboardbox>
+		
+		<dashboardbox name="com.woltlab.wcf.paidSubscriptionsSidebar">
+			<classname><![CDATA[wcf\system\dashboard\box\PaidSubscriptionsSidebarDashboardBox]]></classname>
 			<boxtype>sidebar</boxtype>
 		</dashboardbox>
 	</import>

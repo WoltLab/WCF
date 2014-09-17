@@ -438,6 +438,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.copy.copyMembers.description"><![CDATA[Members of the copied user group will automatically be members of the new user group.]]></item>
 		<item name="wcf.acp.group.copy.copyUserGroupOptions"><![CDATA[Copy Permissions]]></item>
 		<item name="wcf.acp.group.copy.copyUserGroupOptions.description"><![CDATA[The new user group will have the same permissions as the copied user group.]]></item>
+		<item name="wcf.acp.group.option.admin.paidSubscription.canManageSubscription"><![CDATA[TODO: Kann bezahlte Mitgliedschaften verwalten]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
@@ -640,6 +641,10 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.captcha.question.add"><![CDATA[Add Question]]></item>
 		<item name="wcf.acp.menu.link.captcha.question.list"><![CDATA[List Questions]]></item>
 		<item name="wcf.acp.menu.link.log.authentication.failure"><![CDATA[Failed Login Attempts]]></item>
+		<item name="wcf.acp.menu.link.paidSubscription"><![CDATA[TODO: Bezahlte Mitgliedschaften]]></item>
+		<item name="wcf.acp.menu.link.paidSubscription.list"><![CDATA[TODO: Mitgliedschaften auflisten]]></item>
+		<item name="wcf.acp.menu.link.paidSubscription.user.list"><![CDATA[TODO: Aktive Mitgliedschaften auflisten]]></item>
+		<item name="wcf.acp.menu.link.paidSubscription.transactionLog.list"><![CDATA[TODO: Transaktionen auflisten]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1028,6 +1033,14 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.wavatar"><![CDATA[Wavatar]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.monsterid"><![CDATA[Monster id]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.retro"><![CDATA[Retro]]></item>
+		<item name="wcf.acp.option.category.general.payment"><![CDATA[TODO: Zahlungsoptionen]]></item>
+		<item name="wcf.acp.option.category.general.payment.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.available_payment_methods"><![CDATA[TODO: Unterstützte Zahlungsmethoden]]></item>
+		<item name="wcf.acp.option.available_payment_methods.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.paypal_email_address"><![CDATA[TODO: Paypal-E-Mail-Adresse]]></item>
+		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.module_paid_subscription"><![CDATA[TODO: Bezahlte Mitgliedschaften aktivieren]]></item>
+		<item name="wcf.acp.option.module_paid_subscription.description"><![CDATA[TODO]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -1152,6 +1165,41 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Requires the package “{$packageName}” in version “{$packageVersion}” or higher, but it is neither installed nor shipped.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[The {if $type == 'install'}install{else}update{/if}-instructions specify the file “{$value}” for the Package Installation Plugin “{$pip}”, but it cannot be found in the specified location. Possible causes:<ul class="nativeList"><li>The file has not been added to the archive at all</li><li>The file exists but under a (slightly) different name (typo)</li></ul>]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[The package cannot be installed, please review the validation results below.]]></item>
+	</category>
+	
+	<category name="wcf.acp.paidSubscription">
+		<item name="wcf.acp.paidSubscription.list"><![CDATA[TODO: Bezahlte Mitgliedschaften]]></item>
+		<item name="wcf.acp.paidSubscription.add"><![CDATA[TODO: Mitgliedschaft hinzufügen]]></item>
+		<item name="wcf.acp.paidSubscription.edit"><![CDATA[TODO: Mitgliedschaft bearbeiten]]></item>
+		<item name="wcf.acp.paidSubscription.userGroups"><![CDATA[TODO: Benutzergruppen]]></item>
+		<item name="wcf.acp.paidSubscription.userGroups.description"><![CDATA[TODO: Käufer dieser Mitgliedschaft werden automatisch den ausgewählten Benutzergruppen hinzugefügt.]]></item>
+		<item name="wcf.acp.paidSubscription.cost"><![CDATA[TODO: Kosten]]></item>
+		<item name="wcf.acp.paidSubscription.subscriptionLength.permanent"><![CDATA[TODO: Unbegrenzte Laufzeit]]></item>
+		<item name="wcf.acp.paidSubscription.subscriptionLength"><![CDATA[TODO: Laufzeit]]></item>
+		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.D"><![CDATA[TODO: Tag(e)]]></item>
+		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.M"><![CDATA[TODO: Monat(e)]]></item>
+		<item name="wcf.acp.paidSubscription.subscriptionLengthUnit.Y"><![CDATA[TODO: Jahr(e)]]></item>
+		<item name="wcf.acp.paidSubscription.showOrder"><![CDATA[TODO: Reihenfolge]]></item>
+		<item name="wcf.acp.paidSubscription.showOrder.description"><![CDATA[TODO: Legt die Reihenfolge fest, in der die bezahlten Mitgliedschaften angezeigt werden.]]></item>
+		<item name="wcf.acp.paidSubscription.isDisabled"><![CDATA[TODO: Mitgliedschaft deaktivieren]]></item>
+		<item name="wcf.acp.paidSubscription.isDisabled.description"><![CDATA[TODO: Entfernt diese bezahlte Mitgliedschaft aus dem Angebot.]]></item>
+		<item name="wcf.acp.paidSubscription.isRecurring"><![CDATA[TODO: Regelmäßige Abbuchung]]></item>
+		<item name="wcf.acp.paidSubscription.isRecurring.description"><![CDATA[TODO: Aktiviert die automatische Abbuchung der Kosten vom Konto des Käufers, um die Mitgliedschaft automatisch zu verlängern.]]></item>
+		<item name="wcf.acp.paidSubscription.paymentOptions"><![CDATA[TODO: Zahlungsoptionen]]></item>
+		<item name="wcf.acp.paidSubscription.user.list"><![CDATA[TODO: Aktive Mitgliedschaften]]></item>
+		<item name="wcf.acp.paidSubscription.user.endDate"><![CDATA[TODO: Ablaufdatum]]></item>
+		<item name="wcf.acp.paidSubscription.subscription"><![CDATA[TODO: Mitgliedschaft]]></item>
+		<item name="wcf.acp.paidSubscription.transactionLog.list"><![CDATA[TODO: Transaktionen]]></item>
+		<item name="wcf.acp.paidSubscription.transactionLog.paymentMethod"><![CDATA[TODO: Zahlungsmethode]]></item>
+		<item name="wcf.acp.paidSubscription.transactionLog.transactionID"><![CDATA[TODO: Transaktions-ID]]></item>
+		<item name="wcf.acp.paidSubscription.transactionLog.logTime"><![CDATA[TODO: Datum]]></item>
+		<item name="wcf.acp.paidSubscription.transactionLog.logMessage"><![CDATA[TODO: Aktion]]></item>
+		<item name="wcf.acp.paidSubscription.transactionLog"><![CDATA[TODO: Transaktion]]></item>
+		<item name="wcf.acp.paidSubscription.transactionLog.transactionDetails"><![CDATA[TODO: Details]]></item>
+		<item name="wcf.acp.paidSubscription.excludedSubscriptions"><![CDATA[TODO: Andere Mitgliedschaften ausschließen]]></item>
+		<item name="wcf.acp.paidSubscription.excludedSubscriptions.description"><![CDATA[TODO: Sie können den Erwerb anderer bezahlter Mitgliederschaften für Käufer dieser Mitgliedschaft ausschließen.]]></item>
+		<item name="wcf.acp.paidSubscription.user.delete.confirmMessage"><![CDATA[TODO: Wollen Sie die Mitgliedschaft „{$subscriptionUser->title|language}“ für den Benutzer „{$subscriptionUser->username}“ wirklich entfernen?]]></item>
+		<item name="wcf.acp.paidSubscription.user.add"><![CDATA[TODO: Mitgliedschaft manuell zuweisen]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
@@ -1820,6 +1868,8 @@ Errors are:
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.usersOnlineSidebar"><![CDATA[Users Online]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.followingsOnlineSidebar"><![CDATA[Users Online you Follow]]></item>
 		<item name="wcf.dashboard.box.com.woltlab.wcf.user.staffOnlineSidebar"><![CDATA[Staff-Members Online]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.paidSubscriptions"><![CDATA[TODO: Bezahlte Mitgliedschaften]]></item>
+		<item name="wcf.dashboard.box.com.woltlab.wcf.paidSubscriptionsSidebar"><![CDATA[TODO: Bezahlte Mitgliedschaften]]></item>
 	</category>
 	
 	<category name="wcf.date">
@@ -2325,6 +2375,20 @@ Errors are:
 		<item name="wcf.page.com.woltlab.wcf.UsersOnlineListPage"><![CDATA[Users Online]]></item>
 	</category>
 	
+	<category name="wcf.paidSubscription">
+		<item name="wcf.paidSubscription.availableSubscriptions"><![CDATA[TODO: Verfügbare Mitgliedschaften]]></item>
+		<item name="wcf.paidSubscription.purchasedSubscriptions"><![CDATA[TODO: Erworbene Mitgliedschaften]]></item>
+		<item name="wcf.paidSubscription.formattedCost"><![CDATA[TODO: {$subscription->currency} {$subscription->cost|currency}{if $subscription->subscriptionLength} {if $subscription->subscriptionLength != 1}für{else}pro{/if} {if $subscription->subscriptionLength != 1}{@$subscription->subscriptionLength} {/if}{if $subscription->subscriptionLengthUnit == 'D'}Tag{if $subscription->subscriptionLength != 1}e{/if}{/if}{if $subscription->subscriptionLengthUnit == 'M'}Monat{if $subscription->subscriptionLength != 1}e{/if}{/if}{if $subscription->subscriptionLengthUnit == 'Y'}Jahr{if $subscription->subscriptionLength != 1}e{/if}{/if}{/if}]]></item>
+		<item name="wcf.paidSubscription.expires"><![CDATA[TODO: Gültig bis]]></item>
+		<item name="wcf.paidSubscription.returnMessage"><![CDATA[TODO: Danke für Ihre Zahlung. Ihre Transaktion wurde abgeschlossen. Sobald Ihre Zahlung von uns verarbeitet wurde, wird die erworbene Mitgliedschaft aktiviert.]]></item>
+	</category>
+	
+	<category name="wcf.payment">
+		<item name="wcf.payment.com.woltlab.wcf.payment.method.paypal"><![CDATA[TODO: Paypal]]></item>
+		<item name="wcf.payment.paypal.button.purchase"><![CDATA[TODO: Via Paypal kaufen]]></item>
+		<item name="wcf.payment.paypal.button.subscribe"><![CDATA[TODO: Via Paypal abonnieren]]></item>
+	</category>
+	
 	<category name="wcf.poll">
 		<item name="wcf.poll.button.addOption"><![CDATA[Add Another Option]]></item>
 		<item name="wcf.poll.button.removeOption"><![CDATA[Remove Option]]></item>
@@ -2632,6 +2696,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.menu.profile.signature"><![CDATA[Signature]]></item>
 		<item name="wcf.user.menu.settings"><![CDATA[Settings]]></item>
 		<item name="wcf.user.menu.settings.notification"><![CDATA[Notifications]]></item>
+		<item name="wcf.user.menu.settings.paidSubscription"><![CDATA[TODO: Bezahlte Mitgliedschaften]]></item>
 	</category>
 	
 	<category name="wcf.user.register">

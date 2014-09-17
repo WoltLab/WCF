@@ -81,6 +81,9 @@
 					<category name="general.cache.memcached">
 						<parent>general.cache</parent>
 					</category>
+				<category name="general.payment">
+					<parent>general</parent>
+				</category>
 			<!-- /general -->
 			
 			<!-- user -->
@@ -815,6 +818,23 @@ no:!cache_source_memcached_host]]></enableoptions>
 				<optiontype>textarea</optiontype>
 			</option>
 			<!-- /general.cache -->
+			
+			<!-- general.payment -->
+			<option name="available_payment_methods">
+				<categoryname>general.payment</categoryname>
+				<optiontype>paymentMethodSelect</optiontype>
+			</option>
+			
+			<option name="paypal_email_address">
+				<categoryname>general.payment</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			
+			<option name="module_paid_subscription">
+				<categoryname>general.payment</categoryname>
+				<optiontype>boolean</optiontype>
+			</option>
+			<!-- /general.payment -->
 			
 			<option name="attachment_storage">
 				<categoryname>message.attachment</categoryname>

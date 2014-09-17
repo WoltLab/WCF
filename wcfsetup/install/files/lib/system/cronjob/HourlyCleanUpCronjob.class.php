@@ -1,5 +1,8 @@
 <?php
 namespace wcf\system\cronjob;
+use wcf\data\cronjob\Cronjob;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
 
 /**
  * Cronjob for a hourly system cleanup.
@@ -11,4 +14,21 @@ namespace wcf\system\cronjob;
  * @subpackage	system.cronjob
  * @category	Community Framework
  */
-class HourlyCleanUpCronjob extends AbstractCronjob { }
+class HourlyCleanUpCronjob extends AbstractCronjob {
+	/**
+	 * @see	\wcf\system\cronjob\ICronjob::execute()
+	 */
+	public function execute(Cronjob $cronjob) {
+		// disable expired paid subscriptions
+		if (MODULE_PAID_SUBSCRIPTION) {
+			$subscriptionUser = new PaidSubscriptionUserList();
+			$subscriptionUser->getConditionBuilder()->add('isActive = ?', array(1));
+			$subscriptionUser->getConditionBuilder()->add('endDate > 0 AND endDate < ?', array(TIME_NOW));
+			$subscriptionUser->readObjects();
+			
+			if (count($subscriptionUser->getObjects())) {
+				$action = new PaidSubscriptionUserAction(array($subscriptionUser->getObjects()), 'revoke');
+			}
+		}
+	}
+}

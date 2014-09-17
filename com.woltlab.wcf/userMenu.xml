@@ -33,6 +33,12 @@
 			<controller><![CDATA[wcf\form\NotificationSettingsForm]]></controller>
 			<parent>wcf.user.menu.settings</parent>
 		</usermenuitem>
+		
+		<usermenuitem name="wcf.user.menu.settings.paidSubscription">
+			<controller><![CDATA[wcf\page\PaidSubscriptionListPage]]></controller>
+			<parent>wcf.user.menu.settings</parent>
+			<options>module_paid_subscription</options>
+		</usermenuitem>
 		<!-- /settings -->
 		
 		<!-- community -->

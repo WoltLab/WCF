@@ -307,6 +307,29 @@
 			<permissions>admin.notice.canManageNotice</permissions>
 		</acpmenuitem>
 		
+		<acpmenuitem name="wcf.acp.menu.link.paidSubscription">
+			<parent>wcf.acp.menu.link.user</parent>
+			<showorder>6</showorder>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.list">
+			<controller><![CDATA[wcf\acp\page\PaidSubscriptionListPage]]></controller>
+			<parent>wcf.acp.menu.link.paidSubscription</parent>
+			<permissions>admin.paidSubscription.canManageSubscription</permissions>
+			<options>module_paid_subscription</options>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.user.list">
+			<controller><![CDATA[wcf\acp\page\PaidSubscriptionUserListPage]]></controller>
+			<parent>wcf.acp.menu.link.paidSubscription</parent>
+			<permissions>admin.paidSubscription.canManageSubscription</permissions>
+			<options>module_paid_subscription</options>
+		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.paidSubscription.transactionLog.list">
+			<controller><![CDATA[wcf\acp\page\PaidSubscriptionTransactionLogListPage]]></controller>
+			<parent>wcf.acp.menu.link.paidSubscription</parent>
+			<permissions>admin.paidSubscription.canManageSubscription</permissions>
+			<options>module_paid_subscription</options>
+		</acpmenuitem>
+		
 		<acpmenuitem name="wcf.acp.menu.link.display">
 			<showorder>3</showorder>
 		</acpmenuitem>

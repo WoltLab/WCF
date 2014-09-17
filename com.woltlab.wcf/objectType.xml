@@ -951,5 +951,23 @@
 			<classname><![CDATA[wcf\system\message\embedded\object\AttachmentMessageEmbeddedObjectHandler]]></classname>
 		</type>
 		<!-- embedded object handlers -->
+		
+		<type>
+			<name>com.woltlab.wcf.payment.method.paypal</name>
+			<definitionname>com.woltlab.wcf.payment.method</definitionname>
+			<classname><![CDATA[wcf\system\payment\method\PaypalPaymentMethod]]></classname>
+		</type>
+		
+		<!-- <type>
+			<name>com.woltlab.wcf.payment.method.sofortUeberweisung</name>
+			<definitionname>com.woltlab.wcf.payment.method</definitionname>
+			<classname><![CDATA[wcf\system\payment\method\SofortUeberweisungPaymentMethod]]></classname>
+		</type>-->
+		
+		<type>
+			<name>com.woltlab.wcf.payment.type.paidSubscription</name>
+			<definitionname>com.woltlab.wcf.payment.type</definitionname>
+			<classname><![CDATA[wcf\system\payment\type\PaidSubscriptionPaymentType]]></classname>
+		</type>
 	</import>
 </data>
