@@ -52,6 +52,25 @@ class RegisterForm extends UserAddForm {
 	public $isExternalAuthentication = false;
 	
 	/**
+	 * true if external authentication is used and the given e-mail address
+	 * matches the e-mail address returned by the 3rd party provider
+	 * @var	boolean
+	 */
+	public $registerVia3rdParty = false;
+	
+	/**
+	 * user options
+	 * @var	array
+	 */
+	public $saveOptions = array();
+	
+	/**
+	 * url of an external avatar
+	 * @var	string
+	 */
+	public $avatarUrl = '';
+	
+	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array();
@@ -289,10 +308,8 @@ class RegisterForm extends UserAddForm {
 		AbstractForm::save();
 		
 		// get options
-		$saveOptions = $this->optionHandler->save();
-		$registerVia3rdParty = false;
+		$this->saveOptions = $this->optionHandler->save();
 		
-		$avatarURL = '';
 		if ($this->isExternalAuthentication) {
 			switch (WCF::getSession()->getVar('__3rdPartyProvider')) {
 				case 'github':
@@ -306,11 +323,11 @@ class RegisterForm extends UserAddForm {
 						WCF::getSession()->unregister('__githubToken');
 						
 						if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
-							$registerVia3rdParty = true;
+							$this->registerVia3rdParty = true;
 						}
 						
-						if (isset($githubData['bio']) && User::getUserOptionID('aboutMe') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $githubData['bio'];
-						if (isset($githubData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $githubData['location'];
+						if (isset($githubData['bio']) && User::getUserOptionID('aboutMe') !== null) $this->saveOptions[User::getUserOptionID('aboutMe')] = $githubData['bio'];
+						if (isset($githubData['location']) && User::getUserOptionID('location') !== null) $this->saveOptions[User::getUserOptionID('location')] = $githubData['location'];
 					}
 				break;
 				case 'twitter':
@@ -321,8 +338,8 @@ class RegisterForm extends UserAddForm {
 						
 						WCF::getSession()->unregister('__twitterData');
 						
-						if (isset($twitterData['description']) && User::getUserOptionID('aboutMe') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $twitterData['description'];
-						if (isset($twitterData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $twitterData['location'];
+						if (isset($twitterData['description']) && User::getUserOptionID('aboutMe') !== null) $this->saveOptions[User::getUserOptionID('aboutMe')] = $twitterData['description'];
+						if (isset($twitterData['location']) && User::getUserOptionID('location') !== null) $this->saveOptions[User::getUserOptionID('location')] = $twitterData['location'];
 					}
 				break;
 				case 'facebook':
@@ -334,17 +351,17 @@ class RegisterForm extends UserAddForm {
 						WCF::getSession()->unregister('__facebookData');
 						
 						if (isset($facebookData['email']) && $facebookData['email'] == $this->email) {
-							$registerVia3rdParty = true;
+							$this->registerVia3rdParty = true;
 						}
 						
-						if (isset($facebookData['gender']) && User::getUserOptionID('gender') !== null) $saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
+						if (isset($facebookData['gender']) && User::getUserOptionID('gender') !== null) $this->saveOptions[User::getUserOptionID('gender')] = ($facebookData['gender'] == 'male' ? UserProfile::GENDER_MALE : UserProfile::GENDER_FEMALE);
 						
 						if (isset($facebookData['birthday']) && User::getUserOptionID('birthday') !== null) {
 							list($month, $day, $year) = explode('/', $facebookData['birthday']);
-							$saveOptions[User::getUserOptionID('birthday')] = $year.'-'.$month.'-'.$day;
+							$this->saveOptions[User::getUserOptionID('birthday')] = $year.'-'.$month.'-'.$day;
 						}
-						if (isset($facebookData['bio']) && User::getUserOptionID('bio') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $facebookData['bio'];
-						if (isset($facebookData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $facebookData['location']['name'];
+						if (isset($facebookData['bio']) && User::getUserOptionID('bio') !== null) $this->saveOptions[User::getUserOptionID('aboutMe')] = $facebookData['bio'];
+						if (isset($facebookData['location']) && User::getUserOptionID('location') !== null) $this->saveOptions[User::getUserOptionID('location')] = $facebookData['location']['name'];
 						if (isset($facebookData['website']) && User::getUserOptionID('website') !== null) {
 							$urls = preg_split('/[\s,;]/', $facebookData['website'], -1, PREG_SPLIT_NO_EMPTY);
 							if (!empty($urls)) {
@@ -352,13 +369,13 @@ class RegisterForm extends UserAddForm {
 									$urls[0] = 'http://' . $urls[0];
 								}
 								
-								$saveOptions[User::getUserOptionID('homepage')] = $urls[0];
+								$this->saveOptions[User::getUserOptionID('homepage')] = $urls[0];
 							}
 						}
 						
 						// avatar
 						if (isset($facebookData['picture']) && !$facebookData['picture']['data']['is_silhouette']) {
-							$avatarURL = $facebookData['picture']['data']['url'];
+							$this->avatarURL = $facebookData['picture']['data']['url'];
 						}
 					}
 				break;
@@ -371,23 +388,23 @@ class RegisterForm extends UserAddForm {
 						WCF::getSession()->unregister('__googleData');
 						
 						if (isset($googleData['emails'][0]['value']) && $googleData['emails'][0]['value'] == $this->email) {
-							$registerVia3rdParty = true;
+							$this->registerVia3rdParty = true;
 						}
 						
 						if (isset($googleData['gender']) && User::getUserOptionID('gender') !== null) {
 							switch ($googleData['gender']) {
 								case 'male':
-									$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_MALE;
+									$this->saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_MALE;
 								break;
 								case 'female':
-									$saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_FEMALE;
+									$this->saveOptions[User::getUserOptionID('gender')] = UserProfile::GENDER_FEMALE;
 								break;
 							}
 						}
-						if (isset($googleData['birthday']) && User::getUserOptionID('birthday') !== null) $saveOptions[User::getUserOptionID('birthday')] = $googleData['birthday'];
+						if (isset($googleData['birthday']) && User::getUserOptionID('birthday') !== null) $this->saveOptions[User::getUserOptionID('birthday')] = $googleData['birthday'];
 						if (isset($googleData['placesLived']) && User::getUserOptionID('location') !== null) {
 							// save primary location
-							$saveOptions[User::getUserOptionID('location')] = current(array_map(
+							$this->saveOptions[User::getUserOptionID('location')] = current(array_map(
 								function ($element) { return $element['value']; },
 								array_filter($googleData['placesLived'], function ($element) { return isset($element['primary']) && $element['primary']; })
 							));
@@ -395,7 +412,7 @@ class RegisterForm extends UserAddForm {
 						
 						// avatar
 						if (isset($googleData['image']['url'])) {
-							$avatarURL = $googleData['image']['url'];
+							$this->avatarURL = $googleData['image']['url'];
 						}
 					}
 				break;
@@ -410,7 +427,7 @@ class RegisterForm extends UserAddForm {
 		
 		// generate activation code
 		$addDefaultGroups = true;
-		if ((REGISTER_ACTIVATION_METHOD == 1 && !$registerVia3rdParty) || REGISTER_ACTIVATION_METHOD == 2) {
+		if ((REGISTER_ACTIVATION_METHOD == 1 && !$this->registerVia3rdParty) || REGISTER_ACTIVATION_METHOD == 2) {
 			$activationCode = UserRegistrationUtil::getActivationCode();
 			$this->additionalFields['activationCode'] = $activationCode;
 			$addDefaultGroups = false;
@@ -431,7 +448,7 @@ class RegisterForm extends UserAddForm {
 			)),
 			'groups' => $this->groupIDs,
 			'languages' => $this->visibleLanguages,
-			'options' => $saveOptions,
+			'options' => $this->saveOptions,
 			'addDefaultGroups' => $addDefaultGroups
 		);
 		$this->objectAction = new UserAction(array(), 'create', $data);
@@ -440,9 +457,9 @@ class RegisterForm extends UserAddForm {
 		$userEditor = new UserEditor($user);
 		
 		// set avatar if provided
-		if (!empty($avatarURL)) {
+		if (!empty($this->avatarURL)) {
 			$userAvatarAction = new UserAvatarAction(array(), 'fetchRemoteAvatar', array(
-				'url' => $avatarURL,
+				'url' => $this->avatarURL,
 				'userEditor' => $userEditor
 			));
 			$userAvatarAction->executeAction();
@@ -457,7 +474,7 @@ class RegisterForm extends UserAddForm {
 		}
 		else if (REGISTER_ACTIVATION_METHOD == 1) {
 			// registering via 3rdParty leads to instant activation
-			if ($registerVia3rdParty) {
+			if ($this->registerVia3rdParty) {
 				$this->message = 'wcf.user.register.success';
 			}
 			else {

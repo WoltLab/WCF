@@ -34,6 +34,24 @@ class AccountManagementForm extends AbstractForm {
 	public $loginRequired = true;
 	
 	/**
+	 * user data to update
+	 * @var	array
+	 */
+	public $updateParameters = array();
+	
+	/**
+	 * user options to update
+	 * @var	array
+	 */
+	public $updateOptions = array();
+	
+	/**
+	 * success messages
+	 * @var	array
+	 */
+	public $success = array();
+	
+	/**
 	 * user password
 	 * @var	string
 	 */
@@ -311,48 +329,44 @@ class AccountManagementForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$success = array();
-		$updateParameters = array();
-		$updateOptions = array();
-		
 		// quit
 		if (WCF::getSession()->getPermission('user.profile.canQuit')) {
 			if (!WCF::getUser()->quitStarted && $this->quit == 1) {
-				$updateParameters['quitStarted'] = TIME_NOW;
+				$this->updateParameters['quitStarted'] = TIME_NOW;
 				$this->quitStarted = TIME_NOW;
-				$success[] = 'wcf.user.quit.success';
+				$this->success[] = 'wcf.user.quit.success';
 			}
 			else if (WCF::getUser()->quitStarted && $this->cancelQuit == 1) {
-				$updateParameters['quitStarted'] = 0;
+				$this->updateParameters['quitStarted'] = 0;
 				$this->quitStarted = 0;
-				$success[] = 'wcf.user.quit.cancel.success';
+				$this->success[] = 'wcf.user.quit.cancel.success';
 			}
 		}
 		
 		// user name
 		if (WCF::getSession()->getPermission('user.profile.canRename') && $this->username != WCF::getUser()->username) {
 			if (mb_strtolower($this->username) != mb_strtolower(WCF::getUser()->username)) {
-				$updateParameters['lastUsernameChange'] = TIME_NOW;
-				$updateParameters['oldUsername'] = WCF::getUser()->username;
+				$this->updateParameters['lastUsernameChange'] = TIME_NOW;
+				$this->updateParameters['oldUsername'] = WCF::getUser()->username;
 			}
-			$updateParameters['username'] = $this->username;
-			$success[] = 'wcf.user.changeUsername.success';
+			$this->updateParameters['username'] = $this->username;
+			$this->success[] = 'wcf.user.changeUsername.success';
 		}
 		
 		// email
 		if (WCF::getSession()->getPermission('user.profile.canChangeEmail') && $this->email != WCF::getUser()->email && $this->email != WCF::getUser()->newEmail) {
 			if (REGISTER_ACTIVATION_METHOD == 0 || REGISTER_ACTIVATION_METHOD == 2 || mb_strtolower($this->email) == mb_strtolower(WCF::getUser()->email)) {
 				// update email
-				$updateParameters['email'] = $this->email;
-				$success[] = 'wcf.user.changeEmail.success';
+				$this->updateParameters['email'] = $this->email;
+				$this->success[] = 'wcf.user.changeEmail.success';
 			}
 			else if (REGISTER_ACTIVATION_METHOD == 1) {
 				// get reactivation code
 				$activationCode = UserRegistrationUtil::getActivationCode();
 				
 				// save as new email
-				$updateParameters['reactivationCode'] = $activationCode;
-				$updateParameters['newEmail'] = $this->email;
+				$this->updateParameters['reactivationCode'] = $activationCode;
+				$this->updateParameters['newEmail'] = $this->email;
 				
 				$messageData = array(
 					'username' => WCF::getUser()->username,
@@ -362,100 +376,100 @@ class AccountManagementForm extends AbstractForm {
 				
 				$mail = new Mail(array(WCF::getUser()->username => $this->email), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail.subject'), WCF::getLanguage()->getDynamicVariable('wcf.user.changeEmail.needReactivation.mail', $messageData));
 				$mail->send();
-				$success[] = 'wcf.user.changeEmail.needReactivation';
+				$this->success[] = 'wcf.user.changeEmail.needReactivation';
 			}
 		}
 		
 		// password
 		if (!WCF::getUser()->authData) {
 			if (!empty($this->newPassword) || !empty($this->confirmNewPassword)) {
-				$updateParameters['password'] = $this->newPassword;
-				$success[] = 'wcf.user.changePassword.success';
+				$this->updateParameters['password'] = $this->newPassword;
+				$this->success[] = 'wcf.user.changePassword.success';
 			}
 		}
 		
 		// 3rdParty
 		if (GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== '') {
 			if ($this->githubConnect && WCF::getSession()->getVar('__githubToken')) {
-				$updateParameters['authData'] = 'github:'.WCF::getSession()->getVar('__githubToken');
-				$success[] = 'wcf.user.3rdparty.github.connect.success';
+				$this->updateParameters['authData'] = 'github:'.WCF::getSession()->getVar('__githubToken');
+				$this->success[] = 'wcf.user.3rdparty.github.connect.success';
 				
 				WCF::getSession()->unregister('__githubToken');
 				WCF::getSession()->unregister('__githubUsername');
 			}
 			else if ($this->githubDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'github:')) {
-				$updateParameters['authData'] = '';
-				$success[] = 'wcf.user.3rdparty.github.disconnect.success';
+				$this->updateParameters['authData'] = '';
+				$this->success[] = 'wcf.user.3rdparty.github.disconnect.success';
 			}
 		}
 		if (TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== '') {
 			if ($this->twitterConnect && WCF::getSession()->getVar('__twitterData')) {
 				$twitterData = WCF::getSession()->getVar('__twitterData');
-				$updateParameters['authData'] = 'twitter:'.$twitterData['user_id'];
-				$success[] = 'wcf.user.3rdparty.twitter.connect.success';
+				$this->updateParameters['authData'] = 'twitter:'.$twitterData['user_id'];
+				$this->success[] = 'wcf.user.3rdparty.twitter.connect.success';
 				
 				WCF::getSession()->unregister('__twitterData');
 				WCF::getSession()->unregister('__twitterUsername');
 			}
 			else if ($this->twitterDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'twitter:')) {
-				$updateParameters['authData'] = '';
-				$success[] = 'wcf.user.3rdparty.twitter.disconnect.success';
+				$this->updateParameters['authData'] = '';
+				$this->success[] = 'wcf.user.3rdparty.twitter.disconnect.success';
 			}
 		}
 		if (FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== '') {
 			if ($this->facebookConnect && WCF::getSession()->getVar('__facebookData')) {
 				$facebookData = WCF::getSession()->getVar('__facebookData');
-				$updateParameters['authData'] = 'facebook:'.$facebookData['id'];
-				$success[] = 'wcf.user.3rdparty.facebook.connect.success';
+				$this->updateParameters['authData'] = 'facebook:'.$facebookData['id'];
+				$this->success[] = 'wcf.user.3rdparty.facebook.connect.success';
 				
 				WCF::getSession()->unregister('__facebookData');
 				WCF::getSession()->unregister('__facebookUsername');
 			}
 			else if ($this->facebookDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'facebook:')) {
-				$updateParameters['authData'] = '';
-				$success[] = 'wcf.user.3rdparty.facebook.disconnect.success';
+				$this->updateParameters['authData'] = '';
+				$this->success[] = 'wcf.user.3rdparty.facebook.disconnect.success';
 			}
 		}
 		if (GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== '') {
 			if ($this->googleConnect && WCF::getSession()->getVar('__googleData')) {
 				$googleData = WCF::getSession()->getVar('__googleData');
-				$updateParameters['authData'] = 'google:'.$googleData['id'];
-				$success[] = 'wcf.user.3rdparty.google.connect.success';
+				$this->updateParameters['authData'] = 'google:'.$googleData['id'];
+				$this->success[] = 'wcf.user.3rdparty.google.connect.success';
 				
 				WCF::getSession()->unregister('__googleData');
 				WCF::getSession()->unregister('__googleUsername');
 			}
 			else if ($this->googleDisconnect && StringUtil::startsWith(WCF::getUser()->authData, 'google:')) {
-				$updateParameters['authData'] = '';
-				$success[] = 'wcf.user.3rdparty.google.disconnect.success';
+				$this->updateParameters['authData'] = '';
+				$this->success[] = 'wcf.user.3rdparty.google.disconnect.success';
 			}
 		}
 		
 		$data = array();
-		if (!empty($updateParameters)) {
-			$data['data'] = array_merge($this->additionalFields, $updateParameters);
+		if (!empty($this->updateParameters)) {
+			$data['data'] = array_merge($this->additionalFields, $this->updateParameters);
 		}
-		if (!empty($updateOptions)) {
-			$data['options'] = $updateOptions;
+		if (!empty($this->updateOptions)) {
+			$data['options'] = $this->updateOptions;
 		}
 		
 		$this->objectAction = new UserAction(array(WCF::getUser()), 'update', $data);
 		$this->objectAction->executeAction();
 		
 		// update cookie
-		if (isset($_COOKIE[COOKIE_PREFIX.'password']) && isset($updateParameters['password'])) {
+		if (isset($_COOKIE[COOKIE_PREFIX.'password']) && isset($this->updateParameters['password'])) {
 			// reload user
 			$user = new User(WCF::getUser()->userID);
 			
-			HeaderUtil::setCookie('password', PasswordUtil::getSaltedHash($updateParameters['password'], $user->password), TIME_NOW + 365 * 24 * 3600);
+			HeaderUtil::setCookie('password', PasswordUtil::getSaltedHash($this->updateParameters['password'], $user->password), TIME_NOW + 365 * 24 * 3600);
 		}
 		
 		$this->saved();
 		
-		$success = array_merge($success, WCF::getTPL()->get('success') ?: array());
+		$this->success = array_merge($this->success, WCF::getTPL()->get('success') ?: array());
 		
 		// show success message
-		WCF::getTPL()->assign('success', $success);
+		WCF::getTPL()->assign('success', $this->success);
 		
 		// reset password
 		$this->password = '';
