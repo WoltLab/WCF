@@ -86,7 +86,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	protected function import(array $row, array $data) {
 		$result = parent::import($row, $data);
 		
-		if (empty($row)) {
+		if (empty($row) && $data['preset']) {
 			$this->presetEventIDs[] = $result->eventID;
 		}
 		

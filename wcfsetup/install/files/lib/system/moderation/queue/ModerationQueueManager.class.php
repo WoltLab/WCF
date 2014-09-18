@@ -272,9 +272,9 @@ class ModerationQueueManager extends SingletonFactory {
 	 * @param	array<boolean>		$assignments
 	 */
 	public function setAssignment(array $assignments) {
-		$sql = "INSERT INTO	wcf".WCF_N."_moderation_queue_to_user
-					(queueID, userID, isAffected)
-			VALUES		(?, ?, ?)";
+		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_moderation_queue_to_user
+						(queueID, userID, isAffected)
+			VALUES			(?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		WCF::getDB()->beginTransaction();
