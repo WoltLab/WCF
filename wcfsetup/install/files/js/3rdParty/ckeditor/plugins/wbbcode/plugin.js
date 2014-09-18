@@ -456,7 +456,7 @@
 		html = html.replace(/<\/td>/gi, '[/td]');
 		
 		// Remove remaining tags.
-		html = html.replace(/<[^>]+>/g, '');
+		html = html.replace(/<[^(<|>)]+>/g, '');
 		
 		// Restore <, > and &
 		html = html.replace(/&lt;/g, '<');
