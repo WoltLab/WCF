@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @subpackage	page
  * @category	Community Framework
  */
-class PaidSubscriptionReturn extends AbstractPage {
+class PaidSubscriptionReturnPage extends AbstractPage {
 	/**
 	 * @see	\wcf\page\AbstractPage::$templateName
 	 */

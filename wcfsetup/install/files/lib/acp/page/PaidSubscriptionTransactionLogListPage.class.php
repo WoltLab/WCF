@@ -2,8 +2,8 @@
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
 use wcf\util\StringUtil;
-use wcf\system\WCF;
 use wcf\system\cache\builder\PaidSubscriptionCacheBuilder;
+use wcf\system\WCF;
 
 /**
  * Shows the list of paid subscription transactions.

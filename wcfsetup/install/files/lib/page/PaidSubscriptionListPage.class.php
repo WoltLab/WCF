@@ -1,9 +1,9 @@
 <?php
 namespace wcf\page;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 use wcf\system\cache\builder\PaidSubscriptionCacheBuilder;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\WCF;
-use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 
 /**
  * Shows a list of the available paid subscriptions.

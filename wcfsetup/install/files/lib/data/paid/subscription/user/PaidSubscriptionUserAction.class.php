@@ -2,8 +2,8 @@
 namespace wcf\data\paid\subscription\user;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\user\group\UserGroup;
-use wcf\data\user\UserAction;
 use wcf\data\user\User;
+use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\UserInputException;
 use wcf\util\DateUtil;

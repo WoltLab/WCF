@@ -1,9 +1,9 @@
 <?php
 namespace wcf\data\paid\subscription\transaction\log;
-use wcf\data\DatabaseObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\user\User;
+use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**

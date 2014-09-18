@@ -1,15 +1,15 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\paid\subscription\PaidSubscription;
-use wcf\form\AbstractForm;
-use wcf\system\exception\UserInputException;
-use wcf\system\WCF;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\util\StringUtil;
-use wcf\data\user\User;
 use wcf\data\paid\subscription\user\PaidSubscriptionUser;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
+use wcf\data\paid\subscription\PaidSubscription;
+use wcf\data\user\User;
+use wcf\form\AbstractForm;
+use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 use wcf\util\DateUtil;
+use wcf\util\StringUtil;
 
 /**
  * Shows the user subscription add form.

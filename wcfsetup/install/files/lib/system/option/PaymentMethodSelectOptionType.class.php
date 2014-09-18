@@ -2,8 +2,8 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\exception\UserInputException;
-use wcf\system\WCF;
 use wcf\system\payment\method\PaymentMethodHandler;
+use wcf\system\WCF;
 
 /**
  * Option type implementation for selecting payment methods.

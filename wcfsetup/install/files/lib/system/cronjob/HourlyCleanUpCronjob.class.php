@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
-use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 use wcf\data\paid\subscription\user\PaidSubscriptionUserAction;
+use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
 
 /**
  * Cronjob for a hourly system cleanup.

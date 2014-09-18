@@ -1,8 +1,9 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\paid\subscription\PaidSubscriptionAction;
 use wcf\data\paid\subscription\PaidSubscription;
+use wcf\data\paid\subscription\PaidSubscriptionAction;
 use wcf\data\paid\subscription\PaidSubscriptionEditor;
+use wcf\data\paid\subscription\PaidSubscriptionList;
 use wcf\data\user\group\UserGroup;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
@@ -10,7 +11,6 @@ use wcf\system\language\I18nHandler;
 use wcf\system\payment\method\PaymentMethodHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
-use wcf\data\paid\subscription\PaidSubscriptionList;
 
 /**
  * Shows the paid subscription add form.
@@ -35,7 +35,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$templateName
-	*/
+	 */
 	public $templateName = 'paidSubscriptionAdd';
 	
 	/**

@@ -42,7 +42,7 @@ class PaidSubscription extends DatabaseObject {
 			// check supported currencies
 			if (!in_array($this->currency, $paymentMethod->getSupportedCurrencies())) continue;
 			
-			$buttons[] = $paymentMethod->getPurchaseButton($this->cost, $this->currency, WCF::getLanguage()->get($this->title), $objectTypeID . ':' . WCF::getUser()->userID . ':' . $this->subscriptionID , LinkHandler::getInstance()->getLink('PaidSubscriptionReturn'), LinkHandler::getInstance()->getLink(), $this->isRecurring, $this->subscriptionLength, $this->subscriptionLengthUnit);
+			$buttons[] = $paymentMethod->getPurchaseButton($this->cost, $this->currency, WCF::getLanguage()->get($this->title), $objectTypeID . ':' . WCF::getUser()->userID . ':' . $this->subscriptionID, LinkHandler::getInstance()->getLink('PaidSubscriptionReturn'), LinkHandler::getInstance()->getLink(), $this->isRecurring, $this->subscriptionLength, $this->subscriptionLengthUnit);
 		}
 		
 		return $buttons;

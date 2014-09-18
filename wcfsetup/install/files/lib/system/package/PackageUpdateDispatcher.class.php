@@ -16,7 +16,6 @@ use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\HTTPRequest;
 use wcf\util\XML;
-use wcf\data\package\update\PackageUpdate;
 
 /**
  * Provides functions to manage package updates.
