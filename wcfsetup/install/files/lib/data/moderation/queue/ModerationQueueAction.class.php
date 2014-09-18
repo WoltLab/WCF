@@ -127,6 +127,11 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
+		// set moderation as read
+		if (ModerationQueueManager::getInstance()->isNew()) {
+			UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'moderationRead', true);
+		}
+		
 		return array(
 			'template' => WCF::getTPL()->fetch('moderationQueueList'),
 			'totalCount' => $totalCount

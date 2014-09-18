@@ -3,6 +3,7 @@ namespace wcf\page;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\user\storage\UserStorageHandler; 
 use wcf\system\WCF;
 
 /**
@@ -85,6 +86,18 @@ class ModerationListPage extends SortablePage {
 			if ($this->definitionID && !isset($this->availableDefinitions[$this->definitionID])) {
 				throw new IllegalLinkException();
 			}
+		}
+	}
+	
+	/**
+	 * @see	\wcf\page\IPage::readData()
+	 */
+	public function readData() {
+		parent::readData();
+		
+		// set moderation as read
+		if (ModerationQueueManager::getInstance()->isNew()) {
+			UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'moderationRead', true);
 		}
 	}
 	
