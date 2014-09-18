@@ -48,7 +48,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	/**
 	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
 	 */
-	protected $requireACP = array('copy', 'delete', 'setAsDefault', 'toggle', 'update', 'upload');
+	protected $requireACP = array('copy', 'delete', 'setAsDefault', 'toggle', 'update', 'upload', 'uploadLogo');
 	
 	/**
 	 * style object
@@ -279,7 +279,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		
 		try {
 			if (!$file->getValidationErrorType()) {
-				// shrink avatar if necessary
+				// shrink preview image if necessary
 				$fileLocation = $file->getLocation();
 				$imageData = getimagesize($fileLocation);
 				if ($imageData[0] > Style::PREVIEW_IMAGE_MAX_WIDTH || $imageData[1] > Style::PREVIEW_IMAGE_MAX_HEIGHT) {
@@ -314,6 +314,52 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 					// return result
 					return array(
 						'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['tmpHash'].'.'.$file->getFileExtension()
+					);
+				}
+				else {
+					throw new UserInputException('image', 'uploadFailed');
+				}
+			}
+		}
+		catch (UserInputException $e) {
+			$file->setValidationErrorType($e->getType());
+		}
+		
+		return array('errorType' => $file->getValidationErrorType());
+	}
+	
+	/**
+	 * Validates parameters to update a logo.
+	 */
+	public function validateUploadLogo() {
+		$this->validateUpload();
+	}
+	
+	/**
+	 * Handles logo upload.
+	 *
+	 * @return	array<string>
+	 */
+	public function uploadLogo() {
+		// save files
+		$files = $this->parameters['__files']->getFiles();
+		$file = $files[0];
+		
+		try {
+			if (!$file->getValidationErrorType()) {
+				// shrink avatar if necessary
+				$fileLocation = $file->getLocation();
+				
+				// move uploaded file
+				if (@copy($fileLocation, WCF_DIR.'images/styleLogo-'.$this->parameters['tmpHash'].'.'.$file->getFileExtension())) {
+					@unlink($fileLocation);
+					
+					// store extension within session variables
+					WCF::getSession()->register('styleLogo-'.$this->parameters['tmpHash'], $file->getFileExtension());
+					
+					// return result
+					return array(
+						'url' => WCF::getPath().'images/styleLogo-'.$this->parameters['tmpHash'].'.'.$file->getFileExtension()
 					);
 				}
 				else {

@@ -34,6 +34,7 @@
 			'wcf.style.colorPicker.button.apply': '{lang}wcf.style.colorPicker.button.apply{/lang}'
 		});
 		new WCF.ACP.Style.ImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}');
+		new WCF.ACP.Style.LogoUpload('{$tmpHash}', '{@$__wcf->getPath()}images/');
 		
 		{if $action == 'edit'}
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
@@ -350,6 +351,20 @@
 				
 				<dl>
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
+					<dd class="framed">
+						<img src="" alt="" id="styleLogo" />
+						<div id="uploadLogo"></div>
+						{if $errorField == 'image'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.style.image.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
+						<small>{lang}wcf.acp.style.image.description{/lang}</small>
+					</dd>
 					<dd>
 						<input type="text" name="pageLogo" id="pageLogo" value="{$variables[pageLogo]}" class="long" />
 						<small>{lang}wcf.acp.style.globals.pageLogo.description{/lang}</small>
