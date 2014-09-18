@@ -305,7 +305,7 @@ class RegisterForm extends UserAddForm {
 						WCF::getSession()->unregister('__githubData');
 						WCF::getSession()->unregister('__githubToken');
 						
-						if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
+						if (isset($githubData['email']) && $githubData['email'] == $this->email) {
 							$registerVia3rdParty = true;
 						}
 						
