@@ -10,6 +10,7 @@ use wcf\system\cache\builder\SpiderCacheBuilder;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\database\DatabaseException;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\request\RequestHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
@@ -577,6 +578,13 @@ class SessionHandler extends SingletonFactory {
 	 * @return	boolean
 	 */
 	public function changeUser(User $user, $hideSession = false) {
+		$eventParameters = array('user' => $user, 'hideSession' => $hideSession); 
+		
+		EventHandler::getInstance()->fireAction($this, 'beforeChangeUser', $eventParameters);
+		
+		$user = $eventParameters['user']; 
+		$hideSession = $eventParameters['hideSession'];
+		
 		if ($this->supportsVirtualSessions) {
 			return $this->changeUserVirtual($user);
 		}
@@ -636,6 +644,8 @@ class SessionHandler extends SingletonFactory {
 		$this->languageIDs = null;
 		$this->languageID = $this->user->languageID;
 		$this->styleID = $this->user->styleID;
+		
+		EventHandler::getInstance()->fireAction($this, 'afterChangeUser');
 		
 		return true;
 	}
@@ -742,6 +752,8 @@ class SessionHandler extends SingletonFactory {
 		$this->languageIDs = null;
 		$this->languageID = $this->user->languageID;
 		$this->styleID = $this->user->styleID;
+		
+		EventHandler::getInstance()->fireAction($this, 'afterChangeUser');
 		
 		return false;
 	}
