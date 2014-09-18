@@ -141,9 +141,18 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		$this->action = $action;
 		$this->parameters = $parameters;
 		
+		// initialize further settings
+		$this->__init($baseClass, $indexName);
+		
 		// fire event action
 		EventHandler::getInstance()->fireAction($this, 'initializeAction');
 	}
+	
+	/**
+	 * This function can be overridden in children to perform custom initialization
+	 * of a DBOAction before the 'initializeAction' event is fired.
+	 */
+	protected function __init($baseClass, $indexName) { }
 	
 	/**
 	 * @see	\wcf\data\IDatabaseObjectAction::validateAction()
