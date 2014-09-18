@@ -432,6 +432,7 @@ final class HTTPRequest {
 			break;
 			
 			case '401':
+			case '402':
 			case '403':
 				throw new HTTPUnauthorizedException("Received status code '".$this->statusCode."' from server");
 			break;

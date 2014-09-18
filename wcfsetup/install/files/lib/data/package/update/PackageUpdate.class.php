@@ -24,6 +24,12 @@ class PackageUpdate extends DatabaseObject {
 	protected static $databaseTableIndexName = 'packageUpdateID';
 	
 	/**
+	 * package update API version
+	 * @var	string
+	 */
+	const API_VERSION = '2.1';
+	
+	/**
 	 * Returns the name of the package the update belongs to.
 	 * 
 	 * @return	string

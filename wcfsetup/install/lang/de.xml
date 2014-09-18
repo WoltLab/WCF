@@ -1133,6 +1133,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Zugangsdaten]]></item>
 		<item name="wcf.acp.package.update.error.listNotFound"><![CDATA[Die Paketliste konnte nicht abgerufen werden]]></item>
 		<item name="wcf.acp.package.update.errorCode.401"><![CDATA[Ihre Angaben sind ungültig, bitte überprüfen Sie {if $updateServer->requiresLicense()}Lizenz- und Seriennummer{else}Benutzername und Passwort{/if}.]]></item>
+		<item name="wcf.acp.package.update.errorCode.402"><![CDATA[{if $updateServer->requiresLicense()}Lizenz- und Seriennummer{else}Benutzername und Passwort{/if} wurden vom Server akzeptiert, es handelt sich aber um einer kommerzielles Produkt auf das diese Zugangsdaten keinen Zugriff haben.]]></item>
 		<item name="wcf.acp.package.update.errorCode.403"><![CDATA[Sie sind nicht berechtigt auf dieses Paket zuzugreifen.]]></item>
 		<item name="wcf.acp.package.update.licenseNo"><![CDATA[Lizenznummer]]></item>
 		<item name="wcf.acp.package.update.password"><![CDATA[Passwort]]></item>
