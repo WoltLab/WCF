@@ -1,9 +1,9 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\SortablePage;
-use wcf\util\StringUtil;
 use wcf\system\cache\builder\PaidSubscriptionCacheBuilder;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Shows the list of paid subscription transactions.

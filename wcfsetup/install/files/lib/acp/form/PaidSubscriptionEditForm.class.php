@@ -1,9 +1,9 @@
 <?php
 namespace wcf\acp\form;
-use wcf\form\AbstractForm;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\paid\subscription\PaidSubscriptionAction;
 use wcf\data\paid\subscription\PaidSubscriptionList;
+use wcf\form\AbstractForm;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
