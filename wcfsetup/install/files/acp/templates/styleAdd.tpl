@@ -363,7 +363,6 @@
 								{/if}
 							</small>
 						{/if}
-						<small>{lang}wcf.acp.style.image.description{/lang}</small>
 					</dd>
 					<dd>
 						<input type="text" name="pageLogo" id="pageLogo" value="{$variables[pageLogo]}" class="long" />
