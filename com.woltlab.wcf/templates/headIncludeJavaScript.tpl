@@ -36,11 +36,10 @@
 </script>
 {/if}
 
+{if ENABLE_DEBUG_MODE}
 <script src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
 <script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.nestedSortable{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
 <script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.timepicker{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-
-{if ENABLE_DEBUG_MODE}
 <script src="{@$__wcf->getPath()}js/WCF.js?v={@LAST_UPDATE_TIME}"></script>
 {else}
 <script src="{@$__wcf->getPath()}js/WCF.Combined.min.js?v={@LAST_UPDATE_TIME}"></script>
