@@ -195,6 +195,11 @@ class UserOnline extends UserProfile {
 			return 'Midori '.$match[1];
 		}
 		
+		// android
+		if (preg_match('~Mozilla/5.0 \(Linux; (?:(?:N|U|I); )?Android ([\d\.]+)~i', $this->userAgent, $match)) {
+			return 'Android '.$match[1];
+		}
+		
 		// chrome mobile
 		if (preg_match('~(?:crios|crmo)/([\d\.]+)|chrome/([\d\.]+).*mobile~i', $this->userAgent, $match)) {
 			return 'Chrome Mobile '.(isset($match[2]) ? $match[2] : $match[1]);
