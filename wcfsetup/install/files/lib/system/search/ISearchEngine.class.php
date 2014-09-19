@@ -21,11 +21,12 @@ interface ISearchEngine {
 	public function getConditionBuilderClassName();
 	
 	/**
-	 * Returns the inner join query and the condition parameters. This method is allowed to return NULL
-	 * for the 'fulltextCondition' index instead of a PreparedStatementConditionBuilder instance:
+	 * Returns the inner join query and the condition parameters. This method is allowed to return NULL for both the
+	 * 'fulltextCondition' and 'searchIndexCondition' index instead of a PreparedStatementConditionBuilder instance:
 	 * 
 	 * array(
 	 * 	'fulltextCondition' => $fulltextCondition || null,
+	 * 	'searchIndexCondition' => $searchIndexCondition || null,
 	 * 	'sql' => $sql
 	 * );
 	 * 
