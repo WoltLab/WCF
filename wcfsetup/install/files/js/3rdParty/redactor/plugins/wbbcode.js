@@ -815,6 +815,7 @@ RedactorPlugins.wbbcode = {
 		// replace nested elements e.g. <div><p>...</p></div>
 		html = html.replace(/<(div|p)([^>]+)?><(div|p)([^>]+)?>/g, '<p>');
 		html = html.replace(/<\/(div|p)><\/(div|p)>/g, '</p>@@@wcf_break@@@');
+		html = html.replace(/<(div|p)><br><\/(div|p)>/g, '@@@wcf_break@@@');
 		
 		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforePaste', { html: html });
 		
@@ -835,7 +836,7 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/<header[^>]*>/g, '');
 		html = html.replace(/<\/header>/g, '');
 		
-		html = html.replace(/<div>.*?<\/div>/g, '<p>$1</p>');
+		html = html.replace(/<div>(.*?)<\/div>/g, '<p>$1</p>');
 		
 		// drop lonely divs
 		html = html.replace(/<\/?div>/g, '');
