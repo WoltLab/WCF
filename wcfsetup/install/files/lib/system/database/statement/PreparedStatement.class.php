@@ -75,7 +75,7 @@ class PreparedStatement {
 	}
 	
 	/**
-	 * Executes a prepared statement within a transaction.
+	 * Executes a prepared statement.
 	 * 
 	 * @param	array		$parameters
 	 */
