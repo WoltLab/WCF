@@ -109,7 +109,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 		$affectedCount = 0;
 		WCF::getDB()->beginTransaction();
 		foreach ($objectIDs as $objectID) {
-			$statement->executeUnbuffered(array($objectID));
+			$statement->execute(array($objectID));
 			$affectedCount += $statement->getAffectedRows();
 		}
 		WCF::getDB()->commitTransaction();

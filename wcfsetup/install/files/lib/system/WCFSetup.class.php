@@ -815,7 +815,7 @@ class WCFSetup extends WCF {
 			
 			self::getDB()->beginTransaction();
 			foreach ($acpTemplateInserts as $acpTemplate) {
-				$statement->executeUnbuffered(array($acpTemplate, 'wcf'));
+				$statement->execute(array($acpTemplate, 'wcf'));
 			}
 			self::getDB()->commitTransaction();
 		}
@@ -829,7 +829,7 @@ class WCFSetup extends WCF {
 			
 			self::getDB()->beginTransaction();
 			foreach ($fileInserts as $file) {
-				$statement->executeUnbuffered(array($file, 'wcf'));
+				$statement->execute(array($file, 'wcf'));
 			}
 			self::getDB()->commitTransaction();
 		}

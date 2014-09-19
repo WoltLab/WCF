@@ -101,25 +101,11 @@ class PreparedStatement {
 	/**
 	 * Executes a prepared statement.
 	 * 
+	 * @deprecated	2.1 - Please use execute() instead
 	 * @param	array		$parameters
 	 */
 	public function executeUnbuffered(array $parameters = array()) {
-		$this->parameters = $parameters;
-		$this->database->incrementQueryCount();
-		
-		try {
-			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->start($this->query, Benchmark::TYPE_SQL_QUERY);
-			
-			if (empty($parameters)) $this->pdoStatement->execute();
-			else $this->pdoStatement->execute($parameters);
-			
-			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
-		}
-		catch (\PDOException $e) {
-			if (WCF::benchmarkIsEnabled()) Benchmark::getInstance()->stop();
-			
-			throw new DatabaseException('Could not execute prepared statement: '.$e->getMessage(), $this->database, $this);
-		}
+		$this->execute($parameters);
 	}
 	
 	/**
