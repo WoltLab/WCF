@@ -56,7 +56,11 @@ class AdHandler extends SingletonFactory {
 			$output .= $ad->ad;
 		}
 		
-		return $output;
+		if (!empty($output)) {
+			return '<div class="wcfAdLocation' . ($this->objectTypes[$adLocation]->cssclassname ? (' ' . $this->objectTypes[$adLocation]->cssclassname) : '') . '"><div>' . $output . '</div></div>';
+		}
+		
+		return '';
 	}
 	
 	/**

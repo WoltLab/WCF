@@ -2296,6 +2296,43 @@ ul.inlineDataList {
 	}
 }
 
+/* ad locations */
+.wcfAdLocationHeaderContent,
+.wcfAdLocationFooterContent,
+.wcfAdLocationFooterBottom {
+	text-align: center;
+	
+	> div {
+		display: inline-block;
+		text-align: left;
+	}
+}
+
+.wcfAdLocationHeaderContent {
+	margin-top: @wcfGapSmall;
+}
+
+.wcfAdLocationFooterContent,
+.wcfAdLocationFooterBottom {
+	margin-top: @wcfGapMedium;
+}
+
+.wcfAdLocationSidebarTop,
+.wcfAdLocationSidebarBottom {
+	padding: 0 @wcfGapMedium @wcfGapMedium;
+	text-align: center;
+	
+	> div {
+		display: inline-block;
+		text-align: left;
+	}
+}
+
+.wcfAdLocationLogo {
+	float: right;
+	padding: @wcfGapMedium @wcfGapMedium 0 @wcfGapMedium;
+}
+
 /* print version */
 @media print {
 	* {

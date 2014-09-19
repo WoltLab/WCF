@@ -785,31 +785,37 @@
 			<name>com.woltlab.wcf.logo</name>
 			<definitionname>com.woltlab.wcf.adLocation</definitionname>
 			<categoryname>com.woltlab.wcf.global</categoryname>
+			<cssclassname>wcfAdLocationLogo</cssclassname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.header.content</name>
 			<definitionname>com.woltlab.wcf.adLocation</definitionname>
 			<categoryname>com.woltlab.wcf.global</categoryname>
+			<cssclassname>wcfAdLocationHeaderContent</cssclassname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.footer.content</name>
 			<definitionname>com.woltlab.wcf.adLocation</definitionname>
 			<categoryname>com.woltlab.wcf.global</categoryname>
+			<cssclassname>wcfAdLocationFooterContent</cssclassname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.sidebar.top</name>
 			<definitionname>com.woltlab.wcf.adLocation</definitionname>
 			<categoryname>com.woltlab.wcf.global</categoryname>
+			<cssclassname>wcfAdLocationSidebarTop</cssclassname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.sidebar.bottom</name>
 			<definitionname>com.woltlab.wcf.adLocation</definitionname>
 			<categoryname>com.woltlab.wcf.global</categoryname>
+			<cssclassname>wcfAdLocationSidebarBottom</cssclassname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.footer.bottom</name>
 			<definitionname>com.woltlab.wcf.adLocation</definitionname>
 			<categoryname>com.woltlab.wcf.global</categoryname>
+			<cssclassname>wcfAdLocationFooterBottom</cssclassname>
 		</type>
 		<!-- /ad locations -->
 		

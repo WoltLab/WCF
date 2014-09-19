@@ -18,14 +18,14 @@
 		</nav>
 		
 		<div id="logo" class="logo">
+			{if MODULE_WCF_AD}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.logo')}{/if}
+			
 			<a href="{link}{/link}">
 				{if $__wcf->getStyleHandler()->getStyle()->getPageLogo()}
 					<img src="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}" alt="" />
 				{/if}
 				{event name='headerLogo'}
 			</a>
-			
-			{if MODULE_WCF_AD}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.logo')}{/if}
 		</div>
 		
 		{event name='headerContents'}
