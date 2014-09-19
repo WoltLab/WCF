@@ -287,7 +287,13 @@ RedactorPlugins.wbbcode = {
 		html = html.replace(/<img [^>]*?class="smiley" alt="([^"]+?)".*?> ?/gi, '$1 '); // chrome, ie
 		
 		// attachments
-		html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment" data-attachment-id="(\d+)".*?>/gi, '[attach=$1][/attach]');
+		html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment" data-attachment-id="(\d+)"( style="float: (left|right)")?>/gi, function(match, attachmentID, styleTag, alignment) {
+			if (alignment) {
+				return '[attach=' + attachmentID + ',' + alignment + '][/attach]';
+			}
+			
+			return '[attach=' + attachmentID + '][/attach]';
+		});
 		
 		// [img]
 		html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1 style="float: (left|right)[^"]*".*?>/gi, "[img='$2',$3][/img]");
@@ -588,11 +594,18 @@ RedactorPlugins.wbbcode = {
 		if ($attachmentUrl) {
 			var $imageAttachmentIDs = this._getImageAttachmentIDs();
 			
-			data = data.replace(/\[attach=(\d+)\]\[\/attach\]/g, function(match, attachmentID) {
+			data = data.replace(/\[attach=(\d+)(,[^\]]*)?\]\[\/attach\]/g, function(match, attachmentID, alignment) {
 				attachmentID = parseInt(attachmentID);
 				
 				if (WCF.inArray(attachmentID, $imageAttachmentIDs)) {
-					return '<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment" data-attachment-id="' + attachmentID + '" />';
+					var $style = '';
+					if (alignment) {
+						if (alignment.match(/^,'?(left|right)'?/)) {
+							$style = ' style="float: ' + RegExp.$1 + '"';
+						}
+					}
+					
+					return '<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment" data-attachment-id="' + attachmentID + '"' + $style + ' />';
 				}
 				
 				return match;
