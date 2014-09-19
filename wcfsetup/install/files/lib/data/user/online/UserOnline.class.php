@@ -13,7 +13,7 @@ use wcf\util\UserUtil;
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	data.user.online
+ * @subpackage	data.user.onlineapa
  * @category	Community Framework
  */
 class UserOnline extends UserProfile {
@@ -197,7 +197,7 @@ class UserOnline extends UserProfile {
 		
 		// android
 		if (preg_match('~Mozilla/5.0 \(Linux; (?:(?:N|U|I); )?Android ([\d\.]+)~i', $this->userAgent, $match)) {
-			return 'Android '.(isset($match[2]) ? $match[2] : $match[1]);
+			return 'Android '.$match[1];
 		}
 		
 		// chrome mobile
