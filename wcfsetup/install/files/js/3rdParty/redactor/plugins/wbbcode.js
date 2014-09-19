@@ -650,10 +650,10 @@ RedactorPlugins.wbbcode = {
 		for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
 			var $line = $.trim($tmp[$i]);
 			
-			if ($line.indexOf('<') === 0) {
+			if ($line.match(/^<([a-z]+)/)) {
 				data += $line;
 				
-				if (!$line.match(/>$/) || $line.match(/<span[^>]+>.*?<\/span>$/)) {
+				if (!this.opts.rBlockTest.test(RegExp.$1.toUpperCase())) {
 					data += '<br>';
 				}
 			}
