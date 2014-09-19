@@ -121,6 +121,7 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 		
 		return array(
 			'fulltextCondition' => $fulltextCondition,
+			'searchIndexCondition' => $searchIndexCondition,
 			'sql' => $sql
 		);
 	}
