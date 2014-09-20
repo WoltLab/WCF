@@ -28,6 +28,7 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 	public function validateLoad() {
 		$this->readBoolean('filteredByFollowedUsers', true);
 		$this->readInteger('lastEventTime');
+		$this->readInteger('lastEventID', true);
 		$this->readInteger('userID', true);
 	}
 	
@@ -38,7 +39,13 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 	 */
 	public function load() {
 		$eventList = new ViewableUserActivityEventList();
-		$eventList->getConditionBuilder()->add("user_activity_event.time < ?", array($this->parameters['lastEventTime']));
+		if ($this->parameters['lastEventID']) {
+			$eventList->getConditionBuilder()->add("user_activity_event.time <= ?", array($this->parameters['lastEventTime']));
+			$eventList->getConditionBuilder()->add("user_activity_event.eventID < ?", array($this->parameters['lastEventID']));
+		}
+		else {
+			$eventList->getConditionBuilder()->add("user_activity_event.time < ?", array($this->parameters['lastEventTime']));
+		}
 		
 		// profile view
 		if ($this->parameters['userID']) {
@@ -63,7 +70,9 @@ class UserActivityEventAction extends AbstractDatabaseObjectAction {
 			'eventList' => $eventList
 		));
 		
+		$events = $eventList->getObjects();
 		return array(
+			'lastEventID' => end($events)->eventID,
 			'lastEventTime' => $lastEventTime,
 			'template' => WCF::getTPL()->fetch('recentActivityListItem')
 		);

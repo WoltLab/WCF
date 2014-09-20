@@ -6,7 +6,9 @@
 </header>
 
 <div class="container marginTop">
-	<ul id="recentActivities" class="containerList recentActivityList" data-last-event-time="{@$lastEventTime}">
+	{assign var='__events' value=$eventList->getObjects()}
+	{assign var='__lastEvent' value=$__events|end}
+	<ul id="recentActivities" class="containerList recentActivityList" data-last-event-time="{@$lastEventTime}" data-last-event-id="{@$__lastEvent->eventID}">
 		{include file='recentActivityListItem'}
 	</ul>
 </div>

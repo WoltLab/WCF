@@ -1650,6 +1650,7 @@ WCF.User.RecentActivityLoader = Class.extend({
 		this._loadButton.enable();
 		
 		var $parameters = {
+			lastEventID: this._container.data('lastEventID'),
 			lastEventTime: this._container.data('lastEventTime')
 		};
 		if (this._userID) {
@@ -1695,6 +1696,7 @@ WCF.User.RecentActivityLoader = Class.extend({
 			$(data.returnValues.template).insertBefore(this._loadButton.parent());
 			
 			this._container.data('lastEventTime', data.returnValues.lastEventTime);
+			this._container.data('lastEventID', data.returnValues.lastEventID);
 			this._loadButton.enable();
 		}
 		else {

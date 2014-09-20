@@ -29,7 +29,7 @@ class ViewableUserActivityEventList extends UserActivityEventList {
 	/**
 	 * @see	\wcf\data\DatabaseObjectList::$sqlOrderBy
 	 */
-	public $sqlOrderBy = 'user_activity_event.time DESC';
+	public $sqlOrderBy = 'user_activity_event.time DESC, user_activity_event.eventID DESC';
 	
 	/**
 	 * Creates a new ViewableUserActivityEventList object.
