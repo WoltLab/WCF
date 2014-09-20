@@ -103,12 +103,12 @@ class PackageInstallationNodeBuilder {
 			$this->buildOptionalNodes();
 		}
 		
-		// child queues
-		$this->buildChildQueues();
-		
 		if ($this->installation->queue->action == 'update') {
 			$this->buildPackageNode();
 		}
+		
+		// child queues
+		$this->buildChildQueues();
 	}
 	
 	/**
