@@ -42,4 +42,8 @@
 		<instruction type="aclOption">aclOption.xml</instruction>
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
+	
+	<instructions type="update" fromversion="2.0.9">
+		<instruction type="aclOption">aclOption.xml</instruction>
+	</instructions>
 </package>
