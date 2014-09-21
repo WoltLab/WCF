@@ -157,6 +157,10 @@ class SQLParser {
 				else if (preg_match('~^ALTER\s+TABLE\s+(\w+)\s+DROP\s+(?:INDEX|KEY)\s+(\w+)~is', $query, $match)) {
 					$this->executeDropIndexStatement($match[1], $match[2]);
 				}
+				// drop foreign key
+				else if (preg_match('~^ALTER\s+TABLE\s+(\w+)\s+DROP\s+FOREIGN KEY\s+(\w+)~is', $query, $match)) {
+					$this->executeDropForeignKeyStatement($match[1], self::getGenericIndexName($match[1], $match[2], 'fk'));
+				}
 				// drop column
 				else if (preg_match('~^ALTER\s+TABLE\s+(\w+)\s+DROP\s+(?:COLUMN\s+)?(\w+)~is', $query, $match)) {
 					$this->executeDropColumnStatement($match[1], $match[2]);
@@ -276,6 +280,16 @@ class SQLParser {
 	 */
 	protected function executeDropIndexStatement($tableName, $indexName) {
 		WCF::getDB()->getEditor()->dropIndex($tableName, $indexName);
+	}
+	
+	/**
+	 * Executes a 'DROP FOREIGN KEY' statement.
+	 * 
+	 * @param	string		$tableName
+	 * @param	string		$indexName
+	 */
+	protected function executeDropForeignKeyStatement($tableName, $indexName) {
+		WCF::getDB()->getEditor()->dropForeignKey($tableName, $indexName);
 	}
 	
 	/**
