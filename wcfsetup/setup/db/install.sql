@@ -1772,7 +1772,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContain
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerAccentBackgroundColor', 'rgba(249, 249, 249, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerHoverBackgroundColor', 'rgba(244, 244, 244, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBorderColor', 'rgba(221, 221, 221, 1)');
-INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBorderRadius', '0');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContainerBorderRadius', '0px');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTabularBoxBackgroundColor', 'rgba(63, 127, 191, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTabularBoxColor', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTabularBoxHoverColor', 'rgba(255, 255, 255, 1)');
