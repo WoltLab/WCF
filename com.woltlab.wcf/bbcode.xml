@@ -32,12 +32,10 @@
 			<allowedchildren>all^sup</allowedchildren>
 		</bbcode>
 		<bbcode name="email">
-			<htmlopen>a</htmlopen>
-			<htmlclose>a</htmlclose>
+			<classname><![CDATA[wcf\system\bbcode\EmailBBCode]]></classname>
 			<allowedchildren>none^img,b,i,u,s,sub,sup,color,size,font</allowedchildren>
 			<attributes>
 				<attribute name="0">
-					<html>href="mailto:%s"</html>
 					<required>1</required>
 					<usetext>1</usetext>
 					<validationpattern>^[^\s]+@[^\s]+$</validationpattern>
