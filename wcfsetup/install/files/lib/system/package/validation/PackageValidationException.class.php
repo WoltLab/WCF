@@ -77,7 +77,8 @@ class PackageValidationException extends SystemException {
 	const INSUFFICIENT_VERSION = 9;
 	
 	/**
-	 * requirement is set but neither installed nor provided, expects the details 'packageName' and 'packageVersion'
+	 * requirement is set but neither installed nor provided, expects the details 'packageName', 'packageVersion' and 'package' (must be
+	 * an instance of \wcf\data\package\Package or null if not installed)
 	 * @var	integer
 	 */
 	const MISSING_REQUIREMENT = 10;

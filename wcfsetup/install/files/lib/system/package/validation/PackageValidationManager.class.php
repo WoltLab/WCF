@@ -17,12 +17,6 @@ use wcf\system\SingletonFactory;
  */
 class PackageValidationManager extends SingletonFactory {
 	/**
-	 * list of known package installation plugins
-	 * @var	array<string>
-	 */
-	protected $packageInstallationPlugins = array();
-	
-	/**
 	 * package validation archive object
 	 * @var	\wcf\system\package\validation\PackageValidationArchive
 	 */
@@ -35,15 +29,22 @@ class PackageValidationManager extends SingletonFactory {
 	protected $virtualPackageList = array();
 	
 	/**
-	 * @see	\wcf\system\SingletonFactory::init()
+	 * validation will only check if the primary package looks like it can be installed or updated
+	 * @var	integer
 	 */
-	protected function init() {
-		$pipList = new PackageInstallationPluginList();
-		$pipList->readObjects();
-		foreach ($pipList as $pip) {
-			$this->packageInstallationPlugins[$pip->pluginName] = $pip->className;
-		}
-	}
+	const VALIDATION_WEAK = 0;
+	
+	/**
+	 * validation will recursively check dependencies
+	 * @var	integer
+	 */
+	const VALIDATION_RECURSIVE = 1;
+	
+	/**
+	 * validation will use the previously gathered exclusions and check them
+	 * @var	integer
+	 */
+	const VALIDATION_EXCLUSION = 2;
 	
 	/**
 	 * Validates given archive for existance and ability to be installed/updated. If you set the
@@ -55,11 +56,19 @@ class PackageValidationManager extends SingletonFactory {
 	 * @param	boolean		$deepInspection
 	 * @return	boolean
 	 */
-	public function validate($archive, $deepInspection = true) {
+	public function validate($archive, $deepInspection) {
 		$this->virtualPackageList = array();
 		$this->packageValidationArchive = new PackageValidationArchive($archive);
 		
-		return $this->packageValidationArchive->validate($deepInspection);
+		if ($deepInspection) {
+			if (!$this->packageValidationArchive->validate(self::VALIDATION_RECURSIVE)) {
+				return false;
+			}
+			
+			return $this->packageValidationArchive->validate(self::VALIDATION_EXCLUSION);
+		}
+		
+		return $this->packageValidationArchive->validate(self::VALIDATION_WEAK);
 	}
 	
 	/**
@@ -145,23 +154,5 @@ class PackageValidationManager extends SingletonFactory {
 		}
 		
 		return null;
-	}
-	
-	/**
-	 * Validates an instruction against the corresponding package installation plugin.
-	 * 
-	 * Please be aware that unknown PIPs will silently ignored and cause no error.
-	 *  
-	 * @param	\wcf\data\package\PackageArchive	$archive
-	 * @param	string					$pip
-	 * @param	string					$instruction
-	 * @return	boolean
-	 */
-	public function validatePackageInstallationPluginInstruction(PackageArchive $archive, $pip, $instruction) {
-		if (isset($this->packageInstallationPlugins[$pip])) {
-			return call_user_func(array($this->packageInstallationPlugins[$pip], 'isValid'), $archive, $instruction);
-		}
-		
-		return true;
 	}
 }
