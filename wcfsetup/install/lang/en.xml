@@ -2073,6 +2073,8 @@ Errors are:
 		<item name="wcf.edit.revert.sure"><![CDATA[Do you really want to revert to the version at {$edit->time|plainTime}, created by “{$edit->username}”?]]></item>
 		<item name="wcf.edit.reverted"><![CDATA[Reverted to the version at {$edit->time|plainTime}, created by “{$edit->username}”]]></item>
 		<item name="wcf.edit.button.compare"><![CDATA[Compare]]></item>
+		<item name="wcf.edit.headline.old"><![CDATA[TODO: {if $oldID == 'current'}Aktuelle {/if}Version vom {@$old->time|plainTime} ({$old->username})]]></item>
+		<item name="wcf.edit.headline.new"><![CDATA[TODO: {if $newID == 'current'}Aktuelle {/if}Version vom {@$new->time|plainTime} ({$new->username})]]></item>
 	</category>
 	
 	<category name="wcf.global">

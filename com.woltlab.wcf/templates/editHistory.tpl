@@ -11,12 +11,22 @@
 {include file='header'}
 
 <header class="boxHeadline">
-	<h1>{$object->getTitle()}</h1>
+	<h1>{lang}wcf.edit.versions{/lang}: {$object->getTitle()}</h1>
 </header>
 
 {include file='userNotice'}
 
 {if $diff}
+<div class="container containerPadding marginTop editHistoryDiff">
+	<div class="sideBySide">
+		<div class="containerHeadline">
+			<h3>{lang}wcf.edit.headline.old{/lang}</h3>
+		</div>
+		<div class="containerHeadline">
+			<h3>{lang}wcf.edit.headline.new{/lang}</h3>
+		</div>
+	</div>
+
 <div><div>
 {assign var='prevType' value=''}
 {foreach from=$diff->getRawDiff() item='line'}
@@ -24,7 +34,7 @@
 	</div>
 	
 	{* unmodified, after deletion needs a "fake" insertion *}
-	{if $line[0] === ' ' && $prevType === '-'}<div class="containerPadding"></div>{/if}
+	{if $line[0] === ' ' && $prevType === '-'}<div></div>{/if}
 	
 	{* unmodified and deleted start a new container *}
 	{if $line[0] === ' ' || $line[0] === '-'}</div>{/if}
@@ -32,18 +42,17 @@
 	{* adding, without deleting needs a "fake" deletion *}
 	{if $line[0] === '+' && $prevType !== '-'}
 		</div>
-		<div class="container marginTop sideBySide">
-			<div class="containerPadding">
-			</div>
+		<div class="sideBySide">
+			<div></div>
 	{/if}
 	
 	{if $line[0] === ' '}
-		<div class="container marginTop">
+		<div>
 	{/if}
 	{if $line[0] === '-'}
-		<div class="container marginTop sideBySide">
+		<div class="sideBySide">
 	{/if}
-	<div class="containerPadding"{if $line[0] === '+'} style="color: green;"{elseif $line[0] === '-'} style="color: red;"{/if}>
+	<div{if $line[0] === '+'} style="color: green;"{elseif $line[0] === '-'} style="color: red;"{/if}>
 {/if}
 {if $line[0] === ' '}{$line[1]}<br />{/if}
 {if $line[0] === '-'}{$line[1]}<br />{/if}
@@ -51,6 +60,7 @@
 {assign var='prevType' value=$line[0]}
 {/foreach}
 </div></div>
+</div>
 {/if}
 
 <form action="{link controller='EditHistory'}{/link}" method="post">
@@ -65,8 +75,8 @@
 				<tr>
 					<th class="columnID columnEditID" colspan="2">{lang}wcf.global.objectID{/lang}</th>
 					<th class="columnText columnUser">{lang}wcf.user.username{/lang}</th>
-					<th class="columnText columnTime">{lang}wcf.edit.time{/lang}</th>
 					<th class="columnText columnEditReason">{lang}wcf.edit.reason{/lang}</th>
+					<th class="columnDate columnTime">{lang}wcf.edit.time{/lang}</th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -81,8 +91,8 @@
 					</td>
 					<td class="columnID"><strong>{lang}wcf.edit.currentVersion{/lang}</strong></td>
 					<td class="columnText columnUser"><a href="{link controller='User' id=$object->getUserID() title=$object->getUsername()}{/link}">{$object->getUsername()}</a></td>
-					<td class="columnText columnTime">{@$object->getTime()|time}</td>
 					<td class="columnText columnEditReason">{$object->getEditReason()}</td>
+					<td class="columnDate columnTime">{@$object->getTime()|time}</td>
 					
 					{event name='columns'}
 				</tr>
@@ -95,8 +105,8 @@
 						</td>
 						<td class="columnID">{@$edit->entryID}</td>
 						<td class="columnText columnUser"><a href="{link controller='User' id=$edit->userID title=$edit->username}{/link}">{$edit->username}</a></td>
-						<td class="columnText columnTime">{@$edit->time|time}</td>
 						<td class="columnText columnEditReason">{$edit->editReason}</td>
+						<td class="columnDate columnTime">{@$edit->time|time}</td>
 						
 						{event name='columns'}
 					</tr>
@@ -116,7 +126,7 @@
 		{@SID_INPUT_TAG}
 		<input type="hidden" name="objectID" value="{$objectID}" />
 		<input type="hidden" name="objectType" value="{$objectType->objectType}" />
-		<button class="button" data-type="submit">{lang}wcf.edit.button.compare{/lang}</button>
+		<button class="button buttonPrimary" data-type="submit">{lang}wcf.edit.button.compare{/lang}</button>
 	</div>
 </form>
 
