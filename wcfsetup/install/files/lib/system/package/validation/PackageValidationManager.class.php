@@ -17,6 +17,12 @@ use wcf\system\SingletonFactory;
  */
 class PackageValidationManager extends SingletonFactory {
 	/**
+	 * list of known package installation plugins
+	 * @var	array<string>
+	 */
+	protected $packageInstallationPlugins = array();
+	
+	/**
 	 * package validation archive object
 	 * @var	\wcf\system\package\validation\PackageValidationArchive
 	 */
@@ -45,6 +51,17 @@ class PackageValidationManager extends SingletonFactory {
 	 * @var	integer
 	 */
 	const VALIDATION_EXCLUSION = 2;
+	
+	/**
+	 * @see	\wcf\system\SingletonFactory::init()
+	 */
+	protected function init() {
+		$pipList = new PackageInstallationPluginList();
+		$pipList->readObjects();
+		foreach ($pipList as $pip) {
+			$this->packageInstallationPlugins[$pip->pluginName] = $pip->className;
+		}
+	}
 	
 	/**
 	 * Validates given archive for existance and ability to be installed/updated. If you set the
@@ -154,5 +171,23 @@ class PackageValidationManager extends SingletonFactory {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Validates an instruction against the corresponding package installation plugin.
+	 *
+	 * Please be aware that unknown PIPs will silently ignored and cause no error.
+	 *
+	 * @param	\wcf\data\package\PackageArchive	$archive
+	 * @param	string					$pip
+	 * @param	string					$instruction
+	 * @return	boolean
+	 */
+	public function validatePackageInstallationPluginInstruction(PackageArchive $archive, $pip, $instruction) {
+		if (isset($this->packageInstallationPlugins[$pip])) {
+			return call_user_func(array($this->packageInstallationPlugins[$pip], 'isValid'), $archive, $instruction);
+		}
+		
+		return true;
 	}
 }

@@ -92,7 +92,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 				$this->archive->openArchive();
 				
 				// check if package is installable or suitable for an update
-				$this->validateInstructions($requiredVersion);
+				$this->validateInstructions($requiredVersion, $validationMode);
 			}
 			catch (\Exception $e) {
 				$this->exception = $e;
@@ -184,8 +184,9 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * Validates if the package has suitable install or update instructions
 	 * 
 	 * @param	string		$requiredVersion
+	 * @param	integer		$validationMode
 	 */
-	protected function validateInstructions($requiredVersion) {
+	protected function validateInstructions($requiredVersion, $validationMode) {
 		$package = $this->getPackage();
 		
 		// delivered package does not provide the minimum required version
@@ -203,6 +204,10 @@ class PackageValidationArchive implements \RecursiveIterator {
 			if (empty($instructions)) {
 				throw new PackageValidationException(PackageValidationException::NO_INSTALL_PATH, array('packageName' => $this->archive->getPackageInfo('name')));
 			}
+			
+			if ($validationMode == PackageValidationManager::VALIDATION_RECURSIVE) {
+				$this->validatePackageInstallationPlugins('install', $instructions);
+			}
 		}
 		else {
 			// package is already installed, check update path
@@ -211,6 +216,29 @@ class PackageValidationArchive implements \RecursiveIterator {
 					'packageName' => $package->packageName,
 					'packageVersion' => $package->packageVersion,
 					'deliveredPackageVersion' => $this->archive->getPackageInfo('version')
+				));
+			}
+			
+			if ($validationMode === PackageValidationManager::VALIDATION_RECURSIVE) {
+				$this->validatePackageInstallationPlugins('update', $this->archive->getUpdateInstructions());
+			}
+		}
+	}
+	
+	/**
+	 * Validates install or update instructions against the corresponding PIP, unknown PIPs will be silently ignored.
+	 *
+	 * @param	string		$type
+	 * @param	array<array>	$instructions
+	 */
+	protected function validatePackageInstallationPlugins($type, array $instructions) {
+		for ($i = 0, $length = count($instructions); $i < $length; $i++) {
+			$instruction = $instructions[$i];
+			if (!PackageValidationManager::getInstance()->validatePackageInstallationPluginInstruction($this->archive, $instruction['pip'], $instruction['value'])) {
+				throw new PackageValidationException(PackageValidationException::MISSING_INSTRUCTION_FILE, array(
+					'pip' => $instruction['pip'],
+					'type' => $type,
+					'value' => $instruction['value']
 				));
 			}
 		}
