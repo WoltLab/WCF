@@ -7,6 +7,8 @@ use wcf\form\AbstractForm;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\package\validation\PackageValidationException;
+use wcf\system\package\validation\PackageValidationManager;
 use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
@@ -104,8 +106,19 @@ class PackageStartInstallForm extends AbstractForm {
 			throw new UserInputException('uploadPackage', 'uploadFailed');
 		}
 		
-		$this->archive = new PackageArchive($this->uploadPackage['name'], $this->package);
-		$this->validateArchive('uploadPackage');
+		if (!PackageValidationManager::getInstance()->validate($this->uploadPackage['name'], false)) {
+			$exception = PackageValidationManager::getInstance()->getException();
+			if ($exception instanceof PackageValidationException) {
+				switch ($exception->getCode()) {
+					case PackageValidationException::INVALID_PACKAGE_NAME:
+					case PackageValidationException::MISSING_PACKAGE_XML:
+						throw new UserInputException('uploadPackage', 'noValidPackage');
+					break;
+				}
+			}
+		}
+		
+		$this->package = PackageValidationManager::getInstance()->getPackageValidationArchive()->getPackage();
 	}
 	
 	/**
@@ -130,69 +143,22 @@ class PackageStartInstallForm extends AbstractForm {
 			if (!file_exists($this->downloadPackage)) {
 				throw new UserInputException('downloadPackage', 'downloadFailed');
 			}
-			
-			$this->archive = new PackageArchive($this->downloadPackage, $this->package);
 		}
 		
-		$this->validateArchive('downloadPackage');
-	}
-	
-	/**
-	 * Validates the package archive.
-	 * 
-	 * @param	string		$type		upload or download package
-	 */
-	protected function validateArchive($type) {
-		// try to open the archive
-		try {
-			// TODO: Exceptions thrown within openArchive() are discarded, resulting in
-			// the meaningless message 'not a valid package'
-			$this->archive->openArchive();
-		}
-		catch (SystemException $e) {
-			throw new UserInputException($type, 'noValidPackage');
+		if (!PackageValidationManager::getInstance()->validate($this->downloadPackage, false)) {
+			$exception = PackageValidationManager::getInstance()->getException();
+			if ($exception instanceof PackageValidationException) {
+				switch ($exception->getCode()) {
+					case PackageValidationException::INVALID_PACKAGE_NAME:
+					case PackageValidationException::MISSING_PACKAGE_XML:
+						throw new UserInputException('downloadPackage', 'noValidPackage');
+					break;
+				}
+			}
 		}
 		
-		// validate php requirements
-		$errors = PackageInstallationDispatcher::validatePHPRequirements($this->archive->getPhpRequirements());
-		if (!empty($errors)) {
-			WCF::getTPL()->assign('phpRequirements', $errors);
-			throw new UserInputException($type, 'phpRequirements');
-		}
+		$this->package = PackageValidationManager::getInstance()->getPackageValidationArchive()->getPackage();
 		
-		// try to find existing package
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_package
-			WHERE	package = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($this->archive->getPackageInfo('name')));
-		$row = $statement->fetchArray();
-		if ($row !== false) {
-			$this->package = new Package(null, $row);
-		}
-		
-		// check update or install support
-		if ($this->package !== null) {
-			WCF::getSession()->checkPermissions(array('admin.system.package.canUpdatePackage'));
-			$this->activeMenuItem = 'wcf.acp.menu.link.package';
-			
-			if (!$this->archive->isValidUpdate($this->package)) {
-				throw new UserInputException($type, 'noValidUpdate');
-			}
-		}
-		else {
-			WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage'));
-			
-			if (!$this->archive->isValidInstall()) {
-				throw new UserInputException($type, 'noValidInstall');
-			}
-			else if ($this->archive->isAlreadyInstalled()) {
-				throw new UserInputException($type, 'uniqueAlreadyInstalled');
-			}
-			else if ($this->archive->getPackageInfo('isApplication') && $this->archive->hasUniqueAbbreviation()) {
-				throw new UserInputException($type, 'noUniqueAbbrevation');
-			}
-		}
 	}
 	
 	/**
@@ -208,12 +174,12 @@ class PackageStartInstallForm extends AbstractForm {
 		$packageID = ($this->package) ? $this->package->packageID : null;
 		
 		// insert queue
-		$isApplication = $this->archive->getPackageInfo('isApplication');
+		$isApplication = PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getPackageInfo('isApplication');
 		$this->queue = PackageInstallationQueueEditor::create(array(
 			'processNo' => $processNo,
 			'userID' => WCF::getUser()->userID,
-			'package' => $this->archive->getPackageInfo('name'),
-			'packageName' => $this->archive->getLocalizedPackageInfo('packageName'),
+			'package' => PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getPackageInfo('name'),
+			'packageName' => PackageValidationManager::getInstance()->getPackageValidationArchive()->getArchive()->getLocalizedPackageInfo('packageName'),
 			'packageID' => $packageID,
 			'archive' => (!empty($this->uploadPackage['tmp_name']) ? $this->uploadPackage['name'] : $this->downloadPackage),
 			'action' => ($this->package != null ? 'update' : 'install'),

@@ -23,28 +23,12 @@
 	<p>{$archive->getLocalizedPackageInfo('packageDescription')}</p>
 </header>
 
-{if $missingPackages > 0}
-	<p class="error">{lang}wcf.acp.package.install.error.missingRequirements{/lang}</p>
+{if !$validationPassed}
+	<p class="error">{lang}wcf.acp.package.validation.failed{/lang}</p>
 {/if}
 
-{if $excludingPackages|count > 0}
-	<div class="error">{lang}wcf.acp.package.install.error.excludingPackages{/lang}
-		<ul>
-		{foreach from=$excludingPackages item=excludingPackage}
-			<li>{lang}wcf.acp.package.install.error.excludingPackages.excludingPackage{/lang}</li>
-		{/foreach}
-		</ul>
-	</div>
-{/if}
-
-{if $excludedPackages|count > 0}
-	<div class="error">{lang}wcf.acp.package.install.error.excludedPackages{/lang}
-		<ul>
-		{foreach from=$excludedPackages item=excludedPackage}
-			<li>{lang}wcf.acp.package.install.error.excludedPackages.excludedPackage{/lang}</li>
-		{/foreach}
-		</ul>
-	</div>
+{if $installingImportedStyle}
+	<p class="info">{lang}wcf.acp.package.install.installingImportedStyle{/lang}</p>
 {/if}
 
 <div class="container containerPadding marginTop">
@@ -82,10 +66,10 @@
 	</fieldset>
 </div>
 
-{if $requiredPackages|count > 0}
+{if !$validationPassed}
 	<div class="tabularBox tabularBoxTitle marginTop">
 		<header>
-			<h2>{lang}wcf.acp.package.dependencies.required{/lang} <span class="badge badgeInverse">{#$requiredPackages|count}</span></h2>
+			<h2>{lang}wcf.acp.package.validation{/lang}</h2>
 		</header>
 		
 		<table class="table">
@@ -93,23 +77,23 @@
 				<tr>
 					<th class="columnTitle columnPackageName">{lang}wcf.acp.package.name{/lang}</th>
 					<th class="columnText columnPackage">{lang}wcf.acp.package.identifier{/lang}</th>
-					<th class="columnText columnPackageVersion">{lang}wcf.acp.package.installation.requiredVersion{/lang}</th>
 					<th class="columnText">{lang}wcf.acp.package.installation.packageStatus{/lang}</th>
-					
-					{event name='columnHeads'}
 				</tr>
 			</thead>
-			
 			<tbody>
-				{foreach from=$requiredPackages item=$package}
+				{foreach from=$packageValidationArchives item=packageValidationArchive}
+					{assign var=exceptionMessage value=$packageValidationArchive->getExceptionMessage()}
 					<tr>
-						<td class="columnTitle columnPackageName">{if $package[package]}{$package[package]->packageName|language}{/if}</td>
-						<td class="columnText columnPackage">{@$package.name}</td>
-						<td class="columnText columnPackageVersion">{if $package.minversion|isset}<span class="badge label {if $package.status == 'installed'}green{elseif $package.status == 'delivered'}yellow{else}red{/if}">{$package.minversion}</span>{/if}</td>
-						<td class="columnText">{lang}wcf.acp.package.installation.packageStatus.{@$package.status}{/lang}</td>
-						
-						{event name='columns'}
+						<td class="columnTitle columnPackageName"><span{if $packageValidationArchive->getDepth()} style="padding-left: {@$packageValidationArchive->getDepth() * 14}px"{/if}>{$packageValidationArchive->getArchive()->getLocalizedPackageInfo('packageName')}</span></td>
+						<td class="columnText columnPackage">{$packageValidationArchive->getArchive()->getPackageInfo('name')}</td>
+						<td class="columnIcon columnStatus"><span class="icon icon16 {if $exceptionMessage}icon-remove-sign red{else}icon-check green{/if}"></span></td>
 					</tr>
+					
+					{if $exceptionMessage}
+						<tr>
+							<td colspan="3"><span{if $packageValidationArchive->getDepth()} style="padding-left: {@$packageValidationArchive->getDepth() * 14}px"{/if}>{@$exceptionMessage}</span></td>
+						</tr>
+					{/if}
 				{/foreach}
 			</tbody>
 		</table>
@@ -118,7 +102,7 @@
 
 <div class="formSubmit">
 	<input type="button" id="backButton" value="{lang}wcf.global.button.back{/lang}" accesskey="c" />
-	{if $missingPackages == 0 && $excludingPackages|count == 0 && $excludedPackages|count == 0}
+	{if $validationPassed}
 		<input type="button" class="buttonPrimary" id="submitButton" value="{lang}wcf.global.button.next{/lang}" class="default" accesskey="s" />
 	{/if}
 </div>

@@ -1,11 +1,9 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
-use wcf\data\package\Package;
-use wcf\data\package\PackageCache;
 use wcf\page\AbstractPage;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\package\PackageArchive;
+use wcf\system\package\validation\PackageValidationManager;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
@@ -27,18 +25,6 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	public $activeMenuItem = 'wcf.acp.menu.link.package.install';
 	
 	/**
-	 * number of missing packages
-	 * @var	integer
-	 */
-	public $missingPackages = 0;
-	
-	/**
-	 * list of unsatisfied requirements
-	 * @var	array<array>
-	 */
-	public $openRequirements = array();
-	
-	/**
 	 * package installation dispatcher object
 	 * @var	\wcf\system\package\PackageInstallationDispatcher
 	 */
@@ -57,10 +43,17 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	public $queueID = 0;
 	
 	/**
-	 * list of requirements
-	 * @var	array<array>
+	 * package validation result
+	 * @var	boolean
 	 */
-	public $requirements = array();
+	public $validationPassed = false;
+	
+	/**
+	 * true if the package to be installed was uploaded via the import style
+	 * form
+	 * @var	boolean
+	 */
+	public $installingImportedStyle = false;
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -90,51 +83,8 @@ class PackageInstallationConfirmPage extends AbstractPage {
 		
 		$this->packageInstallationDispatcher = new PackageInstallationDispatcher($this->queue);
 		
-		// get requirements
-		$this->requirements = $this->packageInstallationDispatcher->getArchive()->getRequirements();
-		$this->openRequirements = $this->packageInstallationDispatcher->getArchive()->getOpenRequirements();
-		
-		foreach ($this->requirements as &$requirement) {
-			if (isset($this->openRequirements[$requirement['name']])) {
-				$requirement['status'] = 'missing';
-				$requirement['action'] = $this->openRequirements[$requirement['name']]['action'];
-				
-				if (!isset($requirement['file'])) {
-					if ($requirement['action'] === 'update') {
-						$requirement['status'] = 'missingVersion';
-						$requirement['existingVersion'] = $this->openRequirements[$requirement['name']]['existingVersion'];
-					}
-					$this->missingPackages++;
-				}
-				else {
-					$requirement['status'] = 'delivered';
-					$packageArchive = new PackageArchive($this->packageInstallationDispatcher->getArchive()->extractTar($requirement['file']));
-					$packageArchive->openArchive();
-					
-					// make sure that the delivered package is correct
-					if ($requirement['name'] != $packageArchive->getPackageInfo('name')) {
-						$requirement['status'] = 'invalidDeliveredPackage';
-						$requirement['deliveredPackage'] = $packageArchive->getPackageInfo('name');
-						$this->missingPackages++;
-					}
-					else if (isset($requirement['minversion'])) {
-						// make sure that the delivered version is sufficient
-						if (Package::compareVersion($requirement['minversion'], $packageArchive->getPackageInfo('version')) > 0) {
-							$requirement['deliveredVersion'] = $packageArchive->getPackageInfo('version');
-							$requirement['status'] = 'missingVersion';
-							$this->missingPackages++;
-						}
-					}
-				}
-			}
-			else {
-				$requirement['status'] = 'installed';
-			}
-			
-			$requirement['package'] = PackageCache::getInstance()->getPackageByIdentifier($requirement['name']);
-		}
-		
-		unset($requirement);
+		// validate the package and all it's requirements
+		$this->validationPassed = PackageValidationManager::getInstance()->validate($this->queue->archive, true);
 	}
 	
 	/**
@@ -145,11 +95,10 @@ class PackageInstallationConfirmPage extends AbstractPage {
 		
 		WCF::getTPL()->assign(array(
 			'archive' => $this->packageInstallationDispatcher->getArchive(),
-			'requiredPackages' => $this->requirements,
-			'missingPackages' => $this->missingPackages,
-			'excludingPackages' => $this->packageInstallationDispatcher->getArchive()->getConflictedExcludingPackages(),
-			'excludedPackages' => $this->packageInstallationDispatcher->getArchive()->getConflictedExcludedPackages(),
-			'queue' => $this->queue
+			'packageValidationArchives' => PackageValidationManager::getInstance()->getPackageValidationArchiveList(),
+			'queue' => $this->queue,
+			'validationPassed' => $this->validationPassed,
+			'installingImportedStyle' => $this->installingImportedStyle
 		));
 	}
 	

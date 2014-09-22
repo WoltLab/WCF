@@ -985,6 +985,19 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.updates"><![CDATA[Updates]]></item>
 		<item name="wcf.acp.package.error.downloadFailed"><![CDATA[Downloading package{if $__downloadPackage|isset} “{$__downloadPackage}”{/if} has failed.]]></item>
 		<item name="wcf.acp.package.newVersion"><![CDATA[New Version]]></item>
+		<item name="wcf.acp.package.validation"><![CDATA[Validation Result]]></item>
+		<item name="wcf.acp.package.validation.errorCode.1"><![CDATA[The file “{$archive}”{if !$targetArchive|empty} within the archive “{$targetArchive}”{/if} is missing.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.2"><![CDATA[The package “{$archive}” is missing the required “package.xml“ file.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.3"><![CDATA[The package name “{$packageName}” does not met the expectations and was rejected.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.4"><![CDATA[The package version “{$packageVersion}” does not met the expectations and was rejected.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.5"><![CDATA[The package “{lang}{$packageName}{/lang}” does not contain valid install instructions.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.6"><![CDATA[The package “{lang}{$packageName}{/lang}” (installed version: “{$packageVersion}”) should be updated to version “{$deliveredPackageVersion}”, but an update is not supported.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.7"><![CDATA[The following installed packages exclude the current package due to known incompatibilities: <ul class="nativeList">{foreach from=$packages item=package}<li>“{$package}” ({$package->package})</li>{/foreach}</ul>]]></item>
+		<item name="wcf.acp.package.validation.errorCode.8"><![CDATA[This package is incompatible with the following installed packages: <ul class="nativeList">{foreach from=$packages item=package}<li>“{$package}” ({$package->package})</li>{/foreach}</ul>]]></item>
+		<item name="wcf.acp.package.validation.errorCode.9"><![CDATA[The installation requires the package “{$packageName}” in version “{$packageVersion}“ or higher, but only version “{$deliveredPackageVersion}“ is shipped.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Requires the package {if $package === null}“{$packageName}”{else}“{$package}”{/if} in version “{$packageVersion}” or higher, {if $package === null}but it is neither installed nor shipped.{else}but only version “{$package->packageVersion}” is installed.{/if}]]></item>
+		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[The {if $type == 'install'}install{else}update{/if}-instructions specify the file “{$value}” for the Package Installation Plugin “{$pip}”, but it cannot be found in the specified location. Possible causes:<ul class="nativeList"><li>The file has not been added to the archive at all</li><li>The file exists but under a (slightly) different name (typo)</li></ul>]]></item>
+		<item name="wcf.acp.package.validation.failed"><![CDATA[The package cannot be installed, please review the validation results below.]]></item>
 	</category>
 	
 	<category name="wcf.acp.pageMenu">
