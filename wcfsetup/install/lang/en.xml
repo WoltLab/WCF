@@ -2690,6 +2690,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.user.birthdayToday"><![CDATA[It is their birthday]]></item>
 		<item name="wcf.user.login.blocked"><![CDATA[There have been too many failed login attempts originating from your ip address, your login attempts will be temporarily rejected for security reasons. Please try again later!]]></item>
+		<item name="wcf.user.banned"><![CDATA[TODO: Der Benutzer „{$user->username}“ wurde{if $user->banExpires != 0} bis zum {@$user->banExpires|date}{/if} gesperrt.]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
