@@ -116,6 +116,7 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 		$conditionBuilder->add('messageObjectTypeID = ?', array(ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType)));
 		$conditionBuilder->add('messageID IN (?)', array($messageIDs));
 		
+		// get object ids
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_message_embedded_object
 			".$conditionBuilder;
@@ -123,15 +124,23 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 		$statement->execute($conditionBuilder->getParameters());
 		$embeddedObjects = array();
 		while ($row = $statement->fetchArray()) {
+			if (isset($this->embeddedObjects[$row['embeddedObjectTypeID']][$row['embeddedObjectID']])) {
+				// embedded object already loaded
+				continue;
+			}
+			
+			// group objects by object type
 			if (!isset($embeddedObjects[$row['embeddedObjectTypeID']])) $embeddedObjects[$row['embeddedObjectTypeID']] = array();
 			$embeddedObjects[$row['embeddedObjectTypeID']][] = $row['embeddedObjectID'];
 			
+			// store message to embedded object assignment
 			if (!isset($this->messageEmbeddedObjects[$row['messageObjectTypeID']][$row['messageID']][$row['embeddedObjectTypeID']])) {
 				$this->messageEmbeddedObjects[$row['messageObjectTypeID']][$row['messageID']][$row['embeddedObjectTypeID']] = array();
 			}
 			$this->messageEmbeddedObjects[$row['messageObjectTypeID']][$row['messageID']][$row['embeddedObjectTypeID']][] = $row['embeddedObjectID'];
 		}
 		
+		// load objects
 		foreach ($embeddedObjects as $embeddedObjectTypeID => $objectIDs) {
 			if (!isset($this->embeddedObjects[$embeddedObjectTypeID])) $this->embeddedObjects[$embeddedObjectTypeID] = array();
 			foreach ($this->getEmbeddedObjectHandler($embeddedObjectTypeID)->loadObjects(array_unique($objectIDs)) as $objectID => $object) {

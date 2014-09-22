@@ -2075,6 +2075,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.edit.revert.sure"><![CDATA[Möchten Sie die Version von „{$edit->username}“ vom {$edit->time|plainTime} wirklich wiederherstellen?]]></item>
 		<item name="wcf.edit.reverted"><![CDATA[Wiederhergestellt auf Version von „{$edit->username}“ vom {$edit->time|plainTime}]]></item>
 		<item name="wcf.edit.button.compare"><![CDATA[Vergleichen]]></item>
+		<item name="wcf.edit.headline.old"><![CDATA[{if $oldID == 'current'}Aktuelle {/if}Version vom {@$old->time|plainTime} ({$old->username})]]></item>
+		<item name="wcf.edit.headline.new"><![CDATA[{if $newID == 'current'}Aktuelle {/if}Version vom {@$new->time|plainTime} ({$new->username})]]></item>
 	</category>
 	
 	<category name="wcf.global">
@@ -2802,6 +2804,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
 		<item name="wcf.user.birthdayToday"><![CDATA[Hat heute Geburtstag]]></item>
 		<item name="wcf.user.login.blocked"><![CDATA[Aufgrund einer hohen Anzahl von fehlgeschlagenen Anmeldeversuchen durch Ihre IP-Adresse steht Ihnen die Anmeldung aus Sicherheitsgründen vorübergehend nicht zur Verfügung. Bitte versuchen Sie es später erneut!]]></item>
+		<item name="wcf.user.banned"><![CDATA[Der Benutzer „{$user->username}“ wurde{if $user->banExpires != 0} bis zum {@$user->banExpires|date}{/if} gesperrt.]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

@@ -2967,7 +2967,7 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 		
 		var $banExpires = '';
 		if (!$('#' + $optionName + 'NeverExpires').is(':checked')) {
-			var $banExpires = $('#' + $optionName + 'ExpiresDatePicker').val();
+			$banExpires = $('#' + $optionName + 'ExpiresDatePicker').val();
 			if (!$banExpires) {
 				this._dialog.find('#' + $optionName + 'ExpiresSettings > dd > small').prepend($('<small class="innerError" />').text(WCF.Language.get('wcf.global.form.error.empty')));
 				return
@@ -3102,6 +3102,10 @@ WCF.User.InlineEditor = WCF.InlineEditor.extend({
 		
 		if (data.actionName == 'ban' || data.actionName == 'disableAvatar' || data.actionName == 'disableSignature') {
 			this._dialog.wcfDialog('close');
+		}
+		
+		if (data.actionName == 'unban') {
+			$('.userHeadline .jsUserBanned').remove();
 		}
 	},
 	

@@ -2073,6 +2073,8 @@ Errors are:
 		<item name="wcf.edit.revert.sure"><![CDATA[Do you really want to revert to the version at {$edit->time|plainTime}, created by “{$edit->username}”?]]></item>
 		<item name="wcf.edit.reverted"><![CDATA[Reverted to the version at {$edit->time|plainTime}, created by “{$edit->username}”]]></item>
 		<item name="wcf.edit.button.compare"><![CDATA[Compare]]></item>
+		<item name="wcf.edit.headline.old"><![CDATA[TODO: {if $oldID == 'current'}Aktuelle {/if}Version vom {@$old->time|plainTime} ({$old->username})]]></item>
+		<item name="wcf.edit.headline.new"><![CDATA[TODO: {if $newID == 'current'}Aktuelle {/if}Version vom {@$new->time|plainTime} ({$new->username})]]></item>
 	</category>
 	
 	<category name="wcf.global">
@@ -2690,6 +2692,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.edit"><![CDATA[Edit User]]></item>
 		<item name="wcf.user.birthdayToday"><![CDATA[It is their birthday]]></item>
 		<item name="wcf.user.login.blocked"><![CDATA[There have been too many failed login attempts originating from your ip address, your login attempts will be temporarily rejected for security reasons. Please try again later!]]></item>
+		<item name="wcf.user.banned"><![CDATA[TODO: Der Benutzer „{$user->username}“ wurde{if $user->banExpires != 0} bis zum {@$user->banExpires|date}{/if} gesperrt.]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
