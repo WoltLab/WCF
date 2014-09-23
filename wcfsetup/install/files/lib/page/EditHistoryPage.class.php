@@ -4,8 +4,10 @@ use wcf\data\edit\history\entry\EditHistoryEntry;
 use wcf\data\edit\history\entry\EditHistoryEntryList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\Diff;
+use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -119,6 +121,16 @@ class EditHistoryPage extends AbstractPage {
 		if (isset($_REQUEST['newID']) && !$this->new) {
 			$this->new = $this->object;
 			$this->newID = 'current';
+		}
+		
+		if (!empty($_POST)) {
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('EditHistory', array(
+				'objectID' => $this->objectID,
+				'objectType' => $this->objectType->objectType,
+				'newID' => $this->newID,
+				'oldID' => $this->oldID
+			)));
+			exit;
 		}
 	}
 	
