@@ -1146,6 +1146,13 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.update.unauthorized"><![CDATA[Authentifizierung erforderlich]]></item>
 		<item name="wcf.acp.package.update.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.acp.package.update.step.prepare"><![CDATA[Aktualisierung wird vorbereitet …]]></item>
+		<item name="wcf.acp.package.update.excludedPackages"><![CDATA[Konflikt]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.excluded"><![CDATA[Installierte Pakete]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.excluded.description"><![CDATA[Die folgenden installierten Pakete sind mit den zu installierenden Versionen nicht kompatibel]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.excluded.package"><![CDATA[„{$excludedPackage[existingPackageName]}“ in Version „{$excludedPackage[existingPackageVersion]}“ verhindert eine {if $excludedPackage[action] == 'update'}Aktualisierung{else}Installation{/if} von „{$excludedPackage[packageName]}“ {if $excludedPackage[action] == 'update'}auf{else}in{/if} Version „{$excludedPackage[packageVersion]}“]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.excluding"><![CDATA[Zu installierende Pakete]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.excluding.description"><![CDATA[Die folgenden zu installierenden Pakete sind mit installierten Paketen nicht kompatibel]]></item>
+		<item name="wcf.acp.package.update.excludedPackages.excluding.package"><![CDATA[„{$excludedPackage[packageName]}“ in Version „{$excludedPackage[packageVersion]}“ ist mit dem bereits installieren Paket „{$excludedPackage[existingPackageName]}“ nicht kompatibel]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installationsverzeichnis]]></item>
 		<item name="wcf.acp.package.upload"><![CDATA[Paket hochladen]]></item>

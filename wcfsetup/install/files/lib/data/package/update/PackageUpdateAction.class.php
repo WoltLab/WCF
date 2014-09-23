@@ -502,6 +502,18 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			);
 		}
 		
+		// validate exclusions
+		if ($queueType == 'update') {
+			$excludedPackages = $scheduler->getExcludedPackages();
+			
+			if (!empty($excludedPackages)) {
+				return array(
+					'excludedPackages' => true,
+					'template' => WCF::getTPL()->fetch('packageUpdateExcludedPackages', 'wcf', array('excludedPackages' => $excludedPackages))
+				);
+			}
+		}
+		
 		$stack = $scheduler->getPackageInstallationStack();
 		$queueID = null;
 		if (!empty($stack)) {
