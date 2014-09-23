@@ -84,7 +84,7 @@
 		</nav>
 	</div>
 {hascontentelse}
-	<p class="warning">{lang}wcf.global.noItems{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/hascontent}
 
 {include file='footer'}

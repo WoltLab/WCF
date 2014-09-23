@@ -81,7 +81,7 @@
 {/if}
 
 {if !$subscriptions|count && !$userSubscriptions|count}
-	<p class="warning">{lang}wcf.global.noItems{/lang}</p>
+	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 <div class="contentNavigation">
