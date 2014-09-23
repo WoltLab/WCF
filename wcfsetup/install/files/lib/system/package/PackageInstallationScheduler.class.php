@@ -363,7 +363,7 @@ class PackageInstallationScheduler {
 			
 			// check excluded packages of the existing packages
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("excludePackage IN (?)", array($packageIdentifier));
+			$conditions->add("excludedPackage IN (?)", array($packageIdentifier));
 			
 			$sql = "SELECT		package.*, package_exclusion.*
 				FROM		wcf".WCF_N."_package_exclusion package_exclusion

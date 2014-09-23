@@ -1340,6 +1340,20 @@ WCF.ACP.Package.Update.Manager = Class.extend({
 			var $installation = new WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false, true);
 			$installation.prepareInstallation();
 		}
+		else if (data.returnValues.excludedPackages) {
+			if (this._dialog === null) {
+				this._dialog = $('<div>' + data.returnValues.template + '</div>').hide().appendTo(document.body);
+				this._dialog.wcfDialog({
+					title: WCF.Language.get('wcf.acp.package.update.excludedPackages')
+				});
+			}
+			else {
+				this._dialog.wcfDialog('option', 'title', WCF.Language.get('wcf.acp.package.update.excludedPackages'));
+				this._dialog.html(data.returnValues.template).wcfDialog('open');
+			}
+			
+			this._submitButton.enable();
+		}
 		else if (data.returnValues.template) {
 			if (this._dialog === null) {
 				this._dialog = $('<div>' + data.returnValues.template + '</div>').hide().appendTo(document.body);
@@ -1348,6 +1362,7 @@ WCF.ACP.Package.Update.Manager = Class.extend({
 				});
 			}
 			else {
+				this._dialog.wcfDialog('option', 'title', WCF.Language.get('wcf.acp.package.update.unauthorized'));
 				this._dialog.html(data.returnValues.template).wcfDialog('open');
 			}
 			

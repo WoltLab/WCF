@@ -4,6 +4,7 @@
 	//<![CDATA[
 	$(function() {
 		WCF.Language.addObject({
+			'wcf.acp.package.update.excludedPackages': '{lang}wcf.acp.package.update.excludedPackages{/lang}',
 			'wcf.acp.package.update.title': '{lang}wcf.acp.package.update.title{/lang}',
 			'wcf.acp.package.update.unauthorized': '{lang}wcf.acp.package.update.unauthorized{/lang}'
 		})
