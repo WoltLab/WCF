@@ -3734,7 +3734,7 @@ $.widget('wcf.messageTabMenu', {
 	 * Creates the message tab menu.
 	 */
 	_create: function() {
-		var $tabs = this.element.find('> nav > ul > li');
+		var $tabs = this.element.find('> nav > ul > li:not(.jsFlexibleMenuDropdown)');
 		var $tabContainers = this.element.find('> div, > fieldset');
 		
 		if ($tabs.length != $tabContainers.length) {

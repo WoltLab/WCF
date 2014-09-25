@@ -129,9 +129,9 @@
 }
 
 .redactor_toolbar {
+	background: repeating-linear-gradient(0deg, @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor 29px, @wcfContainerBorderColor 30px, @wcfContainerBorderColor 30px);
 	border-bottom: 1px solid @wcfContainerBorderColor;
-	
-	.linearGradient(@wcfContainerBackgroundColor, @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor);
+	margin-top: -1px;
 	
 	> li {
 		display: inline-block;
@@ -142,12 +142,16 @@
 		}
 		
 		> a {
+			box-sizing: border-box;
 			color: @wcfButtonColor;
 			display: block;
 			font-size: 14px;
+			height: 30px;
 			outline: none;
-			padding: 6px 10px;
+			padding: 6px 0;
+			text-align: center;
 			text-decoration: none;
+			width: 30px;
 			
 			.textShadow(@wcfButtonBackgroundColor);
 			

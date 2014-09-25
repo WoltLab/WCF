@@ -631,6 +631,22 @@ $.fn.extend({
 		if (!duration || !parseInt(duration)) duration = 200;
 		
 		return this.hide(WCF.getEffect(this, 'fade'), { }, duration, callback);
+	},
+	
+	/**
+	 * Returns a CSS property as raw number.
+	 * 
+	 * @param	string		property
+	 */
+	cssAsNumber: function(property) {
+		if (this.length) {
+			var $property = this.css(property);
+			if ($property !== undefined) {
+				return parseInt($property.replace(/px$/, ''));
+			}
+		}
+		
+		return 0;
 	}
 });
 
@@ -5410,12 +5426,19 @@ WCF.CloseOverlayHandler = {
 	},
 	
 	/**
+	 * Triggers the callbacks programmatically.
+	 */
+	forceExecution: function() {
+		this._executeCallbacks();
+	},
+	
+	/**
 	 * Binds click event handler.
 	 */
 	_bindListener: function() {
 		if (this._isListening) return;
 		
-		$('body').click($.proxy(this._executeCallbacks, this));
+		$(document.body).click($.proxy(this._executeCallbacks, this));
 		
 		this._isListening = true;
 	},
@@ -6677,7 +6700,7 @@ WCF.System.FlexibleMenu = {
 	 */
 	_registerTabMenus: function() {
 		// register tab menus
-		$('.tabMenuContainer:not(.jsFlexibleMenuEnabled)').each(function(index, tabMenuContainer) {
+		$('.tabMenuContainer:not(.jsFlexibleMenuEnabled), .messageTabMenu:not(.jsFlexibleMenuEnabled)').each(function(index, tabMenuContainer) {
 			var $navigation = $(tabMenuContainer).addClass('jsFlexibleMenuEnabled').children('nav');
 			if ($navigation.length && $navigation.find('> ul:eq(0) > li').length) {
 				WCF.System.FlexibleMenu.registerMenu($navigation.wcfIdentify());
@@ -6710,7 +6733,7 @@ WCF.System.FlexibleMenu = {
 		this._containerIDs.push(containerID);
 		this._containers[containerID] = $container;
 		this._menuItems[containerID] = $container.find('> ul:eq(0) > li');
-		this._dropdowns[containerID] = $('<li class="dropdown"><a class="icon icon16 icon-list" /></li>').data('containerID', containerID).click($.proxy(this._click, this));
+		this._dropdowns[containerID] = $('<li class="dropdown jsFlexibleMenuDropdown"><a class="icon icon16 icon-list" /></li>').data('containerID', containerID).click($.proxy(this._click, this));
 		this._dropdownMenus[containerID] = $('<ul class="dropdownMenu" />').appendTo(this._dropdowns[containerID]);
 		this._hasHiddenItems[containerID] = false;
 		
@@ -6751,99 +6774,96 @@ WCF.System.FlexibleMenu = {
 		var $container = this._containers[containerID];
 		var $currentWidth = 0;
 		
-		// the current width is based upon all items without the dropdown
-		var $menuItems = this._menuItems[containerID].filter(':visible');
-		for (var $i = 0, $length = $menuItems.length; $i < $length; $i++) {
-			$currentWidth += $($menuItems[$i]).outerWidth(true);
-		}
+		// hide all items
+		var $menuItems = this._menuItems[containerID].hide();
+		
+		// the active item must always be visible
+		var $activeItem = $menuItems.filter('.active, .ui-state-active').show();
 		
 		// insert dropdown for calculation purposes
 		if (!this._hasHiddenItems[containerID]) {
 			this._dropdowns[containerID].appendTo($container.children('ul:eq(0)'));
 		}
-		
 		var $dropdownWidth = this._dropdowns[containerID].outerWidth(true);
 		
-		// remove dropdown previously inserted
-		if (!this._hasHiddenItems[containerID]) {
-			this._dropdowns[containerID].detach();
-		}
+		// get maximum width
+		var $parent = $container.parent();
+		var $maximumWidth = $parent.innerWidth();
 		
-		var $maximumWidth = $container.parent().innerWidth();
-		
-		// substract padding from the parent element
-		$maximumWidth -= parseInt($container.parent().css('padding-left').replace(/px$/, '')) + parseInt($container.parent().css('padding-right').replace(/px$/, ''));
+		// exclude padding
+		$maximumWidth -= $parent.cssAsNumber('padding-left') + $parent.cssAsNumber('padding-right');
 		
 		// substract margins and paddings from the container itself
-		$maximumWidth -= parseInt($container.css('margin-left').replace(/px$/, '')) + parseInt($container.css('margin-right').replace(/px$/, ''));
-		$maximumWidth -= parseInt($container.css('padding-left').replace(/px$/, '')) + parseInt($container.css('padding-right').replace(/px$/, ''));
+		$maximumWidth -= $container.cssAsNumber('margin-left') + $container.cssAsNumber('margin-right');
+		$maximumWidth -= $container.cssAsNumber('padding-left') + $container.cssAsNumber('padding-right');
 		
 		// substract paddings from the actual list
-		$maximumWidth -= parseInt($container.children('ul:eq(0)').css('padding-left').replace(/px$/, '')) + parseInt($container.children('ul:eq(0)').css('padding-right').replace(/px$/, ''));
-		if ($currentWidth > $maximumWidth || (this._hasHiddenItems[containerID] && ($currentWidth > $maximumWidth - $dropdownWidth))) {
-			var $menuItems = $menuItems.filter(':not(.active):not(.ui-state-active):visible');
+		$maximumWidth -= $container.children('ul:eq(0)').cssAsNumber('padding-left') + $container.children('ul:eq(0)').cssAsNumber('padding-right');
+		
+		// the active item must always be visible, substract its width
+		$maximumWidth -= $activeItem.outerWidth(true);
+		
+		// show items until maximum width is exceeded
+		this._hasHiddenItems[containerID] = false;
+		for (var $i = 0; $i < $menuItems.length; $i++) {
+			var $item = $($menuItems[$i]);
 			
-			// substract dropdown width from maximum width
-			$maximumWidth -= $dropdownWidth;
-			
-			// hide items starting with the last in list (ignores active item)
-			for (var $i = ($menuItems.length - 1); $i >= 0; $i--) {
-				if ($currentWidth > $maximumWidth) {
-					var $item = $($menuItems[$i]);
-					$currentWidth -= $item.outerWidth(true);
-					$item.hide();
-					
-					$changedItems = true;
-					this._hasHiddenItems[containerID] = true;
-				}
-				else {
-					break;
-				}
+			// ignore active item because it is already visible
+			if ($item.hasClass('active') || $item.hasClass('ui-state-active')) {
+				continue;
 			}
 			
-			if (this._hasHiddenItems[containerID]) {
-				this._dropdowns[containerID].appendTo($container.children('ul:eq(0)'));
+			var $width = $item.outerWidth(true);
+			if ($maximumWidth - $width > 0) {
+				$maximumWidth -= $width;
+				$item.show();
 			}
-		}
-		else if (this._hasHiddenItems[containerID] && $currentWidth < $maximumWidth) {
-			var $hiddenItems = this._menuItems[containerID].filter(':not(:visible)');
-			
-			// substract dropdown width from maximum width unless it is the last item
-			$maximumWidth -= $dropdownWidth;
-			
-			// reverts items starting with the first hidden one
-			for (var $i = 0, $length = $hiddenItems.length; $i < $length; $i++) {
-				var $item = $($hiddenItems[$i]);
-				$currentWidth += $item.outerWidth();
-				
-				if ($i + 1 == $length) {
-					$maximumWidth += $dropdownWidth;
+			else {
+				// check if dropdown no longer fits in
+				if ($maximumWidth < $dropdownWidth) {
+					// hide previous item to clear up some space for the dropdown unless it is the active item
+					var $prev = $item.prev();
+					if ($prev.hasClass('active') || $prev.hasClass('ui-state-active')) {
+						$prev.prev().hide();
+					}
+					else {
+						$prev.hide();
+					}
 				}
 				
-				if ($currentWidth < $maximumWidth) {
-					// enough space, show item
-					$item.css('display', '');
-					$changedItems = true;
-				}
-				else {
-					break;
-				}
-			}
-			
-			if ($changedItems) {
-				this._hasHiddenItems[containerID] = (this._menuItems[containerID].filter(':not(:visible)').length > 0);
-				if (!this._hasHiddenItems[containerID]) {
-					this._dropdowns[containerID].detach();
-				}
+				this._hasHiddenItems[containerID] = true;
 			}
 		}
 		
-		// build dropdown menu for hidden items
-		if ($changedItems) {
+		// rebuild dropdown
+		if (this._hasHiddenItems[containerID]) {
 			this._dropdownMenus[containerID].empty();
-			this._menuItems[containerID].filter(':not(:visible)').each($.proxy(function(index, item) {
-				$('<li>' + $(item).html() + '</li>').appendTo(this._dropdownMenus[containerID]);
+			var self = this;
+			$menuItems.each($.proxy(function(index, item) {
+				if ($(item).is(':visible')) {
+					return true;
+				}
+				
+				$('<li>' + $(item).html() + '</li>').data('index', index).appendTo(this._dropdownMenus[containerID]).click(function(event) {
+					// forward click to the original item
+					var $item = $($menuItems[$(event.currentTarget).data('index')]);
+					if ($item[0].tagName === 'A') {
+						$item.trigger('click');
+					}
+					else {
+						$item.find('a').trigger('click');
+					}
+					
+					// force a rebuild to guarantee the active item being visible
+					setTimeout(function() {
+						self.rebuild(containerID);
+					}, 50);
+				});
 			}, this));
+		}
+		else {
+			// remove dropdown if there are no hidden items
+			this._dropdowns[containerID].detach();
 		}
 	}
 };
