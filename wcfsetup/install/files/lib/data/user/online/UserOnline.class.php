@@ -220,6 +220,11 @@ class UserOnline extends UserProfile {
 			return 'Silk '.$match[1];
 		}
 		
+		// android browser
+		if (preg_match('~Android ([\d\.]+).*AppleWebKit~i', $this->userAgent, $match)) {
+			return 'Android Browser '.$match[1];
+		}
+		
 		// safari
 		if (preg_match('~([\d\.]+) safari~i', $this->userAgent, $match)) {
 			return 'Safari '.$match[1];
