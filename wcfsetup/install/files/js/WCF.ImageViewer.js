@@ -92,7 +92,7 @@ WCF.ImageViewer = Class.extend({
 		
 		$image.removeClass('jsResizeImage');
 		var $dimensions = $image.getDimensions();
-		var $maxWidth = $image.parents('div').width();
+		var $maxWidth = $image.closest('div').width();
 		
 		if ($dimensions.width > $maxWidth) {
 			$image.css({
