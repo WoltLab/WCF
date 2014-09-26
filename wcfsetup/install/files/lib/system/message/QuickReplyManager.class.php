@@ -113,7 +113,7 @@ class QuickReplyManager extends SingletonFactory {
 		$parameters['data']['message'] = StringUtil::trim(MessageUtil::stripCrap($parameters['data']['message']));
 		
 		if (empty($parameters['data']['message'])) {
-			throw new UserInputException('message');
+			throw new UserInputException('message', WCF::getLanguage()->get('wcf.global.form.error.empty'));
 		}
 		
 		$parameters['lastPostTime'] = (isset($parameters['lastPostTime'])) ? intval($parameters['lastPostTime']) : 0;
