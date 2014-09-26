@@ -192,7 +192,7 @@ abstract class MessageForm extends RecaptchaForm {
 		parent::readFormParameters();
 		
 		if (isset($_POST['subject'])) $this->subject = StringUtil::trim($_POST['subject']);
-		if (isset($_POST['text'])) $this->text = MessageUtil::stripCrap(StringUtil::trim($_POST['text']));
+		if (isset($_POST['text'])) $this->text = StringUtil::trim(MessageUtil::stripCrap($_POST['text']));
 		
 		// settings
 		$this->enableSmilies = $this->enableHtml = $this->enableBBCodes = $this->preParse = $this->showSignature = 0;
