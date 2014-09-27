@@ -107,8 +107,14 @@ class QuickReplyManager extends SingletonFactory {
 	 * @param	string						$containerDecoratorClassName
 	 */
 	public function validateParameters(IMessageQuickReplyAction $object, array &$parameters, $containerClassName, $containerDecoratorClassName = '') {
-		if (!isset($parameters['data']['message']) || empty($parameters['data']['message'])) {
+		if (!isset($parameters['data']['message'])) {
 			throw new UserInputException('message');
+		}
+		
+		$parameters['data']['message'] = StringUtil::trim(MessageUtil::stripCrap($parameters['data']['message']));
+		
+		if (empty($parameters['data']['message'])) {
+			throw new UserInputException('message', WCF::getLanguage()->get('wcf.global.form.error.empty'));
 		}
 		
 		$parameters['lastPostTime'] = (isset($parameters['lastPostTime'])) ? intval($parameters['lastPostTime']) : 0;
@@ -180,7 +186,6 @@ class QuickReplyManager extends SingletonFactory {
 		$parameters['data']['username'] = WCF::getUser()->username;
 		
 		// pre-parse message text
-		$parameters['data']['message'] = MessageUtil::stripCrap($parameters['data']['message']);
 		if ($parameters['data']['preParse']) {
 			$parameters['data']['message'] = PreParser::getInstance()->parse($parameters['data']['message'], $this->allowedBBodes);
 		}
