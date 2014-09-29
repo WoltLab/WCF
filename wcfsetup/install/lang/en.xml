@@ -2810,15 +2810,14 @@ You can safely ignore this email if you did not register with the website: {@PAG
 	
 	<category name="wcf.user.recentActivity">
 		<item name="wcf.user.recentActivity"><![CDATA[Recent Activities]]></item>
-		<item name="wcf.user.recentActivity.filteredByFollowedUsers"><![CDATA[Of users you follow]]></item>
 		<item name="wcf.user.recentActivity.more"><![CDATA[Show More]]></item>
 		<item name="wcf.user.recentActivity.noMoreEntries"><![CDATA[No more activities]]></item>
 		<item name="wcf.user.recentActivity.noEntries"><![CDATA[There are no activities.]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.recentActivityEvent.follow"><![CDATA[Follow]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.recentActivityEvent"><![CDATA[Wall Comment]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.response.recentActivityEvent"><![CDATA[Wall Reply]]></item>
-		<item name="wcf.user.recentActivity.scope.all"><![CDATA[All activities]]></item>
-		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Filter by followed users]]></item>
+		<item name="wcf.user.recentActivity.scope.all"><![CDATA[All Activities]]></item>
+		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Filter by Followed Users]]></item>
 	</category>
 	
 	<category name="wcf.user.3rdparty">

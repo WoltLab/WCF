@@ -1639,7 +1639,7 @@ WCF.User.RecentActivityLoader = Class.extend({
 		}
 		
 		if (WCF.User.userID) {
-			$('.jsRecentActivitySwitchContext').click($.proxy(this._switchContext, this));
+			$('.jsRecentActivitySwitchContext .button').click($.proxy(this._switchContext, this));
 		}
 	},
 	
