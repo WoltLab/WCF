@@ -49,7 +49,7 @@ class AtomicWriter extends File {
 			}
 			catch (SystemException $e) {
 				// allow at most 5 failures
-				if (++$i == 5) {
+				if (++$i === 5) {
 					throw $e;
 				}
 			}
@@ -90,7 +90,21 @@ class AtomicWriter extends File {
 		flock($this->resource, LOCK_UN);
 		fclose($this->resource);
 		
-		rename($this->filename, $this->targetFilename);
+		$i = 0;
+		while (true) {
+			try {
+				rename($this->filename, $this->targetFilename);
+				break;
+			}
+			catch (SystemException $e) {
+				// rename may fail on Windows with a high number
+				// of concurrent requests
+				// retry up to 5 times with a random sleep
+				if (++$i === 5) throw $e;
+				
+				usleep(mt_rand(0, .1e6)); // 0 to .1 seconds
+			}
+		}
 	}
 	
 	/**
