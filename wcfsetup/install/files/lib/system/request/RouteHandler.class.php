@@ -104,6 +104,15 @@ class RouteHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns all registered routes. 
+	 * 
+	 * @return	array<\wcf\system\request\Route>
+	 **/
+	public function getRoutes() {
+		return $this->routes; 
+	}
+	
+	/**
 	 * Returns true if a route matches. Please bear in mind, that the
 	 * first route which is able to consume all path components is used,
 	 * even if other routes may fit better. Route order is crucial!
