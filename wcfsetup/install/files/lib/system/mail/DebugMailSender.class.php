@@ -28,7 +28,15 @@ class DebugMailSender extends MailSender {
 	 */
 	public function sendMail(Mail $mail) {
 		if ($this->log === null) {
-			$this->log = new File(FileUtil::addTrailingSlash(MAIL_DEBUG_LOGFILE_PATH).'mail.log', 'ab');
+			$logFilePath = '';
+			if (MAIL_DEBUG_LOGFILE_PATH) {
+				$logFilePath = FileUtil::addTrailingSlash(MAIL_DEBUG_LOGFILE_PATH);
+			}
+			else {
+				$logFilePath = WCF_DIR . 'log/';
+			}
+			
+			$this->log = new File($logFilePath . 'mail.log', 'ab');
 		}
 		
 		$this->log->write($this->printMail($mail));
