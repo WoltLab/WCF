@@ -844,6 +844,17 @@ memcached:cache_source_memcached_host]]></enableoptions>
 				<categoryname>general.payment</categoryname>
 				<optiontype>boolean</optiontype>
 			</option>
+			
+			<option name="paid_subscription_enable_tos_confirmation">
+				<categoryname>general.payment</categoryname>
+				<optiontype>boolean</optiontype>
+				<enableoptions><![CDATA[paid_subscription_tos_url]]></enableoptions>
+			</option>
+			
+			<option name="paid_subscription_tos_url">
+				<categoryname>general.payment</categoryname>
+				<optiontype>text</optiontype>
+			</option>
 			<!-- /general.payment -->
 			
 			<option name="attachment_storage">

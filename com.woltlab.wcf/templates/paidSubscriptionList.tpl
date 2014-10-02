@@ -4,6 +4,30 @@
 	<title>{lang}wcf.user.menu.settings.paidSubscription{/lang} - {lang}wcf.user.menu.settings{/lang} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude'}
+	
+	{if PAID_SUBSCRIPTION_ENABLE_TOS_CONFIRMATION}
+		<script data-relocate="true">
+			$(function() {
+				$('#tosConfirmed').change(function () {
+					if ($('#tosConfirmed').is(':checked')) {
+						$('.paidSubscriptionList button').enable();
+					}
+					else {
+						$('.paidSubscriptionList button').disable();
+					}
+				});
+				$('#tosConfirmed').change();
+			});
+		</script>
+		
+		<noscript>
+			<style type="text/css">
+				.paidSubscriptionList button {
+					display: none;
+				}
+			</style>
+		</noscript>
+	{/if}
 </head>
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
@@ -35,7 +59,13 @@
 		<h2>{lang}wcf.paidSubscription.availableSubscriptions{/lang}</h2>
 	</header>
 	
-	<div class="container marginTop">
+	{if PAID_SUBSCRIPTION_ENABLE_TOS_CONFIRMATION}
+		<div class="container containerPadding marginTop">
+			<label><input type="checkbox" id="tosConfirmed" name="tosConfirmed" value="1" /> {lang}wcf.paidSubscription.confirmTOS{/lang}</label>
+		</div>
+	{/if}
+	
+	<div class="container marginTop paidSubscriptionList">
 		<ul class="containerList">
 			{foreach from=$subscriptions item=subscription}
 				<li>

@@ -1045,6 +1045,8 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.option.module_paid_subscription"><![CDATA[Bezahlte Mitgliedschaften aktivieren]]></item>
 		<item name="wcf.acp.option.module_paid_subscription.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.paid_subscription_enable_tos_confirmation"><![CDATA[Benutzer müssen vor dem Kauf Nutzungsbedingungen akzeptieren]]></item>
+		<item name="wcf.acp.option.paid_subscription_tos_url"><![CDATA[URL zu Nutzungsbedingungen]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -2506,6 +2508,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.paidSubscription.formattedCost"><![CDATA[{$subscription->currency} {$subscription->cost|currency}{if $subscription->subscriptionLength} {if $subscription->subscriptionLength != 1}für{else}pro{/if} {if $subscription->subscriptionLength != 1}{@$subscription->subscriptionLength} {/if}{if $subscription->subscriptionLengthUnit == 'D'}Tag{if $subscription->subscriptionLength != 1}e{/if}{/if}{if $subscription->subscriptionLengthUnit == 'M'}Monat{if $subscription->subscriptionLength != 1}e{/if}{/if}{if $subscription->subscriptionLengthUnit == 'Y'}Jahr{if $subscription->subscriptionLength != 1}e{/if}{/if}{/if}]]></item>
 		<item name="wcf.paidSubscription.expires"><![CDATA[Gültig bis]]></item>
 		<item name="wcf.paidSubscription.returnMessage"><![CDATA[Danke für Ihre Zahlung. Ihre Transaktion wurde abgeschlossen. Sobald Ihre Zahlung von uns verarbeitet wurde, wird die erworbene Mitgliedschaft aktiviert.]]></item>
+		<item name="wcf.paidSubscription.confirmTOS"><![CDATA[Hiermit bestätige ich mein Einverständnis mit den <a href="{PAID_SUBSCRIPTION_TOS_URL}">Nutzungsbedingungen</a>]]></item>
+		<item name="wcf.paidSubscription.button.moreInformation"><![CDATA[Mehr Informationen]]></item>
 	</category>
 	
 	<category name="wcf.payment">
