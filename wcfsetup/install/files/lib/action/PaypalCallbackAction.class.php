@@ -29,13 +29,19 @@ class PaypalCallbackAction extends AbstractAction {
 			// post back to paypal to validate 
 			$content = '';
 			try {
-				$request = new HTTPRequest('http://www.paypal.com', array(), array_merge(array('cmd' => '_notify-validate'), $_POST));
+				$url = 'https://www.paypal.com/cgi-bin/webscr';
+				if (!empty($_POST['test_ipn'])) {
+					// IPN simulator notification
+					$url = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+				}
+				
+				$request = new HTTPRequest($url, array(), array_merge(array('cmd' => '_notify-validate'), $_POST));
 				$request->execute();
 				$reply = $request->getReply();
 				$content = $reply['body'];
 			}
 			catch (SystemException $e) {
-				throw new SystemException('connection to paypal.com failed');
+				throw new SystemException('connection to paypal.com failed: ' . $e->getMessage());
 			}
 		
 			if (strstr($content, "VERIFIED") === false) {

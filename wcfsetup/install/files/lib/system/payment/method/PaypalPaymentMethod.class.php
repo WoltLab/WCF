@@ -61,7 +61,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 	public function getPurchaseButton($cost, $currency, $name, $token, $returnURL, $cancelReturnURL, $isRecurring = false, $subscriptionLength = 0, $subscriptionLengthUnit = '') {
 		if ($isRecurring) {
 			// subscribe button
-			return '<form method="post" action="https://www.paypal.com/cgi-bin/webscr">
+			return '<form method="post" action="https://www.' . (ENABLE_DEBUG_MODE ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr">
 					<input type="hidden" name="a3" value="'.$cost.'" />
 					<input type="hidden" name="p3" value="'.$subscriptionLength.'" />
 					<input type="hidden" name="t3" value="'.$subscriptionLengthUnit.'" />
@@ -85,7 +85,7 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 				</form>';
 		}
 		else {
-			return '<form method="post" action="https://www.paypal.com/cgi-bin/webscr">
+			return '<form method="post" action="https://www.' . (ENABLE_DEBUG_MODE ? 'sandbox.' : '') . 'paypal.com/cgi-bin/webscr">
 					<input type="hidden" name="amount" value="'.$cost.'" />
 					<input type="hidden" name="business" value="'.StringUtil::encodeHTML(PAYPAL_EMAIL_ADDRESS).'" />
 					<input type="hidden" name="cancel_return" value="'.StringUtil::encodeHTML($cancelReturnURL).'" />
