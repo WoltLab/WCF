@@ -96,7 +96,7 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType {
 			// log success
 			$action = new PaidSubscriptionTransactionLogAction(array(), 'create', array('data' => array(
 				'subscriptionUserID' => $userSubscription->subscriptionUserID,
-				'user' => $user->userID,
+				'userID' => $user->userID,
 				'subscriptionID' => $subscription->subscriptionID,
 				'paymentMethodObjectTypeID' => $paymentMethodObjectTypeID,
 				'logTime' => TIME_NOW,
@@ -110,7 +110,7 @@ class PaidSubscriptionPaymentType extends AbstractPaymentType {
 			// log failure
 			$action = new PaidSubscriptionTransactionLogAction(array(), 'create', array('data' => array(
 				'subscriptionUserID' => ($userSubscription !== null ? $userSubscription->subscriptionUserID : null),
-				'user' => ($user !== null ? $user->userID : null),
+				'userID' => ($user !== null ? $user->userID : null),
 				'subscriptionID' => ($subscription !== null ? $subscription->subscriptionID : null),
 				'paymentMethodObjectTypeID' => $paymentMethodObjectTypeID,
 				'logTime' => TIME_NOW,

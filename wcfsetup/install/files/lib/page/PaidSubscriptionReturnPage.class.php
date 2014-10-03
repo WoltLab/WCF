@@ -1,5 +1,6 @@
 <?php
 namespace wcf\page;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -25,7 +26,9 @@ class PaidSubscriptionReturnPage extends AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign(array(
-			'message' => WCF::getLanguage()->get('wcf.paidSubscription.returnMessage')
+			'message' => WCF::getLanguage()->get('wcf.paidSubscription.returnMessage'),
+			'wait' => 60,
+			'url' => LinkHandler::getInstance()->getLink()
 		));
 	}
 }
