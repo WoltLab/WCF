@@ -44,8 +44,8 @@ class PHPInfoPage extends AbstractPage {
 		$info = preg_replace('%<table.*?</table><br />%s', '', $info, 1);
 		
 		// fix tables
-		$info = preg_replace('%<h2>(.*?)</h2>\s*<table border="0" cellpadding="3" width="600">%', '<div class="tabularBox tabularBoxTitle marginTop"><header><h2>\\1</h2></header><table class="table">', $info);
-		$info = preg_replace('%<table border="0" cellpadding="3" width="600">%', '<div class="tabularBox marginTop"><table class="table">', $info);
+		$info = preg_replace('%<h2>(.*?)</h2>\s*<table( border="0" cellpadding="3" width="600")?>%', '<div class="tabularBox tabularBoxTitle marginTop"><header><h2>\\1</h2></header><table class="table">', $info);
+		$info = preg_replace('%<table( border="0" cellpadding="3" width="600")?>%', '<div class="tabularBox marginTop"><table class="table">', $info);
 		$info = str_replace('</table>', '</table></div>', $info);
 		
 		// fix display of disable_functions & disable_classes
