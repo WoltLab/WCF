@@ -2101,6 +2101,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.button.edit"><![CDATA[Bearbeiten]]></item>
 		<item name="wcf.global.button.enable"><![CDATA[Aktivieren]]></item>
 		<item name="wcf.global.button.fullscreen"><![CDATA[Vollbildmodus]]></item>
+		<item name="wcf.global.button.hide"><![CDATA[Ausblenden]]></item>
 		<item name="wcf.global.button.next"><![CDATA[Weiter »]]></item>
 		<item name="wcf.global.button.preview"><![CDATA[Vorschau]]></item>
 		<item name="wcf.global.button.refresh"><![CDATA[Aktualisieren]]></item>
