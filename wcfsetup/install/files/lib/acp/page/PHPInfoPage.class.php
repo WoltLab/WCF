@@ -41,7 +41,7 @@ class PHPInfoPage extends AbstractPage {
 		
 		// style fixes
 		// remove first table
-		$info = preg_replace('%<table.*?</table><(<br />)?%s', '', $info, 1);
+		$info = preg_replace('%<table.*?</table>(<br />)?%s', '', $info, 1);
 		// float logos
 		$info = preg_replace('%<img([^>]*)>%s', '<img style="float:right" \\1>', $info, 1);
 		
