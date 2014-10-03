@@ -25,7 +25,7 @@
 	{foreach from=$__wcf->getNoticeHandler()->getVisibleNotices() item='notice'}
 		<p class="{$notice->cssClassName} notice{if $notice->isDismissible} noticeDismissible{/if}">
 			{if $notice->isDismissible}
-				<span class="icon icon16 icon-remove pointer jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}" style="float: right;"></span>
+				<span class="icon icon16 fa-times pointer jsDismissNoticeButton jsTooltip" data-object-id="{$notice->noticeID}" title="{lang}wcf.notice.button.dismiss{/lang}"></span>
 			{/if}
 			
 			{if $notice->noticeUseHtml}{@$notice->notice|language}{else}{@$notice->notice|language|htmlspecialchars|nl2br}{/if}
