@@ -7380,6 +7380,7 @@ WCF.System.Confirmation = {
 	_notify: function(action) {
 		this._visible = false;
 		this._dialog.wcfDialog('close');
+		this._confirmationButton.blur();
 		
 		this._callback(action, this._parameters);
 	},
