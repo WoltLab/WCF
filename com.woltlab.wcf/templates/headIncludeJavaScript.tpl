@@ -74,6 +74,7 @@
 		'wcf.global.button.disabledI18n': '{lang}wcf.global.button.disabledI18n{/lang}',
 		'wcf.global.button.edit': '{lang}wcf.global.button.edit{/lang}',
 		'wcf.global.button.enable': '{lang}wcf.global.button.enable{/lang}',
+		'wcf.global.button.hide': '{lang}wcf.global.button.hide{/lang}',
 		'wcf.global.button.next': '{lang}wcf.global.button.next{/lang}',
 		'wcf.global.button.preview': '{lang}wcf.global.button.preview{/lang}',
 		'wcf.global.button.reset': '{lang}wcf.global.button.reset{/lang}',
