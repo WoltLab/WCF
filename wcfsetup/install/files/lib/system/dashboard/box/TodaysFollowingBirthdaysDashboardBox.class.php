@@ -42,9 +42,13 @@ class TodaysFollowingBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 			$userProfileList = new UserProfileList();
 			$userProfileList->setObjectIDs($userIDs);
 			$userProfileList->readObjects();
+			$i = 0;
 			foreach ($userProfileList as $userProfile) {
+				if ($i == 10) break;
+				
 				if (!$userProfile->isProtected() && substr($userProfile->birthday, 5) == $currentDay) {
 					$this->userProfiles[] = $userProfile;
+					$i++;
 				}
 			}
 		}

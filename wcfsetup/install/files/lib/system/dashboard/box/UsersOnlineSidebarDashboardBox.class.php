@@ -29,7 +29,7 @@ class UsersOnlineSidebarDashboardBox extends AbstractSidebarDashboardBox {
 	public function init(DashboardBox $box, IPage $page) {
 		parent::init($box, $page);
 		
-		if (MODULE_USERS_ONLINE) {
+		if (MODULE_USERS_ONLINE && WCF::getSession()->getPermission('user.profile.canViewUsersOnlineList')) {
 			$this->usersOnlineList = new UsersOnlineList();
 			$this->usersOnlineList->readStats();
 			$this->usersOnlineList->checkRecord();

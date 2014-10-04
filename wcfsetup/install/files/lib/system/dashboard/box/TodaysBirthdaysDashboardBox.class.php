@@ -43,7 +43,7 @@ class TodaysBirthdaysDashboardBox extends AbstractSidebarDashboardBox {
 			$userProfileList->readObjects();
 			$i = 0;
 			foreach ($userProfileList as $userProfile) {
-				if ($i == 5) break;
+				if ($i == 10) break;
 				
 				if (!$userProfile->isProtected() && substr($userProfile->birthday, 5) == $currentDay) {
 					$this->userProfiles[] = $userProfile;

@@ -28,9 +28,10 @@ class FollowingsOnlineSidebarDashboardBox extends AbstractSidebarDashboardBox {
 	public function init(DashboardBox $box, IPage $page) {
 		parent::init($box, $page);
 		
-		if (MODULE_USERS_ONLINE && count(WCF::getUserProfileHandler()->getFollowingUsers())) {
+		if (MODULE_USERS_ONLINE && WCF::getSession()->getPermission('user.profile.canViewUsersOnlineList') && count(WCF::getUserProfileHandler()->getFollowingUsers())) {
 			$this->usersOnlineList = new UsersOnlineList();
 			$this->usersOnlineList->getConditionBuilder()->add('session.userID IN (?)', array(WCF::getUserProfileHandler()->getFollowingUsers()));
+			$this->usersOnlineList->sqlLimit = 10;
 			$this->usersOnlineList->readObjects();
 		}
 		
