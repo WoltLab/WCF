@@ -2,6 +2,7 @@
 namespace wcf\action;
 use wcf\data\IStorableObject;
 use wcf\system\exception\SystemException;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\ClassUtil;
 use wcf\util\StringUtil;
@@ -96,5 +97,27 @@ class AJAXProxyAction extends AJAXInvokeAction {
 			unset($object);
 		}
 		return $response;
+	}
+	
+	/**
+	 * @see	\wcf\action\AJAXInvokeAction::sendResponse()
+	 */
+	protected function sendResponse() {
+		// add benchmark and debug data
+		if (ENABLE_BENCHMARK) {
+			$this->response['benchmark'] = array(
+				'executionTime' => WCF::getBenchmark()->getExecutionTime().'s',
+				'memoryUsage' => WCF::getBenchmark()->getMemoryUsage(),
+				'phpExecution' => StringUtil::formatNumeric((WCF::getBenchmark()->getExecutionTime() - WCF::getBenchmark()->getQueryExecutionTime()) / WCF::getBenchmark()->getExecutionTime() * 100).'%',
+				'sqlExecution' => StringUtil::formatNumeric(WCF::getBenchmark()->getQueryExecutionTime() / WCF::getBenchmark()->getExecutionTime() * 100).'%',
+				'sqlQueries' => WCF::getBenchmark()->getQueryCount()
+			);
+			
+			if (ENABLE_DEBUG_MODE) {
+				$this->response['benchmark']['items'] = WCF::getBenchmark()->getItems();
+			}
+		}
+		
+		parent::sendResponse();
 	}
 }
