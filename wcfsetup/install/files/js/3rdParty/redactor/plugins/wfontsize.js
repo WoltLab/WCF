@@ -7,51 +7,48 @@ if (!RedactorPlugins) var RedactorPlugins = {};
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-RedactorPlugins.wfontsize = {
-	/**
-	 * Initializes the RedactorPlugins.wfontsize plugin.
-	 */
-	init: function () {
-		var $dropdown = this._createFontSizeDropdown();
-		
-		this.buttonReplace('fontsize', 'wfontsize', WCF.Language.get('wcf.bbcode.button.fontSize'), $.proxy(function(btnName, $button, btnObject, e) {
-			this.dropdownShow(e, btnName);
-		}, this));
-		this.buttonGet('wfontsize').addClass('re-fontsize').data('dropdown', $dropdown);
-	},
+RedactorPlugins.wfontsize = function() {
+	"use strict";
 	
-	/**
-	 * Creates the font size dropdown.
-	 */
-	_createFontSizeDropdown: function() {
-		var $dropdown = $('<div class="redactor_dropdown redactor_dropdown_box_wfontsize dropdownMenu" style="display: none;">');
-		var $fontSizes = [ 8, 10, 12, 14, 18, 24, 36 ];
-		var self = this;
-		for (var $i = 0; $i < $fontSizes.length; $i++) {
-			var $fontSize = $fontSizes[$i];
-			var $listItem = $('<li><a href="#">' + $fontSize + '</a></li>').appendTo($dropdown);
-			var $item = $listItem.children('a').data('fontSize', $fontSize).css('font-size', $fontSize + 'pt');
-			if ($fontSize > 18) {
-				$item.css('line-height', '1em');
+	return {
+		/**
+		 * Initializes the RedactorPlugins.wfontsize plugin.
+		 */
+		init: function () {
+			var $dropdown = this.button.addDropdown(this.button.get('fontsize'));
+			this.wfontsize._createDropdown($dropdown);
+		},
+		
+		/**
+		 * Creates the font size dropdown.
+		 * 
+		 * @param	jQuery		dropdown
+		 */
+		_createDropdown: function(dropdown) {
+			var $fontSizes = [ 8, 10, 12, 14, 18, 24, 36 ];
+			var self = this;
+			for (var $i = 0; $i < $fontSizes.length; $i++) {
+				var $fontSize = $fontSizes[$i];
+				var $listItem = $('<li><a href="#">' + $fontSize + '</a></li>').appendTo(dropdown);
+				var $item = $listItem.children('a').data('fontSize', $fontSize).css('font-size', $fontSize + 'pt');
+				if ($fontSize > 18) {
+					$item.css('line-height', '1em');
+				}
+				
+				$item.click(function() {
+					event.preventDefault();
+					
+					self.inline.format('span', 'style', 'font-size: ' + $(this).data('fontSize') + 'pt;');
+				});
 			}
 			
-			$item.click(function() {
+			$('<li class="dropdownDivider" />').appendTo(dropdown);
+			var $listItem = $('<li><a href="#">None</a></li>').appendTo(dropdown);
+			$listItem.children('a').click(function() {
 				event.preventDefault();
 				
-				self.inlineSetStyle('font-size', $(this).data('fontSize') + 'pt');
+				self.inline.removeStyleRule('font-size');
 			});
 		}
-		
-		$('<li class="dropdownDivider" />').appendTo($dropdown);
-		var $listItem = $('<li><a href="#">None</a></li>').appendTo($dropdown);
-		$listItem.children('a').click(function() {
-			event.preventDefault();
-			
-			self.inlineRemoveStyle('font-size');
-		});
-		
-		$(this.$toolbar).append($dropdown);
-		
-		return $dropdown;
-	}
+	};
 };

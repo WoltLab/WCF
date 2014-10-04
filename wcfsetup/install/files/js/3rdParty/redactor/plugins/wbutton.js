@@ -7,139 +7,170 @@ if (!RedactorPlugins) var RedactorPlugins = {};
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-RedactorPlugins.wbutton = {
-	/**
-	 * list of button names and their associated bbcode tag
-	 * @var	object<string>
-	 */
-	_bbcodes: { },
+RedactorPlugins.wbutton = function() {
+	"use strict";
 	
-	/**
-	 * Initializes the RedactorPlugins.wbutton plugin.
-	 */
-	init: function() {
-		this._bbcodes = { };
+	return {
+		/**
+		 * list of button names and their associated bbcode tag
+		 * @var	object<string>
+		 */
+		_bbcodes: { },
 		
-		for (var $i = 0, $length = __REDACTOR_BUTTONS.length; $i < $length; $i++) {
-			this._addBBCodeButton(__REDACTOR_BUTTONS[$i]);
-		}
-		
-		// this list contains overrides for built-in buttons, if a button is not present
-		// Redactor's own icon will be used instead. This solves the problem of FontAwesome
-		// not providing an icon for everything we need (especially the core stuff)
-		var $faIcons = {
-			'html': 'fa-square-o',
-			'bold': 'fa-bold',
-			'italic': 'fa-italic',
-			'underline': 'fa-underline',
-			'deleted': 'fa-strikethrough',
-			'subscript': 'fa-subscript',
-			'superscript': 'fa-superscript',
-			'orderedlist': 'fa-list-ol',
-			'unorderedlist': 'fa-list-ul',
-			'outdent': 'fa-outdent',
-			'indent': 'fa-indent',
-			'link': 'fa-link',
-			'alignment': 'fa-align-left',
-			'table': 'fa-table'
-		};
-		
-		var $buttons = this.getOption('buttons');
-		var $lastButton = '';
-		for (var $i = 0, $length = $buttons.length; $i < $length; $i++) {
-			var $button = $buttons[$i];
+		/**
+		 * Initializes the RedactorPlugins.wbutton plugin.
+		 */
+		init: function() {
+			this._bbcodes = { };
 			
-			if ($button == 'separator') {
-				this.buttonGet($lastButton).parent().addClass('separator');
-				
-				continue;
+			for (var $i = 0, $length = __REDACTOR_BUTTONS.length; $i < $length; $i++) {
+				this.wbutton._addBBCodeButton(__REDACTOR_BUTTONS[$i]);
 			}
 			
-			// check if button does not exist
-			var $buttonObj = this.buttonGet($button);
-			if ($buttonObj.length) {
-				if ($faIcons[$button]) {
-					this.buttonAwesome($button, $faIcons[$button]);
+			// this list contains overrides for built-in buttons, if a button is not present
+			// Redactor's own icon will be used instead. This solves the problem of FontAwesome
+			// not providing an icon for everything we need (especially the core stuff)
+			var $faIcons = {
+				'html': 'fa-square-o',
+				'bold': 'fa-bold',
+				'italic': 'fa-italic',
+				'underline': 'fa-underline',
+				'deleted': 'fa-strikethrough',
+				'subscript': 'fa-subscript',
+				'superscript': 'fa-superscript',
+				'orderedlist': 'fa-list-ol',
+				'unorderedlist': 'fa-list-ul',
+				'outdent': 'fa-outdent',
+				'indent': 'fa-indent',
+				'link': 'fa-link',
+				'alignment': 'fa-align-left',
+				'table': 'fa-table'
+			};
+			
+			var $buttons = this.wutil.getOption('buttons');
+			var $lastButton = '';
+			for (var $i = 0, $length = $buttons.length; $i < $length; $i++) {
+				var $button = $buttons[$i];
+				if ($button == 'separator') {
+					this.button.get($lastButton).parent().addClass('separator');
+					
+					continue;
 				}
-			}
-			else {
-				this._addCoreButton($button, ($faIcons[$button] ? $faIcons[$button] : null), $lastButton);
-			}
-			
-			$lastButton = $button;
-		}
-	},
-	
-	_addCoreButton: function(buttonName, faIcon, insertAfter) {
-		var $button = this.buttonBuild(buttonName, {
-			title: buttonName,
-			exec: buttonName
-		}, false);
-		$('<li />').append($button).insertAfter(this.buttonGet(insertAfter).parent());
-		
-		if (faIcon !== null) {
-			this.buttonAwesome(buttonName, faIcon);
-		}
-	},
-	
-	/**
-	 * Adds a custom button.
-	 * 
-	 * @param	object<string>		data
-	 */
-	_addBBCodeButton: function(data) {
-		var $buttonName = '__wcf_' + data.name;
-		var $button = this.buttonAdd($buttonName, data.label, this._insertBBCode);
-		this._bbcodes[$buttonName] = data.name;
-		
-		// FontAwesome class name
-		if (data.icon.match(/^fa\-[a-z\-]+$/)) {
-			this.buttonAwesome($buttonName, data.icon);
-		}
-		else {
-			// image reference
-			$button.css('background-image', 'url(' + __REDACTOR_ICON_PATH + data.icon + ')');
-		}
-	},
-	
-	/**
-	 * Inserts the specified BBCode.
-	 * 
-	 * @param	string		buttonName
-	 * @param	jQuery		buttonDOM
-	 * @param	object		buttonObj
-	 * @param	object		event
-	 */
-	_insertBBCode: function(buttonName, buttonDOM, buttonObj, event) {
-		var $bbcode = this._bbcodes[buttonName];
-		var $eventData = {
-			buttonName: buttonName,
-			buttonDOM: buttonDOM,
-			buttonObj: buttonObj,
-			event: event,
-			cancel: false
-		};
-		
-		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'insertBBCode_' + $bbcode + '_' + this.$source.wcfIdentify(), $eventData);
-		
-		if ($eventData.cancel === false) {
-			var $selectedHtml = this.getSelectionHtml();
-			
-			if ($bbcode === 'tt') {
-				var $parent = (this.getParent()) ? $(this.getParent()) : null;
-				if ($parent && $parent.closest('inline.inlineCode', this.$editor.get()[0]).length) {
-					this.inlineRemoveClass('inlineCode');
+				
+				// check if button does not exist
+				var $buttonObj = this.button.get($button);
+				if ($buttonObj.length) {
+					if ($faIcons[$button]) {
+						this.button.setAwesome($button, $faIcons[$button]);
+					}
 				}
 				else {
-					this.inlineSetClass('inlineCode');
+					this.wbutton._addCoreButton($button, ($faIcons[$button] ? $faIcons[$button] : null), $lastButton);
 				}
+				
+				$lastButton = $button;
+			}
+			
+			// handle image insert
+			this.button.addCallback(this.button.get('image'), $.proxy(this.wbutton.insertImage, this));
+		},
+		
+		_addCoreButton: function(buttonName, faIcon, insertAfter) {
+			var $buttonObj = { title: buttonName };
+			if (buttonName === 'subscript' || buttonName === 'superscript') {
+				$buttonObj.command = buttonName;
+			}
+			
+			var $button = this.button.build(buttonName, $buttonObj);
+			$('<li />').append($button).insertAfter(this.button.get(insertAfter).parent());
+			
+			if (faIcon !== null) {
+				this.button.setAwesome(buttonName, faIcon);
+			}
+		},
+		
+		/**
+		 * Adds a custom button.
+		 * 
+		 * @param	object<string>		data
+		 */
+		_addBBCodeButton: function(data) {
+			var $buttonName = '__wcf_' + data.name;
+			var $button = this.button.add($buttonName, data.label);
+			this.button.addCallback($button, this.wbutton._insertBBCode);
+			
+			this._bbcodes[$buttonName] = data.name;
+			
+			// FontAwesome class name
+			if (data.icon.match(/^fa\-[a-z\-]+$/)) {
+				this.button.setAwesome($buttonName, data.icon);
 			}
 			else {
-				this.insertHtml('[' + $bbcode + ']' + $selectedHtml + '[/' + $bbcode + ']');
+				// image reference
+				$button.css('background-image', 'url(' + __REDACTOR_ICON_PATH + data.icon + ')');
+			}
+		},
+		
+		/**
+		 * Inserts the specified BBCode.
+		 * 
+		 * @param	string		buttonName
+		 */
+		_insertBBCode: function(buttonName) {
+			var $bbcode = this._bbcodes[buttonName];
+			var $eventData = {
+				buttonName: buttonName,
+				cancel: false
+			};
+			
+			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'insertBBCode_' + $bbcode + '_' + this.$textarea.wcfIdentify(), $eventData);
+			
+			if ($eventData.cancel === false) {
+				var $selectedHtml = this.selection.getHtml();
+				
+				// TODO: this behaves pretty weird at this time, fix or remove
+				if (false && $bbcode === 'tt') {
+					var $parent = (this.selection.getParent()) ? $(this.selection.getParent()) : null;
+					if ($parent && $parent.closest('inline.inlineCode', this.$editor.get()[0]).length) {
+						this.inline.toggleClass('inlineCode');
+					}
+					else {
+						this.inline.toggleClass('inlineCode');
+					}
+				}
+				else {
+					this.insert.html('[' + $bbcode + ']' + $selectedHtml + '[/' + $bbcode + ']');
+				}
+			}
+			
+			event.preventDefault();
+			return false;
+		},
+		
+		insertImage: function() {
+			this.image.show();
+		},
+		
+		_insertImage: function() {
+			var $source = $('#redactor-image-link-source');
+			var $url = $source.val().trim();
+			if ($url.length) {
+				this.buffer.set();
+				
+				var $align = $('#redactor-image-align').val();
+				var $style = '';
+				if ($align === 'left' || $align === 'right') {
+					$style = ' style="float: ' + $align + '"';
+				}
+				
+				this.insert.html('<img src="' + $url + '"' + $style + '>', false);
+				
+				this.modal.close();
+				this.observe.images();
+			}
+			else if (!$source.next('small.innerError')) {
+				$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($source);
 			}
 		}
-		
-		event.preventDefault();
-		return false;
-	}
+	};
 };

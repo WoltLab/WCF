@@ -46,10 +46,11 @@
 .re-aligncenter:before { content: "\e61e"; }
 .re-gallery:before { content: "\e61f"; }
 
-.redactor_box {
+.redactor-box {
 	border: 1px solid @wcfContainerBorderColor;
 	font-size: 0;
 	line-height: @wcfBaseLineHeight;
+	overflow: hidden;
 	
 	& + .messageTabMenu {
 		padding: 0;
@@ -64,7 +65,7 @@
 	}
 }
 
-.redactor_editor {
+.redactor-editor {
 	font-size: 1rem;
 	max-height: 500px;
 	padding: 10px;
@@ -76,6 +77,7 @@
 		border-width: 0;
 		box-shadow: none;
 		font-size: 1rem;
+		line-height: @wcfBaseLineHeight;
 		outline: none;
 		padding: 10px;
 		
@@ -128,7 +130,7 @@
 	}
 }
 
-.redactor_toolbar {
+.redactor-toolbar {
 	background: repeating-linear-gradient(0deg, @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor 29px, @wcfContainerBorderColor 30px, @wcfContainerBorderColor 30px);
 	border-bottom: 1px solid @wcfContainerBorderColor;
 	margin-top: -1px;
@@ -155,9 +157,9 @@
 			
 			.textShadow(@wcfButtonBackgroundColor);
 			
-			&.redactor_button_disabled,
-			&.redactor_button_disabled:before,
-			&.redactor_button_disabled > i:before {
+			&.redactor-button-disabled,
+			&.redactor-button-disabled:before,
+			&.redactor-button-disabled > i:before {
 				color: @wcfButtonBackgroundColor;
 				cursor: default;
 			}
@@ -175,8 +177,8 @@
 				}
 			}
 			
-			&:not(.redactor_button_disabled):hover,
-			&.redactor_act,
+			&:not(.redactor-button-disabled):hover,
+			&.redactor-act,
 			&.dropact {
 				background-color: @wcfContainerHoverBackgroundColor;
 				
@@ -323,7 +325,7 @@
 	}
 }
 
-.redactor_dropdown_box_fontcolor {
+.redactor-dropdown-box-fontcolor {
 	width: 200px;
 	
 	> li.redactorColorPallet {
