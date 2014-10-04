@@ -604,5 +604,15 @@ final class FileUtil {
 		return self::$memoryLimit;
 	}
 	
+	/**
+	 * Returns true if the given amount of memory is available.
+	 * 
+	 * @param	integer		$neededMemory
+	 * @return	boolean
+	 */
+	public static function checkMemoryLimit($neededMemory) {
+		return self::getMemoryLimit() == -1 || self::getMemoryLimit() > (memory_get_usage() + $neededMemory);
+	}
+	
 	private function __construct() { }
 }
