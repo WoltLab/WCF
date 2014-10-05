@@ -260,7 +260,8 @@ class UserOptionAddForm extends AbstractForm {
 		$this->saved();
 		
 		// reset values
-		$this->optionName = $this->optionDescription = $this->categoryName = $this->optionType = $this->defaultValue = $this->validationPattern = $this->optionType = $this->selectOptions = $this->outputClass = '';
+		$this->optionName = $this->optionDescription = $this->categoryName = $this->optionType = $this->defaultValue = $this->validationPattern = $this->selectOptions = $this->outputClass = '';
+		$this->optionType = 'text';
 		$this->required = $this->searchable = $this->showOrder = $this->askDuringRegistration = 0;
 		$this->editable = 3;
 		$this->visible = 15;
