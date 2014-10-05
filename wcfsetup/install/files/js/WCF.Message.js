@@ -824,8 +824,10 @@ WCF.Message.QuickReply = Class.extend({
 		if (this._container.is(':visible')) {
 			this._quickReplyButtons.hide();
 			
-			var self = this;
-			window.setTimeout(function() { self._scroll.scrollTo(self._container, true); }, 100);
+			setTimeout((function() {
+				$(document).trigger('resize');
+				this._scroll.scrollTo(this._container, true);
+			}).bind(this), 100);
 			
 			WCF.Message.Submit.registerButton('text', this._container.find('.formSubmit button[data-type=save]'));
 			

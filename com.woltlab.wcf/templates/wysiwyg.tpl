@@ -30,7 +30,15 @@ $(function() {
 		
 		var $autosave = $textarea.data('autosave');
 		var $config = {
+			autosave: false,
 			buttons: $buttons,
+			buttonSource: true,
+			imageResizable: false,
+			removeEmpty: false,
+			replaceDivs: false,
+			tabifier: false,
+			
+			{* TODO: possible outdated/deprecated options below *}
 			convertDivs: false,
 			convertImageLinks: false,
 			convertLinks: false,
@@ -38,10 +46,9 @@ $(function() {
 			direction: '{lang}wcf.global.pageDirection{/lang}',
 			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
 			minHeight: 200,
-			imageResizable: false,
-			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize', 'wupload' ],
+			plugins: [ 'wutil',  'wmonkeypatch', 'table', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize', 'wupload' ],
 			wautosave: {
-				active: ($autosave) ? true : false,
+				active: (/* DEBUG ONLY $autosave*/false) ? true : false,
 				key: ($autosave) ? '{@$__wcf->getAutosavePrefix()}_' + $autosave : '',
 				saveOnInit: {if !$errorField|empty}true{else}false{/if}
 			},
@@ -64,6 +71,10 @@ $(function() {
 		{if !ENABLE_DEBUG_MODE}
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wcombined.min.js?v={@LAST_UPDATE_TIME}',
 		{else}
+			{* official *}
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/table.js?v={@LAST_UPDATE_TIME}',
+			
+			{* WoltLab *}
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wbbcode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wbutton.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontcolor.js?v={@LAST_UPDATE_TIME}',
