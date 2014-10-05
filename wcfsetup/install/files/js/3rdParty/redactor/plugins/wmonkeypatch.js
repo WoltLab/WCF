@@ -39,7 +39,6 @@ RedactorPlugins.wmonkeypatch = function() {
 			
 			// events and callbacks
 			this.wmonkeypatch.bindEvents();
-			
 		},
 		
 		/**
@@ -75,7 +74,9 @@ RedactorPlugins.wmonkeypatch = function() {
 			// buttons response
 			if (this.opts.activeButtons) {
 				this.$editor.off('mouseup.redactor keyup.redactor focus.redactor');
+				
 				this.$editor.on('mouseup.redactor keyup.redactor focus.redactor', $.proxy(this.observe.buttons, this));
+				this.$editor.on('keyup.redactor', $.proxy(this.keyup.init, this));
 			}
 		},
 		
@@ -154,10 +155,6 @@ RedactorPlugins.wmonkeypatch = function() {
 						$listItem.appendTo($dropdown);
 					}
 				}).bind(this));
-				
-				/*$dropdown.children('a').each(function() {
-					$(this).wrap('li');
-				});*/
 			}).bind(this);
 			
 			// dropdown.show

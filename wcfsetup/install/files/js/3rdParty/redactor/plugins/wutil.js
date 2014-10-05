@@ -22,7 +22,7 @@ RedactorPlugins.wutil = function() {
 		 */
 		init: function() {
 			// convert HTML to BBCode upon submit
-			this.$textarea.parents('form').submit($.proxy(this.submit, this));
+			this.$textarea.parents('form').submit($.proxy(this.wutil.submit, this));
 			
 			if (this.wutil.getOption('wautosave').active) {
 				this.wutil.autosaveEnable();
@@ -151,18 +151,33 @@ RedactorPlugins.wutil = function() {
 		 */
 		getText: function() {
 			if (this.inWysiwygMode()) {
-				this.wSync();
+				this.code.startSync();
+				this.$textarea.val(this.wbbcode.convertFromHtml(this.$textarea.val()));
 			}
 			
 			return this.$textarea.val();
 		},
 		
 		/**
+		 * Returns true if editor is empty.
+		 * 
+		 * @return	boolean
+		 */
+		isEmptyEditor: function() {
+			if (this.opts.visual) {
+				return this.utils.isEmpty(this.$editor.html());
+			}
+			
+			return (!$.trim(this.$textarea.val()));
+		},
+		
+		/**
 		 * Converts HTML to BBCode upon submit.
 		 */
 		submit: function() {
-			if (this.inWysiwygMode()) {
-				this.wSync();
+			if (this.wutil.inWysiwygMode()) {
+				this.code.startSync();
+				this.$textarea.val(this.wbbcode.convertFromHtml(this.$textarea.val()));
 			}
 			
 			this.autosavePurge();
@@ -172,13 +187,11 @@ RedactorPlugins.wutil = function() {
 		 * Resets the editor's contents.
 		 */
 		reset: function() {
-			if (this.inWysiwygMode()) {
+			if (this.opts.visual) {
 				this.$editor.html('<p>' + this.opts.invisibleSpace + '</p>');
-				this.sync();
 			}
-			else {
-				this.$textarea.val('');
-			}
+			
+			this.$textarea.val('');
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'reset', { wysiwygContainerID: this.$textarea.wcfIdentify() });
 		},
@@ -298,14 +311,6 @@ RedactorPlugins.wutil = function() {
 			}
 			
 			return $string;
-		},
-		
-		/**
-		 * Synchronizes editor's source textarea.
-		 */
-		wSync: function() {
-			this.sync(undefined, true);
-			this.$textarea.val(this.convertFromHtml(this.cleanHtml(this.$textarea.val())));
 		},
 		
 		/**
@@ -442,21 +447,26 @@ RedactorPlugins.wutil = function() {
 		 * @param	string		value
 		 */
 		replaceText: function(value) {
+			var $document = $(document);
+			var $offsetTop = $document.scrollTop();
 			var $wasInWysiwygMode = false;
-			var $offsetTop = $(document).scrollTop();
-			if (this.inWysiwygMode()) {
-				this.toggle();
+			
+			if (this.wutil.inWysiwygMode()) {
+				this.code.toggle();
 				$wasInWysiwygMode = true;
 			}
 			
 			this.$textarea.val(value);
 			
 			if ($wasInWysiwygMode) {
-				this.toggle();
+				this.code.toggle();
 				
 				// restore scrolling since editor receives the focus
-				$(document).scrollTop($offsetTop);
+				$document.scrollTop($offsetTop);
 			}
+			
+			// trigger resize event to rebuild message tab menu
+			$document.trigger('resize');
 		},
 		
 		setCaretBefore: function(element) {

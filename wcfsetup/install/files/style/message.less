@@ -477,7 +477,7 @@
 	display: block;
 	line-height: 1.5;
 	
-	> div:not(.messageFooter):not(.redactor_box):not(.messageTabMenu) {
+	> div:not(.messageFooter):not(.redactor-box):not(.messageTabMenu) {
 		overflow: hidden;
 		padding-bottom: @wcfGapMedium;
 	}
@@ -519,7 +519,7 @@ html[dir='rtl'] {
 	}
 }
 
-.messageHeader + .messageBody > div:first-child:not(.redactor_box),
+.messageHeader + .messageBody > div:first-child:not(.redactor-box),
 .messageBody > div:not(.messageFooter):not(.messageTabMenu):not(:first-child) {
 	border-top: 1px dotted @wcfContainerBorderColor;
 	padding: @wcfGapMedium 0;

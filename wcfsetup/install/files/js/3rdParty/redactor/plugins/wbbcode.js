@@ -21,12 +21,12 @@ RedactorPlugins.wbbcode = function() {
 				// use stored editor contents
 				var $content = $.trim(this.wutil.getOption('wOriginalValue'));
 				if ($content.length) {
-					this.toggle();
-					this.$textarea.val($content);
-					this.toggle();
+					this.wutil.replaceText($content);
 				}
 				
 				delete this.opts.wOriginalValue;
+				
+				$(document).trigger('resize');
 			}, this);
 			
 			this.opts.pasteBeforeCallback = $.proxy(this.wbbcode._pasteBeforeCallback, this);
