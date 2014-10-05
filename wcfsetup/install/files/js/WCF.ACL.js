@@ -287,8 +287,8 @@ WCF.ACL.List = Class.extend({
 		// add a "full access" permission if there are more than one option
 		if ($count > 1) {
 			var $listItem = $('<li class="aclFullAccess"><span>' + WCF.Language.get('wcf.acl.option.fullAccess') + '</span></li>').prependTo(this._containerElements.permissionList);
-			this._containerElements.grantAll = $('<input type="checkbox" id="grantAll" />').appendTo($listItem).wrap('<label for="grantAll" class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.grant') + '" />');
-			this._containerElements.denyAll = $('<input type="checkbox" id="denyAll" />').appendTo($listItem).wrap('<label for="denyAll" class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.deny') + '" />');
+			this._containerElements.grantAll = $('<input type="checkbox" id="grantAll" />').appendTo($listItem).wrap('<label class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.grant') + '" />');
+			this._containerElements.denyAll = $('<input type="checkbox" id="denyAll" />').appendTo($listItem).wrap('<label class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.deny') + '" />');
 			
 			// bind events
 			this._containerElements.grantAll.data('type', 'grant').change($.proxy(this._changeAll, this));
