@@ -287,8 +287,8 @@ WCF.ACL.List = Class.extend({
 		// add a "full access" permission if there are more than one option
 		if ($count > 1) {
 			var $listItem = $('<li class="aclFullAccess"><span>' + WCF.Language.get('wcf.acl.option.fullAccess') + '</span></li>').prependTo(this._containerElements.permissionList);
-			this._containerElements.grantAll = $('<input type="checkbox" id="grantAll" />').appendTo($listItem).wrap('<label class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.grant') + '" />');
-			this._containerElements.denyAll = $('<input type="checkbox" id="denyAll" />').appendTo($listItem).wrap('<label class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.deny') + '" />');
+			this._containerElements.grantAll = $('<input type="checkbox" id="grantAll_' + this._container.attr('id') + '" />').appendTo($listItem).wrap('<label class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.grant') + '" />');
+			this._containerElements.denyAll = $('<input type="checkbox" id="denyAll_' + this._container.attr('id') + '" />').appendTo($listItem).wrap('<label class="jsTooltip" title="' + WCF.Language.get('wcf.acl.option.deny') + '" />');
 			
 			// bind events
 			this._containerElements.grantAll.data('type', 'grant').change($.proxy(this._changeAll, this));
@@ -414,16 +414,16 @@ WCF.ACL.List = Class.extend({
 		}
 		
 		var $allChecked = true;
-		this._containerElements.permissionList.find('input[type=checkbox]').each(function(index, item) {
+		this._containerElements.permissionList.find('input[type=checkbox]').each($.proxy(function(index, item) {
 			var $item = $(item);
 			
-			if ($item.data('type') === $type && $item.attr('id') !== $type + 'All') {
+			if ($item.data('type') === $type && $item.attr('id') !== $type + 'All_' + this._container.attr('id')) {
 				if (!$item.is(':checked')) {
 					$allChecked = false;
 					return false;
 				}
 			}
-		});
+		}, this));
 		if ($type == 'deny') {
 			if (this._containerElements.denyAll !== null) {
 				if ($allChecked) this._containerElements.denyAll.prop('checked', true);
@@ -451,48 +451,48 @@ WCF.ACL.List = Class.extend({
 			if ($type === 'deny') {
 				this._containerElements.grantAll.prop('checked', false);
 				
-				this._containerElements.permissionList.find('input[type=checkbox]').each(function(index, item) {
+				this._containerElements.permissionList.find('input[type=checkbox]').each($.proxy(function(index, item) {
 					var $item = $(item);
 					
-					if ($item.data('type') === 'deny' && $item.attr('id') !== 'denyAll') {
+					if ($item.data('type') === 'deny' && $item.attr('id') !== 'denyAll_' + this._container.attr('id')) {
 						$item.prop('checked', true).trigger('change');
 					}
-				});
+				}, this));
 			}
 			else {
 				this._containerElements.denyAll.prop('checked', false);
 				
-				this._containerElements.permissionList.find('input[type=checkbox]').each(function(index, item) {
+				this._containerElements.permissionList.find('input[type=checkbox]').each($.proxy(function(index, item) {
 					var $item = $(item);
 					
-					if ($item.data('type') === 'grant' && $item.attr('id') !== 'grantAll') {
+					if ($item.data('type') === 'grant' && $item.attr('id') !== 'grantAll_' + this._container.attr('id')) {
 						$item.prop('checked', true).trigger('change');
 					}
-				});
+				}, this));
 			}
 		}
 		else {
 			if ($type === 'deny') {
 				this._containerElements.grantAll.prop('checked', false);
 				
-				this._containerElements.permissionList.find('input[type=checkbox]').each(function(index, item) {
+				this._containerElements.permissionList.find('input[type=checkbox]').each($.proxy(function(index, item) {
 					var $item = $(item);
 					
-					if ($item.data('type') === 'deny' && $item.attr('id') !== 'denyAll') {
+					if ($item.data('type') === 'deny' && $item.attr('id') !== 'denyAll_' + this._container.attr('id')) {
 						$item.prop('checked', false).trigger('change');
 					}
-				});
+				}, this));
 			}
 			else {
 				this._containerElements.denyAll.prop('checked', false);
 				
-				this._containerElements.permissionList.find('input[type=checkbox]').each(function(index, item) {
+				this._containerElements.permissionList.find('input[type=checkbox]').each($.proxy(function(index, item) {
 					var $item = $(item);
 					
-					if ($item.data('type') === 'grant' && $item.attr('id') !== 'grantAll') {
+					if ($item.data('type') === 'grant' && $item.attr('id') !== 'grantAll_' + this._container.attr('id')) {
 						$item.prop('checked', false).trigger('change');
 					}
-				});
+				}, this));
 			}
 		}
 	},
@@ -542,7 +542,7 @@ WCF.ACL.List = Class.extend({
 		var self = this;
 		this._containerElements.permissionList.find("input[type='checkbox']").each(function(index, checkbox) {
 			var $checkbox = $(checkbox);
-			if ($checkbox.attr('id') != 'grantAll' && $checkbox.attr('id') != 'denyAll') {
+			if ($checkbox.attr('id') != 'grantAll_' + this._container.attr('id') && $checkbox.attr('id') != 'denyAll_' + this._container.attr('id')) {
 				var $optionValue = ($checkbox.data('type') === 'deny') ? 0 : 1;
 				var $optionID = $checkbox.data('optionID');
 				
