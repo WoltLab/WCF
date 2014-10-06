@@ -33,31 +33,31 @@ $(function() {
 			autosave: false,
 			buttons: $buttons,
 			buttonSource: true,
+			convertImageLinks: false,
+			convertUrlLinks: false,
+			convertVideoLinks: false,
+			direction: '{lang}wcf.global.pageDirection{/lang}',
 			imageResizable: false,
+			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
+			maxHeight: 500,
+			minHeight: 200,
+			plugins: [ 'wutil',  'wmonkeypatch', 'table', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize', 'wupload' ],
 			removeEmpty: false,
 			replaceDivs: false,
 			tabifier: false,
-			
-			{* TODO: possible outdated/deprecated options below *}
-			convertDivs: false,
-			convertImageLinks: false,
-			convertLinks: false,
-			convertVideoLinks: false,
-			direction: '{lang}wcf.global.pageDirection{/lang}',
-			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
-			minHeight: 200,
-			plugins: [ 'wutil',  'wmonkeypatch', 'table', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize', 'wupload' ],
-			wautosave: {
-				active: (/* DEBUG ONLY $autosave*/false) ? true : false,
-				key: ($autosave) ? '{@$__wcf->getAutosavePrefix()}_' + $autosave : '',
-				saveOnInit: {if !$errorField|empty}true{else}false{/if}
-			},
-			wOriginalValue: $textarea.val()
+			woltlab: {
+				autosave: {
+					active: ($autosave) ? true : false,
+					key: ($autosave) ? '{@$__wcf->getAutosavePrefix()}_' + $autosave : '',
+					saveOnInit: {if !$errorField|empty}true{else}false{/if}
+				},
+				originalValue: $textarea.val()
+			}
 		};
 		
 		{if MODULE_ATTACHMENT && !$attachmentHandler|empty && $attachmentHandler->canUpload()}
 			$config.plugins.push('wupload');
-			$config.wAttachmentUrl = '{link controller='Attachment' id=987654321}thumbnail=1{/link}';
+			$config.woltlab.attachmentUrl = '{link controller='Attachment' id=987654321}thumbnail=1{/link}';
 		{/if}
 		
 		{event name='javascriptInit'}

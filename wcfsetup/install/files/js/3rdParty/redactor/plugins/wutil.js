@@ -24,11 +24,11 @@ RedactorPlugins.wutil = function() {
 			// convert HTML to BBCode upon submit
 			this.$textarea.parents('form').submit($.proxy(this.wutil.submit, this));
 			
-			if (this.wutil.getOption('wautosave').active) {
+			if (this.wutil.getOption('woltlab.autosave').active) {
 				this.wutil.autosaveEnable();
 				
-				if (this.wutil.getOption('wautosave').saveOnInit || this.$textarea.data('saveOnInit')) {
-					this.wutil.setOption('wAutosaveOnce', true);
+				if (this.wutil.getOption('woltlab.autosave').saveOnInit || this.$textarea.data('saveOnInit')) {
+					this.wutil.setOption('woltlab.autosaveOnce', true);
 				}
 				else {
 					this.wutil.autosaveRestore();
@@ -99,7 +99,13 @@ RedactorPlugins.wutil = function() {
 		 * @param	mixed		value
 		 */
 		setOption: function(key, value) {
-			this.opts[key] = value;
+			if (key.indexOf('.') !== -1) {
+				key = key.split('.', 2);
+				this.opts[key[0]][key[1]] = value;
+			}
+			else {
+				this.opts[key] = value;
+			}
 		},
 		
 		/**
@@ -109,7 +115,13 @@ RedactorPlugins.wutil = function() {
 		 * @return	mixed
 		 */
 		getOption: function(key) {
-			if (this.opts[key]) {
+			if (key.indexOf('.') !== -1) {
+				key = key.split('.', 2);
+				if (this.opts[key[0]][key[1]]) {
+					return this.opts[key[0]][key[1]];
+				}
+			}
+			else if (this.opts[key]) {
 				return this.opts[key];
 			}
 			
@@ -202,15 +214,15 @@ RedactorPlugins.wutil = function() {
 		 * @param	string		key
 		 */
 		autosaveEnable: function(key) {
-			if (!this.wutil.getOption('wautosave').active) {
-				this.wutil.setOption('wautosave', {
+			if (!this.wutil.getOption('woltlab.autosave').active) {
+				this.wutil.setOption('woltlab.autosave', {
 					active: true,
 					key: key
 				});
 			}
 			
-			if (this._autosaveWorker === null) {
-				this._autosaveWorker = new WCF.PeriodicalExecuter($.proxy(this._saveTextToStorage, this), 60 * 1000);
+			if (this.wutil._autosaveWorker === null) {
+				this.wutil._autosaveWorker = new WCF.PeriodicalExecuter($.proxy(this.wutil._saveTextToStorage, this), 60 * 1000);
 			}
 			
 			return true;
@@ -220,21 +232,21 @@ RedactorPlugins.wutil = function() {
 		 * Saves current editor text to local browser storage.
 		 */
 		_saveTextToStorage: function() {
-			localStorage.setItem(this.getOption('wautosave').key, this.getText());
+			localStorage.setItem(this.wutil.getOption('woltlab.autosave').key, this.wutil.getText());
 		},
 		
 		/**
 		 * Disables automatic saving.
 		 */
 		autosaveDisable: function() {
-			if (!this.getOption('wautosave').active) {
+			if (!this.getOption('woltlab.autosave').active) {
 				return false;
 			}
 			
-			this._autosaveWorker.stop();
-			this._autosaveWorker = null;
+			this.wutil._autosaveWorker.stop();
+			this.wutil._autosaveWorker = null;
 			
-			this.setOption('wautosave', {
+			this.wutil.setOption('woltlab.autosave', {
 				active: false,
 				key: ''
 			});
@@ -248,18 +260,18 @@ RedactorPlugins.wutil = function() {
 		 * @param	string		key
 		 */
 		autosavePurge: function() {
-			localStorage.removeItem(this.getOption('wautosave').key);
+			localStorage.removeItem(this.wutil.getOption('woltlab.autosave').key);
 		},
 		
 		/**
 		 * Attempts to restore a saved text.
 		 */
 		autosaveRestore: function() {
-			var $options = this.wutil.getOption('wautosave');
+			var $options = this.wutil.getOption('woltlab.autosave');
 			var $text = localStorage.getItem($options.key);
 			if ($text !== null) {
 				if (this.wutil.inWysiwygMode()) {
-					this.wutil.setOption('wOriginalValue', $text);
+					this.wutil.setOption('woltlab.originalValue', $text);
 				}
 				else {
 					this.$textarea.val($text);
