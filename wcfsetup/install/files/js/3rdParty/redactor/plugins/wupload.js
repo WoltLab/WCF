@@ -12,7 +12,7 @@ RedactorPlugins.wupload = function() {
 	
 	return {
 		_boundGlobalUploadEvents: false,
-		_wUploadDropArea: { },
+		_dropArea: { },
 		_timer: null,
 		_isDragging: false,
 		_isFile: false,
@@ -22,21 +22,21 @@ RedactorPlugins.wupload = function() {
 		 */
 		init: function() {
 			var $namespace = '.redactor_' + this.$textarea.wcfIdentify();
-			$(document).on('dragover' + $namespace, $.proxy(this._dragOver, this));
-			$(document).on('dragleave' + $namespace, $.proxy(this._dragLeave, this));
-			$(document).on('drop' + $namespace, $.proxy(function(event) {
+			$(document).on('dragover' + $namespace, $.proxy(this.wupload._dragOver, this));
+			$(document).on('dragleave' + $namespace, $.proxy(this.wupload._dragLeave, this));
+			$(document).on('drop' + $namespace, (function(event) {
 				event.preventDefault();
 				
-				this._revertDropArea(undefined, this.$textarea.wcfIdentify());
-			}, this));
+				this.wupload._revertDropArea(undefined, this.$textarea.wcfIdentify());
+			}).bind(this));
 			
-			if (!this._boundGlobalUploadEvents) {
-				this._boundGlobalUploadEvents = true;
+			if (!this.wupload._boundGlobalUploadEvents) {
+				this.wupload._boundGlobalUploadEvents = true;
 				
 				$(document).on('dragend', function(event) { event.preventDefault(); });
 			}
 			
-			WCF.System.Event.addListener('com.woltlab.wcf.attachment', 'autoInsert_' + this.$textarea.wcfIdentify(), $.proxy(this.insertPastedImageAttachment, this));
+			WCF.System.Event.addListener('com.woltlab.wcf.attachment', 'autoInsert_' + this.$textarea.wcfIdentify(), $.proxy(this.wupload.insertPastedImageAttachment, this));
 		},
 		
 		/**
@@ -53,39 +53,39 @@ RedactorPlugins.wupload = function() {
 			
 			// IE and WebKit set 'Files', Firefox sets 'application/x-moz-file' for files being dragged
 			// and Safari just provides 'Files' along with a huge list of other stuff
-			this._isFile = false;
+			this.wupload._isFile = false;
 			if (event.dataTransfer.types[0] === 'application/x-moz-file') {
-				this._isFile = true;
+				this.wupload._isFile = true;
 			}
 			else {
 				for (var $i = 0; $i < event.dataTransfer.types.length; $i++) {
 					if (event.dataTransfer.types[$i] === 'Files') {
-						this._isFile = true;
+						this.wupload._isFile = true;
 						break;
 					}
 				}
 			}
 			
-			if (!this._isFile) {
+			if (!this.wupload._isFile) {
 				return;
 			}
 			
-			this._isFile = true;
+			this.wupload._isFile = true;
 			event.preventDefault();
 			
-			if (!this._isDragging) {
+			if (!this.wupload._isDragging) {
 				var $containerID = this.$textarea.wcfIdentify();
 				
-				if (this._wUploadDropArea[$containerID] === undefined) {
-					this._wUploadDropArea[$containerID] = $('<div class="redactorDropArea">' + WCF.Language.get('wcf.attachment.dragAndDrop.dropHere') + '</div>').hide().appendTo(document.body);
-					this._wUploadDropArea[$containerID].on('dragover', $.proxy(this._hoverDropArea, this)).on('dragleave', $.proxy(this._revertDropArea, this)).on('drop', $.proxy(this._drop, this));
+				if (this.wupload._dropArea[$containerID] === undefined) {
+					this.wupload._dropArea[$containerID] = $('<div class="redactorDropArea">' + WCF.Language.get('wcf.attachment.dragAndDrop.dropHere') + '</div>').hide().appendTo(document.body);
+					this.wupload._dropArea[$containerID].on('dragover', $.proxy(this.wupload._hoverDropArea, this)).on('dragleave', $.proxy(this.wupload._revertDropArea, this)).on('drop', $.proxy(this.wupload._drop, this));
 				}
 				
 				// adjust dimensions
-				var $dimensions = (this.inWysiwygMode()) ? this.$editor.getDimensions('outer') : this.$textarea.getDimensions('outer');
-				var $position = (this.inWysiwygMode()) ? this.$editor.getOffsets('offset') : this.$textarea.getOffsets('offset');
+				var $dimensions = (this.wutil.inWysiwygMode()) ? this.$editor.getDimensions('outer') : this.$textarea.getDimensions('outer');
+				var $position = (this.wutil.inWysiwygMode()) ? this.$editor.getOffsets('offset') : this.$textarea.getOffsets('offset');
 				
-				this._wUploadDropArea[$containerID].css({
+				this.wupload._dropArea[$containerID].css({
 					height: $dimensions.height + 'px',
 					left: $position.left + 'px',
 					lineHeight: $dimensions.height + 'px',
@@ -93,7 +93,7 @@ RedactorPlugins.wupload = function() {
 					width: $dimensions.width + 'px'
 				}).show();
 				
-				this._isDragging = true;
+				this.wupload._isDragging = true;
 			}
 			
 			event.preventDefault();
@@ -105,7 +105,7 @@ RedactorPlugins.wupload = function() {
 		 * @param	object		event
 		 */
 		_hoverDropArea: function(event) {
-			this._wUploadDropArea[this.$textarea.wcfIdentify()].addClass('active').text(WCF.Language.get('wcf.attachment.dragAndDrop.dropNow'));
+			this.wupload._dropArea[this.$textarea.wcfIdentify()].addClass('active').text(WCF.Language.get('wcf.attachment.dragAndDrop.dropNow'));
 		},
 		
 		/**
@@ -115,15 +115,15 @@ RedactorPlugins.wupload = function() {
 		 * @param	string		containerID
 		 */
 		_revertDropArea: function(event, containerID) {
-			if (!this._isFile) {
+			if (!this.wupload._isFile) {
 				return;
 			}
 			
 			var $containerID = containerID || this.$textarea.wcfIdentify();
-			this._wUploadDropArea[$containerID].removeClass('active').text(WCF.Language.get('wcf.attachment.dragAndDrop.dropHere'));
+			this.wupload._dropArea[$containerID].removeClass('active').text(WCF.Language.get('wcf.attachment.dragAndDrop.dropHere'));
 			
 			if (containerID) {
-				this._wUploadDropArea[$containerID].hide();
+				this.wupload._dropArea[$containerID].hide();
 			}
 		},
 		
@@ -134,25 +134,24 @@ RedactorPlugins.wupload = function() {
 		 * a delay of 100ms before the dragging will be checked again to prevent flicker.
 		 */
 		_dragLeave: function() {
-			if (!this._isDragging || !this._isFile) {
+			if (!this.wupload._isDragging || !this.wupload._isFile) {
 				return;
 			}
 			
-			if (this._timer === null) {
-				var self = this;
-				this._timer = new WCF.PeriodicalExecuter(function(pe) {
+			if (this.wupload._timer === null) {
+				this.wupload._timer = new WCF.PeriodicalExecuter((function(pe) {
 					pe.stop();
 					
-					if (!self._isDragging) {
-						self._wUploadDropArea[self.$source.wcfIdentify()].hide();
+					if (!this.wupload._isDragging) {
+						this.wupload._dropArea[this.$source.wcfIdentify()].hide();
 					}
-				}, 100);
+				}).bind(this), 100);
 			}
 			else {
-				this._timer.resume();
+				this.wupload._timer.resume();
 			}
 			
-			this._isDragging = false;
+			this.wupload._isDragging = false;
 		},
 		
 		/**
@@ -161,7 +160,7 @@ RedactorPlugins.wupload = function() {
 		 * @param	object		event
 		 */
 		_drop: function(event) {
-			if (!this._isFile) {
+			if (!this.wupload._isFile) {
 				return;
 			}
 			
@@ -172,7 +171,7 @@ RedactorPlugins.wupload = function() {
 				
 				// reset overlay
 				var $containerID = this.$textarea.wcfIdentify();
-				this._revertDropArea(undefined, $containerID);
+				this.wupload._revertDropArea(undefined, $containerID);
 				
 				for (var $i = 0; $i < event.dataTransfer.files.length; $i++) {
 					var $file = event.dataTransfer.files[$i];
