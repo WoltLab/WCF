@@ -699,7 +699,7 @@ WCF.Message.Smilies = Class.extend({
 		this._wysiwygSelector = wysiwygSelector;
 		
 		WCF.System.Dependency.Manager.register('Redactor_' + this._wysiwygSelector, $.proxy(function() {
-			this._redactor = $('#' + this._wysiwygSelector).redactor('getObject');
+			this._redactor = $('#' + this._wysiwygSelector).redactor('core.getObject');
 			
 			$('.messageTabMenu[data-wysiwyg-container-id=' + this._wysiwygSelector + ']').on('click', '.jsSmiley', $.proxy(this._smileyClick, this));
 		}, this));
@@ -716,7 +716,7 @@ WCF.Message.Smilies = Class.extend({
 		var $smileyPath = $target.data('smileyPath');
 		
 		// register smiley
-		this._redactor.insertSmiley($smileyCode, $smileyPath, true);
+		this._redactor.wbbcode.insertSmiley($smileyCode, $smileyPath, true);
 	}
 });
 
@@ -824,8 +824,10 @@ WCF.Message.QuickReply = Class.extend({
 		if (this._container.is(':visible')) {
 			this._quickReplyButtons.hide();
 			
-			var self = this;
-			window.setTimeout(function() { self._scroll.scrollTo(self._container, true); }, 100);
+			setTimeout((function() {
+				$(document).trigger('resize');
+				this._scroll.scrollTo(this._container, true);
+			}).bind(this), 100);
 			
 			WCF.Message.Submit.registerButton('text', this._container.find('.formSubmit button[data-type=save]'));
 			
@@ -834,8 +836,7 @@ WCF.Message.QuickReply = Class.extend({
 				var $empty = true;
 				if ($.browser.redactor) {
 					if (this._messageField.data('redactor')) {
-						$empty = (!$.trim(this._messageField.redactor('getText')));
-						this._editorCallback($empty);
+						this._editorCallback(this._messageField.redactor('wutil.isEmptyEditor'));
 					}
 				}
 				else {
@@ -861,7 +862,7 @@ WCF.Message.QuickReply = Class.extend({
 		}
 		
 		if ($.browser.redactor) {
-			this._messageField.redactor('focus');
+			this._messageField.redactor('focus.setEnd');
 		}
 		else {
 			this._messageField.focus();
@@ -983,7 +984,7 @@ WCF.Message.QuickReply = Class.extend({
 		this._revertQuickReply(true);
 		
 		if ($.browser.redactor) {
-			this._messageField.redactor('reset');
+			this._messageField.redactor('wutil.reset');
 		}
 		else {
 			this._messageField.val('');
@@ -3352,11 +3353,9 @@ WCF.Message.UserMention = Class.extend({
 	 */
 	init: function(wysiwygSelector) {
 		this._textarea = $('#' + wysiwygSelector);
-		this._redactor = this._textarea.redactor('getObject');
+		this._redactor = this._textarea.redactor('core.getObject');
 		
-		this._redactor.setOption('keyupCallback', $.proxy(this._keyup, this));
-		
-		this._dropdown = this._textarea.redactor('getEditor');
+		this._dropdown = this._textarea.redactor('core.getEditor');
 		this._dropdownMenu = $('<ul class="dropdownMenu userSuggestionList" />').appendTo(this._textarea.parent());
 		WCF.Dropdown.initDropdownFragment(this._dropdown, this._dropdownMenu);
 		
@@ -3365,6 +3364,7 @@ WCF.Message.UserMention = Class.extend({
 		});
 		
 		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keydown_' + wysiwygSelector, $.proxy(this._keydown, this));
+		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'keyup_' + wysiwygSelector, $.proxy(this._keyup, this));
 	},
 	
 	/**
@@ -3383,7 +3383,7 @@ WCF.Message.UserMention = Class.extend({
 	 */
 	_click: function(event) {
 		// restore caret position
-		this._redactor.replaceRangesWith(this._caretPosition);
+		this._redactor.wutil.replaceRangesWith(this._caretPosition);
 		
 		this._setUsername($(event.currentTarget).data('username'));
 	},
@@ -3415,7 +3415,7 @@ WCF.Message.UserMention = Class.extend({
 		$newRange.setStart($orgRange.startContainer, $orgRange.startOffset - (this._mentionStart.length + 1));
 		$newRange.setEnd($orgRange.startContainer, $orgRange.startOffset);
 		
-		this._redactor.replaceRangesWith($newRange);
+		this._redactor.wutil.replaceRangesWith($newRange);
 		
 		// get the offsets of the bounding box of current text selection
 		var $range = getSelection().getRangeAt(0);
@@ -3431,7 +3431,7 @@ WCF.Message.UserMention = Class.extend({
 		}
 		
 		// restore caret position
-		this._redactor.replaceRangesWith($orgRange);
+		this._redactor.wutil.replaceRangesWith($orgRange);
 		this._caretPosition = $orgRange;
 		
 		return $offsets;
@@ -3444,13 +3444,13 @@ WCF.Message.UserMention = Class.extend({
 		var $orgRange = getSelection().getRangeAt(0).cloneRange();
 		
 		// allow redactor to undo this
-		this._redactor.bufferSet();
+		this._redactor.buffer.set();
 		
 		var $newRange = document.createRange();
 		$newRange.setStart($orgRange.startContainer, $orgRange.startOffset - (this._mentionStart.length + 1));
 		$newRange.setEnd($orgRange.startContainer, $orgRange.startOffset);
 		
-		this._redactor.replaceRangesWith($newRange);
+		this._redactor.wutil.replaceRangesWith($newRange);
 		
 		var $range = getSelection().getRangeAt(0);
 		$range.deleteContents();
@@ -3473,7 +3473,7 @@ WCF.Message.UserMention = Class.extend({
 		$newRange.setStart($text, username.length + 1);
 		$newRange.setEnd($text, username.length + 1);
 		
-		this._redactor.replaceRangesWith($newRange);
+		this._redactor.wutil.replaceRangesWith($newRange);
 		
 		this._hideList();
 	},
@@ -3499,11 +3499,11 @@ WCF.Message.UserMention = Class.extend({
 	 */
 	_getTextLineInFrontOfCaret: function() {
 		// if text is marked, user suggestions are disabled
-		if (this._redactor.getSelectionHtml().length) {
+		if (this._redactor.selection.getHtml().length) {
 			return '';
 		}
 		
-		var $range = this._redactor.getSelection().getRangeAt(0);
+		var $range = getSelection().getRangeAt(0);
 		var $text = $range.startContainer.textContent.substr(0, $range.startOffset);
 		
 		// remove unicode zero width space and non-breaking space
@@ -3542,7 +3542,7 @@ WCF.Message.UserMention = Class.extend({
 	 * @param	object		data
 	 */
 	_keydown: function(data) {
-		if (this._redactor.inPlainMode()) {
+		if (this._redactor.wutil.inPlainMode()) {
 			return;
 		}
 		
@@ -3550,53 +3550,42 @@ WCF.Message.UserMention = Class.extend({
 			switch (data.event.which) {
 				case $.ui.keyCode.ENTER:
 					data.cancel = true;
-					data.event.preventDefault();
 					
 					this._dropdownMenu.children('li').eq(this._itemIndex).trigger('click');
-					
-					return;
 				break;
 				
 				case $.ui.keyCode.UP:
 					data.cancel = true;
-					data.event.preventDefault();
 					
 					this._selectItem(this._itemIndex - 1);
-					
-					return;
 				break;
 				
 				case $.ui.keyCode.DOWN:
 					data.cancel = true;
-					data.event.preventDefault();
 					
 					this._selectItem(this._itemIndex + 1);
-					
-					return;
 				break;
 			}
 		}
-		
-		return true;
 	},
 	
 	/**
 	 * Handles the keyup event to check if the user starts mentioning someone.
 	 * 
-	 * @param	object		event
+	 * @param	object		data
 	 */
-	_keyup: function(event) {
-		if (this._redactor.inPlainMode()) {
+	_keyup: function(data) {
+		if (this._redactor.wutil.inPlainMode()) {
 			return true;
 		}
 		
 		// ignore enter key up event
-		if (event.which === $.ui.keyCode.ENTER) {
+		if (data.event.which === $.ui.keyCode.ENTER) {
 			return;
 		}
 		
 		// ignore event if suggestion list and user pressed enter, arrow up or arrow down
-		if (this._dropdownMenu.is(':visible') && event.which in { 13:1, 38:1, 40:1 }) {
+		if (this._dropdownMenu.is(':visible') && data.event.which in { 13:1, 38:1, 40:1 }) {
 			return;
 		}
 		

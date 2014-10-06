@@ -30,27 +30,34 @@ $(function() {
 		
 		var $autosave = $textarea.data('autosave');
 		var $config = {
+			autosave: false,
 			buttons: $buttons,
-			convertDivs: false,
+			buttonSource: true,
 			convertImageLinks: false,
-			convertLinks: false,
+			convertUrlLinks: false,
 			convertVideoLinks: false,
 			direction: '{lang}wcf.global.pageDirection{/lang}',
-			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
-			minHeight: 200,
 			imageResizable: false,
-			plugins: [ 'wutil',  'wmonkeypatch', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize', 'wupload' ],
-			wautosave: {
-				active: ($autosave) ? true : false,
-				key: ($autosave) ? '{@$__wcf->getAutosavePrefix()}_' + $autosave : '',
-				saveOnInit: {if !$errorField|empty}true{else}false{/if}
-			},
-			wOriginalValue: $textarea.val()
+			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
+			maxHeight: 500,
+			minHeight: 200,
+			plugins: [ 'wutil',  'wmonkeypatch', 'table', 'wbutton', 'wbbcode',  'wfontcolor', 'wfontfamily', 'wfontsize', 'wupload' ],
+			removeEmpty: false,
+			replaceDivs: false,
+			tabifier: false,
+			woltlab: {
+				autosave: {
+					active: ($autosave) ? true : false,
+					key: ($autosave) ? '{@$__wcf->getAutosavePrefix()}_' + $autosave : '',
+					saveOnInit: {if !$errorField|empty}true{else}false{/if}
+				},
+				originalValue: $textarea.val()
+			}
 		};
 		
 		{if MODULE_ATTACHMENT && !$attachmentHandler|empty && $attachmentHandler->canUpload()}
 			$config.plugins.push('wupload');
-			$config.wAttachmentUrl = '{link controller='Attachment' id=987654321}thumbnail=1{/link}';
+			$config.woltlab.attachmentUrl = '{link controller='Attachment' id=987654321}thumbnail=1{/link}';
 		{/if}
 		
 		{event name='javascriptInit'}
@@ -64,6 +71,10 @@ $(function() {
 		{if !ENABLE_DEBUG_MODE}
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wcombined.min.js?v={@LAST_UPDATE_TIME}',
 		{else}
+			{* official *}
+			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/table.js?v={@LAST_UPDATE_TIME}',
+			
+			{* WoltLab *}
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wbbcode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wbutton.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor/plugins/wfontcolor.js?v={@LAST_UPDATE_TIME}',

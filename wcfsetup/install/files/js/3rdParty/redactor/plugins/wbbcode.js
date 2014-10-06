@@ -19,14 +19,14 @@ RedactorPlugins.wbbcode = function() {
 			
 			this.opts.initCallback = $.proxy(function() {
 				// use stored editor contents
-				var $content = $.trim(this.wutil.getOption('wOriginalValue'));
+				var $content = $.trim(this.wutil.getOption('woltlab.originalValue'));
 				if ($content.length) {
-					this.toggle();
-					this.$textarea.val($content);
-					this.toggle();
+					this.wutil.replaceText($content);
 				}
 				
-				delete this.opts.wOriginalValue;
+				delete this.opts.woltlab.originalValue;
+				
+				$(document).trigger('resize');
 			}, this);
 			
 			this.opts.pasteBeforeCallback = $.proxy(this.wbbcode._pasteBeforeCallback, this);
@@ -38,9 +38,9 @@ RedactorPlugins.wbbcode = function() {
 				return $mpCleanOnSync.call(self, html);
 			};
 			
-			if (this.wutil.getOption('wAutosaveOnce')) {
+			if (this.wutil.getOption('woltlab.autosaveOnce')) {
 				this.wutil._saveTextToStorage();
-				delete this.opts.wAutosaveOnce;
+				delete this.opts.woltlab.autosaveOnce;
 			}
 			
 			// we do not support table heads
@@ -630,7 +630,7 @@ RedactorPlugins.wbbcode = function() {
 			});
 			
 			// attachments
-			var $attachmentUrl = this.wutil.getOption('wAttachmentUrl');
+			var $attachmentUrl = this.wutil.getOption('woltlab.attachmentUrl');
 			if ($attachmentUrl) {
 				var $imageAttachmentIDs = this.wbbcode._getImageAttachmentIDs();
 				
@@ -909,7 +909,7 @@ RedactorPlugins.wbbcode = function() {
 		 */
 		insertAttachment: function(attachmentID) {
 			attachmentID = parseInt(attachmentID);
-			var $attachmentUrl = this.getOption('wAttachmentUrl');
+			var $attachmentUrl = this.getOption('woltlab.attachmentUrl');
 			var $bbcode = '[attach=' + attachmentID + '][/attach]';
 			
 			var $imageAttachmentIDs = this.wbbcode._getImageAttachmentIDs();
@@ -932,7 +932,7 @@ RedactorPlugins.wbbcode = function() {
 		 */
 		_getImageAttachmentIDs: function() {
 			// WCF.Attachment.Upload may have no been initialized yet, fallback to static data
-			var $imageAttachmentIDs = this.wutil.getOption('wAttachmentImageIDs') || [ ];
+			var $imageAttachmentIDs = this.wutil.getOption('woltlab.attachmentImageIDs') || [ ];
 			if ($imageAttachmentIDs.length) {
 				delete this.opts.wAttachmentImageIDs;
 				
