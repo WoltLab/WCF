@@ -69,16 +69,19 @@ class PaypalCallbackAction extends AbstractAction {
 			$processor = $objectType->getProcessor();
 			
 			// get status
+			$transactionType = (!empty($_POST['txn_type']) ? $_POST['txn_type'] : '');
+			$paymentStatus = (!empty($_POST['payment_status']) ? $_POST['payment_status'] : '');
+			
 			$status = '';
-			if ($_POST['txn_type'] == 'web_accept' || $_POST['txn_type'] == 'subscr_payment') {
-				if ($_POST['payment_status'] == 'Completed') {
+			if ($transactionType == 'web_accept' || $transactionType == 'subscr_payment') {
+				if ($paymentStatus == 'Completed') {
 					$status = 'completed';
 				}  
 			}
-			if ($_POST['payment_status'] == 'Refunded' || $_POST['payment_status'] == 'Reversed') {
+			if ($paymentStatus == 'Refunded' || $paymentStatus == 'Reversed') {
 				$status = 'reversed';
 			}
-			if ($_POST['payment_status'] == 'Canceled_Reversal') {
+			if ($paymentStatus == 'Canceled_Reversal') {
 				$status = 'canceled_reversal';
 			}
 			
