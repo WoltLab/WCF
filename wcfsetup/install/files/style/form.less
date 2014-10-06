@@ -41,7 +41,6 @@ dl:not(.plain) {
 	}
 	
 	> dt {
-		clear: left;
 		color: @wcfLabelColor;
 		float: left;
 		text-align: right;
@@ -120,6 +119,12 @@ dl:not(.plain) {
 		
 		> .innerError + label {
 			margin-top: 2px;
+		}
+		
+		&:after {
+			clear: left;
+			content: "";
+			display: block;
 		}
 	}
 	
