@@ -699,7 +699,7 @@ RedactorPlugins.wbbcode = function() {
 			
 			// convert line breaks into <p></p> or empty lines to <p><br></p>
 			var $tmp = data.split("\n");
-			console.debug($tmp);
+			
 			data = '';
 			for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
 				var $line = $.trim($tmp[$i]);
@@ -726,8 +726,6 @@ RedactorPlugins.wbbcode = function() {
 					data += '<p>' + $line + '</p>';
 				}
 			}
-			
-			console.debug(data);
 			
 			// insert codes
 			if ($.getLength($cachedCodes)) {

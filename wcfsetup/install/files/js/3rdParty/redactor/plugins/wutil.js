@@ -162,7 +162,7 @@ RedactorPlugins.wutil = function() {
 		 * @return	string
 		 */
 		getText: function() {
-			if (this.inWysiwygMode()) {
+			if (this.wutil.inWysiwygMode()) {
 				this.code.startSync();
 				this.$textarea.val(this.wbbcode.convertFromHtml(this.$textarea.val()));
 			}
