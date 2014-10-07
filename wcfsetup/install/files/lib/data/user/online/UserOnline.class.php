@@ -215,6 +215,11 @@ class UserOnline extends UserProfile {
 			return 'Silk '.$match[1];
 		}
 		
+		// safari mobile
+		if (preg_match('~([\d\.]+) Mobile/\w+ safari~i', $this->userAgent, $match)) {
+			return 'Safari Mobile '.$match[1];
+		}
+		
 		// safari
 		if (preg_match('~([\d\.]+) safari~i', $this->userAgent, $match)) {
 			return 'Safari '.$match[1];
