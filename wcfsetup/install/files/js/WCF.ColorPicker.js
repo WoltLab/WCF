@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Color picker for WCF
  * 

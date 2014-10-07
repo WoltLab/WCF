@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Tagging System for WCF
  * 

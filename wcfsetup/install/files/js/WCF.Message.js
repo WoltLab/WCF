@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Message related classes for WCF
  * 

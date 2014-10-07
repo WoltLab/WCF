@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Namespace for moderation related classes.
  * 

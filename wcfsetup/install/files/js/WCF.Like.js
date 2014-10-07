@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Like support for WCF
  * 

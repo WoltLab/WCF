@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Enhanced image viewer for WCF.
  * 

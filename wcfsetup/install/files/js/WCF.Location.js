@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Location-related classes for WCF
  * 
