@@ -170,58 +170,8 @@ RedactorPlugins.wmonkeypatch = function() {
 		 * Partially overwrites the 'image' module.
 		 * 
 		 *  - WCF-like dialog behavior
-		 *  - resolves an existing issue in Redactor 10.0 related to 'imageEditable' and 'imageResize' = false
 		 */
 		image: function() {
-			// image.setEditable
-			this.image.setEditable = (function($image) {
-				// TODO: remove this entire function once the issue with the option 'imageEditable' has been resolved by Imperavi
-				if (!this.opts.imageEditable) return;
-				
-				$image.on('dragstart', $.proxy(this.image.onDrag, this));
-				
-				$image.on('mousedown', $.proxy(this.image.hideResize, this));
-				$image.on('click touchstart', $.proxy(function(e) {
-					this.observe.image = $image;
-					
-					if (this.$editor.find('#redactor-image-box').size() !== 0) return false;
-					
-					// resize
-					if (!this.opts.imageEditable && !this.opts.imageResizable) return;
-					
-					this.image.resizer = this.image.loadEditableControls($image);
-					if (this.image.resizer === false) {
-						// work-around, this.image.hideResize() is not aware of this.image.resizer = false (but legally possible!)
-						this.image.resizer = $();
-					}
-					else {
-						this.image.resizer.on('mousedown.redactor touchstart.redactor', $.proxy(function(e) {
-							e.preventDefault();
-							
-							this.image.resizeHandle = {
-								x : e.pageX,
-								y : e.pageY,
-								el : $image,
-								ratio: $image.width() / $image.height(),
-								h: $image.height()
-							};
-							
-							e = e.originalEvent || e;
-							
-							if (e.targetTouches) {
-								this.image.resizeHandle.x = e.targetTouches[0].pageX;
-								this.image.resizeHandle.y = e.targetTouches[0].pageY;
-							}
-							
-							this.image.startResize();
-						}, this));
-					}
-					
-					$(document).on('click.redactor-image-resize-hide', $.proxy(this.image.hideResize, this));
-					this.$editor.on('click.redactor-image-resize-hide', $.proxy(this.image.hideResize, this));
-				}, this));
-			}).bind(this);
-			
 			// image.show
 			this.image.show = (function() {
 				this.modal.load('image', this.lang.get('image'), 0);

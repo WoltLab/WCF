@@ -200,6 +200,29 @@
 	.balloonTooltip;
 }
 
+#redactor-image-box {
+	border: 1px dashed rgba(0, 0, 0, .5);
+	display: inline-block;
+	line-height: 0;
+	max-width: 100%;
+	position: relative;
+	
+	> img {
+		opacity: .5;
+	}
+}
+
+#redactor-image-editter {
+	.balloonTooltip;
+	
+	cursor: pointer;
+	left: 50%;
+	line-height: @wcfSmallFontSize;
+	margin-top: -13px;
+	top: 50%;
+	z-index: 5;
+}
+
 .redactorAttachmentContainer {
 	background-color: rgba(255, 255, 255, 1);
 	border: 1px solid rgba(238, 238, 238, 1);
