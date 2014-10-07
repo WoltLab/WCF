@@ -176,7 +176,7 @@ function shuffle(array) {
 /**
  * Initialize WCF namespace
  */
-var WCF = {};
+window.WCF = {};
 
 /**
  * Extends jQuery with additional methods.
