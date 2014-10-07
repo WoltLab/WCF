@@ -14,7 +14,7 @@
 <div class="container marginTop">
 	{assign var='__events' value=$eventList->getObjects()}
 	{assign var='__lastEvent' value=$__events|end}
-	<ul id="recentActivities" class="containerList recentActivityList" data-last-event-time="{@$lastEventTime}" data-last-event-id="{@$__lastEvent->eventID}">
+	<ul id="recentActivities" class="containerList recentActivityList" data-last-event-time="{@$lastEventTime}" data-last-event-id="{if $__lastEvent}{@$__lastEvent->eventID}{else}0{/if}">
 		{include file='recentActivityListItem'}
 	</ul>
 </div>

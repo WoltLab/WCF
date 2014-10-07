@@ -5200,6 +5200,7 @@ WCF.Effect.BalloonTooltip = Class.extend({
 	 * @param	object		event
 	 */
 	_mouseEnterHandler: function(event) {
+		var $top, $left;
 		var $element = $(event.currentTarget);
 		
 		var $title = $element.attr('title');
@@ -5251,28 +5252,28 @@ WCF.Effect.BalloonTooltip = Class.extend({
 		
 		// calculate top offset
 		if ($elementOffsets.top + $elementDimensions.height + $tooltipDimensions.height - $(document).scrollTop() < $(window).height()) {
-			var $top = $elementOffsets.top + $elementDimensions.height + 7;
+			$top = $elementOffsets.top + $elementDimensions.height + 7;
 			this._tooltip.removeClass('inverse');
 			$arrow.css('top', -5);
 		}
 		else {
-			var $top = $elementOffsets.top - $tooltipDimensions.height - 7;
+			$top = $elementOffsets.top - $tooltipDimensions.height - 7;
 			this._tooltip.addClass('inverse');
 			$arrow.css('top', $tooltipDimensions.height);
 		}
 		
-		$property = (WCF.Language.get('wcf.global.pageDirection') == 'rtl' ? 'right' : 'left');
+		var $property = (WCF.Language.get('wcf.global.pageDirection') == 'rtl' ? 'right' : 'left');
 		
 		// calculate left offset
 		switch ($alignment) {
 			case 'center':
-				var $left = Math.round($elementOffsets.left - $tooltipHalfWidth + ($elementDimensions.width / 2));
+				$left = Math.round($elementOffsets.left - $tooltipHalfWidth + ($elementDimensions.width / 2));
 				
 				$arrow.css($property, ($tooltipDimensionsInner.width / 2 - $arrowWidth / 2) + 'px');
 			break;
 			
 			case 'left':
-				var $left = $elementOffsets.left;
+				$left = $elementOffsets.left;
 				
 				if ($property === 'right') {
 					$arrow.css($property, ($tooltipDimensionsInner.width - $arrowWidth - 5) + 'px');
@@ -5283,7 +5284,7 @@ WCF.Effect.BalloonTooltip = Class.extend({
 			break;
 			
 			case 'right':
-				var $left = $elementOffsets.left + $elementDimensions.width - $tooltipDimensions.width;
+				$left = $elementOffsets.left + $elementDimensions.width - $tooltipDimensions.width;
 				
 				if ($property === 'right') {
 					$arrow.css($property, '5px');
