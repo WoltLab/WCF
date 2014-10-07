@@ -1527,7 +1527,7 @@ WCF.Message.InlineEditor = Class.extend({
 		var $message = '';
 		
 		if ($.browser.redactor) {
-			$message = $('#' + this._messageEditorIDPrefix + $objectID).redactor('getText');
+			$message = $('#' + this._messageEditorIDPrefix + $objectID).redactor('wutil.getText');
 		}
 		else {
 			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
@@ -1563,7 +1563,7 @@ WCF.Message.InlineEditor = Class.extend({
 		var $message = '';
 		
 		if ($.browser.redactor) {
-			$message = $('#' + this._messageEditorIDPrefix + $objectID).redactor('getText');
+			$message = $('#' + this._messageEditorIDPrefix + $objectID).redactor('wutil.getText');
 		}
 		else {
 			$message = $('#' + this._messageEditorIDPrefix + $objectID).val();
@@ -1656,8 +1656,8 @@ WCF.Message.InlineEditor = Class.extend({
 		// destroy editor
 		if ($.browser.redactor) {
 			var $target = $('#' + this._messageEditorIDPrefix + $container.data('objectID'));
-			$target.redactor('autosavePurge');
-			$target.redactor('destroy');
+			$target.redactor('wutil.autosavePurge');
+			$target.redactor('core.destroy');
 		}
 		
 		// purge DOM elements

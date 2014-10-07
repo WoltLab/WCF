@@ -92,8 +92,8 @@ WCF.ImageViewer = Class.extend({
 			});
 			
 			if (!$image.parents('a').length) {
-				$image.wrap('<a href="' + $image.attr('src') + '" />');
-				$image.parent().slimbox();
+				$image.wrap('<a href="' + $image.attr('src') + '" class="jsImageViewerEnabled" />');
+				$image.parent().click($.proxy(this._click, this));
 			}
 		}
 	}

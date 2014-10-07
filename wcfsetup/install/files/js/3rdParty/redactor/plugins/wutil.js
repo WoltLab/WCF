@@ -39,12 +39,12 @@ RedactorPlugins.wutil = function() {
 			this.wutil.setOption('autosave', false);
 			
 			// disable autosave on destroy
-			var $mpDestroy = this.destroy;
-			var self = this;
-			this.destroy = function() {
-				self.autosaveDisable();
-				$mpDestroy.call(self);
-			};
+			var $mpDestroy = this.core.destroy;
+			this.core.destroy = (function() {
+				this.wutil.autosaveDisable();
+				
+				$mpDestroy.call(this);
+			}).bind(this);
 		},
 		
 		/**
@@ -239,7 +239,7 @@ RedactorPlugins.wutil = function() {
 		 * Disables automatic saving.
 		 */
 		autosaveDisable: function() {
-			if (!this.getOption('woltlab.autosave').active) {
+			if (!this.wutil.getOption('woltlab.autosave').active) {
 				return false;
 			}
 			

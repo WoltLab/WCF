@@ -3820,7 +3820,7 @@ WCF.String = {
 	 */
 	formatNumeric: function(number, decimalPlaces) {
 		number = String(WCF.Number.round(number, decimalPlaces || 2));
-		numberParts = number.split('.');
+		var numberParts = number.split('.');
 		
 		number = this.addThousandsSeparator(numberParts[0]);
 		if (numberParts.length > 1) number += WCF.Language.get('wcf.global.decimalPoint') + numberParts[1];
