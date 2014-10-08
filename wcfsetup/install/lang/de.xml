@@ -821,7 +821,8 @@
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update-Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentifizierung-Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Ihren Authentifizierung-Code finden Sie in Ihrem Kundenkonto auf woltlab.com.]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[WoltLab-Nachrichten auf der Startseite der Administrationsoberfläche anzeigen]]></item>
+		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[WoltLab-Nachrichten anzeigen]]></item>
+		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Aktiviert die Anzeige aktueller WoltLab-Nachrichten auf der Startseite der Administrationsoberfläche.]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public-API-Key]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[Einen eigenen API-Key für die Nutzung der reCAPTCHA-Funktion können Sie auf der Website von <a href="https://www.google.com/recaptcha/admin/create" class="externalURL">reCAPTCHA</a> beantragen.]]></item>
@@ -995,6 +996,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Standard-Kartenposition (Längengrad)]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[„Benutzer online“-Darstellung für Benutzernamen verwenden]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[Datenschutzerklärung aktivieren]]></item>
+		<item name="wcf.acp.option.module_privacy_policy_page.description"><![CDATA[Die Datenschutzerklärung informiert Nutzer über die Erfassung personenbezogener Daten.]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Erklärung zum „Einsatz von Cookies“ aktivieren]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[„index.php“ aus URLs entfernen]]></item>
@@ -1008,6 +1010,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.url_to_lowercase"><![CDATA[Durchgehende Kleinschreibung in Links aktivieren]]></item>
 		<item name="wcf.acp.option.url_to_lowercase.description"><![CDATA[Links verwenden keine Großbuchstaben mehr, aus „Thread/1-Dies-ist-ein-Test/“ wird „thread/1-dies-ist-ein-test/“.]]></item>
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Werbung]]></item>
+		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[Aktiviert die <a href="{link controller='AdList'}{/link}">Verwaltung von Werbe-Anzeigen</a>.]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha-Art]]></item>
 		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Captcha in Registrierung aktivieren]]></item>
 		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[Captcha in „Kennwort vergessen“ aktivieren]]></item>
@@ -1036,17 +1039,17 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.retro"><![CDATA[Retro]]></item>
 		<item name="wcf.acp.option.search_engine"><![CDATA[Suche]]></item>
 		<item name="wcf.acp.option.search_engine.mysql"><![CDATA[MySQL FULLTEXT (Standard)]]></item>
-		<item name="wcf.acp.option.enable_pluginstore_widget"><![CDATA[Empfohlene Produkte aus dem WoltLab® Plugin-Store auf der Startseite der Administrationsoberfläche anzeigen]]></item>
+		<item name="wcf.acp.option.enable_pluginstore_widget"><![CDATA[Empfohlene Plugins anzeigen]]></item>
+		<item name="wcf.acp.option.enable_pluginstore_widget.description"><![CDATA[Aktiviert die Anzeige empfohlener Produkte aus dem WoltLab® Plugin-Store auf der Startseite der Administrationsoberfläche.]]></item>
 		<item name="wcf.acp.option.category.general.payment"><![CDATA[Zahlungsoptionen]]></item>
-		<item name="wcf.acp.option.category.general.payment.description"><![CDATA[TODO]]></item>
-		<item name="wcf.acp.option.available_payment_methods"><![CDATA[Unterstützte Zahlungsmethoden]]></item>
-		<item name="wcf.acp.option.available_payment_methods.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.available_payment_methods"><![CDATA[Unterstützte Zahlungsanbieter]]></item>
 		<item name="wcf.acp.option.paypal_email_address"><![CDATA[Paypal-E-Mail-Adresse]]></item>
-		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[Für die Abwicklung von Paypal-Zahlungen wird ein Paypal-Business-Konto mit aktivierter sofortiger Zahlungsbestätigung (IPN) benötigt.]]></item>
 		<item name="wcf.acp.option.module_paid_subscription"><![CDATA[Bezahlte Mitgliedschaften aktivieren]]></item>
-		<item name="wcf.acp.option.module_paid_subscription.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.option.module_paid_subscription.description"><![CDATA[Aktiviert die <a href="{link controller='PaidSubscriptionList'}{/link}">Verwaltung der bezahlten Mitgliedschaften</a>.]]></item>
 		<item name="wcf.acp.option.paid_subscription_enable_tos_confirmation"><![CDATA[Benutzer müssen vor dem Kauf Nutzungsbedingungen akzeptieren]]></item>
 		<item name="wcf.acp.option.paid_subscription_tos_url"><![CDATA[URL zu Nutzungsbedingungen]]></item>
+		<item name="wcf.acp.option.category.general.payment.paidSubscription"><![CDATA[Bezahlte Mitgliedschaften]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

@@ -87,6 +87,9 @@
 				<category name="general.payment">
 					<parent>general</parent>
 				</category>
+					<category name="general.payment.paidSubscription">
+						<parent>general.payment</parent>
+					</category>
 			<!-- /general -->
 			
 			<!-- user -->
@@ -841,18 +844,18 @@ memcached:cache_source_memcached_host]]></enableoptions>
 			</option>
 			
 			<option name="module_paid_subscription">
-				<categoryname>general.payment</categoryname>
+				<categoryname>general.payment.paidSubscription</categoryname>
 				<optiontype>boolean</optiontype>
 			</option>
 			
 			<option name="paid_subscription_enable_tos_confirmation">
-				<categoryname>general.payment</categoryname>
+				<categoryname>general.payment.paidSubscription</categoryname>
 				<optiontype>boolean</optiontype>
 				<enableoptions><![CDATA[paid_subscription_tos_url]]></enableoptions>
 			</option>
 			
 			<option name="paid_subscription_tos_url">
-				<categoryname>general.payment</categoryname>
+				<categoryname>general.payment.paidSubscription</categoryname>
 				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.payment -->
