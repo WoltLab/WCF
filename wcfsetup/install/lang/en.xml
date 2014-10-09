@@ -1019,7 +1019,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[User Authentication]]></item>
 		<item name="wcf.acp.option.enable_user_authentication_failure"><![CDATA[Log failed login attempts]]></item>
-		<item name="wcf.acp.option.enable_user_authentication_failure.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_timeout"><![CDATA[Grace Period]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_timeout.description"><![CDATA[Failed login attempts are not put into consideration if they happened more than the configured amount of seconds ago.]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_ip_captcha"><![CDATA[Captcha After Failed Attempts (IP)]]></item>

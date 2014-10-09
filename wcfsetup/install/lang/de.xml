@@ -1020,7 +1020,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.category.security.antispam.captcha"><![CDATA[Captchas]]></item>
 		<item name="wcf.acp.option.category.security.general.authentication"><![CDATA[Benutzer-Authentifikation]]></item>
 		<item name="wcf.acp.option.enable_user_authentication_failure"><![CDATA[Fehlgeschlagene Ammeldeversuche protokollieren]]></item>
-		<item name="wcf.acp.option.enable_user_authentication_failure.description"><![CDATA[]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_timeout"><![CDATA[Zeitraum der Überwachung]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_timeout.description"><![CDATA[Zeitraum aus dem fehlgeschlagene Anmeldeversuche für unten genannte Maßnahmen berücksichtigt werden. [Zeitraum in Sekunden]]]></item>
 		<item name="wcf.acp.option.user_authentication_failure_ip_captcha"><![CDATA[Captcha bei Anmeldung (IP)]]></item>
