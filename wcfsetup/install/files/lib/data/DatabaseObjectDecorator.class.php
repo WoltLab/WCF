@@ -64,6 +64,13 @@ abstract class DatabaseObjectDecorator extends DatabaseObject {
 	}
 	
 	/**
+	 * @see	\wcf\data\IStorableObject::getData()
+	 */
+	public function getData() {
+		return $this->object->getData();
+	}
+	
+	/**
 	 * Delegates inaccessible methods calls to the decorated object.
 	 * 
 	 * @param	string		$name
