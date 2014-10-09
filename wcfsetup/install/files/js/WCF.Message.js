@@ -3349,6 +3349,12 @@ WCF.Message.UserMention = Class.extend({
 	_redactor: null,
 	
 	/**
+	 * delay timer to only send requests after user paused typing
+	 * @var	WCF.PeriodicalExecuter
+	 */
+	_timer: null,
+	
+	/**
 	 * Initalizes user suggestions for Redactor with the given textarea id.
 	 * 
 	 * @param	string		wysiwygSelector
@@ -3362,6 +3368,7 @@ WCF.Message.UserMention = Class.extend({
 		WCF.Dropdown.initDropdownFragment(this._dropdown, this._dropdownMenu);
 		
 		this._proxy = new WCF.Action.Proxy({
+			autoAbortPrevious: true,
 			success: $.proxy(this._success, this)
 		});
 		
@@ -3384,6 +3391,17 @@ WCF.Message.UserMention = Class.extend({
 	 * @param	object		event
 	 */
 	_click: function(event) {
+		// in Firefox, this._caretPosition does not have the text node as
+		// startContainer anymore but its parent p element, thus we need
+		// to manually adjust it
+		if ($.browser.mozilla) {
+			var $textNode = this._caretPosition.startContainer.childNodes[this._caretPosition.startOffset - 1];
+			
+			this._caretPosition = document.createRange();
+			this._caretPosition.selectNodeContents($textNode);
+			this._caretPosition.collapse();
+		}
+		
 		// restore caret position
 		this._redactor.wutil.replaceRangesWith(this._caretPosition);
 		
@@ -3443,6 +3461,12 @@ WCF.Message.UserMention = Class.extend({
 	 * Replaces the started mentioning with a chosen username.
 	 */
 	_setUsername: function(username) {
+		if (this._timer !== null) {
+			this._timer.stop();
+			this._timer = null;
+		}
+		this._proxy.abortPrevious();
+		
 		var $orgRange = getSelection().getRangeAt(0).cloneRange();
 		
 		// allow redactor to undo this
@@ -3461,11 +3485,8 @@ WCF.Message.UserMention = Class.extend({
 		// insert username
 		if (username.indexOf("'") !== -1) {
 			username = username.replace(/'/g, "''");
-			username = "'" + username + "'";
 		}
-		else if (username.indexOf(' ') !== -1) {
-			username = "'" + username + "'";
-		}
+		username = "'" + username + "'";
 		
 		// use native API to prevent issues in Internet Explorer
 		var $text = document.createTextNode('@' + username);
@@ -3506,6 +3527,13 @@ WCF.Message.UserMention = Class.extend({
 		}
 		
 		var $range = getSelection().getRangeAt(0);
+		
+		// in Firefox, blurring and refocusing the browser creates separate
+		// text nodes
+		if ($.browser.mozilla && $range.startContainer.nodeType == 3) {
+			$range.startContainer.parentNode.normalize();
+		}
+		
 		var $text = $range.startContainer.textContent.substr(0, $range.startOffset);
 		
 		// remove unicode zero width space and non-breaking space
@@ -3551,6 +3579,7 @@ WCF.Message.UserMention = Class.extend({
 		if (this._dropdownMenu.is(':visible')) {
 			switch (data.event.which) {
 				case $.ui.keyCode.ENTER:
+					data.event.preventDefault();
 					data.cancel = true;
 					
 					this._dropdownMenu.children('li').eq(this._itemIndex).trigger('click');
@@ -3558,12 +3587,14 @@ WCF.Message.UserMention = Class.extend({
 				
 				case $.ui.keyCode.UP:
 					data.cancel = true;
+					data.event.preventDefault();
 					
 					this._selectItem(this._itemIndex - 1);
 				break;
 				
 				case $.ui.keyCode.DOWN:
 					data.cancel = true;
+					data.event.preventDefault();
 					
 					this._selectItem(this._itemIndex + 1);
 				break;
@@ -3580,6 +3611,13 @@ WCF.Message.UserMention = Class.extend({
 		if (this._redactor.wutil.inPlainMode()) {
 			return true;
 		}
+		
+		// abort previous search requests
+		if (this._timer !== null) {
+			this._timer.stop();
+			this._timer = null;
+		}
+		this._proxy.abortPrevious();
 		
 		// ignore enter key up event
 		if (data.event.which === $.ui.keyCode.ENTER) {
@@ -3600,13 +3638,22 @@ WCF.Message.UserMention = Class.extend({
 				if (!$match.index || $currentText[$match.index - 1].match(/\s/)) {
 					this._mentionStart = $match[1];
 					
-					this._proxy.setOption('data', {
-						actionName: 'getSearchResultList',
-						className: this._className,
-						interfaceName: 'wcf\\data\\ISearchAction',
-						parameters: this._getParameters()
-					});
-					this._proxy.sendRequest();
+					if (this._timer !== null) {
+						this._timer.stop();
+					}
+					
+					this._timer = new WCF.PeriodicalExecuter($.proxy(function() {
+						this._proxy.setOption('data', {
+							actionName: 'getSearchResultList',
+							className: this._className,
+							interfaceName: 'wcf\\data\\ISearchAction',
+							parameters: this._getParameters()
+						});
+						this._proxy.sendRequest();
+						
+						this._timer.stop();
+						this._timer = null;
+					}, this), 500);
 				}
 			}
 			else {
