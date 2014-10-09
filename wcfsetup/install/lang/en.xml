@@ -820,8 +820,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[TODO: WoltLab-Nachrichten anzeigen]]></item>
-		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[TODO: Aktiviert die Anzeige aktueller WoltLab-Nachrichten auf der Startseite der Administrationsoberfläche.]]></item>
+		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Show WoltLab news]]></item>
+		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Shows current WoltLab news on the administration control panel’s start page]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request an own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin/create" class="externalURL">reCAPTCHA website</a>.]]></item>
@@ -995,7 +995,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Default Map Position (Longitude)]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[Apply “Users Online” markings for usernames]]></item>
 		<item name="wcf.acp.option.module_privacy_policy_page"><![CDATA[Enable Privacy Policy Page]]></item>
-		<item name="wcf.acp.option.module_privacy_policy_page.description"><![CDATA[TODO: Die Datenschutzerklärung informiert Nutzer über die Erfassung personenbezogener Daten.]]></item>
+		<item name="wcf.acp.option.module_privacy_policy_page.description"><![CDATA[Inform users regarding the use of their personal data.]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Enable explanation on “Cookie Usage”]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Displays a notice on cookie usage according to EU Directive 2009/136/EG upon first visit.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Remove “index.php” component from URLs]]></item>
@@ -1009,7 +1009,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.url_to_lowercase"><![CDATA[Force lower-case links]]></item>
 		<item name="wcf.acp.option.url_to_lowercase.description"><![CDATA[Links will no longer contain uppercase letters turning links like “Thread/1-Hello-I-am-John-Doe/” into “thread/1-hello-i-am-john-doe/”.]]></item>
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Ads]]></item>
-		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[TODO: Aktiviert die <a href="{link controller='AdList'}{/link}">Verwaltung von Werbe-Anzeigen</a>.]]></item>
+		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[Enables the <a href="{link controller='AdList'}{/link}">advertisement management</a>.]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha Type]]></item>
 		<item name="wcf.acp.option.register_use_captcha"><![CDATA[Enable Captcha protection during registration]]></item>
 		<item name="wcf.acp.option.lost_password_use_captcha"><![CDATA[Enable Captcha protection for “Lost Password”]]></item>
@@ -1038,17 +1038,17 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.retro"><![CDATA[Retro]]></item>
 		<item name="wcf.acp.option.search_engine"><![CDATA[Search Engine]]></item>
 		<item name="wcf.acp.option.search_engine.mysql"><![CDATA[MySQL FULLTEXT (default)]]></item>
-		<item name="wcf.acp.option.enable_pluginstore_widget"><![CDATA[TODO: Empfohlene Plugins anzeigen]]></item>
-		<item name="wcf.acp.option.enable_pluginstore_widget.description"><![CDATA[TODO: Aktiviert die Anzeige empfohlener Produkte aus dem WoltLab® Plugin-Store auf der Startseite der Administrationsoberfläche.]]></item>
+		<item name="wcf.acp.option.enable_pluginstore_widget"><![CDATA[Show recommended products]]></item>
+		<item name="wcf.acp.option.enable_pluginstore_widget.description"><![CDATA[Shows recommended products from the WoltLab® Plugin-Store on the administration control panel’s start page.]]></item>
 		<item name="wcf.acp.option.category.general.payment"><![CDATA[Payments]]></item>
 		<item name="wcf.acp.option.available_payment_methods"><![CDATA[Supported Payment Methods]]></item>
 		<item name="wcf.acp.option.paypal_email_address"><![CDATA[PayPal Email Address]]></item>
-		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[TODO: Für die Abwicklung von Paypal-Zahlungen wird ein Paypal-Business-Konto mit aktivierter sofortiger Zahlungsbestätigung (IPN) benötigt.]]></item>
+		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[Receiving payments requires a PayPal business account with enabled “Instant Payment Notification” (IPN).]]></item>
 		<item name="wcf.acp.option.module_paid_subscription"><![CDATA[Enable paid subscriptions]]></item>
-		<item name="wcf.acp.option.module_paid_subscription.description"><![CDATA[TODO: Aktiviert die <a href="{link controller='PaidSubscriptionList'}{/link}">Verwaltung der bezahlten Mitgliedschaften</a>.]]></item>
+		<item name="wcf.acp.option.module_paid_subscription.description"><![CDATA[Enables the <a href="{link controller='PaidSubscriptionList'}{/link}">management for paid subscriptions</a>.]]></item>
 		<item name="wcf.acp.option.paid_subscription_enable_tos_confirmation"><![CDATA[Users are required to accept your Terms of Service prior to any purchase]]></item>
 		<item name="wcf.acp.option.paid_subscription_tos_url"><![CDATA[Terms of Service URLl]]></item>
-		<item name="wcf.acp.option.category.general.payment.paidSubscription"><![CDATA[TODO: Bezahlte Mitgliedschaften]]></item>
+		<item name="wcf.acp.option.category.general.payment.paidSubscription"><![CDATA[Paid Subscriptions]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
@@ -2443,7 +2443,28 @@ Errors are:
 ]]></item>
 		<item name="wcf.page.cookiePolicy.info"><![CDATA[This site uses cookies. By continuing to browse this site, you are agreeing to our use of cookies. <a href="{link controller='CookiePolicy'}{/link}">More details</a>]]></item>
 		<item name="wcf.page.cookiePolicy"><![CDATA[Cookie Policy]]></item>
-		<item name="wcf.page.cookiePolicy.text"><![CDATA[TODO]]></item>
+		<item name="wcf.page.cookiePolicy.text"><![CDATA[<p>This website uses cookies required to operate and use this site. Below you will find an explanation on our cookie usage.</p>
+		
+<h2>What are cookies</h2>
+<p>Cookies are small text files which a website may put on your computer or mobile device when you first visit a site or page. The cookie will help the website, or another website, to recognise your device the next time you visit. There are many functions cookies serve, for example they can help us to remember your username and preferences.</p>
+
+<h2>What do we use cookies for</h2>
+<p>We’re using cookies for the following purposes:</p>
+<ul>
+<li>Login: Once you login to our website, a cookie is set containing your encrypted credentials, required to recognize you between page visits. You can disable this cookie by unchecking “Remember me” in the login form.</li>
+<li>Session: Upon first visit of our website, the system will create a new unique session for you which will be saved using a cookie on your computer. Sessions are required to recognize users between page accesses. It is a temporary cookie which will be deleted once you close your internet browser.</li>
+<li>Third-Party Services: Displayed ads or sharing content through social networks or comparable actions might cause a cookie created by them.</li>
+</ul>
+
+<h2>How to disable or delete cookies</h2>	
+<p>Your internet browser offers specialized options to manage and remove cookies. They offer settings to reject many or all cookies. Please refer to the instructions for your internet browser from the list below.</p>
+<ul>
+<li><a href="https://support.google.com/chrome/answer/95647?hl=en" class="externalURL" rel="nofollow">Google Chrome</a></li>
+<li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" class="externalURL" rel="nofollow">Mozilla Firefox</a></li>
+<li><a href="http://help.opera.com/Windows/12.00/en/cookies.html" class="externalURL" rel="nofollow">Opera</a></li>
+<li><a href="http://support.apple.com/kb/ph11920" class="externalURL" rel="nofollow">Safari</a></li>
+<li><a href="http://windows.microsoft.com/en-US/internet-explorer/delete-manage-cookies" class="externalURL" rel="nofollow">Windows Internet Explorer</a></li>
+</ul>]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.other"><![CDATA[Other Pages]]></item>
 		<item name="wcf.page.category.com.woltlab.wcf.user"><![CDATA[Users]]></item>
