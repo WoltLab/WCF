@@ -892,10 +892,10 @@ WCF.Message.QuickReply = Class.extend({
 		
 		if ($.browser.redactor) {
 			var $html = WCF.String.unescapeHTML(data.returnValues.template);
-			$html = this._messageField.redactor('convertToHtml', $html);
+			$html = this._messageField.redactor('wbbcode.convertToHtml', $html);
 			
-			this._messageField.redactor('selectionEndOfEditor');
-			this._messageField.redactor('insertDynamic', $html, data.returnValues.template);
+			this._messageField.redactor('focus.setEnd');
+			this._messageField.redactor('wutil.insertDynamic', $html, data.returnValues.template);
 		}
 		else {
 			this._messageField.val(data.returnValues.template);
@@ -2713,10 +2713,10 @@ WCF.Message.Quote.Manager = Class.extend({
 		// insert into editor
 		if ($.browser.redactor) {
 			if (this._editorElementAlternative === null) {
-				this._editorElement.redactor('insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);
+				this._editorElement.redactor('wbbcode.insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);
 			}
 			else {
-				this._editorElementAlternative.redactor('insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);
+				this._editorElementAlternative.redactor('wbbcode.insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);
 			}
 		}
 		else {

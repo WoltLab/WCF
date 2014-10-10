@@ -126,18 +126,14 @@ RedactorPlugins.wbbcode = function() {
 		 */
 		insertSmiley: function(smileyCode, smileyPath, registerSmiley) {
 			if (registerSmiley) {
-				this.registerSmiley(smileyCode, smileyPath);
+				this.wbbcode.registerSmiley(smileyCode, smileyPath);
 			}
 			
 			if (this.opts.visual) {
-				this.bufferSet();
-				
-				this.$editor.focus();
-				
-				this.insertHtml('&nbsp;<img src="' + smileyPath + '" class="smiley" alt="' + smileyCode + '" />&nbsp;');
+				this.insert.html('&nbsp;<img src="' + smileyPath + '" class="smiley" alt="' + smileyCode + '" />&nbsp;', false);
 			}
 			else {
-				this.insertAtCaret(' ' + smileyCode + ' ');
+				this.wutil.insertAtCaret(' ' + smileyCode + ' ');
 			}
 		},
 		

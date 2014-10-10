@@ -80,15 +80,15 @@ RedactorPlugins.wutil = function() {
 		 * @param	string		plainValue
 		 */
 		insertDynamic: function(html, plainValue) {
-			if (this.inWysiwygMode()) {
-				this.insertHtml(html);
+			if (this.wutil.inWysiwygMode()) {
+				this.insert.html(html, false);
 			}
 			else {
 				if (plainValue === undefined || plainValue === null) {
 					plainValue = html;
 				}
 				
-				this.insertAtCaret(plainValue);
+				this.wutil.insertAtCaret(plainValue);
 			}
 		},
 		
