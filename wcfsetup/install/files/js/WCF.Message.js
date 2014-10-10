@@ -392,7 +392,7 @@ WCF.Message.Preview = Class.extend({
 			return this._messageField.val();
 		}
 		else if (this._messageField.data('redactor')) {
-			return this._messageField.redactor('getText');
+			return this._messageField.redactor('wutil.getText');
 		}
 		
 		return null;

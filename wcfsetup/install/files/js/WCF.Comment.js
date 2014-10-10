@@ -247,7 +247,7 @@ WCF.Comment.Handler = Class.extend({
 			var $insertAfter = $comment.find('ul.commentResponseList');
 			if (!$insertAfter.length) $insertAfter = $comment.find('.commentContent');
 			
-			$container = $('<div class="commentOptionContainer" />').hide().insertAfter($insertAfter);
+			var $container = $('<div class="commentOptionContainer" />').hide().insertAfter($insertAfter);
 			self._commentButtonList[$commentID] = $('<ul />').appendTo($container);
 			
 			self._handleLoadNextResponses($commentID);
