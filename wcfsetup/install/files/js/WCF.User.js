@@ -730,7 +730,7 @@ WCF.User.Profile.Editor = Class.extend({
 				
 				case 'textarea':
 					if ($element.data('redactor')) {
-						$value = $element.redactor('getText');
+						$value = $element.redactor('wutil.getText');
 					}
 				break;
 			}
@@ -833,7 +833,7 @@ WCF.User.Profile.Editor = Class.extend({
 		this._tab.find('textarea').each(function(index, container) {
 			var $container = $(container);
 			if ($container.data('redactor')) {
-				$container.redactor('destroy');
+				$container.redactor('core.destroy');
 			}
 		});
 	}

@@ -62,6 +62,9 @@ $(function() {
 		
 		{event name='javascriptInit'}
 		
+		// clear textarea before init
+		$textarea.val('');
+		
 		$textarea.redactor($config);
 	});
 	
