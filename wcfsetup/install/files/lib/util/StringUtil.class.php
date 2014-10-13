@@ -63,9 +63,9 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Swallowes whitespace from beginnung and end of the string.
+	 * Swallowes whitespace from beginning and end of the string.
 	 * 
-	 * @param	string		$string
+	 * @param	string		$text
 	 * @return	string
 	 */
 	public static function trim($text) {
