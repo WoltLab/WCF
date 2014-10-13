@@ -139,7 +139,8 @@ RedactorPlugins.wbutton = function() {
 					}
 				}
 				else {
-					this.insert.html('[' + $bbcode + ']' + $selectedHtml + '[/' + $bbcode + ']');
+					this.insert.html('[' + $bbcode + ']' + $selectedHtml + this.selection.getMarkerAsHtml() + '[/' + $bbcode + ']', false);
+					this.selection.restore();
 				}
 			}
 			
