@@ -45,7 +45,7 @@ class PreparedStatement {
 	 * Creates a new PreparedStatement object.
 	 * 
 	 * @param	\wcf\system\database\Database	$database
-	 * @param	PDOStatement			$pdoStatement
+	 * @param	\PDOStatement			$pdoStatement
 	 * @param	string				$query		SQL query
 	 */
 	public function __construct(Database $database, \PDOStatement $pdoStatement, $query = '') {
