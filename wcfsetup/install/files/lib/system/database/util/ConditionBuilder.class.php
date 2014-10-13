@@ -33,7 +33,7 @@ class ConditionBuilder {
 	/**
 	 * Creates a new ConditionBuilder object.
 	 * 
-	 * @param	string		$addWhereKeyword
+	 * @param	boolean		$addWhereKeyword
 	 * @param	string		$concat
 	 */
 	public function __construct($addWhereKeyword = true, $concat = 'AND') {
