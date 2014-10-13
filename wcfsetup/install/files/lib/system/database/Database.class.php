@@ -322,7 +322,7 @@ abstract class Database {
 	/**
 	 * Returns the name of the database user.
 	 * 
-	 * @param	string		user name
+	 * @return	string		user name
 	 */
 	public function getUser() {
 		return $this->user;
