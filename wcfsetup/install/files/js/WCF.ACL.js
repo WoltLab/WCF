@@ -540,9 +540,7 @@ WCF.ACL.List = Class.extend({
 		
 		// clear old values
 		this._values[$type][$objectID] = { };
-		
-		var self = this;
-		this._containerElements.permissionList.find("input[type='checkbox']").each(function(index, checkbox) {
+		this._containerElements.permissionList.find("input[type='checkbox']").each((function(index, checkbox) {
 			var $checkbox = $(checkbox);
 			if ($checkbox.attr('id') != 'grantAll_' + this._container.attr('id') && $checkbox.attr('id') != 'denyAll_' + this._container.attr('id')) {
 				var $optionValue = ($checkbox.data('type') === 'deny') ? 0 : 1;
@@ -550,16 +548,16 @@ WCF.ACL.List = Class.extend({
 				
 				if ($checkbox.is(':checked')) {
 					// store value
-					self._values[$type][$objectID][$optionID] = $optionValue;
+					this._values[$type][$objectID][$optionID] = $optionValue;
 					
 					// reset value afterwards
 					$checkbox.prop('checked', false);
 				}
-				else if (self._values[$type] && self._values[$type][$objectID] && self._values[$type][$objectID][$optionID] && self._values[$type][$objectID][$optionID] == $optionValue) {
-					delete self._values[$type][$objectID][$optionID];
+				else if (this._values[$type] && this._values[$type][$objectID] && this._values[$type][$objectID][$optionID] && this._values[$type][$objectID][$optionID] == $optionValue) {
+					delete this._values[$type][$objectID][$optionID];
 				}
 			}
-		});
+		}).bind(this));
 	},
 	
 	/**

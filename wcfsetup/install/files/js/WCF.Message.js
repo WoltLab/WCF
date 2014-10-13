@@ -912,7 +912,7 @@ WCF.Message.QuickReply = Class.extend({
 		
 		var $message = '';
 		if ($.browser.redactor) {
-			$message = this._messageField.redactor('getText');
+			$message = this._messageField.redactor('wutil.getText');
 		}
 		else {
 			$message = $.trim(this._messageField.val());
@@ -1031,7 +1031,7 @@ WCF.Message.QuickReply = Class.extend({
 		
 		var $message = '';
 		if ($.browser.redactor) {
-			$message = this._messageField.redactor('getText');
+			$message = this._messageField.redactor('wutil.getText');
 		}
 		else {
 			$message = this._messageField.val();
@@ -1063,7 +1063,7 @@ WCF.Message.QuickReply = Class.extend({
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		if ($.browser.redactor) {
-			this._messageField.redactor('autosavePurge');
+			this._messageField.redactor('wutil.autosavePurge');
 		}
 		
 		// redirect to new page
@@ -1096,7 +1096,7 @@ WCF.Message.QuickReply = Class.extend({
 			}
 			
 			if ($.browser.redactor) {
-				this._messageField.redactor('reset');
+				this._messageField.redactor('wutil.reset');
 			}
 			else {
 				this._messageField.val('');
