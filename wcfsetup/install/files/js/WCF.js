@@ -1009,7 +1009,7 @@ WCF.Dropdown = {
 				
 				this._notifyCallbacks($containerID, 'close');
 			}
-			else if ($containerID === $targetID) {
+			else if ($containerID === $targetID && $dropdownMenu[0].children.length > 0) {
 				$dropdown.addClass('dropdownOpen');
 				$dropdownMenu.addClass('dropdownOpen');
 				
@@ -7976,6 +7976,12 @@ WCF.InlineEditor = Class.extend({
 	_proxy: null,
 	
 	/**
+	 * list of trigger elements by element id
+	 * @var	object<object>
+	 */
+	_triggerElements: { },
+	
+	/**
 	 * list of data to update upon success
 	 * @var	array<object>
 	 */
@@ -8078,7 +8084,7 @@ WCF.InlineEditor = Class.extend({
 		// build dropdown
 		var $trigger = null;
 		if (!this._dropdowns[$elementID]) {
-			$trigger = this._getTriggerElement(this._elements[$elementID]).addClass('dropdownToggle').wrap('<span class="dropdown" />');
+			this._triggerElements[$elementID] = $trigger = this._getTriggerElement(this._elements[$elementID]).addClass('dropdownToggle').wrap('<span class="dropdown" />');
 			this._dropdowns[$elementID] = $('<ul class="dropdownMenu" />').insertAfter($trigger);
 		}
 		this._dropdowns[$elementID].empty();
@@ -8129,8 +8135,8 @@ WCF.InlineEditor = Class.extend({
 			if (!$count) {
 				$quickOption.trigger('click');
 				
-				if ($trigger !== null) {
-					WCF.Dropdown.close($trigger.parents('.dropdown').wcfIdentify());
+				if (this._triggerElements[$elementID]) {
+					WCF.Dropdown.close(this._triggerElements[$elementID].parents('.dropdown').wcfIdentify());
 				}
 				
 				return false;
