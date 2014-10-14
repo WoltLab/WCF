@@ -387,6 +387,12 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 	_actionClassName: null,
 	
 	/**
+	 * additional parameters for executing the 'getMapMarkers' action
+	 * @var	object
+	 */
+	_additionalParameters: { },
+	
+	/**
 	 * indicates if the maps center can be set by location search
 	 * @var	WCF.Location.GoogleMaps.LocationSearch
 	 */
@@ -425,11 +431,12 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 	/**
 	 * @see	WCF.Location.GoogleMaps.Map.init()
 	 */
-	init: function(mapContainerID, mapOptions, actionClassName, locationSearchInputSelector) {
+	init: function(mapContainerID, mapOptions, actionClassName, locationSearchInputSelector, additionalParameters) {
 		this._super(mapContainerID, mapOptions);
 		
 		this._actionClassName = actionClassName;
 		this._locationSearchInputSelector = locationSearchInputSelector || '';
+		this._additionalParameters = additionalParameters || { };
 		this._objectIDs = [ ];
 		
 		if (this._locationSearchInputSelector) {
@@ -499,13 +506,13 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 		this._proxy.setOption('data', {
 			actionName: 'getMapMarkers',
 			className: this._actionClassName,
-			parameters: {
+			parameters: $.extend(this._additionalParameters, {
 				excludedObjectIDs: this._objectIDs,
 				eastLongitude: $northEast.lng(),
 				northLatitude: $northEast.lat(),
 				southLatitude: $southWest.lat(),
 				westLongitude: $southWest.lng()
-			}
+			})
 		});
 		this._proxy.sendRequest();
 	},
