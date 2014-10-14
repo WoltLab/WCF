@@ -47,6 +47,14 @@ RedactorPlugins.wbutton = function() {
 				'table': 'fa-table'
 			};
 			
+			var $buttonTitles = {
+				'fontcolor': WCF.Language.get('wcf.bbcode.button.fontColor'),
+				'fontfamily': WCF.Language.get('wcf.bbcode.button.fontFamily'),
+				'fontsize': WCF.Language.get('wcf.bbcode.button.fontSize'),
+				'subscript': WCF.Language.get('wcf.bbcode.button.subscript'),
+				'superscript': WCF.Language.get('wcf.bbcode.button.superscript')
+			};
+			
 			var $buttons = this.wutil.getOption('buttons');
 			var $lastButton = '';
 			for (var $i = 0, $length = $buttons.length; $i < $length; $i++) {
@@ -65,7 +73,7 @@ RedactorPlugins.wbutton = function() {
 					}
 				}
 				else {
-					this.wbutton._addCoreButton($button, ($faIcons[$button] ? $faIcons[$button] : null), $lastButton);
+					this.wbutton._addCoreButton($button, ($buttonTitles[$button] ? $buttonTitles[$button] : null), ($faIcons[$button] ? $faIcons[$button] : null), $lastButton);
 				}
 				
 				$lastButton = $button;
@@ -75,8 +83,8 @@ RedactorPlugins.wbutton = function() {
 			this.button.addCallback(this.button.get('image'), $.proxy(this.wbutton.insertImage, this));
 		},
 		
-		_addCoreButton: function(buttonName, faIcon, insertAfter) {
-			var $buttonObj = { title: buttonName };
+		_addCoreButton: function(buttonName, buttonTitle, faIcon, insertAfter) {
+			var $buttonObj = { title: (buttonTitle === null ? buttonName : buttonTitle) };
 			if (buttonName === 'subscript' || buttonName === 'superscript') {
 				$buttonObj.command = buttonName;
 			}

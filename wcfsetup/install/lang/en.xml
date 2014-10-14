@@ -1736,12 +1736,15 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 	
 	<category name="wcf.bbcode">
 		<item name="wcf.bbcode.button.code"><![CDATA[Code]]></item>
+		<item name="wcf.bbcode.button.fontColor"><![CDATA[Font Color]]></item>
 		<item name="wcf.bbcode.button.fontFamily"><![CDATA[Font Family]]></item>
 		<item name="wcf.bbcode.button.fontSize"><![CDATA[Font Size]]></item>
 		<item name="wcf.bbcode.button.inlineCode"><![CDATA[Inline-Code]]></item>
 		<item name="wcf.bbcode.button.quote"><![CDATA[Quote]]></item>
 		<item name="wcf.bbcode.button.showAll"><![CDATA[Show All]]></item>
 		<item name="wcf.bbcode.button.spoiler"><![CDATA[Spoiler]]></item>
+		<item name="wcf.bbcode.button.subscript"><![CDATA[Subscript]]></item>
+		<item name="wcf.bbcode.button.superscript"><![CDATA[Superscript]]></item>
 		<item name="wcf.bbcode.code.text"><![CDATA[{@$highlighterTitle} ({#$lines} line{if $lines != 1}s{/if})]]></item>
 		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
 		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck Source Code]]></item>
