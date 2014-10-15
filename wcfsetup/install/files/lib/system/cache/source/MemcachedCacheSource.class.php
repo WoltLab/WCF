@@ -34,9 +34,23 @@ class MemcachedCacheSource implements ICacheSource {
 		if (!class_exists('Memcached')) {
 			throw new SystemException('memcached support is not enabled.');
 		}
+		if (!defined('\Memcached::OPT_REMOVE_FAILED_SERVERS')) {
+			throw new SystemException('required \Memcached::OPT_REMOVE_FAILED_SERVERS option is not available');
+		}
 		
 		// init memcached
 		$this->memcached = new \Memcached();
+		
+		// disable broken hosts for the remainder of the execution
+		// Note: This may cause outdated entries once the affected memcached
+		// server comes back online. But it is better than completely bailing out.
+		// If the outage wasn't solely related to networking the cache is flushed
+		// on restart of the affected memcached instance anyway.
+		$this->memcached->setOption(\Memcached::OPT_REMOVE_FAILED_SERVERS, 1);
+		
+		// LIBKETAMA_COMPATIBLE uses consistent hashing, which causes fewer remaps
+		// in case a server is added or removed.
+		$this->memcached->setOption(\Memcached::OPT_LIBKETAMA_COMPATIBLE, true);
 		
 		// add servers
 		$tmp = explode("\n", StringUtil::unifyNewlines(CACHE_SOURCE_MEMCACHED_HOST));
@@ -78,12 +92,15 @@ class MemcachedCacheSource implements ICacheSource {
 				$servers[] = array($host, $port, $weight);
 			}
 		}
-		
 		$this->memcached->addServers($servers);
 		
-		// test connection
-		$this->memcached->get('testing');
-		
+		// test connection, set will fail if no memcached instances are available
+		// if only the target for the 'connection_testing' key is unavailable the
+		// requests will automatically be mapped to another server
+		if (!$this->memcached->set('connection_testing', true)) {
+			throw new SystemException('Unable to obtain any valid connection');
+		}
+
 		// set variable prefix to prevent collision
 		$this->prefix = substr(sha1(WCF_DIR), 0, 8) . '_';
 	}
