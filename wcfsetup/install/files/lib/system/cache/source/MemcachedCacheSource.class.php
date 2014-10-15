@@ -132,17 +132,14 @@ class MemcachedCacheSource implements ICacheSource {
 	public function flushAll() {
 		// read all keys
 		$availableKeys = $this->memcached->get($this->prefix . 'master');
-		if ($availableKeys !== false) {
-			$keys = @unserialize($availableKeys);
-			if ($keys !== false) {
-				foreach ($keys as $key) {
-					$this->memcached->delete($key);
-				}
+		if (is_array($availableKeys)) {
+			foreach ($availableKeys as $key) {
+				$this->memcached->delete($key);
 			}
 		}
 		
 		// flush master
-		$this->memcached->set($this->prefix . 'master', serialize(array()), $this->getTTL());
+		$this->memcached->set($this->prefix . 'master', array(), $this->getTTL());
 	}
 	
 	/**
@@ -188,57 +185,48 @@ class MemcachedCacheSource implements ICacheSource {
 		$master = $this->memcached->get($this->prefix . 'master');
 		$update = false;
 		
-		// master record missing
-		if ($master === false) {
+		// master record missing or broken
+		if (!is_array($master)) {
 			$update = true;
 			$master = array();
 		}
 		else {
-			$master = @unserialize($master);
-			
-			// master record is broken
-			if ($master === false) {
-				$update = true;
-				$master = array();
-			}
-			else {
-				foreach ($master as $index => $key) {
-					if ($addResource !== null) {
-						// key is already tracked
-						if ($key === $addResource) {
-							$addResource = null;
-							
-							if ($removeResource === null) {
-								break;
-							}
-						}
-					}
-					
-					if ($removeResource !== null) {
-						if ($key === $removeResource) {
-							$update = true;
-							unset($master[$index]);
-							
-							if ($addResource === null) {
-								break;
-							}
-							else {
-								$removeResource = null;
-							}
+			foreach ($master as $index => $key) {
+				if ($addResource !== null) {
+					// key is already tracked
+					if ($key === $addResource) {
+						$addResource = null;
+						
+						if ($removeResource === null) {
+							break;
 						}
 					}
 				}
 				
-				if ($addResource !== null) {
-					$update = true;
-					$master[] = $addResource;
+				if ($removeResource !== null) {
+					if ($key === $removeResource) {
+						$update = true;
+						unset($master[$index]);
+						
+						if ($addResource === null) {
+							break;
+						}
+						else {
+							$removeResource = null;
+						}
+					}
 				}
+			}
+			
+			if ($addResource !== null) {
+				$update = true;
+				$master[] = $addResource;
 			}
 		}
 		
 		// update master record
 		if ($update) {
-			$this->memcached->set($this->prefix . 'master', serialize($master), $this->getTTL());
+			$this->memcached->set($this->prefix . 'master', $master, $this->getTTL());
 		}
 	}
 	
@@ -268,14 +256,10 @@ class MemcachedCacheSource implements ICacheSource {
 		$resources = array();
 		$master = $this->memcached->get($this->prefix . 'master');
 		
-		if ($master !== false) {
-			$master = @unserialize($master);
-			
-			if ($master !== false) {
-				foreach ($master as $index => $key) {
-					if (preg_match($pattern, $key)) {
-						$resources[] = $key;
-					}
+		if (is_array($master)) {
+			foreach ($master as $index => $key) {
+				if (preg_match($pattern, $key)) {
+					$resources[] = $key;
 				}
 			}
 		}
