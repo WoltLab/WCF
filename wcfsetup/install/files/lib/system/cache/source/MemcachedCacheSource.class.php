@@ -2,12 +2,13 @@
 namespace wcf\system\cache\source;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
  * MemcachedCacheSource is an implementation of CacheSource that uses a Memcached server to store cached variables.
  * 
- * @author	Alexander Ebert
+ * @author	Tim Duesterhus, Alexander Ebert
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -51,6 +52,13 @@ class MemcachedCacheSource implements ICacheSource {
 		// LIBKETAMA_COMPATIBLE uses consistent hashing, which causes fewer remaps
 		// in case a server is added or removed.
 		$this->memcached->setOption(\Memcached::OPT_LIBKETAMA_COMPATIBLE, true);
+		
+		if (!WCF::debugModeIsEnabled()) {
+			// use the more efficient binary protocol to communicate with the memcached instance
+			// this option is disabled in debug mode to allow for easier debugging
+			// with tools, such as strace(1)
+			$this->memcached->setOption(\Memcached::OPT_BINARY_PROTOCOL, true);
+		}
 		
 		// add servers
 		$tmp = explode("\n", StringUtil::unifyNewlines(CACHE_SOURCE_MEMCACHED_HOST));
