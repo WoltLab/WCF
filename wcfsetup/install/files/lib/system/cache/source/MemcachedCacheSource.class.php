@@ -23,12 +23,6 @@ class MemcachedCacheSource implements ICacheSource {
 	protected $memcached = null;
 	
 	/**
-	 * key prefix
-	 * @var	string
-	 */
-	protected $prefix = '';
-	
-	/**
 	 * Creates a new instance of memcached.
 	 */
 	public function __construct() {
@@ -52,6 +46,8 @@ class MemcachedCacheSource implements ICacheSource {
 		// LIBKETAMA_COMPATIBLE uses consistent hashing, which causes fewer remaps
 		// in case a server is added or removed.
 		$this->memcached->setOption(\Memcached::OPT_LIBKETAMA_COMPATIBLE, true);
+		
+		$this->memcached->setOption(\Memcached::OPT_PREFIX_KEY, 'wcf_'.substr(StringUtil::getHash(WCF_DIR), 0, 6).'_');
 		
 		if (!WCF::debugModeIsEnabled()) {
 			// use the more efficient binary protocol to communicate with the memcached instance
@@ -108,17 +104,12 @@ class MemcachedCacheSource implements ICacheSource {
 		if (!$this->memcached->set('connection_testing', true)) {
 			throw new SystemException('Unable to obtain any valid connection');
 		}
-
-		// set variable prefix to prevent collision
-		$this->prefix = substr(sha1(WCF_DIR), 0, 8) . '_';
 	}
 	
 	/**
 	 * @see	\wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush($cacheName, $useWildcard) {
-		$cacheName = $this->prefix . $cacheName;
-		
 		$resources = ($useWildcard) ? $this->getResources('~^' . $cacheName. '(-[a-f0-9]+)?$~') : array($cacheName);
 		foreach ($resources as $resource) {
 			$this->memcached->delete($resource);
@@ -131,7 +122,7 @@ class MemcachedCacheSource implements ICacheSource {
 	 */
 	public function flushAll() {
 		// read all keys
-		$availableKeys = $this->memcached->get($this->prefix . 'master');
+		$availableKeys = $this->memcached->get('master');
 		if (is_array($availableKeys)) {
 			foreach ($availableKeys as $key) {
 				$this->memcached->delete($key);
@@ -139,14 +130,13 @@ class MemcachedCacheSource implements ICacheSource {
 		}
 		
 		// flush master
-		$this->memcached->set($this->prefix . 'master', array(), $this->getTTL());
+		$this->memcached->set('master', array(), $this->getTTL());
 	}
 	
 	/**
 	 * @see	\wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get($cacheName, $maxLifetime) {
-		$cacheName = $this->prefix . $cacheName;
 		$value = $this->memcached->get($cacheName);
 		
 		if ($value === false) {
@@ -165,7 +155,6 @@ class MemcachedCacheSource implements ICacheSource {
 	 * @see	\wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
-		$cacheName = $this->prefix . $cacheName;
 		$this->memcached->set($cacheName, $value, $this->getTTL($maxLifetime));
 		
 		$this->updateMaster($cacheName);
@@ -182,7 +171,7 @@ class MemcachedCacheSource implements ICacheSource {
 			return;
 		}
 		
-		$master = $this->memcached->get($this->prefix . 'master');
+		$master = $this->memcached->get('master');
 		$update = false;
 		
 		// master record missing or broken
@@ -226,7 +215,7 @@ class MemcachedCacheSource implements ICacheSource {
 		
 		// update master record
 		if ($update) {
-			$this->memcached->set($this->prefix . 'master', $master, $this->getTTL());
+			$this->memcached->set('master', $master, $this->getTTL());
 		}
 	}
 	
@@ -254,7 +243,7 @@ class MemcachedCacheSource implements ICacheSource {
 	 */
 	protected function getResources($pattern) {
 		$resources = array();
-		$master = $this->memcached->get($this->prefix . 'master');
+		$master = $this->memcached->get('master');
 		
 		if (is_array($master)) {
 			foreach ($master as $index => $key) {
