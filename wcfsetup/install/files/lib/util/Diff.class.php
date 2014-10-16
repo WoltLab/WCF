@@ -83,7 +83,7 @@ class Diff {
 		while ($offsetStart < $this->sizeA && $offsetStart < $this->sizeB && $this->a[$offsetStart] === $this->b[$offsetStart]) {
 			$offsetStart++;
 		}
-		while ($offsetEnd < $this->sizeA && $offsetEnd < $this->sizeB && $this->a[$this->sizeA - 1 - $offsetEnd] === $this->b[$this->sizeB - 1 - $offsetEnd]) {
+		while ($offsetEnd < ($this->sizeA - $offsetStart) && $offsetEnd < ($this->sizeB - $offsetStart) && $this->a[$this->sizeA - 1 - $offsetEnd] === $this->b[$this->sizeB - 1 - $offsetEnd]) {
 			$offsetEnd++;
 		}
 		
@@ -108,6 +108,7 @@ class Diff {
 		// add 1 to fit the line of zeroes at the top and at the left
 		$tableHeight = $this->sizeA + 1 - $offsetStart - $offsetEnd;
 		$tableWidth = $this->sizeB + 1 - $offsetStart - $offsetEnd;
+		
 		$table = new \SplFixedArray($tableHeight);
 		for ($i = 0; $i < $tableHeight; $i++) {
 			$table[$i] = new \SplFixedArray($tableWidth);
@@ -139,12 +140,12 @@ class Diff {
 		$x = $this->sizeB - $offsetStart - $offsetEnd;
 		$y = $this->sizeA - $offsetStart - $offsetEnd;
 		$lcsLength = $table[$y][$x];
-		$i = 0;
 		
 		// allocate array of the length of the LCS
-		$lcs = new \SplFixedArray($table[$y][$x] + $offsetStart + $offsetEnd);
+		$lcs = new \SplFixedArray($lcsLength + $offsetStart + $offsetEnd);
 		
 		// until no more items are left in the LCS
+		$i = 0;
 		while ($table[$y][$x] !== 0) {
 			// go to the very left of the current length
 			if ($table[$y][$x - 1] === $table[$y][$x]) {
