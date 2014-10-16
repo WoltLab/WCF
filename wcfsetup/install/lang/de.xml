@@ -853,7 +853,7 @@
 		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Anzahl der Teilungen anzeigen]]></item>
 		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Bearbeitungen]]></item>
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Speicherzeit]]></item>
-		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Zeitraum, nachdem alte Einträge aus dem Bearbeitungsverlauf entfernt werden [Zeitraum in Tagen]]]></item>
+		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Zeitraum, nachdem alte Einträge aus dem Bearbeitungsverlauf entfernt werden [Zeitraum in Tagen, 0 um die Entfernung gänzlich zu deaktivieren]]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
 		<item name="wcf.acp.option.github_public_key.description"><![CDATA[Sie können Ihre Client ID und Ihr Client Secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/applications'|rawurlencode}" class="externalURL">GitHub</a> anfordern. Die Callback URL ist: {link controller="GithubAuth" forceFrontend=true appendSession=false}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
