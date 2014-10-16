@@ -58,6 +58,9 @@ class EditHistoryManager extends SingletonFactory {
 	 * @param	integer		$obsoletedByUserID	The userID of the user that forced this entry to become outdated
 	 */
 	public function add($objectType, $objectID, $message, $time, $userID, $username, $editReason, $obsoletedByUserID) {
+		// no op, if edit history is disabled
+		if (!MODULE_EDIT_HISTORY) return;
+		
 		// save new entry
 		$sql = "INSERT INTO	wcf".WCF_N."_edit_history_entry
 					(objectTypeID, objectID, message, time, obsoletedAt, userID, username, editReason, obsoletedByUserID)

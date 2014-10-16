@@ -917,6 +917,12 @@ memcached:cache_source_memcached_host]]></enableoptions>
 			<!-- /message.general -->
 			
 			<!-- message.general.edit -->
+			<option name="module_edit_history">
+				<categoryname>message.general.edit</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>edit_history_expiration</enableoptions>
+			</option>
 			<option name="edit_history_expiration">
 				<categoryname>message.general.edit</categoryname>
 				<optiontype>integer</optiontype>

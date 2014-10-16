@@ -852,6 +852,8 @@
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Buttons zum Teilen von Inhalten anzeigen]]></item>
 		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Anzahl der Teilungen anzeigen]]></item>
 		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Bearbeitungen]]></item>
+		<item name="wcf.acp.option.module_edit_history"><![CDATA[Bearbeitungsverlauf aktivieren]]></item>
+		<item name="wcf.acp.option.module_edit_history.description"><![CDATA[Speichert die alten Versionen von Benutzerinhalten.]]]></item>
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Speicherzeit]]></item>
 		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Zeitraum, nachdem alte Einträge aus dem Bearbeitungsverlauf entfernt werden [Zeitraum in Tagen, 0 um die Entfernung gänzlich zu deaktivieren]]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>

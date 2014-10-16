@@ -55,11 +55,15 @@ class UserContentClipboardAction extends AbstractClipboardAction {
 	}
 	
 	/**
-	 * Returns the ids of the users which can be enabled.
+	 * Returns the ids of the users whose edits can be reverted.
 	 * 
 	 * @return	array<integer>
 	 */
-	protected function validateRevertChanges() {
+	protected function validateRevertContentChanges() {
+		if (!MODULE_EDIT_HISTORY) {
+			return array();
+		}
+		
 		// check permissions
 		if (!WCF::getSession()->getPermission('admin.content.canBulkRevertContentChanges')) {
 			return array();

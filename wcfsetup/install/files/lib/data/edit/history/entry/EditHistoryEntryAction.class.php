@@ -2,6 +2,7 @@
 namespace wcf\data\edit\history\entry;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\exception\IllegalLinkException;
 
 /**
  * Executes edit history entry-related actions.
@@ -23,6 +24,10 @@ class EditHistoryEntryAction extends AbstractDatabaseObjectAction {
 	 * Checks permissions to revert.
 	 */
 	public function validateRevert() {
+		if (!MODULE_EDIT_HISTORY) {
+			throw new IllegalLinkException();
+		}
+		
 		$historyEntry = $this->getSingleObject();
 		
 		$objectType = ObjectTypeCache::getInstance()->getObjectType($historyEntry->objectTypeID);

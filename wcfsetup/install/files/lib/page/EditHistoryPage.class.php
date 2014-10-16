@@ -22,6 +22,11 @@ use wcf\util\StringUtil;
  */
 class EditHistoryPage extends AbstractPage {
 	/**
+	 * @see \wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_EDIT_HISTORY');
+	
+	/**
 	 * DatabaseObjectList object
 	 * @var \wcf\data\DatabaseObjectList
 	 */

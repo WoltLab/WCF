@@ -20,6 +20,11 @@ use wcf\system\WCF;
  */
 class UserContentRevertChangesForm extends AbstractForm {
 	/**
+	 * @see \wcf\page\AbstractPage::$neededModules
+	 */
+	public $neededModules = array('MODULE_EDIT_HISTORY');
+
+	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.content.canBulkRevertContentChanges');
