@@ -1325,6 +1325,7 @@ CREATE TABLE wcf1_user_notification_event (
 	permissions TEXT,
 	options TEXT,
 	preset TINYINT(1) NOT NULL DEFAULT 0,
+	presetMailNotificationType ENUM('none', 'instant', 'daily') NOT NULL DEFAULT 'none',
 	UNIQUE KEY eventName (eventName, objectTypeID)
 );
 

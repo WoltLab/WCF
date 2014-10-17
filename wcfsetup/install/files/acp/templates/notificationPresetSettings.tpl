@@ -1,39 +1,26 @@
-{include file='documentHeader'}
+{include file='header' pageTitle='wcf.acp.user.notificationPresetSettings'}
 
-<head>
-	<title>{lang}wcf.user.menu.settings{/lang}: {lang}wcf.user.notification.notifications{/lang} - {lang}wcf.user.menu.settings{/lang} - {PAGE_TITLE|language}</title>
-	
-	{include file='headInclude'}
-	
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			$('#notificationSettings > fieldset > dl > dd > label > input').each(function(index, value) {
-				var $input = $(value);
-				$input.on('click', function(event) {
-					var $input = $(event.currentTarget);
-					$input.parents('dd').find('.jsMailNotificationType').toggle();
-				});
-				if (!$input.is(':checked')) {
-					$input.parents('dd').find('.jsMailNotificationType').hide();
-				}
+<script data-relocate="true">
+	//<![CDATA[
+	$(function() {
+		$('#notificationSettings > fieldset > dl > dd > label > input').each(function(index, value) {
+			var $input = $(value);
+			$input.on('click', function(event) {
+				var $input = $(event.currentTarget);
+				$input.parents('dd').find('.jsMailNotificationType').toggle();
 			});
+			if (!$input.is(':checked')) {
+				$input.parents('dd').find('.jsMailNotificationType').hide();
+			}
 		});
-		//]]>
-	</script>
-</head>
-
-<body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
-
-{include file='userMenuSidebar'}
-
-{include file='header' sidebarOrientation='left'}
+	});
+	//]]>
+</script>
 
 <header class="boxHeadline">
-	<h1>{lang}wcf.user.menu.settings{/lang}: {lang}wcf.user.notification.notifications{/lang}</h1>
+	<h1>{lang}wcf.acp.user.notificationPresetSettings{/lang}</h1>
+	<p>{lang}wcf.acp.user.notificationPresetSettings.description{/lang}</p>
 </header>
-
-{include file='userNotice'}
 
 {include file='formError'}
 
@@ -53,7 +40,7 @@
 	{/hascontent}
 </div>
 
-<form method="post" action="{link controller='NotificationSettings'}{/link}">
+<form method="post" action="{link controller='NotificationPresetSettings'}{/link}">
 	<div class="container containerPadding marginTop" id="notificationSettings">
 		{foreach from=$events key='eventCategory' item='eventList'}
 			<fieldset>
@@ -91,6 +78,3 @@
 </form>
 
 {include file='footer'}
-
-</body>
-</html>

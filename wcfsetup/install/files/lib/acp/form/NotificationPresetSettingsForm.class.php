@@ -1,26 +1,34 @@
 <?php
-namespace wcf\form;
+namespace wcf\acp\form;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\notification\event\UserNotificationEventEditor;
+use wcf\data\user\notification\event\UserNotificationEvent;
+use wcf\form\AbstractForm;
+use wcf\system\cache\builder\UserNotificationEventCacheBuilder;
 use wcf\system\exception\UserInputException;
-use wcf\system\menu\user\UserMenu;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 
 /**
- * Shows the notification settings form.
+ * Shows the notification preset settings form.
  * 
- * @author	Alexander Ebert
+ * @author	Marcel Werk
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
- * @subpackage	form
+ * @subpackage	form.acp
  * @category	Community Framework
  */
-class NotificationSettingsForm extends AbstractForm {
+class NotificationPresetSettingsForm extends AbstractForm {
 	/**
-	 * @see	\wcf\page\AbstractPage::$loginRequired
+	 * @see	\wcf\page\AbstractPage::$activeMenuItem
 	 */
-	public $loginRequired = true;
+	public $activeMenuItem = 'wcf.acp.menu.link.notificationPresetSettings';
+	
+	/**
+	 * @see	\wcf\page\AbstractPage::$neededPermissions
+	 */
+	public $neededPermissions = array('admin.user.canEditUser');
 	
 	/**
 	 * list of notification events
@@ -47,19 +55,6 @@ class NotificationSettingsForm extends AbstractForm {
 		parent::readParameters();
 		
 		$this->events = UserNotificationHandler::getInstance()->getAvailableEvents();
-		
-		// filter events
-		foreach ($this->events as $objectTypeID => $events) {
-			foreach ($events as $eventName => $event) {
-				if (!$event->isVisible()) {
-					unset($this->events[$objectTypeID][$eventName]);
-				}
-			}
-			
-			if (empty($this->events[$objectTypeID])) {
-				unset($this->events[$objectTypeID]);
-			}
-		}
 	}
 	
 	/**
@@ -116,27 +111,15 @@ class NotificationSettingsForm extends AbstractForm {
 		
 		// default values
 		if (empty($_POST)) {
-			// get user settings
 			$eventIDs = array();
 			foreach ($this->events as $events) {
 				foreach ($events as $event) {
 					$eventIDs[] = $event->eventID;
 					$this->settings[$event->eventID] = array(
-						'enabled' => false,
-						'mailNotificationType' => 'none'
+						'enabled' => $event->preset,
+						'mailNotificationType' => $event->presetMailNotificationType
 					);
 				}
-			}
-			
-			// get activation state
-			$sql = "SELECT	eventID, mailNotificationType
-				FROM	wcf".WCF_N."_user_notification_event_to_user
-				WHERE	userID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(WCF::getUser()->userID));
-			while ($row = $statement->fetchArray()) {
-				$this->settings[$row['eventID']]['enabled'] = true;
-				$this->settings[$row['eventID']]['mailNotificationType'] = $row['mailNotificationType'];
 			}
 		}
 	}
@@ -168,65 +151,36 @@ class NotificationSettingsForm extends AbstractForm {
 	}
 	
 	/**
-	 * @see	\wcf\page\IPage::show()
-	 */
-	public function show() {
-		// set active tab
-		UserMenu::getInstance()->setActiveMenuItem('wcf.user.menu.settings.notification');
-		
-		parent::show();
-	}
-	
-	/**
 	 * @see	\wcf\form\IForm::save()
 	 */
 	public function save() {
 		parent::save();
 		
-		$this->updateActivationStates();
+		foreach ($this->events as $objectType => $events) {
+			foreach ($events as $event) {
+				$preset = 0;
+				$presetMailNotificationType = 'none';
+				
+				if (!empty($this->settings[$event->eventID]['enabled'])) {
+					$preset = 1;
+					if (isset($this->settings[$event->eventID]['mailNotificationType'])) {
+						$presetMailNotificationType = $this->settings[$event->eventID]['mailNotificationType'];
+					}
+				}
+				
+				if ($event->preset != $preset || $event->presetMailNotificationType != $presetMailNotificationType) {
+					$editor = new UserNotificationEventEditor(new UserNotificationEvent(null, array('eventID' => $event->eventID)));
+					$editor->update(array(
+						'preset' => $preset,
+						'presetMailNotificationType' => $presetMailNotificationType
+					));
+				}
+			}
+		}
+		UserNotificationEventCacheBuilder::getInstance()->reset();
 		$this->saved();
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);
-	}
-	
-	/**
-	 * Updates preferences for notification events.
-	 */
-	protected function updateActivationStates() {
-		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_event_to_user
-			WHERE		eventID = ?
-					AND userID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		WCF::getDB()->beginTransaction();
-		$newSettings = array();
-		foreach ($this->settings as $eventID => $setting) {
-			$statement->execute(array(
-				$eventID,
-				WCF::getUser()->userID
-			));
-			
-			if ($setting['enabled']) {
-				$newSettings[] = array(
-					'eventID' => $eventID,
-					'mailNotificationType' => $setting['mailNotificationType']
-				);
-			}
-		}
-		
-		if (!empty($newSettings)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_user_notification_event_to_user
-						(eventID, userID, mailNotificationType)
-				VALUES		(?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			foreach ($newSettings as $newSetting) {
-				$statement->execute(array(
-					$newSetting['eventID'],
-					WCF::getUser()->userID,
-					$newSetting['mailNotificationType']
-				));
-			}
-		}
-		WCF::getDB()->commitTransaction();
 	}
 }

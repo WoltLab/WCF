@@ -281,8 +281,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (PACKAGE_ID) {
 			// set default notifications
 			$sql = "INSERT INTO	wcf".WCF_N."_user_notification_event_to_user
-						(userID, eventID)
-				SELECT		?, eventID
+						(userID, eventID, mailNotificationType)
+				SELECT		?, eventID, presetMailNotificationType
 				FROM		wcf".WCF_N."_user_notification_event
 				WHERE		preset = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);

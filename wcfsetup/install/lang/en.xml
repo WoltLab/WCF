@@ -644,6 +644,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.menu.link.paidSubscription.list"><![CDATA[List Paid Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.user.list"><![CDATA[List Active Subscriptions]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.transactionLog.list"><![CDATA[List Transactions]]></item>
+		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[TODO: Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1694,6 +1695,8 @@ Login with your new password: {link controller='Login' isEmail=true}{/link}]]></
 your account on the website: {@PAGE_TITLE|language} has been approved by an administrator.
 You can now fully access the website.]]></item>
 		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[Your account on the website: {@PAGE_TITLE|language} has been approved]]></item>
+		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[TODO: Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
+		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[TODO]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">

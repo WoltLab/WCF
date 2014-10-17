@@ -205,6 +205,12 @@
 			<controller><![CDATA[wcf\acp\form\UserActivityPointOptionForm]]></controller>
 			<permissions>admin.user.canEditActivityPoints</permissions>
 		</acpmenuitem>
+		
+		<acpmenuitem name="wcf.acp.menu.link.notificationPresetSettings">
+			<parent>wcf.acp.menu.link.user.management</parent>
+			<controller><![CDATA[wcf\acp\form\NotificationPresetSettingsForm]]></controller>
+			<permissions>admin.user.canEditUser</permissions>
+		</acpmenuitem>
 		<!-- /users -->
 		
 		<!-- user groups -->

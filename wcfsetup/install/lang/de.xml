@@ -645,6 +645,7 @@
 		<item name="wcf.acp.menu.link.paidSubscription.list"><![CDATA[Mitgliedschaften auflisten]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.user.list"><![CDATA[Aktive Mitgliedschaften auflisten]]></item>
 		<item name="wcf.acp.menu.link.paidSubscription.transactionLog.list"><![CDATA[Transaktionen auflisten]]></item>
+		<item name="wcf.acp.menu.link.notificationPresetSettings"><![CDATA[Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1695,6 +1696,8 @@ Klicken Sie hier, um sich mit Ihrem neuen Kennwort anzumelden: {link controller=
 Ihr Benutzerkonto auf der Website: {@PAGE_TITLE|language} wurde vom Administrator freigeschaltet.
 Sie können jetzt den vollen Funktionsumfang der Seite nutzen.]]></item>
 		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[Ihr Benutzerkonto auf der Website: {@PAGE_TITLE|language} wurde freigeschaltet]]></item>
+		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
+		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[TODO]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">

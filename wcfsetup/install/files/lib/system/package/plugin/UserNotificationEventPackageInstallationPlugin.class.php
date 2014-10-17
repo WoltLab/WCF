@@ -70,13 +70,19 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		if (empty($row['objectTypeID'])) throw new SystemException("unknown notification object type '".$data['elements']['objecttype']."' given");
 		$objectTypeID = $row['objectTypeID'];
 		
+		$presetMailNotificationType = 'none';
+		if (isset($data['elements']['presetmailnotificationtype']) && ($data['elements']['presetmailnotificationtype'] == 'instant' || $data['elements']['presetmailnotificationtype'] == 'daily')) {
+			$presetMailNotificationType = $data['elements']['presetmailnotificationtype'];
+		}
+		
 		return array(
 			'eventName' => $data['elements']['name'],
 			'className' => $data['elements']['classname'],
 			'objectTypeID' => $objectTypeID,
 			'permissions' => (isset($data['elements']['permissions']) ? $data['elements']['permissions'] : ''),
 			'options' => (isset($data['elements']['options']) ? $data['elements']['options'] : ''),
-			'preset' => (!empty($data['elements']['preset']) ? 1 : 0)
+			'preset' => (!empty($data['elements']['preset']) ? 1 : 0),
+			'presetMailNotificationType' => $presetMailNotificationType
 		);
 	}
 	
@@ -87,7 +93,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		$result = parent::import($row, $data);
 		
 		if (empty($row) && $data['preset']) {
-			$this->presetEventIDs[] = $result->eventID;
+			$this->presetEventIDs[$result->eventID] = $data['presetMailNotificationType'];
 		}
 		
 		return $result;
@@ -100,13 +106,13 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		if (empty($this->presetEventIDs)) return;
 		
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_notification_event_to_user
-						(userID, eventID)
-			SELECT			userID, ?
+						(userID, eventID, mailNotificationType)
+			SELECT			userID, ?, ?
 			FROM			wcf".WCF_N."_user";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		WCF::getDB()->beginTransaction();
-		foreach ($this->presetEventIDs as $eventID) {
-			$statement->execute(array($eventID));
+		foreach ($this->presetEventIDs as $eventID => $mailNotificationType) {
+			$statement->execute(array($eventID, $mailNotificationType));
 		}
 		WCF::getDB()->commitTransaction();
 	}
