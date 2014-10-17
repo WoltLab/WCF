@@ -90,6 +90,15 @@ RedactorPlugins.wbbcode = function() {
 					this.button.get('html').children('i').removeClass('fa-square').addClass('fa-square-o');
 				}
 			}).bind(this);
+			
+			// insert a new line if user clicked into the editor and the last children is a quote (same behavior as arrow down)
+			this.wutil.setOption('clickCallback', (function(event) {
+				if (event.target === this.$editor[0]) {
+					if (this.$editor[0].lastElementChild && this.$editor[0].lastElementChild.tagName === 'BLOCKQUOTE') {
+						this.wutil.setCaretAfter($(this.$editor[0].lastElementChild));
+					}
+				}
+			}).bind(this));
 		},
 		
 		/**
