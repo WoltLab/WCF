@@ -124,13 +124,13 @@ class MemcachedCacheSource implements ICacheSource {
 		// read all keys
 		$availableKeys = $this->memcached->get('master');
 		if (is_array($availableKeys)) {
-			foreach ($availableKeys as $key) {
+			foreach ($availableKeys as $key => $dummy) {
 				$this->memcached->delete($key);
 			}
 		}
 		
 		// flush master
-		$this->memcached->set('master', array(), $this->getTTL());
+		$this->memcached->set('master', array());
 	}
 	
 	/**
@@ -183,36 +183,14 @@ class MemcachedCacheSource implements ICacheSource {
 					$master = array();
 				}
 				else {
-					foreach ($master as $index => $key) {
-						if ($addResource !== null) {
-							// key is already tracked
-							if ($key === $addResource) {
-								$addResource = null;
-								
-								if ($removeResource === null) {
-									break;
-								}
-							}
-						}
-						
-						if ($removeResource !== null) {
-							if ($key === $removeResource) {
-								$update = true;
-								unset($master[$index]);
-								
-								if ($addResource === null) {
-									break;
-								}
-								else {
-									$removeResource = null;
-								}
-							}
-						}
+					if ($removeResource !== null && isset($master[$removeResource])) {
+						unset($master[$removeResource]);
+						$update = true;
 					}
 					
-					if ($addResource !== null) {
+					if ($addResource !== null && !isset($master[$addResource])) {
+						$master[$addResource] = true;
 						$update = true;
-						$master[] = $addResource;
 					}
 				}
 				
@@ -265,7 +243,7 @@ class MemcachedCacheSource implements ICacheSource {
 		$master = $this->memcached->get('master');
 		
 		if (is_array($master)) {
-			foreach ($master as $index => $key) {
+			foreach ($master as $key => $dummy) {
 				if (preg_match($pattern, $key)) {
 					$resources[] = $key;
 				}
