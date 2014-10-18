@@ -1,8 +1,8 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\notification\event\UserNotificationEventEditor;
 use wcf\data\user\notification\event\UserNotificationEvent;
+use wcf\data\user\notification\event\UserNotificationEventEditor;
 use wcf\form\AbstractForm;
 use wcf\system\cache\builder\UserNotificationEventCacheBuilder;
 use wcf\system\exception\UserInputException;
