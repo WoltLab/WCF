@@ -1514,7 +1514,7 @@ Errors are:
 		<item name="wcf.comment.add"><![CDATA[Write a comment …]]></item>
 		<item name="wcf.comment.delete.confirmMessage"><![CDATA[Do you really want to delete this comment?]]></item>
 		<item name="wcf.comment.description"><![CDATA[Press Enter to send or Escape to cancel.]]></item>
-		<item name="wcf.comment.error.floodControl"><![CDATA[You have already written a comment within the last {#$__wcf->getSession()->getPermission('user.comment.floodControlTime')} seconds. You have to wait at least {#$lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW} seconds before attempting to write a new one.]]></item>
+		<item name="wcf.comment.error.floodControl"><![CDATA[You have already written a comment within the last {if $__wcf->getSession()->getPermission('user.comment.floodControlTime') > 1}{#$__wcf->getSession()->getPermission('user.comment.floodControlTime')} seconds{else}second{/if}. You have to wait at least {#$lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW} second{if ($lastCommentTime+$__wcf->getSession()->getPermission('user.comment.floodControlTime')-TIME_NOW) != 1}s{/if} before attempting to write a new one.]]></item>
 		<item name="wcf.comment.more"><![CDATA[More Comments]]></item>
 		<item name="wcf.comment.response.add"><![CDATA[Reply …]]></item>
 		<item name="wcf.comment.response.more"><![CDATA[{literal}{if $count == 1}One more reply{else}{#$count} more replies{/if}{/literal}]]></item>
