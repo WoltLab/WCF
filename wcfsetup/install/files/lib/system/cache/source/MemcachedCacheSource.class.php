@@ -171,51 +171,70 @@ class MemcachedCacheSource implements ICacheSource {
 			return;
 		}
 		
-		$master = $this->memcached->get('master');
-		$update = false;
-		
-		// master record missing or broken
-		if (!is_array($master)) {
-			$update = true;
-			$master = array();
-		}
-		else {
-			foreach ($master as $index => $key) {
-				if ($addResource !== null) {
-					// key is already tracked
-					if ($key === $addResource) {
-						$addResource = null;
-						
-						if ($removeResource === null) {
-							break;
+		$i = 0;
+		while (true) {
+			try {
+				$master = $this->memcached->get('master', null, $cas);
+				$update = false;
+				
+				// master record missing or broken
+				if (!is_array($master)) {
+					$update = true;
+					$master = array();
+				}
+				else {
+					foreach ($master as $index => $key) {
+						if ($addResource !== null) {
+							// key is already tracked
+							if ($key === $addResource) {
+								$addResource = null;
+								
+								if ($removeResource === null) {
+									break;
+								}
+							}
 						}
+						
+						if ($removeResource !== null) {
+							if ($key === $removeResource) {
+								$update = true;
+								unset($master[$index]);
+								
+								if ($addResource === null) {
+									break;
+								}
+								else {
+									$removeResource = null;
+								}
+							}
+						}
+					}
+					
+					if ($addResource !== null) {
+						$update = true;
+						$master[] = $addResource;
 					}
 				}
 				
-				if ($removeResource !== null) {
-					if ($key === $removeResource) {
-						$update = true;
-						unset($master[$index]);
-						
-						if ($addResource === null) {
-							break;
-						}
-						else {
-							$removeResource = null;
-						}
-					}
+				// update master record
+				if (!$update) break;
+				
+				// $cas is null, if the key did not exist
+				if ($cas !== null) {
+					if ($this->memcached->cas($cas, 'master', $master)) break;
+				}
+				else {
+					if ($this->memcached->set('master', $master)) break;
+				}
+				
+				throw new SystemException('Unable to perform write to master: '.$this->memcached->getResultMessage());
+			}
+			catch (SystemException $e) {
+				// allow at most 5 failures
+				if (++$i === 5) {
+					throw $e;
 				}
 			}
-			
-			if ($addResource !== null) {
-				$update = true;
-				$master[] = $addResource;
-			}
-		}
-		
-		// update master record
-		if ($update) {
-			$this->memcached->set('master', $master, $this->getTTL());
 		}
 	}
 	
