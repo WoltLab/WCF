@@ -110,44 +110,36 @@ class MemcachedCacheSource implements ICacheSource {
 	 * @see	\wcf\system\cache\source\ICacheSource::flush()
 	 */
 	public function flush($cacheName, $useWildcard) {
-		$resources = ($useWildcard) ? $this->getResources('~^' . $cacheName. '(-[a-f0-9]+)?$~') : array($cacheName);
-		foreach ($resources as $resource) {
-			$this->memcached->delete($resource);
-			$this->updateMaster(null, $resource);
+		if ($useWildcard) {
+			$this->memcached->add('_flush_'.$cacheName, TIME_NOW);
+			$this->memcached->increment('_flush_'.$cacheName);
 		}
+		
+		$this->memcached->delete($this->getCacheName($cacheName));
 	}
 	
 	/**
 	 * @see	\wcf\system\cache\source\ICacheSource::flushAll()
 	 */
 	public function flushAll() {
-		// read all keys
-		$availableKeys = $this->memcached->get('master');
-		if (is_array($availableKeys)) {
-			foreach ($availableKeys as $key => $dummy) {
-				$this->memcached->delete($key);
-			}
-		}
-		
-		// flush master
-		$this->memcached->set('master', array());
+		// increment flush counter to nuke all data
+		$this->memcached->add('_flush', TIME_NOW);
+		$this->memcached->increment('_flush');
 	}
 	
 	/**
 	 * @see	\wcf\system\cache\source\ICacheSource::get()
 	 */
 	public function get($cacheName, $maxLifetime) {
-		$value = $this->memcached->get($cacheName);
+		$value = $this->memcached->get($this->getCacheName($cacheName));
 		
 		if ($value === false) {
 			// check if value does not exist
 			if ($this->memcached->getResultCode() !== \Memcached::RES_SUCCESS) {
-				$this->updateMaster(null, $cacheName);
 				return null;
 			}
 		}
 		
-		$this->updateMaster($cacheName);
 		return $value;
 	}
 	
@@ -155,65 +147,7 @@ class MemcachedCacheSource implements ICacheSource {
 	 * @see	\wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
-		$this->memcached->set($cacheName, $value, $this->getTTL($maxLifetime));
-		
-		$this->updateMaster($cacheName);
-	}
-	
-	/**
-	 * Updates master record for cached resources.
-	 * 
-	 * @param	string		$addResource
-	 * @param	string		$removeResource
-	 */
-	protected function updateMaster($addResource = null, $removeResource = null) {
-		if ($addResource === null && $removeResource === null) {
-			return;
-		}
-		
-		$i = 0;
-		while (true) {
-			try {
-				$master = $this->memcached->get('master', null, $cas);
-				$update = false;
-				
-				// master record missing or broken
-				if (!is_array($master)) {
-					$update = true;
-					$master = array();
-				}
-				else {
-					if ($removeResource !== null && isset($master[$removeResource])) {
-						unset($master[$removeResource]);
-						$update = true;
-					}
-					
-					if ($addResource !== null && !isset($master[$addResource])) {
-						$master[$addResource] = true;
-						$update = true;
-					}
-				}
-				
-				// update master record
-				if (!$update) break;
-				
-				// $cas is null, if the key did not exist
-				if ($cas !== null) {
-					if ($this->memcached->cas($cas, 'master', $master)) break;
-				}
-				else {
-					if ($this->memcached->set('master', $master)) break;
-				}
-				
-				throw new SystemException('Unable to perform write to master: '.$this->memcached->getResultMessage());
-			}
-			catch (SystemException $e) {
-				// allow at most 5 failures
-				if (++$i === 5) {
-					throw $e;
-				}
-			}
-		}
+		$this->memcached->set($this->getCacheName($cacheName), $value, $this->getTTL($maxLifetime));
 	}
 	
 	/**
@@ -233,23 +167,37 @@ class MemcachedCacheSource implements ICacheSource {
 	}
 	
 	/**
-	 * Gets a list of resources matching given pattern.
+	 * Returns the name for the given cache name in respect to flush count.
 	 * 
-	 * @param	string		$pattern
-	 * @return	array<string>
+	 * @param	string		$cacheName
+	 * @return	string
 	 */
-	protected function getResources($pattern) {
-		$resources = array();
-		$master = $this->memcached->get('master');
+	protected function getCacheName($cacheName) {
+		$parts = explode('-', $cacheName, 2);
 		
-		if (is_array($master)) {
-			foreach ($master as $key => $dummy) {
-				if (preg_match($pattern, $key)) {
-					$resources[] = $key;
-				}
-			}
+		$flush = $this->memcached->get('_flush');
+		
+		// create flush counter if it does not exist
+		if ($flush === false) {
+			$this->memcached->add('_flush', TIME_NOW);
+			$flush = $this->memcached->get('_flush');
 		}
 		
-		return $resources;
+		// the cache specific flush counter only is of interest if the cache name contains parameters
+		// the version without parameters is deleted explicitly when calling flush
+		// this saves us a memcached query in most cases (caches without any parameters)
+		if (isset($parts[1])) {
+			$flushByCache = $this->memcached->get('_flush_'.$parts[0]);
+			
+			// create flush counter if it does not exist
+			if ($flushByCache === false) {
+				$this->memcached->add('_flush_'.$parts[0], TIME_NOW);
+				$flushByCache = $this->memcached->get('_flush_'.$parts[0]);
+			}
+			
+			$flush .= '_'.$flushByCache;
+		}
+		
+		return $flush.'_'.$cacheName;
 	}
 }
