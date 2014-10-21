@@ -945,7 +945,7 @@ WCF.Message.QuickReply = Class.extend({
 		// show spinner and hide Redactor
 		var $messageBody = this._container.find('.messageQuickReplyContent .messageBody');
 		$('<span class="icon icon48 icon-spinner" />').appendTo($messageBody);
-		var $redactorBox = $messageBody.children('.redactor_box').hide();
+		var $redactorBox = $messageBody.children('.redactor-box').hide();
 		
 		// hide message tabs
 		$redactorBox.next().hide();
@@ -1010,7 +1010,7 @@ WCF.Message.QuickReply = Class.extend({
 		
 		// display Redactor
 		$messageBody.children('.icon-spinner').remove();
-		$messageBody.children('.redactor_box').show().next().show();
+		$messageBody.children('.redactor-box').show().next().show();
 		
 		// display form submit
 		$messageBody.next().show();
