@@ -477,7 +477,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 			<option name="cookie_prefix">
 				<categoryname>general.system.cookie</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue>wcf_</defaultvalue>
+				<defaultvalue>wcf21_</defaultvalue>
 				<validationpattern>.+</validationpattern>
 			</option>
 			<!-- /general.system.cookie-->
