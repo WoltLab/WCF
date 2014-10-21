@@ -192,7 +192,7 @@ RedactorPlugins.wutil = function() {
 				this.$textarea.val(this.wbbcode.convertFromHtml(this.$textarea.val()));
 			}
 			
-			this.autosavePurge();
+			this.wutil.autosavePurge();
 		},
 		
 		/**
@@ -481,14 +481,30 @@ RedactorPlugins.wutil = function() {
 			$document.trigger('resize');
 		},
 		
+		/**
+		 * Sets the caret before the given element.
+		 * 
+		 * @param	Element		element
+		 */
 		setCaretBefore: function(element) {
 			this.wutil._setCaret(element, true);
 		},
 		
+		/**
+		 * Sets the caret after the given element.
+		 * 
+		 * @param	Element		element
+		 */
 		setCaretAfter: function(element) {
 			this.wutil._setCaret(element, false);
 		},
 		
+		/**
+		 * Sets the caret at target position.
+		 * 
+		 * @param	Element		element
+		 * @param	boolean		setBefore
+		 */
 		_setCaret: function(element, setBefore) {
 			var $node = $(this.opts.emptyHtml);
 			$node[(setBefore ? 'insertBefore' : 'insertAfter')](element);
