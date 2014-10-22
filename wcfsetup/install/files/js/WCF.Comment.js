@@ -568,10 +568,10 @@ WCF.Comment.Handler = Class.extend({
 					var $responseList = $comment.find('ul.commentResponseList');
 					if (!$responseList.length) $responseList = $('<ul class="commentResponseList" />').insertBefore($comment.find('.commentOptionContainer'));
 					$(data.returnValues.template).appendTo($responseList).wcfFadeIn();
-				}
-				
-				if (!WCF.User.userID) {
-					this._guestDialog.wcfDialog('close');
+					
+					if (!WCF.User.userID) {
+						this._guestDialog.wcfDialog('close');
+					}
 				}
 			break;
 			
