@@ -2952,7 +2952,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login.error.access_denied"><![CDATA[Da Sie die Berechtigungen verweigert haben, ist die Anmeldung mit GitHub nicht möglich.]]></item>
 		<item name="wcf.user.3rdparty.github.register"><![CDATA[Sie erstellen einen Account über <span class="icon icon16 icon-github"></span>&nbsp;GitHub. Der Benutzername und Ihre E-Mail-Adresse wurden daher bereits ausgefüllt.]]></item>
-		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Mit GitHub-Konto {if $__wcf->session->getVar('__githubUsername')}(„<a href="https://github.com/{$__wcf->session->getVar('__githubUsername')}">{$__wcf->session->getVar('__githubUsername')}</a>“){/if} verknüpfen]]></item>
+		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Mit GitHub-Konto {if $__wcf->session->getVar('__githubUsername')}(„<a href="https://github.com/{$__wcf->session->getVar('__githubUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__githubUsername')}</a>“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.github.connect.success"><![CDATA[Ihr Benutzerkonto wurde erfolgreich mit Ihrem GitHub-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.github.connect.error.inuse"><![CDATA[Ihr GitHub-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.github.disconnect"><![CDATA[Verknüpfung mit GitHub trennen]]></item>
@@ -2961,7 +2961,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.3rdparty.twitter.login.error.denied"><![CDATA[Da Sie die Berechtigungen verweigert haben, ist die Anmeldung mit Twitter nicht möglich.]]></item>
 		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[Sie erstellen einen Account über <span class="icon icon16 icon-twitter"></span>&nbsp;Twitter. Der Benutzername wurde daher bereits ausgefüllt. Geben Sie nun noch Ihre E-Mail-Adresse an und Sie können sofort loslegen!]]></item>
-		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Mit Twitter-Konto {if $__wcf->session->getVar('__twitterUsername')}(„<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}">{$__wcf->session->getVar('__twitterUsername')}</a>“){/if} verknüpfen]]></item>
+		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Mit Twitter-Konto {if $__wcf->session->getVar('__twitterUsername')}(„<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>“){/if} verknüpfen]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.success"><![CDATA[Ihr Benutzerkonto wurde erfolgreich mit Ihrem Twitter-Konto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[Ihr Twitter-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.twitter.disconnect"><![CDATA[Verknüpfung mit Twitter trennen]]></item>

@@ -2948,7 +2948,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.3rdparty.github.login"><![CDATA[GitHub]]></item>
 		<item name="wcf.user.3rdparty.github.login.error.access_denied"><![CDATA[Access to your GitHub account has been rejected.]]></item>
 		<item name="wcf.user.3rdparty.github.register"><![CDATA[You’re creating an account through <span class="icon icon16 icon-github"></span>&nbsp;GitHub.]]></item>
-		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Connect with your GitHub account{if $__wcf->session->getVar('__githubUsername')} “<a href="https://github.com/{$__wcf->session->getVar('__githubUsername')}">{$__wcf->session->getVar('__githubUsername')}</a>”{/if}]]></item>
+		<item name="wcf.user.3rdparty.github.connect"><![CDATA[Connect with your GitHub account{if $__wcf->session->getVar('__githubUsername')} “<a href="https://github.com/{$__wcf->session->getVar('__githubUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__githubUsername')}</a>”{/if}]]></item>
 		<item name="wcf.user.3rdparty.github.connect.success"><![CDATA[Your user account has been connected with GitHub.]]></item>
 		<item name="wcf.user.3rdparty.github.connect.error.inuse"><![CDATA[Your GitHub account is already connected to a different user.]]></item>
 		<item name="wcf.user.3rdparty.github.disconnect"><![CDATA[Cancel connection with GitHub]]></item>
@@ -2957,7 +2957,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.3rdparty.twitter.login"><![CDATA[Twitter]]></item>
 		<item name="wcf.user.3rdparty.twitter.login.error.denied"><![CDATA[Access to your Twitter account has been rejected.]]></item>
 		<item name="wcf.user.3rdparty.twitter.register"><![CDATA[You’re creating an account through <span class="icon icon16 icon-twitter"></span>&nbsp;Twitter.]]></item>
-		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Connect with your Twitter account{if $__wcf->session->getVar('__twitterUsername')} “<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}">{$__wcf->session->getVar('__twitterUsername')}</a>”{/if}]]></item>
+		<item name="wcf.user.3rdparty.twitter.connect"><![CDATA[Connect with your Twitter account{if $__wcf->session->getVar('__twitterUsername')} “<a href="https://twitter.com/{$__wcf->session->getVar('__twitterUsername')}"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{$__wcf->session->getVar('__twitterUsername')}</a>”{/if}]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.success"><![CDATA[Your user account has been connected with Twitter.]]></item>
 		<item name="wcf.user.3rdparty.twitter.connect.error.inuse"><![CDATA[Your Twitter account is already connected to a different user.]]></item>
 		<item name="wcf.user.3rdparty.twitter.disconnect"><![CDATA[Cancel connection with Twitter]]></item>
