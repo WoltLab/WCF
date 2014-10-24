@@ -251,11 +251,25 @@ final class HTTPRequest {
 		$chunkLength = 0;
 		$bodyLength = 0;
 		
-		// read http response.
-		while (!$remoteFile->eof()) {
+		// read http response, until one of is true
+		// a) EOF is reached
+		// b) bodyLength is at least maxLength
+		// c) bodyLength is at least Content-Length
+		while (!(
+			$remoteFile->eof() ||
+			(isset($this->options['maxLength']) && $bodyLength >= $this->options['maxLength']) ||
+			(isset($this->replyHeaders['content-length']) && $bodyLength >= end($this->replyHeaders['content-length']))
+		)) {
+			
 			if ($chunkLength) {
 				if (isset($this->options['maxLength'])) $chunkLength = min($chunkLength, $this->options['maxLength'] - $bodyLength);
 				$line = $remoteFile->read($chunkLength);
+			}
+			else if (!$inHeader) {
+				$length = min(1024, $this->options['maxLength'] - $bodyLength);
+				if (isset($this->replyHeaders['content-length'])) $length = min($length, end($this->replyHeaders['content-length']) - $bodyLength);
+				
+				$line = $remoteFile->read($length);
 			}
 			else {
 				$line = $remoteFile->gets();
@@ -282,7 +296,7 @@ final class HTTPRequest {
 						// $chunkLength === 0 -> no more data
 						if ($chunkLength === 0) {
 							// clear remaining response
-							while (!$remoteFile->gets());
+							while (!$remoteFile->gets(1024));
 							
 							// remove chunked from transfer-encoding
 							$this->replyHeaders['transfer-encoding'] = array_filter(array_map(function ($element) use ($chunkedTransferRegex) {
@@ -304,10 +318,6 @@ final class HTTPRequest {
 				else {
 					$this->replyBody .= $line;
 					$bodyLength += strlen($line);
-				}
-				
-				if (isset($this->options['maxLength']) && $bodyLength >= $this->options['maxLength']) {
-					break;
 				}
 			}
 		}
