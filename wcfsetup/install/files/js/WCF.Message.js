@@ -2075,42 +2075,12 @@ WCF.Message.Quote.Handler = Class.extend({
 		if (document.createRange && typeof document.createRange().getBoundingClientRect != "undefined") { // Opera, Firefox, Safari, Chrome
 			if (selection.rangeCount > 0) {
 				// the coordinates returned by getBoundingClientRect() is relative to the window, not the document!
-				//var $rect = selection.getRangeAt(0).getBoundingClientRect();
-				var $rects = selection.getRangeAt(0).getClientRects();
 				var $rect = selection.getRangeAt(0).getBoundingClientRect();
-				
-				/*
-				var $rect = { };
-				if (!$.browser.mozilla && $rects.length > 1) {
-					// save current selection to restore it later
-					var $range = selection.getRangeAt(0);
-					var $bckp = this._saveSelection(container.get(0));
-					var $position1 = this._getOffset($range, true);
-					
-					var $range = selection.getRangeAt(0);
-					var $position2 = this._getOffset($range, false);
-					
-					$rect = {
-						left: Math.min($position1.left, $position2.left),
-						right: Math.max($position1.left, $position2.left),
-						top: Math.max($position1.top, $position2.top)
-					};
-					
-					// restore selection
-					this._restoreSelection(container.get(0), $bckp);
-				}
-				else {
-					$rect = selection.getRangeAt(0).getBoundingClientRect();
-				}
-				*/
-				
-				var $document = $(document);
-				var $offsetTop = $document.scrollTop();
 				
 				$coordinates = {
 					left: $rect.left,
 					right: $rect.right,
-					top: $rect.top + $offsetTop
+					top: $rect.top + $(document).scrollTop()
 				};
 			}
 		}
@@ -2295,7 +2265,11 @@ WCF.Message.Quote.Handler = Class.extend({
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		if (data.returnValues.count !== undefined) {
-			var $fullQuoteObjectIDs = (data.fullQuoteObjectIDs !== undefined) ? data.fullQuoteObjectIDs : { };
+			if (data.returnValues.fullQuoteMessageIDs !== undefined) {
+				data.returnValues.fullQuoteObjectIDs = data.returnValues.fullQuoteMessageIDs;
+			}
+			
+			var $fullQuoteObjectIDs = (data.returnValues.fullQuoteObjectIDs !== undefined) ? data.returnValues.fullQuoteObjectIDs : { };
 			this._quoteManager.updateCount(data.returnValues.count, $fullQuoteObjectIDs);
 		}
 	},
@@ -2498,9 +2472,8 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		// update full quote ids of handlers
 		for (var $objectType in this._handlers) {
-			if (fullQuoteObjectIDs[$objectType]) {
-				this._handlers[$objectType].updateFullQuoteObjectIDs(fullQuoteObjectIDs[$objectType]);
-			}
+			var $objectIDs = fullQuoteObjectIDs[$objectType] || [ ];
+			this._handlers[$objectType].updateFullQuoteObjectIDs($objectIDs);
 		}
 	},
 	
@@ -2836,7 +2809,7 @@ WCF.Message.Quote.Manager = Class.extend({
 		
 		this._proxy.setOption('data', {
 			actionName: 'count',
-			getFullQuoteObjectIDs: this._handlers.length > 0,
+			getFullQuoteObjectIDs: ($objectTypes.length > 0),
 			objectTypes: $objectTypes
 		});
 		this._proxy.sendRequest();
