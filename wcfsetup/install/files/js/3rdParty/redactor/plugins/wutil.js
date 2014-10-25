@@ -164,10 +164,10 @@ RedactorPlugins.wutil = function() {
 		getText: function() {
 			if (this.wutil.inWysiwygMode()) {
 				this.code.startSync();
-				this.$textarea.val(this.wbbcode.convertFromHtml(this.$textarea.val()));
+				this.$textarea.val($.trim(this.wbbcode.convertFromHtml(this.$textarea.val())));
 			}
 			
-			return this.$textarea.val();
+			return $.trim(this.$textarea.val());
 		},
 		
 		/**
@@ -189,7 +189,7 @@ RedactorPlugins.wutil = function() {
 		submit: function() {
 			if (this.wutil.inWysiwygMode()) {
 				this.code.startSync();
-				this.$textarea.val(this.wbbcode.convertFromHtml(this.$textarea.val()));
+				this.$textarea.val($.trim(this.wbbcode.convertFromHtml(this.$textarea.val())));
 			}
 			
 			this.wutil.autosavePurge();
