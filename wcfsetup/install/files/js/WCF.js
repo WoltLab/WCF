@@ -9062,6 +9062,8 @@ WCF.Sitemap = Class.extend({
 		}
 		else {
 			this._dialog.wcfDialog('open');
+			
+			$(document).trigger('resize');
 		}
 	},
 	
@@ -9101,6 +9103,8 @@ WCF.Sitemap = Class.extend({
 			
 			this._didInit = true;
 		}
+		
+		$(document).trigger('resize');
 	},
 	
 	/**
