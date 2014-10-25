@@ -115,6 +115,7 @@ class TagEditForm extends TagAddForm {
 		
 		if (empty($_POST)) {
 			$this->name = $this->tagObj->name;
+			$this->languageID = $this->tagObj->languageID;
 		}
 		
 		$synonymList = new TagList();
