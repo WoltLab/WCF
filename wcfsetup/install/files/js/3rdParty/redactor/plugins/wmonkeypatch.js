@@ -476,6 +476,19 @@ RedactorPlugins.wmonkeypatch = function() {
 			// template: imageEdit
 			this.opts.modal.imageEdit = this.opts.modal.image;
 			
+			// template: link
+			this.opts.modal.link =
+				'<fieldset id="redactor-modal-link">'
+					+ '<dl>'
+						+ '<dt><label for="redactor-link-url" />URL</label></dt>' /* TODO: use a phrase instead of hardcoding it! */
+						+ '<dd><input type="url" id="redactor-link-url" /></dd>'
+					+ '</dl>'
+					+ '<dl>'
+						+ '<dt><label for="redactor-link-url-text">' + this.lang.get('text') + '</label></dt>'
+						+ '<dd><input type="text" id="redactor-link-url-text" /></dd>'
+					+ '</dl>'
+				+ '</fieldset>';
+			
 			// template: quote
 			this.opts.modal.quote =
 				'<fieldset>'
