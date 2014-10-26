@@ -416,6 +416,7 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 			}).bind(this);
 			
+			// observe.buttons
 			var $mpButtons = this.observe.buttons;
 			this.observe.buttons = (function(e, btnName) {
 				$mpButtons.call(this, e, btnName);
@@ -428,6 +429,15 @@ RedactorPlugins.wmonkeypatch = function() {
 				$toggleButtons(parent, 'blockquote.quoteBox', 'a.re-__wcf_quote', false, 'redactor-button-disabled', true);
 				$toggleButtons(parent, 'sub', 'a.re-subscript', false, 'redactor-act');
 				$toggleButtons(parent, 'sup', 'a.re-superscript', false, 'redactor-act');
+			}).bind(this);
+			
+			// observe.showTooltip
+			var $mpShowTooltip = this.observe.showTooltip;
+			this.observe.showTooltip = (function(e) {
+				var $link = $(e.target);
+				if (!$link.hasClass('redactorQuoteEdit')) {
+					$mpShowTooltip.call(this, e);
+				}
 			}).bind(this);
 		},
 		
