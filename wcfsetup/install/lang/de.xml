@@ -1746,6 +1746,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.button.fontColor"><![CDATA[Schriftfarbe]]></item>
 		<item name="wcf.bbcode.button.fontFamily"><![CDATA[Schriftart]]></item>
 		<item name="wcf.bbcode.button.fontSize"><![CDATA[Schriftgröße]]></item>
+		<item name="wcf.bbcode.button.image"><![CDATA[Bild]]></item>
 		<item name="wcf.bbcode.button.inlineCode"><![CDATA[Inline-Code]]></item>
 		<item name="wcf.bbcode.button.quote"><![CDATA[Zitat]]></item>
 		<item name="wcf.bbcode.button.showAll"><![CDATA[Alles anzeigen]]></item>

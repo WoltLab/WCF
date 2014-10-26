@@ -1744,6 +1744,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.button.fontColor"><![CDATA[Font Color]]></item>
 		<item name="wcf.bbcode.button.fontFamily"><![CDATA[Font Family]]></item>
 		<item name="wcf.bbcode.button.fontSize"><![CDATA[Font Size]]></item>
+		<item name="wcf.bbcode.button.image"><![CDATA[Image]]></item>
 		<item name="wcf.bbcode.button.inlineCode"><![CDATA[Inline-Code]]></item>
 		<item name="wcf.bbcode.button.quote"><![CDATA[Quote]]></item>
 		<item name="wcf.bbcode.button.showAll"><![CDATA[Show All]]></item>

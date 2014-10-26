@@ -51,6 +51,7 @@ RedactorPlugins.wbutton = function() {
 				'fontcolor': WCF.Language.get('wcf.bbcode.button.fontColor'),
 				'fontfamily': WCF.Language.get('wcf.bbcode.button.fontFamily'),
 				'fontsize': WCF.Language.get('wcf.bbcode.button.fontSize'),
+				'image': WCF.Language.get('wcf.bbcode.button.image'),
 				'subscript': WCF.Language.get('wcf.bbcode.button.subscript'),
 				'superscript': WCF.Language.get('wcf.bbcode.button.superscript')
 			};
@@ -65,11 +66,16 @@ RedactorPlugins.wbutton = function() {
 					continue;
 				}
 				
-				// check if button does not exist
+				// check if button exists
 				var $buttonObj = this.button.get($button);
 				if ($buttonObj.length) {
 					if ($faIcons[$button]) {
 						this.button.setAwesome($button, $faIcons[$button]);
+					}
+					
+					// the 'table' button is added through the official plugin and is therefore misplaced
+					if ($button === 'table' && $lastButton) {
+						$buttonObj.parent().insertAfter(this.button.get($lastButton).parent());
 					}
 				}
 				else {

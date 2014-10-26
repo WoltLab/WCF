@@ -12,6 +12,7 @@ $(function() {
 		'wcf.bbcode.button.fontColor': '{lang}wcf.bbcode.button.fontColor{/lang}',
 		'wcf.bbcode.button.fontFamily': '{lang}wcf.bbcode.button.fontFamily{/lang}',
 		'wcf.bbcode.button.fontSize': '{lang}wcf.bbcode.button.fontSize{/lang}',
+		'wcf.bbcode.button.image': '{lang}wcf.bbcode.button.image{/lang}',
 		'wcf.bbcode.button.subscript': '{lang}wcf.bbcode.button.subscript{/lang}',
 		'wcf.bbcode.button.superscript': '{lang}wcf.bbcode.button.superscript{/lang}',
 		'wcf.bbcode.quote.edit': '{lang}wcf.bbcode.quote.edit{/lang}',
