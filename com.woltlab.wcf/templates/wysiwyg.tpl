@@ -49,6 +49,7 @@ $(function() {
 			removeEmpty: false,
 			replaceDivs: false,
 			tabifier: false,
+			toolbarFixed: false,
 			woltlab: {
 				autosave: {
 					active: ($autosave) ? true : false,
