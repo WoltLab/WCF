@@ -912,19 +912,19 @@ RedactorPlugins.wbbcode = function() {
 		 */
 		insertAttachment: function(attachmentID) {
 			attachmentID = parseInt(attachmentID);
-			var $attachmentUrl = this.getOption('woltlab.attachmentUrl');
+			var $attachmentUrl = this.wutil.getOption('woltlab.attachmentUrl');
 			var $bbcode = '[attach=' + attachmentID + '][/attach]';
 			
 			var $imageAttachmentIDs = this.wbbcode._getImageAttachmentIDs();
 			
 			if ($attachmentUrl && WCF.inArray(attachmentID, $imageAttachmentIDs)) {
-				this.insertDynamic(
+				this.wutil.insertDynamic(
 					'<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment" data-attachment-id="' + attachmentID + '" />',
 					$bbcode
 				);
 			}
 			else {
-				this.insertDynamic($bbcode);
+				this.wutil.insertDynamic($bbcode);
 			}
 		},
 		

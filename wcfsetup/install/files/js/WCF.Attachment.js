@@ -358,7 +358,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		var $attachmentID = (event === null) ? attachmentID : $(event.currentTarget).data('objectID');
 		
 		if ($.browser.redactor) {
-			$('#' + this._wysiwygContainerID).redactor('insertAttachment', $attachmentID);
+			$('#' + this._wysiwygContainerID).redactor('wbbcode.insertAttachment', $attachmentID);
 		}
 	},
 	
