@@ -58,10 +58,12 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 			case 16:
 			case 24:
 				$size = 32;
-				break;
+			break;
+			
 			case 48:
+			case 64:
 				$size = 96;
-				break;
+			break;
 		}
 		
 		return substr($this->fileHash, 0, 2) . '/' . ($this->avatarID) . '-' . $this->fileHash . ($size !== null ? ('-' . $size) : '') . '.' . $this->avatarExtension;
