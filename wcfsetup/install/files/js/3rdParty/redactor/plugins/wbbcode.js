@@ -758,7 +758,7 @@ RedactorPlugins.wbbcode = function() {
 					return quote.replace(/\[quote(=['"].+['"])?\]([\S\s]*)\[\/quote\]/gi, function(match, attributes, innerContent) {
 						var $author = '';
 						var $link = '';
-						console.debug("hi");
+						
 						if (attributes) {
 							attributes = attributes.substr(1);
 							attributes = attributes.split(',');
