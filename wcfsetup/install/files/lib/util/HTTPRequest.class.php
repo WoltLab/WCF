@@ -266,7 +266,8 @@ final class HTTPRequest {
 				$line = $remoteFile->read($chunkLength);
 			}
 			else if (!$inHeader) {
-				$length = min(1024, $this->options['maxLength'] - $bodyLength);
+				$length = 1024;
+				if (isset($this->options['maxLength'])) $length = min($length, $this->options['maxLength'] - $bodyLength);
 				if (isset($this->replyHeaders['content-length'])) $length = min($length, end($this->replyHeaders['content-length']) - $bodyLength);
 				
 				$line = $remoteFile->read($length);
