@@ -160,10 +160,27 @@ RedactorPlugins.wmonkeypatch = function() {
 			// dropdown.show
 			var $mpShow = this.dropdown.show;
 			this.dropdown.show = $.proxy(function(e, key) {
+				var $dropdown = this.button.get(key).data('dropdown');
+				$fixDropdown($dropdown);
+				
 				$mpShow.call(this, e, key);
 				
-				this.button.get(key).data('dropdown').off('mouseover mouseout');
+				$dropdown.off('mouseover mouseout');
 			}, this);
+			
+			// fix existing dropdowns
+			var $fixDropdown = function(dropdown) {
+				if (dropdown.hasClass('dropdownMenu')) {
+					return;
+				}
+				
+				dropdown.addClass('dropdownMenu');
+				var $items = dropdown.children('a').detach();
+				for (var $i = 0; $i < $items.length; $i++) {
+					var $item = $('<li />').appendTo(dropdown);
+					$item.append($items[$i]);
+				}
+			};
 		},
 		
 		/**
