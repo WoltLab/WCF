@@ -809,7 +809,7 @@ RedactorPlugins.wbbcode = function() {
 							}
 						}
 						else {
-							$tmp = '<div>wcf' + self.opts.invisibleSpace + '</div>';
+							$tmp = '<div>' + self.opts.invisibleSpace + '</div>';
 						}
 						
 						$quote += $tmp;
