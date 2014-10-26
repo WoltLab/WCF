@@ -1,6 +1,6 @@
 {include file='header' pageTitle='wcf.acp.label.'|concat:$action}
 
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {

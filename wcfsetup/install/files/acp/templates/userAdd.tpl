@@ -492,8 +492,8 @@
 					</script>
 				{/if}
 				
-				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message.js?v={@LAST_UPDATE_TIME}"></script>
+				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User.js?v={@LAST_UPDATE_TIME}"></script>
 				<script data-relocate="true">
 					//<![CDATA[
 					$(function() {
