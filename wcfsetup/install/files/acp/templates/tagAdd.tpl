@@ -70,7 +70,7 @@
 					</dd>
 				</dl>
 				
-				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Tagging{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
+				<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Tagging.js?v={@LAST_UPDATE_TIME}"></script>
 				<script data-relocate="true">
 					//<![CDATA[
 					$(function() {
