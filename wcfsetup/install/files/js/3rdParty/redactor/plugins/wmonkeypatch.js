@@ -105,6 +105,7 @@ RedactorPlugins.wmonkeypatch = function() {
 		 *  - convert <div> to <p> during paste
 		 */
 		clean: function() {
+			// clean.onPaste
 			var $mpOnPaste = this.clean.onPaste;
 			this.clean.onPaste = (function(html, setMode) {
 				this.opts.replaceDivs = true;
@@ -112,6 +113,25 @@ RedactorPlugins.wmonkeypatch = function() {
 				html = $mpOnPaste.call(this, html, setMode);
 				
 				this.opts.replaceDivs = false;
+				
+				return html;
+			}).bind(this);
+			
+			// clean.setVerified
+			this.clean.setVerified = (function(html) {
+				if (this.utils.browser('msie')) return html;
+				
+				html = html.replace(new RegExp('<img(.*?[^>])>', 'gi'), '<img$1 data-verified="redactor">');
+				html = html.replace(new RegExp('<span(.*?)>', 'gi'), '<span$1 data-verified="redactor">');
+				
+				var matches = html.match(new RegExp('<(span|img)(.*?)style="(.*?)"(.*?[^>])>', 'gi'));
+				if (matches) {
+					var len = matches.length;
+					for (var i = 0; i < len; i++) {
+						var newTag = matches[i].replace(/style="(.*?)"/i, 'style="$1" rel="$1"');
+						html = html.replace(new RegExp(WCF.String.escapeRegExp(matches[i]), 'gi'), newTag);
+					}
+				}
 				
 				return html;
 			}).bind(this);
