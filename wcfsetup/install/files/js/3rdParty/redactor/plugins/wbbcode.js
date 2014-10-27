@@ -712,7 +712,7 @@ RedactorPlugins.wbbcode = function() {
 						
 						// rebuild the array
 						$parts = $previous.concat($part, $parts.slice($i + 1));
-						console.debug($parts);
+						
 						break;
 					}
 				}
@@ -854,7 +854,7 @@ RedactorPlugins.wbbcode = function() {
 					data = data.replace($regex, $transformQuote($cachedQuote.content));
 				}
 			}
-			console.debug(data);
+			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			
 			return data;
