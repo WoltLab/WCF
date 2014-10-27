@@ -274,7 +274,7 @@ RedactorPlugins.wbbcode = function() {
 			});
 			
 			// [b]
-			html = html.replace(/<(?:b|strong)>/gi, '[b]');
+			html = html.replace(/<(?:b|strong)[^>]*>/gi, '[b]');
 			html = html.replace(/<\/(?:b|strong)>/gi, '[/b]');
 			
 			// [i]
@@ -282,20 +282,20 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<\/(?:i|em)>/gi, '[/i]');
 			
 			// [u]
-			html = html.replace(/<u>/gi, '[u]');
+			html = html.replace(/<u[^>]*>/gi, '[u]');
 			html = html.replace(/<\/u>/gi, '[/u]');
 			
-			// [s]
-			html = html.replace(/<(?:s(trike)?|del)>/gi, '[s]');
-			html = html.replace(/<\/(?:s(trike)?|del)>/gi, '[/s]');
-			
 			// [sub]
-			html = html.replace(/<sub>/gi, '[sub]');
+			html = html.replace(/<sub[^>]*>/gi, '[sub]');
 			html = html.replace(/<\/sub>/gi, '[/sub]');
 			
 			// [sup]
-			html = html.replace(/<sup>/gi, '[sup]');
+			html = html.replace(/<sup[^>]*>/gi, '[sup]');
 			html = html.replace(/<\/sup>/gi, '[/sup]');
+			
+			// [s]
+			html = html.replace(/<(?:s(trike)?|del)[^>]*>/gi, '[s]');
+			html = html.replace(/<\/(?:s(trike)?|del)>/gi, '[/s]');
 			
 			// smileys
 			html = html.replace(/<img [^>]*?alt="([^"]+?)" class="smiley".*?> ?/gi, '$1 '); // firefox
