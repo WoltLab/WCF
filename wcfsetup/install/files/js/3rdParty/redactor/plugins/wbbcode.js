@@ -361,7 +361,7 @@ RedactorPlugins.wbbcode = function() {
 								$start = '[color=#' + $hex + ']';
 								$end = '[/color]';
 							}
-							else if ($style.match(/color: ?(.*?);?/i)) {
+							else if ($style.match(/color: ?([^;]+);?/i)) {
 								$start = '[color=' + RegExp.$1 + ']';
 								$end = '[/color]';
 							}
