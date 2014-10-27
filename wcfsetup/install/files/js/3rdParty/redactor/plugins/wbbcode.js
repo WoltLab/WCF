@@ -191,6 +191,9 @@ RedactorPlugins.wbbcode = function() {
 			// remove data-redactor-tag="" attribute
 			html = html.replace(/(<[^>]+?) data-redactor-tag="[^"]+"/g, '$1');
 			
+			// remove zero-width space sometimes slipping through
+			html = html.replace(/&#8203;/g, '');
+			
 			// revert conversion of special characters
 			html = html.replace(/&trade;/gi, '\u2122');
 			html = html.replace(/&copy;/gi, '\u00a9');
@@ -780,20 +783,6 @@ RedactorPlugins.wbbcode = function() {
 				}
 			}
 			
-			// insert codes
-			if ($.getLength($cachedCodes)) {
-				for (var $key in $cachedCodes) {
-					var $regex = new RegExp('@@' + $key + '@@', 'g');
-					data = data.replace($regex, $cachedCodes[$key]);
-				}
-				
-				// [tt]
-				data = data.replace(/\[tt\](.*?)\[\/tt\]/gi, '<span class="inlineCode">$1</span>');
-			}
-			
-			// preserve leading whitespaces in [code] tags
-			data = data.replace(/\[code\][\S\s]*?\[\/code\]/, '<pre>$&</pre>');
-			
 			// insert quotes
 			if ($cachedQuotes.length) {
 				// [quote]
@@ -874,6 +863,20 @@ RedactorPlugins.wbbcode = function() {
 					data = data.replace($regex, $transformQuote($cachedQuote.content));
 				}
 			}
+			
+			// insert codes
+			if ($.getLength($cachedCodes)) {
+				for (var $key in $cachedCodes) {
+					var $regex = new RegExp('@@' + $key + '@@', 'g');
+					data = data.replace($regex, $cachedCodes[$key]);
+				}
+				
+				// [tt]
+				data = data.replace(/\[tt\](.*?)\[\/tt\]/gi, '<span class="inlineCode">$1</span>');
+			}
+			
+			// preserve leading whitespaces in [code] tags
+			data = data.replace(/\[code\][\S\s]*?\[\/code\]/, '<pre>$&</pre>');
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			
