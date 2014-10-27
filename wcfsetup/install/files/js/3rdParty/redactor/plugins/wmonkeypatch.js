@@ -345,6 +345,9 @@ RedactorPlugins.wmonkeypatch = function() {
 					onClose: $.proxy(this.modal.close, this),
 					title: this.modal.title
 				});
+				
+				// focus first input field
+				this.modal.dialog.find('input:first').focus();
 			}).bind(this);
 			
 			// modal.createButton
