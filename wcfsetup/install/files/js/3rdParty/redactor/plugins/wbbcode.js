@@ -106,7 +106,7 @@ RedactorPlugins.wbbcode = function() {
 			// Chrome tends to insert pointless <span> elements in contenteditable areas
 			// see http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
 			this.$editor.on('DOMNodeInserted.redactor', (function(e) {
-				if (e.target.tagName === 'SPAN') {
+				if (e.target.tagName === 'SPAN' && e.target.attributes.length === 1 && e.target.attributes[0].name === 'style') {
 					var $helper = $('<b>helper</b>');
 					$(e.target).before($helper);
 					

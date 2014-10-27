@@ -40,7 +40,7 @@ RedactorPlugins.wfontfamily = function() {
 			$.each($fonts, function(title, fontFamily) {
 				var $listItem = $('<li><a href="#">' + title + '</a></li>').appendTo(dropdown);
 				var $item = $listItem.children('a').data('fontFamily', fontFamily).css('font-family', fontFamily);
-				$item.click(function() {
+				$item.click(function(event) {
 					event.preventDefault();
 					
 					self.inline.format('span', 'style', 'font-family: ' + $(this).data('fontFamily') + ';');
@@ -49,7 +49,7 @@ RedactorPlugins.wfontfamily = function() {
 			
 			$('<li class="dropdownDivider" />').appendTo(dropdown);
 			var $listItem = $('<li><a href="#">None</a></li>').appendTo(dropdown);
-			$listItem.children('a').click(function() {
+			$listItem.children('a').click(function(event) {
 				event.preventDefault();
 				
 				self.inline.removeStyleRule('font-family');

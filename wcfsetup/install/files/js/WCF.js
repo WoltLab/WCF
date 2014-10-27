@@ -10149,9 +10149,13 @@ WCF.Style.Chooser = Class.extend({
 	
 	/**
 	 * Displays the style chooser dialog.
+	 * 
+	 * @param	object		event
 	 */
-	_showDialog: function() {
-		event.preventDefault();
+	_showDialog: function(event) {
+		if (event !== null) {
+			event.preventDefault();
+		}
 		
 		if (this._dialog === null) {
 			this._dialog = $('<div id="styleChooser" />').hide().appendTo(document.body);
@@ -10191,7 +10195,7 @@ WCF.Style.Chooser = Class.extend({
 		this._dialog.html(data.returnValues.template);
 		this._dialog.find('li').addClass('pointer').click($.proxy(this._click, this));
 		
-		this._showDialog();
+		this._showDialog(null);
 	},
 	
 	/**
