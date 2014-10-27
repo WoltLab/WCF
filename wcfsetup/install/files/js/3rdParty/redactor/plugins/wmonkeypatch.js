@@ -78,6 +78,10 @@ RedactorPlugins.wmonkeypatch = function() {
 				this.$editor.on('mouseup.redactor keyup.redactor focus.redactor', $.proxy(this.observe.buttons, this));
 				this.$editor.on('keyup.redactor', $.proxy(this.keyup.init, this));
 			}
+			
+			this.$editor.on('blur.wredactor', (function() {
+				this.selection.save();
+			}).bind(this));
 		},
 		
 		/**
@@ -210,6 +214,14 @@ RedactorPlugins.wmonkeypatch = function() {
 		 *  - WCF-like dialog behavior
 		 */
 		image: function() {
+			// image.setEditable
+			var $mpSetEditable = this.image.setEditable;
+			this.image.setEditable = (function($image) {
+				if (!$image.hasClass('smiley')) {
+					$mpSetEditable.call(this, $image);
+				}
+			}).bind(this);
+			
 			// image.show
 			this.image.show = (function() {
 				this.modal.load('image', this.lang.get('image'), 0);
@@ -261,6 +273,12 @@ RedactorPlugins.wmonkeypatch = function() {
 					this.$editor.focus();
 					
 					this.caret.setEnd(this.$editor.children('p:eq(0)'));
+				}
+				else {
+					if (document.activeElement !== this.$editor[0]) {
+						this.$editor.focus();
+						this.selection.restore();
+					}
 				}
 			}).bind(this);
 			
@@ -375,6 +393,51 @@ RedactorPlugins.wmonkeypatch = function() {
 		},
 		
 		/**
+		 * Partially overwrites the 'observe' module.
+		 * 
+		 *  - handles custom button active states.
+		 */
+		observe: function() {
+			var $toggleButtons = (function(parent, searchFor, buttonSelector, inverse, className, skipInSourceMode) {
+				var $buttons = this.$toolbar.find(buttonSelector);
+				if (parent && parent.closest(searchFor, this.$editor[0]).length != 0) {
+					$buttons[(inverse ? 'removeClass' : 'addClass')](className);
+				}
+				else {
+					if (skipInSourceMode && !this.opts.visual) {
+						return;
+					}
+					
+					$buttons[(inverse ? 'addClass' : 'removeClass')](className);
+				}
+			}).bind(this);
+			
+			// observe.buttons
+			var $mpButtons = this.observe.buttons;
+			this.observe.buttons = (function(e, btnName) {
+				$mpButtons.call(this, e, btnName);
+				
+				var parent = this.selection.getParent();
+				parent = (parent === false) ? null : $(parent);
+				
+				$toggleButtons(parent, 'ul, ol', 'a.re-indent, a.re-outdent', true, 'redactor-button-disabled');
+				//$toggleButtons(parent, 'inline.inlineCode', 'a.re-__wcf_tt', false, 'redactor-act');
+				$toggleButtons(parent, 'blockquote.quoteBox', 'a.re-__wcf_quote', false, 'redactor-button-disabled', true);
+				$toggleButtons(parent, 'sub', 'a.re-subscript', false, 'redactor-act');
+				$toggleButtons(parent, 'sup', 'a.re-superscript', false, 'redactor-act');
+			}).bind(this);
+			
+			// observe.showTooltip
+			var $mpShowTooltip = this.observe.showTooltip;
+			this.observe.showTooltip = (function(e) {
+				var $link = $(e.target);
+				if (!$link.hasClass('redactorQuoteEdit')) {
+					$mpShowTooltip.call(this, e);
+				}
+			}).bind(this);
+		},
+		
+		/**
 		 * Partially overwrites the 'paste' module.
 		 * 
 		 *  - prevent screwed up, pasted HTML from placing text nodes (and inline elements) in the editor's direct root 
@@ -417,51 +480,6 @@ RedactorPlugins.wmonkeypatch = function() {
 				$mpInsert.call(this, html);
 				
 				setTimeout($fixDOM, 20);
-			}).bind(this);
-		},
-		
-		/**
-		 * Partially overwrites the 'observe' module.
-		 * 
-		 *  - handles custom button active states.
-		 */
-		observe: function() {
-			var $toggleButtons = (function(parent, searchFor, buttonSelector, inverse, className, skipInSourceMode) {
-				var $buttons = this.$toolbar.find(buttonSelector);
-				if (parent && parent.closest(searchFor, this.$editor[0]).length != 0) {
-					$buttons[(inverse ? 'removeClass' : 'addClass')](className);
-				}
-				else {
-					if (skipInSourceMode && !this.opts.visual) {
-						return;
-					}
-					
-					$buttons[(inverse ? 'addClass' : 'removeClass')](className);
-				}
-			}).bind(this);
-			
-			// observe.buttons
-			var $mpButtons = this.observe.buttons;
-			this.observe.buttons = (function(e, btnName) {
-				$mpButtons.call(this, e, btnName);
-				
-				var parent = this.selection.getParent();
-				parent = (parent === false) ? null : $(parent);
-				
-				$toggleButtons(parent, 'ul, ol', 'a.re-indent, a.re-outdent', true, 'redactor-button-disabled');
-				//$toggleButtons(parent, 'inline.inlineCode', 'a.re-__wcf_tt', false, 'redactor-act');
-				$toggleButtons(parent, 'blockquote.quoteBox', 'a.re-__wcf_quote', false, 'redactor-button-disabled', true);
-				$toggleButtons(parent, 'sub', 'a.re-subscript', false, 'redactor-act');
-				$toggleButtons(parent, 'sup', 'a.re-superscript', false, 'redactor-act');
-			}).bind(this);
-			
-			// observe.showTooltip
-			var $mpShowTooltip = this.observe.showTooltip;
-			this.observe.showTooltip = (function(e) {
-				var $link = $(e.target);
-				if (!$link.hasClass('redactorQuoteEdit')) {
-					$mpShowTooltip.call(this, e);
-				}
 			}).bind(this);
 		},
 		
