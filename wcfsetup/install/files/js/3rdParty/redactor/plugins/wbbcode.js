@@ -606,7 +606,7 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[list=1\]/gi, '<ul style="list-style-type: decimal">');
 			data = data.replace(/\[list=a\]/gi, '<ul style="list-style-type: lower-latin">');
 			data = data.replace(/\[list=(none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)\]/gi, '<ul style="list-style-type: $1">');
-			data = data.replace(/\[\/list]/gi, '</ul>');
+			data = data.replace(/\[\/list]\n?/gi, '</ul>\n');
 			
 			// trim whitespaces within [table]
 			data = data.replace(/\[table\]([\S\s]*?)\[\/table\]/gi, function(match, p1) {
@@ -673,31 +673,59 @@ RedactorPlugins.wbbcode = function() {
 			// extract [quote] bbcodes to prevent line break handling below
 			var $cachedQuotes = [ ];
 			var $knownQuotes = [ ];
-			for (var $i = 0; $i < 5; $i++) {
-				var $foundQuotes = false;
+			
+			var $parts = data.split(/(\[(?:\/quote|quote|quote='[^']*?'(?:,'[^']*?')?|quote="[^"]*?"(?:,"[^"]*?")?)\])/);
+			var $lostQuote = WCF.getUUID();
+			while (true) {
+				var $foundClosingTag = false;
+				for (var $i = 0; $i < $parts.length; $i++) {
+					var $part = $parts[$i];
+					if ($part === '[/quote]') {
+						$foundClosingTag = true;
+						
+						var $content = '';
+						var $previous = $parts.slice(0, $i);
+						var $foundOpenTag = false;
+						while ($previous.length) {
+							var $prev = $previous.pop();
+							$content = $prev + $content;
+							if ($prev.match(/^\[quote/)) {
+								$part = $content + $part;
+								
+								var $key = WCF.getUUID();
+								$cachedQuotes.push({
+									hashCode: $key,
+									content: $part.replace(/\$/g, '$$$$')
+								});
+								$knownQuotes.push($key);
+								
+								$part = '@@' + $key + '@@';
+								$foundOpenTag = true;
+								break;
+							}
+						}
+						
+						if (!$foundOpenTag) {
+							$previous = $parts.slice(0, $i);
+							$part = $lostQuote;
+						}
+						
+						// rebuild the array
+						$parts = $previous.concat($part, $parts.slice($i + 1));
+						console.debug($parts);
+						break;
+					}
+				}
 				
-				data = data.replace(/\[quote.*?\]((?!\[quote)[\s\S])*?\[\/quote\]/gi, function(match) {
-					var $key = match.hashCode();
-					$cachedQuotes.push({
-						hashCode: $key,
-						content: match.replace(/\$/g, '$$$$')
-					});
-					$knownQuotes.push($key.toString());
-					
-					$foundQuotes = true;
-					
-					return '@@' + $key + '@@';
-				});
-				
-				// we found no more quotes
-				if (!$foundQuotes) {
+				if (!$foundClosingTag) {
 					break;
 				}
 			}
 			
-			// add newlines before and after [quote] tags
-			data = data.replace(/(\[quote.*?\])/gi, '$1\n');
-			data = data.replace(/(\[\/quote\])/gi, '\n$1');
+			data = $parts.join('');
+			
+			// restore unmatched closing quote tags
+			data = data.replace(new RegExp($lostQuote, 'g'), '[/quote]');
 			
 			// drop trailing line breaks
 			data = data.replace(/\n*$/, '');
@@ -826,7 +854,7 @@ RedactorPlugins.wbbcode = function() {
 					data = data.replace($regex, $transformQuote($cachedQuote.content));
 				}
 			}
-			
+			console.debug(data);
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			
 			return data;

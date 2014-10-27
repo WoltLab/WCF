@@ -118,6 +118,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			}).bind(this);
 			
 			// clean.setVerified
+			// TODO: remove this once the escape bug has been fixed by Imperavi
 			this.clean.setVerified = (function(html) {
 				if (this.utils.browser('msie')) return html;
 				
