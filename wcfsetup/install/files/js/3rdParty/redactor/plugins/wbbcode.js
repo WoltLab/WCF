@@ -102,6 +102,20 @@ RedactorPlugins.wbbcode = function() {
 					}
 				}
 			}).bind(this));
+			
+			// Chrome tends to insert pointless <span> elements in contenteditable areas
+			// see http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
+			this.$editor.on('DOMNodeInserted.redactor', (function(e) {
+				if (e.target.tagName === 'SPAN') {
+					var $helper = $('<b>helper</b>');
+					$(e.target).before($helper);
+					
+					$helper.after($(e.target).contents());
+					$helper.remove();
+					
+					$(e.target).remove();
+				}
+			}).bind(this));
 		},
 		
 		/**
@@ -173,6 +187,9 @@ RedactorPlugins.wbbcode = function() {
 		 */
 		convertFromHtml: function(html) {
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
+			
+			// remove data-redactor-tag="" attribute
+			html = html.replace(/(<[^>]+?) data-redactor-tag="[^"]+"/g, '$1');
 			
 			// revert conversion of special characters
 			html = html.replace(/&trade;/gi, '\u2122');
@@ -274,27 +291,27 @@ RedactorPlugins.wbbcode = function() {
 			});
 			
 			// [b]
-			html = html.replace(/<(?:b|strong)[^>]*>/gi, '[b]');
+			html = html.replace(/<(?:b|strong)>/gi, '[b]');
 			html = html.replace(/<\/(?:b|strong)>/gi, '[/b]');
 			
 			// [i]
-			html = html.replace(/<(?:i|em)[^>]*>/gi, '[i]');
+			html = html.replace(/<(?:i|em)>/gi, '[i]');
 			html = html.replace(/<\/(?:i|em)>/gi, '[/i]');
 			
 			// [u]
-			html = html.replace(/<u[^>]*>/gi, '[u]');
+			html = html.replace(/<u>/gi, '[u]');
 			html = html.replace(/<\/u>/gi, '[/u]');
 			
 			// [sub]
-			html = html.replace(/<sub[^>]*>/gi, '[sub]');
+			html = html.replace(/<sub>/gi, '[sub]');
 			html = html.replace(/<\/sub>/gi, '[/sub]');
 			
 			// [sup]
-			html = html.replace(/<sup[^>]*>/gi, '[sup]');
+			html = html.replace(/<sup>/gi, '[sup]');
 			html = html.replace(/<\/sup>/gi, '[/sup]');
 			
 			// [s]
-			html = html.replace(/<(?:s(trike)?|del)[^>]*>/gi, '[s]');
+			html = html.replace(/<(?:s(trike)?|del)>/gi, '[s]');
 			html = html.replace(/<\/(?:s(trike)?|del)>/gi, '[/s]');
 			
 			// smileys
@@ -567,22 +584,22 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[email\=([^"\]]+)](.+?)\[\/email]/gi, '<a href="mailto:$1">$2</a>');
 			
 			// [b]
-			data = data.replace(/\[b\](.*?)\[\/b]/gi, '<b>$1</b>');
+			data = data.replace(/\[b\]([\s\S]*?)\[\/b]/gi, '<b>$1</b>');
 			
 			// [i]
-			data = data.replace(/\[i\](.*?)\[\/i]/gi, '<i>$1</i>');
+			data = data.replace(/\[i\]([\s\S]*?)\[\/i]/gi, '<i>$1</i>');
 			
 			// [u]
-			data = data.replace(/\[u\](.*?)\[\/u]/gi, '<u>$1</u>');
+			data = data.replace(/\[u\]([\s\S]*?)\[\/u]/gi, '<u>$1</u>');
 			
 			// [s]
-			data = data.replace(/\[s\](.*?)\[\/s]/gi, '<strike>$1</strike>');
+			data = data.replace(/\[s\]([\s\S]*?)\[\/s]/gi, '<strike>$1</strike>');
 			
 			// [sub]
-			data = data.replace(/\[sub\](.*?)\[\/sub]/gi, '<sub>$1</sub>');
+			data = data.replace(/\[sub\]([\s\S]*?)\[\/sub]/gi, '<sub>$1</sub>');
 			
 			// [sup]
-			data = data.replace(/\[sup\](.*?)\[\/sup]/gi, '<sup>$1</sup>');
+			data = data.replace(/\[sup\]([\s\S]*?)\[\/sup]/gi, '<sup>$1</sup>');
 				
 			// [img]
 			data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
@@ -590,16 +607,16 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[img='?([^"]*?)'?\]\[\/img\]/gi,'<img src="$1" />');
 			
 			// [size]
-			data = data.replace(/\[size=(\d+)\](.*?)\[\/size\]/gi,'<span style="font-size: $1pt">$2</span>');
+			data = data.replace(/\[size=(\d+)\]([\s\S]*?)\[\/size\]/gi,'<span style="font-size: $1pt">$2</span>');
 			
 			// [color]
-			data = data.replace(/\[color=([#a-z0-9]*?)\](.*?)\[\/color\]/gi,'<span style="color: $1">$2</span>');
+			data = data.replace(/\[color=([#a-z0-9]*?)\]([\s\S]*?)\[\/color\]/gi,'<span style="color: $1">$2</span>');
 			
 			// [font]
-			data = data.replace(/\[font='?([a-z,\- ]*?)'?\](.*?)\[\/font\]/gi,'<span style="font-family: $1">$2</span>');
+			data = data.replace(/\[font='?([a-z,\- ]*?)'?\]([\s\S]*?)\[\/font\]/gi,'<span style="font-family: $1">$2</span>');
 			
 			// [align]
-			data = data.replace(/\[align=(left|right|center|justify)\](.*?)\[\/align\]/gi,'<div style="text-align: $1">$2</div>');
+			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]/gi,'<div style="text-align: $1">$2</div>');
 			
 			// [*]
 			data = data.replace(/\[\*\](.*?)(?=\[\*\]|\[\/list\])/gi,'<li>$1</li>');
