@@ -347,7 +347,17 @@ RedactorPlugins.wutil = function() {
 		 * Sets the selection after the last direct children of the editor.
 		 */
 		selectionEndOfEditor: function() {
-			this.selectionEnd(this.$editor.children(':last')[0]);
+			var $lastChild = this.$editor.children(':last')[0];
+			if ($lastChild.tagName === 'P') {
+				// sometimes the last <p> is just empty, causing the method to fail
+				if ($lastChild.innerHTML === '') {
+					$lastChild = $($lastChild).replaceWith($(this.opts.emptyHtml));
+					this.caret.setEnd($lastChild[0]);
+				}
+			}
+			else {
+				this.wutil.setCaretAfter($lastChild);
+			}
 		},
 		
 		/**

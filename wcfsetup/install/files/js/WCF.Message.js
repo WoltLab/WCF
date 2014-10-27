@@ -896,6 +896,7 @@ WCF.Message.QuickReply = Class.extend({
 			
 			this._messageField.redactor('focus.setEnd');
 			this._messageField.redactor('wutil.insertDynamic', $html, data.returnValues.template);
+			this._messageField.redactor('wutil.selectionEndOfEditor');
 		}
 		else {
 			this._messageField.val(data.returnValues.template);

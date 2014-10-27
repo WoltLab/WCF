@@ -22,6 +22,9 @@ RedactorPlugins.wbbcode = function() {
 				var $content = $.trim(this.wutil.getOption('woltlab.originalValue'));
 				if ($content.length) {
 					this.wutil.replaceText($content);
+					
+					// ensure that the caret is not within a quote tag
+					this.wutil.selectionEndOfEditor();
 				}
 				
 				delete this.opts.woltlab.originalValue;
@@ -1259,29 +1262,41 @@ RedactorPlugins.wbbcode = function() {
 		 * @param	string		plainText
 		 */
 		insertQuoteBBCode: function(author, link, html, plainText) {
-			var $bbcode = '[quote]';
+			var $openTag = '[quote]';
+			var $closingTag = '[/quote]';
+			
 			if (author) {
 				if (link) {
-					$bbcode = "[quote='" + author + "','" + link + "']";
+					$openTag = "[quote='" + author + "','" + link + "']";
 				}
 				else {
-					$bbcode = "[quote='" + author + "']";
+					$openTag = "[quote='" + author + "']";
 				}
 			}
 			
-			if (plainText) $bbcode += plainText;
-			$bbcode += '[/quote]';
-			
 			if (this.wutil.inWysiwygMode()) {
-				$bbcode = this.wbbcode.convertToHtml($bbcode);
-				this.insert.html($bbcode, false);
+				var $innerHTML = (plainText) ? this.wbbcode.convertToHtml(plainText) : '';
+				var $id = WCF.getUUID();
+				var $html = this.wbbcode.convertToHtml($openTag + $id + $closingTag);
+				$html = $html.replace($id, $innerHTML);
+				
+				// assign a unique id in order to recognize the inserted quote
+				$html = $html.replace(/(<p>)?<blockquote/, '$1<blockquote id="' + $id + '"');
+				
+				this.insert.html($html, false);
+				
+				var $quote = this.$editor.find('#' + $id);
+				if ($quote.length) {
+					$quote.removeAttr('id');
+					this.wutil.setCaretAfter($quote[0]);
+				}
 				
 				this.wbbcode._observeQuotes();
 				
 				this.$toolbar.find('a.re-__wcf_quote').addClass('redactor-button-disabled');
 			}
 			else {
-				this.wutil.insertAtCaret($bbcode);
+				this.wutil.insertAtCaret($openTag + plainText + $closingTag);
 			}
 		},
 		
