@@ -251,6 +251,7 @@ final class HTTPRequest {
 		$chunkLength = 0;
 		$bodyLength = 0;
 		
+		$chunkedTransferRegex = new Regex('(^|,)[ \t]*chunked[ \t]*$', Regex::CASE_INSENSITIVE);
 		// read http response, until one of is true
 		// a) EOF is reached
 		// b) bodyLength is at least maxLength
@@ -265,7 +266,7 @@ final class HTTPRequest {
 				if (isset($this->options['maxLength'])) $chunkLength = min($chunkLength, $this->options['maxLength'] - $bodyLength);
 				$line = $remoteFile->read($chunkLength);
 			}
-			else if (!$inHeader) {
+			else if (!$inHeader && (!isset($this->replyHeaders['transfer-encoding']) || !$chunkedTransferRegex->match(end($this->replyHeaders['transfer-encoding'])))) {
 				$length = 1024;
 				if (isset($this->options['maxLength'])) $length = min($length, $this->options['maxLength'] - $bodyLength);
 				if (isset($this->replyHeaders['content-length'])) $length = min($length, end($this->replyHeaders['content-length']) - $bodyLength);
@@ -286,7 +287,6 @@ final class HTTPRequest {
 				$this->replyHeaders[] = $line;
 			}
 			else {
-				$chunkedTransferRegex = new Regex('(^|,)[ \t]*chunked[ \t]*$', Regex::CASE_INSENSITIVE);
 				if (isset($this->replyHeaders['transfer-encoding']) && $chunkedTransferRegex->match(end($this->replyHeaders['transfer-encoding']))) {
 					// last chunk finished
 					if ($chunkLength === 0) {
