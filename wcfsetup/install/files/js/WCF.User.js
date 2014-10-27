@@ -1810,6 +1810,11 @@ WCF.User.LikeLoader = Class.extend({
 			this._likeValue = $button.data('likeValue');
 			$('#likeValue .button').removeClass('active');
 			$button.addClass('active');
+			
+			// change button labels
+			$('#likeType > li:first-child > .button').text(WCF.Language.get('wcf.like.' + (this._likeValue == -1 ? 'dis' : '') + 'likesReceived'));
+			$('#likeType > li:last-child > .button').text(WCF.Language.get('wcf.like.' + (this._likeValue == -1 ? 'dis' : '') + 'likesGiven'));
+			
 			this._reload();
 		}
 	},

@@ -2229,6 +2229,8 @@ Errors are:
 		<item name="wcf.like.likesReceived"><![CDATA[Likes Received]]></item>
 		<item name="wcf.like.showLikesReceived"><![CDATA[Show Likes Received by “{$user->username}”]]></item>
 		<item name="wcf.like.likesGiven"><![CDATA[Likes Given]]></item>
+		<item name="wcf.like.dislikesReceived"><![CDATA[Dislikes Received]]></item>
+		<item name="wcf.like.dislikesGiven"><![CDATA[Dislikes Given]]></item>
 		<item name="wcf.like.summary"><![CDATA[{literal}{if $others == 0}{@$users.slice(0, -1).join(", ")}{if $users.length > 1} and {/if}{@$users.slice(-1)[0]}{else}{@$users.join(", ")} and {if $others == 1}one{else}{#$others}{/if} other{if $others > 1}s{/if}{/if} like{if $users.length == 1}s{/if} this.{/literal}]]></item>
 		<item name="wcf.like.details"><![CDATA[Details]]></item>
 		<item name="wcf.like.details.like"><![CDATA[Likes]]></item>

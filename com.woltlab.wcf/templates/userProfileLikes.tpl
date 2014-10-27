@@ -3,7 +3,11 @@
 	$(function() {
 		WCF.Language.addObject({
 			'wcf.like.likes.more': '{lang}wcf.like.likes.more{/lang}',
-			'wcf.like.likes.noMoreEntries': '{lang}wcf.like.likes.noMoreEntries{/lang}'
+			'wcf.like.likes.noMoreEntries': '{lang}wcf.like.likes.noMoreEntries{/lang}',
+			'wcf.like.likesReceived': '{lang}wcf.like.likesReceived{/lang}',
+			'wcf.like.likesGiven': '{lang}wcf.like.likesGiven{/lang}',
+			'wcf.like.dislikesReceived': '{lang}wcf.like.dislikesReceived{/lang}',
+			'wcf.like.dislikesGiven': '{lang}wcf.like.dislikesGiven{/lang}'
 		});
 		
 		new WCF.User.LikeLoader({@$userID});
