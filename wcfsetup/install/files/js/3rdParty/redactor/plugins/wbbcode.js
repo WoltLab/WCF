@@ -278,7 +278,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<\/(?:b|strong)>/gi, '[/b]');
 			
 			// [i]
-			html = html.replace(/<(?:i|em)>/gi, '[i]');
+			html = html.replace(/<(?:i|em)[^>]*>/gi, '[i]');
 			html = html.replace(/<\/(?:i|em)>/gi, '[/i]');
 			
 			// [u]
@@ -1182,7 +1182,7 @@ RedactorPlugins.wbbcode = function() {
 			$('<a href="#">' + WCF.Language.get('wcf.bbcode.quote.edit') + '</a>').click($.proxy(function(e) {
 				e.preventDefault();
 				
-				this._openQuoteEditOverlay($(event.currentTarget).closest('blockquote.quoteBox'), false);
+				this.wbbcode._openQuoteEditOverlay($(event.currentTarget).closest('blockquote.quoteBox'), false);
 				$('.redactor-link-tooltip').remove();
 			}, this)).appendTo($tooltip);
 			
@@ -1233,7 +1233,7 @@ RedactorPlugins.wbbcode = function() {
 					
 					this.wbbcode._updateQuoteHeader(quote);
 					
-					this.modalClose();
+					this.modal.close();
 				}, this));
 			}
 			
