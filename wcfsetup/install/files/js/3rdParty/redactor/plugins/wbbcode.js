@@ -382,8 +382,8 @@ RedactorPlugins.wbbcode = function() {
 									}
 								}
 							}
-							else if ($style.match(/font-family: ?(.*?);?/)) {
-								$start = '[font=' + RegExp.$1.replace(/'/g, '') + ']';
+							else if ($style.match(/font-family: ?([^;]+);?/)) {
+								$start = "[font='" + RegExp.$1.replace(/'/g, '') + "']";
 								$end = '[/font]';
 							}
 							else {
