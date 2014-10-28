@@ -327,7 +327,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<img [^>]*?class="smiley" alt="([^"]+?)".*?> ?/gi, '$1 '); // chrome, ie
 			
 			// attachments
-			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment" data-attachment-id="(\d+)"( style="float: (left|right)")?>/gi, function(match, attachmentID, styleTag, alignment) {
+			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment" data-attachment-id="(\d+)"( style="[^"]*float: (left|right)[^"]*")?>/gi, function(match, attachmentID, styleTag, alignment) {
 				if (alignment) {
 					return '[attach=' + attachmentID + ',' + alignment + '][/attach]';
 				}
