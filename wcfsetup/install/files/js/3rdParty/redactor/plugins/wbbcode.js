@@ -926,14 +926,17 @@ RedactorPlugins.wbbcode = function() {
 		 * @return	string
 		 */
 		_pasteCallback: function(html) {
+			// reduce successive <br> by one
+			html = html.replace(/<br[^>]*>(<br[^>]*>)+/g, '$1');
+			
 			// replace <p>...</p> with <p>...</p><p><br></p>
-			html = html.replace(/<p>([\s\S]*?)<\/p>/g, function(match, content) {
+			/*html = html.replace(/<p>([\s\S]*?)<\/p>/g, function(match, content) {
 				if (content.match(/<br( \/)?>$/)) {
 					return match;
 				}
 				
 				return '<p>' + content + '</p><p><br></p>';
-			});
+			});*/
 			
 			// restore font size
 			html = html.replace(/\[size=(\d+)\]/g, '<p><span style="font-size: $1pt">');
