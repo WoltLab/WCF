@@ -787,6 +787,10 @@ $.widget('ui.wcfImageViewer', {
 		$slideshowButtonPrevious.click($.proxy(this._previousImage, this));
 		$slideshowButtonEnlarge.click($.proxy(this._toggleView, this));
 		$slideshowButtonToggle.click($.proxy(function() {
+			if (this._items < 2) {
+				return;
+			}
+			
 			if (this._slideshowEnabled) {
 				this.stopSlideshow(true);
 			}
@@ -1021,6 +1025,10 @@ $.widget('ui.wcfImageViewer', {
 		}
 		else {
 			this._ui.slideshow.next.removeClass('pointer');
+		}
+		
+		if (this._items < 2) {
+			this._ui.slideshow.toggle.removeClass('pointer');
 		}
 	},
 	
