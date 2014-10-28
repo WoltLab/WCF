@@ -29,6 +29,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.wmonkeypatch.image();
 			this.wmonkeypatch.insert();
 			this.wmonkeypatch.keydown();
+			this.wmonkeypatch.link();
 			this.wmonkeypatch.modal();
 			this.wmonkeypatch.paste();
 			this.wmonkeypatch.observe();
@@ -321,6 +322,25 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 				else {
 					$mpReplaceDivToParagraph.call(this);
+				}
+			}).bind(this);
+		},
+		
+		/**
+		 * Partially overwrites the 'link' module.
+		 * 
+		 * - force consistent caret position upon link insert
+		 */
+		link: function() {
+			// link.insert
+			var $mpInsert = this.link.insert;
+			this.link.insert = (function() {
+				$mpInsert.call(this);
+				
+				this.selection.get();
+				var $current = this.selection.getCurrent();
+				if ($current.tagName === 'A') {
+					this.caret.setAfter($current);
 				}
 			}).bind(this);
 		},
