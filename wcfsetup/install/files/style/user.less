@@ -144,6 +144,7 @@
 
 .likeList {
 	> li:first-child {
+		padding-bottom: @wcfGapSmall;
 		text-align: right;
 		
 		&:hover {
@@ -152,10 +153,19 @@
 		
 		> ul.buttonGroup {
 			display: inline-block;
+			margin-bottom: @wcfGapSmall;
 			
 			&:not(:first-child) {
 				margin-left: @wcfGapTiny;
 			}
+		}
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.likeList {
+		> li:first-child {
+			padding-bottom: 0;
 		}
 	}
 }
