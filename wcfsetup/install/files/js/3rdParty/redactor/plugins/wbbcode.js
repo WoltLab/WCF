@@ -583,13 +583,13 @@ RedactorPlugins.wbbcode = function() {
 			}
 			
 			// [url]
-			data = data.replace(/\[url\]([^"]+?)\[\/url]/gi, '<a href="$1">$1</a>');
-			data = data.replace(/\[url\='([^'"]+)'](.+?)\[\/url]/gi, '<a href="$1">$2</a>');
-			data = data.replace(/\[url\=([^'"\]]+)](.+?)\[\/url]/gi, '<a href="$1">$2</a>');
+			data = data.replace(/\[url\]([^"]+?)\[\/url]/gi, '<a href="$1">$1</a>' + this.opts.invisibleSpace);
+			data = data.replace(/\[url\='([^'"]+)'](.+?)\[\/url]/gi, '<a href="$1">$2</a>' + this.opts.invisibleSpace);
+			data = data.replace(/\[url\=([^'"\]]+)](.+?)\[\/url]/gi, '<a href="$1">$2</a>' + this.opts.invisibleSpace);
 			
 			// [email]
-			data = data.replace(/\[email\]([^"]+?)\[\/email]/gi, '<a href="mailto:$1">$1</a>');
-			data = data.replace(/\[email\=([^"\]]+)](.+?)\[\/email]/gi, '<a href="mailto:$1">$2</a>');
+			data = data.replace(/\[email\]([^"]+?)\[\/email]/gi, '<a href="mailto:$1">$1</a>' + this.opts.invisibleSpace);
+			data = data.replace(/\[email\=([^"\]]+)](.+?)\[\/email]/gi, '<a href="mailto:$1">$2</a>' + this.opts.invisibleSpace);
 			
 			// [b]
 			data = data.replace(/\[b\]([\s\S]*?)\[\/b]/gi, '<b>$1</b>');
