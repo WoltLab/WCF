@@ -365,6 +365,14 @@
 	}
 }
 
+/* fix for Firefox - fieldsets are set to display: table-column which cause an odd gap between the fieldset
+   and the next element, similar to gaps with display: inline-block and font-size > 0 */
+@-moz-document url-prefix() {
+	fieldset + .messageTabMenu {
+		margin-top: -3px;
+	}
+}
+
 .redactor-dropdown-box-fontcolor {
 	width: 200px;
 	
