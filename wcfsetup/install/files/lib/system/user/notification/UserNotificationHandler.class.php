@@ -5,6 +5,7 @@ use wcf\data\user\notification\event\recipient\UserNotificationEventRecipientLis
 use wcf\data\user\notification\event\UserNotificationEventList;
 use wcf\data\user\notification\UserNotification;
 use wcf\data\user\notification\UserNotificationAction;
+use wcf\data\user\notification\UserNotificationEditor;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
@@ -556,6 +557,10 @@ class UserNotificationHandler extends SingletonFactory {
 	 * @param	\wcf\system\user\notification\event\IUserNotificationEvent	$event
 	 */
 	public function sendInstantMailNotification(UserNotification $notification, User $user, IUserNotificationEvent $event) {
+		// mark e-mail notification as notified
+		$editor = new UserNotificationEditor($notification);
+		$editor->update(array('mailNotified' => 1));
+		
 		// recipient's language
 		$event->setLanguage($user->getLanguage());
 		
