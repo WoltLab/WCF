@@ -211,7 +211,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<p><\/p>/g, '');
 			
 			// remove <br> right in front of </p> (does not match <p><br></p> since it has been converted already)
-			html = html.replace(/<br( \/)?><\/p>/g, '');
+			html = html.replace(/<br( \/)?><\/p>/g, '</p>');
 			
 			// convert paragraphs into single lines
 			var $parts = html.split(/(<\/?(?:div|p)>)/);
