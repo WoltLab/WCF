@@ -151,7 +151,8 @@ function shuffle(array) {
 		browser.safari = true;
 	}
 	
-	jQuery.browser = browser;
+	jQuery.browser = jQuery.browser || { };
+	jQuery.browser = $.extend(jQuery.browser, browser);
 	jQuery.browser.touch = (!!('ontouchstart' in window) || (!!('msMaxTouchPoints' in window.navigator) && window.navigator.msMaxTouchPoints > 0));
 	
 	// detect smartphones
