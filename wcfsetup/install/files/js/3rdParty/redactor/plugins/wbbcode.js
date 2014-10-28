@@ -76,6 +76,9 @@ RedactorPlugins.wbbcode = function() {
 			// disable automatic synchronization
 			this.code.sync = function() { };
 			
+			// fix button label for source toggling
+			var $tooltip = $('.redactor-toolbar-tooltip-html:not(.jsWbbcode)').addClass('jsWbbcode').text(WCF.Language.get('wcf.bbcode.button.toggleBBCode'));
+			
 			this.code.toggle = (function() {
 				if (this.opts.visual) {
 					this.code.startSync();
@@ -84,6 +87,7 @@ RedactorPlugins.wbbcode = function() {
 					this.$textarea.val(this.wbbcode.convertFromHtml(this.$textarea.val()));
 					
 					this.button.get('html').children('i').removeClass('fa-square-o').addClass('fa-square');
+					$tooltip.text(WCF.Language.get('wcf.bbcode.button.toggleHTML'));
 				}
 				else {
 					this.$textarea.val(this.wbbcode.convertToHtml(this.$textarea.val()));
@@ -91,6 +95,7 @@ RedactorPlugins.wbbcode = function() {
 					this.wbbcode._observeQuotes();
 					
 					this.button.get('html').children('i').removeClass('fa-square').addClass('fa-square-o');
+					$tooltip.text(WCF.Language.get('wcf.bbcode.button.toggleBBCode'));
 				}
 			}).bind(this);
 			

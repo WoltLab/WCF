@@ -527,7 +527,7 @@ RedactorPlugins.wmonkeypatch = function() {
 						+ '<dt><label for="redactor-image-align">' + this.opts.curLang.image_position + '</label></dt>'
 						+ '<dd>'
 							+ '<select id="redactor-image-align">'
-								+ '<option value="none">' + this.lang.get('none') + '</option>'
+								+ '<option value="none">' + WCF.Language.get('wcf.global.noSelection') + '</option>'
 								+ '<option value="left">' + this.lang.get('left') + '</option>'
 								+ '<option value="right">' + this.lang.get('right') + '</option>'
 							+ '</select>'

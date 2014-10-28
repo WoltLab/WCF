@@ -1751,6 +1751,8 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.button.spoiler"><![CDATA[Spoiler]]></item>
 		<item name="wcf.bbcode.button.subscript"><![CDATA[Subscript]]></item>
 		<item name="wcf.bbcode.button.superscript"><![CDATA[Superscript]]></item>
+		<item name="wcf.bbcode.button.toggleBBCode"><![CDATA[BBCode]]></item>
+		<item name="wcf.bbcode.button.toggleHTML"><![CDATA[WYSIWYG]]></item>
 		<item name="wcf.bbcode.code.text"><![CDATA[{@$highlighterTitle} ({#$lines} line{if $lines != 1}s{/if})]]></item>
 		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
 		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck Source Code]]></item>

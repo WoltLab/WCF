@@ -1753,6 +1753,8 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.button.spoiler"><![CDATA[Spoiler]]></item>
 		<item name="wcf.bbcode.button.subscript"><![CDATA[Tiefgestellt]]></item>
 		<item name="wcf.bbcode.button.superscript"><![CDATA[Hochgestellt]]></item>
+		<item name="wcf.bbcode.button.toggleBBCode"><![CDATA[BBCode]]></item>
+		<item name="wcf.bbcode.button.toggleHTML"><![CDATA[WYSIWYG]]></item>
 		<item name="wcf.bbcode.code.text"><![CDATA[{@$highlighterTitle} ({#$lines} Zeile{if $lines != 1}n{/if})]]></item>
 		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
 		<item name="wcf.bbcode.code.brainfuck.title"><![CDATA[Brainfuck-Quellcode]]></item>
