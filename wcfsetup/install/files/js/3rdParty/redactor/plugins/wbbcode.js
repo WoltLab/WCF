@@ -76,6 +76,9 @@ RedactorPlugins.wbbcode = function() {
 			// disable automatic synchronization
 			this.code.sync = function() { };
 			
+			// fix button label for source toggling
+			var $tooltip = $('.redactor-toolbar-tooltip-html:not(.jsWbbcode)').addClass('jsWbbcode').text(WCF.Language.get('wcf.bbcode.button.toggleBBCode'));
+			
 			this.code.toggle = (function() {
 				if (this.opts.visual) {
 					this.code.startSync();
@@ -84,6 +87,7 @@ RedactorPlugins.wbbcode = function() {
 					this.$textarea.val(this.wbbcode.convertFromHtml(this.$textarea.val()));
 					
 					this.button.get('html').children('i').removeClass('fa-square-o').addClass('fa-square');
+					$tooltip.text(WCF.Language.get('wcf.bbcode.button.toggleHTML'));
 				}
 				else {
 					this.$textarea.val(this.wbbcode.convertToHtml(this.$textarea.val()));
@@ -91,6 +95,7 @@ RedactorPlugins.wbbcode = function() {
 					this.wbbcode._observeQuotes();
 					
 					this.button.get('html').children('i').removeClass('fa-square').addClass('fa-square-o');
+					$tooltip.text(WCF.Language.get('wcf.bbcode.button.toggleBBCode'));
 				}
 			}).bind(this);
 			
@@ -100,6 +105,20 @@ RedactorPlugins.wbbcode = function() {
 					if (this.$editor[0].lastElementChild && this.$editor[0].lastElementChild.tagName === 'BLOCKQUOTE') {
 						this.wutil.setCaretAfter($(this.$editor[0].lastElementChild));
 					}
+				}
+			}).bind(this));
+			
+			// Chrome tends to insert pointless <span> elements in contenteditable areas
+			// see http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
+			this.$editor.on('DOMNodeInserted.redactor', (function(e) {
+				if (e.target.tagName === 'SPAN' && e.target.attributes.length === 1 && e.target.attributes[0].name === 'style') {
+					var $helper = $('<b>helper</b>');
+					$(e.target).before($helper);
+					
+					$helper.after($(e.target).contents());
+					$helper.remove();
+					
+					$(e.target).remove();
 				}
 			}).bind(this));
 		},
@@ -174,6 +193,12 @@ RedactorPlugins.wbbcode = function() {
 		convertFromHtml: function(html) {
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
 			
+			// remove data-redactor-tag="" attribute
+			html = html.replace(/(<[^>]+?) data-redactor-tag="[^"]+"/g, '$1');
+			
+			// remove zero-width space sometimes slipping through
+			html = html.replace(/&#8203;/g, '');
+			
 			// revert conversion of special characters
 			html = html.replace(/&trade;/gi, '\u2122');
 			html = html.replace(/&copy;/gi, '\u00a9');
@@ -191,7 +216,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<p><\/p>/g, '');
 			
 			// remove <br> right in front of </p> (does not match <p><br></p> since it has been converted already)
-			html = html.replace(/<br( \/)?><\/p>/g, '');
+			html = html.replace(/<br( \/)?><\/p>/g, '</p>');
 			
 			// convert paragraphs into single lines
 			var $parts = html.split(/(<\/?(?:div|p)>)/);
@@ -285,10 +310,6 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<u>/gi, '[u]');
 			html = html.replace(/<\/u>/gi, '[/u]');
 			
-			// [s]
-			html = html.replace(/<(?:s(trike)?|del)>/gi, '[s]');
-			html = html.replace(/<\/(?:s(trike)?|del)>/gi, '[/s]');
-			
 			// [sub]
 			html = html.replace(/<sub>/gi, '[sub]');
 			html = html.replace(/<\/sub>/gi, '[/sub]');
@@ -297,12 +318,16 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<sup>/gi, '[sup]');
 			html = html.replace(/<\/sup>/gi, '[/sup]');
 			
+			// [s]
+			html = html.replace(/<(?:s(trike)?|del)>/gi, '[s]');
+			html = html.replace(/<\/(?:s(trike)?|del)>/gi, '[/s]');
+			
 			// smileys
 			html = html.replace(/<img [^>]*?alt="([^"]+?)" class="smiley".*?> ?/gi, '$1 '); // firefox
 			html = html.replace(/<img [^>]*?class="smiley" alt="([^"]+?)".*?> ?/gi, '$1 '); // chrome, ie
 			
 			// attachments
-			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment" data-attachment-id="(\d+)"( style="float: (left|right)")?>/gi, function(match, attachmentID, styleTag, alignment) {
+			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment" data-attachment-id="(\d+)"( style="[^"]*float: (left|right)[^"]*")?>/gi, function(match, attachmentID, styleTag, alignment) {
 				if (alignment) {
 					return '[attach=' + attachmentID + ',' + alignment + '][/attach]';
 				}
@@ -567,22 +592,22 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[email\=([^"\]]+)](.+?)\[\/email]/gi, '<a href="mailto:$1">$2</a>');
 			
 			// [b]
-			data = data.replace(/\[b\](.*?)\[\/b]/gi, '<b>$1</b>');
+			data = data.replace(/\[b\]([\s\S]*?)\[\/b]/gi, '<b>$1</b>');
 			
 			// [i]
-			data = data.replace(/\[i\](.*?)\[\/i]/gi, '<i>$1</i>');
+			data = data.replace(/\[i\]([\s\S]*?)\[\/i]/gi, '<i>$1</i>');
 			
 			// [u]
-			data = data.replace(/\[u\](.*?)\[\/u]/gi, '<u>$1</u>');
+			data = data.replace(/\[u\]([\s\S]*?)\[\/u]/gi, '<u>$1</u>');
 			
 			// [s]
-			data = data.replace(/\[s\](.*?)\[\/s]/gi, '<strike>$1</strike>');
+			data = data.replace(/\[s\]([\s\S]*?)\[\/s]/gi, '<strike>$1</strike>');
 			
 			// [sub]
-			data = data.replace(/\[sub\](.*?)\[\/sub]/gi, '<sub>$1</sub>');
+			data = data.replace(/\[sub\]([\s\S]*?)\[\/sub]/gi, '<sub>$1</sub>');
 			
 			// [sup]
-			data = data.replace(/\[sup\](.*?)\[\/sup]/gi, '<sup>$1</sup>');
+			data = data.replace(/\[sup\]([\s\S]*?)\[\/sup]/gi, '<sup>$1</sup>');
 				
 			// [img]
 			data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
@@ -590,16 +615,16 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[img='?([^"]*?)'?\]\[\/img\]/gi,'<img src="$1" />');
 			
 			// [size]
-			data = data.replace(/\[size=(\d+)\](.*?)\[\/size\]/gi,'<span style="font-size: $1pt">$2</span>');
+			data = data.replace(/\[size=(\d+)\]([\s\S]*?)\[\/size\]/gi,'<span style="font-size: $1pt">$2</span>');
 			
 			// [color]
-			data = data.replace(/\[color=([#a-z0-9]*?)\](.*?)\[\/color\]/gi,'<span style="color: $1">$2</span>');
+			data = data.replace(/\[color=([#a-z0-9]*?)\]([\s\S]*?)\[\/color\]/gi,'<span style="color: $1">$2</span>');
 			
 			// [font]
-			data = data.replace(/\[font='?([a-z,\- ]*?)'?\](.*?)\[\/font\]/gi,'<span style="font-family: $1">$2</span>');
+			data = data.replace(/\[font='?([a-z,\- ]*?)'?\]([\s\S]*?)\[\/font\]/gi,'<span style="font-family: $1">$2</span>');
 			
 			// [align]
-			data = data.replace(/\[align=(left|right|center|justify)\](.*?)\[\/align\]/gi,'<div style="text-align: $1">$2</div>');
+			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]/gi,'<div style="text-align: $1">$2</div>');
 			
 			// [*]
 			data = data.replace(/\[\*\](.*?)(?=\[\*\]|\[\/list\])/gi,'<li>$1</li>');
@@ -763,20 +788,6 @@ RedactorPlugins.wbbcode = function() {
 				}
 			}
 			
-			// insert codes
-			if ($.getLength($cachedCodes)) {
-				for (var $key in $cachedCodes) {
-					var $regex = new RegExp('@@' + $key + '@@', 'g');
-					data = data.replace($regex, $cachedCodes[$key]);
-				}
-				
-				// [tt]
-				data = data.replace(/\[tt\](.*?)\[\/tt\]/gi, '<span class="inlineCode">$1</span>');
-			}
-			
-			// preserve leading whitespaces in [code] tags
-			data = data.replace(/\[code\][\S\s]*?\[\/code\]/, '<pre>$&</pre>');
-			
 			// insert quotes
 			if ($cachedQuotes.length) {
 				// [quote]
@@ -858,6 +869,20 @@ RedactorPlugins.wbbcode = function() {
 				}
 			}
 			
+			// insert codes
+			if ($.getLength($cachedCodes)) {
+				for (var $key in $cachedCodes) {
+					var $regex = new RegExp('@@' + $key + '@@', 'g');
+					data = data.replace($regex, $cachedCodes[$key]);
+				}
+				
+				// [tt]
+				data = data.replace(/\[tt\](.*?)\[\/tt\]/gi, '<span class="inlineCode">$1</span>');
+			}
+			
+			// preserve leading whitespaces in [code] tags
+			data = data.replace(/\[code\][\S\s]*?\[\/code\]/, '<pre>$&</pre>');
+			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			
 			return data;
@@ -906,14 +931,17 @@ RedactorPlugins.wbbcode = function() {
 		 * @return	string
 		 */
 		_pasteCallback: function(html) {
+			// reduce successive <br> by one
+			html = html.replace(/<br[^>]*>(<br[^>]*>)+/g, '$1');
+			
 			// replace <p>...</p> with <p>...</p><p><br></p>
-			html = html.replace(/<p>([\s\S]*?)<\/p>/g, function(match, content) {
+			/*html = html.replace(/<p>([\s\S]*?)<\/p>/g, function(match, content) {
 				if (content.match(/<br( \/)?>$/)) {
 					return match;
 				}
 				
 				return '<p>' + content + '</p><p><br></p>';
-			});
+			});*/
 			
 			// restore font size
 			html = html.replace(/\[size=(\d+)\]/g, '<p><span style="font-size: $1pt">');
@@ -1182,7 +1210,7 @@ RedactorPlugins.wbbcode = function() {
 			$('<a href="#">' + WCF.Language.get('wcf.bbcode.quote.edit') + '</a>').click($.proxy(function(e) {
 				e.preventDefault();
 				
-				this._openQuoteEditOverlay($(event.currentTarget).closest('blockquote.quoteBox'), false);
+				this.wbbcode._openQuoteEditOverlay($(event.currentTarget).closest('blockquote.quoteBox'), false);
 				$('.redactor-link-tooltip').remove();
 			}, this)).appendTo($tooltip);
 			
@@ -1233,7 +1261,7 @@ RedactorPlugins.wbbcode = function() {
 					
 					this.wbbcode._updateQuoteHeader(quote);
 					
-					this.modalClose();
+					this.modal.close();
 				}, this));
 			}
 			

@@ -35,7 +35,7 @@ RedactorPlugins.wfontsize = function() {
 					$item.css('line-height', '1em');
 				}
 				
-				$item.click(function() {
+				$item.click(function(event) {
 					event.preventDefault();
 					
 					self.inline.format('span', 'style', 'font-size: ' + $(this).data('fontSize') + 'pt;');
@@ -44,7 +44,7 @@ RedactorPlugins.wfontsize = function() {
 			
 			$('<li class="dropdownDivider" />').appendTo(dropdown);
 			var $listItem = $('<li><a href="#">None</a></li>').appendTo(dropdown);
-			$listItem.children('a').click(function() {
+			$listItem.children('a').click(function(event) {
 				event.preventDefault();
 				
 				self.inline.removeStyleRule('font-size');

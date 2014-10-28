@@ -15,12 +15,15 @@ $(function() {
 		'wcf.bbcode.button.image': '{lang}wcf.bbcode.button.image{/lang}',
 		'wcf.bbcode.button.subscript': '{lang}wcf.bbcode.button.subscript{/lang}',
 		'wcf.bbcode.button.superscript': '{lang}wcf.bbcode.button.superscript{/lang}',
+		'wcf.bbcode.button.toggleBBCode': '{lang}wcf.bbcode.button.toggleBBCode{/lang}',
+		'wcf.bbcode.button.toggleHTML': '{lang}wcf.bbcode.button.toggleHTML{/lang}',
 		'wcf.bbcode.quote.edit': '{lang}wcf.bbcode.quote.edit{/lang}',
 		'wcf.bbcode.quote.edit.author': '{lang}wcf.bbcode.quote.edit.author{/lang}',
 		'wcf.bbcode.quote.edit.link': '{lang}wcf.bbcode.quote.edit.link{/lang}',
 		'wcf.bbcode.quote.insert': '{lang}wcf.bbcode.quote.insert{/lang}',
 		'wcf.bbcode.quote.title.clickToSet': '{lang}wcf.bbcode.quote.title.clickToSet{/lang}',
-		'wcf.bbcode.quote.title.javascript': '{lang}wcf.bbcode.quote.title.javascript{/lang}'
+		'wcf.bbcode.quote.title.javascript': '{lang}wcf.bbcode.quote.title.javascript{/lang}',
+		'wcf.global.noSelection': '{lang}wcf.global.noSelection{/lang}'
 	});
 	
 	var $editorName = '{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}';

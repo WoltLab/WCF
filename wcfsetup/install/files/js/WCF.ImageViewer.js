@@ -619,10 +619,11 @@ $.widget('ui.wcfImageViewer', {
 		}
 		
 		this._activeImage = $newImageIndex;
-		
+		console.debug("Showing image " + index);
 		var $currentActiveImage = this._active;
 		this._ui.imageContainer.addClass('loading');
 		this._ui.images[$newImageIndex].off('load').prop('src', false).on('load', $.proxy(function() {
+			console.debug("imageOnLoad for " + index);
 			this._imageOnLoad($currentActiveImage, $newImageIndex);
 		}, this));
 		
@@ -686,6 +687,7 @@ $.widget('ui.wcfImageViewer', {
 	 * @param	object		containerDimensions
 	 */
 	_renderImage: function(targetIndex, imageData, containerDimensions) {
+		var $checkForComplete = true;
 		if (!imageData) {
 			targetIndex = this._activeImage;
 			imageData = this._images[this._active];
@@ -694,6 +696,8 @@ $.widget('ui.wcfImageViewer', {
 				height: $(window).height() - (this._container.hasClass('maximized') || this._container.hasClass('wcfImageViewerMobile') ? 0 : 200),
 				width: this._ui.imageContainer.innerWidth()
 			};
+			
+			$checkForComplete = false;
 		}
 		
 		// simulate padding
@@ -701,8 +705,11 @@ $.widget('ui.wcfImageViewer', {
 		containerDimensions.width -= 20;
 		
 		var $image = this._ui.images[targetIndex].prop('src', imageData.image.url);
+		if ($checkForComplete && $image[0].complete) {
+			$image.trigger('load');
+		}
 		
-		if (this.options.staticViewer && !imageData.height && $image.get(0).complete) {
+		if (this.options.staticViewer && !imageData.height && $image[0].complete) {
 			var $img = new Image();
 			$img.src = imageData.image.url;
 			
@@ -787,6 +794,10 @@ $.widget('ui.wcfImageViewer', {
 		$slideshowButtonPrevious.click($.proxy(this._previousImage, this));
 		$slideshowButtonEnlarge.click($.proxy(this._toggleView, this));
 		$slideshowButtonToggle.click($.proxy(function() {
+			if (this._items < 2) {
+				return;
+			}
+			
 			if (this._slideshowEnabled) {
 				this.stopSlideshow(true);
 			}
@@ -1021,6 +1032,13 @@ $.widget('ui.wcfImageViewer', {
 		}
 		else {
 			this._ui.slideshow.next.removeClass('pointer');
+		}
+		
+		if (this._items < 2) {
+			this._ui.slideshow.toggle.removeClass('pointer');
+		}
+		else {
+			this._ui.slideshow.toggle.addClass('pointer');
 		}
 	},
 	

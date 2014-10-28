@@ -222,7 +222,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				$itemData[] = $itemName;
 				$itemData[] = $itemValue;
 				$itemData[] = $categoryID;
-				if ($packageID) $itemData[] = $packageID;
+				if ($packageID) $itemData[] = ($packageID == -1) ? PACKAGE_ID : $packageID;
 			}
 		}
 		
@@ -239,7 +239,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					VALUES			".substr(str_repeat('(?, ?, ?, ?'. ($packageID ? ', ?' : '') .'), ', $repeat), 0, -2);
 				
 				if ($updateExistingItems) {
-					if ($packageID) {
+					if ($packageID > 0) {
 						// do not update anything if language item is owned by a different package
 						$sql .= "	ON DUPLICATE KEY
 								UPDATE			languageUseCustomValue = IF(packageID = ".$packageID.", IF(languageItemValue = VALUES(languageItemValue), languageUseCustomValue, 0), languageUseCustomValue),
@@ -247,7 +247,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 											languageCategoryID = IF(packageID = ".$packageID.", VALUES(languageCategoryID), languageCategoryID)";
 					}
 					else {
-						// skip package id check during WCFSetup
+						// skip package id check during WCFSetup (packageID = 0) or if using the ACP form (packageID = -1)
 						$sql .= "	ON DUPLICATE KEY
 								UPDATE			languageUseCustomValue = IF(languageItemValue = VALUES(languageItemValue), languageUseCustomValue, 0),
 											languageItemValue = IF(languageItemOriginIsSystem = 0, languageItemValue, VALUES(languageItemValue)),

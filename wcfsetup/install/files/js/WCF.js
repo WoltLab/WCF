@@ -3026,8 +3026,8 @@ WCF.Date.Picker = {
 				// Date objects require a date and a time, thus
 				// add the current date to a time only-value
 				if ($input.data('timeOnly')) {
-					$dateComponents = $inputValue.split(':');
-					$date = new Date();
+					var $dateComponents = $inputValue.split(':');
+					var $date = new Date();
 					$date.setHours($dateComponents[0]);
 					$date.setMinutes($dateComponents[1]);
 					$date.setSeconds(0);
@@ -10149,9 +10149,13 @@ WCF.Style.Chooser = Class.extend({
 	
 	/**
 	 * Displays the style chooser dialog.
+	 * 
+	 * @param	object		event
 	 */
-	_showDialog: function() {
-		event.preventDefault();
+	_showDialog: function(event) {
+		if (event !== null) {
+			event.preventDefault();
+		}
 		
 		if (this._dialog === null) {
 			this._dialog = $('<div id="styleChooser" />').hide().appendTo(document.body);
@@ -10191,7 +10195,7 @@ WCF.Style.Chooser = Class.extend({
 		this._dialog.html(data.returnValues.template);
 		this._dialog.find('li').addClass('pointer').click($.proxy(this._click, this));
 		
-		this._showDialog();
+		this._showDialog(null);
 	},
 	
 	/**
