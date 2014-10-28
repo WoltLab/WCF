@@ -95,7 +95,7 @@ class LanguageImportForm extends AbstractForm {
 			$xml->load($this->filename);
 			
 			// import xml document
-			$this->language = LanguageEditor::importFromXML($xml, PACKAGE_ID);
+			$this->language = LanguageEditor::importFromXML($xml, -1);
 		}
 		catch (SystemException $e) {
 			throw new UserInputException($this->importField, $e->getMessage());
