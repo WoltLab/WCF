@@ -11,7 +11,7 @@ use wcf\util\FileReader;
 /**
  * Shows an attachment.
  * 
- * @author	Marcel Werk
+ * @author	Marcel Werk, Joshua Rüsweg
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	com.woltlab.wcf
@@ -59,6 +59,12 @@ class AttachmentPage extends AbstractPage {
 	 * @var	array<string>
 	 */
 	public static $inlineMimeTypes = array('image/gif', 'image/jpeg', 'image/png', 'image/x-png', 'application/pdf', 'image/pjpeg');
+	
+	/**
+	 * etag for this attachment
+	 * @var string
+	 */ 
+	public $eTag = null; 
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -116,16 +122,19 @@ class AttachmentPage extends AbstractPage {
 			$mimeType = $this->attachment->tinyThumbnailType;
 			$filesize = $this->attachment->tinyThumbnailSize;
 			$location = $this->attachment->getTinyThumbnailLocation();
+			$this->eTag = 'TINY_'.$this->attachmentID;
 		}
 		else if ($this->thumbnail) {
 			$mimeType = $this->attachment->thumbnailType;
 			$filesize = $this->attachment->thumbnailSize;
 			$location = $this->attachment->getThumbnailLocation();
+			$this->eTag = 'THUMB_'.$this->attachmentID;
 		}
 		else {
 			$mimeType = $this->attachment->fileType;
 			$filesize = $this->attachment->filesize;
 			$location = $this->attachment->getLocation();
+			$this->eTag = $this->attachmentID;
 		}
 		
 		// init file reader
@@ -140,9 +149,8 @@ class AttachmentPage extends AbstractPage {
 			'maxAge' => 31536000
 		));
 		
-		// add etag for non-thumbnail
-		if (!$this->thumbnail && !$this->tiny) {
-			$this->fileReader->addHeader('ETag', '"'.$this->attachmentID.'"');
+		if ($this->eTag !== null) {
+			$this->fileReader->addHeader('ETag', '"'.$this->eTag.'"');
 		}
 	}
 	
@@ -151,6 +159,12 @@ class AttachmentPage extends AbstractPage {
 	 */
 	public function show() {
 		parent::show();
+		
+		// etag caching
+		if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && str_replace('"', '', $_SERVER['HTTP_IF_NONE_MATCH']) == $this->eTag) {
+			@header('HTTP/1.1 304 Not Modified');
+			exit;
+		}
 		
 		if (!$this->tiny && !$this->thumbnail) {
 			// update download count
