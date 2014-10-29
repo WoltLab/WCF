@@ -43,7 +43,7 @@ RedactorPlugins.wfontsize = function() {
 			}
 			
 			$('<li class="dropdownDivider" />').appendTo(dropdown);
-			var $listItem = $('<li><a href="#">None</a></li>').appendTo(dropdown);
+			var $listItem = $('<li><a href="#">' + this.opts.curLang.none + '</a></li>').appendTo(dropdown);
 			$listItem.children('a').click(function(event) {
 				event.preventDefault();
 				
