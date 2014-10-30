@@ -80,9 +80,12 @@ RedactorPlugins.wmonkeypatch = function() {
 				this.$editor.on('keyup.redactor', $.proxy(this.keyup.init, this));
 			}
 			
+			/*
+			 * TODO: Disabled since this breaks things on iOS Safari
 			this.$editor.on('blur.wredactor', (function() {
 				this.selection.save();
 			}).bind(this));
+			*/
 		},
 		
 		/**
@@ -269,6 +272,7 @@ RedactorPlugins.wmonkeypatch = function() {
 		 */
 		insert: function() {
 			var $focusEditor = (function() {
+				console.debug("focusEditor()");
 				var $html = this.$editor.html();
 				if (this.utils.isEmpty($html)) {
 					this.$editor.focus();
@@ -290,6 +294,19 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				$mpHtml.call(this, html, clean);
 			}).bind(this);
+			
+			// pasting in Safari is broken, try to avoid breaking everything and wait for Imperavi to address this bug
+			if (navigator.userAgent.match(/safari/i)) {
+				var $mpExecHtml = this.insert.execHtml;
+				this.insert.execHtml = (function(html) {
+					try {
+						$mpExecHtml.call(this, html);
+					}
+					catch (e) {
+						console.debug("[Redactor.wmonkeypatch] Suppressed error in Safari: " + e.message);
+					}
+				}).bind(this);
+			}
 		},
 		
 		/**
