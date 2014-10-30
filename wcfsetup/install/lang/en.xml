@@ -2759,7 +2759,7 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.registerActivation"><![CDATA[Complete Registration]]></item>
 		<item name="wcf.user.registerActivation.error.userAlreadyEnabled"><![CDATA[User is already activated.]]></item>
 		<item name="wcf.user.registerActivation.success"><![CDATA[User account has been activated.]]></item>
-		<item name="wcf.user.activationCode.error.notValid"><![CDATA[You have provided an invalid activation code. Click the button below if you wish to request a new activation code.]]></item>
+		<item name="wcf.user.activationCode.error.notValid"><![CDATA[You have provided an invalid activation code. Click the link below if you wish to request a new activation code.]]></item>
 		<item name="wcf.user.registerNewActivationCode.email.description"><![CDATA[You may provide a different email address or leave it empty to send the code to the same email address again.]]></item>
 		<item name="wcf.user.newActivationCode.success"><![CDATA[Activiation code has been sent to “{$email}”.]]></item>
 		<item name="wcf.user.emailActivation.error.emailAlreadyEnabled"><![CDATA[Email address is already activated.]]></item>
@@ -2866,10 +2866,12 @@ Open the link below to access the user profile:
 Your registration is now completed.]]></item>
 		<item name="wcf.user.register.needActivation.mail"><![CDATA[Dear {@$user->username},
 
-thank you for registering on our website: {@PAGE_TITLE|language}. 
-Please validate your email address to complete your registration.
+thank you for registering on our website: {@PAGE_TITLE|language}. It is required to open the link below in order to verify your email address. 
 
-Open the link below:
+{link controller='RegisterActivation' isEmail=true}u={@$user->userID}&a={@$user->activationCode}{/link} 
+
+**** Unable to click or open the link above? ****
+Please open the link below in your browser:
 {link controller='RegisterActivation' isEmail=true}{/link} 
 
 Once prompted provide the details as shown below:

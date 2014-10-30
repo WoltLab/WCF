@@ -2,6 +2,7 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\UserInputException;
@@ -40,12 +41,29 @@ class RegisterActivationForm extends AbstractForm {
 	public $user = null;
 	
 	/**
+	 * @see	\wcf\page\IPage::readParameters()
+	 */
+	public function readParameters() {
+		parent::readParameters();
+	
+		if (!empty($_GET['u'])) {
+			$userID = intval($_GET['u']);
+			$this->user = new User($userID);
+			if ($this->user->userID) $this->username = $this->user->username;
+		}
+		if (!empty($_GET['a'])) $this->activationCode = intval($_GET['a']);
+	}
+	
+	/**
 	 * @see	\wcf\form\IForm::readFormParameters()
 	 */
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['username'])) $this->username = StringUtil::trim($_POST['username']);
+		if (isset($_POST['username'])) {
+			$this->username = StringUtil::trim($_POST['username']);
+			$this->user = User::getUserByUsername($this->username);
+		}
 		if (isset($_POST['activationCode'])) $this->activationCode = intval($_POST['activationCode']);
 	}
 	
@@ -53,11 +71,10 @@ class RegisterActivationForm extends AbstractForm {
 	 * @see	\wcf\form\IForm::validate()
 	 */
 	public function validate() {
-		parent::validate();
+		EventHandler::getInstance()->fireAction($this, 'validate');
 		
-		// check given user id
-		$this->user = User::getUserByUsername($this->username);
-		if (!$this->user->userID) {
+		// check given user name
+		if ($this->user === null || !$this->user->userID) {
 			throw new UserInputException('username', 'notFound');
 		}
 		
@@ -106,6 +123,10 @@ class RegisterActivationForm extends AbstractForm {
 	public function show() {
 		if (REGISTER_ACTIVATION_METHOD != 1) {
 			throw new IllegalLinkException();
+		}
+		
+		if (empty($_POST) && $this->user !== null && $this->activationCode != 0) {
+			$this->submit();
 		}
 		
 		parent::show();

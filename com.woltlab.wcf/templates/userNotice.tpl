@@ -18,7 +18,7 @@
 		<p class="warning">{lang}wcf.page.javascriptDisabled{/lang}</p>
 	</noscript>
 	
-	{if $__wcf->user->activationCode && REGISTER_ACTIVATION_METHOD == 1}
+	{if $__wcf->user->activationCode && REGISTER_ACTIVATION_METHOD == 1 && $templateName != 'registerActivation'}
 		<p class="warning">{lang}wcf.user.register.needActivation{/lang}</p>
 	{/if}
 	

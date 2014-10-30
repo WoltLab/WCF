@@ -2765,7 +2765,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.registerActivation"><![CDATA[Registrierung abschließen]]></item>
 		<item name="wcf.user.registerActivation.error.userAlreadyEnabled"><![CDATA[Dieser Benutzer ist bereits freigeschaltet.]]></item>
 		<item name="wcf.user.registerActivation.success"><![CDATA[Ihr Benutzerkonto wurde erfolgreich freigeschaltet.]]></item>
-		<item name="wcf.user.activationCode.error.notValid"><![CDATA[Sie haben einen ungültigen Aktivierungscode eingegeben. Klicken Sie auf den unten stehenden Button, falls Sie einen neuen Aktivierungscode anfordern möchten.]]></item>
+		<item name="wcf.user.activationCode.error.notValid"><![CDATA[Sie haben einen ungültigen Aktivierungscode eingegeben. Klicken Sie auf den unten stehenden Link, falls Sie einen neuen Aktivierungscode anfordern möchten.]]></item>
 		<item name="wcf.user.registerNewActivationCode.email.description"><![CDATA[Optional können Sie hier eine neue E-Mail-Adresse eintragen, an die der neue Aktivierungscode gesendet werden soll. Lassen Sie dieses Feld frei, wenn der Aktivierungscode an die bestehende Adresse geschickt werden soll.]]></item>
 		<item name="wcf.user.newActivationCode.success"><![CDATA[Eine E-Mail mit dem neuen Aktivierungscode wurde an {$email} versendet.]]></item>
 		<item name="wcf.user.emailActivation.error.emailAlreadyEnabled"><![CDATA[Die neue E-Mail-Adresse ist bereits aktiviert.]]></item>
@@ -2874,8 +2874,13 @@ vielen Dank für Ihre Registrierung auf der Website: {@PAGE_TITLE|language}.
 Bevor wir Ihre Registrierung aktivieren können, müssen Sie einmalig die Gültigkeit Ihrer E-Mail-Adresse bestätigen.
 
 Bitte bestätigen Sie die Gültigkeit Ihrer E-Mail-Adresse, indem Sie folgenden Link aufrufen:
+{link controller='RegisterActivation' isEmail=true}u={@$user->userID}&a={@$user->activationCode}{/link} 
+
+**** Funktioniert der Link oben nicht? ****
+Wenn der Link nicht funktioniert, sollten Sie folgende Adresse in Ihrem Browser aufrufen:
 {link controller='RegisterActivation' isEmail=true}{/link} 
 
+Bitte achten Sie darauf, dass keine Leerzeichen in der Adresse sind.
 Wenn Sie den Link aufgerufen haben, müssen Sie auf der erscheinenden Seite Ihren Benutzernamen sowie den Aktivierungscode eingeben.
 
 Ihr Benutzername lautet: 	{@$user->username} 

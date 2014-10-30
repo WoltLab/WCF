@@ -56,20 +56,11 @@
 							{if $errorType == 'notValid'}{lang}wcf.user.activationCode.error.notValid{/lang}{/if}
 						</small>
 					{/if}
+					<small><a href="{link controller='EmailNewActivationCode'}{/link}">{lang}wcf.user.newActivationCode{/lang}</a></small>
 				</dd>
 			</dl>
 			
 			{event name='fields'}
-			
-			<dl>
-				<dt></dt>
-				<dd>
-					<ul class="buttonList smallButtons">
-						<li><a class="button small" href="{link controller='EmailNewActivationCode'}{/link}"><span>{lang}wcf.user.newActivationCode{/lang}</span></a></li>
-						{event name='buttons'}
-					</ul>
-				</dd>
-			</dl>
 		</fieldset>
 		
 		{event name='fieldsets'}
