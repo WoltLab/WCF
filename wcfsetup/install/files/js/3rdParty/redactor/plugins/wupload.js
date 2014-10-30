@@ -22,6 +22,7 @@ RedactorPlugins.wupload = function() {
 		 */
 		init: function() {
 			var $namespace = '.redactor_' + this.$textarea.wcfIdentify();
+			$(document).on('dragstart' + $namespace, function() { return false; });
 			$(document).on('dragover' + $namespace, $.proxy(this.wupload._dragOver, this));
 			$(document).on('dragleave' + $namespace, $.proxy(this.wupload._dragLeave, this));
 			$(document).on('drop' + $namespace, (function(event) {
