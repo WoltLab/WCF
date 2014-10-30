@@ -241,7 +241,8 @@ html[dir='rtl'] {
 			}
 		}
 		
-		> header + div {
+		/* quote icon */
+		> div {
 			&::before {
 				content: "\f10d";
 				color: @wcfDimmedColor;
@@ -285,6 +286,7 @@ html[dir='rtl'] {
 				z-index: 101;
 			}
 			
+			/* hide quote icon */
 			> div {
 				&::before {
 					display: none;
