@@ -143,6 +143,14 @@
 	}
 }
 
+/* disable auto zoom in mobile safari */
+@media only screen and (max-width: 800px) {
+	.redactor-editor + textarea {
+		font-size: 16px;
+		max-height: 500px;
+	}
+}
+
 .redactor-toolbar {
 	background: repeating-linear-gradient(0deg, @wcfContainerBackgroundColor, @wcfContainerAccentBackgroundColor 29px, @wcfContainerBorderColor 30px, @wcfContainerBorderColor 30px);
 	border-bottom: 1px solid @wcfContainerBorderColor;
