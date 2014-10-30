@@ -51,7 +51,7 @@ class MultiPageControllerCondition extends AbstractMultiSelectCondition implemen
 	 */
 	public function showContent(Condition $condition) {
 		$requestClassName = RequestHandler::getInstance()->getActiveRequest()->getClassName();
-		$requestClassName = substr($requestClassName, 1); // remove leading backslash
+		$requestClassName = ltrim($requestClassName, '\\'); // remove leading backslash
 		$pageControllers = $condition->pageControllers;
 		foreach ($pageControllers as $objectTypeID) {
 			$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
