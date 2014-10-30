@@ -4,6 +4,7 @@ use wcf\data\attachment\AttachmentAction;
 use wcf\data\attachment\AttachmentList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -61,6 +62,10 @@ class AttachmentHandler implements \Countable {
 	 * @param	string		$tmpHash
 	 */
 	public function __construct($objectType, $objectID, $tmpHash = '', $parentObjectID = 0) {
+		if (!$objectID && !$tmpHash) {
+			throw new SystemException('objectID and tmpHash cannot be empty at the same time');
+		}
+		
 		$this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType);
 		$this->processor = $this->objectType->getProcessor();
 		$this->objectID = $objectID;
