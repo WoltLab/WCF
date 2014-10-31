@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\option;
 use wcf\data\option\Option;
+use wcf\system\bbcode\PreParser;
 use wcf\system\exception\UserInputException;
 use wcf\system\message\censorship\Censorship;
 use wcf\system\WCF;
@@ -34,5 +35,15 @@ class AboutMeOptionType extends MessageOptionType {
 				throw new UserInputException($option->optionName, 'censoredWordsFound');
 			}
 		}
+	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::getData()
+	 */
+	public function getData(Option $option, $newValue) {
+		$newValue = parent::getData($option, $newValue);
+		
+		// run pre-parsing
+		return PreParser::getInstance()->parse($newValue);
 	}
 }
