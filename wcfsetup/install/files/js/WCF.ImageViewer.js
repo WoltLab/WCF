@@ -619,11 +619,9 @@ $.widget('ui.wcfImageViewer', {
 		}
 		
 		this._activeImage = $newImageIndex;
-		console.debug("Showing image " + index);
 		var $currentActiveImage = this._active;
 		this._ui.imageContainer.addClass('loading');
 		this._ui.images[$newImageIndex].off('load').prop('src', false).on('load', $.proxy(function() {
-			console.debug("imageOnLoad for " + index);
 			this._imageOnLoad($currentActiveImage, $newImageIndex);
 		}, this));
 		
@@ -704,7 +702,12 @@ $.widget('ui.wcfImageViewer', {
 		containerDimensions.height -= 22;
 		containerDimensions.width -= 20;
 		
-		var $image = this._ui.images[targetIndex].prop('src', imageData.image.url);
+		var $image = this._ui.images[targetIndex];
+		if ($image.prop('src') !== imageData.image.url) {
+			// assigning the same exact source again breaks Internet Explorer 10
+			$image.prop('src', imageData.image.url);
+		}
+		
 		if ($checkForComplete && $image[0].complete) {
 			$image.trigger('load');
 		}
