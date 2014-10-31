@@ -1681,6 +1681,7 @@ WCF.User.RecentActivityLoader = Class.extend({
 				className: 'wcf\\data\\user\\activity\\event\\UserActivityEventAction'
 			},
 			success: function() {
+				window.location.hash = '#dashboardBoxRecentActivity';
 				window.location.reload();
 			}
 		});

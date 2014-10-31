@@ -1,4 +1,4 @@
-<header class="boxHeadline boxSubHeadline dashboardBoxRecentActivityHeadline">
+<header class="boxHeadline boxSubHeadline dashboardBoxRecentActivityHeadline" id="dashboardBoxRecentActivity">
 	<h2>{lang}wcf.user.recentActivity{/lang}</h2>
 	
 	{if $canFilterByFollowedUsers}

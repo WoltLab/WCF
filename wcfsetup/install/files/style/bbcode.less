@@ -242,7 +242,7 @@ html[dir='rtl'] {
 		}
 		
 		/* quote icon */
-		> div {
+		> div:first-of-type {
 			&::before {
 				content: "\f10d";
 				color: @wcfDimmedColor;
@@ -287,7 +287,7 @@ html[dir='rtl'] {
 			}
 			
 			/* hide quote icon */
-			> div {
+			> div:first-of-type {
 				&::before {
 					display: none;
 				}
@@ -315,7 +315,7 @@ html[dir='rtl'] {
 				display: none;
 			}
 			
-			> div {
+			> div:first-of-type {
 				&::before {
 					display: none;
 				}
@@ -337,7 +337,7 @@ html[dir='rtl'] {
 				padding-left: 28px;
 			}
 			
-			> header + div {
+			> div:first-of-type {
 				&::before {
 					display: block !important;
 					font-size: 14px;
@@ -350,7 +350,7 @@ html[dir='rtl'] {
 			> .container {
 				padding-left: @wcfGapSmall;
 				
-				> div {
+				> div:first-of-type {
 					&::before {
 						display: none !important;
 					}
