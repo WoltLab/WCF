@@ -354,10 +354,10 @@ RedactorPlugins.wutil = function() {
 				// sometimes the last <p> is just empty, causing the method to fail
 				if ($lastChild.innerHTML === '') {
 					$lastChild.remove();
-					$lastChild = $(this.opts.emptyHtml).appendTo(this.$editor);
+					$lastChild = $(this.opts.emptyHtml).appendTo(this.$editor)[0];
 				}
 				
-				this.caret.setEnd($lastChild[0]);
+				this.caret.setEnd($lastChild);
 			}
 			else {
 				this.wutil.setCaretAfter($lastChild);
