@@ -77,6 +77,7 @@ class Gravatar extends DefaultAvatar {
 					$size = 32;
 					break;
 				case 48:
+				case 64:
 					$size = 96;
 					break;
 			}

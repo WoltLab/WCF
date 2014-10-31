@@ -115,6 +115,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 			case 48:
 				$retinaSize = 96;
 				break;
+			case 64:
 			case 96:
 				$retinaSize = 128;
 				break;
