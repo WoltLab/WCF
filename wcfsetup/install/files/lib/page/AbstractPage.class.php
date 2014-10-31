@@ -9,7 +9,6 @@ use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
-use wcf\util\UserUtil;
 
 /**
  * Abstract implementation of a page which fires the default event actions of a
@@ -190,6 +189,10 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 			if (!StringUtil::isUTF8($requestURI)) {
 				$requestURI = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $requestURI);
 			}
+			if (strpos($requestURI, '%') !== false) {
+				$requestURI = urldecode($requestURI);
+			}
+			
 			$requestURL = parse_url($requestURI);
 			
 			$redirect = false;
@@ -208,7 +211,7 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 				}
 			}
 			
-			if ($redirect) {
+			if (false && $redirect) {
 				$redirectURL = $this->canonicalURL;
 				if (!empty($requestURL['query'])) {
 					$queryString = $requestURL['query'];
