@@ -417,7 +417,6 @@
 				<categoryname>general.page.seo</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<enableoptions><![CDATA[url_omit_index_php]]></enableoptions>
 			</option>
 			<option name="url_omit_index_php">
 				<categoryname>general.page.seo</categoryname>

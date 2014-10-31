@@ -301,15 +301,14 @@ class Route {
 			}
 		}
 		
-		if (URL_LEGACY_MODE && !$this->isACP()) {
-			if (!empty($link) && !URL_OMIT_INDEX_PHP) {
-				$link = 'index.php/' . $link;
-			}
-		}
-		else {
+		// enforce non-legacy URLs for ACP and disregard rewrite settings
+		if ($this->isACP()) {
 			if (!empty($link)) {
 				$link = '?' . $link;
 			}
+		}
+		else if (!URL_OMIT_INDEX_PHP) {
+			$link = (URL_LEGACY_MODE ? 'index.php/' : '?') . $link;
 		}
 		
 		if (!empty($components)) {

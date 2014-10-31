@@ -9,7 +9,6 @@ use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
-use wcf\util\UserUtil;
 
 /**
  * Abstract implementation of a page which fires the default event actions of a
@@ -184,7 +183,17 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		// check if current request URL matches the canonical URL
 		if ($this->canonicalURL && empty($_POST)) {
 			$canoncialURL = parse_url($this->canonicalURL);
-			$requestURL = parse_url(WCF::getRequestURI());
+			
+			// use $_SERVER['REQUEST_URI'] because it represents the URL used to access the site and not the internally rewritten one
+			$requestURI = $_SERVER['REQUEST_URI'];
+			if (strpos($requestURI, '%') !== false) {
+				$requestURI = urldecode($requestURI);
+			}
+			if (!StringUtil::isUTF8($requestURI)) {
+				$requestURI = StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $requestURI);
+			}
+			
+			$requestURL = parse_url($requestURI);
 			
 			$redirect = false;
 			if ($canoncialURL['path'] != $requestURL['path']) {
@@ -193,16 +202,6 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 			else if (isset($canoncialURL['query'])) {
 				parse_str($canoncialURL['query'], $cQueryString);
 				parse_str($requestURL['query'], $rQueryString);
-				
-				// Safari does not properly encode UTF-8 characters
-				if (strpos(UserUtil::getUserAgent(), 'Safari') !== false && strpos(UserUtil::getUserAgent(), 'Chrome') === false) {
-					foreach ($rQueryString as $key => $value) {
-						if (!StringUtil::isUTF8($key)) {
-							unset($rQueryString[$key]);
-							$rQueryString[StringUtil::convertEncoding('ISO-8859-1', 'UTF-8', $key)] = $value;
-						}
-					}
-				}
 				
 				foreach ($cQueryString as $key => $value) {
 					if (!isset($rQueryString[$key]) || $rQueryString[$key] != $value) {
