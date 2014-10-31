@@ -1,6 +1,7 @@
 <?php
 namespace wcf\action;
 use wcf\data\user\avatar\Gravatar;
+use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\system\exception\IllegalLinkException;
@@ -48,7 +49,12 @@ class GravatarDownloadAction extends AbstractAction {
 			throw new IllegalLinkException();
 		}
 		
-		if (!empty($_REQUEST['size'])) $this->size = intval($_REQUEST['size']);
+		if (!empty($_REQUEST['size'])) {
+			$this->size = intval($_REQUEST['size']);
+			if (!in_array($this->size, UserAvatar::$avatarThumbnailSizes)) {
+				$this->size = 150;
+			}
+		}
 	}
 	
 	/**
