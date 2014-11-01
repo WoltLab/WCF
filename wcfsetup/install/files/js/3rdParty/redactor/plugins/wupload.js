@@ -22,7 +22,6 @@ RedactorPlugins.wupload = function() {
 		 */
 		init: function() {
 			var $namespace = '.redactor_' + this.$textarea.wcfIdentify();
-			$(document).on('dragstart' + $namespace, function() { return false; });
 			$(document).on('dragover' + $namespace, $.proxy(this.wupload._dragOver, this));
 			$(document).on('dragleave' + $namespace, $.proxy(this.wupload._dragLeave, this));
 			$(document).on('drop' + $namespace, (function(event) {
@@ -52,11 +51,22 @@ RedactorPlugins.wupload = function() {
 				return;
 			}
 			
+			var $isFirefox = false;
+			for (var $property in event.dataTransfer) {
+				if (/^moz/.test($property)) {
+					$isFirefox = true;
+					break;
+				}
+			}
+			
 			// IE and WebKit set 'Files', Firefox sets 'application/x-moz-file' for files being dragged
 			// and Safari just provides 'Files' along with a huge list of other stuff
 			this.wupload._isFile = false;
-			if (event.dataTransfer.types[0] === 'application/x-moz-file') {
-				this.wupload._isFile = true;
+			if ($isFirefox) {
+				// Firefox sets the 'Files' type even if the user is just dragging an on-page element
+				if (event.dataTransfer.types[0] === 'application/x-moz-file') {
+					this.wupload._isFile = true;
+				}
 			}
 			else {
 				for (var $i = 0; $i < event.dataTransfer.types.length; $i++) {
