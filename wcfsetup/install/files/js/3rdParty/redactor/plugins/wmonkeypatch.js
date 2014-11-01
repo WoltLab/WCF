@@ -272,7 +272,6 @@ RedactorPlugins.wmonkeypatch = function() {
 		 */
 		insert: function() {
 			var $focusEditor = (function() {
-				console.debug("focusEditor()");
 				var $html = this.$editor.html();
 				if (this.utils.isEmpty($html)) {
 					this.$editor.focus();
