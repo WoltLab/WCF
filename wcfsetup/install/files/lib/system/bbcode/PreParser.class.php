@@ -178,7 +178,6 @@ class PreParser extends SingletonFactory {
 				});
 			}
 			
-			$this->cachedCodes = array();
 			$this->text = $bbcodeRegex->replace($this->text, $callback);
 		}
 	}
