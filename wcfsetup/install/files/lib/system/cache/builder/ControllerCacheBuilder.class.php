@@ -51,6 +51,8 @@ class ControllerCacheBuilder extends AbstractCacheBuilder {
 		$controllers = array();
 		$path .= $type . '/';
 		
+		if (glob($path . '*' . ucfirst($type) . '.class.php') === false) return $controllers; 
+		
 		foreach (glob($path . '*' . ucfirst($type) . '.class.php') as $file) {
 			$file = basename($file);
 			if (preg_match('~^([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)(Action|Form|Page)\.class\.php$~', $file, $match)) {
