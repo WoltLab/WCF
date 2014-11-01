@@ -107,21 +107,6 @@ RedactorPlugins.wbbcode = function() {
 					}
 				}
 			}).bind(this));
-			
-			// Chrome tends to insert pointless <span> elements in contenteditable areas
-			// see http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
-			this.$editor.on('DOMNodeInserted.redactor', (function(e) {
-				if (e.target.tagName === 'SPAN' && e.target.attributes.length === 1 && e.target.attributes[0].name === 'style') {
-					console.debug("[Redactor.wbbcode] Removed " + $(e.target).html());
-					var $helper = $('<b>helper</b>');
-					$(e.target).before($helper);
-					
-					$helper.after($(e.target).contents());
-					$helper.remove();
-					
-					$(e.target).remove();
-				}
-			}).bind(this));
 		},
 		
 		/**
@@ -1322,7 +1307,7 @@ RedactorPlugins.wbbcode = function() {
 				
 				this.wbbcode._observeQuotes();
 				
-				this.$toolbar.find('a.re-__wcf_quote').addClass('redactor-button-disabled');
+				this.$toolbar.find('a.re-__wcf_quote').removeClass('redactor-button-disabled');
 			}
 			else {
 				this.wutil.insertAtCaret($openTag + plainText + $closingTag);

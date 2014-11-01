@@ -40,6 +40,9 @@ RedactorPlugins.wmonkeypatch = function() {
 			
 			// events and callbacks
 			this.wmonkeypatch.bindEvents();
+			
+			// browser-specific fixes
+			this.wmonkeypatch.fixWebKit();
 		},
 		
 		/**
@@ -592,6 +595,29 @@ RedactorPlugins.wmonkeypatch = function() {
 						+ '<dd><input type="number" size="5" value="3" min="1" id="redactor-table-columns" class="tiny" /></dd>'
 					+ '</dl>'
 				+ '</fieldset>';
+		},
+		
+		/**
+		 * Resolves issues in Chrome / WebKit based browsers
+		 * 
+		 * - Explicitly set CSS values for <span> within the editor, prevents Chrome from inserting random <span> tags
+		 */
+		fixWebKit: function() {
+			if (!$.browser.webkit && !document.documentElement.style.hasOwnProperty('WebkitAppearance') && !window.hasOwnProperty('chrome')) {
+				return;
+			}
+			
+			// get styles
+			var $default = {
+				fontSize: this.$editor.css('font-size'),
+				lineHeight: this.$editor.css('line-height')
+			};
+			
+			var $editorID = this.$editor.wcfIdentify();
+			var $style = document.createElement('style');
+			$style.type = 'text/css';
+			$style.innerHTML = '#' + $editorID + ' span { font-size: ' + $default.fontSize + ', line-height: ' + $default.lineHeight + ' }';
+			document.head.appendChild($style);
 		}
 	};
 };
