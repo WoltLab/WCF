@@ -10645,6 +10645,10 @@ $.widget('ui.wcfDialog', {
 		this._isOpen = false;
 		this._container.wcfFadeOut();
 		
+		if (this._container.data('wcfDialogScrollOffset')) {
+			window.scrollTo(0, this._container.data('wcfDialogScrollOffset'));
+		}
+		
 		if (this._overlay !== null) {
 			WCF.activeDialogs--;
 			
@@ -10674,6 +10678,9 @@ $.widget('ui.wcfDialog', {
 		// check if this if dialog was previously hidden and container is fixed
 		// at 0px (mobile optimization), in this case scroll to top
 		if (!this._container.is(':visible') && this._container.css('top') === '0px') {
+			// save scrolling
+			this._container.data('wcfDialogScrollOffset', $(window).scrollTop());
+			
 			window.scrollTo(0, 0);
 		}
 		
