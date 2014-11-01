@@ -182,6 +182,7 @@
 /* notification overlay */
 #systemNotification {
 	left: 0;
+	pointer-events: none;
 	position: fixed;
 	top: 0;
 	width: 100%;
@@ -191,8 +192,15 @@
 		border-top-left-radius: 0;
 		border-top-right-radius: 0;
 		border-top-width: 0;
+		cursor: pointer;
 		display: table;
 		margin: 0 auto;
 		max-width: 80%;
+		pointer-events: auto;
+		
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 	}
 }

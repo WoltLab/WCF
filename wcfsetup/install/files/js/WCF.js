@@ -7148,6 +7148,12 @@ WCF.System.Notification = Class.extend({
 	_overlay: null,
 	
 	/**
+	 * periodical timer
+	 * @var	WCF.PeriodicalExecuter
+	 */
+	_timer: null,
+	
+	/**
 	 * Creates a new system notification overlay.
 	 * 
 	 * @param	string		message
@@ -7157,9 +7163,13 @@ WCF.System.Notification = Class.extend({
 		this._cssClassNames = cssClassNames || 'success';
 		this._message = message || WCF.Language.get('wcf.global.success');
 		this._overlay = $('#systemNotification');
+		this._timer = null;
 		
 		if (!this._overlay.length) {
 			this._overlay = $('<div id="systemNotification"><p></p></div>').hide().appendTo(document.body);
+			this._overlay.children('p').click((function() {
+				this._hide();
+			}).bind(this));
 		}
 	},
 	
@@ -7183,7 +7193,7 @@ WCF.System.Notification = Class.extend({
 		this._overlay.children('p').removeClass().addClass((cssClassNames || this._cssClassNames));
 		
 		// hide overlay after specified duration
-		new WCF.PeriodicalExecuter($.proxy(this._hide, this), duration);
+		this._timer = new WCF.PeriodicalExecuter($.proxy(this._hide, this), duration);
 		
 		this._overlay.wcfFadeIn(undefined, 300);
 	},
@@ -7194,6 +7204,8 @@ WCF.System.Notification = Class.extend({
 	 * @param	WCF.PeriodicalExecuter		pe
 	 */
 	_hide: function(pe) {
+		pe = (pe) ? pe : this._timer;
+		
 		if (this._callback !== null) {
 			this._callback();
 		}
@@ -7201,6 +7213,7 @@ WCF.System.Notification = Class.extend({
 		this._overlay.wcfFadeOut(undefined, 300);
 		
 		pe.stop();
+		pe = null;
 	}
 });
 
