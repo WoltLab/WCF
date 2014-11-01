@@ -71,14 +71,18 @@ class AttachmentPage extends AbstractPage {
 		if (!$this->attachment->attachmentID) {
 			throw new IllegalLinkException();
 		}
-		if (isset($_REQUEST['tiny']) && $this->attachment->tinyThumbnailType) $this->tiny = intval($_REQUEST['tiny']);
-		if (isset($_REQUEST['thumbnail']) && $this->attachment->thumbnailType) $this->thumbnail = intval($_REQUEST['thumbnail']);
 		
-		$this->canonicalURL = LinkHandler::getInstance()->getLink('Attachment', array(
-			'object' => $this->attachment,
-			'thumbnail' => $this->thumbnail,
-			'tiny' => $this->tiny
-		));
+		$parameters = array('object' => $this->attachment);
+		if (isset($_REQUEST['tiny']) && $this->attachment->tinyThumbnailType) {
+			$this->tiny = intval($_REQUEST['tiny']);
+			$parameters['tiny'] = $this->tiny;
+		}
+		if (isset($_REQUEST['thumbnail']) && $this->attachment->thumbnailType) {
+			$this->thumbnail = intval($_REQUEST['thumbnail']);
+			$parameters['thumbnail'] = $this->thumbnail;
+		}
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('Attachment', $parameters);
 	}
 	
 	/**
