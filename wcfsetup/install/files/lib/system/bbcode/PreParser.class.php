@@ -69,6 +69,9 @@ class PreParser extends SingletonFactory {
 		// cache codes
 		$this->cacheCodes();
 		
+		// cache url bbcodes
+		$this->cacheURLBBCodes();
+		
 		// call event
 		EventHandler::getInstance()->fireAction($this, 'beforeParsing');
 		
@@ -85,6 +88,9 @@ class PreParser extends SingletonFactory {
 		// call event
 		EventHandler::getInstance()->fireAction($this, 'afterParsing');
 		
+		// insert cached url bbcodes
+		$this->insertCachedURLBBCodes();
+		
 		// insert cached codes
 		$this->insertCachedCodes();
 		
@@ -100,13 +106,13 @@ class PreParser extends SingletonFactory {
 		static $emailPattern = null;
 		if ($emailPattern === null) {
 			$emailPattern = new Regex('
-			(?<!\B|"|\'|=|/|\]|,|:)
+			(?<!\B|"|\'|=|/|,|:)
 			(?:)
 			\w+(?:[\.\-]\w+)*
 			@
 			(?:'.self::$illegalChars.'\.)+		# hostname
 			(?:[a-z]{2,4}(?=\b))
-			(?!"|\'|\[|\-|\]|\.[a-z])', Regex::IGNORE_WHITESPACE | Regex::CASE_INSENSITIVE);
+			(?!"|\'|\-|\]|\.[a-z])', Regex::IGNORE_WHITESPACE | Regex::CASE_INSENSITIVE);
 		}
 		
 		$this->text = $emailPattern->replace($this->text, '[email]\\0[/email]');
@@ -120,7 +126,7 @@ class PreParser extends SingletonFactory {
 		static $callback = null;
 		if ($urlPattern === null) {
 			$urlPattern = new Regex('
-			(?<!\B|"|\'|=|/|\]|,|\?|\.)
+			(?<!\B|"|\'|=|/|,|\?|\.)
 			(?:						# hostname
 				(?:ftp|https?)://'.static::$illegalChars.'(?:\.'.static::$illegalChars.')*
 				|
@@ -187,5 +193,43 @@ class PreParser extends SingletonFactory {
 	 */
 	protected function insertCachedCodes() {
 		$this->text = StringStack::reinsertStrings($this->text, 'preParserCode');
+	}
+	
+	/**
+	 * Caches all bbcodes that contain URLs.
+	 */
+	protected function cacheURLBBCodes() {
+		static $bbcodeRegex = null;
+		static $callback = null;
+		
+		if ($bbcodeRegex === null) {
+			$bbcodeRegex = new Regex("
+				(?:\[quote
+				(?:=
+					(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*)
+					(?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
+				)?\])
+				|
+				(?:\[(url|media|email|img)
+				(?:=
+					(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*)
+					(?:,(?:\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'|[^,\]]*))*
+				)?\])
+				(.*?)
+				(?:\[/\\1\])", Regex::DOT_ALL | Regex::IGNORE_WHITESPACE | Regex::CASE_INSENSITIVE);
+		
+			$callback = new Callback(function ($matches) {
+				return StringStack::pushToStringStack($matches[0], 'urlBBCodes');
+			});
+		}
+		
+		$this->text = $bbcodeRegex->replace($this->text, $callback);
+	}
+	
+	/**
+	 * Reinserts cached url bbcodes.
+	 */
+	protected function insertCachedURLBBCodes() {
+		$this->text = StringStack::reinsertStrings($this->text, 'urlBBCodes');
 	}
 }
