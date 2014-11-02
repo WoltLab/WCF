@@ -532,7 +532,9 @@ RedactorPlugins.wbbcode = function() {
 			
 			// remove all leading and trailing whitespaces, but add one empty line at the end
 			html = $.trim(html);
-			html += "\n";
+			if (html.length) {
+				html += "\n";
+			}
 			
 			return html;
 		},
