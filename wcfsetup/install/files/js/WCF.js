@@ -10596,6 +10596,8 @@ $.widget('ui.wcfDialog', {
 		
 		this.render();
 		this._isOpen = true;
+		
+		this._content.find('.jsDialogAutoFocus:visible:first').focus();
 	},
 	
 	/**
