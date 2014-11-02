@@ -143,7 +143,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			// add mail header
 			$message = $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.header', array(
 				'user' => $user
-			))."\n\n";
+			));
 			
 			foreach ($events as $notificationID) {
 				$notification = $notificationObjects[$notificationID];
@@ -173,7 +173,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 					}
 				}
 				
-				if ($message != '') $message .= "\n\n";
+				$message .= "\n\n";
 				$message .= $class->getEmailMessage('daily');
 			}
 			
@@ -186,7 +186,8 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 				$editor->update(array('notificationMailToken' => $token));
 			}
 			
-			$message .= "\n\n".$user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.daily.footer', array(
+			$message .= "\n\n";
+			$message .= $user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.daily.footer', array(
 				'user' => $user,
 				'token' => $token
 			));
