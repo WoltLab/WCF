@@ -1050,9 +1050,7 @@ WCF.Message.QuickReply = Class.extend({
 					message: $message
 				}
 			},
-			success: function(data, textStatus, jqXHR) {
-				window.location = data.returnValues.url;
-			}
+			success: $.proxy(this._success, this)
 		});
 	},
 	
@@ -1070,6 +1068,7 @@ WCF.Message.QuickReply = Class.extend({
 		
 		// redirect to new page
 		if (data.returnValues.url) {
+			this._messageField.redactor('wutil.saveTextToStorage');
 			window.location = data.returnValues.url;
 		}
 		else {

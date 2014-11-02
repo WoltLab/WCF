@@ -222,7 +222,7 @@ RedactorPlugins.wutil = function() {
 			}
 			
 			if (this.wutil._autosaveWorker === null) {
-				this.wutil._autosaveWorker = new WCF.PeriodicalExecuter($.proxy(this.wutil._saveTextToStorage, this), 60 * 1000);
+				this.wutil._autosaveWorker = new WCF.PeriodicalExecuter($.proxy(this.wutil.saveTextToStorage, this), 60 * 1000);
 			}
 			
 			return true;
@@ -231,7 +231,7 @@ RedactorPlugins.wutil = function() {
 		/**
 		 * Saves current editor text to local browser storage.
 		 */
-		_saveTextToStorage: function() {
+		saveTextToStorage: function() {
 			localStorage.setItem(this.wutil.getOption('woltlab.autosave').key, this.wutil.getText());
 		},
 		
