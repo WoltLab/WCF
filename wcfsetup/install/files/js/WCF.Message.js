@@ -3342,6 +3342,11 @@ WCF.Message.UserMention = Class.extend({
 	 * @param	string		wysiwygSelector
 	 */
 	init: function(wysiwygSelector) {
+		if ($.browser.mobile && $.browser.mozilla) {
+			// the desktop Firefox work-arounds do not work on Firefox for Android, in fact they crash it
+			return;
+		}
+		
 		this._textarea = $('#' + wysiwygSelector);
 		this._redactor = this._textarea.redactor('core.getObject');
 		
