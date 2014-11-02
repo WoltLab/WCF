@@ -389,7 +389,7 @@ WCF.Message.Preview = Class.extend({
 	 */
 	_getMessage: function() {
 		if (!$.browser.redactor) {
-			return this._messageField.val();
+			return $.trim(this._messageField.val());
 		}
 		else if (this._messageField.data('redactor')) {
 			return this._messageField.redactor('wutil.getText');
