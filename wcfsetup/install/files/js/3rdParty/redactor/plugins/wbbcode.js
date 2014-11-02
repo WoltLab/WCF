@@ -251,7 +251,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/&nbsp;/gi, " ");
 			
 			// [quote]
-			html = html.replace(/<blockquote class="quoteBox" cite="([^"]+)?" data-author="([^"]+)?">\n?<div[^>]+>\n?<header(?:[^>]*?)>[\s\S]*?<\/header>/gi, function(match, link, author, innerContent) {
+			html = html.replace(/<blockquote class="quoteBox" cite="([^"]+)?" data-author="([^"]+)?"[^>]*?>\n?<div[^>]+>\n?<header[^>]*?>[\s\S]*?<\/header>/gi, function(match, link, author, innerContent) {
 				var $quote;
 				
 				if (author) author = WCF.String.unescapeHTML(author);
