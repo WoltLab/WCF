@@ -243,19 +243,18 @@ class ModerationQueueManager extends SingletonFactory {
 			}
 			
 			// count outstanding and assigned queues
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("moderation_queue_to_user.userID = ?", array(WCF::getUser()->userID));
+			$conditions->add("moderation_queue_to_user.isAffected = ?", array(1));
+			$conditions->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));
+			
 			$sql = "SELECT		COUNT(*) AS count
 				FROM		wcf".WCF_N."_moderation_queue_to_user moderation_queue_to_user
 				LEFT JOIN	wcf".WCF_N."_moderation_queue moderation_queue
 				ON		(moderation_queue.queueID = moderation_queue_to_user.queueID)
-				WHERE		moderation_queue_to_user.userID = ?
-						AND moderation_queue_to_user.isAffected = ?
-						AND moderation_queue.status <> ?";
+				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array(
-				WCF::getUser()->userID,
-				1,
-				ModerationQueue::STATUS_DONE
-			));
+			$statement->execute($conditions->getParameters());
 			$row = $statement->fetchArray();
 			$count = $row['count'];
 			
