@@ -2236,6 +2236,12 @@ WCF.Message.Quote.Handler = Class.extend({
 			$listItem.data('isQuoted', true).children('a').addClass('active');
 		}
 		
+		// close navigation on mobile
+		var $navigationList = $listItem.parents('.buttonGroupNavigation');
+		if ($navigationList.hasClass('jsMobileButtonGroupNavigation')) {
+			$navigationList.children('.dropdownLabel').trigger('click');
+		}
+		
 		// discard event
 		event.stopPropagation();
 		return false;
