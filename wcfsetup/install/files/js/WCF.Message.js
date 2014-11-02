@@ -2678,14 +2678,6 @@ WCF.Message.Quote.Manager = Class.extend({
 	 * @param	object		inputElement
 	 */
 	_insertQuote: function(event, inputElement) {
-		if (event !== null && this._editorElementAlternative === null) {
-			var $api = $('.jsQuickReply:eq(0)').data('__api');
-			if ($api && !$api.getContainer().is(':visible')) {
-				this._insertQuotes = false;
-				$api.click(null);
-			}
-		}
-		
 		var $listItem = (event === null) ? $(inputElement).parents('li') : $(event.currentTarget).parents('li');
 		var $quote = $.trim($listItem.children('div.jsFullQuote').text());
 		var $message = $listItem.parents('article.message');
@@ -2722,6 +2714,14 @@ WCF.Message.Quote.Manager = Class.extend({
 		// close dialog
 		if (event !== null) {
 			this._dialog.wcfDialog('close');
+		}
+		
+		if (event !== null && this._editorElementAlternative === null) {
+			var $api = $('.jsQuickReply:eq(0)').data('__api');
+			if ($api && !$api.getContainer().is(':visible')) {
+				this._insertQuotes = false;
+				$api.click(null);
+			}
 		}
 	},
 	
