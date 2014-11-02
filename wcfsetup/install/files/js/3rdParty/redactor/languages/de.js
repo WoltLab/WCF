@@ -2,7 +2,7 @@
 $.Redactor.opts.langs['de'] = {
 	html: 'HTML',
 	video: 'Video',
-	image: 'Bilder',
+	image: 'Bild einfügen',
 	table: 'Tabelle',
 	link: 'Link',
 	link_insert: 'Link einfügen ...',
