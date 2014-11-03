@@ -42,7 +42,7 @@ RedactorPlugins.wbbcode = function() {
 			};
 			
 			if (this.wutil.getOption('woltlab.autosaveOnce')) {
-				this.wutil._saveTextToStorage();
+				this.wutil.saveTextToStorage();
 				delete this.opts.woltlab.autosaveOnce;
 			}
 			
