@@ -216,7 +216,7 @@ class UserProfileAction extends UserAction {
 		$this->validateBeginEdit();
 		
 		if (!isset($this->parameters['values']) || !is_array($this->parameters['values'])) {
-			throw new UserInputException('values');
+			$this->parameters['values'] = array();
 		}
 		
 		if (isset($this->parameters['values']['__userTitle']) && !WCF::getSession()->getPermission('user.profile.canEditUserTitle')) {

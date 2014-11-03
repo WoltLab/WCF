@@ -56,9 +56,10 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 		$pageCount = ceil($row['count'] / 20);
 		
 		// get user ids
-		$sql = "SELECT	userID
-			FROM	wcf".WCF_N."_user_profile_visitor
-			WHERE	ownerID = ?";
+		$sql = "SELECT		userID
+			FROM		wcf".WCF_N."_user_profile_visitor
+			WHERE		ownerID = ?
+			ORDER BY	time DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
 		$statement->execute(array($this->parameters['userID']));
 		$userIDs = array();
