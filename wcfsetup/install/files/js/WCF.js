@@ -11395,7 +11395,7 @@ $.widget('ui.wcfPages', {
 		}
 		else {
 			$pageElement.addClass('active');
-			var $pageSubElement = $('<span>' + WCF.String.addThousandsSeparator(page) + '</span>');
+			var $pageSubElement = $('<span>' + WCF.String.addThousandsSeparator(page) + '</span><span class="invisible">' + WCF.Language.get('wcf.page.pagePosition', { pageNo: page, pages: this.options.maxPage }) + '</span>');
 			$pageElement.append($pageSubElement);
 		}
 		

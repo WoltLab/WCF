@@ -109,6 +109,7 @@
 		'wcf.global.success.add': '{lang}wcf.global.success.add{/lang}',
 		'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
 		'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
+		'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}',
 		'wcf.page.sitemap': '{lang}wcf.page.sitemap{/lang}',
 		'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}'
 		{if MODULE_LIKE}
