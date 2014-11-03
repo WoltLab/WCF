@@ -3381,13 +3381,13 @@ WCF.Message.UserMention = Class.extend({
 		// in Firefox, this._caretPosition does not have the text node as
 		// startContainer anymore but its parent p element, thus we need
 		// to manually adjust it
-		if ($.browser.mozilla) {
+		/*if ($.browser.mozilla) {
 			var $textNode = this._caretPosition.startContainer.childNodes[this._caretPosition.startOffset - 1];
 			
 			this._caretPosition = document.createRange();
 			this._caretPosition.selectNodeContents($textNode);
 			this._caretPosition.collapse();
-		}
+		}*/
 		
 		// restore caret position
 		this._redactor.wutil.replaceRangesWith(this._caretPosition);
