@@ -182,10 +182,10 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 		
 		// check if current request URL matches the canonical URL
 		if ($this->canonicalURL && empty($_POST)) {
-			$canoncialURL = parse_url($this->canonicalURL);
+			$canoncialURL = parse_url(preg_replace('~[?&]s=[a-f0-9]{40}~', '', $this->canonicalURL));
 			
 			// use $_SERVER['REQUEST_URI'] because it represents the URL used to access the site and not the internally rewritten one
-			$requestURI = $_SERVER['REQUEST_URI'];
+			$requestURI = preg_replace('~[?&]s=[a-f0-9]{40}~', '', $_SERVER['REQUEST_URI']);
 			if (strpos($requestURI, '%') !== false) {
 				$requestURI = urldecode($requestURI);
 			}
