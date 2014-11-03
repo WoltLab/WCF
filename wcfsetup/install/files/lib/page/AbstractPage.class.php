@@ -200,13 +200,18 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 				$redirect = true;
 			}
 			else if (isset($canoncialURL['query'])) {
-				parse_str($canoncialURL['query'], $cQueryString);
-				parse_str($requestURL['query'], $rQueryString);
-				
-				foreach ($cQueryString as $key => $value) {
-					if (!isset($rQueryString[$key]) || $rQueryString[$key] != $value) {
-						$redirect = true;
-						break;
+				if (!isset($requestURL['query'])) {
+					$redirect = true;
+				}
+				else {
+					parse_str($canoncialURL['query'], $cQueryString);
+					parse_str($requestURL['query'], $rQueryString);
+					
+					foreach ($cQueryString as $key => $value) {
+						if (!isset($rQueryString[$key]) || $rQueryString[$key] != $value) {
+							$redirect = true;
+							break;
+						}
 					}
 				}
 			}
