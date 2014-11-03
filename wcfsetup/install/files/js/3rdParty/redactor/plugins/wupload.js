@@ -154,7 +154,7 @@ RedactorPlugins.wupload = function() {
 					pe.stop();
 					
 					if (!this.wupload._isDragging) {
-						this.wupload._dropArea[this.$source.wcfIdentify()].hide();
+						this.wupload._dropArea[this.$textarea.wcfIdentify()].hide();
 					}
 				}).bind(this), 100);
 			}
