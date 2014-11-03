@@ -557,10 +557,6 @@ class UserNotificationHandler extends SingletonFactory {
 	 * @param	\wcf\system\user\notification\event\IUserNotificationEvent	$event
 	 */
 	public function sendInstantMailNotification(UserNotification $notification, User $user, IUserNotificationEvent $event) {
-		// mark e-mail notification as notified
-		$editor = new UserNotificationEditor($notification);
-		$editor->update(array('mailNotified' => 1));
-		
 		// recipient's language
 		$event->setLanguage($user->getLanguage());
 		
