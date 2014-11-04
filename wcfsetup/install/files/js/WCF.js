@@ -118,7 +118,7 @@ function shuffle(array) {
 		array[randomIndex] = temporaryValue;
 	}
 	
-	return this;
+	return array;
 };
 
 /**
