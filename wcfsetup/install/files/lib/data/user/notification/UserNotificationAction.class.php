@@ -103,7 +103,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 			
 			if ($notification === null) {
 				$this->parameters['data']['userID'] = $recipient->userID;
-				$this->parameters['data']['userID'] = (($recipient->mailNotificationType == 'none' || $recipient->mailNotificationType == 'instant') ? 1 : 0);
+				$this->parameters['data']['mailNotified'] = (($recipient->mailNotificationType == 'none' || $recipient->mailNotificationType == 'instant') ? 1 : 0);
 				$notification = $this->create();
 			}
 			
