@@ -183,7 +183,7 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/(<[^>]+?) data-redactor-tag="[^"]+"/g, '$1');
 			
 			// remove zero-width space sometimes slipping through
-			html = html.replace(/&#8203;/g, '');
+			html = html.replace(/&#(8203|x200b);/g, '');
 			
 			// revert conversion of special characters
 			html = html.replace(/&trade;/gi, '\u2122');
@@ -630,14 +630,25 @@ RedactorPlugins.wbbcode = function() {
 			});
 			
 			// [table]
-			data = data.replace(/\[table\]/gi, '<table border="1" cellspacing="1" cellpadding="1" style="width: 500px;">');
-			data = data.replace(/\[\/table\]/gi, '</table>');
+			data = data.replace(/\[table\]\n*/gi, '<table border="1" cellspacing="1" cellpadding="1" style="width: 500px;">');
+			data = data.replace(/\[\/table\](\n*)?/gi, function(match, newlines) {
+				if (newlines) {
+					// tables cause an additional newline if there already was a newline afterwards
+					if (newlines.match(/\n/g).length > 2) {
+						newlines = newlines.replace(/^\n/, '');
+					}
+					
+					return '</table>' + newlines;
+				}
+				
+				return '</table>';
+			});
 			// [tr]
-			data = data.replace(/\[tr\]/gi, '<tr>');
-			data = data.replace(/\[\/tr\]/gi, '</tr>');
+			data = data.replace(/\[tr\]\n*/gi, '<tr>');
+			data = data.replace(/\[\/tr\]\n*/gi, '</tr>');
 			// [td]
-			data = data.replace(/\[td\]/gi, '<td>');
-			data = data.replace(/\[\/td\]/gi, '</td>');
+			data = data.replace(/\[td\]\n*/gi, '<td>');
+			data = data.replace(/\[\/td\]\n*/gi, '</td>');
 			
 			// trim whitespaces within <td>
 			data = data.replace(/<td>([\S\s]*?)<\/td>/gi, function(match, p1) {
@@ -1009,6 +1020,7 @@ RedactorPlugins.wbbcode = function() {
 				case $.ui.keyCode.DOWN:
 				case $.ui.keyCode.ENTER:
 				case $.ui.keyCode.UP:
+				case 83: // [S]
 					// handle keys
 				break;
 				
@@ -1146,6 +1158,28 @@ RedactorPlugins.wbbcode = function() {
 					}
 					
 					data.cancel = true;
+				break;
+				
+				// [S]
+				case 83:
+					var $submitEditor = false;
+					if (navigator.platform.match(/^Mac/)) {
+						if (data.event.ctrlKey && data.event.altKey) {
+							$submitEditor = true;
+						}
+					}
+					else if (data.event.altKey) {
+						$submitEditor = true;
+					}
+					
+					if ($submitEditor) {
+						var $data = { cancel: false };
+						WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'submitEditor_' + this.$textarea.wcfIdentify(), $data);
+						
+						if ($data.cancel) {
+							data.cancel = true;
+						}
+					}
 				break;
 			}
 		},
