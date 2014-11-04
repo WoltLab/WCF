@@ -53,8 +53,8 @@ class ImagickImageAdapter implements IImageAdapter {
 		}
 		
 		$this->imagick = $image;
-		$this->height = $this->imagick->getImageHeight();
-		$this->width = $this->imagick->getImageWidth();
+		
+		$this->readImageDimensions();
 	}
 	
 	/**
@@ -67,8 +67,29 @@ class ImagickImageAdapter implements IImageAdapter {
 		catch (\ImagickException $e) {
 			throw new SystemException("Image '".$file."' is not readable or does not exist.");
 		}
-		$this->height = $this->imagick->getImageHeight();
-		$this->width = $this->imagick->getImageWidth();
+		
+		$this->readImageDimensions();
+	}
+	
+	/**
+	 * Reads width and height of the image.
+	 */
+	protected function readImageDimensions() {
+		// fix height/width for animated gifs as getImageHeight() and
+		// getImageWidth() return the dimension of a height/width frame
+		// of the animated image, not the "real" height/width of the image
+		if ($this->imagick->getImageFormat() == 'GIF') {
+			$imagick = $this->imagick->coalesceImages();
+			
+			$this->height = $imagick->getImageHeight();
+			$this->width = $imagick->getImageWidth();
+			
+			$imagick->clear();
+		}
+		else {
+			$this->height = $this->imagick->getImageHeight();
+			$this->width = $this->imagick->getImageWidth();
+		}
 	}
 	
 	/**
