@@ -75,9 +75,9 @@ class ImagickImageAdapter implements IImageAdapter {
 	 * Reads width and height of the image.
 	 */
 	protected function readImageDimensions() {
-		// fix height/width for animated gifs as getImageHeight() and
-		// getImageWidth() return the dimension of a height/width frame
-		// of the animated image, not the "real" height/width of the image
+		// fix height/width for animated gifs as getImageHeight/getImageWidth
+		// returns the height/width of ONE frame of the animated image,
+		// not the "real" height/width of the image
 		if ($this->imagick->getImageFormat() == 'GIF') {
 			$imagick = $this->imagick->coalesceImages();
 			
