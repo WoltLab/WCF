@@ -321,15 +321,15 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.keydown.enterWithinBlockquote = false;
 			
 			// keydown.onTab
+			var $mpOnTab = this.keydown.onTab;
 			this.keydown.onTab = (function(e, key) {
-				e.preventDefault();
+				var $block = this.selection.getBlock();
 				
-				if (e.metaKey && key === 219) this.indent.decrease();
-				else if (e.metaKey && key === 221) this.indent.increase();
-				else if (!e.shiftKey) this.indent.increase();
-				else this.indent.decrease();
+				if ($block && $block.tagName === 'LI') {
+					return $mpOnTab.call(this, e, key);
+				}
 				
-				return false;
+				return true;
 			}).bind(this);
 			
 			// keydown.replaceDivToParagraph

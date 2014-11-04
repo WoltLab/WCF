@@ -1008,7 +1008,6 @@ RedactorPlugins.wbbcode = function() {
 				case $.ui.keyCode.DELETE:
 				case $.ui.keyCode.DOWN:
 				case $.ui.keyCode.ENTER:
-				case $.ui.keyCode.TAB:
 				case $.ui.keyCode.UP:
 					// handle keys
 				break;
@@ -1106,15 +1105,6 @@ RedactorPlugins.wbbcode = function() {
 						// prevent Redactor's default behavior for <blockquote>
 						this.keydown.blockquote = false;
 						this.keydown.enterWithinBlockquote = true;
-					}
-				break;
-				
-				// tab
-				case $.ui.keyCode.TAB:
-					var $block = this.selection.getBlock();
-					if (!$block || $block.tagName !== 'LI') {
-						// disallow indent/outdent outside of lists
-						data.cancel = true;
 					}
 				break;
 				
