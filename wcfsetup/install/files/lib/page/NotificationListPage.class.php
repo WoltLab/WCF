@@ -30,7 +30,7 @@ class NotificationListPage extends MultipleLinkPage {
 	 * @see	\wcf\page\MultipleLinkPage::countItems()
 	 */
 	public function countItems() {
-		return UserNotificationHandler::getInstance()->getNotificationCount();
+		return UserNotificationHandler::getInstance()->countAllNotifications();
 	}
 	
 	/**
