@@ -24,6 +24,7 @@ RedactorPlugins.wmonkeypatch = function() {
 		init: function() {
 			// module overrides
 			this.wmonkeypatch.button();
+			this.wmonkeypatch.caret();
 			this.wmonkeypatch.clean();
 			this.wmonkeypatch.dropdown();
 			this.wmonkeypatch.image();
@@ -107,6 +108,45 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 				
 				return $dropdown;
+			}).bind(this);
+		},
+		
+		/**
+		 * Partially overwrites the 'caret' module.
+		 * 
+		 *  - resolves a selection issue if start === end when setting the caret offsets
+		 */
+		caret: function() {
+			this.caret.setOffset = (function(start, end)
+			{
+				if (typeof end == 'undefined') end = start;
+				if (!this.focus.isFocused()) this.focus.setStart();
+
+				var range = document.createRange();
+				var sel = document.getSelection();
+				var node, offset = 0;
+				var walker = document.createTreeWalker(this.$editor[0], NodeFilter.SHOW_TEXT, null, null);
+
+				while (node = walker.nextNode())
+				{
+					offset += node.nodeValue.length;
+					// WoltLab fix below, remove this method once the issue has been resolved by Imperavi
+					if (offset > start || (start === end && offset === start))
+					//if (offset > start)
+					{
+						range.setStart(node, node.nodeValue.length + start - offset);
+						start = Infinity;
+					}
+
+					if (offset >= end)
+					{
+						range.setEnd(node, node.nodeValue.length + end - offset);
+						break;
+					}
+				}
+
+				sel.removeAllRanges();
+				sel.addRange(range);
 			}).bind(this);
 		},
 		

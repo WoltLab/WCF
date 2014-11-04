@@ -91,7 +91,9 @@ RedactorPlugins.wbbcode = function() {
 				}
 				else {
 					this.$textarea.val(this.wbbcode.convertToHtml(this.$textarea.val()));
+					this.code.offset = this.$textarea.val().length;
 					this.code.showVisual();
+					this.wutil.selectionEndOfEditor();
 					this.wbbcode._observeQuotes();
 					
 					this.button.get('html').children('i').removeClass('fa-square').addClass('fa-square-o');

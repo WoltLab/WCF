@@ -357,7 +357,12 @@ RedactorPlugins.wutil = function() {
 					$lastChild = $(this.opts.emptyHtml).appendTo(this.$editor)[0];
 				}
 				
-				this.caret.setEnd($lastChild);
+				if ($lastChild.lastChild.nodeType === Element.TEXT_NODE) {
+					this.caret.set($lastChild.lastChild, $lastChild.lastChild.length, $lastChild.lastChild, $lastChild.lastChild.length);
+				}
+				else {
+					this.caret.setEnd($lastChild);
+				}
 			}
 			else {
 				this.wutil.setCaretAfter($lastChild);
