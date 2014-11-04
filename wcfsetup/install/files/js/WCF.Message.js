@@ -797,7 +797,7 @@ WCF.Message.QuickReply = Class.extend({
 		
 		// button actions
 		var $formSubmit = this._container.find('.formSubmit');
-		$formSubmit.find('button[data-type=save]').click($.proxy(this._save, this));
+		var $saveButton = $formSubmit.find('button[data-type=save]').removeAttr('accesskey').click($.proxy(this._save, this));
 		if (supportExtendedForm) $formSubmit.find('button[data-type=extended]').click($.proxy(this._prepareExtended, this));
 		$formSubmit.find('button[data-type=cancel]').click($.proxy(this._cancel, this));
 		
@@ -813,6 +813,12 @@ WCF.Message.QuickReply = Class.extend({
 		this._scroll = new WCF.Effect.Scroll();
 		this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success.add'));
 		this._successMessageNonVisible = '';
+		
+		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'submitEditor_text', function(data) {
+			data.cancel = true;
+			
+			$saveButton.trigger('click');
+		});
 	},
 	
 	/**
@@ -1465,6 +1471,7 @@ WCF.Message.InlineEditor = Class.extend({
 	_showEditor: function(data) {
 		// revert failure function
 		this._proxy.setOption('failure', $.proxy(this._failure, this));
+		var $containerID = this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID');
 		
 		var $messageBody = this._container[this._activeElementID].addClass('jsInvalidQuoteTarget').find('.messageBody');
 		$messageBody.children('.icon-spinner').remove();
@@ -1479,15 +1486,22 @@ WCF.Message.InlineEditor = Class.extend({
 		if (this._supportExtendedForm) $formSubmit.find('button[data-type=extended]').click($.proxy(this._prepareExtended, this));
 		$formSubmit.find('button[data-type=cancel]').click($.proxy(this._cancel, this));
 		
+		// TODO: is this still used?
 		WCF.Message.Submit.registerButton(
 			this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID'),
 			$saveButton
 		);
 		
+		WCF.System.Event.addListener('com.woltlab.wcf.redactor', 'submitEditor_' + $containerID, function(data) {
+			data.cancel = true;
+			
+			$saveButton.trigger('click');
+		});
+		
 		// hide message options
 		this._container[this._activeElementID].find('.messageOptions').addClass('forceHidden');
 		
-		var $element = $('#' + this._messageEditorIDPrefix + this._container[this._activeElementID].data('objectID'));
+		var $element = $('#' + $containerID);
 		if ($.browser.redactor) {
 			new WCF.PeriodicalExecuter($.proxy(function(pe) {
 				pe.stop();
