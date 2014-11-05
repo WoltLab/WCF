@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\user\notification\event;
-use wcf\data\user\User;
 use wcf\system\comment\CommentDataHandler;
 use wcf\system\request\LinkHandler;
 

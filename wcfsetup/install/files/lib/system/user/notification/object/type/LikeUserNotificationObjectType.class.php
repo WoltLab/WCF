@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\user\notification\object\type;
-use wcf\system\WCF;
 
 /**
  * User notification object type implementation for likes.

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\form\AbstractForm;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\edit\EditHistoryManager;

@@ -2,7 +2,6 @@
 namespace wcf\acp\form;
 use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
-use wcf\data\package\Package;
 use wcf\form\AbstractForm;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;

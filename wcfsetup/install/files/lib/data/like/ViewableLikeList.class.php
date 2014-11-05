@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\like;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\like\IViewableLikeProvider;
 
