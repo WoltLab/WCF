@@ -42,7 +42,7 @@ RedactorPlugins.wfontcolor = function() {
 				$swatch.click($.proxy(this.wfontcolor._onColorPick, this));
 			}
 			
-			var $elNone = $('<a href="#" />').html(this.opts.curLang.none).data('color', 'none');
+			var $elNone = $('<a href="#" />').html(this.lang.get('none')).data('color', 'none');
 			$elNone.click($.proxy(this.wfontcolor._onColorPick, this));
 			
 			$container.appendTo(dropdown);
@@ -61,7 +61,7 @@ RedactorPlugins.wfontcolor = function() {
 			
 			var $color = $(event.currentTarget).data('color');
 			if ($color === 'none') {
-				this.inline.remoteStyleRule('color');
+				this.inline.removeStyleRule('color');
 			}
 			else {
 				this.inline.format('span', 'style', 'color: ' + $color + ';');
