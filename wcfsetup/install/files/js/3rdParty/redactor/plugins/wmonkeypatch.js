@@ -26,6 +26,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.wmonkeypatch.button();
 			this.wmonkeypatch.caret();
 			this.wmonkeypatch.clean();
+			this.wmonkeypatch.code();
 			this.wmonkeypatch.dropdown();
 			this.wmonkeypatch.image();
 			this.wmonkeypatch.insert();
@@ -186,6 +187,22 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 				
 				return html;
+			}).bind(this);
+		},
+		
+		/**
+		 * Partially overwrites the 'code' module.
+		 * 
+		 *  - Redactor internally caches the code and does not flush to textarea if it was not changed, force flushing
+		 */
+		code: function() {
+			// code.startSync
+			var $mpStartSync = this.code.startSync;
+			this.code.startSync = (function() {
+				// the editor internally caches if it needs to sync, thus we need to reset the internal cache to force a sync
+				this.code.syncCode = undefined;
+				
+				$mpStartSync.call(this);
 			}).bind(this);
 		},
 		

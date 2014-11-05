@@ -163,9 +163,6 @@ RedactorPlugins.wutil = function() {
 		 */
 		getText: function() {
 			if (this.wutil.inWysiwygMode()) {
-				// the editor internally caches if it needs to sync, thus we need to reset the internal cache to force a sync
-				this.code.syncCode = undefined;
-				
 				this.code.startSync();
 				var $html = this.$textarea.val();
 				$html = this.clean.removeSpaces($html);
