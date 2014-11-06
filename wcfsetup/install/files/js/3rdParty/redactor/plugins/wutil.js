@@ -165,7 +165,6 @@ RedactorPlugins.wutil = function() {
 			if (this.wutil.inWysiwygMode()) {
 				this.code.startSync();
 				var $html = this.$textarea.val();
-				$html = this.clean.removeSpaces($html);
 				
 				this.$textarea.val($.trim(this.wbbcode.convertFromHtml($html)));
 			}

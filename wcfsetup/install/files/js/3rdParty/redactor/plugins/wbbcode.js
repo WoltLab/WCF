@@ -194,8 +194,24 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/&mdash;/gi, '\u2014');
 			html = html.replace(/&dash;/gi, '\u2010');
 			
+			// preserve newlines in <pre> tags
+			var $cachedPreTags = { };
+			html = html.replace(/<pre>[\s\S]+?<\/pre>/g, function(match) {
+				var $uuid = WCF.getUUID();
+				$cachedPreTags[$uuid] = match;
+				
+				return '@@@' + $uuid + '@@@';
+			});
+			
 			// drop all new lines
 			html = html.replace(/\r?\n/g, '');
+			
+			// restore <pre> tags
+			if ($.getLength($cachedPreTags)) {
+				$.each($cachedPreTags, function(key, value) {
+					html = html.replace('@@@' + key + '@@@', value);
+				});
+			}
 			
 			// remove empty links
 			html = html.replace(/<a[^>]*?><\/a>/g, '');
