@@ -235,6 +235,13 @@
 				<hidden>1</hidden>
 			</option>
 			
+			<option name="wcf_uuid">
+				<categoryname>general</categoryname>
+				<optiontype>string</optiontype>
+				<defaultvalue>bd096261-15f4-5dc1-9767-01ce08d7c80b</defaultvalue> <!-- automatically replaced during WCFSetup -->
+				<hidden>1</hidden>
+			</option>
+			
 			<option name="module_master_password">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>

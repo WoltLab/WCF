@@ -667,7 +667,7 @@ class WCFSetup extends WCF {
 					$this->gotoNextStep('createDB');
 					exit;
 				}
-				// show configure temnplate again
+				// show configure template again
 				else {
 					WCF::getTPL()->assign(array('conflictedTables' => $conflictedTables));
 				}

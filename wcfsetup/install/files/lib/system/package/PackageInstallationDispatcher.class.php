@@ -185,19 +185,25 @@ class PackageInstallationDispatcher {
 				if (!PACKAGE_ID) {
 					CacheHandler::getInstance()->flushAll();
 					
+					$sql = "UPDATE	wcf".WCF_N."_option
+						SET	optionValue = ?
+						WHERE	optionName = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					
+					$statement->execute(array(
+						StringUtil::getUUID(),
+						'wcf_uuid'
+					));
+					
 					if (WCF::getSession()->getVar('__wcfSetup_developerMode')) {
-						$sql = "UPDATE	wcf".WCF_N."_option
-							SET	optionValue = ?
-							WHERE	optionName = ?";
-						$statement = WCF::getDB()->prepareStatement($sql);
 						$statement->execute(array(
 							1,
 							'enable_debug_mode'
 						));
-						
-						// update options.inc.php
-						OptionEditor::resetCache();
 					}
+					
+					// update options.inc.php
+					OptionEditor::resetCache();
 				}
 				
 				// rebuild application paths
