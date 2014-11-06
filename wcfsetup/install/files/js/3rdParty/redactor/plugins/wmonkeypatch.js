@@ -19,6 +19,12 @@ RedactorPlugins.wmonkeypatch = function() {
 	
 	return {
 		/**
+		 * saved selection range
+		 * @var	range
+		 */
+		_range: null,
+		
+		/**
 		 * Initializes the RedactorPlugins.wmonkeypatch plugin.
 		 */
 		init: function() {
@@ -26,6 +32,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.wmonkeypatch.button();
 			this.wmonkeypatch.caret();
 			this.wmonkeypatch.clean();
+			this.wmonkeypatch.code();
 			this.wmonkeypatch.dropdown();
 			this.wmonkeypatch.image();
 			this.wmonkeypatch.insert();
@@ -84,12 +91,12 @@ RedactorPlugins.wmonkeypatch = function() {
 				this.$editor.on('keyup.redactor', $.proxy(this.keyup.init, this));
 			}
 			
-			/*
-			 * TODO: Disabled since this breaks things on iOS Safari
 			this.$editor.on('blur.wredactor', (function() {
-				this.selection.save();
+				var $selection = window.getSelection();
+				if ($selection.rangeCount) {
+					this.wmonkeypatch._range = $selection.getRangeAt(0);
+				}
 			}).bind(this));
-			*/
 		},
 		
 		/**
@@ -186,6 +193,22 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 				
 				return html;
+			}).bind(this);
+		},
+		
+		/**
+		 * Partially overwrites the 'code' module.
+		 * 
+		 *  - Redactor internally caches the code and does not flush to textarea if it was not changed, force flushing
+		 */
+		code: function() {
+			// code.startSync
+			var $mpStartSync = this.code.startSync;
+			this.code.startSync = (function() {
+				// the editor internally caches if it needs to sync, thus we need to reset the internal cache to force a sync
+				this.code.syncCode = undefined;
+				
+				$mpStartSync.call(this);
 			}).bind(this);
 		},
 		
@@ -324,7 +347,14 @@ RedactorPlugins.wmonkeypatch = function() {
 				else {
 					if (document.activeElement !== this.$editor[0]) {
 						this.$editor.focus();
-						this.selection.restore();
+						
+						if (this.wmonkeypatch._range) {
+							var $selection = window.getSelection();
+							$selection.removeAllRanges();
+							$selection.addRange(this.wmonkeypatch._range);
+							
+							this.wmonkeypatch._range = null;
+						}
 					}
 				}
 			}).bind(this);

@@ -834,7 +834,10 @@ WCF.Message.QuickReply = Class.extend({
 			
 			setTimeout((function() {
 				$(document).trigger('resize');
-				this._scroll.scrollTo(this._container, true);
+				if (!$.browser.mobile && $.browser.chrome) {
+					// Chrome on Android scrolls to the caret position, manually scrolling breaks the position
+					this._scroll.scrollTo(this._container, true);
+				}
 			}).bind(this), 100);
 			
 			WCF.Message.Submit.registerButton('text', this._container.find('.formSubmit button[data-type=save]'));
