@@ -1272,7 +1272,11 @@ RedactorPlugins.wbbcode = function() {
 					var $author = $('#redactorQuoteAuthor').val();
 					var $link = WCF.String.escapeHTML($('#redactorQuoteLink').val());
 					
-					this.wbbcode.insertQuoteBBCode($author, $link);
+					var $quote = this.wbbcode.insertQuoteBBCode($author, $link);
+					if ($quote !== null) {
+						// set caret inside the quote
+						this.caret.setStart($quote.find('> div > div')[0]);
+					}
 					
 					this.modal.close();
 				}, this));
@@ -1318,6 +1322,7 @@ RedactorPlugins.wbbcode = function() {
 		 * @param	string		link
 		 * @param	string		html
 		 * @param	string		plainText
+		 * @return	jQuery
 		 */
 		insertQuoteBBCode: function(author, link, html, plainText) {
 			var $openTag = '[quote]';
@@ -1332,6 +1337,7 @@ RedactorPlugins.wbbcode = function() {
 				}
 			}
 			
+			var $quote = null;
 			if (this.wutil.inWysiwygMode()) {
 				var $innerHTML = (plainText) ? this.wbbcode.convertToHtml(plainText) : '';
 				var $id = WCF.getUUID();
@@ -1343,8 +1349,14 @@ RedactorPlugins.wbbcode = function() {
 				
 				this.insert.html($html, false);
 				
-				var $quote = this.$editor.find('#' + $id);
+				$quote = this.$editor.find('#' + $id);
 				if ($quote.length) {
+					// quote may be empty if $innerHTML was empty, fix it
+					var $inner = $quote.find('> div > div');
+					if ($inner.length == 1 && $inner[0].innerHTML === '') {
+						$inner[0].innerHTML = this.opts.invisibleSpace;
+					}
+					
 					$quote.removeAttr('id');
 					this.wutil.setCaretAfter($quote[0]);
 				}
@@ -1356,6 +1368,8 @@ RedactorPlugins.wbbcode = function() {
 			else {
 				this.wutil.insertAtCaret($openTag + plainText + $closingTag);
 			}
+			
+			return $quote;
 		},
 		
 		/**
