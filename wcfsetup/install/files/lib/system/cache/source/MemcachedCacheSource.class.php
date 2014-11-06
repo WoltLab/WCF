@@ -47,7 +47,7 @@ class MemcachedCacheSource implements ICacheSource {
 		// in case a server is added or removed.
 		$this->memcached->setOption(\Memcached::OPT_LIBKETAMA_COMPATIBLE, true);
 		
-		$this->memcached->setOption(\Memcached::OPT_PREFIX_KEY, 'wcf_'.substr(StringUtil::getHash(WCF_DIR), 0, 6).'_');
+		$this->memcached->setOption(\Memcached::OPT_PREFIX_KEY, WCF_UUID.'_');
 		
 		if (!WCF::debugModeIsEnabled()) {
 			// use the more efficient binary protocol to communicate with the memcached instance
