@@ -33,6 +33,9 @@ class MySQLDatabase extends Database {
 				);
 			}
 			
+			// disable prepared statement emulation since MySQL 5.1.17 is the minimum required version
+			$driverOptions[\PDO::ATTR_EMULATE_PREPARES] = false;
+			
 			$this->pdo = new \PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->database, $this->user, $this->password, $driverOptions);
 			$this->setAttributes();
 		}
