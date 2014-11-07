@@ -44,9 +44,9 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="2.0.10">
-		<instruction type="file" run="standalone">files.tar</instruction>
-		<instruction type="template" run="standalone">templates.tar</instruction>
-		<instruction type="acpTemplate" run="standalone">acptemplates.tar</instruction>
+		<instruction type="file" run="standalone">files_update.tar</instruction>
+		<instruction type="template" run="standalone">templates_update.tar</instruction>
+		<instruction type="acpTemplate" run="standalone">acptemplates_update.tar</instruction>
 		
 		<instruction type="language" run="standalone">language/*.xml</instruction>
 		
