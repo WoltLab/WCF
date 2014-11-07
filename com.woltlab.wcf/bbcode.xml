@@ -100,9 +100,9 @@
 			<classname><![CDATA[wcf\system\bbcode\CodeBBCode]]></classname>
 			<allowedchildren>none</allowedchildren>
 			<attributes>
-				<attribute name="0">
-					<validationpattern>^\d+$</validationpattern>
-				</attribute>
+				<attribute name="0"></attribute>
+				<attribute name="1"></attribute>
+				<attribute name="2"></attribute>
 			</attributes>
 			<sourcecode>1</sourcecode>
 			<wysiwygicon>fa-code</wysiwygicon>
