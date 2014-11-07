@@ -36,18 +36,6 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 	protected $className = 'wcf\data\attachment\AttachmentEditor';
 	
 	/**
-	 * current attachment object, used to communicate with event listeners
-	 * @var	\wcf\data\attachment\Attachment
-	 */
-	public $eventAttachment = null;
-	
-	/**
-	 * current data, used to communicate with event listeners.
-	 * @var	array
-	 */
-	public $eventData = array();
-	
-	/**
 	 * Validates the delete action.
 	 */
 	public function validateDelete() {
@@ -173,10 +161,12 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 				}
 				else {
 					// check whether we can create thumbnails for this file
-					$this->eventAttachment = $attachment;
-					$this->eventData = array('hasThumbnail' => false);
-					EventHandler::getInstance()->fireAction($this, 'checkThumbnail');
-					if ($this->eventData['hasThumbnail']) $thumbnails[] = $attachment;
+					$hasThumbnail = false;
+					EventHandler::getInstance()->fireAction($this, 'checkThumbnail', array(
+						'attachment' => $attachment, 
+						'hasThumbnail' => $hasThumbnail
+					));
+					if ($hasThumbnail) $thumbnails[] = $attachment;
 				}
 				$attachments[$file->getInternalFileID()] = $attachment;
 			}
@@ -246,13 +236,15 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 		foreach ($this->objects as $attachment) {
 			if (!$attachment->isImage) {
 				// create thumbnails for every file that isn't an image
-				$this->eventAttachment = $attachment;
-				$this->eventData = array();
+				$eventData = array();
 				
-				EventHandler::getInstance()->fireAction($this, 'generateThumbnail');
+				EventHandler::getInstance()->fireAction($this, 'generateThumbnail', array(
+					'attachment' => $attachment, 
+					'data' => $eventData
+				));
 				
-				if (!empty($this->eventData)) {
-					$attachment->update($this->eventData);
+				if (!empty($eventData)) {
+					$attachment->update($eventData);
 				}
 				
 				continue;
