@@ -247,7 +247,10 @@ abstract class AbstractPage implements IPage, ITrackablePage {
 					}
 				}
 				
-				HeaderUtil::redirect($redirectURL);
+				// force a permanent redirect as recommended by Google
+				// https://support.google.com/webmasters/answer/6033086?hl=en#a_note_about_redirects
+				@header('HTTP/1.0 301 Moved Permanently');
+				HeaderUtil::redirect($redirectURL, false);
 				exit;
 			}
 		}
