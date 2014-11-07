@@ -131,11 +131,11 @@ class MysqlSearchEngine extends AbstractSearchEngine {
 	 */
 	protected function getFulltextMinimumWordLength() {
 		if ($this->ftMinWordLen === null) {
-			$sql = "SHOW VARIABLES LIKE ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
+			$sql = "SHOW VARIABLES LIKE 'ft_min_word_len'";
 			
 			try {
-				$statement->execute(array('ft_min_word_len'));
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute();
 				$row = $statement->fetchArray();
 			}
 			catch (DatabaseException $e) {
