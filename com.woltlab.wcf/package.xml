@@ -43,7 +43,24 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="2.0.9">
-		<instruction type="aclOption">aclOption.xml</instruction>
+	<instructions type="update" fromversion="2.0.10">
+		<instruction type="file" run="standalone">files.tar</instruction>
+		<instruction type="template" run="standalone">templates.tar</instruction>
+		<instruction type="acpTemplate" run="standalone">acptemplates.tar</instruction>
+		
+		<instruction type="language" run="standalone">language/*.xml</instruction>
+		
+		<instruction type="sql" run="standalone">update_2.1.0_alpha_1.sql</instruction>
+		
+		<instruction type="acpMenu">acpMenu.xml</instruction>
+		<instruction type="bbcode">bbcode.xml</instruction>
+		<instruction type="clipboardAction">clipboardAction.xml</instruction>
+		<instruction type="coreObject">coreObject.xml</instruction>
+		<!-- TODO: update cronjobs -->
+		<instruction type="dashboardBox">dashboardBox.xml</instruction>
+		<instruction type="objectType">objectType.xml</instruction>
+		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
+		<instruction type="option">option.xml</instruction>
+		<instruction type="pageMenu">pageMenu.xml</instruction>
 	</instructions>
 </package>
