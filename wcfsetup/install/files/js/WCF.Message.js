@@ -1930,6 +1930,7 @@ WCF.Message.Quote.Handler = Class.extend({
 		
 		// remove alt-tag from all images, fixes quoting in Firefox
 		if ($.browser.mozilla) {
+			// TODO: is this still required?
 			$container.find('img').each(function() {
 				var $image = $(this);
 				$image.data('__alt', $image.attr('alt')).removeAttr('alt');
@@ -1944,35 +1945,46 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * @return	string
 	 */
 	_getNodeText: function(node) {
-		var nodeText = '';
+		var $walker = document.createTreeWalker(
+			node,
+			NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
+			{
+				acceptNode: function(node) {
+					if (node.tagName === 'H3') {
+						return NodeFilter.FILTER_REJECT;
+					}
+					
+					return NodeFilter.FILTER_ACCEPT;
+				}
+			}
+		);
 		
-		for (var i = 0; i < node.childNodes.length; i++) {
-			if (node.childNodes[i].nodeType == 3) {
-				// text node
-				nodeText += node.childNodes[i].nodeValue;
+		var $text = '';
+		while ($walker.nextNode()) {
+			var $node = $walker.currentNode;
+			
+			if ($node.nodeType === Node.ELEMENT_NODE) {
+				switch ($node.tagName) {
+					case 'BR':
+					case 'LI':
+					case 'UL':
+						$text += "\n";
+					break;
+					
+					case 'TD':
+						if (!$.browser.msie) {
+							$text += "\n";
+						}
+					break;
+				}
 			}
 			else {
-				if (!node.childNodes[i].tagName) {
-					continue;
-				}
-				
-				var $tagName = node.childNodes[i].tagName.toLowerCase();
-				if ($tagName === 'li') {
-					nodeText += "\r\n";
-				}
-				else if ($tagName === 'td' && !$.browser.msie) {
-					nodeText += "\r\n";
-				}
-				
-				nodeText += this._getNodeText(node.childNodes[i]);
-				
-				if ($tagName === 'ul') {
-					nodeText += "\n";
-				}
+				$text += $walker.currentNode.nodeValue;
 			}
+			
 		}
 		
-		return nodeText;
+		return $text;
 	},
 	
 	/**
@@ -2000,10 +2012,10 @@ WCF.Message.Quote.Handler = Class.extend({
 		// compare selection with message text of given container
 		var $messageText = null;
 		if (this._messageBodySelector) {
-			$messageText = this._getNodeText($container.find(this._messageContentSelector).get(0));
+			$messageText = this._getNodeText($container.find(this._messageContentSelector)[0]);
 		}
 		else {
-			$messageText = this._getNodeText($container.get(0));
+			$messageText = this._getNodeText($container[0]);
 		}
 		
 		// selected text is not part of $messageText or contains text from unrelated nodes
@@ -2012,7 +2024,7 @@ WCF.Message.Quote.Handler = Class.extend({
 		}
 		this._copyQuote.show();
 		
-		var $coordinates = this._getBoundingRectangle($container, $selection);
+		var $coordinates = this._getBoundingRectangle($container, window.getSelection());
 		var $dimensions = this._copyQuote.getDimensions('outer');
 		var $left = ($coordinates.right - $coordinates.left) / 2 - ($dimensions.width / 2) + $coordinates.left;
 		
@@ -2038,6 +2050,7 @@ WCF.Message.Quote.Handler = Class.extend({
 				
 				// revert alt tags, fixes quoting in Firefox
 				if ($.browser.mozilla) {
+					// TODO: is this still required?
 					$container.find('img').each(function() {
 						var $image = $(this);
 						$image.attr('alt', $image.data('__alt'));
@@ -2168,7 +2181,7 @@ WCF.Message.Quote.Handler = Class.extend({
 			var nodeStack = [containerEl], node, foundStart = false, stop = false;
 			
 			while (!stop && (node = nodeStack.pop())) {
-				if (node.nodeType == 3) {
+				if (node.nodeType == Node.TEXT_NODE) {
 					var nextCharIndex = charIndex + node.length;
 					if (!foundStart && savedSel.start >= charIndex && savedSel.start <= nextCharIndex) {
 						range.setStart(node, savedSel.start - charIndex);
@@ -2215,20 +2228,10 @@ WCF.Message.Quote.Handler = Class.extend({
 	/**
 	 * Returns the text selection.
 	 * 
-	 * @return	object
+	 * @return	string
 	 */
 	_getSelectedText: function() {
-		if (window.getSelection) { // Opera, Firefox, Safari, Chrome, IE 9+
-			return window.getSelection();
-		}
-		else if (document.getSelection) { // Opera, Firefox, Safari, Chrome, IE 9+
-			return document.getSelection();
-		}
-		else if (document.selection) { // IE 8
-			return document.selection.createRange().text;
-		}
-		
-		return '';
+		return this._getNodeText(window.getSelection().getRangeAt(0).cloneContents());
 	},
 	
 	/**
