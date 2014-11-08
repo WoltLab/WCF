@@ -93,6 +93,7 @@ RedactorPlugins.wbbcode = function() {
 					this.$textarea.val(this.wbbcode.convertToHtml(this.$textarea.val()));
 					this.code.offset = this.$textarea.val().length;
 					this.code.showVisual();
+					this.wbbcode._fixQuotes();
 					this.wutil.selectionEndOfEditor();
 					this.wbbcode._observeQuotes();
 					
@@ -1403,6 +1404,20 @@ RedactorPlugins.wbbcode = function() {
 		
 		_handleInsertQuote: function() {
 			this.wbbcode._openQuoteEditOverlay(null, true);
+		},
+		
+		/**
+		 * Ensures that there is a paragraph in front of each quotes because you cannot click in between two of them.
+		 */
+		_fixQuotes: function() {
+			this.$editor.find('blockquote').each((function(index, blockquote) {
+				if (blockquote.previousElementSibling === null || blockquote.previousElementSibling.tagName !== 'P') {
+					$(this.opts.emptyHtml).insertBefore(blockquote);
+				}
+				else if (blockquote.previousElementSibling.tagName === 'P' && !blockquote.previousElementSibling.innerHTML.length) {
+					$(blockquote.previousElementSibling).html(this.opts.invisibleSpace);
+				}
+			}).bind(this));
 		}
 	};
 };
