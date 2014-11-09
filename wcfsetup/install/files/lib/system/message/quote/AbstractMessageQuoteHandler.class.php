@@ -57,18 +57,18 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
 	/**
 	 * @see	\wcf\system\message\quote\IMessageQuoteHandler::renderQuotes()
 	 */
-	public function renderQuotes(array $data, $render = true) {
+	public function renderQuotes(array $data, $render = true, $renderAsString = true) {
 		$messages = $this->getMessages($data);
 		
 		$renderedQuotes = array();
 		foreach ($messages as $message) {
 			foreach ($message as $quoteID => $quote) {
 				if ($render) {
-					$renderedQuotes[] = MessageQuoteManager::getInstance()->renderQuote($message->object, $quote);
+					$renderedQuotes[] = MessageQuoteManager::getInstance()->renderQuote($message->object, $quote, $renderAsString);
 				}
 				else {
 					$quotedMessage = $message->getFullQuote($quoteID);
-					$renderedQuotes[] = MessageQuoteManager::getInstance()->renderQuote($message->object, ($quotedMessage === null ? $quote : $quotedMessage));
+					$renderedQuotes[] = MessageQuoteManager::getInstance()->renderQuote($message->object, ($quotedMessage === null ? $quote : $quotedMessage), $renderAsString);
 				}
 			}
 		}

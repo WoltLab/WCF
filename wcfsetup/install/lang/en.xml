@@ -2251,7 +2251,8 @@ Errors are:
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Insert Quote]]></item>
 		<item name="wcf.message.quote.insertSelectedQuotes"><![CDATA[Insert Marked Quotes]]></item>
 		<item name="wcf.message.quote.manageQuotes"><![CDATA[Manage Quotes]]></item>
-		<item name="wcf.message.quote.quoteSelected"><![CDATA[Quote Selection]]></item>
+		<item name="wcf.message.quote.quoteSelected"><![CDATA[Save Quote]]></item>
+		<item name="wcf.message.quote.quoteAndReply"><![CDATA[Insert Quote]]></item>
 		<item name="wcf.message.quote.showQuotes"><![CDATA[Quotes (#count#)]]></item>
 		<item name="wcf.message.quote.quoteMessage"><![CDATA[Quote]]></item>
 		<item name="wcf.message.quote.removeAllQuotes"><![CDATA[Remove All Quotes]]></item>

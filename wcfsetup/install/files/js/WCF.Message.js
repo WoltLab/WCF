@@ -819,6 +819,28 @@ WCF.Message.QuickReply = Class.extend({
 			
 			$saveButton.trigger('click');
 		});
+		
+		WCF.System.Event.addListener('com.woltlab.wcf.message.quote', 'insert', (function(data) {
+			var $insertQuote = false;
+			
+			// direct insert
+			if (this._container.is(':visible')) {
+				$insertQuote = true;
+			}
+			else {
+				// do not programmatically insert the quote because the callback will already do this
+				$insertQuote = (this._messageField.redactor('wutil.isEmptyEditor') ? false : true);
+				this.click(null);
+			}
+			
+			if ($insertQuote) {
+				this._messageField.redactor('wutil.selectionEndOfEditor');
+				this._messageField.redactor('wbbcode.insertQuoteBBCode', data.quote.username, data.quote.link, data.quote.text, data.quote.text);
+				
+				// scroll to editor
+				this._scroll.scrollTo(this._container, true);
+			}
+		}).bind(this));
 	},
 	
 	/**
@@ -1841,8 +1863,9 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * @param	string				containerSelector
 	 * @param	string				messageBodySelector
 	 * @param	string				messageContentSelector
+	 * @param	boolean				supportDirectInsert
 	 */
-	init: function(quoteManager, className, objectType, containerSelector, messageBodySelector, messageContentSelector) {
+	init: function(quoteManager, className, objectType, containerSelector, messageBodySelector, messageContentSelector, supportDirectInsert) {
 		this._className = className;
 		if (this._className == '') {
 			console.debug("[WCF.Message.QuoteManager] Empty class name given, aborting.");
@@ -1865,7 +1888,9 @@ WCF.Message.Quote.Handler = Class.extend({
 		});
 		
 		this._initContainers();
-		this._initCopyQuote();
+		
+		supportDirectInsert = (supportDirectInsert && quoteManager.supportPaste()) ? true : false;
+		this._initCopyQuote(supportDirectInsert);
 		
 		$(document).mouseup($.proxy(this._mouseUp, this));
 		
@@ -2216,12 +2241,17 @@ WCF.Message.Quote.Handler = Class.extend({
 	
 	/**
 	 * Initializes the 'copy quote' element.
+	 * 
+	 * @param	boolean		supportDirectInsert
 	 */
-	_initCopyQuote: function() {
+	_initCopyQuote: function(supportDirectInsert) {
 		this._copyQuote = $('#quoteManagerCopy');
 		if (!this._copyQuote.length) {
-			this._copyQuote = $('<div id="quoteManagerCopy" class="balloonTooltip"><span>' + WCF.Language.get('wcf.message.quote.quoteSelected') + '</span><span class="pointer"><span></span></span></div>').hide().appendTo(document.body);
-			this._copyQuote.click($.proxy(this._saveQuote, this));
+			this._copyQuote = $('<div id="quoteManagerCopy" class="balloonTooltip"><span class="jsQuoteManagerStore">' + WCF.Language.get('wcf.message.quote.quoteSelected') + '</span><span class="pointer"><span></span></span></div>').hide().appendTo(document.body);
+			var $storeQuote = this._copyQuote.children('span.jsQuoteManagerStore').click($.proxy(this._saveQuote, this));
+			if (supportDirectInsert) {
+				$('<span class="jsQuoteManagerQuoteAndInsert">' + WCF.Language.get('wcf.message.quote.quoteAndReply') + '</span>').click($.proxy(this._saveAndInsertQuote, this)).insertAfter($storeQuote);
+			}
 		}
 	},
 	
@@ -2271,18 +2301,30 @@ WCF.Message.Quote.Handler = Class.extend({
 	
 	/**
 	 * Saves a quote.
+	 * 
+	 * @param	boolean		renderQuote
 	 */
-	_saveQuote: function() {
+	_saveQuote: function(renderQuote) {
+		renderQuote = (renderQuote === true) ? true : false;
+		
 		this._proxy.setOption('data', {
 			actionName: 'saveQuote',
 			className: this._className,
 			interfaceName: 'wcf\\data\\IMessageQuoteAction',
 			objectIDs: [ this._objectID ],
 			parameters: {
-				message: this._message
+				message: this._message,
+				renderQuote: renderQuote
 			}
 		});
 		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Saves a quote and directly inserts it.
+	 */
+	_saveAndInsertQuote: function() {
+		this._saveQuote(true);
 	},
 	
 	/**
@@ -2300,6 +2342,12 @@ WCF.Message.Quote.Handler = Class.extend({
 			
 			var $fullQuoteObjectIDs = (data.returnValues.fullQuoteObjectIDs !== undefined) ? data.returnValues.fullQuoteObjectIDs : { };
 			this._quoteManager.updateCount(data.returnValues.count, $fullQuoteObjectIDs);
+		}
+		
+		if (data.actionName === 'saveQuote' && data.returnValues.renderedQuote) {
+			WCF.System.Event.fireEvent('com.woltlab.wcf.message.quote', 'insert', {
+				quote: data.returnValues.renderedQuote
+			});
 		}
 	},
 	
@@ -2869,6 +2917,15 @@ WCF.Message.Quote.Manager = Class.extend({
 				this.renderDialog(data.template);
 			}
 		}
+	},
+	
+	/**
+	 * Returns true if pasting is supported.
+	 * 
+	 * @return	boolean
+	 */
+	supportPaste: function() {
+		return this._supportPaste;
 	}
 });
 

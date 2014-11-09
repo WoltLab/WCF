@@ -2253,7 +2253,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Zitat einfügen]]></item>
 		<item name="wcf.message.quote.insertSelectedQuotes"><![CDATA[Markierte Zitate einfügen]]></item>
 		<item name="wcf.message.quote.manageQuotes"><![CDATA[Zitate verwalten]]></item>
-		<item name="wcf.message.quote.quoteSelected"><![CDATA[Auswahl zitieren]]></item>
+		<item name="wcf.message.quote.quoteSelected"><![CDATA[Zitat speichern]]></item>
+		<item name="wcf.message.quote.quoteAndReply"><![CDATA[Zitat einfügen]]></item>
 		<item name="wcf.message.quote.showQuotes"><![CDATA[Zitate (#count#)]]></item>
 		<item name="wcf.message.quote.quoteMessage"><![CDATA[Zitieren]]></item>
 		<item name="wcf.message.quote.removeAllQuotes"><![CDATA[Alle Zitate entfernen]]></item>
