@@ -223,7 +223,13 @@ class MessageQuoteManager extends SingletonFactory {
 		return false;
 	}
 	
-	public function getRenderedQuote($quoteID) {
+	/**
+	 * Returns an array containing the quote author, link and text.
+	 * 
+	 * @param	string		$quoteID
+	 * @return	array<string>
+	 */
+	public function getQuoteComponents($quoteID) {
 		if ($this->getQuote($quoteID, false) === null) {
 			return '';
 		}
@@ -239,6 +245,8 @@ class MessageQuoteManager extends SingletonFactory {
 							$quoteID => $quoteIDs[$quoteID]
 						)
 					), true, false);
+					
+					$this->markQuotesForRemoval(array($quoteID));
 					
 					return $renderedQuotes[0];
 				}
