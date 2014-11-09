@@ -646,6 +646,12 @@ WCF.Comment.Handler = Class.extend({
 		}
 		else {
 			var $response = this._responses[data.returnValues.responseID];
+			var $comment = this._comments[$response.parents('li.comment:eq(0)').data('commentID')];
+			
+			// decrease response counter as a correct response count
+			// is required in _handleLoadNextResponses()
+			$comment.data('responses', parseInt($comment.data('responses')) - 1);
+			
 			var $commentResponseList = $response.parent();
 			$response.remove();
 			
