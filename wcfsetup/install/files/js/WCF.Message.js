@@ -856,7 +856,7 @@ WCF.Message.QuickReply = Class.extend({
 			
 			setTimeout((function() {
 				$(document).trigger('resize');
-				if (!$.browser.mobile && !$.browser.chrome) {
+				if (!$.browser.mobile || !$.browser.chrome) {
 					// Chrome on Android scrolls to the caret position, manually scrolling breaks the position
 					this._scroll.scrollTo(this._container, true);
 				}
