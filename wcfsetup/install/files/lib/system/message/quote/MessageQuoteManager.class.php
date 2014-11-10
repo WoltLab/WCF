@@ -98,9 +98,9 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @param	integer		$objectID
 	 * @param	string		$message
 	 * @param	string		$fullQuote
-	 * @return	string
+	 * @return	mixed
 	 */
-	public function addQuote($objectType, $parentObjectID, $objectID, $message, $fullQuote = '') {
+	public function addQuote($objectType, $parentObjectID, $objectID, $message, $fullQuote = '', $returnFalseIfExists = true) {
 		if (!isset($this->objectTypes[$objectType])) {
 			throw new SystemException("Object type '".$objectType."' is unknown");
 		}
@@ -141,6 +141,9 @@ class MessageQuoteManager extends SingletonFactory {
 			}
 			
 			$this->updateSession();
+		}
+		else if ($returnFalseIfExists) {
+			return false;
 		}
 		
 		return $quoteID;

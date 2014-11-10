@@ -827,7 +827,7 @@ WCF.Message.QuickReply = Class.extend({
 			if (this._container.is(':visible')) {
 				$insertQuote = true;
 			}
-			else {
+			else if (data.forceInsert) {
 				// do not programmatically insert the quote because the callback will already do this
 				$insertQuote = (this._messageField.redactor('wutil.isEmptyEditor') ? false : true);
 				this.click(null);
@@ -2344,10 +2344,16 @@ WCF.Message.Quote.Handler = Class.extend({
 			this._quoteManager.updateCount(data.returnValues.count, $fullQuoteObjectIDs);
 		}
 		
-		if (data.actionName === 'saveQuote' && data.returnValues.renderedQuote) {
-			WCF.System.Event.fireEvent('com.woltlab.wcf.message.quote', 'insert', {
-				quote: data.returnValues.renderedQuote
-			});
+		switch (data.actionName) {
+			case 'saveQuote':
+			case 'saveFullQuote':
+				if (data.returnValues.renderedQuote) {
+					WCF.System.Event.fireEvent('com.woltlab.wcf.message.quote', 'insert', {
+						forceInsert: (data.actionName === 'saveQuote' ? true : false),
+						quote: data.returnValues.renderedQuote
+					});
+				}
+			break;
 		}
 	},
 	
