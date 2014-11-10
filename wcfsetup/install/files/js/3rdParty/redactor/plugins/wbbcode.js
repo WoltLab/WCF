@@ -1363,6 +1363,7 @@ RedactorPlugins.wbbcode = function() {
 				}
 				
 				this.wbbcode._observeQuotes();
+				this.wbbcode._fixQuotes();
 				
 				this.$toolbar.find('a.re-__wcf_quote').removeClass('redactor-button-disabled');
 			}
@@ -1410,13 +1411,30 @@ RedactorPlugins.wbbcode = function() {
 		 * Ensures that there is a paragraph in front of each quotes because you cannot click in between two of them.
 		 */
 		_fixQuotes: function() {
+			var $addSpacing = (function(referenceElement, target) {
+				var $tagName = 'P';
+				
+				// fix reference element if blockquote is within a quote (wrapped by <div>...</div>)
+				if (referenceElement.parentElement.tagName === 'DIV' && referenceElement.parentElement !== this.$editor[0]) {
+					referenceElement = referenceElement.parentElement;
+					$tagName = 'DIV';
+				}
+				
+				// no previous/next element or it is not a <p> (default) or <div> (within quotes)
+				if (referenceElement[target] === null || referenceElement[target].tagName !== $tagName) {
+					$('<' + $tagName + '>' + this.opts.invisibleSpace + '</' + $tagName + '>')[(target === 'previousElementSibling' ? 'insertBefore' : 'insertAfter')](referenceElement);
+				}
+				else if (referenceElement.previousElementSibling.tagName === $tagName) {
+					// previous/next element is empty or contains an empty <p></p> (blockquote is a direct children of the editor)
+					if (!referenceElement[target].innerHTML.length || referenceElement[target].innerHTML.toLowerCase() === '<p></p>') {
+						$(referenceElement[target]).html(this.opts.invisibleSpace);
+					}
+				}
+			}).bind(this);
+			
 			this.$editor.find('blockquote').each((function(index, blockquote) {
-				if (blockquote.previousElementSibling === null || blockquote.previousElementSibling.tagName !== 'P') {
-					$(this.opts.emptyHtml).insertBefore(blockquote);
-				}
-				else if (blockquote.previousElementSibling.tagName === 'P' && !blockquote.previousElementSibling.innerHTML.length) {
-					$(blockquote.previousElementSibling).html(this.opts.invisibleSpace);
-				}
+				$addSpacing(blockquote, 'previousElementSibling');
+				$addSpacing(blockquote, 'nextElementSibling');
 			}).bind(this));
 		}
 	};
