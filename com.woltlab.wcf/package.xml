@@ -44,6 +44,11 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="2.0.10">
+		<!-- pre-update check to prevent update from WCF < 2.0.10 -->
+		<instruction type="file">pre_update_check.tar</instruction>
+		<instruction type="script">acp/pre_update_com.woltlab.wcf_2.1.php</instruction>
+		
+		<!-- the actual update -->
 		<instruction type="file" run="standalone">files_update.tar</instruction>
 		<instruction type="template" run="standalone">templates_update.tar</instruction>
 		<instruction type="acpTemplate" run="standalone">acptemplates_update.tar</instruction>
