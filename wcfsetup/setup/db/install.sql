@@ -1284,6 +1284,7 @@ CREATE TABLE wcf1_user_notification (
 	packageID INT(10) NOT NULL, -- DEPRECATED
 	eventID INT(10) NOT NULL,
 	objectID INT(10) NOT NULL DEFAULT 0,
+	baseObjectID INT(10) NOT NULL DEFAULT 0, -- base object ID for generic implementations referencing the origin, e.g. the object being liked
 	eventHash VARCHAR(40) NOT NULL DEFAULT '',
 	authorID INT(10) NULL,
 	timesTriggered INT(10) NOT NULL DEFAULT 0,

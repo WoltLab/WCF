@@ -76,8 +76,9 @@ class UserNotificationHandler extends SingletonFactory {
 	 * @param	\wcf\system\user\notification\object\IUserNotificationObject	$notificationObject
 	 * @param	array<integer>							$recipientIDs
 	 * @param	array<mixed>							$additionalData
+	 * @param	integer								$baseObjectID
 	 */
-	public function fireEvent($eventName, $objectType, IUserNotificationObject $notificationObject, array $recipientIDs, array $additionalData = array()) {
+	public function fireEvent($eventName, $objectType, IUserNotificationObject $notificationObject, array $recipientIDs, array $additionalData = array(), $baseObjectID = 0) {
 		// check given object type and event name
 		if (!isset($this->availableEvents[$objectType][$eventName])) {
 			throw new SystemException("Unknown event ".$objectType."-".$eventName." given");
@@ -188,6 +189,7 @@ class UserNotificationHandler extends SingletonFactory {
 					'eventID' => $event->eventID,
 					'authorID' => ($event->getAuthorID() ?: null),
 					'objectID' => $notificationObject->getObjectID(),
+					'baseObjectID' => $baseObjectID,
 					'eventHash' => $event->getEventHash(),
 					'packageID' => $objectTypeObject->packageID,
 					'mailNotified' => ($event->supportsEmailNotification() ? 0 : 1),
