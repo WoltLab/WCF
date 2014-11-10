@@ -105,9 +105,9 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 		
 		// add comment
 		$sql = "ALTER TABLE	".$tableName."
-			COMMENT		= ?";
+			COMMENT		= 'Search index for ".$objectType->objectType."'";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array(' Search index for ' . $objectType->objectType));
+		$statement->execute();
 		
 		// log table
 		$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log

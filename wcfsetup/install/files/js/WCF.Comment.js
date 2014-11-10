@@ -645,7 +645,22 @@ WCF.Comment.Handler = Class.extend({
 			delete this._comments[data.returnValues.commentID];
 		}
 		else {
-			this._responses[data.returnValues.responseID].remove();
+			var $response = this._responses[data.returnValues.responseID];
+			var $comment = this._comments[$response.parents('li.comment:eq(0)').data('commentID')];
+			
+			// decrease response counter as a correct response count
+			// is required in _handleLoadNextResponses()
+			$comment.data('responses', parseInt($comment.data('responses')) - 1);
+			
+			var $commentResponseList = $response.parent();
+			$response.remove();
+			
+			if (!$commentResponseList.children().length) {
+				// make '.commentResponseList' accessible via CSS'
+				// :empty selector
+				$commentResponseList.empty();
+			}
+			
 			delete this._responses[data.returnValues.responseID];
 		}
 	},

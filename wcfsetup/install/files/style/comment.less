@@ -66,11 +66,12 @@
 }
 
 .commentOptionContainer.jsAddResponseActive,
-.commentResponseList + .commentOptionContainer {
+.commentResponseList:not(:empty) + .commentOptionContainer {
 	border-top: 1px solid @wcfContainerBorderColor;
 	padding: @wcfGapSmall @wcfGapSmall 0;
 }
 
+.commentResponseList:empty,
 .commentContent + .commentOptionContainer:not(.jsAddResponseActive) {
 	margin-top: @wcfGapTiny;
 }
@@ -79,7 +80,7 @@
 	margin-top: @wcfGapMedium;
 }
 
-.commentResponseList .commentResponse:first-child {
+.commentResponseList:not(:empty) {
 	margin-top: @wcfGapMedium;
 }
 
