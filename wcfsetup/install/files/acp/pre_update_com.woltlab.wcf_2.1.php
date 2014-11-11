@@ -1,5 +1,6 @@
 <?php
 use wcf\data\package\Package;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -10,8 +11,9 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 
-if (Package::compareVersion(WCF_VERSION, '2.0.10') === -1) {
+if (Package::compareVersion(preg_replace('~ \(Maelstrom\)$~', '', WCF_VERSION), '2.0.10', '<')) {
 	if (WCF::getLanguage()->getFixedLanguageCode() == 'de') {
+		die("<pre>".preg_replace('~ \(Maelstrom\)$~', '', WCF_VERSION)." != 2.0.10");
 		throw new SystemException("Die Aktualisierung erfordert WoltLab Community Framework (com.woltlab.wcf) in Version 2.0.10 oder hoeher");
 	}
 	else {
