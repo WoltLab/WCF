@@ -68,8 +68,8 @@
 		<instruction type="coreObject">coreObject.xml</instruction>
 		<!-- TODO: update cronjobs -->
 		<instruction type="dashboardBox">dashboardBox.xml</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
+		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="pageMenu">pageMenu.xml</instruction>
 	</instructions>
 </package>

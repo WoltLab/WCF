@@ -193,7 +193,7 @@ ALTER TABLE wcf1_moderation_queue ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1
 
 ALTER TABLE wcf1_page_menu_item ADD originIsSystem TINYINT(1) NOT NULL DEFAULT 0;
 
-ALTER TABLE wcf1_session ADD UNIQUE KEY userID (userID);
+ALTER TABLE wcf1_session ADD UNIQUE KEY uniqueUserID (userID);
 
 ALTER TABLE wcf1_sitemap ADD permissions TEXT NULL;
 ALTER TABLE wcf1_sitemap ADD options TEXT NULL;
@@ -248,7 +248,7 @@ ALTER TABLE wcf1_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_ses
 
 ALTER TABLE wcf1_user_group_assignment ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_user_notification DROP FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID);
+ALTER TABLE wcf1_user_notification DROP FOREIGN KEY packageID;
 ALTER TABLE wcf1_user_notification ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_notification_author ADD FOREIGN KEY (notificationID) REFERENCES wcf1_user_notification (notificationID) ON DELETE CASCADE;
