@@ -207,6 +207,10 @@ class StyleAddForm extends AbstractForm {
 					$this->variables[$variableName] = $_POST[$variableName].$_POST[$variableName.'_unit'];
 				}
 			}
+			else {
+				// set default value
+				$this->variables[$variableName] = '0px';
+			}
 		}
 		
 		// read specialized variables
