@@ -49,10 +49,13 @@
 		<instruction type="script" run="standalone">acp/pre_update_com.woltlab.wcf_2.1.php</instruction>
 		
 		<!-- the actual update -->
+		<instruction type="option" run="standalone">option.xml</instruction>
+		
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="script">acp/update_com.woltlab.wcf_2.1.php</instruction>
 		
 		<instruction type="template" run="standalone">templates_update.tar</instruction>
+		
 		<instruction type="acpTemplate" run="standalone">acptemplates_update.tar</instruction>
 		
 		<instruction type="language" run="standalone">language/*.xml</instruction>
@@ -67,7 +70,6 @@
 		<instruction type="dashboardBox">dashboardBox.xml</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
-		<instruction type="option">option.xml</instruction>
 		<instruction type="pageMenu">pageMenu.xml</instruction>
 	</instructions>
 </package>

@@ -272,8 +272,21 @@ class RouteHandler extends SingletonFactory {
 		if (self::$pathInfo === null) {
 			self::$pathInfo = '';
 			
+			if (!URL_LEGACY_MODE || RequestHandler::getInstance()->isACPRequest()) {
+				// WCF 2.1: ?Foo/Bar/
+				if (!empty($_SERVER['QUERY_STRING'])) {
+					parse_str($_SERVER['QUERY_STRING'], $parts);
+					foreach ($parts as $key => $value) {
+						if ($value === '') {
+							self::$pathInfo = $key;
+							break;
+						}
+					}
+				}
+			}
+			
 			// WCF 2.0: index.php/Foo/Bar/
-			if (URL_LEGACY_MODE && !RequestHandler::getInstance()->isACPRequest()) {
+			if ((URL_LEGACY_MODE && !RequestHandler::getInstance()->isACPRequest()) || (RequestHandler::getInstance()->isACPRequest() && empty(self::$pathInfo))) {
 				if (isset($_SERVER['PATH_INFO'])) {
 					self::$pathInfo = $_SERVER['PATH_INFO'];
 				}
@@ -293,18 +306,6 @@ class RouteHandler extends SingletonFactory {
 						
 						if (isset($_SERVER['SCRIPT_URL']) && (self::$pathInfo == $_SERVER['SCRIPT_URL'])) {
 							self::$pathInfo = '';
-						}
-					}
-				}
-			}
-			else {
-				// WCF 2.1: ?Foo/Bar/
-				if (!empty($_SERVER['QUERY_STRING'])) {
-					parse_str($_SERVER['QUERY_STRING'], $parts);
-					foreach ($parts as $key => $value) {
-						if ($value === '') {
-							self::$pathInfo = $key;
-							break;
 						}
 					}
 				}

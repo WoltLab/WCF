@@ -187,7 +187,9 @@ ALTER TABLE wcf1_bbcode ADD originIsSystem TINYINT(1) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_label_group ADD showOrder INT(10) NOT NULL DEFAULT 0;
 
 ALTER TABLE wcf1_moderation_queue ADD comments SMALLINT(5) NOT NULL DEFAULT 0;
-ALTER TABLE wcf1_moderation_queue DROP UNIQUE KEY affectedObject (objectTypeID, objectID);
+ALTER TABLE wcf1_moderation_queue DROP FOREIGN KEY objectTypeID;
+ALTER TABLE wcf1_moderation_queue DROP KEY affectedObject;
+ALTER TABLE wcf1_moderation_queue ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_page_menu_item ADD originIsSystem TINYINT(1) NOT NULL DEFAULT 0;
 
