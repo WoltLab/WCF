@@ -384,6 +384,26 @@ class PackageInstallationSQLParser extends SQLParser {
 	}
 	
 	/**
+	 * @see	\wcf\system\database\util\SQLParser::executeDropForeignKeyStatement()
+	 */
+	protected function executeDropForeignKeyStatement($tableName, $indexName) {
+		if ($this->test) {
+			if ($ownerPackageID = $this->getIndexOwnerID($tableName, $indexName)) {
+				if ($ownerPackageID != $this->package->packageID) {
+					throw new SystemException("Can not drop index '".$indexName."'. A package can only drop own indices.");
+				}
+			}
+		}
+		else {
+			// log
+			$this->indexLog[] = array('tableName' => $tableName, 'indexName' => $indexName, 'packageID' => $this->package->packageID, 'action' => 'delete');
+			
+			// execute
+			parent::executeDropForeignKeyStatement($tableName, $indexName);
+		}
+	}
+	
+	/**
 	 * @see	\wcf\system\database\util\SQLParser::executeDropTableStatement()
 	 */
 	protected function executeDropTableStatement($tableName) {
