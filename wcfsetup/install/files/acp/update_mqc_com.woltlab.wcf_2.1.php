@@ -12,7 +12,7 @@ use wcf\system\WCF;
  */
 
 $sql = "SELECT	objectTypeID
-	FROM	wcf".WCF_N."_objectType
+	FROM	wcf".WCF_N."_object_type
 	WHERE	objectType = ?
 		AND definitionID = (
 			SELECT	definitionID
