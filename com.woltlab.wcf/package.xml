@@ -68,7 +68,7 @@
 		<instruction type="bbcode">bbcode.xml</instruction>
 		<instruction type="clipboardAction">clipboardAction.xml</instruction>
 		<instruction type="coreObject">coreObject.xml</instruction>
-		<!-- TODO: update cronjobs -->
+		<instruction type="cronjob">cronjob_update.xml</instruction>
 		<instruction type="dashboardBox">dashboardBox.xml</instruction>
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
