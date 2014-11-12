@@ -161,7 +161,7 @@ class QuickReplyManager extends SingletonFactory {
 		$parameters['data']['enableHtml'] = 0;
 		$parameters['data']['showSignature'] = (WCF::getUser()->userID ? WCF::getUser()->showSignature : 0);
 		
-		EventHandler::getInstance()->fireAction($this, 'validateParameters');
+		EventHandler::getInstance()->fireAction($this, 'validateParameters', $parameters);
 	}
 	
 	/**
