@@ -62,8 +62,6 @@
 		
 		<instruction type="sql" run="standalone">update_2.1.0_alpha_1.sql</instruction>
 		
-		<instruction type="script" run="standalone">acp/update_mqc_com.woltlab.wcf_2.1.php</instruction>
-		
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="bbcode">bbcode.xml</instruction>
 		<instruction type="clipboardAction">clipboardAction.xml</instruction>
@@ -73,5 +71,7 @@
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="pageMenu">pageMenu.xml</instruction>
+		
+		<instruction type="script" run="standalone">acp/update_mqc_com.woltlab.wcf_2.1.php</instruction>
 	</instructions>
 </package>
