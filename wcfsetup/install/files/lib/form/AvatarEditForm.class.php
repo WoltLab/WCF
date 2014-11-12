@@ -6,6 +6,7 @@ use wcf\data\user\UserAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\menu\user\UserMenu;
+use wcf\system\user\UserProfileHandler;
 use wcf\system\WCF;
 
 /**
@@ -120,6 +121,8 @@ class AvatarEditForm extends AbstractForm {
 			'data' => array_merge($this->additionalFields, $data)
 		));
 		$this->objectAction->executeAction();
+		
+		UserProfileHandler::getInstance()->reloadUserProfile();
 		
 		$this->saved();
 		WCF::getTPL()->assign('success', true);
