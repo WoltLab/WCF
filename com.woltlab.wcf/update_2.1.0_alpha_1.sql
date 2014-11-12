@@ -215,6 +215,7 @@ ALTER TABLE wcf1_user_notification ADD mailNotified TINYINT(1) NOT NULL DEFAULT 
 ALTER TABLE wcf1_user_notification ADD confirmed TINYINT(1) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_user_notification ADD baseObjectID INT(10) NOT NULL DEFAULT 0;
 ALTER TABLE wcf1_user_notification ADD KEY (userID, eventID, objectID, confirmed);
+ALTER TABLE wcf1_user_notification DROP KEY packageID;
 
 ALTER TABLE wcf1_user_notification_to_user DROP mailNotified;
 

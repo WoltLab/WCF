@@ -909,7 +909,7 @@ CREATE TABLE wcf1_session (
 	sessionVariables MEDIUMTEXT,
 	spiderID INT(10),
 	KEY packageID (lastActivityTime, spiderID),
-	UNIQUE KEY userID (userID)
+	UNIQUE KEY uniqueUserID (userID)
 );
 
 DROP TABLE IF EXISTS wcf1_session_virtual;

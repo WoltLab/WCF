@@ -71,6 +71,11 @@
 		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
 		<instruction type="objectType">objectType.xml</instruction>
 		<instruction type="pageMenu">pageMenu.xml</instruction>
+		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+		<instruction type="userMenu">userMenu.xml</instruction>
+		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
+		<instruction type="userOption">userOption.xml</instruction>
+		<instruction type="userProfileMenu">userProfileMenu.xml</instruction>
 		
 		<instruction type="script" run="standalone">acp/update_mqc_com.woltlab.wcf_2.1.php</instruction>
 	</instructions>
