@@ -5,7 +5,7 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.0.9</version> <!-- codename: maelstrom -->
+		<version>2.0.10</version> <!-- codename: maelstrom -->
 		<date>2014-08-29</date>
 	</packageinformation>
 	
@@ -41,12 +41,5 @@
 		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
 		<instruction type="aclOption">aclOption.xml</instruction>
 		<instruction type="script">acp/post_install.php</instruction>
-	</instructions>
-	
-	<instructions type="update" fromversion="2.0.8">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		<instruction type="language">language/*.xml</instruction>
 	</instructions>
 </package>
