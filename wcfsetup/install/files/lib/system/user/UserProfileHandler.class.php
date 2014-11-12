@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\user;
+use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -47,5 +48,12 @@ class UserProfileHandler extends SingletonFactory {
 	 */
 	public function __get($name) {
 		return $this->userProfile->$name;
+	}
+	
+	/**
+	 * Reloads the user profile object with data directly from the database.
+	 */
+	public function reloadUserProfile() {
+		$this->userProfile = new UserProfile(new User($this->userID));
 	}
 }
