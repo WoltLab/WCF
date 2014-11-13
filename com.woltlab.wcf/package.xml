@@ -43,7 +43,7 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instruction type="update" fromversion="2.0.9">
+	<instructions type="update" fromversion="2.0.9">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="files">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
@@ -51,5 +51,5 @@
 		<instruction type="language">language/*.xml</instruction>
 		
 		<instruction type="bbcode">bbcode.xml</instruction>
-	</instruction>
+	</instructions>
 </package>
