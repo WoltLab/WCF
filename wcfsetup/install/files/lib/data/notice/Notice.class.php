@@ -59,9 +59,8 @@ class Notice extends DatabaseObject implements IRouteController {
 		
 		if ($this->isDismissed === null) {
 			if (WCF::getUser()->userID) {
-				UserStorageHandler::getInstance()->loadStorage(array(WCF::getUser()->userID));
-				$dismissedNotices = UserStorageHandler::getInstance()->getStorage(array(WCF::getUser()->userID), 'dismissedNotices');
-				if ($dismissedNotices[WCF::getUser()->userID] === null) {
+				$dismissedNotices = UserStorageHandler::getInstance()->getField('dismissedNotices');
+				if ($dismissedNotices === null) {
 					$sql = "SELECT	noticeID
 						FROM	wcf".WCF_N."_notice_dismissed
 						WHERE	userID = ?";
@@ -82,7 +81,7 @@ class Notice extends DatabaseObject implements IRouteController {
 					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'dismissedNotices', serialize($noticeIDs));
 				}
 				else {
-					$dismissedNoticeIDs = @unserialize($dismissedNotices[WCF::getUser()->userID]);
+					$dismissedNoticeIDs = @unserialize($dismissedNotices);
 					$this->isDismissed = in_array($this->noticeID, $dismissedNoticeIDs);
 				}
 			}

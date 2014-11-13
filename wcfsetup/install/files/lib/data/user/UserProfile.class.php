@@ -114,14 +114,11 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 			$this->followingUserIDs = array();
 			
 			if ($this->userID) {
-				// load storage data
-				UserStorageHandler::getInstance()->loadStorage(array($this->userID));
-				
 				// get ids
-				$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'followingUserIDs');
+				$data = UserStorageHandler::getInstance()->getField('followingUserIDs', $this->userID);
 				
 				// cache does not exist or is outdated
-				if ($data[$this->userID] === null) {
+				if ($data === null) {
 					$sql = "SELECT	followUserID
 						FROM	wcf".WCF_N."_user_follow
 						WHERE	userID = ?";
@@ -135,7 +132,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 					UserStorageHandler::getInstance()->update($this->userID, 'followingUserIDs', serialize($this->followingUserIDs));
 				}
 				else {
-					$this->followingUserIDs = unserialize($data[$this->userID]);
+					$this->followingUserIDs = unserialize($data);
 				}
 			}
 		}
@@ -153,14 +150,11 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 			$this->followerUserIDs = array();
 			
 			if ($this->userID) {
-				// load storage data
-				UserStorageHandler::getInstance()->loadStorage(array($this->userID));
-				
 				// get ids
-				$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'followerUserIDs');
+				$data = UserStorageHandler::getInstance()->getField('followerUserIDs', $this->userID);
 				
 				// cache does not exist or is outdated
-				if ($data[$this->userID] === null) {
+				if ($data === null) {
 					$sql = "SELECT	userID
 						FROM	wcf".WCF_N."_user_follow
 						WHERE	followUserID = ?";
@@ -174,7 +168,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 					UserStorageHandler::getInstance()->update($this->userID, 'followerUserIDs', serialize($this->followerUserIDs));
 				}
 				else {
-					$this->followerUserIDs = unserialize($data[$this->userID]);
+					$this->followerUserIDs = unserialize($data);
 				}
 			}
 		}
@@ -192,14 +186,11 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 			$this->ignoredUserIDs = array();
 			
 			if ($this->userID) {
-				// load storage data
-				UserStorageHandler::getInstance()->loadStorage(array($this->userID));
-				
 				// get ids
-				$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'ignoredUserIDs');
+				$data = UserStorageHandler::getInstance()->getField('ignoredUserIDs', $this->userID);
 				
 				// cache does not exist or is outdated
-				if ($data[$this->userID] === null) {
+				if ($data === null) {
 					$sql = "SELECT	ignoreUserID
 						FROM	wcf".WCF_N."_user_ignore
 						WHERE	userID = ?";
@@ -213,7 +204,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 					UserStorageHandler::getInstance()->update($this->userID, 'ignoredUserIDs', serialize($this->ignoredUserIDs));
 				}
 				else {
-					$this->ignoredUserIDs = unserialize($data[$this->userID]);
+					$this->ignoredUserIDs = unserialize($data);
 				}
 			}
 		}
@@ -262,16 +253,13 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 				if ($this->canSeeAvatar()) {
 					if ($this->avatarID) {
 						if (!$this->fileHash) {
-							// load storage data
-							UserStorageHandler::getInstance()->loadStorage(array($this->userID));
-							$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'avatar');
-							
-							if ($data[$this->userID] === null) {
+							$data = UserStorageHandler::getInstance()->getField('avatar', $this->userID);
+							if ($data === null) {
 								$this->avatar = new UserAvatar($this->avatarID);
 								UserStorageHandler::getInstance()->update($this->userID, 'avatar', serialize($this->avatar));
 							}
 							else {
-								$this->avatar = unserialize($data[$this->userID]);
+								$this->avatar = unserialize($data);
 							}
 						}
 						else {
@@ -616,15 +604,14 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 				}
 				else {
 					// load storage data
-					UserStorageHandler::getInstance()->loadStorage(array($this->userID));
-					$data = UserStorageHandler::getInstance()->getStorage(array($this->userID), 'userRank');
+					$data = UserStorageHandler::getInstance()->getField('userRank', $this->userID);
 					
-					if ($data[$this->userID] === null) {
+					if ($data === null) {
 						$this->rank = new UserRank($this->rankID);
 						UserStorageHandler::getInstance()->update($this->userID, 'userRank', serialize($this->rank));
 					}
 					else {
-						$this->rank = unserialize($data[$this->userID]);
+						$this->rank = unserialize($data);
 					}
 				}
 			}

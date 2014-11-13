@@ -87,14 +87,10 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 			$this->collapsedContent[$objectTypeID] = array();
 			
 			if (WCF::getUser()->userID) {
-				// get data from storage
-				UserStorageHandler::getInstance()->loadStorage(array(WCF::getUser()->userID));
-				
-				// get ids
-				$data = UserStorageHandler::getInstance()->getStorage(array(WCF::getUser()->userID), 'collapsedContent-'.$objectTypeID);
+				$data = UserStorageHandler::getInstance()->getField('collapsedContent-'.$objectTypeID);
 				
 				// cache does not exist or is outdated
-				if ($data[WCF::getUser()->userID] === null) {
+				if ($data === null) {
 					$sql = "SELECT	objectID
 						FROM	wcf".WCF_N."_user_collapsible_content
 						WHERE	objectTypeID = ?
@@ -112,7 +108,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'collapsedContent-'.$objectTypeID, serialize($this->collapsedContent[$objectTypeID]));
 				}
 				else {
-					$this->collapsedContent[$objectTypeID] = @unserialize($data[WCF::getUser()->userID]);
+					$this->collapsedContent[$objectTypeID] = @unserialize($data);
 				}
 			}
 			else {

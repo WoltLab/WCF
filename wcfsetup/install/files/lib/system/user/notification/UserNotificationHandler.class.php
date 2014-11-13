@@ -239,11 +239,7 @@ class UserNotificationHandler extends SingletonFactory {
 			$this->notificationCount = 0;
 			
 			if (WCF::getUser()->userID) {
-				// load storage data
-				UserStorageHandler::getInstance()->loadStorage(array(WCF::getUser()->userID));
-				
-				// get ids
-				$data = UserStorageHandler::getInstance()->getStorage(array(WCF::getUser()->userID), 'userNotificationCount');
+				$data = UserStorageHandler::getInstance()->getField('userNotificationCount');
 				
 				// cache does not exist or is outdated
 				if ($data[WCF::getUser()->userID] === null || $skipCache) {
@@ -264,7 +260,7 @@ class UserNotificationHandler extends SingletonFactory {
 					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'userNotificationCount', serialize($this->notificationCount));
 				}
 				else {
-					$this->notificationCount = unserialize($data[WCF::getUser()->userID]);
+					$this->notificationCount = unserialize($data);
 				}
 			}
 		}

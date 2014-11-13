@@ -208,12 +208,8 @@ class ModerationQueueManager extends SingletonFactory {
 	 * @return	integer
 	 */
 	public function getOutstandingModerationCount() {
-		// load storage data
-		UserStorageHandler::getInstance()->loadStorage(array(WCF::getUser()->userID));
-		
 		// get count
-		$data = UserStorageHandler::getInstance()->getStorage(array(WCF::getUser()->userID), 'outstandingModerationCount');
-		$count = $data[WCF::getUser()->userID];
+		$count = UserStorageHandler::getInstance()->getField('outstandingModerationCount');
 		
 		// cache does not exist or is outdated
 		if ($count === null) {

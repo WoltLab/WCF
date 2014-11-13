@@ -87,6 +87,39 @@ class UserStorageHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns the value of the given field for a certain user or null if no
+	 * such value exists. If no userID is given, the id of the current user
+	 * is used.
+	 * 
+	 * In contrast to getStorage(), this method calls loadStorage() if no stored
+	 * data for the user has been loaded yet!
+	 * 
+	 * @param	string		$field
+	 * @param	integer		$userID
+	 * @return	mixed
+	 */
+	public function getField($field, $userID = null) {
+		if ($userID === null) {
+			$userID = WCF::getUser()->userID;
+		}
+		
+		if (!$userID) {
+			return null;
+		}
+		
+		// make sure stored data is loaded
+		if (!isset($this->cache[$userID])) {
+			$this->loadStorage(array($userID));
+		}
+		
+		if (isset($this->cache[$userID][$field])) {
+			return $this->cache[$userID][$field];
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Inserts new data records into database.
 	 * 
 	 * @param	integer		$userID

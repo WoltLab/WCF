@@ -68,14 +68,10 @@ class VisitTracker extends SingletonFactory {
 		
 		if ($this->userVisits === null) {
 			if (WCF::getUser()->userID) {
-				// get data from storage
-				UserStorageHandler::getInstance()->loadStorage(array(WCF::getUser()->userID));
-				
-				// get ids
-				$data = UserStorageHandler::getInstance()->getStorage(array(WCF::getUser()->userID), 'trackedUserVisits');
+				$data = UserStorageHandler::getInstance()->getField('trackedUserVisits');
 				
 				// cache does not exist or is outdated
-				if ($data[WCF::getUser()->userID] === null) {
+				if ($data === null) {
 					$this->userVisits = array();
 					$sql = "SELECT	objectTypeID, visitTime
 						FROM	wcf".WCF_N."_tracked_visit_type
@@ -90,7 +86,7 @@ class VisitTracker extends SingletonFactory {
 					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'trackedUserVisits', serialize($this->userVisits));
 				}
 				else {
-					$this->userVisits = @unserialize($data[WCF::getUser()->userID]);
+					$this->userVisits = @unserialize($data);
 				}
 			}
 			else {
