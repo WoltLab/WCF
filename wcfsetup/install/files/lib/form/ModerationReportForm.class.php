@@ -1,9 +1,9 @@
 <?php
 namespace wcf\form;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\moderation\queue\ModerationQueueReportManager;
-use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
 use wcf\system\WCF;
 
 /**
