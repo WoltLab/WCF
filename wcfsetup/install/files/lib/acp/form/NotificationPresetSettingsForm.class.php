@@ -43,6 +43,12 @@ class NotificationPresetSettingsForm extends AbstractForm {
 	public $settings = array();
 	
 	/**
+	 * true to apply change to existing users
+	 * @var	boolean
+	 */
+	public $applyChangesToExistingUsers = 0;
+	
+	/**
 	 * list of valid options for the mail notification type.
 	 * @var	array<string>
 	 */
@@ -64,6 +70,7 @@ class NotificationPresetSettingsForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		if (isset($_POST['settings'])) $this->settings = $_POST['settings'];
+		if (isset($_POST['applyChangesToExistingUsers'])) $this->applyChangesToExistingUsers = intval($_POST['applyChangesToExistingUsers']);
 	}
 	
 	/**
@@ -146,7 +153,8 @@ class NotificationPresetSettingsForm extends AbstractForm {
 		
 		WCF::getTPL()->assign(array(
 			'events' => $groupedEvents,
-			'settings' => $this->settings
+			'settings' => $this->settings,
+			'applyChangesToExistingUsers' => $this->applyChangesToExistingUsers
 		));
 	}
 	
@@ -174,6 +182,23 @@ class NotificationPresetSettingsForm extends AbstractForm {
 						'preset' => $preset,
 						'presetMailNotificationType' => $presetMailNotificationType
 					));
+					
+					if ($this->applyChangesToExistingUsers) {
+						if (!$preset) {
+							$sql = "DELETE FROM	wcf".WCF_N."_user_notification_event_to_user
+								WHERE		eventID = ?";
+							$statement = WCF::getDB()->prepareStatement($sql);
+							$statement->execute(array($event->eventID));
+						}
+						else {
+							$sql = "REPLACE INTO	wcf".WCF_N."_user_notification_event_to_user
+										(userID, eventID, mailNotificationType)
+								SELECT		userID, ?, ?
+								FROM		wcf".WCF_N."_user";
+							$statement = WCF::getDB()->prepareStatement($sql);
+							$statement->execute(array($event->eventID, $presetMailNotificationType));
+						}
+					}
 				}
 			}
 		}

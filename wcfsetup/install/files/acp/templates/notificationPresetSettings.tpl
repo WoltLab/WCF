@@ -42,6 +42,16 @@
 
 <form method="post" action="{link controller='NotificationPresetSettings'}{/link}">
 	<div class="container containerPadding marginTop" id="notificationSettings">
+		<fieldset>
+			<dl>
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" name="applyChangesToExistingUsers" value="1" {if $applyChangesToExistingUsers}checked="checked" {/if}/> {lang}wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers{/lang}</label>
+					<small>{lang}wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description{/lang}</small>	
+				</dd>
+			</dl>
+		</fieldset>
+		
 		{foreach from=$events key='eventCategory' item='eventList'}
 			<fieldset>
 				<legend>{lang}wcf.user.notification.{$eventCategory}{/lang}</legend>

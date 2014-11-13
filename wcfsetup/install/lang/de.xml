@@ -1698,6 +1698,8 @@ Sie können jetzt den vollen Funktionsumfang der Seite nutzen.]]></item>
 		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[Ihr Benutzerkonto auf der Website: {@PAGE_TITLE|language} wurde freigeschaltet]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[Sie können auf dieser Seite die Standardeinstellungen für neue Benutzer festlegen, dies wirkt sich nicht auf bestehende Benutzer aus. Benutzer können abweichende Einstellungen festlegen.]]></item>
+		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
+		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description"><![CDATA[Die hier eingestellten Änderungen der Vorgabewerte für Benachrichtigungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
