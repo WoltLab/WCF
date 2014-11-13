@@ -1,6 +1,9 @@
 <?php
 namespace wcf\form;
+use wcf\system\exception\IllegalLinkException;
+use wcf\system\moderation\queue\activation\IModerationQueueActivationHandler;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
+use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\WCF;
 
 /**
@@ -14,6 +17,18 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class ModerationActivationForm extends AbstractModerationForm {
+	/**
+	 * @see	\wcf\page\IPage::readParameters()
+	 */
+	public function readParameters() {
+		parent::readParameters();
+	
+		$processor = ModerationQueueManager::getInstance()->getProcessor(null, null, $this->queue->objectTypeID);
+		if (!($processor instanceof IModerationQueueActivationHandler)) {
+			throw new IllegalLinkException();
+		}
+	}
+	
 	/**
 	 * @see	\wcf\page\IPage::assignVariables()
 	 */
