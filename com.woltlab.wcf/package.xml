@@ -45,7 +45,7 @@
 	
 	<instructions type="update" fromversion="2.0.9">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="files">files_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="language">language/*.xml</instruction>
