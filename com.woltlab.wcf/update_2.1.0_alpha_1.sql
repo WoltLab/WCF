@@ -193,6 +193,9 @@ ALTER TABLE wcf1_moderation_queue ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1
 
 ALTER TABLE wcf1_page_menu_item ADD originIsSystem TINYINT(1) NOT NULL DEFAULT 0;
 
+/* truncate table to ensure consistency */
+DELETE FROM wcf1_session;
+
 ALTER TABLE wcf1_session ADD UNIQUE KEY uniqueUserID (userID);
 
 ALTER TABLE wcf1_sitemap ADD permissions TEXT NULL;
@@ -200,12 +203,10 @@ ALTER TABLE wcf1_sitemap ADD options TEXT NULL;
 
 ALTER TABLE wcf1_template_listener ADD niceValue TINYINT(3) NOT NULL DEFAULT 0;
 
-ALTER TABLE wcf1_user ADD banExpires INT(10) NOT NULL DEFAULT 0;
-ALTER TABLE wcf1_user ADD disableAvatarExpires INT(10) NOT NULL DEFAULT 0;
-ALTER TABLE wcf1_user ADD disableSignatureExpires INT(10) NOT NULL DEFAULT 0;
-ALTER TABLE wcf1_user ADD socialNetworkPrivacySettings TEXT;
-
 ALTER TABLE wcf1_user_group_option ADD usersOnly TINYINT(1) NOT NULL DEFAULT 0;
+
+/* truncate table to ensure consistency */
+DELETE FROM wcf1_user_notification;
 
 ALTER TABLE wcf1_user_notification CHANGE authorID authorID INT(10) NULL;
 ALTER TABLE wcf1_user_notification ADD timesTriggered INT(10) NOT NULL DEFAULT 0;

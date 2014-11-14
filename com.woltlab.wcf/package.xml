@@ -62,6 +62,11 @@
 		
 		<instruction type="sql" run="standalone">update_2.1.0_alpha_1.sql</instruction>
 		
+		<instruction type="sql" run="standalone">update_user1_2.1.0_alpha_1.sql</instruction>
+		<instruction type="sql" run="standalone">update_user2_2.1.0_alpha_1.sql</instruction>
+		<instruction type="sql" run="standalone">update_user3_2.1.0_alpha_1.sql</instruction>
+		<instruction type="sql" run="standalone">update_user4_2.1.0_alpha_1.sql</instruction>
+		
 		<instruction type="acpMenu">acpMenu.xml</instruction>
 		<instruction type="bbcode">bbcode.xml</instruction>
 		<instruction type="clipboardAction">clipboardAction.xml</instruction>
