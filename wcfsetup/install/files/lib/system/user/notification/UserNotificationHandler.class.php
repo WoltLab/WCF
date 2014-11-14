@@ -242,7 +242,7 @@ class UserNotificationHandler extends SingletonFactory {
 				$data = UserStorageHandler::getInstance()->getField('userNotificationCount');
 				
 				// cache does not exist or is outdated
-				if ($data[WCF::getUser()->userID] === null || $skipCache) {
+				if (!isset($data[WCF::getUser()->userID]) || $skipCache) {
 					$sql = "SELECT	COUNT(*) AS count
 						FROM	wcf".WCF_N."_user_notification
 						WHERE	userID = ?
