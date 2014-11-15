@@ -61,9 +61,9 @@ class RebuildDataPage extends AbstractPage {
 			return 0;
 		});
 		
-		$sql = "SHOW VARIABLES LIKE ?";
+		$sql = "SHOW VARIABLES LIKE 'innodb_flush_log_at_trx_commit'";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array('innodb_flush_log_at_trx_commit'));
+		$statement->execute();
 		$row = $statement->fetchArray();
 		if ($row && $row['Value'] == 1) {
 			$this->showInnoDBWarning = true;
