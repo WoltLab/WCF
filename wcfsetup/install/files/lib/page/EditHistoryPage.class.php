@@ -158,6 +158,15 @@ class EditHistoryPage extends AbstractPage {
 			$b = explode("\n", StringUtil::unifyNewlines($this->new->getMessage()));
 			$this->diff = new Diff($a, $b);
 		}
+		
+		// set default values
+		if (!isset($_REQUEST['oldID']) && !isset($_REQUEST['newID'])) {
+			foreach ($this->objectList as $object) {
+				$this->oldID = $object->entryID;
+				break;
+			}
+			$this->newID = 'current';
+		}
 	}
 	
 	/**
