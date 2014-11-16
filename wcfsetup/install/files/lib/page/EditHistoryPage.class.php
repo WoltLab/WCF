@@ -119,6 +119,7 @@ class EditHistoryPage extends AbstractPage {
 		if (!$this->objectType) throw new IllegalLinkException();
 		$processor = $this->objectType->getProcessor();
 		$this->object = $processor->getObjectByID($this->objectID);
+		if (!$this->object->getObjectID()) throw new IllegalLinkException();
 		$processor->checkPermissions($this->object);
 		$this->activeMenuItem = $processor->getActivePageMenuItem();
 		$this->object->addBreadcrumbs();
