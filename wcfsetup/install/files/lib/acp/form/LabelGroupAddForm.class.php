@@ -8,6 +8,7 @@ use wcf\system\acl\ACLHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Shows the label group add form.
@@ -41,6 +42,12 @@ class LabelGroupAddForm extends AbstractForm {
 	 * @var	string
 	 */
 	public $groupName = '';
+	
+	/**
+	 * group description
+	 * @var	string
+	 */
+	public $groupDescription = '';
 	
 	/**
 	 * list of label object type handlers
@@ -93,6 +100,7 @@ class LabelGroupAddForm extends AbstractForm {
 		
 		if (I18nHandler::getInstance()->isPlainValue('groupName')) $this->groupName = I18nHandler::getInstance()->getValue('groupName');
 		
+		if (isset($_POST['groupDescription'])) $this->groupDescription = StringUtil::trim($_POST['groupDescription']);
 		if (isset($_POST['forceSelection'])) $this->forceSelection = true;
 		if (isset($_POST['objectTypes']) && is_array($_POST['objectTypes'])) $this->objectTypes = $_POST['objectTypes'];
 		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
@@ -158,6 +166,7 @@ class LabelGroupAddForm extends AbstractForm {
 		$this->objectAction = new LabelGroupAction(array(), 'create', array('data' => array_merge($this->additionalFields, array(
 			'forceSelection' => ($this->forceSelection ? 1 : 0),
 			'groupName' => $this->groupName,
+			'groupDescription' => $this->groupDescription,
 			'showOrder' => $this->showOrder
 		))));
 		$returnValues = $this->objectAction->executeAction();
@@ -187,7 +196,7 @@ class LabelGroupAddForm extends AbstractForm {
 		
 		// reset values
 		$this->forceSelection = false;
-		$this->groupName = '';
+		$this->groupName = $this->groupDescription = '';
 		$this->objectTypes = array();
 		$this->showOrder = 0;
 		$this->setObjectTypeRelations();
@@ -213,6 +222,7 @@ class LabelGroupAddForm extends AbstractForm {
 			'action' => 'add',
 			'forceSelection' => $this->forceSelection,
 			'groupName' => $this->groupName,
+			'groupDescription' => $this->groupDescription,
 			'labelObjectTypeContainers' => $this->labelObjectTypeContainers,
 			'objectTypeID' => $this->objectTypeID,
 			'showOrder' => $this->showOrder

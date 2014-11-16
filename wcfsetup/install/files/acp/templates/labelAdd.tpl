@@ -49,7 +49,7 @@
 						<select id="groupID" name="groupID">
 							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 							{foreach from=$labelGroupList item=group}
-								<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected="selected"{/if}>{$group}</option>
+								<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected="selected"{/if}>{$group}{if $group->groupDescription} / {$group->groupDescription}{/if}</option>
 							{/foreach}
 						</select>
 						{if $errorField == 'groupID'}
