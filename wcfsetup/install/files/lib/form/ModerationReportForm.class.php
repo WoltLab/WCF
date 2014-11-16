@@ -3,9 +3,9 @@ namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\moderation\queue\ModerationQueueReportManager;
-use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
+use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\moderation\queue\ModerationQueueReportManager;
 use wcf\system\WCF;
 
 /**
