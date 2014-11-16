@@ -590,7 +590,7 @@
 					display: none;
 				}
 			}
-					
+			
 			> .sidebar {
 				background-color: @wcfSidebarBackgroundColor;
 				width: 300px;
@@ -1094,7 +1094,7 @@ html[dir="rtl"] {
 				}
 				
 				> div {
-					padding: 14px 21px;
+					padding: @wcfGapMedium @wcfGapLarge;
 				}
 			}
 			
@@ -1109,7 +1109,7 @@ html[dir="rtl"] {
 
 .nestedCategoryList {
 	> li {
-		margin-top: 14px;
+		margin-top: @wcfGapMedium;
 		overflow: hidden;
 		
 		&:first-child {
@@ -1117,7 +1117,7 @@ html[dir="rtl"] {
 		}
 		
 		> div {
-			padding: 0 14px;
+			padding: 0 @wcfGapMedium;
 			
 			> ol {
 				margin-top: 0;
@@ -1157,7 +1157,7 @@ html[dir="rtl"] {
 .sidebarNestedCategoryList {
 	> li {
 		> ol {
-			margin-left: 14px;
+			margin-left: @wcfGapMedium;
 		}
 	}
 	
@@ -1700,7 +1700,7 @@ html[dir="rtl"] {
 			font-family: FontAwesome;
 			font-size: 14px;
 			position: absolute;
-			margin-left: 4px;
+			margin-left: @wcfGapTiny;
 			
 			.textShadow(@wcfTabularBoxBackgroundColor);
 		}
@@ -1929,7 +1929,7 @@ dl.inlineDataList {
 	
 	> dd {
 		display: inline-block;
-		margin: 0 4px 0 0;
+		margin: 0 @wcfGapTiny 0 0;
 		padding: 0;
 	}
 	

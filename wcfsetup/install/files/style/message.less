@@ -427,7 +427,7 @@
 	position: absolute;
 	text-transform: uppercase;
 	top: 24px;
-			
+	
 	.boxShadow(1px, 1px, rgba(0, 0, 0, .2), 3px);
 	.linearGradient(darken(@wcfTabularBoxBackgroundColor, 10%), @wcfTabularBoxBackgroundColor, darken(@wcfTabularBoxBackgroundColor, 10%));
 	.textShadow(darken(@wcfTabularBoxBackgroundColor, 10%));
@@ -513,7 +513,7 @@
 	color: @wcfDimmedColor;
 	font-size: @wcfSmallFontSize;
 	padding: @wcfGapTiny @wcfGapSmall;
-		
+	
 	.linearGradientNative(~"90deg, @{messageFooterNoteGradientColor} 0%, @{messageFooterNoteGradientColor2} 40%");
 }
 
@@ -980,7 +980,7 @@ li:nth-child(2n+1) .message {
 	.message .messageBody .messageSignature,
 	.message .messageSidebar .userCredits {
 		display: none;
-	}	
+	}
 	
 	.message .messageSidebar {
 		padding: 7px;
@@ -1013,22 +1013,22 @@ li:nth-child(2n+1) .message {
 	
 	/* reduce paddings */
 	.message .messageContent .messageHeader {
-		padding: 7px 7px 0;
+		padding: @wcfGapSmall @wcfGapSmall 0;
 	}
 	
 	.message .messageBody {
-		padding: 7px;
+		padding: @wcfGapSmall;
 	}
 	
 	.message .messageBody > div:not(.messageFooter):not(.messageTabMenu):not(.redactor-box) {
-		padding: 7px 0;
+		padding: @wcfGapSmall 0;
 	}
 	
 	.message .messageBody > footer {
 		padding: 0;
 		position: absolute;
-		right: 7px;
-		top: 7px;
+		right: @wcfGapSmall;
+		top: @wcfGapSmall;
 	}
 	
 	.message .messageOptions nav {
