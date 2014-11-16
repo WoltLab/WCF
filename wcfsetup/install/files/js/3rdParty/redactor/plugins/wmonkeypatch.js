@@ -337,6 +337,8 @@ RedactorPlugins.wmonkeypatch = function() {
 		 *  - fixes insertion in an empty editor w/o prior focus until the issue has been resolved by Imperavi
 		 */
 		insert: function() {
+			var $isWebKit = ($.browser.webkit || document.documentElement.style.hasOwnProperty('WebkitAppearance') || window.hasOwnProperty('chrome'));
+			
 			var $focusEditor = (function() {
 				var $html = this.$editor.html();
 				if (this.utils.isEmpty($html)) {
@@ -359,12 +361,35 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 			}).bind(this);
 			
+			// work-around for WebKit inserting lame spans
+			// bug report: https://code.google.com/p/chromium/issues/detail?id=335955
+			// based upon the idea: http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
+			var $fixWebKit = (function() {
+				this.$editor.find('span').each(function() {
+					var $span = $(this);
+					if ($span.data('verified') !== 'redactor') {
+						var $helper = $('<b>helper</b>').insertBefore($span);
+						
+						$helper.after($span.contents());
+						
+						$helper.remove();
+						$span.remove();
+					}
+				});
+			}).bind(this);
+			
 			// insert.html
 			var $mpHtml = this.insert.html;
 			this.insert.html = (function(html, clean) {
 				$focusEditor();
 				
 				$mpHtml.call(this, html, clean);
+				
+				if ($isWebKit) {
+					setTimeout(function() {
+						$fixWebKit();
+					}, 10);
+				}
 			}).bind(this);
 			
 			// pasting in Safari is broken, try to avoid breaking everything and wait for Imperavi to address this bug
@@ -673,6 +698,7 @@ RedactorPlugins.wmonkeypatch = function() {
 		 * - Explicitly set CSS values for <span> within the editor, prevents Chrome from inserting random <span> tags
 		 */
 		fixWebKit: function() {
+			return;
 			if (!$.browser.webkit && !document.documentElement.style.hasOwnProperty('WebkitAppearance') && !window.hasOwnProperty('chrome')) {
 				return;
 			}
@@ -686,7 +712,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			var $editorID = this.$editor.wcfIdentify();
 			var $style = document.createElement('style');
 			$style.type = 'text/css';
-			$style.innerHTML = '#' + $editorID + ' span { font-size: ' + $default.fontSize + ', line-height: ' + $default.lineHeight + ' }';
+			$style.innerHTML = '#' + $editorID + ' span { font-size: ' + $default.fontSize + '; line-height: ' + $default.lineHeight + ' }';
 			document.head.appendChild($style);
 		}
 	};
