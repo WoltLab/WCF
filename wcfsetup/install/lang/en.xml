@@ -488,7 +488,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.label.group.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
-		<item name="wcf.acp.label.group.groupName.description"><![CDATA[TODO: Die Titel ist für alle Benutzer sichtbar, die Zugriff auf diese Labelgruppe haben.]]></item>
+		<item name="wcf.acp.label.group.groupName.description"><![CDATA[TODO: Der Titel ist für alle Benutzer sichtbar, die Zugriff auf diese Labelgruppe haben.]]></item>
 		<item name="wcf.acp.label.group.groupDescription.description"><![CDATA[TODO: Die optionale Beschreibung wird nur in der Administrationsoberfläche angezeigt.]]></item>
 	</category>
 	
