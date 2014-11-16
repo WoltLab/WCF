@@ -63,11 +63,11 @@ abstract class AbstractMessageQuoteHandler extends SingletonFactory implements I
 		$renderedQuotes = array();
 		foreach ($messages as $message) {
 			foreach ($message as $quoteID => $quote) {
-				if ($render) {
+				$quotedMessage = $message->getFullQuote($quoteID);
+				if ($render && ($renderAsString && $quotedMessage === null)) {
 					$renderedQuotes[] = MessageQuoteManager::getInstance()->renderQuote($message->object, $quote, $renderAsString);
 				}
 				else {
-					$quotedMessage = $message->getFullQuote($quoteID);
 					$renderedQuotes[] = MessageQuoteManager::getInstance()->renderQuote($message->object, ($quotedMessage === null ? $quote : $quotedMessage), $renderAsString);
 				}
 			}

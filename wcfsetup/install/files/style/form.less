@@ -17,7 +17,7 @@ fieldset {
 			display: inline-block;
 			margin-bottom: @wcfGapTiny;
 			position: relative;
-			top: -7px;
+			top: -@wcfGapSmall;
 		}
 	}
 	
@@ -183,14 +183,14 @@ dl:not(.plain) {
 	}
 	
 	fieldset > dl:not(:first-of-type) {
-		margin-top: 14px;
+		margin-top: @wcfGapMedium;
 	}
 }
 
 /* sidebar */
 .sidebar {
 	dl:not(.plain) {
-		&:not(:last-child) {		
+		&:not(:last-child) {
 			margin-bottom: @wcfGapMedium;
 		}
 		
@@ -517,7 +517,7 @@ select > option {
 /* reCaptcha */
 .reCaptcha {
 	input.marginTop {
-		margin-top: 14px;
+		margin-top: @wcfGapMedium;
 	}
 }
 

@@ -2722,6 +2722,8 @@ WCF.Action.Toggle = Class.extend({
 	 * @param	jQuery	$toggleButton
 	 */
 	_toggleButton: function($container, $toggleButton) {
+		var $newTitle = '';
+		
 		// toggle icon source
 		WCF.LoadingOverlayHandler.updateIcon($toggleButton, false);
 		if ($toggleButton.hasClass('icon-check-empty')) {
