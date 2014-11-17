@@ -6789,6 +6789,9 @@ WCF.System.FlexibleMenu = {
 				}
 				
 				$('<li>' + $(item).html() + '</li>').data('index', index).appendTo(this._dropdownMenus[containerID]).click(function(event) {
+					// prevent links being followed (they are mandatory in jQuery UI's tab menu)
+					event.preventDefault();
+					
 					// forward click to the original item
 					var $item = $($menuItems[$(event.currentTarget).data('index')]);
 					if ($item[0].tagName === 'A') {
