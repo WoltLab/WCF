@@ -190,13 +190,16 @@ final class ExifUtil {
 	public static function getFormattedExifData(array $rawExifData) {
 		$exifData = array();
 		
-		if (isset($rawExifData['ExposureTime']) && is_string($rawExifData['ExposureTime'])) { // unit is second (unsigned rational)
+		// unit is second (unsigned rational)
+		if (isset($rawExifData['ExposureTime']) && is_string($rawExifData['ExposureTime'])) {
 			$exifData['ExposureTime'] = $rawExifData['ExposureTime'];
 		}
-		if (isset($rawExifData['FNumber']) && is_string($rawExifData['FNumber'])) { // actual F-number(F-stop) of lens when the image was taken (unsigned rational)
+		// actual F-number(F-stop) of lens when the image was taken (unsigned rational)
+		if (isset($rawExifData['FNumber']) && is_string($rawExifData['FNumber'])) {
 			$exifData['FNumber'] = self::convertExifRational($rawExifData['FNumber']);
 		}
-		if (isset($rawExifData['FocalLength']) && is_string($rawExifData['FocalLength'])) { // unit is millimeter (unsigned rational)
+		// unit is millimeter (unsigned rational)
+		if (isset($rawExifData['FocalLength']) && is_string($rawExifData['FocalLength'])) {
 			$exifData['FocalLength'] = self::convertExifRational($rawExifData['FocalLength']);
 		}
 		/*if (isset($rawExifData['ShutterSpeedValue']) && is_string($rawExifData['ShutterSpeedValue'])) {
