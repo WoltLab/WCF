@@ -924,6 +924,8 @@ WCF.Message.QuickReply = Class.extend({
 		if ($.browser.redactor) {
 			var $html = WCF.String.unescapeHTML(data.returnValues.template);
 			$html = this._messageField.redactor('wbbcode.convertToHtml', $html);
+			$html = $html.replace(/<p><blockquote/, '<blockquote');
+			$html = $html.replace(/blockquote><\/p>/, 'blockquote>');
 			
 			this._messageField.redactor('focus.setEnd');
 			this._messageField.redactor('wutil.insertDynamic', $html, data.returnValues.template);
@@ -2261,7 +2263,12 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * @return	string
 	 */
 	_getSelectedText: function() {
-		return this._getNodeText(window.getSelection().getRangeAt(0).cloneContents());
+		var $selection = window.getSelection();
+		if ($selection.rangeCount) {
+			this._getNodeText($selection.getRangeAt(0).cloneContents());
+		}
+		
+		return '';
 	},
 	
 	/**

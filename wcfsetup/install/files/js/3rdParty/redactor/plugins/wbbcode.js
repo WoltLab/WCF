@@ -1343,19 +1343,30 @@ RedactorPlugins.wbbcode = function() {
 				var $innerHTML = (plainText) ? this.wbbcode.convertToHtml(plainText) : '';
 				var $id = WCF.getUUID();
 				var $html = this.wbbcode.convertToHtml($openTag + $id + $closingTag);
-				$html = $html.replace($id, $innerHTML);
+				$html = $html.replace($id, $innerHTML.replace(/^<p>/, '').replace(/<\/p>$/, ''));
+				$html = $html.replace(/^<p>/, '').replace(/<\/p>$/, '');
 				
 				// assign a unique id in order to recognize the inserted quote
 				$html = $html.replace(/(<p>)?<blockquote/, '$1<blockquote id="' + $id + '"');
-				
+				console.debug($html);
 				this.insert.html($html, false);
 				
 				$quote = this.$editor.find('#' + $id);
 				if ($quote.length) {
 					// quote may be empty if $innerHTML was empty, fix it
 					var $inner = $quote.find('> div > div');
-					if ($inner.length == 1 && $inner[0].innerHTML === '') {
-						$inner[0].innerHTML = this.opts.invisibleSpace;
+					if ($inner.length == 1) {
+						if ($inner[0].innerHTML === '') {
+							$inner[0].innerHTML = this.opts.invisibleSpace;
+						}
+					}
+					else if ($.browser.mozilla) {
+						// Firefox on Mac OS X sometimes removes the "empty" div and replaces it with <br type="_moz">
+						var $br = $quote.find('> div > br[type=_moz]');
+						if ($br.length) {
+							$('<div>' + this.opts.invisibleSpace + '</div>').insertBefore($br);
+							$br.remove();
+						}
 					}
 					
 					$quote.removeAttr('id');
