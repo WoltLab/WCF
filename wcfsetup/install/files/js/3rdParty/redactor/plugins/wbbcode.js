@@ -1347,8 +1347,8 @@ RedactorPlugins.wbbcode = function() {
 				$html = $html.replace(/^<p>/, '').replace(/<\/p>$/, '');
 				
 				// assign a unique id in order to recognize the inserted quote
-				$html = $html.replace(/(<p>)?<blockquote/, '$1<blockquote id="' + $id + '"');
-				console.debug($html);
+				$html = $html.replace(/<blockquote/, '<blockquote id="' + $id + '"');
+				
 				this.insert.html($html, false);
 				
 				$quote = this.$editor.find('#' + $id);

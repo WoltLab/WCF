@@ -2265,7 +2265,7 @@ WCF.Message.Quote.Handler = Class.extend({
 	_getSelectedText: function() {
 		var $selection = window.getSelection();
 		if ($selection.rangeCount) {
-			this._getNodeText($selection.getRangeAt(0).cloneContents());
+			return this._getNodeText($selection.getRangeAt(0).cloneContents());
 		}
 		
 		return '';

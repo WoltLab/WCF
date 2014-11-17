@@ -12,6 +12,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\upload\DefaultUploadFileValidationStrategy;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\ExifUtil;
 use wcf\util\FileUtil;
 
 /**
@@ -170,6 +171,56 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 			if (@move_uploaded_file($file->getLocation(), $attachment->getLocation())) {
 				if ($attachment->isImage) {
 					$thumbnails[] = $attachment;
+					
+					// rotate image based on the exif data
+					$neededMemory = $attachment->width * $attachment->height * ($attachment->imageType == 'image/png' ? 4 : 3) * 2.1;
+					if (FileUtil::getMemoryLimit() == -1 || FileUtil::getMemoryLimit() > (memory_get_usage() + $neededMemory)) {
+						$exifData = ExifUtil::getExifData($attachment->getLocation());
+						if (!empty($exifData)) {
+							$orientation = ExifUtil::getOrientation($exifData);
+							if ($orientation != ExifUtil::ORIENTATION_ORIGINAL) {
+								$adapter = ImageHandler::getInstance()->getAdapter();
+								$adapter->loadFile($attachment->getLocation());
+								
+								$newImage = null;
+								switch ($orientation) {
+									case ExifUtil::ORIENTATION_180_ROTATE:
+										$newImage = $adapter->rotate(180);
+									break;
+									
+									case ExifUtil::ORIENTATION_90_ROTATE:
+										$newImage = $adapter->rotate(90);
+									break;
+									
+									case ExifUtil::ORIENTATION_270_ROTATE:
+										$newImage = $adapter->rotate(270);
+									break;
+									
+									case ExifUtil::ORIENTATION_HORIZONTAL_FLIP:
+									case ExifUtil::ORIENTATION_VERTICAL_FLIP:
+									case ExifUtil::ORIENTATION_VERTICAL_FLIP_270_ROTATE:
+									case ExifUtil::ORIENTATION_HORIZONTAL_FLIP_270_ROTATE:
+										// unsupported
+									break;
+								}
+								
+								if ($newImage !== null) {
+									$adapter->load($newImage, $adapter->getType());
+									
+									// update width and height of the attachment
+									if ($orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE) {
+										$attachmentEditor = new AttachmentEditor($attachment);
+										$attachmentEditor->update(array(
+											'height' => $attachment->width,
+											'width' => $attachment->height
+										));
+									}
+								}
+								
+								$adapter->writeImage($attachment->getLocation());
+							}
+						}
+					}
 				}
 				else {
 					// check whether we can create thumbnails for this file
