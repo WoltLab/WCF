@@ -3090,7 +3090,7 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.mailNotificationType.notSupported"><![CDATA[E-Mail-Benachrichtigungen werden nicht unterstützt.]]></item>
 		<item name="wcf.user.notification.markAllAsConfirmed"><![CDATA[Alle als gelesen markieren]]></item>
 		<item name="wcf.user.notification.markAllAsConfirmed.confirmMessage"><![CDATA[Wollen Sie wirklich alle Benachrichtigungen als gelesen markieren?]]></item>
-		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Alls gelesen markieren]]></item>
+		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Als gelesen markieren]]></item>
 		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[Keine neuen Benachrichtigungen]]></item>
 		<item name="wcf.user.notification.noNotifications"><![CDATA[Sie haben keine Benachrichtigungen.]]></item>
 		<item name="wcf.user.notification.notifications"><![CDATA[Benachrichtigungen]]></item>
