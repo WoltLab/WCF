@@ -73,6 +73,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 		$this->objectAction = new LabelGroupAction(array($this->groupID), 'update', array('data' => array_merge($this->additionalFields, array(
 			'forceSelection' => ($this->forceSelection ? 1 : 0),
 			'groupName' => $this->groupName,
+			'groupDescription' => $this->groupDescription,
 			'showOrder' => $this->showOrder
 		))));
 		$this->objectAction->executeAction();
@@ -107,6 +108,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 			
 			$this->forceSelection = ($this->group->forceSelection ? true : false);
 			$this->groupName = $this->group->groupName;
+			$this->groupDescription = $this->group->groupDescription;
 			$this->showOrder = $this->group->showOrder;
 		}
 	}

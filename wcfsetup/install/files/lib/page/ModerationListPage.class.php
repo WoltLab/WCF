@@ -110,7 +110,7 @@ class ModerationListPage extends SortablePage {
 		
 		// filter by status
 		if ($this->status == ModerationQueue::STATUS_DONE) {
-			$this->objectList->getConditionBuilder()->add("moderation_queue.status = ?", array(ModerationQueue::STATUS_DONE));
+			$this->objectList->getConditionBuilder()->add("moderation_queue.status IN (?)", array(ModerationQueue::STATUS_DONE, ModerationQueue::STATUS_CONFIRMED, ModerationQueue::STATUS_REJECTED));
 		}
 		else {
 			$this->objectList->getConditionBuilder()->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));

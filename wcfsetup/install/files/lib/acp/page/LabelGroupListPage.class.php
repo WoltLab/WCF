@@ -26,7 +26,7 @@ class LabelGroupListPage extends SortablePage {
 	/**
 	 * @see	\wcf\page\SortablePage::$validSortFields
 	 */
-	public $validSortFields = array('groupID', 'groupName', 'showOrder');
+	public $validSortFields = array('groupID', 'groupName', 'groupDescription', 'showOrder');
 	
 	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions

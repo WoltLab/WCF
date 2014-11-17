@@ -489,6 +489,8 @@
 		<item name="wcf.acp.label.group.showOrder"><![CDATA[Reihenfolge]]></item>
 		<item name="wcf.acp.label.label"><![CDATA[Label]]></item>
 		<item name="wcf.acp.label.list"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.label.group.groupName.description"><![CDATA[Der Titel ist für alle Benutzer sichtbar, die Zugriff auf diese Labelgruppe haben.]]></item>
+		<item name="wcf.acp.label.group.groupDescription.description"><![CDATA[Die optionale Beschreibung wird nur in der Administrationsoberfläche angezeigt.]]></item>
 	</category>
 	
 	<category name="wcf.acp.language">

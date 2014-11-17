@@ -44,7 +44,7 @@ class LabelListPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
-		$this->objectList->sqlSelects = "label_group.groupName";
+		$this->objectList->sqlSelects = "label_group.groupName, label_group.groupDescription";
 		$this->objectList->sqlJoins = "LEFT JOIN wcf".WCF_N."_label_group label_group ON (label_group.groupID = label.groupID)";
 	}
 }
