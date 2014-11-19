@@ -191,7 +191,6 @@ final class HTTPRequest {
 		if (isset($this->options['auth'])) {
 			$this->addHeader('authorization', "Basic ".base64_encode($options['auth']['username'].":".$options['auth']['password']));
 		}
-		$this->addHeader('host', $this->host.($this->port != ($this->useSSL ? 443 : 80) ? ':'.$this->port : ''));
 		$this->addHeader('connection', 'Close');
 	}
 	
@@ -201,12 +200,12 @@ final class HTTPRequest {
 	 * @param	string		$url
 	 */
 	private function setURL($url) {
+		$parsedUrl = $originUrl = parse_url($url);
 		if (PROXY_SERVER_HTTP) {
 			$parsedUrl = parse_url(PROXY_SERVER_HTTP);
 			$this->path = $url;
 		}
 		else {
-			$parsedUrl = parse_url($url);
 			$this->path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '/';
 		}
 		
@@ -216,8 +215,11 @@ final class HTTPRequest {
 		$this->query = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
 		
 		// update the 'Host:' header if URL has changed
-		if (!empty($this->url) && $this->url != $url) {
-			$this->addHeader('host', $this->host.($this->port != ($this->useSSL ? 443 : 80) ? ':'.$this->port : ''));
+		if ($this->url != $url) {
+			$originUseSSL = $originUrl['scheme'] === 'https';
+			$originHost = $originUrl['host'];
+			$originPort = isset($originUrl['port']) ? $originUrl['port'] : ($originUseSSL ? 443 : 80);
+			$this->addHeader('host', $originHost.($originPort != ($originUseSSL ? 443 : 80) ? ':'.$originPort : ''));
 		}
 		
 		$this->url = $url;
