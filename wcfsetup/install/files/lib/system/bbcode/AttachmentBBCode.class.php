@@ -4,7 +4,6 @@ use wcf\data\attachment\GroupedAttachmentList;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
 use wcf\util\StringUtil;
-use wcf\data\attachment\Attachment;
 
 /**
  * Parses the [attach] bbcode tag.
