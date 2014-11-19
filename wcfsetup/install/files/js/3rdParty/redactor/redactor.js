@@ -1,6 +1,6 @@
 /*
-	Redactor v10.0.4
-	Updated: November 10, 2014
+	Redactor v10.0.5
+	Updated: November 18, 2014
 
 	http://imperavi.com/redactor/
 
@@ -94,7 +94,7 @@
 
 	// Functionality
 	$.Redactor = Redactor;
-	$.Redactor.VERSION = '10.0.4';
+	$.Redactor.VERSION = '10.0.5';
 	$.Redactor.modules = ['alignment', 'autosave', 'block', 'buffer', 'build', 'button',
 						  'caret', 'clean', 'code', 'core', 'dropdown', 'file', 'focus',
 						  'image', 'indent', 'inline', 'insert', 'keydown', 'keyup',
@@ -794,7 +794,7 @@
 								{
 									if (toggleType == 'toggle') this.block.toggle($formatted);
 									else if (toggleType == 'remove') this.block.remove($formatted);
-									else if (toggleType == 'set')  this.block.set2($formatted);
+									else if (toggleType == 'set') this.block.setForce($formatted);
 								}
 								else this.block.toggle($formatted);
 
@@ -805,6 +805,19 @@
 
 							}, this));
 						}
+					}
+				},
+				setForce: function($el)
+				{
+					if (this.block.type == 'class')
+					{
+						$el.addClass(this.block.value);
+						return;
+					}
+					else if (this.block.type == 'attr' || this.block.type == 'data')
+					{
+						$el.attr(this.block.value.name, this.block.value.value);
+						return;
 					}
 				},
 				toggle: function($el)
@@ -1435,6 +1448,8 @@
 				},
 				onClick: function(e, btnName, type, callback)
 				{
+					this.button.caretOffset = this.caret.getOffset();
+
 					e.preventDefault();
 
 					if (this.utils.browser('msie')) e.returnValue = false;
@@ -1470,7 +1485,6 @@
 							this.observe.buttons(e, btnName);
 						}
 					}
-
 				},
 				get: function(key)
 				{
@@ -1793,6 +1807,9 @@
 				{
 					html = this.clean.savePreCode(html);
 
+					// convert script tag
+					html = html.replace(/<script(.*?[^>]?)>([\w\W]*?)<\/script>/gi, '<pre class="redactor-script-tag" style="display: none;" $1>$2</pre>');
+
 					// replace dollar sign to entity
 					html = html.replace(/\$/g, '&#36;');
 					html = html.replace(/”/g, '"');
@@ -1814,7 +1831,7 @@
 						fonts.replaceWith(function()
 						{
 							var $el = $(this);
-							var span = $('<span>').attr('style', $el.attr('style'));
+							var $span = $('<span>').attr('style', $el.attr('style'));
 							return $span.append($el.contents());
 						});
 
@@ -1851,6 +1868,9 @@
 					{
 						return '';
 					}
+
+					// reconvert script tag
+					html = html.replace(/<pre class="redactor-script-tag" style="display: none;"(.*?[^>]?)>([\w\W]*?)<\/pre>/gi, '<script$1>$2</script>');
 
 					// restore form tag
 					html = this.clean.restoreFormTags(html);
@@ -3218,18 +3238,17 @@
 
 					e = e.originalEvent || e;
 
-					var height =  this.image.resizeHandle.h;
+					var height = this.image.resizeHandle.h;
 
 		            if (e.targetTouches) height += (e.targetTouches[0].pageY -  this.image.resizeHandle.y);
 		            else height += (e.pageY -  this.image.resizeHandle.y);
 
-
-					var width = Math.round(height *  this.image.resizeHandle.ratio);
+					var width = Math.round(height * this.image.resizeHandle.ratio);
 
 					if (height < 50 || width < 100) return;
 
-		            this.image.resizeHandle.el.height(height);
 		            this.image.resizeHandle.el.width(width);
+		            this.image.resizeHandle.el.height(this.image.resizeHandle.el.width()/this.image.resizeHandle.ratio);
 
 		            this.code.sync();
 				},
@@ -3687,7 +3706,9 @@
 					node = this.inline.setFormat(node);
 
 					this.insert.node(node);
-					this.caret.setEnd(node);
+
+					// 10.0.5 inline focus issue
+					//this.caret.setEnd(node);
 
 					this.code.sync();
 
@@ -4748,6 +4769,7 @@
 					this.keyup.parent = this.selection.getParent();
 					var $parent = this.utils.isRedactorParent($(this.keyup.parent).parent());
 
+
 					// callback
 					var keyupStop = this.core.setCallback('keyup', e);
 					if (keyupStop === false)
@@ -5741,10 +5763,17 @@
 				showTooltip: function(e)
 				{
 					var $link = $(e.target);
-					if ($link.size() === 0 || $link[0].tagName !== 'A') return;
+					var $parent = $link.closest('a');
+					if ($parent.size() !== 0 && $parent[0].tagName === 'A' && $link[0].tagName !== 'A')
+					{
+						$link = $parent;
+					}
+					else if ($link.size() === 0 || $link[0].tagName !== 'A')
+					{
+						return;
+					}
 
 					var pos = this.observe.getTooltipPosition($link);
-
 					var tooltip = $('<span class="redactor-link-tooltip"></span>');
 
 					var href = $link.attr('href');
@@ -5773,7 +5802,12 @@
 					e = e.originalEvent || e;
 
 					var target = e.target;
-					if ((target.tagName === 'A' && this.utils.isRedactorParent(target)) || $(target).hasClass('redactor-link-tooltip-action'))
+					var $parent = $(target).closest('a');
+					if ($parent.size() !== 0 && $parent[0].tagName === 'A' && target.tagName !== 'A')
+					{
+						return;
+					}
+					else if ((target.tagName === 'A' && this.utils.isRedactorParent(target)) || $(target).hasClass('redactor-link-tooltip-action'))
 					{
 						return;
 					}
@@ -5958,7 +5992,7 @@
 				{
 					this.$pasteBox = $('<div>').html(' ').attr('contenteditable', 'true').css({ position: 'fixed', width: 0, top: 0, left: '-9999px' });
 
-					$(document.body).append(this.$pasteBox);
+					this.$box.parent().append(this.$pasteBox);
 					this.$pasteBox.focus();
 				},
 				insert: function(html)
@@ -7740,10 +7774,7 @@
 				{
 					var $s = $(s);
 
-					$s.find('.redactor-invisible-space').replaceWith(function()
-					{
-						return $(this).contents();
-					});
+					$s.find('.redactor-invisible-space').removeAttr('style').removeAttr('class');
 
 					if ($s.find('hr, br, img, iframe').length !== 0) return;
 					var text = $.trim($s.text());
