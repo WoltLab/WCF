@@ -84,10 +84,11 @@
 /* attachment form */
 .formAttachmentList {
 	border-bottom: 1px solid @wcfContainerBorderColor;
-	padding-bottom: @wcfGapSmall;
-		
+	margin-bottom: @wcfGapSmall;
+	padding-bottom: @wcfGapMedium;
+	
 	> li {
-		min-height: 60px;
+		min-height: 64px;
 		
 		> div {
 			> div {
@@ -108,8 +109,14 @@
 			}
 			
 			> ul {
+				margin-top: @wcfGapSmall;
+				
 				> li {
 					display: inline-block;
+					
+					> span.jsDeleteButton {
+						margin-right: @wcfGapMedium;
+					}
 				}
 			}
 		}
@@ -141,12 +148,12 @@
 	.formAttachmentList {
 		> li {
 			float: left;
-			width: 33%;
+			width: 50%;
 		}
 	}
 }
 
-.box48 .attachmentTinyThumbnail {
-	max-height: 48px;
-	max-width: 48px;
+.box64 .attachmentTinyThumbnail {
+	max-height: 64px;
+	max-width: 64px;
 }

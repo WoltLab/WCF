@@ -44,7 +44,6 @@ $(function() {
 			convertUrlLinks: false,
 			convertVideoLinks: false,
 			direction: '{lang}wcf.global.pageDirection{/lang}',
-			imageResizable: false,
 			lang: '{@$__wcf->getLanguage()->getFixedLanguageCode()}',
 			maxHeight: 500,
 			minHeight: 200,
@@ -65,7 +64,8 @@ $(function() {
 		
 		{if MODULE_ATTACHMENT && !$attachmentHandler|empty && $attachmentHandler->canUpload()}
 			$config.plugins.push('wupload');
-			$config.woltlab.attachmentUrl = '{link controller='Attachment' id=987654321}thumbnail=1{/link}';
+			$config.woltlab.attachmentUrl = '{link controller='Attachment' id=987654321}{/link}';
+			$config.woltlab.attachmentThumbnailUrl = '{link controller='Attachment' id=987654321}thumbnail=1{/link}';
 		{/if}
 		
 		{event name='javascriptInit'}

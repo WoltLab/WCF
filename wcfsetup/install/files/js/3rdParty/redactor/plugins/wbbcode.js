@@ -332,16 +332,59 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<img [^>]*?class="smiley" alt="([^"]+?)".*?> ?/gi, '$1 '); // chrome, ie
 			
 			// attachments
-			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment" data-attachment-id="(\d+)"( style="([^"]+)")?>/gi, function(match, attachmentID, styleTag, style) {
-				if (style && style.match(/float: (left|right)/i)) {
-					return '[attach=' + attachmentID + ',' + RegExp.$1 + '][/attach]';
+			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment[^"]*" data-attachment-id="(\d+)"( style="([^"]+)")?>/gi, function(match, attachmentID, styleTag, style) {
+				var $float = 'none';
+				var $width = null;
+				
+				if (style) {
+					style = style.split(';');
+					
+					for (var $i = 0; $i < style.length; $i++) {
+						var $style = $.trim(style[$i]);
+						if ($style.match(/^float: (left|right)$/)) {
+							$float = RegExp.$1;
+						}
+						else if ($style.match(/^width: (\d+)px$/)) {
+							$width = RegExp.$1;
+						}
+					}
+					
+					if ($width !== null) {
+						return '[attach=' + attachmentID + ',' + $float + ',' + $width + '][/attach]';
+					}
+					else if ($float !== 'none') {
+						return '[attach=' + attachmentID + ',' + $float + '][/attach]';
+					}
 				}
 				
 				return '[attach=' + attachmentID + '][/attach]';
 			});
 			
 			// [img]
-			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1 style="float: (left|right)[^"]*".*?>/gi, "[img='$2',$3][/img]");
+			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1 style="([^"]+)".*?>/gi, function(match, quotationMarks, source, style) {
+				var $float = 'none';
+				var $width = 0;
+				
+				var $styles = style.split(';');
+				for (var $i = 0; $i < $styles.length; $i++) {
+					var $style = $styles[$i];
+					if ($style.match(/float: (left|right|none)/)) {
+						$float = RegExp.$1;
+					}
+					else if ($style.match(/width: (\d+)px/)) {
+						$width = parseInt(RegExp.$1);
+					}
+				}
+				
+				if ($width) {
+					return "[img='" + source + "'," + $float + "," + $width + "][/img]";
+				}
+				else if ($float !== 'none') {
+					return "[img='" + source + "'," + $float + "][/img]";
+				}
+				
+				return "[img]" + source + "[/img]";
+			});
 			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?>/gi, '[img]$2[/img]');
 			
 			// handle [color], [size], [font] and [tt]
@@ -619,6 +662,7 @@ RedactorPlugins.wbbcode = function() {
 			// [img]
 			data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
 			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right)'?\]\[\/img\]/gi,'<img src="$1" style="float: $2" />');
+			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right|none)'?,'?(\d+)'?\]\[\/img\]/gi, '<img src="$1" style="float: $2; width: $3px" />');
 			data = data.replace(/\[img='?([^"]*?)'?\]\[\/img\]/gi,'<img src="$1" />');
 			
 			// [size]
@@ -682,19 +726,47 @@ RedactorPlugins.wbbcode = function() {
 			
 			// attachments
 			var $attachmentUrl = this.wutil.getOption('woltlab.attachmentUrl');
+			var $attachmentThumbnailUrl = this.wutil.getOption('woltlab.attachmentThumbnailUrl');
 			if ($attachmentUrl) {
-				var $imageAttachmentIDs = this.wbbcode._getImageAttachmentIDs();
+				var $imageAttachments = this.wbbcode._getImageAttachments();
 				
-				data = data.replace(/\[attach=(\d+)(,[^\]]*)?\]\[\/attach\]/g, function(match, attachmentID, alignment) {
+				data = data.replace(/\[attach=(\d+)\]\[\/attach\]/g, function(match, attachmentID, alignment) {
 					attachmentID = parseInt(attachmentID);
 					
-					if (WCF.inArray(attachmentID, $imageAttachmentIDs)) {
+					if ($imageAttachments[attachmentID] !== undefined) {
+						return '<img src="' + $attachmentThumbnailUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment redactorDisableResize" data-attachment-id="' + attachmentID + '" />';
+					}
+					
+					return match;
+				});
+				
+				data = data.replace(/\[attach=(\d+),(left|right|none)\]\[\/attach\]/g, function(match, attachmentID, alignment) {
+					attachmentID = parseInt(attachmentID);
+					
+					if ($imageAttachments[attachmentID] !== undefined) {
 						var $style = '';
-						if (alignment) {
-							if (alignment.match(/^,'?(left|right)'?/)) {
-								$style = ' style="float: ' + RegExp.$1 + '"';
-							}
+						if (alignment === 'left' || alignment === 'right') {
+							$style = 'float: ' + alignment + ';';
 						}
+						
+						$style = ' style="' + $style + '"';
+						
+						return '<img src="' + $attachmentThumbnailUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment redactorDisableResize" data-attachment-id="' + attachmentID + '"' + $style + ' />';
+					}
+					
+					return match;
+				});
+				
+				data = data.replace(/\[attach=(\d+),(left|right|none),(\d+)\]\[\/attach\]/g, function(match, attachmentID, alignment, width) {
+					attachmentID = parseInt(attachmentID);
+					
+					if ($imageAttachments[attachmentID] !== undefined) {
+						var $style = 'width: ' + width + 'px; max-height: ' + $imageAttachments[attachmentID].height + 'px; max-width: ' + $imageAttachments[attachmentID].width + 'px;';
+						if (alignment === 'left' || alignment === 'right') {
+							$style += 'float: ' + alignment + ';';
+						}
+						
+						$style = ' style="' + $style + '"';
 						
 						return '<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment" data-attachment-id="' + attachmentID + '"' + $style + ' />';
 					}
@@ -986,45 +1058,49 @@ RedactorPlugins.wbbcode = function() {
 		 * Inserts an attachment with live preview.
 		 * 
 		 * @param	integer		attachmentID
+		 * @param	boolean		insertFull
 		 */
-		insertAttachment: function(attachmentID) {
+		insertAttachment: function(attachmentID, insertFull) {
 			attachmentID = parseInt(attachmentID);
-			var $attachmentUrl = this.wutil.getOption('woltlab.attachmentUrl');
-			var $bbcode = '[attach=' + attachmentID + '][/attach]';
+			var $attachmentUrl = this.wutil.getOption('woltlab.attachment' + (!insertFull ? 'Thumbnail' : '') + 'Url');
+			var $imageAttachments = this.wbbcode._getImageAttachments();
 			
-			var $imageAttachmentIDs = this.wbbcode._getImageAttachmentIDs();
-			
-			if ($attachmentUrl && WCF.inArray(attachmentID, $imageAttachmentIDs)) {
+			if ($attachmentUrl && $imageAttachments[attachmentID] !== undefined) {
+				var $style = '';
+				if (insertFull) {
+					$style = ' style="width: ' + $imageAttachments[attachmentID].width + 'px; max-height: ' + $imageAttachments[attachmentID].height + 'px; max-width: ' + $imageAttachments[attachmentID].width + 'px;"';
+				}
+				
 				this.wutil.insertDynamic(
-					'<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment" data-attachment-id="' + attachmentID + '" />',
-					$bbcode
+					'<img src="' + $attachmentUrl.replace(/987654321/, attachmentID) + '" class="redactorEmbeddedAttachment' + (!insertFull ? ' redactorDisableResize' : '') + '" data-attachment-id="' + attachmentID + '"' + $style + ' />',
+					'[attach=' + attachmentID + (insertFull ? ',none,' + $imageAttachments[attachmentID].width : '') + '][/attach]'
 				);
 			}
 			else {
-				this.wutil.insertDynamic($bbcode);
+				this.wutil.insertDynamic('[attach=' + attachmentID + '][/attach]');
 			}
 		},
 		
 		/**
 		 * Returns a list of attachments representing an image.
 		 * 
-		 * @return	array<integer>
+		 * @return	object
 		 */
-		_getImageAttachmentIDs: function() {
+		_getImageAttachments: function() {
 			// WCF.Attachment.Upload may have no been initialized yet, fallback to static data
-			var $imageAttachmentIDs = this.wutil.getOption('woltlab.attachmentImageIDs') || [ ];
-			if ($imageAttachmentIDs.length) {
-				delete this.opts.wAttachmentImageIDs;
+			var $imageAttachments = this.wutil.getOption('woltlab.attachmentImages') || [ ];
+			if ($imageAttachments.length) {
+				delete this.opts.attachmentImages;
 				
-				return $imageAttachmentIDs;
+				return $imageAttachments;
 			}
 			
 			var $data = {
-				imageAttachmentIDs: [ ]
+				imageAttachments: { }
 			};
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'getImageAttachments_' + this.$textarea.wcfIdentify(), $data);
 			
-			return $data.imageAttachmentIDs;
+			return $data.imageAttachments;
 		},
 		
 		/**

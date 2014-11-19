@@ -1734,6 +1734,8 @@ Maximum file size: {@$attachmentHandler->getMaxSize()|filesize}<br />
 Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensions()}]]></item>
 		<item name="wcf.attachment.insert"><![CDATA[Insert into message]]></item>
 		<item name="wcf.attachment.insertAll"><![CDATA[Insert All]]></item>
+		<item name="wcf.attachment.insertFull"><![CDATA[Full Image]]></item>
+		<item name="wcf.attachment.insertThumbnail"><![CDATA[Thumbnail]]></item>
 		<item name="wcf.attachment.filename"><![CDATA[Filename]]></item>
 		<item name="wcf.attachment.uploadTime"><![CDATA[Upload Time]]></item>
 		<item name="wcf.attachment.filesize"><![CDATA[Size]]></item>

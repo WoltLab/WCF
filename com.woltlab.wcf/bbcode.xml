@@ -118,7 +118,10 @@
 					<validationpattern>^.+$</validationpattern>
 				</attribute>
 				<attribute name="1">
-					<validationpattern>^(left|right)$</validationpattern>
+					<validationpattern>^(left|right|none)$</validationpattern>
+				</attribute>
+				<attribute name="2">
+					<validationpattern>^\d+$</validationpattern>
 				</attribute>
 			</attributes>
 		</bbcode>
@@ -175,7 +178,10 @@
 					<usetext>1</usetext>
 				</attribute>
 				<attribute name="1">
-					<validationpattern>^(left|right)$</validationpattern>
+					<validationpattern>^(left|right|none)$</validationpattern>
+				</attribute>
+				<attribute name="2">
+					<validationpattern>^\d+$</validationpattern>
 				</attribute>
 			</attributes>
 		</bbcode>
