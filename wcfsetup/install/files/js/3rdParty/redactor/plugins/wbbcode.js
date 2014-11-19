@@ -634,8 +634,8 @@ RedactorPlugins.wbbcode = function() {
 			
 			// [url]
 			data = data.replace(/\[url\]([^"]+?)\[\/url]/gi, '<a href="$1">$1</a>' + this.opts.invisibleSpace);
-			data = data.replace(/\[url\='([^'"]+)'](.+?)\[\/url]/gi, '<a href="$1">$2</a>' + this.opts.invisibleSpace);
-			data = data.replace(/\[url\=([^'"\]]+)](.+?)\[\/url]/gi, '<a href="$1">$2</a>' + this.opts.invisibleSpace);
+			data = data.replace(/\[url\='([^'"]+)']([\s\S]+?)\[\/url]/gi, '<a href="$1">$2</a>' + this.opts.invisibleSpace);
+			data = data.replace(/\[url\=([^'"\]]+)]([\s\S]+?)\[\/url]/gi, '<a href="$1">$2</a>' + this.opts.invisibleSpace);
 			
 			// [email]
 			data = data.replace(/\[email\]([^"]+?)\[\/email]/gi, '<a href="mailto:$1">$1</a>' + this.opts.invisibleSpace);
