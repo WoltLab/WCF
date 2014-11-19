@@ -299,6 +299,10 @@
 					&:hover {
 						color: @wcfLinkColor;
 					}
+					
+					> span.icon {
+						display: none;
+					}
 				}
 				
 				&.active {
@@ -383,6 +387,18 @@
 		> div,
 		> fieldset {
 			border-top-width: 0;
+		}
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.messageTabMenu > nav > ul > li:not(.active) > a {
+		> span.icon {
+			display: block;
+		}
+		
+		> span:not(.icon) {
+			display: none;
 		}
 	}
 }
