@@ -244,6 +244,19 @@
 	z-index: 5;
 }
 
+#redactor-image-resizer {
+	background-color: rgba(0, 0, 0, 1);
+	border: 1px solid rgba(255, 255, 255, 1);
+	bottom: -4px;
+	cursor: nw-resize;
+	height: 8px;
+	line-height: 1;
+	position: absolute;
+	right: -5px;
+	width: 8px;
+	z-index: 10;
+}
+
 .redactorAttachmentContainer {
 	background-color: rgba(255, 255, 255, 1);
 	border: 1px solid rgba(238, 238, 238, 1);
@@ -285,6 +298,10 @@
 					
 					&:hover {
 						color: @wcfLinkColor;
+					}
+					
+					> span.icon {
+						display: none;
 					}
 				}
 				
@@ -370,6 +387,18 @@
 		> div,
 		> fieldset {
 			border-top-width: 0;
+		}
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.messageTabMenu > nav > ul > li:not(.active) > a {
+		> span.icon {
+			display: block;
+		}
+		
+		> span:not(.icon) {
+			display: none;
 		}
 	}
 }

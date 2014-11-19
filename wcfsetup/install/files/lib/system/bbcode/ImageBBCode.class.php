@@ -28,7 +28,19 @@ class ImageBBCode extends AbstractBBCode {
 				$float = $openingTag['attributes'][1];
 			}
 			
-			return '<img src="'.$src.'" class="jsResizeImage" alt=""'.($float ? (' style="float: '.$float.'; margin: ' . ($float == 'left' ? '0 15px 7px 0' : '0 0 7px 15px') . '"') : '').' />';
+			$style = '';
+			if ($float == 'left' || $float == 'right') {
+				$style = 'float: ' . $float . '; margin: ' . ($float == 'left' ? '0 15px 7px 0' : '0 0 7px 15px') . ';';
+			}
+			
+			$width = 0;
+			if (isset($openingTag['attributes'][2])) {
+				$width = $openingTag['attributes'][2];
+				
+				$style .= 'width: ' . $width . 'px;';
+			}
+			
+			return '<img src="'.$src.'" class="jsResizeImage" alt=""'.($style ? ' style="' . $style . '"' : '').' />';
 		}
 		else if ($parser->getOutputType() == 'text/simplified-html') {
 			$src = StringUtil::decodeHTML($src);

@@ -234,7 +234,12 @@ RedactorPlugins.wutil = function() {
 		 * Saves current editor text to local browser storage.
 		 */
 		saveTextToStorage: function() {
-			localStorage.setItem(this.wutil.getOption('woltlab.autosave').key, this.wutil.getText());
+			try {
+				localStorage.setItem(this.wutil.getOption('woltlab.autosave').key, this.wutil.getText());
+			}
+			catch (e) {
+				console.debug("[wutil.saveTextToStorage] Unable to access local storage: " + e.message);
+			}
 		},
 		
 		/**
@@ -262,7 +267,12 @@ RedactorPlugins.wutil = function() {
 		 * @param	string		key
 		 */
 		autosavePurge: function() {
-			localStorage.removeItem(this.wutil.getOption('woltlab.autosave').key);
+			try {
+				localStorage.removeItem(this.wutil.getOption('woltlab.autosave').key);
+			}
+			catch (e) {
+				console.debug("[wutil.autosavePurge] Unable to access local storage: " + e.message);
+			}
 		},
 		
 		/**
@@ -270,7 +280,15 @@ RedactorPlugins.wutil = function() {
 		 */
 		autosaveRestore: function() {
 			var $options = this.wutil.getOption('woltlab.autosave');
-			var $text = localStorage.getItem($options.key);
+			var $text = null;
+			
+			try {
+				$text = localStorage.getItem($options.key);
+			}
+			catch (e) {
+				console.debug("[wutil.autosaveRestore] Unable to access local storage: " + e.message);
+			}
+			
 			if ($text !== null) {
 				if (this.wutil.inWysiwygMode()) {
 					this.wutil.setOption('woltlab.originalValue', $text);

@@ -270,7 +270,9 @@ class AttachmentAction extends AbstractDatabaseObjectAction {
 					'attachmentID' => $attachment->attachmentID,
 					'tinyURL' => ($attachment->tinyThumbnailType ? LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment), 'tiny=1') : ''),
 					'thumbnailURL' => ($attachment->thumbnailType ? LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment), 'thumbnail=1') : ''),
-					'url' => LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment))
+					'url' => LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment)),
+					'height' => $attachment->height,
+					'width' => $attachment->width
 				);
 			}
 		}

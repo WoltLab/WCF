@@ -8,9 +8,9 @@
 <div class="messageTabMenu"{if $preselectTabMenu|isset} data-preselect="{$preselectTabMenu}"{/if} data-wysiwyg-container-id="{$wysiwygContainerID}">
 	<nav class="messageTabMenuNavigation jsOnly">
 		<ul>
-			{if MODULE_SMILEY && $__wcf->getSession()->getPermission($permissionCanUseSmilies) && $smileyCategories|count}<li data-name="smilies"><a>{lang}wcf.message.smilies{/lang}</a></li>{/if}
-			{if MODULE_ATTACHMENT && !$attachmentHandler|empty && $attachmentHandler->canUpload()}<li data-name="attachments"><a>{lang}wcf.attachment.attachments{/lang}</a></li>{/if}
-			{if $__messageFormSettingsInlineContent}<li data-name="settings"><a>{lang}wcf.message.settings{/lang}</a></li>{/if}
+			{if MODULE_SMILEY && $__wcf->getSession()->getPermission($permissionCanUseSmilies) && $smileyCategories|count}<li data-name="smilies"><a><span class="icon icon16 fa-smile-o"></span> <span>{lang}wcf.message.smilies{/lang}</span></a></li>{/if}
+			{if MODULE_ATTACHMENT && !$attachmentHandler|empty && $attachmentHandler->canUpload()}<li data-name="attachments"><a><span class="icon icon16 fa-paperclip"></span> <span>{lang}wcf.attachment.attachments{/lang}</span></a></li>{/if}
+			{if $__messageFormSettingsInlineContent}<li data-name="settings"><a><span class="icon icon16 fa-cog"></span> <span>{lang}wcf.message.settings{/lang}</span></a></li>{/if}
 			{event name='tabMenuTabs'}
 		</ul>
 	</nav>

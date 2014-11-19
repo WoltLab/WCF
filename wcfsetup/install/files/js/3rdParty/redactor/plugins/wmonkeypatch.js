@@ -292,6 +292,18 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 			}).bind(this);
 			
+			// image.loadEditableControls
+			var $mpLoadEditableControls = this.image.loadEditableControls;
+			this.image.loadEditableControls = (function($image) {
+				var $returnValue = $mpLoadEditableControls.call(this, $image);
+				
+				if ($image.hasClass('redactorDisableResize') && $returnValue !== false) {
+					$returnValue.hide();
+				}
+				
+				return $returnValue;
+			}).bind(this);
+			
 			// image.show
 			this.image.show = (function() {
 				this.modal.load('image', this.lang.get('image'), 0);
@@ -515,8 +527,13 @@ RedactorPlugins.wmonkeypatch = function() {
 			
 			// modal.close
 			this.modal.close = (function() {
+				if (this.modal.dialog === null) {
+					return;
+				}
+				
 				this.modal.dialog.wcfDialog('close');
 				this.modal.dialog.remove();
+				this.modal.dialog = null;
 			}).bind(this);
 			
 			// modal.createCancelButton
