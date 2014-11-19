@@ -64,29 +64,20 @@
 				<ul class="containerList"{* id="userNotificationItemList"*}>
 		{/if}
 				<li class="jsNotificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}" data-notification-id="{@$notification[notificationID]}" data-link="{$notification[event]->getLink()}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}">
-					<div class="box48">
+					<div class="box24">
 						{if $notification[authors] < 2}
 							{if $notification[event]->getAuthor()->userID}
-								<a href="{link controller='User' object=$notification[event]->getAuthor()}{/link}" title="{$notification[event]->getAuthor()->username}" class="framed">{@$notification[event]->getAuthor()->getAvatar()->getImageTag(48)}</a>
+								<a href="{link controller='User' object=$notification[event]->getAuthor()}{/link}" title="{$notification[event]->getAuthor()->username}" class="framed">{@$notification[event]->getAuthor()->getAvatar()->getImageTag(24)}</a>
 							{else}
-								<span class="framed">{@$notification[event]->getAuthor()->getAvatar()->getImageTag(48)}</span>
+								<span class="framed">{@$notification[event]->getAuthor()->getAvatar()->getImageTag(24)}</span>
 							{/if}	
 							
 							<div class="details">
-								<div class="containerHeadline">
-									<h3>
-										{if !$notification[confirmed]}<span class="badge label newContentBadge">{lang}wcf.message.new{/lang}</span>{/if}
-										
-										{if $notification[event]->getAuthor()->userID}
-											<a href="{link controller='User' object=$notification[event]->getAuthor()}{/link}" class="userLink" data-user-id="{@$notification[event]->getAuthor()->userID}">{$notification[event]->getAuthor()->username}</a>
-										{else}
-											{$notification[event]->getAuthor()->username}
-										{/if}
-									</h3> 
-									<small>{@$notification[time]|time}</small>
-								</div>
-								
-								<p>{@$notification[event]->getMessage()}</p>
+								<p>
+									{if !$notification[confirmed]}<span class="badge label newContentBadge">{lang}wcf.message.new{/lang}</span>{/if}
+									{@$notification[event]->getMessage()}
+								</p>
+								<p><small>{@$notification[time]|time}</small></p>
 								
 								{if !$notification[confirmed]}
 									<nav class="jsMobileNavigation buttonGroupNavigation">
@@ -97,19 +88,14 @@
 								{/if}
 							</div>
 						{else}
-							<span class="icon icon48 fa-users"></span>
+							<span class="icon icon24 fa-users"></span>
 							
 							<div class="details">
-								<div class="containerHeadline">
-									<h3>
-										{if !$notification[confirmed]}<span class="badge label newContentBadge">{lang}wcf.message.new{/lang}</span>{/if}
-										
-										{$notification[event]->getTitle()}
-									</h3>
-									<small>{@$notification[time]|time}</small>
-								</div>
-								
-								<p>{@$notification[event]->getMessage()}</p>
+								<p>
+									{if !$notification[confirmed]}<span class="badge label newContentBadge">{lang}wcf.message.new{/lang}</span>{/if}
+									{@$notification[event]->getMessage()}
+								</p>
+								<p><small>{@$notification[time]|time}</small></p>
 								
 								<ul class="marginTopTiny">
 									{foreach from=$notification[event]->getAuthors() item=author}
