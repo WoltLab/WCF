@@ -239,4 +239,18 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	public function deleteNoAccessNotification() {
 		return true;
 	}
+	
+	/**
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::isConfirmed()
+	 */
+	public function isConfirmed() {
+		return ($this->notification->confirmed == 1);
+	}
+	
+	/**
+	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::getNotification()
+	 */
+	public function getNotification() {
+		return $this->notification;
+	}
 }

@@ -141,4 +141,18 @@ interface IUserNotificationEvent extends IDatabaseObjectProcessor {
 	 * @return	boolean
 	 */
 	public function deleteNoAccessNotification();
+	
+	/**
+	 * Returns true if the underlying notification has been marked as confirmed.
+	 * 
+	 * @return	boolean
+	 */
+	public function isConfirmed();
+	
+	/**
+	 * Returns the underlying notification object.
+	 * 
+	 * @return	\wcf\data\user\notification\UserNotification
+	 */
+	public function getNotification();
 }

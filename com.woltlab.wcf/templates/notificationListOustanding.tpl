@@ -12,7 +12,7 @@
 			{/if}
 			
 			<div>
-				<h3>{@$notification[event]->getMessage()}</h3>
+				<h3>{if !$notification[event]->isConfirmed()}<span class="badge label newContentBadge">{lang}wcf.message.new{/lang}</span>{/if} {@$notification[event]->getMessage()}</h3>
 				<small>{@$notification[time]|time}</small>
 			</div>
 		</span>

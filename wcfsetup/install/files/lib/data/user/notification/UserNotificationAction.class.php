@@ -1,8 +1,7 @@
 <?php
 namespace wcf\data\user\notification;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\exception\PermissionDeniedException;
-use wcf\system\exception\UserInputException;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -162,47 +161,42 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 	 * @return	array<array>
 	 */
 	public function getOutstandingNotifications() {
-		$notifications = UserNotificationHandler::getInstance()->getNotifications();
+		$notifications = UserNotificationHandler::getInstance()->getMixedNotifications();
 		WCF::getTPL()->assign(array(
 			'notifications' => $notifications
 		));
 		
+		$markAsConfirmed = array();
+		foreach ($notifications['notifications'] as $notification) {
+			if (!$notification['event']->isConfirmed()) {
+				$markAsConfirmed[] = $notification['notificationID'];
+			}
+		}
+		
+		if (!empty($markAsConfirmed)) {
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("notificationID IN (?)", array($markAsConfirmed));
+			
+			// mark notifications as confirmed
+			$sql = "UPDATE	wcf".WCF_N."_user_notification
+				SET	confirmed = 1
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			
+			// delete notification_to_user assignments (mimic legacy notification system)
+			$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			
+			// reset user storage
+			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
+		}
+		
 		return array(
 			'template' => WCF::getTPL()->fetch('notificationListOustanding'),
-			'totalCount' => UserNotificationHandler::getInstance()->getNotificationCount(true)
-		);
-	}
-	
-	/**
-	 * Validates if given notification id is valid for current user.
-	 */
-	public function validateMarkAsConfirmed() {
-		$this->readInteger('notificationID');
-		$this->notification = new UserNotification($this->parameters['notificationID']);
-		
-		if (!$this->notification->notificationID) {
-			throw new UserInputException('notificationID');
-		}
-		else if ($this->notification->userID != WCF::getUser()->userID) {
-			throw new PermissionDeniedException();
-		}
-	}
-	
-	/**
-	 * Marks a notification as confirmed.
-	 * 
-	 * @return	array
-	 */
-	public function markAsConfirmed() {
-		$notificationEditor = new UserNotificationEditor($this->notification);
-		$notificationEditor->markAsConfirmed();
-		
-		// reset notification count
-		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
-		
-		return array(
-			'notificationID' => $this->parameters['notificationID'],
-			'totalCount' => UserNotificationHandler::getInstance()->getNotificationCount()
+			'totalCount' => $notifications['notificationCount']
 		);
 	}
 	

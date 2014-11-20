@@ -1321,26 +1321,38 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 	},
 	
 	/**
-	 * @see	WCF.UserPanel._after()
+	 * @see	WCF.UserPanel._click()
 	 */
-	_after: function(dropdownMenu) {
-		WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify()).children('li.jsNotificationItem').click($.proxy(this._markAsConfirmed, this));
+	_click: function(event) {
+		if (this._didLoad) {
+			var $badge = this._container.find('.badge');
+			if ($badge.length && parseInt($badge.text()) > 0) {
+				var $dropdownMenu = WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify());
+				if (!$dropdownMenu.is(':visible')) {
+					$dropdownMenu.children('li.jsNotificationItem').remove();
+					
+					$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').prependTo($dropdownMenu);
+					
+					this._didLoad = false;
+					this._super(event);
+				}
+			}
+		}
+		else {
+			this._super(event);
+		}
 	},
 	
 	/**
-	 * Marks a notification as confirmed.
-	 * 
-	 * @param	object		event
+	 * @see	WCF.UserPanel._after()
 	 */
-	_markAsConfirmed: function(event) {
-		this._proxy.setOption('data', {
-			actionName: 'markAsConfirmed',
-			className: 'wcf\\data\\user\\notification\\UserNotificationAction',
-			parameters: {
-				notificationID: $(event.currentTarget).data('notificationID')
+	_after: function(dropdownMenu) {
+		WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify()).children('li.jsNotificationItem').click(function(event) {
+			if (event.target.tagName !== 'A') {
+				event.stopPropagation();
+				return false;
 			}
 		});
-		this._proxy.sendRequest();
 	},
 	
 	/**
@@ -1374,16 +1386,6 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 				
 				this._super(data, textStatus, jqXHR);
 			break;
-			
-			case 'markAsConfirmed':
-				WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify()).children('li.jsNotificationItem').each(function(index, item) {
-					var $item = $(item);
-					if (data.returnValues.notificationID == $item.data('notificationID')) {
-						window.location = $item.data('link');
-						return false;
-					}
-				});
-			break;
 		}
 	},
 	
@@ -1416,143 +1418,6 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 		
 		// update badge
 		this._updateBadge(count);
-	}
-});
-
-/**
- * Handles notification list actions.
- */
-WCF.Notification.List = Class.extend({
-	/**
-	 * notification count
-	 * @var	jQuery
-	 */
-	_badge: null,
-	
-	/**
-	 * list of notification items
-	 * @var	object
-	 */
-	_items: { },
-	
-	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * Initializes the notification list.
-	 */
-	init: function() {
-		var $containers = $('li.jsNotificationItem');
-		if (!$containers.length) {
-			return;
-		}
-		
-		$containers.each($.proxy(function(index, container) {
-			var $container = $(container);
-			this._items[$container.data('notificationID')] = $container;
-			
-			$container.find('.jsMarkAsConfirmed').data('notificationID', $container.data('notificationID')).click($.proxy(this._click, this));
-			if (!$container.data('isGrouped')) {
-				$container.find('p').html(function(index, oldHTML) {
-					return '<a>' + oldHTML + '</a>';
-				}).children('a').data('notificationID', $container.data('notificationID')).click($.proxy(this._clickLink, this));
-			}
-		}, this));
-		
-		this._badge = $('.jsNotificationsBadge:eq(0)');
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
-		
-		// mark all as confirmed button
-		$('.contentNavigation .jsMarkAllAsConfirmed').click($.proxy(this._markAllAsConfirmed, this));
-	},
-	
-	/**
-	 * Handles clicks on the text link.
-	 * 
-	 * @param	object		event
-	 */
-	_clickLink: function(event) {
-		this._items[$(event.currentTarget).data('notificationID')].data('redirect', true);
-		this._click(event);
-	},
-	
-	/**
-	 * Handles button actions.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		this._proxy.setOption('data', {
-			actionName: 'markAsConfirmed',
-			className: 'wcf\\data\\user\\notification\\UserNotificationAction',
-			parameters: {
-				notificationID: $(event.currentTarget).data('notificationID')
-			}
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Marks all notifications as confirmed.
-	 */
-	_markAllAsConfirmed: function() {
-		WCF.System.Confirmation.show(WCF.Language.get('wcf.user.notification.markAllAsConfirmed.confirmMessage'), $.proxy(function(action) {
-			if (action === 'confirm') {
-				this._proxy.setOption('data', {
-					actionName: 'markAllAsConfirmed',
-					className: 'wcf\\data\\user\\notification\\UserNotificationAction'
-				});
-				this._proxy.sendRequest();
-			}
-		}, this));
-	},
-	
-	/**
-	 * Handles successful button actions.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		switch (data.actionName) {
-			case 'markAllAsConfirmed':
-				window.location.reload();
-			break;
-			
-			case 'markAsConfirmed':
-				var $item = this._items[data.returnValues.notificationID];
-				if ($item.data('redirect')) {
-					window.location = $item.data('link');
-					return;
-				}
-				
-				this._items[data.returnValues.notificationID].find('.newContentBadge').remove();
-				this._items[data.returnValues.notificationID].find('.jsMarkAsConfirmed').parents('nav:eq(0)').remove();
-				
-				// remove previous notification count
-				document.title = document.title.replace(/^\(([0-9]+)\) /, '');
-				
-				// update page title
-				if (data.returnValues.totalCount > 0) {
-					document.title = '(' + data.returnValues.totalCount + ') ' + document.title;
-				}
-				else {
-					var $listItem = $('.contentNavigation .jsMarkAllAsConfirmed').parent();
-					var $list = $listItem.parent();
-					$listItem.remove();
-					
-					if (!$list.children('li').length) {
-						$list.parents('nav:eq(0)').remove();
-					}
-				}
-			break;
-		}
 	}
 });
 

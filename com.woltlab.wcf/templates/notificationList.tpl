@@ -7,11 +7,20 @@
 	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
-			WCF.Language.addObject({
-				'wcf.user.notification.markAsConfirmed': '{lang}wcf.user.notification.markAsConfirmed{/lang}'
+			$('.contentNavigation .jsMarkAllAsConfirmed').click(function() {
+				WCF.System.Confirmation.show(WCF.Language.get('wcf.user.notification.markAllAsConfirmed.confirmMessage'), function(action) {
+					if (action === 'confirm') {
+						new WCF.Action.Proxy({
+							autoSend: true,
+							data: {
+								actionName: 'markAllAsConfirmed',
+								className: 'wcf\\data\\user\\notification\\UserNotificationAction'
+							},
+							success: function() { window.location.reload(); }
+						});
+					}
+				});
 			});
-			
-			new WCF.Notification.List();
 		});
 		//]]>
 	</script>
