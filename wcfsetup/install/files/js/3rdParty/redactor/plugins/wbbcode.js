@@ -570,7 +570,7 @@ RedactorPlugins.wbbcode = function() {
 			//html = html.replace(/%20/g, ' ');
 			
 			// cache source code tags to preserve leading tabs
-			var $cachedCodes = { };
+			/*var $cachedCodes = { };
 			for (var $i = 0, $length = __REDACTOR_SOURCE_BBCODES.length; $i < $length; $i++) {
 				var $bbcode = __REDACTOR_SOURCE_BBCODES[$i];
 				
@@ -580,17 +580,20 @@ RedactorPlugins.wbbcode = function() {
 					$cachedCodes[$key] = match.replace(/\$/g, '$$$$');
 					return '@@' + $key + '@@';
 				});
-			}
+			}*/
+			
+			// ensure that [/code] is always followed by at least one empty line
+			html = html.replace(/\[\/code\]\n\n?/g, '[/code]\n\n');
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertFromHtml', { html: html });
 			
 			// insert codes
-			if ($.getLength($cachedCodes)) {
+			/*if ($.getLength($cachedCodes)) {
 				for (var $key in $cachedCodes) {
 					var $regex = new RegExp('@@' + $key + '@@', 'g');
 					html = html.replace($regex, $cachedCodes[$key]);
 				}
-			}
+			}*/
 			
 			// remove all leading and trailing whitespaces, but add one empty line at the end
 			html = $.trim(html);
@@ -620,17 +623,13 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/>/g, '&gt;');
 			
 			// cache source code tags
-			var $cachedCodes = { };
-			for (var $i = 0, $length = __REDACTOR_SOURCE_BBCODES.length; $i < $length; $i++) {
-				var $bbcode = __REDACTOR_SOURCE_BBCODES[$i];
-				
-				var $regExp = new RegExp('\\[' + $bbcode + '([\\S\\s]+?)\\[\\/' + $bbcode + '\\]', 'gi');
-				data = data.replace($regExp, function(match) {
-					var $key = match.hashCode();
-					$cachedCodes[$key] = match.replace(/\$/g, '$$$$');
-					return '@@' + $key + '@@';
-				});
-			}
+			var $cachedCodes = [ ];
+			var $regExp = new RegExp('\\[(' + __REDACTOR_SOURCE_BBCODES.join('|') + ')([\\S\\s]+?)\\[\\/\\1\\]', 'gi');
+			data = data.replace($regExp, function(match) {
+				var $key = match.hashCode();
+				$cachedCodes.push({ key: $key, value: match.replace(/\$/g, '$$$$') });
+				return '@@' + $key + '@@';
+			});
 			
 			// [url]
 			data = data.replace(/\[url\]([^"]+?)\[\/url]/gi, '<a href="$1">$1</a>' + this.opts.invisibleSpace);
@@ -960,18 +959,22 @@ RedactorPlugins.wbbcode = function() {
 			}
 			
 			// insert codes
-			if ($.getLength($cachedCodes)) {
-				for (var $key in $cachedCodes) {
-					var $regex = new RegExp('@@' + $key + '@@', 'g');
-					data = data.replace($regex, $cachedCodes[$key]);
+			if ($cachedCodes.length) {
+				for (var $i = $cachedCodes.length - 1; $i >= 0; $i--) {
+					var $cachedCode = $cachedCodes[$i];
+					var $regex = new RegExp('@@' + $cachedCode.key + '@@', 'g');
+					
+					var $value = $cachedCode.value;
+					
+					// [tt]
+					$value = $value.replace(/^\[tt\](.*)\[\/tt\]/, '<span class="inlineCode">$1</span>');
+					
+					// preserve leading whitespaces in [code] tags
+					$value = $value.replace(/^\[code[^\]]*\][\S\s]*\[\/code\]$/, '<pre>$&</pre>');
+					
+					data = data.replace($regex, $value);
 				}
-				
-				// [tt]
-				data = data.replace(/\[tt\](.*?)\[\/tt\]/gi, '<span class="inlineCode">$1</span>');
 			}
-			
-			// preserve leading whitespaces in [code] tags
-			data = data.replace(/\[code\][\S\s]*?\[\/code\]/g, '<pre>$&</pre>');
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			
