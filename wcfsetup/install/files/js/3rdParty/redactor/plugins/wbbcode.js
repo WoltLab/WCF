@@ -971,7 +971,7 @@ RedactorPlugins.wbbcode = function() {
 			}
 			
 			// preserve leading whitespaces in [code] tags
-			data = data.replace(/\[code\][\S\s]*?\[\/code\]/, '<pre>$&</pre>');
+			data = data.replace(/\[code\][\S\s]*?\[\/code\]/g, '<pre>$&</pre>');
 			
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			
