@@ -87,14 +87,6 @@
 									{@$notification[event]->getMessage()}
 								</p>
 								<p><small>{@$notification[time]|time}</small></p>
-								
-								{if !$notification[confirmed]}
-									<nav class="jsMobileNavigation buttonGroupNavigation">
-										<ul class="buttonList iconList jsOnly">
-											<li><a class="jsMarkAsConfirmed jsTooltip" title="{lang}wcf.user.notification.markAsConfirmed{/lang}"><span class="icon icon16 fa-check"></span></a></li>
-										</ul>
-									</nav>
-								{/if}
 							</div>
 						{else}
 							<span class="icon icon24 fa-users"></span>
@@ -113,14 +105,6 @@
 										{/if}
 									{/foreach}
 								</ul>
-								
-								{if !$notification[confirmed]}
-									<nav class="jsMobileNavigation buttonGroupNavigation">
-										<ul class="buttonList iconList jsOnly">
-											<li><a class="jsMarkAsConfirmed jsTooltip" title="{lang}wcf.user.notification.markAsConfirmed{/lang}"><span class="icon icon16 fa-check"></span></a></li>
-										</ul>
-									</nav>
-								{/if}
 							</div>
 						{/if}
 					</div>
