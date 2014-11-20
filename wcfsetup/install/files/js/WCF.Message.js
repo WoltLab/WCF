@@ -3465,19 +3465,22 @@ WCF.Message.UserMention = Class.extend({
 	/**
 	 * Handles a click on a list item suggesting a username.
 	 * 
+	 * This function is also called when seleting a suggested username by clicking
+	 * enter.
+	 * 
 	 * @param	object		event
 	 */
 	_click: function(event) {
 		// in Firefox, this._caretPosition does not have the text node as
-		// startContainer anymore but its parent p element, thus we need
-		// to manually adjust it
-		/*if ($.browser.mozilla) {
+		// startContainer anymore when confirming a username suggestion by
+		// clicking enter, thus we need to manually adjust it
+		if ($.browser.mozilla && this._caretPosition.startContainer.nodeName == 'P') {
 			var $textNode = this._caretPosition.startContainer.childNodes[this._caretPosition.startOffset - 1];
 			
 			this._caretPosition = document.createRange();
 			this._caretPosition.selectNodeContents($textNode);
 			this._caretPosition.collapse();
-		}*/
+		}
 		
 		// restore caret position
 		this._redactor.wutil.replaceRangesWith(this._caretPosition);
