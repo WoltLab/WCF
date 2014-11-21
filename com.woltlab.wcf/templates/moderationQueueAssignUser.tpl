@@ -9,20 +9,19 @@
 				<li><label><input type="radio" name="assignedUserID" value="{@$__wcf->getUser()->userID}"{if $assignedUser && $assignedUser->userID == $__wcf->getUser()->userID} checked="checked"{/if} /> {$__wcf->getUser()->username}</label></li>
 				<li><label><input type="radio" name="assignedUserID" value="0"{if !$assignedUser} checked="checked"{/if} /> {lang}wcf.moderation.assignedUser.nobody{/lang}</label></li>
 				<li>
-					<label><input type="radio" name="assignedUserID" value="-1"{if !$assignedUser} checked="checked"{/if} />
-						<input type="text" id="assignedUsername" name="assignedUsername" value="{if $assignedUser}{$assignedUser->username}{/if}" />
-						{*if $errorField == 'assignedUsername'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{elseif $errorType == 'notAffected'}
-									{lang}wcf.moderation.assignedUser.error.{@$errorType}{/lang}
-								{else}
-									{lang username=$assignedUsername}wcf.user.username.error.{@$errorType}{/lang}
-								{/if}
-							</small>
-						{/if*}
-					</label>
+					<input type="radio" name="assignedUserID" value="-1"{if !$assignedUser} checked="checked"{/if} />
+					<input type="text" id="assignedUsername" name="assignedUsername" value="{if $assignedUser}{$assignedUser->username}{/if}" />
+					{*if $errorField == 'assignedUsername'}
+						<small class="innerError">
+							{if $errorType == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{elseif $errorType == 'notAffected'}
+								{lang}wcf.moderation.assignedUser.error.{@$errorType}{/lang}
+							{else}
+								{lang username=$assignedUsername}wcf.user.username.error.{@$errorType}{/lang}
+							{/if}
+						</small>
+					{/if*}
 				</li>
 			</ul>
 		</dd>
