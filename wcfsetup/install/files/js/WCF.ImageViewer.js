@@ -82,15 +82,13 @@ WCF.ImageViewer = Class.extend({
 		}
 		
 		$image.removeClass('jsResizeImage');
-		var $dimensions = $image.getDimensions();
-		var $maxWidth = $image.closest('div').width();
 		
-		if ($dimensions.width > $maxWidth) {
-			$image.css({
-				height: Math.round($dimensions.height * ($maxWidth / $dimensions.width)) + 'px',
-				width: $maxWidth + 'px'
-			});
-			
+		// setting img { max-width: 100% } causes the image to fit within boundaries, but does not reveal the original dimenions
+		var $imageObject = new Image();
+		$imageObject.src = $image.attr('src');
+		
+		var $maxWidth = $image.closest('div.messageText').width();
+		if ($maxWidth < $imageObject.width) {
 			if (!$image.parents('a').length) {
 				$image.wrap('<a href="' + $image.attr('src') + '" class="jsImageViewerEnabled" />');
 				$image.parent().click($.proxy(this._click, this));
@@ -621,7 +619,8 @@ $.widget('ui.wcfImageViewer', {
 		this._activeImage = $newImageIndex;
 		var $currentActiveImage = this._active;
 		this._ui.imageContainer.addClass('loading');
-		this._ui.images[$newImageIndex].off('load').prop('src', false).on('load', $.proxy(function() {
+		this._ui.images[$newImageIndex].off('load').prop('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=='); // 1x1 pixel transparent gif
+		this._ui.images[$newImageIndex].on('load', $.proxy(function() {
 			this._imageOnLoad($currentActiveImage, $newImageIndex);
 		}, this));
 		
