@@ -124,6 +124,49 @@ RedactorPlugins.wmonkeypatch = function() {
 		 *  - resolves a selection issue if start === end when setting the caret offsets
 		 */
 		caret: function() {
+			// this.caret.set
+			this.caret.set = (function(orgn, orgo, focn, foco) {
+				// focus
+				// WoltLab fix below [#1970]
+				//if (!this.utils.browser('msie')) this.$editor.focus();
+				if (!this.utils.browser('msie')) {
+					if (this.utils.isMobile() && this.utils.browser('webkit') && navigator.userAgent.match(/(iPad|iPhone|iPod)/i)) {
+						if (document.activeElement !== this.$editor[0]) {
+							this.$editor.focus();
+						}
+					}
+					else {
+						this.$editor.focus();
+					}
+				}
+				
+				orgn = orgn[0] || orgn;
+				focn = focn[0] || focn;
+				
+				if (this.utils.isBlockTag(orgn.tagName) && orgn.innerHTML === '')
+				{
+					orgn.innerHTML = this.opts.invisibleSpace;
+				}
+				
+				if (orgn.tagName == 'BR' && this.opts.linebreaks === false)
+				{
+					var par = $(this.opts.emptyHtml)[0];
+					$(orgn).replaceWith(par);
+					orgn = par;
+					focn = orgn;
+				}
+				
+				this.selection.get();
+				
+				try {
+					this.range.setStart(orgn, orgo);
+					this.range.setEnd(focn, foco);
+				}
+				catch (e) {}
+				
+				this.selection.addRange();
+			}).bind(this);
+			
 			this.caret.setOffset = (function(start, end)
 			{
 				if (typeof end == 'undefined') end = start;
