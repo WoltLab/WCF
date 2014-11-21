@@ -1348,14 +1348,24 @@ RedactorPlugins.wbbcode = function() {
 			
 			var $button = this.modal.createActionButton(this.lang.get('save'));
 			if (insertQuote) {
+				this.selection.save();
+				
 				$button.click($.proxy(function() {
 					var $author = $('#redactorQuoteAuthor').val();
 					var $link = WCF.String.escapeHTML($('#redactorQuoteLink').val());
 					
-					var $quote = this.wbbcode.insertQuoteBBCode($author, $link);
+					this.selection.restore();
+					var $html = this.selection.getHtml();
+					if (this.utils.isEmpty($html)) {
+						$html = '';
+					}
+					
+					var $quote = this.wbbcode.insertQuoteBBCode($author, $link, $html);
 					if ($quote !== null) {
 						// set caret inside the quote
-						this.caret.setStart($quote.find('> div > div')[0]);
+						if (!$html.length) {
+							this.caret.setStart($quote.find('> div > div')[0]);
+						}
 					}
 					
 					this.modal.close();
@@ -1419,7 +1429,7 @@ RedactorPlugins.wbbcode = function() {
 			
 			var $quote = null;
 			if (this.wutil.inWysiwygMode()) {
-				var $innerHTML = (plainText) ? this.wbbcode.convertToHtml(plainText) : '';
+				var $innerHTML = (plainText) ? this.wbbcode.convertToHtml(plainText) : html;
 				var $id = WCF.getUUID();
 				var $html = this.wbbcode.convertToHtml($openTag + $id + $closingTag);
 				$html = $html.replace($id, $innerHTML.replace(/^<p>/, '').replace(/<\/p>$/, ''));

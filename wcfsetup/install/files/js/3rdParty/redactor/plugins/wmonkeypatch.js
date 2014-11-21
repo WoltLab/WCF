@@ -531,8 +531,12 @@ RedactorPlugins.wmonkeypatch = function() {
 					return;
 				}
 				
-				this.modal.dialog.wcfDialog('close');
-				this.modal.dialog.remove();
+				try {
+					this.modal.dialog.wcfDialog('close');
+					this.modal.dialog.remove();
+				}
+				catch (e) { }
+				
 				this.modal.dialog = null;
 			}).bind(this);
 			
