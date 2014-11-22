@@ -686,7 +686,8 @@ WCF.Location.GoogleMaps.LocationInput = Class.extend({
 	 * @param	string		mapContainerID
 	 * @param	object		mapOptions
 	 * @param	string		searchInput
-	 * @param	function	callback
+	 * @param	float		latitude
+	 * @param	float		longitude
 	 */
 	init: function(mapContainerID, mapOptions, searchInput, latitude, longitude) {
 		this._searchInput = searchInput;
