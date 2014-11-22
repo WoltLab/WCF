@@ -10,6 +10,9 @@ if (!RedactorPlugins) var RedactorPlugins = {};
 RedactorPlugins.wutil = function() {
 	"use strict";
 	
+	var $autosaveLastMessage = '';
+	var $autosaveNotice = null;
+	
 	return {
 		/**
 		 * autosave worker process
@@ -224,6 +227,8 @@ RedactorPlugins.wutil = function() {
 			}
 			
 			if (this.wutil._autosaveWorker === null) {
+				this.wutil.autosavePurgeOutdated();
+				
 				this.wutil._autosaveWorker = new WCF.PeriodicalExecuter($.proxy(this.wutil.saveTextToStorage, this), 60 * 1000);
 			}
 			
@@ -234,8 +239,19 @@ RedactorPlugins.wutil = function() {
 		 * Saves current editor text to local browser storage.
 		 */
 		saveTextToStorage: function() {
+			var $content = this.wutil.getText();
+			if ($autosaveLastMessage == $content) {
+				return;
+			}
+			
 			try {
-				localStorage.setItem(this.wutil.getOption('woltlab.autosave').key, this.wutil.getText());
+				localStorage.setItem(this.wutil.getOption('woltlab.autosave').key, JSON.stringify({
+					content: $content,
+					timestamp: Date.now()
+				}));
+				$autosaveLastMessage = $content;
+				
+				this.wutil.autosaveShowNotice('saved');
 			}
 			catch (e) {
 				console.debug("[wutil.saveTextToStorage] Unable to access local storage: " + e.message);
@@ -277,6 +293,8 @@ RedactorPlugins.wutil = function() {
 		
 		/**
 		 * Attempts to restore a saved text.
+		 * 
+		 * @return	boolean
 		 */
 		autosaveRestore: function() {
 			var $options = this.wutil.getOption('woltlab.autosave');
@@ -289,18 +307,161 @@ RedactorPlugins.wutil = function() {
 				console.debug("[wutil.autosaveRestore] Unable to access local storage: " + e.message);
 			}
 			
-			if ($text !== null) {
-				if (this.wutil.inWysiwygMode()) {
-					this.wutil.setOption('woltlab.originalValue', $text);
-				}
-				else {
-					this.$textarea.val($text);
-				}
-				
-				return true;
+			try {
+				$text = ($text === null) ? null : JSON.parse($text);
+			}
+			catch (e) {
+				$text = null;
 			}
 			
-			return false;
+			if ($text === null || !$text.content) {
+				return false;
+			}
+			
+			if (this.wutil.inWysiwygMode()) {
+				this.wutil.setOption('woltlab.originalValue', $text.content);
+			}
+			else {
+				this.$textarea.val($text.content);
+			}
+			
+			this.wutil.autosaveShowNotice('restored', { timestamp: $text.timestamp });
+			WCF.DOMNodeInsertedHandler.execute();
+			
+			return true;
+		},
+		
+		/**
+		 * Displays a notice regarding the autosave feature.
+		 * 
+		 * @param	string		type
+		 * @param	object		data
+		 */
+		autosaveShowNotice: function(type, data) {
+			if ($autosaveNotice === null) {
+				$autosaveNotice = $('<div class="redactorAutosaveNotice"><span class="redactorAutosaveMessage" /></div>');
+				$autosaveNotice.appendTo(this.$box);
+				$autosaveNotice.on('transitionend webkitTransitionEnd', (function(event) {
+					if (event.originalEvent.propertyName !== 'opacity') {
+						return;
+					}
+					
+					if ($autosaveNotice.hasClass('open')) {
+						if ($autosaveNotice.data('callbackOpen')) {
+							$autosaveNotice.data('callbackOpen')();
+						}
+					}
+					else {
+						if ($autosaveNotice.data('callbackClose')) {
+							$autosaveNotice.data('callbackClose')();
+						}
+						
+						$autosaveNotice.removeData('callbackClose');
+						$autosaveNotice.removeData('callbackOpen');
+						
+						$autosaveNotice.removeClass('redactorAutosaveNoticeRestore');
+						$autosaveNotice.empty();
+						$('<span class="redactorAutosaveMessage" />').appendTo($autosaveNotice);
+					}
+				}).bind(this));
+			}
+			
+			var $message = '';
+			switch (type) {
+				case 'restored':
+					$('<span class="icon icon16 fa-info blue jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.restored.version', { date: new Date(data.timestamp).toLocaleString() }) + '"></span>').prependTo($autosaveNotice);
+					var $accept = $('<span class="icon icon16 fa-check green pointer jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.restored.confirm') + '"></span>').appendTo($autosaveNotice);
+					var $discard = $('<span class="icon icon16 fa-times red pointer jsTooltip" title="' + WCF.Language.get('wcf.message.autosave.restored.revert') + '"></span>').appendTo($autosaveNotice);
+					
+					$accept.click(function() { $autosaveNotice.removeClass('open'); });
+					
+					$discard.click((function() {
+						WCF.System.Confirmation.show(WCF.Language.get('wcf.message.autosave.restored.revert.confirmMessage'), (function(action) {
+							if (action === 'confirm') {
+								this.wutil.reset();
+								this.wutil.autosavePurge();
+								
+								$autosaveNotice.removeClass('open');
+							}
+						}).bind(this));
+					}).bind(this));
+					
+					$message = WCF.Language.get('wcf.message.autosave.restored');
+					
+					$autosaveNotice.addClass('redactorAutosaveNoticeRestore');
+				break;
+				
+				case 'saved':
+					if ($autosaveNotice.hasClass('open')) {
+						return;
+					}
+					
+					$autosaveNotice.data('callbackOpen', function() {
+						setTimeout(function() {
+							$autosaveNotice.removeClass('open');
+						}, 3000);
+					});
+					
+					$message = WCF.Language.get('wcf.message.autosave.saved');
+				break;
+			}
+			
+			$autosaveNotice.children('span.redactorAutosaveMessage').text($message);
+			$autosaveNotice.addClass('open');
+		},
+		
+		/**
+		 * Automatically purges autosaved content older than 7 days.
+		 */
+		autosavePurgeOutdated: function() {
+			var $lastChecked = 0;
+			var $prefix = this.wutil.getOption('woltlab.autosave').prefix;
+			var $master = $prefix + '_wcf_master';
+			
+			try {
+				$lastChecked = localStorage.getItem($master);
+			}
+			catch (e) {
+				console.debug("[wutil.autosavePurgeOutdated] Unable to access local storage: " + e.message);
+			}
+			
+			if ($lastChecked === 0) {
+				// unable to access local storage, skip check
+				return;
+			}
+			
+			// JavaScript timestamps are in miliseconds
+			var $oneWeekAgo = Date.now() - (7 * 24 * 3600 * 1000);
+			if ($lastChecked === null || $lastChecked < $oneWeekAgo) {
+				var $regExp = new RegExp('^' + $prefix + '_');
+				for (var $key in localStorage) {
+					if ($key.match($regExp)) {
+						var $value = localStorage.getItem($key);
+						try {
+							$value = JSON.parse($value);
+						}
+						catch (e) {
+							$value = { timestamp: 0 };
+						}
+						
+						if (!$value.timestamp || $value.timestamp < $oneWeekAgo) {
+							try {
+								localStorage.removeItem($key);
+							}
+							catch (e) {
+								console.debug("[wutil.autosavePurgeOutdated] Unable to access local storage: " + e.message);
+							}
+						}
+					}
+				}
+				
+				try {
+					localStorage.setItem($master, Date.now());
+				}
+				catch (e) {
+					console.debug("[wutil.autosavePurgeOutdated] Unable to access local storage: " + e.message);
+				}
+			}
 		},
 		
 		/**

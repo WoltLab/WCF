@@ -2254,6 +2254,12 @@ Fehler sind beispielsweise:
 	</category>
 	
 	<category name="wcf.message">
+		<item name="wcf.message.autosave.restored"><![CDATA[Entwurf wiederhergestellt]]></item>
+		<item name="wcf.message.autosave.restored.confirm"><![CDATA[Beibehalten]]></item>
+		<item name="wcf.message.autosave.restored.revert"><![CDATA[Verwerfen und Editor leeren]]></item>
+		<item name="wcf.message.autosave.restored.revert.confirmMessage"><![CDATA[Wollen Sie den gespeicherten Entwurf wirklich löschen und den Editor leeren?]]></item>
+		<item name="wcf.message.autosave.restored.version"><![CDATA[Entwurf vom {@$date}]]></item>
+		<item name="wcf.message.autosave.saved"><![CDATA[Entwurf gespeichert]]></item>
 		<item name="wcf.message.bbcode.code.copy"><![CDATA[Inhalt kopieren]]></item>
 		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Alle Zitate einfügen]]></item>
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Zitat einfügen]]></item>

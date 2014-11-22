@@ -66,6 +66,33 @@
 	> .innerError {
 		margin: -1px;
 	}
+	
+	> .redactorAutosaveNotice {
+		border: 1px solid @wcfContainerBorderColor;
+		border-width: 1px 0 0 1px;
+		bottom: 0;
+		font-size: 1rem;
+		opacity: 0;
+		padding: @wcfGapSmall;
+		position: absolute;
+		right: 0;
+		transition: visibility 0s linear .3s, opacity .3s linear;
+		visibility: hidden;
+		
+		&.open {
+			opacity: 1;
+			visibility: visible;
+			transition-delay: 0s;
+		}
+		
+		&.redactorAutosaveNoticeRestore > span.fa-check {
+			margin-right: @wcfGapSmall;
+		}
+		
+		> span.redactorAutosaveMessage {
+			padding: 0 @wcfGapSmall;
+		}
+	}
 }
 
 .redactor-editor {

@@ -23,7 +23,13 @@ $(function() {
 		'wcf.bbcode.quote.insert': '{lang}wcf.bbcode.quote.insert{/lang}',
 		'wcf.bbcode.quote.title.clickToSet': '{lang}wcf.bbcode.quote.title.clickToSet{/lang}',
 		'wcf.bbcode.quote.title.javascript': '{lang}wcf.bbcode.quote.title.javascript{/lang}',
-		'wcf.global.noSelection': '{lang}wcf.global.noSelection{/lang}'
+		'wcf.global.noSelection': '{lang}wcf.global.noSelection{/lang}',
+		'wcf.message.autosave.restored': '{lang}wcf.message.autosave.restored{/lang}',
+		'wcf.message.autosave.restored.confirm': '{lang}wcf.message.autosave.restored.confirm{/lang}',
+		'wcf.message.autosave.restored.revert': '{lang}wcf.message.autosave.restored.revert{/lang}',
+		'wcf.message.autosave.restored.revert.confirmMessage': '{lang}wcf.message.autosave.restored.revert.confirmMessage{/lang}',
+		'wcf.message.autosave.restored.version': '{lang __literal=true}wcf.message.autosave.restored.version{/lang}',
+		'wcf.message.autosave.saved': '{lang}wcf.message.autosave.saved{/lang}'
 	});
 	
 	var $editorName = '{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}';
@@ -56,6 +62,7 @@ $(function() {
 				autosave: {
 					active: ($autosave) ? true : false,
 					key: ($autosave) ? '{@$__wcf->getAutosavePrefix()}_' + $autosave : '',
+					prefix: '{@$__wcf->getAutosavePrefix()}',
 					saveOnInit: {if !$errorField|empty}true{else}false{/if}
 				},
 				originalValue: $textarea.val()
