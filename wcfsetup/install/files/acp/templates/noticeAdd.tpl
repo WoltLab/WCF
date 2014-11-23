@@ -87,7 +87,7 @@
 			<dl>
 				<dt></dt>
 				<dd>
-					<label><input type="checkbox" name="noticeUseHtml" value="1"{if $noticeUseHtml} checked="checked"{/if} /> {lang}wcf.acp.notice.noticeUseHtml{/lang}</label>
+					<label><input type="checkbox" id="noticeUseHtml" name="noticeUseHtml" value="1"{if $noticeUseHtml} checked="checked"{/if} /> {lang}wcf.acp.notice.noticeUseHtml{/lang}</label>
 				</dd>
 			</dl>
 			
