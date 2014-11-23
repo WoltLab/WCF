@@ -45,16 +45,34 @@ final class HTTPRequest {
 	private $useSSL = false;
 	
 	/**
+	 * indicates if the connection to the proxy target will be made via SSL
+	 * @var	boolean
+	 */
+	private $originUseSSL = false;
+	
+	/**
 	 * target host
 	 * @var	string
 	 */
 	private $host;
 	
 	/**
+	 * target host if a proxy is used
+	 * @var	string
+	 */
+	private $originHost;
+	
+	/**
 	 * target port
 	 * @var	integer
 	 */
 	private $port;
+	
+	/**
+	 * target port if a proxy is used
+	 * @var	integer
+	 */
+	private $originPort;
 	
 	/**
 	 * target path
@@ -191,7 +209,6 @@ final class HTTPRequest {
 		if (isset($this->options['auth'])) {
 			$this->addHeader('authorization', "Basic ".base64_encode($options['auth']['username'].":".$options['auth']['password']));
 		}
-		$this->addHeader('host', $this->host.($this->port != ($this->useSSL ? 443 : 80) ? ':'.$this->port : ''));
 		$this->addHeader('connection', 'Close');
 	}
 	
@@ -201,12 +218,12 @@ final class HTTPRequest {
 	 * @param	string		$url
 	 */
 	private function setURL($url) {
+		$parsedUrl = $originUrl = parse_url($url);
 		if (PROXY_SERVER_HTTP) {
 			$parsedUrl = parse_url(PROXY_SERVER_HTTP);
 			$this->path = $url;
 		}
 		else {
-			$parsedUrl = parse_url($url);
 			$this->path = isset($parsedUrl['path']) ? $parsedUrl['path'] : '/';
 		}
 		
@@ -215,9 +232,13 @@ final class HTTPRequest {
 		$this->port = isset($parsedUrl['port']) ? $parsedUrl['port'] : ($this->useSSL ? 443 : 80);
 		$this->query = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
 		
+		$this->originUseSSL = $originUrl['scheme'] === 'https';
+		$this->originHost = $originUrl['host'];
+		$this->originPort = isset($originUrl['port']) ? $originUrl['port'] : ($this->originUseSSL ? 443 : 80);
+		
 		// update the 'Host:' header if URL has changed
-		if (!empty($this->url) && $this->url != $url) {
-			$this->addHeader('host', $this->host.($this->port != ($this->useSSL ? 443 : 80) ? ':'.$this->port : ''));
+		if ($this->url != $url) {
+			$this->addHeader('host', $this->originHost.($this->originPort != ($this->originUseSSL ? 443 : 80) ? ':'.$this->originPort : ''));
 		}
 		
 		$this->url = $url;
@@ -229,6 +250,30 @@ final class HTTPRequest {
 	public function execute() {
 		// connect
 		$remoteFile = new RemoteFile(($this->useSSL ? 'ssl://' : '').$this->host, $this->port, $this->options['timeout']);
+		
+		if ($this->originUseSSL && PROXY_SERVER_HTTP) {
+			if ($this->useSSL) throw new SystemException("Unable to proxy HTTPS when using TLS for proxy connection");
+			
+			$request = "CONNECT ".$this->originHost.":".$this->originPort." HTTP/1.0\r\n";
+			if (isset($this->headers['user-agent'])) {
+				$request .= 'user-agent: '.reset($this->headers['user-agent'])."\r\n";
+			}
+			$request .= "Host: ".$this->originHost.":".$this->originPort."\r\n";
+			$request .= "\r\n";
+			$remoteFile->puts($request);
+			$this->replyHeaders = array();
+			while (!$remoteFile->eof()) {
+				$line = $remoteFile->gets();
+				if (rtrim($line) === '') {
+					$this->parseReplyHeaders();
+					
+					break;
+				}
+				$this->replyHeaders[] = $line;
+			}
+			if ($this->statusCode != 200) throw new SystemException("Expected 200 Ok as reply to my CONNECT, got '".$this->statusCode."'");
+			$remoteFile->setTLS(true);
+		}
 		
 		$request = $this->options['method']." ".$this->path.($this->query ? '?'.$this->query : '')." HTTP/1.1\r\n";
 		
