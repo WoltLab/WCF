@@ -1279,10 +1279,15 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 	 * @see	WCF.UserPanel.init()
 	 */
 	init: function(showAllLink) {
-		this._favico = new Favico({
-			animation: 'none',
-			type: 'circle',
-		});
+		this._favico = null;
+		
+		try {
+			this._favico = new Favico({
+				animation: 'none',
+				type: 'circle',
+			});
+		}
+		catch (e) { /* ignore for now */ }
 		
 		this._noItems = 'wcf.user.notification.noMoreNotifications';
 		this._proxy = new WCF.Action.Proxy({
@@ -1293,7 +1298,7 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 		this._super('userNotifications');
 		
 		// update page title
-		if (this._container.data('count')) {
+		if (this._container.data('count') && this._favico !== null) {
 			this._favico.badge(this._container.data('count'));
 		}
 		
@@ -1397,7 +1402,9 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 		
 		this._super(count);
 		
-		this._favico.badge(count);
+		if (this._favico !== null) {
+			this._favico.badge(count);
+		}
 	},
 	
 	/**
