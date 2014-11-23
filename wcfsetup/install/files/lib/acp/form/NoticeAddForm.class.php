@@ -43,7 +43,7 @@ class NoticeAddForm extends AbstractForm {
 	 * name of the chosen CSS class name
 	 * @var	string
 	 */
-	public $cssClassName = '';
+	public $cssClassName = 'info';
 	
 	/**
 	 * custom CSS class name
