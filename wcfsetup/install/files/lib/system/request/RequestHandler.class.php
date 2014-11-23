@@ -135,57 +135,7 @@ class RequestHandler extends SingletonFactory {
 			
 			// handle landing page for frontend requests
 			if (!$this->isACPRequest()) {
-				$landingPage = PageMenu::getInstance()->getLandingPage();
-				if ($landingPage !== null && RouteHandler::getInstance()->isDefaultController()) {
-					// check if redirect URL matches current URL
-					$redirectURL = $landingPage->getLink();
-					$relativeRoute = str_replace(RouteHandler::getHost(), '', $redirectURL);
-					
-					// strip query string for comparison
-					$pos = mb_strpos($relativeRoute, '?');
-					if ($pos !== false) $relativeRoute = mb_substr($relativeRoute, 0, $pos);
-					$requestUri = $_SERVER['REQUEST_URI'];
-					$pos = mb_strpos($requestUri, '?');
-					if ($pos !== false) $requestUri = mb_substr($requestUri, 0, $pos);
-					
-					if ($relativeRoute == $requestUri) {
-						$routeData['controller'] = $landingPage->getController();
-					}
-					else {
-						// check if request URI resolves to an application different from relative route
-						// important: request URI may not contain anything else except for the path
-						$currentRequestURI = RouteHandler::getHost() . $requestUri;
-						$redirectToLandingPage = false;
-						if ($currentRequestURI == ApplicationHandler::getInstance()->getPrimaryApplication()->getPageURL()) {
-							HeaderUtil::redirect($landingPage->getLink(), true);
-							exit;
-						}
-						
-						// check if current URL matches an application but controller was omitted
-						foreach (ApplicationHandler::getInstance()->getApplications() as $applicationObject) {
-							if ($currentRequestURI == $applicationObject->getPageURL()) {
-								if ($controller = WCF::getApplicationObject($applicationObject)->getPrimaryController()) {
-									$controller = explode('\\', $controller);
-									
-									if (URL_LEGACY_MODE) {
-										HeaderUtil::redirect(LinkHandler::getInstance()->getLink(preg_replace('~(Action|Form|Page)$~', '', array_pop($controller)), array('application' => $controller[0])));
-										exit;
-									}
-									else {
-										$routeData['controller'] = preg_replace('~(Action|Form|Page)$~', '', array_pop($controller));
-										$redirectURL = '';
-									}
-								}
-							}
-						}
-						
-						// redirect to landing page
-						if (!empty($redirectURL)) {
-							HeaderUtil::redirect($redirectURL, true);
-							exit;
-						}
-					}
-				}
+				$this->handleDefaultController($application, $routeData);
 				
 				// check if accessing from the wrong domain (e.g. "www." omitted but domain was configured with)
 				if (!defined('WCF_RUN_MODE') || WCF_RUN_MODE != 'embedded') {
@@ -237,6 +187,54 @@ class RequestHandler extends SingletonFactory {
 		catch (SystemException $e) {
 			throw new IllegalLinkException();
 		}
+	}
+	
+	/**
+	 * Checks page access for possible mandatory redirects.
+	 * 
+	 * @param	string		$application
+	 * @param	array		$routeData
+	 */
+	protected function handleDefaultController($application, array &$routeData) {
+		if (!RouteHandler::getInstance()->isDefaultController()) {
+			return;
+		}
+		
+		$landingPage = PageMenu::getInstance()->getLandingPage();
+		if ($landingPage === null) {
+			return;
+		}
+		
+		// resolve implicit application abbreviation for landing page controller
+		$landingPageApplication = $landingPage->getApplication();
+		if ($landingPageApplication == 'wcf') {
+			$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
+			$landingPageApplication = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
+		}
+		
+		// check if currently invoked application matches the landing page
+		if ($landingPageApplication == $application) {
+			$routeData['controller'] = $landingPage->getController();
+			return;
+		}
+		
+		// assign the default controller
+		$currentApplication = ApplicationHandler::getInstance()->getApplication($application);
+		if ($controller = WCF::getApplicationObject($currentApplication)->getPrimaryController()) {
+			$controller = explode('\\', $controller);
+			
+			if (URL_LEGACY_MODE) {
+				HeaderUtil::redirect(LinkHandler::getInstance()->getLink(preg_replace('~(Action|Form|Page)$~', '', array_pop($controller)), array('application' => $controller[0])));
+				exit;
+			}
+			else {
+				$routeData['controller'] = preg_replace('~(Action|Form|Page)$~', '', array_pop($controller));
+				return;
+			}
+		}
+		
+		HeaderUtil::redirect($landingPage->getLink());
+		exit;
 	}
 	
 	/**

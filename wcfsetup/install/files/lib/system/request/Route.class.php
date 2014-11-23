@@ -262,7 +262,7 @@ class Route {
 	 * @return	string
 	 */
 	public function buildLink(array $components) {
-		$application = $components['application'];
+		$application = (isset($components['application'])) ? $components['application'] : null;
 		self::loadDefaultControllers();
 		
 		// drop application component to avoid being appended as query string
@@ -283,12 +283,17 @@ class Route {
 				if ($landingPage !== null && strcasecmp($landingPage->getController(), $components['controller']) == 0) {
 					$ignoreController = true;
 				}
-			}
-			
-			// check if this is the default controller of the requested application
-			if (!URL_LEGACY_MODE && !$ignoreController) {
-				if (isset(self::$defaultControllers[$application]) && self::$defaultControllers[$application] == $components['controller']) {
-					$ignoreController = true;
+				
+				// check if this is the default controller of the requested application
+				if (!URL_LEGACY_MODE && !$ignoreController && $application !== null) {
+					if (isset(self::$defaultControllers[$application]) && self::$defaultControllers[$application] == $components['controller']) {
+						// check if this is the primary application and the landing page originates to the same application
+						$primaryApplication = ApplicationHandler::getInstance()->getPrimaryApplication();
+						$abbreviation = ApplicationHandler::getInstance()->getAbbreviation($primaryApplication->packageID);
+						if ($abbreviation != $application || $landingPage === null || $landingPage->getApplication() != 'wcf') {
+							$ignoreController = true;
+						}
+					}
 				}
 			}
 			
