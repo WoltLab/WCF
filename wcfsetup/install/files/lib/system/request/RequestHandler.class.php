@@ -153,7 +153,7 @@ class RequestHandler extends SingletonFactory {
 					}
 					else {
 						// check if request URI resolves to an application different from relative route
-						// important: request URI may not contain anything else expect for the path
+						// important: request URI may not contain anything else except for the path
 						$currentRequestURI = RouteHandler::getHost() . $requestUri;
 						$redirectToLandingPage = false;
 						if ($currentRequestURI == ApplicationHandler::getInstance()->getPrimaryApplication()->getPageURL()) {
@@ -162,19 +162,28 @@ class RequestHandler extends SingletonFactory {
 						}
 						
 						// check if current URL matches an application but controller was omitted
-						foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-							if ($currentRequestURI == $application->getPageURL()) {
-								if ($controller = WCF::getApplicationObject($application)->getPrimaryController()) {
+						foreach (ApplicationHandler::getInstance()->getApplications() as $applicationObject) {
+							if ($currentRequestURI == $applicationObject->getPageURL()) {
+								if ($controller = WCF::getApplicationObject($applicationObject)->getPrimaryController()) {
 									$controller = explode('\\', $controller);
-									HeaderUtil::redirect(LinkHandler::getInstance()->getLink(preg_replace('~(Action|Form|Page)$~', '', array_pop($controller)), array('application' => $controller[0])));
-									exit;
+									
+									if (URL_LEGACY_MODE) {
+										HeaderUtil::redirect(LinkHandler::getInstance()->getLink(preg_replace('~(Action|Form|Page)$~', '', array_pop($controller)), array('application' => $controller[0])));
+										exit;
+									}
+									else {
+										$routeData['controller'] = preg_replace('~(Action|Form|Page)$~', '', array_pop($controller));
+										$redirectURL = '';
+									}
 								}
 							}
 						}
 						
 						// redirect to landing page
-						HeaderUtil::redirect($redirectURL, true);
-						exit;
+						if (!empty($redirectURL)) {
+							HeaderUtil::redirect($redirectURL, true);
+							exit;
+						}
 					}
 				}
 				
