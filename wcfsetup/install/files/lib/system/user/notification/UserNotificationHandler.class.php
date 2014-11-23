@@ -341,13 +341,14 @@ class UserNotificationHandler extends SingletonFactory {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("notification.userID = ?", array(WCF::getUser()->userID));
 		
+		$orderBy = 'notification.time DESC';
 		if ($filterByConfirmed !== null) {
 			// fetch the oldest, unconfirmed notifications, order will be reversed using PHP
-			$orderBy = 'notification.time ASC';
 			$conditions->add("notification.confirmed = ?", array($filterByConfirmed));
-		}
-		else {
-			$orderBy = 'notification.time DESC';
+			
+			if ($filterByConfirmed = 0) {
+				$orderBy = 'notification.time ASC';
+			}
 		}
 		
 		$sql = "SELECT		notification.*, notification_event.eventID, object_type.objectType
