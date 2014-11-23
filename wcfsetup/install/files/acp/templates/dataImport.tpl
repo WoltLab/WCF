@@ -157,10 +157,8 @@
 				<dl>
 					<dt><label for="userMergeMode">{lang}wcf.acp.dataImport.configure.settings.userMergeMode{/lang}</label></dt>
 					<dd>
-						<label><input type="radio" id="userMergeMode" name="userMergeMode" value="1" {if $userMergeMode == 1}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.1{/lang}</label>
-						<label><input type="radio" name="userMergeMode" value="2" {if $userMergeMode == 2}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.2{/lang}</label>
-						<label><input type="radio" name="userMergeMode" value="3" {if $userMergeMode == 3}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.3{/lang}</label>
-						<label><input type="radio" name="userMergeMode" value="4" {if $userMergeMode == 4}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.4{/lang}</label>
+						<label><input type="radio" id="userMergeMode" name="userMergeMode" value="4" {if $userMergeMode == 4}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.4{/lang}</label>
+						<label><input type="radio" name="userMergeMode" value="5" {if $userMergeMode == 5}checked="checked" {/if}/> {lang}wcf.acp.dataImport.configure.settings.userMergeMode.5{/lang}</label>
 					</dd>
 				</dl>
 				

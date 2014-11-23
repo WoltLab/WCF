@@ -35,6 +35,9 @@ class UserImporter extends AbstractImporter {
 	 */
 	protected $userOptions = array();
 	
+	const MERGE_MODE_EMAIL = 4;
+	const MERGE_MODE_USERNAME_OR_EMAIL = 5;
+	
 	/**
 	 * Creates a new UserImporter object.
 	 */
@@ -58,30 +61,39 @@ class UserImporter extends AbstractImporter {
 	 * @see	\wcf\system\importer\IImporter::import()
 	 */
 	public function import($oldID, array $data, array $additionalData = array()) {
-		// resolve duplicates
-		if (ImportHandler::getInstance()->getUserMergeMode() == 4) {
-			$existingUser = User::getUserByEmail($data['email']);
-			if ($existingUser->userID) {
-				// merge user
-				ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user', $oldID, $existingUser->userID);
-					
-				return 0;
-			}
+		// whether to perform a merge
+		$performMerge = false;
+		
+		// fetch user with same username
+		$conflictingUser = User::getUserByUsername($data['username']);
+		switch (ImportHandler::getInstance()->getUserMergeMode()) {
+			case self::MERGE_MODE_USERNAME_OR_EMAIL:
+				// merge target will be the conflicting user
+				$targetUser = $conflictingUser;
+				
+				// check whether user exists
+				if ($targetUser->userID) {
+					$performMerge = true;
+					break;
+				}
+			case self::MERGE_MODE_EMAIL:
+				// fetch merge target
+				$targetUser = User::getUserByEmail($data['email']);
+				// if it exists: perform a merge
+				if ($targetUser->userID) $performMerge = true;
+			break;
 		}
-		else {
-			$existingUser = User::getUserByUsername($data['username']);
-			if ($existingUser->userID) {
-				if (ImportHandler::getInstance()->getUserMergeMode() == 1 || (ImportHandler::getInstance()->getUserMergeMode() == 3 && mb_strtolower($existingUser->email) != mb_strtolower($data['email']))) {
-					// rename user
-					$data['username'] = self::resolveDuplicate($data['username']);
-				}
-				else {
-					// merge user
-					ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user', $oldID, $existingUser->userID);
-					
-					return 0;
-				}
-			}
+		
+		// merge should be performed
+		if ($performMerge) {
+			ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user', $oldID, $targetUser->userID);
+			return 0;
+		}
+		
+		// a conflict arose, but no merge was performed, resolve
+		if ($conflictingUser->userID) {
+			// rename user
+			$data['username'] = self::resolveDuplicate($data['username']);
 		}
 		
 		// check existing user id

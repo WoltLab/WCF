@@ -5,6 +5,7 @@ use wcf\form\AbstractForm;
 use wcf\system\database\DatabaseException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
+use wcf\system\importer\UserImporter;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
@@ -124,7 +125,7 @@ class DataImportForm extends AbstractForm {
 	 * user merge mode
 	 * @var	integer
 	 */
-	public $userMergeMode = 2;
+	public $userMergeMode = UserImporter::MERGE_MODE_EMAIL;
 	
 	/**
 	 * @see	\wcf\page\IPage::readParameters()
@@ -227,8 +228,12 @@ class DataImportForm extends AbstractForm {
 		}
 		
 		// validate user merge mode
-		if ($this->userMergeMode < 1 || $this->userMergeMode > 4) {
-			$this->userMergeMode = 2;
+		switch ($this->userMergeMode) {
+			case UserImporter::MERGE_MODE_EMAIL:
+			case UserImporter::MERGE_MODE_USERNAME_OR_EMAIL:
+			break;
+			default:
+				$this->userMergeMode = UserImporter::MERGE_MODE_EMAIL;
 		}
 	}
 	

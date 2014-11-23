@@ -3,6 +3,7 @@ namespace wcf\system\cli\command;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\DatabaseException;
 use wcf\system\importer\ImportHandler;
+use wcf\system\importer\UserImporter;
 use wcf\system\CLIWCF;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -458,20 +459,26 @@ class ImportCLICommand implements ICLICommand {
 	 */
 	protected function readUserMergeMode() {
 		CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode'));
-		CLIWCF::getReader()->println('1) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.1'));
-		CLIWCF::getReader()->println('2) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.2').' (*)');
-		CLIWCF::getReader()->println('3) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.3'));
-		CLIWCF::getReader()->println('4) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.4'));
+		CLIWCF::getReader()->println('1) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.4').' (*)');
+		CLIWCF::getReader()->println('2) '.WCF::getLanguage()->get('wcf.acp.dataImport.configure.settings.userMergeMode.5'));
 		CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.cli.selection', array(
 			'minSelection' => 1,
-			'maxSelection' => 4
+			'maxSelection' => 2
 		)));
 		
 		while (true) {
 			$this->userMergeMode = CLIWCF::getReader()->readLine('> ');
 			if ($this->userMergeMode === null) exit;
-			if ($this->userMergeMode != intval($this->userMergeMode) || $this->userMergeMode < 1 || $this->userMergeMode > 4) {
-				$this->userMergeMode = 2;
+			switch (intval($this->userMergeMode)) {
+				case 1:
+					$this->userMergeMode = UserImporter::MERGE_MODE_EMAIL;
+				break;
+				case 2:
+					$this->userMergeMode = UserImporter::MERGE_MODE_USERNAME_OR_EMAIL;
+				break;
+				default:
+					$this->userMergeMode = UserImporter::MERGE_MODE_EMAIL;
+				break;
 			}
 			
 			break;
