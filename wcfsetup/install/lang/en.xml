@@ -854,8 +854,8 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.enable_share_buttons"><![CDATA[Show content share button]]></item>
 		<item name="wcf.acp.option.share_buttons_show_count"><![CDATA[Show number of shares]]></item>
 		<item name="wcf.acp.option.category.message.general.edit"><![CDATA[Edits]]></item>
-		<item name="wcf.acp.option.edit_history_enabled"><![CDATA[Enable Edit History]]></item>
-		<item name="wcf.acp.option.edit_history_enabled.description"><![CDATA[Stores old versions of user created items.]]]></item>
+		<item name="wcf.acp.option.module_edit_history"><![CDATA[Enable Edit History]]></item>
+		<item name="wcf.acp.option.module_edit_history.description"><![CDATA[Stores old versions of user created items.]]]></item>
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Storage time]]></item>
 		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Items in the edit history will be discarded if they are older than the given period. [time in days, 0 to disable]]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
@@ -3040,7 +3040,7 @@ You can safely ignore this email if you did not register with the website: {@PAG
 		<item name="wcf.user.condition.likesReceived"><![CDATA[Likes Received]]></item>
 		<item name="wcf.user.condition.mobileBrowser"><![CDATA[Mobile browser]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser"><![CDATA[Uses mobile browser]]></item>
-		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[You may not simultaneously select “Uses mobile browser“ and “Uses no mobile browser“.]]]></item>
+		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[You may not simultaneously select “Uses mobile browser“ and “Uses no mobile browser“.]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesNoMobileBrowser"><![CDATA[Uses no mobile browser]]></item>
 		<item name="wcf.user.condition.notGroupIDs"><![CDATA[not in User Groups]]></item>
 		<item name="wcf.user.condition.notGroupIDs.description"><![CDATA[Users may not be a member of the selected user groups.]]></item>
