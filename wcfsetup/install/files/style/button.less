@@ -177,16 +177,26 @@ button.small,
 		}
 		
 		&:first-child {
-			> .button {
+			> .button:not(.small) {
 				border-top-left-radius: @wcfButtonBorderRadius;
 				border-bottom-left-radius: @wcfButtonBorderRadius;
+			}
+			
+			> .button.small {
+				border-top-left-radius: @wcfSmallButtonBorderRadius;
+				border-bottom-left-radius: @wcfSmallButtonBorderRadius;
 			}
 		}
 		
 		&:last-child {
-			> .button {
+			> .button:not(.small) {
 				border-top-right-radius: @wcfButtonBorderRadius;
 				border-bottom-right-radius: @wcfButtonBorderRadius;
+			}
+			
+			> .button.small {
+				border-top-right-radius: @wcfSmallButtonBorderRadius;
+				border-bottom-right-radius: @wcfSmallButtonBorderRadius;
 			}
 		}
 	}
