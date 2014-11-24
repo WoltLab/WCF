@@ -434,7 +434,7 @@ RedactorPlugins.wutil = function() {
 			if ($lastChecked === null || $lastChecked < $oneWeekAgo) {
 				var $regExp = new RegExp('^' + $prefix + '_');
 				for (var $key in localStorage) {
-					if ($key.match($regExp)) {
+					if ($key.match($regExp) && $key !== $master) {
 						var $value = localStorage.getItem($key);
 						try {
 							$value = JSON.parse($value);
