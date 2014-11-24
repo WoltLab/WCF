@@ -434,6 +434,8 @@ RedactorPlugins.wmonkeypatch = function() {
 			// bug report: https://code.google.com/p/chromium/issues/detail?id=335955
 			// based upon the idea: http://www.neotericdesign.com/blog/2013/3/working-around-chrome-s-contenteditable-span-bug
 			var $fixWebKit = (function() {
+				var $removedSpan = false;
+				
 				this.$editor.find('span').each(function() {
 					var $span = $(this);
 					if ($span.data('verified') !== 'redactor') {
@@ -443,8 +445,14 @@ RedactorPlugins.wmonkeypatch = function() {
 						
 						$helper.remove();
 						$span.remove();
+						
+						$removedSpan = true;
 					}
 				});
+				
+				if ($removedSpan) {
+					this.wmonkeypatch.saveSelection();
+				}
 			}).bind(this);
 			
 			// insert.html
@@ -453,6 +461,8 @@ RedactorPlugins.wmonkeypatch = function() {
 				$focusEditor();
 				
 				$mpHtml.call(this, html, clean);
+				
+				this.wmonkeypatch.saveSelection();
 				
 				if ($isWebKit) {
 					setTimeout(function() {

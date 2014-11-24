@@ -397,11 +397,9 @@ RedactorPlugins.wutil = function() {
 						return;
 					}
 					
-					$autosaveNotice.data('callbackOpen', function() {
-						setTimeout(function() {
-							$autosaveNotice.removeClass('open');
-						}, 3000);
-					});
+					setTimeout(function() {
+						$autosaveNotice.removeClass('open');
+					}, 2000);
 					
 					$message = WCF.Language.get('wcf.message.autosave.saved');
 				break;
