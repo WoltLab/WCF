@@ -54,6 +54,13 @@ RedactorPlugins.wmonkeypatch = function() {
 		},
 		
 		/**
+		 * Saves current caret position.
+		 */
+		saveSelection: function() {
+			this.wmonkeypatch._range = getSelection().getRangeAt(0);
+		},
+		
+		/**
 		 * Setups event listeners and callbacks.
 		 */
 		bindEvents: function() {
@@ -72,7 +79,9 @@ RedactorPlugins.wmonkeypatch = function() {
 			});
 			
 			// keyup
-			this.wutil.setOption('keyupCallback', function(event) {
+			this.wutil.setOption('keyupCallback', (function(event) {
+				this.wmonkeypatch.saveSelection();
+				
 				var $data = {
 					cancel: false,
 					event: event
@@ -81,7 +90,7 @@ RedactorPlugins.wmonkeypatch = function() {
 				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'keyup_' + $identifier, $data);
 				
 				return ($data.cancel ? false : true);
-			});
+			}).bind(this));
 			
 			// buttons response
 			if (this.opts.activeButtons) {
@@ -91,12 +100,13 @@ RedactorPlugins.wmonkeypatch = function() {
 				this.$editor.on('keyup.redactor', $.proxy(this.keyup.init, this));
 			}
 			
-			this.$editor.on('blur.wredactor', (function() {
+			// blur is unreliable in Firefox, especially since 'focusout' is not available
+			/*this.$editor.on('blur.wredactor', (function() {
 				var $selection = window.getSelection();
 				if ($selection.rangeCount) {
 					this.wmonkeypatch._range = $selection.getRangeAt(0);
 				}
-			}).bind(this));
+			}).bind(this));*/
 		},
 		
 		/**

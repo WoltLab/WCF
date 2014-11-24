@@ -17,7 +17,7 @@ RedactorPlugins.wbbcode = function() {
 		init: function() {
 			var $identifier = this.$textarea.wcfIdentify();
 			
-			this.opts.initCallback = $.proxy(function() {
+			this.opts.initCallback = (function() {
 				// use stored editor contents
 				var $content = $.trim(this.wutil.getOption('woltlab.originalValue'));
 				if ($content.length) {
@@ -30,7 +30,8 @@ RedactorPlugins.wbbcode = function() {
 				delete this.opts.woltlab.originalValue;
 				
 				$(document).trigger('resize');
-			}, this);
+				this.wmonkeypatch.saveSelection();
+			}).bind(this);
 			
 			this.opts.pasteBeforeCallback = $.proxy(this.wbbcode._pasteBeforeCallback, this);
 			this.opts.pasteCallback = $.proxy(this.wbbcode._pasteCallback, this);
@@ -99,11 +100,15 @@ RedactorPlugins.wbbcode = function() {
 					
 					this.button.get('html').children('i').removeClass('fa-square').addClass('fa-square-o');
 					$tooltip.text(WCF.Language.get('wcf.bbcode.button.toggleBBCode'));
+					
+					this.wmonkeypatch.saveSelection();
 				}
 			}).bind(this);
 			
 			// insert a new line if user clicked into the editor and the last children is a quote (same behavior as arrow down)
 			this.wutil.setOption('clickCallback', (function(event) {
+				this.wmonkeypatch.saveSelection();
+				
 				if (event.target === this.$editor[0]) {
 					if (this.$editor[0].lastElementChild && this.$editor[0].lastElementChild.tagName === 'BLOCKQUOTE') {
 						this.wutil.setCaretAfter($(this.$editor[0].lastElementChild));

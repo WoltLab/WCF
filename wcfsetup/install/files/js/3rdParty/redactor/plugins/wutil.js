@@ -206,6 +206,7 @@ RedactorPlugins.wutil = function() {
 		reset: function() {
 			if (this.opts.visual) {
 				this.$editor.html('<p>' + this.opts.invisibleSpace + '</p>');
+				this.wmonkeypatch.saveSelection();
 			}
 			
 			this.$textarea.val('');
