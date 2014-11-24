@@ -1354,6 +1354,13 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 	_after: function(dropdownMenu) {
 		WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify()).children('li.jsNotificationItem').click(function(event) {
 			if (event.target.tagName !== 'A') {
+				var $item = $(this);
+				if ($item.data('link')) {
+					window.location = $item.data('link');
+					
+					return false;
+				}
+				
 				event.stopPropagation();
 				return false;
 			}
