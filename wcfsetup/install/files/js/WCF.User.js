@@ -1357,7 +1357,10 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 		$items.each(function(index, item) {
 			var $item = $(item);
 			
-			$('<a href="' + $item.data('link') + '" class="notificationItemLink" />').appendTo($item);
+			if (!$.browser.msie) {
+				$item.addClass('notificationItemLink');
+				$('<a href="' + $item.data('link') + '" />').appendTo($item);
+			}
 			
 			$item.click(function(event) {
 				if (event.target.tagName !== 'A') {

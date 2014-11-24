@@ -247,8 +247,6 @@
 		}
 		
 		&.notificationItem {
-			position: relative;
-			
 			&.groupedNotificationItem > span {
 				> div:first-child {
 					padding: 4px 2px 2px;
@@ -259,24 +257,33 @@
 				}
 			}
 			
-			> span {
-				pointer-events: none;
+			&.notificationItemLink {
 				position: relative;
-				white-space: normal;
-				z-index: 10;
 				
-				a {
-					pointer-events: all;
+				> span {
+					cursor: default;
+					pointer-events: none;
+					position: relative;
+					z-index: 10;
+					
+					a {
+						pointer-events: all;
+					}
+				}
+				
+				> a {
+					bottom: 0;
+					left: 0;
+					position: absolute;
+					right: 0;
+					top: 0;
+					z-index: 1;
 				}
 			}
 			
-			> a.notificationItemLink {
-				bottom: 0;
-				left: 0;
-				position: absolute;
-				right: 0;
-				top: 0;
-				z-index: 1;
+			> span {
+				cursor: pointer;
+				white-space: normal;
 			}
 		}
 	}
