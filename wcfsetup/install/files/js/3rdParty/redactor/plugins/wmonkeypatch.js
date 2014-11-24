@@ -57,7 +57,11 @@ RedactorPlugins.wmonkeypatch = function() {
 		 * Saves current caret position.
 		 */
 		saveSelection: function() {
-			this.wmonkeypatch._range = getSelection().getRangeAt(0);
+			var $selection = getSelection();
+			
+			if ($selection.rangeCount) {
+				this.wmonkeypatch._range = $selection.getRangeAt(0);
+			}
 		},
 		
 		/**
