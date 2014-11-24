@@ -216,4 +216,23 @@ class MessageParser extends BBCodeParser {
 		
 		return true;
 	}
+	
+	/**
+	 * Returns a text-only version of given message.
+	 *
+	 * @param	string		$message
+	 * @return	string
+	 */
+	public function stripHTML($message) {
+		// remove img tags (smilies)
+		$message = preg_replace('~<img src="[^"]+" alt="([^"]+)" />~', '\\1', $message);
+		
+		// strip other HTML tags
+		$message = StringUtil::stripHTML($message);
+		
+		// decode HTML entities
+		$message = StringUtil::decodeHTML($message);
+		
+		return $message;
+	}
 }
