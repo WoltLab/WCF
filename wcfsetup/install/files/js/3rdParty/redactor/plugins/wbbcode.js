@@ -115,6 +115,12 @@ RedactorPlugins.wbbcode = function() {
 					}
 				}
 			}).bind(this));
+			
+			// drop ul to prevent being touched by this.clean.clearUnverifiedRemove()
+			var $index = this.opts.verifiedTags.indexOf('ul');
+			if ($index > -1) {
+				this.opts.verifiedTags.splice($index, 1);
+			}
 		},
 		
 		/**
