@@ -443,7 +443,7 @@ RedactorPlugins.wutil = function() {
 							$value = { timestamp: 0 };
 						}
 						
-						if (!$value.timestamp || $value.timestamp < $oneWeekAgo) {
+						if ($value === null || !$value.timestamp || $value.timestamp < $oneWeekAgo) {
 							try {
 								localStorage.removeItem($key);
 							}
