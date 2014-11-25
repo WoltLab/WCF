@@ -663,8 +663,8 @@ final class StringUtil {
 		preg_match_all('/(<\/?([\w+]+)[^>]*>)?([^<>]*)/', $string, $tags, PREG_SET_ORDER);
 		
 		foreach ($tags as $tag) {
-			// filter standalone html tags
-			if (!preg_match('/^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/s', $tag[2])) { // ignore void elements
+			// ignore void elements
+			if (!preg_match('/^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/s', $tag[2])) {
 				// look for opening tags
 				if (preg_match('/<[\w]+[^>]*>/s', $tag[0])) {
 					array_unshift($openTags, $tag[2]);
