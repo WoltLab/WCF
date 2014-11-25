@@ -1555,18 +1555,22 @@ WCF.User.RecentActivityLoader = Class.extend({
 	/**
 	 * Switches recent activity context.
 	 */
-	_switchContext: function() {
-		new WCF.Action.Proxy({
-			autoSend: true,
-			data: {
-				actionName: 'switchContext',
-				className: 'wcf\\data\\user\\activity\\event\\UserActivityEventAction'
-			},
-			success: function() {
-				window.location.hash = '#dashboardBoxRecentActivity';
-				window.location.reload();
-			}
-		});
+	_switchContext: function(event) {
+		event.preventDefault();
+		
+		if (!$(event.currentTarget).hasClass('active')) {
+			new WCF.Action.Proxy({
+				autoSend: true,
+				data: {
+					actionName: 'switchContext',
+					className: 'wcf\\data\\user\\activity\\event\\UserActivityEventAction'
+				},
+				success: function() {
+					window.location.hash = '#dashboardBoxRecentActivity';
+					window.location.reload();
+				}
+			});
+		}
 	},
 	
 	/**
