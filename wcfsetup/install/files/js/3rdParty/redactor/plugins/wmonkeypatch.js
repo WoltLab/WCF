@@ -267,6 +267,16 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				$mpStartSync.call(this);
 			}).bind(this);
+			
+			// code.textareaIndenting
+			var $mpTextareaIndenting = this.code.textareaIndenting;
+			this.code.textareaIndenting = (function(e) {
+				if (e.keyCode !== 9 || e.ctrlKey) {
+					return true;
+				}
+				
+				return $mpTextareaIndenting.call(this, e);
+			}).bind(this);
 		},
 		
 		/**
