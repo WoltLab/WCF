@@ -1079,3 +1079,30 @@ li:nth-child(2n+1) .message {
 		}
 	}
 }
+
+/* edit history */
+.editHistoryDiff {
+	> .sideBySide:first-child {
+		margin-bottom: @wcfGapLarge;
+		text-align: center;
+	}
+	
+	.sideBySide {
+		> div:first-child {
+			padding-right: @wcfGapMedium;
+		}
+		
+		> div:last-child {
+			padding-left: @wcfGapMedium;
+		}
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.editHistoryVersionList {
+		.columnUser,
+		.columnEditReason {
+			display: none;
+		}
+	}
+}

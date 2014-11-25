@@ -64,7 +64,7 @@
 {/if}
 
 <form action="{link controller='EditHistory'}{/link}" method="post">
-	<div class="tabularBox tabularBoxTitle marginTop">
+	<div class="tabularBox tabularBoxTitle marginTop editHistoryVersionList">
 		<header>
 			{assign var='versionCount' value=$objects|count}
 			<h2>{lang}wcf.edit.versions{/lang} <span class="badge badgeInverse">{#$versionCount+1}</span></h2>
