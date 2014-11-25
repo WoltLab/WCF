@@ -663,7 +663,7 @@ final class StringUtil {
 		
 		foreach ($tags as $tag) {
 			// filter standalone html tags
-			if (!preg_match('/area|base|basefont|br|col|frame|hr|img|input|isindex|link|meta|param/s', $tag[2])) {
+			if (!preg_match('/^(area|base|br|col|embed|hr|img|input|keygen|link|menuitem|meta|param|source|track|wbr)$/s', $tag[2])) { // ignore void elements
 				// look for opening tags
 				if (preg_match('/<[\w]+[^>]*>/s', $tag[0])) {
 					array_unshift($openTags, $tag[2]);
