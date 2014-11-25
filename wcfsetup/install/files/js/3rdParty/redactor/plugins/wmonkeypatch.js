@@ -277,6 +277,23 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				return $mpTextareaIndenting.call(this, e);
 			}).bind(this);
+			
+			// code.showCode
+			// fixes an issue related to setSelectionRange on a hidden textarea in Firefox (NS_ERROR_FAILURE, #1984)
+			var $mpShowCode = this.code.showCode;
+			this.code.showCode = (function() {
+				var $hiddenParent = null;
+				if (!this.$textarea.is(':visible')) {
+					$hiddenParent = this.$textarea.parentsUntil(':visible').last();
+					$hiddenParent.show();
+				}
+				
+				$mpShowCode.call(this);
+				
+				if ($hiddenParent !== null) {
+					$hiddenParent.hide();
+				}
+			}).bind(this);
 		},
 		
 		/**
