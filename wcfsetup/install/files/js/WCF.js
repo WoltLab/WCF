@@ -2519,12 +2519,20 @@ WCF.Action.Delete = Class.extend({
 	triggerEffect: function(objectIDs) {
 		for (var $index in this._containers) {
 			var $container = $('#' + this._containers[$index]);
-			if (WCF.inArray($container.find(this._buttonSelector).data('objectID'), objectIDs)) {
+			var $button = $container.find(this._buttonSelector);
+			if (WCF.inArray($button.data('objectID'), objectIDs)) {
 				var self = this;
 				$container.wcfBlindOut('up',function() {
-					$(this).remove();
-					self._containers.splice(self._containers.indexOf($(this).wcfIdentify()), 1);
-					self._didTriggerEffect($(this));
+					var $container = $(this).remove();
+					self._containers.splice(self._containers.indexOf($container.wcfIdentify()), 1);
+					self._didTriggerEffect($container);
+					
+					if ($button.data('eventName')) {
+						WCF.System.Event.fireEvent('com.woltlab.wcf.action.delete', $button.data('eventName'), {
+							button: $button,
+							container: $container
+						});
+					}
 				});
 			}
 		}

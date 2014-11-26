@@ -1096,6 +1096,25 @@ RedactorPlugins.wbbcode = function() {
 		},
 		
 		/**
+		 * Removes an attachment from WYSIWYG view.
+		 * 
+		 * @param	integer		attachmentID
+		 */
+		removeAttachment: function(attachmentID) {
+			if (!this.opts.visual) {
+				// we're not going to mess with the code view
+				return;
+			}
+			
+			this.$editor.find('img.redactorEmbeddedAttachment').each(function(index, attachment) {
+				var $attachment = $(attachment);
+				if ($attachment.data('attachmentID') == attachmentID) {
+					$attachment.remove();
+				}
+			});
+		},
+		
+		/**
 		 * Returns a list of attachments representing an image.
 		 * 
 		 * @return	object

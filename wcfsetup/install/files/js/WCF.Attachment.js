@@ -58,7 +58,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 */
 	init: function(buttonSelector, fileListSelector, objectType, objectID, tmpHash, parentObjectID, maxUploads, wysiwygContainerID) {
 		this._super(buttonSelector, fileListSelector, 'wcf\\data\\attachment\\AttachmentAction', { multiple: true, maxUploads: maxUploads });
-		console.debug(wysiwygContainerID);
+		
 		this._autoInsert = [ ];
 		this._objectType = objectType;
 		this._objectID = objectID;
@@ -71,7 +71,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		this._fileListSelector.find('.jsButtonAttachmentInsertThumbnail').click($.proxy(this._insert, this));
 		this._fileListSelector.find('.jsButtonAttachmentInsertFull').click($.proxy(this._insert, this));
 		
-		WCF.DOMNodeRemovedHandler.addCallback('WCF.Attachment.Upload', $.proxy(this._removeLimitError, this));
+		//WCF.DOMNodeRemovedHandler.addCallback('WCF.Attachment.Upload', $.proxy(this._removeLimitError, this));
+		WCF.System.Event.addListener('com.woltlab.wcf.action.delete', 'attachment_' + this._wysiwygContainerID, $.proxy(this._removeLimitError, this));
 		
 		this._makeSortable();
 		
@@ -181,14 +182,9 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	/**
 	 * Removes the limit error message.
 	 * 
-	 * @param	object		event
+	 * @param	object		data
 	 */
-	_removeLimitError: function(event) {
-		var $target = $(event.target);
-		if ($target.is('li.box48') && $target.parent().wcfIdentify() === this._fileListSelector.wcfIdentify()) {
-			this._buttonSelector.next('small.innerError').remove();
-		}
-		
+	_removeLimitError: function(data) {
 		var $listItems = this._fileListSelector.children('li');
 		if (!$listItems.filter(':not(.uploadFailed)').length) {
 			this._insertAllButton.hide();
@@ -198,6 +194,10 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			setTimeout((function() {
 				this._fileListSelector.wcfBlindOut();
 			}).bind(this), 250);
+		}
+		
+		if (this._wysiwygContainerID) {
+			$('#' + this._wysiwygContainerID).redactor('wbbcode.removeAttachment', data.button.data('objectID'));
 		}
 	},
 	
@@ -308,7 +308,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				// init buttons
 				var $buttonList = $li.find('ul').addClass('buttonGroup');
-				var $deleteButton = $('<li><span class="button small jsDeleteButton" data-object-id="'+data.returnValues.attachments[$internalFileID]['attachmentID']+'" data-confirm-message="'+WCF.Language.get('wcf.attachment.delete.sure')+'">' + WCF.Language.get('wcf.global.button.delete') + '</span></li>');
+				var $deleteButton = $('<li><span class="button small jsDeleteButton" data-object-id="'+data.returnValues.attachments[$internalFileID]['attachmentID']+'" data-confirm-message="'+WCF.Language.get('wcf.attachment.delete.sure')+'" data-event-name="attachment_' + this._wysiwygContainerID + '">' + WCF.Language.get('wcf.global.button.delete') + '</span></li>');
 				$buttonList.append($deleteButton);
 				
 				$li.data('objectID', data.returnValues.attachments[$internalFileID].attachmentID);
