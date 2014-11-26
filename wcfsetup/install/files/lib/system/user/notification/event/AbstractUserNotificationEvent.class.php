@@ -244,7 +244,7 @@ abstract class AbstractUserNotificationEvent extends DatabaseObjectDecorator imp
 	 * @see	\wcf\system\user\notification\event\IUserNotificationEvent::isConfirmed()
 	 */
 	public function isConfirmed() {
-		return ($this->notification->confirmed == 1);
+		return ($this->notification->confirmTime > 0);
 	}
 	
 	/**

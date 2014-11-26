@@ -248,8 +248,9 @@
 		
 		&.notificationItem {
 			&.groupedNotificationItem > span {
-				> div:first-child {
-					padding: 4px 2px 2px;
+				> .framed > span.fa-users:before {
+					position: relative;
+					top: 3px;
 				}
 				
 				> div + div {
@@ -281,9 +282,31 @@
 				}
 			}
 			
+			&:hover > span > .framed {
+				> .notificationItemMarkAsConfirmed {
+					height: 24px;	
+					display: block;
+					width: 24px;
+					
+					&:before {
+						position: relative;
+						top: 3px;
+					}
+				}
+				
+				> .notificationItemMarkAsConfirmed ~ img,
+				> .notificationItemMarkAsConfirmed ~ .fa-users {
+					display: none;
+				}
+			}
+			
 			> span {
 				cursor: pointer;
 				white-space: normal;
+				
+				> .framed > .notificationItemMarkAsConfirmed {
+					display: none;
+				}
 			}
 		}
 	}

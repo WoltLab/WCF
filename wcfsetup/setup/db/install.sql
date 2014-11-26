@@ -1293,9 +1293,10 @@ CREATE TABLE wcf1_user_notification (
 	userID INT(10) NOT NULL,
 	time INT(10) NOT NULL DEFAULT 0,
 	mailNotified TINYINT(1) NOT NULL DEFAULT 0,
-	confirmed TINYINT(1) NOT NULL DEFAULT 0,
+	confirmTime INT(10) NOT NULL DEFAULT 0,
 	additionalData TEXT,
-	KEY (userID, eventID, objectID, confirmed)
+	KEY (userID, eventID, objectID, confirmTime),
+	KEY (userID, confirmTime)
 );
 
 -- notification authors (stacking)

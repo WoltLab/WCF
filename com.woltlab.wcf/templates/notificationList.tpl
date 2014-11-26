@@ -7,20 +7,11 @@
 	<script data-relocate="true">
 		//<![CDATA[
 		$(function() {
-			$('.contentNavigation .jsMarkAllAsConfirmed').click(function() {
-				WCF.System.Confirmation.show(WCF.Language.get('wcf.user.notification.markAllAsConfirmed.confirmMessage'), function(action) {
-					if (action === 'confirm') {
-						new WCF.Action.Proxy({
-							autoSend: true,
-							data: {
-								actionName: 'markAllAsConfirmed',
-								className: 'wcf\\data\\user\\notification\\UserNotificationAction'
-							},
-							success: function() { window.location.reload(); }
-						});
-					}
-				});
+			WCF.Language.addObject({
+				'wcf.user.notification.markAsConfirmed': '{lang}wcf.user.notification.markAsConfirmed{/lang}'
 			});
+			
+			new WCF.Notification.List();
 		});
 		//]]>
 	</script>
@@ -70,16 +61,14 @@
 			</header>
 			
 			<div class="container marginTop">
-				<ul class="containerList"{* id="userNotificationItemList"*}>
+				<ul class="containerList userNotificationItemList">
 		{/if}
-				<li class="jsNotificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}" data-notification-id="{@$notification[notificationID]}" data-link="{$notification[event]->getLink()}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}">
+				<li class="jsNotificationItem notificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}" data-notification-id="{@$notification[notificationID]}" data-link="{$notification[event]->getLink()}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}" data-is-confirmed="{if $notification[event]->isConfirmed()}true{else}false{/if}">
 					<div class="box24">
 						{if $notification[authors] < 2}
-							{if $notification[event]->getAuthor()->userID}
-								<a href="{link controller='User' object=$notification[event]->getAuthor()}{/link}" title="{$notification[event]->getAuthor()->username}" class="framed">{@$notification[event]->getAuthor()->getAvatar()->getImageTag(24)}</a>
-							{else}
-								<span class="framed">{@$notification[event]->getAuthor()->getAvatar()->getImageTag(24)}</span>
-							{/if}	
+							<div class="framed">
+								{@$notification[event]->getAuthor()->getAvatar()->getImageTag(24)}
+							</div>
 							
 							<div class="details">
 								<p>
@@ -89,7 +78,9 @@
 								<p><small>{@$notification[time]|time}</small></p>
 							</div>
 						{else}
-							<span class="icon icon24 fa-users"></span>
+							<div class="framed">
+								<span class="icon icon24 fa-users"></span>
+							</div>
 							
 							<div class="details">
 								<p>

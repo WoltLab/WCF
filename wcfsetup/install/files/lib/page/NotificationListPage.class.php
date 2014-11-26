@@ -1,9 +1,7 @@
 <?php
 namespace wcf\page;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\menu\user\UserMenu;
 use wcf\system\user\notification\UserNotificationHandler;
-use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -52,34 +50,6 @@ class NotificationListPage extends MultipleLinkPage {
 		parent::readData();
 		
 		$this->notifications = UserNotificationHandler::getInstance()->getNotifications($this->sqlLimit, $this->sqlOffset, true);
-		
-		$markAsConfirmed = array();
-		foreach ($this->notifications['notifications'] as $notification) {
-			if (!$notification['event']->isConfirmed()) {
-				$markAsConfirmed[] = $notification['notificationID'];
-			}
-		}
-		
-		if (!empty($markAsConfirmed)) {
-			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("notificationID IN (?)", array($markAsConfirmed));
-			
-			// mark notifications as confirmed
-			$sql = "UPDATE	wcf".WCF_N."_user_notification
-				SET	confirmed = 1
-				".$conditions;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
-			
-			// delete notification_to_user assignments (mimic legacy notification system)
-			$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
-				".$conditions;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($conditions->getParameters());
-			
-			// reset user storage
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
-		}
 	}
 	
 	/**

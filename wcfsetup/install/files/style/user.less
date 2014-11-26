@@ -314,8 +314,33 @@
 }
 
 /* user notifications */
-#userNotificationItemList > .groupedNotificationItem p > a {
-	font-weight: bold;
+.userNotificationItemList > .notificationItem {
+	&.groupedNotificationItem > div > .framed > span.fa-users:before {
+		position: relative;
+		top: 3px;
+	}
+	
+	&:hover > div > .framed {
+		> .notificationItemMarkAsConfirmed {
+			height: 24px;	
+			display: block;
+			width: 24px;
+			
+			&:before {
+				position: relative;
+				top: 3px;
+			}
+		}
+		
+		> .notificationItemMarkAsConfirmed ~ img,
+		> .notificationItemMarkAsConfirmed ~ .fa-users {
+			display: none;
+		}
+	}
+	
+	> div > .framed > .notificationItemMarkAsConfirmed {
+		display: none;
+	}
 }
 
 .paidSubscriptionTeaserList {

@@ -1249,7 +1249,97 @@ WCF.User.Registration.LostPassword = Class.extend({
  * @copyright	2001-2014 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
-WCF.Notification = {};
+WCF.Notification = { };
+
+/**
+ * Handles the notification list.
+ */
+WCF.Notification.List = Class.extend({
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes the WCF.Notification.List object.
+	 */
+	init: function() {
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		// handle 'mark all as confirmed' buttons
+		$('.contentNavigation .jsMarkAllAsConfirmed').click(function() {
+			WCF.System.Confirmation.show(WCF.Language.get('wcf.user.notification.markAllAsConfirmed.confirmMessage'), function(action) {
+				if (action === 'confirm') {
+					new WCF.Action.Proxy({
+						autoSend: true,
+						data: {
+							actionName: 'markAllAsConfirmed',
+							className: 'wcf\\data\\user\\notification\\UserNotificationAction'
+						},
+						success: function() { window.location.reload(); }
+					});
+				}
+			});
+		});
+		
+		// handle regular items
+		this._convertList();
+	},
+	
+	/**
+	 * Converts the notification item list to be in sync with the notification dropdown.
+	 */
+	_convertList: function() {
+		$('.userNotificationItemList > .notificationItem').each((function(index, item) {
+			var $item = $(item);
+			
+			if (!$.browser.mobile && !$item.data('isConfirmed')) {
+				var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check green notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.user.notification.markAsConfirmed') + '" />').prependTo($item.find('> div.box24 > .framed'));
+				$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
+			}
+		}).bind(this));
+		
+		WCF.DOMNodeInsertedHandler.execute();
+	},
+	
+	/**
+	 * Marks a single notification as confirmed.
+	 * 
+	 * @param	object		event
+	 */
+	_markAsConfirmed: function(event) {
+		event.preventDefault();
+		
+		var $notificationID = $(event.currentTarget).parents('.notificationItem:eq(0)').data('notificationID');
+		
+		this._proxy.setOption('data', {
+			actionName: 'markAsConfirmed',
+			className: 'wcf\\data\\user\\notification\\UserNotificationAction',
+			objectIDs: [ $notificationID ]
+		});
+		this._proxy.sendRequest();
+		
+		return false;
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		var $item = $('.userNotificationItemList > .notificationItem[data-notification-id=' + data.returnValues.notificationID + ']');
+		
+		$item.data('isConfirmed', true);
+		$item.find('.notificationItemMarkAsConfirmed').remove();
+		$item.find('.newContentBadge').remove();
+	}
+});
 
 /**
  * Loads notification for the user panel.
@@ -1333,12 +1423,18 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 			var $badge = this._container.find('.badge');
 			if ($badge.length && parseInt($badge.text()) > 0) {
 				var $dropdownMenu = WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify());
-				if (!$dropdownMenu.is(':visible')) {
-					$dropdownMenu.children('li.jsNotificationItem').remove();
+				
+				// check if there is at least one unconfirmed item
+				var $count = 0;
+				$dropdownMenu.children('li.jsNotificationItem').each(function() {
+					if (!$(this).data('isConfirmed')) {
+						$count++;
+					}
+				});
+				
+				if (!$count && $count != $badge.text() && !$dropdownMenu.is(':visible')) {
+					this._resetList();
 					
-					$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').prependTo($dropdownMenu);
-					
-					this._didLoad = false;
 					this._super(event);
 				}
 			}
@@ -1354,7 +1450,7 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 	_after: function(dropdownMenu) {
 		var $items = WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify()).children('li.jsNotificationItem');
 		
-		$items.each(function(index, item) {
+		$items.each((function(index, item) {
 			var $item = $(item);
 			
 			if (!$.browser.msie) {
@@ -1362,12 +1458,37 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 				$('<a href="' + $item.data('link') + '" />').appendTo($item);
 			}
 			
+			if (!$.browser.mobile && !$item.data('isConfirmed')) {
+				var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check green notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.user.notification.markAsConfirmed') + '" />').prependTo($item.find('> span.box24 > .framed'));
+				$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
+			}
+			
 			$item.click(function(event) {
 				if (event.target.tagName !== 'A') {
 					window.location = $item.data('link');
 				}
 			});
+		}).bind(this));
+	},
+	
+	/**
+	 * Marks a notification as confirmed.
+	 * 
+	 * @param	object		event
+	 */
+	_markAsConfirmed: function(event) {
+		event.preventDefault();
+		
+		var $notificationID = $(event.currentTarget).parents('.notificationItem:eq(0)').data('notificationID');
+		
+		this._proxy.setOption('data', {
+			actionName: 'markAsConfirmed',
+			className: 'wcf\\data\\user\\notification\\UserNotificationAction',
+			objectIDs: [ $notificationID ]
 		});
+		this._proxy.sendRequest();
+		
+		return false;
 	},
 	
 	/**
@@ -1390,8 +1511,23 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 	 */
 	_success: function(data, textStatus, jqXHR) {
 		switch (data.actionName) {
+			case 'markAsConfirmed':
+				WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify()).children('li.jsNotificationItem').each(function(index, item) {
+					var $item = $(item);
+					if ($item.data('notificationID') == data.returnValues.notificationID) {
+						$item.data('isConfirmed', true);
+						$item.find('.notificationItemMarkAsConfirmed').remove();
+						$item.find('.newContentBadge').remove();
+						
+						return false;
+					}
+				});
+				
+				this._updateBadge(data.returnValues.totalCount);
+			break;
+			
 			case 'markAllAsConfirmed':
-				$('.jsNotificationItem').remove();
+				this._resetList();
 			// fall through
 			case 'getOutstandingNotifications':
 				if (!data.returnValues || !data.returnValues.template) {
@@ -1415,6 +1551,18 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 		if (this._favico !== null) {
 			this._favico.badge(count);
 		}
+	},
+	
+	/**
+	 * Resets the notification list to its initial state.
+	 */
+	_resetList: function() {
+		var $dropdownMenu = WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify());
+		$dropdownMenu.children('li.jsNotificationItem').remove();
+		
+		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').prependTo($dropdownMenu);
+		
+		this._didLoad = false;
 	},
 	
 	/**

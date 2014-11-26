@@ -24,7 +24,7 @@ class UserNotificationEditor extends DatabaseObjectEditor {
 	 */
 	public function markAsConfirmed() {
 		$this->update(array(
-			'confirmed' => 1,
+			'confirmTime' => TIME_NOW,
 			'mailNotified' => 1
 		));
 		

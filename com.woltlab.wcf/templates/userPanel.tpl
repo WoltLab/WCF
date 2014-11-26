@@ -37,6 +37,7 @@
 					$(function() {
 						WCF.Language.addObject({
 							'wcf.user.notification.count': '{lang}wcf.user.notification.count{/lang}',
+							'wcf.user.notification.markAsConfirmed': '{lang}wcf.user.notification.markAsConfirmed{/lang}',
 							'wcf.user.notification.markAllAsConfirmed': '{lang}wcf.user.notification.markAllAsConfirmed{/lang}',
 							'wcf.user.notification.markAllAsConfirmed.confirmMessage': '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}',
 							'wcf.user.notification.noMoreNotifications': '{lang}wcf.user.notification.noMoreNotifications{/lang}',

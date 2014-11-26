@@ -110,7 +110,7 @@ class UserNotificationHandler extends SingletonFactory {
 		$conditions->add("userID IN (?)", array($recipientIDs));
 		$conditions->add("eventID = ?", array($event->eventID));
 		$conditions->add("eventHash = ?", array($event->getEventHash()));
-		$conditions->add("confirmed = ?", array(0));
+		$conditions->add("confirmTime = ?", array(0));
 		
 		$sql = "SELECT	notificationID, userID
 			FROM	wcf".WCF_N."_user_notification
@@ -246,7 +246,7 @@ class UserNotificationHandler extends SingletonFactory {
 					$sql = "SELECT	COUNT(*) AS count
 						FROM	wcf".WCF_N."_user_notification
 						WHERE	userID = ?
-							AND confirmed = ?";
+							AND confirmTime = ?";
 					$statement = WCF::getDB()->prepareStatement($sql);
 					$statement->execute(array(
 						WCF::getUser()->userID,
@@ -323,7 +323,7 @@ class UserNotificationHandler extends SingletonFactory {
 		}
 		
 		$returnValues = $this->processNotifications($notifications, true);
-		$returnValues['notificationCount'] = max($notificationCount - $count, 0);
+		$returnValues['notificationCount'] = $notificationCount;
 		
 		return $returnValues;
 	}
@@ -344,7 +344,13 @@ class UserNotificationHandler extends SingletonFactory {
 		$orderBy = 'notification.time DESC';
 		if ($filterByConfirmed !== null) {
 			// fetch the oldest, unconfirmed notifications, order will be reversed using PHP
-			$conditions->add("notification.confirmed = ?", array($filterByConfirmed));
+			if ($filterByConfirmed == 0) {
+				$conditions->add("notification.confirmTime = ?", array(0));
+			}
+			else {
+				// consider only notifications marked as confirmed in the past 48 hours (86400 = 1 day)
+				$conditions->add("notification.confirmTime >= ?", array(TIME_NOW - (2 * 86400)));
+			}
 			
 			if ($filterByConfirmed = 0) {
 				$orderBy = 'notification.time ASC';
@@ -479,7 +485,7 @@ class UserNotificationHandler extends SingletonFactory {
 				'time' => $notification->time
 			);
 			
-			$data['confirmed'] = $notification->confirmed;
+			$data['confirmed'] = ($notification->confirmTime > 0);
 			
 			$notifications[] = $data;
 		}
@@ -748,11 +754,11 @@ class UserNotificationHandler extends SingletonFactory {
 		if (!empty($objectIDs)) $conditions->add("objectID IN (?)", array($objectIDs));
 		
 		$sql = "UPDATE	wcf".WCF_N."_user_notification
-			SET	confirmed = ?
+			SET	confirmTime = ?
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$parameters = $conditions->getParameters();
-		array_unshift($parameters, 1);
+		array_unshift($parameters, TIME_NOW);
 		$statement->execute($parameters);
 		
 		// delete notification_to_user assignments (mimic legacy notification system)
@@ -760,7 +766,7 @@ class UserNotificationHandler extends SingletonFactory {
 			WHERE		notificationID NOT IN (
 						SELECT	notificationID
 						FROM	wcf".WCF_N."_user_notification
-						WHERE	confirmed = ?
+						WHERE	confirmTime = ?
 					)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array(0));
@@ -772,6 +778,47 @@ class UserNotificationHandler extends SingletonFactory {
 		else {
 			UserStorageHandler::getInstance()->resetAll('userNotificationCount');
 		}
+	}
+	
+	/**
+	 * Marks a single notification id as confirmed.
+	 * 
+	 * @param	integer		$notificationID
+	 */
+	public function markAsConfirmedByID($notificationID) {
+		$this->markAsConfirmedByIDs(array($notificationID));
+	}
+	
+	/**
+	 * Marks a list of notification ids as confirmed.
+	 * 
+	 * @param	array<integer>	$notificationIDs
+	 */
+	public function markAsConfirmedByIDs(array $notificationIDs) {
+		if (empty($notificationIDs)) {
+			return;
+		}
+		
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("notificationID IN (?)", array($notificationIDs));
+		
+		// mark notifications as confirmed
+		$sql = "UPDATE	wcf".WCF_N."_user_notification
+			SET	confirmTime = ?
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$parameters = $conditions->getParameters();
+		array_unshift($parameters, TIME_NOW);
+		$statement->execute($parameters);
+		
+		// delete notification_to_user assignments (mimic legacy notification system)
+		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		
+		// reset user storage
+		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
 	}
 	
 	/**
