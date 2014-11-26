@@ -219,4 +219,11 @@ class Category extends ProcessibleDatabaseObject implements IPermissionObject, I
 		
 		parent::handleData($data);
 	}
+	
+	/**
+	 * @see	\wcf\data\ITitledObject::getTitle()
+	 */
+	public function __toString() {
+		return $this->getTitle();
+	}
 }
