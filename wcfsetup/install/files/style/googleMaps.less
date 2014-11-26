@@ -5,3 +5,39 @@
 .sidebarGoogleMap {
 	height: 250px;
 }
+
+// CSS code taken from map type controls
+.googleMapsCustomControlContainer {
+	cursor: pointer !important;
+	margin-top: 5px;
+	
+	.googleMapsCustomControl {
+		.userSelectNone;
+		
+		text-align: center;
+		position: relative;
+		color: rgb(86, 86, 86);
+		font-size: 11px !important;
+		background-color: rgb(255, 255, 255);
+		padding: 1px 6px;
+		border-radius: 3px;
+		background-clip: padding-box;
+		border: 1px solid rgba(0, 0, 0, 0.14902);
+		box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+		min-width: 29px;
+		
+		&:hover {
+			background-color: rgb(235, 235, 235);
+			color: rgb(0, 0, 0);
+		}
+		
+		&.active {
+			color: rgb(0, 0, 0);
+			font-weight: 500;
+		}
+	}
+}
+
+.googleMapsUseLocationSuggestionLink {
+	font-size: @wcfSmallFontSize;
+}
