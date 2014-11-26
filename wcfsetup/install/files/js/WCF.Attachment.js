@@ -58,7 +58,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 */
 	init: function(buttonSelector, fileListSelector, objectType, objectID, tmpHash, parentObjectID, maxUploads, wysiwygContainerID) {
 		this._super(buttonSelector, fileListSelector, 'wcf\\data\\attachment\\AttachmentAction', { multiple: true, maxUploads: maxUploads });
-		
+		console.debug(wysiwygContainerID);
 		this._autoInsert = [ ];
 		this._objectType = objectType;
 		this._objectID = objectID;
@@ -68,6 +68,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		
 		this._buttonSelector.children('p.button').click($.proxy(this._validateLimit, this));
 		this._fileListSelector.find('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
+		this._fileListSelector.find('.jsButtonAttachmentInsertThumbnail').click($.proxy(this._insert, this));
+		this._fileListSelector.find('.jsButtonAttachmentInsertFull').click($.proxy(this._insert, this));
 		
 		WCF.DOMNodeRemovedHandler.addCallback('WCF.Attachment.Upload', $.proxy(this._removeLimitError, this));
 		
@@ -187,16 +189,14 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			this._buttonSelector.next('small.innerError').remove();
 		}
 		
-		var $listItems = this._fileListSelector.children();
+		var $listItems = this._fileListSelector.children('li');
 		if (!$listItems.filter(':not(.uploadFailed)').length) {
 			this._insertAllButton.hide();
 		}
 		
 		if (!$listItems.length) {
 			setTimeout((function() {
-				if (!this._fileListSelector.children('li:not(.uploadFailed)').length) {
-					this._fileListSelector.wcfBlindOut();
-				}
+				this._fileListSelector.wcfBlindOut();
 			}).bind(this), 250);
 		}
 	},
