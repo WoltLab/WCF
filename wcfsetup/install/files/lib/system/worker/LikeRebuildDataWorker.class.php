@@ -91,9 +91,9 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		$sql = "INSERT INTO			wcf".WCF_N."_like_object
 							(objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes)
 			VALUES				(?, ?, ?, ?, ?, ?)
-			ON DUPLICATE KEY UPDATE		likes = VALUES(likes),
-							dislikes = VALUES(dislikes),
-							cumulativeLikes = VALUES(cumulativeLikes)";
+			ON DUPLICATE KEY UPDATE		likes = likes + VALUES(likes),
+							dislikes = dislikes + VALUES(dislikes),
+							cumulativeLikes = cumulativeLikes + VALUES(cumulativeLikes)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		WCF::getDB()->beginTransaction();
