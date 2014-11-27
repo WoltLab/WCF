@@ -1501,6 +1501,8 @@ RedactorPlugins.wbbcode = function() {
 				this.wutil.insertAtCaret($openTag + plainText + $closingTag);
 			}
 			
+			this.wmonkeypatch.saveSelection();
+			
 			return $quote;
 		},
 		

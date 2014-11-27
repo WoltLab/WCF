@@ -707,7 +707,7 @@ RedactorPlugins.wutil = function() {
 		_setCaret: function(element, setBefore) {
 			var $node = $(this.opts.emptyHtml);
 			$node[(setBefore ? 'insertBefore' : 'insertAfter')](element);
-			this.caret.setStart($node[0]);
+			this.caret.setEnd($node[0]);
 		}
 	};
 };
