@@ -1426,13 +1426,7 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 				var $dropdownMenu = WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify());
 				
 				// check if there is at least one unconfirmed item
-				var $count = 0;
-				$dropdownMenu.children('li.jsNotificationItem').each(function() {
-					if (!$(this).data('isConfirmed')) {
-						$count++;
-					}
-				});
-				
+				var $count = $dropdownMenu.children('li.notificationUnconfirmed').length;
 				if (!$count && $count != $badge.text() && !$dropdownMenu.is(':visible')) {
 					this._resetList();
 					
@@ -1451,6 +1445,7 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 	_after: function(dropdownMenu) {
 		var $items = WCF.Dropdown.getDropdownMenu(this._container.wcfIdentify()).children('li.jsNotificationItem');
 		
+		var $insertAfter = null;
 		$items.each((function(index, item) {
 			var $item = $(item);
 			
@@ -1464,12 +1459,23 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 				$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
 			}
 			
+			if (!$item.data('isConfirmed')) {
+				$insertAfter = $item;
+			}
+			
 			$item.click(function(event) {
 				if (event.target.tagName !== 'A') {
 					window.location = $item.data('link');
 				}
 			});
 		}).bind(this));
+		
+		if ($insertAfter !== null) {
+			// check if it is followed by a confirmed item
+			if ($insertAfter.next('.notificationItem').length) {
+				$('<li class="dropdownDivider" />').insertAfter($insertAfter);
+			}
+		}
 	},
 	
 	/**
