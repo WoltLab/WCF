@@ -63,7 +63,7 @@
 			<div class="container marginTop">
 				<ul class="containerList userNotificationItemList">
 		{/if}
-				<li class="jsNotificationItem notificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}" data-notification-id="{@$notification[notificationID]}" data-link="{$notification[event]->getLink()}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}" data-is-confirmed="{if $notification[event]->isConfirmed()}true{else}false{/if}">
+				<li class="jsNotificationItem notificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}{if !$notification[event]->isConfirmed()} notificationUnconfirmed{/if}" data-notification-id="{@$notification[notificationID]}" data-link="{$notification[event]->getLink()}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}" data-is-confirmed="{if $notification[event]->isConfirmed()}true{else}false{/if}">
 					<div class="box24">
 						{if $notification[authors] < 2}
 							<div class="framed">

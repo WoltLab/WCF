@@ -1338,6 +1338,7 @@ WCF.Notification.List = Class.extend({
 		$item.data('isConfirmed', true);
 		$item.find('.notificationItemMarkAsConfirmed').remove();
 		$item.find('.newContentBadge').remove();
+		$item.removeClass('notificationUnconfirmed');
 	}
 });
 
@@ -1518,6 +1519,7 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 						$item.data('isConfirmed', true);
 						$item.find('.notificationItemMarkAsConfirmed').remove();
 						$item.find('.newContentBadge').remove();
+						$item.removeClass('notificationUnconfirmed');
 						
 						return false;
 					}
