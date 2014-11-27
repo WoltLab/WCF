@@ -1,11 +1,10 @@
 <?php
 namespace wcf\data\user\notification;
 use wcf\data\AbstractDatabaseObjectAction;
-use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
-use wcf\system\exception\PermissionDeniedException;
 
 /**
  * Executes user notification-related actions.
