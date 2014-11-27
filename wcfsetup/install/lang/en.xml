@@ -2250,6 +2250,12 @@ Errors are:
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[{if $like->isDislike()}Dislikes{else}Likes{/if} the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{link controller='User' object=$user}#wall{/link}">{$user->username}’s wall</a>.]]></item>
 	</category>
 	
+	<category name="wcf.map">
+		<item name="wcf.map.noLocationSuggestions"><![CDATA[There are no location suggestions in the current map section.]]></item>
+		<item name="wcf.map.showLocationSuggestions"><![CDATA[Suggest Locations]]></item>
+		<item name="wcf.map.useLocationSuggestion"><![CDATA[Use Location]]></item>
+	</category>
+	
 	<category name="wcf.message">
 		<item name="wcf.message.autosave.restored"><![CDATA[Draft restored]]></item>
 		<item name="wcf.message.autosave.restored.confirm"><![CDATA[Keep]]></item>

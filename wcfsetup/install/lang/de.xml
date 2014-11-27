@@ -2251,6 +2251,12 @@ Fehler sind beispielsweise:
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[Mag die Antwort {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">von {$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{link controller='User' object=$user}#wall{/link}">Pinnwand von {$user->username}</a>{if $like->isDislike()} nicht{/if}.]]></item>
 	</category>
 	
+	<category name="wcf.map">
+		<item name="wcf.map.noLocationSuggestions"><![CDATA[Für den aktuellen Kartenausschnitt liegen keine Ortsvorschläge vor.]]></item>
+		<item name="wcf.map.showLocationSuggestions"><![CDATA[Orte vorschlagen]]></item>
+		<item name="wcf.map.useLocationSuggestion"><![CDATA[Ort verwenden]]></item>
+	</category>
+	
 	<category name="wcf.message">
 		<item name="wcf.message.autosave.restored"><![CDATA[Entwurf wiederhergestellt]]></item>
 		<item name="wcf.message.autosave.restored.confirm"><![CDATA[Beibehalten]]></item>

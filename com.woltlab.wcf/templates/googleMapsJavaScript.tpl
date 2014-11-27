@@ -4,6 +4,12 @@
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
+		WCF.Language.addObject({
+			'wcf.map.noLocationSuggestions': '{lang}wcf.map.noLocationSuggestions{/lang}',
+			'wcf.map.showLocationSuggestions': '{lang}wcf.map.showLocationSuggestions{/lang}',
+			'wcf.map.useLocationSuggestion': '{lang}wcf.map.useLocationSuggestion{/lang}'
+		});
+		
 		WCF.Location.GoogleMaps.Settings.set({
 			disableDoubleClickZoom: {if GOOGLE_MAPS_ENABLE_DOUBLE_CLICK_ZOOM}0{else}1{/if},
 			draggable: {@GOOGLE_MAPS_ENABLE_DRAGGING},
