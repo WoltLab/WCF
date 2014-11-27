@@ -1,5 +1,5 @@
 {foreach from=$notifications[notifications] item=notification}
-	<li class="jsNotificationItem notificationItem{if $notification[event]->getAuthors()|count > 1} groupedNotificationItem{/if}" data-link="{$notification[event]->getLink()}" data-notification-id="{@$notification[notificationID]}" data-is-confirmed="{if $notification[event]->isConfirmed()}true{else}false{/if}">
+	<li class="jsNotificationItem notificationItem{if $notification[event]->getAuthors()|count > 1} groupedNotificationItem{/if}{if !$notification[event]->isConfirmed()} notificationUnconfirmed{/if}" data-link="{$notification[event]->getLink()}" data-notification-id="{@$notification[notificationID]}" data-is-confirmed="{if $notification[event]->isConfirmed()}true{else}false{/if}">
 		<span class="box24">
 			<div class="framed">
 				{if $notification[event]->getAuthors()|count < 2}
