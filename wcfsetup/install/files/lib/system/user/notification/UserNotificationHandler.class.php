@@ -310,9 +310,6 @@ class UserNotificationHandler extends SingletonFactory {
 		$notifications = array();
 		if ($notificationCount > 0) {
 			$notifications = $this->fetchNotifications(5, 0, 0);
-			if (!empty($notifications)) {
-				$notifications = array_reverse($notifications);
-			}
 		}
 		
 		$count = count($notifications);
@@ -341,19 +338,14 @@ class UserNotificationHandler extends SingletonFactory {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("notification.userID = ?", array(WCF::getUser()->userID));
 		
-		$orderBy = 'notification.time DESC';
 		if ($filterByConfirmed !== null) {
-			// fetch the oldest, unconfirmed notifications, order will be reversed using PHP
+			// consider only unconfirmed notifications
 			if ($filterByConfirmed == 0) {
 				$conditions->add("notification.confirmTime = ?", array(0));
 			}
 			else {
 				// consider only notifications marked as confirmed in the past 48 hours (86400 = 1 day)
 				$conditions->add("notification.confirmTime >= ?", array(TIME_NOW - (2 * 86400)));
-			}
-			
-			if ($filterByConfirmed = 0) {
-				$orderBy = 'notification.time ASC';
 			}
 		}
 		
@@ -364,7 +356,7 @@ class UserNotificationHandler extends SingletonFactory {
 			LEFT JOIN	wcf".WCF_N."_object_type object_type
 			ON		(object_type.objectTypeID = notification_event.objectTypeID)
 			".$conditions."
-			ORDER BY	".$orderBy;
+			ORDER BY	notification.time DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, $limit, $offset);
 		$statement->execute($conditions->getParameters());
 		
