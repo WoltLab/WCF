@@ -111,7 +111,8 @@ class RequestHandler extends SingletonFactory {
 				else {
 					@header('HTTP/1.1 503 Service Unavailable');
 					WCF::getTPL()->assign(array(
-						'templateName' => 'offline'
+						'templateName' => 'offline',
+						'templateNameApplication' => 'wcf'
 					));
 					WCF::getTPL()->display('offline');
 				}
