@@ -23,7 +23,7 @@
 {event name='stylesheets'}
 
 <!-- Icons -->
-<link rel="icon" href="{@$__wcf->getPath()}images/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="{@$__wcf->getFavicon()}" type="image/x-icon" />
 <link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png" />
 
 <script data-relocate="true">
