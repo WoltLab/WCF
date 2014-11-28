@@ -158,6 +158,21 @@ function shuffle(array) {
 	// detect smartphones
 	jQuery.browser.smartphone = ($('html').css('caption-side') == 'bottom');
 	
+	// properly detect IE11
+	if (jQuery.browser.mozilla && ua.match(/trident/)) {
+		jQuery.browser.mozilla = false;
+		jQuery.browser.msie = true;
+	}
+	
+	// detect iOS devices
+	jQuery.browser.iOS = /\((ipad|iphone|ipod);/.test(ua);
+	if (jQuery.browser.iOS) {
+		$('html').addClass('iOS');
+	}
+	
+	// dectect Android
+	jQuery.browser.android = (ua.indexOf('android') !== -1);
+	
 	// allow plugins to detect the used editor, value should be the same as the $.browser.<editorName> key
 	jQuery.browser.editor = 'redactor';
 	
@@ -166,12 +181,6 @@ function shuffle(array) {
 	
 	// Redactor support
 	jQuery.browser.redactor = true;
-	
-	// properly detect IE11
-	if (jQuery.browser.mozilla && ua.match(/trident/)) {
-		jQuery.browser.mozilla = false;
-		jQuery.browser.msie = true;
-	}
 })();
 
 /**
