@@ -193,6 +193,9 @@ RedactorPlugins.wbbcode = function() {
 		convertFromHtml: function(html) {
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
 			
+			$('<pre />').text(html).appendTo(document.body);
+			
+			console.debug(html);
 			// remove data-redactor-tag="" attribute
 			html = html.replace(/(<[^>]+?) data-redactor-tag="[^"]+"/g, '$1');
 			
@@ -281,17 +284,24 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/&nbsp;/gi, " ");
 			
 			// [quote]
-			html = html.replace(/<blockquote class="quoteBox" cite="([^"]+)?" data-author="([^"]+)?"[^>]*?>\n?<div[^>]+>\n?<header[^>]*?>[\s\S]*?<\/header>/gi, function(match, link, author, innerContent) {
+			html = html.replace(/<blockquote([^>]+)>\n?<div[^>]+>\n?<header[^>]*?>[\s\S]*?<\/header>/gi, function(match, attributes, innerContent) {
 				var $quote;
+				var $author = '';
+				var $link = '';
 				
-				if (author) author = WCF.String.unescapeHTML(author);
-				if (link) link = WCF.String.unescapeHTML(link);
+				if (attributes.match(/data-author="([^"]+)"/)) {
+					$author = WCF.String.unescapeHTML(RegExp.$1);
+				}
 				
-				if (link) {
-					$quote = "[quote='" + author + "','" + link + "']";
+				if (attributes.match(/cite="([^"]+)"/)) {
+					$link = WCF.String.unescapeHTML(RegExp.$1);
+				}
+				
+				if ($link) {
+					$quote = "[quote='" + $author + "','" + $link + "']";
 				}
 				else if (author) {
-					$quote = "[quote='" + author + "']";
+					$quote = "[quote='" + $author + "']";
 				}
 				else {
 					$quote = "[quote]";
