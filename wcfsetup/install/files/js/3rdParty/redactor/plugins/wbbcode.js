@@ -193,9 +193,6 @@ RedactorPlugins.wbbcode = function() {
 		convertFromHtml: function(html) {
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'beforeConvertFromHtml', { html: html });
 			
-			$('<pre />').text(html).appendTo(document.body);
-			
-			console.debug(html);
 			// remove data-redactor-tag="" attribute
 			html = html.replace(/(<[^>]+?) data-redactor-tag="[^"]+"/g, '$1');
 			
