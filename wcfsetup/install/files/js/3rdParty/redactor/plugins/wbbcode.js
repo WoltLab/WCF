@@ -297,7 +297,7 @@ RedactorPlugins.wbbcode = function() {
 				if ($link) {
 					$quote = "[quote='" + $author + "','" + $link + "']";
 				}
-				else if (author) {
+				else if ($author) {
 					$quote = "[quote='" + $author + "']";
 				}
 				else {
