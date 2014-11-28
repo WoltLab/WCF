@@ -839,7 +839,7 @@ class WCF {
 			}
 		}
 		
-		return WCF::getPath() . 'images/favicon.ico';
+		return self::getPath() . 'images/favicon.ico';
 	}
 	
 	/**
