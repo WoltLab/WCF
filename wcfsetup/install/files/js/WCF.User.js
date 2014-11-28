@@ -1476,6 +1476,11 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 				$('<li class="dropdownDivider" />').insertAfter($insertAfter);
 			}
 		}
+		
+		var $badge = this._container.find('.badge');
+		if (!$badge.length) {
+			this._removeMarkAllAsConfirmed();
+		}
 	},
 	
 	/**
@@ -1536,11 +1541,14 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 			
 			case 'markAllAsConfirmed':
 				this._resetList();
-			// fall through
+				
+				this._updateBadge(0);
+				this._removeMarkAllAsConfirmed();
+			break;
+			
 			case 'getOutstandingNotifications':
 				if (!data.returnValues || !data.returnValues.template) {
-					$('#userNotificationsMarkAllAsConfirmed').prev('.dropdownDivider').remove();
-					$('#userNotificationsMarkAllAsConfirmed').remove();
+					this._removeMarkAllAsConfirmed();
 				}
 				
 				this._super(data, textStatus, jqXHR);
@@ -1559,6 +1567,10 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 		if (this._favico !== null) {
 			this._favico.badge(count);
 		}
+		
+		if (count === 0) {
+			this._removeMarkAllAsConfirmed();
+		}
 	},
 	
 	/**
@@ -1570,7 +1582,15 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 		
 		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').prependTo($dropdownMenu);
 		
+		// remove double separators
+		$dropdownMenu.children('.dropdownDivider + .dropdownDivider').remove();
+		
 		this._didLoad = false;
+	},
+	
+	_removeMarkAllAsConfirmed: function() {
+		$('#userNotificationsMarkAllAsConfirmed').prev('.dropdownDivider').remove();
+		$('#userNotificationsMarkAllAsConfirmed').remove();
 	},
 	
 	/**
