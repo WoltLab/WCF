@@ -1983,7 +1983,8 @@ WCF.Message.Quote.Handler = Class.extend({
 					
 					return NodeFilter.FILTER_ACCEPT;
 				}
-			}
+			},
+			true
 		);
 		
 		var $text = '';
