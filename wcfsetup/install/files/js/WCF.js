@@ -6722,9 +6722,7 @@ WCF.System.FlexibleMenu = {
 			return;
 		}
 		
-		var $changedItems = false;
 		var $container = this._containers[containerID];
-		var $currentWidth = 0;
 		
 		// hide all items
 		var $menuItems = this._menuItems[containerID].hide();
@@ -6784,6 +6782,8 @@ WCF.System.FlexibleMenu = {
 				}
 				
 				this._hasHiddenItems[containerID] = true;
+				
+				break;
 			}
 		}
 		
