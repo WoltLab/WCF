@@ -816,6 +816,16 @@ $.widget('ui.wcfImageViewer', {
 		// close button
 		$('<span class="wcfImageViewerButtonClose icon icon48 icon-remove pointer jsTooltip" title="' + WCF.Language.get('wcf.global.button.close') + '" />').appendTo(this._ui.header).click($.proxy(this.close, this));
 		
+		if (!$.browser.mobile) {
+			// clicking on the inner container should close the dialog, but it should not be available on mobile due to
+			// the lack of precision causing accidental closing, the close button is big enough and easily reachable
+			$imageContainer.click((function(event) {
+				if (event.target === $imageContainer[0]) {
+					this.close();
+				}
+			}).bind(this));
+		}
+		
 		WCF.DOMNodeInsertedHandler.execute();
 		
 		enquire.register('screen and (max-width: 800px)', {

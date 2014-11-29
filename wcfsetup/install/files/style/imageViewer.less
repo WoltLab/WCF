@@ -368,59 +368,68 @@
 			.transition(bottom, .3s);
 		}
 		
-		> div > ul {
-			background-color: rgba(0, 0, 0, 1);
-			border: 1px solid @wcfImageViewerBorderColor;
-			border-bottom-width: 0;
-			border-radius: 5px 5px 0 0;
-			bottom: 0;
-			display: inline-block;
-			left: 50%;
-			margin-left: -122px;
-			opacity: .4;
-			position: absolute;
+		> div {
+			cursor: pointer;
 			
-			.transition(opacity, .5s);
-			
-			&:hover {
-				opacity: 1;
+			> img,
+			> ul {
+				cursor: default;
 			}
 			
-			> li {
+			> ul {
+				background-color: rgba(0, 0, 0, 1);
+				border: 1px solid @wcfImageViewerBorderColor;
+				border-bottom-width: 0;
+				border-radius: 5px 5px 0 0;
+				bottom: 0;
 				display: inline-block;
-				opacity: .6;
+				left: 50%;
+				margin-left: -122px;
+				opacity: .4;
+				position: absolute;
 				
 				.transition(opacity, .5s);
 				
-				&.pointer > span.icon {
-					cursor: pointer;
-				}
-				
-				&.active,
-				&.pointer:hover {
+				&:hover {
 					opacity: 1;
 				}
 				
-				&.wcfImageViewerSlideshowButtonToggle > span,
-				&.wcfImageViewerSlideshowButtonEnlarge > span,
-				&.wcfImageViewerSlideshowButtonFull > span {
-					font-size: 28px;
+				> li {
+					display: inline-block;
+					opacity: .6;
 					
-					&:before {
-						left: 2px;
-						position: relative;
-						top: 9px;
+					.transition(opacity, .5s);
+					
+					&.pointer > span.icon {
+						cursor: pointer;
 					}
-				}
-				
-				&.wcfImageViewerSlideshowButtonEnlarge,
-				&.wcfImageViewerSlideshowButtonFull {
-					border-left: 1px solid @wcfImageViewerBorderColor;
-					box-sizing: border-box;
-				}
-				
-				> span {
-					vertical-align: middle;
+					
+					&.active,
+					&.pointer:hover {
+						opacity: 1;
+					}
+					
+					&.wcfImageViewerSlideshowButtonToggle > span,
+					&.wcfImageViewerSlideshowButtonEnlarge > span,
+					&.wcfImageViewerSlideshowButtonFull > span {
+						font-size: 28px;
+						
+						&:before {
+							left: 2px;
+							position: relative;
+							top: 9px;
+						}
+					}
+					
+					&.wcfImageViewerSlideshowButtonEnlarge,
+					&.wcfImageViewerSlideshowButtonFull {
+						border-left: 1px solid @wcfImageViewerBorderColor;
+						box-sizing: border-box;
+					}
+					
+					> span {
+						vertical-align: middle;
+					}
 				}
 			}
 		}
