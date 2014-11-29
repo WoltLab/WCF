@@ -317,6 +317,7 @@ $.widget('ui.wcfImageViewer', {
 			this._isOpen = true;
 			
 			WCF.System.DisableScrolling.disable();
+			WCF.System.DisableZoom.disable();
 			
 			// switch to fullscreen mode on smartphones
 			if ($.browser.touch) {
@@ -341,6 +342,7 @@ $.widget('ui.wcfImageViewer', {
 				this._isOpen = true;
 			
 				WCF.System.DisableScrolling.disable();
+				WCF.System.DisableZoom.disable();
 			}
 		}
 		
@@ -371,6 +373,7 @@ $.widget('ui.wcfImageViewer', {
 		this._isOpen = false;
 		
 		WCF.System.DisableScrolling.enable();
+		WCF.System.DisableZoom.enable();
 		
 		return true;
 	},
@@ -1198,6 +1201,7 @@ $.widget('ui.wcfImageViewer', {
 			this._isOpen = true;
 		
 			WCF.System.DisableScrolling.disable();
+			WCF.System.DisableZoom.disable();
 		}
 	}
 });

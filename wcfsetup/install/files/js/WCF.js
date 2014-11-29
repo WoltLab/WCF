@@ -7421,6 +7421,50 @@ WCF.System.DisableScrolling = {
 };
 
 /**
+ * Disables the ability to zoom the page.
+ */
+WCF.System.DisableZoom = {
+	/**
+	 * number of times zoom was disabled (nested calls)
+	 * @var	integer
+	 */
+	_depth: 0,
+	
+	/**
+	 * old viewport settings in meta[name=viewport]
+	 * @var	string
+	 */
+	_oldViewportSettings: null,
+	
+	/**
+	 * Disables zooming.
+	 */
+	disable: function () {
+		if (this._depth === 0) {
+			var $meta = $('meta[name=viewport]');
+			this._oldViewportSettings = $meta.attr('content');
+			$meta.attr('content', this._oldViewportSettings + ',maximum-scale=1');
+		}
+		
+		this._depth++;
+	},
+	
+	/**
+	 * Enables scrolling again.
+	 * Must be called the same number of times disable() was called to enable scrolling.
+	 */
+	enable: function () {
+		if (this._depth === 0) return;
+		
+		this._depth--;
+		
+		if (this._depth === 0) {
+			$('meta[name=viewport]').attr('content', this._oldViewportSettings);
+		}
+	}
+};
+
+/**
  * Puts an element into HTML 5 fullscreen mode.
  */
 WCF.System.Fullscreen = {
