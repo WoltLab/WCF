@@ -435,12 +435,23 @@ RedactorPlugins.wmonkeypatch = function() {
 		insert: function() {
 			var $isWebKit = ($.browser.webkit || document.documentElement.style.hasOwnProperty('WebkitAppearance') || window.hasOwnProperty('chrome'));
 			
-			var $focusEditor = (function() {
+			var $focusEditor = (function(html) {
 				var $html = this.$editor.html();
 				if (this.utils.isEmpty($html)) {
+					var $cleared = false;
+					if (html.match(/^<(blockquote|div|p)/)) {
+						// inserting a block-level element into a <p /> yields inconsistent behaviors in different browsers
+						// but since the HTML to be inserted is already a block element, we can place it directly in the root
+						this.$editor.empty();
+						
+						$cleared = true;
+					}
+					
 					this.$editor.focus();
 					
-					this.caret.setEnd(this.$editor.children('p:eq(0)'));
+					if (!$cleared) {
+						this.caret.setEnd(this.$editor.children('p:eq(0)'));
+					}
 				}
 				else {
 					if (document.activeElement !== this.$editor[0]) {
@@ -485,7 +496,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			// insert.html
 			var $mpHtml = this.insert.html;
 			this.insert.html = (function(html, clean) {
-				$focusEditor();
+				$focusEditor(html);
 				
 				$mpHtml.call(this, html, clean);
 				
