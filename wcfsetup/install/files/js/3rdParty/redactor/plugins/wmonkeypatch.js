@@ -220,16 +220,47 @@ RedactorPlugins.wmonkeypatch = function() {
 		 *  - convert <div> to <p> during paste
 		 */
 		clean: function() {
+			// these characters are replaced by this.clean.onSet() and this.clean.onPaste() -- #1980
+			var $protectedSpecialCharacters = function(text) {
+				text = text.replace(/\u201D/g, '__wcf_preserve_character_1__');
+				text = text.replace(/\u201C/g, '__wcf_preserve_character_2__');
+				text = text.replace(/\u2018/g, '__wcf_preserve_character_3__');
+				text = text.replace(/\u2019/g, '__wcf_preserve_character_4__');
+				
+				return text;
+			};
+			
+			var $restoreSpecialCharacters = function(text) {
+				text = text.replace(/__wcf_preserve_character_1__/g, '\u201D');
+				text = text.replace(/__wcf_preserve_character_2__/g, '\u201C');
+				text = text.replace(/__wcf_preserve_character_3__/g, '\u2018');
+				text = text.replace(/__wcf_preserve_character_4__/g, '\u2019');
+				
+				return text;
+			};
+			
 			// clean.onPaste
 			var $mpOnPaste = this.clean.onPaste;
 			this.clean.onPaste = (function(html, setMode) {
 				this.opts.replaceDivs = true;
 				
+				html = $protectedSpecialCharacters(html);
+				
 				html = $mpOnPaste.call(this, html, setMode);
 				
 				this.opts.replaceDivs = false;
 				
-				return html;
+				return $restoreSpecialCharacters(html);
+			}).bind(this);
+			
+			// clean.onSet
+			var $mpOnSet = this.clean.onSet;
+			this.clean.onSet = (function(html) {
+				html = $protectedSpecialCharacters(html);
+				
+				html = $mpOnSet.call(this, html);
+				
+				return $restoreSpecialCharacters(html);
 			}).bind(this);
 			
 			// clean.setVerified
