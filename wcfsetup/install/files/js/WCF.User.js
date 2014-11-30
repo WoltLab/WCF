@@ -1589,8 +1589,7 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 	},
 	
 	_removeMarkAllAsConfirmed: function() {
-		$('#userNotificationsMarkAllAsConfirmed').prev('.dropdownDivider').remove();
-		$('#userNotificationsMarkAllAsConfirmed').remove();
+		$('#userNotificationsMarkAllAsConfirmed').hide().prev('.dropdownDivider').hide();
 	},
 	
 	/**
@@ -1603,14 +1602,14 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 		WCF.Dropdown.close('userNotifications');
 		
 		// revert dropdown to initial state
-		var $dropdownMenu = WCF.Dropdown.getDropdownMenu('userNotifications');
-		var $item = $dropdownMenu.find('.dropdownDivider:eq(0)');
-		$item.prevAll().remove();
-		$('<li class="jsDropdownPlaceholder"><span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').insertBefore($item);
-		this._didLoad = false;
+		this._resetList();
 		
 		// update badge
 		this._updateBadge(count);
+		
+		if (parseInt(count) > 0) {
+			$('#userNotificationsMarkAllAsConfirmed').show().prev('.dropdownDivider').show();
+		}
 	}
 });
 
