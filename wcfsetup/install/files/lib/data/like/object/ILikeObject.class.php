@@ -64,4 +64,11 @@ interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
 	 * @param	\wcf\data\like\Like	$like
 	 */
 	public function sendNotification(Like $like);
+	
+	/**
+	 * Returns the language id of this object or its parent.
+	 * 
+	 * @return	integer
+	 */
+	public function getLanguageID();
 }

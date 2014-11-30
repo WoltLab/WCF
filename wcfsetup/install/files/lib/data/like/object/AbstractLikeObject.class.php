@@ -51,4 +51,11 @@ abstract class AbstractLikeObject extends DatabaseObjectDecorator implements ILi
 	public function sendNotification(Like $like) {
 		// individual implementations can override this method to provide notifications
 	}
+	
+	/**
+	 * @see	\wcf\data\like\object\ILikeObject::getLanguageID()
+	 */
+	public function getLanguageID() {
+		return null;
+	}
 }
