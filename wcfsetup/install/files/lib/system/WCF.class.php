@@ -847,7 +847,7 @@ class WCF {
 	 */
 	protected function initCronjobs() {
 		if (PACKAGE_ID) {
-			self::getTPL()->assign('executeCronjobs', CronjobScheduler::getInstance()->getNextExec() < TIME_NOW);
+			self::getTPL()->assign('executeCronjobs', (CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && defined('OFFLINE') && OFFLINE));
 		}
 	}
 }
