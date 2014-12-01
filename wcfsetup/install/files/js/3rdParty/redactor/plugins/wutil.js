@@ -238,10 +238,12 @@ RedactorPlugins.wutil = function() {
 		
 		/**
 		 * Saves current editor text to local browser storage.
+		 * 
+		 * @param	boolean		force
 		 */
-		saveTextToStorage: function() {
+		saveTextToStorage: function(force) {
 			var $content = this.wutil.getText();
-			if ($autosaveLastMessage == $content) {
+			if ($autosaveLastMessage == $content && !force) {
 				return;
 			}
 			

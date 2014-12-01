@@ -1067,9 +1067,16 @@ WCF.Message.QuickReply = Class.extend({
 		var $message = '';
 		if ($.browser.redactor) {
 			$message = this._messageField.redactor('wutil.getText');
+			
+			if ($message.length) {
+				this._messageField.redactor('wutil.saveTextToStorage', true);
+			}
+			else {
+				this._messageField.redactor('wutil.autosavePurge');
+			}
 		}
 		else {
-			$message = this._messageField.val();
+			$message = $.trim(this._messageField.val());
 		}
 		
 		new WCF.Action.Proxy({
