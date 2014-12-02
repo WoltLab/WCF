@@ -585,7 +585,8 @@ class SessionHandler extends SingletonFactory {
 		$user = $eventParameters['user']; 
 		$hideSession = $eventParameters['hideSession'];
 		
-		if ($this->supportsVirtualSessions) {
+		// skip changeUserVirtual, if session will not be persistent anyway
+		if ($this->supportsVirtualSessions && !$hideSession) {
 			return $this->changeUserVirtual($user);
 		}
 		
