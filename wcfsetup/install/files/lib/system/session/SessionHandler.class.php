@@ -235,11 +235,11 @@ class SessionHandler extends SingletonFactory {
 			if (!defined('SID_INPUT_TAG')) define('SID_INPUT_TAG', '');
 		}
 		else {
-			if (!defined('SID_ARG_1ST')) define('SID_ARG_1ST', '?s='.$this->sessionID);
-			if (!defined('SID_ARG_2ND')) define('SID_ARG_2ND', '&amp;s='.$this->sessionID);
-			if (!defined('SID_ARG_2ND_NOT_ENCODED')) define('SID_ARG_2ND_NOT_ENCODED', '&s='.$this->sessionID);
-			if (!defined('SID')) define('SID', $this->sessionID);
-			if (!defined('SID_INPUT_TAG')) define('SID_INPUT_TAG', '<input type="hidden" name="s" value="'.$this->sessionID.'" />');
+			if (!defined('SID_ARG_1ST')) define('SID_ARG_1ST', '?s='.$this->session->sessionID);
+			if (!defined('SID_ARG_2ND')) define('SID_ARG_2ND', '&amp;s='.$this->session->sessionID);
+			if (!defined('SID_ARG_2ND_NOT_ENCODED')) define('SID_ARG_2ND_NOT_ENCODED', '&s='.$this->session->sessionID);
+			if (!defined('SID')) define('SID', $this->session->sessionID);
+			if (!defined('SID_INPUT_TAG')) define('SID_INPUT_TAG', '<input type="hidden" name="s" value="'.$this->session->sessionID.'" />');
 		}
 		
 		// security token
@@ -597,9 +597,21 @@ class SessionHandler extends SingletonFactory {
 			// update session
 			$sessionEditor = new $this->sessionEditorClassName($this->session);
 			
+			// regenerating the session id is essential to prevent session fixation attacks
+			// FIXME: but it cannot be used if cookies are not available, as the constants are already
+			// defined, erase security token in this case for basic security
+			if ($this->useCookies) {
+				$newSessionID = StringUtil::getRandomID();
+			}
+			else {
+				$this->unregister('__SECURITY_TOKEN');
+				$newSessionID = $this->session->sessionID;
+			}
+			
 			try {
 				$sessionEditor->update(array(
-					'userID' => $this->user->userID
+					'sessionID' => $newSessionID,
+					'userID' => $user->userID
 				));
 			}
 			catch (DatabaseException $e) {
@@ -617,6 +629,7 @@ class SessionHandler extends SingletonFactory {
 						
 					// update session
 					$sessionEditor->update(array(
+						'sessionID' => $newSessionID,
 						'userID' => $user->userID
 					));
 				}
@@ -625,6 +638,10 @@ class SessionHandler extends SingletonFactory {
 					throw $e;
 				}
 			}
+			
+			$this->session = new $this->sessionClassName($newSessionID);
+			
+			HeaderUtil::setCookie('cookieHash', $newSessionID);
 		}
 		
 		// reset caches
@@ -698,9 +715,24 @@ class SessionHandler extends SingletonFactory {
 					$sessionEditor = new $this->sessionEditorClassName($this->session);
 					
 					try {
+						// regenerating the session id is essential to prevent session fixation attacks
+						// FIXME: but it cannot be used if cookies are not available, as the constants are already
+						// defined, erase security token in this case for basic security
+						if ($this->useCookies) {
+							$newSessionID = StringUtil::getRandomID();
+						}
+						else {
+							$this->unregister('__SECURITY_TOKEN');
+							$newSessionID = $this->session->sessionID;
+						}
+						
 						$sessionEditor->update(array(
+							'sessionID' => $newSessionID,
 							'userID' => $user->userID
 						));
+						$this->session = new $this->sessionClassName($newSessionID);
+						
+						HeaderUtil::setCookie('cookieHash', $newSessionID);
 					}
 					catch (DatabaseException $e) {
 						// MySQL error 23000 = unique key
