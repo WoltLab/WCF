@@ -590,21 +590,6 @@ class SessionHandler extends SingletonFactory {
 			return $this->changeUserVirtual($user);
 		}
 		
-		$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
-		
-		if ($user->userID && !$hideSession) {
-			// user is not a guest, delete all other sessions of this user
-			$sql = "DELETE FROM	".$sessionTable."
-				WHERE		sessionID <> ?
-						AND userID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			//$statement->execute(array($this->sessionID, $user->userID));
-			
-			// reset session variables
-			$this->variables = array();
-			$this->variablesChanged = true;
-		}
-		
 		// update user reference
 		$this->user = $user;
 		
@@ -621,6 +606,8 @@ class SessionHandler extends SingletonFactory {
 				// MySQL error 23000 = unique key
 				// do not check against the message itself, some weird systems localize them
 				if ($e->getCode() == 23000) {
+					$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
+					
 					// user is not a guest, delete all other sessions of this user
 					$sql = "DELETE FROM	".$sessionTable."
 						WHERE		sessionID <> ?
