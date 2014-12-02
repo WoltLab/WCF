@@ -1295,10 +1295,15 @@ WCF.Notification.List = Class.extend({
 	_convertList: function() {
 		$('.userNotificationItemList > .notificationItem').each((function(index, item) {
 			var $item = $(item);
+			var $isConfirmed = $item.data('isConfirmed');
 			
-			if (!$.browser.mobile && !$item.data('isConfirmed')) {
-				var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check green notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.user.notification.markAsConfirmed') + '" />').prependTo($item.find('> div.box24 > .framed'));
-				$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
+			if (!$isConfirmed) {
+				$item.find('a:not(.userLink)').prop('href', $item.data('confirmLink'));
+				
+				if (!$.browser.mobile) {
+					var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check green notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.user.notification.markAsConfirmed') + '" />').prependTo($item.find('> div.box24 > .framed'));
+					$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
+				}
 			}
 		}).bind(this));
 		
@@ -1448,15 +1453,20 @@ WCF.Notification.UserPanel = WCF.UserPanel.extend({
 		var $insertAfter = null;
 		$items.each((function(index, item) {
 			var $item = $(item);
+			var $isConfirmed = $item.data('isConfirmed');
 			
 			if (!$.browser.msie) {
 				$item.addClass('notificationItemLink');
-				$('<a href="' + $item.data('link') + '" />').appendTo($item);
+				$('<a href="' + ($isConfirmed ? $item.data('link') : $item.data('confirmLink')) + '" />').appendTo($item);
 			}
 			
-			if (!$.browser.mobile && !$item.data('isConfirmed')) {
-				var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check green notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.user.notification.markAsConfirmed') + '" />').prependTo($item.find('> span.box24 > .framed'));
-				$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
+			if (!$isConfirmed) {
+				$item.find('a:not(.userLink)').prop('href', $item.data('confirmLink'));
+				
+				if (!$.browser.mobile) {
+					var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check green notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.user.notification.markAsConfirmed') + '" />').prependTo($item.find('> span.box24 > .framed'));
+					$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
+				}
 			}
 			
 			if (!$item.data('isConfirmed')) {
