@@ -31,7 +31,17 @@ class PreParserAtUserListener implements IParameterizedEventListener {
 		
 		static $userRegex = null;
 		if ($userRegex === null) {
-			$userRegex = new Regex("(?<=^|\s)@([^',\s][^,\s]{2,}|'(?:''|[^'])*')");
+			$userRegex = new Regex("
+				(?<=^|\s)					# either at start of string, or after whitespace
+				@
+				(
+					([^',\s][^,\s]{2,})(?:\s[^,\s]+)?	# either at most two strings, not containing
+										# whitespace or the comma, not starting with a single quote
+										# separated by a single whitespace character
+				|
+					'(?:''|[^'])*'				# or a string delimited by single quotes
+				)
+			", Regex::IGNORE_WHITESPACE);
 		}
 		
 		// cache quotes
@@ -70,14 +80,19 @@ class PreParserAtUserListener implements IParameterizedEventListener {
 			$text .= $quote;
 		}
 		
-		$userRegex->match($text, true);
+		$userRegex->match($text, true, Regex::ORDER_MATCH_BY_SET);
 		$matches = $userRegex->getMatches();
 		
-		if (!empty($matches[1])) {
+		if (!empty($matches)) {
 			$usernames = array();
-			foreach ($matches[1] as $match) {
-				$username = self::getUsername($match);
-				if (!in_array($username, $usernames)) $usernames[] = $username;
+			foreach ($matches as $match) {
+				// we don't care about the full match
+				array_shift($match);
+				
+				foreach ($match as $username) {
+					$username = self::getUsername($username);
+					if (!in_array($username, $usernames)) $usernames[] = $username;
+				}
 			}
 			
 			if (!empty($usernames)) {
@@ -91,9 +106,15 @@ class PreParserAtUserListener implements IParameterizedEventListener {
 				}
 				
 				$text = $userRegex->replace($text, new Callback(function ($matches) use ($users) {
-					$username = PreParserAtUserListener::getUsername($matches[1]);
+					// containing the full match
+					$usernames = array($matches[1]);
+					// containing only the part before the first space
+					if (isset($matches[2])) $usernames[] = $matches[2];
 					
-					if (isset($users[$username])) {
+					$usernames = array_map(array('self', 'getUsername'), $usernames);
+					
+					foreach ($usernames as $username) {
+						if (!isset($users[$username])) continue;
 						$link = LinkHandler::getInstance()->getLink('User', array(
 							'appendSession' => false,
 							'object' => $users[$username]
