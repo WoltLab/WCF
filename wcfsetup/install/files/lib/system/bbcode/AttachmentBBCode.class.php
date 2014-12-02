@@ -86,7 +86,7 @@ class AttachmentBBCode extends AbstractBBCode {
 					$source = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', array('object' => $attachment)));
 					$title = StringUtil::encodeHTML($attachment->filename);
 					
-					$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsResizeImage"><img src="' . $source . '" style="' . $style . '" alt="" /></a>';
+					$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer"><img src="' . $source . '" style="' . $style . '" alt="" /></a>';
 				}
 				else {
 					$linkParameters = array(
