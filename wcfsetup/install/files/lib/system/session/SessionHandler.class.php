@@ -738,14 +738,12 @@ class SessionHandler extends SingletonFactory {
 						// MySQL error 23000 = unique key
 						// do not check against the message itself, some weird systems localize them
 						if ($e->getCode() == 23000) {
-							// find existing session for this user
-							$session = call_user_func(array($this->sessionClassName, 'getSessionByUserID'), $user->userID);
-							
-							// update session
+							// delete guest session
 							$sessionEditor = new $this->sessionEditorClassName($this->session);
-							$sessionEditor->update(array(
-									'userID' => $user->userID
-							));
+							$sessionEditor->delete();
+							
+							// inherit existing session
+							$this->session = $session;
 						}
 						else {
 							// not our business
