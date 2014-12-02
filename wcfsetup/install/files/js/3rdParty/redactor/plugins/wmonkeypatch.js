@@ -35,6 +35,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.wmonkeypatch.code();
 			this.wmonkeypatch.dropdown();
 			this.wmonkeypatch.image();
+			this.wmonkeypatch.inline();
 			this.wmonkeypatch.insert();
 			this.wmonkeypatch.keydown();
 			this.wmonkeypatch.link();
@@ -61,6 +62,23 @@ RedactorPlugins.wmonkeypatch = function() {
 			
 			if ($selection.rangeCount) {
 				this.wmonkeypatch._range = $selection.getRangeAt(0);
+			}
+		},
+		
+		/**
+		 * Restores saved selection.
+		 */
+		restoreSelection: function() {
+			if (document.activeElement !== this.$editor[0]) {
+				this.$editor.focus();
+			}
+			
+			if (this.wmonkeypatch._range !== null) {
+				var $selection = window.getSelection();
+				$selection.removeAllRanges();
+				$selection.addRange(this.wmonkeypatch._range);
+				
+				this.wmonkeypatch._range = null;
 			}
 		},
 		
@@ -331,6 +349,7 @@ RedactorPlugins.wmonkeypatch = function() {
 		 * Partially overwrites the 'dropdown' module.
 		 * 
 		 *  - emulate WCF-like dropdowns.
+		 *  - save text selection on iOS (#2003)
 		 */
 		dropdown: function() {
 			// dropdown.build
@@ -372,6 +391,10 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.dropdown.show = $.proxy(function(e, key) {
 				var $dropdown = this.button.get(key).data('dropdown');
 				$fixDropdown($dropdown);
+				
+				if ($.browser.iOS) {
+					this.wmonkeypatch.saveSelection();
+				}
 				
 				$mpShow.call(this, e, key);
 				
@@ -455,6 +478,31 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				this.modal.close();
 				this.observe.images();
+			}).bind(this);
+		},
+		
+		/**
+		 * Partially overwrites the 'inline' module.
+		 * 
+		 *  - restore the text selection on iOS (#2003)
+		 */
+		inline: function() {
+			var $mpFormat = this.inline.format;
+			this.inline.format = (function(tag, type, value) {
+				if ($.browser.iOS) {
+					this.wmonkeypatch.restoreSelection();
+				}
+				
+				$mpFormat.call(this, tag, type, value);
+			}).bind(this);
+			
+			var $mpRemoveStyleRule = this.inline.removeStyleRule;
+			this.inline.removeStyleRule = (function(name) {
+				if ($.browser.iOS) {
+					this.wmonkeypatch.restoreSelection();
+				}
+				
+				$mpRemoveStyleRule.call(this, name);
 			}).bind(this);
 		},
 		
