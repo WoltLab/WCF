@@ -24,6 +24,6 @@ if (RECAPTCHA_PUBLICKEY === '6LfOlMYSAAAAADvo3s4puBAYDqI-6YK2ybe7BJE5' && RECAPT
 	$options['recaptcha_privatekey'] = '';
 }
 
-OptionEditor::updateAll();
+OptionEditor::updateAll($options);
 
 OptionEditor::resetCache();
