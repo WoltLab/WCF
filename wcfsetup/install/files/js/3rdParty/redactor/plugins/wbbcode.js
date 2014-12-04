@@ -30,7 +30,7 @@ RedactorPlugins.wbbcode = function() {
 				delete this.opts.woltlab.originalValue;
 				
 				$(document).trigger('resize');
-				this.wmonkeypatch.saveSelection();
+				this.wutil.saveSelection();
 			}).bind(this);
 			
 			this.opts.pasteBeforeCallback = $.proxy(this.wbbcode._pasteBeforeCallback, this);
@@ -101,13 +101,13 @@ RedactorPlugins.wbbcode = function() {
 					this.button.get('html').children('i').removeClass('fa-square').addClass('fa-square-o');
 					$tooltip.text(WCF.Language.get('wcf.bbcode.button.toggleBBCode'));
 					
-					this.wmonkeypatch.saveSelection();
+					this.wutil.saveSelection();
 				}
 			}).bind(this);
 			
 			// insert a new line if user clicked into the editor and the last children is a quote (same behavior as arrow down)
 			this.wutil.setOption('clickCallback', (function(event) {
-				this.wmonkeypatch.saveSelection();
+				this.wutil.saveSelection();
 				
 				if (event.target === this.$editor[0]) {
 					if (this.$editor[0].lastElementChild && this.$editor[0].lastElementChild.tagName === 'BLOCKQUOTE') {
@@ -1508,7 +1508,7 @@ RedactorPlugins.wbbcode = function() {
 				this.wutil.insertAtCaret($openTag + plainText + $closingTag);
 			}
 			
-			this.wmonkeypatch.saveSelection();
+			this.wutil.saveSelection();
 			
 			return $quote;
 		},

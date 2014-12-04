@@ -19,12 +19,6 @@ RedactorPlugins.wmonkeypatch = function() {
 	
 	return {
 		/**
-		 * saved selection range
-		 * @var	range
-		 */
-		_range: null,
-		
-		/**
 		 * Initializes the RedactorPlugins.wmonkeypatch plugin.
 		 */
 		init: function() {
@@ -55,34 +49,6 @@ RedactorPlugins.wmonkeypatch = function() {
 		},
 		
 		/**
-		 * Saves current caret position.
-		 */
-		saveSelection: function() {
-			var $selection = getSelection();
-			
-			if ($selection.rangeCount) {
-				this.wmonkeypatch._range = $selection.getRangeAt(0);
-			}
-		},
-		
-		/**
-		 * Restores saved selection.
-		 */
-		restoreSelection: function() {
-			if (document.activeElement !== this.$editor[0]) {
-				this.$editor.focus();
-			}
-			
-			if (this.wmonkeypatch._range !== null) {
-				var $selection = window.getSelection();
-				$selection.removeAllRanges();
-				$selection.addRange(this.wmonkeypatch._range);
-				
-				this.wmonkeypatch._range = null;
-			}
-		},
-		
-		/**
 		 * Setups event listeners and callbacks.
 		 */
 		bindEvents: function() {
@@ -102,7 +68,7 @@ RedactorPlugins.wmonkeypatch = function() {
 			
 			// keyup
 			this.wutil.setOption('keyupCallback', (function(event) {
-				this.wmonkeypatch.saveSelection();
+				this.wutil.saveSelection();
 				
 				var $data = {
 					cancel: false,
@@ -121,14 +87,6 @@ RedactorPlugins.wmonkeypatch = function() {
 				this.$editor.on('mouseup.redactor keyup.redactor focus.redactor', $.proxy(this.observe.buttons, this));
 				this.$editor.on('keyup.redactor', $.proxy(this.keyup.init, this));
 			}
-			
-			// blur is unreliable in Firefox, especially since 'focusout' is not available
-			/*this.$editor.on('blur.wredactor', (function() {
-				var $selection = window.getSelection();
-				if ($selection.rangeCount) {
-					this.wmonkeypatch._range = $selection.getRangeAt(0);
-				}
-			}).bind(this));*/
 		},
 		
 		/**
@@ -393,7 +351,7 @@ RedactorPlugins.wmonkeypatch = function() {
 				$fixDropdown($dropdown);
 				
 				if ($.browser.iOS) {
-					this.wmonkeypatch.saveSelection();
+					this.wutil.saveSelection();
 				}
 				
 				$mpShow.call(this, e, key);
@@ -534,15 +492,7 @@ RedactorPlugins.wmonkeypatch = function() {
 				}
 				else {
 					if (document.activeElement !== this.$editor[0]) {
-						this.$editor.focus();
-						
-						if (this.wmonkeypatch._range) {
-							var $selection = window.getSelection();
-							$selection.removeAllRanges();
-							$selection.addRange(this.wmonkeypatch._range);
-							
-							this.wmonkeypatch._range = null;
-						}
+						this.wutil.restoreSelection();
 					}
 				}
 			}).bind(this);
@@ -568,7 +518,7 @@ RedactorPlugins.wmonkeypatch = function() {
 				});
 				
 				if ($removedSpan) {
-					this.wmonkeypatch.saveSelection();
+					this.wutil.saveSelection();
 				}
 			}).bind(this);
 			
@@ -579,7 +529,7 @@ RedactorPlugins.wmonkeypatch = function() {
 				
 				$mpHtml.call(this, html, clean);
 				
-				this.wmonkeypatch.saveSelection();
+				this.wutil.saveSelection();
 				
 				if ($isWebKit) {
 					setTimeout(function() {

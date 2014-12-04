@@ -21,6 +21,12 @@ RedactorPlugins.wutil = function() {
 		_autosaveWorker: null,
 		
 		/**
+		 * saved selection range
+		 * @var	range
+		 */
+		_range: null,
+		
+		/**
 		 * Initializes the RedactorPlugins.wutil plugin.
 		 */
 		init: function() {
@@ -48,6 +54,34 @@ RedactorPlugins.wutil = function() {
 				
 				$mpDestroy.call(this);
 			}).bind(this);
+		},
+		
+		/**
+		 * Saves current caret position.
+		 */
+		saveSelection: function() {
+			var $selection = getSelection();
+			
+			if ($selection.rangeCount) {
+				this.wutil._range = $selection.getRangeAt(0);
+			}
+		},
+		
+		/**
+		 * Restores saved selection.
+		 */
+		restoreSelection: function() {
+			if (document.activeElement !== this.$editor[0]) {
+				this.$editor.focus();
+			}
+			
+			if (this.wutil._range !== null) {
+				var $selection = window.getSelection();
+				$selection.removeAllRanges();
+				$selection.addRange(this.wutil._range);
+				
+				this.wutil._range = null;
+			}
 		},
 		
 		/**
@@ -206,7 +240,7 @@ RedactorPlugins.wutil = function() {
 		reset: function() {
 			if (this.opts.visual) {
 				this.$editor.html('<p>' + this.opts.invisibleSpace + '</p>');
-				this.wmonkeypatch.saveSelection();
+				this.wutil.saveSelection();
 			}
 			
 			this.$textarea.val('');
@@ -549,6 +583,8 @@ RedactorPlugins.wutil = function() {
 			else {
 				this.wutil.setCaretAfter($lastChild);
 			}
+			
+			this.wutil.saveSelection();
 		},
 		
 		/**
