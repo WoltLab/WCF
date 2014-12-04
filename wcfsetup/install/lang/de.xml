@@ -2099,8 +2099,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.edit.reason"><![CDATA[Änderungsgrund]]></item>
 		<item name="wcf.edit.currentVersion"><![CDATA[Aktuell]]></item>
 		<item name="wcf.edit.revert"><![CDATA[Wiederherstellen]]></item>
-		<item name="wcf.edit.revert.sure"><![CDATA[Möchten Sie die Version von „{$edit->username}“ vom {$edit->time|plainTime} wirklich wiederherstellen?]]></item>
-		<item name="wcf.edit.reverted"><![CDATA[Wiederhergestellt auf Version von „{$edit->username}“ vom {$edit->time|plainTime}]]></item>
+		<item name="wcf.edit.revert.sure"><![CDATA[Möchten Sie die Version von {$edit->username} vom {$edit->time|plainTime} wirklich wiederherstellen?]]></item>
+		<item name="wcf.edit.reverted"><![CDATA[Wiederhergestellt auf Version von {$edit->username} vom {$edit->time|plainTime}]]></item>
 		<item name="wcf.edit.button.compare"><![CDATA[Vergleichen]]></item>
 		<item name="wcf.edit.headline.old"><![CDATA[{if $oldID == 'current'}Aktuelle {/if}Version vom {@$old->time|plainTime} ({$old->username})]]></item>
 		<item name="wcf.edit.headline.new"><![CDATA[{if $newID == 'current'}Aktuelle {/if}Version vom {@$new->time|plainTime} ({$new->username})]]></item>
@@ -2235,7 +2235,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.like.button.like"><![CDATA[Gefällt mir]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Gefällt mir nicht]]></item>
 		<item name="wcf.like.likesReceived"><![CDATA[Erhaltene Likes]]></item>
-		<item name="wcf.like.showLikesReceived"><![CDATA[Erhaltene Likes von „{$user->username}“ anzeigen]]></item>
+		<item name="wcf.like.showLikesReceived"><![CDATA[Erhaltene Likes von {$user->username} anzeigen]]></item>
 		<item name="wcf.like.likesGiven"><![CDATA[Vergebene Likes]]></item>
 		<item name="wcf.like.dislikesReceived"><![CDATA[Erhaltene Dislikes]]></item>
 		<item name="wcf.like.dislikesGiven"><![CDATA[Vergebene Dislikes]]></item>
@@ -2653,7 +2653,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.userID"><![CDATA[Benutzer-ID]]></item>
 		<item name="wcf.user.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.user.username.placeholder"><![CDATA[Geben Sie einen Benutzernamen ein]]></item>
-		<item name="wcf.user.username.error.notFound"><![CDATA[Der Benutzername „{$username}“ konnte nicht gefunden werden.]]></item>
+		<item name="wcf.user.username.error.notFound"><![CDATA[Der Benutzername {$username} konnte nicht gefunden werden.]]></item>
 		<item name="wcf.user.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
 		<item name="wcf.user.username.error.notValid"><![CDATA[Sie haben einen ungültigen Benutzernamen eingegeben.]]></item>
 		<item name="wcf.user.userNote"><![CDATA[{$__wcf->user->username}]]></item>
@@ -2694,7 +2694,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.user.profileHits"><![CDATA[Profil-Aufrufe]]></item>
 		<item name="wcf.user.profileHits.hitsPerDay"><![CDATA[{#$user->profileHits/$user->getProfileAge()} Aufrufe pro Tag]]></item>
 		<item name="wcf.user.online"><![CDATA[Online]]></item>
-		<item name="wcf.user.online.title"><![CDATA[„{$username}“ ist online]]></item>
+		<item name="wcf.user.online.title"><![CDATA[{$username} ist online]]></item>
 		<item name="wcf.user.button.follow"><![CDATA[Folgen]]></item>
 		<item name="wcf.user.button.unfollow"><![CDATA[Entfolgen]]></item>
 		<item name="wcf.user.button.ignore"><![CDATA[Blockieren]]></item>
@@ -2795,7 +2795,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.signature.current"><![CDATA[Aktuelle Signatur]]></item>
 		<item name="wcf.user.signature.error.disabled"><![CDATA[Der Administrator hat{if $__wcf->user->signature} Ihre derzeitige Signatur gesperrt und{/if} Ihnen die weitere Nutzungsberechtigung der Signatur-Funktion {if !$__wcf->user->disableSignatureReason}entzogen.{else} aus folgenden Gründen entzogen: {$__wcf->user->disableSignatureReason}{/if}]]></item>
 		<item name="wcf.user.activityPoint"><![CDATA[Punkte]]></item>
-		<item name="wcf.user.activityPoint.showActivityPoints"><![CDATA[Punkte von „{$user->username}“ anzeigen]]></item>
+		<item name="wcf.user.activityPoint.showActivityPoints"><![CDATA[Punkte von {$user->username} anzeigen]]></item>
 		<item name="wcf.user.activityPoint.objects"><![CDATA[Anzahl]]></item>
 		<item name="wcf.user.activityPoint.objectType"><![CDATA[Art]]></item>
 		<item name="wcf.user.activityPoint.pointsPerObject"><![CDATA[Punkte]]></item>
@@ -2825,7 +2825,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Erhaltene Likes]]></item>
 		<item name="wcf.user.register.honeyPot"><![CDATA[Bitte ignorieren!]]></item>
 		<item name="wcf.user.register.honeyPot.description"><![CDATA[Falls Sie dies sehen können, füllen Sie bitte die nächsten zwei Eingabefelder <strong>NICHT</strong> aus!]]></item>
-		<item name="wcf.user.searchUserContent"><![CDATA[Inhalte von „{$user->username}“ suchen]]></item>
+		<item name="wcf.user.searchUserContent"><![CDATA[Inhalte von {$user->username} suchen]]></item>
 		<item name="wcf.user.author"><![CDATA[Autor]]></item>
 		<item name="wcf.user.moderate"><![CDATA[Benutzer moderieren]]></item>
 		<item name="wcf.user.ban"><![CDATA[Benutzer sperren]]></item>
@@ -2850,7 +2850,7 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.edit"><![CDATA[Benutzer bearbeiten]]></item>
 		<item name="wcf.user.birthdayToday"><![CDATA[Hat heute Geburtstag]]></item>
 		<item name="wcf.user.login.blocked"><![CDATA[Aufgrund einer hohen Anzahl von fehlgeschlagenen Anmeldeversuchen durch Ihre IP-Adresse steht Ihnen die Anmeldung aus Sicherheitsgründen vorübergehend nicht zur Verfügung. Bitte versuchen Sie es später erneut!]]></item>
-		<item name="wcf.user.banned"><![CDATA[Der Benutzer „{$user->username}“ wurde{if $user->banExpires != 0} bis zum {@$user->banExpires|date}{/if} gesperrt.]]></item>
+		<item name="wcf.user.banned"><![CDATA[Der Benutzer {$user->username} wurde{if $user->banExpires != 0} bis zum {@$user->banExpires|date}{/if} gesperrt.]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
@@ -2939,18 +2939,18 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 {/if}]]></item>
 		<item name="wcf.user.usersOnline.invisible"><![CDATA[ (unsichtbar)]]></item>
 		<item name="wcf.user.usersOnline.marking.legend"><![CDATA[Legende]]></item>
-		<item name="wcf.user.usersOnline.location.UserPage"><![CDATA[<a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">Benutzerprofil von „{$user->username}“</a>]]></item>
-		<item name="wcf.user.usersOnline.location.UsersOnlineListPage"><![CDATA[Benutzer-Online-Liste]]></item>
-		<item name="wcf.user.usersOnline.location.MembersListPage"><![CDATA[Mitgliederliste]]></item>
-		<item name="wcf.user.usersOnline.location.TeamPage"><![CDATA[Team-Mitglieder]]></item>
-		<item name="wcf.user.usersOnline.location.DashboardPage"><![CDATA[Dashboard]]></item>
-		<item name="wcf.user.usersOnline.location.RegisterForm"><![CDATA[Registrierung]]></item>
-		<item name="wcf.user.usersOnline.location.LostPasswordForm"><![CDATA[Kennwort vergessen-Formular]]></item>
-		<item name="wcf.user.usersOnline.location.LoginForm"><![CDATA[Anmeldung]]></item>
-		<item name="wcf.user.usersOnline.location.AccountManagementForm"><![CDATA[Account-Verwaltung]]></item>
-		<item name="wcf.user.usersOnline.location.AvatarEditForm"><![CDATA[Avatar-Verwaltung]]></item>
-		<item name="wcf.user.usersOnline.location.SettingsForm"><![CDATA[Einstellungen]]></item>
-		<item name="wcf.user.usersOnline.location.SignatureEditForm"><![CDATA[Signatur-Verwaltung]]></item>
+		<item name="wcf.user.usersOnline.location.UserPage"><![CDATA[Betrachtet das Benutzerprofil von <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>.]]></item>
+		<item name="wcf.user.usersOnline.location.UsersOnlineListPage"><![CDATA[Betrachtet die Benutzer-Online-Liste.]]></item>
+		<item name="wcf.user.usersOnline.location.MembersListPage"><![CDATA[Betrachtet die Mitgliederliste.]]></item>
+		<item name="wcf.user.usersOnline.location.TeamPage"><![CDATA[Betrachtet die die Liste der Team-Mitglieder.]]></item>
+		<item name="wcf.user.usersOnline.location.DashboardPage"><![CDATA[Betrachtet das Dashboard.]]></item>
+		<item name="wcf.user.usersOnline.location.RegisterForm"><![CDATA[Führt die Registrierung durch.]]></item>
+		<item name="wcf.user.usersOnline.location.LostPasswordForm"><![CDATA[Fordert ein neues Kennwort an.]]></item>
+		<item name="wcf.user.usersOnline.location.LoginForm"><![CDATA[Führt die Anmeldung durch.]]></item>
+		<item name="wcf.user.usersOnline.location.AccountManagementForm"><![CDATA[Verwaltet das Benutzerkonto.]]></item>
+		<item name="wcf.user.usersOnline.location.AvatarEditForm"><![CDATA[Verwaltet das Avatar.]]></item>
+		<item name="wcf.user.usersOnline.location.SettingsForm"><![CDATA[Passt Einstellungen an.]]></item>
+		<item name="wcf.user.usersOnline.location.SignatureEditForm"><![CDATA[Bearbeitet die Signatur.]]></item>
 		<item name="wcf.user.usersOnline.guests"><![CDATA[Gäste]]></item>
 		<item name="wcf.user.usersOnline.location"><![CDATA[Ort]]></item>
 		<item name="wcf.user.usersOnline.ipAddress"><![CDATA[IP-Adresse]]></item>
@@ -3072,7 +3072,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 	<category name="wcf.user.notification">
 		<item name="wcf.user.notification.button.confirmed"><![CDATA[OK]]></item>
 		<item name="wcf.user.notification.count"><![CDATA[if (data.returnValues.count == 0) { "Keine Benachrichtigungen" } else if (data.returnValues.count == 1) { "Eine Benachrichtigung" } else { data.returnValues.count + " Benachrichtigungen" }]]></item>
-		<item name="wcf.user.notification.follow.message"><![CDATA[„{@$author->getAnchorTag()}“ folgt Ihnen.]]></item>
+		<item name="wcf.user.notification.follow.message"><![CDATA[{@$author->getAnchorTag()} folgt Ihnen.]]></item>
 		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weiteren{/if} folgen Ihnen.]]></item>
 		<item name="wcf.user.notification.follow.title"><![CDATA[Neuer Follower]]></item>
 		<item name="wcf.user.notification.follow.title.stacked"><![CDATA[{#$count} neue Follower]]></item>
@@ -3111,7 +3111,7 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.com.woltlab.wcf.user.follow.following"><![CDATA[Jemand folgt Ihnen]]></item>
 		<item name="wcf.user.notification.comment.title"><![CDATA[Neuer Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Pinnwand)]]></item>
-		<item name="wcf.user.notification.comment.message"><![CDATA[{if !$author->userID}Ein Gast{else}„{@$author->getAnchorTag()}“{/if} hat einen Kommentar an <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a> verfasst.]]></item>
+		<item name="wcf.user.notification.comment.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat einen Kommentar an <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a> verfasst.]]></item>
 		<item name="wcf.user.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben Kommentare an <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a> verfasst.]]></item>
 		<item name="wcf.user.notification.comment.mail"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->username}{/if} hat einen Kommentar an Ihrer Pinnwand verfasst:
 {if $notificationType == 'instant'}
@@ -3123,11 +3123,11 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 {link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
 		<item name="wcf.user.notification.comment.like.title"><![CDATA[Gefällt ein Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.comment.like.title.stacked"><![CDATA[{#$count} Benutzern gefällt Ihr Kommentar (Pinnwand)]]></item>
-		<item name="wcf.user.notification.comment.like.message"><![CDATA[„{@$author->getAnchorTag()}“ gefällt Ihr Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if}.]]></item>
+		<item name="wcf.user.notification.comment.like.message"><![CDATA[{@$author->getAnchorTag()} gefällt Ihr Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if}.]]></item>
 		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weiteren{/if} gefällt Ihr Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if}.]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Pinnwand)]]></item>
-		<item name="wcf.user.notification.commentResponse.message"><![CDATA[{if !$author->userID}Ein Gast{else}„{@$author->getAnchorTag()}“{/if} hat eine Antwort zu Ihrem Kommentar an {if $owner->userID == $__wcf->getUser()->userID}<a href="{link controller='User' object=$owner}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if} verfasst.]]></item>
+		<item name="wcf.user.notification.commentResponse.message"><![CDATA[{if !$author->userID}Ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zu Ihrem Kommentar an {if $owner->userID == $__wcf->getUser()->userID}<a href="{link controller='User' object=$owner}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if} verfasst.]]></item>
 		<item name="wcf.user.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben auf Ihren Kommentar an {if $owner->userID == $__wcf->getUser()->userID}<a href="{link controller='User' object=$owner}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if} geantwortet.]]></item>
 		<item name="wcf.user.notification.commentResponse.mail"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->username}{/if} hat eine Antwort zu Ihrem Kommentar an der Pinnwand von "{@$owner->username}" verfasst:
 {if $notificationType == 'instant'}
@@ -3139,11 +3139,11 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 {link controller='User' object=$owner isEmail=true}#wall{/link}]]></item>
 		<item name="wcf.user.notification.commentResponse.like.title"><![CDATA[Gefällt die Antwort auf einen Kommentar (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponse.like.title.stacked"><![CDATA[{#$count} Benutzern gefällt Ihre Antwort auf einen Kommentar (Pinnwand)]]></item>
-		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[„{@$author->getAnchorTag()}“ gefällt Ihre Antwort auf einen Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if}.]]></item>
+		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[{@$author->getAnchorTag()} gefällt Ihre Antwort auf einen Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if}.]]></item>
 		<item name="wcf.user.notification.commentResponse.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weiteren{/if} gefällt Ihre Antwort auf einen Kommentar an {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a>{else}der <a href="{link controller='User' object=$owner}#wall{/link}">Pinnwand von {$owner->username}</a>{/if}.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[Neue Antwort (Pinnwand)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Pinnwand)]]></item>
-		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[{if !$author->userID}ein Gast{else}„{@$author->getAnchorTag()}“{/if} hat eine Antwort zum Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} an <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a> verfasst.]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[{if !$author->userID}ein Gast{else}{@$author->getAnchorTag()}{/if} hat eine Antwort zum Kommentar von {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} an <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a> verfasst.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} und {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} und{/if} {#$others} weitere Benutzer {if $guestTimesTriggered}und {if $guestTimesTriggered == 1}ein Gast{else}Gäste{/if}{/if}{/if} haben auf den Kommentar von {if $author->userID}<a href="{link controller='User' object=$author}{/link}" class="userLink" data-user-id="{@$author->userID}">{$author->username}</a>{else}{$author->username}{/if} an <a href="{link controller='User' object=$__wcf->getUser()}#wall{/link}">Ihrer Pinnwand</a> geantwortet.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail"><![CDATA[{@$author->username} hat eine Antwort zum Kommentar von "{@$commentAuthor->username}" an Ihrer Pinnwand verfasst:
 {if $notificationType == 'instant'}
@@ -3161,14 +3161,13 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 	</category>
 	
 	<category name="wcf.user.profile">
-		<item name="wcf.user.profile"><![CDATA[Benutzerprofil von „{$user->username}“]]></item>
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}Sie haben noch keine sichtbaren Informationen hinterlegt.{else}Der Benutzer hat noch keine für Sie sichtbaren Informationen hinterlegt.{/if}]]></item>
 		<item name="wcf.user.profile.content.recentActivity.noEntries"><![CDATA[Es sind keine anzeigbaren Aktivitäten vorhanden.]]></item>
 		<item name="wcf.user.profile.followers"><![CDATA[{$user->username} folgen]]></item>
 		<item name="wcf.user.profile.following"><![CDATA[{$user->username} folgt]]></item>
 		<item name="wcf.user.profile.menu.about"><![CDATA[Über mich]]></item>
 		<item name="wcf.user.profile.menu.recentActivity"><![CDATA[Letzte Aktivitäten]]></item>
-		<item name="wcf.user.profile.oldUsername"><![CDATA[Hieß früher „{$user->getOldUsername()}“]]></item>
+		<item name="wcf.user.profile.oldUsername"><![CDATA[Hieß früher {$user->getOldUsername()}]]></item>
 		<item name="wcf.user.profile.recentActivity.follow"><![CDATA[Folgt nun <a href="{link controller='User' object=$user}{/link}">{$user->username}</a>.]]></item>
 		<item name="wcf.user.profile.visitors"><![CDATA[Profil-Besucher]]></item>
 		<item name="wcf.user.profile.content.wall.comment"><![CDATA[Kommentar an der Pinnwand]]></item>
@@ -3234,15 +3233,15 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.mail.information"><![CDATA[Informationen]]></item>
 		<item name="wcf.user.mail.mail"><![CDATA[Hallo {@$recipient->username},
 
-„{@$username}“ hat Ihnen auf der Website „{@PAGE_TITLE|language}“ folgende Nachricht gesandt:
+"{@$username}" hat Ihnen auf der Website "{@PAGE_TITLE|language}" folgende Nachricht gesandt:
 {@$message}]]></item>
 		<item name="wcf.user.mail.mail.subject"><![CDATA[Nachricht von {@$username}: {@$subject}]]></item>
 		<item name="wcf.user.mail.message"><![CDATA[Nachricht]]></item>
 		<item name="wcf.user.mail.senderEmail"><![CDATA[Ihre E-Mail-Adresse]]></item>
-		<item name="wcf.user.mail.sent"><![CDATA[Ihre Nachricht an „{$user->username}“ wurde erfolgreich versandt.]]></item>
+		<item name="wcf.user.mail.sent"><![CDATA[Ihre Nachricht an {$user->username} wurde erfolgreich versandt.]]></item>
 		<item name="wcf.user.mail.showAddress"><![CDATA[Meine E-Mail-Adresse als Absender-Adresse benutzen. Der Empfänger kann direkt auf die Nachricht antworten.]]></item>
 		<item name="wcf.user.mail.subject"><![CDATA[Betreff]]></item>
-		<item name="wcf.user.mail.title"><![CDATA[E-Mail an „{$user->username}“ senden]]></item>
+		<item name="wcf.user.mail.title"><![CDATA[E-Mail an {$user->username} senden]]></item>
 	</category>
 	
 	<category name="wcf.user.rank">

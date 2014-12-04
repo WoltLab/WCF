@@ -1,7 +1,7 @@
 {include file='documentHeader'}
 
 <head>
-	<title>{lang}wcf.user.mail.title{/lang} - {lang}wcf.user.profile{/lang} - {PAGE_TITLE|language}</title>
+	<title>{lang}wcf.user.mail.title{/lang} - {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude'}
 </head>
