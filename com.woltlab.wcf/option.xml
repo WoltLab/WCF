@@ -654,8 +654,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<categoryname>security.antispam.recaptcha</categoryname>
 				<optiontype>text</optiontype>
 				<validationpattern>^[^/]*$</validationpattern>
-				<!-- wcf-recaptcha.woltlab.com global key -->
-				<defaultvalue>6LfOlMYSAAAAADvo3s4puBAYDqI-6YK2ybe7BJE5</defaultvalue>
+				<defaultvalue></defaultvalue>
 				<showorder>1</showorder>
 			</option>
 			<option name="recaptcha_privatekey">
@@ -663,7 +662,7 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<optiontype>text</optiontype>
 				<validationpattern>^[^/]*$</validationpattern>
 				<!-- wcf-recaptcha.woltlab.com global key -->
-				<defaultvalue>6LfOlMYSAAAAAKR3m_EFxmDv1xS8PCfeaSZ2LdG9</defaultvalue>
+				<defaultvalue></defaultvalue>
 				<showorder>2</showorder>
 			</option>
 			<!-- /security.antispam.recaptcha -->
