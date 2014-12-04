@@ -641,7 +641,7 @@ class SessionHandler extends SingletonFactory {
 			
 			$this->session = new $this->sessionClassName($newSessionID);
 			
-			HeaderUtil::setCookie('cookieHash', $newSessionID);
+			if ($this->useCookies) HeaderUtil::setCookie('cookieHash', $newSessionID);
 		}
 		
 		// reset caches
@@ -732,7 +732,7 @@ class SessionHandler extends SingletonFactory {
 						));
 						$this->session = new $this->sessionClassName($newSessionID);
 						
-						HeaderUtil::setCookie('cookieHash', $newSessionID);
+						if ($this->useCookies) HeaderUtil::setCookie('cookieHash', $newSessionID);
 					}
 					catch (DatabaseException $e) {
 						// MySQL error 23000 = unique key

@@ -1180,6 +1180,10 @@ $.widget('ui.wcfImageViewer', {
 		
 		$(this.options.imageSelector).each(function(index, link) {
 			var $link = $(link);
+			var $thumbnail = $link.children('img');
+			if (!$thumbnail.length) {
+				$thumbnail = $link.parentsUntil('.formAttachmentList').last().find('.attachmentTinyThumbnail');
+			}
 			
 			$images.push({
 				image: {
@@ -1190,7 +1194,7 @@ $.widget('ui.wcfImageViewer', {
 				},
 				series: null,
 				thumbnail: {
-					url: $link.children('img').prop('src')
+					url: $thumbnail.prop('src')
 				},
 				user: null
 			});

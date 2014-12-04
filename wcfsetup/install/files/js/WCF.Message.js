@@ -3627,16 +3627,23 @@ WCF.Message.UserMention = Class.extend({
 		// remove unicode zero width space and non-breaking space
 		var $textBackup = $text;
 		$text = '';
+		var $hadSpace = false;
 		for (var $i = 0; $i < $textBackup.length; $i++) {
 			var $byte = $textBackup.charCodeAt($i).toString(16);
-			if ($byte != '200b' && !/\s/.test($textBackup[$i])) {
+			if ($byte != '200b' && (!/\s/.test($textBackup[$i]) || (($byte == 'a0' || $byte == '20') && !$hadSpace))) {
+				if ($byte == 'a0' || $byte == '20') {
+					$hadSpace = true;
+				}
+				
 				if ($textBackup[$i] === '@' && $i && /\s/.test($textBackup[$i - 1])) {
+					$hadSpace = false;
 					$text = '';
 				}
 				
 				$text += $textBackup[$i];
 			}
 			else {
+				$hadSpace = false;
 				$text = '';
 			}
 		}
