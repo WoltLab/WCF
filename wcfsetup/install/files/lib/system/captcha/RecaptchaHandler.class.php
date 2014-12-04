@@ -30,7 +30,18 @@ class RecaptchaHandler implements ICaptchaHandler {
 	 * @see	\wcf\system\captcha\ICaptchaHandler::getFormElement()
 	 */
 	public function getFormElement() {
-		\wcf\system\recaptcha\RecaptchaHandler::getInstance()->assignVariables();
+		if (WCF::getSession()->getVar('recaptchaDone')) return '';
+		
+		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
+			// V1
+			\wcf\system\recaptcha\RecaptchaHandler::getInstance()->assignVariables();
+		}
+		else {
+			// V2
+			WCF::getTPL()->assign(array(
+				'recaptchaLegacyMode' => true
+			));
+		}
 		
 		return WCF::getTPL()->fetch('recaptcha');
 	}
@@ -39,15 +50,22 @@ class RecaptchaHandler implements ICaptchaHandler {
 	 * @see	\wcf\system\captcha\ICaptchaHandler::isAvailable()
 	 */
 	public function isAvailable() {
-		return RECAPTCHA_PUBLICKEY && RECAPTCHA_PRIVATEKEY;
+		return true;
 	}
 	
 	/**
 	 * @see	\wcf\system\captcha\ICaptchaHandler::readFormParameters()
 	 */
 	public function readFormParameters() {
-		if (isset($_POST['recaptcha_challenge_field'])) $this->challenge = StringUtil::trim($_POST['recaptcha_challenge_field']);
-		if (isset($_POST['recaptcha_response_field'])) $this->response = StringUtil::trim($_POST['recaptcha_response_field']);
+		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
+			// V1
+			if (isset($_POST['recaptcha_challenge_field'])) $this->challenge = StringUtil::trim($_POST['recaptcha_challenge_field']);
+			if (isset($_POST['recaptcha_response_field'])) $this->response = StringUtil::trim($_POST['recaptcha_response_field']);
+		}
+		else {
+			// V2
+			if (isset($_POST['g-recaptcha-response'])) $this->response = $_POST['g-recaptcha-response'];
+		}
 	}
 	
 	/**
@@ -61,6 +79,15 @@ class RecaptchaHandler implements ICaptchaHandler {
 	 * @see	\wcf\system\captcha\ICaptchaHandler::validate()
 	 */
 	public function validate() {
-		\wcf\system\recaptcha\RecaptchaHandler::getInstance()->validate($this->challenge, $this->response);
+		if (WCF::getSession()->getVar('recaptchaDone')) return;
+		
+		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
+			// V1
+			\wcf\system\recaptcha\RecaptchaHandler::getInstance()->validate($this->challenge, $this->response);
+		}
+		else {
+			// V2
+			\wcf\system\recaptcha\RecaptchaHandlerV2::getInstance()->validate($this->response);
+		}
 	}
 }
