@@ -6108,7 +6108,7 @@ WCF.Search.Base = Class.extend({
 		
 		var $content = this._getSearchString(event);
 		if ($content === '') {
-			this._clearList(true);
+			this._clearList(false);
 		}
 		else if ($content.length >= this._triggerLength) {
 			var $parameters = {
