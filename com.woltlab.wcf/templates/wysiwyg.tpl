@@ -69,6 +69,11 @@ $(function() {
 			}
 		};
 		
+		if ($.browser.iOS) {
+			// using a zero-width space breaks iOS' detection of the start of a sentence, causing the first word to be lowercased
+			$config.emptyHtml = '<p><br></p>';
+		}
+		
 		{if MODULE_ATTACHMENT && !$attachmentHandler|empty && $attachmentHandler->canUpload()}
 			$config.plugins.push('wupload');
 			$config.woltlab.attachmentUrl = '{link controller='Attachment' id=987654321}{/link}';
