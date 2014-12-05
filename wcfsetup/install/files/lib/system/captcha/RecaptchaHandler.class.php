@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\captcha;
+use wcf\system\recaptcha\RecaptchaHandler;
+use wcf\system\recaptcha\RecaptchaHandlerV2;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -83,11 +85,11 @@ class RecaptchaHandler implements ICaptchaHandler {
 		
 		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
 			// V1
-			\wcf\system\recaptcha\RecaptchaHandler::getInstance()->validate($this->challenge, $this->response);
+			RecaptchaHandler::getInstance()->validate($this->challenge, $this->response);
 		}
 		else {
 			// V2
-			\wcf\system\recaptcha\RecaptchaHandlerV2::getInstance()->validate($this->response);
+			RecaptchaHandlerV2::getInstance()->validate($this->response);
 		}
 	}
 }
