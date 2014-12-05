@@ -9,13 +9,21 @@ use wcf\data\option\OptionEditor;
  * @category	Community Framework
  */
 
-OptionEditor::updateAll(array(
+$options = array(
 	'cache_source_type' => (CACHE_SOURCE_TYPE == 'no' ? 'disk' : CACHE_SOURCE_TYPE), 
 	'last_update_time' => TIME_NOW,
 	'url_legacy_mode' => 1,
 	'url_to_lowercase' => 0,
 	// the line below equals \wcf\util\StringUtil::getUUID(), but since we have to do it in one step, the "old" class exists in memory
 	'wcf_uuid' => sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535))
-));
+);
+
+// clear recaptcha keys if public key and private key match WoltLab's OEM key
+if (RECAPTCHA_PUBLICKEY === '6LfOlMYSAAAAADvo3s4puBAYDqI-6YK2ybe7BJE5' && RECAPTCHA_PRIVATEKEY === '6LfOlMYSAAAAAKR3m_EFxmDv1xS8PCfeaSZ2LdG9') {
+	$options['recaptcha_publickey'] = '';
+	$options['recaptcha_privatekey'] = '';
+}
+
+OptionEditor::updateAll($options);
 
 OptionEditor::resetCache();

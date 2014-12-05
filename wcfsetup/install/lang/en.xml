@@ -1800,6 +1800,10 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.captcha.question.captcha.description"><![CDATA[Please answer the question below or solve the problem below.]]></item>
 	</category>
 	
+	<category name="wcf.captcha.recaptchaV2">
+		<item name="wcf.captcha.recaptchaV2.error.recaptchaString.false"><![CDATA[Please confirm that you aren’t a robot.]]></item>
+	</category>
+	
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.category.button.list"><![CDATA[List Categories]]></item>

@@ -1801,6 +1801,10 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.captcha.question.captcha.description"><![CDATA[Bitte beantworten Sie die untenstehende Frage bzw. lösen Sie die untenstehende Aufgabe.]]></item>
 	</category>
 	
+	<category name="wcf.captcha.recaptchaV2">
+		<item name="wcf.captcha.recaptchaV2.error.recaptchaString.false"><![CDATA[Bitte bestätigen Sie, dass Sie kein Roboter sind.]]></item>
+	</category>
+	
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 		<item name="wcf.category.button.list"><![CDATA[Kategorien auflisten]]></item>

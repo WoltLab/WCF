@@ -71,35 +71,9 @@ class RecaptchaHandler extends SingletonFactory {
 			$this->languageCode = 'en';
 		}
 		
-		// fetch appropriate keys
-		$this->publicKey = $this->getKey(RECAPTCHA_PUBLICKEY, 'public');
-		$this->privateKey = $this->getKey(RECAPTCHA_PRIVATEKEY, 'private');
-	}
-	
-	/**
-	 * Returns appropriate public or private key, supports multiple hosts.
-	 * 
-	 * @param	string		$pubKey
-	 * @param	string		$type
-	 * @return	string
-	 */
-	protected function getKey($pubKey, $type) {
-		// check if multiple keys are given
-		$keys = explode("\n", $pubKey);
-		if (count($keys) > 1) {
-			foreach ($keys as $key) {
-				$keyParts = explode(':', $key);
-				
-				if (StringUtil::trim($keyParts[0]) == $_SERVER['HTTP_HOST']) {
-					return StringUtil::trim($keyParts[1]);
-				}
-			}
-		}
-		else {
-			return $pubKey;
-		}
-		
-		throw new SystemException('No valid '.$type.' key for reCAPTCHA found.');
+		// WoltLab's V1 OEM keys
+		$this->publicKey = '6LfOlMYSAAAAADvo3s4puBAYDqI-6YK2ybe7BJE5';
+		$this->privateKey = '6LfOlMYSAAAAAKR3m_EFxmDv1xS8PCfeaSZ2LdG9';
 	}
 	
 	/**
