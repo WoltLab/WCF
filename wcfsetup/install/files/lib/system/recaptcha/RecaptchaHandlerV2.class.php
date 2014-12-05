@@ -4,8 +4,8 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\JSON;
 use wcf\util\HTTPRequest;
+use wcf\util\JSON;
 use wcf\util\UserUtil;
 
 /**
