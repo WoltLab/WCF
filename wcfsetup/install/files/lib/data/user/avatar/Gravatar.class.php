@@ -28,7 +28,7 @@ class Gravatar extends DefaultAvatar {
 	 * gravatar local cache location
 	 * @var	string
 	 */
-	const GRAVATAR_CACHE_LOCATION = 'images/avatars/gravatars/%s-%s.png';
+	const GRAVATAR_CACHE_LOCATION = 'images/avatars/gravatars/%s-%s.%s';
 	
 	/**
 	 * gravatar expire time (days)
@@ -49,6 +49,12 @@ class Gravatar extends DefaultAvatar {
 	public $gravatar = '';
 	
 	/**
+	 * file extension of the gravatar image
+	 * @var	string
+	 */
+	public $fileExtension = 'png';
+	
+	/**
 	 * urls of this gravatar
 	 * @var	array<string>
 	 */
@@ -60,9 +66,10 @@ class Gravatar extends DefaultAvatar {
 	 * @param	integer		$userID
 	 * @param	string		$gravatar
 	 */
-	public function __construct($userID, $gravatar) {
+	public function __construct($userID, $gravatar, $fileExtension = 'png') {
 		$this->userID = $userID;
 		$this->gravatar = $gravatar;
+		$this->fileExtension = $fileExtension;
 	}
 	
 	/**
@@ -85,7 +92,7 @@ class Gravatar extends DefaultAvatar {
 		
 		if (!isset($this->url[$size])) {
 			// try to use cached gravatar
-			$cachedFilename = sprintf(self::GRAVATAR_CACHE_LOCATION, md5(mb_strtolower($this->gravatar)), $size);
+			$cachedFilename = sprintf(self::GRAVATAR_CACHE_LOCATION, md5(mb_strtolower($this->gravatar)), $size, $this->fileExtension);
 			if (file_exists(WCF_DIR.$cachedFilename) && filemtime(WCF_DIR.$cachedFilename) > (TIME_NOW - (self::GRAVATAR_CACHE_EXPIRE * 86400))) {
 				$this->url[$size] = WCF::getPath().$cachedFilename;
 			}
