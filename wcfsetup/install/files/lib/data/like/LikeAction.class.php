@@ -304,8 +304,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		}
 		$likeList->getConditionBuilder()->add("like_table.likeValue = ?", array($this->parameters['likeValue']));
 		$likeList->readObjects();
-		$lastLikeTime = $likeList->getLastLikeTime();
-		if (!$lastLikeTime) {
+		if (!count($likeList)) {
 			return array();
 		}
 		
@@ -315,7 +314,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		));
 		
 		return array(
-			'lastLikeTime' => $lastLikeTime,
+			'lastLikeTime' => $likeList->getLastLikeTime(),
 			'template' => WCF::getTPL()->fetch('userProfileLikeItem')
 		);
 	}
