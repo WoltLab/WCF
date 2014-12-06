@@ -1,15 +1,4 @@
 {if !$__messageSidebarJavascript|isset}
-	<script data-relocate="true">
-		//<![CDATA[
-		$(function() {
-			WCF.Language.addObject({
-				'wcf.user.activityPoint': '{lang}wcf.user.activityPoint{/lang}'
-			});
-			
-			WCF.User.Profile.ActivityPointList.init();
-		});
-		//]]>
-	</script>
 	{assign var=__messageSidebarJavascript value=true}
 {/if}
 

@@ -39,14 +39,6 @@
 				new WCF.User.Profile.Editor({@$user->userID}, {if $editOnInit}true{else}false{/if});
 			{/if}
 			
-			{if $user->activityPoints}
-				WCF.Language.addObject({
-					'wcf.user.activityPoint': '{lang}wcf.user.activityPoint{/lang}'
-				});
-				
-				WCF.User.Profile.ActivityPointList.init();
-			{/if}
-			
 			{if $followingCount > 10}
 				var $followingList = null;
 				$('#followingAll').click(function() {

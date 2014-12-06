@@ -111,7 +111,8 @@
 		'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 		'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}',
 		'wcf.page.sitemap': '{lang}wcf.page.sitemap{/lang}',
-		'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}'
+		'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}',
+		'wcf.user.activityPoint': '{lang}wcf.user.activityPoint{/lang}'
 		{if MODULE_LIKE}
 			,'wcf.like.button.like': '{lang}wcf.like.button.like{/lang}',
 			'wcf.like.button.dislike': '{lang}wcf.like.button.dislike{/lang}',
@@ -174,6 +175,7 @@
 		WCF.Date.Picker.init();
 		new WCF.User.ProfilePreview();
 		new WCF.Notice.Dismiss();
+		WCF.User.Profile.ActivityPointList.init();
 		
 		{event name='javascriptInit'}
 		
