@@ -575,7 +575,6 @@ class SessionHandler extends SingletonFactory {
 	 * 
 	 * @param	\wcf\data\userUser		$user
 	 * @param	boolean				$hideSession	if true, database won't be updated
-	 * @return	boolean
 	 */
 	public function changeUser(User $user, $hideSession = false) {
 		$eventParameters = array('user' => $user, 'hideSession' => $hideSession); 
@@ -587,61 +586,62 @@ class SessionHandler extends SingletonFactory {
 		
 		// skip changeUserVirtual, if session will not be persistent anyway
 		if ($this->supportsVirtualSessions && !$hideSession) {
-			return $this->changeUserVirtual($user);
+			$this->changeUserVirtual($user);
 		}
-		
-		// update user reference
-		$this->user = $user;
-		
-		if (!$hideSession) {
-			// update session
-			$sessionEditor = new $this->sessionEditorClassName($this->session);
+		else {
+			// update user reference
+			$this->user = $user;
 			
-			// regenerating the session id is essential to prevent session fixation attacks
-			// FIXME: but it cannot be used if cookies are not available, as the constants are already
-			// defined, erase security token in this case for basic security
-			if ($this->useCookies) {
-				$newSessionID = StringUtil::getRandomID();
-			}
-			else {
-				$this->unregister('__SECURITY_TOKEN');
-				$newSessionID = $this->session->sessionID;
-			}
-			
-			try {
-				$sessionEditor->update(array(
-					'sessionID' => $newSessionID,
-					'userID' => $user->userID
-				));
-			}
-			catch (DatabaseException $e) {
-				// MySQL error 23000 = unique key
-				// do not check against the message itself, some weird systems localize them
-				if ($e->getCode() == 23000) {
-					$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
-					
-					// user is not a guest, delete all other sessions of this user
-					$sql = "DELETE FROM	".$sessionTable."
-						WHERE		sessionID <> ?
-								AND userID = ?";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute(array($this->sessionID, $user->userID));
-						
-					// update session
+			if (!$hideSession) {
+				// update session
+				$sessionEditor = new $this->sessionEditorClassName($this->session);
+				
+				// regenerating the session id is essential to prevent session fixation attacks
+				// FIXME: but it cannot be used if cookies are not available, as the constants are already
+				// defined, erase security token in this case for basic security
+				if ($this->useCookies) {
+					$newSessionID = StringUtil::getRandomID();
+				}
+				else {
+					$this->unregister('__SECURITY_TOKEN');
+					$newSessionID = $this->session->sessionID;
+				}
+				
+				try {
 					$sessionEditor->update(array(
 						'sessionID' => $newSessionID,
 						'userID' => $user->userID
 					));
 				}
-				else {
-					// not our business
-					throw $e;
+				catch (DatabaseException $e) {
+					// MySQL error 23000 = unique key
+					// do not check against the message itself, some weird systems localize them
+					if ($e->getCode() == 23000) {
+						$sessionTable = call_user_func(array($this->sessionClassName, 'getDatabaseTableName'));
+						
+						// user is not a guest, delete all other sessions of this user
+						$sql = "DELETE FROM	".$sessionTable."
+							WHERE		sessionID <> ?
+									AND userID = ?";
+						$statement = WCF::getDB()->prepareStatement($sql);
+						$statement->execute(array($this->sessionID, $user->userID));
+							
+						// update session
+						$sessionEditor->update(array(
+							'sessionID' => $newSessionID,
+							'userID' => $user->userID
+						));
+					}
+					else {
+						// not our business
+						throw $e;
+					}
 				}
+				
+				$this->session = new $this->sessionClassName($newSessionID);
+				
+				if ($this->useCookies) HeaderUtil::setCookie('cookieHash', $newSessionID);
 			}
-			
-			$this->session = new $this->sessionClassName($newSessionID);
-			
-			if ($this->useCookies) HeaderUtil::setCookie('cookieHash', $newSessionID);
 		}
 		
 		// reset caches
@@ -651,8 +651,6 @@ class SessionHandler extends SingletonFactory {
 		$this->styleID = $this->user->styleID;
 		
 		EventHandler::getInstance()->fireAction($this, 'afterChangeUser');
-		
-		return true;
 	}
 	
 	/**
@@ -764,16 +762,6 @@ class SessionHandler extends SingletonFactory {
 		
 		$this->user = $user;
 		$this->loadVirtualSession(true);
-		
-		// reset caches
-		$this->groupData = null;
-		$this->languageIDs = null;
-		$this->languageID = $this->user->languageID;
-		$this->styleID = $this->user->styleID;
-		
-		EventHandler::getInstance()->fireAction($this, 'afterChangeUser');
-		
-		return false;
 	}
 	
 	/**
@@ -844,14 +832,13 @@ class SessionHandler extends SingletonFactory {
 			}
 		}
 		
-		// set user to guest
-		$deleteSession = $this->changeUser(new User(null), true);
+		// 1st: Change user to guest, otherwise other the entire session, including
+		// all virtual sessions of the user will be deleted
+		$this->changeUser(new User(null));
 		
-		// remove session
-		if ($deleteSession !== false) {
-			$sessionEditor = new $this->sessionEditorClassName($this->session);
-			$sessionEditor->delete();
-		}
+		// 2nd: Actually remove session
+		$sessionEditor = new $this->sessionEditorClassName($this->session);
+		$sessionEditor->delete();
 		
 		// disable update
 		$this->disableUpdate();
