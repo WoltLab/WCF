@@ -103,7 +103,7 @@ class GravatarDownloadAction extends AbstractAction {
 				file_put_contents(WCF_DIR.$cachedFilename, $reply['body']);
 				FileUtil::makeWritable(WCF_DIR.$cachedFilename);
 				
-				// file file extension
+				// update file extension
 				if ($fileExtension != $this->user->gravatarFileExtension) {
 					$editor = new UserEditor($this->user);
 					$editor->update(array(
