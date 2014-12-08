@@ -5664,6 +5664,12 @@ WCF.Option.Handler = Class.extend({
 				if ($.wcfIsset($target)) {
 					this._enableOption($target, !isActive);
 				}
+				else {
+					var $dl = $('.' + $target + 'Input');
+					if ($dl.length) {
+						this._enableOptions($dl.children('dd').find('input, select, textarea'), !isActive);
+					}
+				}
 			}
 		}
 		
@@ -5673,34 +5679,62 @@ WCF.Option.Handler = Class.extend({
 				if ($.wcfIsset($target)) {
 					this._enableOption($target, isActive);
 				}
+				else {
+					var $dl = $('.' + $target + 'Input');
+					if ($dl.length) {
+						this._enableOptions($dl.children('dd').find('input, select, textarea'), isActive);
+					}
+				}
 			}
 		}
 	},
 	
 	/**
-	 * Enables an option.
+	 * Enables/Disables an option.
 	 * 
 	 * @param	string		target
 	 * @param	boolean		enable
 	 */
 	_enableOption: function(target, enable) {
-		var $targetElement = $('#' + $.wcfEscapeID(target));
-		var $tagName = $targetElement.getTagName();
+		this._enableOptionElement($('#' + $.wcfEscapeID(target)), enable);
+	},
+	
+	/**
+	 * Enables/Disables an option element.
+	 * 
+	 * @param	string		target
+	 * @param	boolean		enable
+	 */
+	_enableOptionElement: function(element, enable) {
+		element = $(element);
+		var $tagName = element.getTagName();
 		
-		if ($tagName == 'select' || ($tagName == 'input' && ($targetElement.attr('type') == 'checkbox' || $targetElement.attr('type') == 'radio'))) {
-			if (enable) $targetElement.enable();
-			else $targetElement.disable();
+		if ($tagName == 'select' || ($tagName == 'input' && (element.attr('type') == 'checkbox' || element.attr('type') == 'file' || element.attr('type') == 'radio'))) {
+			if (enable) element.enable();
+			else element.disable();
 		}
 		else {
-			if (enable) $targetElement.removeAttr('readonly');
-			else $targetElement.attr('readonly', true);
+			if (enable) element.removeAttr('readonly');
+			else element.attr('readonly', true);
 		}
 		
 		if (enable) {
-			$targetElement.closest('dl').removeClass('disabled');
+			element.closest('dl').removeClass('disabled');
 		}
 		else {
-			$targetElement.closest('dl').addClass('disabled');
+			element.closest('dl').addClass('disabled');
+		}
+	},
+	
+	/**
+	 * Enables/Disables an option consisting of multiple form elements.
+	 * 
+	 * @param	string		target
+	 * @param	boolean		enable
+	 */
+	_enableOptions: function(targets, enable) {
+		for (var $i = 0, $length = targets.length; $i < $length; $i++) {
+			this._enableOptionElement(targets[$i], enable);
 		}
 	}
 });
