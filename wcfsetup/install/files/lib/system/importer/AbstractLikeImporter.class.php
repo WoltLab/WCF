@@ -31,7 +31,7 @@ class AbstractLikeImporter extends AbstractImporter {
 		if ($data['objectUserID']) $data['objectUserID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['objectUserID']);
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		if (!$data['userID']) return 0;
-		if (empty($data['time'])) $data['time'] = 0;
+		if (empty($data['time'])) $data['time'] = 1;
 		
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_like
 						(objectID, objectTypeID, objectUserID, userID, time, likeValue)

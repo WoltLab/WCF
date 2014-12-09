@@ -470,7 +470,7 @@ CREATE TABLE wcf1_like (
 	objectTypeID INT(10) NOT NULL,
 	objectUserID INT(10),
 	userID INT(10) NOT NULL,
-	time INT(10) NOT NULL DEFAULT 0,
+	time INT(10) NOT NULL DEFAULT 1,
 	likeValue TINYINT(1) NOT NULL DEFAULT 1,
 	UNIQUE KEY (objectTypeID, objectID, userID)
 );
