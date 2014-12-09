@@ -301,6 +301,8 @@ class PostgreSQLDatabaseEditor extends DatabaseEditor {
 		
 		// add operation and action
 		if (!empty($indexData['operation'])) $sql .= " ON ".$indexData['operation']." ".$indexData['action'];
+		if (!empty($indexData['ON DELETE'])) $sql .= " ON DELETE ".$indexData['ON DELETE'];
+		if (!empty($indexData['ON UPDATE'])) $sql .= " ON UPDATE ".$indexData['ON UPDATE'];
 		
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute();
