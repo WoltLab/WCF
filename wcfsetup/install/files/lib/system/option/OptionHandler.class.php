@@ -280,7 +280,8 @@ class OptionHandler implements IOptionHandler {
 		return array(
 			'object' => $option,
 			'html' => $html,
-			'cssClassName' => $this->getTypeObject($option->optionType)->getCSSClassName()
+			'cssClassName' => $this->getTypeObject($option->optionType)->getCSSClassName(),
+			'hideLabelInSearch' => $this->getTypeObject($option->optionType)->hideLabelInSearch()
 		);
 	}
 	

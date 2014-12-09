@@ -6,7 +6,7 @@
 		{assign var=error value=''}
 	{/if}
 	<dl class="{$option->optionName}Input{if $error} formError{/if}">
-		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}><label for="{$option->optionName}">{lang}{@$langPrefix}{$option->optionName}{/lang}</label></dt>
+		<dt{if $optionData[cssClassName]} class="{$optionData[cssClassName]}"{/if}>{if $isSearchMode|empty || !$optionData[hideLabelInSearch]}<label for="{$option->optionName}">{lang}{@$langPrefix}{$option->optionName}{/lang}</label>{/if}</dt>
 		<dd>{@$optionData[html]}
 			{if $error}
 				<small class="innerError">

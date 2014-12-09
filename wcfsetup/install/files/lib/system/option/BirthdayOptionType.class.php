@@ -154,4 +154,11 @@ class BirthdayOptionType extends DateOptionType {
 		
 		return $newValue;
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::hideLabelInSearch()
+	 */
+	public function hideLabelInSearch() {
+		return false;
+	}
 }

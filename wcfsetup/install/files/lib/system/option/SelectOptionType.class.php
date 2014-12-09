@@ -83,4 +83,11 @@ class SelectOptionType extends RadioButtonOptionType {
 			'enableOptions' => $enableOptions
 		);
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::hideLabelInSearch()
+	 */
+	public function hideLabelInSearch() {
+		return true;
+	}
 }
