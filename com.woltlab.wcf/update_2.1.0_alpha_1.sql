@@ -287,6 +287,8 @@ DELETE FROM wcf1_style_variable WHERE variableName = 'wcfMainMenuHoverBackground
  */
 
 INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Soundcloud set', 'https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/sets/(?P<name>[a-zA-Z0-9_-]+)', '<iframe width="100%" height="450" scrolling="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2Fsets%2F{$name}"></iframe>');
+UPDATE wcf1_bbcode_media_provider SET regex = 'https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/(?!sets/)(?P<song>[a-zA-Z0-9_-]+)' WHERE title = 'Soundcloud';
+UPDATE wcf1_bbcode_media_provider SET html = '<iframe style="max-width:100%;" width="560" height="315" src="https://www.youtube-nocookie.com/embed/{$ID}?wmode=transparent{$start}" allowfullscreen></iframe>' WHERE title = 'YouTube';
 
 /* 
  * ########################
