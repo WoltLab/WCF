@@ -191,7 +191,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		UserNotificationHandler::getInstance()->markAsConfirmedByID($this->notificationEditor->notificationID);
 		
 		return array(
-			'notificationID' => $this->notificationEditor->notificationID,
+			'markAsRead' => $this->notificationEditor->notificationID,
 			'totalCount' => UserNotificationHandler::getInstance()->getNotificationCount(true)
 		);
 	}
