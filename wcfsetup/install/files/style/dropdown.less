@@ -314,6 +314,17 @@
 		border-width: 1px 0;
 		max-height: 300px;
 		
+		&.ps-container {
+			> .interactiveDropdownItems {
+				position: relative;
+				z-index: 100;
+			}
+			
+			> .ps-scrollbar-y-rail {
+				z-index: 200;
+			}
+		}
+		
 		> .interactiveDropdownItems {
 			> li {
 				background-color: @wcfDropdownBackgroundColor;
