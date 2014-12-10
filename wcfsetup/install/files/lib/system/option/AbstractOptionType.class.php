@@ -51,4 +51,11 @@ abstract class AbstractOptionType implements IOptionType {
 	public function compare($value1, $value2) {
 		return 0;
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::hideLabelInSearch()
+	 */
+	public function hideLabelInSearch() {
+		return false;
+	}
 }

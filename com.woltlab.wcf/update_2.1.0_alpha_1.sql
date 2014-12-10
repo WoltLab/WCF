@@ -191,6 +191,9 @@ ALTER TABLE wcf1_moderation_queue DROP FOREIGN KEY objectTypeID;
 ALTER TABLE wcf1_moderation_queue DROP KEY affectedObject;
 ALTER TABLE wcf1_moderation_queue ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
+/* change default value to '1' */
+ALTER TABLE wcf1_like CHANGE time time INT(10) NOT NULL DEFAULT 1;
+
 ALTER TABLE wcf1_page_menu_item ADD originIsSystem TINYINT(1) NOT NULL DEFAULT 0;
 
 /* truncate table to ensure consistency */
@@ -204,6 +207,8 @@ ALTER TABLE wcf1_sitemap ADD options TEXT NULL;
 ALTER TABLE wcf1_template_listener ADD niceValue TINYINT(3) NOT NULL DEFAULT 0;
 
 ALTER TABLE wcf1_user_group_option ADD usersOnly TINYINT(1) NOT NULL DEFAULT 0;
+
+ALTER TABLE wcf1_user ADD gravatarFileExtension VARCHAR(3) NOT NULL DEFAULT '';
 
 /* truncate table to ensure consistency */
 DELETE FROM wcf1_user_notification;
@@ -246,7 +251,7 @@ ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (userID) REFE
 ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (subscriptionID) REFERENCES wcf1_paid_subscription (subscriptionID) ON DELETE SET NULL;
 ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (paymentMethodObjectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_session (sessionID) ON DELETE CASCADE;
+ALTER TABLE wcf1_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_session (sessionID) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE wcf1_user_group_assignment ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_group (groupID) ON DELETE CASCADE;
 
@@ -282,3 +287,14 @@ DELETE FROM wcf1_style_variable WHERE variableName = 'wcfMainMenuHoverBackground
  */
 
 INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Soundcloud set', 'https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/sets/(?P<name>[a-zA-Z0-9_-]+)', '<iframe width="100%" height="450" scrolling="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2Fsets%2F{$name}"></iframe>');
+UPDATE wcf1_bbcode_media_provider SET regex = 'https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/(?!sets/)(?P<song>[a-zA-Z0-9_-]+)' WHERE title = 'Soundcloud';
+UPDATE wcf1_bbcode_media_provider SET html = '<iframe style="max-width:100%;" width="560" height="315" src="https://www.youtube-nocookie.com/embed/{$ID}?wmode=transparent{$start}" allowfullscreen></iframe>' WHERE title = 'YouTube';
+
+/* 
+ * ########################
+ * ### MINOR UPDATES ######
+ * ########################
+ */
+
+/* change default value to '1' */
+UPDATE wcf1_like SET time = 1 WHERE time = 0;

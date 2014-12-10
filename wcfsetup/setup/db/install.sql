@@ -470,7 +470,7 @@ CREATE TABLE wcf1_like (
 	objectTypeID INT(10) NOT NULL,
 	objectUserID INT(10),
 	userID INT(10) NOT NULL,
-	time INT(10) NOT NULL DEFAULT 0,
+	time INT(10) NOT NULL DEFAULT 1,
 	likeValue TINYINT(1) NOT NULL DEFAULT 1,
 	UNIQUE KEY (objectTypeID, objectID, userID)
 );
@@ -1102,6 +1102,7 @@ CREATE TABLE wcf1_user (
 	disableAvatarReason TEXT,
 	disableAvatarExpires INT(10) NOT NULL DEFAULT 0,
 	enableGravatar TINYINT(1) NOT NULL DEFAULT 0,
+	gravatarFileExtension VARCHAR(3) NOT NULL DEFAULT '',
 	signature TEXT,
 	signatureEnableBBCodes TINYINT(1) NOT NULL DEFAULT 1,
 	signatureEnableHtml TINYINT(1) NOT NULL DEFAULT 0,
@@ -1579,7 +1580,7 @@ ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) O
 ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (spiderID) REFERENCES wcf1_spider (spiderID) ON DELETE CASCADE;
 
-ALTER TABLE wcf1_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_session (sessionID) ON DELETE CASCADE;
+ALTER TABLE wcf1_session_virtual ADD FOREIGN KEY (sessionID) REFERENCES wcf1_session (sessionID) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE wcf1_sitemap ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 

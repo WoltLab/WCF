@@ -7,6 +7,7 @@ use wcf\data\user\UserEditor;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\SystemException;
 use wcf\util\FileUtil;
+use wcf\util\HTTPRequest;
 
 /**
  * Downloads and caches gravatars.
@@ -64,8 +65,10 @@ class GravatarDownloadAction extends AbstractAction {
 		parent::execute();
 		
 		if ($this->user->enableGravatar) {
+			$fileExtension = ($this->user->gravatarFileExtension ?: 'png');
+			
 			// try to use cached gravatar
-			$cachedFilename = sprintf(Gravatar::GRAVATAR_CACHE_LOCATION, md5(mb_strtolower($this->user->email)), $this->size);
+			$cachedFilename = sprintf(Gravatar::GRAVATAR_CACHE_LOCATION, md5(mb_strtolower($this->user->email)), $this->size, $fileExtension);
 			if (file_exists(WCF_DIR.$cachedFilename) && filemtime(WCF_DIR.$cachedFilename) > (TIME_NOW - (Gravatar::GRAVATAR_CACHE_EXPIRE * 86400))) {
 				@header('Content-Type: image/png');
 				@readfile(WCF_DIR.$cachedFilename);
@@ -75,12 +78,40 @@ class GravatarDownloadAction extends AbstractAction {
 			// try to download new version
 			$gravatarURL = sprintf(Gravatar::GRAVATAR_BASE, md5(mb_strtolower($this->user->email)), $this->size, GRAVATAR_DEFAULT_TYPE);
 			try {
-				$tmpFile = FileUtil::downloadFileFromHttp($gravatarURL, 'gravatar');
-				copy($tmpFile, WCF_DIR.$cachedFilename);
-				@unlink($tmpFile);
+				$request = new HTTPRequest($gravatarURL);
+				$request->execute();
+				$reply = $request->getReply();
+				
+				// get mime type and file extension
+				$fileExtension = 'png';
+				$mimeType = 'image/png';
+				if (isset($reply['headers']['Content-Type'])) {
+					switch ($reply['headers']['Content-Type']) {
+						case 'image/jpeg':
+							$mimeType = 'image/jpeg';
+							$fileExtension = 'jpg';
+						break;
+						case 'image/gif':
+							$mimeType = 'image/gif';
+							$fileExtension = 'gif';
+						break;
+					}
+				}
+				
+				// save file
+				$cachedFilename = sprintf(Gravatar::GRAVATAR_CACHE_LOCATION, md5(mb_strtolower($this->user->email)), $this->size, $fileExtension);
+				file_put_contents(WCF_DIR.$cachedFilename, $reply['body']);
 				FileUtil::makeWritable(WCF_DIR.$cachedFilename);
 				
-				@header('Content-Type: image/png');
+				// update file extension
+				if ($fileExtension != $this->user->gravatarFileExtension) {
+					$editor = new UserEditor($this->user);
+					$editor->update(array(
+						'gravatarFileExtension' => $fileExtension
+					));
+				}
+				
+				@header('Content-Type: '.$mimeType);
 				@readfile(WCF_DIR.$cachedFilename);
 				exit;
 			}

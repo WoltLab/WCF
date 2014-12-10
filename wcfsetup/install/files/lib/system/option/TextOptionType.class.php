@@ -146,4 +146,11 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	public function getConditionData(Option $option, $newValue) {
 		return $newValue;
 	}
+	
+	/**
+	 * @see	\wcf\system\option\IOptionType::hideLabelInSearch()
+	 */
+	public function hideLabelInSearch() {
+		return true;
+	}
 }

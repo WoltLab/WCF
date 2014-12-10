@@ -112,6 +112,8 @@
 		'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}',
 		'wcf.page.sitemap': '{lang}wcf.page.sitemap{/lang}',
 		'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}',
+		'wcf.user.activityPoint': '{lang}wcf.user.activityPoint{/lang}',
+		'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}',
 		'wcf.user.panel.markAllAsRead': '{lang}wcf.user.panel.markAllAsRead{/lang}',
 		'wcf.user.panel.markAsRead': '{lang}wcf.user.panel.markAsRead{/lang}',
 		'wcf.user.panel.settings': '{lang}wcf.user.panel.settings{/lang}',
@@ -178,6 +180,7 @@
 		WCF.Date.Picker.init();
 		new WCF.User.ProfilePreview();
 		new WCF.Notice.Dismiss();
+		WCF.User.Profile.ActivityPointList.init();
 		
 		{event name='javascriptInit'}
 		

@@ -104,6 +104,18 @@
 			<dt></dt>
 			<dd>
 				<div id="recaptchaBucket{$recaptchaBucketID}"></div>
+				<noscript>
+					<div style="width: 302px; height: 352px;">
+						<div style="width: 302px; height: 352px; position: relative;">
+							<div style="width: 302px; height: 352px; position: absolute;">
+								<iframe src="https://www.google.com/recaptcha/api/fallback?k={RECAPTCHA_PUBLICKEY|encodeJS}" frameborder="0" scrolling="no" style="width: 302px; height:352px; border-style: none;"></iframe>
+							</div>
+							<div style="width: 250px; height: 80px; position: absolute; border-style: none; bottom: 21px; left: 25px; margin: 0px; padding: 0px; right: 25px;">
+								<textarea name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 80px; border: 1px solid #c1c1c1; margin: 0px; padding: 0px; resize: none;"></textarea>
+							</div>
+						</div>
+					</div>
+				</noscript>
 				{if (($errorType|isset && $errorType|is_array && $errorType[recaptchaString]|isset) || ($errorField|isset && $errorField == 'recaptchaString'))}
 					{if $errorType|is_array && $errorType[recaptchaString]|isset}
 						{assign var='__errorType' value=$errorType[recaptchaString]}

@@ -69,4 +69,11 @@ interface IOptionType {
 	 * @return	integer
 	 */
 	public function compare($value1, $value2);
+	
+	/**
+	 * Returns true if option's label is hidden in search form.
+	 *
+	 * @return	boolean
+	 */
+	public function hideLabelInSearch();
 }

@@ -267,7 +267,7 @@ class UserProfile extends DatabaseObjectDecorator implements IBreadcrumbProvider
 						}
 					}
 					else if (MODULE_GRAVATAR && $this->enableGravatar) {
-						$this->avatar = new Gravatar($this->userID, $this->email);
+						$this->avatar = new Gravatar($this->userID, $this->email, ($this->gravatarFileExtension ?: 'png'));
 					}
 				}
 			}

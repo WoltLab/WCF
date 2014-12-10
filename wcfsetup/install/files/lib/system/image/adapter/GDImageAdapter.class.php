@@ -272,7 +272,7 @@ class GDImageAdapter implements IImageAdapter {
 	 * @see	\wcf\system\image\adapter\IImageAdapter::rotate()
 	 */
 	public function rotate($degrees) {
-		// imagerotate interpretes degress as counter-clockwise
+		// imagerotate interpretes degrees as counter-clockwise
 		return imagerotate($this->image, (360.0 - $degrees), ($this->color ?: 0));
 	}
 	
