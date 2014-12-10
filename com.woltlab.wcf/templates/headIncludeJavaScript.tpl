@@ -111,7 +111,11 @@
 		'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 		'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}',
 		'wcf.page.sitemap': '{lang}wcf.page.sitemap{/lang}',
-		'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}'
+		'wcf.style.changeStyle': '{lang}wcf.style.changeStyle{/lang}',
+		'wcf.user.panel.markAllAsRead': '{lang}wcf.user.panel.markAllAsRead{/lang}',
+		'wcf.user.panel.markAsRead': '{lang}wcf.user.panel.markAsRead{/lang}',
+		'wcf.user.panel.settings': '{lang}wcf.user.panel.settings{/lang}',
+		'wcf.user.panel.showAll': '{lang}wcf.user.panel.showAll{/lang}'
 		{if MODULE_LIKE}
 			,'wcf.like.button.like': '{lang}wcf.like.button.like{/lang}',
 			'wcf.like.button.dislike': '{lang}wcf.like.button.dislike{/lang}',

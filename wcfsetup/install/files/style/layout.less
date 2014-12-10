@@ -2415,3 +2415,33 @@ see: http://beta.woltlab.com/index.php/Thread/3874-Kosmetik-Darstellungsfehler-I
 .ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
 .ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
 .ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}
+
+/* PerfectScrollbar plugin */
+.ps-container {
+	&:hover > .ps-scrollbar-y-rail > .ps-scrollbar-y {
+		background-color: rgba(102, 102, 102, .6);
+	}
+	
+	> .ps-scrollbar-y-rail {
+		background-color: rgba(102, 102, 102, 0);
+		border-radius: 4px;
+		bottom: 0;
+		position: absolute;
+		right: 2px;
+		width: 8px;
+		
+		.transition(background-color, .3s, linear);
+		
+		&:hover {
+			background-color: rgba(102, 102, 102, .3);
+		}
+		
+		> .ps-scrollbar-y {
+			background-color: rgba(102, 102, 102, 0);
+			border-radius: 4px;
+			position: relative;
+			
+			.transition(background-color, .3s, linear);
+		}
+	}
+}

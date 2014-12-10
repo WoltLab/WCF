@@ -2855,6 +2855,10 @@ Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich bitte an den Admini
 		<item name="wcf.user.birthdayToday"><![CDATA[Hat heute Geburtstag]]></item>
 		<item name="wcf.user.login.blocked"><![CDATA[Aufgrund einer hohen Anzahl von fehlgeschlagenen Anmeldeversuchen durch Ihre IP-Adresse steht Ihnen die Anmeldung aus Sicherheitsgründen vorübergehend nicht zur Verfügung. Bitte versuchen Sie es später erneut!]]></item>
 		<item name="wcf.user.banned"><![CDATA[Der Benutzer {$user->username} wurde{if $user->banExpires != 0} bis zum {@$user->banExpires|date}{/if} gesperrt.]]></item>
+		<item name="wcf.user.panel.markAllAsRead"><![CDATA[Alle als gelesen markieren]]></item>
+		<item name="wcf.user.panel.markAsRead"><![CDATA[Als gelesen markieren]]></item>
+		<item name="wcf.user.panel.settings"><![CDATA[Einstellungen]]></item>
+		<item name="wcf.user.panel.showAll"><![CDATA[Alle anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
@@ -3107,7 +3111,7 @@ Möchten Sie diese E-Mail-Benachrichtigung in Zukunft nicht mehr erhalten, könn
 		<item name="wcf.user.notification.markAllAsConfirmed"><![CDATA[Alle als gelesen markieren]]></item>
 		<item name="wcf.user.notification.markAllAsConfirmed.confirmMessage"><![CDATA[Wollen Sie wirklich alle Benachrichtigungen als gelesen markieren?]]></item>
 		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Als gelesen markieren]]></item>
-		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[Keine neuen Benachrichtigungen]]></item>
+		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[Keine aktuellen Benachrichtigungen]]></item>
 		<item name="wcf.user.notification.noNotifications"><![CDATA[Sie haben keine Benachrichtigungen.]]></item>
 		<item name="wcf.user.notification.notifications"><![CDATA[Benachrichtigungen]]></item>
 		<item name="wcf.user.notification.showAll"><![CDATA[Alle Benachrichtigungen anzeigen]]></item>

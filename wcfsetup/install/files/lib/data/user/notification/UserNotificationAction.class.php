@@ -167,7 +167,7 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		));
 		
 		return array(
-			'template' => WCF::getTPL()->fetch('notificationListOustanding'),
+			'template' => WCF::getTPL()->fetch('notificationListUserPanel'),
 			'totalCount' => $notifications['notificationCount']
 		);
 	}

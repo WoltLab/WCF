@@ -2850,6 +2850,10 @@ If you cannot activate your email address or have any troubles following the ins
 		<item name="wcf.user.birthdayToday"><![CDATA[It is their birthday]]></item>
 		<item name="wcf.user.login.blocked"><![CDATA[There have been too many failed login attempts originating from your ip address, your login attempts will be temporarily rejected for security reasons. Please try again later!]]></item>
 		<item name="wcf.user.banned"><![CDATA[The user {$user->username} has been banned{if $user->banExpires != 0} until {@$user->banExpires|date}{/if}.]]></item>
+		<item name="wcf.user.panel.markAllAsRead"><![CDATA[Mark All as Read]]></item>
+		<item name="wcf.user.panel.markAsRead"><![CDATA[Mark as Read]]></item>
+		<item name="wcf.user.panel.settings"><![CDATA[Settings]]></item>
+		<item name="wcf.user.panel.showAll"><![CDATA[Show All]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
@@ -3101,7 +3105,7 @@ If you do not want to receive further email notifications for this event, you ca
 		<item name="wcf.user.notification.markAllAsConfirmed"><![CDATA[Mark All as Read]]></item>
 		<item name="wcf.user.notification.markAllAsConfirmed.confirmMessage"><![CDATA[Do you really want to mark all notifications as read?]]></item>
 		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Mark as Read]]></item>
-		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[No new notifications]]></item>
+		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[No recent notifications]]></item>
 		<item name="wcf.user.notification.noNotifications"><![CDATA[You have no notifications.]]></item>
 		<item name="wcf.user.notification.notifications"><![CDATA[Notifications]]></item>
 		<item name="wcf.user.notification.showAll"><![CDATA[Show All Notifications]]></item>
