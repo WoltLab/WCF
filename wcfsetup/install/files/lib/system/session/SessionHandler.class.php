@@ -185,6 +185,13 @@ class SessionHandler extends SingletonFactory {
 		// init session environment
 		$this->loadVariables();
 		$this->initSecurityToken();
+		
+		// session id change was delayed to the next request
+		// as the SID constants already were defined
+		if ($this->getVar('__changeSessionID')) {
+			$this->unregister('__changeSessionID');
+			$this->changeSessionID();
+		}
 		$this->defineConstants();
 		
 		// assign language and style id
@@ -193,6 +200,39 @@ class SessionHandler extends SingletonFactory {
 		
 		// init environment variables
 		$this->initEnvironment();
+	}
+	
+	/**
+	 * Changes the session id to a new random one.
+	 * 
+	 * Usually a change is requested after login to ensure
+	 * that the user is not running a fixated session by an
+	 * attacker.
+	 */
+	protected function changeSessionID() {
+		$oldSessionID = $this->session->sessionID;
+		$newSessionID = StringUtil::getRandomID();
+		
+		$sessionEditor = new $this->sessionEditorClassName($this->session);
+		$sessionEditor->update(array(
+			'sessionID' => $newSessionID
+		));
+		
+		// fetch new session data from database
+		$this->session = new $this->sessionClassName($newSessionID);
+		
+		if ($this->useCookies) {
+			// we know that the user accepts cookies, simply send new session id
+			HeaderUtil::setCookie('cookieHash', $newSessionID);
+		}
+		else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+			// user maybe does not accept cookies, replace session id in url
+			// otherwise reloading the page will generate a new session
+			
+			$this->update();
+			HeaderUtil::redirect(str_replace('s='.$oldSessionID, 's='.$newSessionID, UserUtil::getRequestURI()));
+			exit;
+		}
 	}
 	
 	/**
@@ -596,20 +636,10 @@ class SessionHandler extends SingletonFactory {
 				// update session
 				$sessionEditor = new $this->sessionEditorClassName($this->session);
 				
-				// regenerating the session id is essential to prevent session fixation attacks
-				// FIXME: but it cannot be used if cookies are not available, as the constants are already
-				// defined, erase security token in this case for basic security
-				if ($this->useCookies) {
-					$newSessionID = StringUtil::getRandomID();
-				}
-				else {
-					$this->unregister('__SECURITY_TOKEN');
-					$newSessionID = $this->session->sessionID;
-				}
+				$this->register('__changeSessionID', true);
 				
 				try {
 					$sessionEditor->update(array(
-						'sessionID' => $newSessionID,
 						'userID' => $user->userID
 					));
 				}
@@ -625,10 +655,9 @@ class SessionHandler extends SingletonFactory {
 									AND userID = ?";
 						$statement = WCF::getDB()->prepareStatement($sql);
 						$statement->execute(array($this->sessionID, $user->userID));
-							
+						
 						// update session
 						$sessionEditor->update(array(
-							'sessionID' => $newSessionID,
 							'userID' => $user->userID
 						));
 					}
@@ -637,10 +666,6 @@ class SessionHandler extends SingletonFactory {
 						throw $e;
 					}
 				}
-				
-				$this->session = new $this->sessionClassName($newSessionID);
-				
-				if ($this->useCookies) HeaderUtil::setCookie('cookieHash', $newSessionID);
 			}
 		}
 		
@@ -713,24 +738,11 @@ class SessionHandler extends SingletonFactory {
 					$sessionEditor = new $this->sessionEditorClassName($this->session);
 					
 					try {
-						// regenerating the session id is essential to prevent session fixation attacks
-						// FIXME: but it cannot be used if cookies are not available, as the constants are already
-						// defined, erase security token in this case for basic security
-						if ($this->useCookies) {
-							$newSessionID = StringUtil::getRandomID();
-						}
-						else {
-							$this->unregister('__SECURITY_TOKEN');
-							$newSessionID = $this->session->sessionID;
-						}
+						$this->register('__changeSessionID', true);
 						
 						$sessionEditor->update(array(
-							'sessionID' => $newSessionID,
 							'userID' => $user->userID
 						));
-						$this->session = new $this->sessionClassName($newSessionID);
-						
-						if ($this->useCookies) HeaderUtil::setCookie('cookieHash', $newSessionID);
 					}
 					catch (DatabaseException $e) {
 						// MySQL error 23000 = unique key

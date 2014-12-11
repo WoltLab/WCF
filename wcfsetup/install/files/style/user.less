@@ -320,26 +320,36 @@
 		top: 3px;
 	}
 	
-	&:hover > div > .framed {
-		> .notificationItemMarkAsConfirmed {
-			height: 24px;	
-			display: block;
-			width: 24px;
-			
-			&:before {
-				position: relative;
-				top: 3px;
-			}
+	&.notificationUnconfirmed {
+		position: relative;
+		
+		> div > .details {
+			padding-right: 16px + @wcfGapLarge;
 		}
 		
-		> .notificationItemMarkAsConfirmed ~ img,
-		> .notificationItemMarkAsConfirmed ~ .fa-users {
-			display: none;
+		> .notificationItemMarkAsConfirmed {
+			opacity: .6;
+			position: absolute;
+			right: @wcfGapLarge;
+			top: 50%;
+			
+			-ms-transform: translateY(-50%);
+			transform: translateY(-50%);
+			
+			.transition(opacity, .3s, linear);
+		}
+		
+		&:hover > .notificationItemMarkAsConfirmed {
+			opacity: 1;
 		}
 	}
 	
-	> div > .framed > .notificationItemMarkAsConfirmed {
-		display: none;
+	> div > .details {
+		padding-top: 3px;
+		
+		.userLink {
+			font-weight: bold;
+		}
 	}
 }
 

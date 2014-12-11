@@ -63,11 +63,11 @@
 			<div class="container marginTop">
 				<ul class="containerList userNotificationItemList">
 		{/if}
-				<li class="jsNotificationItem notificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}{if !$notification[event]->isConfirmed()} notificationUnconfirmed{/if}" data-notification-id="{@$notification[notificationID]}" data-link="{$notification[event]->getLink()}" data-confirm-link="{link controller='NotificationConfirm' id=$notification[notificationID]}{/link}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}" data-is-confirmed="{if $notification[event]->isConfirmed()}true{else}false{/if}">
-					<div class="box24">
+				<li class="jsNotificationItem notificationItem{if $notification[authors] > 1} groupedNotificationItem{/if}{if !$notification[event]->isConfirmed()} notificationUnconfirmed{/if}"  data-link="{if $notification[event]->isConfirmed()}{$notification[event]->getLink()}{else}{link controller='NotificationConfirm' id=$notification[notificationID]}{/link}{/if}" data-link-replace-all="{if $notification[event]->isConfirmed()}false{else}true{/if}" data-object-id="{@$notification[notificationID]}" data-is-read="{if $notification[event]->isConfirmed()}true{else}false{/if}" data-is-grouped="{if $notification[authors] > 1}true{else}false{/if}">
+					<div class="box32">
 						{if $notification[authors] < 2}
 							<div class="framed">
-								{@$notification[event]->getAuthor()->getAvatar()->getImageTag(24)}
+								{@$notification[event]->getAuthor()->getAvatar()->getImageTag(32)}
 							</div>
 							
 							<div class="details">
@@ -79,7 +79,7 @@
 							</div>
 						{else}
 							<div class="framed">
-								<span class="icon icon24 fa-users"></span>
+								<span class="icon icon32 fa-users"></span>
 							</div>
 							
 							<div class="details">

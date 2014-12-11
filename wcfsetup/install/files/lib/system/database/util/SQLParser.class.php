@@ -120,8 +120,14 @@ class SQLParser {
 					$this->executeAddIndexStatement($match[1], ($match[3] ?: self::getGenericIndexName($match[1], $match[4])), array('type' => strtoupper($match[2]), 'columns' => $match[4]));
 				}
 				// add foreign key
-				else if (preg_match('~^ALTER\s+TABLE\s+(\w+)\s+ADD\s+FOREIGN KEY\s+(?:(\w+)\s*)?\((\s*\w+\s*(?:,\s*\w+\s*)*)\)\s+REFERENCES\s+(\w+)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)(?:\s+ON\s+(UPDATE|DELETE)\s+(CASCADE|SET NULL|NO ACTION))?~is', $query, $match)) {
-					$this->executeAddForeignKeyStatement($match[1], ($match[2] ?: self::getGenericIndexName($match[1], $match[3], 'fk')), array('columns' => $match[3], 'referencedTable' => $match[4], 'referencedColumns' => $match[5], 'operation' => $match[6], 'action' => $match[7]));
+				else if (preg_match('~^ALTER\s+TABLE\s+(\w+)\s+ADD\s+FOREIGN KEY\s+(?:(\w+)\s*)?\((\s*\w+\s*(?:,\s*\w+\s*)*)\)\s+REFERENCES\s+(\w+)\s+\((\s*\w+\s*(?:,\s*\w+\s*)*)\)(?:\s+ON\s+DELETE\s+(CASCADE|SET NULL|NO ACTION))?(?:\s+ON\s+UPDATE\s+(CASCADE|SET NULL|NO ACTION))?~is', $query, $match)) {
+					$this->executeAddForeignKeyStatement($match[1], ($match[2] ?: self::getGenericIndexName($match[1], $match[3], 'fk')), array(
+						'columns' => $match[3],
+						'referencedTable' => $match[4],
+						'referencedColumns' => $match[5],
+						'ON DELETE' => $match[6],
+						'ON UPDATE' => $match[7]
+					));
 				}
 				// add/change column
 				else if (preg_match("~^ALTER\s+TABLE\s+(\w+)\s+(?:(ADD)\s+(?:COLUMN\s+)?|(CHANGE)\s+(?:COLUMN\s+)?(\w+)\s+)(\w+)\s+(\w+)(?:\s*\((\s*(?:\d+(?:\s*,\s*\d+)?|'[^']*'(?:\s*,\s*'[^']*')*))\s*\))?(?:\s+UNSIGNED)?(?:\s+(NOT NULL|NULL))?(?:\s+DEFAULT\s+(-?\d+.\d+|-?\d+|NULL|'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'))?(?:\s+(AUTO_INCREMENT))?(?:\s+(UNIQUE|PRIMARY)(?: KEY)?)?~is", $query, $match)) {

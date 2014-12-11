@@ -35,16 +35,13 @@
 				<script data-relocate="true">
 					//<![CDATA[
 					$(function() {
-						WCF.Language.addObject({
-							'wcf.user.notification.count': '{lang}wcf.user.notification.count{/lang}',
-							'wcf.user.notification.markAsConfirmed': '{lang}wcf.user.notification.markAsConfirmed{/lang}',
-							'wcf.user.notification.markAllAsConfirmed': '{lang}wcf.user.notification.markAllAsConfirmed{/lang}',
-							'wcf.user.notification.markAllAsConfirmed.confirmMessage': '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}',
-							'wcf.user.notification.noMoreNotifications': '{lang}wcf.user.notification.noMoreNotifications{/lang}',
-							'wcf.user.notification.showAll': '{lang}wcf.user.notification.showAll{/lang}'
+						new WCF.User.Panel.Notification({
+							markAllAsReadConfirmMessage: '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}',
+							noItems: '{lang}wcf.user.notification.noMoreNotifications{/lang}',
+							settingsLink: '{link controller='NotificationSettings' encode=false}{/link}',
+							showAllLink: '{link controller='NotificationList' encode=false}{/link}',
+							title: '{lang}wcf.user.notification.notifications{/lang}'
 						});
-						
-						new WCF.Notification.UserPanel('{link controller='NotificationList' encode=false}{/link}');
 					});
 					//]]>
 				</script>
