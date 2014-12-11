@@ -1509,6 +1509,8 @@ WCF.Dropdown.Interactive.Instance = Class.extend({
 			return false;
 		}
 		else {
+			WCF.Dropdown.Interactive.Handler.closeAll();
+			
 			this.open();
 			
 			return true;
