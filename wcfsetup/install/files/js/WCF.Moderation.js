@@ -270,6 +270,122 @@ WCF.Moderation.Management = Class.extend({
 });
 
 /**
+ * Namespace for moderation queue related classes.
+ */
+WCF.Moderation.Queue = { };
+
+/**
+ * Marks one moderation queue entry as read.
+ */
+WCF.Moderation.Queue.MarkAsRead = Class.extend({
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes the mark as read for queue entries.
+	 */
+	init: function() {
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		$(document).on('dblclick', '.moderationList .new .columnAvatar', $.proxy(this._dblclick, this));
+	},
+	
+	/**
+	 * Handles double clicks on avatar.
+	 * 
+	 * @param	object		event
+	 */
+	_dblclick: function(event) {
+		this._proxy.setOption('data', {
+			actionName: 'markAsRead',
+			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
+			objectIDs: [ $(event.currentTarget).parents('tr:eq(0)').data('queueID') ]
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Handles successful AJAX requests.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		$('.moderationList .new').each(function(index, element) {
+			var $element = $(element);
+			if (WCF.inArray($element.data('queueID'), data.objectIDs)) {
+				// remove new class
+				$element.removeClass('new');
+				
+				// remove event
+				$element.find('.columnAvatar').off('dblclick');
+			}
+		});
+	}
+});
+
+/**
+ * Marks all moderation queue entries as read.
+ */
+WCF.Moderation.Queue.MarkAllAsRead = Class.extend({
+	/**
+	 * action proxy
+	 * @var	WCF.Action.Proxy
+	 */
+	_proxy: null,
+	
+	/**
+	 * Initializes the WCF.Moderation.Queue.MarkAllAsRead class.
+	 */
+	init: function() {
+		this._proxy = new WCF.Action.Proxy({
+			success: $.proxy(this._success, this)
+		});
+		
+		$('.markAllAsReadButton').click($.proxy(this._click, this));
+	},
+	
+	/**
+	 * Handles clicks.
+	 * 
+	 * @param	object		event
+	 */
+	_click: function(event) {
+		event.preventDefault();
+		
+		this._proxy.setOption('data', {
+			actionName: 'markAllAsRead',
+			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * Marks all queue entries as read.
+	 * 
+	 * @param	object		data
+	 * @param	string		textStatus
+	 * @param	jQuery		jqXHR
+	 */
+	_success: function(data, textStatus, jqXHR) {
+		// @todo fix dropdown
+		
+		// @todo remove badge in userpanel
+				
+		// fix moderation list
+		var $moderationList = $('.moderationList');
+		$moderationList.find('.new').removeClass('new');
+		$moderationList.find('.columnAvatar').off('dblclick');
+	}
+});
+
+/**
  * Namespace for activation related classes.
  */
 WCF.Moderation.Activation = { };

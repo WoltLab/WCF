@@ -6,6 +6,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\visitTracker\VisitTracker;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -214,29 +215,7 @@ class ModerationQueueManager extends SingletonFactory {
 		// cache does not exist or is outdated
 		if ($count === null) {
 			// force update of non-tracked queues for this user
-			$queueList = new ModerationQueueList();
-			$queueList->sqlJoins = "LEFT JOIN wcf".WCF_N."_moderation_queue_to_user moderation_queue_to_user ON (moderation_queue_to_user.queueID = moderation_queue.queueID AND moderation_queue_to_user.userID = ".WCF::getUser()->userID.")";
-			$queueList->getConditionBuilder()->add("moderation_queue_to_user.queueID IS NULL");
-			$queueList->readObjects();
-			
-			if (count($queueList)) {
-				$queues = array();
-				foreach ($queueList as $queue) {
-					if (!isset($queues[$queue->objectTypeID])) {
-						$queues[$queue->objectTypeID] = array();
-					}
-					
-					$queues[$queue->objectTypeID][$queue->queueID] = $queue;
-				}
-				
-				foreach ($this->objectTypeNames as $definitionName => $objectTypeIDs) {
-					foreach ($objectTypeIDs as $objectTypeID) {
-						if (isset($queues[$objectTypeID])) {
-							$this->moderationTypes[$definitionName]->getProcessor()->assignQueues($objectTypeID, $queues[$objectTypeID]);
-						}
-					}
-				}
-			}
+			$this->forceUserAssignment();
 			
 			// count outstanding and assigned queues
 			$conditions = new PreparedStatementConditionBuilder();
@@ -259,6 +238,76 @@ class ModerationQueueManager extends SingletonFactory {
 		}
 		
 		return $count;
+	}
+	
+	/**
+	 * Returns the count of unread moderation queue items.
+	 *
+	 * @return	integer
+	 */
+	public function getUnreadModerationCount() {
+		// get count
+		$count = UserStorageHandler::getInstance()->getField('unreadModerationCount');
+	
+		// cache does not exist or is outdated
+		if ($count === null) {
+			// force update of non-tracked queues for this user
+			$this->forceUserAssignment();
+			
+			// count outstanding and assigned queues
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("moderation_queue_to_user.userID = ?", array(WCF::getUser()->userID));
+			$conditions->add("moderation_queue_to_user.isAffected = ?", array(1));
+			$conditions->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));
+			$conditions->add("moderation_queue.time > ?", array(VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')));
+			$conditions->add("(moderation_queue.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
+			
+			$sql = "SELECT		COUNT(*) AS count
+				FROM		wcf".WCF_N."_moderation_queue_to_user moderation_queue_to_user
+				LEFT JOIN	wcf".WCF_N."_moderation_queue moderation_queue
+				ON		(moderation_queue.queueID = moderation_queue_to_user.queueID)
+				LEFT JOIN	wcf".WCF_N."_tracked_visit tracked_visit
+				ON		(tracked_visit.objectTypeID = ".VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue')." AND tracked_visit.objectID = moderation_queue.queueID AND tracked_visit.userID = ".WCF::getUser()->userID.")
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			$row = $statement->fetchArray();
+			$count = $row['count'];
+				
+			// update storage data
+			UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadModerationCount', $count);
+		}
+	
+		return $count;
+	}
+	
+	/**
+	 * Forces the update of non-tracked queues for this user.
+	 */
+	protected function forceUserAssignment() {
+		$queueList = new ModerationQueueList();
+		$queueList->sqlJoins = "LEFT JOIN wcf".WCF_N."_moderation_queue_to_user moderation_queue_to_user ON (moderation_queue_to_user.queueID = moderation_queue.queueID AND moderation_queue_to_user.userID = ".WCF::getUser()->userID.")";
+		$queueList->getConditionBuilder()->add("moderation_queue_to_user.queueID IS NULL");
+		$queueList->readObjects();
+			
+		if (count($queueList)) {
+			$queues = array();
+			foreach ($queueList as $queue) {
+				if (!isset($queues[$queue->objectTypeID])) {
+					$queues[$queue->objectTypeID] = array();
+				}
+					
+				$queues[$queue->objectTypeID][$queue->queueID] = $queue;
+			}
+		
+			foreach ($this->objectTypeNames as $definitionName => $objectTypeIDs) {
+				foreach ($objectTypeIDs as $objectTypeID) {
+					if (isset($queues[$objectTypeID])) {
+						$this->moderationTypes[$definitionName]->getProcessor()->assignQueues($objectTypeID, $queues[$objectTypeID]);
+					}
+				}
+			}
+		}
 	}
 	
 	/**
@@ -347,9 +396,11 @@ class ModerationQueueManager extends SingletonFactory {
 	public function resetModerationCount($userID = null) {
 		if ($userID === null) {
 			UserStorageHandler::getInstance()->resetAll('outstandingModerationCount');
+			UserStorageHandler::getInstance()->resetAll('unreadModerationCount');
 		}
 		else {
 			UserStorageHandler::getInstance()->reset(array($userID), 'outstandingModerationCount');
+			UserStorageHandler::getInstance()->reset(array($userID), 'unreadModerationCount');
 		}
 	}
 	

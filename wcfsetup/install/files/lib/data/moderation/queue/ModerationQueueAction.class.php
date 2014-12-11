@@ -9,6 +9,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\moderation\queue\ModerationQueueManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
@@ -236,5 +237,57 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			'userID' => $this->user->userID,
 			'username' => $username
 		);
+	}
+	
+	/**
+	 * Marks queue entries as read.
+	 */
+	public function markAsRead() {
+		if (empty($this->parameters['visitTime'])) {
+			$this->parameters['visitTime'] = TIME_NOW;
+		}
+	
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+	
+		foreach ($this->objects as $queue) {
+			VisitTracker::getInstance()->trackObjectVisit('com.woltlab.wcf.moderation.queue', $queue->queueID, $this->parameters['visitTime']);
+		}
+	
+		// reset storage
+		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'unreadModerationCount');
+	}
+	
+	/**
+	 * @see	\wcf\data\IVisitableObjectAction::validateMarkAsRead()
+	 */
+	public function validateMarkAsRead() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		foreach ($this->objects as $queue) {
+			if (!$queue->canEdit()) {
+				throw new PermissionDeniedException();
+			}
+		}
+	}
+	
+	/**
+	 * Marks all queue entries as read.
+	 */
+	public function markAllAsRead() {
+		VisitTracker::getInstance()->trackTypeVisit('com.woltlab.wcf.moderation.queue');
+		
+		// reset storage
+		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'unreadModerationCount');
+	}
+	
+	/**
+	 * Validates the mark all as read action.
+	 */
+	public function validateMarkAllAsRead() {
+		// does nothing
 	}
 }

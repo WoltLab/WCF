@@ -2348,6 +2348,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.comments"><![CDATA[Kommentare]]></item>
 		<item name="wcf.moderation.comments.description"><![CDATA[Diese Kommentare sind intern und nur für Moderatoren einsehbar]]></item>
 		<item name="wcf.moderation.jumpToContent"><![CDATA[Zum Inhalt gehen]]></item>
+		<item name="wcf.moderation.markAllAsRead"><![CDATA[Alle Einträge als gelesen markieren]]></item>
+		<item name="wcf.moderation.markAsRead.doubleClick"><![CDATA[Eintrag durch Doppelklick als gelesen markieren]]></item>
 	</category>
 	
 	<category name="wcf.moderation.activation">

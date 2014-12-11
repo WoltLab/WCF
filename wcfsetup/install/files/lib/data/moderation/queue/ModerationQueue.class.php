@@ -86,7 +86,7 @@ class ModerationQueue extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public function isDone() {
-		return ($this->status == self::STATUS_DONE);
+		return ($this->status == self::STATUS_DONE || $this->status == self::STATUS_CONFIRMED || $this->status == self::STATUS_REJECTED);
 	}
 	
 	/**

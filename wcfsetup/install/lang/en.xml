@@ -2347,6 +2347,8 @@ Errors are:
 		<item name="wcf.moderation.comments"><![CDATA[Comments]]></item>
 		<item name="wcf.moderation.comments.description"><![CDATA[All comments are internal and will not be exposed to non-moderators]]></item>
 		<item name="wcf.moderation.jumpToContent"><![CDATA[Go to Related Content]]></item>
+		<item name="wcf.moderation.markAllAsRead"><![CDATA[Mark All Items Read]]></item>
+		<item name="wcf.moderation.markAsRead.doubleClick"><![CDATA[Double-Click to Mark This Item Read]]></item>
 	</category>
 	
 	<category name="wcf.moderation.activation">

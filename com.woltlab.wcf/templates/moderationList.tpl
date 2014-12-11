@@ -4,6 +4,15 @@
 	<title>{lang}wcf.moderation.moderation{/lang} {if $pageNo > 1}- {lang}wcf.page.pageNo{/lang} {/if}- {PAGE_TITLE|language}</title>
 	
 	{include file='headInclude'}
+	
+	<script data-relocate="true">
+		//<![CDATA[
+		$(function() {
+			new WCF.Moderation.Queue.MarkAsRead();
+			new WCF.Moderation.Queue.MarkAllAsRead();
+		});
+		//]]>
+	</script>
 </head>
 
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}">
@@ -57,6 +66,10 @@
 	{event name='sidebarBoxes'}
 {/capture}
 
+{capture assign='headerNavigation'}
+	<li class="jsOnly"><a href="#" title="{lang}wcf.moderation.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip"><span class="icon icon16 icon-ok"></span> <span class="invisible">{lang}wcf.moderation.markAllAsRead{/lang}</span></a></li>
+{/capture}
+
 {include file='header' sidebarOrientation='left'}
 
 <header class="boxHeadline">
@@ -88,7 +101,6 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID{if $sortField == 'queueID'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=queueID&sortOrder={if $sortField == 'queueID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnText columnTitle" colspan="2">{lang}wcf.moderation.title{/lang}</th>
 					<th class="columnText columnAssignedUserID{if $sortField == 'assignedUsername'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=assignedUsername&sortOrder={if $sortField == 'assignedUsername' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.moderation.assignedUser{/lang}</a></th>
 					<th class="columnDigits columnComments{if $sortField == 'comments'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=comments&sortOrder={if $sortField == 'comments' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.moderation.comments{/lang}</a></th>
@@ -100,9 +112,12 @@
 			
 			<tbody>
 				{foreach from=$objects item=entry}
-					<tr>
-						<td class="columnID">{@$entry->queueID}</td>
-						<td class="columnIcon"><p class="framed">{@$entry->getUserProfile()->getAvatar()->getImageTag(32)}</p></td>
+					<tr class="moderationQueueEntry{if $entry->isNew()} new{/if}" data-queue-id="{@$entry->queueID}">
+						<td class="columnIcon columnAvatar">
+							<div>
+								<p class="framed"{if $entry->isNew()} title="{lang}wcf.moderation.markAsRead.doubleClick{/lang}"{/if}>{@$entry->getUserProfile()->getAvatar()->getImageTag(32)}</p>
+							</div>
+						</td>
 						<td class="columnText columnSubject">
 							<h3>
 								<span class="badge label">{lang}wcf.moderation.type.{@$definitionNames[$entry->objectTypeID]}{/lang}</span>

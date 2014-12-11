@@ -1,5 +1,6 @@
 <?php
 namespace wcf\form;
+use wcf\data\moderation\queue\ModerationQueueAction;
 use wcf\data\moderation\queue\ViewableModerationQueue;
 use wcf\system\breadcrumb\Breadcrumb;
 use wcf\system\comment\CommentHandler;
@@ -102,6 +103,14 @@ abstract class AbstractModerationForm extends AbstractForm {
 		$this->commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue');
 		$this->commentManager = CommentHandler::getInstance()->getObjectType($this->commentObjectTypeID)->getProcessor();
 		$this->commentList = CommentHandler::getInstance()->getCommentList($this->commentManager, $this->commentObjectTypeID, $this->queueID);
+		
+		// update queue visit
+		if ($this->queue->isNew()) {
+			$action = new ModerationQueueAction(array($this->queue->getDecoratedObject()), 'markAsRead', array(
+				'visitTime' => TIME_NOW
+			));
+			$action->executeAction();
+		}
 	}
 	
 	/**

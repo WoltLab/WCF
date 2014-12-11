@@ -6,6 +6,7 @@ use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IUserContent;
 use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\visitTracker\VisitTracker;
 
 /**
  * Represents a viewable moderation queue entry.
@@ -162,5 +163,16 @@ class ViewableModerationQueue extends DatabaseObjectDecorator {
 	public function getObjectTypeName() {
 		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
 		return $objectType->objectType;
+	}
+	
+	/**
+	 * Returns true if this queue item is new for the active user.
+	 *
+	 * @return	boolean
+	 */
+	public function isNew() {
+		if ($this->time > max(VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue'), VisitTracker::getInstance()->getObjectVisitTime('com.woltlab.wcf.moderation.queue', $this->queueID))) return true;
+	
+		return false;
 	}
 }

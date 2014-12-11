@@ -152,6 +152,13 @@
 		</type>
 		<!-- /moderation type -->
 		
+		<!-- Visit Tracker -->
+		<type>
+			<name>com.woltlab.wcf.moderation.queue</name>
+			<definitionname>com.woltlab.wcf.visitTracker.objectType</definitionname>
+		</type>
+		<!-- /Visit Tracker -->
+		
 		<!-- activity points -->
 		<type>
 			<name>com.woltlab.wcf.like.activityPointEvent.receivedLikes</name>
