@@ -256,6 +256,7 @@
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
+				<options>module_user_signature</options>
 			</option>
 			<option name="admin.user.canMailUser">
 				<categoryname>admin.user.user</categoryname>
@@ -493,6 +494,7 @@ pdf]]></defaultvalue>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<usersonly>1</usersonly>
+				<options>module_user_signature</options>
 			</option>
 			<option name="user.signature.canUseHtml">
 				<categoryname>user.signature</categoryname>
@@ -500,12 +502,14 @@ pdf]]></defaultvalue>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
+				<options>module_user_signature</options>
 			</option>
 			<option name="user.signature.canUseBBCodes">
 				<categoryname>user.signature</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<usersonly>1</usersonly>
+				<options>module_user_signature</options>
 			</option>
 			<option name="user.signature.maxLength">
 				<categoryname>user.signature</categoryname>
@@ -515,12 +519,14 @@ pdf]]></defaultvalue>
 				<minvalue>100</minvalue>
 				<maxvalue>65535</maxvalue>
 				<usersonly>1</usersonly>
+				<options>module_user_signature</options>
 			</option>
 			<option name="user.signature.allowedBBCodes">
 				<categoryname>user.signature</categoryname>
 				<optiontype>BBCodeSelect</optiontype>
 				<defaultvalue>all</defaultvalue>
 				<usersonly>1</usersonly>
+				<options>module_user_signature</options>
 			</option>
 			<!-- /user.signature -->
 			
