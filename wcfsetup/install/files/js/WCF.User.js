@@ -182,6 +182,9 @@ WCF.User.Panel.Abstract = Class.extend({
 		});
 		
 		this._triggerElement.click($.proxy(this.toggle, this));
+		if (this._options.showAllLink) {
+			this._triggerElement.dblclick($.proxy(this._dblClick, this));
+		}
 		
 		var $badge = this._triggerElement.find('span.badge');
 		if ($badge.length) {
@@ -218,6 +221,20 @@ WCF.User.Panel.Abstract = Class.extend({
 				this._load();
 			}
 		}
+		
+		return false;
+	},
+	
+	/**
+	 * Forward to original URL by double clicking the trigger element.
+	 * 
+	 * @param	object		event
+	 * @return	boolean
+	 */
+	_dblClick: function(event) {
+		event.preventDefault();
+		
+		window.location = this._options.showAllLink;
 		
 		return false;
 	},
