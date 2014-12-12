@@ -257,6 +257,15 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	
 		// reset storage
 		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'unreadModerationCount');
+		
+		if (count($this->objects) == 1) {
+			$queue = reset($this->objects);
+			
+			return array(
+				'markAsRead' => $queue->queueID,
+				'totalCount' => ModerationQueueManager::getInstance()->getUnreadModerationCount(true)
+			);
+		}
 	}
 	
 	/**
@@ -282,6 +291,10 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		
 		// reset storage
 		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'unreadModerationCount');
+		
+		return array(
+			'markAllAsRead' => true
+		);
 	}
 	
 	/**

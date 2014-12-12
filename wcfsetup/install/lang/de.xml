@@ -2323,6 +2323,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.moderation.outstandingItems"><![CDATA[Ausstehende Einträge]]></item>
 		<item name="wcf.moderation.doneItems"><![CDATA[Erledigte Einträge]]></item>
 		<item name="wcf.moderation.lastChangeTime"><![CDATA[Letzte Änderung]]></item>
+		<item name="wcf.moderation.markAllAsRead.confirmMessage"><![CDATA[Wollen Sie wirklich alle Einträge als gelesen markieren?]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.moderation.noMoreItems"><![CDATA[Keine weiteren Einträge]]></item>
 		<item name="wcf.moderation.status"><![CDATA[Status]]></item>

@@ -181,7 +181,7 @@ WCF.Moderation.Management = Class.extend({
 					$('<a href="' + data.returnValues.link + '" data-user-id="' + data.returnValues.userID + '" class="userLink">' + WCF.String.escapeHTML(data.returnValues.username) + '</a>').appendTo($span);
 				}
 				else {
-					$span.append(data.returnValues.username)
+					$span.append(data.returnValues.username);
 				}
 				
 				$span.append(' ');
@@ -614,51 +614,74 @@ WCF.Moderation.Report.Management = WCF.Moderation.Management.extend({
 });
 
 /**
- * Provides a dropdown for user panel.
+ * User Panel implementation for moderation queues.
  * 
- * @see	WCF.UserPanel
+ * @see	WCF.User.Panel.Abstract
  */
-WCF.Moderation.UserPanel = WCF.UserPanel.extend({
+WCF.User.Panel.Moderation = WCF.User.Panel.Abstract.extend({
 	/**
-	 * link to show all outstanding queues
-	 * @var	string
+	 * @see	WCF.User.Panel.Abstract.init()
 	 */
-	_showAllLink: '',
-	
-	/**
-	 * link to deleted content list
-	 * @var	string
-	 */
-	_deletedContentLink: '',
-	
-	/**
-	 * @see	WCF.UserPanel.init()
-	 */
-	init: function(showAllLink, deletedContentLink) {
-		this._noItems = 'wcf.moderation.noMoreItems';
-		this._showAllLink = showAllLink;
-		this._deletedContentLink = deletedContentLink;
+	init: function(options) {
+		options.enableMarkAsRead = true;
 		
-		this._super('outstandingModeration');
+		this._super($('#outstandingModeration'), 'outstandingModeration', options);
 	},
 	
 	/**
-	 * @see	WCF.UserPanel._addDefaultItems()
+	 * @see	WCF.User.Panel.Abstract._initDropdown()
 	 */
-	_addDefaultItems: function(dropdownMenu) {
-		this._addDivider(dropdownMenu);
-		$('<li><a href="' + this._showAllLink + '">' + WCF.Language.get('wcf.moderation.showAll') + '</a></li>').appendTo(dropdownMenu);
-		this._addDivider(dropdownMenu);
-		$('<li><a href="' + this._deletedContentLink + '">' + WCF.Language.get('wcf.moderation.showDeletedContent') + '</a></li>').appendTo(dropdownMenu);
+	_initDropdown: function() {
+		var $dropdown = this._super();
+		
+		$('<li><a href="' + this._options.deletedContentLink + '" title="' + this._options.deletedContent + '" class="jsTooltip"><span class="icon icon16 fa-trash-o" /></a></li>').appendTo($dropdown.getLinkList());
+		
+		return $dropdown;
 	},
 	
 	/**
-	 * @see	WCF.UserPanel._getParameters()
+	 * @see	WCF.User.Panel.Abstract._load()
 	 */
-	_getParameters: function() {
-		return {
+	_load: function() {
+		this._proxy.setOption('data', {
 			actionName: 'getOutstandingQueues',
 			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
-		};
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * @see	WCF.User.Panel.Abstract._markAsRead()
+	 */
+	_markAsRead: function(event, objectID) {
+		this._proxy.setOption('data', {
+			actionName: 'markAsRead',
+			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
+			objectIDs: [ objectID ]
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * @see	WCF.User.Panel.Abstract._markAllAsRead()
+	 */
+	_markAllAsRead: function(event) {
+		this._proxy.setOption('data', {
+			actionName: 'markAllAsRead',
+			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
+		});
+		this._proxy.sendRequest();
+	},
+	
+	/**
+	 * @see	WCF.User.Panel.Abstract._success()
+	 */
+	_success: function(data) {
+		this._super(data);
+		
+		if (data.actionName === 'markAllAsConfirmed') {
+			this.resetItems();
+			this.updateBadge(0);
+		}
 	}
 });
