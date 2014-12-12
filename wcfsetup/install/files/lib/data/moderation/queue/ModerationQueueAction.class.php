@@ -148,7 +148,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			$queues = array_merge($queues, $queueList->getObjects());
 			
 			// check if stored count is out of sync
-			if($count < $totalCount) {
+			if ($count < $totalCount) {
 				UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'outstandingModerationCount');
 				
 				// check for orphaned queues
