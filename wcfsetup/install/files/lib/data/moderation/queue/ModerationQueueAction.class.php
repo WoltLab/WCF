@@ -103,27 +103,50 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 	public function getOutstandingQueues() {
 		$objectTypeIDs = ModerationQueueManager::getInstance()->getObjectTypeIDs(array_keys(ModerationQueueManager::getInstance()->getDefinitions()));
 		
-		$queueList = new ViewableModerationQueueList();
-		$queueList->getConditionBuilder()->add("moderation_queue.objectTypeID IN (?)", array($objectTypeIDs));
-		$queueList->getConditionBuilder()->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));
-		$queueList->sqlOrderBy = 'moderation_queue.lastChangeTime DESC';
-		$queueList->sqlLimit = 5;
-		$queueList->loadUserProfiles = true;
-		$queueList->readObjects();
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("moderation_queue_to_user.userID = ?", array(WCF::getUser()->userID));
+		$conditions->add("moderation_queue_to_user.isAffected = ?", array(1));
+		$conditions->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));
+		$conditions->add("moderation_queue.time > ?", array(VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.moderation.queue')));
+		$conditions->add("(moderation_queue.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)");
+		
+		$sql = "SELECT		moderation_queue.queueID
+			FROM		wcf".WCF_N."_moderation_queue_to_user moderation_queue_to_user
+			LEFT JOIN	wcf".WCF_N."_moderation_queue moderation_queue
+			ON		(moderation_queue.queueID = moderation_queue_to_user.queueID)
+			LEFT JOIN	wcf".WCF_N."_tracked_visit tracked_visit
+			ON		(tracked_visit.objectTypeID = ".VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue')." AND tracked_visit.objectID = moderation_queue.queueID AND tracked_visit.userID = ".WCF::getUser()->userID.")
+			".$conditions."
+			ORDER BY	moderation_queue.lastChangeTime DESC";
+		$statement = WCF::getDB()->prepareStatement($sql, 5);
+		$statement->execute($conditions->getParameters());
+		$queueIDs = array();
+		while ($row = $statement->fetchArray()) {
+			$queueIDs[] = $row['queueID'];
+		}
+		
+		$queues = array();
+		if (!empty($queueIDs)) {
+			$queueList = new ViewableModerationQueueList();
+			$queueList->setObjectIDs($queueIDs);
+			$queueList->loadUserProfiles = true;
+			$queueList->readObjects();
+			$queues = $queueList->getObjects();
+		}
 		
 		WCF::getTPL()->assign(array(
-			'queues' => $queueList
+			'queues' => $queues
 		));
 		
 		// check if user storage is outdated
-		$totalCount = ModerationQueueManager::getInstance()->getOutstandingModerationCount();
-		$count = count($queueList);
+		$totalCount = ModerationQueueManager::getInstance()->getUnreadModerationCount();
+		$count = count($queues);
 		if ($count < 5 && $count < $totalCount) {
 			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'outstandingModerationCount');
 			
 			// check for orphaned queues
-			$queueCount = ModerationQueueManager::getInstance()->getOutstandingModerationCount();
-			if (count($queueList) < $queueCount) {
+			$queueCount = ModerationQueueManager::getInstance()->getUnreadModerationCount();
+			if (count($queues) < $queueCount) {
 				ModerationQueueManager::getInstance()->identifyOrphans();
 			}
 		}

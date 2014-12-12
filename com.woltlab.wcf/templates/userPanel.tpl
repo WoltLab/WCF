@@ -191,19 +191,12 @@
 				<script data-relocate="true">
 					//<![CDATA[
 					$(function() {
-						/*WCF.Language.addObject({
-							'wcf.moderation.noMoreItems': '{lang}wcf.moderation.noMoreItems{/lang}',
-							'wcf.moderation.showAll': '{lang}wcf.moderation.showAll{/lang}',
-							'wcf.moderation.showDeletedContent': '{lang}wcf.moderation.showDeletedContent{/lang}'
-						});*/
-						
-						//new WCF.Moderation.UserPanel('{link controller='ModerationList' encode=false}{/link}', '{link controller='DeletedContentList' encode=false}{/link}');
-						
 						new WCF.User.Panel.Moderation({
 							deletedContent: '{lang}wcf.moderation.showDeletedContent{/lang}',
 							deletedContentLink: '{link controller='DeletedContentList' encode=false}{/link}',
 							markAllAsReadConfirmMessage: '{lang}wcf.moderation.markAllAsRead.confirmMessage{/lang}',
 							noItems: '{lang}wcf.moderation.noMoreItems{/lang}',
+							showAllLink: '{link controller='ModerationList' encode=false}{/link}',
 							title: '{lang}wcf.moderation.moderation{/lang}'
 						});
 					});
