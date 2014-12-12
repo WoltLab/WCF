@@ -223,5 +223,9 @@ class UserNotificationAction extends AbstractDatabaseObjectAction {
 		
 		// reset notification count
 		UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'userNotificationCount');
+		
+		return array(
+			'markAllAsRead' => true
+		);
 	}
 }
