@@ -125,8 +125,8 @@ class SQLParser {
 						'columns' => $match[3],
 						'referencedTable' => $match[4],
 						'referencedColumns' => $match[5],
-						'ON DELETE' => $match[6],
-						'ON UPDATE' => $match[7]
+						'ON DELETE' => isset($match[6]) ? $match[6] : '',
+						'ON UPDATE' => isset($match[7]) ? $match[7] : ''
 					));
 				}
 				// add/change column
