@@ -202,8 +202,21 @@ WCF.User.Panel.Abstract = Class.extend({
 			this._dropdown = this._initDropdown();
 		}
 		
-		if (this._dropdown.toggle() && this._loadData) {
-			this._load();
+		if (this._dropdown.toggle()) {
+			if (!this._loadData) {
+				// check if there are outstanding items but there are no outstanding ones in the current list
+				if (this._badge !== null) {
+					var $count = parseInt(this._badge.text()) || 0;
+					if ($count && !this._dropdown.getItemList().children('.interactiveDropdownItemOutstanding').length) {
+						this._loadData = true;
+					}
+				}
+			}
+			
+			if (this._loadData) {
+				this._loadData = false;
+				this._load();
+			}
 		}
 		
 		return false;
