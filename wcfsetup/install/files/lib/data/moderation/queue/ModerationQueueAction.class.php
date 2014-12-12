@@ -128,7 +128,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		$queues = array();
 		if (!empty($queueIDs)) {
 			$queueList = new ViewableModerationQueueList();
-			$queueList->setObjectIDs($queueIDs);
+			$queueList->getConditionBuilder()->add("moderation_queue.queueID IN (?)", array($queueIDs));
 			$queueList->loadUserProfiles = true;
 			$queueList->readObjects();
 			$queues = $queueList->getObjects();
@@ -141,6 +141,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			// load more entries to fill up list
 			$queueList = new ViewableModerationQueueList();
 			$queueList->getConditionBuilder()->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));
+			$queueList->getConditionBuilder()->add("moderation_queue.queueID NOT IN (?)", array($queueIDs));
 			$queueList->sqlOrderBy = "moderation_queue.lastChangeTime DESC";
 			$queueList->sqlLimit = 5 - $count;
 			$queueList->loadUserProfiles = true;
