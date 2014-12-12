@@ -12,8 +12,8 @@ WCF.ImageViewer
 WCF.Label
 WCF.Location
 WCF.Message
-WCF.Moderation
 WCF.Poll
 WCF.Search.Message
 WCF.Tagging
 WCF.User
+WCF.Moderation

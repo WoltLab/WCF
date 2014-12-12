@@ -148,11 +148,11 @@
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Label.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Location.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Message.js?v={@LAST_UPDATE_TIME}"></script>
-<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Poll.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Search.Message.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Tagging.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.User.js?v={@LAST_UPDATE_TIME}"></script>
+<script data-relocate="true" src="{@$__wcf->getPath()}js/WCF.Moderation.js?v={@LAST_UPDATE_TIME}"></script>
 {/if}
 
 {event name='javascriptInclude'}
