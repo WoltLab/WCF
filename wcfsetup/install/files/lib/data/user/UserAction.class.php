@@ -341,7 +341,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		if (!empty($removeGroups)) {
 			$action = new UserAction($this->objects, 'removeFromGroups', array(
-				'groups' => $groupIDs
+				'groups' => $removeGroups
 			));
 			$action->executeAction();
 		}
