@@ -455,18 +455,6 @@ WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
 	},
 	
 	/**
-	 * @see	WCF.User.Panel.Abstract._success()
-	 */
-	_success: function(data) {
-		this._super(data);
-		
-		if (data.actionName === 'markAllAsConfirmed') {
-			this.resetItems();
-			this.updateBadge(0);
-		}
-	},
-	
-	/**
 	 * @see	WCF.User.Panel.Abstract.resetItems()
 	 */
 	resetItems: function() {

@@ -671,17 +671,5 @@ WCF.User.Panel.Moderation = WCF.User.Panel.Abstract.extend({
 			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
 		});
 		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * @see	WCF.User.Panel.Abstract._success()
-	 */
-	_success: function(data) {
-		this._super(data);
-		
-		if (data.actionName === 'markAllAsConfirmed') {
-			this.resetItems();
-			this.updateBadge(0);
-		}
 	}
 });
