@@ -134,22 +134,34 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			$queues = $queueList->getObjects();
 		}
 		
-		WCF::getTPL()->assign(array(
-			'queues' => $queues
-		));
-		
 		// check if user storage is outdated
 		$totalCount = ModerationQueueManager::getInstance()->getUnreadModerationCount();
 		$count = count($queues);
-		if ($count < 5 && $count < $totalCount) {
-			UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'outstandingModerationCount');
+		if ($count < 5) {
+			// load more entries to fill up list
+			$queueList = new ViewableModerationQueueList();
+			$queueList->getConditionBuilder()->add("moderation_queue.status IN (?)", array(array(ModerationQueue::STATUS_OUTSTANDING, ModerationQueue::STATUS_PROCESSING)));
+			$queueList->sqlOrderBy = "moderation_queue.lastChangeTime DESC";
+			$queueList->sqlLimit = 5 - $count;
+			$queueList->loadUserProfiles = true;
+			$queueList->readObjects();
+			$queues = array_merge($queues, $queueList->getObjects());
 			
-			// check for orphaned queues
-			$queueCount = ModerationQueueManager::getInstance()->getUnreadModerationCount();
-			if (count($queues) < $queueCount) {
-				ModerationQueueManager::getInstance()->identifyOrphans();
+			// check if stored count is out of sync
+			if($count < $totalCount) {
+				UserStorageHandler::getInstance()->reset(array(WCF::getUser()->userID), 'outstandingModerationCount');
+				
+				// check for orphaned queues
+				$queueCount = ModerationQueueManager::getInstance()->getUnreadModerationCount();
+				if (count($queues) < $queueCount) {
+					ModerationQueueManager::getInstance()->identifyOrphans();
+				}
 			}
 		}
+		
+		WCF::getTPL()->assign(array(
+			'queues' => $queues
+		));
 		
 		return array(
 			'template' => WCF::getTPL()->fetch('moderationQueueList'),
