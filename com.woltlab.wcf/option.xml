@@ -1253,7 +1253,7 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 			<option name="user_cleanup_notification_lifetime">
 				<categoryname>user.cleanup</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue>60</defaultvalue>
+				<defaultvalue>14</defaultvalue>
 				<minvalue>0</minvalue>
 			</option>
 			<option name="user_cleanup_activity_event_lifetime">

@@ -14,6 +14,7 @@ $options = array(
 	'last_update_time' => TIME_NOW,
 	'url_legacy_mode' => 1,
 	'url_to_lowercase' => 0,
+	'user_cleanup_notification_lifetime' => (USER_CLEANUP_NOTIFICATION_LIFETIME == 60 ? 14 : USER_CLEANUP_NOTIFICATION_LIFETIME),
 	// the line below equals \wcf\util\StringUtil::getUUID(), but since we have to do it in one step, the "old" class exists in memory
 	'wcf_uuid' => sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535))
 );
