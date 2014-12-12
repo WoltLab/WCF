@@ -51,69 +51,75 @@ class CodeBBCode extends AbstractBBCode {
 		
 		// fetch highlighter-classname
 		$className = '\wcf\system\bbcode\highlighter\PlainHighlighter';
-		if ($this->codeType) {
-			$className = '\wcf\system\bbcode\highlighter\\'.StringUtil::firstCharToUpperCase(mb_strtolower($this->codeType)).'Highlighter';
-			
-			switch (mb_substr($className, strlen('\wcf\system\bbcode\highlighter\\'))) {
-				case 'ShellHighlighter':
-					$className = '\wcf\system\bbcode\highlighter\BashHighlighter';
-				break;
+		
+		// no highlighting for strings over a certain size, to prevent DoS
+		// this serves as a safety net in case one of the regular expressions
+		// in a highlighter causes PCRE to exhaust resources, such as the stack
+		if (strlen($content) < 16384) {
+			if ($this->codeType) {
+				$className = '\wcf\system\bbcode\highlighter\\'.StringUtil::firstCharToUpperCase(mb_strtolower($this->codeType)).'Highlighter';
 				
-				case 'C++Highlighter':
+				switch (mb_substr($className, strlen('\wcf\system\bbcode\highlighter\\'))) {
+					case 'ShellHighlighter':
+						$className = '\wcf\system\bbcode\highlighter\BashHighlighter';
+					break;
+					
+					case 'C++Highlighter':
+						$className = '\wcf\system\bbcode\highlighter\CHighlighter';
+					break;
+					
+					case 'JavascriptHighlighter':
+						$className = '\wcf\system\bbcode\highlighter\JsHighlighter';
+					break;
+					
+					case 'LatexHighlighter':
+						$className = '\wcf\system\bbcode\highlighter\TexHighlighter';
+					break;
+				}
+			}
+			else {
+				// try to guess highlighter
+				if (mb_strpos($content, '<?php') !== false) {
+					$className = '\wcf\system\bbcode\highlighter\PhpHighlighter';
+				}
+				else if (mb_strpos($content, '<html') !== false) {
+					$className = '\wcf\system\bbcode\highlighter\HtmlHighlighter';
+				}
+				else if (mb_strpos($content, '<?xml') === 0) {
+					$className = '\wcf\system\bbcode\highlighter\XmlHighlighter';
+				}
+				else if (	mb_strpos($content, 'SELECT') === 0
+						||	mb_strpos($content, 'UPDATE') === 0
+						||	mb_strpos($content, 'INSERT') === 0
+						||	mb_strpos($content, 'DELETE') === 0) {
+					$className = '\wcf\system\bbcode\highlighter\SqlHighlighter';
+				}
+				else if (mb_strpos($content, 'import java.') !== false) {
+					$className = '\wcf\system\bbcode\highlighter\JavaHighlighter';
+				}
+				else if (	mb_strpos($content, "---") !== false
+						&&	mb_strpos($content, "\n+++") !== false) {
+					$className = '\wcf\system\bbcode\highlighter\DiffHighlighter';
+				}
+				else if (mb_strpos($content, "\n#include ") !== false) {
 					$className = '\wcf\system\bbcode\highlighter\CHighlighter';
-				break;
-				
-				case 'JavascriptHighlighter':
-					$className = '\wcf\system\bbcode\highlighter\JsHighlighter';
-				break;
-				
-				case 'LatexHighlighter':
+				}
+				else if (mb_strpos($content, '#!/usr/bin/perl') === 0) {
+					$className = '\wcf\system\bbcode\highlighter\PerlHighlighter';
+				}
+				else if (mb_strpos($content, 'def __init__(self') !== false) {
+					$className = '\wcf\system\bbcode\highlighter\PythonHighlighter';
+				}
+				else if (Regex::compile('^#!/bin/(ba|z)?sh')->match($content)) {
+					$className = '\wcf\system\bbcode\highlighter\BashHighlighter';
+				}
+				else if (mb_strpos($content, '\\documentclass') !== false) {
 					$className = '\wcf\system\bbcode\highlighter\TexHighlighter';
-				break;
-			}
-		}
-		else {
-			// try to guess highlighter
-			if (mb_strpos($content, '<?php') !== false) {
-				$className = '\wcf\system\bbcode\highlighter\PhpHighlighter';
-			}
-			else if (mb_strpos($content, '<html') !== false) {
-				$className = '\wcf\system\bbcode\highlighter\HtmlHighlighter';
-			}
-			else if (mb_strpos($content, '<?xml') === 0) {
-				$className = '\wcf\system\bbcode\highlighter\XmlHighlighter';
-			}
-			else if (	mb_strpos($content, 'SELECT') === 0
-					||	mb_strpos($content, 'UPDATE') === 0
-					||	mb_strpos($content, 'INSERT') === 0
-					||	mb_strpos($content, 'DELETE') === 0) {
-				$className = '\wcf\system\bbcode\highlighter\SqlHighlighter';
-			}
-			else if (mb_strpos($content, 'import java.') !== false) {
-				$className = '\wcf\system\bbcode\highlighter\JavaHighlighter';
-			}
-			else if (	mb_strpos($content, "---") !== false
-					&&	mb_strpos($content, "\n+++") !== false) {
-				$className = '\wcf\system\bbcode\highlighter\DiffHighlighter';
-			}
-			else if (mb_strpos($content, "\n#include ") !== false) {
-				$className = '\wcf\system\bbcode\highlighter\CHighlighter';
-			}
-			else if (mb_strpos($content, '#!/usr/bin/perl') === 0) {
-				$className = '\wcf\system\bbcode\highlighter\PerlHighlighter';
-			}
-			else if (mb_strpos($content, 'def __init__(self') !== false) {
-				$className = '\wcf\system\bbcode\highlighter\PythonHighlighter';
-			}
-			else if (Regex::compile('^#!/bin/(ba|z)?sh')->match($content)) {
-				$className = '\wcf\system\bbcode\highlighter\BashHighlighter';
-			}
-			else if (mb_strpos($content, '\\documentclass') !== false) {
-				$className = '\wcf\system\bbcode\highlighter\TexHighlighter';
-			}
-			else if (Regex::compile('[-\\+\\.,\\[\\]\\>\\<]{9}')->match($content)) {
-				// 9 times a brainfuck char in a row -> seems to be brainfuck
-				$className = '\wcf\system\bbcode\highlighter\BrainfuckHighlighter';
+				}
+				else if (Regex::compile('[-\\+\\.,\\[\\]\\>\\<]{9}')->match($content)) {
+					// 9 times a brainfuck char in a row -> seems to be brainfuck
+					$className = '\wcf\system\bbcode\highlighter\BrainfuckHighlighter';
+				}
 			}
 		}
 		
