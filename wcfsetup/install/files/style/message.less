@@ -506,7 +506,13 @@
 	
 	.nativeList {
 		list-style-position: inside;
-		margin-left: 20px; 
+		margin: 0.5em 0 0.5em 20px;
+		overflow: hidden;
+		
+		> li {
+			text-indent: -1em;
+			margin-left: 1em;
+		}
 	}
 }
 
