@@ -80,6 +80,14 @@ RedactorPlugins.wbbcode = function() {
 			// fix button label for source toggling
 			var $tooltip = $('.redactor-toolbar-tooltip-html:not(.jsWbbcode)').addClass('jsWbbcode').text(WCF.Language.get('wcf.bbcode.button.toggleBBCode'));
 			
+			var $fixBR = function(editor) {
+				editor.find('br').each(function(index, br) {
+					if (br.children.length) {
+						$(br).empty();
+					}
+				});
+			};
+			
 			this.code.toggle = (function() {
 				if (this.opts.visual) {
 					this.code.startSync();
@@ -100,6 +108,7 @@ RedactorPlugins.wbbcode = function() {
 					
 					this.button.get('html').children('i').removeClass('fa-square').addClass('fa-square-o');
 					$tooltip.text(WCF.Language.get('wcf.bbcode.button.toggleBBCode'));
+					$fixBR(this.$editor);
 					
 					this.wutil.saveSelection();
 				}
@@ -695,7 +704,7 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]/gi,'<div style="text-align: $1">$2</div>');
 			
 			// [*]
-			data = data.replace(/\[\*\](.*?)(?=\[\*\]|\[\/list\])/gi,'<li>$1</li>');
+			data = data.replace(/\[\*\]([\s\S]*?)(?=\[\*\]|\[\/list\])/gi,'<li>$1</li>');
 			
 			// [list]
 			data = data.replace(/\[list\]/gi, '<ul>');
@@ -872,12 +881,19 @@ RedactorPlugins.wbbcode = function() {
 			for (var $i = 0, $length = $tmp.length; $i < $length; $i++) {
 				var $line = $.trim($tmp[$i]);
 				
-				if ($line.match(/^<([a-z]+)/)) {
-					if (!this.reIsBlock.test(RegExp.$1.toUpperCase())) {
+				if ($line.match(/^<([a-z]+)/) || $line.match(/<\/([a-z]+)>$/)) {
+					if (this.reIsBlock.test(RegExp.$1.toUpperCase())) {
+						// check if line starts and ends with the same tag
+						if ($line.match(/^<([a-z]+).*<\/\1>/)) {
+							data += $line;
+						}
+						else {
+							data += $line + '<br />';
+						}
+					}
+					else {
 						$line = '<p>' + $line + '</p>';
 					}
-					
-					data += $line;
 				}
 				else {
 					if (!$line) {
