@@ -892,7 +892,7 @@ RedactorPlugins.wbbcode = function() {
 						}
 					}
 					else {
-						$line = '<p>' + $line + '</p>';
+						data += '<p>' + $line + '</p>';
 					}
 				}
 				else {
