@@ -1979,18 +1979,20 @@ WCF.Message.Quote.Handler = Class.extend({
 	 * @return	string
 	 */
 	_getNodeText: function(node) {
+		// work-around for IE, see http://stackoverflow.com/a/5983176
+		var $nodeFilter = function(node) {
+			if (node.tagName === 'H3') {
+				return NodeFilter.FILTER_REJECT;
+			}
+			
+			return NodeFilter.FILTER_ACCEPT;
+		};
+		$nodeFilter.acceptNode = $nodeFilter;
+		
 		var $walker = document.createTreeWalker(
 			node,
 			NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT,
-			{
-				acceptNode: function(node) {
-					if (node.tagName === 'H3') {
-						return NodeFilter.FILTER_REJECT;
-					}
-					
-					return NodeFilter.FILTER_ACCEPT;
-				}
-			},
+			$nodeFilter,
 			true
 		);
 		
