@@ -825,7 +825,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.enable_woltlab_news.description"><![CDATA[Shows current WoltLab news on the administration control panel’s start page]]></item>
 		<item name="wcf.acp.option.category.security.antispam.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey"><![CDATA[Public API Key]]></item>
-		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request an own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin/create" class="externalURL">reCAPTCHA website</a>.]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[You can request an own API-Key for using reCAPTCHA on the <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA website</a>.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Private API Key]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Create thumbnails for uploaded images]]></item>
