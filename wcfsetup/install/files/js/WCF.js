@@ -2822,16 +2822,19 @@ WCF.Action.Delete = Class.extend({
 	 * Initializes available element containers.
 	 */
 	_initElements: function() {
-		var self = this;
-		$(this._containerSelector).each(function(index, container) {
+		$(this._containerSelector).each((function(index, container) {
 			var $container = $(container);
 			var $containerID = $container.wcfIdentify();
 			
-			if (!WCF.inArray($containerID, self._containers)) {
-				self._containers.push($containerID);
-				$container.find(self._buttonSelector).click($.proxy(self._click, self));
+			if (!WCF.inArray($containerID, this._containers)) {
+				var $deleteButton = $container.find(this._buttonSelector);
+				
+				if ($deleteButton.length) {
+					this._containers.push($containerID);
+					$deleteButton.click($.proxy(this._click, this));
+				}
 			}
-		});
+		}).bind(this));
 	},
 	
 	/**
