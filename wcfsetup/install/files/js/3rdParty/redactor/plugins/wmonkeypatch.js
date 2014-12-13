@@ -733,7 +733,8 @@ RedactorPlugins.wmonkeypatch = function() {
 		/**
 		 * Partially overwrites the 'paste' module.
 		 * 
-		 *  - prevent screwed up, pasted HTML from placing text nodes (and inline elements) in the editor's direct root 
+		 *  - prevent screwed up, pasted HTML from placing text nodes (and inline elements) in the editor's direct root
+		 *  - fixes text pasting in Internet Explorer 11 (#2040) 
 		 */
 		paste: function() {
 			var $fixDOM = (function() {
@@ -772,7 +773,15 @@ RedactorPlugins.wmonkeypatch = function() {
 			this.paste.insert = (function(html) {
 				$mpInsert.call(this, html);
 				
-				setTimeout($fixDOM, 20);
+				setTimeout((function() {
+					$fixDOM();
+					
+					if ($.browser.msie) {
+						getSelection().getRangeAt(0).collapse(true);
+					}
+					
+					this.wutil.saveSelection();
+				}).bind(this), 20);
 			}).bind(this);
 		},
 		
