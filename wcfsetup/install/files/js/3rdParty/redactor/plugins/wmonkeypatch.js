@@ -777,7 +777,7 @@ RedactorPlugins.wmonkeypatch = function() {
 					$fixDOM();
 					
 					if ($.browser.msie) {
-						getSelection().getRangeAt(0).collapse(true);
+						getSelection().getRangeAt(0).collapse(false);
 					}
 					
 					this.wutil.saveSelection();
