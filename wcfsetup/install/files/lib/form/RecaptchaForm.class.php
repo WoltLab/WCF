@@ -1,6 +1,7 @@
 <?php
 namespace wcf\form;
 use wcf\system\recaptcha\RecaptchaHandler;
+use wcf\system\recaptcha\RecaptchaHandlerV2;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -51,8 +52,15 @@ abstract class RecaptchaForm extends AbstractForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (isset($_POST['recaptcha_challenge_field'])) $this->challenge = StringUtil::trim($_POST['recaptcha_challenge_field']);
-		if (isset($_POST['recaptcha_response_field'])) $this->response = StringUtil::trim($_POST['recaptcha_response_field']);
+		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
+			// V1
+			if (isset($_POST['recaptcha_challenge_field'])) $this->challenge = StringUtil::trim($_POST['recaptcha_challenge_field']);
+			if (isset($_POST['recaptcha_response_field'])) $this->response = StringUtil::trim($_POST['recaptcha_response_field']);
+		}
+		else {
+			// V2
+			if (isset($_POST['g-recaptcha-response'])) $this->response = $_POST['g-recaptcha-response'];
+		}
 	}
 	
 	/**
@@ -69,7 +77,15 @@ abstract class RecaptchaForm extends AbstractForm {
 	 */
 	protected function validateCaptcha() {
 		if ($this->useCaptcha) {
-			RecaptchaHandler::getInstance()->validate($this->challenge, $this->response);
+			if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
+				// V1
+				RecaptchaHandler::getInstance()->validate($this->challenge, $this->response);
+			}
+			else {
+				// V2
+				RecaptchaHandlerV2::getInstance()->validate($this->response);
+			}
+			
 			$this->useCaptcha = false;
 		}
 	}
@@ -89,7 +105,17 @@ abstract class RecaptchaForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		RecaptchaHandler::getInstance()->assignVariables();
+		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
+			// V1
+			RecaptchaHandler::getInstance()->assignVariables();
+		}
+		else {
+			// V2
+			WCF::getTPL()->assign(array(
+				'recaptchaLegacyMode' => true
+			));
+		}
+		
 		WCF::getTPL()->assign(array(
 			'useCaptcha' => $this->useCaptcha
 		));
