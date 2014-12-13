@@ -895,7 +895,7 @@ WCF.Message.QuickReply = Class.extend({
 		}
 		
 		if ($.browser.redactor) {
-			this._messageField.redactor('focus.setEnd');
+			this._messageField.redactor('wutil.selectionEndOfEditor');
 		}
 		else {
 			this._messageField.focus();
