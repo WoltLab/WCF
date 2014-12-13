@@ -1368,6 +1368,11 @@ RedactorPlugins.wbbcode = function() {
 						var $outerDiv = $editHeader.parent().parent();
 						$outerDiv.attr('contenteditable', false);
 						$outerDiv.children('div').attr('contenteditable', true);
+						
+						// prevent resize handles being displayed
+						$outerDiv.on('mscontrolselect', function(event) {
+							event.preventDefault();
+						});
 					}
 				}).bind(this));
 			}
