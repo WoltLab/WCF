@@ -87,6 +87,10 @@ RedactorPlugins.wmonkeypatch = function() {
 				this.$editor.on('mouseup.redactor keyup.redactor focus.redactor', $.proxy(this.observe.buttons, this));
 				this.$editor.on('keyup.redactor', $.proxy(this.keyup.init, this));
 			}
+			
+			this.$editor.on('mousedown.wmonkeypatch mouseup.wmonkeypatch', (function() {
+				this.wutil.saveSelection();
+			}).bind(this));
 		},
 		
 		/**
