@@ -1358,7 +1358,19 @@ RedactorPlugins.wbbcode = function() {
 		 * Initializes source editing for quotes.
 		 */
 		_observeQuotes: function() {
-			this.$editor.find('.redactorQuoteEdit:not(.jsRedactorQuoteEdit)').addClass('jsRedactorQuoteEdit').click($.proxy(this.wbbcode._observeQuotesClick, this));
+			var $editHeader = this.$editor.find('.redactorQuoteEdit:not(.jsRedactorQuoteEdit)');
+			if ($editHeader.length) {
+				$editHeader.each((function(index, editHeader) {
+					var $editHeader = $(editHeader);
+					$editHeader.addClass('jsRedactorQuoteEdit').click($.proxy(this.wbbcode._observeQuotesClick, this));
+					
+					if ($.browser.msie) {
+						var $outerDiv = $editHeader.parent().parent();
+						$outerDiv.attr('contenteditable', false);
+						$outerDiv.children('div').attr('contenteditable', true);
+					}
+				}).bind(this));
+			}
 		},
 		
 		/**
