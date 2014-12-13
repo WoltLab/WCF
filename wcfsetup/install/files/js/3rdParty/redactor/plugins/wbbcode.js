@@ -1001,7 +1001,7 @@ RedactorPlugins.wbbcode = function() {
 					var $value = $cachedCode.value;
 					
 					// [tt]
-					$value = $value.replace(/^\[tt\](.*)\[\/tt\]/, '<span class="inlineCode">$1</span>');
+					//$value = $value.replace(/^\[tt\](.*)\[\/tt\]/, '<span class="inlineCode">$1</span>');
 					
 					// preserve leading whitespaces in [code] tags
 					$value = $value.replace(/^\[code[^\]]*\][\S\s]*\[\/code\]$/, '<pre>$&</pre>');
