@@ -205,7 +205,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @see	WCF.Upload._upload()
 	 */
 	_upload: function(event, file, blob) {
-		var $uploadID;
+		var $uploadID = undefined;
 		
 		if (this._validateLimit()) {
 			$uploadID = this._super(event, file, blob);
