@@ -129,9 +129,12 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		if (!empty($queueIDs)) {
 			$queueList = new ViewableModerationQueueList();
 			$queueList->getConditionBuilder()->add("moderation_queue.queueID IN (?)", array($queueIDs));
+			$queueList->sqlOrderBy = "moderation_queue.lastChangeTime DESC";
 			$queueList->loadUserProfiles = true;
 			$queueList->readObjects();
-			$queues = $queueList->getObjects();
+			foreach ($queueList as $queue) {
+				$queues[] = $queue;
+			}
 		}
 		
 		// check if user storage is outdated
@@ -146,7 +149,9 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 			$queueList->sqlLimit = 5 - $count;
 			$queueList->loadUserProfiles = true;
 			$queueList->readObjects();
-			$queues = array_merge($queues, $queueList->getObjects());
+			foreach ($queueList as $queue) {
+				$queues[] = $queue;
+			}
 			
 			// check if stored count is out of sync
 			if ($count < $totalCount) {
