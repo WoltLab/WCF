@@ -1724,6 +1724,13 @@ WCF.Notification.List = Class.extend({
 				var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.user.notification.markAsConfirmed') + '" />').appendTo($item);
 				$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
 			}
+			
+			// work-around for legacy notifications
+			if (!$item.find('a').length) {
+				$item.find('.details > p:eq(0)').html(function(index, oldHTML) {
+					return '<a href="' + $item.data('link') + '">' + oldHTML + '</a>';
+				});
+			}
 		}).bind(this));
 		
 		WCF.DOMNodeInsertedHandler.execute();
