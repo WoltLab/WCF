@@ -436,6 +436,7 @@ Examples for medium ID detection:
 		<item name="wcf.acp.group.copy.copyUserGroupOptions"><![CDATA[Copy Permissions]]></item>
 		<item name="wcf.acp.group.copy.copyUserGroupOptions.description"><![CDATA[The new user group will have the same permissions as the copied user group.]]></item>
 		<item name="wcf.acp.group.option.admin.paidSubscription.canManageSubscription"><![CDATA[Can manage paid subscriptions]]></item>
+		<item name="wcf.acp.group.option.user.tag.canViewTag"><![CDATA[Can view tags]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">

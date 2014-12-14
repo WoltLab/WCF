@@ -437,6 +437,7 @@
 		<item name="wcf.acp.group.copy.copyUserGroupOptions"><![CDATA[Berechtigungen kopieren]]></item>
 		<item name="wcf.acp.group.copy.copyUserGroupOptions.description"><![CDATA[Die neue Benutzergruppe wird die gleichen Berechtigungen besitzen wie die kopierte Benutzergruppe.]]></item>
 		<item name="wcf.acp.group.option.admin.paidSubscription.canManageSubscription"><![CDATA[Kann bezahlte Mitgliedschaften verwalten]]></item>
+		<item name="wcf.acp.group.option.user.tag.canViewTag"><![CDATA[Kann Tag sehen]]></item>
 	</category>
 	
 	<category name="wcf.acp.index">
