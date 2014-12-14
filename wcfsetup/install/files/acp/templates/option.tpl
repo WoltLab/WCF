@@ -47,7 +47,7 @@
 	{/hascontent}
 </div>
 
-<form method="post" action="{link controller='Option' id=$category->categoryID}{/link}">
+<form method="post" action="{link controller='Option' id=$category->categoryID}{/link}" enctype="multipart/form-data">
 	<div class="tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem">
 		<nav class="tabMenu">
 			<ul>
