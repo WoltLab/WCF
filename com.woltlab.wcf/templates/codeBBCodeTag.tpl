@@ -39,8 +39,8 @@
 						$(this).find('.codeBoxExpand').click();
 					});
 					
-					// expand code boxes that are initially scrolled this
-					// may happen due to someone linking to a specific line
+					// expand code boxes that are initially scrolled
+					// this may happen due to someone linking to a specific line
 					$('.codeBox').each(function() {
 						if ($(this).scrollTop() != 0) {
 							$(this).find('.codeBoxExpand').click();
