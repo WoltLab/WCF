@@ -2,8 +2,8 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\data\package\PackageCache;
-use wcf\system\exception\UserInputException;
 use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\system\upload\IUploadFileValidationStrategy;
 use wcf\system\upload\UploadHandler;
 use wcf\system\WCF;
