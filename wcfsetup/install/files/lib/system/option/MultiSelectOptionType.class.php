@@ -20,6 +20,18 @@ use wcf\util\ArrayUtil;
  */
 class MultiSelectOptionType extends SelectOptionType {
 	/**
+	 * name of the form element template
+	 * @var	string
+	 */
+	protected $formElementTemplate = 'multiSelectOptionType';
+	
+	/**
+	 * name of the searchable form element template
+	 * @var	string
+	 */
+	protected $searchableFormElementTemplate = 'multiSelectSearchableOptionType';
+	
+	/**
 	 * @see	\wcf\system\option\IOptionType::getFormElement()
 	 */
 	public function getFormElement(Option $option, $value) {
@@ -28,7 +40,7 @@ class MultiSelectOptionType extends SelectOptionType {
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => (!is_array($value) ? explode("\n", $value) : $value)
 		));
-		return WCF::getTPL()->fetch('multiSelectOptionType');
+		return WCF::getTPL()->fetch($this->formElementTemplate);
 	}
 	
 	/**
@@ -41,7 +53,7 @@ class MultiSelectOptionType extends SelectOptionType {
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => (!is_array($value) ? explode("\n", $value) : $value)
 		));
-		return WCF::getTPL()->fetch('multiSelectSearchableOptionType');
+		return WCF::getTPL()->fetch($this->searchableFormElementTemplate);
 	}
 	
 	/**
