@@ -206,7 +206,12 @@ RedactorPlugins.wutil = function() {
 				this.$textarea.val($.trim(this.wbbcode.convertFromHtml($html)));
 			}
 			
-			return $.trim(this.$textarea.val());
+			var $text = $.trim(this.$textarea.val());
+			
+			// remove linebreak after [/quote]
+			$text = $text.replace(/\[\/quote\]\n/g, '[/quote]');
+			
+			return $text;
 		},
 		
 		/**
