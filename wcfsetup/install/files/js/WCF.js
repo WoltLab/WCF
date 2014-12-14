@@ -1293,6 +1293,24 @@ WCF.Dropdown = {
 		for (var $i = 0, $length = this._callbacks[containerID].length; $i < $length; $i++) {
 			this._callbacks[containerID][$i](containerID, action);
 		}
+	},
+	
+	/**
+	 * Destroies an existing dropdown menu.
+	 * 
+	 * @param	string		containerID
+	 * @return	boolean
+	 */
+	destroy: function(containerID) {
+		if (this._dropdowns[containerID] === undefined) {
+			return false;
+		}
+		
+		this.close(containerID);
+		
+		this._menus[containerID].remove();
+		delete this._menus[containerID];
+		delete this._dropdowns[containerID];
 	}
 };
 
@@ -10590,6 +10608,7 @@ WCF.Language.Chooser = Class.extend({
 			this._dropdown.children('.dropdownToggle').empty().append($dropdownToggle);
 		}
 		
+		WCF.Dropdown.destroy(containerID + '-languageChooser');
 		WCF.Dropdown.init();
 	},
 	
