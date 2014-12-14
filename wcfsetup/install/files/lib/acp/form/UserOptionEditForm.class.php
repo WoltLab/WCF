@@ -98,7 +98,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 			$this->visible = $this->userOption->visible;
 			$this->searchable = $this->userOption->searchable;
 			$this->showOrder = $this->userOption->showOrder;
-			$this->outputClass = $this->userOption->outputClass;	
+			$this->outputClass = $this->userOption->outputClass;
 		}
 	}
 	
