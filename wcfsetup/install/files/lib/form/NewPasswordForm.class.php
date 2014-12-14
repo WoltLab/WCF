@@ -100,7 +100,7 @@ class NewPasswordForm extends AbstractForm {
 		parent::save();
 		
 		// generate new password
-		$this->newPassword = PasswordUtil::getRandomPassword((REGISTER_PASSWORD_MIN_LENGTH > 9 ? REGISTER_PASSWORD_MIN_LENGTH : 9));
+		$this->newPassword = PasswordUtil::getRandomPassword((REGISTER_PASSWORD_MIN_LENGTH > 12 ? REGISTER_PASSWORD_MIN_LENGTH : 12));
 		
 		// update user
 		$this->objectAction = new UserAction(array($this->user), 'update', array(

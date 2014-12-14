@@ -79,7 +79,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 	 * @param	\wcf\data\user\UserEditor	$userEditor
 	 */
 	protected function sendNewPassword(UserEditor $userEditor) {
-		$newPassword = PasswordUtil::getRandomPassword();
+		$newPassword = PasswordUtil::getRandomPassword((REGISTER_PASSWORD_MIN_LENGTH > 12 ? REGISTER_PASSWORD_MIN_LENGTH : 12));
 		
 		$userAction = new UserAction(array($userEditor), 'update', array(
 			'data' => array(

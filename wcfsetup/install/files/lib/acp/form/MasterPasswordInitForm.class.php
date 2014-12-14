@@ -61,7 +61,7 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 		}
 		
 		// check password security
-		if (mb_strlen($this->masterPassword) < 8) {
+		if (mb_strlen($this->masterPassword) < 12) {
 			throw new UserInputException('masterPassword', 'notSecure');
 		}
 		// digits
@@ -74,10 +74,6 @@ class MasterPasswordInitForm extends MasterPasswordForm {
 		}
 		// latin characters (upper-case)
 		if (!Regex::compile('[A-Z]')->match($this->masterPassword)) {
-			throw new UserInputException('masterPassword', 'notSecure');
-		}
-		// special characters
-		if (!Regex::compile('[^0-9a-zA-Z]')->match($this->masterPassword)) {
 			throw new UserInputException('masterPassword', 'notSecure');
 		}
 		
@@ -121,7 +117,7 @@ define('MASTER_PASSWORD', '".PasswordUtil::getDoubleSaltedHash($this->masterPass
 		
 		WCF::getTPL()->assign(array(
 			'confirmMasterPassword' => $this->confirmMasterPassword,
-			'exampleMasterPassword' => PasswordUtil::getRandomPassword(12),
+			'exampleMasterPassword' => PasswordUtil::getRandomPassword(16),
 			'relativeWcfDir' => RELATIVE_WCF_DIR
 		));
 	}

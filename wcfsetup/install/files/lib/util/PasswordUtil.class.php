@@ -15,6 +15,12 @@ use wcf\system\Regex;
  */
 final class PasswordUtil {
 	/**
+	 * list of possible characters in generated passwords
+	 * @var	string
+	 */
+	const PASSWORD_CHARSET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+	/**
 	 * concated list of valid blowfish salt characters
 	 * @var	string
 	 */
@@ -203,27 +209,20 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * Generates a random user password with the given character length.
+	 * Generates a random alphanumeric user password with the given character length.
 	 * 
 	 * @param	integer		$length
 	 * @return	string
 	 */
-	public static function getRandomPassword($length = 8) {
-		$availableCharacters = array(
-			'abcdefghijklmnopqrstuvwxyz',
-			'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-			'0123456789',
-			'+#-.,;:?!'
-		);
-		
+	public static function getRandomPassword($length = 12) {
+		$charset = self::PASSWORD_CHARSET;
 		$password = '';
-		$type = 0;
-		for ($i = 0; $i < $length; $i++) {
-			$type = ($i % 4 == 0) ? 0 : ($type + 1);
-			$password .= substr($availableCharacters[$type], self::secureRandomNumber(0, strlen($availableCharacters[$type]) - 1), 1);
+
+		for ($i = 0, $maxIndex = (strlen($charset) - 1); $i < $length; $i++) {
+			$password .= $charset[self::secureRandomNumber(0, $maxIndex)];
 		}
-		
-		return str_shuffle($password);
+
+		return $password;
 	}
 	
 	/**
