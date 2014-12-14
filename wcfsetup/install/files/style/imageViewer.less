@@ -223,9 +223,25 @@
 						}
 					}
 					
+					&.wcfImageViewerSlideshowButtonFull {
+						bottom: 80px;
+						left: 50%;
+						top: auto;
+						
+						transform: translateX(-50%);
+						-ms-transform: translateX(-50%);
+						
+						> span {
+							font-size: 32px;
+							left: 2px;
+							position: relative;
+							top: 10px;
+						}
+					}
+					
 					&.wcfImageViewerSlideshowButtonToggle,
 					&.wcfImageViewerSlideshowButtonEnlarge,
-					&.wcfImageViewerSlideshowButtonFull {
+					{
 						display: none;
 					}
 				}
