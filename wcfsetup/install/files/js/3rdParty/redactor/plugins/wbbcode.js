@@ -1014,7 +1014,6 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/<p><blockquote/g, '<blockquote');
 			data = data.replace(/<\/blockquote><\/p>/g, '</blockquote>');
 			
-			console.debug(data);
 			WCF.System.Event.fireEvent('com.woltlab.wcf.redactor', 'afterConvertToHtml', { data: data });
 			
 			return data;
@@ -1596,11 +1595,6 @@ RedactorPlugins.wbbcode = function() {
 					referenceElement = referenceElement.parentElement;
 					$tagName = 'DIV';
 				}
-				
-				console.debug(referenceElement);
-				console.debug(target);
-				console.debug(referenceElement[target]);
-				console.debug("");
 				
 				// no previous/next element or it is not a <p> (default) or <div> (within quotes)
 				if (referenceElement[target] === null || referenceElement[target].tagName !== $tagName) {
