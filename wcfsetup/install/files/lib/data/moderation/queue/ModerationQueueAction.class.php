@@ -221,12 +221,12 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		
 		if ($this->parameters['assignedUserID'] == -1) {
 			$this->readString('assignedUsername');
-				
+			
 			$this->user = User::getUserByUsername($this->parameters['assignedUsername']);
 			if (!$this->user->userID) {
 				throw new UserInputException('assignedUsername', 'notFound');
 			}
-				
+			
 			// get handler
 			$objectType = ObjectTypeCache::getInstance()->getObjectType($this->moderationQueueEditor->objectTypeID);
 			if (!$objectType->getProcessor()->isAffectedUser($this->moderationQueueEditor->getDecoratedObject(), $this->user->userID)) {
