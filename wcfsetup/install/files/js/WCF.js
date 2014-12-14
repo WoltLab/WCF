@@ -10737,6 +10737,8 @@ WCF.Style.Chooser = Class.extend({
 /**
  * Converts static user panel items into interactive dropdowns.
  * 
+ * @deprecated	2.1 - Please use WCF.User.Panel.Interactive instead
+ * 
  * @param	string		containerID
  */
 WCF.UserPanel = Class.extend({
