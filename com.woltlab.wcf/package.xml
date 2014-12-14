@@ -43,12 +43,15 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
+	<!--
+		Update has not been tested with the changes since Alpha 1, disabled for now and will return in a future beta release (NOT beta 1!)
+		
 	<instructions type="update" fromversion="2.0.10">
-		<!-- pre-update check to prevent update from WCF < 2.0.10 -->
+		--><!-- pre-update check to prevent update from WCF < 2.0.10 --><!--
 		<instruction type="file">pre_update_check.tar</instruction>
 		<instruction type="script" run="standalone">acp/pre_update_com.woltlab.wcf_2.1.php</instruction>
 		
-		<!-- the actual update -->
+		--><!-- the actual update --><!--
 		<instruction type="option" run="standalone">option.xml</instruction>
 		
 		<instruction type="file">files_update.tar</instruction>
@@ -84,17 +87,5 @@
 		
 		<instruction type="script" run="standalone">acp/update_mqc_com.woltlab.wcf_2.1.php</instruction>
 	</instructions>
-	
-	<!-- internal update to roll out some changes -->
-	<instructions type="update" fromversion="2.1.0 Alpha 1">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="language" run="standalone">language/*.xml</instruction>
-		
-		<instruction type="style">blue-temptation-style.tgz</instruction>
-		
-		<instruction type="bbcode">bbcode.xml</instruction>
-	</instructions>
+	 -->
 </package>
