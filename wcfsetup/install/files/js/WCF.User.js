@@ -377,6 +377,7 @@ WCF.User.Panel.Abstract = Class.extend({
 		if (count) {
 			if (this._badge === null) {
 				this._badge = $('<span class="badge badgeInverse" />').appendTo(this._triggerElement.children('a'));
+				this._badge.before(' ');
 			}
 			
 			this._badge.text(count);
