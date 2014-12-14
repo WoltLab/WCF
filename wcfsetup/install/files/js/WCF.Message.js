@@ -2778,6 +2778,14 @@ WCF.Message.Quote.Manager = Class.extend({
 		// insert into editor
 		if ($.browser.redactor) {
 			if (this._editorElementAlternative === null) {
+				if (event !== null) {
+					var $api = $('.jsQuickReply:eq(0)').data('__api');
+					if ($api && !$api.getContainer().is(':visible')) {
+						this._insertQuotes = false;
+						$api.click(null);
+					}
+				}
+				
 				this._editorElement.redactor('wbbcode.insertQuoteBBCode', $message.attr('data-username'), $message.data('link'), $quote, $quote);
 			}
 			else {
@@ -2807,14 +2815,6 @@ WCF.Message.Quote.Manager = Class.extend({
 		// close dialog
 		if (event !== null) {
 			this._dialog.wcfDialog('close');
-		}
-		
-		if (event !== null && this._editorElementAlternative === null) {
-			var $api = $('.jsQuickReply:eq(0)').data('__api');
-			if ($api && !$api.getContainer().is(':visible')) {
-				this._insertQuotes = false;
-				$api.click(null);
-			}
 		}
 	},
 	
