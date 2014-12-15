@@ -3,10 +3,11 @@ namespace wcf\data\package;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\io\RemoteFile;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\HTTPRequest;
 use wcf\util\JSON;
+use wcf\util\HTTPRequest;
 
 /**
  * Executes package-related actions.
@@ -79,7 +80,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	 * @return array<string>
 	 */
 	public function searchForPurchasedItems() {
-		if (!HTTPRequest::supportSSL()) {
+		if (!RemoteFile::supportsSSL()) {
 			return array(
 				'noSSL' => WCF::getLanguage()->get('wcf.acp.pluginStore.api.noSSL')
 			);

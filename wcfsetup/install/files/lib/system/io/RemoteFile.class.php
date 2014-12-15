@@ -38,6 +38,12 @@ class RemoteFile extends File {
 	protected $errorDesc = '';
 	
 	/**
+	 * true if PHP supports SSL/TLS
+	 * @var	boolean
+	 */
+	private static $hasSSLSupport = null;
+	
+	/**
 	 * Opens a new connection to a remote host.
 	 * 
 	 * @param	string		$host
@@ -93,5 +99,26 @@ class RemoteFile extends File {
 	 */
 	public function hasTLSSupport() {
 		return function_exists('stream_socket_enable_crypto');
+	}
+	
+	/**
+	 * Returns true if PHP supports SSL/TLS.
+	 * 
+	 * @return	boolean
+	 */
+	public static function supportsSSL() {
+		if (static::$hasSSLSupport === null) {
+			static::$hasSSLSupport = false;
+			
+			$transports = stream_get_transports();
+			foreach ($transports as $transport) {
+				if (preg_match('~^(ssl(v[23])?|tls(v[0-9\.]+)?)$~', $transport)) {
+					static::$hasSSLSupport = true;
+					break;
+				}
+			}
+		}
+		
+		return static::$hasSSLSupport;
 	}
 }
