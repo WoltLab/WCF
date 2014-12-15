@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\package;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -38,19 +39,32 @@ class PackageAction extends AbstractDatabaseObjectAction {
 	 */
 	protected $permissionsUpdate = array('admin.system.package.canUpdatePackage');
 	
+	/**
+	 * @see	\wcf\data\AbstractDatabaseObjectAction::$requireACP
+	 */
+	protected $requireACP = array('searchForPurchasedItems');
+	
+	/**
+	 * Validates parameters to search for purchased items in the WoltLab Plugin-Store.
+	 */
 	public function validateSearchForPurchasedItems() {
-		// TODO: validate permissions
+		WCF::getSession()->checkPermissions(array('admin.system.package.canInstallPackage', 'admin.system.package.canUpdatePackage'));
 		
 		$this->readString('password', true);
 		$this->readString('username', true);
 		
 		if (empty($this->parameters['username'])) {
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("serverURL IN (?)", array(array('http://store.woltlab.com/maelstrom/', 'http://store.woltlab.com/typhoon/')));
+			$conditions->add("loginUsername <> ''");
+			$conditions->add("loginPassword <> ''");
+			
 			// check if user has already provided credentials
 			$sql = "SELECT	loginUsername, loginPassword
 				FROM	wcf".WCF_N."_package_update_server
-				WHERE	serverURL = ?";
+				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
-			$statement->execute(array('http://store.woltlab.com/typhoon/'));
+			$statement->execute($conditions->getParameters());
 			$row = $statement->fetchArray();
 			if (!empty($row['loginUsername']) && !empty($row['loginPassword'])) {
 				$this->parameters['password'] = $row['loginPassword'];
@@ -59,14 +73,25 @@ class PackageAction extends AbstractDatabaseObjectAction {
 		}
 	}
 	
+	/**
+	 * Searches for purchased items in the WoltLab Plugin-Store.
+	 * 
+	 * @return array<string>
+	 */
 	public function searchForPurchasedItems() {
+		if (!HTTPRequest::supportSSL()) {
+			return array(
+				'noSSL' => WCF::getLanguage()->get('wcf.acp.pluginStore.api.noSSL')
+			);
+		}
+		
 		if (empty($this->parameters['username']) || empty($this->parameters['password'])) {
 			return array(
 				'template' => $this->renderAuthorizationDialog(false)
 			);
 		}
 		
-		$request = new HTTPRequest('https://www.woltlab.com/api/1.0/customer/purchases/list.json', array(
+		$request = new HTTPRequest('https://api.woltlab.com/1.0/customer/purchases/list.json', array(
 			'method' => 'POST'
 		), array(
 			'username' => $this->parameters['username'],
@@ -83,7 +108,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 			case 200:
 				if (empty($response['products'])) {
 					return array(
-						'noResults' => WCF::getLanguage()->get('wcf.acp.pluginstore.purchasedItems.noResults')
+						'noResults' => WCF::getLanguage()->get('wcf.acp.pluginStore.purchasedItems.noResults')
 					);
 				}
 				else {
@@ -105,11 +130,17 @@ class PackageAction extends AbstractDatabaseObjectAction {
 			
 			// any other kind of errors
 			default:
-				throw new SystemException(WCF::getLanguage()->getDynamicVariable('wcf.acp.pluginstore.api.error', array('status' => $code)));
+				throw new SystemException(WCF::getLanguage()->getDynamicVariable('wcf.acp.pluginStore.api.error', array('status' => $code)));
 			break;
 		}
 	}
 	
+	/**
+	 * Renders the authentication dialog.
+	 * 
+	 * @param	boolean		$rejected
+	 * @return	string
+	 */
 	protected function renderAuthorizationDialog($rejected) {
 		WCF::getTPL()->assign(array(
 			'rejected' => $rejected

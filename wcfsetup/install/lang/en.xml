@@ -1253,6 +1253,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 	
 	<category name="wcf.acp.pluginStore">
 		<item name="wcf.acp.pluginStore.api.error"><![CDATA[Error {@$status}: The server was unable to process your request.]]></item>
+		<item name="wcf.acp.pluginStore.api.noSSL"><![CDATA[Querying the Plugin-Store to fetch the purchased products requires a secure connection.<br /><br />Your PHP version has been compiled without OpenSSL support required to establish secure connections, please contact your hosting company or system-administrator to resolve this shortcoming.]]></item>
 		<item name="wcf.acp.pluginStore.authorization"><![CDATA[Authorization Required]]></item>
 		<item name="wcf.acp.pluginStore.authorization.credentials"><![CDATA[Credentials]]></item>
 		<item name="wcf.acp.pluginStore.authorization.credentials.description"><![CDATA[Please enter your WoltLab.com username and password.]]></item>

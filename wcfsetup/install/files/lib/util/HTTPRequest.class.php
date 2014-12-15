@@ -129,6 +129,12 @@ final class HTTPRequest {
 	private $statusCode = 0;
 	
 	/**
+	 * true if PHP supports SSL/TLS
+	 * @var	boolean
+	 */
+	private static $hasSSLSupport = null;
+	
+	/**
 	 * Constructs a new instance of HTTPRequest.
 	 * 
 	 * @param	string		$url		URL to connect to
@@ -600,5 +606,26 @@ final class HTTPRequest {
 		$this->replyHeaders = array();
 		$this->replyBody = '';
 		$this->statusCode = 0;
+	}
+	
+	/**
+	 * Returns true if PHP supports SSL/TLS.
+	 * 
+	 * @return	boolean
+	 */
+	public static function supportSSL() {
+		if (static::$hasSSLSupport === null) {
+			static::$hasSSLSupport = false;
+			
+			$transports = stream_get_transports();
+			foreach ($transports as $transport) {
+				if (preg_match('~^(ssl(v[23])?|tls(v[0-9\.]+)?)$~', $transport)) {
+					static::$hasSSLSupport = true;
+					break;
+				}
+			}
+		}
+		
+		return static::$hasSSLSupport;
 	}
 }

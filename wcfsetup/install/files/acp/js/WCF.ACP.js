@@ -1678,6 +1678,20 @@ WCF.ACP.PluginStore.PurchasedItems.Search = Class.extend({
 			this._dialog.html(data.returnValues.noResults);
 			this._dialog.wcfDialog('open');
 		}
+		else if (data.returnValues.noSSL) {
+			// PHP was compiled w/o OpenSSL support
+			if (this._dialog === null) {
+				this._dialog = $('<div />').hide().appendTo(document.body);
+				this._dialog.html(data.returnValues.noSSL).wcfDialog({
+					title: WCF.Language.get('wcf.global.error.title')
+				});
+			}
+			else {
+				this._dialog.wcfDialog('option', 'title', WCF.Language.get('wcf.global.error.title'));
+				this._dialog.html(data.returnValues.noSSL);
+				this._dialog.wcfDialog('open');
+			}
+		}
 		else if (data.returnValues.redirectURL) {
 			// redirect to list of purchased products
 			window.location = data.returnValues.redirectURL;
