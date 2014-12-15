@@ -52,16 +52,24 @@ class DatabaseException extends SystemException {
 	protected $preparedStatement = null;
 	
 	/**
+	 * SQL query if prepare() failed
+	 * @var	string
+	 */
+	protected $sqlQuery = null;
+	
+	/**
 	 * Creates a new DatabaseException.
 	 * 
 	 * @param	string							$message		error message
 	 * @param	\wcf\system\database\Database				$db			affected db object
-	 * @param	\wcf\system\database\statement\PreparedStatement		$preparedStatement	affected prepared statement
+	 * @param	\wcf\system\database\statement\PreparedStatement	$preparedStatement	affected prepared statement
+	 * @param	string							$sqlQuery		SQL query if prepare() failed
 	 */
-	public function __construct($message, Database $db, PreparedStatement $preparedStatement = null) {
+	public function __construct($message, Database $db, PreparedStatement $preparedStatement = null, $sqlQuery = null) {
 		$this->db = $db;
 		$this->DBType = $db->getDBType();
 		$this->preparedStatement = $preparedStatement;
+		$this->sqlQuery = $sqlQuery;
 		
 		// prefer errors from prepared statement
 		if ($this->preparedStatement !== null && $this->preparedStatement->getErrorNumber()) {
@@ -137,6 +145,9 @@ class DatabaseException extends SystemException {
 					$this->information .= '<b>sql query parameter ' . $index . ':</b>' . StringUtil::encodeHTML($parameter) . '<br />';
 				}
 			}
+		}
+		else if ($this->sqlQuery !== null) {
+			$this->information .= '<b>sql query:</b> ' . StringUtil::encodeHTML($this->sqlQuery) . '<br />';
 		}
 		
 		parent::show();

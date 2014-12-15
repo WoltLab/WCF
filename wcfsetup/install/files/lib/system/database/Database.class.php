@@ -124,7 +124,7 @@ abstract class Database {
 			return $this->pdo->lastInsertId();
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot fetch last insert id", $this);
+			throw new DatabaseException("Cannot fetch last insert id: " . $e->getMessage(), $this);
 		}
 	}
 	
@@ -150,7 +150,7 @@ abstract class Database {
 			return $result;
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot begin transaction", $this);
+			throw new DatabaseException("Cannot begin transaction: " . $e->getMessage(), $this);
 		}
 	}
 	
@@ -179,7 +179,7 @@ abstract class Database {
 			return $result;
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot commit transaction", $this);
+			throw new DatabaseException("Cannot commit transaction: " . $e->getMessage(), $this);
 		}
 	}
 	
@@ -207,7 +207,7 @@ abstract class Database {
 			return $result;
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot rollback transaction", $this);
+			throw new DatabaseException("Cannot rollback transaction: " . $e->getMessage(), $this);
 		}
 	}
 	
@@ -224,13 +224,11 @@ abstract class Database {
 		
 		try {
 			$pdoStatement = $this->pdo->prepare($statement);
-			if ($pdoStatement instanceof \PDOStatement) {
-				return new $this->preparedStatementClassName($this, $pdoStatement, $statement);
-			}
-			throw new DatabaseException("Cannot prepare statement: ".$statement, $this);
+			
+			return new $this->preparedStatementClassName($this, $pdoStatement, $statement);
 		}
 		catch (\PDOException $e) {
-			throw new DatabaseException("Cannot prepare statement: ".$statement, $this);
+			throw new DatabaseException($e->getMessage(), $this, null, $statement);
 		}
 	}
 	
