@@ -6,8 +6,8 @@ use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\JSON;
 use wcf\util\HTTPRequest;
+use wcf\util\JSON;
 
 /**
  * Executes package-related actions.
