@@ -85,6 +85,13 @@ RedactorPlugins.wutil = function() {
 		},
 		
 		/**
+		 * Clears the current selection.
+		 */
+		clearSelection: function() {
+			this._wutil.range = null;
+		},
+		
+		/**
 		 * Allows inserting of text contents in Redactor's source area.
 		 * 
 		 * @param	string		string

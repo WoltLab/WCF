@@ -89,6 +89,14 @@ RedactorPlugins.wbutton = function() {
 			this.button.addCallback(this.button.get('image'), $.proxy(this.wbutton.insertImage, this));
 		},
 		
+		/**
+		 * Modifies an existing button belonging to Redactor.
+		 * 
+		 * @param	string		buttonName
+		 * @param	string		buttonTitle
+		 * @param	string		faIcon
+		 * @param	string		insertAfter
+		 */
 		_addCoreButton: function(buttonName, buttonTitle, faIcon, insertAfter) {
 			var $buttonObj = { title: (buttonTitle === null ? buttonName : buttonTitle) };
 			if (buttonName === 'subscript' || buttonName === 'superscript') {
@@ -153,6 +161,7 @@ RedactorPlugins.wbutton = function() {
 					}
 				}
 				else {
+					this.buffer.set();
 					this.insert.html('[' + $bbcode + ']' + $selectedHtml + this.selection.getMarkerAsHtml() + '[/' + $bbcode + ']', false);
 					this.selection.restore();
 				}
