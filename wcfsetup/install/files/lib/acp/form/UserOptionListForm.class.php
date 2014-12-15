@@ -32,6 +32,11 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	protected function getAvailableGroups() {
 		$userGroups = UserGroup::getAccessibleGroups(array(), array(UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS));
 		
+		// work-around for PHP 5.3.3 randomly failing in uasort()
+		foreach ($userGroups as $userGroup) {
+			$userGroup->getName();
+		}
+		
 		uasort($userGroups, function(UserGroup $groupA, UserGroup $groupB) {
 			return strcmp($groupA->getName(), $groupB->getName());
 		});
