@@ -1359,6 +1359,11 @@ RedactorPlugins.wbbcode = function() {
 				
 				// [S]
 				case 83:
+					// not supported on mobile devices anyway
+					if ($.browser.mobile) {
+						return;
+					}
+					
 					var $submitEditor = false;
 					if (navigator.platform.match(/^Mac/)) {
 						if (data.event.ctrlKey && data.event.altKey) {
