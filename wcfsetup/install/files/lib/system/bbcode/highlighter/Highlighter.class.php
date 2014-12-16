@@ -177,7 +177,13 @@ abstract class Highlighter extends SingletonFactory {
 			
 			$opening = preg_quote($opening);
 			$closing = preg_quote($closing);
-			$quotesRegEx .= $opening.'(?>[^'.$closing.$quotedEscapeSequence.']|'.$quotedEscapeSequence.'.)*'.$closing;
+			
+			if ($quotedEscapeSequence) {
+				$quotesRegEx .= $opening.'(?>[^'.$closing.$quotedEscapeSequence.']|'.$quotedEscapeSequence.'.)*'.$closing;
+			}
+			else {
+				$quotesRegEx .= $opening.'(?>[^'.$closing.$quotedEscapeSequence.'])*'.$closing;
+			}
 		}
 		
 		if ($quotesRegEx !== '') {
