@@ -111,7 +111,7 @@ class PreParserAtUserListener implements IParameterizedEventListener {
 					// containing only the part before the first space
 					if (isset($matches[2])) $usernames[] = $matches[2];
 					
-					$usernames = array_map(array('self', 'getUsername'), $usernames);
+					$usernames = array_map(array('\wcf\system\event\listener\PreParserAtUserListener', 'getUsername'), $usernames);
 					
 					foreach ($usernames as $username) {
 						if (!isset($users[$username])) continue;
