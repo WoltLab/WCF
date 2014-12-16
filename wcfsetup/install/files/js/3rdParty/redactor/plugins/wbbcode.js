@@ -874,6 +874,20 @@ RedactorPlugins.wbbcode = function() {
 			// drop trailing line breaks
 			data = data.replace(/\n*$/, '');
 			
+			// line-breaks within list items must be a <br> instead of <p></p>
+			var $listItems = [ ];
+			data = data.replace(/(<li>[\s\S]*?<\/li>)/g, function(match) {
+				match = $.trim(match).replace(/\n/, '<br>');
+				
+				var $key = WCF.getUUID();
+				$listItems.push({
+					key: $key,
+					content: match
+				});
+				
+				return $key;
+			});
+			
 			// convert line breaks into <p></p> or empty lines to <p><br></p>
 			var $tmp = data.split("\n");
 			
@@ -908,6 +922,13 @@ RedactorPlugins.wbbcode = function() {
 					}
 					
 					data += '<p>' + $line + '</p>';
+				}
+			}
+			
+			// insert list items
+			if ($listItems.length) {
+				for (var $i = $listItems.length - 1; $i >= 0; $i--) {
+					data = data.replace($listItems[$i].key, $listItems[$i].content);
 				}
 			}
 			
