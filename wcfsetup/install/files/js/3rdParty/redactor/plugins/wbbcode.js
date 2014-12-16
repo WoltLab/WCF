@@ -692,7 +692,7 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[img='?([^"]*?)'?\]\[\/img\]/gi,'<img src="$1" />');
 			
 			// [size]
-			data = data.replace(/\[size=(\d+)\]([\s\S]*?)\[\/size\]/gi, (function(match, a, content) {
+			data = data.replace(/\[size=(\d+)\]([\s\S]*?)\[\/size\]/gi, (function(match, size, content) {
 				content = $.trim(content);
 				if (!content.length) {
 					content = this.opts.invisibleSpace;
