@@ -597,6 +597,19 @@ RedactorPlugins.wmonkeypatch = function() {
 					$mpReplaceDivToParagraph.call(this);
 				}
 			}).bind(this);
+			
+			// keydown.setupBuffer
+			var $mpSetupBuffer = this.keydown.setupBuffer;
+			this.keydown.setupBuffer = (function(e, key) {
+				// undo
+				if (this.keydown.ctrl && key === 89 && !e.shiftKey && !e.altKey && this.opts.rebuffer.length !== 0) {
+					e.preventDefault();
+					this.buffer.redo();
+					return;
+				}
+				
+				$mpSetupBuffer.call(this, e, key);
+			}).bind(this);
 		},
 		
 		/**
