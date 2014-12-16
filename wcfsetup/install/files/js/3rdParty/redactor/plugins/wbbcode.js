@@ -436,7 +436,7 @@ RedactorPlugins.wbbcode = function() {
 				
 				if ($value == '</span>') {
 					var $opening = $openElements.pop();
-					var $tmp = $opening.start + $buffer.pop() + $opening.end;
+					var $tmp = $opening.start + $.trim($buffer.pop()) + $opening.end;
 					
 					if ($buffer.length) {
 						$buffer[$buffer.length - 1] += $tmp;
@@ -692,13 +692,34 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[img='?([^"]*?)'?\]\[\/img\]/gi,'<img src="$1" />');
 			
 			// [size]
-			data = data.replace(/\[size=(\d+)\]([\s\S]*?)\[\/size\]/gi,'<span style="font-size: $1pt">$2</span>');
+			data = data.replace(/\[size=(\d+)\]([\s\S]*?)\[\/size\]/gi, (function(match, a, content) {
+				content = $.trim(content);
+				if (!content.length) {
+					content = this.opts.invisibleSpace;
+				}
+				
+				return '<span style="font-size: ' + size + 'pt">' + content + '</span>';
+			}).bind(this));
 			
 			// [color]
-			data = data.replace(/\[color=([#a-z0-9]*?)\]([\s\S]*?)\[\/color\]/gi,'<span style="color: $1">$2</span>');
+			data = data.replace(/\[color=([#a-z0-9]*?)\]([\s\S]*?)\[\/color\]/gi, (function(match, color, content) {
+				content = $.trim(content);
+				if (!content.length) {
+					content = this.opts.invisibleSpace;
+				}
+				
+				return '<span style="color: ' + color + '">' + content + '</span>';
+			}).bind(this));
 			
 			// [font]
-			data = data.replace(/\[font='?([a-z,\- ]*?)'?\]([\s\S]*?)\[\/font\]/gi,'<span style="font-family: $1">$2</span>');
+			data = data.replace(/\[font='?([a-z,\- ]*?)'?\]([\s\S]*?)\[\/font\]/gi, (function(match, fontFamily, content) {
+				content = $.trim(content);
+				if (!content.length) {
+					content = this.opts.invisibleSpace;
+				}
+				
+				return '<span style="font-family: ' + fontFamily + '">' + content + '</span>';
+			}).bind(this));
 			
 			// [align]
 			data = data.replace(/\[align=(left|right|center|justify)\]([\s\S]*?)\[\/align\]/gi,'<div style="text-align: $1">$2</div>');
