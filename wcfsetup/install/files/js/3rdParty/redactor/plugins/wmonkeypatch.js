@@ -759,44 +759,13 @@ RedactorPlugins.wmonkeypatch = function() {
 		 *  - fixes text pasting in Internet Explorer 11 (#2040) 
 		 */
 		paste: function() {
-			var $fixDOM = (function() {
-				var $current = this.$editor[0].childNodes[0];
-				var $nextSibling = $current;
-				var $p = null;
-				
-				while ($nextSibling) {
-					$current = $nextSibling;
-					$nextSibling = $current.nextSibling;
-					
-					if ($current.nodeType === Element.ELEMENT_NODE) {
-						if (this.reIsBlock.test($current.tagName)) {
-							$p = null;
-						}
-						else {
-							if ($p === null) {
-								$p = $('<p />').insertBefore($current);
-							}
-							
-							$p.append($current);
-						}
-					}
-					else if ($current.nodeType === Element.TEXT_NODE) {
-						if ($p === null) {
-							$p = $('<p />').insertBefore($current);
-						}
-						
-						$p.append($current);
-					}
-				}
-			}).bind(this);
-			
 			// paste.insert
 			var $mpInsert = this.paste.insert;
 			this.paste.insert = (function(html) {
 				$mpInsert.call(this, html);
 				
 				setTimeout((function() {
-					$fixDOM();
+					this.wutil.fixDOM();
 					
 					if ($.browser.msie) {
 						getSelection().getRangeAt(0).collapse(false);

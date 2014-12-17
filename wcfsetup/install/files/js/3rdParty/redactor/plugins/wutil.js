@@ -758,6 +758,49 @@ RedactorPlugins.wutil = function() {
 			var $node = $(this.opts.emptyHtml);
 			$node[(setBefore ? 'insertBefore' : 'insertAfter')](element);
 			this.caret.setEnd($node[0]);
+		},
+		
+		/**
+		 * Fixes the DOM by moving all non-element children of the editor into a paragraph.
+		 */
+		fixDOM: function() {
+			var $current = this.$editor[0].childNodes[0];
+			var $nextSibling = $current;
+			var $p = null;
+			
+			while ($nextSibling) {
+				$current = $nextSibling;
+				$nextSibling = $current.nextSibling;
+				
+				if ($current.nodeType === Element.ELEMENT_NODE) {
+					if (this.reIsBlock.test($current.tagName)) {
+						$p = null;
+					}
+					else {
+						if ($p === null) {
+							$p = $('<p />').insertBefore($current);
+						}
+						
+						$p.append($current);
+					}
+				}
+				else if ($current.nodeType === Element.TEXT_NODE) {
+					if ($p === null) {
+						// check for ghost paragraphs next
+						if ($nextSibling) {
+							if ($nextSibling.nodeType === Element.ELEMENT_NODE && $nextSibling.tagName === 'P' && $nextSibling.innerHTML === '\u200B') {
+								var $afterNextSibling = $nextSibling.nextSibling;
+								this.$editor[0].removeChild($nextSibling);
+								$nextSibling = $afterNextSibling;
+							}
+						}
+						
+						$p = $('<p />').insertBefore($current);
+					}
+					
+					$p.append($current);
+				}
+			}
 		}
 	};
 };

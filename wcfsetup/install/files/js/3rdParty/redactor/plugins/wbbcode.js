@@ -108,6 +108,7 @@ RedactorPlugins.wbbcode = function() {
 					
 					this.button.get('html').children('i').removeClass('fa-square').addClass('fa-square-o');
 					$tooltip.text(WCF.Language.get('wcf.bbcode.button.toggleBBCode'));
+					this.wutil.fixDOM();
 					$fixBR(this.$editor);
 					
 					this.wutil.saveSelection();
