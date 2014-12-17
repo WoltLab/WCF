@@ -744,8 +744,6 @@
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Aktiviert die Komprimierung der Inhalte bei der Übertragung vom Server an den Client. Dies reduziert den Traffic und kann den Ladevorgang erheblich beschleunigen.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Seitencaching im Client-Browser verhindern]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers.description"><![CDATA[Verhindert zuverlässig das Cachen von einzelnen Seiten und sorgt somit dafür, dass beim Seitenaufruf immer die neueste Version der Seite geladen wird. Führt umgekehrt aber zu höherem Traffic und mehr Serverlast.]]></item>
-		<item name="wcf.acp.option.http_gzip_level"><![CDATA[Gzip-Komprimierungslevel]]></item>
-		<item name="wcf.acp.option.http_gzip_level.description"><![CDATA[Werte von 1-9 sind zulässig. Als Optimum zwischen Komprimierung und Serverlast empfiehlt sich Level 1.]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Einbindung in einem Frame verhindern]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sendet den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'http://de.wikipedia.org/wiki/Clickjacking'|rawurlencode}" class="externalURL">„X-Frame-Options“</a> Header um die Einbettung dieser Seite in einem Frame zu verhindern (sendet „SAMEORIGIN“).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>

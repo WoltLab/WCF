@@ -743,8 +743,6 @@ Examples for medium ID detection:
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Compresses content transfered to users, reduces traffic and page load time. Does not affect files, e.g. images.]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers"><![CDATA[Prevent browser-caching]]></item>
 		<item name="wcf.acp.option.http_enable_no_cache_headers.description"><![CDATA[Prevents browser’s caching ensuring your users are always viewing the latest content. Increases both traffic and server load.]]></item>
-		<item name="wcf.acp.option.http_gzip_level"><![CDATA[Gzip-Compression Level]]></item>
-		<item name="wcf.acp.option.http_gzip_level.description"><![CDATA[Values between 1 and 9 are valid, it is recommended to use “1” for good compression without causing high server loads.]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Disallow embedding in a frame]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sends the <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'http://en.wikipedia.org/wiki/Clickjacking'|rawurlencode}" class="externalURL">“X-Frame-Options”</a> header to prevent 3rd party sites from embedding this site in a frame (sends “SAMEORIGIN”).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Graphics Library]]></item>

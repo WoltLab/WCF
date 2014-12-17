@@ -17,6 +17,12 @@ use wcf\system\WCF;
  */
 final class HeaderUtil {
 	/**
+	 * gzip level to user
+	 * @var	integer
+	 */
+	const GZIP_LEVEL = 1;
+	
+	/**
 	 * gzip compression
 	 * @var	boolean
 	 */
@@ -54,7 +60,7 @@ final class HeaderUtil {
 			@header('Cache-Control: no-store');
 		}
 		
-		if (HTTP_ENABLE_GZIP && HTTP_GZIP_LEVEL > 0 && HTTP_GZIP_LEVEL < 10 && !defined('HTTP_DISABLE_GZIP')) {
+		if (HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
 			if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
 				self::$enableGzipCompression = true;
 				
@@ -122,7 +128,7 @@ final class HeaderUtil {
 			$crc = crc32(self::$output);
 			
 			$newOutput = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff";
-			$newOutput .= substr(gzcompress(self::$output, HTTP_GZIP_LEVEL), 2, -4);
+			$newOutput .= substr(gzcompress(self::$output, self::GZIP_LEVEL), 2, -4);
 			$newOutput .= pack('V', $crc);
 			$newOutput .= pack('V', $size);
 			

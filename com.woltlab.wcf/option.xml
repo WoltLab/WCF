@@ -505,13 +505,6 @@ imagick:wcf.acp.option.image_adapter_type.imagick]]>
 				<defaultvalue>1</defaultvalue>
 				<enableoptions><![CDATA[http_gzip_level]]></enableoptions>
 			</option>
-			<option name="http_gzip_level">
-				<categoryname>general.system.http</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<minvalue>1</minvalue>
-				<maxvalue>9</maxvalue>
-			</option>
 			<!-- /general.system.http -->
 			
 			<!-- general.system.packageServer -->
@@ -1403,5 +1396,6 @@ DESC:wcf.global.sortOrder.descending]]></selectoptions>
 	
 	<delete>
 		<option name="cache_source_memcached_use_pconnect" />
+		<option name="http_gzip_level" />
 	</delete>
 </data>
