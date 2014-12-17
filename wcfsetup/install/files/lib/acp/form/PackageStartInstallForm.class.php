@@ -98,10 +98,8 @@ class PackageStartInstallForm extends AbstractForm {
 		parent::validate();
 		
 		if ($this->stylePackageImportLocation) {
-			$this->archive = new PackageArchive($this->stylePackageImportLocation, $this->package);
-			
 			try {
-				$this->validateArchive('uploadPackage');
+				$this->validateUploadPackage($this->stylePackageImportLocation);
 			}
 			catch (UserInputException $e) {
 				WCF::getSession()->unregister('stylePackageImportLocation');
@@ -122,22 +120,28 @@ class PackageStartInstallForm extends AbstractForm {
 	
 	/**
 	 * Validates the upload package input.
+	 * 
+	 * @param	string		$filename
 	 */
-	protected function validateUploadPackage() {
+	protected function validateUploadPackage($filename = '') {
 		$this->activeTabMenuItem = 'upload';
 		
-		if (empty($this->uploadPackage['tmp_name'])) {
-			throw new UserInputException('uploadPackage', 'uploadFailed');
+		if (empty($filename)) {
+			if (empty($this->uploadPackage['tmp_name'])) {
+				throw new UserInputException('uploadPackage', 'uploadFailed');
+			}
+			
+			// get filename
+			$this->uploadPackage['name'] = FileUtil::getTemporaryFilename('package_', preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', basename($this->uploadPackage['name'])));
+			
+			if (!@move_uploaded_file($this->uploadPackage['tmp_name'], $this->uploadPackage['name'])) {
+				throw new UserInputException('uploadPackage', 'uploadFailed');
+			}
+			
+			$filename = $this->uploadPackage['name'];
 		}
 		
-		// get filename
-		$this->uploadPackage['name'] = FileUtil::getTemporaryFilename('package_', preg_replace('!^.*(?=\.(?:tar\.gz|tgz|tar)$)!i', '', basename($this->uploadPackage['name'])));
-		
-		if (!@move_uploaded_file($this->uploadPackage['tmp_name'], $this->uploadPackage['name'])) {
-			throw new UserInputException('uploadPackage', 'uploadFailed');
-		}
-		
-		if (!PackageValidationManager::getInstance()->validate($this->uploadPackage['name'], false)) {
+		if (!PackageValidationManager::getInstance()->validate($filename, false)) {
 			$exception = PackageValidationManager::getInstance()->getException();
 			if ($exception instanceof PackageValidationException) {
 				switch ($exception->getCode()) {
