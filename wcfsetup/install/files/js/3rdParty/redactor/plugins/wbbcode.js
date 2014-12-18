@@ -688,9 +688,9 @@ RedactorPlugins.wbbcode = function() {
 				
 			// [img]
 			data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
-			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right)'?\]\[\/img\]/gi, function(match, src, float) {
-				var $style = 'float: ' + float + ';';
-				if (float === 'left') {
+			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right)'?\]\[\/img\]/gi, function(match, src, alignment) {
+				var $style = 'float: ' + alignment + ';';
+				if (alignment === 'left') {
 					$style += 'margin: 0 15px 7px 0';
 				}
 				else {
@@ -699,9 +699,9 @@ RedactorPlugins.wbbcode = function() {
 				
 				return '<img src="' + src + '" style="' + $style + '" />';
 			});
-			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right|none)'?,'?(\d+)'?\]\[\/img\]/gi, function(match, src, float, width) {
-				var $style = 'float: ' + float + '; width: ' + width + 'px';
-				if (float === 'left') {
+			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right|none)'?,'?(\d+)'?\]\[\/img\]/gi, function(match, src, alignment, width) {
+				var $style = 'float: ' + alignment + '; width: ' + width + 'px';
+				if (alignment === 'left') {
 					$style += 'margin: 0 15px 7px 0';
 				}
 				else {
