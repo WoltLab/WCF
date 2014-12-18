@@ -355,66 +355,6 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<(?:s(trike)?|del)>/gi, '[s]');
 			html = html.replace(/<\/(?:s(trike)?|del)>/gi, '[/s]');
 			
-			// smileys
-			html = html.replace(/<img [^>]*?alt="([^"]+?)" class="smiley".*?> ?/gi, '$1 '); // firefox
-			html = html.replace(/<img [^>]*?class="smiley" alt="([^"]+?)".*?> ?/gi, '$1 '); // chrome, ie
-			
-			// attachments
-			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment[^"]*" data-attachment-id="(\d+)"( style="([^"]+)")?>/gi, function(match, attachmentID, styleTag, style) {
-				var $float = 'none';
-				var $width = null;
-				
-				if (style) {
-					style = style.split(';');
-					
-					for (var $i = 0; $i < style.length; $i++) {
-						var $style = $.trim(style[$i]);
-						if ($style.match(/^float: (left|right)$/)) {
-							$float = RegExp.$1;
-						}
-						else if ($style.match(/^width: (\d+)px$/)) {
-							$width = RegExp.$1;
-						}
-					}
-					
-					if ($width !== null) {
-						return '[attach=' + attachmentID + ',' + $float + ',' + $width + '][/attach]';
-					}
-					else if ($float !== 'none') {
-						return '[attach=' + attachmentID + ',' + $float + '][/attach]';
-					}
-				}
-				
-				return '[attach=' + attachmentID + '][/attach]';
-			});
-			
-			// [img]
-			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1 style="([^"]+)".*?>/gi, function(match, quotationMarks, source, style) {
-				var $float = 'none';
-				var $width = 0;
-				
-				var $styles = style.split(';');
-				for (var $i = 0; $i < $styles.length; $i++) {
-					var $style = $styles[$i];
-					if ($style.match(/float: (left|right|none)/)) {
-						$float = RegExp.$1;
-					}
-					else if ($style.match(/width: (\d+)px/)) {
-						$width = parseInt(RegExp.$1);
-					}
-				}
-				
-				if ($width) {
-					return "[img='" + source + "'," + $float + "," + $width + "][/img]";
-				}
-				else if ($float !== 'none') {
-					return "[img='" + source + "'," + $float + "][/img]";
-				}
-				
-				return "[img]" + source + "[/img]";
-			});
-			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?>/gi, '[img]$2[/img]');
-			
 			// handle [color], [size], [font] and [tt]
 			var $components = html.split(/(<\/?span[^>]*>)/);
 			
@@ -531,6 +471,66 @@ RedactorPlugins.wbbcode = function() {
 			html = html.replace(/<(div|p) style="text-align: ?(left|center|right|justify);? ?">([\s\S]*?)\n/gi, function(match, tag, alignment, content) {
 				return '[align=' + alignment + ']' + $.trim(content) + '[/align]';
 			});
+			
+			// smileys
+			html = html.replace(/<img [^>]*?alt="([^"]+?)" class="smiley".*?> ?/gi, '$1 '); // firefox
+			html = html.replace(/<img [^>]*?class="smiley" alt="([^"]+?)".*?> ?/gi, '$1 '); // chrome, ie
+			
+			// attachments
+			html = html.replace(/<img [^>]*?class="redactorEmbeddedAttachment[^"]*" data-attachment-id="(\d+)"( style="([^"]+)")?>/gi, function(match, attachmentID, styleTag, style) {
+				var $float = 'none';
+				var $width = null;
+				
+				if (style) {
+					style = style.split(';');
+					
+					for (var $i = 0; $i < style.length; $i++) {
+						var $style = $.trim(style[$i]);
+						if ($style.match(/^float: (left|right)$/)) {
+							$float = RegExp.$1;
+						}
+						else if ($style.match(/^width: (\d+)px$/)) {
+							$width = RegExp.$1;
+						}
+					}
+					
+					if ($width !== null) {
+						return '[attach=' + attachmentID + ',' + $float + ',' + $width + '][/attach]';
+					}
+					else if ($float !== 'none') {
+						return '[attach=' + attachmentID + ',' + $float + '][/attach]';
+					}
+				}
+				
+				return '[attach=' + attachmentID + '][/attach]';
+			});
+			
+			// [img]
+			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1 style="([^"]+)".*?>/gi, function(match, quotationMarks, source, style) {
+				var $float = 'none';
+				var $width = 0;
+				
+				var $styles = style.split(';');
+				for (var $i = 0; $i < $styles.length; $i++) {
+					var $style = $styles[$i];
+					if ($style.match(/float: (left|right|none)/)) {
+						$float = RegExp.$1;
+					}
+					else if ($style.match(/width: (\d+)px/)) {
+						$width = parseInt(RegExp.$1);
+					}
+				}
+				
+				if ($width) {
+					return "[img='" + source + "'," + $float + "," + $width + "][/img]";
+				}
+				else if ($float !== 'none') {
+					return "[img='" + source + "'," + $float + "][/img]";
+				}
+				
+				return "[img]" + source + "[/img]";
+			});
+			html = html.replace(/<img [^>]*?src=(["'])([^"']+?)\1.*?>/gi, '[img]$2[/img]');
 			
 			// [*]
 			html = html.replace(/<li>/gi, '[*]');
