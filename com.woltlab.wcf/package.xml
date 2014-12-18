@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.1.0 Beta 1</version> <!-- codename: typhoon -->
-		<date>2014-12-14</date>
+		<version>2.1.0 Beta 2</version> <!-- codename: typhoon -->
+		<date>2014-12-18</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -87,5 +87,15 @@
 		
 		<instruction type="script" run="standalone">acp/update_mqc_com.woltlab.wcf_2.1.php</instruction>
 	</instructions>
-	 -->
+	-->
+	
+	<instructions type="update" fromversion="2.1.0 Beta 1">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language" run="standalone">language/*.xml</instruction>
+		
+		<instruction type="option">option.xml</instruction>
+	</instructions>
 </package>
