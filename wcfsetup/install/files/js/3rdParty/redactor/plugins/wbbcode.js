@@ -688,7 +688,7 @@ RedactorPlugins.wbbcode = function() {
 				
 			// [img]
 			data = data.replace(/\[img\]([^"]+?)\[\/img\]/gi,'<img src="$1" />');
-			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right)'?\]\[\/img\]/gi, function(match, src, float, width) {
+			data = data.replace(/\[img='?([^"]*?)'?,'?(left|right)'?\]\[\/img\]/gi, function(match, src, float) {
 				var $style = 'float: ' + float + ';';
 				if (float === 'left') {
 					$style += 'margin: 0 15px 7px 0';
