@@ -233,6 +233,5 @@ class FileReader {
 	 */
 	public function removeHeader($name) {
 		unset($this->headers[$name]);
-		return;
 	}
 }
