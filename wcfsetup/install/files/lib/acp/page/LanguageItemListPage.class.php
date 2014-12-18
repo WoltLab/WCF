@@ -24,6 +24,12 @@ class LanguageItemListPage extends AbstractPage {
 	public $activeMenuItem = 'wcf.acp.menu.link.language.item.list';
 	
 	/**
+	 * number of matching phrases
+	 * @var	integer
+	 */
+	public $count = 0;
+	
+	/**
 	 * @see	\wcf\page\AbstractPage::$neededPermissions
 	 */
 	public $neededPermissions = array('admin.language.canManageLanguage');
@@ -77,6 +83,12 @@ class LanguageItemListPage extends AbstractPage {
 	public $availableLanguageCategories = array();
 	
 	/**
+	 * current page no
+	 * @var	integer
+	 */
+	public $pageNo = 1;
+	
+	/**
 	 * @see	\wcf\page\IPage::readParameters()
 	 */
 	public function readParameters() {
@@ -87,6 +99,7 @@ class LanguageItemListPage extends AbstractPage {
 		if (isset($_REQUEST['languageItem'])) $this->languageItem = StringUtil::trim($_REQUEST['languageItem']);
 		if (isset($_REQUEST['languageItemValue'])) $this->languageItemValue = $_REQUEST['languageItemValue'];
 		if (!empty($_REQUEST['hasCustomValue'])) $this->hasCustomValue = 1;
+		if (isset($_REQUEST['pageNo'])) $this->pageNo = intval($_REQUEST['pageNo']);
 	}
 	
 	/**
@@ -119,6 +132,17 @@ class LanguageItemListPage extends AbstractPage {
 		if ($this->languageItemValue) $this->languageItemList->getConditionBuilder()->add('((languageUseCustomValue = 0 AND languageItemValue LIKE ?) OR languageCustomItemValue LIKE ?)', array('%'.$this->languageItemValue.'%', '%'.$this->languageItemValue.'%'));
 		if ($this->hasCustomValue) $this->languageItemList->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
 		if (!$this->languageCategoryID) $this->languageItemList->sqlLimit = 100;
+		
+		if (!empty($_POST)) {
+			$this->count = $this->languageItemList->countObjects();
+			$maxPages = ceil($this->count / 100);
+			$this->pageNo = max(min($this->pageNo, $maxPages), 1);
+			
+			if ($this->pageNo > 1) {
+				$this->languageItemList->sqlOffset = ($this->pageNo - 1) * 100;
+			}
+		}
+		
 		$this->languageItemList->readObjects();
 	}
 	
@@ -130,6 +154,8 @@ class LanguageItemListPage extends AbstractPage {
 		
 		WCF::getTPL()->assign(array(
 			'objects' => $this->languageItemList,
+			'count' => $this->count,
+			'pageNo' => $this->pageNo,
 			'languageID' => $this->languageID,
 			'languageCategoryID' => $this->languageCategoryID,
 			'languageItem' => $this->languageItem,

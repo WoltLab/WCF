@@ -9,6 +9,9 @@ WCF.ACP.Language = { };
 
 /**
  * Handles language item list management.
+ * 
+ * @param	integer		count
+ * @param	integer		pageNo
  */
 WCF.ACP.Language.ItemList = Class.extend({
 	/**
@@ -31,8 +34,11 @@ WCF.ACP.Language.ItemList = Class.extend({
 	
 	/**
 	 * Initializes the WCF.ACP.Style.List class.
+	 * 
+	 * @param	integer		count
+	 * @param	integer		pageNo
 	 */
-	init: function() {
+	init: function(count, pageNo) {
 		this._proxy = new WCF.Action.Proxy({
 			success: $.proxy(this._success, this)
 		});
@@ -44,6 +50,33 @@ WCF.ACP.Language.ItemList = Class.extend({
 			var self = this;
 			$button.click(function() { self._click($languageItemID); });
 		}, this));
+		
+		count = parseInt(count) || 0;
+		if (count > 100) {
+			this._createPagination(count, pageNo);
+		}
+	},
+	
+	/**
+	 * Creates a pagination for current search result.
+	 * 
+	 * @param	integer		count
+	 * @param	integer		pageNo
+	 */
+	_createPagination: function(count, pageNo) {
+		$('.contentNavigation').each(function(index, contentNavigation) {
+			var $contentNavigation = $(contentNavigation);
+			var $nav = $('<nav />').prependTo($contentNavigation);
+			
+			$nav.wcfPages({
+				activePage: parseInt(pageNo) || 1,
+				maxPage: Math.ceil(count / 100)
+			}).on('wcfpagesswitched', function(event, data) {
+				var $form = $('#languageItemSearchForm');
+				$('<input type="hidden" name="pageNo" value="' + data.activePage + '" />').appendTo($form);
+				$form.submit();
+			});
+		});
 	},
 	
 	/**

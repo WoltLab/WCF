@@ -4,7 +4,7 @@
 <script data-relocate="true">
 	//<![CDATA[
 	$(function() {
-		new WCF.ACP.Language.ItemList();
+		new WCF.ACP.Language.ItemList({@$count}, {@$pageNo});
 	});
 	//]]>
 </script>
@@ -15,7 +15,7 @@
 
 {include file='formError'}
 
-<form method="post" action="{link controller='LanguageItemList'}{/link}">
+<form method="post" action="{link controller='LanguageItemList'}{/link}" id="languageItemSearchForm">
 	<div class="container containerPadding marginTop">
 		<fieldset>
 			<legend>{lang}wcf.global.filter{/lang}</legend>
