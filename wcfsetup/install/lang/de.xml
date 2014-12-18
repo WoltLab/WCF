@@ -351,7 +351,7 @@
 		<item name="wcf.acp.group.option.user.message.allowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe verwendet werden.]]></item>
 		<item name="wcf.acp.group.option.admin.content.dashboard.canEditDashboard"><![CDATA[Kann Dashboards konfigurieren]]></item>
 		<item name="wcf.acp.group.option.admin.user.rank.canManageRank"><![CDATA[Kann Benutzerränge verwalten]]></item>
-		<item name="wcf.acp.group.option.admin.user.canEditActivityPoints"><![CDATA[Kann Aktivtitätspunkte bearbeiten]]></item>
+		<item name="wcf.acp.group.option.admin.user.canEditActivityPoints"><![CDATA[Kann Aktivitätspunkte bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canViewInvisible"><![CDATA[Kann unsichtbare Benutzer sehen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canViewIpAddress"><![CDATA[Kann die IP-Adressen der Benutzer sehen]]></item>
 		<item name="wcf.acp.group.option.category.admin.content.dashboard"><![CDATA[Dashboard]]></item>
@@ -1555,7 +1555,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.user.merge.markedUsers"><![CDATA[Folgende Benutzer zusammenfügen]]></item>
 		<item name="wcf.acp.user.revertChanges"><![CDATA[Änderungen an Inhalten zurücksetzen]]></item>
 		<item name="wcf.acp.user.revertChanges.timeframe"><![CDATA[Zeitraum]]></item>
-		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Zeitraum in dem Änderungen des Benutzers zurückgesetzt werden sollen. Inhalte werden auf die neuste Version, welche entweder älter als der angebene Zeitraum ist oder welche von einem anderen Nutzer stammt, zurückgesetzt. [Zeitraum in Tagen]]]></item>
+		<item name="wcf.acp.user.revertChanges.timeframe.description"><![CDATA[Zeitraum in dem Änderungen des Benutzers zurückgesetzt werden sollen. Inhalte werden auf die neuste Version, welche entweder älter als der angegebene Zeitraum ist oder welche von einem anderen Nutzer stammt, zurückgesetzt. [Zeitraum in Tagen]]]></item>
 		<item name="wcf.acp.user.revertChanges.markedUsers"><![CDATA[Änderungen folgender Nutzer zurücksetzen]]></item>
 		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Aktion]]></item>
@@ -2197,15 +2197,15 @@ Fehler sind beispielsweise:
 		<item name="wcf.global.form.data"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.global.form.error"><![CDATA[Ihre Angaben sind ungültig. Bitte überprüfen Sie die markierten Eingabefelder.]]></item>
 		<item name="wcf.global.form.error.empty"><![CDATA[Bitte füllen Sie dieses Eingabefeld aus.]]></item>
-		<item name="wcf.global.form.error.greaterThan"><![CDATA[Der eingebene Wert muss größer sein als {#$greaterThan}.]]></item>
-		<item name="wcf.global.form.error.lessThan"><![CDATA[Der eingebene Wert muss kleiner sein als {#$lessThan}.]]></item>
+		<item name="wcf.global.form.error.greaterThan"><![CDATA[Der eingegebene Wert muss größer sein als {#$greaterThan}.]]></item>
+		<item name="wcf.global.form.error.lessThan"><![CDATA[Der eingegebene Wert muss kleiner sein als {#$lessThan}.]]></item>
 		<item name="wcf.global.form.error.multilingual"><![CDATA[Bitte füllen Sie dieses Eingabefeld für jede Sprache aus.]]></item>
 		<item name="wcf.global.form.error.noValidSelection"><![CDATA[Wählen Sie eine der angebotenen Optionen aus.]]></item>
 		<item name="wcf.global.form.error.securityToken"><![CDATA[Ihre Sitzung ist abgelaufen, bitte senden Sie das Formular erneut ab.]]></item>
 		
 		<!-- deprecated since 2.1 -->
-		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}Der eingebene Wert muss kleiner sein als {#$lessThan}.{/literal}]]></item>
-		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}Der eingebene Wert muss größer sein als {#$greaterThan}.{/literal}]]></item>
+		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss kleiner sein als {#$lessThan}.{/literal}]]></item>
+		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss größer sein als {#$greaterThan}.{/literal}]]></item>
 		<!-- /deprecated since 2.1 -->
 	</category>
 	
@@ -3070,7 +3070,7 @@ Sollten Sie sich nicht auf der Website: {@PAGE_TITLE|language} angemeldet haben,
 		<item name="wcf.user.condition.registrationDate.error.endBeforeStart"><![CDATA[Das Enddatum ist vor dem Startdatum.]]></item>
 		<item name="wcf.user.condition.registrationDate.error.endNotValid"><![CDATA[Das Startdatum ist ungültig.]]></item>
 		<item name="wcf.user.condition.registrationDate.error.startNotValid"><![CDATA[Das Enddatum ist ungültig.]]></item>
-		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Tage seit Registierung]]></item>
+		<item name="wcf.user.condition.registrationDateInterval"><![CDATA[Tage seit Registrierung]]></item>
 		<item name="wcf.user.condition.state"><![CDATA[Zustand]]></item>
 		<item name="wcf.user.condition.state.isBanned"><![CDATA[Gesperrt]]></item>
 		<item name="wcf.user.condition.state.isBanned.error.conflict"><![CDATA[„Gesperrt“ und „Nicht gesperrt“ können nicht gleichzeitig ausgewählt werden.]]></item>
