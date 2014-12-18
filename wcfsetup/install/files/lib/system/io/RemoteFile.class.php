@@ -51,14 +51,11 @@ class RemoteFile extends File {
 	 * @param	integer		$timeout
 	 * @param	array		$options
 	 */
-	public function __construct($host, $port, $timeout = 30, $options = array()) {
+	public function __construct($host, $port, $timeout = 30) {
 		$this->host = $host;
 		$this->port = $port;
 		
-		if (!preg_match('/^[a-z0-9]+:/', $this->host)) $this->host = 'tcp://'.$this->host;
-		
-		$context = stream_context_create($options);
-		$this->resource = @stream_socket_client($this->host.':'.$this->port, $this->errorNumber, $this->errorDesc, $timeout, STREAM_CLIENT_CONNECT, $context);
+		$this->resource = @fsockopen($host, $port, $this->errorNumber, $this->errorDesc, $timeout);
 		if ($this->resource === false) {
 			throw new SystemException('Can not connect to ' . $host, 0, $this->errorDesc);
 		}

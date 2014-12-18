@@ -249,11 +249,7 @@ final class HTTPRequest {
 	 */
 	public function execute() {
 		// connect
-		$remoteFile = new RemoteFile(($this->useSSL ? 'ssl://' : '').$this->host, $this->port, $this->options['timeout'], array(
-			'ssl' => array(
-				'peer_name' => $this->originHost
-			)
-		));
+		$remoteFile = new RemoteFile(($this->useSSL ? 'ssl://' : '').$this->host, $this->port, $this->options['timeout']);
 		
 		if ($this->originUseSSL && PROXY_SERVER_HTTP) {
 			if ($this->useSSL) throw new SystemException("Unable to proxy HTTPS when using TLS for proxy connection");
