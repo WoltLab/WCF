@@ -12,7 +12,6 @@
 	<rule ref="Generic.Files.OneInterfacePerFile" />
 	<rule ref="Generic.Formatting.DisallowMultipleStatements" />
 	<rule ref="Generic.Functions.FunctionCallArgumentSpacing" />
-	<rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie" />
 	<rule ref="Generic.NamingConventions.UpperCaseConstantName" />
 	<rule ref="Generic.PHP.CharacterBeforePHPOpeningTag" />
 	<rule ref="Generic.PHP.DisallowShortOpenTag" />
@@ -32,6 +31,7 @@
 	<rule ref="Squiz.Scope.MethodScope" />
 	<rule ref="WCF.Classes.ClassFileName" />
 	<rule ref="WCF.ControlStructures.ControlSignature" />
+	<rule ref="WCF.Functions.OpeningFunctionBraceKernighanRitchie" />
 	<rule ref="WCF.Methods.MethodDeclaration" />
 	<rule ref="WCF.Namespaces.ClassMustBeImported" />
 	<rule ref="WCF.Namespaces.SortedUseDeclaration" />
