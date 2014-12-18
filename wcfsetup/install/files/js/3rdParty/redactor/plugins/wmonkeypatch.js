@@ -440,12 +440,21 @@ RedactorPlugins.wmonkeypatch = function() {
 			}).bind(this);
 			
 			// image.update
+			var $moveImage = (function(image) {
+				var $parent = image.parent();
+				image = image.detach();
+				image.prependTo($parent);
+				
+				this.caret.setAfter(image);
+			}).bind(this);
+			
 			this.image.update = (function(image) {
 				this.image.hideResize();
 				this.buffer.set();
 				
 				image.attr('src', $('#redactor-image-link-source').val());
 				this.image.setFloating(image);
+				$moveImage(image);
 				
 				this.modal.close();
 				this.observe.images();
@@ -816,11 +825,11 @@ RedactorPlugins.wmonkeypatch = function() {
 				'<fieldset id="redactor-modal-link">'
 					+ '<dl>'
 						+ '<dt><label for="redactor-link-url" />URL</label></dt>' /* TODO: use a phrase instead of hardcoding it! */
-						+ '<dd><input type="url" id="redactor-link-url" /></dd>'
+						+ '<dd><input type="url" id="redactor-link-url" class="long" /></dd>'
 					+ '</dl>'
 					+ '<dl>'
 						+ '<dt><label for="redactor-link-url-text">' + this.lang.get('text') + '</label></dt>'
-						+ '<dd><input type="text" id="redactor-link-url-text" /></dd>'
+						+ '<dd><input type="text" id="redactor-link-url-text" class="long" /></dd>'
 					+ '</dl>'
 				+ '</fieldset>';
 			
