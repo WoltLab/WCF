@@ -361,7 +361,14 @@ class Route {
 			self::$defaultControllers = array();
 			
 			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-				$controller = WCF::getApplicationObject($application)->getPrimaryController();
+				$app = WCF::getApplicationObject($application);
+				
+				if (!$app) {
+					continue;
+				}
+				
+				$controller = $app->getPrimaryController();
+				
 				if (!$controller) {
 					continue;
 				}
