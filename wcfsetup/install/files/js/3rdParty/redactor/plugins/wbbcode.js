@@ -753,7 +753,7 @@ RedactorPlugins.wbbcode = function() {
 			data = data.replace(/\[list=1\]/gi, '<ul style="list-style-type: decimal">');
 			data = data.replace(/\[list=a\]/gi, '<ul style="list-style-type: lower-latin">');
 			data = data.replace(/\[list=(none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)\]/gi, '<ul style="list-style-type: $1">');
-			data = data.replace(/\[\/list]\n?/gi, '</ul>\n');
+			data = data.replace(/\[\/list\]/gi, '</ul>');
 			
 			// trim whitespaces within [table]
 			data = data.replace(/\[table\]([\S\s]*?)\[\/table\]/gi, function(match, p1) {
