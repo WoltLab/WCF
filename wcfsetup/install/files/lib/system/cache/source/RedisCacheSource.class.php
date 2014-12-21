@@ -84,9 +84,33 @@ class RedisCacheSource implements ICacheSource {
 	}
 	
 	/**
+	 * Returns time to live in seconds, defaults to 3 days.
+	 * 
+	 * @param	integer		$maxLifetime
+	 * @return	integer
+	 */
+	protected function getTTL($maxLifetime = 0) {
+		if ($maxLifetime) return $maxLifetime;
+		
+		// default to 3 days
+		return 60 * 60 * 24 * 3;
+	}
+	
+	/**
 	 * @see	\wcf\system\cache\source\ICacheSource::set()
 	 */
 	public function set($cacheName, $value, $maxLifetime) {
+		// split parameterized cache entry names into cache name and cache index
+		$parts = explode('-', $cacheName, 2);
 		
+		// check if entry is parameterized
+		if (isset($parts[1])) {
+			// save parameterized cache entries as field in a hashset
+			$this->redis->hset($parts[0], $parts[1], serialize($value));
+		}
+		else {
+			// save normal cache entries as simple key
+			$this->redis->setex($cacheName, $this->getTTL($maxLifetime), serialize($value));
+		}
 	}
 }
