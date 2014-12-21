@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\cache\source;
 use wcf\system\exception\SystemException;
+use wcf\system\Regex;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * RedisCacheSource is an implementation of CacheSource that uses a Redis server to store cached variables.
@@ -14,6 +16,52 @@ use wcf\system\WCF;
  * @category	Community Framework
  */
 class RedisCacheSource implements ICacheSource {
+	/**
+	 * Redis object
+	 * @var	\Redis
+	 */
+	protected $redis = null;
+	
+	/**
+	 * Creates a new instance of Redis.
+	 */
+	public function __construct() {
+		if (!class_exists('Redis')) {
+			throw new SystemException('Redis support is not enabled.');
+		}
+		
+		$this->redis = new \Redis();
+		
+		$regex = new Regex('^\[([a-z0-9\:\.]+)\](?::([0-9]{1,5}))?$', Regex::CASE_INSENSITIVE);
+		$host = StringUtil::trim(CACHE_SOURCE_REDIS_HOST);
+		$port = 6379; // default Redis port
+		
+		// check for IPv6
+		if ($regex->match($host)) {
+			$matches = $regex->getMatches();
+			$host = $matches[1];
+			
+			if (isset($matches[2])) {
+				$port = $matches[2];
+			}
+		}
+		else {
+			// IPv4 or host, try to get port
+			if (strpos($host, ':')) {
+				$parsedHost = explode(':', $host);
+				$host = $parsedHost[0];
+				$port = $parsedHost[1];
+			}
+		}
+		
+		if (!$this->redis->connect($host, $port)) {
+			throw new SystemException('Unable to connect to Redis server');
+		}
+		
+		// automatically prefix key names with the WCF UUID
+		$this->redis->setOption(\Redis::OPT_PREFIX, WCF_UUID.':');
+	}
+	
 	/**
 	 * @see	\wcf\system\cache\source\ICacheSource::flush()
 	 */
