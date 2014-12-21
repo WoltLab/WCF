@@ -78,21 +78,18 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * @param	\wcf\data\package\update\server\PackageUpdateServer	$updateServer
 	 */
 	protected function getPackageUpdateXML(PackageUpdateServer $updateServer) {
-		$authData = $updateServer->getAuthData();
 		$settings = array();
-		if ($authData) $settings['auth'] = $authData;
-		
-		$postData = array(
-			'apiVersion' => PackageUpdate::API_VERSION,
-			'lastUpdateTime' => $updateServer->lastUpdateTime
-		);
-		
-		// append auth code if set and update server resolves to woltlab.com
-		if (PACKAGE_SERVER_AUTH_CODE && Regex::compile('^https?://[a-z]+.woltlab.com/')->match($updateServer->serverURL)) {
-			$postData['authCode'] = PACKAGE_SERVER_AUTH_CODE;
+		if ($updateServer->apiVersion == '2.0') {
+			$authData = $updateServer->getAuthData();
+			if ($authData) $settings['auth'] = $authData;
 		}
 		
-		$request = new HTTPRequest($updateServer->serverURL, $settings, $postData);
+		// append auth code if set and update server resolves to woltlab.com
+		/*if (PACKAGE_SERVER_AUTH_CODE && Regex::compile('^https?://[a-z]+.woltlab.com/')->match($updateServer->serverURL)) {
+			$postData['authCode'] = PACKAGE_SERVER_AUTH_CODE;
+		}*/
+		
+		$request = new HTTPRequest($updateServer->getListURL(), $settings);
 		
 		try {
 			$request->execute();
@@ -109,43 +106,66 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		}
 		
 		// parse given package update xml
-		$allNewPackages = $this->parsePackageUpdateXML($reply['body']);
-		unset($request, $reply);
+		$allNewPackages = $this->parsePackageUpdateXML($updateServer, $reply['body']);
 		
-		// purge package list
-		$sql = "DELETE FROM	wcf".WCF_N."_package_update
-			WHERE		packageUpdateServerID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(array($updateServer->packageUpdateServerID));
-		
-		// save packages
-		if (!empty($allNewPackages)) {
-			$this->savePackageUpdates($allNewPackages, $updateServer->packageUpdateServerID);
-		}
-		unset($allNewPackages);
-		
-		// update server status
-		$updateServerEditor = new PackageUpdateServerEditor($updateServer);
-		$updateServerEditor->update(array(
+		$data = array(
 			'lastUpdateTime' => TIME_NOW,
 			'status' => 'online',
 			'errorMessage' => ''
-		));
+		);
+		
+		// check if server indicates support for a newer API
+		if ($updateServer->apiVersion == '2.0' && !empty($reply['httpHeaders']['wcf-update-server-api'])) {
+			$apiVersions = explode(' ', reset($reply['httpHeaders']['wcf-update-server-api']));
+			if (in_array('2.1', $apiVersions)) {
+				$data['apiVersion'] = '2.1';
+			}
+		}
+		
+		unset($request, $reply);
+		
+		if ($allNewPackages !== false) {
+			// purge package list
+			$sql = "DELETE FROM	wcf".WCF_N."_package_update
+				WHERE		packageUpdateServerID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array($updateServer->packageUpdateServerID));
+			
+			// save packages
+			if (!empty($allNewPackages)) {
+				$this->savePackageUpdates($allNewPackages, $updateServer->packageUpdateServerID);
+			}
+			unset($allNewPackages);
+		}
+		
+		// update server status
+		$updateServerEditor = new PackageUpdateServerEditor($updateServer);
+		$updateServerEditor->update($data);
 	}
 	
 	/**
-	 * Parses a stream containing info from a packages_update.xml.
+	 * Parses a stream containing info from a packages_update.xml, returns false if package list
+	 * has not changed since last update.
 	 * 
-	 * @param	string		$content
-	 * @return	array		$allNewPackages
+	 * @param	\wcf\data\package\update\server\PackageUpdateServer	$updateServer
+	 * @param	string							$content
+	 * @return	array							$allNewPackages
 	 */
-	protected function parsePackageUpdateXML($content) {
+	protected function parsePackageUpdateXML(PackageUpdateServer $updateServer, $content) {
 		// load xml document
 		$xml = new XML();
 		$xml->loadXML('packageUpdateServer.xml', $content);
 		$xpath = $xml->xpath();
 		
 		// loop through <package> tags inside the <section> tag.
+		$section = $xpath->query('/ns:section');
+		if ($section->item(0)->hasAttribute('lastUpdateTime')) {
+			$lastUpdateTime = intval($section->item(0)->getAttribute('lastUpdateTime'));
+			if ($lastUpdateTime && $updateServer->lastUpdateTime > $lastUpdateTime) {
+				return false;
+			}
+		}
+		
 		$allNewPackages = array();
 		$packages = $xpath->query('/ns:section/ns:package');
 		foreach ($packages as $package) {

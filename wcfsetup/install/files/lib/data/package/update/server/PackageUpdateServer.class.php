@@ -3,6 +3,8 @@ namespace wcf\data\package\update\server;
 use wcf\data\DatabaseObject;
 use wcf\system\Regex;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
+use wcf\system\io\RemoteFile;
 
 /**
  * Represents a package update server.
@@ -134,5 +136,27 @@ class PackageUpdateServer extends DatabaseObject {
 	public function getHighlightedURL() {
 		$host = parse_url($this->serverURL, PHP_URL_HOST);
 		return str_replace($host, '<strong>'.$host.'</strong>', $this->serverURL);
+	}
+	
+	/**
+	 * Returns the list URL for package servers.
+	 * 
+	 * @return	string
+	 */
+	public function getListURL() {
+		if ($this->apiVersion == '2.0') {
+			return $this->serverURL;
+		}
+		
+		$serverURL = FileUtil::addTrailingSlash($this->serverURL) . 'list/' . WCF::getLanguage()->getFixedLanguageCode() . '.xml';
+		$serverURL = preg_replace_callback('~^https?://~', function($matches) {
+			if (RemoteFile::supportsSSL()) {
+				return 'https://';
+			}
+			
+			return 'http://';
+		}, $serverURL);
+		
+		return $serverURL;
 	}
 }
