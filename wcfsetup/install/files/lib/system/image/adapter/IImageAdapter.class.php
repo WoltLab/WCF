@@ -162,6 +162,26 @@ interface IImageAdapter {
 	public function rotate($degrees);
 	
 	/**
+	 * Overlays the given image at an absolute position.
+	 * 
+	 * @param	string		$file
+	 * @param	integer		$x
+	 * @param	integer		$y
+	 * @param	float		$opacity
+	 */
+	public function overlayImage($file, $x, $y, $opacity);
+	
+	/**
+	 * Overlays the given image at a relative position.
+	 * 
+	 * @param	string		$file
+	 * @param	string		$position
+	 * @param	integer		$margin
+	 * @param	float		$opacity
+	 */
+	public function overlayImageRelative($file, $position, $margin, $opacity);
+	
+	/**
 	 * Determines if an image adapter is supported.
 	 * 
 	 * @return	boolean

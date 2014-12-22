@@ -277,6 +277,28 @@ class GDImageAdapter implements IImageAdapter {
 	}
 	
 	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImage()
+	 */
+	public function overlayImage($file, $x, $y, $opacity) {
+		$overlayImage = new self();
+		$overlayImage->loadFile($file);
+		
+		// fix PNG alpha channel handling
+		// see http://php.net/manual/en/function.imagecopymerge.php#92787
+		$cut = imagecreatetruecolor($overlayImage->getWidth(), $overlayImage->getHeight());
+		imagecopy($cut, $this->image, 0, 0, $x, $y, $overlayImage->getWidth(), $overlayImage->getHeight());
+		imagecopy($cut, $overlayImage->image, 0, 0, 0, 0, $overlayImage->getWidth(), $overlayImage->getHeight());
+		imagecopymerge($this->image, $cut, $x, $y, 0, 0, $overlayImage->getWidth(), $overlayImage->getHeight(), $opacity * 100);
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImageRelative()
+	 */
+	public function overlayImageRelative($file, $position, $margin, $opacity) {
+		// does nothing
+	}
+	
+	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::isSupported()
 	 */
 	public static function isSupported() {

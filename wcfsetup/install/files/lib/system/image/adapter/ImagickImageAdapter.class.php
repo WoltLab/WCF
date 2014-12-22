@@ -76,6 +76,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	 */
 	public function loadFile($file) {
 		try {
+			$this->imagick->clear();
 			$this->imagick->readImage($file);
 		}
 		catch (\ImagickException $e) {
@@ -278,6 +279,29 @@ class ImagickImageAdapter implements IImageAdapter {
 		$image->rotateImage(($this->color ?: new \ImagickPixel()), $degrees);
 		
 		return $image;
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImage()
+	 */
+	public function overlayImage($file, $x, $y, $opacity) {
+		try {
+			$overlayImage = new \Imagick($file);
+		}
+		catch (\ImagickException $e) {
+			throw new SystemException("Image '".$file."' is not readable or does not exist.");
+		}
+		
+		$overlayImage->evaluateImage(\Imagick::EVALUATE_MULTIPLY, $opacity, \Imagick::CHANNEL_OPACITY);
+		$this->imagick->compositeImage($overlayImage, \Imagick::COMPOSITE_OVER, $x, $y);
+		$this->imagick = $this->imagick->flattenImages();
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImageRelative()
+	 */
+	public function overlayImageRelative($file, $position, $margin, $opacity) {
+		// does nothing
 	}
 	
 	/**
