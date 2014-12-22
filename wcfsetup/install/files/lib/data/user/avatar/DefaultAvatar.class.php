@@ -58,4 +58,11 @@ class DefaultAvatar implements IUserAvatar {
 	public function canCrop() {
 		return false;
 	}
+	
+	/**
+	 * @see	\wcf\data\user\avatar\IUserAvatar::getCropImageTag()
+	 */
+	public function getCropImageTag($size = null) {
+		return '';
+	}
 }

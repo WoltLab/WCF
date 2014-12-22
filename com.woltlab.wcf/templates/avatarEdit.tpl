@@ -57,13 +57,11 @@
 				<dl class="jsOnly{if $errorField == 'custom'} formError{/if}" id="avatarUpload">
 					<dt class="framed">
 						{if $avatarType == 'custom'}
-							{assign var='__customAvatar' value=$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
 							{if $__wcf->getUserProfileHandler()->getAvatar()->canCrop()}
-								{assign var='__customAvatar' value=$__customAvatar|substr:0:-2}
-								{assign var='__customAvatarTitle' value='wcf.user.avatar.type.custom.crop'|language}
-								{append var='__customAvatar' value='class="userAvatarCrop jsTooltip" title="'|concat:$__customAvatarTitle:'" />'}
+								{@$__wcf->getUserProfileHandler()->getAvatar()->getCropImageTag(96)}
+							{else}
+								{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
 							{/if}
-							{@$__customAvatar}
 						{else}
 							<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="icon96" />
 						{/if}
