@@ -82,10 +82,6 @@ class CacheListPage extends AbstractPage {
 				// set version
 				$this->cacheData['version'] = WCF_VERSION;
 			break;
-			
-			case 'wcf\system\cache\source\NoCacheSource':
-				$this->cacheData['version'] = WCF_VERSION;
-			break;
 		}
 		
 		$this->readCacheFiles('language', FileUtil::unifyDirSeparator(WCF_DIR.'language'));
