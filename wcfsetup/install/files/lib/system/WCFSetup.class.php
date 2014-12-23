@@ -409,7 +409,7 @@ class WCFSetup extends WCF {
 	}
 	
 	/**
-	 * Returns true if memory_limit is set to at least 64 MB
+	 * Returns true if memory_limit is set to at least 128 MB
 	 * 
 	 * @return	boolean
 	 */
@@ -423,8 +423,8 @@ class WCFSetup extends WCF {
 		
 		// completely numeric, PHP assumes byte
 		if (is_numeric($memoryLimit)) {
-			$memoryLimit = $memoryLimit / 1024;
-			return ($memoryLimit >= 64);
+			$memoryLimit = $memoryLimit / 1024 / 1024;
+			return ($memoryLimit >= 128);
 		}
 		
 		// PHP supports 'K', 'M' and 'G' shorthand notation
@@ -432,11 +432,11 @@ class WCFSetup extends WCF {
 			switch ($matches[2]) {
 				case 'K':
 					$memoryLimit = $matches[1] * 1024;
-					return ($memoryLimit >= 64);
+					return ($memoryLimit >= 128);
 				break;
 				
 				case 'M':
-					return ($matches[1] >= 64);
+					return ($matches[1] >= 128);
 				break;
 				
 				case 'G':

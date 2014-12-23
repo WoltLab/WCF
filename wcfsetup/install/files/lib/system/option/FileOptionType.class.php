@@ -42,6 +42,9 @@ class FileOptionType extends AbstractOptionType {
 	 */
 	public function getData(Option $option, $newValue) {
 		$this->createUploadHandler($option);
+		if ($this->uploadHandlers[$option->optionName] === null) {
+			return '';
+		}
 		
 		$files = $this->uploadHandlers[$option->optionName]->getFiles();
 		$file = reset($files);
@@ -91,6 +94,9 @@ class FileOptionType extends AbstractOptionType {
 	 */
 	public function validate(Option $option, $newValue) {
 		$this->createUploadHandler($option);
+		if ($this->uploadHandlers[$option->optionName] === null) {
+			return;
+		}
 		
 		$files = $this->uploadHandlers[$option->optionName]->getFiles();
 		$file = reset($files);

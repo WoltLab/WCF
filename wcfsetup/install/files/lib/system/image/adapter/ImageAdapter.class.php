@@ -20,6 +20,22 @@ class ImageAdapter implements IImageAdapter {
 	protected $adapter = null;
 	
 	/**
+	 * supported relative positions
+	 * @var	array<string>
+	 */
+	protected $relativePositions = array(
+		'topLeft',
+		'topCenter',
+		'topRight',
+		'middleLeft',
+		'middleCenter',
+		'middleRight',
+		'bottomLeft',
+		'bottomCenter',
+		'bottomRight'
+	);
+	
+	/**
 	 * Creates a new ImageAdapter instance.
 	 * 
 	 * @param	string		$adapterClassName
@@ -112,12 +128,43 @@ class ImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
-	public function drawText($string, $x, $y) {
+	public function drawText($string, $x, $y, $opacity) {
 		if (!$this->adapter->hasColor()) {
 			throw new SystemException("Cannot draw text unless a color has been specified with setColor().");
 		}
 		
-		$this->adapter->drawText($string, $x, $y);
+		// validate opacity
+		if ($opacity < 0 || $opacity > 1) {
+			throw new SystemException("Invalid opacity value given.");
+		}
+		
+		$this->adapter->drawText($string, $x, $y, $opacity);
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::drawTextRelative()
+	 */
+	public function drawTextRelative($text, $position, $margin, $opacity) {
+		if (!$this->adapter->hasColor()) {
+			throw new SystemException("Cannot draw text unless a color has been specified with setColor().");
+		}
+		
+		// validate position
+		if (!in_array($position, $this->relativePositions)) {
+			throw new SystemException("Unknown relative position '".$position."'.");
+		}
+		
+		// validate margin
+		if ($margin < 0 || $margin >= $this->getHeight() / 2 || $margin >= $this->getWidth() / 2) {
+			throw new SystemException("Margin has to be positive and respect image dimensions.");
+		}
+		
+		// validate opacity
+		if ($opacity < 0 || $opacity > 1) {
+			throw new SystemException("Invalid opacity value given.");
+		}
+		
+		$this->adapter->drawTextRelative($text, $position, $margin, $opacity);
 	}
 	
 	/**
@@ -190,6 +237,100 @@ class ImageAdapter implements IImageAdapter {
 		}
 		
 		return $this->adapter->rotate($degrees);
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImage()
+	 */
+	public function overlayImage($file, $x, $y, $opacity) {
+		// validate file
+		if (!file_exists($file)) {
+			throw new SystemException("Image '".$file."' does not exist.");
+		}
+		
+		// validate opacity
+		if ($opacity < 0 || $opacity > 1) {
+			throw new SystemException("Invalid opacity value given.");
+		}
+		
+		$this->adapter->overlayImage($file, $x, $y, $opacity);
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImage()
+	 */
+	public function overlayImageRelative($file, $position, $margin, $opacity) {
+		// validate file
+		if (!file_exists($file)) {
+			throw new SystemException("Image '".$file."' does not exist.");
+		}
+		
+		// validate position
+		if (!in_array($position, $this->relativePositions)) {
+			throw new SystemException("Unknown relative position '".$position."'.");
+		}
+		
+		// validate margin
+		if ($margin < 0 || $margin >= $this->getHeight() / 2 || $margin >= $this->getWidth() / 2) {
+			throw new SystemException("Margin has to be positive and respect image dimensions.");
+		}
+		
+		// validate opacity
+		if ($opacity < 0 || $opacity > 1) {
+			throw new SystemException("Invalid opacity value given.");
+		}
+		
+		$adapterClassName = get_class($this->adapter);
+		$overlayImage = new $adapterClassName();
+		$overlayImage->loadFile($file);
+		$overlayHeight = $overlayImage->getHeight();
+		$overlayWidth = $overlayImage->getWidth();
+		
+		// calculate y coordinate
+		$x = 0;
+		switch ($position) {
+			case 'topLeft':
+			case 'middleLeft':
+			case 'bottomLeft':
+				$x = $margin;
+			break;
+			
+			case 'topCenter':
+			case 'middleCenter':
+			case 'bottomCenter':
+				$x = floor(($this->getWidth() - $overlayWidth) / 2);
+			break;
+			
+			case 'topRight':
+			case 'middleRight':
+			case 'bottomRight':
+				$x = $this->getWidth() - $overlayWidth - $margin;
+			break;
+		}
+		
+		// calculate y coordinate
+		$y = 0;
+		switch ($position) {
+			case 'topLeft':
+			case 'topCenter':
+			case 'topRight':
+				$y = $margin;
+			break;
+			
+			case 'middleLeft':
+			case 'middleCenter':
+			case 'middleRight':
+				$y = floor(($this->getHeight() - $overlayHeight) / 2);
+			break;
+			
+			case 'bottomLeft':
+			case 'bottomCenter':
+			case 'bottomRight':
+				$y = $this->getHeight() - $overlayHeight - $margin;
+			break;
+		}
+		
+		$this->overlayImage($file, $x, $y, $opacity);
 	}
 	
 	/**

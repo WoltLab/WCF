@@ -76,6 +76,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	 */
 	public function loadFile($file) {
 		try {
+			$this->imagick->clear();
 			$this->imagick->readImage($file);
 		}
 		catch (\ImagickException $e) {
@@ -186,14 +187,71 @@ class ImagickImageAdapter implements IImageAdapter {
 	/**
 	 * @see	\wcf\system\image\adapter\IImageAdapter::drawText()
 	 */
-	public function drawText($string, $x, $y) {
+	public function drawText($string, $x, $y, $opacity) {
 		$draw = new \ImagickDraw();
+		$draw->setStrokeOpacity($opacity);
 		$draw->setFillColor($this->color);
 		$draw->setTextAntialias(true);
 		
 		// draw text
 		$draw->annotation($x, $y, $string);
 		$this->imagick->drawImage($draw);
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::drawTextRelative()
+	 */
+	public function drawTextRelative($text, $position, $margin, $opacity) {
+		$draw = new \ImagickDraw();
+		$draw->setStrokeOpacity($opacity);
+		$metrics = $this->imagick->queryFontMetrics($draw, $string);
+		
+		// calculate x coordinate
+		$x = 0;
+		switch ($position) {
+			case 'topLeft':
+			case 'middleLeft':
+			case 'bottomLeft':
+				$x = $margin;
+			break;
+			
+			case 'topCenter':
+			case 'middleCenter':
+			case 'bottomCenter':
+				$x = floor(($this->getWidth() - $metrics['textWidth']) / 2);
+			break;
+			
+			case 'topRight':
+			case 'middleRight':
+			case 'bottomRight':
+				$x = $this->getWidth() - $metrics['textWidth'] - $margin;
+			break;
+		}
+		
+		// calculate y coordinate
+		$y = 0;
+		switch ($position) {
+			case 'topLeft':
+			case 'topCenter':
+			case 'topRight':
+				$y = $margin;
+			break;
+			
+			case 'middleLeft':
+			case 'middleCenter':
+			case 'middleRight':
+				$y = floor(($this->getHeight() - $metrics['textHeight']) / 2);
+			break;
+			
+			case 'bottomLeft':
+			case 'bottomCenter':
+			case 'bottomRight':
+				$y = $this->getHeight() - $metrics['textHeight'] - $margin;
+			break;
+		}
+		
+		// draw text
+		$this->drawText($string, $x, $y);
 	}
 	
 	/**
@@ -278,6 +336,29 @@ class ImagickImageAdapter implements IImageAdapter {
 		$image->rotateImage(($this->color ?: new \ImagickPixel()), $degrees);
 		
 		return $image;
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImage()
+	 */
+	public function overlayImage($file, $x, $y, $opacity) {
+		try {
+			$overlayImage = new \Imagick($file);
+		}
+		catch (\ImagickException $e) {
+			throw new SystemException("Image '".$file."' is not readable or does not exist.");
+		}
+		
+		$overlayImage->evaluateImage(\Imagick::EVALUATE_MULTIPLY, $opacity, \Imagick::CHANNEL_OPACITY);
+		$this->imagick->compositeImage($overlayImage, \Imagick::COMPOSITE_OVER, $x, $y);
+		$this->imagick = $this->imagick->flattenImages();
+	}
+	
+	/**
+	 * @see	\wcf\system\image\adapter\IImageAdapter::overlayImageRelative()
+	 */
+	public function overlayImageRelative($file, $position, $margin, $opacity) {
+		// does nothing
 	}
 	
 	/**

@@ -114,19 +114,33 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 		switch ($size) {
 			case 16:
 				$retinaSize = 32;
-				break;
+			break;
+			
 			case 24:
 			case 32:
 			case 48:
 				$retinaSize = 96;
-				break;
+			break;
+			
 			case 64:
 			case 96:
 				$retinaSize = 128;
-				break;
+			break;
 		}
 		
 		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" '.($retinaSize !== null ? ('srcset="'.StringUtil::encodeHTML($this->getURL($retinaSize)).' 2x" ') : '').'style="width: '.$width.'px; height: '.$height.'px" alt="'.WCF::getLanguage()->get('wcf.user.avatar.alt').'" class="userAvatarImage" />';
+	}
+	
+	/**
+	 * @see	\wcf\data\user\avatar\IUserAvatar::getCropImageTag()
+	 */
+	public function getCropImageTag($size = null) {
+		$imageTag = $this->getImageTag($size);
+		
+		// append CSS classes and append title
+		$title = StringUtil::encodeHTML(WCF::getLanguage()->get('wcf.user.avatar.type.custom.crop'));
+		
+		return str_replace('class="userAvatarImage"', 'class="userAvatarImage userAvatarCrop jsTooltip" title="'.$title.'"', $imageTag);
 	}
 	
 	/**

@@ -36,6 +36,14 @@ interface IUserAvatar {
 	public function getImageTag($size = null);
 	
 	/**
+	 * Returns the image tag used for cropping.
+	 * 
+	 * @param	integer		$size
+	 * @return	string
+	 */
+	public function getCropImageTag($size = null);
+	
+	/**
 	 * Returns the width of this avatar.
 	 * 
 	 * @return	integer
