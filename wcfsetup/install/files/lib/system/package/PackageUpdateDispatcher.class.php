@@ -100,7 +100,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		try {
 			$request->execute();
 			$reply = $request->getReply();
-			//die("<pre>".print_r($request, true));
 		}
 		catch (HTTPUnauthorizedException $e) {
 			throw new PackageUpdateUnauthorizedException($request, $updateServer);
@@ -111,7 +110,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			$statusCode = (is_array($reply['statusCode'])) ? reset($reply['statusCode']) : $reply['statusCode'];
 			throw new SystemException(WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' ('.$statusCode.')');
 		}
-		//echo "<pre>" . $updateServer->getListURL() . ": " . ((is_array($reply['statusCode'])) ? reset($reply['statusCode']) : $reply['statusCode']) . "</pre>";
+		
 		// parse given package update xml
 		$allNewPackages = false;
 		if ($updateServer->apiVersion == '2.0' || $reply['statusCode'] != 304) {
