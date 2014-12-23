@@ -230,7 +230,7 @@ class PackageInstallationScheduler {
 			else {
 				// create request
 				$request = new HTTPRequest(
-					$this->packageUpdateServers[$packageUpdateVersion['packageUpdateServerID']]->serverURL,
+					$this->packageUpdateServers[$packageUpdateVersion['packageUpdateServerID']]->getDownloadURL(),
 					(!empty($authData) ? array('auth' => $authData) : array()),
 					array(
 						'apiVersion' => PackageUpdate::API_VERSION,

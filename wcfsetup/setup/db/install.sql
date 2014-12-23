@@ -760,7 +760,8 @@ CREATE TABLE wcf1_package_update_server (
 	lastUpdateTime INT(10) NOT NULL DEFAULT 0,
 	status ENUM('online', 'offline') NOT NULL DEFAULT 'online',
 	errorMessage TEXT,
-	apiVersion ENUM('2.0', '2.1') NOT NULL DEFAULT '2.0'
+	apiVersion ENUM('2.0', '2.1') NOT NULL DEFAULT '2.0',
+	metaData TEXT
 );
 
 DROP TABLE IF EXISTS wcf1_package_update_version;

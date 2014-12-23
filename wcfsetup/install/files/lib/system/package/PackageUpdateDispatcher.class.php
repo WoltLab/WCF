@@ -79,10 +79,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 */
 	protected function getPackageUpdateXML(PackageUpdateServer $updateServer) {
 		$settings = array();
-		if ($updateServer->apiVersion == '2.0') {
-			$authData = $updateServer->getAuthData();
-			if ($authData) $settings['auth'] = $authData;
-		}
+		$authData = $updateServer->getAuthData();
+		if ($authData) $settings['auth'] = $authData;
 		
 		// append auth code if set and update server resolves to woltlab.com
 		/*if (PACKAGE_SERVER_AUTH_CODE && Regex::compile('^https?://[a-z]+.woltlab.com/')->match($updateServer->serverURL)) {
@@ -91,9 +89,18 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		$request = new HTTPRequest($updateServer->getListURL(), $settings);
 		
+		if ($updateServer->apiVersion == '2.1') {
+			$metaData = $updateServer->getMetaData();
+			if (!empty($metaData['list'])) {
+				$request->addHeader('if-none-match', $metaData['list']['etag']);
+				$request->addHeader('if-modified-since', $metaData['list']['lastModified']);
+			}
+		}
+		
 		try {
 			$request->execute();
 			$reply = $request->getReply();
+			//die("<pre>".print_r($request, true));
 		}
 		catch (HTTPUnauthorizedException $e) {
 			throw new PackageUpdateUnauthorizedException($request, $updateServer);
@@ -104,9 +111,12 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			$statusCode = (is_array($reply['statusCode'])) ? reset($reply['statusCode']) : $reply['statusCode'];
 			throw new SystemException(WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' ('.$statusCode.')');
 		}
-		
+		//echo "<pre>" . $updateServer->getListURL() . ": " . ((is_array($reply['statusCode'])) ? reset($reply['statusCode']) : $reply['statusCode']) . "</pre>";
 		// parse given package update xml
-		$allNewPackages = $this->parsePackageUpdateXML($updateServer, $reply['body']);
+		$allNewPackages = false;
+		if ($updateServer->apiVersion == '2.0' || $reply['statusCode'] != 304) {
+			$allNewPackages = $this->parsePackageUpdateXML($reply['body']);
+		}
 		
 		$data = array(
 			'lastUpdateTime' => TIME_NOW,
@@ -121,6 +131,23 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				$data['apiVersion'] = '2.1';
 			}
 		}
+		
+		$metaData = array();
+		if ($updateServer->apiVersion == '2.1' || (isset($data['apiVersion']) && $data['apiVersion'] == '2.1')) {
+			if (empty($reply['httpHeaders']['etag']) || empty($reply['httpHeaders']['last-modified'])) {
+				throw new SystemException("Missing required HTTP headers 'etag' and/or 'last-modified'.");
+			}
+			else if (empty($reply['httpHeaders']['wcf-update-server-ssl'])) {
+				throw new SystemException("Missing required HTTP header 'wcf-update-server-ssl'.");
+			}
+			
+			$metaData['list'] = array(
+				'etag' => reset($reply['httpHeaders']['etag']),
+				'lastModified' => reset($reply['httpHeaders']['last-modified'])
+			);
+			$metaData['ssl'] = (reset($reply['httpHeaders']['wcf-update-server-ssl']) == 'true') ? true : false;
+		}
+		$data['metaData'] = serialize($metaData);
 		
 		unset($request, $reply);
 		
@@ -144,27 +171,16 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	}
 	
 	/**
-	 * Parses a stream containing info from a packages_update.xml, returns false if package list
-	 * has not changed since last update.
+	 * Parses a stream containing info from a packages_update.xml.
 	 * 
-	 * @param	\wcf\data\package\update\server\PackageUpdateServer	$updateServer
-	 * @param	string							$content
-	 * @return	array							$allNewPackages
+	 * @param	string		$content
+	 * @return	array		$allNewPackages
 	 */
-	protected function parsePackageUpdateXML(PackageUpdateServer $updateServer, $content) {
+	protected function parsePackageUpdateXML($content) {
 		// load xml document
 		$xml = new XML();
 		$xml->loadXML('packageUpdateServer.xml', $content);
 		$xpath = $xml->xpath();
-		
-		// loop through <package> tags inside the <section> tag.
-		$section = $xpath->query('/ns:section');
-		if ($section->item(0)->hasAttribute('lastUpdateTime')) {
-			$lastUpdateTime = intval($section->item(0)->getAttribute('lastUpdateTime'));
-			if ($lastUpdateTime && $updateServer->lastUpdateTime > $lastUpdateTime) {
-				return false;
-			}
-		}
 		
 		$allNewPackages = array();
 		$packages = $xpath->query('/ns:section/ns:package');
